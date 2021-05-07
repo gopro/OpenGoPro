@@ -1,0 +1,7 @@
+# We're mounting a volume when running the container so only add things here needed for building
+
+# Ignore everything
+**
+
+# Allow tools
+!/tools/rdocs

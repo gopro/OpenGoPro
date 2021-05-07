@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant PC
+    participant GoPro
+    GoPro-->>PC: Advertising
+    GoPro-->>PC: Advertising
+    note over PC: Scanning
+    PC->>GoPro: Connect
+    note over GoPro, PC: Connected
+    alt If not Previously Paired
+        PC ->> GoPro: Pair Request
+        GoPro ->> PC: Pair Response
+    else
+
+    end
+    note over GoPro, PC: Paired
+    PC ->> GoPro: Enable Notifications on Characteristic 1
+    PC ->> GoPro: Enable Notifications on Characteristic 2
+    PC ->> GoPro: Enable Notifications on Characteristic ..
+    PC ->> GoPro: Enable Notifications on Characteristic N
+    note over GoPro, PC: Ready to Communicate

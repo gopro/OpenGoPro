@@ -1,0 +1,20 @@
+# This workflow will run pre-merge checks to verify a PR before it is merged:
+#    - copyright: Checks to see if there are any missing copyrights
+
+name: Pre Merge Checks
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    copyright:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+            - name: Check copyrights
+              run: |
+                  ./tools/hooks/copyright -c -i . $(awk '/Current Version: /{print $NF}' README.md)

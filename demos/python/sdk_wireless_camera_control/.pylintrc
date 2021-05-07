@@ -1,0 +1,17 @@
+[MASTER]
+
+load-plugins=pylint.extensions.check_docs
+accept-no-param-doc=no
+accept-no-return-doc=no
+default-docstring-type=google
+
+ignore=tests,proto
+
+
+[MESSAGES CONTROL]
+
+disable=W1203, W0511, R0902, R0912get_update, W0212, C0103, R0904, R0912, missing-raises-doc, W0622, R0903, W0221, R0915, W1202, C0302, R0914, duplicate-code
+
+[FORMAT]
+
+max-line-length=160

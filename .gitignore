@@ -1,0 +1,5 @@
+.vscode
+.Rhistory
+venv
+xcuserdata/
+.git

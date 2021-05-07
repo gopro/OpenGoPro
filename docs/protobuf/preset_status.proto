@@ -1,0 +1,165 @@
+/* preset_status.proto/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
+/* This copyright was auto-generated on Fri, May  7, 2021  2:28:56 PM */
+
+/*
+Defines the structure of preset status protobuf messages from the camera
+*/
+
+syntax="proto2";
+package open_gopro;
+
+
+message NotifyPresetStatus {
+    repeated PresetGroup preset_group_array = 1;
+}
+
+
+message PresetGroup {
+    optional EnumPresetGroup id = 1;
+    repeated Preset preset_array = 2;
+    optional bool can_add_preset = 3;
+}
+
+
+enum EnumPresetGroup {
+    PRESET_GROUP_ID_VIDEO = 1000;
+    PRESET_GROUP_ID_PHOTO = 1001;
+    PRESET_GROUP_ID_TIMELAPSE = 1002;
+    PRESET_GROUP_ID_VIDEO_DUAL_LENS = 1003;
+    PRESET_GROUP_ID_PHOTO_DUAL_LENS = 1004;
+    PRESET_GROUP_ID_TIMELAPSE_DUAL_LENS = 1005;
+    PRESET_GROUP_ID_SPECIAL = 1006;
+}
+
+
+message Preset {
+    optional int32 id = 1;
+    optional EnumFlatMode mode = 2;
+    optional EnumPresetTitle title_id = 3;
+    optional int32 title_number = 4;
+    optional bool user_defined = 5;
+    optional EnumPresetIcon icon = 6;
+    repeated PresetSetting setting_array = 7;
+    optional bool is_modified = 8;
+}
+
+
+enum EnumFlatMode {
+    FLAT_MODE_UNKNOWN = -1;
+    FLAT_MODE_PLAYBACK = 4;
+    FLAT_MODE_SETUP = 5;
+    FLAT_MODE_VIDEO = 12;
+    FLAT_MODE_TIME_LAPSE_VIDEO = 13;
+    FLAT_MODE_LOOPING = 15;
+    FLAT_MODE_PHOTO = 17;
+    FLAT_MODE_PHOTO_NIGHT = 18;
+    FLAT_MODE_PHOTO_BURST = 19;
+    FLAT_MODE_TIME_LAPSE_PHOTO = 20;
+    FLAT_MODE_NIGHT_LAPSE_PHOTO = 21;
+    FLAT_MODE_BROADCAST_BROADCAST = 23;
+    FLAT_MODE_TIME_WARP_VIDEO = 24;
+    FLAT_MODE_LIVE_BURST = 25;
+    FLAT_MODE_NIGHT_LAPSE_VIDEO = 26;
+    FLAT_MODE_SLOMO = 27;
+}
+
+
+enum EnumPresetTitle {
+    PRESET_TITLE_ACTIVITY = 0;
+    PRESET_TITLE_STANDARD = 1;
+    PRESET_TITLE_CINEMATIC = 2;
+    PRESET_TITLE_PHOTO = 3;
+    PRESET_TITLE_LIVE_BURST = 4;
+    PRESET_TITLE_BURST = 5;
+    PRESET_TITLE_NIGHT = 6;
+    PRESET_TITLE_TIME_WARP = 7;
+    PRESET_TITLE_TIME_LAPSE = 8;
+    PRESET_TITLE_NIGHT_LAPSE = 9;
+    PRESET_TITLE_VIDEO = 10;
+    PRESET_TITLE_SLOMO = 11;
+    PRESET_TITLE_360_VIDEO = 12;
+    PRESET_TITLE_PHOTO_2 = 13;
+    PRESET_TITLE_PANORAMA = 14;
+    PRESET_TITLE_360_PHOTO = 15;
+    PRESET_TITLE_TIME_WARP_2 = 16;
+    PRESET_TITLE_360_TIME_WARP = 17;
+    PRESET_TITLE_CUSTOM = 18;
+    PRESET_TITLE_AIR = 19;
+    PRESET_TITLE_BIKE = 20;
+    PRESET_TITLE_EPIC = 21;
+    PRESET_TITLE_INDOOR = 22;
+    PRESET_TITLE_MOTOR = 23;
+    PRESET_TITLE_MOUNTED = 24;
+    PRESET_TITLE_OUTDOOR = 25;
+    PRESET_TITLE_POV = 26;
+    PRESET_TITLE_SELFIE = 27;
+    PRESET_TITLE_SKATE = 28;
+    PRESET_TITLE_SNOW = 29;
+    PRESET_TITLE_TRAIL = 30;
+    PRESET_TITLE_TRAVEL = 31;
+    PRESET_TITLE_WATER = 32;
+    PRESET_TITLE_LOOPING = 33;
+    /* Reserved 34 - 50 for custom presets. */
+    PRESET_TITLE_360_TIMELAPSE= 51;
+    PRESET_TITLE_360_NIGHT_LAPSE = 52;
+    PRESET_TITLE_360_NIGHT_PHOTO = 53;
+    PRESET_TITLE_PANO_TIME_LAPSE = 54;
+    PRESET_TITLE_MAX_VIDEO = 55;
+    PRESET_TITLE_MAX_PHOTO = 56;
+    PRESET_TITLE_MAX_TIMEWARP = 57;
+    PRESET_TITLE_MAX = 58;
+}
+
+
+enum EnumPresetIcon {
+    PRESET_ICON_VIDEO = 0;
+    PRESET_ICON_ACTIVITY = 1;
+    PRESET_ICON_CINEMATIC = 2;
+    PRESET_ICON_PHOTO = 3;
+    PRESET_ICON_LIVE_BURST = 4;
+    PRESET_ICON_BURST = 5;
+    PRESET_ICON_PHOTO_NIGHT = 6;
+    PRESET_ICON_TIMEWARP = 7;
+    PRESET_ICON_TIMELAPSE = 8;
+    PRESET_ICON_NIGHTLAPSE = 9;
+    PRESET_ICON_SNAIL = 10;
+    PRESET_ICON_VIDEO_2 = 11;
+    PRESET_ICON_360_VIDEO = 12;
+    PRESET_ICON_PHOTO_2 = 13;
+    PRESET_ICON_PANORAMA = 14;
+    PRESET_ICON_BURST_2 = 15;
+    PRESET_ICON_TIMEWARP_2 = 16;
+    PRESET_ICON_TIMELAPSE_2 = 17;
+    PRESET_ICON_CUSTOM = 18;
+    PRESET_ICON_AIR = 19;
+    PRESET_ICON_BIKE = 20;
+    PRESET_ICON_EPIC = 21;
+    PRESET_ICON_INDOOR = 22;
+    PRESET_ICON_MOTOR = 23;
+    PRESET_ICON_MOUNTED = 24;
+    PRESET_ICON_OUTDOOR = 25;
+    PRESET_ICON_POV = 26;
+    PRESET_ICON_SELFIE = 27;
+    PRESET_ICON_SKATE = 28;
+    PRESET_ICON_SNOW = 29;
+    PRESET_ICON_TRAIL = 30;
+    PRESET_ICON_TRAVEL = 31;
+    PRESET_ICON_WATER = 32;
+    PRESET_ICON_LOOPING = 33;
+    /* Reserved 34 - 50 for Custom presets */
+    /* Add icons below for new presets starting from 51 */
+    PRESET_ICON_MAX_VIDEO = 55;
+    PRESET_ICON_MAX_PHOTO = 56;
+    PRESET_ICON_MAX_TIMEWARP = 57;
+    PRESET_ICON_TIMELAPSE_PHOTO = 1000;
+    PRESET_ICON_NIGHTLAPSE_PHOTO = 1001;
+    PRESET_ICON_MAX = 1002;
+}
+
+
+message PresetSetting {
+    optional int32 id = 1;
+    optional int32 value = 2;
+    optional bool is_caption = 3;
+}
+

@@ -1,0 +1,4 @@
+-e .
+../../demos/python/sdk_wireless_camera_control/
+bleak==0.11.0
+requests==2.25.1

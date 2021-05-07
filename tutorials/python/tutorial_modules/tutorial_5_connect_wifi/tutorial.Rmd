@@ -1,0 +1,260 @@
+---
+title: 'Python Tutorial 5: Connect WiFi'
+date: '`r Sys.Date()`'
+author: Tim Camise
+output:
+    rmdformats::downcute:
+        toc_depth: 4
+        self_contained: true
+        code_folding: show
+        thumbnails: false
+        lightbox: true
+        gallery: false
+        highlight: tango
+        number_sections: false
+        css: ../../../../tools/rdocs/style.css
+---
+
+```{r}
+htmltools::includeHTML("../../static/header.html")
+```
+
+# Introduction
+
+This document will provide a walk-through tutorial to use [bleak](https://pypi.org/project/bleak/) to implement the
+[Open GoPro Interface](https://github.com/gopro/OpenGoPro) to enable the GoPro's WiFi Access Point (AP) so that it
+can be connected to. It will also provide an example of connecting to the WiFi AP.
+
+> Note! It is recommended that you have first completed the [connecting](../tutorial_1_connect_ble/tutorial.html), [sending commands](../tutorial_2_send_ble_commands/tutorial.html), and [parsing responses](../tutorial_3_parse_responses/tutorial.html) tutorials before proceeding
+
+# Requirements
+
+It is assumed that that hardware and software requirements from the [connect tutorial](../tutorial_1_connect_ble/tutorial.html#requirements)
+are present and configured correctly.
+
+# Just Show me the Demo(s)!!
+
+There are two relevant scripts that will be discussed here:
+
+-   wifi_enable.py
+-   wifi_enable_and_connect.py
+
+If you don't want to read this tutorial and just want to see the demo, for example, run:
+
+```console
+$ python wifi_enable_and_connect.py
+```
+
+> Note! Python 3.8.x must be used as specified in [the requirements](../tutorial_1_connect_ble/tutorial.html#requirements)
+
+Note that each script has a command-line help which can be found via:
+
+```console
+python wifi_enable_and_connect.py --help
+usage: wifi_enable_and_connect.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera via BLE, get WiFi info, enable WiFi and connect.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro name to scan for. If not used,
+                        first discovered GoPro will be connected to
+```
+
+# Setup
+
+We must first connect to BLE as was discussed in the [connect tutorial](../tutorial_1_connect_ble/tutorial.html). We are also
+using the same notification handler as was used in the [sending commands tutorial](../tutorial_2_send_ble_commands/tutorial.html#setup)
+
+# Connecting to WiFi AP
+
+Now that we are are connected via BLE, paired, and have enabled notifications, we can send commands to enable the WiFi AP.
+
+Here is an outline of the steps to do so:
+
+```{r}
+htmltools::includeHTML("../../static/connect_wifi.svg")
+```
+
+Essentially we will be finding the WiFi AP information (SSID and password) via BLE, enabling the WiFi AP via BLE, then
+connecting to the WiFi AP.
+
+## Find WiFi Information { .tabset .tabset-fade}
+
+Note that the process to get this information is different than all procedures described up to this point.
+Whereas the previous command, setting, and query procedures all followed the Write Request-Notification Response
+pattern, the WiFi Information is retrieved via direct Read Requests to BLE characteristics.
+
+### Get WiFi SSID
+
+The WiFi SSID can be found by reading from the WiFi AP SSID
+[characteristic](https://github.com/gopro/OpenGoPro/tree/main/docs/ble#services-and-characteristics) of the
+WiFi Access Point service.
+
+First, we need to define the attribute to read from:
+
+```python
+WIFI_AP_SSID_UUID = GOPRO_BASE_UUID.format("0002")
+```
+
+Now, let's send the read request to get the SSID (and decode it into a string).
+
+```python
+ssid = await client.read_gatt_char(WIFI_AP_SSID_UUID)
+ssid = ssid.decode()
+```
+
+> Note! There is no need for a synchronization event as the information is available when the `read_gatt_char` method returns.
+
+In the demo, this information is logged as such:
+
+```console
+INFO:root:Reading the WiFi AP SSID
+INFO:root:SSID is GP24500456
+```
+
+### Get WiFi Password
+
+The WiFi password can be found by reading from the WiFi AP password
+[characteristic](https://github.com/gopro/OpenGoPro/tree/main/docs/ble#services-and-characteristics) of the
+WiFi Access Point service.
+
+First, we need to define the attribute to read from:
+
+```python
+WIFI_AP_PASSWORD_UUID = GOPRO_BASE_UUID.format("0003")
+```
+
+Now, let's send the read request to get the password (and decode it into a string).
+
+```python
+password = await client.read_gatt_char(WIFI_AP_PASSWORD_UUID)
+password = password.decode()
+```
+
+> Note! There is no need for a synchronization event as the information is available when the `read_gatt_char` method returns.
+
+In the demo, this information is logged as such:
+
+```console
+INFO:root:Reading the WiFi AP password
+INFO:root:Password is g@6-Tj9-C7K
+```
+
+## Enable WiFi AP
+
+Before we can connect to the WiFi AP, we have to make sure it is enabled. This is accomplished by using the
+"AP Control" [command](https://github.com/gopro/OpenGoPro/tree/main/docs/ble#commands-quick-reference):
+
+| Command            |        Bytes        |
+| ------------------ | :-----------------: |
+| Ap Control Enable  | 0x03 0x17 0x01 0x01 |
+| Ap Control Disable | 0x03 0x17 0x01 0x00 |
+
+This is done in the same manner that we did in the
+[sending commands tutorial](../tutorial_2_send_ble_commands/tutorial.html).
+
+Now, let's write the bytes to the "Command Request UUID" to enable the WiFi AP!
+
+```python
+event.clear()
+await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x03, 0x17, 0x01, 0x01]))
+await event.wait()  # Wait to receive the notification response
+```
+
+> We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback.
+
+Note that we have received the "Command Status" notification response from the
+Command Response characteristic since we enabled it's notifications in
+[Enable Notifications](../tutorial_1_connect_ble/tutorial.html#enable-notifications). This can be seen in the demo log:
+
+```console
+INFO:root:Enabling the WiFi AP
+INFO:root:Received response at handle=52: b'02:17:00'
+INFO:root:Command sent successfully
+INFO:root:WiFi AP is enabled
+```
+
+As expected, the response was received on the correct handle and the status was "success".
+
+## Establish Connection to WiFi AP
+
+If you have been following through the `ble_enable_wifi.py` script, you will notice that it ends here such that
+we know the WiFi SSID and password and the WiFi AP is enabled and ready to connect to. This is because there
+are many different methods of connecting to the WiFi AP depending on your OS and the framework you are
+using to develop.
+
+We do provide an example of this in the `ble_enable_wifi_and_connect.py` script. This script uses the
+cross-platform `Wireless` module from the Open GoPro Python SDK [package](TODO_ADD_LINK).
+Note that this has been imported as such:
+
+```python
+from open_gopro.wifi_controller import Wireless
+```
+
+In order to do so, perform the following after the above steps have been completed:
+
+```python
+wifi = Wireless()
+wifi.connect(ssid, password)
+```
+
+This will log something similar to the following (it will vary slightly based on your OS):
+
+```console
+INFO:root:Connecting to GoPro WiFi AP
+INFO:open_gopro.wifi_controller:Attempting to establish WiFi connection to GP24500456...
+INFO:open_gopro.wifi_controller:Wifi connection established!
+INFO:root:Wifi Connected!
+```
+
+**Quiz time! 📚 ✏️**
+
+```{r}
+quiz(
+    question = "How is the WiFi password response received?",
+    answers = list(
+        list("a", "As a read response from the WiFi AP Password characteristic."),
+        list("b", "As write responses to the WiFi Request characteristic."),
+        list("c", "As notifications of the Command Response characteristic.")
+    ),
+    correct_answer = "a",
+    answer_info = "This (and WiFi AP SSID) is an exception to the rule. Usually responses
+    are received as notifications to a response characteristic. However, in this case, it is
+    received as a direct read response (since we are reading from the characteristic and not
+    writing to it)."
+)
+```
+
+```{r}
+quiz(
+    question = "Which of the following statements about the GoPro WiFi AP is true?",
+    answers = list(
+        list("a", "It only needs to be enabled once and it will then always remain on."),
+        list("b", "The WiFi password will never change."),
+        list("c", "The WiFi SSID will never change.")
+    ),
+    correct_answer = "d",
+    answer_info = "Trick question! They are all false. While the WiFi AP will remain on for
+    some time, it can and will eventually turn off so it is always recommended to first connect
+    via BLE and ensure that it is enabled. The password and SSID will almost never change.
+    However, they will change if the connections are reset via Connections->Reset Connections."
+)
+```
+
+# Troubleshooting
+
+See the first tutorial's [troubleshooting section](../tutorial_1_connect_ble/tutorial.html#troubleshooting).
+
+# Good Job!
+
+🤙 Congratulations 🤙
+
+You are now connected to the GoPro's Wifi AP and can send any of the HTTP commands defined in the
+[Open GoPro Interface](https://github.com/gopro/OpenGoPro/tree/main/docs/wifi). Proceed to the
+[next tutorial](../tutorial_6_send_wifi_commands/tutorial.html) to see how to do so.
+
+```{r}
+htmltools::includeHTML("../../static/footer.html")
+```
