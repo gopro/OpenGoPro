@@ -1,14 +1,18 @@
+---
+title: 'WiFi Specification'
+permalink: /wifi
+---
 
 
-<h1>Overview</h1>
+# Overview
 
 <p>
 The GoPro API allows developers to create apps and utilities that interact with and control a GoPro camera.
 </p>
 
-<h2>
+## 
 What can you do with GoPro API?
-</h2>
+
 
 <p>
 The GoPro API allows you to control and query the camera:
@@ -24,7 +28,7 @@ The GoPro API allows you to control and query the camera:
 </p>
 
 
-<h1>Supported Cameras</h1>
+# Supported Cameras
 
 <p>
 Below is a table of cameras that support GoPro's public REST API:
@@ -46,10 +50,10 @@ Below is a table of cameras that support GoPro's public REST API:
 </table>
 
 
-<h1>The Basics</h1>
+# The Basics
 
 
-<h2>Turning on Camera WiFi Access Point</h2>
+## Turning on Camera WiFi Access Point
 
 <p>
 In order to maximize the battery life of the camera, the camera's WiFi AP is turned off by default.
@@ -59,7 +63,7 @@ and sending an AP Control command.
 </p>
 
 
-<h2>Authentication</h2>
+## Authentication
 <p>
 Once the WiFi Access Point has been turned on, authentication with the camera simply requries connecting with the
 correct SSID and password. This information is available in the camera UI by putting the camera into
@@ -73,7 +77,7 @@ See <a href="https://github.com/gopro/OpenGoPro/tree/main/docs/ble">Services and
 </p>
 
 
-<h2>Request and Response Formats</h2>
+## Request and Response Formats
 <p>
 The camera will respond to REST commands and queries according to the table below.
 Most commands are sent via HTTP/GET and require no special HTTP headers.
@@ -115,7 +119,7 @@ Depending on the command sent, the camera can return JSON, binary, or Protobuf d
 </p>
 
 
-<h2>Sending Commands</h2>
+## Sending Commands
 
 <p>
 Depending on the camera's state, it may not be ready to accept some commands.
@@ -134,7 +138,7 @@ For details regarding camera state, see <a href="#camera-status-codes">Camera St
 </p>
 
 
-<h2>Presets</h2>
+## Presets
 <p>
 Presets were first added to the GoPro product line with the release of HERO8 Black.
 A preset represents a targeted camera state; for example, the built-in "Activity" preset is useful for
@@ -163,15 +167,15 @@ For example:
 </ul> 
 
 
-<h2>Limitations</h2>
+## Limitations
 
-<h3>HERO9 Black</h3>
+### HERO9 Black
 <ul>
     <li>HTTP server is not available while the camera is encoding, which means shutter controls are not supported over WiFi</li>
     <li>This limitation can be overcome by using  <a href="https://learn.adafruit.com/introduction-to-bluetooth-low-energy">Bluetooth Low Energy</a> for command and control and HTTP/REST for quering media content such as media list, media info, preview stream, etc.</li>
 </ul>
 
-<h3>General</h3>
+### General
 <p>
 Unless changed by the user, GoPro cameras will automatically power off after some time (e.g. 5min, 15min, 30min).
 The Auto Power Down watchdog timer can be reset by sending periodic keep-alive messages to the camera.
@@ -179,10 +183,10 @@ It is recommended to send a keep-alive at least once every 120 seconds.
 </p>
 
 
-<h1>Commands</h1>
+# Commands
 Using the Open GoPro API, a client can perform various command, control, and query operations! 
 
-<h2>Commands Quick Reference</h2>
+## Commands Quick Reference
 Below is a table of commands that can be sent to the camera and how to send them.
 
 <table border="1">
@@ -457,7 +461,7 @@ Below is a table of commands that can be sent to the camera and how to send them
 </table>
 
 
-<h1>Settings</h1>
+# Settings
 <p>
 GoPro cameras have hundreds of setting options to choose from, all of which can be set using a single endpoint.
 The endpoint is configured with a <b>setting id</b> and an <b>option value</b>.
@@ -465,7 +469,7 @@ Note that setting option values are not globally unique.
 While most option values are enumerated values, some are complex bitmasked values.
 </p>
 
-<h2>Settings Quick Reference</h2>
+## Settings Quick Reference
 Below is a table of setting options detailing how to set every option supported by Open GoPro cameras.
 
 <table border="1">
@@ -762,10 +766,10 @@ Below is a table of setting options detailing how to set every option supported 
 </table>    
 
 
-<h2>Camera Capabilities</h2>
+### Camera Capabilities
 Below are tables detailing supported features for Open GoPro cameras.
 
-<h4>HERO9 Black</h4>
+#### HERO9 Black
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
@@ -776,84 +780,6 @@ Below are tables detailing supported features for Open GoPro cameras.
     </tr>
     <tr>
       <td rowspan="48">1080</td>
-      <td rowspan="24">60Hz</td>
-      <td rowspan="5">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">30</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">60</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">120</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">240</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
       <td rowspan="24">50Hz</td>
       <td rowspan="5">24</td>
       <td>Wide</td>
@@ -932,60 +858,85 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
+      <td rowspan="24">60Hz</td>
+      <td rowspan="5">24</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="5">30</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="5">60</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="5">120</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="4">240</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
       <td rowspan="32">1440</td>
-      <td rowspan="16">60Hz</td>
-      <td rowspan="4">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">30</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">60</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">120</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
       <td rowspan="16">50Hz</td>
       <td rowspan="4">24</td>
       <td>Wide</td>
@@ -1039,13 +990,35 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="18">2.7K</td>
-      <td rowspan="9">60Hz</td>
-      <td rowspan="5">60</td>
+      <td rowspan="16">60Hz</td>
+      <td rowspan="4">24</td>
       <td>Wide</td>
     </tr>
     <tr>
-      <td>Superview</td>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="4">30</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="4">60</td>
+      <td>Wide</td>
     </tr>
     <tr>
       <td>Linear</td>
@@ -1070,6 +1043,7 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
+      <td rowspan="18">2.7K</td>
       <td rowspan="9">50Hz</td>
       <td rowspan="5">50</td>
       <td>Wide</td>
@@ -1100,9 +1074,24 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="8">2.7K 4:3</td>
-      <td rowspan="4">60Hz</td>
-      <td rowspan="4">60</td>
+      <td rowspan="9">60Hz</td>
+      <td rowspan="5">60</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="4">120</td>
       <td>Wide</td>
     </tr>
     <tr>
@@ -1115,6 +1104,7 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
+      <td rowspan="8">2.7K 4:3</td>
       <td rowspan="4">50Hz</td>
       <td rowspan="4">50</td>
       <td>Wide</td>
@@ -1129,34 +1119,21 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
+      <td rowspan="4">60Hz</td>
+      <td rowspan="4">60</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
       <td rowspan="16">5K</td>
-      <td rowspan="8">60Hz</td>
-      <td rowspan="4">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">30</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
       <td rowspan="8">50Hz</td>
       <td rowspan="4">24</td>
       <td>Wide</td>
@@ -1184,53 +1161,34 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
+      <td rowspan="8">60Hz</td>
+      <td rowspan="4">24</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="4">30</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
       <td rowspan="28">4K</td>
-      <td rowspan="14">60Hz</td>
-      <td rowspan="5">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">30</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">60</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
       <td rowspan="14">50Hz</td>
       <td rowspan="5">24</td>
       <td>Wide</td>
@@ -1277,34 +1235,53 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
+      <td rowspan="14">60Hz</td>
+      <td rowspan="5">24</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="5">30</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="4">60</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
       <td rowspan="16">4K 4:3</td>
-      <td rowspan="8">60Hz</td>
-      <td rowspan="4">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">30</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
       <td rowspan="8">50Hz</td>
       <td rowspan="4">24</td>
       <td>Wide</td>
@@ -1331,17 +1308,44 @@ Below are tables detailing supported features for Open GoPro cameras.
     <tr>
       <td>Linear + Horizon Leveling</td>
     </tr>
+    <tr>
+      <td rowspan="8">60Hz</td>
+      <td rowspan="4">24</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="4">30</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
   </tbody>
 </table>
 
 
-<h1>Media</h1>
+# Media
 <p>
 The camera provides an endpoint to query basic details about media captured on the sdcard.
 </p>
 
 
-<h2>Chapters</h2>
+## Chapters
 <p>
 All GoPro cameras break longer videos into chapters.
 HERO9 and older cameras limit file sizes on sdcards to 4GB for both FAT32 and exFAT file systems.
@@ -1377,7 +1381,7 @@ look like the following:
 </pre>
 
 
-<h2>Media List Format</h2>
+## Media List Format
 <p>
 The format of the media list is given below.
 </p>
@@ -1398,7 +1402,7 @@ The format of the media list is given below.
 }
 </pre>
 
-<h4>Media List Keys</h4>
+### Media List Keys
 The outer structure of the media list and the inner structure of individual media items use the keys in the table below.
 <table border="1">
   <tbody>
@@ -1461,7 +1465,7 @@ The outer structure of the media list and the inner structure of individual medi
   </tbody>
 </table>
 
-<h4>Grouped Media Items</h4>
+### Grouped Media Items
 <p>
 In order to minimize the size of the JSON transmitted by the camera, grouped media items such as Burst Photos, 
 Time Lapse Photos, Night Lapse Photos, etc are represented with a single item in the media list with additional keys
@@ -1520,7 +1524,7 @@ G0010394.JPG, G0010395.JPG. G0010396.JPG<br/>
 </p>
 
 
-<h2>Downloading Media</h2>
+## Downloading Media
 <p>
 The URL to download/stream media from the DCIM/ directory on the sdcard is the Base URL plus <i>/videos/DCIM/XXX/YYY</i>
 where XXX is the directory name within DCIM/ given by the media list and YYY is the target media filename.
@@ -1568,7 +1572,7 @@ The URL to download GOPR0001.JPG over WiFi would be
 </p>
 
 
-<h2>Turbo Transfer</h2>
+## Turbo Transfer
 <p>
 Some cameras support Turbo Transfer mode, which allows media to be downloaded over WiFi more rapidly.
 This special mode should only be used during media offload.
@@ -1578,7 +1582,7 @@ For details on which cameras are supported and how to enable and disable Turbo T
 </p>
 
 
-<h2>Downloading Preview Stream</h2>
+## Downloading Preview Stream
 <p>
 When the preview stream is started, the camera starts up a UDP client and begins writing MPEG Transport Stream
 data to the connected client on port 8554.
@@ -1587,7 +1591,7 @@ datagrams to a file when they are received.
 </p>
 
 
-<h1>Camera State</h1>
+# Camera State
 <p>
 The camera provides multiple types of state, all of which can be queried:
 </p>
@@ -1598,7 +1602,7 @@ The camera provides multiple types of state, all of which can be queried:
 </ul>
 
 
-<h2>Camera State Format</h2>
+## Camera State Format
 Camera state is given in the following form:
 
 <pre>
@@ -1630,7 +1634,7 @@ For settings, keys are setting IDs, and values are option values
 </p>
 
 
-<h2>Camera Status Codes</h2>
+## Camera Status Codes
 Below is a table of supported camera status codes.
 
 <table border="1">
@@ -2332,7 +2336,7 @@ Below is a table of supported camera status codes.
 </table>
 
 
-<h2>Preset Status Format</h2>
+## Preset Status Format
 <p>
 Preset Status is returned as JSON, whose content is the serialization of the <a href="https://developers.google.com/protocol-buffers">protobuf</a> message:
 <a href="https://github.com/gopro/OpenGoPro/blob/main/docs/protobuf/preset_status.proto">NotifyPresetStatus</a>.
