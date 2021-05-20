@@ -766,7 +766,7 @@ Below is a table of setting options detailing how to set every option supported 
 </table>    
 
 
-## Camera Capabilities
+### Camera Capabilities
 Below are tables detailing supported features for Open GoPro cameras.
 
 #### HERO9 Black
@@ -1402,7 +1402,7 @@ The format of the media list is given below.
 }
 </pre>
 
-#### Media List Keys
+### Media List Keys
 The outer structure of the media list and the inner structure of individual media items use the keys in the table below.
 <table border="1">
   <tbody>
@@ -1465,7 +1465,7 @@ The outer structure of the media list and the inner structure of individual medi
   </tbody>
 </table>
 
-#### Grouped Media Items
+### Grouped Media Items
 <p>
 In order to minimize the size of the JSON transmitted by the camera, grouped media items such as Burst Photos, 
 Time Lapse Photos, Night Lapse Photos, etc are represented with a single item in the media list with additional keys
