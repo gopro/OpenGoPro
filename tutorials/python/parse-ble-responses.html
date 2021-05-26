@@ -23,7 +23,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
 <meta property="og:title" content="Python Tutorial 3: Parse BLE TLV Responses">
-<meta property="og:url" content="/OpenGoPro/tutorials/python/parse-ble-responses">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro//OpenGoPro/tutorials/python/parse-ble-responses">
 
 
   <meta property="og:description" content="Python Tutorial 3: Parse BLE TLV Responses">
@@ -34,14 +34,14 @@
 
 
 
-  <meta property="article:published_time" content="2021-05-26T11:45:09-07:00">
+  <meta property="article:published_time" content="2021-05-26T12:34:54-07:00">
 
 
 
 
 
 
-<link rel="canonical" href="/OpenGoPro/tutorials/python/parse-ble-responses">
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro//OpenGoPro/tutorials/python/parse-ble-responses">
 
 
 
@@ -52,7 +52,7 @@
     
       "@type": "Person",
       "name": "GoPro",
-      "url": "/OpenGoPro/"
+      "url": "https://gopro.github.io/OpenGoPro//OpenGoPro/"
     
   }
 </script>
@@ -101,12 +101,12 @@
     <script src="/OpenGoPro/assets/js/quiz.js"></script>
   
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/logos/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logos/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logos/favicon-16x16.png">
-<link rel="manifest" href="/assets/images/logos/site.webmanifest">
-<link rel="mask-icon" href="/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
-<link rel="shortcut icon" href="/assets/images/logos/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
 <meta name="msapplication-TileColor" content="#2d89ef">
 <meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
@@ -195,7 +195,7 @@
     
       
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+          <a href="https://gopro.github.io/OpenGoPro//OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
           <meta itemprop="position" content="1">
         </li>
         <span class="sep">/</span>
@@ -434,7 +434,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 3: Parse BLE TLV Responses">
     <meta itemprop="description" content="Python Tutorial 3: Parse BLE TLV Responses">
-    <meta itemprop="datePublished" content="2021-05-26T11:45:09-07:00">
+    <meta itemprop="datePublished" content="2021-05-26T12:34:54-07:00">
     
 
     <div class="page__inner-wrap">
@@ -767,10 +767,10 @@ print them (and all of the other response information) as such:</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_919b9769-c38c-4e06-9faf-d1c261bd9619" class="quiz">
+<div id="quiz_ceb5bd3b-637b-4185-8785-5399594f4a1f" class="quiz">
     <div>
-        <div id="question_919b9769-c38c-4e06-9faf-d1c261bd9619" class="quiz__question">What is the maximum size of an individual notification response packet?</div>
-        <div id="answers_919b9769-c38c-4e06-9faf-d1c261bd9619">
+        <div id="question_ceb5bd3b-637b-4185-8785-5399594f4a1f" class="quiz__question">What is the maximum size of an individual notification response packet?</div>
+        <div id="answers_ceb5bd3b-637b-4185-8785-5399594f4a1f">
         
             <input type="radio" name="question" value="A"><label>A: 20 bytes</label>
             <br>
@@ -783,19 +783,19 @@ print them (and all of the other response information) as such:</p>
         
         </div>
     </div>
-    <button onclick="showResults('919b9769-c38c-4e06-9faf-d1c261bd9619', 'A')">Submit Answer</button>
-    <div id="results_919b9769-c38c-4e06-9faf-d1c261bd9619" style="display: none">
-        <span id="correct_919b9769-c38c-4e06-9faf-d1c261bd9619" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_919b9769-c38c-4e06-9faf-d1c261bd9619" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('ceb5bd3b-637b-4185-8785-5399594f4a1f', 'A')">Submit Answer</button>
+    <div id="results_ceb5bd3b-637b-4185-8785-5399594f4a1f" style="display: none">
+        <span id="correct_ceb5bd3b-637b-4185-8785-5399594f4a1f" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_ceb5bd3b-637b-4185-8785-5399594f4a1f" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         Responses can be composed of multiple packets where each packet is at
     maximum 20 bytes.
     </div>
 </div>
 
-<div id="quiz_4c326a36-2b52-4f59-8a79-348ab2c75a42" class="quiz">
+<div id="quiz_06f65992-3ce2-4971-984c-c604bd12aaa9" class="quiz">
     <div>
-        <div id="question_4c326a36-2b52-4f59-8a79-348ab2c75a42" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
-        <div id="answers_4c326a36-2b52-4f59-8a79-348ab2c75a42">
+        <div id="question_06f65992-3ce2-4971-984c-c604bd12aaa9" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
+        <div id="answers_06f65992-3ce2-4971-984c-c604bd12aaa9">
         
             <input type="radio" name="question" value="A"><label>A: 20 bytes</label>
             <br>
@@ -808,18 +808,18 @@ print them (and all of the other response information) as such:</p>
         
         </div>
     </div>
-    <button onclick="showResults('4c326a36-2b52-4f59-8a79-348ab2c75a42', 'C')">Submit Answer</button>
-    <div id="results_4c326a36-2b52-4f59-8a79-348ab2c75a42" style="display: none">
-        <span id="correct_4c326a36-2b52-4f59-8a79-348ab2c75a42" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_4c326a36-2b52-4f59-8a79-348ab2c75a42" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('06f65992-3ce2-4971-984c-c604bd12aaa9', 'C')">Submit Answer</button>
+    <div id="results_06f65992-3ce2-4971-984c-c604bd12aaa9" style="display: none">
+        <span id="correct_06f65992-3ce2-4971-984c-c604bd12aaa9" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_06f65992-3ce2-4971-984c-c604bd12aaa9" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There is no limit on the amount of packets that can comprise a response.
     </div>
 </div>
 
-<div id="quiz_c4b82c89-cd57-406e-bc41-bf974d6d1f67" class="quiz">
+<div id="quiz_e2678526-eb93-486d-b59e-762bce4b9a3f" class="quiz">
     <div>
-        <div id="question_c4b82c89-cd57-406e-bc41-bf974d6d1f67" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
-        <div id="answers_c4b82c89-cd57-406e-bc41-bf974d6d1f67">
+        <div id="question_e2678526-eb93-486d-b59e-762bce4b9a3f" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
+        <div id="answers_e2678526-eb93-486d-b59e-762bce4b9a3f">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -832,20 +832,20 @@ print them (and all of the other response information) as such:</p>
         
         </div>
     </div>
-    <button onclick="showResults('c4b82c89-cd57-406e-bc41-bf974d6d1f67', 'C')">Submit Answer</button>
-    <div id="results_c4b82c89-cd57-406e-bc41-bf974d6d1f67" style="display: none">
-        <span id="correct_c4b82c89-cd57-406e-bc41-bf974d6d1f67" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_c4b82c89-cd57-406e-bc41-bf974d6d1f67" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('e2678526-eb93-486d-b59e-762bce4b9a3f', 'C')">Submit Answer</button>
+    <div id="results_e2678526-eb93-486d-b59e-762bce4b9a3f" style="display: none">
+        <span id="correct_e2678526-eb93-486d-b59e-762bce4b9a3f" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_e2678526-eb93-486d-b59e-762bce4b9a3f" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Command responses are almost always 1 packet (just returning the status).
     The exception are complex responses which can be multiple packets (in the case of Get Hardware
     Info)
     </div>
 </div>
 
-<div id="quiz_f0178157-f9fb-45e2-bf11-f4327fc74d47" class="quiz">
+<div id="quiz_0d13c8e3-1d90-49d9-b10e-3d73c2a1066b" class="quiz">
     <div>
-        <div id="question_f0178157-f9fb-45e2-bf11-f4327fc74d47" class="quiz__question">How many packets are setting responses comprised of?</div>
-        <div id="answers_f0178157-f9fb-45e2-bf11-f4327fc74d47">
+        <div id="question_0d13c8e3-1d90-49d9-b10e-3d73c2a1066b" class="quiz__question">How many packets are setting responses comprised of?</div>
+        <div id="answers_0d13c8e3-1d90-49d9-b10e-3d73c2a1066b">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -858,10 +858,10 @@ print them (and all of the other response information) as such:</p>
         
         </div>
     </div>
-    <button onclick="showResults('f0178157-f9fb-45e2-bf11-f4327fc74d47', 'A')">Submit Answer</button>
-    <div id="results_f0178157-f9fb-45e2-bf11-f4327fc74d47" style="display: none">
-        <span id="correct_f0178157-f9fb-45e2-bf11-f4327fc74d47" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_f0178157-f9fb-45e2-bf11-f4327fc74d47" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('0d13c8e3-1d90-49d9-b10e-3d73c2a1066b', 'A')">Submit Answer</button>
+    <div id="results_0d13c8e3-1d90-49d9-b10e-3d73c2a1066b" style="display: none">
+        <span id="correct_0d13c8e3-1d90-49d9-b10e-3d73c2a1066b" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_0d13c8e3-1d90-49d9-b10e-3d73c2a1066b" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         Settings Responses only ever contain the command status. Furthermore, there
     is no concept of complex responses for setting commands.
     </div>
@@ -1078,10 +1078,10 @@ INFO\:root\:Successfully received the response
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_0f2b7b17-9d23-444b-ba39-ed7ea97bd331" class="quiz">
+<div id="quiz_81341dd1-3ec5-4670-a17b-02122dd1f062" class="quiz">
     <div>
-        <div id="question_0f2b7b17-9d23-444b-ba39-ed7ea97bd331" class="quiz__question">Which of the following is not a real preset group?</div>
-        <div id="answers_0f2b7b17-9d23-444b-ba39-ed7ea97bd331">
+        <div id="question_81341dd1-3ec5-4670-a17b-02122dd1f062" class="quiz__question">Which of the following is not a real preset group?</div>
+        <div id="answers_81341dd1-3ec5-4670-a17b-02122dd1f062">
         
             <input type="radio" name="question" value="A"><label>A: The stop bit will be set in the header</label>
             <br>
@@ -1094,10 +1094,10 @@ INFO\:root\:Successfully received the response
         
         </div>
     </div>
-    <button onclick="showResults('0f2b7b17-9d23-444b-ba39-ed7ea97bd331', 'B')">Submit Answer</button>
-    <div id="results_0f2b7b17-9d23-444b-ba39-ed7ea97bd331" style="display: none">
-        <span id="correct_0f2b7b17-9d23-444b-ba39-ed7ea97bd331" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_0f2b7b17-9d23-444b-ba39-ed7ea97bd331" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('81341dd1-3ec5-4670-a17b-02122dd1f062', 'B')">Submit Answer</button>
+    <div id="results_81341dd1-3ec5-4670-a17b-02122dd1f062" style="display: none">
+        <span id="correct_81341dd1-3ec5-4670-a17b-02122dd1f062" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_81341dd1-3ec5-4670-a17b-02122dd1f062" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         The length of the entire response is parsed from the first packet. We
         then accumulate packets, keeping track of the received length, until all of the bytes
         have been received. A and C are just made up 😜.
@@ -1264,10 +1264,10 @@ each value in a dict indexed by ID for later access.</p>
   <li>ID 3 == 1 equates to FPS == 120</li>
 </ul>
 
-<div id="quiz_a283d29c-ecd5-4054-8a9b-8f5dcebc0d9c" class="quiz">
+<div id="quiz_8408885e-e83c-4430-8cdc-5459fd372df8" class="quiz">
     <div>
-        <div id="question_a283d29c-ecd5-4054-8a9b-8f5dcebc0d9c" class="quiz__question">How many packets are query responses?</div>
-        <div id="answers_a283d29c-ecd5-4054-8a9b-8f5dcebc0d9c">
+        <div id="question_8408885e-e83c-4430-8cdc-5459fd372df8" class="quiz__question">How many packets are query responses?</div>
+        <div id="answers_8408885e-e83c-4430-8cdc-5459fd372df8">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -1283,20 +1283,20 @@ each value in a dict indexed by ID for later access.</p>
         
         </div>
     </div>
-    <button onclick="showResults('a283d29c-ecd5-4054-8a9b-8f5dcebc0d9c', 'D')">Submit Answer</button>
-    <div id="results_a283d29c-ecd5-4054-8a9b-8f5dcebc0d9c" style="display: none">
-        <span id="correct_a283d29c-ecd5-4054-8a9b-8f5dcebc0d9c" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_a283d29c-ecd5-4054-8a9b-8f5dcebc0d9c" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('8408885e-e83c-4430-8cdc-5459fd372df8', 'D')">Submit Answer</button>
+    <div id="results_8408885e-e83c-4430-8cdc-5459fd372df8" style="display: none">
+        <span id="correct_8408885e-e83c-4430-8cdc-5459fd372df8" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_8408885e-e83c-4430-8cdc-5459fd372df8" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         Query responses can be one packet (if for example querying a specific
 setting) or multiple packets (when querying many or all settings as in the example here).
 See the next tutorial for more information on queries.
     </div>
 </div>
 
-<div id="quiz_e9350cff-865d-4962-bea0-d002e618c050" class="quiz">
+<div id="quiz_6bb53b2d-0eef-446a-8674-23145c1eff68" class="quiz">
     <div>
-        <div id="question_e9350cff-865d-4962-bea0-d002e618c050" class="quiz__question">Which field is not common to all responses?</div>
-        <div id="answers_e9350cff-865d-4962-bea0-d002e618c050">
+        <div id="question_6bb53b2d-0eef-446a-8674-23145c1eff68" class="quiz__question">Which field is not common to all responses?</div>
+        <div id="answers_6bb53b2d-0eef-446a-8674-23145c1eff68">
         
             <input type="radio" name="question" value="A"><label>A: length</label>
             <br>
@@ -1309,10 +1309,10 @@ See the next tutorial for more information on queries.
         
         </div>
     </div>
-    <button onclick="showResults('e9350cff-865d-4962-bea0-d002e618c050', 'D')">Submit Answer</button>
-    <div id="results_e9350cff-865d-4962-bea0-d002e618c050" style="display: none">
-        <span id="correct_e9350cff-865d-4962-bea0-d002e618c050" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_e9350cff-865d-4962-bea0-d002e618c050" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('6bb53b2d-0eef-446a-8674-23145c1eff68', 'D')">Submit Answer</button>
+    <div id="results_6bb53b2d-0eef-446a-8674-23145c1eff68" style="display: none">
+        <span id="correct_6bb53b2d-0eef-446a-8674-23145c1eff68" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_6bb53b2d-0eef-446a-8674-23145c1eff68" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         Query responses can be one packet (if for example querying a specific
 setting) or multiple packets (when querying many or all settings as in the example here).
 See the next tutorial for more information on queries.
@@ -1332,7 +1332,7 @@ See the next tutorial for more information on queries.
 <p>You can now parse any TLV response that is received from the GoPro, at least if it is received uninterrupted. There
 is additional logic required for a complete solution such as checking the UUID the response is received on and
 storing a dict of response per UUID. At the current time, this endeavor is left for the reader. For a complete
-example of this, see the Open GoPro Python SDK <a href="TODO_ADD_LINK">package</a>.</p>
+example of this, see the <a href="https://gopro.github.io/OpenGoPro/python_sdk/">Open GoPro Python SDK</a>.</p>
 
 <p>To learn more about queries, go to the next tutorial.</p>
 
@@ -1346,7 +1346,7 @@ example of this, see the Open GoPro Python SDK <a href="TODO_ADD_LINK">package</
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-05-26T11:45:09-07:00">May 26, 2021</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-05-26T12:34:54-07:00">May 26, 2021</time></p>
 
 
       </footer>
