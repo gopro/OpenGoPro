@@ -1,10 +1,12 @@
 # docker-compose.yml/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Thu, May  6, 2021 11:38:38 AM
+# This copyright was auto-generated on Tue May 18 22:08:52 UTC 2021
 
 version: '3.7'
 services:
-    docs:
+    jekyll:
         build:
             context: .
         volumes:
-            - .:/workspace
+            - ./docs:/site
+        ports:
+            - '5000:5000'

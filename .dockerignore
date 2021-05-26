@@ -3,5 +3,4 @@
 # Ignore everything
 **
 
-# Allow tools
-!/tools/rdocs
+# Add exclusions for anything that should be un-ignored

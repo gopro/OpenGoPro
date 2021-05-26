@@ -1,5 +1,5 @@
 # params.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Thu, May  6, 2021 11:38:32 AM
+# This copyright was auto-generated on Tue May 18 22:08:50 UTC 2021
 
 """Parameter definitions for GoPro BLE and WiFi commands.
 

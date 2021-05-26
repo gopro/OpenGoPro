@@ -1,0 +1,26 @@
+source "https://rubygems.org"
+
+gem 'jekyll', "~> 4.2"
+gem 'minimal-mistakes-jekyll'
+gem 'jekyll-spaceship'
+gem 'jekyll-include-cache'
+gem "liquid-tag-parser", "~> 1.9"
+
+# Dependencies from github pages
+gem 'jekyll-avatar', '~> 0.7.0'
+gem 'jekyll-coffeescript', '~> 1.1.1'
+gem 'jekyll-commonmark-ghpages', '~> 0.1.6'
+gem 'jekyll-default-layout', '~> 0.1.4'
+gem 'jekyll-gist', '~> 1.5.0'
+gem 'jekyll-mentions', '~> 1.5.1'
+gem 'jekyll-optional-front-matter', '~> 0.3.2'
+gem 'jekyll-paginate', '~> 1.1.0'
+gem 'jekyll-readme-index', '~> 0.3.0'
+gem 'jekyll-redirect-from', '~> 0.15.0'
+gem 'jekyll-relative-links', '~> 0.6.1'
+gem 'jekyll-remote-theme', '~> 0.4.1'
+gem 'jekyll-sass-converter', '~> 2.0'
+gem 'jekyll-seo-tag', '~> 2.6.1'
+gem 'jekyll-sitemap', '~> 1.4.0'
+gem 'jekyll-swiss', '~> 1.0.0'
+gem 'jekyll-titles-from-headings', '~> 0.5.3'

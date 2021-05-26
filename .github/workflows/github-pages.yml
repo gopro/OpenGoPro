@@ -1,0 +1,31 @@
+name: Jekyll Build and Deploy
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    jekyll:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            # Cache the built Ruby gem bundle using the Gemfile as the key
+            - uses: actions/cache@v2
+              with:
+                  path: docs/vendor/bundle
+                  key: ${{ runner.os }}-gems-${{ hashFiles('**/docs/Gemfile') }}
+                  restore-keys: |
+                      ${{ runner.os }}-gems--
+
+            - name: Prepare Demos
+              shell: bash
+              run: make prepare_demos
+
+            # Standard usage
+            - uses: helaili/jekyll-action@2.2.0
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  keep_history: true
+                  target_branch: 'gh-pages'

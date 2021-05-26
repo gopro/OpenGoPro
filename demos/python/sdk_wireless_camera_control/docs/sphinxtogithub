@@ -1,6 +1,6 @@
 #! /bin/sh
 # sphinxtogithub/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Thu, May  6, 2021  6:58:14 PM
+# This copyright was auto-generated on Tue May 18 22:08:50 UTC 2021
 
 
 BUILD_DIR=docs/build
@@ -16,7 +16,7 @@ for dir in ${dirs[@]}; do
         # Rename top level directory
         mv $dir $(dirname $dir)/$new_name
 
-        # Replace this string in all files
-        find $BUILD_DIR -type f -exec sed -i -e "s/$name/$new_name/g" {} \;
+        # Replace this string in all files (except fonts)
+        find $BUILD_DIR -path *fonts* -prune -o -type f -exec sed -i -e "s/$name/$new_name/g" {} \;
     fi
 done

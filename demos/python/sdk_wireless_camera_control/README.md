@@ -1,6 +1,6 @@
-# Open GoPro
+# Open GoPro Python SDK
 
-<img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/824af16af5f5dc14263ab20249f29e661bf64f15/logo.png?token=ASEL3UOW2CZVUFQ54PK452LATXRUY" width="50%" style="max-width: 500px;"/>
+<img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/logo.png?token=ASEL3UPDVM4EG6P53WZWG73AT4EOA" width="50%" style="max-width: 500px;"/>
 
 [![Build and Test](https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml/badge.svg)](https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml)
 [![Build Docs](https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml/badge.svg)](https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml)
@@ -15,6 +15,10 @@ the preview stream.
 -   Free software: MIT license
 -   Documentation: TODO Add link
 -   View on Github: https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control
+
+## Documentation
+
+This README is an overview of the package. Complete documentation can be found on Open GoPro: TODO ADD LINK.
 
 ## Installation
 
@@ -88,7 +92,7 @@ Connect to a GoPro camera, take a photo, then download it.
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro name to scan for. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to
   -l LOG, --log LOG     Location to store detailed log
   -o OUTPUT, --output OUTPUT
                         Where to write the photo to. If not set, write to 'photo.jpg'

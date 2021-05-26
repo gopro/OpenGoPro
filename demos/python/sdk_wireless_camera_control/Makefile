@@ -1,5 +1,5 @@
 # Makefile/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Thu, May  6, 2021 11:38:30 AM
+# This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021
 
 # This must be run from the directory it exists in.
 
@@ -73,11 +73,16 @@ docs-api-check: lint ## Static analysis of docstrings for missing / errors
 sphinx: clean_docs ## Generate Sphinx documentation
 	@echo "Building html documentation..."
 	@cd ${DOCS_DIR} && sphinx-build -W -b html . build
+	@rm -rf ${DOCS_DIR}/build/.doctrees ${DOCS_DIR}/build/_sources ${DOCS_DIR}/build/_static/fonts
 
 .PHONY: docs
 docs: clean_docs docs-api-check sphinx ## Generate all documentation with prerequisite checks.
 	@echo Githubifying Sphinx output...
 	@docs/sphinxtogithub
+
+.PHONY: deploy_docs
+deploy_docs: docs
+	@rm -rf ../../../docs/_site/python_sdk && mkdir -p ../../../docs/_site/ && cp -r docs/build/. ../../../docs/_site/python_sdk
 
 .PHONY: clean_build
 clean_build: ## Clean build artifacts

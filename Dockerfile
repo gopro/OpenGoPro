@@ -1,23 +1,20 @@
 # Dockerfile/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Thu, May  6, 2021 11:38:38 AM
+# This copyright was auto-generated on Tue May 18 22:08:50 UTC 2021
 
-FROM r-base
 
-# We can't have any user input
-ENV DEBIAN_FRONTEND=noninteractive
+FROM ruby:2.7-alpine
 
-RUN apt-get update && apt-get install -y \
-    pandoc \
-    libcurl4-openssl-dev \
-    libssl-dev \
-    libxml2-dev \
-    tree
+WORKDIR /site
 
-RUN R -e "install.packages(c('rmdformats', 'rmarkdown', 'htmlwidgets', 'devtools', 'optparse', 'DiagrammeR'), repos='https://cloud.r-project.org/')"
+RUN apk add --no-cache build-base
+RUN apk add --no-cache gcc bash git
 
-COPY . /workspace
-WORKDIR /workspace
+# Install bundler
+RUN gem install bundler
+# Port 4000 doesn't work for some reason?
+EXPOSE 5000
 
-RUN make -f /workspace/tools/rdocs/Makefile install
-
-CMD make -f ./tools/rdocs/Makefile tutorials
+# Default command to run if no command is passed
+CMD ["bundle install && bundle exec jekyll serve --host 0.0.0.0 --port 5000 --force_polling --incremental"]
+# If a command is passed, execute it in bash
+ENTRYPOINT [ "/bin/bash", "-c" ]

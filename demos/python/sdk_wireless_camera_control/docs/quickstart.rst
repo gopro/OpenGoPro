@@ -1,3 +1,5 @@
+:github_url: https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control
+
 ================
 QuickStart Guide
 ================
@@ -37,7 +39,7 @@ For more information, do:
     optional arguments:
     -h, --help            show this help message and exit
     -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro name to scan for. If not used, first discovered
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered
                             GoPro will be connected to
     -l LOG, --log LOG     Location to store detailed log
     -o OUTPUT, --output OUTPUT
@@ -68,7 +70,7 @@ For more information, do:
     optional arguments:
       -h, --help            show this help message and exit
       -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro name to scan for. If not used, first discovered
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered
                             GoPro will be connected to
       -l LOG, --log LOG     Location to store detailed log
       -o OUTPUT, --output OUTPUT
@@ -97,7 +99,7 @@ For more information, do:
     optional arguments:
     -h, --help            show this help message and exit
     -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro name to scan for. If not used, first discovered
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered
                             GoPro will be connected to
     -l LOG, --log LOG     Location to store detailed log
     -v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically
@@ -128,7 +130,7 @@ For more information, do:
     optional arguments:
     -h, --help            show this help message and exit
     -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro name to scan for. If not used, first discovered
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered
                             GoPro will be connected to
     -l LOG, --log LOG     Location to store detailed log
     -v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically

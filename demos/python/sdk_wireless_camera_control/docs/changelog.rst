@@ -1,3 +1,5 @@
+:github_url: https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control
+
 =========
 Changelog
 =========
@@ -83,6 +85,7 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 * Fix bug where multiple simultaneous sync responses weren't handled
 
 0.5.0 (March-30-2021)
+---------------------
 
 * Add support for Ubuntu 20.04
 * Upgrade to bleak 0.11.0
@@ -105,3 +108,8 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 
 * Documentation updates
 * Move into Open GoPro repo
+
+0.5.4 (May-6-2021)
+---------------------
+
+* Update documentation to coexist with jekyll on Github pages

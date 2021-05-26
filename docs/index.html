@@ -1,0 +1,91 @@
+---
+title: Open GoPro
+layout: splash
+header:
+    overlay_color: '#000'
+    overlay_filter: '0.5'
+    overlay_image: /assets/images/splash.jpg
+    actions:
+        - label: 'View on Github'
+          url: 'https://github.com/gopro/OpenGoPro'
+excerpt: 'An open source interface specification to communicate with a GoPro camera with accompanying demos and tutorials.'
+read_time: false
+classes: main__splash
+---
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" type="text/css" media="screen" href="https://raw.githubusercontent.com/cobyism/gridism/master/gridism.css" />
+    </head>
+    <body>
+        <div class="badges">
+            <figure class="badge">
+                <a href="https://github.com/gopro/OpenGoPro/tags">
+                    <img
+                        src="https://img.shields.io/github/v/tag/gopro/OpenGoPro?label=version"
+                        alt="Version (latest tag)"
+                    />
+                </a>
+            </figure>
+            <figure class="badge">
+                <a href="https://github.com/gopro/OpenGoPro/blob/main/LICENSE">
+                    <img
+                        src="https://img.shields.io/badge/License-MIT-blue.svg"
+                        alt="MIT License"
+                    />
+                </a>
+            </figure>
+        </div>
+
+        <p style="margin-bottom: 0.1em">
+            The Open GoPro API is the primary way for users to interact with a GoPro
+            camera. The camera provides interfaces to WiFi and Bluetooth Low Energy that
+            allow users to perform command, control, and query actions including, but not
+            limited to:
+        </p>
+        <ul>
+            <li>Get camera state</li>
+            <li>Load presets</li>
+            <li>Change settings</li>
+            <li>Digital Zoom</li>
+            <li>Start and stop encoding</li>
+            <li>Get media list</li>
+        </ul>
+
+        <hr />
+
+        <div class="grid">
+            <div class="unit one-third">
+                <h1>Docs</h1>
+                <p>
+                    Detailed Bluetooth Low Energy (BLE) and WiFi Interface Specifications.
+                </p>
+                <i class="fab fa-bluetooth" style="color: blue"></i>
+                <a href="/ble">BLE Spec →</a>
+                <br />
+                <i class="fas fa-wifi"></i>
+                <a href="/wifi">WiFi Spec →</a>
+            </div>
+
+            <div class="unit one-third">
+                <h1>Tutorials</h1>
+                <p>
+                    Walk-through tutorials in different languages / frameworks for getting
+                    started.
+                </p>
+                ✏️ <a href="/tutorials">Tutorials →</a>
+            </div>
+
+            <div class="unit one-third">
+                <h1>Demos</h1>
+                <p>
+                    Complete runnable examples in different languages to use as base for
+                    your project.
+                </p>
+                ⚙️ <a href="/demos">Demos →</a>
+            </div>
+        </div>
+    </body>
+</html>

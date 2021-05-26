@@ -1,5 +1,5 @@
 # setup.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Thu, May  6, 2021 11:38:34 AM
+# This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021
 
 """Package definition"""
 
@@ -78,7 +78,7 @@ setup(
     name=NAME,
     version=VERSION,
     description=DESCRIPTION,
-    long_description_content_type='text/markdown',
+    long_description_content_type="text/markdown",
     long_description=long_description,
     author=AUTHOR,
     author_email=EMAIL,
