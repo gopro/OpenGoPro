@@ -70,7 +70,7 @@ minimal mistakes theme, the various Ruby gem plugins, or custom plugins in this 
 
 The source for the guide is in [contribution.md](contribution.md).
 
-To view its output, serve the site, then go to [127.0.0.1:5000/contribution](127.0.0.1:5000/contribution)
+To view its output, serve the site, then go to [127.0.0.1:5000/OpenGoPro/contribution](127.0.0.1:5000/OpenGoPro/contribution)
 
 ## Testing
 
@@ -78,5 +78,5 @@ Assuming that python is installed and that the site is currently being served lo
 for any invalid links via the top-level Makefile in this repo:
 
 ```
-make test
+make tests
 ```
