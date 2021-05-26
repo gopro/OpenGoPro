@@ -1,1 +1,1 @@
-Sitemap: /sitemap.xml
+Sitemap: /OpenGoPro/sitemap.xml
