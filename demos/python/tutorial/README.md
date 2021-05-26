@@ -1,3 +1,3 @@
 # Python Tutorials
 
-This package is designed to be used with the accompanying Python [tutorials](www.TODO.com).
+This package is designed to be used with the accompanying Python [tutorials](https://gopro.github.io/OpenGoPro/tutorials/).

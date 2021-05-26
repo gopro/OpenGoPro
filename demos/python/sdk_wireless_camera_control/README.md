@@ -13,12 +13,14 @@ Energy (BLE) and Wi-Fi API's as well as install command line interfaces to take 
 the preview stream.
 
 -   Free software: MIT license
--   Documentation: TODO Add link
--   View on Github: https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control
+-   Documentation: [View on Open GoPro](https://gopro.github.io/OpenGoPro/python_sdk/)
+-   View on [Github](https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control)
 
 ## Documentation
 
-This README is an overview of the package. Complete documentation can be found on Open GoPro: TODO ADD LINK.
+> This README is only an overview of the package.
+
+Complete documentation can be found on [Open GoPro](https://gopro.github.io/OpenGoPro/python_sdk/)
 
 ## Installation
 

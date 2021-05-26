@@ -16,7 +16,7 @@ title_separator: ': '
 subtitle:
 name: 'GoPro'
 description: 'Open Source GoPro Interface'
-# url: # TODO once we have a public url
+url: 'https://gopro.github.io/OpenGoPro/'
 baseurl: '/OpenGoPro'
 repository: https://github.com/gopro/OpenGoPro
 teaser: /assets/images/logos/logo.png

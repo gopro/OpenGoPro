@@ -29,8 +29,7 @@ After completing the tutorials, you will need to reference it for future develop
 
 {% note  These are extremely stripped down Python tutorials that are only meant to show the basics. %}
 For a complete Python SDK that uses [bleak](https://bleak.readthedocs.io/en/latest/) as the backend as well as a
-cross-platform WiFi backend to easily write Python apps that control the GoPro, see: [TODO](www.TODO.com)
-
+cross-platform WiFi backend to easily write Python apps that control the GoPro, see the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/)
 
 # Bash
 

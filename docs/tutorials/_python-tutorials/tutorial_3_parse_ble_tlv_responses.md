@@ -632,6 +632,6 @@ See the first tutorial's [troubleshooting section]({% link _python-tutorials/tut
 You can now parse any TLV response that is received from the GoPro, at least if it is received uninterrupted. There
 is additional logic required for a complete solution such as checking the UUID the response is received on and
 storing a dict of response per UUID. At the current time, this endeavor is left for the reader. For a complete
-example of this, see the Open GoPro Python SDK [package](TODO_ADD_LINK).
+example of this, see the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/).
 
 To learn more about queries, go to the next tutorial.

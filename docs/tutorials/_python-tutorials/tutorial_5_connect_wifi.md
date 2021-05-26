@@ -203,7 +203,7 @@ are many different methods of connecting to the WiFi AP depending on your OS and
 using to develop.
 
 We do provide an example of this in the `ble_enable_wifi_and_connect.py` script. This script uses the
-cross-platform `Wireless` module from the Open GoPro Python SDK [package](TODO_ADD_LINK).
+cross-platform `Wireless` module from the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/).
 Note that this has been imported as such:
 
 ```python
