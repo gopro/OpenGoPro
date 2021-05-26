@@ -7,13 +7,17 @@ Open GoPro Python SDK
     :alt: GoPro Logo
     :width: 50%
 
-.. image:: https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml/badge.svg
+.. image:: https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Testing?label=Build%20and%20Test
     :target: https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml
     :alt: Build and Test
 
-.. image:: https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_deploy_docs.yml/badge.svg
+.. image:: https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Docs%20Build%20and%20Deploy?label=Docs
     :target: https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_deploy_docs.yml
-    :alt: Build and Test
+    :alt: Build Docs
+
+.. image:: https://img.shields.io/pypi/v/open-gopro
+    :target: https://pypi.org/project/open-gopro/
+    :alt: PyPI
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black

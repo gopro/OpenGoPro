@@ -2,11 +2,10 @@
 
 <img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"/>
 
-[![Build and Test](https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml/badge.svg)](https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml)
-[![Build Docs](https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml/badge.svg)](https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml)
+[![Build and Test](https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Testing?label=Build%20and%20Test)](https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml)
+[![Build Docs](https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Docs%20Build%20and%20Deploy?label=Docs)](https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-
-TODO  add PyPi badge once released on PyPi
+[![PyPI](https://img.shields.io/pypi/v/open-gopro)]( https://pypi.org/project/open-gopro/)
 
 This is a Python package that provides an interface for the user to exercise the Open GoPro Bluetooth Low
 Energy (BLE) and Wi-Fi API's as well as install command line interfaces to take photos, videos, and view

@@ -11,10 +11,10 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-VERSION = "0.5.4"
+VERSION = "0.5.5"
 NAME = "open_gopro"
 DESCRIPTION = "Open GoPro API and Examples"
-URL = "https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control"
+URL = "https://gopro.github.io/OpenGoPro/python_sdk/"
 EMAIL = "tcamise@gopro.com"
 AUTHOR = "Tim Camise"
 

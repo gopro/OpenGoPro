@@ -110,7 +110,12 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 * Move into Open GoPro repo
 
 0.5.4 (May-6-2021)
----------------------
+------------------
 
 * Update documentation to coexist with jekyll on Github pages
+
+0.5.5 (May-26-2021)
+-------------------
+
+* Documentation link updates
 
