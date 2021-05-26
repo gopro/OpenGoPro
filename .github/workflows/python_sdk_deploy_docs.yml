@@ -52,17 +52,14 @@ jobs:
               working-directory: ./source/demos/python/sdk_wireless_camera_control/
               run: |
                   make sphinx
-                  echo "NUM_MODIFIED=$(git diff --numstat | wc -l)" >> $GITHUB_ENV
 
             - name: Checkout target branch
-              if: env.NUM_MODIFIED != 0
               uses: actions/checkout@v2
               with:
                   ref: gh-pages
                   path: target
 
-            - name: Deploy to Github pages
-              if: env.NUM_MODIFIED != 0
+            - name: Deploy to Github Pages
               run: |
                   rm -rf ./target/python_sdk
                   mkdir -p ./target/python_sdk
@@ -71,5 +68,5 @@ jobs:
                   git add .
                   git config user.name github-actions
                   git config user.email github-actions@github.com
-                  git commit -m "sphinx build from Action ${GITHUB_SHA}"
+                  git commit --allow-empty -m "sphinx build from Action ${GITHUB_SHA}"
                   git push
