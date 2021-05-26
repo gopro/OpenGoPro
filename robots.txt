@@ -1,1 +1,1 @@
-Sitemap: https://gopro.github.io/OpenGoPro//OpenGoPro/sitemap.xml
+Sitemap: https://gopro.github.io/OpenGoPro/sitemap.xml
