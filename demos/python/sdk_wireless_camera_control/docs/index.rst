@@ -3,17 +3,16 @@
 Open GoPro Python SDK
 =====================
 
-.. figure:: https://raw.githubusercontent.com/gopro/OpenGoPro/main/logo.png?token=ASEL3UPDVM4EG6P53WZWG73AT4EOA
-    :target: https://github.com/gopro/OpenGoPro
+.. figure:: https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png
     :alt: GoPro Logo
     :width: 50%
 
-.. image:: https://github.com/gopro/OpenGoPro/workflows/Build%20and%20Test/badge.svg
-    :target: https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml
+.. image:: https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml/badge.svg
+    :target: https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml
     :alt: Build and Test
 
-.. image:: https://github.com/gopro/OpenGoPro/workflows/Build%20Docs/badge.svg
-    :target: https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml
+.. image:: https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_deploy_docs.yml/badge.svg
+    :target: https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_deploy_docs.yml
     :alt: Build and Test
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg

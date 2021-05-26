@@ -1,6 +1,6 @@
 # Open GoPro Python SDK
 
-<img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/logo.png?token=ASEL3UPDVM4EG6P53WZWG73AT4EOA" width="50%" style="max-width: 500px;"/>
+<img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"/>
 
 [![Build and Test](https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml/badge.svg)](https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml)
 [![Build Docs](https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml/badge.svg)](https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml)
