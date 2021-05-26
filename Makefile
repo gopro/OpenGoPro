@@ -34,10 +34,10 @@ version: ## Update the Open GoPro version
 	@sed -i.bak "s/Current Version: $(ORIGINAL_VERSION)/Current Version: ${VERSION}/g" README.md && rm README.md.bak
 	@make copyright
 
-.PHONY: test
-test: ## Run link checker. This assumes python installed and jekyll site is currently being served
+.PHONY: tests
+tests: ## Run link checker. This assumes python installed and jekyll site is currently being served
 	@pip install linkchecker
-	@linkchecker http://127.0.0.1:5000/
+	@linkchecker http://127.0.0.1:5000/OpenGoPro/index.html
 
 .PHONY: copyright
 copyright: ## Check for missing copyrights everywhere and add them using the version from README.md

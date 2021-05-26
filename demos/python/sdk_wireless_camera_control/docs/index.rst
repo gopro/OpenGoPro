@@ -3,18 +3,21 @@
 Open GoPro Python SDK
 =====================
 
-.. figure:: https://raw.githubusercontent.com/gopro/OpenGoPro/main/logo.png?token=ASEL3UPDVM4EG6P53WZWG73AT4EOA
-    :target: https://github.com/gopro/OpenGoPro
+.. figure:: https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png
     :alt: GoPro Logo
     :width: 50%
 
-.. image:: https://github.com/gopro/OpenGoPro/workflows/Build%20and%20Test/badge.svg
-    :target: https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml
+.. image:: https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Testing?label=Build%20and%20Test
+    :target: https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml
     :alt: Build and Test
 
-.. image:: https://github.com/gopro/OpenGoPro/workflows/Build%20Docs/badge.svg
-    :target: https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml
-    :alt: Build and Test
+.. image:: https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Docs%20Build%20and%20Deploy?label=Docs
+    :target: https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_deploy_docs.yml
+    :alt: Build Docs
+
+.. image:: https://img.shields.io/pypi/v/open-gopro
+    :target: https://pypi.org/project/open-gopro/
+    :alt: PyPI
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black

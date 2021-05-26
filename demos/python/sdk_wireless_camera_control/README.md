@@ -1,24 +1,26 @@
 # Open GoPro Python SDK
 
-<img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/logo.png?token=ASEL3UPDVM4EG6P53WZWG73AT4EOA" width="50%" style="max-width: 500px;"/>
+<img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"/>
 
-[![Build and Test](https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml/badge.svg)](https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml)
-[![Build Docs](https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml/badge.svg)](https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml)
+[![Build and Test](https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Testing?label=Build%20and%20Test)](https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml)
+[![Build Docs](https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Docs%20Build%20and%20Deploy?label=Docs)](https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-
-TODO  add PyPi badge once released on PyPi
+[![PyPI](https://img.shields.io/pypi/v/open-gopro)]( https://pypi.org/project/open-gopro/)
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)]( https://github.com/gopro/OpenGoPro/blob/main/LICENSE)
 
 This is a Python package that provides an interface for the user to exercise the Open GoPro Bluetooth Low
 Energy (BLE) and Wi-Fi API's as well as install command line interfaces to take photos, videos, and view
 the preview stream.
 
 -   Free software: MIT license
--   Documentation: TODO Add link
--   View on Github: https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control
+-   Documentation: [View on Open GoPro](https://gopro.github.io/OpenGoPro/python_sdk/)
+-   View on [Github](https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control)
 
 ## Documentation
 
-This README is an overview of the package. Complete documentation can be found on Open GoPro: TODO ADD LINK.
+> This README is only an overview of the package.
+
+Complete documentation can be found on [Open GoPro](https://gopro.github.io/OpenGoPro/python_sdk/)
 
 ## Installation
 

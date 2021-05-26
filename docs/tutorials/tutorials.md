@@ -24,20 +24,19 @@ It is ok not to have read the [BLE]({% link specs/ble.md %}) or [WiFi]({% link s
 After completing the tutorials, you will need to reference it for future development.
 
 {% for tutorial in site.python-tutorials %}
--   [{{ tutorial.title }}]({{ tutorial.permalink }})
+-   [{{ tutorial.title }}]({{ tutorial.permalink | prepend: site.baseurl }})
 {% endfor %}
 
 {% note  These are extremely stripped down Python tutorials that are only meant to show the basics. %}
 For a complete Python SDK that uses [bleak](https://bleak.readthedocs.io/en/latest/) as the backend as well as a
-cross-platform WiFi backend to easily write Python apps that control the GoPro, see: [TODO](www.TODO.com)
-
+cross-platform WiFi backend to easily write Python apps that control the GoPro, see the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/)
 
 # Bash
 
 BlueZ tutorial for Ubuntu using the command line:
 
 {% for tutorial in site.bash-tutorials %}
--   [{{ tutorial.title }}]({{ tutorial.permalink }})
+-   [{{ tutorial.title }}]({{ tutorial.permalink | prepend: site.baseurl }})
 {% endfor %}
 
 # More to come!

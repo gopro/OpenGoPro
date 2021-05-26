@@ -42,7 +42,7 @@ local machine, the package can be installed as follows:
 pip install -r requirements.txt
 ```
 
-> This will also install the [Open GoPro Python SDK](www.TODO.com) which will be used for some of the optional examples through these tutorials.
+> This will also install the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/) which will be used for some of the optional examples through these tutorials.
 
 You can test that installation was successful by viewing the installed package's information:
 
