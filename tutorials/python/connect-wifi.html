@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Python Tutorial 5: Connect WiFi :  Open GoPro</title>
+<meta name="description" content="Python Tutorial 5: Connect WiFi">
+
+
+  <meta name="author" content="GoPro">
+  
+  <meta property="article:author" content="GoPro">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Python Tutorial 5: Connect WiFi">
+<meta property="og:url" content="/tutorials/python/connect-wifi">
+
+
+  <meta property="og:description" content="Python Tutorial 5: Connect WiFi">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-05-26T11:15:31-07:00">
+
+
+
+
+
+
+<link rel="canonical" href="/tutorials/python/connect-wifi">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+  
+    <script src="/assets/js/tabs.js"></script>
+  
+    <script src="/assets/js/quiz.js"></script>
+  
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro">View on Github</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/ble">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/wifi">WiFi Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/demos">Demos</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
+          <meta itemprop="position" content="2">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/python" itemprop="item"><span itemprop="name">Python</span></a>
+          <meta itemprop="position" content="3">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Python Tutorial 5: Connect WiFi</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">GoPro</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Be a <strong>hero</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox">
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <a href="/tutorials/python/connect-ble"><span class="nav__sub-title">1: Connect BLE</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/send-ble-commands"><span class="nav__sub-title">2: Send BLE Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/parse-ble-responses"><span class="nav__sub-title">3: Parse BLE TLV Responses</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/ble-queries"><span class="nav__sub-title">4: BLE Queries</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/connect-wifi"><span class="nav__sub-title">5: Connect WiFi</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/send-wifi-commands"><span class="nav__sub-title">6: Send WiFi Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/camera-media-list"><span class="nav__sub-title">7: Camera Media List</span></a>
+        
+
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Python Tutorial 5: Connect WiFi">
+    <meta itemprop="description" content="Python Tutorial 5: Connect WiFi">
+    <meta itemprop="datePublished" content="2021-05-26T11:15:31-07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Python Tutorial 5: Connect WiFi
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#just-show-me-the-demos">Just Show me the Demo(s)!!</a></li>
+<li><a href="#setup">Setup</a></li>
+<li>
+<a href="#connecting-to-wifi-ap">Connecting to WiFi AP</a><ul>
+<li>
+<a href="#find-wifi-information">Find WiFi Information</a><ul>
+<li><a href="#get-wifi-ssid">Get WiFi SSID</a></li>
+<li><a href="#get-wifi-password">Get WiFi Password</a></li>
+</ul>
+</li>
+<li><a href="#enable-wifi-ap">Enable WiFi AP</a></li>
+<li><a href="#establish-connection-to-wifi-ap">Establish Connection to WiFi AP</a></li>
+</ul>
+</li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#good-job">Good Job!</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>This document will provide a walk-through tutorial to use <a href="https://pypi.org/project/bleak/">bleak</a> to implement the
+<a href="/wifi">Open GoPro Interface</a> to enable the GoPro’s WiFi Access Point (AP) so that it
+can be connected to. It will also provide an example of connecting to the WiFi AP.</p>
+
+<blockquote>
+  <p>Note! It is recommended that you have first completed the <a href="/tutorials/python/connect-ble">connecting</a>, <a href="/tutorials/python/send-ble-commands">sending commands</a>, and <a href="../tutorial_3_parse_responses/tutorial.html">parsing responses</a> tutorials before proceeding</p>
+</blockquote>
+
+<h1 id="requirements">Requirements</h1>
+
+<p>It is assumed that the hardware and software requirements from the <a href="/tutorials/python/connect-ble#requirements">connect tutorial</a>
+are present and configured correctly.</p>
+
+<p>The scripts that will be used for this tutorial can be found at in the
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_5_connect_wifi">Tutorial 5 Folder</a>.</p>
+
+<h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
+
+<p>There are two relevant scripts that will be discussed here:</p>
+
+<ul>
+  <li>wifi_enable.py</li>
+  <li>wifi_enable_and_connect.py</li>
+</ul>
+
+<p>If you don’t want to read this tutorial and just want to see the demo, for example, run:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_enable_and_connect.py
+</code></pre></div></div>
+
+<blockquote>
+  <p>Note! Python 3.8.x must be used as specified in <a href="/tutorials/python/connect-ble#requirements">the requirements</a></p>
+</blockquote>
+
+<p>Note that each script has a command-line help which can be found via:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">python wifi_enable_and_connect.py --help
+usage: wifi_enable_and_connect.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera via BLE, get WiFi info, enable WiFi and connect.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used,
+                        first discovered GoPro will be connected to
+</span></code></pre></div></div>
+
+<h1 id="setup">Setup</h1>
+
+<p>We must first connect to BLE as was discussed in the <a href="/tutorials/python/connect-ble">connect tutorial</a>. We are also
+using the same notification handler as was used in the <a href="/tutorials/python/send-ble-commands#setup">sending commands tutorial</a></p>
+
+<h1 id="connecting-to-wifi-ap">Connecting to WiFi AP</h1>
+
+<p>Now that we are connected via BLE, paired, and have enabled notifications, we can send the command to enable the WiFi AP.</p>
+
+<p>Here is an outline of the steps to do so:</p>
+
+<p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5wYXJ0aWNpcGFudCBQQ1xucGFydGljaXBhbnQgR29Qcm9CTEVcbnBhcnRpY2lwYW50IEdvUHJvV2lGaVxubG9vcCBTdGVwcyBmcm9tIENvbm5lY3QgVHV0b3JpYWxcbkdvUHJvQkxFLS0-PlBDOiBBZHZlcnRpc2luZ1xuR29Qcm9CTEUtLT4-UEM6IEFkdmVydGlzaW5nXG5ub3RlIG92ZXIgUEM6IFNjYW5uaW5nXG5QQy0-PkdvUHJvQkxFOiBDb25uZWN0XG5ub3RlIG92ZXIgR29Qcm9CTEUsIFBDOiBDb25uZWN0ZWRcbmFsdCBJZiBub3QgUHJldmlvdXNseSBQYWlyZWRcblBDIC0-PiBHb1Byb0JMRTogUGFpciBSZXF1ZXN0XG5Hb1Byb0JMRSAtPj4gUEM6IFBhaXIgUmVzcG9uc2VcbmVsc2VcbiUlLVxuZW5kXG5ub3RlIG92ZXIgR29Qcm9CTEUsIFBDOiBQYWlyZWRcblBDIC0-PiBHb1Byb0JMRTogRW5hYmxlIE5vdGlmaWNhdGlvbnMgb24gQ2hhcmFjdGVyaXN0aWMgMVxuUEMgLT4-IEdvUHJvQkxFOiBFbmFibGUgTm90aWZpY2F0aW9ucyBvbiBDaGFyYWN0ZXJpc3RpYyAyXG5QQyAtPj4gR29Qcm9CTEU6IEVuYWJsZSBOb3RpZmljYXRpb25zIG9uIENoYXJhY3RlcmlzdGljIC4uXG5QQyAtPj4gR29Qcm9CTEU6IEVuYWJsZSBOb3RpZmljYXRpb25zIG9uIENoYXJhY3RlcmlzdGljIE5cbm5vdGUgb3ZlciBHb1Byb0JMRSwgUEM6IFJlYWR5IHRvIENvbW11bmljYXRlXG5lbmRcblBDIC0-PiBHb1Byb0JMRTogUmVhZCBXaWZpIEFQIFNTSURcblBDIC0-PiBHb1Byb0JMRTogUmVhZCBXaWZpIEFQIFBhc3N3b3JkXG5QQyAtPj4gR29Qcm9CTEU6IFdyaXRlIHRvIEVuYWJsZSBXaUZpIEFQXG5Hb1Byb0JMRSAtPj4gUEM6IFJlc3BvbnNlIHNlbnQgYXMgbm90aWZpY2F0aW9uXG5ub3RlIG92ZXIgR29Qcm9XaUZpOiBXaUZpIEFQIGVuYWJsZWRcblBDIC0-PiBHb1Byb1dpRmk6IENvbm5lY3QgdG8gV2lGaSBBUCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19"></p>
+
+<p>Essentially we will be finding the WiFi AP information (SSID and password) via BLE, enabling the WiFi AP via BLE, then
+connecting to the WiFi AP.</p>
+
+<h2 id="find-wifi-information">Find WiFi Information</h2>
+
+<p>Note that the process to get this information is different than all procedures described up to this point.
+Whereas the previous command, setting, and query procedures all followed the Write Request-Notification Response
+pattern, the WiFi Information is retrieved via direct Read Requests to BLE characteristics.</p>
+
+<h3 id="get-wifi-ssid">Get WiFi SSID</h3>
+
+<p>The WiFi SSID can be found by reading from the WiFi AP SSID
+<a href="/ble#services-and-characteristics">characteristic</a> of the
+WiFi Access Point service.</p>
+
+<p>First, we need to define the attribute to read from:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">WIFI_AP_SSID_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0002"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now, let’s send the read request to get the SSID (and decode it into a string).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssid</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">read_gatt_char</span><span class="p">(</span><span class="n">WIFI_AP_SSID_UUID</span><span class="p">)</span>
+<span class="n">ssid</span> <span class="o">=</span> <span class="n">ssid</span><span class="p">.</span><span class="n">decode</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  There is no need for a synchronization event as the information is available when the `read_gatt_char` method returns.</span>
+</div>
+
+<p>In the demo, this information is logged as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Reading the WiFi AP SSID
+INFO\:root\:SSID is GP24500456
+</span></code></pre></div></div>
+
+<h3 id="get-wifi-password">Get WiFi Password</h3>
+
+<p>The WiFi password can be found by reading from the WiFi AP password
+<a href="/ble#services-and-characteristics">characteristic</a> of the
+WiFi Access Point service.</p>
+
+<p>First, we need to define the attribute to read from:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">WIFI_AP_PASSWORD_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0003"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now, let’s send the read request to get the password (and decode it into a string).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">password</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">read_gatt_char</span><span class="p">(</span><span class="n">WIFI_AP_PASSWORD_UUID</span><span class="p">)</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">password</span><span class="p">.</span><span class="n">decode</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  There is no need for a synchronization event as the information is available when the `read_gatt_char` method returns.</span>
+</div>
+
+<p>In the demo, this information is logged as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Reading the WiFi AP password
+INFO\:root\:Password is g@6-Tj9-C7K
+</span></code></pre></div></div>
+
+<h2 id="enable-wifi-ap">Enable WiFi AP</h2>
+
+<p>Before we can connect to the WiFi AP, we have to make sure it is enabled. This is accomplished by using the
+“AP Control” <a href="/ble#commands-quick-reference">command</a>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th style="text-align: center">Bytes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ap Control Enable</td>
+      <td style="text-align: center">0x03 0x17 0x01 0x01</td>
+    </tr>
+    <tr>
+      <td>Ap Control Disable</td>
+      <td style="text-align: center">0x03 0x17 0x01 0x00</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This is done in the same manner that we did in the
+<a href="/tutorials/python/send-ble-commands">sending commands tutorial</a>.</p>
+
+<p>Now, let’s write the bytes to the “Command Request UUID” to enable the WiFi AP!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">COMMAND_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x17</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback.</span>
+</div>
+
+<p>Note that we have received the “Command Status” notification response from the
+Command Response characteristic since we enabled it’s notifications in
+<a href="/tutorials/python/connect-ble#enable-notifications">Enable Notifications</a>. This can be seen in the demo log:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Enabling the WiFi AP
+INFO\:root\:Received response at handle=52: b'02\:17\:00'
+INFO\:root\:Command sent successfully
+INFO\:root\:WiFi AP is enabled
+</span></code></pre></div></div>
+
+<p>As expected, the response was received on the correct handle and the status was “success”.</p>
+
+<h2 id="establish-connection-to-wifi-ap">Establish Connection to WiFi AP</h2>
+
+<p>If you have been following through the <code class="language-plaintext highlighter-rouge">ble_enable_wifi.py</code> script, you will notice that it ends here such that
+we know the WiFi SSID and password and the WiFi AP is enabled and ready to connect to. This is because there
+are many different methods of connecting to the WiFi AP depending on your OS and the framework you are
+using to develop.</p>
+
+<p>We do provide an example of this in the <code class="language-plaintext highlighter-rouge">ble_enable_wifi_and_connect.py</code> script. This script uses the
+cross-platform <code class="language-plaintext highlighter-rouge">Wireless</code> module from the Open GoPro Python SDK <a href="TODO_ADD_LINK">package</a>.
+Note that this has been imported as such:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">open_gopro.wifi_controller</span> <span class="kn">import</span> <span class="n">Wireless</span>
+</code></pre></div></div>
+
+<p>In order to do so, perform the following after the above steps have been completed:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">wifi</span> <span class="o">=</span> <span class="n">Wireless</span><span class="p">()</span>
+<span class="n">wifi</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This will log something similar to the following (it will vary slightly based on your OS):</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Connecting to GoPro WiFi AP
+INFO:open_gopro.wifi_controller:Attempting to establish WiFi connection to GP24500456...
+INFO:open_gopro.wifi_controller:Wifi connection established!
+INFO\:root\:Wifi Connected!
+</span></code></pre></div></div>
+
+<p><strong>Quiz time! 📚 ✏️</strong></p>
+
+<div id="quiz_7b83751e-6443-40d4-a3cf-1972ca8c462b" class="quiz">
+    <div>
+        <div id="question_7b83751e-6443-40d4-a3cf-1972ca8c462b" class="quiz__question">How is the WiFi password response received?</div>
+        <div id="answers_7b83751e-6443-40d4-a3cf-1972ca8c462b">
+        
+            <input type="radio" name="question" value="A"><label>A: As a read response from the WiFi AP Password characteristic</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: As write responses to the WiFi Request characteristic</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: As notifications of the Command Response characteristic</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('7b83751e-6443-40d4-a3cf-1972ca8c462b', 'A')">Submit Answer</button>
+    <div id="results_7b83751e-6443-40d4-a3cf-1972ca8c462b" style="display: none">
+        <span id="correct_7b83751e-6443-40d4-a3cf-1972ca8c462b" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_7b83751e-6443-40d4-a3cf-1972ca8c462b" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+        This (and WiFi AP SSID) is an exception to the rule. Usually responses
+    are received as notifications to a response characteristic. However, in this case, it is
+    received as a direct read response (since we are reading from the characteristic and not
+    writing to it).
+    </div>
+</div>
+
+<div id="quiz_5540236b-8596-46bf-8706-b6790830a74b" class="quiz">
+    <div>
+        <div id="question_5540236b-8596-46bf-8706-b6790830a74b" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
+        <div id="answers_5540236b-8596-46bf-8706-b6790830a74b">
+        
+            <input type="radio" name="question" value="A"><label>A: It only needs to be enabled once and it will then always remain on</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: The WiFi password will never change</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: The WiFi SSID will never change</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('5540236b-8596-46bf-8706-b6790830a74b', 'D')">Submit Answer</button>
+    <div id="results_5540236b-8596-46bf-8706-b6790830a74b" style="display: none">
+        <span id="correct_5540236b-8596-46bf-8706-b6790830a74b" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_5540236b-8596-46bf-8706-b6790830a74b" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+        Trick question! They are all false. While the WiFi AP will remain on for
+    some time, it can and will eventually turn off so it is always recommended to first connect
+    via BLE and ensure that it is enabled. The password and SSID will almost never change.
+    However, they will change if the connections are reset via Connections-&gt;Reset Connections.
+    </div>
+</div>
+
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>See the first tutorial’s <a href="/tutorials/python/connect-ble#troubleshooting">troubleshooting section</a>.</p>
+
+<h1 id="good-job">Good Job!</h1>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  Congratulations 🤙</span>
+</div>
+
+<p>You are now connected to the GoPro’s Wifi AP and can send any of the HTTP commands defined in the
+<a href="/wifi">Open GoPro Interface</a>. Proceed to the next tutorial.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-05-26T11:15:31-07:00">May 26, 2021</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/tutorials/python/ble-queries" class="pagination--pager" title="Python Tutorial 4: BLE Queries
+">Previous</a>
+    
+    
+      <a href="/tutorials/python/send-wifi-commands" class="pagination--pager" title="Python Tutorial 6: Send WiFi Commands
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+        
+      
+        
+          <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2021 GoPro. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

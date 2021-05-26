@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Python Tutorial 7: Camera Media List :  Open GoPro</title>
+<meta name="description" content="Python Tutorial 7: Camera Media List">
+
+
+  <meta name="author" content="GoPro">
+  
+  <meta property="article:author" content="GoPro">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Python Tutorial 7: Camera Media List">
+<meta property="og:url" content="/tutorials/python/camera-media-list">
+
+
+  <meta property="og:description" content="Python Tutorial 7: Camera Media List">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-05-26T11:15:31-07:00">
+
+
+
+
+
+
+<link rel="canonical" href="/tutorials/python/camera-media-list">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+  
+    <script src="/assets/js/tabs.js"></script>
+  
+    <script src="/assets/js/quiz.js"></script>
+  
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro">View on Github</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/ble">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/wifi">WiFi Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/demos">Demos</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
+          <meta itemprop="position" content="2">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/python" itemprop="item"><span itemprop="name">Python</span></a>
+          <meta itemprop="position" content="3">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Python Tutorial 7: Camera Media List</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">GoPro</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Be a <strong>hero</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox">
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <a href="/tutorials/python/connect-ble"><span class="nav__sub-title">1: Connect BLE</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/send-ble-commands"><span class="nav__sub-title">2: Send BLE Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/parse-ble-responses"><span class="nav__sub-title">3: Parse BLE TLV Responses</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/ble-queries"><span class="nav__sub-title">4: BLE Queries</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/connect-wifi"><span class="nav__sub-title">5: Connect WiFi</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/send-wifi-commands"><span class="nav__sub-title">6: Send WiFi Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/camera-media-list"><span class="nav__sub-title">7: Camera Media List</span></a>
+        
+
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Python Tutorial 7: Camera Media List">
+    <meta itemprop="description" content="Python Tutorial 7: Camera Media List">
+    <meta itemprop="datePublished" content="2021-05-26T11:15:31-07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Python Tutorial 7: Camera Media List
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#just-show-me-the-demos">Just Show me the Demo(s)!!</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#get-media-list">Get Media List</a></li>
+<li>
+<a href="#media-list-operations">Media List Operations</a><ul>
+<li><a href="#download-media-file">Download Media File</a></li>
+<li><a href="#get-media-gpmf">Get Media GPMF</a></li>
+<li><a href="#get-media-screennail">Get Media Screennail</a></li>
+<li><a href="#get-media-thumbnail">Get Media Thumbnail</a></li>
+</ul>
+</li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#good-job">Good Job!</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>This document will provide a walk-through tutorial to use the Python <a href="https://docs.python-requests.org/en/master/">requests</a>
+package to send Open GoPro <a href="/wifi">HTTP commands</a> to the GoPro,
+specifically to get the media list and perform operations on it (downloading pictures, videos, etc.)</p>
+
+<blockquote>
+  <p>Note! It is required that you have first completed the <a href="/tutorials/python/connect-wifi">Connecting to Wifi</a> and <a href="/tutorials/python/send-wifi-commands">Sending WiFi Commands</a> tutorials.</p>
+</blockquote>
+
+<p>This tutorial only considers sending these commands as one-off commands. That is, it does not consider state management /
+synchronization when sending multiple commands. This will be discussed in a future lab.</p>
+
+<h1 id="requirements">Requirements</h1>
+
+<p>It is assumed that the hardware and software requirements from the <a href="/tutorials/python/connect-ble#requirements">connect tutorial</a>
+are present and configured correctly.</p>
+
+<p>The scripts that will be used for this tutorial can be found at in the
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_7_camera_media_list">Tutorial 7 Folder</a>.</p>
+
+<h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
+
+<p>Each of the operations detailed below has a corresponding script to demo it. If you don’t want
+to read this tutorial and just want to see the demo, for example, run:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_media_download_file.py
+</code></pre></div></div>
+
+<blockquote>
+  <p>Note! Python 3.8.x must be used as specified in <a href="/tutorials/python/connect-ble#requirements">the requirements</a></p>
+</blockquote>
+
+<p>Note that each script has a command-line help which can be found via:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_media_download_file.py <span class="nt">--help</span>
+<span class="go">usage: wifi_media_download_file.py [-h]
+
+Find a photo on the camera and download it to the computer.
+
+optional arguments:
+  -h, --help  show this help message and exit
+</span></code></pre></div></div>
+
+<h1 id="setup">Setup</h1>
+
+<p>We must first connect to The GoPro’s WiFi Access Point (AP) as was discussed in the
+<a href="/tutorials/python/connect-wifi">Connecting to Wifi</a> tutorial.</p>
+
+<h1 id="get-media-list">Get Media List</h1>
+
+<p>Now that we are are connected via WiFi, we will get the media list using the same procedure
+to send HTTP commands as in the <a href="/tutorials/python/send-wifi-commands">previous tutorial</a>.</p>
+
+<div>
+    <ul class="tab" data-tab="9b640db7-aa03-46c6-8b87-4e66f917094d">
+        
+            <li class="active">
+                <a href="">Send Request </a>
+            </li>
+        
+            <li>
+                <a href="">Parse Response </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="9b640db7-aa03-46c6-8b87-4e66f917094d">
+        
+            <li class="active">
+<p>We get the media list via the
+<a href="/wifi#commands-quick-reference">Get Media List command</a>.
+This command will return a JSON structure of all of the media files (pictures, videos) on the camera with corresponding information about each media file.</p>
+
+<p>Let’s first build the endpoint:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="s">"/gopro/media/list"</span>
+</code></pre></div></div>
+
+<p>Now we send the GET request and check the response for errors. Any errors will raise an exception.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Lastly, we print the response’s JSON data (nicely formatted with indent 4 using the <code class="language-plaintext highlighter-rouge">json</code> module):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Go to the next tab for examples of viewing and parsing the response.</p>
+
+</li>
+        
+            <li>
+<p>The response will log as such (abbreviated for brevity):</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Getting the media list: sending http://10.5.5.9:8080/gopro/media/list
+INFO\:root\:Command sent successfully
+INFO\:root\:Response: {
+    "id": "2510746051348624995",
+    "media": [
+        {
+            "d": "100GOPRO",
+            "fs": [
+                {
+                    "n": "GOPR0987.JPG",
+                    "cre": "1618583762",
+                    "mod": "1618583762",
+                    "s": "5013927"
+                },
+                {
+                    "n": "GOPR0988.JPG",
+                    "cre": "1618583764",
+                    "mod": "1618583764",
+                    "s": "5009491"
+                },
+                {
+                    "n": "GOPR0989.JPG",
+                    "cre": "1618583766",
+                    "mod": "1618583766",
+                    "s": "5031861"
+                },
+                {
+                    "n": "GX010990.MP4",
+                    "cre": "1451608343",
+                    "mod": "1451608343",
+                    "glrv": "806586",
+                    "ls": "-1",
+                    "s": "10725219"
+                },
+</span></code></pre></div></div>
+
+<p>The media list format is defined in the
+<a href="/wifi#media-list-format">Open GoPro Specification</a>.
+We won’t be rehashing that here but will provide examples below of using the media list.</p>
+
+<p>One common functionality is to get the list of media file names, which can be done as such:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">[</span><span class="s">"media"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">"fs"</span><span class="p">]])</span>
+</code></pre></div></div>
+
+<p>That is, access the list at the <strong>fs</strong> tag at the first element of the <strong>media</strong> tag, then
+make a list
+of all of the names (<strong>n</strong> tag of each element) in the <strong>fs</strong> list.</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<h1 id="media-list-operations">Media List Operations</h1>
+
+<p>Whereas all of the WiFi commands described until now have returned JSON responses, most of
+the media list operations return binary data. From an HTTP perspective, the behavior is the same. However,
+the GET response will contain a large binary chunk of information so we will loop through it with the
+<code class="language-plaintext highlighter-rouge">requests</code> library as such, writing up to 8 kB at a time:</p>
+
+<p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5wYXJ0aWNpcGFudCBkaXNrXG5wYXJ0aWNpcGFudCBQQ1xucGFydGljaXBhbnQgR29Qcm9cbm5vdGUgb3ZlciBHb1BybywgUEM6IFBDIGNvbm5lY3RlZCB0byBXaUZpIEFQXG5QQyAtPj4gR29Qcm86IEdldCBNZWRpYSBMaXN0IChHRVQpXG5Hb1BybyAtPj4gUEM6IE1lZGlhIExpc3QgKEhUVFAgMjAwIE9LKVxuUEMgLT4-IEdvUHJvOiBDb21tYW5kIFJlcXVlc3QgKEdFVClcbmFjdGl2YXRlIEdvUHJvXG5Hb1BybyAtPj4gUEM6IEJpbmFyeSBSZXNwb25zZSAoSFRUUCAyMDAgT0spXG5kZWFjdGl2YXRlIEdvUHJvXG5hY3RpdmF0ZSBQQ1xubG9vcCB3cml0ZSB1bnRpbCBjb21wbGV0ZVxuUEMgLT4-IGRpc2s6IHdyaXRlIDw9IDhLXG5lbmRcbmRlYWN0aXZhdGUgUEMiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9fQ"></p>
+
+<h2 id="download-media-file">Download Media File</h2>
+
+<p>The next command we will be sending is
+<a href="/wifi#downloading-media">Download Media</a>. Specifically, we
+will be downloading a photo. The camera must have at least one photo in its media list in order for this to
+work.</p>
+
+<p>First, we get the media list as in <a href="/tutorials/python/camera-media-list#get-media-list">Get Media List</a> . Then we search through the list of file names in
+the media list looking for a photo (i.e. a file whose name ends in <strong>.jpg</strong>). Once we find a photo, we
+proceed:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">media_list</span> <span class="o">=</span> <span class="n">get_media_list</span><span class="p">()</span>
+
+<span class="n">photo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="k">for</span> <span class="n">media_file</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">[</span><span class="s">"media"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">"fs"</span><span class="p">]]:</span>
+    <span class="k">if</span> <span class="n">media_file</span><span class="p">.</span><span class="n">lower</span><span class="p">().</span><span class="n">endswith</span><span class="p">(</span><span class="s">".jpg"</span><span class="p">):</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"found a photo: </span><span class="si">{</span><span class="n">media_file</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="n">photo</span> <span class="o">=</span> <span class="n">media_file</span>
+        <span class="k">break</span>
+</code></pre></div></div>
+
+<p>Now let’s build the endpoint to download the photo whose name we just found:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"videos/DCIM/100GOPRO/</span><span class="si">{</span><span class="n">photo</span><span class="si">}</span><span class="s">"</span>
+</code></pre></div></div>
+
+<div class="tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  The endpoint will start with "videos" for both photos and videos</span>
+</div>
+
+<p>Next we send the GET request and check the response for errors. Any errors will raise an exception.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">request</span><span class="p">:</span>
+    <span class="n">request</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Lastly, we iterate through the binary content in 8 kB chunks, writing to a local file:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">file</span> <span class="o">=</span> <span class="n">photo</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">".jpg"</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"receiving binary stream to </span><span class="si">{</span><span class="nb">file</span><span class="si">}</span><span class="s">..."</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">request</span><span class="p">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">):</span>
+        <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This will log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:found a photo: GOPR0987.JPG
+INFO\:root\:Downloading GOPR0987.JPG
+INFO\:root\:Sending: http://10.5.5.9:8080/videos/DCIM/100GOPRO/GOPR0987.JPG
+INFO\:root\:receiving binary stream to GOPR0987.jpg...
+</span></code></pre></div></div>
+
+<p>Once complete, the <code class="language-plaintext highlighter-rouge">GOPR0987.jpg</code> file will be available from where the demo script was called.</p>
+
+<h2 id="get-media-gpmf">Get Media GPMF</h2>
+
+<p>The next command we will be sending is
+<a href="/wifi#commands-quick-reference">Get Media GPMF</a>. More
+information about GPMF can be found <a href="https://github.com/gopro/gpmf-parser">here</a>. Specifically, we will be
+downloading the GPMF for a photo. The camera must have at least one photo in its media list in order for this to
+work.</p>
+
+<p>First, we get the media list as in <a href="/tutorials/python/camera-media-list#get-media-list">Get Media List</a> . Then we search through the list of file names in
+the media list looking for a photo (i.e. a file whose name ends in <strong>.jpg</strong>). Once we find a photo, we
+proceed:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">media_list</span> <span class="o">=</span> <span class="n">get_media_list</span><span class="p">()</span>
+
+<span class="n">photo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="k">for</span> <span class="n">media_file</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">[</span><span class="s">"media"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">"fs"</span><span class="p">]]:</span>
+    <span class="k">if</span> <span class="n">media_file</span><span class="p">.</span><span class="n">lower</span><span class="p">().</span><span class="n">endswith</span><span class="p">(</span><span class="s">".jpg"</span><span class="p">):</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"found a photo: </span><span class="si">{</span><span class="n">media_file</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="n">photo</span> <span class="o">=</span> <span class="n">media_file</span>
+        <span class="k">break</span>
+</code></pre></div></div>
+
+<p>Now let’s build the endpoint to download the GPMF for the photo whose name we just found:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"/gopro/media/gpmf?path=100GOPRO/</span><span class="si">{</span><span class="n">photo</span><span class="si">}</span><span class="s">"</span>
+</code></pre></div></div>
+
+<p>Next we send the GET request and check the response for errors. Any errors will raise an exception.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">request</span><span class="p">:</span>
+    <span class="n">request</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Lastly, we iterate through the binary content in 8 kB chunks, writing to a local file:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">file</span> <span class="o">=</span> <span class="n">photo</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">".jpg"</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"receiving binary stream to </span><span class="si">{</span><span class="nb">file</span><span class="si">}</span><span class="s">..."</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">request</span><span class="p">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">):</span>
+        <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This will log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:found a photo: GOPR0987.JPG
+INFO\:root\:Getting the GPMF for GOPR0987.JPG
+INFO\:root\:Sending: http://10.5.5.9:8080/gopro/media/gpmf?path=100GOPRO/GOPR0987.JPG
+INFO\:root\:receiving binary stream to GOPR0987.gpmf...
+</span></code></pre></div></div>
+
+<p>Once complete, the <code class="language-plaintext highlighter-rouge">GOPR0987.gpm</code>f file will be available from where the demo script was called.</p>
+
+<h2 id="get-media-screennail">Get Media Screennail</h2>
+
+<p>The next command we will be sending is
+<a href="/wifi#downloading-media">Get Media Screennail </a>.
+Specifically, we will be getting the screennail for a photo. The camera must have at least one photo in its
+media list in order for this to work.</p>
+
+<div class="note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  There is a separate command (shown below) to get a media "thumbnbail"</span>
+</div>
+
+<p>First, we get the media list as in <a href="/tutorials/python/camera-media-list#get-media-list">Get Media List</a> . Then we search through the list of file names in
+the media list looking for a photo (i.e. a file whose name ends in <strong>.jpg</strong>). Once we find a photo, we
+proceed:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">media_list</span> <span class="o">=</span> <span class="n">get_media_list</span><span class="p">()</span>
+
+<span class="n">photo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="k">for</span> <span class="n">media_file</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">[</span><span class="s">"media"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">"fs"</span><span class="p">]]:</span>
+    <span class="k">if</span> <span class="n">media_file</span><span class="p">.</span><span class="n">lower</span><span class="p">().</span><span class="n">endswith</span><span class="p">(</span><span class="s">".jpg"</span><span class="p">):</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"found a photo: </span><span class="si">{</span><span class="n">media_file</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="n">photo</span> <span class="o">=</span> <span class="n">media_file</span>
+        <span class="k">break</span>
+</code></pre></div></div>
+
+<p>Now let’s build the endpoint to download the screennail for the photo whose name we just found:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"/gopro/media/screennail?path=100GOPRO/</span><span class="si">{</span><span class="n">photo</span><span class="si">}</span><span class="s">"</span>
+</code></pre></div></div>
+
+<p>Next we send the GET request and check the response for errors. Any errors will raise an exception.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">request</span><span class="p">:</span>
+    <span class="n">request</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Lastly, we iterate through the binary content in 8 kB chunks, writing to a local file:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">file</span> <span class="o">=</span> <span class="n">photo</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">".jpg"</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"receiving binary stream to </span><span class="si">{</span><span class="nb">file</span><span class="si">}</span><span class="s">..."</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">request</span><span class="p">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">):</span>
+        <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This will log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:found a photo: GOPR0987.JPG
+INFO\:root\:Getting the screennail for GOPR0987.JPG
+INFO\:root\:Sending: http://10.5.5.9:8080/gopro/media/screennail?path=100GOPRO/GOPR0987.JPG
+INFO\:root\:receiving binary stream to GOPR0987_screennail.jpg...
+</span></code></pre></div></div>
+
+<p>Once complete, the <code class="language-plaintext highlighter-rouge">GOPR0987_screennail.jpg</code> file will be available from where the demo script was called.</p>
+
+<h2 id="get-media-thumbnail">Get Media Thumbnail</h2>
+
+<p>The next command we will be sending is
+<a href="/wifi#downloading-media">Get Media thumbnail </a>.
+Specifically, we will be getting the thumbnail for a photo. The camera must have at least one photo in its
+media list in order for this to work.</p>
+
+<div class="note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  Note! There is a separate command (shown above) to get a media "screennail"</span>
+</div>
+
+<p>First, we get the media list as in <a href="/tutorials/python/camera-media-list#get-media-list">Get Media List</a> . Then we search through the list of file names in
+the media list looking for a photo (i.e. a file whose name ends in <strong>.jpg</strong>). Once we find a photo, we
+proceed:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">media_list</span> <span class="o">=</span> <span class="n">get_media_list</span><span class="p">()</span>
+
+<span class="n">photo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="k">for</span> <span class="n">media_file</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">[</span><span class="s">"media"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">"fs"</span><span class="p">]]:</span>
+    <span class="k">if</span> <span class="n">media_file</span><span class="p">.</span><span class="n">lower</span><span class="p">().</span><span class="n">endswith</span><span class="p">(</span><span class="s">".jpg"</span><span class="p">):</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"found a photo: </span><span class="si">{</span><span class="n">media_file</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="n">photo</span> <span class="o">=</span> <span class="n">media_file</span>
+        <span class="k">break</span>
+</code></pre></div></div>
+
+<p>Now let’s build the endpoint to download the thumbnail for the photo whose name we just found:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"/gopro/media/thumbnail?path=100GOPRO/</span><span class="si">{</span><span class="n">photo</span><span class="si">}</span><span class="s">"</span>
+</code></pre></div></div>
+
+<p>Next we send the GET request and check the response for errors. Any errors will raise an exception.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">request</span><span class="p">:</span>
+    <span class="n">request</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Lastly, we iterate through the binary content in 8 kB chunks, writing to a local file:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">file</span> <span class="o">=</span> <span class="n">photo</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">".jpg"</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"receiving binary stream to </span><span class="si">{</span><span class="nb">file</span><span class="si">}</span><span class="s">..."</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">request</span><span class="p">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">):</span>
+        <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This will log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:found a photo: GOPR0987.JPG
+INFO\:root\:Getting the thumbnail for GOPR0987.JPG
+INFO\:root\:Sending: http://10.5.5.9:8080/gopro/media/thumbnail?path=100GOPRO/GOPR0987.JPG
+INFO\:root\:receiving binary stream to GOPR0987_thumbnail.jpg...
+</span></code></pre></div></div>
+
+<p>Once complete, the <code class="language-plaintext highlighter-rouge">GOPR0987_thumbnail.jpg</code> file will be available from where the demo script was called.</p>
+
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>See the previous tutorial’s <a href="/tutorials/python/send-wifi-commands#troubleshooting">troubleshooting section</a>.</p>
+
+<h1 id="good-job">Good Job!</h1>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  Congratulations 🤙</span>
+</div>
+
+<p>You can now query the GoPro’s media list and retrieve binary information for media file. This is currently
+last tutorial. Stay tuned for more 👍</p>
+
+<p>At this point you should be able to start creating a useful example using the Open GoPro Interface. For some
+inspiration check out some of the <a href="/demos">demos</a>.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-05-26T11:15:31-07:00">May 26, 2021</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/tutorials/python/send-wifi-commands" class="pagination--pager" title="Python Tutorial 6: Send WiFi Commands
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+        
+      
+        
+          <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2021 GoPro. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

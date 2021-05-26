@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Python Tutorial 4: BLE Queries :  Open GoPro</title>
+<meta name="description" content="Python Tutorial 4: BLE Queries">
+
+
+  <meta name="author" content="GoPro">
+  
+  <meta property="article:author" content="GoPro">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Python Tutorial 4: BLE Queries">
+<meta property="og:url" content="/tutorials/python/ble-queries">
+
+
+  <meta property="og:description" content="Python Tutorial 4: BLE Queries">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-05-26T11:15:31-07:00">
+
+
+
+
+
+
+<link rel="canonical" href="/tutorials/python/ble-queries">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+  
+    <script src="/assets/js/tabs.js"></script>
+  
+    <script src="/assets/js/quiz.js"></script>
+  
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro">View on Github</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/ble">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/wifi">WiFi Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/demos">Demos</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
+          <meta itemprop="position" content="2">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/python" itemprop="item"><span itemprop="name">Python</span></a>
+          <meta itemprop="position" content="3">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Python Tutorial 4: BLE Queries</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">GoPro</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Be a <strong>hero</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox">
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <a href="/tutorials/python/connect-ble"><span class="nav__sub-title">1: Connect BLE</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/send-ble-commands"><span class="nav__sub-title">2: Send BLE Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/parse-ble-responses"><span class="nav__sub-title">3: Parse BLE TLV Responses</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/ble-queries"><span class="nav__sub-title">4: BLE Queries</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/connect-wifi"><span class="nav__sub-title">5: Connect WiFi</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/send-wifi-commands"><span class="nav__sub-title">6: Send WiFi Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/camera-media-list"><span class="nav__sub-title">7: Camera Media List</span></a>
+        
+
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Python Tutorial 4: BLE Queries">
+    <meta itemprop="description" content="Python Tutorial 4: BLE Queries">
+    <meta itemprop="datePublished" content="2021-05-26T11:15:31-07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Python Tutorial 4: BLE Queries
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#just-show-me-the-demos">Just Show me the Demo(s)!!</a></li>
+<li><a href="#setup">Setup</a></li>
+<li>
+<a href="#polling-query-information">Polling Query Information</a><ul>
+<li><a href="#individual-query-poll">Individual Query Poll</a></li>
+<li><a href="#multiple-simultaneous-query-polls">Multiple Simultaneous Query Polls</a></li>
+<li><a href="#query-all">Query All</a></li>
+</ul>
+</li>
+<li><a href="#registering-for-query-push-notifications">Registering for Query Push Notifications</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#good-job">Good Job!</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>This document will provide a walk-through tutorial to use <a href="https://pypi.org/project/bleak/">bleak</a> to implement the
+<a href="/ble">Open GoPro Interface</a> to query the camera’s setting and status information
+via BLE.</p>
+
+<p>“Queries” in this sense are specifically procedures that are initiated by writing to the Query UUID and receive
+responses via the Query Response UUID. This will be described in more detail below.</p>
+
+<blockquote>
+  <p>Note! It is required that you have first completed the <a href="/tutorials/python/connect-ble#requirements">connect</a>, <a href="/tutorials/python/send-ble-commands">sending commands</a>, and <a href="/tutorials/python/parse-ble-responses">parsing responses</a> tutorials before going through this tutorial.</p>
+</blockquote>
+
+<p>This tutorial only considers sending these queries as one-off commands. That is, it does not consider state management /
+synchronization when sending multiple commands. This will be discussed in a future lab.</p>
+
+<h1 id="requirements">Requirements</h1>
+
+<p>It is assumed that the hardware and software requirements from the <a href="/tutorials/python/connect-ble">connect tutorial</a>
+are present and configured correctly.</p>
+
+<p>The scripts that will be used for this tutorial can be found at in the
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_4_ble_queries">Tutorial 4 Folder</a>.</p>
+
+<h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
+
+<p>Each of the commands detailed in this tutorial has a corresponding script to demo it. If you don’t want to read this
+tutorial and just want to see the demo, for example, run:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_query_poll_resolution_value.py
+</code></pre></div></div>
+
+<blockquote>
+  <p>Note! Python 3.8.x must be used as specified in <a href="/tutorials/python/connect-ble#requirements">the requirements</a></p>
+</blockquote>
+
+<p>Note that each script has a command-line help which can be found via:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ./ble_command_poll_resolution_value.py <span class="nt">--help</span>
+<span class="go">usage: ble_query_poll_resolution_value.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera then get the current resolution.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to
+</span></code></pre></div></div>
+
+<h1 id="setup">Setup</h1>
+
+<p>We must first connect as was discussed in the <a href="/tutorials/python/connect-ble">connect tutorial</a>.</p>
+
+<p>We will also be using the <strong>Response</strong> class that was defined in the
+<a href="/tutorials/python/parse-ble-responses">parsing responses</a> tutorial to accumulate and parse
+notification responses to the Query Response <a href="/ble#services-and-characteristics">characteristic</a>.
+Throughout this tutorial, the query information that we will be reading is the Resolution Setting (ID 0x02).
+Therefore, we have slightly changed the notification handler to update a global resolution variable as it
+queries the resolution:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">response</span><span class="p">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">is_received</span><span class="p">:</span>
+        <span class="n">response</span><span class="p">.</span><span class="n">parse</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">QUERY_RSP_UUID</span><span class="p">:</span>
+            <span class="n">resolution</span> <span class="o">=</span> <span class="n">Resolution</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">RESOLUTION_ID</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1"># Notify writer that the procedure is complete
+</span>        <span class="n">event</span><span class="p">.</span><span class="nb">set</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>There are two methods to query status / setting information, each of which will be described in a following section:</p>
+
+<ul>
+  <li><a href="/tutorials/python/ble-queries#polling-query-information">Polling Query Information</a></li>
+  <li><a href="/tutorials/python/ble-queries#registering-for-query-push-notifications">Registering for query push notifications</a></li>
+</ul>
+
+<h1 id="polling-query-information">Polling Query Information</h1>
+
+<p>It is possible to poll one or more setting / status values using the
+following <a href="/ble#query-commands">commands</a>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Query ID</th>
+      <th>Request</th>
+      <th>Query</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x12</td>
+      <td>Get Setting value(s)</td>
+      <td>len:12:xx:xx</td>
+    </tr>
+    <tr>
+      <td>0x13</td>
+      <td>Get Status value(s)</td>
+      <td>len:13:xx:xx</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>where <strong>xx</strong> are setting / status ID(s) and <strong>len</strong> is the total length of the query (not including the length).
+There will be specific examples below.</p>
+
+<div class="note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  Since they are two separate commands, combination of settings / statuses can not be polled simultaneously.</span>
+</div>
+
+<p>Here is a generic sequence (the same is true for statuses):</p>
+
+<p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5ub3RlIG92ZXIgUEMsIEdvUHJvOiBDb25uZWN0ZWQgKHN0ZXBzIGZyb20gY29ubmVjdCB0dXRvcmlhbClcblBDIC0-PiBHb1BybzogR2V0IFNldHRpbmcgdmFsdWUocykgY29tbWFuZCB3cml0dGVuIHRvIFF1ZXJ5IFVVSURcbkdvUHJvIC0-PiBQQzogU2V0dGluZyB2YWx1ZXMgcmVzcG9uZGVkIHRvIFF1ZXJ5IFJlc3BvbnNlIFVVSURcbkdvUHJvIC0-PiBQQzogTW9yZSBzZXR0aW5nIHZhbHVlcyByZXNwb25kZWQgdG8gUXVlcnkgUmVzcG9uc2UgVVVJRFxuR29Qcm8gLT4-IFBDOiAuLi5cbkdvUHJvIC0-PiBQQzogTW9yZSBzZXR0aW5nIHZhbHVlcyByZXNwb25kZWQgdG8gUXVlcnkgUmVzcG9uc2UgVVVJRCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19"></p>
+
+<p>The number of notification responses will vary depending on the amount of settings that have been queried.
+Note that setting values will be combined into one notification until it reaches the maximum notification size (20 bytes).
+At this point, a new response will be sent. Therefore, it is necessary to accumulate and then parse these
+responses as was described in <a href="/tutorials/python/parse-ble-responses#query-responses">parsing query responses</a></p>
+
+<h2 id="individual-query-poll">Individual Query Poll</h2>
+
+<p>Here we will walk through an example of polling one setting (Resolution) in <code class="language-plaintext highlighter-rouge">ble_query_poll_resolution_value.py</code>.
+First, we define the UUID’s to write to and receive from:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">QUERY_REQ_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0076"</span><span class="p">)</span>
+<span class="n">QUERY_RSP_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0077"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Then we send the query command:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">QUERY_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x12</span><span class="p">,</span> <span class="n">RESOLUTION_ID</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<p>When the response is received in the notification handler, we update the global resolution variable:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">response</span><span class="p">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># Notify the writer if we have received the entire response
+</span>    <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">is_received</span><span class="p">:</span>
+        <span class="n">response</span><span class="p">.</span><span class="n">parse</span><span class="p">()</span>
+
+        <span class="c1"># If this is query response, it must contain a resolution value
+</span>        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">QUERY_RSP_UUID</span><span class="p">:</span>
+            <span class="n">resolution</span> <span class="o">=</span> <span class="n">Resolution</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">RESOLUTION_ID</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>This all shows in the log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Getting the current resolution
+INFO\:root\:Received response at handle=62: b'05\:12\:00\:02\:01:09'
+INFO\:root\:self.bytes_remaining=0
+INFO\:root\:Resolution is currently Resolution.RES_1080
+</span></code></pre></div></div>
+
+<p>For verification purposes, we are then changing the resolution and polling again to verify that the setting
+has changed:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Changing the resolution to Resolution.RES_1440...
+INFO\:root\:Received response at handle=57: b'02\:02\:00'
+INFO\:root\:self.bytes_remaining=0
+INFO\:root\:Command sent successfully
+INFO\:root\:Polling the resolution to see if it has changed...
+INFO\:root\:Received response at handle=62: b'05\:12\:00\:02\:01:07'
+INFO\:root\:self.bytes_remaining=0
+INFO\:root\:Resolution is currently Resolution.RES_1440
+</span></code></pre></div></div>
+
+<h2 id="multiple-simultaneous-query-polls">Multiple Simultaneous Query Polls</h2>
+
+<p>Rather than just polling one setting, it is also possible to poll multiple settings. There is an example of this in
+<code class="language-plaintext highlighter-rouge">ble_poll_multiple_setting_values.py</code>. It is very similar to the previous example except for the following:</p>
+
+<p>The query command now includes 3 settings:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RESOLUTION_ID</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">FPS_ID</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">FOV_ID</span> <span class="o">=</span> <span class="mi">121</span>
+
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">QUERY_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x04</span><span class="p">,</span> <span class="mh">0x12</span><span class="p">,</span> <span class="n">RESOLUTION_ID</span><span class="p">,</span> <span class="n">FPS_ID</span><span class="p">,</span> <span class="n">FOV_ID</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<div class="note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  The length (first byte of the command) has been increased to 4 to accommodate the extra settings</span>
+</div>
+
+<p>We are also parsing the response to get all 3 values:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">response</span><span class="p">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">is_received</span><span class="p">:</span>
+        <span class="n">response</span><span class="p">.</span><span class="n">parse</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">QUERY_RSP_UUID</span><span class="p">:</span>
+            <span class="n">resolution</span> <span class="o">=</span> <span class="n">Resolution</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">RESOLUTION_ID</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">fps</span> <span class="o">=</span> <span class="n">FPS</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">FPS_ID</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">video_fov</span> <span class="o">=</span> <span class="n">VideoFOV</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">FOV_ID</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  When we are storing the updated setting, we are just taking the first byte (i..e index 0). A real-world
+implementation would need to know the length (and type) of the setting / status response by the ID. For example,
+sometimes settings / statuses are bytes, words, strings, etc.</span>
+</div>
+
+<p>They are then printed to the log which will look like the following:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Received response at handle=62: b'0b\:12\:00\:02\:01\:07\:03\:01\:01\:79\:01:00'
+INFO\:root\:self.bytes_remaining=0
+INFO\:root\:Resolution is currently Resolution.RES_1440
+INFO\:root\:Video FOV is currently VideoFOV.FOV_WIDE
+INFO\:root\:FPS is currently FPS.FPS_120
+</span></code></pre></div></div>
+
+<h2 id="query-all">Query All</h2>
+
+<p>It is also possible to query all settings / statuses by not passing any ID’s into the the query command, i.e.:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Query ID</th>
+      <th>Request</th>
+      <th>Query</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x12</td>
+      <td>Get All Settings</td>
+      <td>01:12</td>
+    </tr>
+    <tr>
+      <td>0x13</td>
+      <td>Get All Statuses</td>
+      <td>01:13</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>An example of this can be seen in the <code class="language-plaintext highlighter-rouge">ble_command_get_state.py</code> script described in the
+<a href="/tutorials/python/parse-ble-responses#query-responses">parsing query responses</a> tutorial</p>
+
+<p><strong>Quiz time! 📚 ✏️</strong></p>
+
+<div id="quiz_df00bb8b-9626-40ab-99b2-54243080dabf" class="quiz">
+    <div>
+        <div id="question_df00bb8b-9626-40ab-99b2-54243080dabf" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
+        <div id="answers_df00bb8b-9626-40ab-99b2-54243080dabf">
+        
+            <input type="radio" name="question" value="A"><label>A: Concatenate a Get Setting Value command and a Get Status command with the relevant ID's</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: Concatenate the Get All Setting and Get All Status commands.</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: It is not possible</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('df00bb8b-9626-40ab-99b2-54243080dabf', 'C')">Submit Answer</button>
+    <div id="results_df00bb8b-9626-40ab-99b2-54243080dabf" style="display: none">
+        <span id="correct_df00bb8b-9626-40ab-99b2-54243080dabf" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_df00bb8b-9626-40ab-99b2-54243080dabf" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+        It is not possible to concatenate commands. This would result in an unknown sequence of bytes
+        from the camera's perspective. So it is not possible to get a setting value and a status value in one command.
+        The Get Setting command (with resolution ID) and Get Status command(with encoding ID) must be sent sequentially
+        in order to get this information.
+    </div>
+</div>
+
+<h1 id="registering-for-query-push-notifications">Registering for Query Push Notifications</h1>
+
+<p>Rather than polling the query information, it is also possible to use an interrupt scheme to register for
+push notifications when the relevant query information changes.</p>
+
+<p>The relevant <a href="/ble#query-commands">commands</a> are:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Query ID</th>
+      <th>Request</th>
+      <th>Query</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x52</td>
+      <td>Register updates for setting(s)</td>
+      <td>len:52:xx:xx</td>
+    </tr>
+    <tr>
+      <td>0x53</td>
+      <td>Register updates for status(es)</td>
+      <td>len:53:xx:xx</td>
+    </tr>
+    <tr>
+      <td>0x72</td>
+      <td>Unregister updates for setting(s)</td>
+      <td>len:72:xx:xx</td>
+    </tr>
+    <tr>
+      <td>0x73</td>
+      <td>Unregister updates for status(es)</td>
+      <td>len:73:xx:xx</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>where <strong>xx</strong> are setting / status ID(s) and <strong>len</strong> is the total length of the query (not including the length).</p>
+
+<p>The Query ID’s for push notification responses are as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Query ID</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x92</td>
+      <td>Setting Value Push Notification</td>
+    </tr>
+    <tr>
+      <td>0x93</td>
+      <td>Status Value Push Notification</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Here is a generic sequence diagram of how this looks (the same is true for statuses):</p>
+
+<p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5ub3RlIG92ZXIgUEMsIEdvUHJvOiBDb25uZWN0ZWQgKHN0ZXBzIGZyb20gY29ubmVjdCB0dXRvcmlhbClcblBDIC0-PiBHb1BybzogUmVnaXN0ZXIgdXBkYXRlcyBmb3Igc2V0dGluZ1xuR29Qcm8gLT4-IFBDOiBOb3RpZmljYXRpb24gUmVzcG9uc2UgYW5kIEN1cnJlbnQgU2V0dGluZyBWYWx1ZVxubG9vcCBTZXR0aW5nIGNoYW5nZXNcbmFjdGl2YXRlIEdvUHJvXG5Hb1BybyAtPj4gR29Qcm86IFNldHRpbmcgY2hhbmdlc1xuZGVhY3RpdmF0ZSBHb1Byb1xuR29Qcm8gLT4-IFBDOiBQdXNoIG5vdGlmaWNhdGlvbiBvZiBuZXcgc2V0dGluZyB2YWx1ZVxuZW5kXG5QQyAtPj4gR29Qcm86IFVucmVnaXN0ZXIgdXBkYXRlcyBmb3Igc2V0dGluZ1xuR29Qcm8gLT4-IFBDOiBOb3RpZmljYXRpb24gUmVzcG9uc2Vcbmxvb3AgU2V0dGluZyBjaGFuZ2VzXG5hY3RpdmF0ZSBHb1Byb1xuR29Qcm8gLT4-IEdvUHJvOiBTZXR0aW5nIGNoYW5nZXNcbmRlYWN0aXZhdGUgR29Qcm9cbmVuZCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19"></p>
+
+<p>That is, after registering for push notifications for a given query, notification responses will continuously
+be sent whenever the query changes until the client unregisters for push notifications for the given query.</p>
+
+<div class="tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  The response to the Register command also contains the current setting / status value</span>
+</div>
+
+<p>We will walk through the <code class="language-plaintext highlighter-rouge">ble_query_register_resolution_value_updates.py</code> script to demonstrate this:</p>
+
+<p>First, we define the UUID’s to write to and receive from:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SETTINGS_REQ_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0074"</span><span class="p">)</span>
+<span class="n">SETTINGS_RSP_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0075"</span><span class="p">)</span>
+<span class="n">QUERY_REQ_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0076"</span><span class="p">)</span>
+<span class="n">QUERY_RSP_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0077"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Then we register for updates when the resolution setting changes:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">QUERY_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x52</span><span class="p">,</span> <span class="n">RESOLUTION_ID</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<p>and parse its response (which includes the current resolution value). This is very similar to the polling example
+with the exception that the Query ID is now 0x52 (Register Updates for Settings). This can be seen in the raw
+byte data as well as by inspecting <code class="language-plaintext highlighter-rouge">response.id</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">'Received response at </span><span class="si">{</span><span class="n">handle</span><span class="o">=</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">hexlify</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">":"</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+    <span class="n">response</span><span class="p">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># Notify the writer if we have received the entire response
+</span>    <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">is_received</span><span class="p">:</span>
+        <span class="n">response</span><span class="p">.</span><span class="n">parse</span><span class="p">()</span>
+
+        <span class="c1"># If this is query response, it must contain a resolution value
+</span>        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">QUERY_RSP_UUID</span><span class="p">:</span>
+            <span class="k">global</span> <span class="n">resolution</span>
+            <span class="n">resolution</span> <span class="o">=</span> <span class="n">Resolution</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">RESOLUTION_ID</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>This will show in the log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Registering for resolution updates
+INFO\:root\:Received response at handle=62: b'05\:52\:00\:02\:01:07'
+INFO\:root\:self.bytes_remaining=0
+INFO\:root\:Successfully registered for resolution value updates.
+INFO\:root\:Resolution is currently Resolution.RES_1440
+</span></code></pre></div></div>
+
+<p>We are now successfully registered for resolution value updates and will receive push notifications whenever
+the resolution changes. We verify this is the demo by then changing the resolution. This will show in the log
+as:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Successfully changed the resolution
+INFO\:root\:Received response at handle=62: b'05\:92\:00\:02\:01:09'
+INFO\:root\:self.bytes_remaining=0
+INFO\:root\:Resolution is now Resolution.RES_1080
+</span></code></pre></div></div>
+
+<p>In this case, the Query ID is 0x92 (Setting Value Push Notification) as expected.</p>
+
+<hr>
+
+<p>Multiple push notifications can be registered / received in a similar manner that multiple queries were polled
+in <a href="/tutorials/python/ble-queries#multiple-simultaneous-query-polls">multiple simultaneous query polls</a></p>
+
+<p><strong>Quiz time! 📚 ✏️</strong></p>
+
+<div id="quiz_ceced019-1f7d-4a51-ac25-4c7caf8c36f2" class="quiz">
+    <div>
+        <div id="question_ceced019-1f7d-4a51-ac25-4c7caf8c36f2" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
+    receive push notifications for it.</div>
+        <div id="answers_ceced019-1f7d-4a51-ac25-4c7caf8c36f2">
+        
+            <input type="radio" name="question" value="A"><label>A: True</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: False</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('ceced019-1f7d-4a51-ac25-4c7caf8c36f2', 'A')">Submit Answer</button>
+    <div id="results_ceced019-1f7d-4a51-ac25-4c7caf8c36f2" style="display: none">
+        <span id="correct_ceced019-1f7d-4a51-ac25-4c7caf8c36f2" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_ceced019-1f7d-4a51-ac25-4c7caf8c36f2" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+        While there is probably not a good reason to do so, there is nothing preventing polling
+        in this manner.
+    </div>
+</div>
+
+<div id="quiz_d82dce55-95a2-4788-be71-96dbe14e5dfe" class="quiz">
+    <div>
+        <div id="question_d82dce55-95a2-4788-be71-96dbe14e5dfe" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
+    about one setting ID.</div>
+        <div id="answers_d82dce55-95a2-4788-be71-96dbe14e5dfe">
+        
+            <input type="radio" name="question" value="A"><label>A: True</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: False</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('d82dce55-95a2-4788-be71-96dbe14e5dfe', 'B')">Submit Answer</button>
+    <div id="results_d82dce55-95a2-4788-be71-96dbe14e5dfe" style="display: none">
+        <span id="correct_d82dce55-95a2-4788-be71-96dbe14e5dfe" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_d82dce55-95a2-4788-be71-96dbe14e5dfe" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+        It is possible for push notifications to contain multiple setting ID's if both setting ID's have
+    push notifications registered and both settings change at the same time.
+    </div>
+</div>
+
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>See the first tutorial’s <a href="/tutorials/python/connect-ble#troubleshooting">troubleshooting section</a>.</p>
+
+<h1 id="good-job">Good Job!</h1>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  Congratulations 🤙</span>
+</div>
+
+<p>You can now query any of the settings / statuses from the camera using one of the above patterns.</p>
+
+<p>If you have been following these tutorials in order, here is an extra 🥇🍾 <strong>Congratulations</strong> 🍰👍 because you have
+completed all of the BLE tutorials.</p>
+
+<p>Next, to get started with WiFI (specifically to enable and connect to it),
+proceed to the next tutorial.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-05-26T11:15:31-07:00">May 26, 2021</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/tutorials/python/parse-ble-responses" class="pagination--pager" title="Python Tutorial 3: Parse BLE TLV Responses
+">Previous</a>
+    
+    
+      <a href="/tutorials/python/connect-wifi" class="pagination--pager" title="Python Tutorial 5: Connect WiFi
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+        
+      
+        
+          <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2021 GoPro. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

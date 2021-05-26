@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Open GoPro Python SDK :  Open GoPro</title>
+<meta name="description" content="Open GoPro Python SDK">
+
+
+  <meta name="author" content="GoPro">
+  
+  <meta property="article:author" content="GoPro">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Open GoPro Python SDK">
+<meta property="og:url" content="/demos/python/sdk_wireless_camera_control">
+
+
+  <meta property="og:description" content="Open GoPro Python SDK">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-05-26T11:15:31-07:00">
+
+
+
+
+
+
+<link rel="canonical" href="/demos/python/sdk_wireless_camera_control">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+  
+    <script src="/assets/js/tabs.js"></script>
+  
+    <script src="/assets/js/quiz.js"></script>
+  
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--demo">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro">View on Github</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/ble">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/wifi">WiFi Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/demos">Demos</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/demos" itemprop="item"><span itemprop="name">Demos</span></a>
+          <meta itemprop="position" content="2">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/python" itemprop="item"><span itemprop="name">Python</span></a>
+          <meta itemprop="position" content="3">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Open GoPro Python SDK</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">GoPro</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Be a <strong>hero</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Open GoPro Python SDK">
+    <meta itemprop="description" content="Open GoPro Python SDK">
+    <meta itemprop="datePublished" content="2021-05-26T11:15:31-07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Open GoPro Python SDK
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#demos">Demos</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <button class="github-button" onclick="location.href='https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control'">
+          <i class="fab fa-github"></i>
+          View this Demo on Github
+        </button>
+        <p><img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/logo.png?token=ASEL3UPDVM4EG6P53WZWG73AT4EOA" width="50%" style="max-width: 500px;"></p>
+
+<p><a href="https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml"><img src="https://github.com/gopro/OpenGoPro/actions/workflows/test_sdk_wireless_camera_control.yml/badge.svg" alt="Build and Test"></a>
+<a href="https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml"><img src="https://github.com/gopro/OpenGoPro/actions/workflows/docs_sdk_wireless_camera_control.yml/badge.svg" alt="Build Docs"></a>
+<a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black"></a></p>
+
+<p>TODO add PyPi badge once released on PyPi</p>
+
+<p>This is a Python package that provides an interface for the user to exercise the Open GoPro Bluetooth Low
+Energy (BLE) and Wi-Fi API’s as well as install command line interfaces to take photos, videos, and view
+the preview stream.</p>
+
+<ul>
+  <li>Free software: MIT license</li>
+  <li>Documentation: TODO Add link</li>
+  <li>View on Github: https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control</li>
+</ul>
+
+<h2 id="documentation">Documentation</h2>
+
+<p>This README is an overview of the package. Complete documentation can be found on Open GoPro: TODO ADD LINK.</p>
+
+<h2 id="installation">Installation</h2>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">    $</span><span class="w"> </span>pip <span class="nb">install </span>open_gopro
+</code></pre></div></div>
+
+<h2 id="features">Features</h2>
+
+<ul>
+  <li>Top-level GoPro class interface to use both BLE / WiFi</li>
+  <li>Cross-platform (tested on MacOS Big Sur, Windows 10, and Ubuntu 20.04)
+    <ul>
+      <li>BLE implemented using <code class="language-plaintext highlighter-rouge">bleak &lt;https://pypi.org/project/bleak/&gt;</code>_</li>
+      <li>Wi-Fi controller provided in the Open GoPro package (loosely based on the <code class="language-plaintext highlighter-rouge">Wireless Library &lt;https://pypi.org/project/wireless/&gt;</code>_ )</li>
+    </ul>
+  </li>
+  <li>Supports all <code class="language-plaintext highlighter-rouge">Open GoPro API's &lt;https://github.com/gopro/OpenGoPro&gt;</code>_</li>
+  <li>Automatically handles some required functionality:
+    <ul>
+      <li>manage camera ready / encoding</li>
+      <li>periodically sends keep alive signals</li>
+    </ul>
+  </li>
+  <li>Includes demo scripts installed as command-line applications to show BLE and WiFi functionality</li>
+</ul>
+
+<h2 id="usage">Usage</h2>
+
+<p>To automatically connect to GoPro device via BLE and WiFI, take a video, and download all files:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">GoProBLE</span><span class="p">,</span> <span class="n">params</span>
+
+<span class="k">with</span> <span class="n">GoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
+    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="n">load_preset</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="n">Preset</span><span class="p">.</span><span class="n">CINEMATIC</span><span class="p">)</span>
+    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">resolution</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="n">Resolution</span><span class="p">.</span><span class="n">RES_5k</span><span class="p">)</span>
+    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">fps</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="n">FPS</span><span class="p">.</span><span class="n">FPS_30</span><span class="p">)</span>
+    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="n">Shutter</span><span class="p">.</span><span class="n">ON</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Record for 2 seconds
+</span>    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="n">Shutter</span><span class="p">.</span><span class="n">OFF</span><span class="p">)</span>
+
+    <span class="c1"># Download all of the files from the camera
+</span>    <span class="n">media_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">gopro</span><span class="p">.</span><span class="n">wifi_command</span><span class="p">.</span><span class="n">get_media_list</span><span class="p">()[</span><span class="s">"media"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">"fs"</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">:</span>
+        <span class="n">gopro</span><span class="p">.</span><span class="n">wifi_command</span><span class="p">.</span><span class="n">download_file</span><span class="p">(</span><span class="n">camera_file</span><span class="o">=</span><span class="nb">file</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>And much more!</p>
+
+<h2 id="demos">Demos</h2>
+
+<blockquote>
+  <p>Note! These demos can be found on <a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control/open_gopro/demos">Github</a></p>
+</blockquote>
+
+<p>Demos can be found in the installed package in the “demos” folder. They are installed as a CLI entrypoint
+and can be run via:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-photo
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-video
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-stream
+</code></pre></div></div>
+
+<p>For more information on each, try running with help as such:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-photo <span class="nt">--help</span>
+
+usage: gopro-photo <span class="o">[</span><span class="nt">-h</span><span class="o">]</span> <span class="o">[</span><span class="nt">-i</span> IDENTIFIER] <span class="o">[</span><span class="nt">-l</span> LOG] <span class="o">[</span><span class="nt">-o</span> OUTPUT]
+
+Connect to a GoPro camera, take a photo, <span class="k">then </span>download it.
+
+optional arguments:
+  <span class="nt">-h</span>, <span class="nt">--help</span>            show this <span class="nb">help </span>message and <span class="nb">exit</span>
+  <span class="nt">-i</span> IDENTIFIER, <span class="nt">--identifier</span> IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to
+  <span class="nt">-l</span> LOG, <span class="nt">--log</span> LOG     Location to store detailed log
+  <span class="nt">-o</span> OUTPUT, <span class="nt">--output</span> OUTPUT
+                        Where to write the photo to. If not <span class="nb">set</span>, write to <span class="s1">'photo.jpg'</span>
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-05-26T11:15:31-07:00">May 26, 2021</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/demos/csharp/GoProCSharpSample" class="pagination--pager" title="GoProCSharpSample
+">Previous</a>
+    
+    
+      <a href="/demos/swift/EnableWiFiDemo" class="pagination--pager" title="Swift Enable WiFi Demo
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+        
+      
+        
+          <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2021 GoPro. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

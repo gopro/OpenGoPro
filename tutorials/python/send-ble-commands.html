@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Python Tutorial 2: Send BLE Commands :  Open GoPro</title>
+<meta name="description" content="Python Tutorial 2: Send BLE Commands">
+
+
+  <meta name="author" content="GoPro">
+  
+  <meta property="article:author" content="GoPro">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Python Tutorial 2: Send BLE Commands">
+<meta property="og:url" content="/tutorials/python/send-ble-commands">
+
+
+  <meta property="og:description" content="Python Tutorial 2: Send BLE Commands">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-05-26T11:15:31-07:00">
+
+
+
+
+
+
+<link rel="canonical" href="/tutorials/python/send-ble-commands">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+  
+    <script src="/assets/js/tabs.js"></script>
+  
+    <script src="/assets/js/quiz.js"></script>
+  
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro">View on Github</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/ble">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/wifi">WiFi Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/demos">Demos</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
+          <meta itemprop="position" content="2">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/python" itemprop="item"><span itemprop="name">Python</span></a>
+          <meta itemprop="position" content="3">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Python Tutorial 2: Send BLE Commands</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">GoPro</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Be a <strong>hero</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox">
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <a href="/tutorials/python/connect-ble"><span class="nav__sub-title">1: Connect BLE</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/send-ble-commands"><span class="nav__sub-title">2: Send BLE Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/parse-ble-responses"><span class="nav__sub-title">3: Parse BLE TLV Responses</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/ble-queries"><span class="nav__sub-title">4: BLE Queries</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/connect-wifi"><span class="nav__sub-title">5: Connect WiFi</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/send-wifi-commands"><span class="nav__sub-title">6: Send WiFi Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/tutorials/python/camera-media-list"><span class="nav__sub-title">7: Camera Media List</span></a>
+        
+
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Python Tutorial 2: Send BLE Commands">
+    <meta itemprop="description" content="Python Tutorial 2: Send BLE Commands">
+    <meta itemprop="datePublished" content="2021-05-26T11:15:31-07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Python Tutorial 2: Send BLE Commands
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#just-show-me-the-demos">Just Show me the Demo(s)!!</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#command-overview">Command Overview</a></li>
+<li>
+<a href="#sending-commands">Sending Commands</a><ul>
+<li><a href="#set-shutter">Set Shutter</a></li>
+<li><a href="#sleep">Sleep</a></li>
+<li><a href="#load-preset-group">Load Preset Group</a></li>
+<li><a href="#load-preset">Load Preset</a></li>
+<li><a href="#enable-analytics">Enable Analytics</a></li>
+<li><a href="#set-the-video-resolution">Set the Video Resolution</a></li>
+<li><a href="#set-the-frames-per-second-fps">Set the Frames Per Second (FPS)</a></li>
+</ul>
+</li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#good-job">Good Job!</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>This document will provide a walk-through tutorial to use <a href="https://pypi.org/project/bleak/">bleak</a> to implement the
+<a href="/ble">Open GoPro Interface</a> to send commands and receive responses.</p>
+
+<p>Commands in this sense are specifically procedures that are initiated by either:</p>
+
+<ul>
+  <li>Writing to the Command Request UUID and receiving responses via the Command Response UUID. They are listed <a href="/ble#commands">here</a>.</li>
+  <li>Writing to the Setting UUID and receiving responses via the Setting Response UUID. They are listed <a href="/ble#settings">here</a>.</li>
+</ul>
+
+<blockquote>
+  <p>It is required that you have first completed the <a href="/tutorials/python/connect-ble#requirements">connect tutorial</a> before going through this tutorial.</p>
+</blockquote>
+
+<p>This tutorial only considers sending these commands as one-off commands. That is, it does not consider state management /
+synchronization when sending multiple commands. This will be discussed in a future lab.</p>
+
+<h1 id="requirements">Requirements</h1>
+
+<p>It is assumed that the hardware and software requirements from the <a href="/tutorials/python/connect-ble">connect tutorial</a>
+are present and configured correctly.</p>
+
+<p>The scripts that will be used for this tutorial can be found at in the
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_2_send_ble_commands">Tutorial 2 Folder</a>.</p>
+
+<h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
+
+<p>Each of the commands detailed in [Sending Commands] has a corresponding script to demo it. If you don’t want to read this
+tutorial and just want to see the demo, for example, run:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_set_shutter.py
+</code></pre></div></div>
+
+<blockquote>
+  <p>Note! Python 3.8.x must be used as specified in <a href="/tutorials/python/connect-ble#requirements">the requirements</a></p>
+</blockquote>
+
+<p>Note that each script has a command-line help which can be found via:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ./ble_command_set_shutter.py <span class="nt">--help</span>
+<span class="go">usage: ble_command_set_shutter.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, set the shutter on, wait 2 seconds, then set the shutter off.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to
+</span></code></pre></div></div>
+
+<h1 id="setup">Setup</h1>
+
+<p>We must first connect as was discussed in the <a href="/tutorials/python/connect-ble">connect tutorial</a>. In
+this case, however, we are defining a meaningful (albeit naive) notification handler that will:</p>
+
+<ol>
+  <li>print byte data and handle that the notification was received on</li>
+  <li>check if the response is what we expected</li>
+  <li>set an event to notify the writer that the response was received</li>
+</ol>
+
+<p>This is a very simple handler: response parsing will be expanded upon in the <a href="/tutorials/python/parse-ble-responses">next tutorial</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">'Received response at </span><span class="si">{</span><span class="n">handle</span><span class="o">=</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">hexlify</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">":"</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+    <span class="c1"># If this is the correct handle and the status is success, the command was a success
+</span>    <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">response_uuid</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x00</span><span class="p">:</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Command sent successfully"</span><span class="p">)</span>
+    <span class="c1"># Anything else is unexpected. This shouldn't happen
+</span>    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="s">"Unexpected response"</span><span class="p">)</span>
+
+    <span class="c1"># Notify the writer
+</span>    <span class="n">event</span><span class="p">.</span><span class="nb">set</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>The event used above is a simple synchronization event that is only alerting the writer that a notification was
+received. There is much more to the synchronization and data parsing than this but this will be
+discussed in future tutorials. For now, we’re just checking that the handle matches what is expected and
+that the status (third byte) is success (0x00).</p>
+
+<h1 id="command-overview">Command Overview</h1>
+
+<p>Both Command Requests and Setting Requests follow the same procedure:</p>
+
+<ol>
+  <li>Write to relevant request UUID</li>
+  <li>Receive confirmation from GoPro (via notification from relevant response UUID) that request was received.</li>
+  <li>GoPro reacts to command</li>
+</ol>
+
+<blockquote>
+  <p>Note! The notification response only indicates that the request was received and whether it was accepted or rejected. The relevant behavior of the GoPro must be observed to verify when the command’s effects have been applied.</p>
+</blockquote>
+
+<p>Here is the procedure from power-on to finish:</p>
+
+<p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5wYXJ0aWNpcGFudCBQQ1xucGFydGljaXBhbnQgR29Qcm9cbm5vdGUgb3ZlciBQQywgR29Qcm8gOiBkZXZpY2VzIGFyZSBjb25uZWN0ZWQgYXMgaW4gVHV0b3JpYWwgMVxuUEMgLT4-IEdvUHJvOiBDb21tYW5kIFJlcXVlc3QgKFdyaXRlIHRvIFJlcXVlc3QgVVVJRClcbmFjdGl2YXRlIEdvUHJvXG5Hb1BybyAtPj4gUEM6IENvbW1hbmQgUmVzcG9uc2UgKHZpYSBub3RpZmljYXRpb24gdG8gUmVzcG9uc2UgVVVJRClcbkdvUHJvIC0-PiBHb1BybzogQXBwbHkgZWZmZWN0cyBvZiBjb21tYW5kIHdoZW4gYWJsZVxuZGVhY3RpdmF0ZSBHb1BybyIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19"></p>
+
+<h1 id="sending-commands">Sending Commands</h1>
+
+<p>Now that we are are connected, paired, and have enabled notifications (using our defined callback), we can send commands.</p>
+
+<p>First, we need to define the attributes to write to and receive responses from, which, for commands, are the “Command Request”
+characteristic (UUID <code class="language-plaintext highlighter-rouge">b5f90072-aa8d-11e3-9046-0002a5d5c51b</code>) and “Command Response” characteristic (UUID
+<code class="language-plaintext highlighter-rouge">b5f90073-aa8d-11e3-9046-0002a5d5c51b</code>).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">COMMAND_REQ_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0072"</span><span class="p">)</span>
+<span class="n">COMMAND_RSP_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0073"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Or, for settings, the “Settings” characteristic (UUID <code class="language-plaintext highlighter-rouge">b5f90074-aa8d-11e3-9046-0002a5d5c51b</code>) and “Settings
+Response” (UUID <code class="language-plaintext highlighter-rouge">b5f90075-aa8d-11e3-9046-0002a5d5c51b</code>).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SETTINGS_REQ_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0074"</span><span class="p">)</span>
+<span class="n">SETTINGS_RSP_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0075"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  We're using the GOPRO_BASE_UUID string imported from the module's `__init__.py ` to build these.</span>
+</div>
+
+<h2 id="set-shutter">Set Shutter</h2>
+
+<p>The first command we will be sending is <a href="/ble#commands-quick-reference">Set Shutter</a>, which at byte level is:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th style="text-align: center">Bytes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Set Shutter Off</td>
+      <td style="text-align: center">0x03 0x01 0x01 0x00</td>
+    </tr>
+    <tr>
+      <td>Set Shutter On</td>
+      <td style="text-align: center">0x03 0x01 0x01 0x01</td>
+    </tr>
+  </tbody>
+</table>
+
+<div>
+    <ul class="tab" data-tab="e96008ac-1dfa-4ea0-8d77-b4753063e120">
+        
+            <li class="active">
+                <a href="">Set Shutter On </a>
+            </li>
+        
+            <li>
+                <a href="">Set Shutter Off </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="e96008ac-1dfa-4ea0-8d77-b4753063e120">
+        
+            <li class="active">
+<p>Now, let’s write the bytes to the “Command Request” UUID to turn the shutter on and start encoding!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">COMMAND_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span> <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback.</span>
+</div>
+
+<p>You should hear the camera beep and it will either take a picture or start recording
+depending on what mode it is in.</p>
+
+<p>Also note that we have received the “Command Status” notification response from the
+Command Response characteristic since we enabled its notifications in
+<a href="/tutorials/python/connect-ble#enable-notifications">Enable Notifications</a>.
+This can be seen in the demo log:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Setting the shutter on
+INFO\:root\:Received response at handle=52: b'02\:01\:00'
+INFO\:root\:Shutter command sent successfully
+</span></code></pre></div></div>
+
+<p>As expected, the response was received on the correct handle and the status was “success”.</p>
+
+<p>If you are recording a video, go to the next tab to set the shutter off.</p>
+
+</li>
+        
+            <li>
+<p>We can now set the shutter off:</p>
+
+<blockquote>
+  <p>We’re waiting 2 seconds in case you are in video mode so that we can capture a 2 second video.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">COMMAND_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span> <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<p>This will log in the console as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">INFO</span><span class="p">:</span><span class="n">root</span><span class="p">:</span><span class="n">Setting</span> <span class="n">the</span> <span class="n">shutter</span> <span class="n">off</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">root</span><span class="p">:</span><span class="n">Received</span> <span class="n">response</span> <span class="n">at</span> <span class="n">handle</span><span class="o">=</span><span class="mi">52</span><span class="p">:</span> <span class="sa">b</span><span class="s">'02\:01\:00'</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">root</span><span class="p">:</span><span class="n">Shutter</span> <span class="n">command</span> <span class="n">sent</span> <span class="n">successfully</span>
+</code></pre></div></div>
+
+</li>
+        
+    </ul>
+</div>
+
+<h2 id="sleep">Sleep</h2>
+
+<p>The next command we will be sending is
+<a href="/ble#commands-quick-reference">Sleep</a>, which at byte level is:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th style="text-align: center">Bytes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sleep</td>
+      <td style="text-align: center">0x01 0x05</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Now, let’s write the bytes to the “Command Request” UUID to put the camera to sleep!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">COMMAND_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x05</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback.</span>
+</div>
+
+<p>You should hear the camera beep display a spinner showing “Powering Off”</p>
+
+<p>Also note that we have received the “Command Status” notification response from the
+Command Response characteristic since we enabled its notifications in <a href="/tutorials/python/connect-ble#enable-notifications">Enable Notifications</a>.. This can
+be seen in the demo log:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Putting the camera to sleep
+INFO\:root\:Received response at handle=52: b'02\:05\:00'
+INFO\:root\: Command sent successfully
+</span></code></pre></div></div>
+
+<p>As expected, the response was received on the correct handle and the status was “success”.</p>
+
+<p>Since the camera has gone to sleep, it must be reconnected to via BLE to communicate again as detailed in the
+<a href="/tutorials/python/connect-ble">connect tutorial</a>.</p>
+
+<h2 id="load-preset-group">Load Preset Group</h2>
+
+<p>The next command we will be sending is
+<a href="/ble#commands-quick-reference">Load Preset Group</a>, which is used
+to toggle between the 3 groups of presets (video, photo, and timelapse). At byte level, the commands are:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th style="text-align: center">Bytes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Load Video Preset Group</td>
+      <td style="text-align: center">0x04 0x3E 0x02 0x03 0xE8</td>
+    </tr>
+    <tr>
+      <td>Load Photo Preset Group</td>
+      <td style="text-align: center">0x04 0x3E 0x02 0x03 0xE9</td>
+    </tr>
+    <tr>
+      <td>Load Timelapse Preset Group</td>
+      <td style="text-align: center">0x04 0x3E 0x02 0x03 0xEA</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Now, let’s write the bytes to the “Command Request” UUID to change the preset group to Video!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">COMMAND_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x04</span><span class="p">,</span> <span class="mh">0x3E</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">,</span> <span class="mh">0xE8</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback.</span>
+</div>
+
+<p>You should hear the camera beep and move to the Video Preset Group. You can tell this by the logo at the top
+middle of the screen:</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/assets/images/tutorials/python/preset_group.png" alt="Preset Group" style="
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Load Preset Group
+
+        </figcaption></figure>
+
+<p>Also note that we have received the “Command Status” notification response from the
+Command Response characteristic since we enabled its notifications in <a href="/tutorials/python/connect-ble#enable-notifications">Enable Notifications</a>.. This can
+be seen in the demo log:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Loading the video preset group...
+INFO\:root\:Received response at handle=52: b'02\:3e\:00'
+INFO\:root\:Command sent successfully
+</span></code></pre></div></div>
+
+<p>As expected, the response was received on the correct handle and the status was “success”.</p>
+
+<h2 id="load-preset">Load Preset</h2>
+
+<p>The next command we will be sending is
+<a href="/ble#commands-quick-reference">Load Preset</a>, which is used
+to select a specific preset that is part of a Preset Group. At byte level, some of the commands for the various
+preset are:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th style="text-align: center">Bytes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Load Cinematic Preset</td>
+      <td style="text-align: center">0x06 0x40 0x04 0x00 0x00 0x00 0x02</td>
+    </tr>
+    <tr>
+      <td>Load Slo-Mo Preset</td>
+      <td style="text-align: center">0x06 0x40 0x04 0x00 0x00 0x00 0x03</td>
+    </tr>
+    <tr>
+      <td>Load Burst Photo Preset</td>
+      <td style="text-align: center">0x06 0x40 0x04 0x00 0x01 0x00 0x02</td>
+    </tr>
+    <tr>
+      <td>Load Night Photo Preset</td>
+      <td style="text-align: center">0x06 0x40 0x04 0x00 0x01 0x00 0x03</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>Note! It is possible that the preset ID values will vary in future cameras. The only absolutely correct way to know the preset ID is to read them from the “Get Preset Status” protobuf command. A future lab will discuss protobuf commands.</p>
+</blockquote>
+
+<p>Now, let’s write the bytes to the “Command Request” UUID to change the preset to Cinematic!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">COMMAND_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x06</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">,</span> <span class="mh">0x04</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">]))</span>
+    <span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback.</span>
+</div>
+
+<p>You should hear the camera beep and switch to the Cinematic Preset (assuming it wasn’t already sent). You can verify
+this by seeing the preset name in the pill at bottom middle of the screen.</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/assets/images/tutorials/python/preset.png" alt="Preset" style="
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Load Preset
+
+        </figcaption></figure>
+
+<p>Also note that we have received the “Command Status” notification response from the
+Command Response characteristic since we enabled its notifications in <a href="/tutorials/python/connect-ble#enable-notifications">Enable Notifications</a>.. This can
+be seen in the demo log:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Loading the cinematic preset...
+INFO\:root\:Received response at handle=52: b'02\:40\:00'
+INFO\:root\:Command sent successfully
+</span></code></pre></div></div>
+
+<p>As expected, the response was received on the correct handle and the status was “success”.</p>
+
+<h2 id="enable-analytics">Enable Analytics</h2>
+
+<p>The next command we will be sending is
+<a href="/ble#commands-quick-reference">Enable Analytics</a>, which at byte level is:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th style="text-align: center">Bytes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Enable Analytics</td>
+      <td style="text-align: center">0x01 0x50</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This command is used to notify that a Third Party is using the Open GoPro API. It should be called after
+each connection.  The use of this command by third parties will help improve Open GoPro.</p>
+
+<p>Now, let’s write the bytes to the “Command Request” UUID to enable analytics.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">COMMAND_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x50</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback.</span>
+</div>
+
+<p>Also note that we have received the “Command Status” notification response from the
+Command Response characteristic since we enabled its notifications in <a href="/tutorials/python/connect-ble#enable-notifications">Enable Notifications</a>.. This can
+be seen in the demo log:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Enabling analytics...
+INFO\:root\:Received response at handle=52: b'02\:50\:00'
+INFO\:root\:Command sent successfully
+</span></code></pre></div></div>
+
+<p>As expected, the response was received on the correct handle and the status was “success”.</p>
+
+<h2 id="set-the-video-resolution">Set the Video Resolution</h2>
+
+<p>The next command we will be sending is
+<a href="/ble#commands-quick-reference">Set Video Resolution</a>. This is
+used to change the value of the Video Resolution setting. It is important to note that this only affects <strong>video</strong>
+resolution (not photo). Therefore, the Video Preset Group must be active in order for it to succeed. This can be done
+either manually through the camera UI or by sending [Load Preset Group].</p>
+
+<blockquote>
+  <p>Additionally, this resolution it only affects the current video preset. Each video preset can have its own independent values for video resolution.</p>
+</blockquote>
+
+<p>Here are some of the byte level commands for various video resolutions.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th style="text-align: center">Bytes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Set Video Resolution to 1080</td>
+      <td style="text-align: center">0x03 0x02 0x01 0x09</td>
+    </tr>
+    <tr>
+      <td>Set Video Resolution to 2.7K</td>
+      <td style="text-align: center">0x03 0x02 0x01 0x04</td>
+    </tr>
+    <tr>
+      <td>Set Video Resolution to 4K</td>
+      <td style="text-align: center">0x03 0x02 0x01 0x18</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Now, let’s write the bytes to the “Setting Request” UUID to change the video resolution to 1080!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">SETTINGS_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x09</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback.</span>
+</div>
+
+<p>You should hear the camera beep and see the video resolution change to 1080 in the pill in the bottom-middle of the
+screen:</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/assets/images/tutorials/python/video_resolution.png" alt="Video Resolution" style="
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Set Video Resolution
+
+        </figcaption></figure>
+
+<p>Also note that we have received the “Command Status” notification response from the
+Command Response characteristic since we enabled its notifications in <a href="/tutorials/python/connect-ble#enable-notifications">Enable Notifications</a>.. This can
+be seen in the demo log:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Loading the video preset group...
+INFO\:root\:Received response at handle=52: b'02\:3e\:00'
+INFO\:root\:Command sent successfully
+</span></code></pre></div></div>
+
+<p>As expected, the response was received on the correct handle and the status was “success”. If the Preset
+Group was not Video, the status will not be success.</p>
+
+<h2 id="set-the-frames-per-second-fps">Set the Frames Per Second (FPS)</h2>
+
+<p>The next command we will be sending is
+<a href="/ble#commands-quick-reference">Set FPS</a>. This is
+used to change the value of the FPS setting. It is important to note that this setting is dependent on the
+video resolution. That is, certain FPS values are not valid with certain resolutions. In general, higher resolutions
+only allow lower FPS values. Also, the current anti-flicker value may further limit possible FPS values. Check the
+<a href="/ble#camera-capabilities">camera capabilities </a> to see which FPS
+values are valid for given use cases.</p>
+
+<p>Therefore, for this step of the tutorial, it is assumed that the resolution has
+been set to 1080 as in [Set the Video Resolution].</p>
+
+<p>Here are some of the byte level commands for various FPS values.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th style="text-align: center">Bytes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Set FPS to 24</td>
+      <td style="text-align: center">0x03 0x03 0x01 0x0A</td>
+    </tr>
+    <tr>
+      <td>Set FPS to 60</td>
+      <td style="text-align: center">0x03 0x03 0x01 0x05</td>
+    </tr>
+    <tr>
+      <td>Set FPS to 240</td>
+      <td style="text-align: center">0x03 0x03 0x01 0x00</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Now, let’s write the bytes to the “Setting Request” UUID to change the FPS to 240!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">SETTINGS_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback.</span>
+</div>
+
+<p>You should hear the camera beep and see the FPS change to 240 in the pill in the bottom-middle of the
+screen:</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/assets/images/tutorials/python/fps.png" alt="FPS" style="
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Set FPS
+
+        </figcaption></figure>
+
+<p>Also note that we have received the “Command Status” notification response from the
+Command Response characteristic since we enabled its notifications in <a href="/tutorials/python/connect-ble#enable-notifications">Enable Notifications</a>.. This can
+be seen in the demo log:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Setting the fps to 240
+INFO\:root\:Received response at handle=57: b'02\:03\:00'
+INFO\:root\:Command sent successfully
+</span></code></pre></div></div>
+
+<p>As expected, the response was received on the correct handle and the status was “success”. If the video resolution
+was higher, for example 5K, this would fail.</p>
+
+<p><strong>Quiz time! 📚 ✏️</strong></p>
+
+<div id="quiz_2b067200-b58e-41ba-a16d-efc39dfb99d0" class="quiz">
+    <div>
+        <div id="question_2b067200-b58e-41ba-a16d-efc39dfb99d0" class="quiz__question">Which of the following is not a real preset group?</div>
+        <div id="answers_2b067200-b58e-41ba-a16d-efc39dfb99d0">
+        
+            <input type="radio" name="question" value="A"><label>A: Timelapse</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: Photo</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: Burst</label>
+            <br>
+        
+            <input type="radio" name="question" value="D"><label>D: Video</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('2b067200-b58e-41ba-a16d-efc39dfb99d0', 'C')">Submit Answer</button>
+    <div id="results_2b067200-b58e-41ba-a16d-efc39dfb99d0" style="display: none">
+        <span id="correct_2b067200-b58e-41ba-a16d-efc39dfb99d0" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_2b067200-b58e-41ba-a16d-efc39dfb99d0" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+        There are 3 preset groups (Timelapse, Photo, and Video). These can be
+    set via the Load Preset Group command.
+    </div>
+</div>
+
+<div id="quiz_e463fdb7-7cda-43ea-b1d8-c6d27010c14d" class="quiz">
+    <div>
+        <div id="question_e463fdb7-7cda-43ea-b1d8-c6d27010c14d" class="quiz__question">What of the following sets of FPS values are possible at 5K?</div>
+        <div id="answers_e463fdb7-7cda-43ea-b1d8-c6d27010c14d">
+        
+            <input type="radio" name="question" value="A"><label>A: [24, 25, 30]</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: [24, 25, 30, 60]</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: [24, 25, 30, 60, 120]</label>
+            <br>
+        
+            <input type="radio" name="question" value="D"><label>D: Any FPS is valid in at 5k</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('e463fdb7-7cda-43ea-b1d8-c6d27010c14d', 'A')">Submit Answer</button>
+    <div id="results_e463fdb7-7cda-43ea-b1d8-c6d27010c14d" style="display: none">
+        <span id="correct_e463fdb7-7cda-43ea-b1d8-c6d27010c14d" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_e463fdb7-7cda-43ea-b1d8-c6d27010c14d" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+        Among these options, only 24 is possible. You're not actually expected to know
+    this. But you should know where to find the information: https://github.com/gopro/OpenGoPro/tree/main/docs/ble#camera-capabilities
+    </div>
+</div>
+
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>See the first tutorial’s <a href="/tutorials/python/connect-ble#troubleshooting">troubleshooting section</a>.</p>
+
+<h1 id="good-job">Good Job!</h1>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  Congratulations 🤙</span>
+</div>
+
+<p>You can now send any of the other BLE commands detailed in the Open GoPro documentation in
+a similar manner.</p>
+
+<p>To see how to parse more complicate responses, proceed to the next tutorial.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-05-26T11:15:31-07:00">May 26, 2021</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/tutorials/python/connect-ble" class="pagination--pager" title="Python Tutorial 1: Connect BLE
+">Previous</a>
+    
+    
+      <a href="/tutorials/python/parse-ble-responses" class="pagination--pager" title="Python Tutorial 3: Parse BLE TLV Responses
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+        
+      
+        
+          <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2021 GoPro. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

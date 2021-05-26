@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>BlueZ Bash Tutorial :  Open GoPro</title>
+<meta name="description" content="BlueZ Bash Tutorial">
+
+
+  <meta name="author" content="GoPro">
+  
+  <meta property="article:author" content="GoPro">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="BlueZ Bash Tutorial">
+<meta property="og:url" content="/tutorials/bash/bluez">
+
+
+  <meta property="og:description" content="BlueZ Bash Tutorial">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-05-26T11:15:31-07:00">
+
+
+
+
+
+
+<link rel="canonical" href="/tutorials/bash/bluez">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+  
+    <script src="/assets/js/tabs.js"></script>
+  
+    <script src="/assets/js/quiz.js"></script>
+  
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro">View on Github</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/ble">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/wifi">WiFi Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/demos">Demos</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
+          <meta itemprop="position" content="2">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/bash" itemprop="item"><span itemprop="name">Bash</span></a>
+          <meta itemprop="position" content="3">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">BlueZ Bash Tutorial</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">GoPro</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Be a <strong>hero</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="BlueZ Bash Tutorial">
+    <meta itemprop="description" content="BlueZ Bash Tutorial">
+    <meta itemprop="datePublished" content="2021-05-26T11:15:31-07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">BlueZ Bash Tutorial
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          11 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li>
+<a href="#requirements">Requirements</a><ul>
+<li><a href="#hardware">Hardware</a></li>
+<li><a href="#software">Software</a></li>
+</ul>
+</li>
+<li>
+<a href="#basic-ble-tutorial">Basic BLE Tutorial</a><ul>
+<li><a href="#advertise">Advertise</a></li>
+<li><a href="#scan">Scan</a></li>
+<li><a href="#connect">Connect</a></li>
+<li><a href="#pair">Pair</a></li>
+<li><a href="#enable-notifications">Enable Notifications</a></li>
+<li>
+<a href="#sending-commands">Sending Commands</a><ul>
+<li><a href="#send-commands">Send Commands</a></li>
+<li><a href="#good-job">Good Job!</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a><ul>
+<li><a href="#gopro-stops-advertising">GoPro Stops Advertising</a></li>
+<li><a href="#complete-system-reset">Complete System Reset</a></li>
+<li><a href="#logs">Logs</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>This document will provide a walk-through tutorial to use <a href="http://www.bluez.org/">BlueZ</a> to interact with the
+<a href="https://github.com/gopro/OpenGoPro">Open GoPro Interface</a>.
+It is ok not to have read the interface documentation first as we will describe it as needed here.
+After completing this tutorial, you will need to reference it for future development.</p>
+
+<h1 id="requirements">Requirements</h1>
+
+<h2 id="hardware">Hardware</h2>
+
+<ol>
+  <li>A platform that is <a href="http://www.bluez.org/about/">supported by Bluez</a>
+</li>
+  <li>A GoPro camera that is <a href="/ble#supported-cameras">supported by Open GoPro</a>
+</li>
+</ol>
+
+<h2 id="software">Software</h2>
+
+<ol>
+  <li>BlueZ must be installed. Follow the steps <a href="https://computingforgeeks.com/connect-to-bluetooth-device-from-linux-terminal/">here</a>
+</li>
+</ol>
+
+<p>Test that installation was successful with:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>bluetoothctl <span class="nt">--version</span>
+<span class="go">bluetoothctl: 5.58
+</span></code></pre></div></div>
+
+<h1 id="basic-ble-tutorial">Basic BLE Tutorial</h1>
+
+<p>This tutorial will walk through a process of connecting to the GoPro via Bluetooth Low Energy
+(BLE) and taking a picture / video.</p>
+
+<p>First, invoke the bluetooth control tool from BlueZ with:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>bluetoothctl
+<span class="go">Agent registered
+[CHG] Controller FC\:44\:82\:DD\:5A:3F Pairable: yes
+</span><span class="gp">[bluetooth]#</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="advertise">Advertise</h2>
+
+<p>Now, we need to ensure the camera is discoverable (i.e. it is advertising).
+Ensure that the Camera is powered on, then select
+Connections –&gt; Connect Device –&gt; Quik App</p>
+
+<p>The screen should appear as such:</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/assets/images/tutorials/quik.png" alt="Quik" style="
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Camera is discoverable.
+
+        </figcaption></figure>
+
+<div class="note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  This step may vary slightly by camera</span>
+</div>
+
+<h2 id="scan">Scan</h2>
+
+<div>
+    <ul class="tab" data-tab="6dc0aae0-2299-4fd5-9b92-faa690c6465c">
+        
+            <li class="active">
+                <a href="">code </a>
+            </li>
+        
+            <li>
+                <a href="">output </a>
+            </li>
+        
+            <li>
+                <a href="">Input </a>
+            </li>
+        
+            <li>
+                <a href="">Output </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="6dc0aae0-2299-4fd5-9b92-faa690c6465c">
+        
+            <li class="active">
+<p>Next, we must find the GoPro Camera using bleak. Let’s initialize an empty dict that will
+store discovered devices, indexed by name:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Map of devices indexed by name
+</span><span class="n">devices</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BleakDevice</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+</code></pre></div></div>
+
+<p>We’re then going to scan for all devices.
+We are passing a scan callback to bleak in order to also find non-connectable scan responses.
+We are keeping any devices that have a device name.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Scan callback to also catch nonconnectable scan responses
+</span><span class="k">def</span> <span class="nf">_scan_callback</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">BleakDevice</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="c1"># Add to the dict if not unknown
+</span>    <span class="k">if</span> <span class="n">device</span><span class="p">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s">"Unknown"</span> <span class="ow">and</span> <span class="n">device</span><span class="p">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">devices</span><span class="p">[</span><span class="n">device</span><span class="p">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">device</span>
+
+<span class="c1"># Now discover and add connectable advertisements
+</span><span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="k">await</span> <span class="n">BleakScanner</span><span class="p">.</span><span class="n">discover</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">detection_callback</span><span class="o">=</span><span class="n">_scan_callback</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">device</span><span class="p">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s">"Unknown"</span> <span class="ow">and</span> <span class="n">device</span><span class="p">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">devices</span><span class="p">[</span><span class="n">device</span><span class="p">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">device</span>
+</code></pre></div></div>
+
+<p>Now we can search through the discovered devices to see if we found a GoPro. Any GoPro
+device name will be structured as <code class="language-plaintext highlighter-rouge">GoPro XXXX</code> where XXXX is the last four digits of
+your camera’s serial number.</p>
+
+<p>First, we define a regex which is either “GoPro “ followed by any four digits if no identifier was passed,
+or “GoPro “ concatenated with the identifier if it exists. In the demo <code class="language-plaintext highlighter-rouge">ble_connect.py</code>, the identifier is taken
+from the command-line arguments.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">token</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s">"GoPro \d\d\d\d"</span> <span class="k">if</span> <span class="n">identifier</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="sa">f</span><span class="s">"GoPro </span><span class="si">{</span><span class="n">identifier</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now we build a list of matched devices by checking if each device’s name includes the token regex.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">matched_devices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BleakDevice</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1"># Now look for our matching device(s)
+</span><span class="n">matched_devices</span> <span class="o">=</span> <span class="p">[</span><span class="n">device</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">token</span><span class="p">.</span><span class="n">match</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<p>Due to potential RF interference and the asynchronous nature of BLE advertising / scanning, it is possible that
+the advertising GoPro will not be discovered by the scanning PC in one scan. Therefore, you may need to redo
+the scan (as <code class="language-plaintext highlighter-rouge">ble_connect.py</code> does) until a GoPro is found. That is, <code class="language-plaintext highlighter-rouge">matched_device</code> must contain at least one device.</p>
+
+<p>When running the demo, discovered devices will be logged to the console as they are found. Click the output tab
+to see an example of this.</p>
+
+</li>
+        
+            <li>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Here is an example of the log from `ble_connect.py` of scanning for devices. Note that this
+includes several rescans until the devices was found.
+
+</span><span class="gp">$</span><span class="w"> </span>python ble_connect.py
+<span class="go">INFO\:root\:Scanning for bluetooth devices...
+INFO\:root\:      Discovered:
+INFO\:root\:      Discovered: TR8600 seri
+INFO\:root\:Found 0 matching devices.
+INFO\:root\:      Discovered:
+INFO\:root\:      Discovered: TR8600 seri
+INFO\:root\:      Discovered: GoPro Cam
+INFO\:root\:      Discovered: GoPro 0456
+INFO\:root\:Found 1 matching devices.
+</span></code></pre></div></div>
+
+<p>Among other devices, you should see <code class="language-plaintext highlighter-rouge">GoPro XXXX</code> where XXXX is the last four digits of
+your camera’s serial number.</p>
+
+</li>
+        
+            <li>
+<p>Next, we must find the GoPro Camera from BlueZ. Scan for devices via:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[bluetooth]#</span><span class="w"> </span>scan on
+</code></pre></div></div>
+
+<p>As BlueZ discovers devices, it will display them to the console.</p>
+
+<p>Click the output tab to see the output.</p>
+
+</li>
+        
+            <li>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[bluetooth]#</span><span class="w"> </span>scan on
+<span class="go">Discovery started
+[CHG] Controller FC\:44\:82\:DD\:5A:3F Discovering: yes
+[NEW] Device 6E\:0A\:B0\:76\:36:49 6E-0A-B0-76-36-49
+[NEW] Device DF\:34\:ED\:D1\:DA:E8 GoPro 0456
+[NEW] Device 26\:A2\:8C\:82\:74:6E 26-A2-8C-82-74-6E
+[CHG] Device F8\:A2\:6D\:4C\:5D:E0 RSSI: -60
+</span></code></pre></div></div>
+
+<p>Among other devices, you should see <code class="language-plaintext highlighter-rouge">GoPro XXXX</code> where XXXX is the last four digits of
+your camera’s serial number. Take note of the address to the left of this string (<strong>DF:34:ED:D1:DA:E8</strong>
+in the example above). This is how the camera will be identified via <code class="language-plaintext highlighter-rouge">bluetoothctl</code>.</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<h2 id="connect">Connect</h2>
+
+<div>
+    <ul class="tab" data-tab="a038342b-24ec-4717-ab5c-62a708ee4ac9">
+        
+            <li class="active">
+                <a href="">Input </a>
+            </li>
+        
+            <li>
+                <a href="">Output </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="a038342b-24ec-4717-ab5c-62a708ee4ac9">
+        
+            <li class="active">
+<p>Now that we know the address to connect to, the next step is to establish a BLE connection
+to the camera as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[bluetooth]#</span><span class="w"> </span>connect DF\:34\:ED\:D1\:DA:E8
+</code></pre></div></div>
+
+<p>Click the output tab to see the output.</p>
+
+</li>
+        
+            <li>
+<p>When the connection is successfully established, the list of services and characteristics
+will be displayed as such:</p>
+
+<p>We will make use of these attributes later on.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">[CHG] Device DF\:34\:ED\:D1\:DA:E8 Connected: yes
+Connection successful
+[NEW] Primary Service (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0001
+        00001801-0000-1000-8000-00805f9b34fb
+        Generic Attribute Profile
+[NEW] Primary Service (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service000b
+        00001804-0000-1000-8000-00805f9b34fb
+        Tx Power
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service000b/char000c
+        00002a07-0000-1000-8000-00805f9b34fb
+        Tx Power Level
+[NEW] Primary Service (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service000e
+        0000180f-0000-1000-8000-00805f9b34fb
+        Battery Service
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service000e/char000f
+        00002a19-0000-1000-8000-00805f9b34fb
+        Battery Level
+[NEW] Descriptor (Handle 0xea04)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service000e/char000f/desc0011
+        00002902-0000-1000-8000-00805f9b34fb
+        Client Characteristic Configuration
+[NEW] Primary Service (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0012
+        0000180a-0000-1000-8000-00805f9b34fb
+        Device Information
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0012/char0013
+        00002a29-0000-1000-8000-00805f9b34fb
+        Manufacturer Name String
+[NEW] Characteristic (Handle 0xea8d)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0012/char0015
+        00002a24-0000-1000-8000-00805f9b34fb
+        Model Number String
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0012/char0017
+        00002a25-0000-1000-8000-00805f9b34fb
+        Serial Number String
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0012/char0019
+        00002a27-0000-1000-8000-00805f9b34fb
+        Hardware Revision String
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0012/char001b
+        00002a26-0000-1000-8000-00805f9b34fb
+        Firmware Revision String
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0012/char001d
+        00002a28-0000-1000-8000-00805f9b34fb
+        Software Revision String
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0012/char001f
+        00002a23-0000-1000-8000-00805f9b34fb
+        System ID
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0012/char0021
+        00002a2a-0000-1000-8000-00805f9b34fb
+        IEEE 11073-20601 Regulatory Cert. Data List
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0012/char0023
+        00002a50-0000-1000-8000-00805f9b34fb
+        PnP ID
+[NEW] Primary Service (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0025
+        b5f90001-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0025/char0026
+        b5f90002-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0025/char0028
+        b5f90003-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0025/char002a
+        b5f90004-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0025/char002c
+        b5f90005-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Descriptor (Handle 0x32a4)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0025/char002c/desc002e
+        00002902-0000-1000-8000-00805f9b34fb
+        Client Characteristic Configuration
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0025/char002f
+        b5f90006-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Primary Service (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031
+        0000fea6-0000-1000-8000-00805f9b34fb
+        GoPro, Inc.
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031/char0032
+        b5f90072-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031/char0034
+        b5f90073-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Descriptor (Handle 0x4174)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031/char0034/desc0036
+        00002902-0000-1000-8000-00805f9b34fb
+        Client Characteristic Configuration
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031/char0037
+        b5f90074-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031/char0039
+        b5f90075-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Descriptor (Handle 0x4b84)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031/char0039/desc003b
+        00002902-0000-1000-8000-00805f9b34fb
+        Client Characteristic Configuration
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031/char003c
+        b5f90076-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031/char003e
+        b5f90077-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Descriptor (Handle 0x5494)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031/char003e/desc0040
+        00002902-0000-1000-8000-00805f9b34fb
+        Client Characteristic Configuration
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031/char0041
+        b5f90078-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031/char0043
+        b5f90079-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Descriptor (Handle 0x5da4)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031/char0043/desc0045
+        00002902-0000-1000-8000-00805f9b34fb
+        Client Characteristic Configuration
+[NEW] Primary Service (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0046
+        b5f90090-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0046/char0047
+        b5f90091-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0046/char0049
+        b5f90092-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Descriptor (Handle 0x6984)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0046/char0049/desc004b
+        00002902-0000-1000-8000-00805f9b34fb
+        Client Characteristic Configuration
+[NEW] Primary Service (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service004c
+        b5f90080-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service004c/char004d
+        b5f90081-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Descriptor (Handle 0x7274)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service004c/char004d/desc004f
+        00002902-0000-1000-8000-00805f9b34fb
+        Client Characteristic Configuration
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service004c/char0050
+        b5f90082-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service004c/char0052
+        b5f90083-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Descriptor (Handle 0x8104)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service004c/char0052/desc0054
+        00002902-0000-1000-8000-00805f9b34fb
+        Client Characteristic Configuration
+[NEW] Characteristic (Handle 0xe461)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service004c/char0055
+        b5f90084-aa8d-11e3-9046-0002a5d5c51b
+        Vendor specific
+[NEW] Descriptor (Handle 0x8724)
+        /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service004c/char0055/desc0057
+        00002902-0000-1000-8000-00805f9b34fb
+        Client Characteristic Configuration
+[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: 00001800-0000-1000-8000-00805f9b34fb
+[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: 00001801-0000-1000-8000-00805f9b34fb
+[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: 00001804-0000-1000-8000-00805f9b34fb
+[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: 0000180a-0000-1000-8000-00805f9b34fb
+[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: 0000180f-0000-1000-8000-00805f9b34fb
+[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: 0000fea6-0000-1000-8000-00805f9b34fb
+[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: b5f90001-aa8d-11e3-9046-0002a5d5c51b
+[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: b5f90080-aa8d-11e3-9046-0002a5d5c51b
+[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: b5f90090-aa8d-11e3-9046-0002a5d5c51b
+[CHG] Device DF\:34\:ED\:D1\:DA:E8 ServicesResolved: yes
+[CHG] Device DF\:34\:ED\:D1\:DA:E8 Appearance: 0x0080
+[CHG] Device DF\:34\:ED\:D1\:DA:E8 Icon: computer
+[NEW] Device 6C\:4A\:85\:45\:04:D4 6C-4A-85-45-04-D4
+</span><span class="gp">[GoPro 0456]#</span><span class="w">
+</span></code></pre></div></div>
+
+</li>
+        
+    </ul>
+</div>
+
+<h2 id="pair">Pair</h2>
+
+<p>The GoPro has encryption-protected characteristics which require us to pair before
+writing to. Now that you are connected (the prompt should now show <code class="language-plaintext highlighter-rouge">GoPro XXXX</code> instead of
+<code class="language-plaintext highlighter-rouge">bluetooth</code>), do:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[GoPro 0456]#</span><span class="w"> </span>pair
+<span class="go">Attempting to pair with DF\:34\:ED\:D1\:DA:E8
+[CHG] Device DF\:34\:ED\:D1\:DA:E8 Paired: yes
+Pairing successful
+</span></code></pre></div></div>
+
+<p>Once paired, the camera should beep and display “Connection Successful”. Also,
+the device should show up when querying <code class="language-plaintext highlighter-rouge">bluetoothctl</code> for paired devices:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[GoPro 0456]#</span><span class="w"> </span>paired-devices
+<span class="go">Device DF\:34\:ED\:D1\:DA:E8 GoPro 0456
+</span></code></pre></div></div>
+
+<div class="tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  It is now no longer necessary to pair on subsequent connections.</span>
+</div>
+
+<h2 id="enable-notifications">Enable Notifications</h2>
+
+<div>
+    <ul class="tab" data-tab="91370f80-7e22-413d-852b-1bf80007f414">
+        
+            <li class="active">
+                <a href="">Enter Gatt Menu </a>
+            </li>
+        
+            <li>
+                <a href="">Enable Notifications </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="91370f80-7e22-413d-852b-1bf80007f414">
+        
+            <li class="active">
+<p>As specified in the <a href="/ble#sending-and-receiving-messages">Open GoPro Bluetooth API</a>, we must enable notifications for a given characteristic
+to receive responses from it. First, let’s enter the <code class="language-plaintext highlighter-rouge">gatt</code> submenu:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[GoPro 0456]#</span><span class="w"> </span>menu gatt
+<span class="go">Menu gatt:
+Available commands:
+-------------------
+list-attributes [dev/local]                       List attributes
+</span><span class="gp">select-attribute &lt;attribute/UUID&gt;</span><span class="w">                 </span>Select attribute
+<span class="go">attribute-info [attribute/UUID]                   Select attribute
+read [offset]                                     Read attribute value
+</span><span class="gp">write &lt;data=xx xx ...&gt;</span><span class="w"> </span><span class="o">[</span>offset] <span class="o">[</span><span class="nb">type</span><span class="o">]</span>            Write attribute value
+<span class="go">acquire-write                                     Acquire Write file descriptor
+release-write                                     Release Write file descriptor
+acquire-notify                                    Acquire Notify file descriptor
+release-notify                                    Release Notify file descriptor
+</span><span class="gp">notify &lt;on/off&gt;</span><span class="w">                                   </span>Notify attribute value
+<span class="go">clone [dev/attribute/UUID]                        Clone a device or attribute
+register-application [UUID ...]                   Register profile to connect
+unregister-application                            Unregister profile
+</span><span class="gp">register-service &lt;UUID&gt;</span><span class="w"> </span><span class="o">[</span>handle]                  Register application service.
+<span class="gp">unregister-service &lt;UUID/object&gt;</span><span class="w">                  </span>Unregister application service
+<span class="gp">register-includes &lt;UUID&gt;</span><span class="w"> </span><span class="o">[</span>handle]                 Register as Included service <span class="k">in</span><span class="nb">.</span>
+<span class="gp">unregister-includes &lt;Service-UUID&gt;</span>&lt;Inc-UUID&gt;      Unregister Included service.
+<span class="gp">register-characteristic &lt;UUID&gt;</span><span class="w"> </span>&lt;<span class="nv">Flags</span><span class="o">=</span><span class="nb">read</span>,write,notify...&gt; <span class="o">[</span>handle] Register application characteristic
+<span class="gp">unregister-characteristic &lt;UUID/object&gt;</span><span class="w">           </span>Unregister application characteristic
+<span class="gp">register-descriptor &lt;UUID&gt;</span><span class="w"> </span>&lt;<span class="nv">Flags</span><span class="o">=</span><span class="nb">read</span>,write...&gt; <span class="o">[</span>handle] Register application descriptor
+<span class="gp">unregister-descriptor &lt;UUID/object&gt;</span><span class="w">               </span>Unregister application descriptor
+<span class="go">back                                              Return to main menu
+version                                           Display version
+quit                                              Quit program
+exit                                              Quit program
+help                                              Display help about this program
+export                                            Print environment variables
+</span></code></pre></div></div>
+
+<p>Go the the next tab to enable notifications</p>
+
+</li>
+        
+            <li>
+<p>Now, we need to enable notifications for the relevant characteristic.
+In this demo, we will only be setting the shutter. This command is sent on the “Command Request”
+characteristic and it’s responses are received as notifications on the “Command Response”
+characteristic. So we only care about the “Command Response”
+characteristic which <a href="/ble#services-and-characteristics">has UUID</a>
+<code class="language-plaintext highlighter-rouge">b5f90073-aa8d-11e3-9046-0002a5d5c51b</code>.</p>
+
+<blockquote>
+  <p>You can see this UUID listed above when the connection was formed. All attributes can also be found again from bluetoothctl with <code class="language-plaintext highlighter-rouge">list-attributes</code></p>
+</blockquote>
+
+<p>To enable notifications, select the attribute then enable notifications:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[GoPro 0456]#</span><span class="w"> </span><span class="k">select</span><span class="nt">-attribute</span> b5f90073-aa8d-11e3-9046-0002a5d5c51b
+<span class="gp">[GoPro 0456:/service0031/char0034]#</span><span class="w"> </span>acquire-notify
+<span class="go">[CHG] Attribute /org/bluez/hci0/dev_CA_D7_FF_49_B1_27/service0031/char0034 NotifyAcquired: yes
+AcquireNotify success: fd 7 MTU 335
+</span></code></pre></div></div>
+
+<p>Since we are acquiring (using the BlueZ terminology as in the command) notifications, this means that we will
+be alerted of responses when the characteristic is notified.</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<p><strong>Quiz time! 📚 ✏️</strong></p>
+
+<div id="quiz_0d675f7e-666c-41db-b450-d87c73e2117c" class="quiz">
+    <div>
+        <div id="question_0d675f7e-666c-41db-b450-d87c73e2117c" class="quiz__question">How are responses to the Command Request characteristic received over BLE?</div>
+        <div id="answers_0d675f7e-666c-41db-b450-d87c73e2117c">
+        
+            <input type="radio" name="question" value="A"><label>A: As write responses to the Command Request characteristic</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: As notifications of the Command Response characteristic</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: There is no response since this characteristic is Write-without-Response</label>
+            <br>
+        
+            <input type="radio" name="question" value="D"><label>D: They must be polled by reading the Command Response characteristic</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('0d675f7e-666c-41db-b450-d87c73e2117c', 'B')">Submit Answer</button>
+    <div id="results_0d675f7e-666c-41db-b450-d87c73e2117c" style="display: none">
+        <span id="correct_0d675f7e-666c-41db-b450-d87c73e2117c" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_0d675f7e-666c-41db-b450-d87c73e2117c" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+        All GoPro commands follow the same behavior: a command is first sent on a request characteristic.
+    The response is then notified on the response characteristic (assuming notifications are enabled).
+    </div>
+</div>
+
+<div id="quiz_b5e80fc1-3500-427d-980f-7f5b6d5f0878" class="quiz">
+    <div>
+        <div id="question_b5e80fc1-3500-427d-980f-7f5b6d5f0878" class="quiz__question">How often is it necessary to pair?</div>
+        <div id="answers_b5e80fc1-3500-427d-980f-7f5b6d5f0878">
+        
+            <input type="radio" name="question" value="A"><label>A: Pairing must occur every time to ensure safe BLE communication</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: We never need to pair as the GoPro does not require it to communicate</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: Pairing only needs to occur once as BlueZ will automatically re-use the shared keys for future connections</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('b5e80fc1-3500-427d-980f-7f5b6d5f0878', 'C')">Submit Answer</button>
+    <div id="results_b5e80fc1-3500-427d-980f-7f5b6d5f0878" style="display: none">
+        <span id="correct_b5e80fc1-3500-427d-980f-7f5b6d5f0878" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_b5e80fc1-3500-427d-980f-7f5b6d5f0878" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+        Pairing is only needed once (assuming neither side deletes the keys). If the
+    GoPro deletes the keys (via Connections-&gt;Reset Connections or a factory reset), the devices will need to re-pair.
+    </div>
+</div>
+
+<h2 id="sending-commands">Sending Commands</h2>
+
+<p>Now that we are are connected, paired, and have enabled notifications, we can send commands.
+The command we will be sending is <a href="/ble#commands-quick-reference">Set Shutter</a>, which at byte level is:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th style="text-align: center">Bytes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Set Shutter Off</td>
+      <td style="text-align: center">0x03 0x01 0x01 0x00</td>
+    </tr>
+    <tr>
+      <td>Set Shutter On</td>
+      <td style="text-align: center">0x03 0x01 0x01 0x01</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>First, we need to choose the attribute to write to which is the “Command Request” characteristic
+with UUID <code class="language-plaintext highlighter-rouge">b5f90072-aa8d-11e3-9046-0002a5d5c51b</code>. This is done via <code class="language-plaintext highlighter-rouge">select-attribute</code>:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[GoPro 0456:/service0031/char0034]#</span><span class="w"> </span><span class="k">select</span><span class="nt">-attribute</span> b5f90072-aa8d-11e3-9046-0002a5d5c51b
+<span class="gp">[GoPro 0456:/service0031/char0032]#</span><span class="w"> </span>attribute-info
+<span class="go">Characteristic - Vendor specific
+        UUID: b5f90072-aa8d-11e3-9046-0002a5d5c51b
+        Service: /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0031
+        Flags: write
+</span></code></pre></div></div>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  As a bonus, you can then call "attribute-info" to verify that this characteristic is writeable.</span>
+</div>
+
+<h3 id="send-commands">Send Commands</h3>
+
+<div>
+    <ul class="tab" data-tab="f7c9d972-0044-442d-a7f2-b180345c12d4">
+        
+            <li class="active">
+                <a href="">Set Shutter On </a>
+            </li>
+        
+            <li>
+                <a href="">Set Shutter Off </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="f7c9d972-0044-442d-a7f2-b180345c12d4">
+        
+            <li class="active">
+<p>Now, let’s write the bytes to turn the shutter on and start encoding!</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[GoPro 0456:/service0031/char0032]#</span><span class="w"> </span>write <span class="s2">"0x03 0x01 0x01 0x01"</span>
+<span class="go">Attempting to write /org/bluez/hci0/dev_CA_D7_FF_49_B1_27/service0031/char0032
+[CHG] /org/bluez/hci0/dev_CA_D7_FF_49_B1_27/service0031/char0034 Notification:
+  02 01 00
+</span></code></pre></div></div>
+
+<p>You should hear the camera beep and it will either take a picture or start recording
+depending on what mode it is in.</p>
+
+<p>Also note that we have received the “Command Status” notification response from the
+Command Response characteristic since we acquired it’s notifications in [Enable Notifications]</p>
+
+<p>If you are recording a video, go to the next tab to set the shutter off.</p>
+
+</li>
+        
+            <li>
+<p>We can now set the shutter off:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[GoPro 0456:/service0031/char0032]#</span><span class="w"> </span>write <span class="s2">"0x03 0x01 0x01 0x00"</span>
+<span class="go">Attempting to write /org/bluez/hci0/dev_CA_D7_FF_49_B1_27/service0031/char0032
+[CHG] /org/bluez/hci0/dev_CA_D7_FF_49_B1_27/service0031/char0034 Notification:
+  02 01 00
+</span></code></pre></div></div>
+
+</li>
+        
+    </ul>
+</div>
+
+<h3 id="good-job">Good Job!</h3>
+
+<div class="success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  Congratulations 🤙</span>
+</div>
+
+<p>You can now send any of the other BLE commands detailed in the Open GoPro documentation in
+a similar manner.</p>
+
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<h2 id="gopro-stops-advertising">GoPro Stops Advertising</h2>
+
+<p>Sometimes the GoPro will stop advertising. A quick fix at this point is to power cycle the camera
+by pulling and then re-inserting the battery.</p>
+
+<h2 id="complete-system-reset">Complete System Reset</h2>
+
+<p>BLE is a fickle beast. If at any point it is impossible to discover or connect to the camera,
+perform the following.</p>
+
+<ol>
+  <li>Reset the camera by choosing Connections –&gt; Reset Connections</li>
+  <li>
+    <p>Power cycle the bluetooth adapter:</p>
+
+    <div class="language-console highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="gp"> [bluetooth]#</span><span class="w"> </span>power off
+<span class="go"> Changing power off succeeded
+ [CHG] Controller FC\:44\:82\:DD\:5A:3F Powered: no
+ [CHG] Controller FC\:44\:82\:DD\:5A:3F Discovering: no
+ [CHG] Controller FC\:44\:82\:DD\:5A:3F Class: 0x00000000
+</span><span class="gp"> [bluetooth]#</span><span class="w"> </span>power on
+<span class="go"> [CHG] Controller FC\:44\:82\:DD\:5A:3F Class: 0x002c010c
+ Changing power on succeeded
+ [CHG] Controller FC\:44\:82\:DD\:5A:3F Powered: yes
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Remove the GoPro from the paired devices:</p>
+
+    <div class="language-console highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="gp"> [bluetooth]#</span><span class="w"> </span>paired-devices
+<span class="go"> Device DF\:34\:ED\:D1\:DA:E8 GoPro 0456
+</span><span class="gp"> [bluetooth]#</span><span class="w"> </span>remove DF\:34\:ED\:D1\:DA:E8
+</code></pre></div>    </div>
+  </li>
+  <li>Restart the procedure detailed above</li>
+</ol>
+
+<h2 id="logs">Logs</h2>
+
+<p>It is also possible to get some bluetooth system logs.</p>
+
+<p>To enable debug information and view HCI Trace information from the Bluetooth Monitor:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo sed -i 's/bluetoothd/bluetoothd \-d/g' /lib/systemd/system/bluetooth.service
+sudo btmon
+</span></code></pre></div></div>
+
+<p>To view the DBus log (i.e. to see BlueZ messages):</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo dbus-monitor --system
+</span></code></pre></div></div>
+
+<p>You can search this for “bluez” but not every relevant Bluetooth message will include it.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-05-26T11:15:31-07:00">May 26, 2021</time></p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+        
+      
+        
+          <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2021 GoPro. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
