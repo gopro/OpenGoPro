@@ -4,17 +4,71 @@
 name: Pre Merge Checks
 
 on:
-    push:
-        branches: [main]
     pull_request:
         branches: [main]
 
 jobs:
     copyright:
         runs-on: ubuntu-latest
-
         steps:
             - uses: actions/checkout@v2
-            - name: Check copyrights
+              with:
+                  path: source
+
+            - name: Extract branch name
+              shell: bash
+              run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF#refs/heads/})"
+              id: extract_branch
+
+            - name: Check for missing copyrights
+              shell: bash
+              working-directory: source
               run: |
-                  ./tools/hooks/copyright -c -i . $(awk '/Current Version: /{print $NF}' README.md)
+                  make copyright
+                  echo "NUM_MODIFIED=$(git diff --numstat | wc -l)" >> $GITHUB_ENV
+
+            - name: Checkout PR branch
+              if: env.NUM_MODIFIED != 0
+              uses: actions/checkout@v2
+              with:
+                  ref: ${{ steps.extract_branch.outputs.branch }}
+                  path: target
+
+            # It might be faster to copy in changed files from source rather then running copyright again.
+            # But there is currently no bottleneck.
+            - name: Fix copyrights
+              working-directory: target
+              if: env.NUM_MODIFIED != 0
+              shell: bash
+              run: |
+                  git config core.fileMode false
+                  make copyright
+                  git add .
+                  git config user.name github-actions
+                  git config user.email github-actions@github.com
+                  git commit -m "updating copyrights from pre merge check github action"
+                  git push -f origin HEAD:${{ steps.extract_branch.outputs.branch }}
+
+    test_github_pages:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            # Cache the built Ruby gem bundle using the Gemfile as the key
+            - uses: actions/cache@v2
+              with:
+                  path: docs/vendor/bundle
+                  key: ${{ runner.os }}-gems-${{ hashFiles('**/docs/Gemfile') }}
+                  restore-keys: |
+                      ${{ runner.os }}-gems-
+
+            - name: Prepare Demos
+              shell: bash
+              run: make prepare_demos
+
+            - uses: helaili/jekyll-action@2.2.0
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  keep_history: true
+                  target_branch: 'gh-pages'
+                  build_only: true

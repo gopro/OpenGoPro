@@ -1,0 +1,15 @@
+/* turbo_transfer.proto/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
+/* This copyright was auto-generated on Tue May 18 22:08:50 UTC 2021 */
+
+/*
+Defines the structure of preset status protobuf messages from the camera
+*/
+
+syntax="proto2";
+package open_gopro;
+
+
+message RequestSetTurboActive {
+    required bool active = 1;
+}
+

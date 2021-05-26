@@ -1,5 +1,5 @@
 # demo.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Thu, May  6, 2021 11:38:31 AM
+# This copyright was auto-generated on Tue May 18 22:08:50 UTC 2021
 
 """Demonstration of using the GoPro package."""
 
@@ -245,7 +245,8 @@ def parse_arguments() -> Tuple[str, Path, Path]:
         "-i",
         "--identifier",
         type=str,
-        help="Last 4 digits of GoPro name to scan for. If not used, first discovered GoPro will be connected to",
+        help="Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. \
+            If not used, first discovered GoPro will be connected to",
         default=None,
     )
     parser.add_argument(

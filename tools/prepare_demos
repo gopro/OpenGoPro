@@ -1,0 +1,89 @@
+#!/bin/bash
+# prepare_demos/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Thu, May 20, 2021  8:25:53 PM
+
+help() {
+    cat <<EOF
+
+Usage: prepare_demos [OPTIONS]
+Prepare demo documentation for building Jekyll site from README's in the demo folder
+
+NOTE! This script is only designed to be run from the top level of this repo.
+
+Optional arguments:
+    -h               Print this Help.
+
+EOF
+}
+
+# This script will perform the following
+# 1. Copy over demo documentation from the top-level demos folder into the docs directory for building the site
+# 2. Add front matter to the demo documentation based on its relative path into the demos directory
+# 3. Extract a snippet describing the demo from the README.md at the top level of the demos folder
+
+# Escape all characters for use in perl regex
+# from: https://stackoverflow.com/questions/29613304/is-it-possible-to-escape-regex-metacharacters-reliably-with-sed
+quoteRe() { sed -e 's/[^^]/[&]/g; s/\^/\\^/g; $!a\'$'\n''\\n' <<<"$1" | tr -d '\n'; }
+
+main() {
+    # Clean the target directory, then move all .md's into it (except for the top level)
+    rm -rf docs/tutorials/_demos && mkdir -p docs/tutorials/_demos
+    for i in $(find demos/**/* -name '*.md'); do
+        mkdir -p docs/tutorials/$(dirname $i)
+        cp $i docs/tutorials/$(dirname $i)
+    done
+    mv docs/tutorials/demos/* docs/tutorials/_demos && rm -rf docs/tutorials/demos
+
+    # For each .md in the target directory:
+    find docs/tutorials/_demos -type f | while read -r file; do
+        dir=$(dirname ${file#'docs/tutorials/_demos'})
+
+        # Start writing front matter to a temporary file
+        echo "---" >temp
+        echo "collection: demo" >>temp
+        echo "github: https://github.com/gopro/OpenGoPro/tree/main/demos${dir}" >>temp
+        echo "permalink: /demos${dir}" >>temp
+
+        # Build an escaped version of the directory for use in regex pattern (to handle, for examaple, C++)
+        dir_escaped=$(quoteRe $(echo $dir | cut -c2-))
+        # Extract the snippet from the demos README.md using the current demo directory as the key
+        echo "snippet: $(cat demos/README.md |
+            # extract text after $dir_escape
+            perl -sne '/(?<=$before)(.*)/ && print "$1\n";' -- -before=$dir_escaped |
+            # extract text between first pipe and next pipe
+            perl -sne '/(?<=\|)(.*?)(?=\|)/ && print "$1\n";' |
+            # strip whitespace
+            xargs)" \
+        >>temp
+
+        # Close the front matter, write the content, then move the temporary file to the source location
+        echo "---" >>temp
+        echo >>temp
+        cat $file >>temp
+        mv temp $file
+
+        # Update path to assets
+        sed -i.bak 's:../../../docs/assets:/assets:g' $file && rm $file.bak
+    done
+}
+
+# Parse optional arguments
+while getopts "hci:" option; do
+    case ${option} in
+    h) #For option h
+        help
+        exit 0
+        ;;
+    \? | :)
+        help
+        exit 1
+        ;;
+    *)
+        echo "Unexpected error occurred." >&2
+        help
+        exit 1
+        ;;
+    esac
+done
+
+main

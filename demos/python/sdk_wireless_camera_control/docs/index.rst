@@ -1,7 +1,9 @@
-Open GoPro
-==========
+:github_url: https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control
 
-.. figure:: https://raw.githubusercontent.com/gopro/OpenGoPro/824af16af5f5dc14263ab20249f29e661bf64f15/logo.png?token=ASEL3UOW2CZVUFQ54PK452LATXRUY
+Open GoPro Python SDK
+=====================
+
+.. figure:: https://raw.githubusercontent.com/gopro/OpenGoPro/main/logo.png?token=ASEL3UPDVM4EG6P53WZWG73AT4EOA
     :target: https://github.com/gopro/OpenGoPro
     :alt: GoPro Logo
     :width: 50%
@@ -17,8 +19,6 @@ Open GoPro
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black
     :alt: Black
-
-View on `Github <https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control>`_
 
 Summary
 -------
