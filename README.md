@@ -3,12 +3,10 @@
 [comment]: <> (Do not touch the following line. It is used as the single source of versioning.)
 Current Version: 1.0
 
-[![Pre Merge Checks](https://github.com/gopro/OpenGoPro/actions/workflows/pre_merge_checks.yml/badge.svg)](https://github.com/gopro/OpenGoPro/actions/workflows/pre_merge_checks.yml)
-
 <img src="docs/assets/images/logos/logo.png" alt="GoPro Logo" style="width: 35%;"/>
 
 This README is for a developer who wants to modify or contribute to this repo. If you are a user (i.e.
-you don't want to make changes to this repo), see the Open GoPro [Github Pages site](www.TODO.com). If you
+you don't want to make changes to this repo), see the Open GoPro [Github Pages site](https://gopro.github.io/OpenGoPro/). If you
 are just looking for demos, you can browse the `demos` folder here.
 
 ## Overview
@@ -56,8 +54,7 @@ First, build and serve the site locally via:
 make serve
 ```
 
-TODO update this when we have a public URL
-The site can then be viewed at `http://127.0.0.1:5000/index.html`
+The site can then be viewed at `http://127.0.0.1:5000`
 
 > Note! This is different than the address from the Jekyll CLI output
 

@@ -89,7 +89,7 @@ clean_build: ## Clean build artifacts
 	@rm -rf build dist
 
 .PHONY: build
-build: clean_build ## Build dist but do not publsih
+build: clean_build ## Build dist but do not publish
 	@python setup.py sdist
 
 .PHONY: publish

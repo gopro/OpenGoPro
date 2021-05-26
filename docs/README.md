@@ -78,5 +78,5 @@ Assuming that python is installed and that the site is currently being served lo
 for any invalid links via the top-level Makefile in this repo:
 
 ```
-make test
+make tests
 ```

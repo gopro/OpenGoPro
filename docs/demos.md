@@ -25,7 +25,7 @@ redirect_from:
         {% assign parts = demo.path | split: "/" %}
         {% assign target_language = parts[1] %}
         {% if target_language == language %}
-[{{ demo.title }}]({{ demo.permalink }})
+[{{ demo.title }}]({{ demo.permalink | prepend: site.baseurl }})
 
 - {{ demo.snippet }}
 

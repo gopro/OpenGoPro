@@ -66,7 +66,8 @@ jobs:
               shell: bash
               run: make prepare_demos
 
-            - uses: helaili/jekyll-action@2.2.0
+            - name: Test Jekyll Build
+              uses: helaili/jekyll-action@2.2.0
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
                   keep_history: true

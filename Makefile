@@ -19,7 +19,7 @@ prepare_demos: ## Copy demos into docs folder for Jekyll building and add front 
 
 .PHONY: build
 build: prepare_demos ## Build but do not serve the jekyll pages
-	@docker-compose run --rm jekyll "bundle install && bundle exec jekyll build"
+	@docker-compose run --rm jekyll "bundle exec jekyll build --baseurl ${BASE_URL}"
 
 .PHONY: serve
 serve: prepare_demos ## Serve the sample site here
@@ -34,8 +34,8 @@ version: ## Update the Open GoPro version
 	@sed -i.bak "s/Current Version: $(ORIGINAL_VERSION)/Current Version: ${VERSION}/g" README.md && rm README.md.bak
 	@make copyright
 
-.PHONY: test
-test: ## Run link checker. This assumes python installed and jekyll site is currently being served
+.PHONY: tests
+tests: ## Run link checker. This assumes python installed and jekyll site is currently being served
 	@pip install linkchecker
 	@linkchecker http://127.0.0.1:5000/
 
