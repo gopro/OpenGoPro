@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>QuickStart Guide &mdash; Open GoPro Python SDK 0.5.4 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Usage" href="usage.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Open GoPro Python SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">QuickStart Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#photo-demo">Photo Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#video-demo">Video Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stream-demo">Stream Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#big-demo">Big Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="future_work.html">Future Work</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Open GoPro Python SDK</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>QuickStart Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="quickstart-guide">
+<h1>QuickStart Guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This section assumes you have successfully <a class="reference internal" href="installation.html#installation"><span class="std std-ref">installed</span></a> the package.</p>
+</div>
+<p>Open GoPro installs with several command line demos to demonstrate BLE and Wi-Fi. The source code for these example
+can be found in <cite>$INSTALL/demos</cite> where $INSTALL can be found with:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip show open-gopro
+</pre></div>
+</div>
+<p>All of the demos have command-line help via the <cite>–help</cite> parameter. They also all log to the console as well
+as write a more detailed log to a file (this file can be set with the <cite>–log</cite> parameter).</p>
+<div class="section" id="photo-demo">
+<h2>Photo Demo<a class="headerlink" href="#photo-demo" title="Permalink to this headline">¶</a></h2>
+<p>The photo demo will discover a GoPro camera, connect to it, take a photo, and then download the
+photo to your local machine.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-photo
+</pre></div>
+</div>
+<p>For more information, do:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-photo --help
+<span class="go">usage: gopro-photo [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT]</span>
+
+<span class="go">Connect to a GoPro camera, take a photo, then download it.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">-h, --help            show this help message and exit</span>
+<span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
+<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered</span>
+<span class="go">                        GoPro will be connected to</span>
+<span class="go">-l LOG, --log LOG     Location to store detailed log</span>
+<span class="go">-o OUTPUT, --output OUTPUT</span>
+<span class="go">                        Where to write the photo to. If not set, write to &#39;photo.jpg&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="video-demo">
+<h2>Video Demo<a class="headerlink" href="#video-demo" title="Permalink to this headline">¶</a></h2>
+<p>The video demo will discover a GoPro camera, connect to it, take a video, and then download the
+photo to your local machine.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-video
+</pre></div>
+</div>
+<p>For more information, do:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-video --help
+<span class="go">usage: gopro-video [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT] record_time</span>
+
+<span class="go">Connect to a GoPro camera, take a video, then download it.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  record_time           How long to record for</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -i IDENTIFIER, --identifier IDENTIFIER</span>
+<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered</span>
+<span class="go">                        GoPro will be connected to</span>
+<span class="go">  -l LOG, --log LOG     Location to store detailed log</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        Where to write the video to. If not set, write to &#39;video.jpg&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stream-demo">
+<h2>Stream Demo<a class="headerlink" href="#stream-demo" title="Permalink to this headline">¶</a></h2>
+<p>The stream demo will discover a GoPro camera, connect to it, enable the preview stream, and then attempt to
+launch VLC to view the stream. It will attempt to automatically discover VLC if it is not passed a location
+for the VLC executable.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-stream
+</pre></div>
+</div>
+<p>For more information, do:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-stream --help
+<span class="go">usage: gopro-stream [-h] [-i IDENTIFIER] [-l LOG] [-v VLC]</span>
+
+<span class="go">Connect to a GoPro camera, enable the preview stream, then open VLC to view it.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">-h, --help            show this help message and exit</span>
+<span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
+<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered</span>
+<span class="go">                        GoPro will be connected to</span>
+<span class="go">-l LOG, --log LOG     Location to store detailed log</span>
+<span class="go">-v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically</span>
+<span class="go">                        discovered.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="big-demo">
+<h2>Big Demo<a class="headerlink" href="#big-demo" title="Permalink to this headline">¶</a></h2>
+<p>This is a superset of the above demos as well as other functionality as shown below. It might not be
+very useful to run this as a demo but the source code can be helpful for showing examples of various
+behavior.</p>
+<p>To run the demo;</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-demo
+</pre></div>
+</div>
+<p>For more information, do:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-demo --help
+<span class="go">usage: gopro-demo [-h] [-i IDENTIFIER] [-l LOG] [-v VLC]</span>
+
+<span class="go">Connect to a GoPro camera via BLE and Wifi and do some things.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">-h, --help            show this help message and exit</span>
+<span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
+<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered</span>
+<span class="go">                        GoPro will be connected to</span>
+<span class="go">-l LOG, --log LOG     Location to store detailed log</span>
+<span class="go">-v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically</span>
+<span class="go">                        discovered.</span>
+</pre></div>
+</div>
+<p>The demo will perform the following, logging to the console as it goes as well as writing a
+more detailed log to a file (this file can be set with the –log parameter):</p>
+<ol class="arabic simple">
+<li><p>Scan for advertising BLE Devices, displaying any it finds. Note it is possible to specify a device connect to via the –identifier CLI parameter.</p></li>
+<li><p>Connect to the first GoPro BLE Device it finds (if not passed an identifier)</p></li>
+<li><p>Read the Wifi SSID and password via BLE, then enable the WiFi access point</p></li>
+<li><p>Connect to the camera Wifi</p></li>
+<li><p>Dump the discovered BLE characteristics to a .csv file</p></li>
+<li><p>Disable the shutter and Turbo mode</p></li>
+<li><p>Get all statuses and settings</p></li>
+<li><p>Get and print some statuses, settings, and capabilities individually</p></li>
+<li><p>Register to receive push notifications of some statuses, settings, amnd capabilities</p></li>
+<li><p>Take a picture</p></li>
+<li><p>Take a video</p></li>
+<li><p>Get the media list</p></li>
+<li><p>Find a picture from the media list and download it</p></li>
+<li><p>Find a video from the media list and download it</p></li>
+<li><p>Get the media info for a video and a picture</p></li>
+<li><p>Get GPMF data for a picture</p></li>
+<li><p>Get the screen-nail of a video</p></li>
+<li><p>Get telemetry data for a video</p></li>
+<li><p>Get the thumbnail of a picture</p></li>
+<li><p>Get the preset status</p></li>
+<li><p>Cycle through resolutions, getting async notifications for push notifications that we registered for previously</p></li>
+<li><p>Enable the live stream.</p></li>
+<li><p>Attempt to open VLC to view the live stream. This should work if you installed VLC to the default location.</p></li>
+<li><p>Sleep until a keyboard interrupt is received, then exit</p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="usage.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, GoPro Inc..
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
