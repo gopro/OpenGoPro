@@ -37,7 +37,7 @@ version: ## Update the Open GoPro version
 .PHONY: tests
 tests: ## Run link checker. This assumes python installed and jekyll site is currently being served
 	@pip install linkchecker
-	@linkchecker http://127.0.0.1:5000/OpenGoPro/index.html
+	@linkchecker http://127.0.0.1:5000/
 
 .PHONY: copyright
 copyright: ## Check for missing copyrights everywhere and add them using the version from README.md
