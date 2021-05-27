@@ -25,7 +25,7 @@ Complete documentation can be found on [Open GoPro](https://gopro.github.io/Open
 ## Installation
 
 ```console
-    $ pip install open_gopro
+    $ pip install open-gopro
 ```
 
 ## Features
