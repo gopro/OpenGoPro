@@ -17,7 +17,7 @@ subtitle:
 name: 'GoPro'
 description: 'Open Source GoPro Interface'
 url: 'https://gopro.github.io'
-baseurl: '/OpenGoPro'
+baseurl: ''
 repository: https://github.com/gopro/OpenGoPro
 teaser: /assets/images/logos/logo.png
 logo: /assets/images/logos/logo.png

@@ -19,7 +19,7 @@ prepare_demos: ## Copy demos into docs folder for Jekyll building and add front 
 
 .PHONY: build
 build: prepare_demos ## Build but do not serve the jekyll pages
-	@docker-compose run --rm jekyll "bundle install && bundle exec jekyll build"
+	@docker-compose run --rm jekyll "bundle exec jekyll build --baseurl ${BASE_URL}"
 
 .PHONY: serve
 serve: prepare_demos ## Serve the sample site here

@@ -23,8 +23,18 @@ jobs:
               shell: bash
               run: make prepare_demos
 
-            # Standard usage
-            - uses: helaili/jekyll-action@2.2.0
+            - name: Build and Deploy External
+              if: ${{ github.repository == 'gopro/OpenGoPro' }}
+              uses: helaili/jekyll-action@2.2.0
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  keep_history: true
+                  target_branch: 'gh-pages'
+                  jekyll_build_options: '--baseurl /OpenGoPro'
+
+            - name: Build and Deploy Internal
+              if: ${{ github.repository != 'gopro/OpenGoPro' }}
+              uses: helaili/jekyll-action@2.2.0
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
                   keep_history: true
