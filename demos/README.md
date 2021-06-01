@@ -11,7 +11,7 @@ for more information.
 | python/tutorial                    | short Python scripts to accompany the [Python Tutorials](https://gopro.github.io/OpenGoPro/tutorials/#python) | ✔️      | ✔️  | ✔️    | ❌     |
 | swift/EnableWiFiDemo               | a swift demo for discovering, connecting and enabling Wi-Fi on GoPro Camera                                   | ❌      | ❌  | ❌    | ✔️     |
 | csharp/GoProCSharpSample           | a C# demo for discovering, pairing, connecting and manipulating a camera                                      | ✔️      | ❌  | ❌    | ❌     |
-| c_c++/GoProC++Demo               | 3 C / C++ demos to send media commands, stream commands, and UI control commands                              | ✔️      | ✔️  | ✔️    | ❌     |
+| c_c++/GoProC_C++Demo               | 2 C / C++ demos to send media commands and start/stop the preview stream                                      | ✔️      | ✔️  | ✔️    | ❌     |
 
 ## Contributing
 
