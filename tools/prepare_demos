@@ -47,14 +47,19 @@ main() {
         # Build an escaped version of the directory for use in regex pattern (to handle, for examaple, C++)
         dir_escaped=$(quoteRe $(echo $dir | cut -c2-))
         # Extract the snippet from the demos README.md using the current demo directory as the key
-        echo "snippet: $(cat demos/README.md |
+        snippet=$(cat demos/README.md |
             # extract text after $dir_escape
             perl -sne '/(?<=$before)(.*)/ && print "$1\n";' -- -before=$dir_escaped |
             # extract text between first pipe and next pipe
             perl -sne '/(?<=\|)(.*?)(?=\|)/ && print "$1\n";' |
             # strip whitespace
-            xargs)" \
-        >>temp
+            xargs)
+        if [ -z "$snippet" ]; then
+            echo "ERROR! Can not parse snippet for demo at demos$dir."
+            echo "Ensure the table in demos/README.md is correct."
+            exit 1
+        fi
+        echo "snippet: $snippet" >>temp
 
         # Close the front matter, write the content, then move the temporary file to the source location
         echo "---" >>temp
