@@ -9,8 +9,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>GoPro C++ Demo :  Open GoPro</title>
-<meta name="description" content="GoPro C++ Demo">
+<!-- begin _includes/seo.html --><title>GoPro C/C++ Demos :  Open GoPro</title>
+<meta name="description" content="GoPro C/C++ Demos">
 
 
   <meta name="author" content="GoPro">
@@ -22,26 +22,26 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
-<meta property="og:title" content="GoPro C++ Demo">
-<meta property="og:url" content="https://gopro.github.io/OpenGoPro/demos/c_c++/GoProC++Demo">
+<meta property="og:title" content="GoPro C/C++ Demos">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/demos/c_c++/GoProC_C++Demo">
 
 
-  <meta property="og:description" content="GoPro C++ Demo">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2021-06-01T14:20:04-07:00">
+  <meta property="og:description" content="GoPro C/C++ Demos">
 
 
 
 
 
 
-<link rel="canonical" href="https://gopro.github.io/OpenGoPro/demos/c_c++/GoProC++Demo">
+
+  <meta property="article:published_time" content="2021-06-01T14:57:56-07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/demos/c_c++/GoProC_C++Demo">
 
 
 
@@ -221,7 +221,7 @@
     
       
       
-        <li class="current">GoPro C++ Demo</li>
+        <li class="current">GoPro C/C++ Demos</li>
       
     
   </ol>
@@ -356,15 +356,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="GoPro C++ Demo">
-    <meta itemprop="description" content="GoPro C++ Demo">
-    <meta itemprop="datePublished" content="2021-06-01T14:20:04-07:00">
+    <meta itemprop="headline" content="GoPro C/C++ Demos">
+    <meta itemprop="description" content="GoPro C/C++ Demos">
+    <meta itemprop="datePublished" content="2021-06-01T14:57:56-07:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">GoPro C++ Demo
+          <h1 id="page-title" class="page__title" itemprop="headline">GoPro C/C++ Demos
 </h1>
           
 
@@ -398,29 +398,26 @@
 <i class="fas fa-file-alt"></i> On this page</h4></header>
               <ul class="toc__menu">
 <li><a href="#requirements">Requirements</a></li>
-<li>
-<a href="#media-commands">Media Commands</a><ul>
+<li><a href="#media-commands">Media Commands</a></li>
 <li><a href="#stream-commands">Stream Commands</a></li>
-<li><a href="#ui-control-commands">UI Control Commands</a></li>
-</ul>
-</li>
 </ul>
 
             </nav>
           </aside>
         
-        <button class="github-button" onclick="location.href='https://github.com/gopro/OpenGoPro/tree/main/demos/c_c++/GoProC++Demo'">
+        <button class="github-button" onclick="location.href='https://github.com/gopro/OpenGoPro/tree/main/demos/c_c++/GoProC_C++Demo'">
           <i class="fab fa-github"></i>
           View this Demo on Github
         </button>
-        <p>This folder contains C and C++ examples to perform some Open GoPro functionality. There are three examples,
+        <p><img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"></p>
+
+<p>This folder contains C and C++ examples to perform some Open GoPro functionality. There are two examples,
 each of which are detailed in a section below.</p>
 
-<ul>
-  <li>media commands</li>
-  <li>stream commands</li>
-  <li>UI control commands</li>
-</ul>
+<ol>
+  <li><a href="#media-commands"><strong>Media Commands</strong></a></li>
+  <li><a href="#stream-commands"><strong>Stream Commands</strong></a></li>
+</ol>
 
 <h2 id="requirements">Requirements</h2>
 
@@ -432,7 +429,7 @@ C or C++ and work for MacOS, Linux and Windows.</p>
 <p>To connect to the camera:</p>
 
 <ol>
-  <li>Connect <a href="https://github.com/gopro/OpenGoPro/tree/main/docs/ble">BLE</a> to turn on AP and get <a href="https://github.com/gopro/OpenGoPro/tree/main/docs/wifi">WiFi</a> SSID/PASSPHRASE</li>
+  <li>Connect <a href="https://github.com/gopro/OpenGoPro/blob/23108d127ccb4f96d43116a9083890193557ab23/docs/specs/ble.md">BLE</a> to turn on AP and get <a href="https://github.com/gopro/OpenGoPro/blob/23108d127ccb4f96d43116a9083890193557ab23/docs/specs/wifi.md">WiFi</a> SSID/PASSPHRASE</li>
   <li>Use retrieved WiFi SSID/PASSPHRASE to connect system to GoPro WiFi</li>
 </ol>
 
@@ -471,7 +468,7 @@ requests to get the media list, media info and downloading specific media files.
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/media_commands &lt;<span class="nt">-d</span>, <span class="nt">--demo</span><span class="o">&gt;</span> &lt;output_path&gt;
 </code></pre></div></div>
 
-<h3 id="stream-commands">Stream Commands</h3>
+<h2 id="stream-commands">Stream Commands</h2>
 
 <p>This demo demonstrates one way to start and stop the preview stream.</p>
 
@@ -495,15 +492,6 @@ The UDP address is <strong><em>udp://0.0.0.0:8554</em></strong></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/stream_commands &lt;<span class="nt">-d</span>, <span class="nt">--demo</span><span class="o">&gt;</span>
 </code></pre></div></div>
 
-<h3 id="ui-control-commands">UI Control Commands</h3>
-
-<p>This demo shows one example of setting a setting value (video resolution).</p>
-
-<p>Set resolution:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/ui_control_commands
-</code></pre></div></div>
-
         
       </section>
 
@@ -514,7 +502,7 @@ The UDP address is <strong><em>udp://0.0.0.0:8554</em></strong></p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-06-01T14:20:04-07:00">June 1, 2021</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-06-01T14:57:56-07:00">June 1, 2021</time></p>
 
 
       </footer>
