@@ -1,11 +1,12 @@
-# GoPro C++ Demo
+# GoPro C/C++ Demos
 
-This folder contains C and C++ examples to perform some Open GoPro functionality. There are three examples,
+<img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"/>
+
+This folder contains C and C++ examples to perform some Open GoPro functionality. There are two examples,
 each of which are detailed in a section below.
 
--   media commands
--   stream commands
--   UI control commands
+1. [**Media Commands**](#media-commands)
+2. [**Stream Commands**](#stream-commands)
 
 ## Requirements
 
@@ -16,10 +17,10 @@ C or C++ and work for MacOS, Linux and Windows.
 
 To connect to the camera:
 
-1. Connect [BLE](https://github.com/gopro/OpenGoPro/tree/main/docs/ble) to turn on AP and get [WiFi](https://github.com/gopro/OpenGoPro/tree/main/docs/wifi) SSID/PASSPHRASE
+1. Connect [BLE](https://github.com/gopro/OpenGoPro/blob/23108d127ccb4f96d43116a9083890193557ab23/docs/specs/ble.md) to turn on AP and get [WiFi](https://github.com/gopro/OpenGoPro/blob/23108d127ccb4f96d43116a9083890193557ab23/docs/specs/wifi.md) SSID/PASSPHRASE
 2. Use retrieved WiFi SSID/PASSPHRASE to connect system to GoPro WiFi
 
-## Media Commands
+<h2 id="media-commands">Media Commands</h2>
 
 This demo demonstrates one way to get the media list and download the first media file. It also supports
 requests to get the media list, media info and downloading specific media files.
@@ -60,7 +61,7 @@ Media Demo:
 $ ./bin/media_commands <-d, --demo> <output_path>
 ```
 
-### Stream Commands
+<h2 id="stream-commands">Stream Commands</h2>
 
 This demo demonstrates one way to start and stop the preview stream.
 
@@ -83,14 +84,4 @@ Preview Stream Demo:
 
 ```bash
 $ ./bin/stream_commands <-d, --demo>
-```
-
-### UI Control Commands
-
-This demo shows one example of setting a setting value (video resolution).
-
-Set resolution:
-
-```bash
-$ ./bin/ui_control_commands
 ```
