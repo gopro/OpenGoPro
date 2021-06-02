@@ -101,6 +101,8 @@ Here is a generic sequence (the same is true for statuses):
 
 ```mermaid!
 sequenceDiagram
+  participant PC as Open GoPro user device
+  participant GoPro
   note over PC, GoPro: Connected (steps from connect tutorial)
   PC ->> GoPro: Get Setting value(s) command written to Query UUID
   GoPro ->> PC: Setting values responded to Query Response UUID
@@ -269,6 +271,8 @@ Here is a generic sequence diagram of how this looks (the same is true for statu
 
 ```mermaid!
 sequenceDiagram
+  participant PC as Open GoPro user device
+  participant GoPro
   note over PC, GoPro: Connected (steps from connect tutorial)
   PC ->> GoPro: Register updates for setting
   GoPro ->> PC: Notification Response and Current Setting Value
