@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2021-06-01T14:57:56-07:00">
+  <meta property="article:published_time" content="2021-06-03T13:04:53-07:00">
 
 
 
@@ -434,7 +434,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 3: Parse BLE TLV Responses">
     <meta itemprop="description" content="Python Tutorial 3: Parse BLE TLV Responses">
-    <meta itemprop="datePublished" content="2021-06-01T14:57:56-07:00">
+    <meta itemprop="datePublished" content="2021-06-03T13:04:53-07:00">
     
 
     <div class="page__inner-wrap">
@@ -555,13 +555,13 @@ handler simply checks that the UUID is the expected UUID and that the status byt
 This has been fine since we were only sending specific commands where this works and we know that the sequence
 always appears as such (connection sequence left out for brevity):</p>
 
-<p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5wYXJ0aWNpcGFudCBQQ1xucGFydGljaXBhbnQgR29Qcm9cbm5vdGUgb3ZlciBQQywgR29Qcm8gOiBkZXZpY2VzIGFyZSBjb25uZWN0ZWQgYXMgaW4gVHV0b3JpYWwgMVxuUEMgLT4-IEdvUHJvOiBXcml0ZSB0byBjaGFyYWN0ZXJpc3RpY1xuR29Qcm8gLT4-IFBDOiBOb3RpZmljYXRpb24gUmVzcG9uc2UgKE1TQiA9PSAwIChzdGFydCkpIiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifX0"></p>
+<p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5wYXJ0aWNpcGFudCBQQyBhcyBPcGVuIEdvUHJvIHVzZXIgZGV2aWNlXG5wYXJ0aWNpcGFudCBHb1Byb1xubm90ZSBvdmVyIFBDLCBHb1BybyA6IGRldmljZXMgYXJlIGNvbm5lY3RlZCBhcyBpbiBUdXRvcmlhbCAxXG5QQyAtPj4gR29Qcm86IFdyaXRlIHRvIGNoYXJhY3RlcmlzdGljXG5Hb1BybyAtPj4gUEM6IE5vdGlmaWNhdGlvbiBSZXNwb25zZSAoTVNCID09IDAgKHN0YXJ0KSkiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9fQ"></p>
 
 <p>In actuality, responses can be more complicated. As described in the
 <a href="/OpenGoPro/ble#packet-headers">Open GoPro Interface</a>, responses can be
 be comprised of multiple packets where each packet is &lt;= 20 bytes such as:</p>
 
-<p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5ub3RlIG92ZXIgUEMsIEdvUHJvIDogZGV2aWNlcyBhcmUgY29ubmVjdGVkIGFzIGluIFR1dG9yaWFsIDFcblBDIC0-PiBHb1BybzogV3JpdGUgdG8gY2hhcmFjdGVyaXN0aWNcbkdvUHJvIC0-PiBQQzogTm90aWZpY2F0aW9uIFJlc3BvbnNlIChNU0IgPT0gMCAoc3RhcnQpKVxuR29Qcm8gLT4-IFBDOiBOb3RpZmljYXRpb24gUmVzcG9uc2UgKE1TQiA9PSAxIChjb250aW51YXRpb24pKVxuR29Qcm8gLT4-IFBDOiBOb3RpZmljYXRpb24gUmVzcG9uc2UgKE1TQiA9PSAxIChjb250aW51YXRpb24pKVxuR29Qcm8gLT4-IFBDOiBOb3RpZmljYXRpb24gUmVzcG9uc2UgKE1TQiA9PSAxIChjb250aW51YXRpb24pKSIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19"></p>
+<p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5wYXJ0aWNpcGFudCBQQyBhcyBPcGVuIEdvUHJvIHVzZXIgZGV2aWNlXG5wYXJ0aWNpcGFudCBHb1Byb1xubm90ZSBvdmVyIFBDLCBHb1BybyA6IGRldmljZXMgYXJlIGNvbm5lY3RlZCBhcyBpbiBUdXRvcmlhbCAxXG5QQyAtPj4gR29Qcm86IFdyaXRlIHRvIGNoYXJhY3RlcmlzdGljXG5Hb1BybyAtPj4gUEM6IE5vdGlmaWNhdGlvbiBSZXNwb25zZSAoTVNCID09IDAgKHN0YXJ0KSlcbkdvUHJvIC0-PiBQQzogTm90aWZpY2F0aW9uIFJlc3BvbnNlIChNU0IgPT0gMSAoY29udGludWF0aW9uKSlcbkdvUHJvIC0-PiBQQzogTm90aWZpY2F0aW9uIFJlc3BvbnNlIChNU0IgPT0gMSAoY29udGludWF0aW9uKSlcbkdvUHJvIC0-PiBQQzogTm90aWZpY2F0aW9uIFJlc3BvbnNlIChNU0IgPT0gMSAoY29udGludWF0aW9uKSkiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9fQ"></p>
 
 <p>This requires the implementation of accumulating and parsing algorithms which will be described in
 [Parsing Multiple Packet TLV Responses].</p>
@@ -767,10 +767,10 @@ print them (and all of the other response information) as such:</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_b25ff846-5e21-4449-82e4-fbaafb025642" class="quiz">
+<div id="quiz_30d6abd4-c777-4196-b4c0-594d8639b376" class="quiz">
     <div>
-        <div id="question_b25ff846-5e21-4449-82e4-fbaafb025642" class="quiz__question">What is the maximum size of an individual notification response packet?</div>
-        <div id="answers_b25ff846-5e21-4449-82e4-fbaafb025642">
+        <div id="question_30d6abd4-c777-4196-b4c0-594d8639b376" class="quiz__question">What is the maximum size of an individual notification response packet?</div>
+        <div id="answers_30d6abd4-c777-4196-b4c0-594d8639b376">
         
             <input type="radio" name="question" value="A"><label>A: 20 bytes</label>
             <br>
@@ -783,19 +783,19 @@ print them (and all of the other response information) as such:</p>
         
         </div>
     </div>
-    <button onclick="showResults('b25ff846-5e21-4449-82e4-fbaafb025642', 'A')">Submit Answer</button>
-    <div id="results_b25ff846-5e21-4449-82e4-fbaafb025642" style="display: none">
-        <span id="correct_b25ff846-5e21-4449-82e4-fbaafb025642" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_b25ff846-5e21-4449-82e4-fbaafb025642" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('30d6abd4-c777-4196-b4c0-594d8639b376', 'A')">Submit Answer</button>
+    <div id="results_30d6abd4-c777-4196-b4c0-594d8639b376" style="display: none">
+        <span id="correct_30d6abd4-c777-4196-b4c0-594d8639b376" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_30d6abd4-c777-4196-b4c0-594d8639b376" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         Responses can be composed of multiple packets where each packet is at
     maximum 20 bytes.
     </div>
 </div>
 
-<div id="quiz_82638d18-faf0-4d38-ae1a-618b3af758af" class="quiz">
+<div id="quiz_6e0f73b2-2471-4908-9d2f-0c9fa7034ba9" class="quiz">
     <div>
-        <div id="question_82638d18-faf0-4d38-ae1a-618b3af758af" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
-        <div id="answers_82638d18-faf0-4d38-ae1a-618b3af758af">
+        <div id="question_6e0f73b2-2471-4908-9d2f-0c9fa7034ba9" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
+        <div id="answers_6e0f73b2-2471-4908-9d2f-0c9fa7034ba9">
         
             <input type="radio" name="question" value="A"><label>A: 20 bytes</label>
             <br>
@@ -808,18 +808,18 @@ print them (and all of the other response information) as such:</p>
         
         </div>
     </div>
-    <button onclick="showResults('82638d18-faf0-4d38-ae1a-618b3af758af', 'C')">Submit Answer</button>
-    <div id="results_82638d18-faf0-4d38-ae1a-618b3af758af" style="display: none">
-        <span id="correct_82638d18-faf0-4d38-ae1a-618b3af758af" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_82638d18-faf0-4d38-ae1a-618b3af758af" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('6e0f73b2-2471-4908-9d2f-0c9fa7034ba9', 'C')">Submit Answer</button>
+    <div id="results_6e0f73b2-2471-4908-9d2f-0c9fa7034ba9" style="display: none">
+        <span id="correct_6e0f73b2-2471-4908-9d2f-0c9fa7034ba9" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_6e0f73b2-2471-4908-9d2f-0c9fa7034ba9" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There is no limit on the amount of packets that can comprise a response.
     </div>
 </div>
 
-<div id="quiz_394a0aef-70dd-47f0-8d60-5bbddecec082" class="quiz">
+<div id="quiz_1ccbe237-525e-428b-8399-c70b8a751c62" class="quiz">
     <div>
-        <div id="question_394a0aef-70dd-47f0-8d60-5bbddecec082" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
-        <div id="answers_394a0aef-70dd-47f0-8d60-5bbddecec082">
+        <div id="question_1ccbe237-525e-428b-8399-c70b8a751c62" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
+        <div id="answers_1ccbe237-525e-428b-8399-c70b8a751c62">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -832,20 +832,20 @@ print them (and all of the other response information) as such:</p>
         
         </div>
     </div>
-    <button onclick="showResults('394a0aef-70dd-47f0-8d60-5bbddecec082', 'C')">Submit Answer</button>
-    <div id="results_394a0aef-70dd-47f0-8d60-5bbddecec082" style="display: none">
-        <span id="correct_394a0aef-70dd-47f0-8d60-5bbddecec082" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_394a0aef-70dd-47f0-8d60-5bbddecec082" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('1ccbe237-525e-428b-8399-c70b8a751c62', 'C')">Submit Answer</button>
+    <div id="results_1ccbe237-525e-428b-8399-c70b8a751c62" style="display: none">
+        <span id="correct_1ccbe237-525e-428b-8399-c70b8a751c62" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_1ccbe237-525e-428b-8399-c70b8a751c62" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Command responses are almost always 1 packet (just returning the status).
     The exception are complex responses which can be multiple packets (in the case of Get Hardware
     Info)
     </div>
 </div>
 
-<div id="quiz_dc1b7d79-5cdb-42fa-981f-f8c0082cb658" class="quiz">
+<div id="quiz_5f19eb64-122a-4b32-adbe-6e3a0f433eba" class="quiz">
     <div>
-        <div id="question_dc1b7d79-5cdb-42fa-981f-f8c0082cb658" class="quiz__question">How many packets are setting responses comprised of?</div>
-        <div id="answers_dc1b7d79-5cdb-42fa-981f-f8c0082cb658">
+        <div id="question_5f19eb64-122a-4b32-adbe-6e3a0f433eba" class="quiz__question">How many packets are setting responses comprised of?</div>
+        <div id="answers_5f19eb64-122a-4b32-adbe-6e3a0f433eba">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -858,10 +858,10 @@ print them (and all of the other response information) as such:</p>
         
         </div>
     </div>
-    <button onclick="showResults('dc1b7d79-5cdb-42fa-981f-f8c0082cb658', 'A')">Submit Answer</button>
-    <div id="results_dc1b7d79-5cdb-42fa-981f-f8c0082cb658" style="display: none">
-        <span id="correct_dc1b7d79-5cdb-42fa-981f-f8c0082cb658" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_dc1b7d79-5cdb-42fa-981f-f8c0082cb658" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('5f19eb64-122a-4b32-adbe-6e3a0f433eba', 'A')">Submit Answer</button>
+    <div id="results_5f19eb64-122a-4b32-adbe-6e3a0f433eba" style="display: none">
+        <span id="correct_5f19eb64-122a-4b32-adbe-6e3a0f433eba" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_5f19eb64-122a-4b32-adbe-6e3a0f433eba" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         Settings Responses only ever contain the command status. Furthermore, there
     is no concept of complex responses for setting commands.
     </div>
@@ -1078,10 +1078,10 @@ INFO\:root\:Successfully received the response
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_b3b673df-1860-4d6f-a558-da8de431c4cd" class="quiz">
+<div id="quiz_b7ae53ed-3282-49c3-83c0-253c9e05e9d7" class="quiz">
     <div>
-        <div id="question_b3b673df-1860-4d6f-a558-da8de431c4cd" class="quiz__question">Which of the following is not a real preset group?</div>
-        <div id="answers_b3b673df-1860-4d6f-a558-da8de431c4cd">
+        <div id="question_b7ae53ed-3282-49c3-83c0-253c9e05e9d7" class="quiz__question">Which of the following is not a real preset group?</div>
+        <div id="answers_b7ae53ed-3282-49c3-83c0-253c9e05e9d7">
         
             <input type="radio" name="question" value="A"><label>A: The stop bit will be set in the header</label>
             <br>
@@ -1094,10 +1094,10 @@ INFO\:root\:Successfully received the response
         
         </div>
     </div>
-    <button onclick="showResults('b3b673df-1860-4d6f-a558-da8de431c4cd', 'B')">Submit Answer</button>
-    <div id="results_b3b673df-1860-4d6f-a558-da8de431c4cd" style="display: none">
-        <span id="correct_b3b673df-1860-4d6f-a558-da8de431c4cd" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_b3b673df-1860-4d6f-a558-da8de431c4cd" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('b7ae53ed-3282-49c3-83c0-253c9e05e9d7', 'B')">Submit Answer</button>
+    <div id="results_b7ae53ed-3282-49c3-83c0-253c9e05e9d7" style="display: none">
+        <span id="correct_b7ae53ed-3282-49c3-83c0-253c9e05e9d7" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_b7ae53ed-3282-49c3-83c0-253c9e05e9d7" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         The length of the entire response is parsed from the first packet. We
         then accumulate packets, keeping track of the received length, until all of the bytes
         have been received. A and C are just made up 😜.
@@ -1209,8 +1209,9 @@ each value in a dict indexed by ID for later access.</p>
   </div>
 <div style="flex:60%">
 
-    <p><br><br><br>
-<img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggVERcbkFbUGFyc2UgUXVlcnkgSURdIC0tPiBCW1BhcnNlIFN0YXR1c11cbkIgLS0-IEN7TW9yZSBkYXRhP31cbkMgLS0-IHx5ZXN8RFtHZXQgVmFsdWUgSURdXG5EIC0tPiBFW0dldCBWYWx1ZSBMZW5ndGhdXG5FIC0tPiBGW0dldCBWYWx1ZV1cbkYgLS0-IENcbkMgLS0-IHxub3xHKGRvbmUpIiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifX0"></p>
+    <p><br><br><br></p>
+
+    <p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggVERcbkFbUGFyc2UgUXVlcnkgSURdIC0tPiBCW1BhcnNlIFN0YXR1c11cbkIgLS0-IEN7TW9yZSBkYXRhP31cbkMgLS0-IHx5ZXN8RFtHZXQgVmFsdWUgSURdXG5EIC0tPiBFW0dldCBWYWx1ZSBMZW5ndGhdXG5FIC0tPiBGW0dldCBWYWx1ZV1cbkYgLS0-IENcbkMgLS0-IHxub3xHKGRvbmUpIiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifX0"></p>
 
   </div>
 </div>
@@ -1264,10 +1265,10 @@ each value in a dict indexed by ID for later access.</p>
   <li>ID 3 == 1 equates to FPS == 120</li>
 </ul>
 
-<div id="quiz_4c7ada62-486a-471f-be09-4352b8504d1a" class="quiz">
+<div id="quiz_3f1abc35-fa98-4fa5-82db-c0f3e5676b2b" class="quiz">
     <div>
-        <div id="question_4c7ada62-486a-471f-be09-4352b8504d1a" class="quiz__question">How many packets are query responses?</div>
-        <div id="answers_4c7ada62-486a-471f-be09-4352b8504d1a">
+        <div id="question_3f1abc35-fa98-4fa5-82db-c0f3e5676b2b" class="quiz__question">How many packets are query responses?</div>
+        <div id="answers_3f1abc35-fa98-4fa5-82db-c0f3e5676b2b">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -1283,20 +1284,20 @@ each value in a dict indexed by ID for later access.</p>
         
         </div>
     </div>
-    <button onclick="showResults('4c7ada62-486a-471f-be09-4352b8504d1a', 'D')">Submit Answer</button>
-    <div id="results_4c7ada62-486a-471f-be09-4352b8504d1a" style="display: none">
-        <span id="correct_4c7ada62-486a-471f-be09-4352b8504d1a" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_4c7ada62-486a-471f-be09-4352b8504d1a" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('3f1abc35-fa98-4fa5-82db-c0f3e5676b2b', 'D')">Submit Answer</button>
+    <div id="results_3f1abc35-fa98-4fa5-82db-c0f3e5676b2b" style="display: none">
+        <span id="correct_3f1abc35-fa98-4fa5-82db-c0f3e5676b2b" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_3f1abc35-fa98-4fa5-82db-c0f3e5676b2b" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         Query responses can be one packet (if for example querying a specific
 setting) or multiple packets (when querying many or all settings as in the example here).
 See the next tutorial for more information on queries.
     </div>
 </div>
 
-<div id="quiz_17fac31d-7b0c-4369-a06e-7895cc73f3b3" class="quiz">
+<div id="quiz_36bad485-224f-49db-a9f2-778f0cc66a15" class="quiz">
     <div>
-        <div id="question_17fac31d-7b0c-4369-a06e-7895cc73f3b3" class="quiz__question">Which field is not common to all responses?</div>
-        <div id="answers_17fac31d-7b0c-4369-a06e-7895cc73f3b3">
+        <div id="question_36bad485-224f-49db-a9f2-778f0cc66a15" class="quiz__question">Which field is not common to all responses?</div>
+        <div id="answers_36bad485-224f-49db-a9f2-778f0cc66a15">
         
             <input type="radio" name="question" value="A"><label>A: length</label>
             <br>
@@ -1309,10 +1310,10 @@ See the next tutorial for more information on queries.
         
         </div>
     </div>
-    <button onclick="showResults('17fac31d-7b0c-4369-a06e-7895cc73f3b3', 'D')">Submit Answer</button>
-    <div id="results_17fac31d-7b0c-4369-a06e-7895cc73f3b3" style="display: none">
-        <span id="correct_17fac31d-7b0c-4369-a06e-7895cc73f3b3" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_17fac31d-7b0c-4369-a06e-7895cc73f3b3" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('36bad485-224f-49db-a9f2-778f0cc66a15', 'D')">Submit Answer</button>
+    <div id="results_36bad485-224f-49db-a9f2-778f0cc66a15" style="display: none">
+        <span id="correct_36bad485-224f-49db-a9f2-778f0cc66a15" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_36bad485-224f-49db-a9f2-778f0cc66a15" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         Query responses can be one packet (if for example querying a specific
 setting) or multiple packets (when querying many or all settings as in the example here).
 See the next tutorial for more information on queries.
@@ -1346,7 +1347,7 @@ example of this, see the <a href="https://gopro.github.io/OpenGoPro/python_sdk/"
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-06-01T14:57:56-07:00">June 1, 2021</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-06-03T13:04:53-07:00">June 3, 2021</time></p>
 
 
       </footer>
@@ -1396,40 +1397,49 @@ example of this, see the <a href="https://gopro.github.io/OpenGoPro/python_sdk/"
         <!-- start custom footer snippets -->
 
 <!-- end custom footer snippets -->
-
         <div class="page__footer-follow">
-  <ul class="social-icons">
-    
-
-    
-      
-        
-          <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
-        
-      
-        
-          <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
-        
-      
-        
-          <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
-        
-      
-        
-          <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
-        
-      
-        
-          <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
-        
-      
-    
-
-    
-  </ul>
+    <ul class="social-icons">
+           
+        <li>
+            <a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i>
+                Website</a>
+        </li>
+          
+        <li>
+            <a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i>
+                Twitter</a>
+        </li>
+          
+        <li>
+            <a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i>
+                Facebook</a>
+        </li>
+          
+        <li>
+            <a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i>
+                GitHub</a>
+        </li>
+          
+        <li>
+            <a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i>
+                Instagram</a>
+        </li>
+           
+    </ul>
 </div>
 
-<div class="page__footer-copyright">© 2021 GoPro. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">
+    © 2021 GoPro. Powered by
+    <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
+    <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
+    <p>
+        Can be used with GoPro® HERO9 cameras. You must include the following text on
+        every page where it can be seen by someone purchasing such an item: <em>"This product
+        and/or service is not affiliated with, endorsed by or in any way associated with
+        GoPro Inc. or its products and services. GoPro, HERO, and their respective logos
+        are trademarks or registered trademarks of GoPro, Inc."</em>
+    </p>
+</div>
 
       </footer>
     </div>
