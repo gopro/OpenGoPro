@@ -22,8 +22,8 @@ build: prepare_demos ## Build but do not serve the jekyll pages
 	@docker-compose run --rm jekyll "bundle exec jekyll build --baseurl ${BASE_URL}"
 
 .PHONY: serve
-serve: prepare_demos ## Serve the sample site here
-	@docker-compose up
+serve: prepare_demos ## Serve the site locally at http://127.0.0.1:5000/
+	-docker-compose up
 
 .PHONY: version
 version: ## Update the Open GoPro version

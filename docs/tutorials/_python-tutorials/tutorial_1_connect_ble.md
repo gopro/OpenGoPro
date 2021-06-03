@@ -75,7 +75,7 @@ sections:
 
 ```mermaid!
 sequenceDiagram
-    participant PC
+    participant PC as Open GoPro user device
     participant GoPro
     GoPro-->>PC: Advertising
     GoPro-->>PC: Advertising

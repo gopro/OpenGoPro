@@ -99,7 +99,7 @@ Here is the procedure from power-on to finish:
 
 ```mermaid!
 sequenceDiagram
-  participant PC
+  participant PC  as Open GoPro user device
   participant GoPro
   note over PC, GoPro : devices are connected as in Tutorial 1
   PC ->> GoPro: Command Request (Write to Request UUID)

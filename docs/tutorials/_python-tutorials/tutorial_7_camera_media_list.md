@@ -154,7 +154,7 @@ the GET response will contain a large binary chunk of information so we will loo
 ```mermaid!
 sequenceDiagram
   participant disk
-  participant PC
+  participant PC as Open GoPro user device
   participant GoPro
   note over GoPro, PC: PC connected to WiFi AP
   PC ->> GoPro: Get Media List (GET)

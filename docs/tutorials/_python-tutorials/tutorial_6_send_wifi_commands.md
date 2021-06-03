@@ -71,7 +71,7 @@ GoPro must be observed to verify when the command's effects have been applied. %
 
 ```mermaid!
 sequenceDiagram
-  participant PC
+  participant PC as Open GoPro user device
   participant GoPro
   note over GoPro, PC: PC connected to WiFi AP
   PC ->> GoPro: Command Request (GET)

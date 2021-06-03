@@ -66,7 +66,7 @@ always appears as such (connection sequence left out for brevity):
 
 ```mermaid!
 sequenceDiagram
-  participant PC
+  participant PC as Open GoPro user device
   participant GoPro
   note over PC, GoPro : devices are connected as in Tutorial 1
   PC ->> GoPro: Write to characteristic
@@ -79,6 +79,8 @@ be comprised of multiple packets where each packet is <= 20 bytes such as:
 
 ```mermaid!
 sequenceDiagram
+  participant PC as Open GoPro user device
+  participant GoPro
   note over PC, GoPro : devices are connected as in Tutorial 1
   PC ->> GoPro: Write to characteristic
   GoPro ->> PC: Notification Response (MSB == 0 (start))
@@ -536,6 +538,7 @@ while len(buf) > 0:
 <div markdown="1" style="flex:60%">
 
 <br><br><br>
+
 ```mermaid!
 graph TD
     A[Parse Query ID] --> B[Parse Status]

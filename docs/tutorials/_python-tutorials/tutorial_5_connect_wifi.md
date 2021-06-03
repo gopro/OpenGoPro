@@ -64,7 +64,7 @@ Here is an outline of the steps to do so:
 
 ```mermaid!
 sequenceDiagram
-    participant PC
+    participant PC as Open GoPro user device
     participant GoProBLE
     participant GoProWiFi
     loop Steps from Connect Tutorial
