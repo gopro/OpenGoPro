@@ -22,12 +22,8 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 2em;
-    max-width: 100%;
+    max-width: 45em;
     padding: 0 1em 2em;
-
-    @include breakpoint($x-large) {
-      max-width: $x-large;
-    }
   }
 
   a {
