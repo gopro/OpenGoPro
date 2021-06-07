@@ -110,7 +110,10 @@ class Wireless(WifiController):
         response = cmd("get-command netsh")
         if len(response) > 0 and "not found" not in response and "not recognized" not in response:
             return "netsh"
-
+        response = cmd("WHERE netsh")
+        if len(response) > 0 and "Could not find files" not in response:
+            return "netsh"
+        
         # try nmcli (Ubuntu 14.04)
         response = cmd("which nmcli")
         if len(response) > 0 and "not found" not in response:
