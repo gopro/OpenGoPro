@@ -39,7 +39,7 @@ Below is a table of cameras that support GoPro's public BLE API:
       <td>55</td>
       <td>HD9.01</td>
       <td>HERO9 Black</td>
-      <td>Will be supported in future FW release</td>
+      <td><a href="https://gopro.com/en/us/update/hero9-black">v1.60</a></td>
     </tr>
   </tbody>
 </table>
