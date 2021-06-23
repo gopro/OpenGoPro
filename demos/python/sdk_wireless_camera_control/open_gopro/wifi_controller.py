@@ -102,31 +102,31 @@ class Wireless(WifiController):
         Returns:
             str: Name of discovered driver
         """
-        # try netsh (Windows).
-        # NOTE! This must be first as the other checks break on Windows
-        response = cmd("which netsh")
-        if len(response) > 0 and "not found" not in response and "not recognized" not in response:
-            return "netsh"
-        response = cmd("get-command netsh")
-        if len(response) > 0 and "not found" not in response and "not recognized" not in response:
-            return "netsh"
+        if os.name == 'nt':
+            # try netsh (Windows).
+            response = cmd("where netsh")
+            if len(response) > 0 and "not found" not in response and "not recognized" not in response:
+                return "netsh"
+            response = cmd("powershell get-command netsh")
+            if len(response) > 0 and "not found" not in response and "not recognized" not in response:
+                return "netsh"
+        else:
+            # try nmcli (Ubuntu 14.04)
+            response = cmd("which nmcli")
+            if len(response) > 0 and "not found" not in response:
+                response = cmd("nmcli --version")
+                parts = response.split()
+                ver = parts[-1]
+                compare = self.vercmp(ver, "0.9.9.0")
+                if compare >= 0:
+                    return "nmcli0990"
 
-        # try nmcli (Ubuntu 14.04)
-        response = cmd("which nmcli")
-        if len(response) > 0 and "not found" not in response:
-            response = cmd("nmcli --version")
-            parts = response.split()
-            ver = parts[-1]
-            compare = self.vercmp(ver, "0.9.9.0")
-            if compare >= 0:
-                return "nmcli0990"
+                return "nmcli"
 
-            return "nmcli"
-
-        # try nmcli (Ubuntu w/o network-manager)
-        response = cmd("which wpa_supplicant")
-        if len(response) > 0 and "not found" not in response:
-            return "wpa_supplicant"
+            # try nmcli (Ubuntu w/o network-manager)
+            response = cmd("which wpa_supplicant")
+            if len(response) > 0 and "not found" not in response:
+                return "wpa_supplicant"
 
         # try networksetup (Mac OS 10.10)
         response = cmd("which networksetup")
@@ -868,7 +868,7 @@ class NetshWireless(WifiController):
             bool: True if connected, False otherwise
         """
         # Replace ampersand as it causes problems
-        password = password.replace("&", "%26")
+        password = password.replace("&", "&amp;")
 
         logger.info(f"Attempting to establish WiFi connection to {ssid}...")
 
