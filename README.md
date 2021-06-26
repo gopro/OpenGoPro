@@ -71,7 +71,7 @@ make clean serve
 
 Github Pages serves the site from the `gh-pages` branch of this repo. Whenever the main branch is updated (such
 as via a Pull Request being merged),
-the "Jekyll Build and Deploy" [Github Actions](https://github.com/features/actions) workflow will automatically
+the "Jekyll Build and Deploy" [Github Actions](hhttps://github.com/gopro/OpenGoPro/actions/workflows/release.yml) workflow will automatically
 be triggered to build the site from `main` and update the `gh-pages` branch.
 
 > Note! This process should be invisible to the developer

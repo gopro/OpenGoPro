@@ -39,11 +39,13 @@ Below is a table of cameras that support GoPro's public REST API:
       <td>ID</td>
       <td>Model</td>
       <td>Marketing Name</td>
+      <td>Minimal Firmware Version</td>
     </tr>
     <tr>
       <td>55</td>
       <td>HD9.01</td>
       <td>HERO9 Black</td>
+      <td><a href="https://gopro.com/en/us/update/hero9-black">v1.60</a></td>
     </tr>
   </tbody>
 </table>

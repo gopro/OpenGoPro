@@ -43,7 +43,7 @@ jobs:
                       ${{ runner.os }}-pip-
 
             - name: Install Bluez on Ubuntu
-              run: sudo apt install -y bluez
+              run: sudo apt-get update && sudo apt install -y bluez
               if: ${{ matrix.os == 'ubuntu-latest'}}
 
             - name: Install dependencies
