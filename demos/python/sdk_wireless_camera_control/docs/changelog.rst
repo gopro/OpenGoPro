@@ -123,3 +123,8 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 -------------------
 
 * Minor documentation updates
+
+0.5.7 (June-7-2021)
+-------------------
+
+* Fix wifi driver for Windows
