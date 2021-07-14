@@ -45,7 +45,7 @@ Complete documentation can be found on [Open GoPro](https://gopro.github.io/Open
 To automatically connect to GoPro device via BLE and WiFI, take a video, and download all files:
 
 ```python
-from open_gopro import GoProBLE, params
+from open_gopro import GoPro, params
 
 with GoPro() as gopro:
     gopro.ble_command.load_preset(params.Preset.CINEMATIC)
