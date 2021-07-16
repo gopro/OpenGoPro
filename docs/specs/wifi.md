@@ -2305,6 +2305,6 @@ Below is a table of supported camera status codes.
 ## Preset Status Format
 <p>
 Preset Status is returned as JSON, whose content is the serialization of the <a href="https://developers.google.com/protocol-buffers">protobuf</a> message:
-<a href="https://github.com/gopro/OpenGoPro/blob/main/dprotobuf/preset_status.proto">NotifyPresetStatus</a>.
+<a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">NotifyPresetStatus</a>.
 Using Google protobuf APIs, the JSON can be converted back into a programmatic object in the user's language of choice.
 </p>
