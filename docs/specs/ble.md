@@ -80,7 +80,7 @@ Note: GP-XXXX is shorthand for GoPro's 128-bit UUIDs: <b>b5f9xxxx-aa8d-11e3-9046
     <tr>
       <td>GP-0005</td>
       <td>WiFi AP State</td>
-      <td>Read</td>
+      <td>Read / Notify</td>
     </tr>
     <tr>
       <td rowspan="6">FEA6</td>
@@ -338,8 +338,16 @@ Command messages are sent to GP-0072 and responses/notifications are received on
       <td>Sleep</td>
     </tr>
     <tr>
+      <td>0x16</td>
+      <td>Locate</td>
+    </tr>
+    <tr>
       <td>0x17</td>
       <td>AP Control</td>
+    </tr>
+    <tr>
+      <td>0x18</td>
+      <td>Tag Moment</td>
     </tr>
     <tr>
       <td>0x3C</td>
@@ -2427,7 +2435,7 @@ Below is a table of all possible camera status codes.
     <tr>
       <td>87</td>
       <td>Thermal mitigation mode</td>
-      <td>Can camera use high resolution/fps (based on temperature)? (Boomer/Badger only)</td>
+      <td>Can camera use high resolution/fps (based on temperature)? (HERO7 Silver/HERO7 White only)</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
     </tr>
@@ -2443,7 +2451,7 @@ Below is a table of all possible camera status codes.
       <td>Current mode</td>
       <td>Current flatmode ID</td>
       <td>integer</td>
-      <td>*</td>
+      <td>4: Playback<br />5: Setup<br />12: Video<br />13: Time Lapse Video<br />15: Looping<br />16: Single Photo<br />17: Photo<br />18: Night Photo<br />19: Burst Photo<br />20: Time Lapse Photo<br />21: Night Lapse Photo<br />22: Broadcast Record<br />23: Broadcast<br />24: Time Warp Video<br />25: Live Burst<br />26: Night Lapse Video<br />27: SloMo<br /></td>
     </tr>
     <tr>
       <td>91</td>
@@ -2548,7 +2556,7 @@ Below is a table of all possible camera status codes.
       <td>Camera lens type</td>
       <td>Camera lens type (reflects changes to setting 162)</td>
       <td>integer</td>
-      <td>0: Default<br />1: Hemicuda<br /></td>
+      <td>0: Default<br />1: GoPro Max Lens Mod<br /></td>
     </tr>
     <tr>
       <td>106</td>
