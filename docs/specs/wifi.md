@@ -1113,61 +1113,6 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="16">5K</td>
-      <td rowspan="8">50Hz</td>
-      <td rowspan="4">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">25</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="8">60Hz</td>
-      <td rowspan="4">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">30</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
       <td rowspan="28">4K</td>
       <td rowspan="14">50Hz</td>
       <td rowspan="5">24</td>
@@ -1262,6 +1207,61 @@ Below are tables detailing supported features for Open GoPro cameras.
     </tr>
     <tr>
       <td rowspan="16">4K 4:3</td>
+      <td rowspan="8">50Hz</td>
+      <td rowspan="4">24</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="4">25</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="8">60Hz</td>
+      <td rowspan="4">24</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="4">30</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="16">5K</td>
       <td rowspan="8">50Hz</td>
       <td rowspan="4">24</td>
       <td>Wide</td>
@@ -2089,13 +2089,6 @@ Below is a table of supported camera status codes.
       <td>0: False<br />1: True<br /></td>
     </tr>
     <tr>
-      <td>80</td>
-      <td>Sec sd status</td>
-      <td>Secondary Storage Status (exclusive to Superbank)</td>
-      <td>integer</td>
-      <td>-1: Unknown<br />0: OK<br />1: SD Card Full<br />2: SD Card Removed<br />3: SD Card Format Error<br />4: SD Card Busy<br />8: SD Card Swapped<br /></td>
-    </tr>
-    <tr>
       <td>81</td>
       <td>Band 5ghz avail</td>
       <td>Is 5GHz wireless band available?</td>
@@ -2133,7 +2126,7 @@ Below is a table of supported camera status codes.
     <tr>
       <td>87</td>
       <td>Thermal mitigation mode</td>
-      <td>Can camera use high resolution/fps (based on temperature)? (Boomer/Badger only)</td>
+      <td>Can camera use high resolution/fps (based on temperature)? (HERO7 Silver/White only)</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
     </tr>
@@ -2196,7 +2189,7 @@ Below is a table of supported camera status codes.
     <tr>
       <td>97</td>
       <td>Active preset</td>
-      <td>Currently Preset (ID)</td>
+      <td>Current Preset (ID)</td>
       <td>integer</td>
       <td>*</td>
     </tr>
@@ -2254,7 +2247,7 @@ Below is a table of supported camera status codes.
       <td>Camera lens type</td>
       <td>Camera lens type (reflects changes to setting 162)</td>
       <td>integer</td>
-      <td>0: Default<br />1: Hemicuda<br /></td>
+      <td>0: Default<br />1: Max Lens<br /></td>
     </tr>
     <tr>
       <td>106</td>
