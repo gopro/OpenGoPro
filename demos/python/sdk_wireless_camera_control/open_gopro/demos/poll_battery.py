@@ -1,3 +1,6 @@
+# poll_battery.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Fri Jul 30 21:36:24 UTC 2021
+
 """Example to poll the battery (with no WiFi connection)"""
 
 import sys
