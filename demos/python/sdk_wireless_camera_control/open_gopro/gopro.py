@@ -494,16 +494,6 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
         self._as_coroutine(partial(self._ble.disconnect, self._client))
         self._client = None
 
-        # try:
-        #     self.ready.release()
-        # except ValueError:
-        #     pass  # If we didn't actually have the semaphore
-        # self.keep_alive_thread.join()
-
-        # with self._state_condition:
-        #     self._state_condition.notify()
-        # self._state_thread.join()
-
     def discover_chars(self) -> None:
         """Discover all characteristics.
 
