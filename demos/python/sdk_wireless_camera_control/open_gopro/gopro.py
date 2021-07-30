@@ -119,8 +119,8 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
 
     Args:
         identifier (str, optional): Last 4 of camera name / serial number (i.e. 0456 for GoPro0456). Defaults to None
-        ble_adapter (BLEController, optional): Class used to control BLE connection / send data. Defaults to BleakController().
-        wifi_adapter (WifiController, optional): Class used to control WiFi connection / send data. Defaults to Wireless().
+        ble_adapter (BLEController, optional): Class used to control computer's BLE connection / send data. Defaults to BleakController().
+        wifi_adapter (WifiController, optional): Class used to control computer's WiFi connection / send data. Defaults to Wireless().
         enable_wifi (bool, optional): Optionally do not enable WiFi. Defaults to True.
     """
 

@@ -1,14 +1,9 @@
-# demo.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:50 UTC 2021
-
-"""Demonstration of using the GoPro package."""
+"""Example to poll the battery (with no WiFi connection)"""
 
 import sys
 import time
 import logging
 import argparse
-import threading
-from json import dumps
 from pathlib import Path
 from typing import Tuple
 
@@ -16,8 +11,7 @@ from rich import traceback
 from rich.logging import RichHandler
 from rich.console import Console
 
-from open_gopro import GoPro, params, QueryCmdId
-from open_gopro.util import launch_vlc
+from open_gopro import GoPro
 
 logger = logging.getLogger(__name__)
 traceback.install()  # Enable exception tracebacks in rich logger
@@ -26,7 +20,7 @@ console = Console()  # rich consoler printer
 
 def main() -> None:
     """Main function."""
-    identifier, log_location, vlc_location = parse_arguments()
+    identifier, log_location = parse_arguments()
     setup_logging(log_location)
 
     try:
@@ -104,7 +98,7 @@ def setup_logging(log_location: Path) -> None:
         log.addHandler(sh)
 
 
-def parse_arguments() -> Tuple[str, Path, Path]:
+def parse_arguments() -> Tuple[str, Path]:
     """Parse command line arguments
 
     Returns:
@@ -128,16 +122,9 @@ def parse_arguments() -> Tuple[str, Path, Path]:
         help="Location to store detailed log",
         default="gopro_demo.log",
     )
-    parser.add_argument(
-        "-v",
-        "--vlc",
-        type=Path,
-        help="VLC location. If not set, the location will attempt to be automatically discovered.",
-        default=None,
-    )
     args = parser.parse_args()
 
-    return args.identifier, args.log, args.vlc
+    return args.identifier, args.log
 
 
 if __name__ == "__main__":
