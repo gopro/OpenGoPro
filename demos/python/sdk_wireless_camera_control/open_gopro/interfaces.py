@@ -4,6 +4,7 @@
 """Interfaces that must be defined outside of other files to avoid circular imports."""
 
 from abc import ABC, abstractmethod
+from enum import IntEnum, auto
 from typing import Callable, Generic, Pattern, Optional, List, Tuple, TypeVar
 
 from open_gopro.services import AttributeTable
@@ -114,6 +115,12 @@ class BLEController(ABC, Generic[BleClient, BleDevice]):
         raise NotImplementedError
 
 
+class SsidState(IntEnum):
+    ESTABLISHING = auto()
+    CONNECTED = auto()
+    DISCONNECTED = auto()
+
+
 class WifiController(ABC):
     """Interface definition for a Wifi driver to be used by GoPro."""
 
@@ -141,12 +148,12 @@ class WifiController(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def current(self) -> Tuple[Optional[str], Optional[str]]:
+    def current(self) -> Tuple[Optional[str], SsidState]:
         """Return the SSID and state of the current network.
 
         Returns:
-            Tuple[Optional[str], Optional[str]]: Tuple of SSID and state. State is optional. If SSID is None,
-            there is no current connection
+            Tuple[Optional[str], SsidState]: Tuple of SSID str and state. If SSID is None,
+            there is no current connection.
         """
         raise NotImplementedError
 
