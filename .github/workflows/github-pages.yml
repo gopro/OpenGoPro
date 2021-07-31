@@ -1,3 +1,6 @@
+# github-pages.yml/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Fri, Jul 30, 2021  5:20:49 PM
+
 name: Jekyll Build and Deploy
 
 on:

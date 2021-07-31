@@ -1,3 +1,6 @@
+# pre_merge_checks.yml/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Fri, Jul 30, 2021  5:20:50 PM
+
 # This workflow will run pre-merge checks to verify a PR before it is merged:
 #    - copyright: Checks to see if there are any missing copyrights
 

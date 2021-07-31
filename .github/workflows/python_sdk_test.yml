@@ -1,6 +1,6 @@
-# test_sdk_wireless_camera_control.yml/Open GoPro,  VERSION 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# python_sdk_test.yml/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Fri, Jul 30, 2021  5:20:50 PM
 
-# This workflow will install Python dependencies, lint, and run tests
 # It only runs when something inside sdk_wireless_camera_control has changed
 
 name: Python SDK Testing

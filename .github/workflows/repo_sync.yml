@@ -1,0 +1,26 @@
+# repo_sync.yml/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Fri, Jul 30, 2021  5:03:43 PM
+
+name: Synchronize with external repo
+
+on:
+  schedule:
+  - cron:  "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    steps:
+    - if: ${{ github.repository != 'gopro/OpenGoPro' }}
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+    - if: ${{ github.repository != 'gopro/OpenGoPro' }}
+      name: repo-sync
+      uses: repo-sync/github-sync@v2.3.0
+      with:
+        source_repo: https://github.com/gopro/OpenGoPro
+        source_branch: main
+        destination_branch: main
+        github_token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
