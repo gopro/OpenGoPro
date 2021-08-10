@@ -29,19 +29,16 @@ def main() -> None:
     setup_logging(log_location)
 
     try:
-        spinner = console.status("[bold green]Connecting...")
-        spinner.start()
         with GoPro(identifier) as gopro:
             assert gopro.ble_command.set_shutter(params.Shutter.OFF).is_ok
             assert gopro.ble_command.set_turbo_mode(False).is_ok
-            spinner.stop()
 
-            with console.status("[bold green]Starting the preview stream..."):
-                assert gopro.wifi_command.stop_preview_stream().is_ok
-                assert gopro.wifi_command.start_preview_stream().is_ok
+            console.print("Starting the preview stream...")
+            assert gopro.wifi_command.stop_preview_stream().is_ok
+            assert gopro.wifi_command.start_preview_stream().is_ok
 
-            with console.status("[bold green]Launching VLC..."):
-                threading.Thread(target=launch_vlc, args=(vlc_location,), daemon=True).start()
+            console.print("Launching VLC...")
+            threading.Thread(target=launch_vlc, args=(vlc_location,), daemon=True).start()
 
             console.print(
                 "Success!! :smiley: Stream has been enabled. VLC is viewing it at udp://@:8554",
@@ -82,7 +79,7 @@ def setup_logging(log_location: Path) -> None:
     sh = RichHandler(rich_tracebacks=True, enable_link_path=True, show_time=False)
     stream_formatter = logging.Formatter("%(asctime)s.%(msecs)03d %(message)s", datefmt="%H:%M:%S")
     sh.setFormatter(stream_formatter)
-    sh.setLevel(logging.WARNING)
+    sh.setLevel(logging.INFO)
     logger.addHandler(sh)
     logger.setLevel(logging.DEBUG)
 
