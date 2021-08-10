@@ -11,7 +11,7 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-VERSION = "0.5.7"
+VERSION = "0.5.8"
 NAME = "open_gopro"
 DESCRIPTION = "Open GoPro API and Examples"
 URL = "https://gopro.github.io/OpenGoPro/python_sdk/"
