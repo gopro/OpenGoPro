@@ -88,6 +88,7 @@ setup(
             "gopro-photo=open_gopro.demos.photo:main",
             "gopro-video=open_gopro.demos.video:main",
             "gopro-stream=open_gopro.demos.stream:main",
+            "gopro-log-battery=open_gopro.demos.log_battery:main",
         ]
     },
     install_requires=REQUIRED,
