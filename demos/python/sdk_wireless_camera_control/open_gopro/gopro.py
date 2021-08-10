@@ -630,6 +630,7 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
         """Connect to a GoPro device via WiFi.
 
         Args:
+            enable (bool): whether to enable or disable wifi
             timeout (float, optional): Time before considering establishment failed. Defaults to 15 seconds.
             retries (int, optional): How many tries to reconnect after failures. Defaults to 5.
 
@@ -647,9 +648,8 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
                     return
                 logger.warning(f"WiFi connection timed out. Retrying #{retry}")
             raise ConnectFailed("WiFi", timeout, retries)
-        else:
-            logger.info("Turning off WiFi radio")
-            self.ble_command.enable_wifi_ap(False)
+        logger.info("Turning off WiFi radio")
+        self.ble_command.enable_wifi_ap(False)
 
     def terminate_wifi(self) -> None:
         """Terminate the WiFi connection."""

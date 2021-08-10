@@ -10,7 +10,7 @@ import re
 import time
 import logging
 import tempfile
-from enum import Enum, auto, IntEnum
+from enum import Enum, auto
 from typing import List, Optional, Tuple, Any
 
 from open_gopro.util import cmd
@@ -1008,7 +1008,7 @@ class NetshWireless(WifiController):
         if "no wireless interface" in response.lower():
             return False
         # Is at least one interface enabled?
-        elif "hardware on" not in response.lower() or "software on" not in response.lower():
+        if "hardware on" not in response.lower() or "software on" not in response.lower():
             return False
         return True
 

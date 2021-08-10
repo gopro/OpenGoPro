@@ -116,6 +116,7 @@ class BLEController(ABC, Generic[BleClient, BleDevice]):
 
 
 class SsidState(IntEnum):
+    """Current state of the SSID"""
     ESTABLISHING = auto()
     CONNECTED = auto()
     DISCONNECTED = auto()
