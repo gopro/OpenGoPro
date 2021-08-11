@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Interfaces &mdash; Open GoPro Python SDK 0.5.7 documentation</title>
+  <title>Interfaces &mdash; Open GoPro Python SDK 0.5.8 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.5.7
+                0.5.8
               </div>
             
           
@@ -203,7 +203,7 @@ information that a user (not a developer) of the Open GoPro module should care a
 <span class="target" id="module-open_gopro.gopro"></span><p>Implements top level interface to GoPro module.</p>
 <dl class="py class">
 <dt id="open_gopro.gopro.GoPro">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.gopro.</span></code><code class="sig-name descname"><span class="pre">GoPro</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">identifier:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">ble_adapter:</span> <span class="pre">Type[open_gopro.interfaces.BLEController]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'open_gopro.ble_controller.BleakController'&gt;</span></em>, <em class="sig-param"><span class="pre">wifi_adapter:</span> <span class="pre">Type[open_gopro.interfaces.WifiController]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'open_gopro.wifi_controller.Wireless'&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.gopro.GoPro" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.gopro.</span></code><code class="sig-name descname"><span class="pre">GoPro</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">identifier:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">ble_adapter:</span> <span class="pre">Type[open_gopro.interfaces.BLEController]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'open_gopro.ble_controller.BleakController'&gt;</span></em>, <em class="sig-param"><span class="pre">wifi_adapter:</span> <span class="pre">Type[open_gopro.interfaces.WifiController]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'open_gopro.wifi_controller.Wireless'&gt;</span></em>, <em class="sig-param"><span class="pre">enable_wifi:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.gopro.GoPro" title="Permalink to this definition">¶</a></dt>
 <dd><p>The top-level BLE and Wifi interface to a GoPro device.</p>
 <p>This will handle for BLE:</p>
 <ul class="simple">
@@ -239,8 +239,9 @@ information that a user (not a developer) of the Open GoPro module should care a
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>identifier</strong> (<em>str</em><em>, </em><em>optional</em>) – Last 4 of camera name / serial number (i.e. 0456 for GoPro0456). Defaults to None</p></li>
-<li><p><strong>ble_adapter</strong> (<em>BLEController</em><em>, </em><em>optional</em>) – Class used to control BLE connection / send data. Defaults to BleakController().</p></li>
-<li><p><strong>wifi_adapter</strong> (<em>WifiController</em><em>, </em><em>optional</em>) – Class used to control WiFi connection / send data. Defaults to Wireless().</p></li>
+<li><p><strong>ble_adapter</strong> (<em>BLEController</em><em>, </em><em>optional</em>) – Class used to control computer’s BLE connection / send data. Defaults to BleakController().</p></li>
+<li><p><strong>wifi_adapter</strong> (<em>WifiController</em><em>, </em><em>optional</em>) – Class used to control computer’s WiFi connection / send data. Defaults to Wireless().</p></li>
+<li><p><strong>enable_wifi</strong> (<em>bool</em><em>, </em><em>optional</em>) – Optionally do not enable WiFi. Defaults to True.</p></li>
 </ul>
 </dd>
 </dl>
@@ -269,6 +270,24 @@ information that a user (not a developer) of the Open GoPro module should care a
 </dd></dl>
 
 <dl class="py method">
+<dt id="open_gopro.gopro.GoPro.configure_wifi">
+<code class="sig-name descname"><span class="pre">configure_wifi</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retries</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#open_gopro.gopro.GoPro.configure_wifi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to a GoPro device via WiFi.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>enable</strong> (<em>bool</em>) – whether to enable or disable wifi</p></li>
+<li><p><strong>timeout</strong> (<em>float</em><em>, </em><em>optional</em>) – Time before considering establishment failed. Defaults to 15 seconds.</p></li>
+<li><p><strong>retries</strong> (<em>int</em><em>, </em><em>optional</em>) – How many tries to reconnect after failures. Defaults to 5.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – Wifi failed to connect.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="open_gopro.gopro.GoPro.discover_chars">
 <code class="sig-name descname"><span class="pre">discover_chars</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#open_gopro.gopro.GoPro.discover_chars" title="Permalink to this definition">¶</a></dt>
 <dd><p>Discover all characteristics.</p>
@@ -289,23 +308,6 @@ information that a user (not a developer) of the Open GoPro module should care a
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><strong>Any BLE connecting</strong><strong>, </strong><strong>notification enabling</strong><strong>, or </strong><strong>pairing errors will be passed through</strong> – </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="open_gopro.gopro.GoPro.establish_wifi">
-<code class="sig-name descname"><span class="pre">establish_wifi</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retries</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#open_gopro.gopro.GoPro.establish_wifi" title="Permalink to this definition">¶</a></dt>
-<dd><p>Connect to a GoPro device via WiFi.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>timeout</strong> (<em>float</em><em>, </em><em>optional</em>) – Time before considering establishment failed. Defaults to 15 seconds.</p></li>
-<li><p><strong>retries</strong> (<em>int</em><em>, </em><em>optional</em>) – How many tries to reconnect after failures. Defaults to 5.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>Exception</strong> – Wifi failed to connect.</p>
 </dd>
 </dl>
 </dd></dl>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>QuickStart Guide &mdash; Open GoPro Python SDK 0.5.7 documentation</title>
+  <title>QuickStart Guide &mdash; Open GoPro Python SDK 0.5.8 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.5.7
+                0.5.8
               </div>
             
           
@@ -92,8 +92,10 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">QuickStart Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#a-special-consideration-for-bluez">A Special Consideration for BlueZ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#photo-demo">Photo Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#video-demo">Video Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#battery-demo">Battery Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stream-demo">Stream Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#big-demo">Big Demo</a></li>
 </ul>
@@ -190,6 +192,13 @@ can be found in <cite>$INSTALL/demos</cite> where $INSTALL can be found with:</p
 </div>
 <p>All of the demos have command-line help via the <cite>–help</cite> parameter. They also all log to the console as well
 as write a more detailed log to a file (this file can be set with the <cite>–log</cite> parameter).</p>
+<div class="section" id="a-special-consideration-for-bluez">
+<h2>A Special Consideration for BlueZ<a class="headerlink" href="#a-special-consideration-for-bluez" title="Permalink to this headline">¶</a></h2>
+<p>The Bleak BLE controller does not currently support autonomous pairing for the BlueZ backend. So if you are using
+BlueZ (i.e. Ubuntu, RaspberryPi, etc.), you need to first pair the camera from the command line as shown in the
+<a class="reference external" href="https://gopro.github.io/OpenGoPro/tutorials/bash/bluez">BlueZ tutorial</a>. There is work to add this feature
+and progress can be tracked on the <a class="reference external" href="https://github.com/gopro/OpenGoPro/issues/29">Github Issue</a></p>
+</div>
 <div class="section" id="photo-demo">
 <h2>Photo Demo<a class="headerlink" href="#photo-demo" title="Permalink to this headline">¶</a></h2>
 <p>The photo demo will discover a GoPro camera, connect to it, take a photo, and then download the
@@ -216,9 +225,9 @@ photo to your local machine.</p>
 </div>
 <div class="section" id="video-demo">
 <h2>Video Demo<a class="headerlink" href="#video-demo" title="Permalink to this headline">¶</a></h2>
-<p>The video demo will discover a GoPro camera, connect to it, take a video, and then download the
+<p>The video demo will discover a GoPro camera, connect to it, take a video for a given amount of time, and then download the
 photo to your local machine.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-video
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-video <span class="m">2</span>
 </pre></div>
 </div>
 <p>For more information, do:</p>
@@ -238,6 +247,30 @@ photo to your local machine.</p>
 <span class="go">  -l LOG, --log LOG     Location to store detailed log</span>
 <span class="go">  -o OUTPUT, --output OUTPUT</span>
 <span class="go">                        Where to write the video to. If not set, write to &#39;video.jpg&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="battery-demo">
+<h2>Battery Demo<a class="headerlink" href="#battery-demo" title="Permalink to this headline">¶</a></h2>
+<p>This demo will continuously read the battery level (either via polling or registering fro notifications) and write
+the results to a .csv file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-log-battery
+</pre></div>
+</div>
+<p>For more information, do:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-log-battery --help
+<span class="go">usage: log_battery.py [-h] [-i IDENTIFIER] [-l LOG] [-p POLL]</span>
+
+<span class="go">Connect to the GoPro via BLE only and continuously read the battery (either by polling or notifications).</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">-h, --help            show this help message and exit</span>
+<span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
+<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first</span>
+<span class="go">                        discovered GoPro will be connected to</span>
+<span class="go">-l LOG, --log LOG     Location to store detailed log</span>
+<span class="go">-p POLL, --poll POLL  Set to poll the battery at a given interval. If not set, battery level will be notified instead. Defaults to</span>
+<span class="go">                        notifications.</span>
 </pre></div>
 </div>
 </div>
@@ -302,7 +335,7 @@ more detailed log to a file (this file can be set with the –log parameter):</p
 <li><p>Disable the shutter and Turbo mode</p></li>
 <li><p>Get all statuses and settings</p></li>
 <li><p>Get and print some statuses, settings, and capabilities individually</p></li>
-<li><p>Register to receive push notifications of some statuses, settings, amnd capabilities</p></li>
+<li><p>Register to receive push notifications of some statuses, settings, and capabilities</p></li>
 <li><p>Take a picture</p></li>
 <li><p>Take a video</p></li>
 <li><p>Get the media list</p></li>
