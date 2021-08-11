@@ -37,6 +37,7 @@ from open_gopro.interfaces import (
     BleDevice,
     BleClient,
     WifiController,
+    SsidState
 )
 from open_gopro.wifi_commands import WifiCommands, WifiSettings, WifiCommunicator
 from open_gopro.wifi_controller import Wireless
@@ -118,8 +119,9 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
 
     Args:
         identifier (str, optional): Last 4 of camera name / serial number (i.e. 0456 for GoPro0456). Defaults to None
-        ble_adapter (BLEController, optional): Class used to control BLE connection / send data. Defaults to BleakController().
-        wifi_adapter (WifiController, optional): Class used to control WiFi connection / send data. Defaults to Wireless().
+        ble_adapter (BLEController, optional): Class used to control computer's BLE connection / send data. Defaults to BleakController().
+        wifi_adapter (WifiController, optional): Class used to control computer's WiFi connection / send data. Defaults to Wireless().
+        enable_wifi (bool, optional): Optionally do not enable WiFi. Defaults to True.
     """
 
     base_url = "http://10.5.5.9:8080/"  #: Hard-coded Open GoPro base URL
@@ -129,15 +131,17 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
         identifier: Optional[str] = None,
         ble_adapter: Type[BLEController] = BleakController,
         wifi_adapter: Type[WifiController] = Wireless,
+        enable_wifi: bool = True
     ) -> None:
-        # Initialize adapters
-        self.ble: BLEController = ble_adapter()
-        self.wifi: WifiController = wifi_adapter()
+        # Initialize adapters and initialization information
+        self._ble: BLEController = ble_adapter()
+        self._wifi: WifiController = wifi_adapter()
+        self._enable_wifi_during_init = enable_wifi
 
         # Connection information
         self._token: Pattern = re.compile(r"GoPro \d\d\d\d" if identifier is None else f"GoPro {identifier}")
-        self.ssid: str
-        self.password: str
+        self.ssid: str # SSID of camera's AP
+        self.password: str # password of camera's AP
         self._device: Optional[BleDevice] = None
         self._client: Optional[BleClient] = None
         self.gatt_table: Optional[AttributeTable] = None  #: Attribute storage / access
@@ -165,8 +169,8 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
 
         # Thread to run ble controller asyncio loop (to abstract asyncio from client as well as handle async notifications)
         self._module_loop: asyncio.AbstractEventLoop
-        self.module_thread = threading.Thread(daemon=True, target=self._run, name="data")
-        self.module_thread.start()
+        self._module_thread = threading.Thread(daemon=True, target=self._run, name="data")
+        self._module_thread.start()
         # Wait for this thread to start
         while self._start_threads_done < 1:
             time.sleep(0.1)
@@ -180,7 +184,7 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
         self.ready = threading.BoundedSemaphore(value=1)
         self._state_condition = threading.Condition()
         self._internal_state = InternalState.ENCODING | InternalState.SYSTEM_BUSY
-        self.state_thread = threading.Thread(target=self._maintain_state, name="state", daemon=True)
+        self._state_thread = threading.Thread(target=self._maintain_state, name="state", daemon=True)
 
     # TODO if this fails, we will hang and not exit gracefully.
     def __enter__(self) -> "GoPro":
@@ -200,7 +204,7 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
         self.establish_ble(self._device)
         self.discover_chars()
         self.initialize()
-        self.establish_wifi()
+        self.configure_wifi(self._enable_wifi_during_init)
         return self
 
     def __exit__(self, *_: Any) -> None:
@@ -246,7 +250,8 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
         Returns:
             bool: True if yes, False if no
         """
-        raise NotImplementedError
+        (ssid, state) = self._wifi.current()
+        return ssid is not None and state is SsidState.CONNECTED
 
     @property
     def is_initialized(self) -> bool:
@@ -376,7 +381,7 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
         """
         for retry in range(1, retries):
             try:
-                return self._as_coroutine(partial(self.ble.scan, self._token, timeout))
+                return self._as_coroutine(partial(self._ble.scan, self._token, timeout))
             except ScanFailedToFindDevice:
                 logger.warning(f"Failed to find a device in {timeout} seconds. Retrying #{retry}")
         return None
@@ -395,12 +400,12 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
         for retry in range(1, retries):
             try:
                 # Establish connection
-                self._client = self._as_coroutine(partial(self.ble.connect, device, timeout=timeout))
+                self._client = self._as_coroutine(partial(self._ble.connect, device, timeout=timeout))
                 # Attempt to pair
-                self._as_coroutine(partial(self.ble.pair, self._client))
+                self._as_coroutine(partial(self._ble.pair, self._client))
                 # Enable all GATT notifications
                 self._as_coroutine(
-                    partial(self.ble.enable_notifications, self._client, self.notification_handler)
+                    partial(self._ble.enable_notifications, self._client, self.notification_handler)
                 )
                 return
             # TODO narrow these down and find out why they're failing, is there a way to handle them?
@@ -486,34 +491,21 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
     def terminate_ble(self) -> None:
         """Terminate the BLE connection."""
         logger.info("Terminating the BLE connection")
-        self._as_coroutine(partial(self.ble.disconnect, self._client))
+        self._as_coroutine(partial(self._ble.disconnect, self._client))
         self._client = None
-
-        # try:
-        #     self.ready.release()
-        # except ValueError:
-        #     pass  # If we didn't actually have the semaphore
-        # self.keep_alive_thread.join()
-
-        # with self._state_condition:
-        #     self._state_condition.notify()
-        # self.state_thread.join()
 
     def discover_chars(self) -> None:
         """Discover all characteristics.
 
         They will be stored in the instance's gatt_table attribute.
         """
-        self.gatt_table = self._as_coroutine(partial(self.ble.discover_chars, self._client))
+        self.gatt_table = self._as_coroutine(partial(self._ble.discover_chars, self._client))
 
     def initialize(self) -> None:
         """Register for statuses / information that is necessary for internal functionality."""
-        self.state_thread.start()
+        self._state_thread.start()
         self.ble_status.encoding_active.register_value_update()
         self.ble_status.system_ready.register_value_update()
-        self.password = self.ble_command.get_wifi_password().flatten
-        self.ssid = self.ble_command.get_wifi_ssid().flatten
-        self.ble_command.enable_wifi_ap(True)
         self.keep_alive_thread.start()
 
     def write(self, uuid: UUID, data: bytearray) -> GoProResp:
@@ -545,7 +537,7 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
         # Store information on the response we are expecting
         self._sync_resp_wait_q.put(GoProResp.from_write_command(uuid, data))
         # Perform write
-        self._as_coroutine(partial(self.ble.write, self._client, uuid.value, data))
+        self._as_coroutine(partial(self._ble.write, self._client, uuid.value, data))
         # Wait to be notified that response was received
         try:
             response = self._sync_resp_ready_q.get(timeout=WRITE_TIMEOUT)
@@ -597,7 +589,7 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
             logger.debug(f"{uuid} has the semaphore")
             have_semaphore = True
 
-        received_data = self._as_coroutine(partial(self.ble.read, self._client, uuid.value))
+        received_data = self._as_coroutine(partial(self._ble.read, self._client, uuid.value))
 
         if have_semaphore:
             self.ready.release()
@@ -634,27 +626,35 @@ class GoPro(BLECommunicator, WifiCommunicator, Generic[BleDevice, BleClient]):
 
     # ---------------------------------WiFi-------------------------------------------------------------------
 
-    def establish_wifi(self, timeout: float = 15, retries: int = 5) -> None:
+    def configure_wifi(self, enable: bool, timeout: float = 15, retries: int = 5) -> None:
         """Connect to a GoPro device via WiFi.
 
         Args:
+            enable (bool): whether to enable or disable wifi
             timeout (float, optional): Time before considering establishment failed. Defaults to 15 seconds.
             retries (int, optional): How many tries to reconnect after failures. Defaults to 5.
 
         Raises:
             Exception: Wifi failed to connect.
         """
-        logger.info("Establishing WiFi connection...")
-        for retry in range(1, retries):
-            if self.wifi.connect(self.ssid, self.password, timeout=timeout):
-                return
-            logger.warning(f"WiFi connection timed out. Retrying #{retry}")
-        raise ConnectFailed("WiFi", timeout, retries)
+        if enable is True:
+            logger.info("Discovering WiFi AP info and enabling via BLE")
+            self.password = self.ble_command.get_wifi_password().flatten
+            self.ssid = self.ble_command.get_wifi_ssid().flatten
+            self.ble_command.enable_wifi_ap(True)
+            logger.info("Establishing WiFi connection...")
+            for retry in range(1, retries):
+                if self._wifi.connect(self.ssid, self.password, timeout=timeout):
+                    return
+                logger.warning(f"WiFi connection timed out. Retrying #{retry}")
+            raise ConnectFailed("WiFi", timeout, retries)
+        logger.info("Turning off WiFi radio")
+        self.ble_command.enable_wifi_ap(False)
 
     def terminate_wifi(self) -> None:
         """Terminate the WiFi connection."""
         logger.debug("Terminating the WiFi connection...")
-        self.wifi.disconnect()
+        self._wifi.disconnect()
 
     @_ensure_initialized_acquire_ready_semaphore
     def get(self, url: str) -> GoProResp:

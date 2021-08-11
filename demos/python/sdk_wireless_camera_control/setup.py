@@ -11,7 +11,7 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-VERSION = "0.5.7"
+VERSION = "0.5.8"
 NAME = "open_gopro"
 DESCRIPTION = "Open GoPro API and Examples"
 URL = "https://gopro.github.io/OpenGoPro/python_sdk/"
@@ -33,8 +33,6 @@ REQUIRED = [
 here = os.path.abspath(os.path.dirname(__file__))
 with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
-# with io.open(os.path.join(here, "CHANGELOG.rst"), encoding="utf-8") as f:
-#     long_description += "\n\n" + f.read()
 
 
 class UploadCommand(Command):
@@ -90,6 +88,7 @@ setup(
             "gopro-photo=open_gopro.demos.photo:main",
             "gopro-video=open_gopro.demos.video:main",
             "gopro-stream=open_gopro.demos.stream:main",
+            "gopro-log-battery=open_gopro.demos.log_battery:main",
         ]
     },
     install_requires=REQUIRED,

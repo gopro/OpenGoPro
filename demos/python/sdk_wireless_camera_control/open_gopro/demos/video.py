@@ -27,29 +27,26 @@ def main() -> None:
     setup_logging(log_location)
 
     try:
-        spinner = console.status("[bold green]Connecting...")
-        spinner.start()
         with GoPro(identifier) as gopro:
             assert gopro.ble_command.set_shutter(params.Shutter.OFF).is_ok
             assert gopro.ble_command.set_turbo_mode(False).is_ok
-            spinner.stop()
 
-            with console.status("[bold green]Capturing a video..."):
-                # Get the media list before
-                media_set_before = set(x["n"] for x in gopro.wifi_command.get_media_list()["media"][0]["fs"])
-                # Take a video
-                assert gopro.ble_command.load_preset(params.Preset.CINEMATIC).is_ok
-                assert gopro.ble_command.set_shutter(params.Shutter.ON).is_ok
-                time.sleep(record_time)
-                assert gopro.ble_command.set_shutter(params.Shutter.OFF).is_ok
+            console.print("Capturing a video...")
+            # Get the media list before
+            media_set_before = set(x["n"] for x in gopro.wifi_command.get_media_list()["media"][0]["fs"])
+            # Take a video
+            assert gopro.ble_command.load_preset(params.Preset.CINEMATIC).is_ok
+            assert gopro.ble_command.set_shutter(params.Shutter.ON).is_ok
+            time.sleep(record_time)
+            assert gopro.ble_command.set_shutter(params.Shutter.OFF).is_ok
 
-            with console.status("[bold green]Downloading the video..."):
-                # Get the media list after
-                media_set_after = set(x["n"] for x in gopro.wifi_command.get_media_list()["media"][0]["fs"])
-                # The video (is most likely) the difference between the two dicts as sets
-                video = media_set_after.difference(media_set_before).pop()
-                # Download the video
-                gopro.wifi_command.download_file(camera_file=video, local_file=output_location)
+            console.print("Downloading the video...")
+            # Get the media list after
+            media_set_after = set(x["n"] for x in gopro.wifi_command.get_media_list()["media"][0]["fs"])
+            # The video (is most likely) the difference between the two dicts as sets
+            video = media_set_after.difference(media_set_before).pop()
+            # Download the video
+            gopro.wifi_command.download_file(camera_file=video, local_file=output_location)
 
             console.print(
                 f"Success!! :smiley: File has been downloaded to {output_location}", style="bold green"
@@ -85,7 +82,7 @@ def setup_logging(log_location: Path) -> None:
     sh = RichHandler(rich_tracebacks=True, enable_link_path=True, show_time=False)
     stream_formatter = logging.Formatter("%(asctime)s.%(msecs)03d %(message)s", datefmt="%H:%M:%S")
     sh.setFormatter(stream_formatter)
-    sh.setLevel(logging.WARNING)
+    sh.setLevel(logging.INFO)
     logger.addHandler(sh)
     logger.setLevel(logging.DEBUG)
 

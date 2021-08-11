@@ -79,7 +79,7 @@ def test_cant_send_get_unless_initialized(gopro):
 
 def test_control_semaphore(gopro):
     gopro._client = True
-    gopro.state_thread.start()
+    gopro._state_thread.start()
     time.sleep(1)
 
     # Attempt to get the semaphore. It should fail

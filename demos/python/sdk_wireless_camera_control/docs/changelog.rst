@@ -128,3 +128,9 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 -------------------
 
 * Fix wifi driver for Windows
+
+0.5.8 (August-10-2021)
+----------------------
+
+* Add option to start GoPro communication without WiFi (i.e only use BLE)
+* Add battery logging example

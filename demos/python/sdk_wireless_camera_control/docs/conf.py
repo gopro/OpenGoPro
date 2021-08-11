@@ -4,8 +4,8 @@
 project = "Open GoPro Python SDK"
 copyright = "2020, GoPro Inc."
 author = "Tim Camise"
-version = "0.5.7"
-release = "0.5.7"
+version = "0.5.8"
+release = "0.5.8"
 templates_path = ["_templates"]
 source_suffix = ".rst"
 master_doc = "index"

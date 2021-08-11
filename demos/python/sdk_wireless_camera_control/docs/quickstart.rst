@@ -17,6 +17,14 @@ can be found in `$INSTALL/demos` where $INSTALL can be found with:
 All of the demos have command-line help via the `--help` parameter. They also all log to the console as well
 as write a more detailed log to a file (this file can be set with the `--log` parameter).
 
+A Special Consideration for BlueZ
+---------------------------------
+
+The Bleak BLE controller does not currently support autonomous pairing for the BlueZ backend. So if you are using
+BlueZ (i.e. Ubuntu, RaspberryPi, etc.), you need to first pair the camera from the command line as shown in the
+`BlueZ tutorial <https://gopro.github.io/OpenGoPro/tutorials/bash/bluez>`_. There is work to add this feature
+and progress can be tracked on the `Github Issue <https://github.com/gopro/OpenGoPro/issues/29>`_
+
 Photo Demo
 ----------
 
@@ -48,12 +56,12 @@ For more information, do:
 Video Demo
 ----------
 
-The video demo will discover a GoPro camera, connect to it, take a video, and then download the
+The video demo will discover a GoPro camera, connect to it, take a video for a given amount of time, and then download the
 photo to your local machine.
 
 .. code-block:: console
 
-    $ gopro-video
+    $ gopro-video 2
 
 For more information, do:
 
@@ -75,6 +83,34 @@ For more information, do:
       -l LOG, --log LOG     Location to store detailed log
       -o OUTPUT, --output OUTPUT
                             Where to write the video to. If not set, write to 'video.jpg'
+
+Battery Demo
+------------
+
+This demo will continuously read the battery level (either via polling or registering fro notifications) and write
+the results to a .csv file.
+
+.. code-block:: console
+
+    $ gopro-log-battery
+
+For more information, do:
+
+.. code-block:: console
+
+    $ gopro-log-battery --help
+    usage: log_battery.py [-h] [-i IDENTIFIER] [-l LOG] [-p POLL]
+
+    Connect to the GoPro via BLE only and continuously read the battery (either by polling or notifications).
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    -i IDENTIFIER, --identifier IDENTIFIER
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first
+                            discovered GoPro will be connected to
+    -l LOG, --log LOG     Location to store detailed log
+    -p POLL, --poll POLL  Set to poll the battery at a given interval. If not set, battery level will be notified instead. Defaults to
+                            notifications.
 
 Stream Demo
 -----------
@@ -147,7 +183,7 @@ more detailed log to a file (this file can be set with the --log parameter):
 #. Disable the shutter and Turbo mode
 #. Get all statuses and settings
 #. Get and print some statuses, settings, and capabilities individually
-#. Register to receive push notifications of some statuses, settings, amnd capabilities
+#. Register to receive push notifications of some statuses, settings, and capabilities
 #. Take a picture
 #. Take a video
 #. Get the media list
