@@ -137,7 +137,7 @@ def parse_arguments() -> Tuple[str, Path, Path, float]:
         "-o",
         "--output",
         type=Path,
-        help="Where to write the video to. If not set, write to 'video.jpg'",
+        help="Where to write the video to. If not set, write to 'video.mp4'",
         default=Path("video.mp4"),
     )
     args = parser.parse_args()
