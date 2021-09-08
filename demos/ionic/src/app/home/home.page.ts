@@ -1,3 +1,6 @@
+/* home.page.ts/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
+/* This copyright was auto-generated on Wed, Sep  8, 2021 11:42:14 AM */
+
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';

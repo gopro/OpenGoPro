@@ -1,3 +1,6 @@
+/* home.module.ts/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
+/* This copyright was auto-generated on Wed, Sep  8, 2021 11:42:13 AM */
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';

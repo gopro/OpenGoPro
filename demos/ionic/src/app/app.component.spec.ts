@@ -1,3 +1,6 @@
+/* app.component.spec.ts/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
+/* This copyright was auto-generated on Wed, Sep  8, 2021 11:42:09 AM */
+
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 

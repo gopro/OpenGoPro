@@ -1,3 +1,6 @@
+/* protractor.conf.js/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
+/* This copyright was auto-generated on Wed, Sep  8, 2021 11:42:01 AM */
+
 // @ts-check
 // Protractor configuration file, see link for more information
 // https://github.com/angular/protractor/blob/master/lib/config.ts
