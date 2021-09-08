@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Preview File (Device) </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Preview File (Device)</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-img
+    *ngIf="goProFileOnDevice.fileType == 'image' && fileSrc"
+    [src]="fileSrc"
+    decoding="async"
+    loading="lazy"
+  ></ion-img>
+
+  <video
+    *ngIf="goProFileOnDevice.fileType == 'video' && fileSrc"
+    controls
+    playsinline
+    preload="metadata"
+    autoplay="autoplay"
+    webkit-playsinline="webkit-playsinline"
+  >
+    <source [src]="fileSrc" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <div style="height: 24px"></div>
+</ion-content>

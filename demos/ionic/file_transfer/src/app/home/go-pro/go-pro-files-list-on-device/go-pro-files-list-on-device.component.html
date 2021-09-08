@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Files on Device </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Files on Device</ion-title>
+    </ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-header>
+  <ion-text
+    color="medium"
+    *ngIf="filesOnDevice.length === 0"
+    class="ion-padding ion-text-center"
+  >
+    <p>No Files on Device From Camera</p>
+  </ion-text>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let file of filesOnDevice">
+      <ion-item (click)="previewFileFromDevice(file)">
+        <ion-icon
+          [name]="
+            file.fileType == 'video' ? 'videocam-outline' : 'image-outline'
+          "
+          slot="start"
+        ></ion-icon>
+        <ion-label>{{ file.fileName }}</ion-label>
+        <ion-note slot="end">{{ file.fileSize }} MB</ion-note>
+      </ion-item>
+
+      <ion-item-options side="start">
+        <ion-item-option (click)="deleteFileFromDevice(file)" color="danger">
+          <ion-icon name="trash" slot="icon-only"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

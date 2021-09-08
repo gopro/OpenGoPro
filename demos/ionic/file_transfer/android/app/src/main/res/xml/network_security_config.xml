@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">localhost</domain>
+        <domain includeSubdomains="true">192.168.1.102</domain>
+        <!-- Add Go Pro WiFi Access Point -->
+        <domain includeSubdomains="true">10.5.5.9</domain>
+    </domain-config>
+</network-security-config>
