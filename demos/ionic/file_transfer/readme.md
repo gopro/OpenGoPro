@@ -18,9 +18,10 @@
 # Run on your computer
 
 1. [install ionic CLI](https://ionicframework.com/docs/angular/your-first-app#install-ionic-tooling)
-1. clone repo
-1. cd project `cd demos/ionic`
+1. git clone https://github.com/gopro/OpenGoPro.git
+1. cd project `cd OpenGoPro/demos/ionic/file_transfer`
 1. run `npm install`
+1. run `ionic build`
 1. run `ionic cap sync`
 
 - for ios
