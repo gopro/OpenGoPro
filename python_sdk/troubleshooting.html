@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Troubleshooting &mdash; Open GoPro Python SDK 0.5.8 documentation</title>
+  <title>Troubleshooting &mdash; Open GoPro Python SDK 0.6.0 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.5.8
+                0.6.0
               </div>
             
           
@@ -181,24 +181,17 @@
 <div class="section" id="logging">
 <h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
 <p>There is a lot of logging sprinkled throughout using the standard Python logging module.</p>
-<p>Without getting too deep into the logging module, here is an example of activating logging on a per module
-basis:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">GoPro</span>
+<p>Furthermore, there is a help function in <cite>util.py</cite> that will enable logging with some default modules / levels.
+All of the demos use this and here is an example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">GoPro</span>
+<span class="kn">from</span> <span class="nn">open_gopro.util</span> <span class="kn">import</span> <span class="n">setup_logging</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<span class="n">stream_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
-<span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> : </span><span class="si">%(levelname)s</span><span class="s2"> : </span><span class="si">%(name)s</span><span class="s2"> : </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">stream_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">stream_handler</span><span class="p">)</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-
-<span class="c1"># Enable / disable logging in modules</span>
-<span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;gopro&quot;</span><span class="p">,</span> <span class="s2">&quot;ble_commands&quot;</span><span class="p">,</span> <span class="s2">&quot;wifi_commands&quot;</span><span class="p">,</span> <span class="s2">&quot;responses&quot;</span><span class="p">]:</span>
-    <span class="n">l</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;open_gopro.</span><span class="si">{</span><span class="n">module</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">l</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-    <span class="n">l</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">stream_handler</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logging</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;my_log.log&quot;</span><span class="p">))</span>
 
 <span class="k">with</span> <span class="n">GoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I&#39;m logged!&quot;</span><span class="p">)</span>
@@ -236,12 +229,12 @@ basis:</p>
 </div>
 <div class="section" id="bluetooth-characteristics">
 <h2>Bluetooth Characteristics<a class="headerlink" href="#bluetooth-characteristics" title="Permalink to this headline">¶</a></h2>
-<p>There is a utility in the GoProBLE class to dump the discovered BLE characteristics to a
+<p>There is a utility in the GoPro class to dump the discovered BLE characteristics to a
 CSV file. This can be done as such:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">GoPro</span>
 
 <span class="k">with</span> <span class="n">GoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="n">gopro</span><span class="o">.</span><span class="n">services_as_csv</span><span class="p">()</span>
+    <span class="n">gopro</span><span class="o">.</span><span class="n">_ble</span><span class="o">.</span><span class="n">services_as_csv</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

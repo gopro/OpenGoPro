@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Contributing &mdash; Open GoPro Python SDK 0.5.8 documentation</title>
+  <title>Contributing &mdash; Open GoPro Python SDK 0.6.0 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.5.8
+                0.6.0
               </div>
             
           
@@ -233,41 +233,51 @@ articles, and such.</p>
 <li><p>Fork the Open GoPro repo on GitHub.</p></li>
 <li><p>Clone your fork locally:</p>
 <blockquote>
-<div><p>$ git clone <a class="reference external" href="mailto:git&#37;&#52;&#48;github&#46;com">git<span>&#64;</span>github<span>&#46;</span>com</a>:your_name_here/OpenGoPro.git</p>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git clone git@github.com:your_name_here/OpenGoPro.git
+</pre></div>
+</div>
 </div></blockquote>
 </li>
 <li><p>Enter the sdk_wireless_camera_control directory:</p>
 <blockquote>
-<div><p>$ cd OpenGoPro/demos/python/sdk_wireless_camera_control</p>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span> OpenGoPro/demos/python/sdk_wireless_camera_control
+</pre></div>
+</div>
 </div></blockquote>
 </li>
 <li><p>Install your local copy into a virtual environment. The activation directory may vary based on your OS</p>
 <blockquote>
-<div><p>$ python -m venv venv
-$ source ./venv/bin/activate
-$ pip install -r requirements-dev.txt -r requirements.txt</p>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python -m venv venv
+<span class="gp">$ </span><span class="nb">source</span> ./venv/bin/activate
+<span class="gp">$ </span>pip install -r requirements-dev.txt -r requirements.txt
+</pre></div>
+</div>
 </div></blockquote>
 </li>
 </ol>
 <ol class="arabic" start="4">
 <li><p>Create a branch for local development, originating from the <cite>main</cite> branch:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout -b name-of-your-bugfix-or-feature main
-
-Now you can make your changes locally.
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git checkout -b name-of-your-bugfix-or-feature main
 </pre></div>
 </div>
+</div></blockquote>
 </li>
-<li><p>When you’re done making changes, check that your changes pass pylint and the tests:</p>
+<li><p>Make your changes locally. When you’re done making changes, check that your changes pass pylint and the unit tests:</p>
 <blockquote>
-<div><p>$ make lint tests</p>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make format lint unit_tests
+</pre></div>
+</div>
 </div></blockquote>
 </li>
 <li><p>Commit your changes and push your branch to GitHub:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git add .
-$ git commit -m &quot;Your detailed description of your changes.&quot;
-$ git push origin name-of-your-bugfix-or-feature
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git add .
+<span class="gp">$ </span>git commit -m <span class="s2">&quot;Your detailed description of your changes.&quot;</span>
+<span class="gp">$ </span>git push origin name-of-your-bugfix-or-feature
 </pre></div>
 </div>
+</div></blockquote>
 </li>
 <li><p>Submit a pull request through the GitHub website.</p></li>
 </ol>
@@ -279,7 +289,7 @@ $ git push origin name-of-your-bugfix-or-feature
 <li><p>If the pull request adds functionality, the docs should be updated.</p></li>
 <li><p>Modify the <code class="docutils literal notranslate"><span class="pre">CHANGELOG.rst</span></code>.</p></li>
 <li><dl class="simple">
-<dt>The pull request should work for Python 3.8+ on the following platforms:</dt><dd><ul class="simple">
+<dt>The pull request should work for Python 3.8.x on the following platforms:</dt><dd><ul class="simple">
 <li><p>Windows 10, version 16299 (Fall Creators Update) and greater</p></li>
 <li><p>Linux distributions with BlueZ &gt;= 5.43</p></li>
 <li><p>OS X / macOS &gt;= 10.11</p></li>

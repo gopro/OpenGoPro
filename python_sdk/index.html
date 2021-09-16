@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Open GoPro Python SDK &mdash; Open GoPro Python SDK 0.5.8 documentation</title>
+  <title>Open GoPro Python SDK &mdash; Open GoPro Python SDK 0.6.0 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.5.8
+                0.6.0
               </div>
             
           
@@ -175,50 +175,76 @@
 <div class="figure align-default">
 <a class="reference internal image-reference" href="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png"><img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png" style="width: 50%;" /></a>
 </div>
+<a class="reference external image-reference" href="https://lbesson.mit-license.org/"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml"><img alt="Build and Test" src="https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Testing?label=Build%20and%20Test" /></a>
 <a class="reference external image-reference" href="https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_deploy_docs.yml"><img alt="Build Docs" src="https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Docs%20Build%20and%20Deploy?label=Docs" /></a>
 <a class="reference external image-reference" href="https://pypi.org/project/open-gopro/"><img alt="PyPI" src="https://img.shields.io/pypi/v/open-gopro" /></a>
 <a class="reference external image-reference" href="https://github.com/psf/black"><img alt="Black" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
-<div class="section" id="summary">
+<img alt="Coverage" src="_images/coverage.svg" /><div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
 <p>Welcome to the Open GoPro Python package documentation. This is a Python package that provides an
 interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and Wi-Fi API’s.</p>
-<p>This package implements the API as defined in the <a class="reference external" href="https://github.com/gopro/OpenGoPro">Open GoPro Specification</a> .</p>
-<p>For more information on the API, see the relevant documentation:</p>
+<p>This package implements the API as defined in the <a class="reference external" href="https://gopro.github.io/OpenGoPro/">Open GoPro Specification</a> .
+For more information on the API, see the relevant documentation:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/docs/ble">BLE API</a></p></li>
-<li><p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/docs/wifi">Wi-Fi API</a></p></li>
+<li><p><a class="reference external" href="https://gopro.github.io/OpenGoPro/ble">BLE API</a></p></li>
+<li><p><a class="reference external" href="https://gopro.github.io/OpenGoPro/wifi">Wi-Fi API</a></p></li>
 </ul>
 </div>
 <div class="section" id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
+<ul>
 <li><p>Top-level GoPro class interface to use both BLE / WiFi</p></li>
-<li><dl class="simple">
-<dt>Cross-platform (tested on MacOS Big Sur, Windows 10, and Ubuntu 20.04)</dt><dd><ul>
+<li><p>Cross-platform (tested on MacOS Big Sur, Windows 10, and Ubuntu 20.04)</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>BLE controller implemented using <a class="reference external" href="https://pypi.org/project/bleak/">bleak</a></p></li>
 <li><p>Wi-Fi controller provided in the Open GoPro package (loosely based on the <a class="reference external" href="https://pypi.org/project/wireless/">Wireless Library</a> )</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><p>Supports all <a class="reference external" href="https://github.com/gopro/OpenGoPro">Open GoPro API’s</a></p></li>
-<li><dl class="simple">
-<dt>Automatically handles some required functionality:</dt><dd><ul>
+<li><p>Supports all commands, settings, and statuses from the <a class="reference external" href="https://gopro.github.io/OpenGoPro/">Open GoPro API</a></p></li>
+<li><p>Supports all versions of the Open GoPro API</p></li>
+<li><p>Automatically handles connection maintenance:</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>manage camera ready / encoding</p></li>
 <li><p>periodically sends keep alive signals</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><p>Includes demo scripts installed as command-line applications to show BLE and WiFi functionality</p></li>
+<li><p>Includes detailed logging for each module</p></li>
+<li><p>Includes demo scripts installed as command-line applications to show BLE and WiFi functionality such as:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Take a photo</p></li>
+<li><p>Take a video</p></li>
+<li><p>View the live stream</p></li>
+<li><p>Log the battery</p></li>
 </ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>Here is a suggested procedure for getting acquainted with this package (it is the same as reading through
+this document in order):</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="installation.html#installation"><span class="std std-ref">Install</span></a> the package</p></li>
+<li><p>Try some of the <a class="reference internal" href="quickstart.html#quickstart-guide"><span class="std std-ref">demos</span></a></p></li>
+<li><p>Implement your own example, perhaps starting with a demo, with <a class="reference internal" href="usage.html#usage"><span class="std std-ref">usage</span></a> information</p></li>
+<li><p>If you need more detailed implementation reference, see the Interface <a class="reference internal" href="api.html#interfaces"><span class="std std-ref">documentation</span></a></p></li>
+</ol>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#for-developers">For Developers</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart Guide</a><ul>
@@ -227,48 +253,69 @@ interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#video-demo">Video Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#battery-demo">Battery Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#stream-demo">Stream Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#wifi-demo">WiFi Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#big-demo">Big Demo</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#connecting">Connecting</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="usage.html#initialized">Initialized</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#opening">Opening</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#arguments">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#api-version">API Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#camera-readiness">Camera Readiness</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#synchronous-data-operations">Synchronous Data Operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="usage.html#commands">Commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage.html#settings-and-statuses">Settings and Statuses</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="usage.html#ble-status">BLE Status</a></li>
-<li class="toctree-l4"><a class="reference internal" href="usage.html#ble-settings">BLE Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="usage.html#wifi-settings">WiFi Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="usage.html#wifi-status">WiFi Status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#sending-commands">Sending Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#selecting-parameters">Selecting Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#synchronous-data-operations">Synchronous Data Operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="usage.html#commands">Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="usage.html#statuses">Statuses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="usage.html#settings">Settings</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#asynchronous-push-notifications">Asynchronous Push Notifications</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#asynchronous-push-notifications">Asynchronous Push Notifications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#selecting-parameters">Selecting Parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#handling-responses">Handling Responses</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#response-structure">Response Structure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#data-access">Data Access</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#value-flattening">Value Flattening</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#closing">Closing</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Interfaces</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#gopro">GoPro</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api.html#commands-ble">Commands (BLE)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#settings-ble">Settings (BLE)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#statuses-ble">Statuses (BLE)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#commands-wifi">Commands (WiFi)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#settings-wifi">Settings (Wifi)</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#gopro">GoPro</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#responses">Responses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#constants">Constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#api">API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#base-types">Base Types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#ble-setting">BLE Setting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#ble-status">BLE Status</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#wifi-setting">WiFi Setting</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#api-version-1-0">API Version 1.0</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#ble-1-0-commands">BLE 1.0 Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#ble-1-0-settings">BLE 1.0 Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#ble-1-0-statuses">BLE 1.0 Statuses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#wifi-1-0-commands">WiFi 1.0 Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#wifi-1-0-settings">WiFi 1.0 Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#parameters">1.0 Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#api-version-2-0">API Version 2.0</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#ble-2-0-commands">BLE 2.0 Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#ble-2-0-settings">BLE 2.0 Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#ble-2-0-statuses">BLE 2.0 Statuses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#wifi-2-0-commands">WiFi 2.0 Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#wifi-2-0-settings">WiFi 2.0 Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#id1">2.0 Parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
@@ -295,28 +342,29 @@ interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#x-march-10-2021">0.1.x (March-10-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-10-2021">0.2.0 (March-10-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-11-2021">0.3.0 (March-11-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-12-2021">0.3.1 (March-12-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-15-2021">0.3.2 (March-15-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-22-2021">0.3.3 (March-22-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-25-2021">0.4.0 (March-25-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">0.4.1 (March-25-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">0.4.2 (March-25-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-26-2021">0.4.3 (March-26-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-27-2021">0.4.4 (March-27-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-29-2021">0.4.5 (March-29-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">0.4.6 (March-29-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-30-2021">0.5.0 (March-30-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#april-1-2021">0.5.1 (April-1-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#april-2-2021">0.5.2 (April-2-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#april-15-2021">0.5.3 (April-15-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#may-6-2021">0.5.4 (May-6-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#may-26-2021">0.5.5 (May-26-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">0.5.6 (May-26-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#june-7-2021">0.5.7 (June-7-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#september-2-2021">0.6.0 (September-2-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#august-10-2021">0.5.8 (August-10-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#june-7-2021">0.5.7 (June-7-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#may-26-2021">0.5.6 (May-26-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">0.5.5 (May-26-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#may-6-2021">0.5.4 (May-6-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#april-15-2021">0.5.3 (April-15-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#april-2-2021">0.5.2 (April-2-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#april-1-2021">0.5.1 (April-1-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-30-2021">0.5.0 (March-30-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-29-2021">0.4.6 (March-29-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">0.4.5 (March-29-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-27-2021">0.4.4 (March-27-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-26-2021">0.4.3 (March-26-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-25-2021">0.4.2 (March-25-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">0.4.1 (March-25-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">0.4.0 (March-25-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-22-2021">0.3.3 (March-22-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-15-2021">0.3.2 (March-15-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-12-2021">0.3.1 (March-12-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-11-2021">0.3.0 (March-11-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#march-10-2021">0.2.0 (March-10-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#x-march-10-2021">0.1.x (March-10-2021)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="future_work.html">Future Work</a><ul>

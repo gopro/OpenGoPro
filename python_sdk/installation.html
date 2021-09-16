@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Installation &mdash; Open GoPro Python SDK 0.5.8 documentation</title>
+  <title>Installation &mdash; Open GoPro Python SDK 0.6.0 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.5.8
+                0.6.0
               </div>
             
           
@@ -92,7 +92,10 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#stable-release">Stable release</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#from-sources">From sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#from-sources">From sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#for-developers">For Developers</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart Guide</a></li>
@@ -183,7 +186,8 @@
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip install open-gopro
 </pre></div>
 </div>
-<p>This is the preferred method to install Open GoPro, as it will always install the most recent stable release.</p>
+<p>This is the preferred method to install Open GoPro, as it will always install the most recent stable release
+from <a class="reference external" href="https://pypi.org/project/open-gopro/">PyPi</a> .</p>
 <p>If you don’t have <a class="reference external" href="https://pip.pypa.io">pip</a> installed, this <a class="reference external" href="http://docs.python-guide.org/en/latest/starting/installation/">Python installation guide</a> can guide
 you through the process.</p>
 </div>
@@ -206,6 +210,14 @@ you through the process.</p>
 <p>Then install the package</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip install .
 </pre></div>
+</div>
+<div class="section" id="for-developers">
+<h3>For Developers<a class="headerlink" href="#for-developers" title="Permalink to this headline">¶</a></h3>
+<p>The above installation will not install Open GoPro in editable mode. If you want to modify the package, you
+should install it as such:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip install -r requirements-dev.txt -r requirements.txt
+</pre></div>
+</div>
 </div>
 </div>
 </div>
