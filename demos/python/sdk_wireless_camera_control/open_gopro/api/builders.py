@@ -9,7 +9,7 @@ import logging
 from pathlib import Path
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
-from typing import Any, TypeVar, Generic, TYPE_CHECKING, Type, Union, no_type_check, Optional, Dict
+from typing import Any, ClassVar, TypeVar, Generic, TYPE_CHECKING, Type, Union, no_type_check, Optional, Dict
 
 import wrapt
 import requests
@@ -59,43 +59,48 @@ def log_query(wrapped, instance, args, kwargs):  # type: ignore
 ######################################################## BLE #################################################
 
 
-class EnumByteAdapter(Adapter):
-    """Adapter to use an Enum for Construct building and parsing.
+def build_enum_adapter(target: Type[enum.Enum]) -> Adapter:
+    """Build an enum to Construct parsing and building adapter
 
-    This only works in the case where the value is of length one byte
+    This adapter only works on byte data of length 1
 
     Args:
-        enum (Type[enum.Enum]): Enum to use for parsing / building
+        target (Type[enum.Enum]): Enum to use use for parsing / building
+
+    Returns:
+        Adapter: adapter to be used by Construct
     """
-    def __init__(self, enum: Type[enum.Enum]) -> None:
-        # Apparently construct isn't designed for passing in a direct subcon. But this is very useful so ignore type error
-        super().__init__(subcon=Int8ub)  # type: ignore
-        self.enum = enum
+    class EnumByteAdapter(Adapter):
+        """An enum to Construct adapter"""
+        target: ClassVar[Type[enum.Enum]]
 
-    def _decode(self, obj: bytearray, *_: Any) -> enum.Enum:
-        """Parse a bytestream into an Enum value
+        def _decode(self, obj: bytearray, *_: Any) -> enum.Enum:
+            """Parse a bytestream of length 1 into an Enum
 
-        Args:
-            obj (bytearray): bytestream to parsed
+            Args:
+                obj (bytearray): bytestream to parse
 
-        Returns:
-            enum.Enum: returned Enum
-        """
-        return self.enum(obj)
+            Returns:
+                enum.Enum: Enum value
+            """
+            return self.target(obj)
 
-    def _encode(self, obj: Union[enum.Enum, int], *_: Any) -> int:
-        """Adapt an enum value into an integer that is ready for Construct to build a bytestream from
+        def _encode(self, obj: Union[enum.Enum, int], *_: Any) -> int:
+            """Adapt an enum for use by Construct
 
-        Args:
-            obj (Union[enum.Enum, int]): enum value
+            Args:
+                obj (Union[enum.Enum, int]): Enum to adapt
 
-        Returns:
-            int: returned integer value
-        """
-        return obj if isinstance(obj, int) else obj.value
+            Returns:
+                int: int value of Enum
+            """
+            return obj if isinstance(obj, int) else obj.value
+
+    setattr(EnumByteAdapter, "target", target)
+    return EnumByteAdapter(Int8ub)
 
 
-status_struct = Struct("status" / EnumByteAdapter(enum=ErrorCode))
+status_struct = Struct("status" / build_enum_adapter(ErrorCode))
 
 
 # Ignoring because hitting this mypy bug: https://github.com/python/mypy/issues/5374
@@ -246,31 +251,35 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
         return response
 
 
-class ProtobufConstructAdapter(Adapter):
-    """Adapt a protobuf to be used by Construct (for parsing only)
+def build_protobuf_adapter(protobuf: Type[betterproto.Message]) -> Adapter:
+    """Build a protobuf to Construct parsing (only) adapter
 
     Args:
         protobuf (Type[betterproto.Message]): protobuf to use as parser
+
+    Returns:
+        Adapter: adapter to be used by Construct
     """
+    class ProtobufConstructAdapter(Adapter):
+        """Adapt a protobuf to be used by Construct (for parsing only)"""
+        protobuf: Type[betterproto.Message]
 
-    def __init__(self, protobuf: Type[betterproto.Message]) -> None:
-        # Apparently construct isn't designed for passing in a direct subcon. But this is very useful so ignore type error
-        super().__init__(subcon=GreedyBytes)  # type: ignore
-        self.protobuf = protobuf
+        def _decode(self, obj: bytearray, *_: Any) -> Dict[Any, Any]:
+            """Parse a byte stream into a JSON dict using a protobuf
 
-    def _decode(self, obj: bytearray, *_: Any) -> Dict[Any, Any]:
-        """Parse a byte stream into a JSON dict using a protobuf
+            Args:
+                obj (bytearray): byte stream to parse
 
-        Args:
-            obj (bytearray): byte stream to parse
+            Returns:
+                Dict[Any, Any]: parsed JSON dict
+            """
+            return self.protobuf.FromString(bytes(obj)).to_dict()
 
-        Returns:
-            Dict[Any, Any]: parsed JSON dict
-        """
-        return self.protobuf.FromString(bytes(obj)).to_dict()
+        def _encode(self, *_: Any) -> Any:
+            raise NotImplementedError
 
-    def _encode(self, *_: Any) -> Any:
-        raise NotImplementedError
+    setattr(ProtobufConstructAdapter, "protobuf", protobuf)
+    return ProtobufConstructAdapter(GreedyBytes)
 
 
 # Ignoring because hitting this mypy bug: https://github.com/python/mypy/issues/5374
@@ -299,9 +308,7 @@ class BleProtoCommand(BleCommand):
     @property
     def _response_parser(self) -> BytesParser:
         return (
-            self.response_proto
-            if self.response_proto is None
-            else ProtobufConstructAdapter(protobuf=self.response_proto)
+            self.response_proto if self.response_proto is None else build_protobuf_adapter(self.response_proto)
         )
 
     @abstractmethod

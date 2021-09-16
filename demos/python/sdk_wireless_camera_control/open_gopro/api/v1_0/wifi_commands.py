@@ -51,7 +51,6 @@ class WifiCommandsV1_0:
                 for k, v in buf[name].items():
                     identifier = id_map(int(k))
                     try:
-                        print(f"parsing {k} {v}")
                         parser = additional_parsers[identifier]
                         # GreedyBytes, GreedyString, etc can't be built since they don't have a length
                         val = v if "Greedy" in str(parser) else parser.parse(parser.build(v))
