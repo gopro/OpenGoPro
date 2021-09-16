@@ -3,22 +3,31 @@
 
 """Test the responses module"""
 
+# pylint: disable= redefined-outer-name
+
 import requests
 
-import construct
-from construct import Struct, GreedyString, Struct, Int8ub
+import pytest
 import requests_mock
 
-from open_gopro import GoPro, proto
-from open_gopro.api.v1_0.wifi_commands import WifiCommandsV1_0
-from open_gopro.constants import QueryCmdId, SettingId, StatusId, ActionId, CmdId, ErrorCode, UUID
-from open_gopro.responses import GoProResp, ProtobufResponseAdapter
+from open_gopro import GoPro
+from open_gopro.communication_client import GoProResponder
+from open_gopro.api import Api
+from open_gopro.constants import QueryCmdId, SettingId, StatusId, UUID
+from open_gopro.responses import GoProResp, ParserMapType
+
+
+@pytest.fixture(scope="function")
+def parser_map() -> ParserMapType:
+    responder = GoProResponder()
+    Api(responder, responder)
+    yield responder._parser_map
+
 
 test_push_receive_no_parameter = bytearray([0x08, 0xA2, 0x00, 0x02, 0x00, 0x03, 0x00, 0x79, 0x00])
 
 
-def test_push_response_no_parameter_values():
-    parser_map = {QueryCmdId.SETTING_CAPABILITY_PUSH: None}
+def test_push_response_no_parameter_values(parser_map: ParserMapType):
     r = GoProResp(parser_map, [UUID.CQ_QUERY_RESP])
     r._accumulate(test_push_receive_no_parameter)
     assert r.is_parsed
@@ -36,8 +45,7 @@ def test_push_response_no_parameter_values():
 test_read_receive = bytearray([0x64, 0x62, 0x32, 0x2D, 0x73, 0x58, 0x56, 0x2D, 0x66, 0x62, 0x38])
 
 
-def test_read_command():
-    parser_map = {UUID.WAP_PASSWORD: Struct("password" / GreedyString("utf-8"))}
+def test_read_command(parser_map: ParserMapType):
     r = GoProResp._from_read_response(parser_map, UUID.WAP_PASSWORD, test_read_receive)
     assert r.is_parsed
     assert r.is_received
@@ -55,8 +63,7 @@ test_write_send = bytearray([0x01, 0x05])
 test_write_recieve = bytearray([0x02, 0x05, 0x00])
 
 
-def test_write_command():
-    parser_map = {CmdId.SLEEP: Struct("status" / construct.Enum(Int8ub, ErrorCode))}
+def test_write_command(parser_map: ParserMapType):
     r = GoProResp._from_write_command(parser_map, UUID.CQ_COMMAND, test_write_send)
     r._accumulate(test_write_recieve)
     assert r.is_received
@@ -462,8 +469,7 @@ test_complex_write_receive = bytes(
 )
 
 
-def test_complex_write_command():
-    parser_map = {QueryCmdId.GET_STATUS_VAL: None}
+def test_complex_write_command(parser_map: ParserMapType):
     r = GoProResp._from_write_command(parser_map, UUID.CQ_QUERY, test_complex_write_send)
     idx = 0
     while not r.is_received:
@@ -672,9 +678,8 @@ test_json = {
 }
 
 
-def test_http_response_with_extra_parsing():
+def test_http_response_with_extra_parsing(parser_map: ParserMapType):
     url = "gopro/camera/state"
-    parser_map = {url: WifiCommandsV1_0.ParseCameraState()}
     url = GoPro._base_url + url
     with requests_mock.Mocker() as m:
         m.get(url, json=test_json)
@@ -695,8 +700,7 @@ send_proto = bytearray(b"\x04\xf1k\x08\x01")
 receive_proto = bytearray(b"\x04\xf1\xeb\x08\x01")
 
 
-def test_proto():
-    parser_map = {ActionId.SET_TURBO_MODE: ProtobufResponseAdapter(proto.ResponseGeneric)}
+def test_proto(parser_map: ParserMapType):
     r = GoProResp._from_write_command(parser_map, UUID.CQ_COMMAND, send_proto)
     r._accumulate(receive_proto)
     assert r.is_received

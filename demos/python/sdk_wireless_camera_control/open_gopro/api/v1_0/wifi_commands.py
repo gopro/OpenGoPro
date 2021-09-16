@@ -44,13 +44,14 @@ class WifiCommandsV1_0:
             Returns:
                 Dict[Any, Any]: parsed output dict
             """
+            assert additional_parsers is not None
             parsed: Dict[Any, Any] = {}
             # Parse status and settings values into nice human readable things
             for (name, id_map) in [("status", StatusId), ("settings", SettingId)]:
                 for k, v in buf[name].items():
                     identifier = id_map(int(k))
                     try:
-                        assert additional_parsers is not None
+                        print(f"parsing {k} {v}")
                         parser = additional_parsers[identifier]
                         # GreedyBytes, GreedyString, etc can't be built since they don't have a length
                         val = v if "Greedy" in str(parser) else parser.parse(parser.build(v))
@@ -82,7 +83,7 @@ class WifiCommandsV1_0:
             ...
 
         class CameraFileToLocalFile(WifiGetBinary):
-            def __call__(self, /, camera_file: str, local_file: Optional[Path] = None) -> GoProResp:
+            def __call__(self, /, camera_file: str, local_file: Optional[Path] = None) -> Path:
                 return super().__call__(camera_file=camera_file, local_file=local_file)
 
         # ======================================== Commands

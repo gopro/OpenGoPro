@@ -22,10 +22,8 @@ from typing import (
 )
 from typing_extensions import Protocol
 
-import betterproto
 import requests
-import construct  # For enum
-from construct import Struct, FormatField, StringEncoded
+from construct import Construct
 
 from open_gopro.exceptions import ResponseParseError
 from open_gopro.constants import (
@@ -43,47 +41,13 @@ from open_gopro.ble import UUID
 
 logger = logging.getLogger(__name__)
 
-
-# Type of data that will be parsed into a GoPro Response.
-InputType = Optional[Union[bytearray, Dict[str, Any]]]
-
-
-class BytesParser(Protocol):
-    """Protocol definition for a non-Construct parser to be used by GoProResp for parsing bytes."""
-
-    def parse(self, buf: bytearray) -> Dict[Any, Any]:
-        """Parse bytes into JSON dict
-
-        Args:
-            buf (bytearray): bytes to parse
-
-        Returns:
-            Dict[Any, Any]: parsed JSON dict
-        """
-        ...
-
-
-class BytesBuilder(Protocol):
-    """Protocol definition for a non-Construct builder to be used by GoProResp for building a byte stream."""
-
-    def build(self, buf: Any) -> bytearray:
-        """Build something into a bytestream.
-
-        Args:
-            buf (Any): The thing to build
-
-        Returns:
-            bytearray: The build bytestream.
-        """
-        ...
-
-
-class BytesParserBuilder(BytesParser, BytesBuilder, Protocol):
-    """A class that can both parse and build."""
+BytesParser = Construct
+BytesBuilder = Construct
+BytesParserBuilder = Construct
 
 
 class JsonParser(Protocol):
-    """Protocol definition for a non-Construct parser to be used by GoProResp for parsing bytes."""
+    """Protocol definition for a non-Construct parser to be used by GoProResp for parsing JSON input into  JSON output."""
 
     def parse(
         self, buf: Dict[str, Any], additional_parsers: Dict[Any, BytesParserBuilder] = None
@@ -100,31 +64,12 @@ class JsonParser(Protocol):
         ...
 
 
-class ProtobufResponseAdapter(BytesParser):
-    """Use a protobuf definition to parse a byte stream into a dict.
-
-    Args:
-        protobuf (Type[betterproto.Message]): protobuf to use as parser
-    """
-
-    def __init__(self, protobuf: Type[betterproto.Message]) -> None:  # pylint: disable = super-init-not-called
-        self.protobuf = protobuf
-
-    def parse(self, buf: bytearray) -> Dict[Any, Any]:
-        """Parse a byte stream into a JSON dict using a protobuf
-
-        Args:
-            buf (bytearray): byte stream to parse
-
-        Returns:
-            Dict[Any, Any]: parsed JSON dict
-        """
-        return self.protobuf.FromString(bytes(buf)).to_dict()
-
-
 Parser = Union[BytesParser, JsonParser]
-FieldBuilder = Callable[..., FormatField]
-ConstructType = Union[Struct, construct.Enum, FieldBuilder, StringEncoded]
+
+# Type of data that will be parsed into a GoPro Response.
+InputType = Optional[Union[bytearray, Dict[str, Any]]]
+
+
 ParserMapType = Dict[ResponseType, Parser]
 
 CONT_MASK = 0b10000000
@@ -240,7 +185,7 @@ class GoProResp:
         cmd_id = id_map[response_uuid](data[1])
         info = [response_uuid, cmd_id]
         # If this is a protobuf command, it also has an action id
-        if cmd_id.value >= 0xF0:
+        if cmd_id >= 0xF0:
             info.append(ActionId(data[2]))
         return cls(parsers, info=info)
 
@@ -482,7 +427,7 @@ class GoProResp:
 
             # UUID's whose responses contain multiple parameters to parse
             if self.uuid in [UUID.CQ_QUERY_RESP, UUID.CQ_SETTINGS_RESP]:
-                identifier: Optional[Union[Type[SettingId], Type[StatusId]]] = None
+                identifier: Optional[Type[ResponseType]] = None
                 if self.uuid is UUID.CQ_SETTINGS_RESP:
                     self._info.append(SettingId(buf[0]))
                     identifier = SettingId

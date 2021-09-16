@@ -1,12 +1,10 @@
 # test_ble_commands.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:05:54 PM
 
-import pytest
 from construct import Int32ub
 
 from open_gopro.communication_client import GoProBle
-from open_gopro.constants import SettingId, StatusId, UUID, CmdId, QueryCmdId, ProducerType
-from open_gopro.api.v1_0 import params
+from open_gopro.constants import SettingId, StatusId, UUID, CmdId, QueryCmdId
 from open_gopro import proto
 
 
