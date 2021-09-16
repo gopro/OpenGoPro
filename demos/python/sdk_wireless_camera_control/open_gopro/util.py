@@ -174,10 +174,11 @@ class Singleton:
     _instances: Dict[Type["Singleton"], Type["Singleton"]] = {}
 
     # pylint: disable=missing-return-doc, missing-return-type-doc
-    def __new__(cls, *args, **kwargs):  # type: ignore
+    def __new__(cls, *args: Any, **kwargs: Any) -> Any:
         """Check for existing instance."""
         if cls not in cls._instances:
-            cls._instances[cls] = object.__new__(cls, *args, **kwargs)
+            # https://github.com/python/mypy/issues/6061
+            cls._instances[cls] = object.__new__(cls, *args, **kwargs) # type: ignore
         return cls._instances[cls]
 
 

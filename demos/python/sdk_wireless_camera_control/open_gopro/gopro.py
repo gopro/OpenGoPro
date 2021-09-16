@@ -3,6 +3,7 @@
 
 """Implements top level interface to GoPro module."""
 
+from __future__ import annotations
 import time
 import enum
 import queue
@@ -44,7 +45,9 @@ WRITE_TIMEOUT = 10
 
 
 @wrapt.decorator
-def _ensure_initialized_acquire_ready_semaphore(wrapped, instance, args, kwargs) -> Callable:  # type: ignore
+def _ensure_initialized_acquire_ready_semaphore(
+    wrapped: Callable, instance: GoPro, args: Any, kwargs: Any
+) -> Callable:
     """If the instance is initialized, acquire the semaphore before doing anything.
 
     Raises:

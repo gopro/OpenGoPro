@@ -479,9 +479,11 @@ class GoProResp:
                             QueryCmdId.SETTING_CAPABILITY_PUSH,
                         ]:
                             # Parse using parser from map and append
+                            # Mypy can't follow that this parser is guarantted to be a ByteParser
                             self.data[param_id].append(self._parsers[param_id].parse(param_val))  # type: ignore
                         else:
                             # Parse using parser from map and set
+                            # Mypy can't follow that this parser is guarantted to be a ByteParser
                             self.data[param_id] = self._parsers[param_id].parse(param_val)  # type: ignore
                     except KeyError:
                         # We don't have defined params for all ID's yet. Just store raw bytes
@@ -499,6 +501,7 @@ class GoProResp:
                     buf = buf[1:]
 
                 try:
+                    # Mypy can't follow that this parser is guarantted to be a ByteParser
                     self.data = self._parsers[self.id].parse(buf)  # type: ignore
                     self.status = self.data["status"] if "status" in self.data else self.status
                 except KeyError as e:
@@ -510,6 +513,7 @@ class GoProResp:
             json_data: Dict[str, Any] = self._raw_packet
             # Is there a parser for this? Most of them do not have one yet.
             try:
+                # Mypy can't follow that this parser is guarantted to be a JsonParser
                 self.data = self._parsers[self.id].parse(json_data, self._parsers)  # type: ignore
             except KeyError:
                 self.data = json_data

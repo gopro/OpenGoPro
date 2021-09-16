@@ -9,7 +9,19 @@ import logging
 from pathlib import Path
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
-from typing import Any, ClassVar, TypeVar, Generic, TYPE_CHECKING, Type, Union, no_type_check, Optional, Dict
+from typing import (
+    Any,
+    ClassVar,
+    TypeVar,
+    Generic,
+    TYPE_CHECKING,
+    Type,
+    Union,
+    no_type_check,
+    Optional,
+    Dict,
+    Callable,
+)
 
 import wrapt
 import requests
@@ -48,7 +60,9 @@ CommandValueType = TypeVar("CommandValueType", bound=Union[enum.Enum, bool, int,
 
 @wrapt.decorator
 # pylint: disable = E, W
-def log_query(wrapped, instance, args, kwargs):  # type: ignore
+def log_query(
+    wrapped: Callable, instance: Union[BleSetting, BleStatus, WifiSetting], args: Any, kwargs: Any
+) -> Callable:
     """Log a query write."""
     logger.info(f"<----------- {wrapped.__name__} : {instance.identifier}")
     response = wrapped(*args, **kwargs)
@@ -70,8 +84,10 @@ def build_enum_adapter(target: Type[enum.Enum]) -> Adapter:
     Returns:
         Adapter: adapter to be used by Construct
     """
+
     class EnumByteAdapter(Adapter):
         """An enum to Construct adapter"""
+
         target: ClassVar[Type[enum.Enum]]
 
         def _decode(self, obj: bytearray, *_: Any) -> enum.Enum:
@@ -260,8 +276,10 @@ def build_protobuf_adapter(protobuf: Type[betterproto.Message]) -> Adapter:
     Returns:
         Adapter: adapter to be used by Construct
     """
+
     class ProtobufConstructAdapter(Adapter):
         """Adapt a protobuf to be used by Construct (for parsing only)"""
+
         protobuf: Type[betterproto.Message]
 
         def _decode(self, obj: bytearray, *_: Any) -> Dict[Any, Any]:
@@ -740,7 +758,7 @@ class WifiSetting(Generic[SettingValueType]):
             GoProResp: Status of set
         """
         logger.info(f"<----------- Setting {self.identifier}: {value}")
-        # Build url.. TODO fix this type error with Mixin (or passing in endpoint as argument)
+        # Build url. TODO fix this type error with Mixin (or passing in endpoint as argument)
         url = self.communicator._api.wifi_setting.endpoint.format(self.identifier.value, value)  # type: ignore
         # Send to camera
         response = self.communicator._get(url)
