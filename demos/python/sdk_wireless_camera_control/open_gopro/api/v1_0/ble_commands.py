@@ -7,7 +7,6 @@ from __future__ import annotations
 import logging
 from typing import Type
 
-import construct  # For enum
 from construct import Int8ub, Int32ub, Int64ub, Flag, GreedyString, GreedyBytes, Struct, Padding
 
 from open_gopro import proto
@@ -20,6 +19,7 @@ from open_gopro.api.builders import (
     BleWriteWithParamsCommand,
     BleReadCommand,
     BleProtoCommand,
+    EnumByteAdapter,
 )
 from open_gopro.constants import ActionId, UUID, SettingId, StatusId, CmdId
 from .params import ParamsV1_0 as Params
@@ -191,21 +191,21 @@ class BleSettingsV1_0:
             ...
 
         self.resolution = Resolution(
-            self.communicator, SettingId.RESOLUTION, construct.Enum(Int8ub, params.Resolution)
+            self.communicator, SettingId.RESOLUTION, EnumByteAdapter(enum=params.Resolution)
         )
         """Resolution. Set with :py:class:`open_gopro.params.Resolution`"""
 
         class FPS(BleSetting[Params.FPS]):
             ...
 
-        self.fps = FPS(self.communicator, SettingId.FPS, construct.Enum(Int8ub, params.FPS))
+        self.fps = FPS(self.communicator, SettingId.FPS, EnumByteAdapter(enum=params.FPS))
         """Frames per second. Set with :py:class:`open_gopro.params.FPS`"""
 
         class AutoOffTime(BleSetting[Params.AutoOff]):
             ...
 
         self.auto_off = AutoOffTime(
-            self.communicator, SettingId.AUTO_OFF, construct.Enum(Int8ub, params.AutoOff)
+            self.communicator, SettingId.AUTO_OFF, EnumByteAdapter(enum=params.AutoOff)
         )
         """Set the auto off time."""
 
@@ -213,7 +213,7 @@ class BleSettingsV1_0:
             ...
 
         self.video_field_of_view = VideoFOV(
-            self.communicator, SettingId.VIDEO_FOV, construct.Enum(Int8ub, params.VideoFOV)
+            self.communicator, SettingId.VIDEO_FOV, EnumByteAdapter(enum=params.VideoFOV)
         )
         """Video FOV. Set with :py:class:`open_gopro.params.VideoFOV`"""
 
@@ -221,7 +221,7 @@ class BleSettingsV1_0:
             ...
 
         self.photo_field_of_view = PhotoFOV(
-            self.communicator, SettingId.PHOTO_FOV, construct.Enum(Int8ub, params.PhotoFOV)
+            self.communicator, SettingId.PHOTO_FOV, EnumByteAdapter(enum=params.PhotoFOV)
         )
         """Photo FOV. Set with :py:class:`open_gopro.params.PhotoFOV`"""
 
@@ -229,21 +229,21 @@ class BleSettingsV1_0:
             ...
 
         self.multi_shot_field_of_view = Multishot(
-            self.communicator, SettingId.MULTI_SHOT_FOV, construct.Enum(Int8ub, params.MultishotFOV)
+            self.communicator, SettingId.MULTI_SHOT_FOV, EnumByteAdapter(enum=params.MultishotFOV)
         )
         """Multi-shot FOV. Set with :py:class:`open_gopro.params.Multishot`"""
 
         class LED(BleSetting[Params.LED]):
             ...
 
-        self.led = LED(self.communicator, SettingId.LED, construct.Enum(Int8ub, params.LED))
+        self.led = LED(self.communicator, SettingId.LED, EnumByteAdapter(enum=params.LED))
         """Set the LED options (or also send the BLE keep alive signal). Set with :py:class:`open_gopro.params.LED`"""
 
         class MaxLensMode(BleSetting[Params.MaxLensMode]):
             ...
 
         self.max_lens_mode = MaxLensMode(
-            self.communicator, SettingId.MAX_LENS_MOD, construct.Enum(Int8ub, params.MaxLensMode)
+            self.communicator, SettingId.MAX_LENS_MOD, EnumByteAdapter(enum=params.MaxLensMode)
         )
         """Enable / disable max lens mod. Set with :py:class:`open_gopro.params.MaxLensMode`"""
 
@@ -251,22 +251,22 @@ class BleSettingsV1_0:
             ...
 
         self.lower_left_shortcut = Shortcut(
-            self.communicator, SettingId.SHORTCUT_LOWER_LEFT, construct.Enum(Int8ub, params.Shortcut)
+            self.communicator, SettingId.SHORTCUT_LOWER_LEFT, EnumByteAdapter(enum=params.Shortcut)
         )
         """Lower left shortcut. Set with :py:class:`open_gopro.params.Shortcut`"""
 
         self.lower_right_shortcut = Shortcut(
-            self.communicator, SettingId.SHORTCUT_LOWER_RIGHT, construct.Enum(Int8ub, params.Shortcut)
+            self.communicator, SettingId.SHORTCUT_LOWER_RIGHT, EnumByteAdapter(enum=params.Shortcut)
         )
         """Lower right shortcut. Set with :py:class:`open_gopro.params.Shortcut`"""
 
         self.upper_left_shortcut = Shortcut(
-            self.communicator, SettingId.SHORTCUT_UPPER_LEFT, construct.Enum(Int8ub, params.Shortcut)
+            self.communicator, SettingId.SHORTCUT_UPPER_LEFT, EnumByteAdapter(enum=params.Shortcut)
         )
         """Upper left shortcut. Set with :py:class:`open_gopro.params.Shortcut`"""
 
         self.upper_right_shortcut = Shortcut(
-            self.communicator, SettingId.SHORTCUT_UPPER_RIGHT, construct.Enum(Int8ub, params.Shortcut)
+            self.communicator, SettingId.SHORTCUT_UPPER_RIGHT, EnumByteAdapter(enum=params.Shortcut)
         )
         """Upper right shortcut. Set with :py:class:`open_gopro.params.Shortcut`"""
 
@@ -350,12 +350,12 @@ class BleStatusesV1_0:
         """Are Wireless Connections enabled?"""
 
         self.pair_state: BleStatus = BleStatus(
-            self.communicator, StatusId.PAIR_STATE, construct.Enum(Int8ub, params.PairState)
+            self.communicator, StatusId.PAIR_STATE, EnumByteAdapter(enum=params.PairState)
         )
         """What is the pair state?"""
 
         self.pair_type: BleStatus = BleStatus(
-            self.communicator, StatusId.PAIR_TYPE, construct.Enum(Int8ub, params.PairType)
+            self.communicator, StatusId.PAIR_TYPE, EnumByteAdapter(enum=params.PairType)
         )
         """The last type of pairing that the camera was engaged in."""
 
@@ -363,7 +363,7 @@ class BleStatusesV1_0:
         """	Time (milliseconds) since boot of last successful pairing complete action."""
 
         self.wap_scan_state: BleStatus = BleStatus(
-            self.communicator, StatusId.WAP_SCAN_STATE, construct.Enum(Int8ub, params.WAPState)
+            self.communicator, StatusId.WAP_SCAN_STATE, EnumByteAdapter(enum=params.WAPState)
         )
         """State of current scan for Wifi Access Points. Appears to only change for CAH-related scans."""
 
@@ -371,7 +371,7 @@ class BleStatusesV1_0:
         """The time, in milliseconds since boot that the Wifi Access Point scan completed."""
 
         self.wap_prov_stat: BleStatus = BleStatus(
-            self.communicator, StatusId.WAP_PROV_STAT, construct.Enum(Int8ub, params.WAPState)
+            self.communicator, StatusId.WAP_PROV_STAT, EnumByteAdapter(enum=params.WAPState)
         )
         """Wifi AP provisioning state."""
 
@@ -401,7 +401,7 @@ class BleStatusesV1_0:
         """Is preview stream enabled?"""
 
         self.sd_status: BleStatus = BleStatus(
-            self.communicator, StatusId.SD_STATUS, construct.Enum(Int8ub, params.SDStatus)
+            self.communicator, StatusId.SD_STATUS, EnumByteAdapter(enum=params.SDStatus)
         )
         """Primary Storage Status."""
 
@@ -429,7 +429,7 @@ class BleStatusesV1_0:
         """Current date/time (format: %YY%MM%DD%HH%MM%SS, all values in hex)."""
 
         self.ota_stat: BleStatus = BleStatus(
-            self.communicator, StatusId.OTA_STAT, construct.Enum(Int8ub, params.OTAStatus)
+            self.communicator, StatusId.OTA_STAT, EnumByteAdapter(enum=params.OTAStatus)
         )
         """The current status of Over The Air (OTA) update."""
 
@@ -467,7 +467,7 @@ class BleStatusesV1_0:
         """The min time between camera status updates (msec). Do not poll for status more often than this."""
 
         self.analytics_rdy: BleStatus = BleStatus(
-            self.communicator, StatusId.ANALYTICS_RDY, construct.Enum(Int8ub, params.AnalyticsState)
+            self.communicator, StatusId.ANALYTICS_RDY, EnumByteAdapter(enum=params.AnalyticsState)
         )
         """The current state of camera analytics."""
 
@@ -481,7 +481,7 @@ class BleStatusesV1_0:
         """How many min of Timelapse video can be captured with current settings before sdcard is full?"""
 
         self.exposure_type: BleStatus = BleStatus(
-            self.communicator, StatusId.EXPOSURE_TYPE, construct.Enum(Int8ub, params.ExposureMode)
+            self.communicator, StatusId.EXPOSURE_TYPE, EnumByteAdapter(enum=params.ExposureMode)
         )
         """Liveview Exposure Select Mode."""
 
@@ -501,7 +501,7 @@ class BleStatusesV1_0:
         """Internal battery level (percent)."""
 
         self.acc_mic_stat: BleStatus = BleStatus(
-            self.communicator, StatusId.ACC_MIC_STAT, construct.Enum(Int8ub, params.ExposureMode)
+            self.communicator, StatusId.ACC_MIC_STAT, EnumByteAdapter(enum=params.ExposureMode)
         )
         """Microphone Accesstory status."""
 
@@ -509,7 +509,7 @@ class BleStatusesV1_0:
         """	Digital Zoom level (percent)."""
 
         self.wireless_band: BleStatus = BleStatus(
-            self.communicator, StatusId.WIRELESS_BAND, construct.Enum(Int8ub, params.WifiBand)
+            self.communicator, StatusId.WIRELESS_BAND, EnumByteAdapter(enum=params.WifiBand)
         )
         """Wireless Band."""
 
@@ -523,7 +523,7 @@ class BleStatusesV1_0:
         """Is the camera currently in First Time Use (FTU) UI flow?"""
 
         self.sec_sd_stat: BleStatus = BleStatus(
-            self.communicator, StatusId.SEC_SD_STAT, construct.Enum(Int8ub, params.SDStatus)
+            self.communicator, StatusId.SEC_SD_STAT, EnumByteAdapter(enum=params.SDStatus)
         )
         """Secondary Storage Status (exclusive to Superbank)."""
 
@@ -540,7 +540,7 @@ class BleStatusesV1_0:
         """Is the camera getting too cold to continue recording?"""
 
         self.orientation: BleStatus = BleStatus(
-            self.communicator, StatusId.ORIENTATION, construct.Enum(Int8ub, params.Orientation)
+            self.communicator, StatusId.ORIENTATION, EnumByteAdapter(enum=params.Orientation)
         )
         """The rotational orientation of the camera."""
 
@@ -551,7 +551,7 @@ class BleStatusesV1_0:
         """Is this camera capable of zooming while encoding (static value based on model, not settings)?"""
 
         self.flatmode_id: BleStatus = BleStatus(
-            self.communicator, StatusId.FLATMODE_ID, construct.Enum(Int8ub, params.Flatmode)
+            self.communicator, StatusId.FLATMODE_ID, EnumByteAdapter(enum=params.Flatmode)
         )
         """Current flatmode ID."""
 
@@ -589,12 +589,14 @@ class BleStatusesV1_0:
         """Is Capture Delay currently active (i.e. counting down)?"""
 
         self.media_mod_mic_stat: BleStatus = BleStatus(
-            self.communicator, StatusId.MEDIA_MOD_MIC_STAT, construct.Enum(Int8ub, params.MediaModMicStatus)
+            self.communicator,
+            StatusId.MEDIA_MOD_MIC_STAT,
+            EnumByteAdapter(enum=params.MediaModMicStatus),
         )
         """Media mod State."""
 
         self.timewarp_speed_ramp: BleStatus = BleStatus(
-            self.communicator, StatusId.TIMEWARP_SPEED_RAMP, construct.Enum(Int8ub, params.TimeWarpSpeed)
+            self.communicator, StatusId.TIMEWARP_SPEED_RAMP, EnumByteAdapter(enum=params.TimeWarpSpeed)
         )
         """Time Warp Speed."""
 
@@ -602,7 +604,7 @@ class BleStatusesV1_0:
         """Is the system's Linux core active?"""
 
         self.camera_lens_type: BleStatus = BleStatus(
-            self.communicator, StatusId.CAMERA_LENS_TYPE, construct.Enum(Int8ub, params.MaxLensMode)
+            self.communicator, StatusId.CAMERA_LENS_TYPE, EnumByteAdapter(enum=params.MaxLensMode)
         )
         """Camera lens type (reflects changes to setting 162)."""
 
@@ -619,7 +621,7 @@ class BleStatusesV1_0:
         """Is the camera in the process of creating a custom preset?"""
 
         self.media_mod_stat: BleStatus = BleStatus(
-            self.communicator, StatusId.MEDIA_MOD_STAT, construct.Enum(Int8ub, params.MediaModStatus)
+            self.communicator, StatusId.MEDIA_MOD_STAT, EnumByteAdapter(enum=params.MediaModStatus)
         )
         """Media Mode Status (bitmasked)."""
 

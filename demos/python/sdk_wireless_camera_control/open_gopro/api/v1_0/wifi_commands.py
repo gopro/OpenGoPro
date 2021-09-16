@@ -10,7 +10,7 @@ from typing import Any, Optional, Type, Dict
 
 from open_gopro.communication_client import GoProWifi
 from open_gopro.constants import SettingId, StatusId
-from open_gopro.responses import BytesParserBuilder, GoProResp, JsonParser
+from open_gopro.responses import BytesParserBuilder, JsonParser
 from open_gopro.api.builders import WifiSetting, WifiGetJsonNoParams, WifiGetJsonWithParams, WifiGetBinary
 from .params import ParamsV1_0 as Params
 

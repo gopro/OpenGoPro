@@ -13,7 +13,6 @@ from typing import Any, TypeVar, Generic, TYPE_CHECKING, Type, Union, no_type_ch
 
 import wrapt
 import requests
-import construct  # For enum
 import betterproto
 from construct import Int8ub, Struct, Adapter, GreedyBytes
 
@@ -59,7 +58,44 @@ def log_query(wrapped, instance, args, kwargs):  # type: ignore
 
 ######################################################## BLE #################################################
 
-status_struct = Struct("status" / construct.Enum(Int8ub, ErrorCode))
+
+class EnumByteAdapter(Adapter):
+    """Adapter to use an Enum for Construct building and parsing.
+
+    This only works in the case where the value is of length one byte
+
+    Args:
+        enum (Type[enum.Enum]): Enum to use for parsing / building
+    """
+    def __init__(self, enum: Type[enum.Enum]) -> None:
+        # Apparently construct isn't designed for passing in a direct subcon. But this is very useful so ignore type error
+        super().__init__(subcon=Int8ub)  # type: ignore
+        self.enum = enum
+
+    def _decode(self, obj: bytearray, *_: Any) -> enum.Enum:
+        """Parse a bytestream into an Enum value
+
+        Args:
+            obj (bytearray): bytestream to parsed
+
+        Returns:
+            enum.Enum: returned Enum
+        """
+        return self.enum(obj)
+
+    def _encode(self, obj: Union[enum.Enum, int], *_: Any) -> int:
+        """Adapt an enum value into an integer that is ready for Construct to build a bytestream from
+
+        Args:
+            obj (Union[enum.Enum, int]): enum value
+
+        Returns:
+            int: returned integer value
+        """
+        return obj if isinstance(obj, int) else obj.value
+
+
+status_struct = Struct("status" / EnumByteAdapter(enum=ErrorCode))
 
 
 # Ignoring because hitting this mypy bug: https://github.com/python/mypy/issues/5374
@@ -219,7 +255,7 @@ class ProtobufConstructAdapter(Adapter):
 
     def __init__(self, protobuf: Type[betterproto.Message]) -> None:
         # Apparently construct isn't designed for passing in a direct subcon. But this is very useful so ignore type error
-        super().__init__(subcon=GreedyBytes) # type: ignore
+        super().__init__(subcon=GreedyBytes)  # type: ignore
         self.protobuf = protobuf
 
     def _decode(self, obj: bytearray, *_: Any) -> Dict[Any, Any]:

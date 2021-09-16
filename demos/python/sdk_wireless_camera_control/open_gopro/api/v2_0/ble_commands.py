@@ -7,13 +7,12 @@ from __future__ import annotations
 import logging
 from typing import Type, TYPE_CHECKING
 
-import construct
 from construct import Flag, Int8ub
 
 from open_gopro.constants import StatusId
 from open_gopro.api.v1_0.ble_commands import BleCommandsV1_0, BleSettingsV1_0, BleStatusesV1_0
 from open_gopro.communication_client import GoProBle
-from open_gopro.api.builders import BleStatus
+from open_gopro.api.builders import BleStatus, EnumByteAdapter
 
 if TYPE_CHECKING:
     from .params import ParamsV2_0 as Params
@@ -49,7 +48,7 @@ class BleStatusesV2_0(BleStatusesV1_0):
         """Number of sdcard write speed errors since device booted"""
 
         self.camera_control: BleStatus = BleStatus(
-            self.communicator, StatusId.CAMERA_CONTROL, construct.Enum(Int8ub, params.CameraControlStatus)
+            self.communicator, StatusId.CAMERA_CONTROL, EnumByteAdapter(enum=params.CameraControlStatus)
         )
         """Camera control status ID"""
 

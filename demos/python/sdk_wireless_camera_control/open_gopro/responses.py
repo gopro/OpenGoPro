@@ -185,7 +185,7 @@ class GoProResp:
         cmd_id = id_map[response_uuid](data[1])
         info = [response_uuid, cmd_id]
         # If this is a protobuf command, it also has an action id
-        if cmd_id >= 0xF0:
+        if cmd_id.value >= 0xF0:
             info.append(ActionId(data[2]))
         return cls(parsers, info=info)
 
@@ -500,7 +500,7 @@ class GoProResp:
 
                 try:
                     self.data = self._parsers[self.id].parse(buf)  # type: ignore
-                    self.status = ErrorCode(int(self.data["status"])) if "status" in self.data else self.status
+                    self.status = self.data["status"] if "status" in self.data else self.status
                 except KeyError as e:
                     self._state = GoProResp._State.ERROR
                     raise ResponseParseError(str(self.id), buf) from e

@@ -9,11 +9,12 @@ Note these have to be IntEnum's in order to be correctly built when sending comm
 """
 
 import enum
+
 from open_gopro.api.v1_0.params import ParamsV1_0
 
 
 class ParamsV2_0(ParamsV1_0):
-    class Resolution(enum.IntEnum):
+    class Resolution(enum.Enum):
         RES_4K = 1
         RES_2_7K = 4
         RES_2_7K_4_3 = 6
@@ -22,7 +23,7 @@ class ParamsV2_0(ParamsV1_0):
         RES_5_K_4_3 = 25
         RES_5_3_K = 100
 
-    class Preset(enum.IntEnum):
+    class Preset(enum.Enum):
         ACTIVITY = 1
         BURST_PHOTO = 65538
         CINEMATIC = 2
@@ -38,12 +39,12 @@ class ParamsV2_0(ParamsV1_0):
         MAX_TIMEWARP = 327680
         MAX_VIDEO = 196608
 
-    class CameraControlStatus(enum.IntEnum):
+    class CameraControlStatus(enum.Enum):
         IDLE = 1
         CAMERA = 2
         EXTERNAL = 3
 
-    class VideoFOV(enum.IntEnum):
+    class VideoFOV(enum.Enum):
         WIDE = 0
         NARROW = 2
         SUPERVIEW = 3
@@ -51,13 +52,13 @@ class ParamsV2_0(ParamsV1_0):
         MAX_SUPERVIEW = 7
         LINEAR_HORIZON = 8
 
-    class PhotoFOV(enum.IntEnum):
+    class PhotoFOV(enum.Enum):
         WIDE = 101
         LINEAR = 102
         NARROW = 19
         MAX_SUPERVIEW = 100
 
-    class MultishotFOV(enum.IntEnum):
+    class MultishotFOV(enum.Enum):
         NARROW = 19
         MAX_SUPERVIEW = 100
         WIDE = 101

@@ -5,6 +5,7 @@
 
 import enum
 from typing import Union, Tuple
+
 import construct
 
 from open_gopro.ble import UUID
@@ -12,7 +13,7 @@ from open_gopro.ble import UUID
 GOPRO_BASE_UUID = "b5f9{}-aa8d-11e3-9046-0002a5d5c51b"
 
 
-class ErrorCode(enum.IntEnum):
+class ErrorCode(enum.Enum):
     """Status Codes."""
 
     SUCCESS = 0
@@ -20,7 +21,7 @@ class ErrorCode(enum.IntEnum):
     INVALID_PARAM = 2
 
 
-class CmdId(enum.IntEnum):
+class CmdId(enum.Enum):
     """Command ID's that are written to UUID.CQ_COMMAND."""
 
     SET_SHUTTER = 0x01
@@ -40,14 +41,14 @@ class CmdId(enum.IntEnum):
     GET_PRESET_STATUS = 0xF5
 
 
-class ActionId(enum.IntEnum):
+class ActionId(enum.Enum):
     """Action ID's that identify a protobuf command."""
 
     SET_TURBO_MODE = 0x6B
     GET_PRESET_STATUS = 0x02
 
 
-class SettingId(enum.IntEnum):
+class SettingId(enum.Enum):
     """Setting ID's that identify settings and are written to UUID.CQ_SETTINGS."""
 
     RESOLUTION = 2
@@ -143,7 +144,7 @@ class SettingId(enum.IntEnum):
     INVALID_FOR_TESTING = 0xFF
 
 
-class QueryCmdId(enum.IntEnum):
+class QueryCmdId(enum.Enum):
     """Command ID that is written to UUID.CQ_QUERY."""
 
     GET_SETTING_VAL = 0x12
@@ -163,7 +164,7 @@ class QueryCmdId(enum.IntEnum):
     INVALID_FOR_TESTING = 0xFF
 
 
-class StatusId(enum.IntEnum):
+class StatusId(enum.Enum):
     """Status ID to identify statuses sent to UUID.CQ_QUERY or received from UUID.CQ_QUERY_RESP."""
 
     BATT_PRESENT = 1

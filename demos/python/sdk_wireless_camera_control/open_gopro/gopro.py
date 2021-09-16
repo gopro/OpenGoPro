@@ -479,7 +479,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             return
 
         # Responses we don't care about. For now, just the BLE-spec defined battery characteristic
-        if uuid == UUID.BATT_LEVEL:
+        if uuid is UUID.BATT_LEVEL:
             return
 
         logger.debug(f'Received response on {uuid}: {data.hex(":")}')
