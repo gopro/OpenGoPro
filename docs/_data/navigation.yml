@@ -32,13 +32,13 @@ python-tutorials:
       url: /tutorials/python/camera-media-list
 
 ble-specs:
-    - title: 'BLE 1.0'
-      url: /ble_1_0
     - title: 'BLE 2.0'
       url: /ble_2_0
+    - title: 'BLE 1.0'
+      url: /ble_1_0
 
 wifi-specs:
-    - title: 'WiFi 1.0'
-      url: /wifi_1_0
     - title: 'WiFi 2.0'
       url: /wifi_2_0
+    - title: 'WiFi 1.0'
+      url: /wifi_1_0
