@@ -1,5 +1,5 @@
-# wifi_command_zoom.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021
+# wifi_command_zoom.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:06:04 PM
 
 import json
 import logging
@@ -15,7 +15,7 @@ logger = logging.getLogger()
 
 def main(zoom):
     # Build the HTTP GET request
-    url = GOPRO_BASE_URL + f"gopro/camera/digital_zoom?percent={zoom}"
+    url = GOPRO_BASE_URL + f"/gopro/camera/digital_zoom?percent={zoom}"
     logger.info(f"Setting digital zoom to {zoom}%: sending {url}")
 
     # Send the GET request and retrieve the response

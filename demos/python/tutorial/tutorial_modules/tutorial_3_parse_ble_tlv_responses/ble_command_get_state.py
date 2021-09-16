@@ -1,5 +1,5 @@
-# ble_command_get_state.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021
+# ble_command_get_state.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:59 PM
 
 import json
 import enum
@@ -130,6 +130,8 @@ async def main(identifier):
     await client.write_gatt_char(QUERY_REQ_UUID, bytearray([0x01, 0x13]))
     await event.wait()  # Wait to receive the notification response
     logger.info(f"Received statuses\n: {response}")
+
+    await client.disconnect()
 
 
 if __name__ == "__main__":

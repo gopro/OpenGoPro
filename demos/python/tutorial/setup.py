@@ -1,5 +1,5 @@
-# setup.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021
+# setup.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:56 PM
 
 import io
 import os
@@ -14,7 +14,7 @@ URL = "https://github.com/gopro/OpenGoPro"
 EMAIL = "gopro.com"
 AUTHOR = "GoPro"
 
-REQUIRED = ["bleak==0.11.0"]
+REQUIRED = ["bleak=0.12.1"]
 
 here = os.path.abspath(os.path.dirname(__file__))
 with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:

@@ -1,5 +1,8 @@
 pytest==6.2.2
 pytest-cov==2.11.1
+pytest-asyncio==0.15.1
+pytest-html==3.1.1
+requests-mock==1.8.0
 black==20.8b1
 pylint==2.7.2
 mypy==0.800
@@ -8,4 +11,4 @@ sphinx==3.5.4
 sphinxcontrib-napoleon==0.7
 sphinx-rtd-theme==0.5.2
 twine==3.3.0
-requests-mock==1.8.0
+coverage-badge==1.0.1

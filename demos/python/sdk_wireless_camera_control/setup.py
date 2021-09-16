@@ -1,5 +1,5 @@
-# setup.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021
+# setup.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:52 PM
 
 """Package definition"""
 
@@ -11,21 +11,21 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-VERSION = "0.5.8"
+
 NAME = "open_gopro"
 DESCRIPTION = "Open GoPro API and Examples"
 URL = "https://gopro.github.io/OpenGoPro/python_sdk/"
 EMAIL = "tcamise@gopro.com"
 AUTHOR = "Tim Camise"
 
-TEST_REQUIRED = ["pytest", "pytest-cov"]
+TEST_REQUIRED = ["pytest", "pytest-cov", "pytest-asyncio", "pytest-html"]
 
 REQUIRED = [
-    "bleak==0.11.0",
+    "bleak==0.12.1",
     "construct>=2.10",
     "wrapt>=1.12.1",
     "requests",
-    "rich>=9",
+    "rich",
     "protobuf>=3",
     "betterproto",
 ]
@@ -33,6 +33,11 @@ REQUIRED = [
 here = os.path.abspath(os.path.dirname(__file__))
 with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
+
+# Load the package's __version__.py module as a dictionary.
+about = {}
+with open(os.path.join(here, NAME, "__version__.py")) as f:
+    exec(f.read(), about)
 
 
 class UploadCommand(Command):
@@ -74,7 +79,7 @@ class UploadCommand(Command):
 
 setup(
     name=NAME,
-    version=VERSION,
+    version=about["__version__"],
     description=DESCRIPTION,
     long_description_content_type="text/markdown",
     long_description=long_description,
@@ -89,6 +94,8 @@ setup(
             "gopro-video=open_gopro.demos.video:main",
             "gopro-stream=open_gopro.demos.stream:main",
             "gopro-log-battery=open_gopro.demos.log_battery:main",
+            "gopro-wifi=open_gopro.demos.connect_wifi:main",
+            "gopro-ble-write=open_gopro.demos.ble_write:main",
         ]
     },
     install_requires=REQUIRED,

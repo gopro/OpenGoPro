@@ -115,6 +115,28 @@ default markdown syntax via:
 
 > I'm a simple callout
 
+### Collapsible Accordion
+
+Collapsible accordion sections can be added, for example with use for FAQ's via:
+
+{% raw %}
+```markdown
+{% accordion
+  question="Question"
+  answer="Answer"
+%}
+
+```
+{% endraw %}
+
+Here is an example:
+
+{% accordion
+  question="Question"
+  answer="Answer"
+%}
+
+
 ### Quiz
 
 Multiple choice quizzes via:

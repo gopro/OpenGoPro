@@ -1,5 +1,5 @@
-# responses.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:50 UTC 2021
+# responses.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:49 PM
 
 """Any responses that are returned from GoPro commands."""
 
@@ -7,10 +7,8 @@ import enum
 import json
 import logging
 from collections import defaultdict
-from abc import abstractmethod, ABC
 from typing import (
     Any,
-    ClassVar,
     Dict,
     Callable,
     List,
@@ -22,15 +20,17 @@ from typing import (
     ValuesView,
     KeysView,
 )
+from typing_extensions import Protocol
 
+import betterproto
 import requests
 import construct  # For enum
 from construct import Struct, FormatField, StringEncoded
 
+from open_gopro.exceptions import ResponseParseError
 from open_gopro.constants import (
     ActionId,
     StatusId,
-    UUID,
     CmdId,
     ErrorCode,
     SettingId,
@@ -39,6 +39,7 @@ from open_gopro.constants import (
     CmdType,
 )
 from open_gopro.util import scrub
+from open_gopro.ble import UUID
 
 logger = logging.getLogger(__name__)
 
@@ -47,26 +48,24 @@ logger = logging.getLogger(__name__)
 InputType = Optional[Union[bytearray, Dict[str, Any]]]
 
 
-class Parser(ABC):
-    """Interface definition for a non-Construct parser to be used by GoProResp for parsing."""
+class BytesParser(Protocol):
+    """Protocol definition for a non-Construct parser to be used by GoProResp for parsing bytes."""
 
-    @abstractmethod
-    def parse(self, buf: Any) -> Dict[Any, Any]:
-        """Parse any input type into a dict.
+    def parse(self, buf: bytearray) -> Dict[Any, Any]:
+        """Parse bytes into JSON dict
 
         Args:
-            buf (InputType): input to parse
+            buf (bytearray): bytes to parse
 
         Returns:
-            Dict[Any, Any]: parsed output
+            Dict[Any, Any]: parsed JSON dict
         """
-        raise NotImplementedError
+        ...
 
 
-class Builder(ABC):
-    """Interface definition for a non-Construct builder to be used by GoProResp for building."""
+class BytesBuilder(Protocol):
+    """Protocol definition for a non-Construct builder to be used by GoProResp for building a byte stream."""
 
-    @abstractmethod
     def build(self, buf: Any) -> bytearray:
         """Build something into a bytestream.
 
@@ -76,22 +75,57 @@ class Builder(ABC):
         Returns:
             bytearray: The build bytestream.
         """
-        raise NotImplementedError
+        ...
 
 
-class ParserBuilder(Parser, Builder):
+class BytesParserBuilder(BytesParser, BytesBuilder, Protocol):
     """A class that can both parse and build."""
 
-    ...
+
+class JsonParser(Protocol):
+    """Protocol definition for a non-Construct parser to be used by GoProResp for parsing bytes."""
+
+    def parse(
+        self, buf: Dict[str, Any], additional_parsers: Dict[Any, BytesParserBuilder] = None
+    ) -> Dict[Any, Any]:
+        """Parse JSON input into JSON dict
+
+        Args:
+            buf (Dict[str, Any]): JSON input
+            additional_parsers (Dict[Any, BytesParserBuilder], optional): additional parsers. Defaults to None.
+
+        Returns:
+            Dict[Any, Any]: JSON response
+        """
+        ...
 
 
+class ProtobufResponseAdapter(BytesParser):
+    """Use a protobuf definition to parse a byte stream into a dict.
+
+    Args:
+        protobuf (Type[betterproto.Message]): protobuf to use as parser
+    """
+
+    def __init__(self, protobuf: Type[betterproto.Message]) -> None:  # pylint: disable = super-init-not-called
+        self.protobuf = protobuf
+
+    def parse(self, buf: bytearray) -> Dict[Any, Any]:
+        """Parse a byte stream into a JSON dict using a protobuf
+
+        Args:
+            buf (bytearray): byte stream to parse
+
+        Returns:
+            Dict[Any, Any]: parsed JSON dict
+        """
+        return self.protobuf.FromString(bytes(buf)).to_dict()
+
+
+Parser = Union[BytesParser, JsonParser]
 FieldBuilder = Callable[..., FormatField]
 ConstructType = Union[Struct, construct.Enum, FieldBuilder, StringEncoded]
-
-ParserBuilderType = Union[ParserBuilder, ConstructType]
-ParserType = Union[Parser, ParserBuilderType, ConstructType]
-BuilderType = Union[Builder, ParserBuilderType, ConstructType]
-
+ParserMapType = Dict[ResponseType, Parser]
 
 CONT_MASK = 0b10000000
 HDR_MASK = 0b01100000
@@ -118,7 +152,12 @@ class GoProResp:
 
     It is mostly a wrapper around a JSON-like dictionary (GoProResp.data)
 
+    For example, first send the command and store the response:
+
     >>> response = ble_setting.resolution.get_value()
+
+    Now let's inspect the responses various attributes / properties:
+
     >>> print(response.status)
     ErrorCode.SUCCESS
     >>> print(response.is_ok)
@@ -129,6 +168,9 @@ class GoProResp:
     QueryCmdId.GET_SETTING_VAL
     >>> print(response.uuid)
     UUID.CQ_QUERY_RESP
+
+    Now let's print it as (as JSON):
+
     >>> print(response.data)
     {
         "status": "SUCCESS",
@@ -138,34 +180,34 @@ class GoProResp:
         ]
     }
 
+
     Args:
         info (List[ResponseType]): A list of all information known about the response.
         status (ErrorCode, optional): A status if known at time of instantiation. Defaults to ErrorCode.SUCCESS.
         raw_packet (InputType, optional): The unparsed input if known at time of instantiation. Defaults to None.
     """
 
-    # To be filled out when settings / statuses are defined
-    parser_map: ClassVar[Dict[ResponseType, ParserType]] = {}
-
-    class State(enum.Enum):
+    class _State(enum.Enum):
         """Describes the state of the GoProResp."""
 
         INITIALIZED = enum.auto()
         ACCUMULATED = enum.auto()
         PARSED = enum.auto()
+        ERROR = enum.auto()
 
     def __init__(
         self,
+        parsers: ParserMapType,
         info: List[ResponseType],
         status: ErrorCode = ErrorCode.SUCCESS,
         raw_packet: InputType = None,
     ) -> None:
+        # A list describing all of the currently known information about the response.
+        # This will be appended to as more information is discovered. The various properties of GoProResp will
+        # use this list to parse out their relevant information.
         self._info: List[ResponseType] = info
-        """A list describing all of the currently known information about the response.
-
-        This will be appended to as more information is discovered. The various properties of GoProResp will
-        use this list to parse out their relevant information.
-        """
+        # Parsers to use to parse this response
+        self._parsers = parsers
 
         self.status: ErrorCode = status
         """Status of the response"""
@@ -177,10 +219,10 @@ class GoProResp:
 
         self._raw_packet = raw_packet
         self._bytes_remaining = 0
-        self._state = GoProResp.State.INITIALIZED
+        self._state: GoProResp._State = GoProResp._State.INITIALIZED
 
     @classmethod
-    def from_write_command(cls, uuid: UUID, data: bytes) -> "GoProResp":
+    def _from_write_command(cls, parsers: ParserMapType, uuid: UUID, data: bytes) -> "GoProResp":
         """Build a GoProResp from a write command.
 
         This will discover the expected response UUID from the command UUID as well as parse the ID
@@ -200,10 +242,10 @@ class GoProResp:
         # If this is a protobuf command, it also has an action id
         if cmd_id.value >= 0xF0:
             info.append(ActionId(data[2]))
-        return cls(info=info)
+        return cls(parsers, info=info)
 
     @classmethod
-    def from_read_response(cls, uuid: UUID, data: bytearray) -> "GoProResp":
+    def _from_read_response(cls, parsers: ParserMapType, uuid: UUID, data: bytearray) -> "GoProResp":
         """Build a GoProResp from a read response.
 
         Args:
@@ -213,12 +255,12 @@ class GoProResp:
         Returns:
             GoProResp: created instance
         """
-        resp = cls(info=[uuid], status=ErrorCode.SUCCESS, raw_packet=data)
+        resp = cls(parsers, info=[uuid], status=ErrorCode.SUCCESS, raw_packet=data)
         resp._parse()
         return resp
 
     @classmethod
-    def from_http_response(cls, response: requests.models.Response) -> "GoProResp":
+    def _from_http_response(cls, parsers: ParserMapType, response: requests.models.Response) -> "GoProResp":
         """Build a GoProResp from an HTTP response from the requests package.
 
         Args:
@@ -228,6 +270,7 @@ class GoProResp:
             GoProResp: created instance
         """
         resp = cls(
+            parsers,
             info=[response.request.path_url.strip("/")],
             status=ErrorCode.SUCCESS if response.ok else ErrorCode.ERROR,
             raw_packet=response.json(),
@@ -286,7 +329,7 @@ class GoProResp:
         Returns:
             bool: True if completely received, False if not
         """
-        return self._state is GoProResp.State.ACCUMULATED or self._state is GoProResp.State.PARSED
+        return self._state is not GoProResp._State.INITIALIZED
 
     @property
     def is_parsed(self) -> bool:
@@ -295,7 +338,7 @@ class GoProResp:
         Returns:
             bool: True if it has been parsed, False if not
         """
-        return self._state is GoProResp.State.PARSED
+        return self._state is GoProResp._State.PARSED
 
     @property
     def is_ok(self) -> bool:
@@ -333,7 +376,7 @@ class GoProResp:
         """
         for x in self._info:
             if isinstance(x, (QueryCmdId, CmdId)):
-                return x  # type: ignore
+                return x
         return None
 
     @property
@@ -421,20 +464,21 @@ class GoProResp:
                 buf = buf[3:]
 
         # Append payload to buffer and update remaining / complete
-        self._raw_packet.extend(buf)  # type: ignore
+        assert isinstance(self._raw_packet, bytearray)
+        self._raw_packet.extend(buf)
         self._bytes_remaining -= len(buf)
 
         if self._bytes_remaining < 0:
             logger.error("received too much data. parsing is in unknown state")
         elif self._bytes_remaining == 0:
-            self._state = GoProResp.State.ACCUMULATED
+            self._state = GoProResp._State.ACCUMULATED
             self._parse()
 
     def _parse(self) -> None:
         """Parse the accumulated response (either from a BLE bytestream or an HTTP JSON dict)."""
         # Is this a BLE response?
         if isinstance(self._raw_packet, bytearray):
-            buf: bytearray = self._raw_packet  # type: ignore
+            buf: bytearray = self._raw_packet
 
             # UUID's whose responses contain multiple parameters to parse
             if self.uuid in [UUID.CQ_QUERY_RESP, UUID.CQ_SETTINGS_RESP]:
@@ -447,10 +491,12 @@ class GoProResp:
                     if self.id in [
                         QueryCmdId.GET_SETTING_VAL,
                         QueryCmdId.REG_SETTING_VAL_UPDATE,
+                        QueryCmdId.UNREG_SETTING_VAL_UPDATE,
                         QueryCmdId.SETTING_VAL_PUSH,
                         QueryCmdId.SETTING_CAPABILITY_PUSH,
                         QueryCmdId.GET_CAPABILITIES_VAL,
                         QueryCmdId.REG_CAPABILITIES_UPDATE,
+                        QueryCmdId.UNREG_CAPABILITIES_UPDATE,
                     ]:
                         identifier = SettingId
                     elif self.id is QueryCmdId.GET_SETTING_NAME:
@@ -461,9 +507,8 @@ class GoProResp:
                         QueryCmdId.STATUS_VAL_PUSH,
                     ]:
                         identifier = StatusId
-
-                if identifier is None:
-                    raise Exception("Identifier is unexpectedly None")
+                    else:
+                        raise Exception("Unhandled parse state")
 
                 # Parse all parameters
                 self.status = ErrorCode(buf[1])
@@ -472,16 +517,15 @@ class GoProResp:
                     param_id = identifier(buf[0])
                     param_len = buf[1]
                     buf = buf[2:]
-
                     # Special case where we register for a push notification for something that does not yet
                     # have a value
                     if param_len == 0:
                         self.data[param_id] = []
                         continue
-
                     param_val = buf[:param_len]
                     buf = buf[param_len:]
 
+                    # Add parsed value to response's data dict
                     try:
                         # These can be more than 1 value so use a list
                         if self.cmd in [
@@ -490,12 +534,12 @@ class GoProResp:
                             QueryCmdId.SETTING_CAPABILITY_PUSH,
                         ]:
                             # Parse using parser from map and append
-                            self.data[param_id].append(GoProResp.parser_map[param_id].parse(param_val))  # type: ignore
+                            self.data[param_id].append(self._parsers[param_id].parse(param_val))  # type: ignore
                         else:
                             # Parse using parser from map and set
-                            self.data[param_id] = GoProResp.parser_map[param_id].parse(param_val)  # type: ignore
+                            self.data[param_id] = self._parsers[param_id].parse(param_val)  # type: ignore
                     except KeyError:
-                        # We don't have defined params for all ID's yet.
+                        # We don't have defined params for all ID's yet. Just store raw bytes
                         logger.warning(f"No parser defined for {param_id}")
                         self.data[param_id] = param_val
 
@@ -503,21 +547,25 @@ class GoProResp:
                 if self.uuid is UUID.CQ_COMMAND_RESP:
                     self._info.append(CmdId(buf[0]))
                     # If this is a protobuf, first get the action ID (after stripping msb)
-                    if self.cmd.value >= 0xF0:  # type: ignore
+                    assert self.cmd is not None
+                    if self.cmd.value >= 0xF0:
                         self._info.append(ActionId(buf[1] & 0x7F))
                         buf = buf[1:]
                     buf = buf[1:]
 
-                self.data = GoProResp.parser_map[self.id].parse(buf)  # type: ignore
-                self.status = ErrorCode(int(self.data["status"])) if "status" in self.data else self.status  # type: ignore
-                scrub(self.data, "status")
+                try:
+                    self.data = self._parsers[self.id].parse(buf)  # type: ignore
+                    self.status = ErrorCode(int(self.data["status"])) if "status" in self.data else self.status
+                except KeyError as e:
+                    self._state = GoProResp._State.ERROR
+                    raise ResponseParseError(str(self.id), buf) from e
 
         # Is this an HTTP response?
         elif isinstance(self._raw_packet, dict):
-            json_data: Dict[str, Any] = self._raw_packet  # type: ignore
-            # Is there a parser for this? Most of them do not have one.
+            json_data: Dict[str, Any] = self._raw_packet
+            # Is there a parser for this? Most of them do not have one yet.
             try:
-                self.data = GoProResp.parser_map[self.id].parse(json_data)  # type: ignore
+                self.data = self._parsers[self.id].parse(json_data, self._parsers)  # type: ignore
             except KeyError:
                 self.data = json_data
         else:
@@ -527,4 +575,5 @@ class GoProResp:
 
         # Recursively scrub away parsing artifacts
         scrub(self.data, "_io")
-        self._state = GoProResp.State.PARSED
+        scrub(self.data, "status")
+        self._state = GoProResp._State.PARSED

@@ -24,7 +24,7 @@ before finally providing a **Response** class that will be used in future tutori
 It is assumed that the hardware and software requirements from the [connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %})
 are present and configured correctly.
 
-The scripts that will be used for this tutorial can be found at in the
+The scripts that will be used for this tutorial can be found in the
 [Tutorial 3 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_3_parse_ble_tlv_responses).
 
 # Just Show me the Demo(s)!!
@@ -133,6 +133,9 @@ From the [commands reference]({% link specs/ble.md %}#commands-quick-reference),
 The `ble_command_get_version.py` script demonstrates a simple parser for the Open GoPro
 Get Version command which we will walk through here.
 
+{% tip It is important to always query the version after connecting in order to know which API is supported.
+See the relevant version of the BLE and / or WiFi spec for more details about each version. %}
+
 First, we send the command to the Command Request [UUID]({% link specs/ble.md %}#services-and-characteristics):
 
 ```python
@@ -142,7 +145,7 @@ await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x01, 0x51]))
 await event.wait()  # Wait to receive the notification response
 ```
 
-> Note! The following snippets of code are taken from the `notification handler`
+{% note The following snippets of code are taken from the `notification handler` %}
 
 We then receive a response at the expected handle. This is logged as:
 
@@ -466,7 +469,7 @@ At this point the response has been accumulated. See the next section for how to
 **Quiz time! 📚 ✏️**
 
 {% quiz
-    question="Which of the following is not a real preset group?"
+    question="How can we know that a response has been completely received?"
     option="A:::The stop bit will be set in the header"
     option="B:::The response has accumulated length bytes"
     option="C:::By checking for the end of frame (EOF) sentinel character"

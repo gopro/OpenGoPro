@@ -1,6 +1,7 @@
-# ble_query_register_resolution_value_updates.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021
+# ble_query_register_resolution_value_updates.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:06:00 PM
 
+import time
 import enum
 import asyncio
 import logging
@@ -15,11 +16,11 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 
+# Note that this may change based on the Open GoPro version!
 class Resolution(enum.Enum):
     RES_4K = 1
     RES_2_7K = 4
     RES_2_7K_4_3 = 6
-    RES_1440 = 7
     RES_1080 = 9
     RES_4K_4_3 = 18
     RES_5K = 24
@@ -76,8 +77,8 @@ async def main(identifier):
     logger.info("Successfully registered for resolution value updates.")
     logger.info(f"Resolution is currently {resolution}")
 
-    # Write to command request UUID to change the video resolution (either to 1080 or 1440)
-    new_resolution = Resolution.RES_1440 if resolution is Resolution.RES_1080 else Resolution.RES_1080
+    # Write to command request UUID to change the video resolution (either to 1080 or 2.7K)
+    new_resolution = Resolution.RES_2_7K if resolution is Resolution.RES_1080 else Resolution.RES_1080
     logger.info(f"Changing the resolution to {new_resolution}...")
     event.clear()
     await client.write_gatt_char(SETTINGS_REQ_UUID, bytearray([0x03, 0x02, 0x01, new_resolution.value]))
@@ -85,9 +86,12 @@ async def main(identifier):
     logger.info("Successfully changed the resolution")
 
     # Let's verify we got the update
-    event.clear()
-    await event.wait()
+    while resolution is not new_resolution:
+        event.clear()
+        await event.wait()
     logger.info(f"Resolution is now {resolution}")
+
+    await client.disconnect()
 
 
 if __name__ == "__main__":

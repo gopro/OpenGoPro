@@ -1,5 +1,5 @@
-# pre_merge_checks.yml/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Fri, Jul 30, 2021  5:20:50 PM
+# pre_merge_checks.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:35 PM
 
 # This workflow will run pre-merge checks to verify a PR before it is merged:
 #    - copyright: Checks to see if there are any missing copyrights
@@ -8,71 +8,51 @@ name: Pre Merge Checks
 
 on:
     pull_request:
-        branches: [main]
+        branches: [main, develop]
 
 jobs:
     copyright:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
-              with:
-                  path: source
-
             - name: Extract branch name
               shell: bash
               run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF#refs/heads/})"
               id: extract_branch
 
-            - name: Check for missing copyrights
+            - name: Checkout PR branch
+              uses: actions/checkout@v2
+              with:
+                  ref: ${{ steps.extract_branch.outputs.branch }}
+                  ssh-key: ${{ secrets.PUSH_FROM_WORKFLOW_TO_RETRIGGER }}
+
+            - name: Check for (and add) missing copyrights
               shell: bash
-              working-directory: source
               run: |
                   make copyright
                   echo "NUM_MODIFIED=$(git diff --numstat | wc -l)" >> $GITHUB_ENV
 
-            - name: Checkout PR branch
-              if: env.NUM_MODIFIED != 0
-              uses: actions/checkout@v2
-              with:
-                  ref: ${{ steps.extract_branch.outputs.branch }}
-                  path: target
+            - name: Push changes
 
-            # It might be faster to copy in changed files from source rather then running copyright again.
-            # But there is currently no bottleneck.
-            - name: Fix copyrights
-              working-directory: target
               if: env.NUM_MODIFIED != 0
               shell: bash
               run: |
                   git config core.fileMode false
-                  make copyright
-                  git add .
                   git config user.name github-actions
                   git config user.email github-actions@github.com
-                  git commit -m "updating copyrights from pre merge check github action"
+                  git add .
+                  git commit -m "updating copyrights from pre merge check in github action"
                   git push -f origin HEAD:${{ steps.extract_branch.outputs.branch }}
 
     test_github_pages:
+        needs: copyright
+        timeout-minutes: 3
         runs-on: ubuntu-latest
         steps:
+            - name: Cancel Previous Runs
+              uses: styfle/cancel-workflow-action@0.8.0
+              with:
+                access_token: ${{ github.token }}
+
             - uses: actions/checkout@v2
-
-            # Cache the built Ruby gem bundle using the Gemfile as the key
-            - uses: actions/cache@v2
-              with:
-                  path: docs/vendor/bundle
-                  key: ${{ runner.os }}-gems-${{ hashFiles('**/docs/Gemfile') }}
-                  restore-keys: |
-                      ${{ runner.os }}-gems-
-
-            - name: Prepare Demos
-              shell: bash
-              run: make prepare_demos
-
-            - name: Test Jekyll Build
-              uses: helaili/jekyll-action@2.2.0
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  keep_history: true
-                  target_branch: 'gh-pages'
-                  build_only: true
+            - name: Test Jekyll Build and Check Links
+              run: make setup tests

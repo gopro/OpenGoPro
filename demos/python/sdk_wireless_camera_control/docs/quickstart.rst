@@ -15,7 +15,8 @@ can be found in `$INSTALL/demos` where $INSTALL can be found with:
     $ pip show open-gopro
 
 All of the demos have command-line help via the `--help` parameter. They also all log to the console as well
-as write a more detailed log to a file (this file can be set with the `--log` parameter).
+as write a more detailed log to a file (this file can be set with the `--log` parameter). The detailed log
+is very helpful for diagnosing BLE / WiFi inconsistencies.
 
 A Special Consideration for BlueZ
 ---------------------------------
@@ -28,8 +29,8 @@ and progress can be tracked on the `Github Issue <https://github.com/gopro/OpenG
 Photo Demo
 ----------
 
-The photo demo will discover a GoPro camera, connect to it, take a photo, and then download the
-photo to your local machine.
+The `photo` demo will discover a GoPro camera, connect to it, take a photo, and then download the
+photo to your local machine. To run, do:
 
 .. code-block:: console
 
@@ -47,8 +48,8 @@ For more information, do:
     optional arguments:
     -h, --help            show this help message and exit
     -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered
-                            GoPro will be connected to
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default
+                            camera SSID. If not used, first discovered GoPro will be connected to
     -l LOG, --log LOG     Location to store detailed log
     -o OUTPUT, --output OUTPUT
                             Where to write the photo to. If not set, write to 'photo.jpg'
@@ -56,8 +57,8 @@ For more information, do:
 Video Demo
 ----------
 
-The video demo will discover a GoPro camera, connect to it, take a video for a given amount of time, and then download the
-photo to your local machine.
+The video demo will discover a GoPro camera, connect to it, take a video for a given amount of time, and then
+download the photo to your local machine. To run, do:
 
 .. code-block:: console
 
@@ -78,8 +79,8 @@ For more information, do:
     optional arguments:
       -h, --help            show this help message and exit
       -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered
-                            GoPro will be connected to
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default
+                            camera SSID. If not used, first discovered GoPro will be connected to
       -l LOG, --log LOG     Location to store detailed log
       -o OUTPUT, --output OUTPUT
                             Where to write the video to. If not set, write to 'video.jpg'
@@ -87,8 +88,9 @@ For more information, do:
 Battery Demo
 ------------
 
-This demo will continuously read the battery level (either via polling or registering fro notifications) and write
-the results to a .csv file.
+This demo will continuously read the battery level (either via polling or registering fro notifications as
+configured per the command line argument) and write
+the results to a .csv file. To run, do:
 
 .. code-block:: console
 
@@ -106,16 +108,16 @@ For more information, do:
     optional arguments:
     -h, --help            show this help message and exit
     -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first
-                            discovered GoPro will be connected to
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default
+                            camera SSID. If not used, first discovered GoPro will be connected to
     -l LOG, --log LOG     Location to store detailed log
-    -p POLL, --poll POLL  Set to poll the battery at a given interval. If not set, battery level will be notified instead. Defaults to
-                            notifications.
+    -p POLL, --poll POLL  Set to poll the battery at a given interval. If not set, battery level will be
+                            notified instead. Defaults to notifications.
 
 Stream Demo
 -----------
 
-The stream demo will discover a GoPro camera, connect to it, enable the preview stream, and then attempt to
+The `stream` demo will discover a GoPro camera, connect to it, enable the preview stream, and then attempt to
 launch VLC to view the stream. It will attempt to automatically discover VLC if it is not passed a location
 for the VLC executable.
 
@@ -135,11 +137,39 @@ For more information, do:
     optional arguments:
     -h, --help            show this help message and exit
     -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered
-                            GoPro will be connected to
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default
+                            camera SSID. If not used, first discovered GoPro will be connected to
     -l LOG, --log LOG     Location to store detailed log
     -v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically
                             discovered.
+
+WiFi Demo
+-----------
+
+The `wifi` demo will discover a GoPro camera, connect to it, enable the camera'a WiFi AP, and then connect
+to it via WiFi. This is useful if you want to send HTTP commands to it from some external source such as curl.
+
+Note that this demo will run, thus maintaining the WiFi connection, until exited via keyboard interrupt.
+
+.. code-block:: console
+
+    $ gopro-wifi
+
+For more information, do:
+
+.. code-block:: console
+
+    $ gopro-wif --help
+    usage: gopro-wifi [-h] [-i IDENTIFIER] [-l LOG]
+
+    Connect to a GoPro cameras Wifi Access Point.
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    -i IDENTIFIER, --identifier IDENTIFIER
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default
+                            camera SSID. If not used, first discovered GoPro will be connected to
+    -l LOG, --log LOG     Location to store detailed log
 
 Big Demo
 --------
@@ -166,8 +196,8 @@ For more information, do:
     optional arguments:
     -h, --help            show this help message and exit
     -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered
-                            GoPro will be connected to
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default
+                            camera SSID. If not used, first discovered GoPro will be connected to
     -l LOG, --log LOG     Location to store detailed log
     -v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically
                             discovered.
@@ -175,7 +205,8 @@ For more information, do:
 The demo will perform the following, logging to the console as it goes as well as writing a
 more detailed log to a file (this file can be set with the --log parameter):
 
-#. Scan for advertising BLE Devices, displaying any it finds. Note it is possible to specify a device connect to via the --identifier CLI parameter.
+#. Scan for advertising BLE Devices, displaying any it finds. Note it is possible to specify a device connect
+   to via the --identifier CLI parameter.
 #. Connect to the first GoPro BLE Device it finds (if not passed an identifier)
 #. Read the Wifi SSID and password via BLE, then enable the WiFi access point
 #. Connect to the camera Wifi
@@ -198,4 +229,4 @@ more detailed log to a file (this file can be set with the --log parameter):
 #. Cycle through resolutions, getting async notifications for push notifications that we registered for previously
 #. Enable the live stream.
 #. Attempt to open VLC to view the live stream. This should work if you installed VLC to the default location.
-#. Sleep until a keyboard interrupt is received, then exit
+#. Sleep until a keyboard interrupt is received, then disconnect, and exit

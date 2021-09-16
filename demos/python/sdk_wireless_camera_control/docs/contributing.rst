@@ -60,33 +60,43 @@ Ready to contribute? Here's how to set up Open GoPro for local development.
 #. Fork the Open GoPro repo on GitHub.
 #. Clone your fork locally:
 
-    $ git clone git@github.com:your_name_here/OpenGoPro.git
+    .. code-block:: console
+
+        $ git clone git@github.com:your_name_here/OpenGoPro.git
 
 #. Enter the sdk_wireless_camera_control directory:
 
-    $ cd OpenGoPro/demos/python/sdk_wireless_camera_control
+    .. code-block:: console
+
+        $ cd OpenGoPro/demos/python/sdk_wireless_camera_control
 
 #. Install your local copy into a virtual environment. The activation directory may vary based on your OS
 
-    $ python -m venv venv
-    $ source ./venv/bin/activate
-    $ pip install -r requirements-dev.txt -r requirements.txt
+    .. code-block:: console
 
-4. Create a branch for local development, originating from the `main` branch::
+        $ python -m venv venv
+        $ source ./venv/bin/activate
+        $ pip install -r requirements-dev.txt -r requirements.txt
 
-    $ git checkout -b name-of-your-bugfix-or-feature main
+4. Create a branch for local development, originating from the `main` branch:
 
-    Now you can make your changes locally.
+    .. code-block:: console
 
-5. When you're done making changes, check that your changes pass pylint and the tests:
+        $ git checkout -b name-of-your-bugfix-or-feature main
 
-    $ make lint tests
+5. Make your changes locally. When you're done making changes, check that your changes pass pylint and the unit tests:
 
-6. Commit your changes and push your branch to GitHub::
+    .. code-block:: console
 
-    $ git add .
-    $ git commit -m "Your detailed description of your changes."
-    $ git push origin name-of-your-bugfix-or-feature
+        $ make format lint unit_tests
+
+6. Commit your changes and push your branch to GitHub:
+
+    .. code-block:: console
+
+        $ git add .
+        $ git commit -m "Your detailed description of your changes."
+        $ git push origin name-of-your-bugfix-or-feature
 
 7. Submit a pull request through the GitHub website.
 
@@ -97,7 +107,7 @@ Before you submit a pull request, check that it meets these guidelines:
 
 1. If the pull request adds functionality, the docs should be updated.
 2. Modify the ``CHANGELOG.rst``.
-3. The pull request should work for Python 3.8+ on the following platforms:
+3. The pull request should work for Python 3.8.x on the following platforms:
     - Windows 10, version 16299 (Fall Creators Update) and greater
     - Linux distributions with BlueZ >= 5.43
     - OS X / macOS >= 10.11

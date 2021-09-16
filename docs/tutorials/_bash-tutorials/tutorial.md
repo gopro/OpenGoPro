@@ -19,7 +19,7 @@ After completing this tutorial, you will need to reference it for future develop
 
 ## Software
 
-1. BlueZ must be installed. Follow the steps [here](https://computingforgeeks.com/connect-to-bluetooth-device-from-linux-terminal/)
+1. BlueZ must be installed. Follow the steps [here](https://www.maketecheasier.com/setup-bluetooth-in-linux/)
 
 Test that installation was successful with:
 

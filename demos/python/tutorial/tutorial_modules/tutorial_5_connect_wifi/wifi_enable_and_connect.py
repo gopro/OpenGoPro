@@ -1,5 +1,5 @@
-# wifi_enable_and_connect.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021
+# wifi_enable_and_connect.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:06:01 PM
 
 import asyncio
 import logging
@@ -26,7 +26,7 @@ async def connect_wifi(identifier: str = None) -> None:
     # Now use the Open GoPro Python module to connect to the WiFi
     wifi = Wireless()
     logger.info("Connecting to GoPro WiFi AP")
-    if wifi.connect(ssid, password):
+    if wifi.connect(ssid, password, timeout=30):
         logger.info("Wifi Connected!")
 
 

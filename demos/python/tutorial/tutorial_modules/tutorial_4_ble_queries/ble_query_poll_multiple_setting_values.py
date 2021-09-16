@@ -1,5 +1,5 @@
-# ble_query_poll_multiple_setting_values.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021
+# ble_query_poll_multiple_setting_values.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:06:00 PM
 
 import enum
 import asyncio
@@ -15,6 +15,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 
+# Note these may change based on the Open GoPro version!
 class Resolution(enum.Enum):
     RES_4K = 1
     RES_2_7K = 4
@@ -25,6 +26,7 @@ class Resolution(enum.Enum):
     RES_5K = 24
 
 
+# Note these may change based on the Open GoPro version!
 class FPS(enum.Enum):
     FPS_240 = 0
     FPS_120 = 1
@@ -35,7 +37,7 @@ class FPS(enum.Enum):
     FPS_24 = 10
     FPS_200 = 13
 
-
+# Note these may change based on the Open GoPro version!
 class VideoFOV(enum.Enum):
     FOV_WIDE = 0
     FOV_NARROW = 6
@@ -104,6 +106,8 @@ async def main(identifier):
     logger.info(f"Resolution is currently {resolution}")
     logger.info(f"Video FOV is currently {video_fov}")
     logger.info(f"FPS is currently {fps}")
+
+    await client.disconnect()
 
 
 if __name__ == "__main__":

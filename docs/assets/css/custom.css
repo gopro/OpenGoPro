@@ -1,5 +1,5 @@
-/* custom.css/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021 */
+/* custom.css/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
+/* This copyright was auto-generated on Wed, Sep  1, 2021  5:06:11 PM */
 
 /* Tabs */
 
@@ -232,4 +232,47 @@ img.mermaid {
 
 .spec table {
     width: fit-content;
+}
+
+/* Accordions */
+
+.accordion {
+    background-color: #e3f3ff;
+    margin: 0.4em 0 0.4em 0;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: 1px solid #1e87f0;
+    border-radius: 15px;
+    outline: none !important;
+}
+
+.accordion-active {
+    margin: 0.4em 0 0 0;
+    background-color: #ccc;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.accordion:hover {
+    background-color: #ccc;
+}
+
+.panel {
+    padding: 0 18px;
+    margin: 0;
+    display: none;
+    overflow: hidden;
+    border: 1px solid #1e87f0;
+    border-top: none;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    transition: 0.4s !important;
+}
+
+.panel p {
+    margin: 0 0 0.2em !important;
 }

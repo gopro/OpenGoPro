@@ -11,27 +11,20 @@ Logging
 
 There is a lot of logging sprinkled throughout using the standard Python logging module.
 
-Without getting too deep into the logging module, here is an example of activating logging on a per module
-basis:
+Furthermore, there is a help function in `util.py` that will enable logging with some default modules / levels.
+All of the demos use this and here is an example:
 
 .. code-block:: python
 
-    from open_gopro import GoPro
+    from pathlib import Path
     import logging
+
+    from open_gopro import GoPro
+    from open_gopro.util import setup_logging
 
     logger = logging.getLogger(__name__)
 
-    stream_handler = logging.StreamHandler()
-    formatter = logging.Formatter("%(asctime)s : %(levelname)s : %(name)s : %(message)s")
-    stream_handler.setFormatter(formatter)
-    logger.addHandler(stream_handler)
-    logger.setLevel(logging.DEBUG)
-
-    # Enable / disable logging in modules
-    for module in ["gopro", "ble_commands", "wifi_commands", "responses"]:
-        l = logging.getLogger(f"open_gopro.{module}")
-        l.setLevel(logging.DEBUG)
-        l.addHandler(stream_handler)
+    logger = setup_logging(logger, Path("my_log.log"))
 
     with GoPro() as gopro:
         logger.info("I'm logged!")
@@ -52,7 +45,7 @@ logging.CRITICAL     Not used.
 Bluetooth Characteristics
 -------------------------
 
-There is a utility in the GoProBLE class to dump the discovered BLE characteristics to a
+There is a utility in the GoPro class to dump the discovered BLE characteristics to a
 CSV file. This can be done as such:
 
 .. code-block:: python
@@ -60,4 +53,4 @@ CSV file. This can be done as such:
     from open_gopro import GoPro
 
     with GoPro() as gopro:
-        gopro.services_as_csv()
+        gopro._ble.services_as_csv()

@@ -25,13 +25,12 @@ synchronization when sending multiple commands. This will be discussed in a futu
 It is assumed that the hardware and software requirements from the [connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %})
 are present and configured correctly.
 
-The scripts that will be used for this tutorial can be found at in the
+The scripts that will be used for this tutorial can be found in the
 [Tutorial 2 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_2_send_ble_commands).
-
 
 # Just Show me the Demo(s)!!
 
-Each of the commands detailed in [Sending Commands] has a corresponding script to demo it. If you don't want to read this
+Each of the commands detailed in [Sending Commands](#sending-commands) has a corresponding script to demo it. If you don't want to read this
 tutorial and just want to see the demo, for example, run:
 
 ```console
@@ -93,7 +92,8 @@ Both Command Requests and Setting Requests follow the same procedure:
 1. Receive confirmation from GoPro (via notification from relevant response UUID) that request was received.
 1. GoPro reacts to command
 
-> Note! The notification response only indicates that the request was received and whether it was accepted or rejected. The relevant behavior of the GoPro must be observed to verify when the command's effects have been applied.
+{% note The notification response only indicates that the request was received and whether it was accepted or rejected.
+The relevant behavior of the GoPro must be observed to verify when the command's effects have been applied. %}
 
 Here is the procedure from power-on to finish:
 
@@ -287,7 +287,8 @@ preset are:
 | Load Burst Photo Preset | 0x06 0x40 0x04 0x00 0x01 0x00 0x02 |
 | Load Night Photo Preset | 0x06 0x40 0x04 0x00 0x01 0x00 0x03 |
 
-> Note! It is possible that the preset ID values will vary in future cameras. The only absolutely correct way to know the preset ID is to read them from the "Get Preset Status" protobuf command. A future lab will discuss protobuf commands.
+{% note It is possible that the preset ID values will vary in future cameras. The only absolutely correct way to know the
+preset ID is to read them from the "Get Preset Status" protobuf command. A future lab will discuss protobuf commands. %}
 
 Now, let's write the bytes to the "Command Request" UUID to change the preset to Cinematic!
 
@@ -299,7 +300,7 @@ Now, let's write the bytes to the "Command Request" UUID to change the preset to
 
 {% success We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. %}
 
-You should hear the camera beep and switch to the Cinematic Preset (assuming it wasn't already sent). You can verify
+You should hear the camera beep and switch to the Cinematic Preset (assuming it wasn't already set). You can verify
 this by seeing the preset name in the pill at bottom middle of the screen.
 
 {% include figure image_path="/assets/images/tutorials/python/preset.png" alt="Preset" size="50%" caption="Load Preset" %}
@@ -326,7 +327,7 @@ The next command we will be sending is
 | Enable Analytics | 0x01 0x50 |
 
 This command is used to notify that a Third Party is using the Open GoPro API. It should be called after
-each connection.  The use of this command by third parties will help improve Open GoPro.
+each connection. The use of this command by third parties will help improve Open GoPro.
 
 Now, let's write the bytes to the "Command Request" UUID to enable analytics.
 
@@ -356,9 +357,9 @@ The next command we will be sending is
 [Set Video Resolution]({% link specs/ble.md %}#commands-quick-reference). This is
 used to change the value of the Video Resolution setting. It is important to note that this only affects **video**
 resolution (not photo). Therefore, the Video Preset Group must be active in order for it to succeed. This can be done
-either manually through the camera UI or by sending [Load Preset Group].
+either manually through the camera UI or by sending [Load Preset Group](#load-preset-group).
 
-> Additionally, this resolution it only affects the current video preset. Each video preset can have its own independent values for video resolution.
+> Additionally, this resolution only affects the current video preset. Each video preset can have its own independent values for video resolution.
 
 Here are some of the byte level commands for various video resolutions.
 
@@ -367,6 +368,10 @@ Here are some of the byte level commands for various video resolutions.
 | Set Video Resolution to 1080 | 0x03 0x02 0x01 0x09 |
 | Set Video Resolution to 2.7K | 0x03 0x02 0x01 0x04 |
 | Set Video Resolution to 4K   | 0x03 0x02 0x01 0x18 |
+
+Note that the possible resolution values can vary based on the Open GoPro version that the camera supports.
+Therefore, it is necessary to
+[check the version]({% link _python-tutorials/tutorial_3_parse_ble_tlv_responses.md %}#complex-command-response).
 
 Now, let's write the bytes to the "Setting Request" UUID to change the video resolution to 1080!
 
@@ -407,7 +412,7 @@ only allow lower FPS values. Also, the current anti-flicker value may further li
 values are valid for given use cases.
 
 Therefore, for this step of the tutorial, it is assumed that the resolution has
-been set to 1080 as in [Set the Video Resolution].
+been set to 1080 as in [Set the Video Resolution](#set-the-video-resolution).
 
 Here are some of the byte level commands for various FPS values.
 
@@ -416,6 +421,10 @@ Here are some of the byte level commands for various FPS values.
 | Set FPS to 24  | 0x03 0x03 0x01 0x0A |
 | Set FPS to 60  | 0x03 0x03 0x01 0x05 |
 | Set FPS to 240 | 0x03 0x03 0x01 0x00 |
+
+Note that the possible FPS values can vary based on the Open GoPro version that the camera supports.
+Therefore, it is necessary to
+[check the version]({% link _python-tutorials/tutorial_3_parse_ble_tlv_responses.md %}#complex-command-response).
 
 Now, let's write the bytes to the "Setting Request" UUID to change the FPS to 240!
 
@@ -466,7 +475,16 @@ was higher, for example 5K, this would fail.
     option="D:::Any FPS is valid in at 5k"
     correct="A"
     info="Among these options, only 24 is possible. You're not actually expected to know
-    this. But you should know where to find the information: https://github.com/gopro/OpenGoPro/tree/main/docs/ble#camera-capabilities"
+    this. But you should know where to find the information: https://gopro.github.io/OpenGoPro/ble#camera-capabilities"
+%}
+
+{% quiz
+    question="True or False: Every camera supports the same combination of resolution and FPS values."
+    option="A:::True"
+    option="B:::False"
+    correct="B"
+    info="The only way to know what values are supported is to first check the Open GoPro version.
+    See the relevant version of the BLE or WiFi spec to see what is supported."
 %}
 
 # Troubleshooting

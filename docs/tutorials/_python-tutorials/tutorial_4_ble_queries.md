@@ -11,8 +11,12 @@ This document will provide a walk-through tutorial to use [bleak](https://pypi.o
 [Open GoPro Interface]({% link specs/ble.md %}) to query the camera's setting and status information
 via BLE.
 
-"Queries" in this sense are specifically procedures that are initiated by writing to the Query UUID and receive
-responses via the Query Response UUID. This will be described in more detail below.
+"Queries" in this sense are specifically procedures that:
+
+-   are initiated by writing to the Query UUID
+-   receive responses via the Query Response UUID.
+
+This will be described in more detail below.
 
 > Note! It is required that you have first completed the [connect]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements), [sending commands]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}), and [parsing responses]({% link _python-tutorials/tutorial_3_parse_ble_tlv_responses.md %}) tutorials before going through this tutorial.
 
@@ -24,7 +28,7 @@ synchronization when sending multiple commands. This will be discussed in a futu
 It is assumed that the hardware and software requirements from the [connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %})
 are present and configured correctly.
 
-The scripts that will be used for this tutorial can be found at in the
+The scripts that will be used for this tutorial can be found in the
 [Tutorial 4 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_4_ble_queries).
 
 # Just Show me the Demo(s)!!
@@ -84,8 +88,8 @@ There are two methods to query status / setting information, each of which will 
 
 # Polling Query Information
 
-It is possible to poll one or more setting / status values using the
-following [commands]({% link specs/ble.md %}#query-commands).
+It is possible to poll one or more setting / status values using the following
+[commands]({% link specs/ble.md %}#query-commands):
 
 | Query ID | Request              | Query        |
 | -------- | -------------------- | ------------ |
@@ -97,7 +101,7 @@ There will be specific examples below.
 
 {% note Since they are two separate commands, combination of settings / statuses can not be polled simultaneously. %}
 
-Here is a generic sequence (the same is true for statuses):
+Here is a generic sequence diagram (the same is true for statuses):
 
 ```mermaid!
 sequenceDiagram
@@ -162,14 +166,14 @@ For verification purposes, we are then changing the resolution and polling again
 has changed:
 
 ```console
-INFO:root:Changing the resolution to Resolution.RES_1440...
+INFO:root:Changing the resolution to Resolution.RES_2_7K...
 INFO:root:Received response at handle=57: b'02:02:00'
 INFO:root:self.bytes_remaining=0
 INFO:root:Command sent successfully
 INFO:root:Polling the resolution to see if it has changed...
 INFO:root:Received response at handle=62: b'05:12:00:02:01:07'
 INFO:root:self.bytes_remaining=0
-INFO:root:Resolution is currently Resolution.RES_1440
+INFO:root:Resolution is currently Resolution.RES_2_7K
 ```
 
 ## Multiple Simultaneous Query Polls
@@ -213,7 +217,7 @@ They are then printed to the log which will look like the following:
 ```console
 INFO:root:Received response at handle=62: b'0b:12:00:02:01:07:03:01:01:79:01:00'
 INFO:root:self.bytes_remaining=0
-INFO:root:Resolution is currently Resolution.RES_1440
+INFO:root:Resolution is currently Resolution.RES_2_7K
 INFO:root:Video FOV is currently VideoFOV.FOV_WIDE
 INFO:root:FPS is currently FPS.FPS_120
 ```
@@ -234,8 +238,8 @@ An example of this can be seen in the `ble_command_get_state.py` script describe
 
 {% quiz
     question="How can we poll the encoding status and the resolution setting using one command?"
-    option="A:::Concatenate a Get Setting Value command and a Get Status command with the relevant ID's"
-    option="B:::Concatenate the Get All Setting and Get All Status commands."
+    option="A:::Concatenate a 'Get Setting Value' command and a 'Get Status' command with the relevant ID's"
+    option="B:::Concatenate the 'Get All Setting' and 'Get All Status' commands."
     option="C:::It is not possible"
     correct="C"
     info="It is not possible to concatenate commands. This would result in an unknown sequence of bytes
@@ -294,7 +298,7 @@ sequenceDiagram
 That is, after registering for push notifications for a given query, notification responses will continuously
 be sent whenever the query changes until the client unregisters for push notifications for the given query.
 
-{% tip The response to the Register command also contains the current setting / status value %}
+{% tip The initial response to the Register command also contains the current setting / status value %}
 
 We will walk through the `ble_query_register_resolution_value_updates.py` script to demonstrate this:
 
@@ -342,7 +346,7 @@ INFO:root:Registering for resolution updates
 INFO:root:Received response at handle=62: b'05:52:00:02:01:07'
 INFO:root:self.bytes_remaining=0
 INFO:root:Successfully registered for resolution value updates.
-INFO:root:Resolution is currently Resolution.RES_1440
+INFO:root:Resolution is currently Resolution.RES_2_7K
 ```
 
 We are now successfully registered for resolution value updates and will receive push notifications whenever
@@ -360,8 +364,8 @@ In this case, the Query ID is 0x92 (Setting Value Push Notification) as expected
 
 ---
 
-Multiple push notifications can be registered / received in a similar manner that multiple queries were polled
-in [multiple simultaneous query polls]({% link _python-tutorials/tutorial_4_ble_queries.md %}#multiple-simultaneous-query-polls)
+{% tip Multiple push notifications can be registered / received in a similar manner that multiple queries were
+polled above %}
 
 **Quiz time! 📚 ✏️**
 

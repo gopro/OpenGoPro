@@ -7,12 +7,12 @@ for more information.
 
 | Directory                          | Summary                                                                                                       | Windows | Mac | Linux | Mobile |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------- | --- | ----- | ------ |
-| ionic/file_transfer                | ionic demo for transfering files from GoPro to Mobile over Wi-Fi here are demos for iOS & Android             | ❌      | ❌  | ❌    | ✔️     |
-| python/sdk_wireless_camera_control | a Python package to easily exercise the Open GoPro API's + CLI's for taking pictures, videos, etc             | ✔️      | ✔️  | ✔️    | ❌     |
-| python/tutorial                    | short Python scripts to accompany the [Python Tutorials](https://gopro.github.io/OpenGoPro/tutorials/#python) | ✔️      | ✔️  | ✔️    | ❌     |
-| swift/EnableWiFiDemo               | a swift demo for discovering, connecting and enabling Wi-Fi on GoPro Camera                                   | ❌      | ❌  | ❌    | ✔️     |
-| csharp/GoProCSharpSample           | a C# demo for discovering, pairing, connecting and manipulating a camera                                      | ✔️      | ❌  | ❌    | ❌     |
-| c_c++/GoProC_C++Demo               | 2 C / C++ demos to send media commands and start/stop the preview stream                                      | ✔️      | ✔️  | ✔️    | ❌     |
+| ionic/file_transfer                | Ionic demo for transfering files from GoPro to Mobile over Wi-Fi here are demos for iOS & Android             | ❌      | ❌  | ❌    | ✔️     |
+| python/sdk_wireless_camera_control | A Python package to easily exercise the Open GoPro API's + CLI's for taking pictures, videos, etc             | ✔️      | ✔️  | ✔️    | ❌     |
+| python/tutorial                    | Short Python scripts to accompany the [Python Tutorials](https://gopro.github.io/OpenGoPro/tutorials/#python) | ✔️      | ✔️  | ✔️    | ❌     |
+| swift/EnableWiFiDemo               | A swift demo for discovering, connecting and enabling Wi-Fi on a GoPro camera                                 | ❌      | ❌  | ❌    | ✔️     |
+| csharp/GoProCSharpSample           | A C# demo for discovering, pairing, connecting and controlling a camera                                       | ✔️      | ❌  | ❌    | ❌     |
+| c_c++/GoProC_C++Demo               | Two C / C++ demos to send media commands and start/stop the preview stream                                    | ✔️      | ✔️  | ✔️    | ❌     |
 
 ## Contributing
 

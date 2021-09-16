@@ -1,5 +1,5 @@
-# wifi_media_download_file.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021
+# wifi_media_download_file.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:06:05 PM
 
 import json
 import logging
@@ -30,7 +30,7 @@ def main():
 
     # Build the url to get the thumbnail data for the photo
     logger.info(f"Downloading {photo}")
-    url = GOPRO_BASE_URL + f"videos/DCIM/100GOPRO/{photo}"
+    url = GOPRO_BASE_URL + f"/videos/DCIM/100GOPRO/{photo}"
     logger.info(f"Sending: {url}")
     with requests.get(url, stream=True) as request:
         request.raise_for_status()

@@ -1,6 +1,6 @@
 #!/bin/bash
-# prepare_demos/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Thu, May 20, 2021  8:25:53 PM
+# prepare_demos/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:06:28 PM
 
 help() {
     cat <<EOF
@@ -28,7 +28,7 @@ quoteRe() { sed -e 's/[^^]/[&]/g; s/\^/\\^/g; $!a\'$'\n''\\n' <<<"$1" | tr -d '\
 main() {
     # Clean the target directory, then move all .md's into it (except for the top level)
     rm -rf docs/tutorials/_demos && mkdir -p docs/tutorials/_demos
-    for i in $(find demos/**/* -name '*.md'); do
+    for i in $(find demos/**/* -name '*.md' -not -path *venv*); do
         mkdir -p docs/tutorials/$(dirname $i)
         cp $i docs/tutorials/$(dirname $i)
     done

@@ -1,5 +1,5 @@
-# _config.yml/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:52 UTC 2021
+# _config.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:06:20 PM
 
 # Theme Settings
 # https://mmistakes.github.io/minimal-mistakes/docs/configuration/
@@ -28,6 +28,7 @@ masthead_title: 'Open GoPro'
 head_scripts:
     - /assets/js/tabs.js
     - /assets/js/quiz.js
+    - /assets/js/accordion.js
     # - https://code.jquery.com/jquery-3.2.1.min.js
 
 ### Navigation
@@ -133,11 +134,6 @@ sass:
     sass_dir: _sass
     style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
 
-### Outputting
-# permalink: /:categories/:title/
-# paginate: 5 # amount of posts to show
-# paginate_path: /page:num/
-
 ### Plugins
 plugins:
     - jekyll-paginate
@@ -155,34 +151,6 @@ titles_from_headings:
     enabled: true
     strip_title: true
     collections: true
-
-### Archives
-#  Type
-#  - GitHub Pages compatible archive pages built with Liquid ~> type: liquid (default)
-#  - Jekyll Archives plugin archive pages ~> type: jekyll-archives
-#  Path (examples)
-#  - Archive page should exist at path when using Liquid method or you can
-#    expect broken links (especially with breadcrumbs enabled)
-#  - <base_path>/tags/my-awesome-tag/index.html ~> path: /tags/
-#  - <base_path>/categories/my-awesome-category/index.html ~> path: /categories/
-#  - <base_path>/my-awesome-category/index.html ~> path: /
-# category_archive:
-#     type: liquid
-#     path: /categories/
-# tag_archive:
-#     type: liquid
-#     path: /tags/
-# https://github.com/jekyll/jekyll-archives
-# jekyll-archives:
-#   enabled:
-#     - categories
-#     - tags
-#   layouts:
-#     category: archive-taxonomy
-#     tag: archive-taxonomy
-#   permalinks:
-#     category: /categories/:name/
-#     tag: /tags/:name/
 
 # HTML Compression
 # - https://jch.penibelst.de/
@@ -221,6 +189,20 @@ defaults:
           type: demos
       values:
           layout: demo
+    - scope:
+          path: 'specs/ble_versions'
+      values:
+          identifier: ble_spec
+          classes: spec
+          sidebar:
+            nav: 'ble-specs'
+    - scope:
+          path: 'specs/wifi_versions'
+      values:
+          identifier: wifi_spec
+          classes: spec
+          sidebar:
+            nav: 'wifi-specs'
 
 jekyll-spaceship:
     # default enabled processors

@@ -1,5 +1,5 @@
-# util.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:50 UTC 2021
+# util.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:50 PM
 
 """Miscellaneous utilities for the GoPro package."""
 
@@ -10,7 +10,76 @@ import subprocess
 from pathlib import Path
 from typing import Dict, Type, Any, List, Optional, Union
 
-logger = logging.getLogger(__name__)
+from rich.logging import RichHandler
+from rich import traceback
+
+util_logger = logging.getLogger(__name__)
+
+
+def setup_logging(logger: Any, output: Path, modules: Dict[str, int] = None) -> Any:
+    """Configure open gopro modules for logging
+
+    The application's logger is passed in, modified, and then returned
+
+    Args:
+        logger (Any): input logger that will be modified and then returned
+        output (Path): Path of log file for file stream handler
+        modules (Dict[str, int], optional): Optional override of modules / levels.
+
+    Returns:
+        Any: updated logger that the application can use for logging
+    """
+    modules = modules or {
+        "open_gopro.gopro": logging.DEBUG,
+        "open_gopro.api.builders": logging.DEBUG,
+        "open_gopro.communication_client": logging.DEBUG,
+        "open_gopro.ble.adapters.bleak_wrapper": logging.DEBUG,
+        "open_gopro.wifi.adapters.wireless": logging.DEBUG,
+        "open_gopro.responses": logging.DEBUG,
+        "open_gopro.util": logging.DEBUG,
+        "bleak": logging.DEBUG,
+    }
+
+    # Logging to file with millisecond timing
+    fh = logging.FileHandler(output, mode="w")
+    file_formatter = logging.Formatter(
+        fmt="%(threadName)13s:%(asctime)s.%(msecs)03d %(filename)-26s %(lineno)4s %(levelname)-8s | %(message)s",
+        datefmt="%H:%M:%S",
+    )
+    fh.setFormatter(file_formatter)
+    fh.setLevel(logging.DEBUG)
+    logger.addHandler(fh)
+
+    # Use Rich for colorful console logging
+    sh = RichHandler(rich_tracebacks=True, enable_link_path=True, show_time=False)
+    stream_formatter = logging.Formatter("%(asctime)s.%(msecs)03d %(message)s", datefmt="%H:%M:%S")
+    sh.setFormatter(stream_formatter)
+    sh.setLevel(logging.INFO)
+    logger.addHandler(sh)
+    logger.setLevel(logging.DEBUG)
+
+    # Enable / disable logging in modules
+    for module, level in modules.items():
+        l = logging.getLogger(module)
+        l.setLevel(level)
+        l.addHandler(fh)
+        l.addHandler(sh)
+
+    traceback.install()  # Enable exception tracebacks in rich logger
+
+    return logger
+
+
+def set_logging_level(logger: Any, level: int) -> None:
+    """Change the global logging level
+
+    Args:
+        logger (Any): logger to update
+        level (int): level to set
+    """
+    for handler in logger.handlers:
+        if isinstance(handler, RichHandler):
+            handler.setLevel(level)
 
 
 def launch_vlc(location: Optional[Path]) -> None:
@@ -47,10 +116,10 @@ def launch_vlc(location: Optional[Path]) -> None:
             and " cannot " not in response
             and " unexpected " not in response
         ):
-            logger.info("VLC launched")
+            util_logger.info("VLC launched")
             return
 
-    logger.error("Failed to find VLC")
+    util_logger.error("Failed to find VLC")
 
 
 def scrub(obj: Any, bad_key: str) -> None:
@@ -86,7 +155,7 @@ def cmd(command: str) -> str:
     Returns:
         str: response returned from shell
     """
-    logger.debug(f"Send cmd --> {command}")
+    util_logger.debug(f"Send cmd --> {command}")
     # Note: Ignoring unicode characters in SSIDs to prevent intermittent UnicodeDecodeErrors from occurring
     # while trying to connect to SSID when *any* AP is nearby that has unicode characters in the name
     response = (
@@ -94,7 +163,7 @@ def cmd(command: str) -> str:
         .stdout.read()
         .decode(errors="ignore")
     )
-    logger.debug(f"Receive response --> {response}")
+    util_logger.debug(f"Receive response --> {response}")
 
     return response
 

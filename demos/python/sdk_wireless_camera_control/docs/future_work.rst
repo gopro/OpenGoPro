@@ -4,16 +4,15 @@
 Future Work
 ===========
 
-Convert this to tickets in Github issues once we have a final repo.
-
-- Timing issues with WiFi preset. Getting internal errors
-- Improve Gatt services module
-- Investigate bleak connection failures
-- Do more testing of protobuf commands. Get demo fpr PresetStatus
-- Clean up Wifi Controller (perhaps release as separate package)
-- Make a nice class for accessing the media list
+See the Github `Issues <https://github.com/gopro/OpenGoPro/issues>`_  page for tickets tagged with "Python SDK"
+and "Enhancement."
+`Here <https://github.com/gopro/OpenGoPro/issues?q=is%3Aopen+label%3Apython_sdk+label%3Aenhancement>`_  is a
+sample search.
 
 Known issues
 ************
 
-- Wifi gets into bad state and will only respond with Internal Error
+See the Github `Issues <https://github.com/gopro/OpenGoPro/issues>`_  page for tickets tagged with "Python SDK"
+and "bug."
+Here is a sample
+`search <https://github.com/gopro/OpenGoPro/issues?q=is%3Aopen+label%3Apython_sdk+label%3Abug>`_.

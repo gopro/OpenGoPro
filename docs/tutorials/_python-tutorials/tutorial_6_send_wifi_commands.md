@@ -24,7 +24,7 @@ JSON responses that work with the media list), see the [next tutorial]({% link _
 It is assumed that the hardware and software requirements from the [connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
 are present and configured correctly.
 
-The scripts that will be used for this tutorial can be found at in the
+The scripts that will be used for this tutorial can be found in the
 [Tutorial 6 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_6_send_wifi_commands).
 
 # Just Show me the Demo(s)!!
@@ -83,9 +83,50 @@ sequenceDiagram
 
 {% tip We are building the endpoints using the GOPRO_BASE_URL defined in the tutorial package's `__init__.py` %}
 
-## Digital Zoom
+## Get Open GoPro Version
 
 The first command we will be sending is
+[Get Version]({% link specs/wifi.md %}#commands-quick-reference). This should be the first command you send
+after connecting.
+
+{% warning It is imperative to know the Open GoPro version that the connected camera supports as setting values,
+endpoints, and more differ between versions %}
+
+Let's build the endpoint first send the Keep Alive signal:
+
+```python
+url = GOPRO_BASE_URL + f"/gopro/version
+```
+
+Now we send the GET request and check the response for errors. Any errors will raise an exception.
+
+```python
+response = requests.get(url)
+response.raise_for_status()
+```
+
+Lastly, we print the response's JSON data (nicely formatted with indent 4 using the `json` module):
+
+```python
+logger.info(f"Response: {json.dumps(response.json(), indent=4)}")
+```
+
+This will log as such:
+
+```console
+INFO:root:Getting the Open GoPro version: sending http://10.5.5.9:8080/gopro/version
+INFO:root:Command sent successfully
+INFO:root:Response: {
+    "version": "2.0"
+}
+```
+
+In this case, this camera supports version 2.0 of the Open GoPro spec. We will an example of why this is important in the Set Setting section
+[below](#set-setting).
+
+## Digital Zoom
+
+The next command we will be sending is
 [Digital Zoom]({% link specs/wifi.md %}#commands-quick-reference). The camera
 must be in the [Photo Preset Group]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}#load-preset-group)
 for this command to succeed. The commands writes to the following endpoint:
@@ -511,6 +552,44 @@ INFO:root:Response: {}
 
 {% tip It is recommended to send a keep-alive at least once every 120 seconds. %}
 
+## Set Shutter
+
+The next command we will be sending is
+[Set Shutter]({% link specs/wifi.md %}#commands-quick-reference). which is
+used to start and stop encoding.
+
+Let's build the endpoint first send the Set Shutter signal:
+
+```python
+url = GOPRO_BASE_URL + f"/gopro/camera/shutter/start"
+```
+
+Now we send the GET request and check the response for errors. Any errors will raise an exception.
+
+```python
+response = requests.get(url)
+response.raise_for_status()
+```
+
+{% note This command does not return a JSON response so we don't print the response %}
+
+This will log as such:
+
+```console
+INFO:root:Turning the shutter on: sending http://10.5.5.9:8080/gopro/camera/shutter/start
+INFO:root:Command sent successfully
+```
+
+We then wait a few seconds and repeat the above procedure to set the shutter off. This time we use the following
+URL:
+
+```python
+url = GOPRO_BASE_URL + f"/gopro/camera/shutter/stop"
+```
+
+{% warning The shutter can not be set on if the camera is encoding or set off if the camera is not encoding. An
+attempt to do so will result in an error response. %}
+
 ## Set Setting
 
 The next command will be sending is [Set Setting]({% link specs/wifi.md %}#settings-quick-reference).
@@ -522,11 +601,26 @@ certain FPS values are not valid with certain resolutions. In general, higher re
 only allow lower FPS values. Check the [camera capabilities]({% link specs/ble.md %}#camera-capabilities)
 to see which settings are valid for given use cases.
 
-Let's build the endpoint first to set the Video Resolution to 1080 (the setting_id and opt_value comes from the command table linked above):
+{% tip The following endpoint is different between Open GoPro 1.0 and 2.0. %}
+
+Let's build the endpoint first to set the Video Resolution to 1080 (the setting_id and opt_value comes from the command table linked above). Click the relevant tab for the desired Open GoPro Version.
+
+{% tabs endpoint %}
+{% tab endpoint Version 1.0 %}
 
 ```python
 url = GOPRO_BASE_URL + f"/gopro/camera/setting?setting_id=2&opt_value=9"
 ```
+
+{% endtab %}
+{% tab endpoint Version 2.0 %}
+
+```python
+url = GOPRO_BASE_URL + f"/gopro/camera/setting?setting=2&option=9"
+```
+
+{% endtab %}
+{% endtabs %}
 
 Now we send the GET request and check the response for errors. Any errors will raise an exception.
 
@@ -571,7 +665,7 @@ As a reader exercise, try using the [Get State] command to verify that the resol
 %}
 
 {% quiz
-    question="What of the following is not a real preset group?"
+    question="Which of the of the following is not a real preset group?"
     option="A:::Timelapse"
     option="B:::Photo"
     option="C:::Burst"
@@ -589,7 +683,7 @@ As a reader exercise, try using the [Get State] command to verify that the resol
     option="D:::Any FPS is valid in at 5k"
     correct="A"
     info="Among these options, only 24 is possible. You're not actually expected to know
-    this. But you should know where to find the information: https://github.com/gopro/OpenGoPro/tree/main/docs/ble#camera-capabilities"
+    this. But you should know where to find the information: https://gopro.github.io/OpenGoPro/ble#camera-capabilities"
 %}
 
 # Troubleshooting

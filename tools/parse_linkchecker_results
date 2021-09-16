@@ -1,0 +1,52 @@
+#!/bin/bash
+# parse_linkchecker_results/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:06:28 PM
+
+
+PARSE_STATE_URL=1
+PARSE_STATE_STATUS=2
+
+allowable_error_codes=(403 500 501 502 503 504 505 506 507 508 509 510)
+
+total_our_errors=0
+
+state=$PARSE_STATE_URL
+while IFS= read -r line; do
+    if [[ $state == $PARSE_STATE_URL ]]; then
+        if [[ "$line" =~ ^Real.* ]]; then
+            url=$(echo -n "$line" | sed -n -e 's/Real URL\s*//p')
+            state=$PARSE_STATE_STATUS
+        fi
+    elif [[ $state == $PARSE_STATE_STATUS ]]; then
+        if [[ "$line" =~ ^Result ]]; then
+            error=$(echo $line | sed -n -e 's/Result\s*//p')
+            state=$PARSE_STATE_URL
+
+            our_fault=true
+            for error_code in ${allowable_error_codes[@]}; do
+                if [[ "$error" =~ .*${error_code}.* ]]; then
+                    # This is not our error so we don't care about it
+                    our_fault=false
+                    break
+                fi
+            done
+
+            if $our_fault; then
+                echo "$url ---> $error"
+                total_our_errors=$((total_our_errors + 1))
+            fi
+        fi
+    else
+        echo "unexpected parse state" >&2
+    fi
+done <"$1"
+
+echo "Found $total_our_errors errors that are our fault."
+
+if [[ $total_our_errors == 0 ]]; then
+    echo "😃 SUCCESS!!"
+    exit 0
+else
+    echo "😟 See linkchecker output for more information."
+    exit 1
+fi

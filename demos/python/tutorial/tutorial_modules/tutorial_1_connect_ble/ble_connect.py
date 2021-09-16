@@ -1,11 +1,10 @@
-# ble_connect.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021
+# ble_connect.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:56 PM
 
 import re
 import asyncio
 import logging
 import argparse
-from binascii import hexlify
 from typing import Dict, Any, List, Callable, Pattern
 
 from bleak import BleakScanner, BleakClient
@@ -51,7 +50,7 @@ async def connect_ble(
         for d in devices:
             logger.info(f"\tDiscovered: {d}")
         # Now look for our matching device(s)
-        token = re.compile(r"GoPro \d\d\d\d" if identifier is None else f"GoPro {identifier}")
+        token = re.compile(r"GoPro [A-Z0-9]{4}" if identifier is None else f"GoPro {identifier}")
         matched_devices = [device for name, device in devices.items() if token.match(name)]
         logger.info(f"Found {len(matched_devices)} matching devices.")
 
@@ -89,17 +88,17 @@ async def main(identifier):
         ...
 
     client = await connect_ble(dummy_notification_handler, identifier)
+    await client.disconnect()
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Connect to a GoPro camera, pair, then enable notifications."
-    )
+    parser = argparse.ArgumentParser(description="Connect to a GoPro camera, pair, then enable notifications.")
     parser.add_argument(
         "-i",
         "--identifier",
         type=str,
-        help="Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to",
+        help="Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. \
+            If not used, first discovered GoPro will be connected to",
         default=None,
     )
     args = parser.parse_args()

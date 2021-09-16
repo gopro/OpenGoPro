@@ -1,9 +1,8 @@
-# poll_battery.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Fri Jul 30 21:36:24 UTC 2021
+# log_battery.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:45 PM
 
-"""Example to continuously read the battery (with no WiFi connection)"""
+"""Example to continuously read the battery (with no Wifi connection)"""
 
-import sys
 import csv
 import time
 import logging
@@ -14,18 +13,17 @@ from datetime import datetime
 from dataclasses import dataclass
 from typing import Optional, Tuple, Literal, List
 
-from rich import traceback
-from rich.logging import RichHandler
 from rich.console import Console
 
 from open_gopro import GoPro
 from open_gopro.constants import StatusId
+from open_gopro.util import setup_logging, set_logging_level
 
 logger = logging.getLogger(__name__)
-traceback.install()  # Enable exception tracebacks in rich logger
 console = Console()  # rich consoler printer
 
 BarsType = Literal[0, 1, 2, 3]
+
 
 @dataclass
 class Sample:
@@ -41,8 +39,10 @@ class Sample:
     def __str__(self) -> str:  # pylint: disable=missing-return-doc
         return f"Index {self.index} @ time {self.time.strftime('%H:%M:%S')} --> bars: {self.bars}, percentage: {self.percentage}"
 
-sample_index = 0
-samples: List[Sample] = []
+
+SAMPLE_INDEX = 0
+SAMPLES: List[Sample] = []
+
 
 def dump_results_as_csv(location: Path) -> None:
     """Write all of the samples to a csv file
@@ -54,8 +54,8 @@ def dump_results_as_csv(location: Path) -> None:
     with open(location, mode="w") as f:
         w = csv.writer(f, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
         w.writerow(["index", "time", "percentage", "bars"])
-        initial_time = samples[0].time
-        for s in samples:
+        initial_time = SAMPLES[0].time
+        for s in SAMPLES:
             w.writerow([s.index, (s.time - initial_time).seconds, s.percentage, s.bars])
 
 
@@ -69,8 +69,8 @@ def process_battery_notifications(gopro: GoPro, initial_bars: BarsType, initial_
         initial_bars (BarsType): Initial bars level when notifications were enabled
         initial_percentage (int): Initial percentage when notifications were enabled
     """
-    global sample_index
-    global samples
+    global SAMPLE_INDEX
+    global SAMPLES
     last_percentage = initial_percentage
     last_bars = initial_bars
 
@@ -87,30 +87,34 @@ def process_battery_notifications(gopro: GoPro, initial_bars: BarsType, initial_
             notification.data[StatusId.BATT_LEVEL] if StatusId.BATT_LEVEL in notification.data else last_bars
         )
         # Append and print sample
-        samples.append(Sample(index=sample_index, percentage=last_percentage, bars=last_bars))
-        console.print(str(samples[-1]))
-        sample_index += 1
+        SAMPLES.append(Sample(index=SAMPLE_INDEX, percentage=last_percentage, bars=last_bars))
+        console.print(str(SAMPLES[-1]))
+        SAMPLE_INDEX += 1
 
 
-def main() -> None:
-    """Main function."""
+def main() -> int:
+    """Main program functionality
+
+    Returns:
+        int: program return code
+    """
     identifier, log_location, poll = parse_arguments()
-    setup_logging(log_location)
+    global logger
+    logger = setup_logging(logger, log_location)
 
-    global sample_index
-    global samples
+    global SAMPLE_INDEX
+    global SAMPLES
 
+    gopro: Optional[GoPro] = None
+    return_code = 0
     try:
         with GoPro(identifier, enable_wifi=False) as gopro:
-            # Now we only want errors and above since we're going to be doing a lot of printing below
-            for handler in logger.handlers:
-                if isinstance(handler, RichHandler):
-                    handler.setLevel(logging.ERROR)
+            set_logging_level(logger, logging.ERROR)
 
             # Ensure that wifi is not enabled. Not needed but left for instructive purposes
             assert not gopro.ble_status.ap_state.get_value().flatten
 
-            # Setup notifications if we are not polling
+            # # Setup notifications if we are not polling
             if poll is None:
                 console.print("Configuring battery notifications...")
                 # Enable notifications of the relevant battery statuses. Also store initial values.
@@ -128,72 +132,30 @@ def main() -> None:
             else:
                 with console.status("[bold green]Polling the battery until it dies..."):
                     while True:
-                        samples.append(
+                        SAMPLES.append(
                             Sample(
-                                index=sample_index,
+                                index=SAMPLE_INDEX,
                                 percentage=gopro.ble_status.int_batt_per.get_value().flatten,
                                 bars=gopro.ble_status.batt_level.get_value().flatten,
                             )
                         )
-                        console.print(str(samples[-1]))
-                        sample_index += 1
+                        console.print(str(SAMPLES[-1]))
+                        SAMPLE_INDEX += 1
                         time.sleep(poll)
 
     except Exception as e:  # pylint: disable=broad-except
         logger.error(repr(e))
-        sys.exit(-1)
+        return_code = 1
     except KeyboardInterrupt:
         logger.warning("Received keyboard interrupt. Shutting down...")
     finally:
-        if len(samples) > 0:
-            csv_location = Path(log_location.parent) / 'battery_results.csv'
+        if len(SAMPLES) > 0:
+            csv_location = Path(log_location.parent) / "battery_results.csv"
             dump_results_as_csv(csv_location)
+        if gopro is not None:
+            gopro.close()
         console.print("Exiting...")
-        sys.exit(0)
-
-
-def setup_logging(log_location: Path) -> None:
-    """Configure logging to file and Rich console logging
-
-    Args:
-        log_location (Path): location to configure for the file handler
-    """
-    # Logging to file with
-    fh = logging.FileHandler(f"{log_location}", mode="w")
-    file_formatter = logging.Formatter(
-        fmt="%(threadName)13s: %(name)40s:%(lineno)5d %(asctime)s.%(msecs)03d %(levelname)-8s | %(message)s",
-        datefmt="%H:%M:%S",
-    )
-    fh.setFormatter(file_formatter)
-    fh.setLevel(logging.DEBUG)
-    logger.addHandler(fh)
-
-    # Use Rich for colorful console logging
-    sh = RichHandler(rich_tracebacks=True, enable_link_path=True, show_time=False)
-    stream_formatter = logging.Formatter("%(asctime)s.%(msecs)03d %(message)s", datefmt="%H:%M:%S")
-    sh.setFormatter(stream_formatter)
-    sh.setLevel(logging.INFO)
-    logger.addHandler(sh)
-    logger.setLevel(logging.DEBUG)
-
-    # Enable / disable logging in modules
-    for (module, level) in [
-        ("open_gopro.gopro", logging.DEBUG),
-        ("open_gopro.ble_commands", logging.DEBUG),
-        ("open_gopro.ble_controller", logging.DEBUG),
-        ("open_gopro.wifi_commands", logging.DEBUG),
-        ("open_gopro.wifi_controller", logging.DEBUG),
-        ("open_gopro.responses", logging.DEBUG),
-        ("open_gopro.util", logging.DEBUG),
-        ("bleak", logging.DEBUG),
-        ("bleak.backends.bluezdbus.client", logging.DEBUG),
-        ("bleak.backends.corebluetooth.client", logging.DEBUG),
-        ("bleak.backends.dotnet.client", logging.DEBUG),
-    ]:
-        log = logging.getLogger(module)
-        log.setLevel(level)
-        log.addHandler(fh)
-        log.addHandler(sh)
+        return return_code  # pylint: disable=lost-exception
 
 
 def parse_arguments() -> Tuple[str, Path, Optional[int]]:

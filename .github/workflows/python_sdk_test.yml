@@ -1,13 +1,13 @@
-# python_sdk_test.yml/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Fri, Jul 30, 2021  5:20:50 PM
+# python_sdk_test.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:35 PM
 
 # It only runs when something inside sdk_wireless_camera_control has changed
 
-name: Python SDK Testing
+name: Python SDK Unit Testing
 
 on:
     pull_request:
-        branches: [main]
+        branches: [main, develop]
         paths:
             - 'demos/python/sdk_wireless_camera_control/**'
 
@@ -39,8 +39,7 @@ jobs:
               with:
                   path: ${{ matrix.path }}
                   key: ${{ runner.os }}-${{ matrix.python-version }}-pip-${{ hashFiles('demos/python/sdk_wireless_camera_control/setup.py') }}-${{ hashFiles('demos/python/sdk_wireless_camera_control/requirements-dev.txt') }}
-                  restore-keys: |
-                      ${{ runner.os }}-pip-
+                  restore-keys: ${{ runner.os }}-pip-
 
             - name: Install Bluez on Ubuntu
               run: sudo apt-get update && sudo apt install -y bluez
@@ -55,15 +54,20 @@ jobs:
 
             - name: Lint code
               working-directory: ./demos/python/sdk_wireless_camera_control/
-              run: |
-                  make lint
+              run: make lint
 
             - name: Run unit tests
               working-directory: ./demos/python/sdk_wireless_camera_control/
-              run: |
-                  make tests
+              run: make unit_tests
 
             - name: Test docs build
               working-directory: ./demos/python/sdk_wireless_camera_control/
-              run: |
-                  make sphinx
+              run: make docs
+
+            - name: Archive test report on failure
+              uses: actions/upload-artifact@v2
+              if: failure()
+              with:
+                  name: test-reports
+                  path: ./demos/python/sdk_wireless_camera_control/reports
+                  retention-days: 2

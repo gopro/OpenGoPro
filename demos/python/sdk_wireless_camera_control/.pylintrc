@@ -10,7 +10,25 @@ ignore=tests,proto
 
 [MESSAGES CONTROL]
 
-disable=W1203, W0511, R0902, R0912get_update, W0212, C0103, R0904, R0912, missing-raises-doc, W0622, R0903, W0221, R0915, W1202, C0302, R0914, duplicate-code, global-statement
+disable=
+    abstract-method, # Pylint incorrectly assumes any function that raises NotImplementedError is abstract. We let mypy check for ABC errors.
+    cyclic-import,
+    missing-raises-doc,
+    redundant-returns-doc,
+    logging-fstring-interpolation,
+    logging-format-interpolation,
+    duplicate-code,
+    global-statement,
+    too-few-public-methods,
+    too-many-arguments,
+    too-many-instance-attributes,
+    too-many-branches,
+    too-many-locals,
+    too-many-lines,
+    too-many-statements,
+    fixme,
+    protected-access, # Maybe fix this one
+    invalid-name # We are passing these except for <= 2 character variable names. Should be able to configure via http://pylint.pycqa.org/en/1.9/user_guide/options.html#cmdoption-variable-rgx
 
 [FORMAT]
 

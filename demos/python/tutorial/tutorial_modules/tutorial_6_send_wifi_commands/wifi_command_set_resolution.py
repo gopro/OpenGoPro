@@ -1,5 +1,5 @@
-# wifi_command_set_resolution.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021
+# wifi_command_set_resolution.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:06:04 PM
 
 import json
 import logging
@@ -14,8 +14,11 @@ logger = logging.getLogger()
 
 
 def main():
+    # Note!! The endpoint below changed between Open GoPro version 1.0 and 2.0
+    # This endpoint supports >= 2.0
+
     # Build the HTTP GET request
-    url = GOPRO_BASE_URL + f"/gopro/camera/setting?setting_id=2&opt_value=9"
+    url = GOPRO_BASE_URL + f"/gopro/camera/setting?setting=2&option=9"
     logger.info(f"Setting the video resolution to 1080: sending {url}")
 
     # Send the GET request and retrieve the response

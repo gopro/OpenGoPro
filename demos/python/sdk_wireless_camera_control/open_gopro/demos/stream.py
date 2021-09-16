@@ -1,36 +1,42 @@
-# stream.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:50 UTC 2021
+# stream.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:46 PM
 
 """Entrypoint for taking a picture."""
 
-import sys
 import time
 import logging
 import argparse
 import threading
 from pathlib import Path
-from typing import Tuple
+from typing import Tuple, Optional
 
-from rich import traceback
-from rich.logging import RichHandler
 from rich.console import Console
 
-from open_gopro import GoPro, params
-from open_gopro.util import launch_vlc
+from open_gopro import GoPro
+from open_gopro.util import launch_vlc, setup_logging
 
 logger = logging.getLogger(__name__)
-traceback.install()  # Enable exception tracebacks in rich logger
 console = Console()  # rich consoler printer
 
 
-def main() -> None:
-    """Main function."""
-    identifier, log_location, vlc_location = parse_arguments()
-    setup_logging(log_location)
+def main() -> int:
+    """Main functionality
 
+    Returns:
+        int: program return code
+    """
+    identifier, log_location, vlc_location = parse_arguments()
+    global logger
+    logger = setup_logging(logger, log_location)
+
+    gopro: Optional[GoPro] = None
+    return_code = 0
     try:
         with GoPro(identifier) as gopro:
-            assert gopro.ble_command.set_shutter(params.Shutter.OFF).is_ok
+            # Turn off the shutter if we are currently encoding
+            if gopro.is_encoding:
+                assert gopro.ble_command.set_shutter(gopro.params.Shutter.OFF)
+
             assert gopro.ble_command.set_turbo_mode(False).is_ok
 
             console.print("Starting the preview stream...")
@@ -51,56 +57,14 @@ def main() -> None:
 
     except Exception as e:  # pylint: disable=broad-except
         logger.error(repr(e))
-        sys.exit(-1)
+        return_code = 1
     except KeyboardInterrupt:
         console.print("Received keyboard interrupt. Shutting down...")
     finally:
+        if gopro is not None:
+            gopro.close()
         console.print("Exiting...")
-        sys.exit(0)
-
-
-def setup_logging(log_location: Path) -> None:
-    """Configure logging to file and Rich console logging
-
-    Args:
-        log_location (Path): location to configure for the file handler
-    """
-    # Logging to file with
-    fh = logging.FileHandler(f"{log_location}", mode="w")
-    file_formatter = logging.Formatter(
-        fmt="%(threadName)13s: %(name)30s:%(lineno)5d %(asctime)s.%(msecs)03d %(levelname)-8s | %(message)s",
-        datefmt="%H:%M:%S",
-    )
-    fh.setFormatter(file_formatter)
-    fh.setLevel(logging.DEBUG)
-    logger.addHandler(fh)
-
-    # Use Rich for colorful console logging
-    sh = RichHandler(rich_tracebacks=True, enable_link_path=True, show_time=False)
-    stream_formatter = logging.Formatter("%(asctime)s.%(msecs)03d %(message)s", datefmt="%H:%M:%S")
-    sh.setFormatter(stream_formatter)
-    sh.setLevel(logging.INFO)
-    logger.addHandler(sh)
-    logger.setLevel(logging.DEBUG)
-
-    # Enable / disable logging in modules
-    for (module, level) in [
-        ("open_gopro.gopro", logging.DEBUG),
-        ("open_gopro.ble_commands", logging.DEBUG),
-        ("open_gopro.ble_controller", logging.DEBUG),
-        ("open_gopro.wifi_commands", logging.DEBUG),
-        ("open_gopro.wifi_controller", logging.DEBUG),
-        ("open_gopro.responses", logging.DEBUG),
-        ("open_gopro.util", logging.DEBUG),
-        ("bleak", logging.DEBUG),
-        ("bleak.backends.bluezdbus.client", logging.DEBUG),
-        ("bleak.backends.corebluetooth.client", logging.DEBUG),
-        ("bleak.backends.dotnet.client", logging.DEBUG),
-    ]:
-        log = logging.getLogger(module)
-        log.setLevel(level)
-        log.addHandler(fh)
-        log.addHandler(sh)
+        return return_code  # pylint: disable=lost-exception
 
 
 def parse_arguments() -> Tuple[str, Path, Path]:

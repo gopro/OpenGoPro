@@ -1,4 +1,40 @@
+/test.html
+/link_results
 .vscode
 venv
 xcuserdata/
 .git
+**/temp
+/*.jpg
+/*.gpmf
+
+# Vim
+*~
+*.sw[p_]
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Ruby Gem
+*.gem
+.bundle
+**/vendor/bundle
+
+# Node.js and NPM
+node_modules
+npm-debug.log*
+package-lock.json
+codekit-config.json
+
+# macOS
+.DS_Store
+
+# Jekyll generated files
+/docs/.jekyll-cache
+/docs/.jekyll-metadata
+/docs/.sass-cache
+/docs/_asset_bundler_cache
+/docs/_site
+/docs/**/demos
+/docs/**/_demos

@@ -1,5 +1,5 @@
-/* stream.c/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Thu, May 20, 2021  8:24:31 PM */
+/* stream.c/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
+/* This copyright was auto-generated on Wed, Sep  1, 2021  5:05:40 PM */
 
 #include <curl/curl.h>
 #include <unistd.h>

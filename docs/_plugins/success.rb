@@ -1,5 +1,5 @@
-# success.rb/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:52 UTC 2021
+# success.rb/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:06:22 PM
 
 module Jekyll
     class Success < Liquid::Tag
@@ -18,14 +18,14 @@ module Jekyll
             @context = context
 
             "<div class=\"success\">" +
-            "<i " +
-                "class=\"fa fa-check-circle fa-2x\" " +
-                "style=\"" +
-                    "color: #2dcb71;" +
-                    "margin: 0.25em;" +
-                "\"" +
-        "></i>" +
-            "<span>  #{@text}</span>" +
+                "<i " +
+                    "class=\"fa fa-check-circle fa-2x\" " +
+                    "style=\"" +
+                        "color: #2dcb71;" +
+                        "margin: 0.25em;" +
+                    "\"" +
+                "></i>" +
+                "<span>  #{@text}</span>" +
             "</div>"
         end
 

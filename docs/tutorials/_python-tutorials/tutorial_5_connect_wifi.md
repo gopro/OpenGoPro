@@ -18,7 +18,7 @@ can be connected to. It will also provide an example of connecting to the WiFi A
 It is assumed that the hardware and software requirements from the [connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
 are present and configured correctly.
 
-The scripts that will be used for this tutorial can be found at in the
+The scripts that will be used for this tutorial can be found in the
 [Tutorial 5 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_5_connect_wifi).
 
 # Just Show me the Demo(s)!!

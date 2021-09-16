@@ -1,44 +1,57 @@
-# video.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:50 UTC 2021
+# video.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:46 PM
 
-"""Entrypoint for taking a video."""
+"""Entrypoint for taking a video demo."""
 
 import sys
 import time
 import logging
 import argparse
 from pathlib import Path
-from typing import Tuple
+from typing import Tuple, Optional
 
-from rich import traceback
-from rich.logging import RichHandler
 from rich.console import Console
 
-from open_gopro import GoPro, params
+from open_gopro import GoPro
+from open_gopro.util import setup_logging
 
 logger = logging.getLogger(__name__)
-traceback.install()  # Enable exception tracebacks in rich logger
 console = Console()  # rich consoler printer
 
 
-def main() -> None:
-    """Main function."""
-    identifier, log_location, output_location, record_time = parse_arguments()
-    setup_logging(log_location)
+def main(identifier: Optional[str], log_location: Path, output_location: Path, record_time: float) -> int:
+    """Main program functionality
 
+    Args:
+        identifier (Optional[str]): device to connect to
+        log_location (Path): file to write detailed log to
+        output_location (Path): where to store video
+        record_time (float): how long to record for
+
+    Returns:
+        int: program return code
+    """
+    global logger
+    logger = setup_logging(logger, log_location)
+
+    gopro: Optional[GoPro] = None
+    return_code = 0
     try:
         with GoPro(identifier) as gopro:
-            assert gopro.ble_command.set_shutter(params.Shutter.OFF).is_ok
+            # Turn off the shutter if we are currently encoding
+            if gopro.is_encoding:
+                assert gopro.ble_command.set_shutter(gopro.params.Shutter.OFF).is_ok
+
             assert gopro.ble_command.set_turbo_mode(False).is_ok
 
             console.print("Capturing a video...")
             # Get the media list before
             media_set_before = set(x["n"] for x in gopro.wifi_command.get_media_list()["media"][0]["fs"])
             # Take a video
-            assert gopro.ble_command.load_preset(params.Preset.CINEMATIC).is_ok
-            assert gopro.ble_command.set_shutter(params.Shutter.ON).is_ok
+            assert gopro.ble_command.load_preset(gopro.params.Preset.CINEMATIC).is_ok
+            assert gopro.ble_command.set_shutter(gopro.params.Shutter.ON).is_ok
             time.sleep(record_time)
-            assert gopro.ble_command.set_shutter(params.Shutter.OFF).is_ok
+            assert gopro.ble_command.set_shutter(gopro.params.Shutter.OFF).is_ok
 
             console.print("Downloading the video...")
             # Get the media list after
@@ -47,63 +60,20 @@ def main() -> None:
             video = media_set_after.difference(media_set_before).pop()
             # Download the video
             gopro.wifi_command.download_file(camera_file=video, local_file=output_location)
-
             console.print(
                 f"Success!! :smiley: File has been downloaded to {output_location}", style="bold green"
             )
 
     except Exception as e:  # pylint: disable=broad-except
         logger.error(repr(e))
-        sys.exit(-1)
+        return_code = 1
     except KeyboardInterrupt:
         logger.warning("Received keyboard interrupt. Shutting down...")
     finally:
+        if gopro is not None:
+            gopro.close()
         console.print("Exiting...")
-        sys.exit(0)
-
-
-def setup_logging(log_location: Path) -> None:
-    """Configure logging to file and Rich console logging
-
-    Args:
-        log_location (Path): location to configure for the file handler
-    """
-    # Logging to file with
-    fh = logging.FileHandler(f"{log_location}", mode="w")
-    file_formatter = logging.Formatter(
-        fmt="%(threadName)13s: %(name)30s:%(lineno)5d %(asctime)s.%(msecs)03d %(levelname)-8s | %(message)s",
-        datefmt="%H:%M:%S",
-    )
-    fh.setFormatter(file_formatter)
-    fh.setLevel(logging.DEBUG)
-    logger.addHandler(fh)
-
-    # Use Rich for colorful console logging
-    sh = RichHandler(rich_tracebacks=True, enable_link_path=True, show_time=False)
-    stream_formatter = logging.Formatter("%(asctime)s.%(msecs)03d %(message)s", datefmt="%H:%M:%S")
-    sh.setFormatter(stream_formatter)
-    sh.setLevel(logging.INFO)
-    logger.addHandler(sh)
-    logger.setLevel(logging.DEBUG)
-
-    # Enable / disable logging in modules
-    for (module, level) in [
-        ("open_gopro.gopro", logging.DEBUG),
-        ("open_gopro.ble_commands", logging.DEBUG),
-        ("open_gopro.ble_controller", logging.DEBUG),
-        ("open_gopro.wifi_commands", logging.DEBUG),
-        ("open_gopro.wifi_controller", logging.DEBUG),
-        ("open_gopro.responses", logging.DEBUG),
-        ("open_gopro.util", logging.DEBUG),
-        ("bleak", logging.DEBUG),
-        ("bleak.backends.bluezdbus.client", logging.DEBUG),
-        ("bleak.backends.corebluetooth.client", logging.DEBUG),
-        ("bleak.backends.dotnet.client", logging.DEBUG),
-    ]:
-        log = logging.getLogger(module)
-        log.setLevel(level)
-        log.addHandler(fh)
-        log.addHandler(sh)
+        return return_code  # pylint: disable=lost-exception
 
 
 def parse_arguments() -> Tuple[str, Path, Path, float]:
@@ -146,4 +116,4 @@ def parse_arguments() -> Tuple[str, Path, Path, float]:
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main(*parse_arguments()))

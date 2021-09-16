@@ -6,6 +6,7 @@ redirect_from:
     - /python
     - /csharp
     - /c_c++
+    - /ionic
 ---
 
 # Demos

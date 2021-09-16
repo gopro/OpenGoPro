@@ -122,7 +122,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     mercenary (0.4.0)
-    minimal-mistakes-jekyll (4.23.0)
+    minimal-mistakes-jekyll (4.24.0)
       jekyll (>= 3.7, < 5.0)
       jekyll-feed (~> 0.1)
       jekyll-gist (~> 1.5)
@@ -188,7 +188,7 @@ DEPENDENCIES
   jekyll-swiss (~> 1.0.0)
   jekyll-titles-from-headings (~> 0.5.3)
   liquid-tag-parser (~> 1.9)
-  minimal-mistakes-jekyll
+  minimal-mistakes-jekyll (~> 4.24)
 
 BUNDLED WITH
-   2.2.17
+   2.2.25

@@ -1,4 +1,12 @@
+# Need to unignore since it is ignored at a higher layer
+!.vscode
+# VSCode files we don't care about
+.vscode/PythonImportHelper-v2-Completion.json
+.vscode/settings.json
+
 **/temp
+logs/
+reports/
 
 # Docs output
 docs/build
@@ -20,9 +28,6 @@ __pycache__/
 
 # C extensions
 *.so
-
-# VSCode files we don't care about
-.vscode/PythonImportHelper-v2-Completion.json
 
 # Distribution / packaging
 .Python
@@ -68,6 +73,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+.mypy_cache
 
 # Translations
 *.mo

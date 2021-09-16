@@ -1,5 +1,5 @@
-# ble_command_set_fps.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:51 UTC 2021
+# ble_command_set_fps.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:58 PM
 
 import asyncio
 import logging
@@ -45,7 +45,7 @@ async def main(identifier):
     event.clear()
     await client.write_gatt_char(SETTINGS_REQ_UUID, bytearray([0x03, 0x03, 0x01, 0x00]))
     await event.wait()  # Wait to receive the notification response
-
+    await client.disconnect()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(

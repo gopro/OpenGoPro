@@ -47,10 +47,10 @@ pip install -r requirements.txt
 You can test that installation was successful by viewing the installed package's information:
 
 ```console
-$ pip show open-gopro-bleak-tutorials
-Name: open-gopro-bleak-tutorials
+$ pip show open-gopro-python-tutorials
+Name: open-gopro-python-tutorials
 Version: 0.0.1
-Summary: Open GoPro Bleak Tutorials
+Summary: Open GoPro Python Tutorials
 Home-page: https://github.com/gopro/OpenGoPro
 Author: GoPro
 Author-email: gopro.com
@@ -60,7 +60,7 @@ Requires: bleak
 Required-by:
 ```
 
-The scripts that will be used for this tutorial can be found at in the
+The scripts that will be used for this tutorial can be found in the
 [Tutorial 1 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_1_connect_ble).
 
 # Basic BLE Tutorial
@@ -181,12 +181,12 @@ Now we can search through the discovered devices to see if we found a GoPro. Any
 device name will be structured as `GoPro XXXX` where XXXX is the last four digits of
 your camera's serial number.
 
-First, we define a regex which is either "GoPro " followed by any four digits if no identifier was passed,
+First, we define a regex which is either "GoPro " followed by any four alphanumeric characters if no identifier was passed,
 or "GoPro " concatenated with the identifier if it exists. In the demo `ble_connect.py`, the identifier is taken
 from the command-line arguments.
 
 ```python
-token = re.compile(r"GoPro \d\d\d\d" if identifier is None else f"GoPro {identifier}")
+token = re.compile(r"GoPro [A-Z0-9]{4}" if identifier is None else f"GoPro {identifier}")
 ```
 
 Now we build a list of matched devices by checking if each device's name includes the token regex.
@@ -347,6 +347,14 @@ will be used in a future tutorial to send data.
 %}
 
 # Troubleshooting
+
+## Device not connecting
+
+If the connection is not starting, it is likely because the camera is not advertising. This can be due to either:
+1. The camera is not in pairing mode. Ensure that this is achieved as done in
+[the advertise section]({% link _python-tutorials/tutorial_1_connect_ble.md %}#advertise).
+2. The devices never disconnected from the previous session so are thus already connected. If this is the case,
+   perform the "Complete System Reset" shown below.
 
 ## Complete System Reset
 

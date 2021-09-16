@@ -1,12 +1,13 @@
-# constants.py/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue May 18 22:08:50 UTC 2021
+# constants.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:44 PM
 
-"""Constant numbers shared across the GoPro module."""
+"""Constant numbers shared across the GoPro module. These do not change across Open GoPro Versions"""
 
 import enum
 from typing import Union, Tuple
-
 import construct
+
+from open_gopro.ble import UUID
 
 GOPRO_BASE_UUID = "b5f9{}-aa8d-11e3-9046-0002a5d5c51b"
 
@@ -19,80 +20,19 @@ class ErrorCode(enum.Enum):
     INVALID_PARAM = 2
 
 
-class UUID(enum.Enum):
-    """BLE UUID."""
-
-    # Generic Attribute Service
-    S_GENERIC_ATT = "00001801-0000-1000-8000-00805f9b34fb"
-
-    # Generic Access Service
-    S_GENERIC_ACCESS = "00001800-0000-1000-8000-00805f9b34fb"
-    ACC_DEVICE_NAME = "00002a00-0000-1000-8000-00805f9b34fb"
-    ACC_APPEARANCE = "00002a01-0000-1000-8000-00805f9b34fb"
-    ACC_PREF_CONN_PARAMS = "00002a04-0000-1000-8000-00805f9b34fb"
-    ACC_CENTRAL_ADDR_RES = "00002aa6-0000-1000-8000-00805f9b34fb"
-
-    # Tx Power
-    S_TX_POWER = "00001804-0000-1000-8000-00805f9b34fb"
-    TX_POWER_LEVEL = "00002a07-0000-1000-8000-00805f9b34fb"
-
-    # Battery Service
-    S_BATTERY = "0000180f-0000-1000-8000-00805f9b34fb"
-    BATT_LEVEL = "00002a19-0000-1000-8000-00805f9b34fb"
-
-    # Device Information Service
-    S_DEV_INFO = "0000180a-0000-1000-8000-00805f9b34fb"
-    INF_MAN_NAME = "00002a29-0000-1000-8000-00805f9b34fb"
-    INF_MODEL_NUM = "00002a24-0000-1000-8000-00805f9b34fb"
-    INF_SERIAL_NUM = "00002a25-0000-1000-8000-00805f9b34fb"
-    INF_FW_REV = "00002a26-0000-1000-8000-00805f9b34fb"
-    INF_HW_REV = "00002a27-0000-1000-8000-00805f9b34fb"
-    INF_SW_REV = "00002a28-0000-1000-8000-00805f9b34fb"
-    INF_SYS_ID = "00002a23-0000-1000-8000-00805f9b34fb"
-    INF_CERT_DATA = "00002a2a-0000-1000-8000-00805f9b34fb"
-    INF_PNP_ID = "00002a50-0000-1000-8000-00805f9b34fb"
-
-    # GoPro Wifi Access Point Service
-    S_WIFI_ACCESS_POINT = GOPRO_BASE_UUID.format("0001")
-    WAP_SSID = GOPRO_BASE_UUID.format("0002")
-    WAP_PASSWORD = GOPRO_BASE_UUID.format("0003")
-    WAP_POWER = GOPRO_BASE_UUID.format("0004")
-    WAP_STATE = GOPRO_BASE_UUID.format("0005")
-    WAP_CSI_PASSWORD = GOPRO_BASE_UUID.format("0006")
-
-    # GoPro Control & Query Service
-    S_CONTROL_QUERY = "0000fea6-0000-1000-8000-00805f9b34fb"
-    CQ_COMMAND = GOPRO_BASE_UUID.format("0072")
-    CQ_COMMAND_RESP = GOPRO_BASE_UUID.format("0073")
-    CQ_SETTINGS = GOPRO_BASE_UUID.format("0074")
-    CQ_SETTINGS_RESP = GOPRO_BASE_UUID.format("0075")
-    CQ_QUERY = GOPRO_BASE_UUID.format("0076")
-    CQ_QUERY_RESP = GOPRO_BASE_UUID.format("0077")
-    CQ_SENSOR = GOPRO_BASE_UUID.format("0078")
-    CQ_SENSOR_RESP = GOPRO_BASE_UUID.format("0079")
-
-    # GoPro Camera Management Service
-    S_CAMERA_MANAGEMENT = GOPRO_BASE_UUID.format("0090")
-    CM_NET_MGMT_COMM = GOPRO_BASE_UUID.format("0091")
-    CN_NET_MGMT_RESP = GOPRO_BASE_UUID.format("0092")
-
-    # Unknown
-    S_UNKNOWN = GOPRO_BASE_UUID.format("0080")
-    INTERNAL_81 = GOPRO_BASE_UUID.format("0081")
-    INTERNAL_82 = GOPRO_BASE_UUID.format("0082")
-    INTERNAL_83 = GOPRO_BASE_UUID.format("0083")
-    INTERNAL_84 = GOPRO_BASE_UUID.format("0084")
-
-
 class CmdId(enum.Enum):
     """Command ID's that are written to UUID.CQ_COMMAND."""
 
     SET_SHUTTER = 0x01
+    POWER_DOWN = 0x04
+    SLEEP = 0x05
     SET_PAIRING_COMPLETE = 0x03
-    GET_CAMERA_STATUS = 0x13
+    GET_CAMERA_SETTINGS = 0x12
+    GET_CAMERA_STATUSES = 0x13
     SET_WIFI = 0x17
     GET_SETTINGS_JSON = 0x3B
     GET_HW_INFO = 0x3C
+    LOAD_PRESET_GROUP = 0x3E
     LOAD_PRESET = 0x40
     SET_THIRD_PARTY_CLIENT_INFO = 0x50
     GET_THIRD_PARTY_API_VERSION = 0x51
@@ -129,7 +69,7 @@ class SettingId(enum.Enum):
     INTERNAL_47 = 47
     INTERNAL_48 = 48
     INTERNAL_54 = 54
-    INTERNAL_59 = 59
+    AUTO_OFF = 59
     INTERNAL_60 = 60
     INTERNAL_61 = 61
     INTERNAL_62 = 62
@@ -137,6 +77,8 @@ class SettingId(enum.Enum):
     INTERNAL_65 = 65
     INTERNAL_66 = 66
     INTERNAL_67 = 67
+    INTERNAL_68 = 68
+    INTERNAL_69 = 69
     INTERNAL_75 = 75
     INTERNAL_76 = 76
     INTERNAL_79 = 79
@@ -175,7 +117,7 @@ class SettingId(enum.Enum):
     INTERNAL_134 = 134
     INTERNAL_135 = 135
     INTERNAL_139 = 139
-    FLATMODE = 144
+    INTERNAL_144 = 144
     INTERNAL_145 = 145
     INTERNAL_146 = 146
     INTERNAL_147 = 147
@@ -319,7 +261,11 @@ class StatusId(enum.Enum):
     SCHEDULED_CAPTURE = 108
     CREATING_PRESET = 109
     MEDIA_MOD_STAT = 110
+    SD_RATING_CHECK_ERROR = 111
+    SD_WRITE_SPEED_ERROR = 112
     TURBO_MODE = 113
+    CAMERA_CONTROL = 114
+    USB_CONNECTED = 115
 
 
 ProducerType = Tuple[QueryCmdId, Union[SettingId, StatusId]]

@@ -1,0 +1,58 @@
+# python_sdk_regression.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:35 PM
+
+# Nightly regression testing
+
+name: Python SDK Nightly Regression Testing
+
+on:
+    schedule:
+        - cron: 0 23 * * *
+
+jobs:
+    build_and_test:
+        runs-on: [self-hosted, local]
+        strategy:
+            matrix:
+                python-version: [3.8]
+
+        steps:
+            - name: Clean workspace
+              run: Remove-Item -Recurse -Force "${{ github.workspace }}\*"
+
+            - name: Checkout source branch
+              uses: actions/checkout@v2
+
+            - name: Set up Python ${{ matrix.python-version }}
+              uses: actions/setup-python@v2
+              with:
+                  python-version: ${{ matrix.python-version }}
+
+            - name: Install dependencies
+              working-directory: ./demos/python/sdk_wireless_camera_control/
+              run: |
+                  python -m pip install --upgrade pip wheel
+                  pip install .
+                  pip install -r requirements-dev.txt
+
+            - name: Run regression tests
+              working-directory: ./demos/python/sdk_wireless_camera_control/
+              timeout-minutes: 4
+              run: |
+                make unit_tests
+                make e2e_tests
+
+            - name: Archive code coverage results
+              uses: actions/upload-artifact@v2
+              with:
+                  name: code-coverage-report
+                  path: ./demos/python/sdk_wireless_camera_control/reports/coverage
+                  retention-days: 2
+
+            - name: Archive test report on failure
+              uses: actions/upload-artifact@v2
+              if: failure()
+              with:
+                  name: test-reports
+                  path: ./demos/python/sdk_wireless_camera_control/reports/
+                  retention-days: 2

@@ -1,21 +1,114 @@
-# github-pages.yml/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Fri, Jul 30, 2021  5:20:49 PM
+# github-pages.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:34 PM
 
 name: Jekyll Build and Deploy
 
 on:
     push:
-        branches:
-            - main
+        branches: [main, develop]
+    workflow_dispatch:
 
 jobs:
+    check:
+        name: Check modified files for Python SDK changes
+        runs-on: ubuntu-latest
+        outputs:
+            run_job: ${{ steps.check_files.outputs.run_job }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+              with:
+                  fetch-depth: 2
+
+            - name: Analyze modified files
+              id: check_files
+              run: |
+                  echo "=============== list modified files ==============="
+                  git diff --name-only HEAD^ HEAD
+                  echo
+                  git diff --name-only HEAD^ HEAD >files.txt
+                  while IFS= read -r file; do
+                      if [[ $file != demos/python/sdk_wireless_camera_control* ]]; then
+                          echo "::set-output name=run_job::false"
+                      else
+                          echo "Found a Python SDK modified file"
+                          echo "::set-output name=run_job::true"
+                          break
+                      fi
+                  done <files.txt
+
+    python_sdk:
+        name: Build and Deploy Python SDK
+        needs: check
+        if: needs.check.outputs.run_job == 'true'
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [macos-latest]
+                include:
+                    - os: macos-latest
+                      path: ~/Library/Caches/pip
+
+        steps:
+            - name: Checkout source branch
+              uses: actions/checkout@v2
+              with:
+                  path: source
+
+            - name: Set up Python 3.8.8
+              uses: actions/setup-python@v2
+              with:
+                  python-version: 3.8.8
+
+            - name: Restore cached pip environment
+              uses: actions/cache@v2
+              with:
+                  path: ${{ matrix.path }}
+                  key: ${{ runner.os }}-3.8.8-pip-${{ hashFiles('demos/python/sdk_wireless_camera_control/setup.py') }}-${{ hashFiles('demos/python/sdk_wireless_camera_control/requirements-dev.txt') }}
+                  restore-keys: |
+                      ${{ runner.os }}-pip-
+
+            - name: Install dependencies
+              working-directory: ./source/demos/python/sdk_wireless_camera_control/
+              run: |
+                  python -m pip install --upgrade pip wheel
+                  pip install .
+                  pip install -r requirements-dev.txt
+
+            - name: Build Sphinx Documentation
+              working-directory: ./source/demos/python/sdk_wireless_camera_control/
+              run: |
+                  make sphinx
+
+            - name: Checkout target branch
+              uses: actions/checkout@v2
+              with:
+                  ref: gh-pages
+                  path: target
+
+            - name: Deploy to Github Pages
+              run: |
+                  rm -rf ./target/python_sdk
+                  mkdir -p ./target/python_sdk
+                  cp -r ./source/demos/python/sdk_wireless_camera_control/docs/build/. ./target/python_sdk
+                  cd  ./target/python_sdk
+                  git add .
+                  git config user.name github-actions
+                  git config user.email github-actions@github.com
+                  git commit --allow-empty -m "sphinx build from Action ${GITHUB_SHA}"
+                  git push
+
     jekyll:
+        name: Build and Deploy Jekyll Site
+        needs: [check, python_sdk]
+        if: always()
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - name: Checkout the repo
+              uses: actions/checkout@v2
 
-            # Cache the built Ruby gem bundle using the Gemfile as the key
-            - uses: actions/cache@v2
+            - name: Restore Ruby gems cache
+              uses: actions/cache@v2
               with:
                   path: docs/vendor/bundle
                   key: ${{ runner.os }}-gems-${{ hashFiles('**/docs/Gemfile') }}
@@ -26,7 +119,7 @@ jobs:
               shell: bash
               run: make prepare_demos
 
-            - name: Build and Deploy External
+            - name: Build and Deploy External Github Pages
               if: ${{ github.repository == 'gopro/OpenGoPro' }}
               uses: helaili/jekyll-action@2.2.0
               with:
@@ -35,7 +128,7 @@ jobs:
                   target_branch: 'gh-pages'
                   jekyll_build_options: '--baseurl /OpenGoPro'
 
-            - name: Build and Deploy Internal
+            - name: Build and Deploy Internal Github Pages
               if: ${{ github.repository != 'gopro/OpenGoPro' }}
               uses: helaili/jekyll-action@2.2.0
               with:

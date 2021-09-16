@@ -1,5 +1,5 @@
-/* karma.conf.js/Open GoPro, Version 1.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Wed, Sep  8, 2021 11:42:07 AM */
+/* karma.conf.js/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
+/* This copyright was auto-generated on Wed Sep  8 21:37:26 UTC 2021 */
 
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
