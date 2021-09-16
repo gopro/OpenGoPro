@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
   Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
@@ -73,22 +73,8 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
-
-<!--[if IE]>
-  <style>
-    /* old IE unsupported flexbox fixes */
-    .greedy-nav .site-title {
-      padding-right: 3em;
-    }
-    .greedy-nav button {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-    }
-  </style>
-<![endif]-->
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
 
 
   
@@ -96,6 +82,9 @@
   
     <script src="/OpenGoPro/assets/js/quiz.js"></script>
   
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
 
     <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
@@ -111,7 +100,6 @@
 
   <body class="layout--single">
     <nav class="skip-links">
-  <h2 class="screen-reader-text">Skip links</h2>
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
     <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
@@ -141,13 +129,10 @@
               <a href="/OpenGoPro/">Home</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="https://github.com/gopro/OpenGoPro">View on Github</a>
+              <a href="/OpenGoPro/ble">BLE Specs</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/ble">BLE Spec</a>
-            </li>
-<li class="masthead__menu-item">
-              <a href="/OpenGoPro/wifi">WiFi Spec</a>
+              <a href="/OpenGoPro/wifi">WiFi Specs</a>
             </li>
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/tutorials">Tutorials</a>
@@ -155,13 +140,14 @@
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/demos">Demos</a>
             </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
 </ul>
         
         <button class="search__toggle" type="button">
           <span class="visually-hidden">Toggle search</span>
-          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15.99 16">
-            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
-          </svg>
+          <i class="fas fa-search"></i>
         </button>
         
         <button class="greedy-nav__toggle hidden" type="button">
@@ -356,7 +342,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          5 minute read
+          6 minute read
         
       </span>
     
@@ -388,6 +374,7 @@
 <li><a href="#tips">Tips</a></li>
 </ul>
 </li>
+<li><a href="#collapsible-accordion">Collapsible Accordion</a></li>
 <li><a href="#quiz">Quiz</a></li>
 <li><a href="#tabs">Tabs</a></li>
 <li>
@@ -501,6 +488,24 @@ default markdown syntax via:</p>
   <p>I’m a simple callout</p>
 </blockquote>
 
+<h3 id="collapsible-accordion">Collapsible Accordion</h3>
+
+<p>Collapsible accordion sections can be added, for example with use for FAQ’s via:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% accordion
+  question="Question"
+  answer="Answer"
+%}
+
+</code></pre></div></div>
+
+<p>Here is an example:</p>
+
+<div class="accordion-container">
+    <button class="accordion">Question</button>
+    <div class="panel"><p>Answer</p></div>
+</div>
+
 <h3 id="quiz">Quiz</h3>
 
 <p>Multiple choice quizzes via:</p>
@@ -515,10 +520,10 @@ default markdown syntax via:</p>
 %}
 </code></pre></div></div>
 
-<div id="quiz_1092be9a-8038-4825-bb4e-f955bbacb176" class="quiz">
+<div id="quiz_b1b42cb9-829f-4eaa-91a4-bc83c56ac91b" class="quiz">
     <div>
-        <div id="question_1092be9a-8038-4825-bb4e-f955bbacb176" class="quiz__question">What is the question?</div>
-        <div id="answers_1092be9a-8038-4825-bb4e-f955bbacb176">
+        <div id="question_b1b42cb9-829f-4eaa-91a4-bc83c56ac91b" class="quiz__question">What is the question?</div>
+        <div id="answers_b1b42cb9-829f-4eaa-91a4-bc83c56ac91b">
         
             <input type="radio" name="question" value="A"><label>A: Option 1 (this one is correct)</label>
             <br>
@@ -531,10 +536,10 @@ default markdown syntax via:</p>
         
         </div>
     </div>
-    <button onclick="showResults('1092be9a-8038-4825-bb4e-f955bbacb176', 'A')">Submit Answer</button>
-    <div id="results_1092be9a-8038-4825-bb4e-f955bbacb176" style="display: none">
-        <span id="correct_1092be9a-8038-4825-bb4e-f955bbacb176" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_1092be9a-8038-4825-bb4e-f955bbacb176" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('b1b42cb9-829f-4eaa-91a4-bc83c56ac91b', 'A')">Submit Answer</button>
+    <div id="results_b1b42cb9-829f-4eaa-91a4-bc83c56ac91b" style="display: none">
+        <span id="correct_b1b42cb9-829f-4eaa-91a4-bc83c56ac91b" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_b1b42cb9-829f-4eaa-91a4-bc83c56ac91b" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         And here is some more info
     </div>
 </div>
@@ -550,10 +555,10 @@ default markdown syntax via:</p>
 %}
 </code></pre></div></div>
 
-<div id="quiz_be0b5289-575d-454a-bc17-973218438361" class="quiz">
+<div id="quiz_c2993228-12aa-49d5-bdcd-685db55618a6" class="quiz">
     <div>
-        <div id="question_be0b5289-575d-454a-bc17-973218438361" class="quiz__question">True or False?</div>
-        <div id="answers_be0b5289-575d-454a-bc17-973218438361">
+        <div id="question_c2993228-12aa-49d5-bdcd-685db55618a6" class="quiz__question">True or False?</div>
+        <div id="answers_c2993228-12aa-49d5-bdcd-685db55618a6">
         
             <input type="radio" name="question" value="True"><label>True: Option 1(this one is correct)</label>
             <br>
@@ -563,10 +568,10 @@ default markdown syntax via:</p>
         
         </div>
     </div>
-    <button onclick="showResults('be0b5289-575d-454a-bc17-973218438361', 'True')">Submit Answer</button>
-    <div id="results_be0b5289-575d-454a-bc17-973218438361" style="display: none">
-        <span id="correct_be0b5289-575d-454a-bc17-973218438361" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_be0b5289-575d-454a-bc17-973218438361" style="display: none"> Incorrect!! 😭 The correct answer is True.</span>
+    <button onclick="showResults('c2993228-12aa-49d5-bdcd-685db55618a6', 'True')">Submit Answer</button>
+    <div id="results_c2993228-12aa-49d5-bdcd-685db55618a6" style="display: none">
+        <span id="correct_c2993228-12aa-49d5-bdcd-685db55618a6" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_c2993228-12aa-49d5-bdcd-685db55618a6" style="display: none"> Incorrect!! 😭 The correct answer is True.</span>
         And here is some more info
     </div>
 </div>
@@ -589,7 +594,7 @@ This is the content of the third tab.
 </code></pre></div></div>
 
 <div>
-    <ul class="tab" data-tab="bd74e2a4-2f2f-4b6c-9bc9-039d361bc2c5">
+    <ul class="tab" data-tab="c8d0509f-ad4e-42d9-a2dc-e0eae9941216">
         
             <li class="active">
                 <a href="">tab1 </a>
@@ -604,7 +609,7 @@ This is the content of the third tab.
             </li>
         
         </ul>
-        <ul class="tab-content" id="bd74e2a4-2f2f-4b6c-9bc9-039d361bc2c5">
+        <ul class="tab-content" id="c8d0509f-ad4e-42d9-a2dc-e0eae9941216">
         
             <li class="active">
 <p>This is the content of the first tab.</p>
@@ -940,7 +945,7 @@ Orange</td>
     <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
     <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
     <p>
-        Can be used with GoPro® HERO9 cameras. You must include the following text on
+        Can be used with GoPro® HERO9 and HERO10 cameras. You must include the following text on
         every page where it can be seen by someone purchasing such an item: <em>"This product
         and/or service is not affiliated with, endorsed by or in any way associated with
         GoPro Inc. or its products and services. GoPro, HERO, and their respective logos

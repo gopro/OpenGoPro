@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
   Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2021-09-10T13:33:55-07:00">
+  <meta property="article:published_time" content="2021-09-16T08:07:33-07:00">
 
 
 
@@ -77,22 +77,8 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
-
-<!--[if IE]>
-  <style>
-    /* old IE unsupported flexbox fixes */
-    .greedy-nav .site-title {
-      padding-right: 3em;
-    }
-    .greedy-nav button {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-    }
-  </style>
-<![endif]-->
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
 
 
   
@@ -100,6 +86,9 @@
   
     <script src="/OpenGoPro/assets/js/quiz.js"></script>
   
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
 
     <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
@@ -115,7 +104,6 @@
 
   <body class="layout--single">
     <nav class="skip-links">
-  <h2 class="screen-reader-text">Skip links</h2>
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
     <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
@@ -145,13 +133,10 @@
               <a href="/OpenGoPro/">Home</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="https://github.com/gopro/OpenGoPro">View on Github</a>
+              <a href="/OpenGoPro/ble">BLE Specs</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/ble">BLE Spec</a>
-            </li>
-<li class="masthead__menu-item">
-              <a href="/OpenGoPro/wifi">WiFi Spec</a>
+              <a href="/OpenGoPro/wifi">WiFi Specs</a>
             </li>
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/tutorials">Tutorials</a>
@@ -159,13 +144,14 @@
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/demos">Demos</a>
             </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
 </ul>
         
         <button class="search__toggle" type="button">
           <span class="visually-hidden">Toggle search</span>
-          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15.99 16">
-            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
-          </svg>
+          <i class="fas fa-search"></i>
         </button>
         
         <button class="greedy-nav__toggle hidden" type="button">
@@ -434,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 6: Send WiFi Commands">
     <meta itemprop="description" content="Python Tutorial 6: Send WiFi Commands">
-    <meta itemprop="datePublished" content="2021-09-10T13:33:55-07:00">
+    <meta itemprop="datePublished" content="2021-09-16T08:07:33-07:00">
     
 
     <div class="page__inner-wrap">
@@ -456,7 +442,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          11 minute read
+          13 minute read
         
       </span>
     
@@ -478,6 +464,7 @@
 <li><a href="#setup">Setup</a></li>
 <li>
 <a href="#sending-http-commands-with-json-responses">Sending HTTP Commands with JSON Responses</a><ul>
+<li><a href="#get-open-gopro-version">Get Open GoPro Version</a></li>
 <li><a href="#digital-zoom">Digital Zoom</a></li>
 <li><a href="#get-state">Get State</a></li>
 <li><a href="#preview-stream">Preview Stream</a></li>
@@ -485,6 +472,7 @@
 <li><a href="#load-preset">Load Preset</a></li>
 <li><a href="#get-preset-status">Get Preset Status</a></li>
 <li><a href="#keep-alive">Keep Alive</a></li>
+<li><a href="#set-shutter">Set Shutter</a></li>
 <li><a href="#set-setting">Set Setting</a></li>
 </ul>
 </li>
@@ -516,7 +504,7 @@ JSON responses that work with the media list), see the <a href="/OpenGoPro/tutor
 <p>It is assumed that the hardware and software requirements from the <a href="/OpenGoPro/tutorials/python/connect-ble#requirements">connect tutorial</a>
 are present and configured correctly.</p>
 
-<p>The scripts that will be used for this tutorial can be found at in the
+<p>The scripts that will be used for this tutorial can be found in the
 <a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_6_send_wifi_commands">Tutorial 6 Folder</a>.</p>
 
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
@@ -571,9 +559,48 @@ GoPro must be observed to verify when the command's effects have been applied.</
 <i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  We are building the endpoints using the GOPRO_BASE_URL defined in the tutorial package's `__init__.py`</span>
 </div>
 
-<h2 id="digital-zoom">Digital Zoom</h2>
+<h2 id="get-open-gopro-version">Get Open GoPro Version</h2>
 
 <p>The first command we will be sending is
+<a href="/OpenGoPro/wifi#commands-quick-reference">Get Version</a>. This should be the first command you send
+after connecting.</p>
+
+<div class="warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142;margin: 0.25em;"></i><span>  It is imperative to know the Open GoPro version that the connected camera supports as setting values,
+endpoints, and more differ between versions</span>
+</div>
+
+<p>Let’s build the endpoint first send the Keep Alive signal:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"/gopro/version
+</span></code></pre></div></div>
+
+<p>Now we send the GET request and check the response for errors. Any errors will raise an exception.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Lastly, we print the response’s JSON data (nicely formatted with indent 4 using the <code class="language-plaintext highlighter-rouge">json</code> module):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This will log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Getting the Open GoPro version: sending http://10.5.5.9:8080/gopro/version
+INFO\:root\:Command sent successfully
+INFO\:root\:Response: {
+    "version": "2.0"
+}
+</span></code></pre></div></div>
+
+<p>In this case, this camera supports version 2.0 of the Open GoPro spec. We will an example of why this is important in the Set Setting section
+<a href="#set-setting">below</a>.</p>
+
+<h2 id="digital-zoom">Digital Zoom</h2>
+
+<p>The next command we will be sending is
 <a href="/OpenGoPro/wifi#commands-quick-reference">Digital Zoom</a>. The camera
 must be in the <a href="/OpenGoPro/tutorials/python/send-ble-commands#load-preset-group">Photo Preset Group</a>
 for this command to succeed. The commands writes to the following endpoint:</p>
@@ -610,7 +637,7 @@ INFO\:root\:Response: {}
 <h2 id="get-state">Get State</h2>
 
 <div>
-    <ul class="tab" data-tab="4ec74b68-f2f0-4eae-874f-8ca8496ec91c">
+    <ul class="tab" data-tab="da3eddfa-cc11-475b-9615-b590c0f48a6b">
         
             <li class="active">
                 <a href="">Send Request </a>
@@ -621,7 +648,7 @@ INFO\:root\:Response: {}
             </li>
         
         </ul>
-        <ul class="tab-content" id="4ec74b68-f2f0-4eae-874f-8ca8496ec91c">
+        <ul class="tab-content" id="da3eddfa-cc11-475b-9615-b590c0f48a6b">
         
             <li class="active">
 <p>The next command we will be sending is
@@ -712,7 +739,7 @@ INFO\:root\:Response: {
 <h2 id="preview-stream">Preview Stream</h2>
 
 <div>
-    <ul class="tab" data-tab="f87c266f-8d7d-4d82-9840-6f8eba9ad706">
+    <ul class="tab" data-tab="a173e690-ce68-4cda-9a2a-f89d36866aa0">
         
             <li class="active">
                 <a href="">Send Request </a>
@@ -723,7 +750,7 @@ INFO\:root\:Response: {
             </li>
         
         </ul>
-        <ul class="tab-content" id="f87c266f-8d7d-4d82-9840-6f8eba9ad706">
+        <ul class="tab-content" id="a173e690-ce68-4cda-9a2a-f89d36866aa0">
         
             <li class="active">
 <p>The next command we will be sending is
@@ -927,7 +954,7 @@ this by seeing the preset name in the pill at bottom middle of the screen.</p>
 <h2 id="get-preset-status">Get Preset Status</h2>
 
 <div>
-    <ul class="tab" data-tab="5bd3f854-6422-484f-b225-d1fb40a0b3f0">
+    <ul class="tab" data-tab="1b486e71-a64b-4766-85a9-e4c595080e87">
         
             <li class="active">
                 <a href="">Send Request </a>
@@ -938,7 +965,7 @@ this by seeing the preset name in the pill at bottom middle of the screen.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="5bd3f854-6422-484f-b225-d1fb40a0b3f0">
+        <ul class="tab-content" id="1b486e71-a64b-4766-85a9-e4c595080e87">
         
             <li class="active">
 <p>The next command we will be sending is
@@ -1087,6 +1114,44 @@ INFO\:root\:Response: {}
 <i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  It is recommended to send a keep-alive at least once every 120 seconds.</span>
 </div>
 
+<h2 id="set-shutter">Set Shutter</h2>
+
+<p>The next command we will be sending is
+<a href="/OpenGoPro/wifi#commands-quick-reference">Set Shutter</a>. which is
+used to start and stop encoding.</p>
+
+<p>Let’s build the endpoint first send the Set Shutter signal:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"/gopro/camera/shutter/start"</span>
+</code></pre></div></div>
+
+<p>Now we send the GET request and check the response for errors. Any errors will raise an exception.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  This command does not return a JSON response so we don't print the response</span>
+</div>
+
+<p>This will log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Turning the shutter on: sending http://10.5.5.9:8080/gopro/camera/shutter/start
+INFO\:root\:Command sent successfully
+</span></code></pre></div></div>
+
+<p>We then wait a few seconds and repeat the above procedure to set the shutter off. This time we use the following
+URL:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"/gopro/camera/shutter/stop"</span>
+</code></pre></div></div>
+
+<div class="warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142;margin: 0.25em;"></i><span>  The shutter can not be set on if the camera is encoding or set off if the camera is not encoding. An
+attempt to do so will result in an error response.</span>
+</div>
+
 <h2 id="set-setting">Set Setting</h2>
 
 <p>The next command will be sending is <a href="/OpenGoPro/wifi#settings-quick-reference">Set Setting</a>.
@@ -1098,10 +1163,40 @@ certain FPS values are not valid with certain resolutions. In general, higher re
 only allow lower FPS values. Check the <a href="/OpenGoPro/ble#camera-capabilities">camera capabilities</a>
 to see which settings are valid for given use cases.</p>
 
-<p>Let’s build the endpoint first to set the Video Resolution to 1080 (the setting_id and opt_value comes from the command table linked above):</p>
+<div class="tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  The following endpoint is different between Open GoPro 1.0 and 2.0.</span>
+</div>
 
+<p>Let’s build the endpoint first to set the Video Resolution to 1080 (the setting_id and opt_value comes from the command table linked above). Click the relevant tab for the desired Open GoPro Version.</p>
+
+<div>
+    <ul class="tab" data-tab="f4978b26-ad39-475a-ab2a-2abae38270e8">
+        
+            <li class="active">
+                <a href="">Version 1.0 </a>
+            </li>
+        
+            <li>
+                <a href="">Version 2.0 </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="f4978b26-ad39-475a-ab2a-2abae38270e8">
+        
+            <li class="active">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"/gopro/camera/setting?setting_id=2&amp;opt_value=9"</span>
 </code></pre></div></div>
+
+</li>
+        
+            <li>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"/gopro/camera/setting?setting=2&amp;option=9"</span>
+</code></pre></div></div>
+
+</li>
+        
+    </ul>
+</div>
 
 <p>Now we send the GET request and check the response for errors. Any errors will raise an exception.</p>
 
@@ -1147,10 +1242,10 @@ screen:</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_e87c53cb-dc92-466a-8053-9ddc1df71318" class="quiz">
+<div id="quiz_8ff94ad6-71fe-4377-9704-294f21654ba7" class="quiz">
     <div>
-        <div id="question_e87c53cb-dc92-466a-8053-9ddc1df71318" class="quiz__question">What is the significance of empty JSON in an HTTP response?</div>
-        <div id="answers_e87c53cb-dc92-466a-8053-9ddc1df71318">
+        <div id="question_8ff94ad6-71fe-4377-9704-294f21654ba7" class="quiz__question">What is the significance of empty JSON in an HTTP response?</div>
+        <div id="answers_8ff94ad6-71fe-4377-9704-294f21654ba7">
         
             <input type="radio" name="question" value="A"><label>A: Always an error! The command was not received correctly.</label>
             <br>
@@ -1163,19 +1258,19 @@ screen:</p>
         
         </div>
     </div>
-    <button onclick="showResults('e87c53cb-dc92-466a-8053-9ddc1df71318', 'B')">Submit Answer</button>
-    <div id="results_e87c53cb-dc92-466a-8053-9ddc1df71318" style="display: none">
-        <span id="correct_e87c53cb-dc92-466a-8053-9ddc1df71318" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_e87c53cb-dc92-466a-8053-9ddc1df71318" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('8ff94ad6-71fe-4377-9704-294f21654ba7', 'B')">Submit Answer</button>
+    <div id="results_8ff94ad6-71fe-4377-9704-294f21654ba7" style="display: none">
+        <span id="correct_8ff94ad6-71fe-4377-9704-294f21654ba7" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_8ff94ad6-71fe-4377-9704-294f21654ba7" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is common for the JSON response to be empty if the command was received successfully
     but there is no additional information to return at the current time.
     </div>
 </div>
 
-<div id="quiz_7b2e527a-f910-494e-9004-7231f9d08433" class="quiz">
+<div id="quiz_298c338e-5cc6-418c-a249-91c81d6a4a48" class="quiz">
     <div>
-        <div id="question_7b2e527a-f910-494e-9004-7231f9d08433" class="quiz__question">What of the following is not a real preset group?</div>
-        <div id="answers_7b2e527a-f910-494e-9004-7231f9d08433">
+        <div id="question_298c338e-5cc6-418c-a249-91c81d6a4a48" class="quiz__question">Which of the of the following is not a real preset group?</div>
+        <div id="answers_298c338e-5cc6-418c-a249-91c81d6a4a48">
         
             <input type="radio" name="question" value="A"><label>A: Timelapse</label>
             <br>
@@ -1191,19 +1286,19 @@ screen:</p>
         
         </div>
     </div>
-    <button onclick="showResults('7b2e527a-f910-494e-9004-7231f9d08433', 'C')">Submit Answer</button>
-    <div id="results_7b2e527a-f910-494e-9004-7231f9d08433" style="display: none">
-        <span id="correct_7b2e527a-f910-494e-9004-7231f9d08433" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_7b2e527a-f910-494e-9004-7231f9d08433" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('298c338e-5cc6-418c-a249-91c81d6a4a48', 'C')">Submit Answer</button>
+    <div id="results_298c338e-5cc6-418c-a249-91c81d6a4a48" style="display: none">
+        <span id="correct_298c338e-5cc6-418c-a249-91c81d6a4a48" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_298c338e-5cc6-418c-a249-91c81d6a4a48" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There are 3 preset groups (Timelapse, Photo, and Video). These can be
     set via the Load Preset Group command.
     </div>
 </div>
 
-<div id="quiz_fb71fbcb-6e4c-47fb-b2cc-faf362b52e80" class="quiz">
+<div id="quiz_35e9f2b0-8a62-41b8-b829-fd5be93c7dcc" class="quiz">
     <div>
-        <div id="question_fb71fbcb-6e4c-47fb-b2cc-faf362b52e80" class="quiz__question">What of the following sets of FPS values are possible at 5K?</div>
-        <div id="answers_fb71fbcb-6e4c-47fb-b2cc-faf362b52e80">
+        <div id="question_35e9f2b0-8a62-41b8-b829-fd5be93c7dcc" class="quiz__question">What of the following sets of FPS values are possible at 5K?</div>
+        <div id="answers_35e9f2b0-8a62-41b8-b829-fd5be93c7dcc">
         
             <input type="radio" name="question" value="A"><label>A: [24, 25, 30]</label>
             <br>
@@ -1219,12 +1314,12 @@ screen:</p>
         
         </div>
     </div>
-    <button onclick="showResults('fb71fbcb-6e4c-47fb-b2cc-faf362b52e80', 'A')">Submit Answer</button>
-    <div id="results_fb71fbcb-6e4c-47fb-b2cc-faf362b52e80" style="display: none">
-        <span id="correct_fb71fbcb-6e4c-47fb-b2cc-faf362b52e80" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_fb71fbcb-6e4c-47fb-b2cc-faf362b52e80" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('35e9f2b0-8a62-41b8-b829-fd5be93c7dcc', 'A')">Submit Answer</button>
+    <div id="results_35e9f2b0-8a62-41b8-b829-fd5be93c7dcc" style="display: none">
+        <span id="correct_35e9f2b0-8a62-41b8-b829-fd5be93c7dcc" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_35e9f2b0-8a62-41b8-b829-fd5be93c7dcc" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         Among these options, only 24 is possible. You're not actually expected to know
-    this. But you should know where to find the information: https://github.com/gopro/OpenGoPro/tree/main/docs/ble#camera-capabilities
+    this. But you should know where to find the information: https://gopro.github.io/OpenGoPro/ble#camera-capabilities
     </div>
 </div>
 
@@ -1276,7 +1371,7 @@ next tutorial to see how to get and perform operations using the media list.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-09-10T13:33:55-07:00">September 10, 2021</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-09-16T08:07:33-07:00">September 16, 2021</time></p>
 
 
       </footer>
@@ -1362,7 +1457,7 @@ next tutorial to see how to get and perform operations using the media list.</p>
     <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
     <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
     <p>
-        Can be used with GoPro® HERO9 cameras. You must include the following text on
+        Can be used with GoPro® HERO9 and HERO10 cameras. You must include the following text on
         every page where it can be seen by someone purchasing such an item: <em>"This product
         and/or service is not affiliated with, endorsed by or in any way associated with
         GoPro Inc. or its products and services. GoPro, HERO, and their respective logos

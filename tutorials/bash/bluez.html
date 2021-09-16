@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
   Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2021-09-10T13:33:55-07:00">
+  <meta property="article:published_time" content="2021-09-16T08:07:33-07:00">
 
 
 
@@ -77,22 +77,8 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
-
-<!--[if IE]>
-  <style>
-    /* old IE unsupported flexbox fixes */
-    .greedy-nav .site-title {
-      padding-right: 3em;
-    }
-    .greedy-nav button {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-    }
-  </style>
-<![endif]-->
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
 
 
   
@@ -100,6 +86,9 @@
   
     <script src="/OpenGoPro/assets/js/quiz.js"></script>
   
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
 
     <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
@@ -115,7 +104,6 @@
 
   <body class="layout--single">
     <nav class="skip-links">
-  <h2 class="screen-reader-text">Skip links</h2>
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
     <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
@@ -145,13 +133,10 @@
               <a href="/OpenGoPro/">Home</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="https://github.com/gopro/OpenGoPro">View on Github</a>
+              <a href="/OpenGoPro/ble">BLE Specs</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/ble">BLE Spec</a>
-            </li>
-<li class="masthead__menu-item">
-              <a href="/OpenGoPro/wifi">WiFi Spec</a>
+              <a href="/OpenGoPro/wifi">WiFi Specs</a>
             </li>
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/tutorials">Tutorials</a>
@@ -159,13 +144,14 @@
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/demos">Demos</a>
             </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
 </ul>
         
         <button class="search__toggle" type="button">
           <span class="visually-hidden">Toggle search</span>
-          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15.99 16">
-            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
-          </svg>
+          <i class="fas fa-search"></i>
         </button>
         
         <button class="greedy-nav__toggle hidden" type="button">
@@ -358,7 +344,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="BlueZ Bash Tutorial">
     <meta itemprop="description" content="BlueZ Bash Tutorial">
-    <meta itemprop="datePublished" content="2021-09-10T13:33:55-07:00">
+    <meta itemprop="datePublished" content="2021-09-16T08:07:33-07:00">
     
 
     <div class="page__inner-wrap">
@@ -449,7 +435,7 @@ After completing this tutorial, you will need to reference it for future develop
 <h2 id="software">Software</h2>
 
 <ol>
-  <li>BlueZ must be installed. Follow the steps <a href="https://computingforgeeks.com/connect-to-bluetooth-device-from-linux-terminal/">here</a>
+  <li>BlueZ must be installed. Follow the steps <a href="https://www.maketecheasier.com/setup-bluetooth-in-linux/">here</a>
 </li>
 </ol>
 
@@ -502,7 +488,7 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
 <h2 id="scan">Scan</h2>
 
 <div>
-    <ul class="tab" data-tab="3c721e93-4b75-4cfd-a214-c145c21e526e">
+    <ul class="tab" data-tab="846463e1-ade4-4904-9691-6cd0f693e6d8">
         
             <li class="active">
                 <a href="">code </a>
@@ -521,7 +507,7 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="3c721e93-4b75-4cfd-a214-c145c21e526e">
+        <ul class="tab-content" id="846463e1-ade4-4904-9691-6cd0f693e6d8">
         
             <li class="active">
 <p>Next, we must find the GoPro Camera using bleak. Let’s initialize an empty dict that will
@@ -551,11 +537,11 @@ We are keeping any devices that have a device name.</p>
 device name will be structured as <code class="language-plaintext highlighter-rouge">GoPro XXXX</code> where XXXX is the last four digits of
 your camera’s serial number.</p>
 
-<p>First, we define a regex which is either “GoPro “ followed by any four digits if no identifier was passed,
+<p>First, we define a regex which is either “GoPro “ followed by any four alphanumeric characters if no identifier was passed,
 or “GoPro “ concatenated with the identifier if it exists. In the demo <code class="language-plaintext highlighter-rouge">ble_connect.py</code>, the identifier is taken
 from the command-line arguments.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">token</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s">"GoPro \d\d\d\d"</span> <span class="k">if</span> <span class="n">identifier</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="sa">f</span><span class="s">"GoPro </span><span class="si">{</span><span class="n">identifier</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">token</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s">"GoPro [A-Z0-9]{4}"</span> <span class="k">if</span> <span class="n">identifier</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="sa">f</span><span class="s">"GoPro </span><span class="si">{</span><span class="n">identifier</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Now we build a list of matched devices by checking if each device’s name includes the token regex.</p>
@@ -629,7 +615,7 @@ in the example above). This is how the camera will be identified via <code class
 <h2 id="connect">Connect</h2>
 
 <div>
-    <ul class="tab" data-tab="80eb5304-99f4-47ec-8468-e22bb4d58136">
+    <ul class="tab" data-tab="8fe91d44-7162-43f5-9600-5c6cb6746859">
         
             <li class="active">
                 <a href="">Input </a>
@@ -640,7 +626,7 @@ in the example above). This is how the camera will be identified via <code class
             </li>
         
         </ul>
-        <ul class="tab-content" id="80eb5304-99f4-47ec-8468-e22bb4d58136">
+        <ul class="tab-content" id="8fe91d44-7162-43f5-9600-5c6cb6746859">
         
             <li class="active">
 <p>Now that we know the address to connect to, the next step is to establish a BLE connection
@@ -900,7 +886,7 @@ the device should show up when querying <code class="language-plaintext highligh
 <h2 id="enable-notifications">Enable Notifications</h2>
 
 <div>
-    <ul class="tab" data-tab="ba5aea98-b4ec-45dd-9f32-1783b96b22b9">
+    <ul class="tab" data-tab="df08d893-f962-4aa3-a5b7-035b818b4b5d">
         
             <li class="active">
                 <a href="">Enter Gatt Menu </a>
@@ -911,7 +897,7 @@ the device should show up when querying <code class="language-plaintext highligh
             </li>
         
         </ul>
-        <ul class="tab-content" id="ba5aea98-b4ec-45dd-9f32-1783b96b22b9">
+        <ul class="tab-content" id="df08d893-f962-4aa3-a5b7-035b818b4b5d">
         
             <li class="active">
 <p>As specified in the <a href="/OpenGoPro/ble#sending-and-receiving-messages">Open GoPro Bluetooth API</a>, we must enable notifications for a given characteristic
@@ -984,10 +970,10 @@ be alerted of responses when the characteristic is notified.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_41e75256-3ed4-4976-bc23-b010d94747e2" class="quiz">
+<div id="quiz_9428dfff-ec01-437a-9c1f-899cedb006aa" class="quiz">
     <div>
-        <div id="question_41e75256-3ed4-4976-bc23-b010d94747e2" class="quiz__question">How are responses to the Command Request characteristic received over BLE?</div>
-        <div id="answers_41e75256-3ed4-4976-bc23-b010d94747e2">
+        <div id="question_9428dfff-ec01-437a-9c1f-899cedb006aa" class="quiz__question">How are responses to the Command Request characteristic received over BLE?</div>
+        <div id="answers_9428dfff-ec01-437a-9c1f-899cedb006aa">
         
             <input type="radio" name="question" value="A"><label>A: As write responses to the Command Request characteristic</label>
             <br>
@@ -1003,19 +989,19 @@ be alerted of responses when the characteristic is notified.</p>
         
         </div>
     </div>
-    <button onclick="showResults('41e75256-3ed4-4976-bc23-b010d94747e2', 'B')">Submit Answer</button>
-    <div id="results_41e75256-3ed4-4976-bc23-b010d94747e2" style="display: none">
-        <span id="correct_41e75256-3ed4-4976-bc23-b010d94747e2" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_41e75256-3ed4-4976-bc23-b010d94747e2" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('9428dfff-ec01-437a-9c1f-899cedb006aa', 'B')">Submit Answer</button>
+    <div id="results_9428dfff-ec01-437a-9c1f-899cedb006aa" style="display: none">
+        <span id="correct_9428dfff-ec01-437a-9c1f-899cedb006aa" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_9428dfff-ec01-437a-9c1f-899cedb006aa" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         All GoPro commands follow the same behavior: a command is first sent on a request characteristic.
     The response is then notified on the response characteristic (assuming notifications are enabled).
     </div>
 </div>
 
-<div id="quiz_3a316b8d-a874-46e9-b04a-75ed14cbef3f" class="quiz">
+<div id="quiz_f0b240f8-13f6-47c7-9924-2f569563f41d" class="quiz">
     <div>
-        <div id="question_3a316b8d-a874-46e9-b04a-75ed14cbef3f" class="quiz__question">How often is it necessary to pair?</div>
-        <div id="answers_3a316b8d-a874-46e9-b04a-75ed14cbef3f">
+        <div id="question_f0b240f8-13f6-47c7-9924-2f569563f41d" class="quiz__question">How often is it necessary to pair?</div>
+        <div id="answers_f0b240f8-13f6-47c7-9924-2f569563f41d">
         
             <input type="radio" name="question" value="A"><label>A: Pairing must occur every time to ensure safe BLE communication</label>
             <br>
@@ -1028,10 +1014,10 @@ be alerted of responses when the characteristic is notified.</p>
         
         </div>
     </div>
-    <button onclick="showResults('3a316b8d-a874-46e9-b04a-75ed14cbef3f', 'C')">Submit Answer</button>
-    <div id="results_3a316b8d-a874-46e9-b04a-75ed14cbef3f" style="display: none">
-        <span id="correct_3a316b8d-a874-46e9-b04a-75ed14cbef3f" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_3a316b8d-a874-46e9-b04a-75ed14cbef3f" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('f0b240f8-13f6-47c7-9924-2f569563f41d', 'C')">Submit Answer</button>
+    <div id="results_f0b240f8-13f6-47c7-9924-2f569563f41d" style="display: none">
+        <span id="correct_f0b240f8-13f6-47c7-9924-2f569563f41d" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_f0b240f8-13f6-47c7-9924-2f569563f41d" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Pairing is only needed once (assuming neither side deletes the keys). If the
     GoPro deletes the keys (via Connections-&gt;Reset Connections or a factory reset), the devices will need to re-pair.
     </div>
@@ -1079,7 +1065,7 @@ with UUID <code class="language-plaintext highlighter-rouge">b5f90072-aa8d-11e3-
 <h3 id="send-commands">Send Commands</h3>
 
 <div>
-    <ul class="tab" data-tab="bfdbe0bd-576e-4dc7-a031-2f4c70ea5c07">
+    <ul class="tab" data-tab="fa5d0fdd-dcae-47f8-bbc8-b3ea29687651">
         
             <li class="active">
                 <a href="">Set Shutter On </a>
@@ -1090,7 +1076,7 @@ with UUID <code class="language-plaintext highlighter-rouge">b5f90072-aa8d-11e3-
             </li>
         
         </ul>
-        <ul class="tab-content" id="bfdbe0bd-576e-4dc7-a031-2f4c70ea5c07">
+        <ul class="tab-content" id="fa5d0fdd-dcae-47f8-bbc8-b3ea29687651">
         
             <li class="active">
 <p>Now, let’s write the bytes to turn the shutter on and start encoding!</p>
@@ -1202,7 +1188,7 @@ sudo btmon
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-09-10T13:33:55-07:00">September 10, 2021</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-09-16T08:07:33-07:00">September 16, 2021</time></p>
 
 
       </footer>
@@ -1277,7 +1263,7 @@ sudo btmon
     <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
     <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
     <p>
-        Can be used with GoPro® HERO9 cameras. You must include the following text on
+        Can be used with GoPro® HERO9 and HERO10 cameras. You must include the following text on
         every page where it can be seen by someone purchasing such an item: <em>"This product
         and/or service is not affiliated with, endorsed by or in any way associated with
         GoPro Inc. or its products and services. GoPro, HERO, and their respective logos

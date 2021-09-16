@@ -9,39 +9,35 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Swift Enable WiFi Demo :  Open GoPro</title>
-<meta name="description" content="Swift Enable WiFi Demo">
+<!-- begin _includes/seo.html --><title>Frequently Asked Questions :  Open GoPro</title>
+<meta name="description" content="Open Source GoPro Interface">
 
 
   <meta name="author" content="GoPro">
   
-  <meta property="article:author" content="GoPro">
-  
 
 
-<meta property="og:type" content="article">
+<meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
-<meta property="og:title" content="Swift Enable WiFi Demo">
-<meta property="og:url" content="https://gopro.github.io/OpenGoPro/demos/swift/EnableWiFiDemo">
+<meta property="og:title" content="Frequently Asked Questions">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/faq">
 
 
-  <meta property="og:description" content="Swift Enable WiFi Demo">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2021-09-16T08:07:33-07:00">
+  <meta property="og:description" content="Open Source GoPro Interface">
 
 
 
 
 
 
-<link rel="canonical" href="https://gopro.github.io/OpenGoPro/demos/swift/EnableWiFiDemo">
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/faq">
 
 
 
@@ -102,7 +98,7 @@
 
   </head>
 
-  <body class="layout--demo">
+  <body class="layout--single">
     <nav class="skip-links">
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
@@ -187,27 +183,7 @@
         <span class="sep">/</span>
       
       
-        
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/OpenGoPro/demos" itemprop="item"><span itemprop="name">Demos</span></a>
-          <meta itemprop="position" content="2">
-        </li>
-        <span class="sep">/</span>
-      
-    
-      
-      
-        
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/OpenGoPro/swift" itemprop="item"><span itemprop="name">Swift</span></a>
-          <meta itemprop="position" content="3">
-        </li>
-        <span class="sep">/</span>
-      
-    
-      
-      
-        <li class="current">Swift Enable WiFi Demo</li>
+        <li class="current">Frequently Asked Questions</li>
       
     
   </ol>
@@ -342,35 +318,17 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Swift Enable WiFi Demo">
-    <meta itemprop="description" content="Swift Enable WiFi Demo">
-    <meta itemprop="datePublished" content="2021-09-16T08:07:33-07:00">
+    <meta itemprop="headline" content="Frequently Asked Questions">
+    
+    
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Swift Enable WiFi Demo
+          <h1 id="page-title" class="page__title" itemprop="headline">Frequently Asked Questions
 </h1>
           
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          less than 1 minute read
-        
-      </span>
-    
-  </p>
 
 
         </header>
@@ -383,57 +341,68 @@
               <header><h4 class="nav__title">
 <i class="fas fa-file-alt"></i> On this page</h4></header>
               <ul class="toc__menu">
-<li><a href="#requirements">Requirements</a></li>
-<li>
-<a href="#file-structure">File Structure</a><ul>
-<li><a href="#ble">BLE</a></li>
-<li><a href="#views">Views</a></li>
-</ul>
-</li>
+<li><a href="#connectivity">Connectivity</a></li>
+<li><a href="#general">General</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
 </ul>
 
             </nav>
           </aside>
         
-        <button class="github-button" onclick="location.href='https://github.com/gopro/OpenGoPro/tree/main/demos/swift/EnableWiFiDemo'">
-          <i class="fab fa-github"></i>
-          View this Demo on Github
-        </button>
-        <p>This demo demonstrates how to discover and connect to a GoPro camera via Bluetooth LE (BLE). Once a connection is
-established, the demo demonstrates how to enable Wi-Fi on the GoPro camera and join the camera’s Wi-Fi. The steps
-required to join camera’s Wi-Fi are:</p>
+        <p>If you have somehow stumbled here first, note that there are specifications, demos, and tutorials which expand upon
+much of the information here. These can be found, among other places, from the <a href="/">home page</a>.</p>
 
-<ol>
-  <li>Enable Wi-Fi</li>
-  <li>Request camera’s Wi-Fi settings (SSID and password)</li>
-  <li>Use <a href="https://developer.apple.com/documentation/networkextension/nehotspotconfigurationmanager">iOS NetworkExtension</a> API to join camera’s WiFi</li>
-</ol>
+<h2 id="connectivity">Connectivity</h2>
 
-<h1 id="requirements">Requirements</h1>
+<div class="accordion-container">
+    <button class="accordion">What is the distance from the camera that BLE will still work?</button>
+    <div class="panel"><p>It is standard Bluetooth 4.0 range and it depends on external factors such as: Interference: anything
+  interfering with the signal will shorten the range. The type of device that the camera is connected to: BT
+  classification distinguishes 3 device classes based on their power levels. Depending on the class of the
+  connected device, the range varies from less than 10 meters to 100 meters.</p></div>
+</div>
 
-<p>GoPro camera must be paired with the mobile device. If the camera is not paired, put the camera in pairing mode</p>
+<div class="accordion-container">
+    <button class="accordion">Can I connect using WiFi only?</button>
+    <div class="panel"><p>Theoretically yes, if you already know the SSID, password, and the camera's WiFi AP has been enabled.
+  However, practically no because BLE is required in order to discover this information and configure the AP.</p></div>
+</div>
 
-<h1 id="file-structure">File Structure</h1>
+<div class="accordion-container">
+    <button class="accordion">Can I connect using BLE only?</button>
+    <div class="panel"><p>Yes, however there is some functionality that is not possible over BLE such as accessing the media list
+  and downloading files.</p></div>
+</div>
 
-<h2 id="ble">BLE</h2>
+<div class="accordion-container">
+    <button class="accordion">How many devices can connect to the camera?</button>
+    <div class="panel"><p>Simultaneously, only one device can connect at a time. However, the camera stores BLE security keys and
+  other connection information so it is possible to connect multiple devices sequentially.</p></div>
+</div>
 
-<ul>
-  <li>
-<em>CentralManager.swift</em> - A simple wrapper around CBCentralManager to handle CoreBluetooth Central related tasks</li>
-  <li>
-<em>Peripheral.swift</em> - A simple wrapper around CBPeripheral to handle CoreBluetooth Peripheral related tasks</li>
-  <li>
-<em>Peripheral+Camera.swift</em> - An extension of Peripheral class for sending commands to a GoPro camera</li>
-</ul>
+<h2 id="general">General</h2>
 
-<h2 id="views">Views</h2>
+<div class="accordion-container">
+    <button class="accordion">Is preview turned off during record for all video settings?</button>
+    <div class="panel"><p>Yes, preview is disabled during record on all video settings.</p></div>
+</div>
+<div class="accordion-container">
+    <button class="accordion">How can I view the live stream?</button>
+    <div class="panel"><p>In VLC, for example, you need to open network stream udp://@0.0.0.0:8554. You may see some latency due
+  to VLC caching. See the Preview Stream tutorial for more information.</p></div>
+</div>
 
-<ul>
-  <li>
-<em>CameraSelectionView.swift</em> - A SwiftUI list view for showing the nearby GoPro cameras</li>
-  <li>
-<em>CameraView.swift</em> - A simple view with a button for initiate the request to enable Wi-Fi on the connected GoPro camera</li>
-</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<p>If you are able to consistently reproduce a problem, please file a bug on <a href="https://github.com/gopro/OpenGoPro/issues">Github Issues</a></p>
+
+<div class="accordion-container">
+    <button class="accordion">Why isn't the camera advertising?</button>
+    <div class="panel"><p>If you have not yet paired to the camera with the desired device, then you need to first set the
+  camera into pairing mode (Connections-&gt;Connect Device-&gt;Quick App). If you have already
+  paired, then the camera should be advertising and ready to connect. If it is not advertising, it is possible
+  you are already connected to it from a previous session. To be sure, power cycle both the camera and the peer device.</p></div>
+</div>
 
         
       </section>
@@ -445,24 +414,12 @@ required to join camera’s Wi-Fi are:</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-09-16T08:07:33-07:00">September 16, 2021</time></p>
-
 
       </footer>
 
       
 
       
-  <nav class="pagination">
-    
-      <a href="/OpenGoPro/demos/python/sdk_wireless_camera_control" class="pagination--pager" title="Open GoPro Python SDK
-">Previous</a>
-    
-    
-      <a href="#" class="pagination--pager disabled">Next</a>
-    
-  </nav>
-
     </div>
 
     
@@ -471,6 +428,7 @@ required to join camera’s Wi-Fi are:</p>
   
   
 </div>
+
     </div>
 
     

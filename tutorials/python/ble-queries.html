@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
   Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2021-09-10T13:33:55-07:00">
+  <meta property="article:published_time" content="2021-09-16T08:07:33-07:00">
 
 
 
@@ -77,22 +77,8 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
-
-<!--[if IE]>
-  <style>
-    /* old IE unsupported flexbox fixes */
-    .greedy-nav .site-title {
-      padding-right: 3em;
-    }
-    .greedy-nav button {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-    }
-  </style>
-<![endif]-->
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
 
 
   
@@ -100,6 +86,9 @@
   
     <script src="/OpenGoPro/assets/js/quiz.js"></script>
   
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
 
     <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
@@ -115,7 +104,6 @@
 
   <body class="layout--single">
     <nav class="skip-links">
-  <h2 class="screen-reader-text">Skip links</h2>
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
     <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
@@ -145,13 +133,10 @@
               <a href="/OpenGoPro/">Home</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="https://github.com/gopro/OpenGoPro">View on Github</a>
+              <a href="/OpenGoPro/ble">BLE Specs</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/ble">BLE Spec</a>
-            </li>
-<li class="masthead__menu-item">
-              <a href="/OpenGoPro/wifi">WiFi Spec</a>
+              <a href="/OpenGoPro/wifi">WiFi Specs</a>
             </li>
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/tutorials">Tutorials</a>
@@ -159,13 +144,14 @@
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/demos">Demos</a>
             </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
 </ul>
         
         <button class="search__toggle" type="button">
           <span class="visually-hidden">Toggle search</span>
-          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15.99 16">
-            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
-          </svg>
+          <i class="fas fa-search"></i>
         </button>
         
         <button class="greedy-nav__toggle hidden" type="button">
@@ -434,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 4: BLE Queries">
     <meta itemprop="description" content="Python Tutorial 4: BLE Queries">
-    <meta itemprop="datePublished" content="2021-09-10T13:33:55-07:00">
+    <meta itemprop="datePublished" content="2021-09-16T08:07:33-07:00">
     
 
     <div class="page__inner-wrap">
@@ -495,8 +481,14 @@
 <a href="/OpenGoPro/ble">Open GoPro Interface</a> to query the camera’s setting and status information
 via BLE.</p>
 
-<p>“Queries” in this sense are specifically procedures that are initiated by writing to the Query UUID and receive
-responses via the Query Response UUID. This will be described in more detail below.</p>
+<p>“Queries” in this sense are specifically procedures that:</p>
+
+<ul>
+  <li>are initiated by writing to the Query UUID</li>
+  <li>receive responses via the Query Response UUID.</li>
+</ul>
+
+<p>This will be described in more detail below.</p>
 
 <blockquote>
   <p>Note! It is required that you have first completed the <a href="/OpenGoPro/tutorials/python/connect-ble#requirements">connect</a>, <a href="/OpenGoPro/tutorials/python/send-ble-commands">sending commands</a>, and <a href="/OpenGoPro/tutorials/python/parse-ble-responses">parsing responses</a> tutorials before going through this tutorial.</p>
@@ -510,7 +502,7 @@ synchronization when sending multiple commands. This will be discussed in a futu
 <p>It is assumed that the hardware and software requirements from the <a href="/OpenGoPro/tutorials/python/connect-ble">connect tutorial</a>
 are present and configured correctly.</p>
 
-<p>The scripts that will be used for this tutorial can be found at in the
+<p>The scripts that will be used for this tutorial can be found in the
 <a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_4_ble_queries">Tutorial 4 Folder</a>.</p>
 
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
@@ -571,8 +563,8 @@ queries the resolution:</p>
 
 <h1 id="polling-query-information">Polling Query Information</h1>
 
-<p>It is possible to poll one or more setting / status values using the
-following <a href="/OpenGoPro/ble#query-commands">commands</a>.</p>
+<p>It is possible to poll one or more setting / status values using the following
+<a href="/OpenGoPro/ble#query-commands">commands</a>:</p>
 
 <table>
   <thead>
@@ -603,7 +595,7 @@ There will be specific examples below.</p>
 <i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  Since they are two separate commands, combination of settings / statuses can not be polled simultaneously.</span>
 </div>
 
-<p>Here is a generic sequence (the same is true for statuses):</p>
+<p>Here is a generic sequence diagram (the same is true for statuses):</p>
 
 <p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5wYXJ0aWNpcGFudCBQQyBhcyBPcGVuIEdvUHJvIHVzZXIgZGV2aWNlXG5wYXJ0aWNpcGFudCBHb1Byb1xubm90ZSBvdmVyIFBDLCBHb1BybzogQ29ubmVjdGVkIChzdGVwcyBmcm9tIGNvbm5lY3QgdHV0b3JpYWwpXG5QQyAtPj4gR29Qcm86IEdldCBTZXR0aW5nIHZhbHVlKHMpIGNvbW1hbmQgd3JpdHRlbiB0byBRdWVyeSBVVUlEXG5Hb1BybyAtPj4gUEM6IFNldHRpbmcgdmFsdWVzIHJlc3BvbmRlZCB0byBRdWVyeSBSZXNwb25zZSBVVUlEXG5Hb1BybyAtPj4gUEM6IE1vcmUgc2V0dGluZyB2YWx1ZXMgcmVzcG9uZGVkIHRvIFF1ZXJ5IFJlc3BvbnNlIFVVSURcbkdvUHJvIC0-PiBQQzogLi4uXG5Hb1BybyAtPj4gUEM6IE1vcmUgc2V0dGluZyB2YWx1ZXMgcmVzcG9uZGVkIHRvIFF1ZXJ5IFJlc3BvbnNlIFVVSUQiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9fQ"></p>
 
@@ -653,14 +645,14 @@ INFO\:root\:Resolution is currently Resolution.RES_1080
 <p>For verification purposes, we are then changing the resolution and polling again to verify that the setting
 has changed:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Changing the resolution to Resolution.RES_1440...
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Changing the resolution to Resolution.RES_2_7K...
 INFO\:root\:Received response at handle=57: b'02\:02\:00'
 INFO\:root\:self.bytes_remaining=0
 INFO\:root\:Command sent successfully
 INFO\:root\:Polling the resolution to see if it has changed...
 INFO\:root\:Received response at handle=62: b'05\:12\:00\:02\:01:07'
 INFO\:root\:self.bytes_remaining=0
-INFO\:root\:Resolution is currently Resolution.RES_1440
+INFO\:root\:Resolution is currently Resolution.RES_2_7K
 </span></code></pre></div></div>
 
 <h2 id="multiple-simultaneous-query-polls">Multiple Simultaneous Query Polls</h2>
@@ -705,7 +697,7 @@ sometimes settings / statuses are bytes, words, strings, etc.</span>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Received response at handle=62: b'0b\:12\:00\:02\:01\:07\:03\:01\:01\:79\:01:00'
 INFO\:root\:self.bytes_remaining=0
-INFO\:root\:Resolution is currently Resolution.RES_1440
+INFO\:root\:Resolution is currently Resolution.RES_2_7K
 INFO\:root\:Video FOV is currently VideoFOV.FOV_WIDE
 INFO\:root\:FPS is currently FPS.FPS_120
 </span></code></pre></div></div>
@@ -741,15 +733,15 @@ INFO\:root\:FPS is currently FPS.FPS_120
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_a30a98ca-3329-462c-8ffe-7c243d3d3a78" class="quiz">
+<div id="quiz_d5d2f585-37a2-4da0-87d2-62ddaf329172" class="quiz">
     <div>
-        <div id="question_a30a98ca-3329-462c-8ffe-7c243d3d3a78" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
-        <div id="answers_a30a98ca-3329-462c-8ffe-7c243d3d3a78">
+        <div id="question_d5d2f585-37a2-4da0-87d2-62ddaf329172" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
+        <div id="answers_d5d2f585-37a2-4da0-87d2-62ddaf329172">
         
-            <input type="radio" name="question" value="A"><label>A: Concatenate a Get Setting Value command and a Get Status command with the relevant ID's</label>
+            <input type="radio" name="question" value="A"><label>A: Concatenate a 'Get Setting Value' command and a 'Get Status' command with the relevant ID's</label>
             <br>
         
-            <input type="radio" name="question" value="B"><label>B: Concatenate the Get All Setting and Get All Status commands.</label>
+            <input type="radio" name="question" value="B"><label>B: Concatenate the 'Get All Setting' and 'Get All Status' commands.</label>
             <br>
         
             <input type="radio" name="question" value="C"><label>C: It is not possible</label>
@@ -757,10 +749,10 @@ INFO\:root\:FPS is currently FPS.FPS_120
         
         </div>
     </div>
-    <button onclick="showResults('a30a98ca-3329-462c-8ffe-7c243d3d3a78', 'C')">Submit Answer</button>
-    <div id="results_a30a98ca-3329-462c-8ffe-7c243d3d3a78" style="display: none">
-        <span id="correct_a30a98ca-3329-462c-8ffe-7c243d3d3a78" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_a30a98ca-3329-462c-8ffe-7c243d3d3a78" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('d5d2f585-37a2-4da0-87d2-62ddaf329172', 'C')">Submit Answer</button>
+    <div id="results_d5d2f585-37a2-4da0-87d2-62ddaf329172" style="display: none">
+        <span id="correct_d5d2f585-37a2-4da0-87d2-62ddaf329172" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_d5d2f585-37a2-4da0-87d2-62ddaf329172" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         It is not possible to concatenate commands. This would result in an unknown sequence of bytes
         from the camera's perspective. So it is not possible to get a setting value and a status value in one command.
         The Get Setting command (with resolution ID) and Get Status command(with encoding ID) must be sent sequentially
@@ -838,7 +830,7 @@ push notifications when the relevant query information changes.</p>
 be sent whenever the query changes until the client unregisters for push notifications for the given query.</p>
 
 <div class="tip">
-<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  The response to the Register command also contains the current setting / status value</span>
+<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  The initial response to the Register command also contains the current setting / status value</span>
 </div>
 
 <p>We will walk through the <code class="language-plaintext highlighter-rouge">ble_query_register_resolution_value_updates.py</code> script to demonstrate this:</p>
@@ -883,7 +875,7 @@ byte data as well as by inspecting <code class="language-plaintext highlighter-r
 INFO\:root\:Received response at handle=62: b'05\:52\:00\:02\:01:07'
 INFO\:root\:self.bytes_remaining=0
 INFO\:root\:Successfully registered for resolution value updates.
-INFO\:root\:Resolution is currently Resolution.RES_1440
+INFO\:root\:Resolution is currently Resolution.RES_2_7K
 </span></code></pre></div></div>
 
 <p>We are now successfully registered for resolution value updates and will receive push notifications whenever
@@ -900,16 +892,18 @@ INFO\:root\:Resolution is now Resolution.RES_1080
 
 <hr>
 
-<p>Multiple push notifications can be registered / received in a similar manner that multiple queries were polled
-in <a href="/OpenGoPro/tutorials/python/ble-queries#multiple-simultaneous-query-polls">multiple simultaneous query polls</a></p>
+<div class="tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  Multiple push notifications can be registered / received in a similar manner that multiple queries were
+polled above</span>
+</div>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_f212388f-33cf-4345-9b4d-9aa6e87b1102" class="quiz">
+<div id="quiz_010fdedc-afe7-40a4-bb7e-75d5bc07bdb7" class="quiz">
     <div>
-        <div id="question_f212388f-33cf-4345-9b4d-9aa6e87b1102" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
+        <div id="question_010fdedc-afe7-40a4-bb7e-75d5bc07bdb7" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
     receive push notifications for it.</div>
-        <div id="answers_f212388f-33cf-4345-9b4d-9aa6e87b1102">
+        <div id="answers_010fdedc-afe7-40a4-bb7e-75d5bc07bdb7">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -919,20 +913,20 @@ in <a href="/OpenGoPro/tutorials/python/ble-queries#multiple-simultaneous-query-
         
         </div>
     </div>
-    <button onclick="showResults('f212388f-33cf-4345-9b4d-9aa6e87b1102', 'A')">Submit Answer</button>
-    <div id="results_f212388f-33cf-4345-9b4d-9aa6e87b1102" style="display: none">
-        <span id="correct_f212388f-33cf-4345-9b4d-9aa6e87b1102" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_f212388f-33cf-4345-9b4d-9aa6e87b1102" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('010fdedc-afe7-40a4-bb7e-75d5bc07bdb7', 'A')">Submit Answer</button>
+    <div id="results_010fdedc-afe7-40a4-bb7e-75d5bc07bdb7" style="display: none">
+        <span id="correct_010fdedc-afe7-40a4-bb7e-75d5bc07bdb7" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_010fdedc-afe7-40a4-bb7e-75d5bc07bdb7" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         While there is probably not a good reason to do so, there is nothing preventing polling
         in this manner.
     </div>
 </div>
 
-<div id="quiz_b3303cd0-771c-43f5-8673-c4b6be79a776" class="quiz">
+<div id="quiz_e0e131f4-c235-4d53-a55c-580cede17bd3" class="quiz">
     <div>
-        <div id="question_b3303cd0-771c-43f5-8673-c4b6be79a776" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
+        <div id="question_e0e131f4-c235-4d53-a55c-580cede17bd3" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
     about one setting ID.</div>
-        <div id="answers_b3303cd0-771c-43f5-8673-c4b6be79a776">
+        <div id="answers_e0e131f4-c235-4d53-a55c-580cede17bd3">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -942,10 +936,10 @@ in <a href="/OpenGoPro/tutorials/python/ble-queries#multiple-simultaneous-query-
         
         </div>
     </div>
-    <button onclick="showResults('b3303cd0-771c-43f5-8673-c4b6be79a776', 'B')">Submit Answer</button>
-    <div id="results_b3303cd0-771c-43f5-8673-c4b6be79a776" style="display: none">
-        <span id="correct_b3303cd0-771c-43f5-8673-c4b6be79a776" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_b3303cd0-771c-43f5-8673-c4b6be79a776" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('e0e131f4-c235-4d53-a55c-580cede17bd3', 'B')">Submit Answer</button>
+    <div id="results_e0e131f4-c235-4d53-a55c-580cede17bd3" style="display: none">
+        <span id="correct_e0e131f4-c235-4d53-a55c-580cede17bd3" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_e0e131f4-c235-4d53-a55c-580cede17bd3" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is possible for push notifications to contain multiple setting ID's if both setting ID's have
     push notifications registered and both settings change at the same time.
     </div>
@@ -979,7 +973,7 @@ proceed to the next tutorial.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-09-10T13:33:55-07:00">September 10, 2021</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-09-16T08:07:33-07:00">September 16, 2021</time></p>
 
 
       </footer>
@@ -1065,7 +1059,7 @@ proceed to the next tutorial.</p>
     <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
     <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
     <p>
-        Can be used with GoPro® HERO9 cameras. You must include the following text on
+        Can be used with GoPro® HERO9 and HERO10 cameras. You must include the following text on
         every page where it can be seen by someone purchasing such an item: <em>"This product
         and/or service is not affiliated with, endorsed by or in any way associated with
         GoPro Inc. or its products and services. GoPro, HERO, and their respective logos

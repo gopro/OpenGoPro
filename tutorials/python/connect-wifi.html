@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
   Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2021-09-10T13:33:55-07:00">
+  <meta property="article:published_time" content="2021-09-16T08:07:33-07:00">
 
 
 
@@ -77,22 +77,8 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
-
-<!--[if IE]>
-  <style>
-    /* old IE unsupported flexbox fixes */
-    .greedy-nav .site-title {
-      padding-right: 3em;
-    }
-    .greedy-nav button {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-    }
-  </style>
-<![endif]-->
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
 
 
   
@@ -100,6 +86,9 @@
   
     <script src="/OpenGoPro/assets/js/quiz.js"></script>
   
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
 
     <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
@@ -115,7 +104,6 @@
 
   <body class="layout--single">
     <nav class="skip-links">
-  <h2 class="screen-reader-text">Skip links</h2>
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
     <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
@@ -145,13 +133,10 @@
               <a href="/OpenGoPro/">Home</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="https://github.com/gopro/OpenGoPro">View on Github</a>
+              <a href="/OpenGoPro/ble">BLE Specs</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/ble">BLE Spec</a>
-            </li>
-<li class="masthead__menu-item">
-              <a href="/OpenGoPro/wifi">WiFi Spec</a>
+              <a href="/OpenGoPro/wifi">WiFi Specs</a>
             </li>
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/tutorials">Tutorials</a>
@@ -159,13 +144,14 @@
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/demos">Demos</a>
             </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
 </ul>
         
         <button class="search__toggle" type="button">
           <span class="visually-hidden">Toggle search</span>
-          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15.99 16">
-            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
-          </svg>
+          <i class="fas fa-search"></i>
         </button>
         
         <button class="greedy-nav__toggle hidden" type="button">
@@ -434,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 5: Connect WiFi">
     <meta itemprop="description" content="Python Tutorial 5: Connect WiFi">
-    <meta itemprop="datePublished" content="2021-09-10T13:33:55-07:00">
+    <meta itemprop="datePublished" content="2021-09-16T08:07:33-07:00">
     
 
     <div class="page__inner-wrap">
@@ -508,7 +494,7 @@ can be connected to. It will also provide an example of connecting to the WiFi A
 <p>It is assumed that the hardware and software requirements from the <a href="/OpenGoPro/tutorials/python/connect-ble#requirements">connect tutorial</a>
 are present and configured correctly.</p>
 
-<p>The scripts that will be used for this tutorial can be found at in the
+<p>The scripts that will be used for this tutorial can be found in the
 <a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_5_connect_wifi">Tutorial 5 Folder</a>.</p>
 
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
@@ -699,10 +685,10 @@ INFO\:root\:Wifi Connected!
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_99cda29d-446b-4ec4-86be-3178de6bbd7f" class="quiz">
+<div id="quiz_ffcb0099-c758-4b6d-80a9-d541ecdb1a21" class="quiz">
     <div>
-        <div id="question_99cda29d-446b-4ec4-86be-3178de6bbd7f" class="quiz__question">How is the WiFi password response received?</div>
-        <div id="answers_99cda29d-446b-4ec4-86be-3178de6bbd7f">
+        <div id="question_ffcb0099-c758-4b6d-80a9-d541ecdb1a21" class="quiz__question">How is the WiFi password response received?</div>
+        <div id="answers_ffcb0099-c758-4b6d-80a9-d541ecdb1a21">
         
             <input type="radio" name="question" value="A"><label>A: As a read response from the WiFi AP Password characteristic</label>
             <br>
@@ -715,10 +701,10 @@ INFO\:root\:Wifi Connected!
         
         </div>
     </div>
-    <button onclick="showResults('99cda29d-446b-4ec4-86be-3178de6bbd7f', 'A')">Submit Answer</button>
-    <div id="results_99cda29d-446b-4ec4-86be-3178de6bbd7f" style="display: none">
-        <span id="correct_99cda29d-446b-4ec4-86be-3178de6bbd7f" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_99cda29d-446b-4ec4-86be-3178de6bbd7f" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('ffcb0099-c758-4b6d-80a9-d541ecdb1a21', 'A')">Submit Answer</button>
+    <div id="results_ffcb0099-c758-4b6d-80a9-d541ecdb1a21" style="display: none">
+        <span id="correct_ffcb0099-c758-4b6d-80a9-d541ecdb1a21" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_ffcb0099-c758-4b6d-80a9-d541ecdb1a21" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         This (and WiFi AP SSID) is an exception to the rule. Usually responses
     are received as notifications to a response characteristic. However, in this case, it is
     received as a direct read response (since we are reading from the characteristic and not
@@ -726,10 +712,10 @@ INFO\:root\:Wifi Connected!
     </div>
 </div>
 
-<div id="quiz_2057e350-1300-4523-aedc-ad6b49ef645e" class="quiz">
+<div id="quiz_4a6dda5d-44f8-4827-9302-61f971f3285d" class="quiz">
     <div>
-        <div id="question_2057e350-1300-4523-aedc-ad6b49ef645e" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
-        <div id="answers_2057e350-1300-4523-aedc-ad6b49ef645e">
+        <div id="question_4a6dda5d-44f8-4827-9302-61f971f3285d" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
+        <div id="answers_4a6dda5d-44f8-4827-9302-61f971f3285d">
         
             <input type="radio" name="question" value="A"><label>A: It only needs to be enabled once and it will then always remain on</label>
             <br>
@@ -742,10 +728,10 @@ INFO\:root\:Wifi Connected!
         
         </div>
     </div>
-    <button onclick="showResults('2057e350-1300-4523-aedc-ad6b49ef645e', 'D')">Submit Answer</button>
-    <div id="results_2057e350-1300-4523-aedc-ad6b49ef645e" style="display: none">
-        <span id="correct_2057e350-1300-4523-aedc-ad6b49ef645e" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_2057e350-1300-4523-aedc-ad6b49ef645e" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('4a6dda5d-44f8-4827-9302-61f971f3285d', 'D')">Submit Answer</button>
+    <div id="results_4a6dda5d-44f8-4827-9302-61f971f3285d" style="display: none">
+        <span id="correct_4a6dda5d-44f8-4827-9302-61f971f3285d" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_4a6dda5d-44f8-4827-9302-61f971f3285d" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         Trick question! They are all false. While the WiFi AP will remain on for
     some time, it can and will eventually turn off so it is always recommended to first connect
     via BLE and ensure that it is enabled. The password and SSID will almost never change.
@@ -776,7 +762,7 @@ INFO\:root\:Wifi Connected!
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-09-10T13:33:55-07:00">September 10, 2021</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-09-16T08:07:33-07:00">September 16, 2021</time></p>
 
 
       </footer>
@@ -862,7 +848,7 @@ INFO\:root\:Wifi Connected!
     <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
     <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
     <p>
-        Can be used with GoPro® HERO9 cameras. You must include the following text on
+        Can be used with GoPro® HERO9 and HERO10 cameras. You must include the following text on
         every page where it can be seen by someone purchasing such an item: <em>"This product
         and/or service is not affiliated with, endorsed by or in any way associated with
         GoPro Inc. or its products and services. GoPro, HERO, and their respective logos
