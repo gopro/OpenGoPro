@@ -6,11 +6,11 @@
 from __future__ import annotations
 import logging
 from pathlib import Path
-from typing import Any, Optional, Type, Dict
+from typing import Any, Optional, Type, Dict, Callable
 
 from open_gopro.communication_client import GoProWifi
 from open_gopro.constants import SettingId, StatusId
-from open_gopro.responses import BytesParserBuilder, JsonParser
+from open_gopro.responses import BytesParserBuilder, GoProResp, JsonParser
 from open_gopro.api.builders import WifiSetting, WifiGetJsonNoParams, WifiGetJsonWithParams, WifiGetBinary
 from .params import ParamsV1_0 as Params
 
@@ -29,7 +29,8 @@ class WifiCommandsV1_0:
         communicator (GoProWifi): [description]
     """
 
-    class ParseCameraState(JsonParser):
+    # TODO refactor this to reuse response parsing
+    class _ParseCameraState(JsonParser):
         """Additional parsing to do on received camera state."""
 
         def parse(
@@ -57,6 +58,10 @@ class WifiCommandsV1_0:
                     except KeyError:
                         logger.warning(f"unparsed {name}: {identifier}")
                         val = v
+                    except ValueError:
+                        logger.warning(f"{identifier} does not contain a value {v}")
+                        val = v
+
                     parsed[identifier] = val
 
             return parsed
@@ -87,11 +92,13 @@ class WifiCommandsV1_0:
 
         # ======================================== Commands
 
-        self.set_digital_zoom = GetJsonFromInt(communicator, "gopro/camera/digital_zoom?percent={}")
+        self.set_digital_zoom: Callable[[int], GoProResp] = GetJsonFromInt(
+            communicator, "gopro/camera/digital_zoom?percent={}"
+        )
         """Set digital zoom in percent (0 to 100)."""
 
         self.get_camera_state = WifiGetJsonNoParams(
-            communicator, "gopro/camera/state", response_parser=WifiCommandsV1_0.ParseCameraState()
+            communicator, "gopro/camera/state", response_parser=WifiCommandsV1_0._ParseCameraState()
         )
         """Get camera status and settings."""
 

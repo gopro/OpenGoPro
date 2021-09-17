@@ -489,6 +489,12 @@ class GoProResp:
                         # We don't have defined params for all ID's yet. Just store raw bytes
                         logger.warning(f"No parser defined for {param_id}")
                         self.data[param_id] = param_val
+                    except ValueError:
+                        # This is the case where we receive a value that is not defined in our params.
+                        # This shouldn't happen and means the documentation needs to be updated. However, it
+                        # isn't functionally critical
+                        logger.warning(f"{param_id} does not contain a value {param_val}")
+                        self.data[param_id] = param_val
 
             else:  # Other UUID's have responses that can be parsed monolithically
                 if self.uuid is UUID.CQ_COMMAND_RESP:

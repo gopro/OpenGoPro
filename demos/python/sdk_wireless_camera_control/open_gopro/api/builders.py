@@ -759,6 +759,7 @@ class WifiSetting(Generic[SettingValueType]):
         """
         logger.info(f"<----------- Setting {self.identifier}: {value}")
         # Build url. TODO fix this type error with Mixin (or passing in endpoint as argument)
+        value = value.value if isinstance(value, enum.Enum) else value
         url = self.communicator._api.wifi_setting.endpoint.format(self.identifier.value, value)  # type: ignore
         # Send to camera
         response = self.communicator._get(url)

@@ -696,13 +696,18 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         url = GoPro._base_url + url
         logger.debug(f"Sending:  {url}")
 
-        # TODO This is a terrible temporary hack. I just don't know why these are breaking.
-        time.sleep(2)
+        # TODO figure out why these are failing. For now retry 5 times.
+        for _ in range(5):
+            try:
+                request = requests.get(url)
+                request.raise_for_status()
+                response = GoProResp._from_http_response(self._parser_map, request)
+                return response
+            except Exception as e:
+                logger.critical(repr(e))
+                logger.critical("Retrying to send the command...")
 
-        request = requests.get(url)
-        request.raise_for_status()
-        response = GoProResp._from_http_response(self._parser_map, request)
-        return response
+        raise Exception("Couldn't send command after 5 retries")
 
     @_ensure_initialized_acquire_ready_semaphore
     def _stream_to_file(self, url: str, file: Path) -> None:

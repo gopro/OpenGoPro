@@ -39,6 +39,7 @@ class ParamsV1_0:
         TIMELAPSE = 1002
 
     class Resolution(enum.Enum):
+        NOT_APPLICABLE = 0
         RES_4K = 1
         RES_2_7K = 4
         RES_2_7K_4_3 = 6
@@ -77,20 +78,22 @@ class ParamsV1_0:
         LINEAR_HORIZON = 8
 
     class PhotoFOV(enum.Enum):
+        NOT_APPLICABLE = 0
         WIDE = 22
         LINEAR = 23
         NARROW = 24
         MAX_SUPERVIEW = 25
 
     class MultishotFOV(enum.Enum):
+        NOT_APPLICABLE = 0
         WIDE = 22
         LINEAR = 23
         NARROW = 24
 
     class LED(enum.Enum):
-        ALL_ON = 2
         ALL_OFF = 0
         FRONT_OFF = 1
+        ALL_ON = 2
         BLE_KEEP_ALIVE = 66
 
     class PairState(enum.Enum):
@@ -194,35 +197,6 @@ class ParamsV1_0:
         SELFIE_1_HDMI_0_MEDIAMODCONNECTED_TRUE = 5
         SELFIE_1_HDMI_1_MEDIAMODCONNECTED_FALSE = 6
         SELFIE_1_HDMI_1_MEDIAMODCONNECTED_TRUE = 7
-
-    class Shortcut(enum.Enum):
-        HORIZON_LOCK = 24
-        WIND = 23
-        MEDIA_MOD = 16
-        RAW_AUDIO = 18
-        COLOR = 10
-        SHARPNESS = 19
-        ISO_MAX = 15
-        ISO_MIN = 14
-        WHITE_BALANCE = 5
-        EV_COMP = 11
-        SHUTTER = 6
-        BIT_RATE = 7
-        ZOOM = 1
-        TIMER = 20
-        BURST_RATE = 8
-        HINDSIGHT = 27
-        DURATION = 9
-        SCHEDULE_CAPTURE = 26
-        HYPERSMOOTH_BOOST = 12
-        SPEED_RAMP = 25
-        SPEED = 21
-        OUTPUT = 17
-        INTERVAL = 13
-        LOOPING_INTERVAL = 13
-        LENS = 2
-        SLOMO = 3
-        OFF = 0
 
     class Flatmode(enum.Enum):
         VIDEO = 12

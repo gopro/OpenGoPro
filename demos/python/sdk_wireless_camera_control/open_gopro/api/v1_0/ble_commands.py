@@ -245,29 +245,6 @@ class BleSettingsV1_0:
         )
         """Enable / disable max lens mod. Set with :py:class:`open_gopro.params.MaxLensMode`"""
 
-        class Shortcut(BleSetting[Params.Shortcut]):
-            ...
-
-        self.lower_left_shortcut = Shortcut(
-            self.communicator, SettingId.SHORTCUT_LOWER_LEFT, build_enum_adapter(params.Shortcut)
-        )
-        """Lower left shortcut. Set with :py:class:`open_gopro.params.Shortcut`"""
-
-        self.lower_right_shortcut = Shortcut(
-            self.communicator, SettingId.SHORTCUT_LOWER_RIGHT, build_enum_adapter(params.Shortcut)
-        )
-        """Lower right shortcut. Set with :py:class:`open_gopro.params.Shortcut`"""
-
-        self.upper_left_shortcut = Shortcut(
-            self.communicator, SettingId.SHORTCUT_UPPER_LEFT, build_enum_adapter(params.Shortcut)
-        )
-        """Upper left shortcut. Set with :py:class:`open_gopro.params.Shortcut`"""
-
-        self.upper_right_shortcut = Shortcut(
-            self.communicator, SettingId.SHORTCUT_UPPER_RIGHT, build_enum_adapter(params.Shortcut)
-        )
-        """Upper right shortcut. Set with :py:class:`open_gopro.params.Shortcut`"""
-
     def __iter__(self) -> Iterator:
         """Return an iterable of this instance's attributes
 

@@ -43,7 +43,11 @@ async def test_set_cinematic_mode(gopro_ble_and_wifi: GoPro):
 
 @pytest.mark.asyncio
 async def test_set_resolution(gopro_ble_and_wifi: GoPro):
-    for resolution in gopro_ble_and_wifi.params.Resolution:
+    for resolution in [
+        res
+        for res in gopro_ble_and_wifi.params.Resolution
+        if res is not gopro_ble_and_wifi.params.Resolution.NOT_APPLICABLE
+    ]:
         print(f"Setting resolution to {resolution.name}")
         assert gopro_ble_and_wifi.wifi_setting.resolution.set(resolution).is_ok
 

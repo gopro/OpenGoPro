@@ -29,7 +29,7 @@ class GoProResponder:
     """Interface implementation for accumulating response GoPro response parsers"""
 
     def __init__(self) -> None:
-        # Will be filled out by builder decorators when API's are called
+        # Will be filled out by Command, Setting, Status class's when instantiated
         self._response_parsers: ParserMapType = {}
 
     @property
