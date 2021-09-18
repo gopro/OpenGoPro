@@ -8,17 +8,17 @@
 Note these have to be IntEnum's in order to be correctly built when sending commands
 """
 
-import enum
+from open_gopro.constants import GoProEnum
 
 # from open_gopro.proto.request_get_preset_status_pb import EnumRegisterPresetStatus
 
 
 class ParamsV1_0:
-    class Shutter(enum.Enum):
+    class Shutter(GoProEnum):
         ON = 1
         OFF = 0
 
-    class Preset(enum.Enum):
+    class Preset(GoProEnum):
         ACTIVITY = 1
         BURST_PHOTO = 65538
         CINEMATIC = 2
@@ -33,12 +33,12 @@ class ParamsV1_0:
         MAX_TIMEWARP = 327680
         MAX_VIDEO = 196608
 
-    class PresetGroup(enum.Enum):
+    class PresetGroup(GoProEnum):
         VIDE0 = 1000
         PHOTO = 1001
         TIMELAPSE = 1002
 
-    class Resolution(enum.Enum):
+    class Resolution(GoProEnum):
         NOT_APPLICABLE = 0
         RES_4K = 1
         RES_2_7K = 4
@@ -48,7 +48,7 @@ class ParamsV1_0:
         RES_4K_4_3 = 18
         RES_5_K = 24
 
-    class FPS(enum.Enum):
+    class FPS(GoProEnum):
         FPS_240 = 0
         FPS_120 = 1
         FPS_100 = 2
@@ -59,17 +59,17 @@ class ParamsV1_0:
         FPS_24 = 10
         FPS_200 = 13
 
-    class AutoOff(enum.Enum):
+    class AutoOff(GoProEnum):
         NEVER = 0
         MIN_5 = 4
         MIN_15 = 6
         MIN_30 = 7
 
-    class LensMode(enum.Enum):
+    class LensMode(GoProEnum):
         SINGLE = 0
         DUAL = 5
 
-    class VideoFOV(enum.Enum):
+    class VideoFOV(GoProEnum):
         WIDE = 0
         NARROW = 6
         SUPERVIEW = 3
@@ -77,45 +77,45 @@ class ParamsV1_0:
         MAX_SUPERVIEW = 7
         LINEAR_HORIZON = 8
 
-    class PhotoFOV(enum.Enum):
+    class PhotoFOV(GoProEnum):
         NOT_APPLICABLE = 0
         WIDE = 22
         LINEAR = 23
         NARROW = 24
         MAX_SUPERVIEW = 25
 
-    class MultishotFOV(enum.Enum):
+    class MultishotFOV(GoProEnum):
         NOT_APPLICABLE = 0
         WIDE = 22
         LINEAR = 23
         NARROW = 24
 
-    class LED(enum.Enum):
+    class LED(GoProEnum):
         ALL_OFF = 0
         FRONT_OFF = 1
         ALL_ON = 2
         BLE_KEEP_ALIVE = 66
 
-    class PairState(enum.Enum):
+    class PairState(GoProEnum):
         SUCCESS = 0
         IN_PROGRESS = 1
         FAILED = 2
         STOPPED = 3
 
-    class PairType(enum.Enum):
+    class PairType(GoProEnum):
         NOT_PAIRING = 0
         PAIRING_APP = 1
         PAIRING_REMOTE_CONTROL = 2
         PAIRING_BLUETOOTH = 3
 
-    class WAPState(enum.Enum):
+    class WAPState(GoProEnum):
         NEVER_STARTED = 0
         STARTED = 1
         ABORTED = 2
         CANCELED = 3
         COMPLETED = 4
 
-    class SDStatus(enum.Enum):
+    class SDStatus(GoProEnum):
         OK = 0
         FULL = 1
         REMOVED = 2
@@ -124,7 +124,7 @@ class ParamsV1_0:
         SWAPPED = 8
         UNKNOWN = 0xFF
 
-    class OTAStatus(enum.Enum):
+    class OTAStatus(GoProEnum):
         IDLE = 0
         DOWNLOADING = 1
         VERIFYING = 2
@@ -137,39 +137,39 @@ class ParamsV1_0:
         GOPRO_APP_VERIFY_FAILED = 9
         GOPRO_APP_READY = 10
 
-    class AnalyticsState(enum.Enum):
+    class AnalyticsState(GoProEnum):
         NOT_READY = 0
         READY = 1
         ON_CONNECT = 2
 
-    class ExposureMode(enum.Enum):
+    class ExposureMode(GoProEnum):
         DISABLED = 0
         AUTO = 1
         ISO_LOCK = 2
         HEMISPHERE = 3
 
-    class AccMicStatus(enum.Enum):
+    class AccMicStatus(GoProEnum):
         NOT_CONNECTED = 0
         CONNECTED = 1
         CONNECTED_AND_PLUGGED_IN = 2
 
-    class WifiBand(enum.Enum):
+    class WifiBand(GoProEnum):
         BAND_2_4_GHZ = 0
         BAND_5_GHZ = 1
         BAND_MAX = 2
 
-    class Orientation(enum.Enum):
+    class Orientation(GoProEnum):
         UPRIGHT = 0
         UPSIDE_DOWN = 1
         ON_RIGHT_SIDE = 2
         ON_LEFT_SIDE = 3
 
-    class MediaModMicStatus(enum.Enum):
+    class MediaModMicStatus(GoProEnum):
         REMOVED = 0
         ONLY = 1
         WITH_EXTERNAL = 2
 
-    class TimeWarpSpeed(enum.Enum):
+    class TimeWarpSpeed(GoProEnum):
         SPEED_15X = 0
         SPEED_30X = 1
         SPEED_60X = 2
@@ -184,11 +184,11 @@ class ParamsV1_0:
         SPEED_1X = 11
         SPEED_HALF = 12
 
-    class MaxLensMode(enum.Enum):
+    class MaxLensMode(GoProEnum):
         DEFAULT = 0
         MAX_LENS = 1
 
-    class MediaModStatus(enum.Enum):
+    class MediaModStatus(GoProEnum):
         SELFIE_0_HDMI_0_MEDIAMODCONNECTED_FALSE = 0
         SELFIE_0_HDMI_0_MEDIAMODCONNECTED_TRUE = 1
         SELFIE_0_HDMI_1_MEDIAMODCONNECTED_FALSE = 2
@@ -198,7 +198,7 @@ class ParamsV1_0:
         SELFIE_1_HDMI_1_MEDIAMODCONNECTED_FALSE = 6
         SELFIE_1_HDMI_1_MEDIAMODCONNECTED_TRUE = 7
 
-    class Flatmode(enum.Enum):
+    class Flatmode(GoProEnum):
         VIDEO = 12
         LOOPING = 15
         SINGLE_PHOTO = 16
@@ -212,6 +212,6 @@ class ParamsV1_0:
         NIGHT_LAPSE_VIDEO = 26
         SLO_MO = 27
 
-    class Toggle(enum.Enum):
+    class Toggle(GoProEnum):
         ENABLE = 1
         DISABLE = 0

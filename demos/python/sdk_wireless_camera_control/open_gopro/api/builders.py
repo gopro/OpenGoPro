@@ -548,7 +548,7 @@ class BleStatus:
         self.communicator = communicator
         self.parser = parser
         # Add to response parsing map
-        communicator._parser_map[self.identifier] = self.parser
+        communicator._add_parser(self.identifier, self.parser)
 
     def __str__(self) -> str:  # pylint: disable=missing-return-doc
         return str(self.identifier.name)
@@ -676,9 +676,6 @@ class WifiGetJsonNoParams(WifiGetJsonCommand):
             GoProResp: received and parsed response
         """
         logger.info(f"<----------- {self.endpoint}")
-
-        if self.response_parser is not None:
-            self.communicator._add_parser(self.endpoint, self.response_parser)
 
         url = self.endpoint
         # Send to camera

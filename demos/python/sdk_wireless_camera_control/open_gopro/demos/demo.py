@@ -162,9 +162,7 @@ def main() -> int:
 
             with console.status("[bold green]Cycling through resolutions via Wifi..."):
                 assert gopro.wifi_command.set_preset(gopro.params.Preset.CINEMATIC).is_ok
-                for resolution in [
-                    res for res in gopro.params.Resolution if res is not gopro.params.Resolution.NOT_APPLICABLE
-                ]:
+                for resolution in gopro.params.Resolution:
                     assert gopro.wifi_setting.resolution.set(resolution).is_ok
 
             with console.status("[bold green]Starting the preview stream..."):

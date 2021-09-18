@@ -3,18 +3,14 @@
 
 # pylint: disable=missing-class-docstring
 
-"""Updates to parameter definitions for GoPro BLE and WiFi commands for Open GoPro version 2.0
+"""Updates to parameter definitions for GoPro BLE and WiFi commands for Open GoPro version 2.0"""
 
-Note these have to be IntEnum's in order to be correctly built when sending commands
-"""
-
-import enum
-
+from open_gopro.constants import GoProEnum
 from open_gopro.api.v1_0.params import ParamsV1_0
 
 
 class ParamsV2_0(ParamsV1_0):
-    class Resolution(enum.Enum):
+    class Resolution(GoProEnum):
         NOT_APPLICABLE = 0
         RES_4K = 1
         RES_2_7K = 4
@@ -24,7 +20,7 @@ class ParamsV2_0(ParamsV1_0):
         RES_5_K_4_3 = 25
         RES_5_3_K = 100
 
-    class Preset(enum.Enum):
+    class Preset(GoProEnum):
         ACTIVITY = 1
         BURST_PHOTO = 65538
         CINEMATIC = 2
@@ -40,18 +36,18 @@ class ParamsV2_0(ParamsV1_0):
         MAX_TIMEWARP = 327680
         MAX_VIDEO = 196608
 
-    class LED(enum.Enum):
+    class LED(GoProEnum):
         ALL_ON = 3
         ALL_OFF = 4
         FRONT_OFF_ONLY = 5
         BLE_KEEP_ALIVE = 66
 
-    class CameraControlStatus(enum.Enum):
+    class CameraControlStatus(GoProEnum):
         IDLE = 0
         CAMERA = 1
         EXTERNAL = 2
 
-    class VideoFOV(enum.Enum):
+    class VideoFOV(GoProEnum):
         WIDE = 0
         NARROW = 2
         SUPERVIEW = 3
@@ -59,14 +55,14 @@ class ParamsV2_0(ParamsV1_0):
         MAX_SUPERVIEW = 7
         LINEAR_HORIZON = 8
 
-    class PhotoFOV(enum.Enum):
+    class PhotoFOV(GoProEnum):
         NOT_APPLICABLE = 0
         WIDE = 101
         LINEAR = 102
         NARROW = 19
         MAX_SUPERVIEW = 100
 
-    class MultishotFOV(enum.Enum):
+    class MultishotFOV(GoProEnum):
         NOT_APPLICABLE = 0
         NARROW = 19
         MAX_SUPERVIEW = 100
