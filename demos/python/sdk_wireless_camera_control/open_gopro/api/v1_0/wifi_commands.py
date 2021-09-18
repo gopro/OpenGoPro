@@ -88,7 +88,7 @@ class WifiCommandsV1_0:
 
         class CameraFileToLocalFile(WifiGetBinary):
             def __call__(self, /, camera_file: str, local_file: Optional[Path] = None) -> Path:
-                return super().__call__(camera_file=camera_file, local_file=local_file)
+                return super().__call__(camera_file=camera_file, local_file=local_file or camera_file)
 
         # ======================================== Commands
 

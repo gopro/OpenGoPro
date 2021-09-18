@@ -112,6 +112,7 @@ async def test_turbo_mode(gopro_ble_no_wifi: GoPro):
 @pytest.mark.asyncio
 async def test_cycle_resolutions(gopro_ble_no_wifi: GoPro):
     assert gopro_ble_no_wifi.ble_command.load_preset(gopro_ble_no_wifi.params.Preset.CINEMATIC).is_ok
+    time.sleep(2)
     response = gopro_ble_no_wifi.ble_setting.resolution.get_capabilities_values()
     assert response.is_ok
     for resolution in response.flatten:

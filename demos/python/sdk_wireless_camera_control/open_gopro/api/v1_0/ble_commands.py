@@ -318,7 +318,7 @@ class BleStatusesV1_0:
         self.lcd_lock_active: BleStatus = BleStatus(self.communicator, StatusId.LCD_LOCK_ACTIVE, Flag)
         """Is the LCD lock currently active?"""
 
-        self.video_progress: BleStatus = BleStatus(self.communicator, StatusId.VIDEO_PROGRESS, Int8ub)
+        self.video_progress: BleStatus = BleStatus(self.communicator, StatusId.VIDEO_PROGRESS, Int32ub)
         """When encoding video, this is the duration (seconds) of the video so far; 0 otherwise."""
 
         self.wireless_enabled: BleStatus = BleStatus(self.communicator, StatusId.WIRELESS_ENABLED, Flag)
