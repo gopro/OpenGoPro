@@ -9,6 +9,15 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
+0.6.1 (September-20-2021)
+-------------------------
+
+* make parsers available at instantiation
+* use GoPro specific enums to handle invalid parameter cases
+* handle HTTP GET errors
+* add Construct typing
+* update Construct parsers to return actual enum's so identity checks can be used
+
 0.6.0 (September-2-2021)
 ------------------------
 
