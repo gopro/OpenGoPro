@@ -8,7 +8,6 @@ import logging
 import argparse
 import threading
 from pathlib import Path
-from json import dumps
 from typing import Tuple, Optional
 
 from rich.console import Console
@@ -34,7 +33,7 @@ def process_async_events(gopro: GoPro) -> None:
         # Print pushed updates (they're either setting capability or setting / status value updates)
         description = "capabilities are" if update.cmd is QueryCmdId.SETTING_CAPABILITY_PUSH else "value is"
         for item in update:
-            console.print(f"{item} {description} now: {dumps(update[item])}")
+            console.print(f"{item} {description} now: {update[item]}")
 
 
 def main() -> int:
@@ -95,14 +94,14 @@ def main() -> int:
 
             with console.status("[bold green]Getting some capabilities via BLE..."):
                 resolution_caps = gopro.ble_setting.resolution.get_capabilities_values().flatten
-                console.print(f"Current resolution capabilities are: {dumps(resolution_caps)}")
+                console.print(f"Current resolution capabilities are: {resolution_caps}")
                 fov_caps = gopro.ble_setting.video_field_of_view.get_capabilities_values().flatten
-                console.print(f"Current video FOV capabilities are: {dumps(fov_caps)}")
+                console.print(f"Current video FOV capabilities are: {fov_caps}")
 
             with console.status("[bold green]Registering for push notifications..."):
                 assert gopro.ble_setting.resolution.set(gopro.params.Resolution.RES_1080).is_ok
                 fps_caps_update = gopro.ble_setting.fps.register_value_update().flatten
-                console.print(f"New fps capabilities are: {dumps(fps_caps_update)}")
+                console.print(f"New fps capabilities are: {fps_caps_update}")
                 assert gopro.ble_setting.resolution.register_value_update().is_ok
                 assert gopro.ble_setting.resolution.register_capability_update().is_ok
                 assert gopro.ble_setting.fps.register_capability_update().is_ok

@@ -6,13 +6,42 @@
 
 """Unit testing of GoPro Client"""
 
-from open_gopro.responses import GoProResp
+import time
+import threading
+from pathlib import Path
+
 import pytest
+import requests
+import requests_mock
 
 from open_gopro.gopro import GoPro
 from open_gopro.ble import UUID
-from open_gopro.exceptions import InvalidConfiguration
-from open_gopro.constants import CmdId
+from open_gopro.exceptions import InvalidConfiguration, ResponseTimeout
+from open_gopro.constants import CmdId, ErrorCode, StatusId
+from open_gopro.responses import GoProResp
+
+
+ready = False
+@pytest.mark.asyncio
+def test_ble_threads_start(gopro_client_maintain_ble: GoPro):
+    def open_client():
+        gopro_client_maintain_ble.open()
+        global ready
+        ready = True
+
+    threading.Thread(target=open_client, daemon=True).start()
+    while not ready:
+        time.sleep(0.1)
+    not_encoding = bytearray([0x05, 0x13, 0x00, StatusId.ENCODING.value, 0x01, 0x00])
+    gopro_client_maintain_ble._notification_handler(0xFF, not_encoding)
+    not_busy = bytearray([0x05, 0x13, 0x00, StatusId.SYSTEM_READY.value, 0x01, 0x01])
+    gopro_client_maintain_ble._notification_handler(0xFF, not_busy)
+    assert not gopro_client_maintain_ble.is_busy
+    assert not gopro_client_maintain_ble.is_encoding
+    set_shutter = bytearray([0x02, 0x01, 0x00])
+    assert gopro_client_maintain_ble._write_characteristic_receive_notification(
+        UUID.CQ_COMMAND, set_shutter
+    ).is_ok
 
 
 @pytest.mark.asyncio
@@ -32,6 +61,57 @@ def test_gopro_open(gopro_client: GoPro):
     assert gopro_client.is_ble_connected
     assert gopro_client.is_wifi_connected
     assert gopro_client.identifier == "scanned_device"
+
+
+@pytest.mark.asyncio
+def test_http_get(gopro_client: GoPro, monkeypatch):
+    endpoint = "gopro/camera/stream/start"
+    session = requests.Session()
+    adapter = requests_mock.Adapter()
+    session.mount(GoPro._base_url + endpoint, adapter)
+    adapter.register_uri("GET", GoPro._base_url + endpoint, json="{}")
+    monkeypatch.setattr("open_gopro.gopro.requests.get", session.get)
+    response = gopro_client._get(endpoint)
+    assert response.is_ok
+
+
+@pytest.mark.asyncio
+def test_http_file(gopro_client: GoPro, monkeypatch):
+    out_file = Path("test.mp4")
+    endpoint = "videos/DCIM/100GOPRO/dummy.MP4"
+    session = requests.Session()
+    adapter = requests_mock.Adapter()
+    session.mount(GoPro._base_url + endpoint, adapter)
+    adapter.register_uri("GET", GoPro._base_url + endpoint, text="BINARY DATA")
+    monkeypatch.setattr("open_gopro.gopro.requests.get", session.get)
+    gopro_client._stream_to_file(endpoint, out_file)
+    assert out_file.exists()
+
+
+@pytest.mark.asyncio
+def test_http_response_timeout(gopro_client: GoPro, monkeypatch):
+    with pytest.raises(ResponseTimeout):
+        endpoint = "gopro/camera/stream/start"
+        session = requests.Session()
+        adapter = requests_mock.Adapter()
+        session.mount(GoPro._base_url + endpoint, adapter)
+        adapter.register_uri("GET", GoPro._base_url + endpoint, exc=requests.exceptions.ConnectTimeout)
+        monkeypatch.setattr("open_gopro.gopro.requests.get", session.get)
+        gopro_client._get(endpoint)
+
+
+@pytest.mark.asyncio
+def test_http_response_error(gopro_client: GoPro, monkeypatch):
+    endpoint = "gopro/camera/stream/start"
+    session = requests.Session()
+    adapter = requests_mock.Adapter()
+    session.mount(GoPro._base_url + endpoint, adapter)
+    adapter.register_uri(
+        "GET", GoPro._base_url + endpoint, status_code=403, reason="something bad happened", json="{}"
+    )
+    monkeypatch.setattr("open_gopro.gopro.requests.get", session.get)
+    response = gopro_client._get(endpoint)
+    assert not response.is_ok
 
 
 @pytest.mark.asyncio

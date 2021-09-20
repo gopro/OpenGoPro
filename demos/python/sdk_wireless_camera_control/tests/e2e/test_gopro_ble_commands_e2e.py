@@ -112,7 +112,7 @@ async def test_turbo_mode(gopro_ble_no_wifi: GoPro):
 @pytest.mark.asyncio
 async def test_cycle_resolutions(gopro_ble_no_wifi: GoPro):
     assert gopro_ble_no_wifi.ble_command.load_preset(gopro_ble_no_wifi.params.Preset.CINEMATIC).is_ok
-    assert gopro_ble_no_wifi.ble_setting.fps.set(gopro_ble_no_wifi.params.FPS.FPS_24)
+    time.sleep(2)
     response = gopro_ble_no_wifi.ble_setting.resolution.get_capabilities_values()
     assert response.is_ok
     for resolution in response.flatten:
@@ -125,7 +125,7 @@ async def test_narrow_param_value(gopro_ble_no_wifi: GoPro):
     version = gopro_ble_no_wifi.version
     if version == "1.0":
         assert gopro_ble_no_wifi.params.VideoFOV.NARROW.value == 6
-    elif version == "1.0":
+    elif version == "2.0":
         assert gopro_ble_no_wifi.params.VideoFOV.NARROW.value == 2
     else:
         pytest.fail(f"Need to implement test for version {version}")

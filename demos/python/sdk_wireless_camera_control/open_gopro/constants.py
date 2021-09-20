@@ -3,16 +3,40 @@
 
 """Constant numbers shared across the GoPro module. These do not change across Open GoPro Versions"""
 
-import enum
-from typing import Union, Tuple
+from enum import Enum, EnumMeta
+from typing import Union, Tuple, Iterator, Type, TypeVar
+
 import construct
 
 from open_gopro.ble import UUID
 
+T = TypeVar("T")
+
 GOPRO_BASE_UUID = "b5f9{}-aa8d-11e3-9046-0002a5d5c51b"
 
 
-class ErrorCode(enum.Enum):
+class GoProEnumMeta(EnumMeta):
+    """Modify enum metaclass to build GoPro specific enums"""
+
+    ITER_SKIP_NAMES = ["NOT_APPLICABLE"]
+
+    def __iter__(cls: Type[T]) -> Iterator[T]:
+        """Do not return enum values whose name is in the ITER_SKIP_NAMES list
+
+        Returns:
+            Iterator[T]: enum iterator
+        """
+        return iter([x[1] for x in cls._member_map_.items() if x[0] not in GoProEnumMeta.ITER_SKIP_NAMES])  # type: ignore
+
+
+class GoProEnum(Enum, metaclass=GoProEnumMeta):
+    """GoPro specific enum to be used for all settings, statuses, and parameters
+
+    The name NOT_APPLICABLE is special as it will not be returned as part of the enum iterator
+    """
+
+
+class ErrorCode(GoProEnum):
     """Status Codes."""
 
     SUCCESS = 0
@@ -20,7 +44,7 @@ class ErrorCode(enum.Enum):
     INVALID_PARAM = 2
 
 
-class CmdId(enum.Enum):
+class CmdId(GoProEnum):
     """Command ID's that are written to UUID.CQ_COMMAND."""
 
     SET_SHUTTER = 0x01
@@ -40,14 +64,14 @@ class CmdId(enum.Enum):
     GET_PRESET_STATUS = 0xF5
 
 
-class ActionId(enum.Enum):
+class ActionId(GoProEnum):
     """Action ID's that identify a protobuf command."""
 
     SET_TURBO_MODE = 0x6B
     GET_PRESET_STATUS = 0x02
 
 
-class SettingId(enum.Enum):
+class SettingId(GoProEnum):
     """Setting ID's that identify settings and are written to UUID.CQ_SETTINGS."""
 
     RESOLUTION = 2
@@ -143,7 +167,7 @@ class SettingId(enum.Enum):
     INVALID_FOR_TESTING = 0xFF
 
 
-class QueryCmdId(enum.Enum):
+class QueryCmdId(GoProEnum):
     """Command ID that is written to UUID.CQ_QUERY."""
 
     GET_SETTING_VAL = 0x12
@@ -163,7 +187,7 @@ class QueryCmdId(enum.Enum):
     INVALID_FOR_TESTING = 0xFF
 
 
-class StatusId(enum.Enum):
+class StatusId(GoProEnum):
     """Status ID to identify statuses sent to UUID.CQ_QUERY or received from UUID.CQ_QUERY_RESP."""
 
     BATT_PRESENT = 1

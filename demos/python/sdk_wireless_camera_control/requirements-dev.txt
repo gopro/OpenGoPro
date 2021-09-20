@@ -12,3 +12,4 @@ sphinxcontrib-napoleon==0.7
 sphinx-rtd-theme==0.5.2
 twine==3.3.0
 coverage-badge==1.0.1
+construct-typing==0.5.1

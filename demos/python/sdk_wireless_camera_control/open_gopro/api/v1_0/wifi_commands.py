@@ -6,7 +6,7 @@
 from __future__ import annotations
 import logging
 from pathlib import Path
-from typing import Any, Optional, Type, Dict
+from typing import Any, Optional, Type, Dict, Callable
 
 from open_gopro.communication_client import GoProWifi
 from open_gopro.constants import SettingId, StatusId
@@ -29,7 +29,8 @@ class WifiCommandsV1_0:
         communicator (GoProWifi): [description]
     """
 
-    class ParseCameraState(JsonParser):
+    # TODO refactor this to reuse response parsing
+    class _ParseCameraState(JsonParser):
         """Additional parsing to do on received camera state."""
 
         def parse(
@@ -44,19 +45,23 @@ class WifiCommandsV1_0:
             Returns:
                 Dict[Any, Any]: parsed output dict
             """
+            assert additional_parsers is not None
             parsed: Dict[Any, Any] = {}
             # Parse status and settings values into nice human readable things
             for (name, id_map) in [("status", StatusId), ("settings", SettingId)]:
                 for k, v in buf[name].items():
                     identifier = id_map(int(k))
                     try:
-                        assert additional_parsers is not None
                         parser = additional_parsers[identifier]
                         # GreedyBytes, GreedyString, etc can't be built since they don't have a length
                         val = v if "Greedy" in str(parser) else parser.parse(parser.build(v))
                     except KeyError:
                         logger.warning(f"unparsed {name}: {identifier}")
                         val = v
+                    except ValueError:
+                        logger.warning(f"{identifier} does not contain a value {v}")
+                        val = v
+
                     parsed[identifier] = val
 
             return parsed
@@ -82,16 +87,18 @@ class WifiCommandsV1_0:
             ...
 
         class CameraFileToLocalFile(WifiGetBinary):
-            def __call__(self, /, camera_file: str, local_file: Optional[Path] = None) -> GoProResp:
-                return super().__call__(camera_file=camera_file, local_file=local_file)
+            def __call__(self, /, camera_file: str, local_file: Optional[Path] = None) -> Path:
+                return super().__call__(camera_file=camera_file, local_file=local_file or camera_file)
 
         # ======================================== Commands
 
-        self.set_digital_zoom = GetJsonFromInt(communicator, "gopro/camera/digital_zoom?percent={}")
+        self.set_digital_zoom: Callable[[int], GoProResp] = GetJsonFromInt(
+            communicator, "gopro/camera/digital_zoom?percent={}"
+        )
         """Set digital zoom in percent (0 to 100)."""
 
         self.get_camera_state = WifiGetJsonNoParams(
-            communicator, "gopro/camera/state", response_parser=WifiCommandsV1_0.ParseCameraState()
+            communicator, "gopro/camera/state", response_parser=WifiCommandsV1_0._ParseCameraState()
         )
         """Get camera status and settings."""
 

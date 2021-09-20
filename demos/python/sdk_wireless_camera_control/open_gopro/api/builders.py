@@ -9,23 +9,42 @@ import logging
 from pathlib import Path
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
-from typing import Any, TypeVar, Generic, TYPE_CHECKING, Type, Union, no_type_check, Optional
+from typing import (
+    Any,
+    ClassVar,
+    TypeVar,
+    Generic,
+    TYPE_CHECKING,
+    Type,
+    Union,
+    no_type_check,
+    Optional,
+    Dict,
+    Callable,
+)
 
 import wrapt
 import requests
-import construct  # For enum
 import betterproto
-from construct import Int8ub, Struct
+from construct import Int8ub, Struct, Adapter, GreedyBytes
 
 from open_gopro.responses import (
-    ProtobufResponseAdapter,
     BytesParser,
     BytesBuilder,
     BytesParserBuilder,
     JsonParser,
     GoProResp,
 )
-from open_gopro.constants import ActionId, UUID, CmdId, SettingId, QueryCmdId, StatusId, ErrorCode
+from open_gopro.constants import (
+    ActionId,
+    UUID,
+    CmdId,
+    ResponseType,
+    SettingId,
+    QueryCmdId,
+    StatusId,
+    ErrorCode,
+)
 from open_gopro.communication_client import GoProBle, GoProWifi
 
 if TYPE_CHECKING:
@@ -41,7 +60,9 @@ CommandValueType = TypeVar("CommandValueType", bound=Union[enum.Enum, bool, int,
 
 @wrapt.decorator
 # pylint: disable = E, W
-def log_query(wrapped, instance, args, kwargs):  # type: ignore
+def log_query(
+    wrapped: Callable, instance: Union[BleSetting, BleStatus, WifiSetting], args: Any, kwargs: Any
+) -> Callable:
     """Log a query write."""
     logger.info(f"<----------- {wrapped.__name__} : {instance.identifier}")
     response = wrapped(*args, **kwargs)
@@ -51,11 +72,56 @@ def log_query(wrapped, instance, args, kwargs):  # type: ignore
 
 ######################################################## BLE #################################################
 
-status_struct = Struct("status" / construct.Enum(Int8ub, ErrorCode))
+
+def build_enum_adapter(target: Type[enum.Enum]) -> Adapter:
+    """Build an enum to Construct parsing and building adapter
+
+    This adapter only works on byte data of length 1
+
+    Args:
+        target (Type[enum.Enum]): Enum to use use for parsing / building
+
+    Returns:
+        Adapter: adapter to be used by Construct
+    """
+
+    class EnumByteAdapter(Adapter):
+        """An enum to Construct adapter"""
+
+        target: ClassVar[Type[enum.Enum]]
+
+        def _decode(self, obj: bytearray, *_: Any) -> enum.Enum:
+            """Parse a bytestream of length 1 into an Enum
+
+            Args:
+                obj (bytearray): bytestream to parse
+
+            Returns:
+                enum.Enum: Enum value
+            """
+            return self.target(obj)
+
+        def _encode(self, obj: Union[enum.Enum, int], *_: Any) -> int:
+            """Adapt an enum for use by Construct
+
+            Args:
+                obj (Union[enum.Enum, int]): Enum to adapt
+
+            Returns:
+                int: int value of Enum
+            """
+            return obj if isinstance(obj, int) else obj.value
+
+    setattr(EnumByteAdapter, "target", target)
+    return EnumByteAdapter(Int8ub)
 
 
-@dataclass
-class BleCommand:
+status_struct = Struct("status" / build_enum_adapter(ErrorCode))
+
+
+# Ignoring because hitting this mypy bug: https://github.com/python/mypy/issues/5374
+@dataclass  # type: ignore
+class BleCommand(ABC):
     """The base class for all BLE commands to store common info
 
     Args:
@@ -65,6 +131,19 @@ class BleCommand:
 
     communicator: GoProBle
     uuid: UUID
+
+    def __post_init__(self) -> None:
+        self.communicator._add_parser(self._identifier, self._response_parser)
+
+    @property
+    @abstractmethod
+    def _identifier(self) -> ResponseType:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _response_parser(self) -> BytesParser:
+        raise NotImplementedError
 
 
 @dataclass
@@ -77,9 +156,15 @@ class BleReadCommand(BleCommand):
         response_parser (BytesParser): the parser that will parse the received bytestream into a JSON dict
     """
 
-    communicator: GoProBle
-    uuid: UUID
     response_parser: BytesParser
+
+    @property
+    def _identifier(self) -> ResponseType:
+        return self.uuid
+
+    @property
+    def _response_parser(self) -> BytesParser:
+        return self.response_parser
 
     def __call__(self) -> GoProResp:
         """The method that will actually build and send the command.
@@ -88,7 +173,6 @@ class BleReadCommand(BleCommand):
             GoProResp: received and parsed response
         """
         logger.info(f"<----------- {self.uuid.name}")
-        self.communicator._add_parser(self.uuid, self.response_parser)
         response = self.communicator._read_characteristic(self.uuid)
         logger.info(f"-----------> {self.uuid.name} : {response}")
         return response
@@ -102,13 +186,20 @@ class BleWriteNoParamsCommand(BleCommand):
         communicator (GoProBle): BLE client to write
         uuid (UUID): UUID to write to
         cmd (CmdId): Command ID that is being sent
-        response_parser (BytesParser): the parser that will parse the received bytestream into a JSON dict
+        response_parser (Optional[ConstructBytesParser]): the parser that will parse the received bytestream into a JSON dict.
+            Defaults to None
     """
 
-    communicator: GoProBle
-    uuid: UUID
     cmd: CmdId
     response_parser: Optional[BytesParser] = None
+
+    @property
+    def _identifier(self) -> ResponseType:
+        return self.cmd
+
+    @property
+    def _response_parser(self) -> BytesParser:
+        return status_struct if self.response_parser is None else status_struct + self.response_parser
 
     def __call__(self) -> GoProResp:
         """The method that will actually build and send the command
@@ -117,11 +208,6 @@ class BleWriteNoParamsCommand(BleCommand):
             GoProResp: received and parsed response
         """
         logger.info(f"<----------- {self.cmd.name}")
-        # Append optional additional response parser to status parser
-        self.communicator._add_parser(
-            identifier=self.cmd,
-            parser=status_struct if self.response_parser is None else status_struct + self.response_parser,
-        )
         # Build data buffer
         data = bytearray([self.cmd.value])
         data.insert(0, len(data))
@@ -143,11 +229,17 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
         response_parser (Optional[BytesParser]): the parser that will parse the received bytestream into a JSON dict
     """
 
-    communicator: GoProBle
-    uuid: UUID
     cmd: CmdId
     param_builder: BytesBuilder
     response_parser: Optional[BytesParser] = None
+
+    @property
+    def _identifier(self) -> ResponseType:
+        return self.cmd
+
+    @property
+    def _response_parser(self) -> BytesParser:
+        return status_struct if self.response_parser is None else status_struct + self.response_parser
 
     def __call__(self, value: CommandValueType) -> GoProResp:
         """The method that will actually build and send the command
@@ -161,14 +253,10 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
             GoProResp: received and parsed response
         """
         logger.info(f"<----------- {self.cmd.name}: {str(value)}")
-        # Append optional additional response parser to status parser
-        self.communicator._add_parser(
-            identifier=self.cmd,
-            parser=status_struct if self.response_parser is None else status_struct + self.response_parser,
-        )
         # Build data buffer
         data = bytearray([self.cmd.value])
-        param = value.value if issubclass(type(value), enum.Enum) else value
+        # Mypy is not understanding the subclass check here
+        param = value.value if issubclass(type(value), enum.Enum) else value  # type: ignore
         # There must be a param builder if we have a param
         param = self.param_builder.build(param)
         data.extend([len(param), *param])
@@ -179,9 +267,42 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
         return response
 
 
+def build_protobuf_adapter(protobuf: Type[betterproto.Message]) -> Adapter:
+    """Build a protobuf to Construct parsing (only) adapter
+
+    Args:
+        protobuf (Type[betterproto.Message]): protobuf to use as parser
+
+    Returns:
+        Adapter: adapter to be used by Construct
+    """
+
+    class ProtobufConstructAdapter(Adapter):
+        """Adapt a protobuf to be used by Construct (for parsing only)"""
+
+        protobuf: Type[betterproto.Message]
+
+        def _decode(self, obj: bytearray, *_: Any) -> Dict[Any, Any]:
+            """Parse a byte stream into a JSON dict using a protobuf
+
+            Args:
+                obj (bytearray): byte stream to parse
+
+            Returns:
+                Dict[Any, Any]: parsed JSON dict
+            """
+            return self.protobuf.FromString(bytes(obj)).to_dict()
+
+        def _encode(self, *_: Any) -> Any:
+            raise NotImplementedError
+
+    setattr(ProtobufConstructAdapter, "protobuf", protobuf)
+    return ProtobufConstructAdapter(GreedyBytes)
+
+
 # Ignoring because hitting this mypy bug: https://github.com/python/mypy/issues/5374
 @dataclass  # type: ignore
-class BleProtoCommand(BleCommand, ABC):
+class BleProtoCommand(BleCommand):
     """A BLE command that writes to a UUID and does not accept any parameters
 
     Args:
@@ -193,12 +314,20 @@ class BleProtoCommand(BleCommand, ABC):
         response_proto (Type[betterproto.Message]): protobuf used to parse received bytestream
     """
 
-    communicator: GoProBle
-    uuid: UUID
     feature_id: CmdId
     action_id: ActionId
     request_proto: Type[betterproto.Message]
     response_proto: Type[betterproto.Message]
+
+    @property
+    def _identifier(self) -> ResponseType:
+        return self.action_id
+
+    @property
+    def _response_parser(self) -> BytesParser:
+        return (
+            self.response_proto if self.response_proto is None else build_protobuf_adapter(self.response_proto)
+        )
 
     @abstractmethod
     @no_type_check
@@ -217,9 +346,6 @@ class BleProtoCommand(BleCommand, ABC):
         logger.info(
             f"<----------- {self.feature_id.name} : {' '.join([*[str(a) for a in args], *[str(a) for a in kwargs.values()]])}"
         )
-
-        if self.response_proto is not None:
-            self.communicator._add_parser(self.action_id, ProtobufResponseAdapter(self.response_proto))
 
         # Build request protobuf bytestream
         proto = self.request_proto()
@@ -422,7 +548,7 @@ class BleStatus:
         self.communicator = communicator
         self.parser = parser
         # Add to response parsing map
-        communicator._parser_map[self.identifier] = self.parser
+        communicator._add_parser(self.identifier, self.parser)
 
     def __str__(self) -> str:  # pylint: disable=missing-return-doc
         return str(self.identifier.name)
@@ -480,7 +606,7 @@ class BleStatus:
 
 
 @dataclass
-class WifiCommand:
+class WifiGetJsonCommand:
     """The base class for all WiFi Commands. Stores common information.
 
     Args:
@@ -490,10 +616,15 @@ class WifiCommand:
 
     communicator: GoProWifi
     endpoint: str
+    response_parser: Optional[JsonParser] = None
+
+    def __post_init__(self) -> None:
+        if self.response_parser is not None:
+            self.communicator._add_parser(self.endpoint, self.response_parser)
 
 
 @dataclass
-class WifiGetJsonWithParams(WifiCommand, Generic[CommandValueType]):
+class WifiGetJsonWithParams(WifiGetJsonCommand, Generic[CommandValueType]):
     """A Wifi command that writes to a UUID (with parameters) and receives JSON as response
 
     Args:
@@ -501,10 +632,6 @@ class WifiGetJsonWithParams(WifiCommand, Generic[CommandValueType]):
         endpoint (str): endpoint to GET
         response_parser (Optional[JsonParser]): the parser that will parse the received bytestream into a JSON dict
     """
-
-    communicator: GoProWifi
-    endpoint: str
-    response_parser: Optional[JsonParser] = None
 
     def __call__(self, value: CommandValueType) -> GoProResp:
         """The method that will actually build and send the command
@@ -518,9 +645,6 @@ class WifiGetJsonWithParams(WifiCommand, Generic[CommandValueType]):
             GoProResp: received and parsed response
         """
         logger.info(f"<----------- {self.endpoint} : {str(value)}")
-
-        if self.response_parser is not None:
-            self.communicator._add_parser(self.endpoint, self.response_parser)
 
         # Build list of args as they should be represented in URL
         url_params = []
@@ -536,7 +660,7 @@ class WifiGetJsonWithParams(WifiCommand, Generic[CommandValueType]):
 
 
 @dataclass
-class WifiGetJsonNoParams(WifiCommand):
+class WifiGetJsonNoParams(WifiGetJsonCommand):
     """A Wifi command that writes to a UUID (with parameters) and receives JSON as response
 
     Args:
@@ -545,10 +669,6 @@ class WifiGetJsonNoParams(WifiCommand):
         response_parser (Optional[JsonParser]): the parser that will parse the received bytestream into a JSON dict
     """
 
-    communicator: GoProWifi
-    endpoint: str
-    response_parser: Optional[JsonParser] = None
-
     def __call__(self) -> GoProResp:
         """The method that will actually build and send the command
 
@@ -556,9 +676,6 @@ class WifiGetJsonNoParams(WifiCommand):
             GoProResp: received and parsed response
         """
         logger.info(f"<----------- {self.endpoint}")
-
-        if self.response_parser is not None:
-            self.communicator._add_parser(self.endpoint, self.response_parser)
 
         url = self.endpoint
         # Send to camera
@@ -569,7 +686,7 @@ class WifiGetJsonNoParams(WifiCommand):
 
 # Ignoring because hitting this mypy bug: https://github.com/python/mypy/issues/5374
 @dataclass  # type: ignore
-class WifiGetBinary(WifiCommand, ABC):
+class WifiGetBinary(ABC):
     """A Wifi command that writes to a UUID (with parameters) and receives a binary stream as response
 
     Args:
@@ -638,7 +755,8 @@ class WifiSetting(Generic[SettingValueType]):
             GoProResp: Status of set
         """
         logger.info(f"<----------- Setting {self.identifier}: {value}")
-        # Build url.. TODO fix this type error with Mixin (or passing in endpoint as argument)
+        # Build url. TODO fix this type error with Mixin (or passing in endpoint as argument)
+        value = value.value if isinstance(value, enum.Enum) else value
         url = self.communicator._api.wifi_setting.endpoint.format(self.identifier.value, value)  # type: ignore
         # Send to camera
         response = self.communicator._get(url)
