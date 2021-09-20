@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 from enum import Enum, auto
-from typing import Literal, Dict
+from typing import Literal
 from abc import abstractmethod, ABC
 from dataclasses import dataclass
 

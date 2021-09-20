@@ -178,7 +178,7 @@ class Singleton:
         """Check for existing instance."""
         if cls not in cls._instances:
             # https://github.com/python/mypy/issues/6061
-            cls._instances[cls] = object.__new__(cls, *args, **kwargs) # type: ignore
+            cls._instances[cls] = object.__new__(cls, *args, **kwargs)  # type: ignore
         return cls._instances[cls]
 
 

@@ -36,13 +36,7 @@ def main(identifier: Optional[str], log_location: Path, output_location: Path) -
     return_code = 0
     try:
         with GoPro(identifier) as gopro:
-            while True:
-                try:
-                    if gopro.wifi_command.set_preset(gopro.params.Preset.CINEMATIC).is_ok:
-                        break
-                except Exception as e:
-                    print(repr(e))
-                    pass
+            assert gopro.wifi_command.set_preset(gopro.params.Preset.CINEMATIC).is_ok
 
             # Turn off the shutter if we are currently encoding
             if gopro.is_encoding:

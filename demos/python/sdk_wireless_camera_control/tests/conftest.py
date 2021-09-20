@@ -60,9 +60,9 @@ def manage_logs(request):
 
 @pytest.fixture(scope="function", autouse=True)
 def test_log(request):
-    logging.critical("################################################################################")
-    logging.critical("Test '{}' STARTED".format(request.node.nodeid))
-    logging.critical("################################################################################")
+    logging.debug("################################################################################")
+    logging.debug("Test '{}' STARTED".format(request.node.nodeid))
+    logging.debug("################################################################################")
 
 
 ##############################################################################################################
@@ -412,6 +412,37 @@ async def gopro_client(request):
     test_client = GoProTest(request.param)
     yield test_client
     GoProResp._parse = original_parse
+
+
+class GoProTestMaintainBle(GoPro):
+    def __init__(self) -> None:
+        super().__init__(
+            target=re.compile("device"),
+            ble_adapter=BleControllerTest,
+            wifi_adapter=WifiControllerTest,
+            enable_wifi=True,
+            maintain_ble=True,
+        )
+        self._test_version = "1.0"
+        self._api.ble_command.get_open_gopro_api_version = self._test_return_version
+        self.ble_status.encoding_active.register_value_update = lambda *args: None
+        self.ble_status.system_ready.register_value_update = lambda *args: None
+        self.keep_alive = lambda *args: True
+        self._open_wifi = lambda *args: None
+        self._sync_resp_ready_q.get = lambda *args, **kwargs: good_response
+
+    def _open_ble(self, timeout: int, retries: int) -> None:
+        super()._open_ble(timeout=timeout, retries=retries)
+        self._ble._gatt_table.handle2uuid = lambda *args: UUID.CQ_QUERY_RESP
+
+    def _test_return_version(self) -> FlattenPatch:
+        return FlattenPatch(Version(*[int(x) for x in self._test_version.split(".")]))
+
+
+@pytest.fixture(scope="function")
+async def gopro_client_maintain_ble():
+    test_client = GoProTestMaintainBle()
+    yield test_client
 
 
 ##############################################################################################################

@@ -11,7 +11,7 @@ import logging
 import threading
 from queue import Queue
 from pathlib import Path
-from typing import Any, Dict, Optional, Type, Callable, Union, Generic, Pattern
+from typing import Any, Dict, Final, Optional, Type, Callable, Union, Generic, Pattern
 
 import wrapt
 import requests
@@ -38,10 +38,9 @@ from open_gopro.communication_client import GoProBle, GoProWifi
 
 logger = logging.getLogger(__name__)
 
-# Send a keep alive minimum every 5 seconds
-KEEP_ALIVE_INTERVAL = 60
-
-WRITE_TIMEOUT = 10
+KEEP_ALIVE_INTERVAL: Final = 60
+WRITE_TIMEOUT: Final = 10
+HTTP_GET_RETRIES: Final = 5
 
 
 @wrapt.decorator
@@ -240,7 +239,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         """
         if not self._maintain_ble:
             raise InvalidConfiguration("Not maintaining BLE state so busy is not applicable")
-        return self._internal_state & GoPro._InternalState.READY == 0
+        return self._internal_state & GoPro._InternalState.SYSTEM_BUSY == 1
 
     @property
     def version(self) -> str:
@@ -534,7 +533,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             if not response_claimed:
                 logger.info(f"--(ASYNC)--> {response}")
                 # See if there are any registered responses that need to be enqueued for client consumption
-                for key in response.data.keys():
+                for key in list(response.data.keys()):
                     if (response.cmd, key) not in self._listeners:
                         del response.data[key]
                 # Enqueue the response if there is anything left
@@ -614,7 +613,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         if self._maintain_ble:
             # If this was set shutter on, we need to wait to be notified that encoding has started
             if response.cmd is CmdId.SET_SHUTTER and data[-1] == 1:
-                while not self._internal_state & GoPro._InternalState.ENCODING:
+                while not self.is_encoding:
                     # We don't want to use the application's loop, can't use any of our loops due to potential deadlock,
                     # and don't want to spawn a new thread for this. So just poll ¯\_(ツ)_/¯
                     # A read to an int is atomic anyway.
@@ -687,27 +686,32 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         Args:
             url (str): endpoint URL
 
-        Raises:
-            requests.models.HTTPError if there is an HTTP error
-
         Returns:
             GoProResp: response
         """
         url = GoPro._base_url + url
         logger.debug(f"Sending:  {url}")
 
-        # TODO figure out why these are failing. For now retry 5 times.
-        for _ in range(5):
+        response: Optional[GoProResp] = None
+        for retry in range(HTTP_GET_RETRIES):
             try:
                 request = requests.get(url)
                 request.raise_for_status()
                 response = GoProResp._from_http_response(self._parser_map, request)
-                return response
-            except Exception as e:
-                logger.critical(repr(e))
-                logger.critical("Retrying to send the command...")
+            except requests.exceptions.HTTPError as e:
+                # The camera responded with an error. Break since we successfully sent the command and attempt
+                # to continue
+                logger.warning(e)
+                response = GoProResp._from_http_response(self._parser_map, e.response)
+            # TODO figure out why these are failing. For now just retry
+            except requests.exceptions.ConnectionError as e:
+                logger.warning(repr(e))
+                logger.warning("Retrying to send the command...")
+                if retry == HTTP_GET_RETRIES - 1:
+                    raise ResponseTimeout(HTTP_GET_RETRIES) from e
 
-        raise Exception("Couldn't send command after 5 retries")
+        assert response is not None
+        return response
 
     @_ensure_initialized_acquire_ready_semaphore
     def _stream_to_file(self, url: str, file: Path) -> None:

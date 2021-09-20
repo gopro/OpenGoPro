@@ -4,24 +4,36 @@
 """Constant numbers shared across the GoPro module. These do not change across Open GoPro Versions"""
 
 from enum import Enum, EnumMeta
-from typing import Union, Tuple
+from typing import Union, Tuple, Iterator, Type, TypeVar
 
 import construct
 
 from open_gopro.ble import UUID
 
+T = TypeVar("T")
+
 GOPRO_BASE_UUID = "b5f9{}-aa8d-11e3-9046-0002a5d5c51b"
 
 
 class GoProEnumMeta(EnumMeta):
+    """Modify enum metaclass to build GoPro specific enums"""
+
     ITER_SKIP_NAMES = ["NOT_APPLICABLE"]
 
-    def __iter__(self):
-        return iter([x[1] for x in self._member_map_.items() if x[0] not in GoProEnumMeta.ITER_SKIP_NAMES])
+    def __iter__(cls: Type[T]) -> Iterator[T]:
+        """Do not return enum values whose name is in the ITER_SKIP_NAMES list
+
+        Returns:
+            Iterator[T]: enum iterator
+        """
+        return iter([x[1] for x in cls._member_map_.items() if x[0] not in GoProEnumMeta.ITER_SKIP_NAMES])  # type: ignore
 
 
 class GoProEnum(Enum, metaclass=GoProEnumMeta):
-    ...
+    """GoPro specific enum to be used for all settings, statuses, and parameters
+
+    The name NOT_APPLICABLE is special as it will not be returned as part of the enum iterator
+    """
 
 
 class ErrorCode(GoProEnum):
