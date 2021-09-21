@@ -15,10 +15,8 @@ using the Get Version command upon connection %}
 ## [WiFi Specification 2.0](wifi_versions/wifi_2_0.md)
 
 -   New Features:
-
     -   Set third party client command
     -   Set shutter command
-
 -   Breaking changes:
     -   Settings endpoint has changed to: `gopro/camera/setting?setting={setting}&option={option}`
         See the [quick reference]({% link specs/wifi_versions/wifi_2_0.md %}#settings-quick-reference) for more information
