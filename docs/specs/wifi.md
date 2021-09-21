@@ -14,14 +14,25 @@ using the Get Version command upon connection %}
 
 ## [WiFi Specification 2.0](wifi_versions/wifi_2_0.md)
 
--   New commands:
-    - Set third party client
-    - Set shutter
+-   New Features:
 
--   Settings endpoint has changed to: `gopro/camera/setting?setting={setting}&option={option}`
-    See the [quick reference]({% link specs/wifi_versions/wifi_2_0.md %}#settings-quick-reference) for more information
+    -   Set third party client command
+    -   Set shutter command
+
+-   Breaking changes:
+    -   Settings endpoint has changed to: `gopro/camera/setting?setting={setting}&option={option}`
+        See the [quick reference]({% link specs/wifi_versions/wifi_2_0.md %}#settings-quick-reference) for more information
+    -   Video Digital Lens setting parameter changes:
+        -   Narrow changed from 6 to 2
+    -   Photo Digital Lens setting parameter changes:
+        -   Wide changed from 22 to 101
+        -   Linear changed from 23 to 102
+        -   Narrow changed from 24 to 19
+        -   Max Superview changed from 25 to 100
+    -   Multishot Digital Lens parameter changes:
+        -   Wide changed from 2 to 101
+        -   Narrow changed from 24 to 19
 
 ## [WiFi Specification 1.0](wifi_versions/wifi_1_0.md)
 
 -   Initial API
-
