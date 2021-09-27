@@ -1,0 +1,50 @@
+# hotfix_release.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Mon Sep 27 19:29:34 UTC 2021
+
+name: Release a hotfix externally
+
+on:
+    push:
+        branches:
+            - hotfix
+    workflow_dispatch:
+
+jobs:
+    release_hotfix:
+        if: ${{ github.repository != 'gopro/OpenGoPro' }}
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout Hotfix branch
+              uses: actions/checkout@v2
+              with:
+                  ref: hotfix
+                  path: hotfix
+                  token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
+                  fetch-depth: 2
+
+            - name: checkout Target branch
+              uses: actions/checkout@v2
+              with:
+                  repository: gopro/OpenGoPro
+                  ref: main
+                  path: target
+                  token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
+
+            - name: Copy changes and push
+              shell: bash
+              run : |
+                pushd hotfix
+                git log -1 --pretty=%B > ../message
+                rm -rf .git
+                popd
+                pushd target
+                git rm -rf .
+                git clean -fxd
+                shopt -s dotglob
+                mv ../hotfix/* .
+                git config core.fileMode false
+                git config user.name github-actions
+                git config user.email github-actions@github.com
+                git add .
+                git commit -a -F ../message
+                git push

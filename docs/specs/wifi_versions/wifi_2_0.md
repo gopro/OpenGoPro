@@ -675,14 +675,6 @@ Below is a table of setting options detailing how to set every option supported 
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Lens</td>
-      <td>Set video digital lenses (id: 121) to max superview (id: 7)</td>
-      <td>GET</td>
-      <td>/gopro/camera/setting?setting=121&option=7</td>
-      <td>Y</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>121</td>
-      <td>Lens</td>
       <td>Set video digital lenses (id: 121) to linear + horizon leveling (id: 8)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=121&option=8</td>
@@ -694,14 +686,6 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set photo digital lenses (id: 122) to narrow (id: 19)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=122&option=19</td>
-      <td>Y</td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>122</td>
-      <td>Lens</td>
-      <td>Set photo digital lenses (id: 122) to max superview (id: 100)</td>
-      <td>GET</td>
-      <td>/gopro/camera/setting?setting=122&option=100</td>
       <td>Y</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
@@ -726,14 +710,6 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set multi shot digital lenses (id: 123) to narrow (id: 19)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=123&option=19</td>
-      <td>Y</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>123</td>
-      <td>Lens</td>
-      <td>Set multi shot digital lenses (id: 123) to max superview (id: 100)</td>
-      <td>GET</td>
-      <td>/gopro/camera/setting?setting=123&option=100</td>
       <td>Y</td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">

@@ -230,12 +230,12 @@ Discovery of and connection to the GoPro camera can be done as follows:
 </p>
 
 <ol>
-  <li>Put the camera into pairing mode</li>
-  <li>Scan to discover peripherals (which can be narrowed by limiting to peripherals that advertise service FEA6)</li>
-  <li>Connect to the peripheral</li>
-  <li>Finish pairing with the peripheral</li>
-  <li>Discover all advertised services and characteristics</li>
-  <li>Subscribe to notifications from all characteristics that have the notify flag set</li>
+<li>Put the camera into pairing mode</li>
+<li>Scan to discover peripherals (which can be narrowed by limiting to peripherals that advertise service FEA6)</li>
+<li>Connect to the peripheral</li>
+<li>Finish pairing with the peripheral</li>
+<li>Discover all advertised services and characteristics</li>
+<li>Subscribe to notifications from all characteristics that have the notify flag set</li>
 </ol>
 
 
@@ -1066,14 +1066,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Lens</td>
-      <td>Set video digital lenses (id: 121) to max superview (id: 7)</td>
-      <td>03:79:01:07</td>
-      <td>02:79:00</td>
-      <td>Y</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>121</td>
-      <td>Lens</td>
       <td>Set video digital lenses (id: 121) to linear + horizon leveling (id: 8)</td>
       <td>03:79:01:08</td>
       <td>02:79:00</td>
@@ -1084,14 +1076,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Lens</td>
       <td>Set photo digital lenses (id: 122) to narrow (id: 19)</td>
       <td>03:7A:01:13</td>
-      <td>02:7A:00</td>
-      <td>Y</td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>122</td>
-      <td>Lens</td>
-      <td>Set photo digital lenses (id: 122) to max superview (id: 100)</td>
-      <td>03:7A:01:64</td>
       <td>02:7A:00</td>
       <td>Y</td>
     </tr>
@@ -1116,14 +1100,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Lens</td>
       <td>Set multi shot digital lenses (id: 123) to narrow (id: 19)</td>
       <td>03:7B:01:13</td>
-      <td>02:7B:00</td>
-      <td>Y</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>123</td>
-      <td>Lens</td>
-      <td>Set multi shot digital lenses (id: 123) to max superview (id: 100)</td>
-      <td>03:7B:01:64</td>
       <td>02:7B:00</td>
       <td>Y</td>
     </tr>
@@ -2756,3 +2732,44 @@ Open GoPro supports the following protobuf commands:
     </tr>
   </tbody>
 </table>
+
+
+## Protobuf Command Details
+Below are additional details about specific protobuf commands:
+
+
+### RequestSetTurboActive
+<p>
+Turbo Transfer Mode is a special feature that serves two purposes:
+<ul>
+<li>Temporarily modify low-level settings in the OS to prioritize WiFi offload speeds</li>
+<li>Put up a UI on the camera indicating that media is being transferred and preventing the user from inadvertently changing settings or capturing new media</li>
+</ul>
+</p>
+
+<p>
+Developers can query whether the camera is currently in Turbo Transfer Mode from camera status 113.
+</p>
+
+<p>
+While in Turbo Transfer Mode, if the user presses the <b>Mode/Power</b> or <b>Shutter</b> buttons on the camera,
+Turbo Transfer Mode will be deactivated.
+</p>
+
+<p>
+Some cameras are already optimized for WiFi transfer and do not gain additional speed from this feature.
+</p>
+
+### RequestGetPresetStatus
+<p>
+This command is used to get information about what Preset Groups and Presets the camera supports in its current state.
+Each Preset Group contains an ID, whether additional presets can be added, and an array of existing Presets.
+Each Preset contains information about its ID, associated flatmode, title, icon, whether it's a user-defined preset,
+whether the preset has been modified from its factory-default state (for factory-default presets only) and a list of 
+settings associated with the Preset.
+</p>
+
+<p>
+Preset Status should not be confused with camera status, which contains hundreds of camera/setting statuses on a system level.
+</p>
+
