@@ -8,7 +8,7 @@ name: Pre Merge Checks
 
 on:
     pull_request:
-        branches: [main, develop]
+        branches: [main, develop, hotfix]
 
 jobs:
     copyright:
@@ -32,7 +32,6 @@ jobs:
                   echo "NUM_MODIFIED=$(git diff --numstat | wc -l)" >> $GITHUB_ENV
 
             - name: Push changes
-
               if: env.NUM_MODIFIED != 0
               shell: bash
               run: |
@@ -51,8 +50,32 @@ jobs:
             - name: Cancel Previous Runs
               uses: styfle/cancel-workflow-action@0.8.0
               with:
-                access_token: ${{ github.token }}
+                  access_token: ${{ github.token }}
 
             - uses: actions/checkout@v2
             - name: Test Jekyll Build and Check Links
               run: make setup tests
+
+    ensure_synchronization:
+        if: ${{ github.repository != 'gopro/OpenGoPro' }} && ${{ github.base_ref == 'hotfix' }}
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout source branch
+              uses: actions/checkout@v2
+              with:
+                ref: hotfix
+                ssh-key: ${{ secrets.PUSH_FROM_WORKFLOW_TO_RETRIGGER }}
+            - name: Verify synchronized if hotfix
+              shell: bash
+              run: |
+                hash=$( git rev-parse HEAD | cut -c1-7)
+                target_hash=$(git ls-remote git@github.com:gopro/OpenGoPro U main | cut -c1-7)
+                echo "Target hash is $target_hash"
+                echo "Hotfix release hash is $hash"
+                if [[ $hash == $target_hash ]]; then
+                  exit 0
+                else
+                  echo "Hotfix branch is not synchronized with external main"
+                  exit 1
+                fi
+
