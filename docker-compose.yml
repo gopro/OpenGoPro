@@ -4,7 +4,7 @@
 version: '3.7'
 services:
     jekyll:
-        image: tcamise/open_gopro:latest
+        image: ghcr.io/gopro/opengopro:main
         build:
             context: .
         volumes:
