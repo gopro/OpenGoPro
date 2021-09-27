@@ -189,6 +189,7 @@ DEPENDENCIES
   jekyll-titles-from-headings (~> 0.5.3)
   liquid-tag-parser (~> 1.9)
   minimal-mistakes-jekyll (~> 4.24)
+  nokogiri (>= 1.12.5)
 
 BUNDLED WITH
-   2.2.25
+   2.2.30
