@@ -30,21 +30,25 @@ jobs:
                   path: target
                   token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
 
-            - name: Copy changes and push
+            - name: Copy changes
               shell: bash
-              run : |
-                pushd hotfix
-                git log -1 --pretty=%B > ../message
-                rm -rf .git
-                popd
-                pushd target
-                git rm -rf .
-                git clean -fxd
-                shopt -s dotglob
-                mv ../hotfix/* .
-                git config core.fileMode false
-                git config user.name github-actions
-                git config user.email github-actions@github.com
-                git add .
-                git commit -a -F ../message
-                git push
+              run: |
+                  pushd hotfix
+                  git log -1 --pretty=%B > ../message
+                  rm -rf .git
+                  popd
+                  pushd target
+                  git rm -rf .
+                  git clean -fxd
+                  shopt -s dotglob
+                  mv ../hotfix/* .
+                  git config user.name github-actions
+                  git config user.email github-actions@github.com
+                  git add .
+                  num_modified=$(git diff --cached --numstat | wc -l)
+                  if [[ $num_modified == 0 ]]; then
+                    echo "Nothing to push"
+                  else
+                    git commit -a -F ../message
+                    git push
+                  fi

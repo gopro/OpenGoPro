@@ -38,3 +38,4 @@ codekit-config.json
 /docs/_site
 /docs/**/demos
 /docs/**/_demos
+!/docs/assets/images/demos

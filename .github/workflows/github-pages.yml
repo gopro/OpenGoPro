@@ -117,9 +117,7 @@ jobs:
 
             - name: Prepare Demos
               shell: bash
-              run: |
-                ls -la tools
-                make prepare_demos
+              run: make prepare_demos
 
             - name: Build and Deploy External Github Pages
               if: ${{ github.repository == 'gopro/OpenGoPro' }}
