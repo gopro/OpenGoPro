@@ -178,6 +178,7 @@ For example:
 
 <ul>
 <li>Unless changed by the user, GoPro cameras will automatically power off after some time (e.g. 5min, 15min, 30min). The Auto Power Down watchdog timer can be reset by sending periodic keep-alive messages to the camera. It is recommended to send a keep-alive at least once every 120 seconds.</li>
+<li>In general, querying the value for a setting that is not associated with the current preset/flatmode results in an undefined value. For example, the user should not try to query the current Photo Digital Lenses (FOV) value while in Standard preset (Video flatmode).</li>
 </ul>
 
 
@@ -267,174 +268,188 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Y</td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
+      <td>Media: Telemetry</td>
+      <td>Get telemetry track data (MP4)</td>
+      <td>GET</td>
+      <td>/gopro/media/telemetry?path=100GOPRO/XXX.MP4</td>
+      <td>Y</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Media: Telemetry</td>
+      <td>Get telemetry track data (JPG)</td>
+      <td>GET</td>
+      <td>/gopro/media/telemetry?path=100GOPRO/XXX.JPG</td>
+      <td>Y</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>Media: Thumbnail</td>
       <td>Get thumbnail for "100GOPRO/xxx.MP4"</td>
       <td>GET</td>
       <td>/gopro/media/thumbnail?path=100GOPRO/XXX.MP4</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Media: Thumbnail</td>
       <td>Get thumbnail for "100GOPRO/xxx.JPG"</td>
       <td>GET</td>
       <td>/gopro/media/thumbnail?path=100GOPRO/XXX.JPG</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Media: Turbo Transfer</td>
       <td>Turbo transfer: on</td>
       <td>GET</td>
       <td>/gopro/media/turbo_transfer?p=1</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Media: Turbo Transfer</td>
       <td>Turbo transfer: off</td>
       <td>GET</td>
       <td>/gopro/media/turbo_transfer?p=0</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Open GoPro</td>
       <td>Get version</td>
       <td>GET</td>
       <td>/gopro/version</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Get Status</td>
       <td>Get preset status</td>
       <td>GET</td>
       <td>/gopro/camera/presets/get</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Activity</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=1</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Burst Photo</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=65538</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Cinematic</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=2</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Live Burst</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=65537</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Night Photo</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=65539</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Night Lapse</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=131074</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Photo</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=65536</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Slo-Mo</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=3</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Standard</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=0</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Time Lapse</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=131073</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Time Warp</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=131072</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Max Photo</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=262144</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Max Timewarp</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=327680</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Max Video</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=196608</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Load Group</td>
       <td>Video</td>
       <td>GET</td>
       <td>/gopro/camera/presets/set_group?id=1000</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Load Group</td>
       <td>Photo</td>
       <td>GET</td>
       <td>/gopro/camera/presets/set_group?id=1001</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Load Group</td>
       <td>Timelapse</td>
       <td>GET</td>
       <td>/gopro/camera/presets/set_group?id=1002</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Stream: Start</td>
       <td>Start preview stream</td>
       <td>GET</td>
       <td>/gopro/camera/stream/start</td>
       <td>Y</td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Stream: Stop</td>
       <td>Stop preview stream</td>
       <td>GET</td>

@@ -17,3 +17,5 @@ jobs:
             - uses: zofrex/mirror-branch@v1.0.2
               with:
                   target-branch: hotfix
+                  token:  ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
+                  force: true

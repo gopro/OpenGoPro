@@ -310,6 +310,7 @@ For details on which cameras are supported and how to enable and disable Turbo T
 
 <ul>
 <li>Unless changed by the user, GoPro cameras will automatically power off after some time (e.g. 5min, 15min, 30min). The Auto Power Down watchdog timer can be reset by sending periodic keep-alive messages to the camera. It is recommended to send a keep-alive at least once every 120 seconds.</li>
+<li>In general, querying the value for a setting that is not associated with the current preset/flatmode results in an undefined value. For example, the user should not try to query the current Photo Digital Lenses (FOV) value while in Standard preset (Video flatmode).</li>
 </ul>
 
 
@@ -1854,7 +1855,7 @@ Query responses are pushed asynchronously in the following scenarios:
       <td>Status Value</td>
     </tr>
     <tr>
-      <td>1 byte</td>
+      <td>1-2 bytes</td>
       <td>1 byte</td>
       <td>1 byte</td>
       <td>1 byte</td>
