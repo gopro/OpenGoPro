@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2021-09-27T14:54:31-07:00">
+  <meta property="article:published_time" content="2021-09-27T15:06:57-07:00">
 
 
 
@@ -344,7 +344,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="BlueZ Bash Tutorial">
     <meta itemprop="description" content="BlueZ Bash Tutorial">
-    <meta itemprop="datePublished" content="2021-09-27T14:54:31-07:00">
+    <meta itemprop="datePublished" content="2021-09-27T15:06:57-07:00">
     
 
     <div class="page__inner-wrap">
@@ -488,7 +488,7 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
 <h2 id="scan">Scan</h2>
 
 <div>
-    <ul class="tab" data-tab="a62dd315-685d-4d9e-b280-6696ae8ffdec">
+    <ul class="tab" data-tab="64bbc5a9-ff66-45d3-8f77-11cc116ab67a">
         
             <li class="active">
                 <a href="">code </a>
@@ -507,7 +507,7 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="a62dd315-685d-4d9e-b280-6696ae8ffdec">
+        <ul class="tab-content" id="64bbc5a9-ff66-45d3-8f77-11cc116ab67a">
         
             <li class="active">
 <p>Next, we must find the GoPro Camera using bleak. Let’s initialize an empty dict that will
@@ -615,7 +615,7 @@ in the example above). This is how the camera will be identified via <code class
 <h2 id="connect">Connect</h2>
 
 <div>
-    <ul class="tab" data-tab="af5ee74b-b246-4a25-bd16-4d0d8ec984d8">
+    <ul class="tab" data-tab="b6c5af14-d899-478f-9d24-2dcecf07bcb6">
         
             <li class="active">
                 <a href="">Input </a>
@@ -626,7 +626,7 @@ in the example above). This is how the camera will be identified via <code class
             </li>
         
         </ul>
-        <ul class="tab-content" id="af5ee74b-b246-4a25-bd16-4d0d8ec984d8">
+        <ul class="tab-content" id="b6c5af14-d899-478f-9d24-2dcecf07bcb6">
         
             <li class="active">
 <p>Now that we know the address to connect to, the next step is to establish a BLE connection
@@ -886,7 +886,7 @@ the device should show up when querying <code class="language-plaintext highligh
 <h2 id="enable-notifications">Enable Notifications</h2>
 
 <div>
-    <ul class="tab" data-tab="c68f531c-e9cd-400a-842d-48e5889ee81f">
+    <ul class="tab" data-tab="46d9602a-2ac9-4cba-a3dd-ebfa93fba80b">
         
             <li class="active">
                 <a href="">Enter Gatt Menu </a>
@@ -897,7 +897,7 @@ the device should show up when querying <code class="language-plaintext highligh
             </li>
         
         </ul>
-        <ul class="tab-content" id="c68f531c-e9cd-400a-842d-48e5889ee81f">
+        <ul class="tab-content" id="46d9602a-2ac9-4cba-a3dd-ebfa93fba80b">
         
             <li class="active">
 <p>As specified in the <a href="/OpenGoPro/ble#sending-and-receiving-messages">Open GoPro Bluetooth API</a>, we must enable notifications for a given characteristic
@@ -970,10 +970,10 @@ be alerted of responses when the characteristic is notified.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_448896c2-c727-45dc-93c2-6c1bfc54bc74" class="quiz">
+<div id="quiz_5cbe8e62-078f-4ead-b0ed-c7b76b022a6b" class="quiz">
     <div>
-        <div id="question_448896c2-c727-45dc-93c2-6c1bfc54bc74" class="quiz__question">How are responses to the Command Request characteristic received over BLE?</div>
-        <div id="answers_448896c2-c727-45dc-93c2-6c1bfc54bc74">
+        <div id="question_5cbe8e62-078f-4ead-b0ed-c7b76b022a6b" class="quiz__question">How are responses to the Command Request characteristic received over BLE?</div>
+        <div id="answers_5cbe8e62-078f-4ead-b0ed-c7b76b022a6b">
         
             <input type="radio" name="question" value="A"><label>A: As write responses to the Command Request characteristic</label>
             <br>
@@ -989,19 +989,19 @@ be alerted of responses when the characteristic is notified.</p>
         
         </div>
     </div>
-    <button onclick="showResults('448896c2-c727-45dc-93c2-6c1bfc54bc74', 'B')">Submit Answer</button>
-    <div id="results_448896c2-c727-45dc-93c2-6c1bfc54bc74" style="display: none">
-        <span id="correct_448896c2-c727-45dc-93c2-6c1bfc54bc74" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_448896c2-c727-45dc-93c2-6c1bfc54bc74" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('5cbe8e62-078f-4ead-b0ed-c7b76b022a6b', 'B')">Submit Answer</button>
+    <div id="results_5cbe8e62-078f-4ead-b0ed-c7b76b022a6b" style="display: none">
+        <span id="correct_5cbe8e62-078f-4ead-b0ed-c7b76b022a6b" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_5cbe8e62-078f-4ead-b0ed-c7b76b022a6b" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         All GoPro commands follow the same behavior: a command is first sent on a request characteristic.
     The response is then notified on the response characteristic (assuming notifications are enabled).
     </div>
 </div>
 
-<div id="quiz_98ab75ba-afd0-4188-ac74-0906b268a611" class="quiz">
+<div id="quiz_df4a09c1-7cdb-491d-8b77-12bfee8e3262" class="quiz">
     <div>
-        <div id="question_98ab75ba-afd0-4188-ac74-0906b268a611" class="quiz__question">How often is it necessary to pair?</div>
-        <div id="answers_98ab75ba-afd0-4188-ac74-0906b268a611">
+        <div id="question_df4a09c1-7cdb-491d-8b77-12bfee8e3262" class="quiz__question">How often is it necessary to pair?</div>
+        <div id="answers_df4a09c1-7cdb-491d-8b77-12bfee8e3262">
         
             <input type="radio" name="question" value="A"><label>A: Pairing must occur every time to ensure safe BLE communication</label>
             <br>
@@ -1014,10 +1014,10 @@ be alerted of responses when the characteristic is notified.</p>
         
         </div>
     </div>
-    <button onclick="showResults('98ab75ba-afd0-4188-ac74-0906b268a611', 'C')">Submit Answer</button>
-    <div id="results_98ab75ba-afd0-4188-ac74-0906b268a611" style="display: none">
-        <span id="correct_98ab75ba-afd0-4188-ac74-0906b268a611" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_98ab75ba-afd0-4188-ac74-0906b268a611" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('df4a09c1-7cdb-491d-8b77-12bfee8e3262', 'C')">Submit Answer</button>
+    <div id="results_df4a09c1-7cdb-491d-8b77-12bfee8e3262" style="display: none">
+        <span id="correct_df4a09c1-7cdb-491d-8b77-12bfee8e3262" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_df4a09c1-7cdb-491d-8b77-12bfee8e3262" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Pairing is only needed once (assuming neither side deletes the keys). If the
     GoPro deletes the keys (via Connections-&gt;Reset Connections or a factory reset), the devices will need to re-pair.
     </div>
@@ -1065,7 +1065,7 @@ with UUID <code class="language-plaintext highlighter-rouge">b5f90072-aa8d-11e3-
 <h3 id="send-commands">Send Commands</h3>
 
 <div>
-    <ul class="tab" data-tab="ecdd70e8-6055-4745-8009-83726f4cc689">
+    <ul class="tab" data-tab="2473cfa1-1010-463f-8952-0cabdb94042b">
         
             <li class="active">
                 <a href="">Set Shutter On </a>
@@ -1076,7 +1076,7 @@ with UUID <code class="language-plaintext highlighter-rouge">b5f90072-aa8d-11e3-
             </li>
         
         </ul>
-        <ul class="tab-content" id="ecdd70e8-6055-4745-8009-83726f4cc689">
+        <ul class="tab-content" id="2473cfa1-1010-463f-8952-0cabdb94042b">
         
             <li class="active">
 <p>Now, let’s write the bytes to turn the shutter on and start encoding!</p>
@@ -1188,7 +1188,7 @@ sudo btmon
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-09-27T14:54:31-07:00">September 27, 2021</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-09-27T15:06:57-07:00">September 27, 2021</time></p>
 
 
       </footer>
