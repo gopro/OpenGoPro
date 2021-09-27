@@ -39,8 +39,8 @@ jobs:
               working-directory: ./demos/python/sdk_wireless_camera_control/
               timeout-minutes: 4
               run: |
-                make unit_tests
-                make e2e_tests
+                  make unit_tests
+                  make e2e_tests
 
             - name: Archive code coverage results
               uses: actions/upload-artifact@v2

@@ -7,7 +7,7 @@ name: Python SDK Unit Testing
 
 on:
     pull_request:
-        branches: [main, develop]
+        branches: [main, develop, hotfix]
         paths:
             - 'demos/python/sdk_wireless_camera_control/**'
 

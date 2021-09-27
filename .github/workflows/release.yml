@@ -7,10 +7,10 @@ name: Make a Tagged Release
 
 on:
     workflow_dispatch:
-      inputs:
-        version:
-            description: 'version'
-            required: true
+        inputs:
+            version:
+                description: 'version'
+                required: true
 
 jobs:
     version_and_tag:
@@ -20,7 +20,7 @@ jobs:
             - name: Checkout source branch
               uses: actions/checkout@v2
               with:
-                ref: main
+                  ref: main
 
             - name: Update version, copyrights, and make tag
               shell: bash
@@ -39,10 +39,10 @@ jobs:
             - name: Push to protected branch
               uses: CasperWA/push-protected@v2
               with:
-                token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
-                branch: main
-                force: false
-                unprotect_reviews: true
+                  token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
+                  branch: main
+                  force: false
+                  unprotect_reviews: true
 
             - name: Create tag
               shell: bash
