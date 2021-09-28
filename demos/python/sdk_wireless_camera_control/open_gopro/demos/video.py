@@ -3,7 +3,6 @@
 
 """Entrypoint for taking a video demo."""
 
-import sys
 import time
 import logging
 import argparse
@@ -19,18 +18,14 @@ logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
 
 
-def main(identifier: Optional[str], log_location: Path, output_location: Path, record_time: float) -> int:
+def main() -> int:
     """Main program functionality
-
-    Args:
-        identifier (Optional[str]): device to connect to
-        log_location (Path): file to write detailed log to
-        output_location (Path): where to store video
-        record_time (float): how long to record for
 
     Returns:
         int: program return code
     """
+    identifier, log_location, output_location, record_time = parse_arguments()
+
     global logger
     logger = setup_logging(logger, log_location)
 
@@ -116,4 +111,4 @@ def parse_arguments() -> Tuple[str, Path, Path, float]:
 
 
 if __name__ == "__main__":
-    sys.exit(main(*parse_arguments()))
+    main()

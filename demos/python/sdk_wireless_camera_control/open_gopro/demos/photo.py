@@ -108,5 +108,10 @@ def parse_arguments() -> Tuple[str, Path, Path]:
     return args.identifier, args.log, args.output
 
 
-if __name__ == "__main__":
+def entrypoint() -> None:
+    """Entrypoint for setup.py"""
     sys.exit(main(*parse_arguments()))
+
+
+if __name__ == "__main__":
+    entrypoint()

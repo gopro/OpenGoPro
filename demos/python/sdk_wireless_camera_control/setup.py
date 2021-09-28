@@ -28,6 +28,7 @@ REQUIRED = [
     "rich",
     "protobuf>=3",
     "betterproto",
+    "typing-extensions"
 ]
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -90,7 +91,7 @@ setup(
     entry_points={
         "console_scripts": [
             "gopro-demo=open_gopro.demos.demo:main",
-            "gopro-photo=open_gopro.demos.photo:main",
+            "gopro-photo=open_gopro.demos.photo:entrypoint",
             "gopro-video=open_gopro.demos.video:main",
             "gopro-stream=open_gopro.demos.stream:main",
             "gopro-log-battery=open_gopro.demos.log_battery:main",
