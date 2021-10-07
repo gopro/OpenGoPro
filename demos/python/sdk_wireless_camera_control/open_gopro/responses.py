@@ -417,7 +417,6 @@ class GoProResp:
             logger.error("received too much data. parsing is in unknown state")
         elif self._bytes_remaining == 0:
             self._state = GoProResp._State.ACCUMULATED
-            self._parse()
 
     def _parse(self) -> None:
         """Parse the accumulated response (either from a BLE bytestream or an HTTP JSON dict)."""

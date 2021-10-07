@@ -30,9 +30,9 @@ test_push_receive_no_parameter = bytearray([0x08, 0xA2, 0x00, 0x02, 0x00, 0x03, 
 def test_push_response_no_parameter_values(parser_map: ParserMapType):
     r = GoProResp(parser_map, [UUID.CQ_QUERY_RESP])
     r._accumulate(test_push_receive_no_parameter)
+    assert r.is_received
+    r._parse()
     assert r.is_parsed
-    assert r.is_received
-    assert r.is_received
     assert r.is_ok
     assert r.id is QueryCmdId.SETTING_CAPABILITY_PUSH
     assert r.cmd is QueryCmdId.SETTING_CAPABILITY_PUSH
@@ -67,6 +67,7 @@ def test_write_command(parser_map: ParserMapType):
     r = GoProResp._from_write_command(parser_map, UUID.CQ_COMMAND, test_write_send)
     r._accumulate(test_write_recieve)
     assert r.is_received
+    r._parse()
     assert r.is_parsed
     assert r.is_ok
 
@@ -476,8 +477,9 @@ def test_complex_write_command(parser_map: ParserMapType):
         end = len(test_complex_write_receive) if idx + 20 > len(test_complex_write_receive) else idx + 20
         r._accumulate(test_complex_write_receive[idx:end])
         idx = end
-    assert r.is_parsed
     assert r.is_received
+    r._parse()
+    assert r.is_parsed
     assert r.is_received
     assert r.is_ok
     assert r.id is QueryCmdId.GET_STATUS_VAL
@@ -704,5 +706,6 @@ def test_proto(parser_map: ParserMapType):
     r = GoProResp._from_write_command(parser_map, UUID.CQ_COMMAND, send_proto)
     r._accumulate(receive_proto)
     assert r.is_received
+    r._parse()
     assert r.is_parsed
     assert r.is_ok
