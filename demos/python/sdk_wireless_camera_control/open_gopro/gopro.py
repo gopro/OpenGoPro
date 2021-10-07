@@ -472,18 +472,10 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             data (bytes): Bytestream that was received.
         """
         # Convert handle to UUID
-        try:
-            uuid = self._ble.gatt_table.handle2uuid(handle)
-        except AttributeError:
-            # It's possible a non-Open GoPro service (i.e. battery) sends a notification before we have
-            # built the attribute. For now, ignore these.
-            logger.warning(f"Unhandled notification from handle {handle}: {data}")
-            return
-
+        uuid = self._ble.gatt_table.handle2uuid(handle)
         # Responses we don't care about. For now, just the BLE-spec defined battery characteristic
         if uuid is UUID.BATT_LEVEL:
             return
-
         logger.debug(f'Received response on {uuid}: {data.hex(":")}')
 
         # Add to response dict if not already there
@@ -494,6 +486,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
         if self._active_resp[uuid].is_received:
             response = self._active_resp[uuid]
+            response._parse()
 
             # Handle internal statuses
             if (

@@ -74,7 +74,7 @@ clean_tests: ## Clean raw coverage and html results
 .PHONY: unit_tests
 unit_tests: # Run unit tests.
 	@echo "Running unit tests..."
-	@pytest tests/unit --cov-fail-under=60
+	@pytest tests/unit --cov-fail-under=70
 
 .PHONY: e2e_tests
 e2e_tests: # Run end to end tests (excluding demos).
