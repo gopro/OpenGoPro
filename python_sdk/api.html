@@ -1444,6 +1444,11 @@ start maintenance, and get Open GoPro version..</p>
 <code class="sig-name descname"><span class="pre">VIDEO_FOV</span></code><em class="property"> <span class="pre">=</span> <span class="pre">121</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.VIDEO_FOV" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt id="open_gopro.constants.SettingId.VIDEO_PERFORMANCE_MODE">
+<code class="sig-name descname"><span class="pre">VIDEO_PERFORMANCE_MODE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">173</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.VIDEO_PERFORMANCE_MODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -4203,8 +4208,8 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <h4>BLE 2.0 Settings<a class="headerlink" href="#ble-2-0-settings" title="Permalink to this headline">¶</a></h4>
 <dl class="py class">
 <dt id="open_gopro.api.v2_0.ble_commands.BleSettingsV2_0">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.api.v2_0.ble_commands.</span></code><code class="sig-name descname"><span class="pre">BleSettingsV2_0</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">open_gopro.communication_client.GoProBle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.api.v1_0.params.ParamsV1_0" title="open_gopro.api.v1_0.params.ParamsV1_0"><span class="pre">open_gopro.api.v1_0.params.ParamsV1_0</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0" title="Permalink to this definition">¶</a></dt>
-<dd><p>Version 2.0 settings are an exact copy of 1.0</p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.api.v2_0.ble_commands.</span></code><code class="sig-name descname"><span class="pre">BleSettingsV2_0</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">open_gopro.communication_client.GoProBle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.api.v2_0.params.ParamsV2_0" title="open_gopro.api.v2_0.params.ParamsV2_0"><span class="pre">open_gopro.api.v2_0.params.ParamsV2_0</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement updates to BLE Settings for version 2.0</p>
 <dl class="py class">
 <dt id="open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.Iterator">
 <em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BleSettingsV1_0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.Iterator" title="Permalink to this definition">¶</a></dt>
@@ -4260,6 +4265,12 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dd><p>Video FOV. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.VideoFOV</span></code></p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.video_performance_mode">
+<code class="sig-name descname"><span class="pre">video_performance_mode</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.video_performance_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Video Performance Mode. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.VideoPerformanceMode</span></code></p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -4267,7 +4278,7 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <h4>BLE 2.0 Statuses<a class="headerlink" href="#ble-2-0-statuses" title="Permalink to this headline">¶</a></h4>
 <dl class="py class">
 <dt id="open_gopro.api.v2_0.ble_commands.BleStatusesV2_0">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.api.v2_0.ble_commands.</span></code><code class="sig-name descname"><span class="pre">BleStatusesV2_0</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">GoProBle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">Params</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleStatusesV2_0" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.api.v2_0.ble_commands.</span></code><code class="sig-name descname"><span class="pre">BleStatusesV2_0</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">open_gopro.communication_client.GoProBle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.api.v2_0.params.ParamsV2_0" title="open_gopro.api.v2_0.params.ParamsV2_0"><span class="pre">open_gopro.api.v2_0.params.ParamsV2_0</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleStatusesV2_0" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implement updates to BLE statuses for version 2.0</p>
 <dl class="py class">
 <dt id="open_gopro.api.v2_0.ble_commands.BleStatusesV2_0.Iterator">
@@ -5117,6 +5128,16 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.ACTIVITY_EB">
+<code class="sig-name descname"><span class="pre">ACTIVITY_EB</span></code><em class="property"> <span class="pre">=</span> <span class="pre">524289</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.ACTIVITY_EB" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.BASIC">
+<code class="sig-name descname"><span class="pre">BASIC</span></code><em class="property"> <span class="pre">=</span> <span class="pre">5</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.BASIC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.BURST_PHOTO">
 <code class="sig-name descname"><span class="pre">BURST_PHOTO</span></code><em class="property"> <span class="pre">=</span> <span class="pre">65538</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.BURST_PHOTO" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -5127,23 +5148,13 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.CINEMATIC_EB">
+<code class="sig-name descname"><span class="pre">CINEMATIC_EB</span></code><em class="property"> <span class="pre">=</span> <span class="pre">524290</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.CINEMATIC_EB" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.LIVE_BURST">
 <code class="sig-name descname"><span class="pre">LIVE_BURST</span></code><em class="property"> <span class="pre">=</span> <span class="pre">65537</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.LIVE_BURST" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.MAX_PHOTO">
-<code class="sig-name descname"><span class="pre">MAX_PHOTO</span></code><em class="property"> <span class="pre">=</span> <span class="pre">262144</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.MAX_PHOTO" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.MAX_TIMEWARP">
-<code class="sig-name descname"><span class="pre">MAX_TIMEWARP</span></code><em class="property"> <span class="pre">=</span> <span class="pre">327680</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.MAX_TIMEWARP" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.MAX_VIDEO">
-<code class="sig-name descname"><span class="pre">MAX_VIDEO</span></code><em class="property"> <span class="pre">=</span> <span class="pre">196608</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.MAX_VIDEO" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -5162,13 +5173,18 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.SLO_MO">
-<code class="sig-name descname"><span class="pre">SLO_MO</span></code><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.SLO_MO" title="Permalink to this definition">¶</a></dt>
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.SLOMO_EB">
+<code class="sig-name descname"><span class="pre">SLOMO_EB</span></code><em class="property"> <span class="pre">=</span> <span class="pre">524291</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.SLOMO_EB" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.STANDARD">
 <code class="sig-name descname"><span class="pre">STANDARD</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.STANDARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.STANDARD_EB">
+<code class="sig-name descname"><span class="pre">STANDARD_EB</span></code><em class="property"> <span class="pre">=</span> <span class="pre">524288</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.STANDARD_EB" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -5179,6 +5195,21 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.TIME_WARP">
 <code class="sig-name descname"><span class="pre">TIME_WARP</span></code><em class="property"> <span class="pre">=</span> <span class="pre">131072</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.TIME_WARP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.TRIPOD_4K">
+<code class="sig-name descname"><span class="pre">TRIPOD_4K</span></code><em class="property"> <span class="pre">=</span> <span class="pre">589824</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.TRIPOD_4K" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.TRIPOD_5_3K">
+<code class="sig-name descname"><span class="pre">TRIPOD_5_3K</span></code><em class="property"> <span class="pre">=</span> <span class="pre">589825</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.TRIPOD_5_3K" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.ULTRA_SLOMO">
+<code class="sig-name descname"><span class="pre">ULTRA_SLOMO</span></code><em class="property"> <span class="pre">=</span> <span class="pre">4</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.ULTRA_SLOMO" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -5426,6 +5457,27 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.params.ParamsV2_0.VideoFOV.WIDE">
 <code class="sig-name descname"><span class="pre">WIDE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.VideoFOV.WIDE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.VideoPerformanceMode">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">VideoPerformanceMode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.VideoPerformanceMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.VideoPerformanceMode.EXTENDED_BATTERY">
+<code class="sig-name descname"><span class="pre">EXTENDED_BATTERY</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.VideoPerformanceMode.EXTENDED_BATTERY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.VideoPerformanceMode.MAX_PERFORMANCE">
+<code class="sig-name descname"><span class="pre">MAX_PERFORMANCE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.VideoPerformanceMode.MAX_PERFORMANCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.VideoPerformanceMode.STATIONARY">
+<code class="sig-name descname"><span class="pre">STATIONARY</span></code><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.VideoPerformanceMode.STATIONARY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
