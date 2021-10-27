@@ -39,7 +39,7 @@ Below is a table of cameras that support GoPro's public BLE API:
       <td>57</td>
       <td>H21.01</td>
       <td>HERO10 Black</td>
-      <td><a href="https://gopro.com/en/us/update/hero10-black">v1.10</a></td>
+      <td><a href="https://gopro.com/en/us/update/hero10-black">v01.10.00</a></td>
     </tr>
   </tbody>
 </table>
@@ -265,6 +265,158 @@ System Busy and Encode Active flags to go down before sending messages other tha
 </p>
 
 
+## Presets
+<p>
+The camera organizes modes of operation into presets.
+A preset is a logical wrapper around a specific camera flatmode and a collection of settings that target different ways of capturing media.
+</p>
+
+<p>
+The set of presets available to load at any moment depends on the value of certain camera settings, which are outlined in the table below.
+</p>
+
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Setting</td>
+      <td>Preset</td>
+      <td>Preset ID</td>
+    </tr>
+    <tr>
+      <td rowspan="12">Video Performance Modes: Maximum Video Performance</td>
+      <td>Standard</td>
+      <td>0x00000000</td>
+    </tr>
+    <tr>
+      <td>Activity</td>
+      <td>0x00000001</td>
+    </tr>
+    <tr>
+      <td>Cinematic</td>
+      <td>0x00000002</td>
+    </tr>
+    <tr>
+      <td>Ultra Slo-Mo</td>
+      <td>0x00000004</td>
+    </tr>
+    <tr>
+      <td>Basic</td>
+      <td>0x00000005</td>
+    </tr>
+    <tr>
+      <td>Photo</td>
+      <td>0x00010000</td>
+    </tr>
+    <tr>
+      <td>Live Burst</td>
+      <td>0x00010001</td>
+    </tr>
+    <tr>
+      <td>Burst Photo</td>
+      <td>0x00010002</td>
+    </tr>
+    <tr>
+      <td>Night Photo</td>
+      <td>0x00010003</td>
+    </tr>
+    <tr>
+      <td>Time Warp</td>
+      <td>0x00020000</td>
+    </tr>
+    <tr>
+      <td>Time Lapse</td>
+      <td>0x00020001</td>
+    </tr>
+    <tr>
+      <td>Night Lapse</td>
+      <td>0x00020002</td>
+    </tr>
+    <tr>
+      <td rowspan="11">Video Performance Modes: Extended Battery</td>
+      <td>Photo</td>
+      <td>0x00010000</td>
+    </tr>
+    <tr>
+      <td>Live Burst</td>
+      <td>0x00010001</td>
+    </tr>
+    <tr>
+      <td>Burst Photo</td>
+      <td>0x00010002</td>
+    </tr>
+    <tr>
+      <td>Night Photo</td>
+      <td>0x00010003</td>
+    </tr>
+    <tr>
+      <td>Time Warp</td>
+      <td>0x00020000</td>
+    </tr>
+    <tr>
+      <td>Time Lapse</td>
+      <td>0x00020001</td>
+    </tr>
+    <tr>
+      <td>Night Lapse</td>
+      <td>0x00020002</td>
+    </tr>
+    <tr>
+      <td>Standard [EB]</td>
+      <td>0x00080000</td>
+    </tr>
+    <tr>
+      <td>Activity [EB]</td>
+      <td>0x00080001</td>
+    </tr>
+    <tr>
+      <td>Cinematic [EB]</td>
+      <td>0x00080002</td>
+    </tr>
+    <tr>
+      <td>Slo-Mo [EB]</td>
+      <td>0x00080003</td>
+    </tr>
+    <tr>
+      <td rowspan="9">Video Performance Modes: Tripod / Stationary Video</td>
+      <td>Photo</td>
+      <td>0x00010000</td>
+    </tr>
+    <tr>
+      <td>Live Burst</td>
+      <td>0x00010001</td>
+    </tr>
+    <tr>
+      <td>Burst Photo</td>
+      <td>0x00010002</td>
+    </tr>
+    <tr>
+      <td>Night Photo</td>
+      <td>0x00010003</td>
+    </tr>
+    <tr>
+      <td>Time Warp</td>
+      <td>0x00020000</td>
+    </tr>
+    <tr>
+      <td>Time Lapse</td>
+      <td>0x00020001</td>
+    </tr>
+    <tr>
+      <td>Night Lapse</td>
+      <td>0x00020002</td>
+    </tr>
+    <tr>
+      <td>4K Tripod</td>
+      <td>0x00090000</td>
+    </tr>
+    <tr>
+      <td>5.3K Tripod</td>
+      <td>0x00090001</td>
+    </tr>
+  </tbody>
+</table>
+
+
 ## Keep Alive
 <p>
 Unless changed by the user, GoPro cameras will automatically power off after some time (e.g. 5min, 15min, 30min).
@@ -444,7 +596,10 @@ Unless indicated otherwise in the Quick Reference table below, command responses
 
 ### Commands Quick Reference
 <p>
-Below is a table of commands that can be sent to the camera and how to send them.
+Below is a table of commands that can be sent to the camera and how to send them.<br />
+<span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
+<span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
+\&gt;= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
 </p>
  
 <table border="1">
@@ -463,7 +618,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Shutter: on</td>
       <td>03:01:01:01</td>
       <td>02:01:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x01</td>
@@ -471,7 +626,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Shutter: off</td>
       <td>03:01:01:00</td>
       <td>02:01:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x05</td>
@@ -479,7 +634,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Put camera to sleep</td>
       <td>01:05</td>
       <td>02:05:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x17</td>
@@ -487,7 +642,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>WiFi AP: on</td>
       <td>03:17:01:01</td>
       <td>02:17:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x17</td>
@@ -495,7 +650,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>WiFi AP: off</td>
       <td>03:17:01:00</td>
       <td>02:17:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x3C</td>
@@ -503,7 +658,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Get camera hardware info</td>
       <td>01:3C</td>
       <td>Complex</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x3E</td>
@@ -511,7 +666,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Video</td>
       <td>04:3E:02:03:E8</td>
       <td>02:3E:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x3E</td>
@@ -519,7 +674,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Photo</td>
       <td>04:3E:02:03:E9</td>
       <td>02:3E:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x3E</td>
@@ -527,63 +682,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Timelapse</td>
       <td>04:3E:02:03:EA</td>
       <td>02:3E:00</td>
-      <td>Y</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Activity</td>
-      <td>06:40:04:00:00:00:01</td>
-      <td>02:40:00</td>
-      <td>Y</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Burst Photo</td>
-      <td>06:40:04:00:01:00:02</td>
-      <td>02:40:00</td>
-      <td>Y</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Cinematic</td>
-      <td>06:40:04:00:00:00:02</td>
-      <td>02:40:00</td>
-      <td>Y</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Live Burst</td>
-      <td>06:40:04:00:01:00:01</td>
-      <td>02:40:00</td>
-      <td>Y</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Night Photo</td>
-      <td>06:40:04:00:01:00:03</td>
-      <td>02:40:00</td>
-      <td>Y</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Night Lapse</td>
-      <td>06:40:04:00:02:00:02</td>
-      <td>02:40:00</td>
-      <td>Y</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Photo</td>
-      <td>06:40:04:00:01:00:00</td>
-      <td>02:40:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x40</td>
@@ -591,15 +690,71 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Standard</td>
       <td>06:40:04:00:00:00:00</td>
       <td>02:40:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x40</td>
       <td>Presets: Load</td>
-      <td>Time Lapse</td>
-      <td>06:40:04:00:02:00:01</td>
+      <td>Activity</td>
+      <td>06:40:04:00:00:00:01</td>
       <td>02:40:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Cinematic</td>
+      <td>06:40:04:00:00:00:02</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Ultra Slo-Mo</td>
+      <td>06:40:04:00:00:00:04</td>
+      <td>02:40:00</td>
+      <td>\&gt;= v01.15.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Basic</td>
+      <td>06:40:04:00:00:00:05</td>
+      <td>02:40:00</td>
+      <td>\&gt;= v01.15.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Photo</td>
+      <td>06:40:04:00:01:00:00</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Live Burst</td>
+      <td>06:40:04:00:01:00:01</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Burst Photo</td>
+      <td>06:40:04:00:01:00:02</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Night Photo</td>
+      <td>06:40:04:00:01:00:03</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x40</td>
@@ -607,31 +762,183 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Time Warp</td>
       <td>06:40:04:00:02:00:00</td>
       <td>02:40:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x40</td>
       <td>Presets: Load</td>
-      <td>Max Photo</td>
-      <td>06:40:04:00:04:00:00</td>
+      <td>Time Lapse</td>
+      <td>06:40:04:00:02:00:01</td>
       <td>02:40:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x40</td>
       <td>Presets: Load</td>
-      <td>Max Timewarp</td>
-      <td>06:40:04:00:05:00:00</td>
+      <td>Night Lapse</td>
+      <td>06:40:04:00:02:00:02</td>
       <td>02:40:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x40</td>
       <td>Presets: Load</td>
-      <td>Max Video</td>
-      <td>06:40:04:00:03:00:00</td>
+      <td>Photo</td>
+      <td>06:40:04:00:01:00:00</td>
       <td>02:40:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Live Burst</td>
+      <td>06:40:04:00:01:00:01</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Burst Photo</td>
+      <td>06:40:04:00:01:00:02</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Night Photo</td>
+      <td>06:40:04:00:01:00:03</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Time Warp</td>
+      <td>06:40:04:00:02:00:00</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Time Lapse</td>
+      <td>06:40:04:00:02:00:01</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Night Lapse</td>
+      <td>06:40:04:00:02:00:02</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>4K Tripod</td>
+      <td>06:40:04:00:09:00:00</td>
+      <td>02:40:00</td>
+      <td>\&gt;= v01.15.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>5.3K Tripod</td>
+      <td>06:40:04:00:09:00:01</td>
+      <td>02:40:00</td>
+      <td>\&gt;= v01.15.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Photo</td>
+      <td>06:40:04:00:01:00:00</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Live Burst</td>
+      <td>06:40:04:00:01:00:01</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Burst Photo</td>
+      <td>06:40:04:00:01:00:02</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Night Photo</td>
+      <td>06:40:04:00:01:00:03</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Time Warp</td>
+      <td>06:40:04:00:02:00:00</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Time Lapse</td>
+      <td>06:40:04:00:02:00:01</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Night Lapse</td>
+      <td>06:40:04:00:02:00:02</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Standard [EB]</td>
+      <td>06:40:04:00:08:00:00</td>
+      <td>02:40:00</td>
+      <td>\&gt;= v01.15.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Activity [EB]</td>
+      <td>06:40:04:00:08:00:01</td>
+      <td>02:40:00</td>
+      <td>\&gt;= v01.15.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Cinematic [EB]</td>
+      <td>06:40:04:00:08:00:02</td>
+      <td>02:40:00</td>
+      <td>\&gt;= v01.15.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Slo-Mo [EB]</td>
+      <td>06:40:04:00:08:00:03</td>
+      <td>02:40:00</td>
+      <td>\&gt;= v01.15.00</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x50</td>
@@ -639,7 +946,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Set third party client</td>
       <td>01:50</td>
       <td>02:50:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x51</td>
@@ -647,7 +954,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Get version</td>
       <td>01:51</td>
       <td>Complex</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
   </tbody>
 </table>
@@ -773,7 +1080,7 @@ Below are clarifications for complex camera responses
 
 #### Open GoPro Version
 <p>
-Given the response <i>06:51:00:01:01:01:00</i>, the Open GoPro version is v1.0.
+Given the response <i>06:51:00:01:XX:01:YY</i>, the Open GoPro version would be vXX.YY.
 </p>
 <table border="1">
   <tbody>
@@ -859,7 +1166,10 @@ This will configure a setting on the camera. Only one setting may be sent on a p
 
 ### Settings Quick Reference
 <p>
-All settings are sent to UUID GP-0074. All values are hexadecimal and length are in bytes.
+All settings are sent to UUID GP-0074. All values are hexadecimal and length are in bytes.<br />
+<span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
+<span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
+\&gt;= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
 </p>
 
 <table border="1">
@@ -878,7 +1188,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 4k (id: 1)</td>
       <td>03:02:01:01</td>
       <td>02:02:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -886,7 +1196,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 2.7k (id: 4)</td>
       <td>03:02:01:04</td>
       <td>02:02:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -894,7 +1204,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 2.7k 4:3 (id: 6)</td>
       <td>03:02:01:06</td>
       <td>02:02:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -902,7 +1212,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 1080 (id: 9)</td>
       <td>03:02:01:09</td>
       <td>02:02:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -910,7 +1220,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 4k 4:3 (id: 18)</td>
       <td>03:02:01:12</td>
       <td>02:02:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -918,7 +1228,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 5k 4:3 (id: 25)</td>
       <td>03:02:01:19</td>
       <td>02:02:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -926,15 +1236,15 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 5.3k (id: 100)</td>
       <td>03:02:01:64</td>
       <td>02:02:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
-      <td>Set video fps (id: 3) to 240 (id: 0)</td>
+      <td>Set video fps (id: 3) to maximum video performance (id: 0)</td>
       <td>03:03:01:00</td>
       <td>02:03:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -942,15 +1252,15 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 120 (id: 1)</td>
       <td>03:03:01:01</td>
       <td>02:03:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
-      <td>Set video fps (id: 3) to 100 (id: 2)</td>
+      <td>Set video fps (id: 3) to tripod / stationary video (id: 2)</td>
       <td>03:03:01:02</td>
       <td>02:03:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -958,7 +1268,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 60 (id: 5)</td>
       <td>03:03:01:05</td>
       <td>02:03:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -966,7 +1276,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 50 (id: 6)</td>
       <td>03:03:01:06</td>
       <td>02:03:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -974,7 +1284,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 30 (id: 8)</td>
       <td>03:03:01:08</td>
       <td>02:03:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -982,7 +1292,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 25 (id: 9)</td>
       <td>03:03:01:09</td>
       <td>02:03:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -990,7 +1300,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 24 (id: 10)</td>
       <td>03:03:01:0A</td>
       <td>02:03:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -998,15 +1308,15 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 200 (id: 13)</td>
       <td>03:03:01:0D</td>
       <td>02:03:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>59</td>
       <td>Auto Off</td>
-      <td>Set setup auto power down (id: 59) to never (id: 0)</td>
+      <td>Set setup auto power down (id: 59) to maximum video performance (id: 0)</td>
       <td>03:3B:01:00</td>
       <td>01:3B:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>59</td>
@@ -1014,7 +1324,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set setup auto power down (id: 59) to 5 min (id: 4)</td>
       <td>03:3B:01:04</td>
       <td>01:3B:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>59</td>
@@ -1022,7 +1332,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set setup auto power down (id: 59) to 15 min (id: 6)</td>
       <td>03:3B:01:06</td>
       <td>01:3B:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>59</td>
@@ -1030,23 +1340,23 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set setup auto power down (id: 59) to 30 min (id: 7)</td>
       <td>03:3B:01:07</td>
       <td>01:3B:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Lens</td>
-      <td>Set video digital lenses (id: 121) to wide (id: 0)</td>
+      <td>Set video digital lenses (id: 121) to maximum video performance (id: 0)</td>
       <td>03:79:01:00</td>
       <td>02:79:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Lens</td>
-      <td>Set video digital lenses (id: 121) to narrow (id: 2)</td>
+      <td>Set video digital lenses (id: 121) to tripod / stationary video (id: 2)</td>
       <td>03:79:01:02</td>
       <td>02:79:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
@@ -1054,7 +1364,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video digital lenses (id: 121) to superview (id: 3)</td>
       <td>03:79:01:03</td>
       <td>02:79:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
@@ -1062,7 +1372,15 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video digital lenses (id: 121) to linear (id: 4)</td>
       <td>03:79:01:04</td>
       <td>02:79:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>121</td>
+      <td>Lens</td>
+      <td>Set video digital lenses (id: 121) to max superview (id: 7)</td>
+      <td>03:79:01:07</td>
+      <td>02:79:00</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
@@ -1070,7 +1388,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video digital lenses (id: 121) to linear + horizon leveling (id: 8)</td>
       <td>03:79:01:08</td>
       <td>02:79:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>122</td>
@@ -1078,7 +1396,15 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo digital lenses (id: 122) to narrow (id: 19)</td>
       <td>03:7A:01:13</td>
       <td>02:7A:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>122</td>
+      <td>Lens</td>
+      <td>Set photo digital lenses (id: 122) to max superview (id: 100)</td>
+      <td>03:7A:01:64</td>
+      <td>02:7A:00</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>122</td>
@@ -1086,7 +1412,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo digital lenses (id: 122) to wide (id: 101)</td>
       <td>03:7A:01:65</td>
       <td>02:7A:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>122</td>
@@ -1094,7 +1420,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo digital lenses (id: 122) to linear (id: 102)</td>
       <td>03:7A:01:66</td>
       <td>02:7A:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>123</td>
@@ -1102,7 +1428,15 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set multi shot digital lenses (id: 123) to narrow (id: 19)</td>
       <td>03:7B:01:13</td>
       <td>02:7B:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>123</td>
+      <td>Lens</td>
+      <td>Set multi shot digital lenses (id: 123) to max superview (id: 100)</td>
+      <td>03:7B:01:64</td>
+      <td>02:7B:00</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>123</td>
@@ -1110,7 +1444,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set multi shot digital lenses (id: 123) to wide (id: 101)</td>
       <td>03:7B:01:65</td>
       <td>02:7B:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>123</td>
@@ -1118,23 +1452,31 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set multi shot digital lenses (id: 123) to linear (id: 102)</td>
       <td>03:7B:01:66</td>
       <td>02:7B:00</td>
-      <td>Y</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>162</td>
-      <td>Max Lens Mod Enable</td>
-      <td>Set mods max lens enable (id: 162) to off (id: 0)</td>
-      <td>03:A2:01:00</td>
-      <td>02:A2:00</td>
-      <td>Y</td>
+      <td>173</td>
+      <td>Video Performance Modes</td>
+      <td>Set system power profile (id: 173) to maximum video performance (id: 0)</td>
+      <td>03:AD:01:00</td>
+      <td>02:AD:00</td>
+      <td>\&gt;= v01.15.00</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>162</td>
-      <td>Max Lens Mod Enable</td>
-      <td>Set mods max lens enable (id: 162) to on (id: 1)</td>
-      <td>03:A2:01:01</td>
-      <td>02:A2:00</td>
-      <td>Y</td>
+      <td>173</td>
+      <td>Video Performance Modes</td>
+      <td>Set system power profile (id: 173) to extended battery (id: 1)</td>
+      <td>03:AD:01:01</td>
+      <td>02:AD:00</td>
+      <td>\&gt;= v01.15.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>173</td>
+      <td>Video Performance Modes</td>
+      <td>Set system power profile (id: 173) to tripod / stationary video (id: 2)</td>
+      <td>03:AD:01:02</td>
+      <td>02:AD:00</td>
+      <td>\&gt;= v01.15.00</td>
     </tr>
   </tbody>
 </table>
@@ -1153,24 +1495,8 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Lens</td>
     </tr>
     <tr>
-      <td rowspan="48">1080</td>
-      <td rowspan="24">50Hz</td>
-      <td rowspan="5">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
+      <td rowspan="38">1080</td>
+      <td rowspan="19">50Hz</td>
       <td rowspan="5">25</td>
       <td>Wide</td>
     </tr>
@@ -1232,23 +1558,7 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="24">60Hz</td>
-      <td rowspan="5">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
+      <td rowspan="19">60Hz</td>
       <td rowspan="5">30</td>
       <td>Wide</td>
     </tr>
@@ -1583,34 +1893,8 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="24">4K 4:3</td>
-      <td rowspan="12">50Hz</td>
-      <td rowspan="4">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">25</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
+      <td rowspan="8">4K 4:3</td>
+      <td rowspan="4">50Hz</td>
       <td rowspan="4">50</td>
       <td>Wide</td>
     </tr>
@@ -1624,33 +1908,7 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="12">60Hz</td>
-      <td rowspan="4">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">30</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
+      <td rowspan="4">60Hz</td>
       <td rowspan="4">60</td>
       <td>Wide</td>
     </tr>
@@ -1664,90 +1922,9 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="24">5.3K</td>
-      <td rowspan="12">50Hz</td>
-      <td rowspan="4">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">25</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">50</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="12">60Hz</td>
-      <td rowspan="4">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">30</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">60</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="16">5K 4:3</td>
+      <td rowspan="16">5.3K</td>
       <td rowspan="8">50Hz</td>
-      <td rowspan="4">24</td>
+      <td rowspan="4">25</td>
       <td>Wide</td>
     </tr>
     <tr>
@@ -1760,7 +1937,7 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="4">25</td>
+      <td rowspan="4">50</td>
       <td>Wide</td>
     </tr>
     <tr>
@@ -1774,7 +1951,7 @@ Below are tables detailing supported features for Open GoPro cameras.
     </tr>
     <tr>
       <td rowspan="8">60Hz</td>
-      <td rowspan="4">24</td>
+      <td rowspan="4">30</td>
       <td>Wide</td>
     </tr>
     <tr>
@@ -1787,6 +1964,35 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
+      <td rowspan="4">60</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="8">5K 4:3</td>
+      <td rowspan="4">50Hz</td>
+      <td rowspan="4">25</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="4">60Hz</td>
       <td rowspan="4">30</td>
       <td>Wide</td>
     </tr>
@@ -1957,7 +2163,10 @@ For example, if the original query comand ID was 0x52, the query ID of the push 
 
 ### Status Codes
 <p>
-Below is a table of all possible camera status codes.
+Below is a table of supported status codes.<br />
+<span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
+<span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
+\&gt;= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ 
 </p>
 <table border="1">
   <tbody>
@@ -1967,6 +2176,7 @@ Below is a table of all possible camera status codes.
       <td>Description</td>
       <td>Type</td>
       <td>Values</td>
+      <td>HERO10 Black</td>
     </tr>
     <tr>
       <td>1</td>
@@ -1974,6 +2184,7 @@ Below is a table of all possible camera status codes.
       <td>Is the system's internal battery present?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>2</td>
@@ -1981,6 +2192,7 @@ Below is a table of all possible camera status codes.
       <td>Rough approximation of internal battery level in bars</td>
       <td>integer</td>
       <td>0: Zero<br />1: One<br />2: Two<br />3: Three<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>3</td>
@@ -1988,6 +2200,7 @@ Below is a table of all possible camera status codes.
       <td>Is an external battery connected?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>4</td>
@@ -1995,13 +2208,7 @@ Below is a table of all possible camera status codes.
       <td>External battery power level in percent</td>
       <td>percent</td>
       <td>0-100</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Unused</td>
-      <td>Unused</td>
-      <td>None</td>
-      <td></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>6</td>
@@ -2009,13 +2216,7 @@ Below is a table of all possible camera status codes.
       <td>Is the system currently overheating?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>Unused</td>
-      <td>Unused</td>
-      <td>None</td>
-      <td></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>8</td>
@@ -2023,6 +2224,7 @@ Below is a table of all possible camera status codes.
       <td>Is the camera busy?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>9</td>
@@ -2030,6 +2232,7 @@ Below is a table of all possible camera status codes.
       <td>Is Quick Capture feature enabled?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>10</td>
@@ -2037,6 +2240,7 @@ Below is a table of all possible camera status codes.
       <td>Is the system encoding right now?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>11</td>
@@ -2044,13 +2248,7 @@ Below is a table of all possible camera status codes.
       <td>Is LCD lock active?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
-    </tr>
-    <tr>
-      <td>12</td>
-      <td>Unused</td>
-      <td>Unused</td>
-      <td>None</td>
-      <td></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>13</td>
@@ -2058,6 +2256,7 @@ Below is a table of all possible camera status codes.
       <td>When encoding video, this is the duration (seconds) of the video so far; 0 otherwise</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>17</td>
@@ -2065,13 +2264,7 @@ Below is a table of all possible camera status codes.
       <td>Are Wireless Connections enabled?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
-    </tr>
-    <tr>
-      <td>18</td>
-      <td>Unused</td>
-      <td>Unused</td>
-      <td></td>
-      <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>19</td>
@@ -2079,6 +2272,7 @@ Below is a table of all possible camera status codes.
       <td>The pairing state of the camera</td>
       <td>integer</td>
       <td>0: Success<br />1: In Progress<br />2: Failed<br />3: Stopped<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>20</td>
@@ -2086,6 +2280,7 @@ Below is a table of all possible camera status codes.
       <td>The last type of pairing that the camera was engaged in</td>
       <td>integer</td>
       <td>0: Not Pairing<br />1: Pairing App<br />2: Pairing Remote Control<br />3: Pairing Bluetooth Device<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>21</td>
@@ -2093,6 +2288,7 @@ Below is a table of all possible camera status codes.
       <td>Time (milliseconds) since boot of last successful pairing complete action</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>22</td>
@@ -2100,6 +2296,7 @@ Below is a table of all possible camera status codes.
       <td>State of current scan for WiFi Access Points. Appears to only change for CAH-related scans</td>
       <td>integer</td>
       <td>0: Never started<br />1: Started<br />2: Aborted<br />3: Canceled<br />4: Completed<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>23</td>
@@ -2107,6 +2304,7 @@ Below is a table of all possible camera status codes.
       <td>The time, in milliseconds since boot that the WiFi Access Point scan completed</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>24</td>
@@ -2114,13 +2312,7 @@ Below is a table of all possible camera status codes.
       <td>WiFi AP provisioning state</td>
       <td>integer</td>
       <td>0: Never started<br />1: Started<br />2: Aborted<br />3: Canceled<br />4: Completed<br /></td>
-    </tr>
-    <tr>
-      <td>25</td>
-      <td>Unused</td>
-      <td>Unused</td>
-      <td>None</td>
-      <td></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>26</td>
@@ -2128,6 +2320,7 @@ Below is a table of all possible camera status codes.
       <td>Wireless remote control version</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>27</td>
@@ -2135,6 +2328,7 @@ Below is a table of all possible camera status codes.
       <td>Is a wireless remote control connected?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>28</td>
@@ -2142,6 +2336,7 @@ Below is a table of all possible camera status codes.
       <td>Wireless Pairing State</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>29</td>
@@ -2149,6 +2344,7 @@ Below is a table of all possible camera status codes.
       <td>Provisioned WIFI AP SSID. On BLE connection, value is big-endian byte-encoded int</td>
       <td>string</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>30</td>
@@ -2156,6 +2352,7 @@ Below is a table of all possible camera status codes.
       <td>Camera's WIFI SSID. On BLE connection, value is big-endian byte-encoded int</td>
       <td>string</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>31</td>
@@ -2163,6 +2360,7 @@ Below is a table of all possible camera status codes.
       <td>The number of wireless devices connected to the camera</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>32</td>
@@ -2170,6 +2368,7 @@ Below is a table of all possible camera status codes.
       <td>Is Preview Stream enabled?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>33</td>
@@ -2177,6 +2376,7 @@ Below is a table of all possible camera status codes.
       <td>Primary Storage Status</td>
       <td>integer</td>
       <td>-1: Unknown<br />0: OK<br />1: SD Card Full<br />2: SD Card Removed<br />3: SD Card Format Error<br />4: SD Card Busy<br />8: SD Card Swapped<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>34</td>
@@ -2184,6 +2384,7 @@ Below is a table of all possible camera status codes.
       <td>How many photos can be taken before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>35</td>
@@ -2191,6 +2392,7 @@ Below is a table of all possible camera status codes.
       <td>How many minutes of video can be captured with current settings before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>36</td>
@@ -2198,6 +2400,7 @@ Below is a table of all possible camera status codes.
       <td>How many group photos can be taken with current settings before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>37</td>
@@ -2205,6 +2408,7 @@ Below is a table of all possible camera status codes.
       <td>Total number of group videos on sdcard</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>38</td>
@@ -2212,6 +2416,7 @@ Below is a table of all possible camera status codes.
       <td>Total number of photos on sdcard</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>39</td>
@@ -2219,6 +2424,7 @@ Below is a table of all possible camera status codes.
       <td>Total number of videos on sdcard</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>40</td>
@@ -2226,6 +2432,7 @@ Below is a table of all possible camera status codes.
       <td>Current date/time (format: %YY%MM%DD%HH%MM%SS, all values in hex)</td>
       <td>string</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>41</td>
@@ -2233,6 +2440,7 @@ Below is a table of all possible camera status codes.
       <td>The current status of Over The Air (OTA) update</td>
       <td>integer</td>
       <td>0: Idle<br />1: Downloading<br />2: Verifying<br />3: Download Failed<br />4: Verify Failed<br />5: Ready<br />6: GoPro App: Downloading<br />7: GoPro App: Verifying<br />8: GoPro App: Download Failed<br />9: GoPro App: Verify Failed<br />10: GoPro App: Ready<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>42</td>
@@ -2240,6 +2448,7 @@ Below is a table of all possible camera status codes.
       <td>Is there a pending request to cancel a firmware update download?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>45</td>
@@ -2247,6 +2456,7 @@ Below is a table of all possible camera status codes.
       <td>Is locate camera feature active?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>49</td>
@@ -2254,34 +2464,7 @@ Below is a table of all possible camera status codes.
       <td>The current timelapse interval countdown value (e.g. 5...4...3...2...1...)</td>
       <td>integer</td>
       <td>*</td>
-    </tr>
-    <tr>
-      <td>50</td>
-      <td>Unused</td>
-      <td>Unused</td>
-      <td>None</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>51</td>
-      <td>Unused</td>
-      <td>Unused</td>
-      <td>None</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>52</td>
-      <td>Unused</td>
-      <td>Unused</td>
-      <td>None</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>53</td>
-      <td>Unused</td>
-      <td>Unused</td>
-      <td>None</td>
-      <td></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>54</td>
@@ -2289,6 +2472,7 @@ Below is a table of all possible camera status codes.
       <td>Remaining space on the sdcard in Kilobytes</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>55</td>
@@ -2296,6 +2480,7 @@ Below is a table of all possible camera status codes.
       <td>Is preview stream supported in current recording/flatmode/secondary-stream?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>56</td>
@@ -2303,6 +2488,7 @@ Below is a table of all possible camera status codes.
       <td>WiFi signal strength in bars</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>57</td>
@@ -2310,6 +2496,7 @@ Below is a table of all possible camera status codes.
       <td>System time in milliseconds since system was booted</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>58</td>
@@ -2317,6 +2504,7 @@ Below is a table of all possible camera status codes.
       <td>The number of hilights in encoding video (set to 0 when encoding stops)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>59</td>
@@ -2324,6 +2512,7 @@ Below is a table of all possible camera status codes.
       <td>Time since boot (msec) of most recent hilight in encoding video (set to 0 when encoding stops)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>60</td>
@@ -2331,6 +2520,7 @@ Below is a table of all possible camera status codes.
       <td>The min time between camera status updates (msec). Do not poll for status more often than this</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>63</td>
@@ -2338,6 +2528,7 @@ Below is a table of all possible camera status codes.
       <td>Is the camera currently in a contextual menu (e.g. Preferences)?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>64</td>
@@ -2345,6 +2536,7 @@ Below is a table of all possible camera status codes.
       <td>How many min of Timelapse video can be captured with current settings before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>65</td>
@@ -2352,6 +2544,7 @@ Below is a table of all possible camera status codes.
       <td>Liveview Exposure Select Mode</td>
       <td>integer</td>
       <td>0: Disabled<br />1: Auto<br />2: ISO Lock<br />3: Hemisphere<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>66</td>
@@ -2359,6 +2552,7 @@ Below is a table of all possible camera status codes.
       <td>Liveview Exposure Select: y-coordinate (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>67</td>
@@ -2366,6 +2560,7 @@ Below is a table of all possible camera status codes.
       <td>Liveview Exposure Select: y-coordinate (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>68</td>
@@ -2373,6 +2568,7 @@ Below is a table of all possible camera status codes.
       <td>Does the camera currently have a GPS lock?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>69</td>
@@ -2380,6 +2576,7 @@ Below is a table of all possible camera status codes.
       <td>Is the WiFi radio enabled?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>70</td>
@@ -2387,6 +2584,7 @@ Below is a table of all possible camera status codes.
       <td>Internal battery level (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>74</td>
@@ -2394,6 +2592,7 @@ Below is a table of all possible camera status codes.
       <td>Microphone Accesstory status</td>
       <td>integer</td>
       <td>0: Microphone mod not connected<br />1: Microphone mod connected<br />2: Microphone mod connected and microphone plugged into Microphone mod<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>75</td>
@@ -2401,6 +2600,7 @@ Below is a table of all possible camera status codes.
       <td>Digital Zoom level (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>76</td>
@@ -2408,6 +2608,7 @@ Below is a table of all possible camera status codes.
       <td>Wireless Band</td>
       <td>integer</td>
       <td>0: 2.4 GHz<br />1: 5 GHz<br />2: Max<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>77</td>
@@ -2415,6 +2616,7 @@ Below is a table of all possible camera status codes.
       <td>Is Digital Zoom feature available?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>78</td>
@@ -2422,6 +2624,7 @@ Below is a table of all possible camera status codes.
       <td>Are current video settings mobile friendly? (related to video compression and frame rate)</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>79</td>
@@ -2429,6 +2632,7 @@ Below is a table of all possible camera status codes.
       <td>Is the camera currently in First Time Use (FTU) UI flow?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>81</td>
@@ -2436,6 +2640,7 @@ Below is a table of all possible camera status codes.
       <td>Is 5GHz wireless band available?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>82</td>
@@ -2443,6 +2648,7 @@ Below is a table of all possible camera status codes.
       <td>Is the system ready to accept commands?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>83</td>
@@ -2450,6 +2656,7 @@ Below is a table of all possible camera status codes.
       <td>Is the internal battery charged sufficiently to start Over The Air (OTA) update?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>85</td>
@@ -2457,6 +2664,7 @@ Below is a table of all possible camera status codes.
       <td>Is the camera getting too cold to continue recording?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>86</td>
@@ -2464,13 +2672,7 @@ Below is a table of all possible camera status codes.
       <td>The rotational orientation of the camera</td>
       <td>integer</td>
       <td>0: 0 degrees (upright)<br />1: 180 degrees (upside down)<br />2: 90 degrees (laying on right side)<br />3: 270 degrees (laying on left side)<br /></td>
-    </tr>
-    <tr>
-      <td>87</td>
-      <td>Thermal mitigation mode</td>
-      <td>Can camera use high resolution/fps (based on temperature)? (HERO7 Silver/White only)</td>
-      <td>boolean</td>
-      <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>88</td>
@@ -2478,6 +2680,7 @@ Below is a table of all possible camera status codes.
       <td>Is this camera capable of zooming while encoding (static value based on model, not settings)</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>89</td>
@@ -2485,6 +2688,7 @@ Below is a table of all possible camera status codes.
       <td>Current flatmode ID</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>91</td>
@@ -2492,13 +2696,7 @@ Below is a table of all possible camera status codes.
       <td>Are system logs ready to be downloaded?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
-    </tr>
-    <tr>
-      <td>92</td>
-      <td>Timewarp 1x active</td>
-      <td>Is Timewarp 1x active?</td>
-      <td>boolean</td>
-      <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>93</td>
@@ -2506,6 +2704,7 @@ Below is a table of all possible camera status codes.
       <td>Current Video Preset (ID)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>94</td>
@@ -2513,6 +2712,7 @@ Below is a table of all possible camera status codes.
       <td>Current Photo Preset (ID)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>95</td>
@@ -2520,6 +2720,7 @@ Below is a table of all possible camera status codes.
       <td>Current Timelapse Preset (ID)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>96</td>
@@ -2527,6 +2728,7 @@ Below is a table of all possible camera status codes.
       <td>Current Preset Group (ID)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>97</td>
@@ -2534,6 +2736,7 @@ Below is a table of all possible camera status codes.
       <td>Current Preset (ID)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>98</td>
@@ -2541,6 +2744,7 @@ Below is a table of all possible camera status codes.
       <td>Preset Modified Status, which contains an event ID and a preset (group) ID</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>99</td>
@@ -2548,6 +2752,7 @@ Below is a table of all possible camera status codes.
       <td>How many Live Bursts can be captured before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>100</td>
@@ -2555,6 +2760,7 @@ Below is a table of all possible camera status codes.
       <td>Total number of Live Bursts on sdcard</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>101</td>
@@ -2562,6 +2768,7 @@ Below is a table of all possible camera status codes.
       <td>Is Capture Delay currently active (i.e. counting down)?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>102</td>
@@ -2569,6 +2776,7 @@ Below is a table of all possible camera status codes.
       <td>Media mod State</td>
       <td>integer</td>
       <td>0: Media mod microphone removed<br />2: Media mod microphone only<br />3: Media mod microphone with external microphone<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>103</td>
@@ -2576,6 +2784,7 @@ Below is a table of all possible camera status codes.
       <td>Time Warp Speed</td>
       <td>integer</td>
       <td>0: 15x<br />1: 30x<br />2: 60x<br />3: 150x<br />4: 300x<br />5: 900x<br />6: 1800x<br />7: 2x<br />8: 5x<br />9: 10x<br />10: Auto<br />11: 1x (realtime)<br />12: 1/2x (slow-motion)<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>104</td>
@@ -2583,6 +2792,7 @@ Below is a table of all possible camera status codes.
       <td>Is the system's Linux core active?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>105</td>
@@ -2590,6 +2800,7 @@ Below is a table of all possible camera status codes.
       <td>Camera lens type (reflects changes to setting 162)</td>
       <td>integer</td>
       <td>0: Default<br />1: Max Lens<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>106</td>
@@ -2597,6 +2808,7 @@ Below is a table of all possible camera status codes.
       <td>Is Video Hindsight Capture Active?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>107</td>
@@ -2604,6 +2816,7 @@ Below is a table of all possible camera status codes.
       <td>Scheduled Capture Preset ID</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>108</td>
@@ -2611,6 +2824,7 @@ Below is a table of all possible camera status codes.
       <td>Is Scheduled Capture set?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>109</td>
@@ -2618,6 +2832,7 @@ Below is a table of all possible camera status codes.
       <td>Is the camera in the process of creating a custom preset?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>110</td>
@@ -2625,6 +2840,7 @@ Below is a table of all possible camera status codes.
       <td>Media Mode Status (bitmasked)</td>
       <td>integer</td>
       <td>0: Display (selfie) mod: 0, HDMI: 0, Media Mod Connected: False<br />1: Display (selfie) mod: 0, HDMI: 0, Media Mod Connected: True<br />2: Display (selfie) mod: 0, HDMI: 1, Media Mod Connected: False<br />3: Display (selfie) mod: 0, HDMI: 1, Media Mod Connected: True<br />4: Display (selfie) mod: 1, HDMI: 0, Media Mod Connected: False<br />5: Display (selfie) mod: 1, HDMI: 0, Media Mod Connected: True<br />6: Display (selfie) mod: 1, HDMI: 1, Media Mod Connected: False<br />7: Display (selfie) mod: 1, HDMI: 1, Media Mod Connected: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>111</td>
@@ -2632,6 +2848,7 @@ Below is a table of all possible camera status codes.
       <td>Does sdcard meet specified minimum write speed?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>112</td>
@@ -2639,6 +2856,7 @@ Below is a table of all possible camera status codes.
       <td>Number of sdcard write speed errors since device booted</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>113</td>
@@ -2646,6 +2864,7 @@ Below is a table of all possible camera status codes.
       <td>Is Turbo Transfer active?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>114</td>
@@ -2653,6 +2872,7 @@ Below is a table of all possible camera status codes.
       <td>Camera control status ID</td>
       <td>integer</td>
       <td>0: Camera Idle: No one is attempting to change camera settings<br />1: Camera Control: Camera is in a menu or changing settings. To intervene, app must request control<br />2: Camera External Control: An outside entity (app) has control and is in a menu or modifying settings<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>115</td>
@@ -2660,6 +2880,7 @@ Below is a table of all possible camera status codes.
       <td>Is the camera connected to a PC via USB?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
   </tbody>
 </table>
