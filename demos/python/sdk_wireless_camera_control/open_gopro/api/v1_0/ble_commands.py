@@ -144,8 +144,7 @@ class BleCommandsV1_0:
 
 
 class BleSettingsV1_0:
-    # pylint: disable=missing-class-docstring
-    # pylint: disable=unused-argument
+    # pylint: disable=missing-class-docstring, unused-argument
     """The collection of all Settings.
 
     To be used by a GoProBle delegate to build setting commands.

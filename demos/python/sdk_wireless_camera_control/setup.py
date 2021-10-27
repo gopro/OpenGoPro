@@ -28,7 +28,7 @@ REQUIRED = [
     "rich",
     "protobuf>=3",
     "betterproto",
-    "typing-extensions"
+    "typing-extensions",
 ]
 
 here = os.path.abspath(os.path.dirname(__file__))

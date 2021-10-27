@@ -3,7 +3,6 @@
 
 # This must be run from the directory it exists in.
 
-OPEN_GO_PRO_DIR		:=
 PACKAGE_DIR			:= open_gopro
 DOCS_DIR			:= docs
 DEMO_DIR			:= ${PACKAGE_DIR}/demos
@@ -16,6 +15,8 @@ PROTOC				:= protoc
 PROTOCFLAGS			:= -I ${PROTO_SRC_DIR} --python_betterproto_out=${PROTO_OUT_DIR}
 PROTOS				:= $(wildcard ${PROTO_SRC_DIR}/*.proto)
 PROTO_OBJS			:= $(PROTOS:.proto=_pb.py)
+
+UNIT_TEST_MIN_COV	:= 70
 
 ######################################### General ############################################################
 
@@ -60,7 +61,7 @@ protos: ${PROTO_OBJS} ## Generate all protobuf python files
 %_pb.py: %.proto
 	mv ${PROTO_OUT_DIR}/__init__.py ${PROTO_OUT_DIR}/temp
 	${PROTOC} ${PROTOCFLAGS} $*.proto
-	mv ${PROTO_OUT_DIR}/open_gopro.py ${PACKAGE_DIR}/proto/$(@F)
+	mv ${PROTO_OUT_DIR}/${PACKAGE_DIR}.py ${PACKAGE_DIR}/proto/$(@F)
 	mv ${PROTO_OUT_DIR}/temp ${PROTO_OUT_DIR}/__init__.py
 
 ########################################## Testing ###########################################################
@@ -74,7 +75,7 @@ clean_tests: ## Clean raw coverage and html results
 .PHONY: unit_tests
 unit_tests: # Run unit tests.
 	@echo "Running unit tests..."
-	@pytest tests/unit --cov-fail-under=70
+	@pytest tests/unit --cov-fail-under=${UNIT_TEST_MIN_COV}
 
 .PHONY: e2e_tests
 e2e_tests: # Run end to end tests (excluding demos).
@@ -102,9 +103,9 @@ format: ## Run Black to format code
 .PHONY: lint
 lint: reports ## Run mypy for static typing analysis and pylint for linting
 	@echo "Performing static typing analysis..."
-	@mypy open_gopro | tee ${REPORTS_DIR}/linting
+	@mypy ${PACKAGE_DIR} | tee ${REPORTS_DIR}/linting
 	@echo "Linting..."
-	@pylint open_gopro | tee -a ${REPORTS_DIR}/linting
+	@pylint ${PACKAGE_DIR} | tee -a ${REPORTS_DIR}/linting
 
 ######################################### Documentation ######################################################
 

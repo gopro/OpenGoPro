@@ -5,17 +5,15 @@
 
 from __future__ import annotations
 import logging
-from typing import Type, TYPE_CHECKING
+from typing import Type
 
 from construct import Flag, Int8ub
 
-from open_gopro.constants import StatusId
+from open_gopro.constants import StatusId, SettingId
 from open_gopro.api.v1_0.ble_commands import BleCommandsV1_0, BleSettingsV1_0, BleStatusesV1_0
 from open_gopro.communication_client import GoProBle
-from open_gopro.api.builders import BleStatus, build_enum_adapter
-
-if TYPE_CHECKING:
-    from .params import ParamsV2_0 as Params
+from open_gopro.api.builders import BleSetting, BleStatus, build_enum_adapter
+from .params import ParamsV2_0 as Params
 
 logger = logging.getLogger(__name__)
 
@@ -25,10 +23,19 @@ class BleCommandsV2_0(BleCommandsV1_0):
 
 
 class BleSettingsV2_0(BleSettingsV1_0):
-    """Version 2.0 settings are an exact copy of 1.0"""
+    # pylint: disable=missing-class-docstring, unused-argument
+    """Implement updates to BLE Settings for version 2.0"""
 
+    def __init__(self, communicator: GoProBle, params: Type[Params]) -> None:
+        super().__init__(communicator, params)
 
-logger = logging.getLogger(__name__)
+        class VideoPerformanceMode(BleSetting[Params.VideoPerformanceMode]):
+            ...
+
+        self.video_performance_mode = VideoPerformanceMode(
+            self.communicator, SettingId.VIDEO_FOV, build_enum_adapter(params.VideoPerformanceMode)
+        )
+        """Video Performance Mode. Set with :py:class:`open_gopro.params.VideoPerformanceMode`"""
 
 
 class BleStatusesV2_0(BleStatusesV1_0):

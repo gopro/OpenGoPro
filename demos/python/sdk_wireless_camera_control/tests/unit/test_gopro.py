@@ -22,6 +22,8 @@ from open_gopro.responses import GoProResp
 
 
 ready = False
+
+
 @pytest.mark.asyncio
 def test_ble_threads_start(gopro_client_maintain_ble: GoPro):
     def open_client():

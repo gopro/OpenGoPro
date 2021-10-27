@@ -21,20 +21,24 @@ class ParamsV2_0(ParamsV1_0):
         RES_5_3_K = 100
 
     class Preset(GoProEnum):
-        ACTIVITY = 1
-        BURST_PHOTO = 65538
-        CINEMATIC = 2
-        LIVE_BURST = 65537
-        NIGHT_PHOTO = 65539
-        NIGHT_LAPSE = 131074
-        PHOTO = 65536
-        SLO_MO = 3
-        STANDARD = 0
-        TIME_LAPSE = 131073
-        TIME_WARP = 131072
-        MAX_PHOTO = 262144
-        MAX_TIMEWARP = 327680
-        MAX_VIDEO = 196608
+        STANDARD = 0x00000000
+        ACTIVITY = 0x00000001
+        CINEMATIC = 0x00000002
+        ULTRA_SLOMO = 0x00000004
+        BASIC = 0x00000005
+        PHOTO = 0x00010000
+        LIVE_BURST = 0x00010001
+        BURST_PHOTO = 0x00010002
+        NIGHT_PHOTO = 0x00010003
+        TIME_WARP = 0x00020000
+        TIME_LAPSE = 0x00020001
+        NIGHT_LAPSE = 0x00020002
+        STANDARD_EB = 0x00080000
+        ACTIVITY_EB = 0x00080001
+        CINEMATIC_EB = 0x00080002
+        SLOMO_EB = 0x00080003
+        TRIPOD_4K = 0x00090000
+        TRIPOD_5_3K = 0x00090001
 
     class LED(GoProEnum):
         ALL_ON = 3
@@ -67,3 +71,8 @@ class ParamsV2_0(ParamsV1_0):
         NARROW = 19
         MAX_SUPERVIEW = 100
         WIDE = 101
+
+    class VideoPerformanceMode(GoProEnum):
+        MAX_PERFORMANCE = 0
+        EXTENDED_BATTERY = 1
+        STATIONARY = 2
