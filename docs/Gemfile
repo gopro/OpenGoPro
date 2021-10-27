@@ -1,3 +1,6 @@
+# Note!! The built gems are stored in the Docker image. If this file is updated, the Docker image must be rebuilt
+# using the Github Actions workflow: https://github.com/gopro/OpenGoPro/actions/workflows/publish_docker_image.yml
+
 source "https://rubygems.org"
 
 gem 'jekyll', "~> 4.2"
@@ -5,6 +8,7 @@ gem 'minimal-mistakes-jekyll', "~> 4.24"
 gem 'jekyll-spaceship'
 gem 'jekyll-include-cache'
 gem "liquid-tag-parser", "~> 1.9"
+gem "nokogiri", ">= 1.12.5"
 
 # Dependencies from github pages
 gem 'jekyll-avatar', '~> 0.7.0'
