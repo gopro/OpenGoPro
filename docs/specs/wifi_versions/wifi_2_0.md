@@ -355,23 +355,16 @@ Below is a table of commands that can be sent to the camera and how to send them
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Media: GPMF</td>
-      <td>Get GPMF data (MP4)</td>
-      <td>GET</td>
-      <td>/gopro/media/gpmf?path=100GOPRO/XXX.MP4</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>Media: GPMF</td>
       <td>Get GPMF data (JPG)</td>
       <td>GET</td>
       <td>/gopro/media/gpmf?path=100GOPRO/XXX.JPG</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Media: Info</td>
-      <td>Get media info (MP4)</td>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Media: GPMF</td>
+      <td>Get GPMF data (MP4)</td>
       <td>GET</td>
-      <td>/gopro/media/info?path=100GOPRO/XXX.MP4</td>
+      <td>/gopro/media/gpmf?path=100GOPRO/XXX.MP4</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
@@ -379,6 +372,13 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Get media info (JPG)</td>
       <td>GET</td>
       <td>/gopro/media/info?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Media: Info</td>
+      <td>Get media info (MP4)</td>
+      <td>GET</td>
+      <td>/gopro/media/info?path=100GOPRO/XXX.MP4</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
@@ -390,23 +390,16 @@ Below is a table of commands that can be sent to the camera and how to send them
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Media: Screennail</td>
-      <td>Get screennail for "100GOPRO/xxx.MP4"</td>
-      <td>GET</td>
-      <td>/gopro/media/screennail?path=100GOPRO/XXX.MP4</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Media: Screennail</td>
       <td>Get screennail for "100GOPRO/xxx.JPG"</td>
       <td>GET</td>
       <td>/gopro/media/screennail?path=100GOPRO/XXX.JPG</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>Media: Telemetry</td>
-      <td>Get telemetry track data (MP4)</td>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Media: Screennail</td>
+      <td>Get screennail for "100GOPRO/xxx.MP4"</td>
       <td>GET</td>
-      <td>/gopro/media/telemetry?path=100GOPRO/XXX.MP4</td>
+      <td>/gopro/media/screennail?path=100GOPRO/XXX.MP4</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
@@ -416,11 +409,11 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>/gopro/media/telemetry?path=100GOPRO/XXX.JPG</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Media: Thumbnail</td>
-      <td>Get thumbnail for "100GOPRO/xxx.MP4"</td>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Media: Telemetry</td>
+      <td>Get telemetry track data (MP4)</td>
       <td>GET</td>
-      <td>/gopro/media/thumbnail?path=100GOPRO/XXX.MP4</td>
+      <td>/gopro/media/telemetry?path=100GOPRO/XXX.MP4</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
@@ -430,11 +423,11 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>/gopro/media/thumbnail?path=100GOPRO/XXX.JPG</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>Media: Turbo Transfer</td>
-      <td>Turbo transfer: on</td>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Media: Thumbnail</td>
+      <td>Get thumbnail for "100GOPRO/xxx.MP4"</td>
       <td>GET</td>
-      <td>/gopro/media/turbo_transfer?p=1</td>
+      <td>/gopro/media/thumbnail?path=100GOPRO/XXX.MP4</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
@@ -442,6 +435,13 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Turbo transfer: off</td>
       <td>GET</td>
       <td>/gopro/media/turbo_transfer?p=0</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Media: Turbo Transfer</td>
+      <td>Turbo transfer: on</td>
+      <td>GET</td>
+      <td>/gopro/media/turbo_transfer?p=1</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
@@ -484,126 +484,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Ultra Slo-Mo</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=4</td>
-      <td>\&gt;= v01.15.00</td>
+      <td>\&gt;= v01.16.00</td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Load</td>
       <td>Basic</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=5</td>
-      <td>\&gt;= v01.15.00</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Photo</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=65536</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Live Burst</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=65537</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Burst Photo</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=65538</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Night Photo</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=65539</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Time Warp</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=131072</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Time Lapse</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=131073</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Night Lapse</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=131074</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Photo</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=65536</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Live Burst</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=65537</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Burst Photo</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=65538</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Night Photo</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=65539</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Time Warp</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=131072</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Time Lapse</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=131073</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>Night Lapse</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=131074</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>4K Tripod</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=589824</td>
-      <td>\&gt;= v01.15.00</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Presets: Load</td>
-      <td>5.3K Tripod</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/load?id=589825</td>
-      <td>\&gt;= v01.15.00</td>
+      <td>\&gt;= v01.16.00</td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Load</td>
@@ -659,28 +547,42 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Standard [EB]</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=524288</td>
-      <td>\&gt;= v01.15.00</td>
+      <td>\&gt;= v01.16.00</td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Load</td>
       <td>Activity [EB]</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=524289</td>
-      <td>\&gt;= v01.15.00</td>
+      <td>\&gt;= v01.16.00</td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Load</td>
       <td>Cinematic [EB]</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=524290</td>
-      <td>\&gt;= v01.15.00</td>
+      <td>\&gt;= v01.16.00</td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Load</td>
       <td>Slo-Mo [EB]</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=524291</td>
-      <td>\&gt;= v01.15.00</td>
+      <td>\&gt;= v01.16.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Presets: Load</td>
+      <td>4K Tripod</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=589824</td>
+      <td>\&gt;= v01.16.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Presets: Load</td>
+      <td>5.3K Tripod</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=589825</td>
+      <td>\&gt;= v01.16.00</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load Group</td>
@@ -820,7 +722,7 @@ Below is a table of setting options detailing how to set every option supported 
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
-      <td>Set video fps (id: 3) to maximum video performance (id: 0)</td>
+      <td>Set video fps (id: 3) to 240 (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=3&option=0</td>
       <td><span style="color:green">✔</span></td>
@@ -836,7 +738,7 @@ Below is a table of setting options detailing how to set every option supported 
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
-      <td>Set video fps (id: 3) to tripod / stationary video (id: 2)</td>
+      <td>Set video fps (id: 3) to 100 (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=3&option=2</td>
       <td><span style="color:green">✔</span></td>
@@ -892,7 +794,7 @@ Below is a table of setting options detailing how to set every option supported 
     <tr style="background-color: rgb(222,235,255);">
       <td>59</td>
       <td>Auto Off</td>
-      <td>Set setup auto power down (id: 59) to maximum video performance (id: 0)</td>
+      <td>Set setup auto power down (id: 59) to never (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=59&option=0</td>
       <td><span style="color:green">✔</span></td>
@@ -924,7 +826,7 @@ Below is a table of setting options detailing how to set every option supported 
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Lens</td>
-      <td>Set video digital lenses (id: 121) to maximum video performance (id: 0)</td>
+      <td>Set video digital lenses (id: 121) to wide (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=121&option=0</td>
       <td><span style="color:green">✔</span></td>
@@ -932,7 +834,7 @@ Below is a table of setting options detailing how to set every option supported 
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Lens</td>
-      <td>Set video digital lenses (id: 121) to tripod / stationary video (id: 2)</td>
+      <td>Set video digital lenses (id: 121) to narrow (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=121&option=2</td>
       <td><span style="color:green">✔</span></td>
@@ -1039,7 +941,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set system power profile (id: 173) to maximum video performance (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=173&option=0</td>
-      <td>\&gt;= v01.15.00</td>
+      <td>\&gt;= v01.16.00</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>173</td>
@@ -1047,7 +949,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set system power profile (id: 173) to extended battery (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=173&option=1</td>
-      <td>\&gt;= v01.15.00</td>
+      <td>\&gt;= v01.16.00</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>173</td>
@@ -1055,7 +957,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set system power profile (id: 173) to tripod / stationary video (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=173&option=2</td>
-      <td>\&gt;= v01.15.00</td>
+      <td>\&gt;= v01.16.00</td>
     </tr>
   </tbody>
 </table>
@@ -2247,14 +2149,6 @@ Below is a table of supported status codes.<br />
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
-      <td>63</td>
-      <td>In contextual menu</td>
-      <td>Is the camera currently in a contextual menu (e.g. Preferences)?</td>
-      <td>boolean</td>
-      <td>0: False<br />1: True<br /></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
       <td>64</td>
       <td>Remaining timelapse time</td>
       <td>How many min of Timelapse video can be captured with current settings before sdcard is full</td>
@@ -2588,14 +2482,6 @@ Below is a table of supported status codes.<br />
       <td>Is Turbo Transfer active?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
-      <td>114</td>
-      <td>Camera control status</td>
-      <td>Camera control status ID</td>
-      <td>integer</td>
-      <td>0: Camera Idle: No one is attempting to change camera settings<br />1: Camera Control: Camera is in a menu or changing settings. To intervene, app must request control<br />2: Camera External Control: An outside entity (app) has control and is in a menu or modifying settings<br /></td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
