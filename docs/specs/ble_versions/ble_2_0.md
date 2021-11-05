@@ -2799,7 +2799,12 @@ Note: For commands that do not require any protobuf inputs, Value would be empty
 
 
 ## Protobuf Commands
-Open GoPro supports the following protobuf commands:
+<p>
+Below is a table of protobuf commands that can be sent to the camera and their expected response..<br />
+<span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
+<span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
+\&gt;= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
+</p>
 
 <table border="1">
   <tbody>
