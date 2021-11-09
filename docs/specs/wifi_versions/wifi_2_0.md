@@ -313,7 +313,7 @@ Using the Open GoPro API, a client can perform various command, control, and que
 Below is a table of commands that can be sent to the camera and how to send them.<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
-\&gt;= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
+>= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
 </p>
 
 <table border="1">
@@ -650,7 +650,7 @@ While most option values are enumerated values, some are complex bitmasked value
 Below is a table of setting options detailing how to set every option supported by Open GoPro cameras.<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
-\&gt;= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
+>= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
 </p>
 
 <table border="1">
@@ -1791,7 +1791,7 @@ For settings, keys are setting IDs, and values are option values
 Below is a table of supported status codes.<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
-\&gt;= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
+>= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
 </p>
 
 <table border="1">
