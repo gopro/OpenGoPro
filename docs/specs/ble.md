@@ -17,7 +17,7 @@ using the Get Version command upon connection %}
 -   New features:
     -   SD card rating check error status
     -   SD card write speed error status
-    -   Camera control status status
+    -   Camera control status
     -   Usb connected status
 -   Breaking changes:
     -   Video Digital Lens setting parameter changes:

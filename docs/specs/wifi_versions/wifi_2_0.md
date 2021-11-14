@@ -149,6 +149,10 @@ A preset is a logical wrapper around a specific camera flatmode and a collection
 The set of presets available to load at any moment depends on the value of certain camera settings, which are outlined in the table below.
 </p>
 
+<p>
+NOTE: 5.3K Tripod, 4K Tripod, Basic, Ultra Slow-Mo and Video Performance Mode capability are available on HERO10 Black v1.16 Firmware Update.
+</p>
+
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
