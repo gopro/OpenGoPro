@@ -5,6 +5,8 @@ import asyncio
 import logging
 import argparse
 
+import sys
+sys.path.append('/home/shunsuke/softroid/OpenGoPro/demos/python/tutorial')
 from tutorial_modules import GOPRO_BASE_UUID, enable_wifi
 try:
     from open_gopro.wifi_controller import Wireless

@@ -8,7 +8,7 @@ from typing import Dict, Any
 
 import requests
 
-from tutorial_modules import GOPRO_BASE_URL
+from tutorial_modules import GOPRO_BASE_URL, GOPRO_MAX
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
@@ -16,7 +16,10 @@ logger = logging.getLogger()
 
 def get_media_list() -> Dict[str, Any]:
     # Build the HTTP GET request
-    url = GOPRO_BASE_URL + "/gopro/media/list"
+    if GOPRO_MAX:
+        url = GOPRO_BASE_URL + "/gp/gpMediaList"
+    else:
+        url = GOPRO_BASE_URL + "/gopro/media/list"
     logger.info(f"Getting the media list: sending {url}")
 
     # Send the GET request and retrieve the response
