@@ -6,7 +6,10 @@ import logging
 import argparse
 
 from tutorial_modules import GOPRO_BASE_UUID, enable_wifi
-from open_gopro.wifi_controller import Wireless
+try:
+    from open_gopro.wifi_controller import Wireless
+except:
+    from open_gopro.wifi.adapters.wireless import Wireless
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
