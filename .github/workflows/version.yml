@@ -1,0 +1,51 @@
+# version.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed Dec 15 21:08:47 UTC 2021
+
+# Update the version, copyrights, make a commit, and tag the version
+
+name: Make a Tagged Release
+
+on:
+    workflow_dispatch:
+        inputs:
+            version:
+                description: 'version'
+                required: true
+
+jobs:
+    version_and_tag:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout source branch
+              uses: actions/checkout@v2
+              with:
+                  ref: main
+
+            - name: Update version, copyrights, and make tag
+              shell: bash
+              run: |
+                  git config core.fileMode false
+                  make version VERSION=${{ github.event.inputs.version }}
+
+            - name: Create commit
+              shell: bash
+              run: |
+                  git config core.fileMode false
+                  git config user.name github-actions
+                  git config user.email github-actions@github.com
+                  git commit -am "Set version to  $(VERSION) from github actions"
+
+            - name: Push to protected branch
+              uses: CasperWA/push-protected@v2
+              with:
+                  token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
+                  branch: main
+                  force: false
+                  unprotect_reviews: true
+
+            - name: Create tag
+              shell: bash
+              run: |
+                  git tag ${{ github.event.inputs.version }}
+                  git push origin ${{ github.event.inputs.version }}
