@@ -1,0 +1,20 @@
+/* set_camera_control_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
+/* This copyright was auto-generated on Thu Nov 18 01:50:56 UTC 2021 */
+
+/*
+Defines the structure of protobuf message for setting camera control status
+*/
+
+syntax="proto2";
+package open_gopro;
+
+
+enum EnumCameraControlStatus {
+    CAMERA_IDLE = 0;
+    CAMERA_CONTROL = 1; // Can only be set by camera, not by third-party
+    CAMERA_EXTERNAL_CONTROL = 2;
+}
+message RequestSetCameraControlStatus {
+    required EnumCameraControlStatus camera_control_status = 1;
+}
+
