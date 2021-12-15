@@ -10,14 +10,14 @@ on:
 
 jobs:
     repo-sync:
+        if: ${{ github.repository != 'gopro/OpenGoPro' }}
+        name: Mirror external main with internal main
         runs-on: ubuntu-latest
         steps:
-            - if: ${{ github.repository != 'gopro/OpenGoPro' }}
-              uses: actions/checkout@v2
+            - uses: actions/checkout@v2
               with:
                   persist-credentials: false
-            - if: ${{ github.repository != 'gopro/OpenGoPro' }}
-              name: repo-sync
+            - name: repo-sync
               uses: repo-sync/github-sync@v2.3.0
               with:
                   source_repo: https://github.com/gopro/OpenGoPro
