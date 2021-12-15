@@ -24,15 +24,3 @@ jobs:
                   source_branch: main
                   destination_branch: main
                   github_token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
-
-    mirror-main-to-release:
-        needs: repo-sync
-        if: ${{ github.repository != 'gopro/OpenGoPro' }}
-        name: Mirror Main with Release on internal repo
-        runs-on: ubuntu-latest
-        steps:
-            - uses: zofrex/mirror-branch@v1.0.2
-              with:
-                  target-branch: release
-                  token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
-                  force: true
