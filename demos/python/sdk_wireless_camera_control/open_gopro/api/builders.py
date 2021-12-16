@@ -6,6 +6,7 @@
 from __future__ import annotations
 import enum
 import logging
+from datetime import datetime
 from pathlib import Path
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
@@ -14,19 +15,20 @@ from typing import (
     ClassVar,
     TypeVar,
     Generic,
-    TYPE_CHECKING,
     Type,
     Union,
     no_type_check,
     Optional,
     Dict,
     Callable,
+    Tuple,
+    List,
 )
 
 import wrapt
 import requests
 import betterproto
-from construct import Int8ub, Struct, Adapter, GreedyBytes
+from construct import Int8ub, Int16ub, Struct, Adapter, GreedyBytes
 
 from open_gopro.responses import (
     BytesParser,
@@ -34,6 +36,7 @@ from open_gopro.responses import (
     BytesParserBuilder,
     JsonParser,
     GoProResp,
+    StringBuilder,
 )
 from open_gopro.constants import (
     ActionId,
@@ -47,15 +50,12 @@ from open_gopro.constants import (
 )
 from open_gopro.communication_client import GoProBle, GoProWifi
 
-if TYPE_CHECKING:
-    from . import Params
-
 logger = logging.getLogger(__name__)
 
-SettingValueType = TypeVar("SettingValueType", bound=Union[enum.Enum, bool, int, str])
-CommandValueType = TypeVar("CommandValueType", bound=Union[enum.Enum, bool, int, str])
+SettingValueType = TypeVar("SettingValueType")
+CommandValueType = TypeVar("CommandValueType")
 
-####################################################### Genearl##############################################
+####################################################### General ##############################################
 
 
 @wrapt.decorator
@@ -119,6 +119,46 @@ def build_enum_adapter(target: Type[enum.Enum]) -> Adapter:
 status_struct = Struct("status" / build_enum_adapter(ErrorCode))
 
 
+class DateTimeAdapter(Adapter):
+    """Translate between different date time representations"""
+
+    def _decode(self, obj: Union[List, str], *_: Any) -> datetime:
+        """Translate string or list of bytes into datetime
+
+        Args:
+            obj (list): input
+
+        Returns:
+            datetime: built datetime
+        """
+        if isinstance(obj, str):
+            # comes as '%14%01%02%03%09%2F'
+            year, *remaining = [int(x, 16) for x in obj.split("%")[1:]]
+            return datetime(year + 2000, *remaining)  # type: ignore
+        if isinstance(obj, list):
+            # When received from BLE, it includes garbage first byte
+            obj = obj[-7:]
+            year = Int16ub.parse(bytes(obj[0:2]))
+            return datetime(year, *[int(x) for x in obj[2:]])  # type: ignore
+        raise TypeError(f"Datetime decoder received invalid type: {type(obj)}")
+
+    def _encode(self, obj: Union[datetime, str], *_: Any) -> Union[bytes, str]:
+        """Translate datetime into bytes or pass through string
+
+        Args:
+            obj (Union[datetime, str]): Input
+
+        Returns:
+            Union[bytes, str]: built bytes
+        """
+        if isinstance(obj, datetime):
+            year = [int(x) for x in Int16ub.build(obj.year)]
+            return bytes([*year, obj.month, obj.day, obj.hour, obj.minute, obj.second])
+        if isinstance(obj, str):
+            return obj
+        raise TypeError(f"Datetime encoder received invalid type: {type(obj)}")
+
+
 # Ignoring because hitting this mypy bug: https://github.com/python/mypy/issues/5374
 @dataclass  # type: ignore
 class BleCommand(ABC):
@@ -166,12 +206,8 @@ class BleReadCommand(BleCommand):
     def _response_parser(self) -> BytesParser:
         return self.response_parser
 
-    def __call__(self) -> GoProResp:
-        """The method that will actually build and send the command.
-
-        Returns:
-            GoProResp: received and parsed response
-        """
+    # pylint: disable=missing-return-doc
+    def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(f"<----------- {self.uuid.name}")
         response = self.communicator._read_characteristic(self.uuid)
         logger.info(f"-----------> {self.uuid.name} : {response}")
@@ -201,12 +237,8 @@ class BleWriteNoParamsCommand(BleCommand):
     def _response_parser(self) -> BytesParser:
         return status_struct if self.response_parser is None else status_struct + self.response_parser
 
-    def __call__(self) -> GoProResp:
-        """The method that will actually build and send the command
-
-        Returns:
-            GoProResp: received and parsed response
-        """
+    # pylint: disable=missing-return-doc
+    def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(f"<----------- {self.cmd.name}")
         # Build data buffer
         data = bytearray([self.cmd.value])
@@ -241,17 +273,8 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
     def _response_parser(self) -> BytesParser:
         return status_struct if self.response_parser is None else status_struct + self.response_parser
 
-    def __call__(self, value: CommandValueType) -> GoProResp:
-        """The method that will actually build and send the command
-
-        When this class is subclassed, the CommandValueType will be taken from the generic definition
-
-        Args:
-            value (CommandValueType): Value to send
-
-        Returns:
-            GoProResp: received and parsed response
-        """
+    # pylint: disable=missing-return-doc
+    def __call__(self, value: CommandValueType) -> GoProResp:  # noqa: D102
         logger.info(f"<----------- {self.cmd.name}: {str(value)}")
         # Build data buffer
         data = bytearray([self.cmd.value])
@@ -264,6 +287,56 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
         # Send the data and receive the response
         response = self.communicator._write_characteristic_receive_notification(self.uuid, data)
         logger.info(f"-----------> \n{response}")
+        return response
+
+
+@dataclass
+class RegisterUnregisterAll(BleWriteNoParamsCommand):
+    """Base class for register / unregister all commands
+
+    This will loop over all of the elements (i.e. settings / statusess found from the element_set entry of the
+    producer tuple parameter) and individually register / unregister (depending on the action parameter) each
+    element in the set
+
+    Args:
+        producer: (Optional[Tuple[Union[Type[SettingId], Type[StatusId]], QueryCmdId]]): Tuple of (element_set,
+            query command) where element_set is the GoProEnum that this command relates to, i.e. SettingId for
+            settings, StatusId for Statuses
+        action: (Optional[Action]): whether to register or unregister
+    """
+
+    class Action(enum.Enum):
+        """Enum to differentiate between register actions"""
+
+        REGISTER = enum.auto()
+        UNREGISTER = enum.auto()
+
+    producer: Optional[Tuple[Union[Type[SettingId], Type[StatusId]], QueryCmdId]] = None
+    action: Optional[Action] = None
+
+    def __post_init__(self) -> None:
+        # TODO refactor to not use dataclasses since derived classes can't have non default members if base classes do
+        assert self.producer is not None
+        assert self.action is not None
+
+    # pylint: disable=missing-return-doc
+    def __call__(self) -> GoProResp:  # noqa: D102
+        assert self.producer is not None
+        assert self.action is not None
+        element_set = self.producer[0]
+        responded_command = self.producer[1]
+        response = super().__call__()
+        if response.is_ok:
+            for element in element_set:
+                (
+                    self.communicator._register_listener
+                    if self.action is RegisterUnregisterAll.Action.REGISTER
+                    else self.communicator._unregister_listener
+                )(
+                    # Ignoring typing because this seems correct and looks like mypy error
+                    (responded_command, element)  # type: ignore
+                )
+
         return response
 
 
@@ -331,18 +404,15 @@ class BleProtoCommand(BleCommand):
 
     @abstractmethod
     @no_type_check
-    def __call__(self, *args: Any, **kwargs: Any) -> GoProResp:
-        """The method that will actually build and send the protobuf command
+    # pylint: disable=missing-return-doc
+    def __call__(self, *args: Any, **kwargs: Any) -> GoProResp:  # noqa: D102
+        # The method that will actually build and send the protobuf command
 
-        This method's signature shall be override by the subclass.
-        The subclass shall then pass the arguments to this method and return it's returned response
+        # This method's signature shall be override by the subclass.
+        # The subclass shall then pass the arguments to this method and return it's returned response
 
-        This pattern is technically violating the Liskov substitution principle. But we are accepting this as a
-        tradeoff for exposing type hints on BLE Protobuf commands.
-
-        Returns:
-            GoProResp: the received and parsed response
-        """
+        # This pattern is technically violating the Liskov substitution principle. But we are accepting this as a
+        # tradeoff for exposing type hints on BLE Protobuf commands.
         logger.info(
             f"<----------- {self.feature_id.name} : {' '.join([*[str(a) for a in args], *[str(a) for a in kwargs.values()]])}"
         )
@@ -633,25 +703,23 @@ class WifiGetJsonWithParams(WifiGetJsonCommand, Generic[CommandValueType]):
         response_parser (Optional[JsonParser]): the parser that will parse the received bytestream into a JSON dict
     """
 
-    def __call__(self, value: CommandValueType) -> GoProResp:
-        """The method that will actually build and send the command
+    communicator: GoProWifi
+    endpoint: str
+    response_parser: Optional[JsonParser] = None
+    param_builder: Optional[StringBuilder] = None
 
-        When this class is subclassed, the CommandValueType will be taken from the generic definition
-
-        Args:
-            value (CommandValueType): Value to send
-
-        Returns:
-            GoProResp: received and parsed response
-        """
+    # pylint: disable=missing-return-doc
+    def __call__(self, value: CommandValueType) -> GoProResp:  # noqa: D102
         logger.info(f"<----------- {self.endpoint} : {str(value)}")
 
         # Build list of args as they should be represented in URL
         url_params = []
-        if issubclass(type(value), enum.Enum):
-            url_params.append(value.value)
+        if self.param_builder is not None:
+            url_params.append(self.param_builder(value))
+        elif issubclass(type(value), enum.Enum):
+            url_params.append(value.value)  # type: ignore
         else:
-            url_params.append(value)
+            url_params.append(value)  # type: ignore
         url = self.endpoint.format(*url_params)
         # Send to camera
         response = self.communicator._get(url)
@@ -669,12 +737,8 @@ class WifiGetJsonNoParams(WifiGetJsonCommand):
         response_parser (Optional[JsonParser]): the parser that will parse the received bytestream into a JSON dict
     """
 
-    def __call__(self) -> GoProResp:
-        """The method that will actually build and send the command
-
-        Returns:
-            GoProResp: received and parsed response
-        """
+    # pylint: disable=missing-return-doc
+    def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(f"<----------- {self.endpoint}")
 
         url = self.endpoint
@@ -699,18 +763,15 @@ class WifiGetBinary(ABC):
 
     @abstractmethod
     @no_type_check
-    def __call__(self, /, **kwargs) -> Path:
-        """The method that will actually send the command and receive the stream
+    # pylint: disable=missing-return-doc
+    def __call__(self, /, **kwargs) -> Path:  # noqa: D102
+        # The method that will actually send the command and receive the stream
 
-        This method's signature shall be override by the subclass.
-        The subclass shall then pass the arguments to this method and return it's returned response
+        # This method's signature shall be override by the subclass.
+        # The subclass shall then pass the arguments to this method and return it's returned response
 
-        This pattern is technically violating the Liskov substitution principle. But we are accepting this as a
-        tradeoff for exposing type hints on BLE Protobuf commands.
-
-        Returns:
-            GoProResp: the received and parsed response
-        """
+        # This pattern is technically violating the Liskov substitution principle. But we are accepting this as a
+        # tradeoff for exposing type hints on BLE Protobuf commands.
         logger.info(f'<----------- {self.endpoint} : {" ".join([str(x) for x in list(kwargs.values())])}')
         camera_file = kwargs["camera_file"]
         try:
@@ -741,6 +802,8 @@ class WifiSetting(Generic[SettingValueType]):
     def __init__(self, communicator: GoProWifi, identifier: SettingId) -> None:
         self.identifier = identifier
         self.communicator = communicator
+        # Note! It is assumed that BLE and WiFi settings are symmetric so we only add to the communicator's
+        # parser in the BLE Setting.
 
     def __str__(self) -> str:  # pylint: disable=missing-return-doc
         return str(self.identifier.name)

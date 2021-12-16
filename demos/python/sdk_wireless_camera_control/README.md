@@ -26,6 +26,8 @@ Complete documentation can be found on [Open GoPro](https://gopro.github.io/Open
 
 ## Installation
 
+> Note! This package has only been tested on Python 3.8.x
+
 ```console
     $ pip install open-gopro
 ```

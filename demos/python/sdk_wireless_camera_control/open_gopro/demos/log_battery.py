@@ -111,9 +111,6 @@ def main() -> int:
         with GoPro(identifier, enable_wifi=False) as gopro:
             set_logging_level(logger, logging.ERROR)
 
-            # Ensure that wifi is not enabled. Not needed but left for instructive purposes
-            assert not gopro.ble_status.ap_state.get_value().flatten
-
             # # Setup notifications if we are not polling
             if poll is None:
                 console.print("Configuring battery notifications...")

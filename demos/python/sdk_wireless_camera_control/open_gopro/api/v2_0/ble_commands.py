@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class BleCommandsV2_0(BleCommandsV1_0):
-    """Version 2.0 commands are an exact copy of 1.0"""
+    """Implement updates to BLE commands for version 2.0"""
 
 
 class BleSettingsV2_0(BleSettingsV1_0):
@@ -29,13 +29,12 @@ class BleSettingsV2_0(BleSettingsV1_0):
     def __init__(self, communicator: GoProBle, params: Type[Params]) -> None:
         super().__init__(communicator, params)
 
-        class VideoPerformanceMode(BleSetting[Params.VideoPerformanceMode]):
-            ...
-
-        self.video_performance_mode = VideoPerformanceMode(
-            self.communicator, SettingId.VIDEO_FOV, build_enum_adapter(params.VideoPerformanceMode)
+        self.video_performance_mode = BleSetting[Params.VideoPerformanceMode](
+            self.communicator,
+            SettingId.VIDEO_PERFORMANCE_MODE,
+            build_enum_adapter(params.VideoPerformanceMode),
         )
-        """Video Performance Mode. Set with :py:class:`open_gopro.params.VideoPerformanceMode`"""
+        """Video Performance Mode. Set with :py:class:`Params.VideoPerformanceMode`"""
 
 
 class BleStatusesV2_0(BleStatusesV1_0):
@@ -55,7 +54,7 @@ class BleStatusesV2_0(BleStatusesV1_0):
         """Number of sdcard write speed errors since device booted"""
 
         self.camera_control: BleStatus = BleStatus(
-            self.communicator, StatusId.CAMERA_CONTROL, build_enum_adapter(params.CameraControlStatus)
+            self.communicator, StatusId.CAMERA_CONTROL, build_enum_adapter(params.CameraControl)
         )
         """Camera control status ID"""
 

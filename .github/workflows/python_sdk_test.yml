@@ -53,14 +53,17 @@ jobs:
                   pip install -r requirements-dev.txt
 
             - name: Lint code
+              shell: bash
               working-directory: ./demos/python/sdk_wireless_camera_control/
               run: make lint
 
             - name: Run unit tests
+              shell: bash
               working-directory: ./demos/python/sdk_wireless_camera_control/
               run: make unit_tests
 
             - name: Test docs build
+              shell: bash
               working-directory: ./demos/python/sdk_wireless_camera_control/
               run: make docs
 

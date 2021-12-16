@@ -37,6 +37,12 @@ def main() -> int:
             if gopro.is_encoding:
                 assert gopro.ble_command.set_shutter(gopro.params.Shutter.OFF).is_ok
 
+            # Ensure we are in a mode that can enter cinematic preset
+            if gopro.version >= 2.0:
+                assert gopro.ble_setting.video_performance_mode.set(
+                    gopro.params.VideoPerformanceMode.MAX_PERFORMANCE
+                ).is_ok
+                assert gopro.ble_setting.max_lens_mode.set(gopro.params.MaxLensMode.DEFAULT).is_ok
             assert gopro.ble_command.set_turbo_mode(False).is_ok
 
             console.print("Capturing a video...")

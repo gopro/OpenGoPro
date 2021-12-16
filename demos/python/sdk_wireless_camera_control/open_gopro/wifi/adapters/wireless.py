@@ -955,7 +955,7 @@ class NetshWireless(WifiController):
             PARSE_SSID = auto()
             PARSE_STATE = auto()
 
-        if self.interface is None:
+        if self._interface is None:
             self._interface = self.interfaces()[0]
         if self._interface is None:
             raise Exception("Can't auto-assign interface. None found.")

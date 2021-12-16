@@ -182,7 +182,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
             w = csv.writer(f, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
             w.writerow(["handle", "description", "UUID", "properties", "value"])
             # For each service in table
-            for s in self.gatt_table.services.values():  # type: ignore
+            for s in self.gatt_table.services.values():
                 w.writerow(["SERVICE", s.name, s.uuid.value, "SERVICE", "SERVICE"])
                 # For each characteristic in service
                 for c in s.chars.values():

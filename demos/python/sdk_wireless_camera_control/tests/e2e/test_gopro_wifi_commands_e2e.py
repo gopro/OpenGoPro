@@ -37,12 +37,15 @@ async def test_set_turbo_mode(gopro_ble_and_wifi: GoPro):
 
 
 @pytest.mark.asyncio
-async def test_set_cinematic_mode(gopro_ble_and_wifi: GoPro):
-    assert gopro_ble_and_wifi.wifi_command.set_preset(gopro_ble_and_wifi.params.Preset.CINEMATIC)
-
-
-@pytest.mark.asyncio
 async def test_set_resolution(gopro_ble_and_wifi: GoPro):
+    if gopro_ble_and_wifi.version >= 2.0:
+        assert gopro_ble_and_wifi.ble_setting.video_performance_mode.set(
+            gopro_ble_and_wifi.params.VideoPerformanceMode.MAX_PERFORMANCE
+        ).is_ok
+        assert gopro_ble_and_wifi.ble_setting.max_lens_mode.set(
+            gopro_ble_and_wifi.params.MaxLensMode.DEFAULT
+        ).is_ok
+    assert gopro_ble_and_wifi.wifi_command.set_preset(gopro_ble_and_wifi.params.Preset.CINEMATIC).is_ok
     for resolution in gopro_ble_and_wifi.params.Resolution:
         print(f"Setting resolution to {resolution.name}")
         assert gopro_ble_and_wifi.wifi_setting.resolution.set(resolution).is_ok
