@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Usage &mdash; Open GoPro Python SDK 0.7.0 documentation</title>
+  <title>Usage &mdash; Open GoPro Python SDK 0.7.1 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.7.0
+                0.7.1
               </div>
             
           
@@ -274,9 +274,9 @@ be tracked. This is most likely not desirable for the user and is mostly used fo
 <h3>API Version<a class="headerlink" href="#api-version" title="Permalink to this headline">¶</a></h3>
 <p>As mentioned above, one of the steps during the opening sequence is to query the camera’s Open GoPro API version.
 Once this is done, the relevant commands, settings, and statuses properties of the <cite>GoPro</cite> instance are
-set to access a specific version. This means that the attributes of these properties can change depending on the camera that
-you connect to if different cameras support different Open GoPro versions. That is, different versions can, for
-example, have different commands and / or parameters.</p>
+set to access a specific version. This means that the attributes of these properties can change depending on the
+camera that you connect to if you are connecting to cameras supporting different Open GoPro versions. That is,
+different versions can, for example, have different commands and / or parameters.</p>
 <p>Here are the relevant properties which will all be expanded upon (with accompanying example code) below:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.params" title="open_gopro.gopro.GoPro.params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.gopro.GoPro.params()</span></code></a></p></li>
@@ -294,6 +294,12 @@ example, have different commands and / or parameters.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">GoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;This camera supports Open GoPro version </span><span class="si">{</span><span class="n">gopro</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the API is set (by version) dynamically after connection, it is not possible to perform static type checking
+on the top-level Open GoPro API calls. The benefit of this approach is that the user does not need to
+manually choose the API to use.</p>
 </div>
 </div>
 <div class="section" id="camera-readiness">
@@ -320,16 +326,19 @@ by the <cite>GoPro</cite> instance.</p>
 <h2>Sending Commands<a class="headerlink" href="#sending-commands" title="Permalink to this headline">¶</a></h2>
 <p>Once the <cite>GoPro</cite> instance has been <a class="reference internal" href="#opening"><span class="std std-ref">opened</span></a>, it is now possible to send commands to the camera
 (provided that the camera is <a class="reference internal" href="#camera-readiness"><span class="std std-ref">ready</span></a>) using the Open GoPro API <a class="reference internal" href="#api-version"><span class="std std-ref">version</span></a>
-that the camera supports. This is done either via:
-- synchronous data operations
-- registering for asynchronous push notifications</p>
+that the camera supports. This is done either via:</p>
+<ul class="simple">
+<li><p>synchronous data operations</p></li>
+<li><p>registering for asynchronous push notifications</p></li>
+</ul>
 <p>Both of these patterns will be expanded upon below. But first, a note on selecting parameters for use with commands…</p>
 <div class="section" id="selecting-parameters">
 <h3>Selecting Parameters<a class="headerlink" href="#selecting-parameters" title="Permalink to this headline">¶</a></h3>
 <p>Whenever a parameter is required for a command, it will be type-hinted in the method definition as either a basic Python type
 or an Enum from the version-specific <cite>params</cite> class (i.e. <a class="reference internal" href="api.html#open_gopro.api.v1_0.params.ParamsV1_0" title="open_gopro.api.v1_0.params.ParamsV1_0"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.api.v1_0.params.ParamsV1_0</span></code></a> for version
 1.0). Since parameters can vary by open GoPro version, this params class should be accessed using the <cite>GoPro</cite> instance’s
-<cite>params</cite> property (<a class="reference internal" href="api.html#open_gopro.gopro.GoPro.params" title="open_gopro.gopro.GoPro.params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.gopro.GoPro.params()</span></code></a>).</p>
+<cite>params</cite> property (<a class="reference internal" href="api.html#open_gopro.gopro.GoPro.params" title="open_gopro.gopro.GoPro.params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.gopro.GoPro.params()</span></code></a>). Doing so will ensure that the correct parameter set
+is dynamically chosen.</p>
 <p>For example, if we want to send the “set shutter” command, we can see that it takes one parameter (<cite>shutter</cite>) which
 is of type <cite>Shutter</cite>:</p>
 <a class="reference internal image-reference" href="_images/shows_param_type.png"><img alt="_images/shows_param_type.png" src="_images/shows_param_type.png" style="width: 80%;" /></a>
@@ -463,12 +472,20 @@ printing the current value in the example above.</p>
 <p class="admonition-title">Note</p>
 <p>It is probably desirable to have a separate thread to retrieve these updates as the demo examples do.</p>
 </div>
+<p>It is also possible to register / unregister for all settings and / or statuses via one API call using the
+following commands:</p>
+<ul class="simple">
+<li><p>register for all  setting notifications via <a class="reference internal" href="api.html#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_settings" title="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_settings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_settings()</span></code></a></p></li>
+<li><p>register for all status notifications via <a class="reference internal" href="api.html#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_statuses" title="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_statuses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_statuses()</span></code></a></p></li>
+<li><p>unregister for all  setting notifications via <a class="reference internal" href="api.html#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_settings" title="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_settings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_settings()</span></code></a></p></li>
+<li><p>unregister for all status notifications via <a class="reference internal" href="api.html#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_statuses" title="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_statuses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_statuses()</span></code></a></p></li>
+</ul>
 </div>
 </div>
 <div class="section" id="handling-responses">
 <h2>Handling Responses<a class="headerlink" href="#handling-responses" title="Permalink to this headline">¶</a></h2>
 <p>Unless otherwise stated, all commands, settings, and status operations return a <cite>GoProResp</cite>
-(<a class="reference internal" href="api.html#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.responses.GoProResp</span></code></a>) which is basically a JSON serializable dict with some helper functions.</p>
+(<a class="reference internal" href="api.html#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.responses.GoProResp</span></code></a>) which is a JSON serializable dict with some helper functions.</p>
 <div class="section" id="response-structure">
 <h3>Response Structure<a class="headerlink" href="#response-structure" title="Permalink to this headline">¶</a></h3>
 <p>A <cite>GoProResp</cite> has 3 relevant attributes for the end user:</p>

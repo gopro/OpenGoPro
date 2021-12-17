@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Interfaces &mdash; Open GoPro Python SDK 0.7.0 documentation</title>
+  <title>Interfaces &mdash; Open GoPro Python SDK 0.7.1 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.7.0
+                0.7.1
               </div>
             
           
@@ -212,7 +212,14 @@ this package implements can be found in the Open GoPro documentation linked from
 <p>Not everything is exposed here. This section should only consist of the interface
 information that a user (not a developer) of the Open GoPro module should care about.</p>
 </div>
-<p>Also, for a higher-level summary / usage, see the <a class="reference internal" href="usage.html#usage"><span class="std std-ref">usage</span></a> section</p>
+<p>For a higher-level summary / usage, see the <a class="reference internal" href="usage.html#usage"><span class="std std-ref">usage</span></a> section</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This documentation is not a substitute for the Open GoPro BLE and WiFi
+<a class="reference external" href="https://gopro.github.io/OpenGoPro/">specifications</a>. That is, this interface shows how to use the various
+commands but is not an exhaustive source of information for what each command does. The Open GoPro specs
+should be used simultaneously with this document for development.</p>
+</div>
 <div class="section" id="gopro">
 <h2>GoPro<a class="headerlink" href="#gopro" title="Permalink to this headline">¶</a></h2>
 <p>This can be imported as:</p>
@@ -328,7 +335,8 @@ prevent reconnection issues because the OS has never disconnected from the previ
 <dt id="open_gopro.gopro.GoPro.get_update">
 <code class="sig-name descname"><span class="pre">get_update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><span class="pre">open_gopro.responses.GoProResp</span></a><a class="headerlink" href="#open_gopro.gopro.GoPro.get_update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a notification that we received from a registered listener.</p>
-<p>If timeout is None, this will block until a notification is received.</p>
+<p>If timeout is None, this will block until a notification is received.
+The updates are received via FIFO</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>timeout</strong> (<em>float</em><em>, </em><em>optional</em>) – Time to wait for a notification before returning. Defaults to None (wait forever)</p>
@@ -464,14 +472,14 @@ start maintenance, and get Open GoPro version..</p>
 <dl class="py method">
 <dt id="open_gopro.gopro.GoPro.version">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">version</span></code><a class="headerlink" href="#open_gopro.gopro.GoPro.version" title="Permalink to this definition">¶</a></dt>
-<dd><p>What API version does the connected device support?</p>
+<dd><p>The API version does the connected camera supports</p>
 <p>Note! If we have not yet connected and query the peer to find its version, this will be set to 1.0</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>version supported in MAJOR.MINOR format</p>
+<dd class="field-odd"><p>supported version in decimal form</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>str</p>
+<dd class="field-even"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -517,9 +525,10 @@ start maintenance, and get Open GoPro version..</p>
 <dt id="open_gopro.responses.GoProResp">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.responses.</span></code><code class="sig-name descname"><span class="pre">GoProResp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">parsers:</span> <span class="pre">Dict[Union[open_gopro.constants.CmdId,</span> <span class="pre">open_gopro.constants.QueryCmdId,</span> <span class="pre">open_gopro.constants.ActionId,</span> <span class="pre">open_gopro.constants.StatusId,</span> <span class="pre">open_gopro.constants.SettingId,</span> <span class="pre">open_gopro.ble.services.UUID,</span> <span class="pre">str,</span> <span class="pre">construct.core.Enum],</span> <span class="pre">Union[construct.core.Construct,</span> <span class="pre">open_gopro.responses.JsonParser]],</span> <span class="pre">info:</span> <span class="pre">List[Union[open_gopro.constants.CmdId,</span> <span class="pre">open_gopro.constants.QueryCmdId,</span> <span class="pre">open_gopro.constants.ActionId,</span> <span class="pre">open_gopro.constants.StatusId,</span> <span class="pre">open_gopro.constants.SettingId,</span> <span class="pre">open_gopro.ble.services.UUID,</span> <span class="pre">str,</span> <span class="pre">construct.core.Enum]],</span> <span class="pre">status:</span> <span class="pre">open_gopro.constants.ErrorCode</span> <span class="pre">=</span> <span class="pre">&lt;ErrorCode.SUCCESS:</span> <span class="pre">0&gt;,</span> <span class="pre">raw_packet:</span> <span class="pre">Optional[Union[bytearray,</span> <span class="pre">Dict[str,</span> <span class="pre">Any]]]</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.responses.GoProResp" title="Permalink to this definition">¶</a></dt>
 <dd><p>A flexible object to be used to encapsulate all GoPro responses.</p>
-<p>It can be instantiated with varying levels of information and filled out as more is received.</p>
-<p>It is mostly a wrapper around a JSON-like dictionary (GoProResp.data)</p>
-<p>For example, first send the command and store the response:</p>
+<p>It can be instantiated with varying levels of information and filled out as more is received.
+The end user should never need to create a response and will only be consuming them.</p>
+<p>It is mostly a wrapper around a JSON-like dictionary (GoProResp.data)
+For example, first send the command and store the response:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">ble_setting</span><span class="o">.</span><span class="n">resolution</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -677,7 +686,7 @@ start maintenance, and get Open GoPro version..</p>
 <dl class="py method">
 <dt id="open_gopro.responses.GoProResp.items">
 <code class="sig-name descname"><span class="pre">items</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">ItemsView</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#open_gopro.responses.GoProResp.items" title="Permalink to this definition">¶</a></dt>
-<dd><p>Access data dict’s “items” method</p>
+<dd><p>Pass-through to access data dict’s “items” method</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>[description]</p>
@@ -691,7 +700,7 @@ start maintenance, and get Open GoPro version..</p>
 <dl class="py method">
 <dt id="open_gopro.responses.GoProResp.keys">
 <code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">KeysView</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#open_gopro.responses.GoProResp.keys" title="Permalink to this definition">¶</a></dt>
-<dd><p>Access data dict’s “keys” method</p>
+<dd><p>Pass-through to access data dict’s “keys” method</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>[description]</p>
@@ -726,7 +735,7 @@ start maintenance, and get Open GoPro version..</p>
 <dl class="py method">
 <dt id="open_gopro.responses.GoProResp.values">
 <code class="sig-name descname"><span class="pre">values</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">ValuesView</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#open_gopro.responses.GoProResp.values" title="Permalink to this definition">¶</a></dt>
-<dd><p>Access data dict’s “values” method</p>
+<dd><p>Pass-through to access data dict’s “values” method</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>[description]</p>
@@ -813,6 +822,16 @@ start maintenance, and get Open GoPro version..</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt id="open_gopro.constants.CmdId.REGISTER_ALL_SETTINGS">
+<code class="sig-name descname"><span class="pre">REGISTER_ALL_SETTINGS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">82</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.REGISTER_ALL_SETTINGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.CmdId.REGISTER_ALL_STATUSES">
+<code class="sig-name descname"><span class="pre">REGISTER_ALL_STATUSES</span></code><em class="property"> <span class="pre">=</span> <span class="pre">83</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.REGISTER_ALL_STATUSES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt id="open_gopro.constants.CmdId.SET_PAIRING_COMPLETE">
 <code class="sig-name descname"><span class="pre">SET_PAIRING_COMPLETE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.SET_PAIRING_COMPLETE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -840,6 +859,16 @@ start maintenance, and get Open GoPro version..</p>
 <dl class="py attribute">
 <dt id="open_gopro.constants.CmdId.SLEEP">
 <code class="sig-name descname"><span class="pre">SLEEP</span></code><em class="property"> <span class="pre">=</span> <span class="pre">5</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.SLEEP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.CmdId.UNREGISTER_ALL_SETTINGS">
+<code class="sig-name descname"><span class="pre">UNREGISTER_ALL_SETTINGS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">114</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.UNREGISTER_ALL_SETTINGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.CmdId.UNREGISTER_ALL_STATUSES">
+<code class="sig-name descname"><span class="pre">UNREGISTER_ALL_STATUSES</span></code><em class="property"> <span class="pre">=</span> <span class="pre">115</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.UNREGISTER_ALL_STATUSES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1080,8 +1109,28 @@ start maintenance, and get Open GoPro version..</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt id="open_gopro.constants.SettingId.INTERNAL_129">
+<code class="sig-name descname"><span class="pre">INTERNAL_129</span></code><em class="property"> <span class="pre">=</span> <span class="pre">129</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.INTERNAL_129" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt id="open_gopro.constants.SettingId.INTERNAL_13">
 <code class="sig-name descname"><span class="pre">INTERNAL_13</span></code><em class="property"> <span class="pre">=</span> <span class="pre">13</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.INTERNAL_13" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.SettingId.INTERNAL_130">
+<code class="sig-name descname"><span class="pre">INTERNAL_130</span></code><em class="property"> <span class="pre">=</span> <span class="pre">130</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.INTERNAL_130" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.SettingId.INTERNAL_131">
+<code class="sig-name descname"><span class="pre">INTERNAL_131</span></code><em class="property"> <span class="pre">=</span> <span class="pre">131</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.INTERNAL_131" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.SettingId.INTERNAL_132">
+<code class="sig-name descname"><span class="pre">INTERNAL_132</span></code><em class="property"> <span class="pre">=</span> <span class="pre">132</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.INTERNAL_132" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1102,6 +1151,11 @@ start maintenance, and get Open GoPro version..</p>
 <dl class="py attribute">
 <dt id="open_gopro.constants.SettingId.INTERNAL_139">
 <code class="sig-name descname"><span class="pre">INTERNAL_139</span></code><em class="property"> <span class="pre">=</span> <span class="pre">139</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.INTERNAL_139" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.SettingId.INTERNAL_142">
+<code class="sig-name descname"><span class="pre">INTERNAL_142</span></code><em class="property"> <span class="pre">=</span> <span class="pre">142</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.INTERNAL_142" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1420,26 +1474,6 @@ start maintenance, and get Open GoPro version..</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="open_gopro.constants.SettingId.SHORTCUT_LOWER_LEFT">
-<code class="sig-name descname"><span class="pre">SHORTCUT_LOWER_LEFT</span></code><em class="property"> <span class="pre">=</span> <span class="pre">129</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.SHORTCUT_LOWER_LEFT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.constants.SettingId.SHORTCUT_LOWER_RIGHT">
-<code class="sig-name descname"><span class="pre">SHORTCUT_LOWER_RIGHT</span></code><em class="property"> <span class="pre">=</span> <span class="pre">130</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.SHORTCUT_LOWER_RIGHT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.constants.SettingId.SHORTCUT_UPPER_LEFT">
-<code class="sig-name descname"><span class="pre">SHORTCUT_UPPER_LEFT</span></code><em class="property"> <span class="pre">=</span> <span class="pre">131</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.SHORTCUT_UPPER_LEFT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.constants.SettingId.SHORTCUT_UPPER_RIGHT">
-<code class="sig-name descname"><span class="pre">SHORTCUT_UPPER_RIGHT</span></code><em class="property"> <span class="pre">=</span> <span class="pre">132</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.SHORTCUT_UPPER_RIGHT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt id="open_gopro.constants.SettingId.VIDEO_FOV">
 <code class="sig-name descname"><span class="pre">VIDEO_FOV</span></code><em class="property"> <span class="pre">=</span> <span class="pre">121</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.VIDEO_FOV" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1603,6 +1637,11 @@ start maintenance, and get Open GoPro version..</p>
 <dl class="py attribute">
 <dt id="open_gopro.constants.StatusId.GPS_STAT">
 <code class="sig-name descname"><span class="pre">GPS_STAT</span></code><em class="property"> <span class="pre">=</span> <span class="pre">68</span></em><a class="headerlink" href="#open_gopro.constants.StatusId.GPS_STAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.StatusId.INTERNAL_116">
+<code class="sig-name descname"><span class="pre">INTERNAL_116</span></code><em class="property"> <span class="pre">=</span> <span class="pre">116</span></em><a class="headerlink" href="#open_gopro.constants.StatusId.INTERNAL_116" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1960,10 +1999,12 @@ start maintenance, and get Open GoPro version..</p>
 </div>
 <div class="section" id="api">
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
-<p>This is both the base types that are used to implement the API (BLE Setting, Ble Status, etc). and the
+<p>This is both the base types that are used to implement the API (BLE Setting, Ble Status, etc.) and the
 version-specific API’s themselves.</p>
-<p>These should not be imported directly and instead should be accessed using the
-api(<code class="xref py py-attr docutils literal notranslate"><span class="pre">open_gopro.gopro.GoPro.api</span></code>) attribute of a GoPro(<a class="reference internal" href="#open_gopro.gopro.GoPro" title="open_gopro.gopro.GoPro"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.gopro.GoPro</span></code></a>) instance.</p>
+<p>Since the API is configured (by version) dynamically after a connection is formed, these should not be imported
+directly and instead should be accessed using the relevant properties (<cite>ble_command</cite>, <cite>wifi_setting</cite>, etc.) of a
+GoPro(<a class="reference internal" href="#open_gopro.gopro.GoPro" title="open_gopro.gopro.GoPro"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.gopro.GoPro</span></code></a>) instance. Doing so will ensure that the correct parameters are selected
+and data is sent.</p>
 <div class="section" id="base-types">
 <h3>Base Types<a class="headerlink" href="#base-types" title="Permalink to this headline">¶</a></h3>
 <p>These are the base types that are used to implement version-specific API’s.</p>
@@ -2217,6 +2258,7 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 </div>
 <div class="section" id="api-version-1-0">
 <h3>API Version 1.0<a class="headerlink" href="#api-version-1-0" title="Permalink to this headline">¶</a></h3>
+<p>This is the API that the user should actually use to interface with the camera.</p>
 <div class="section" id="ble-1-0-commands">
 <h4>BLE 1.0 Commands<a class="headerlink" href="#ble-1-0-commands" title="Permalink to this headline">¶</a></h4>
 <dl class="py class">
@@ -2234,84 +2276,265 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.enable_wifi_ap">
 <code class="sig-name descname"><span class="pre">enable_wifi_ap</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.enable_wifi_ap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable / disable the Wi-Fi Access Point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>bool</em>) – True to enable, False to disable</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_camera_settings">
 <code class="sig-name descname"><span class="pre">get_camera_settings</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_camera_settings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all camera settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and current value of all settings</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_camera_statuses">
 <code class="sig-name descname"><span class="pre">get_camera_statuses</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_camera_statuses" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all camera statuses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and current value of all statuses</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_hardware_info">
 <code class="sig-name descname"><span class="pre">get_hardware_info</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_hardware_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get hardware information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and hardware info (model name, etc.)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_open_gopro_api_version">
 <code class="sig-name descname"><span class="pre">get_open_gopro_api_version</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_open_gopro_api_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get Open GoPro API version that is supported by the peer camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and version (separate into major and minor fields)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_wifi_password">
 <code class="sig-name descname"><span class="pre">get_wifi_password</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_wifi_password" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the Wifi password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and passworde</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_wifi_ssid">
 <code class="sig-name descname"><span class="pre">get_wifi_ssid</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_wifi_ssid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the Wifi SSID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and SSID</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.load_preset">
 <code class="sig-name descname"><span class="pre">load_preset</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.load_preset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load a Preset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Params.Preset</em>) – preset load.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.load_preset_group">
 <code class="sig-name descname"><span class="pre">load_preset_group</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.load_preset_group" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load a Preset Group.</p>
+<p>Once complete, the most recently used preset in this group will be active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Params.PresetGroup</em>) – preset group to load.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.power_down">
 <code class="sig-name descname"><span class="pre">power_down</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.power_down" title="Permalink to this definition">¶</a></dt>
 <dd><p>Power down the camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_settings">
+<code class="sig-name descname"><span class="pre">register_for_all_settings</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register push notifications for all settings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and current value of all settings</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_statuses">
+<code class="sig-name descname"><span class="pre">register_for_all_statuses</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_statuses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register push notifications for all statuses</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and current value of all statuses</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.set_shutter">
 <code class="sig-name descname"><span class="pre">set_shutter</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.set_shutter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set shutter on or off.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Params.Shutter</em>) – on or off</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.set_third_party_client_info">
 <code class="sig-name descname"><span class="pre">set_third_party_client_info</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.set_third_party_client_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flag as third party app.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.set_turbo_mode">
 <code class="sig-name descname"><span class="pre">set_turbo_mode</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.set_turbo_mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable / disable turbo mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>active</strong> (<em>bool</em>) – True to enable, False to disable.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TODO</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.sleep">
 <code class="sig-name descname"><span class="pre">sleep</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.sleep" title="Permalink to this definition">¶</a></dt>
 <dd><p>Put the camera in standby.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_settings">
+<code class="sig-name descname"><span class="pre">unregister_for_all_settings</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister push notifications for all settings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_statuses">
+<code class="sig-name descname"><span class="pre">unregister_for_all_statuses</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_statuses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister push notifications for all statuses</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2326,7 +2549,10 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <p>To be used by a GoProBle delegate to build setting commands.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>communicator</strong> (<em>GoProBle</em>) – Adapter to read / write settings</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>communicator</strong> (<em>GoProBle</em>) – Adapter to read / write settings</p></li>
+<li><p><strong>params</strong> – (Type[Params]): the set of parameters to use to build the settings</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py class">
@@ -2338,50 +2564,50 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.auto_off">
-<code class="sig-name descname"><span class="pre">auto_off</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.auto_off" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the auto off time.</p>
+<code class="sig-name descname"><span class="pre">auto_off</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleSetting" title="open_gopro.api.builders.BleSetting"><span class="pre">open_gopro.api.builders.BleSetting</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.auto_off" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the auto off time. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.AutoOff</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.fps">
-<code class="sig-name descname"><span class="pre">fps</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.fps" title="Permalink to this definition">¶</a></dt>
-<dd><p>Frames per second. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.FPS</span></code></p>
+<code class="sig-name descname"><span class="pre">fps</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleSetting" title="open_gopro.api.builders.BleSetting"><span class="pre">open_gopro.api.builders.BleSetting</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.fps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Frames per second. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.FPS</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.led">
-<code class="sig-name descname"><span class="pre">led</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.led" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the LED options (or also send the BLE keep alive signal). Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.LED</span></code></p>
+<code class="sig-name descname"><span class="pre">led</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleSetting" title="open_gopro.api.builders.BleSetting"><span class="pre">open_gopro.api.builders.BleSetting</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.led" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the LED options (or also send the BLE keep alive signal). Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.LED</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.max_lens_mode">
-<code class="sig-name descname"><span class="pre">max_lens_mode</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.max_lens_mode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable / disable max lens mod. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.MaxLensMode</span></code></p>
+<code class="sig-name descname"><span class="pre">max_lens_mode</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleSetting" title="open_gopro.api.builders.BleSetting"><span class="pre">open_gopro.api.builders.BleSetting</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.max_lens_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable / disable max lens mod. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.MaxLensMode</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.multi_shot_field_of_view">
-<code class="sig-name descname"><span class="pre">multi_shot_field_of_view</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.multi_shot_field_of_view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Multi-shot FOV. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.Multishot</span></code></p>
+<code class="sig-name descname"><span class="pre">multi_shot_field_of_view</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleSetting" title="open_gopro.api.builders.BleSetting"><span class="pre">open_gopro.api.builders.BleSetting</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.multi_shot_field_of_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-shot FOV. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.Multishot</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.photo_field_of_view">
-<code class="sig-name descname"><span class="pre">photo_field_of_view</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.photo_field_of_view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Photo FOV. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.PhotoFOV</span></code></p>
+<code class="sig-name descname"><span class="pre">photo_field_of_view</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleSetting" title="open_gopro.api.builders.BleSetting"><span class="pre">open_gopro.api.builders.BleSetting</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.photo_field_of_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Photo FOV. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.PhotoFOV</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.resolution">
-<code class="sig-name descname"><span class="pre">resolution</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.resolution" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resolution. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.Resolution</span></code></p>
+<code class="sig-name descname"><span class="pre">resolution</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleSetting" title="open_gopro.api.builders.BleSetting"><span class="pre">open_gopro.api.builders.BleSetting</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.resolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolution. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.Resolution</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.video_field_of_view">
-<code class="sig-name descname"><span class="pre">video_field_of_view</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.video_field_of_view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Video FOV. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.VideoFOV</span></code></p>
+<code class="sig-name descname"><span class="pre">video_field_of_view</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleSetting" title="open_gopro.api.builders.BleSetting"><span class="pre">open_gopro.api.builders.BleSetting</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.video_field_of_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Video FOV. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.VideoFOV</span></code></p>
 </dd></dl>
 
 </dd></dl>
@@ -2394,6 +2620,14 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.api.v1_0.ble_commands.</span></code><code class="sig-name descname"><span class="pre">BleStatusesV1_0</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">open_gopro.communication_client.GoProBle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.api.v1_0.params.ParamsV1_0" title="open_gopro.api.v1_0.params.ParamsV1_0"><span class="pre">open_gopro.api.v1_0.params.ParamsV1_0</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleStatusesV1_0" title="Permalink to this definition">¶</a></dt>
 <dd><p>All of the BLE Statuses.</p>
 <p>To be used by a GoProBle delegate to build status commands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>communicator</strong> (<em>GoProBle</em>) – Adapter to read / write settings</p></li>
+<li><p><strong>params</strong> – (Type[Params]): the set of parameters to use to build the statuses</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py class">
 <dt id="open_gopro.api.v1_0.ble_commands.BleStatusesV1_0.Iterator">
 <em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">statuses</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#open_gopro.api.v1_0.ble_commands.BleStatusesV1_0" title="open_gopro.api.v1_0.ble_commands.BleStatusesV1_0"><span class="pre">BleStatusesV1_0</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleStatusesV1_0.Iterator" title="Permalink to this definition">¶</a></dt>
@@ -2969,7 +3203,7 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <p>All of these return a GoProResp</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>communicator</strong> (<em>GoProWifi</em>) – [description]</p>
+<dd class="field-odd"><p><strong>communicator</strong> (<em>GoProWifi</em>) – Adapter to read / write commands</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -2997,6 +3231,14 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_camera_state">
 <code class="sig-name descname"><span class="pre">get_camera_state</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_camera_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get camera status and settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -3024,30 +3266,86 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_media_info">
 <code class="sig-name descname"><span class="pre">get_media_info</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_media_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get media info for a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>str</em>) – Media file to get info for</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status and media info as JSON</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_media_list">
 <code class="sig-name descname"><span class="pre">get_media_list</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_media_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a list of media on the camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and media list as JSON</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_open_gopro_api_version">
 <code class="sig-name descname"><span class="pre">get_open_gopro_api_version</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_open_gopro_api_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get Open GoPro version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and version separated into major and minor fields</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_preset_status">
 <code class="sig-name descname"><span class="pre">get_preset_status</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_preset_status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get current Preset status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and current preset status as JSON</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_screennail">
 <code class="sig-name descname"><span class="pre">get_screennail</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_screennail" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get screennail for a file.</p>
+<p>If local_file is none, the output location will be the same name as the camera_file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>camera_file</strong> (<em>str</em>) – filename on camera to operate on</p></li>
+<li><p><strong>local_file</strong> (<em>Optional</em><em>[</em><em>Path</em><em>]</em><em>, </em><em>optional</em>) – Location on computer to write output. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Path to local_file that output was written to</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_telemetry">
+<code class="sig-name descname"><span class="pre">get_telemetry</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_telemetry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the telemetry data for a camera file and store in a local file.</p>
 <p>If local_file is none, the output location will be the same name as the camera_file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -3088,14 +3386,33 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.set_digital_zoom">
-<code class="sig-name descname"><span class="pre">set_digital_zoom</span></code><em class="property"><span class="pre">:</span> <span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><span class="pre">open_gopro.responses.GoProResp</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.set_digital_zoom" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set digital zoom in percent (0 to 100).</p>
+<code class="sig-name descname"><span class="pre">set_digital_zoom</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.set_digital_zoom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set digital zoom in percent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>int</em>) – Desired zoom as a percentage</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.set_keep_alive">
 <code class="sig-name descname"><span class="pre">set_keep_alive</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.set_keep_alive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send the keep alive signal to maintain the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -3108,24 +3425,63 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.set_preset_group">
 <code class="sig-name descname"><span class="pre">set_preset_group</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.set_preset_group" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the active preset group.</p>
+<p>The most recently used Preset in this group will be set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Params.PresetGroup</em>) – desired Preset Group</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.set_turbo_mode">
 <code class="sig-name descname"><span class="pre">set_turbo_mode</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.set_turbo_mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable or disable Turbo transfer mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Params.Toggle</em>) – enable / disable turbo mode</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.start_preview_stream">
 <code class="sig-name descname"><span class="pre">start_preview_stream</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.start_preview_stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start the preview stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.stop_preview_stream">
 <code class="sig-name descname"><span class="pre">stop_preview_stream</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.stop_preview_stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop the preview stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -3139,7 +3495,11 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dd><p>The collection of all Settings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>communicator</strong> (<em>GoProWifi</em>) – Adapter to read / write settings</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>communicator</strong> (<em>GoProWifi</em>) – Adapter to read / write settings</p></li>
+<li><p><strong>params</strong> – (Type[Params]): the set of parameters to use to build the settings</p></li>
+<li><p><strong>endpoint</strong> (<em>str</em>) – the endpoint to write to to set a setting</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py class">
@@ -3152,7 +3512,7 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiSettingsV1_0.auto_off">
 <code class="sig-name descname"><span class="pre">auto_off</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiSettingsV1_0.auto_off" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the auto off time.</p>
+<dd><p>Set the auto off time. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.AutoOff</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -4111,94 +4471,276 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 </div>
 <div class="section" id="api-version-2-0">
 <h3>API Version 2.0<a class="headerlink" href="#api-version-2-0" title="Permalink to this headline">¶</a></h3>
+<p>This is the API that the user should actually use to interface with the camera.</p>
 <div class="section" id="ble-2-0-commands">
 <h4>BLE 2.0 Commands<a class="headerlink" href="#ble-2-0-commands" title="Permalink to this headline">¶</a></h4>
 <dl class="py class">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.api.v2_0.ble_commands.</span></code><code class="sig-name descname"><span class="pre">BleCommandsV2_0</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">open_gopro.communication_client.GoProBle</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0" title="Permalink to this definition">¶</a></dt>
-<dd><p>Version 2.0 commands are an exact copy of 1.0</p>
+<dd><p>Implement updates to BLE commands for version 2.0</p>
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.enable_wifi_ap">
 <code class="sig-name descname"><span class="pre">enable_wifi_ap</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.enable_wifi_ap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable / disable the Wi-Fi Access Point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>bool</em>) – True to enable, False to disable</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_camera_settings">
 <code class="sig-name descname"><span class="pre">get_camera_settings</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_camera_settings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all camera settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and current value of all settings</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_camera_statuses">
 <code class="sig-name descname"><span class="pre">get_camera_statuses</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_camera_statuses" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all camera statuses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and current value of all statuses</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_hardware_info">
 <code class="sig-name descname"><span class="pre">get_hardware_info</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_hardware_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get hardware information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and hardware info (model name, etc.)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_open_gopro_api_version">
 <code class="sig-name descname"><span class="pre">get_open_gopro_api_version</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_open_gopro_api_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get Open GoPro API version that is supported by the peer camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and version (separate into major and minor fields)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_wifi_password">
 <code class="sig-name descname"><span class="pre">get_wifi_password</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_wifi_password" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the Wifi password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and passworde</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_wifi_ssid">
 <code class="sig-name descname"><span class="pre">get_wifi_ssid</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_wifi_ssid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the Wifi SSID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and SSID</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.load_preset">
 <code class="sig-name descname"><span class="pre">load_preset</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.load_preset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load a Preset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Params.Preset</em>) – preset load.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.load_preset_group">
 <code class="sig-name descname"><span class="pre">load_preset_group</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.load_preset_group" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load a Preset Group.</p>
+<p>Once complete, the most recently used preset in this group will be active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Params.PresetGroup</em>) – preset group to load.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.power_down">
 <code class="sig-name descname"><span class="pre">power_down</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.power_down" title="Permalink to this definition">¶</a></dt>
 <dd><p>Power down the camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.register_for_all_settings">
+<code class="sig-name descname"><span class="pre">register_for_all_settings</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.register_for_all_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register push notifications for all settings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and current value of all settings</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.register_for_all_statuses">
+<code class="sig-name descname"><span class="pre">register_for_all_statuses</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.register_for_all_statuses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register push notifications for all statuses</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and current value of all statuses</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.set_shutter">
 <code class="sig-name descname"><span class="pre">set_shutter</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.set_shutter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set shutter on or off.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Params.Shutter</em>) – on or off</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.set_third_party_client_info">
 <code class="sig-name descname"><span class="pre">set_third_party_client_info</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.set_third_party_client_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flag as third party app.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.set_turbo_mode">
 <code class="sig-name descname"><span class="pre">set_turbo_mode</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.set_turbo_mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable / disable turbo mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>active</strong> (<em>bool</em>) – True to enable, False to disable.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TODO</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.sleep">
 <code class="sig-name descname"><span class="pre">sleep</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.sleep" title="Permalink to this definition">¶</a></dt>
 <dd><p>Put the camera in standby.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.unregister_for_all_settings">
+<code class="sig-name descname"><span class="pre">unregister_for_all_settings</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.unregister_for_all_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister push notifications for all settings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.unregister_for_all_statuses">
+<code class="sig-name descname"><span class="pre">unregister_for_all_statuses</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.unregister_for_all_statuses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister push notifications for all statuses</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -4218,57 +4760,9 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.auto_off">
-<code class="sig-name descname"><span class="pre">auto_off</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.auto_off" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the auto off time.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.fps">
-<code class="sig-name descname"><span class="pre">fps</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.fps" title="Permalink to this definition">¶</a></dt>
-<dd><p>Frames per second. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.FPS</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.led">
-<code class="sig-name descname"><span class="pre">led</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.led" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the LED options (or also send the BLE keep alive signal). Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.LED</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.max_lens_mode">
-<code class="sig-name descname"><span class="pre">max_lens_mode</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.max_lens_mode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable / disable max lens mod. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.MaxLensMode</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.multi_shot_field_of_view">
-<code class="sig-name descname"><span class="pre">multi_shot_field_of_view</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.multi_shot_field_of_view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Multi-shot FOV. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.Multishot</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.photo_field_of_view">
-<code class="sig-name descname"><span class="pre">photo_field_of_view</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.photo_field_of_view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Photo FOV. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.PhotoFOV</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.resolution">
-<code class="sig-name descname"><span class="pre">resolution</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.resolution" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resolution. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.Resolution</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.video_field_of_view">
-<code class="sig-name descname"><span class="pre">video_field_of_view</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.video_field_of_view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Video FOV. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.VideoFOV</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.video_performance_mode">
 <code class="sig-name descname"><span class="pre">video_performance_mode</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.video_performance_mode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Video Performance Mode. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.params.VideoPerformanceMode</span></code></p>
+<dd><p>Video Performance Mode. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.VideoPerformanceMode</span></code></p>
 </dd></dl>
 
 </dd></dl>
@@ -4352,6 +4846,14 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_camera_state">
 <code class="sig-name descname"><span class="pre">get_camera_state</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_camera_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get camera status and settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -4379,30 +4881,86 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_media_info">
 <code class="sig-name descname"><span class="pre">get_media_info</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_media_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get media info for a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>str</em>) – Media file to get info for</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status and media info as JSON</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_media_list">
 <code class="sig-name descname"><span class="pre">get_media_list</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_media_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a list of media on the camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and media list as JSON</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_open_gopro_api_version">
 <code class="sig-name descname"><span class="pre">get_open_gopro_api_version</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_open_gopro_api_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get Open GoPro version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and version separated into major and minor fields</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_preset_status">
 <code class="sig-name descname"><span class="pre">get_preset_status</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_preset_status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get current Preset status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status and current preset status as JSON</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_screennail">
 <code class="sig-name descname"><span class="pre">get_screennail</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_screennail" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get screennail for a file.</p>
+<p>If local_file is none, the output location will be the same name as the camera_file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>camera_file</strong> (<em>str</em>) – filename on camera to operate on</p></li>
+<li><p><strong>local_file</strong> (<em>Optional</em><em>[</em><em>Path</em><em>]</em><em>, </em><em>optional</em>) – Location on computer to write output. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Path to local_file that output was written to</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_telemetry">
+<code class="sig-name descname"><span class="pre">get_telemetry</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_telemetry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the telemetry data for a camera file and store in a local file.</p>
 <p>If local_file is none, the output location will be the same name as the camera_file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -4442,9 +5000,51 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 </dd></dl>
 
 <dl class="py attribute">
+<dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_camera_control">
+<code class="sig-name descname"><span class="pre">set_camera_control</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_camera_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure global behaviors by setting camera control (to i.e. Idle, External)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Params.CameraControl</em>) – desired camera control value</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_digital_zoom">
+<code class="sig-name descname"><span class="pre">set_digital_zoom</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_digital_zoom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set digital zoom in percent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>int</em>) – Desired zoom as a percentage</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_keep_alive">
 <code class="sig-name descname"><span class="pre">set_keep_alive</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_keep_alive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send the keep alive signal to maintain the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -4457,42 +5057,107 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_preset_group">
 <code class="sig-name descname"><span class="pre">set_preset_group</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_preset_group" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the active preset group.</p>
+<p>The most recently used Preset in this group will be set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Params.PresetGroup</em>) – desired Preset Group</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_shutter_off">
 <code class="sig-name descname"><span class="pre">set_shutter_off</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_shutter_off" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the shutter off (i.e. stop encoding).</p>
+<p>Will return error tf this command is sent when the camera is not encoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_shutter_on">
 <code class="sig-name descname"><span class="pre">set_shutter_on</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_shutter_on" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the shutter on (i.e. start encoding).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_third_party_client_info">
 <code class="sig-name descname"><span class="pre">set_third_party_client_info</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_third_party_client_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flag as third party app.</p>
+<p>Will return error if the camera is already encoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_turbo_mode">
 <code class="sig-name descname"><span class="pre">set_turbo_mode</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_turbo_mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable or disable Turbo transfer mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Params.Toggle</em>) – enable / disable turbo mode</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.start_preview_stream">
 <code class="sig-name descname"><span class="pre">start_preview_stream</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.start_preview_stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start the preview stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.stop_preview_stream">
 <code class="sig-name descname"><span class="pre">stop_preview_stream</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.stop_preview_stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop the preview stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -4502,7 +5167,7 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <h4>WiFi 2.0 Settings<a class="headerlink" href="#wifi-2-0-settings" title="Permalink to this headline">¶</a></h4>
 <dl class="py class">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.api.v2_0.wifi_commands.</span></code><code class="sig-name descname"><span class="pre">WifiSettingsV2_0</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">GoProWifi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">Params</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.api.v2_0.wifi_commands.</span></code><code class="sig-name descname"><span class="pre">WifiSettingsV2_0</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">open_gopro.communication_client.GoProWifi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.api.v2_0.params.ParamsV2_0" title="open_gopro.api.v2_0.params.ParamsV2_0"><span class="pre">open_gopro.api.v2_0.params.ParamsV2_0</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates to WiFi settings for Open GoPro version 2.0</p>
 <dl class="py class">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0.Iterator">
@@ -4514,7 +5179,7 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0.auto_off">
 <code class="sig-name descname"><span class="pre">auto_off</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0.auto_off" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the auto off time.</p>
+<dd><p>Set the auto off time. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.AutoOff</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -4551,6 +5216,12 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0.video_field_of_view">
 <code class="sig-name descname"><span class="pre">video_field_of_view</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0.video_field_of_view" title="Permalink to this definition">¶</a></dt>
 <dd><p>Video FOV. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.Params.FieldOfView</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0.video_performance_mode">
+<code class="sig-name descname"><span class="pre">video_performance_mode</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0.video_performance_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Video Performance Mode (extended battery, tripod, etc).</p>
 </dd></dl>
 
 </dd></dl>
@@ -4634,22 +5305,22 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 </dd></dl>
 
 <dl class="py class">
-<dt id="open_gopro.api.v2_0.params.ParamsV2_0.CameraControlStatus">
-<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">CameraControlStatus</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.CameraControlStatus" title="Permalink to this definition">¶</a></dt>
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.CameraControl">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">CameraControl</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.CameraControl" title="Permalink to this definition">¶</a></dt>
 <dd><p>An enumeration.</p>
 <dl class="py attribute">
-<dt id="open_gopro.api.v2_0.params.ParamsV2_0.CameraControlStatus.CAMERA">
-<code class="sig-name descname"><span class="pre">CAMERA</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.CameraControlStatus.CAMERA" title="Permalink to this definition">¶</a></dt>
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.CameraControl.CAMERA">
+<code class="sig-name descname"><span class="pre">CAMERA</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.CameraControl.CAMERA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="open_gopro.api.v2_0.params.ParamsV2_0.CameraControlStatus.EXTERNAL">
-<code class="sig-name descname"><span class="pre">EXTERNAL</span></code><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.CameraControlStatus.EXTERNAL" title="Permalink to this definition">¶</a></dt>
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.CameraControl.EXTERNAL">
+<code class="sig-name descname"><span class="pre">EXTERNAL</span></code><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.CameraControl.EXTERNAL" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="open_gopro.api.v2_0.params.ParamsV2_0.CameraControlStatus.IDLE">
-<code class="sig-name descname"><span class="pre">IDLE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.CameraControlStatus.IDLE" title="Permalink to this definition">¶</a></dt>
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.CameraControl.IDLE">
+<code class="sig-name descname"><span class="pre">IDLE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.CameraControl.IDLE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -5155,6 +5826,21 @@ api(<code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.LIVE_BURST">
 <code class="sig-name descname"><span class="pre">LIVE_BURST</span></code><em class="property"> <span class="pre">=</span> <span class="pre">65537</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.LIVE_BURST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.MAX_PHOTO">
+<code class="sig-name descname"><span class="pre">MAX_PHOTO</span></code><em class="property"> <span class="pre">=</span> <span class="pre">262144</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.MAX_PHOTO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.MAX_TIMEWARP">
+<code class="sig-name descname"><span class="pre">MAX_TIMEWARP</span></code><em class="property"> <span class="pre">=</span> <span class="pre">327680</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.MAX_TIMEWARP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.Preset.MAX_VIDEO">
+<code class="sig-name descname"><span class="pre">MAX_VIDEO</span></code><em class="property"> <span class="pre">=</span> <span class="pre">196608</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Preset.MAX_VIDEO" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
