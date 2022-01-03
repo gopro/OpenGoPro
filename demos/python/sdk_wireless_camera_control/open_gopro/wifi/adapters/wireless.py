@@ -67,7 +67,7 @@ class Wireless(WifiController):
     _driver: WifiController
 
     # init
-    def __init__(self, interface: str = None):
+    def __init__(self, interface: Optional[str] = None):
         # detect and init appropriate driver
         self._driver_name = self._detect_driver()
         if self._driver_name == "nmcli":
@@ -246,7 +246,7 @@ class NmcliWireless(WifiController):
 
     _interface = None
 
-    def __init__(self, interface: str = None) -> None:
+    def __init__(self, interface: Optional[str] = None) -> None:
         ensure_sudo()
         self.interface(interface)
 
@@ -406,7 +406,7 @@ class Nmcli0990Wireless(WifiController):
 
     _interface = None
 
-    def __init__(self, interface: str = None) -> None:
+    def __init__(self, interface: Optional[str] = None) -> None:
         ensure_sudo()
         self.interface(interface)
 
@@ -566,7 +566,7 @@ class WpasupplicantWireless(WifiController):
     _file = "/tmp/wpa_supplicant.conf"
     _interface = None
 
-    def __init__(self, interface: str = None) -> None:
+    def __init__(self, interface: Optional[str] = None) -> None:
         self.interface(interface)
 
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
@@ -698,7 +698,7 @@ class NetworksetupWireless(WifiController):
 
     _interface = None
 
-    def __init__(self, interface: str = None) -> None:
+    def __init__(self, interface: Optional[str] = None) -> None:
         self.interface(interface)
 
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
@@ -860,7 +860,7 @@ class NetshWireless(WifiController):
     </MacRandomization>
 </WLANProfile>"""
 
-    def __init__(self, interface: str = None) -> None:
+    def __init__(self, interface: Optional[str] = None) -> None:
         self._interface: Optional[str] = None
         self.interface(interface)
         self.ssid: Optional[str] = None
@@ -1005,7 +1005,7 @@ class NetshWireless(WifiController):
 
         return interfaces
 
-    def interface(self, interface: str = None) -> Optional[str]:
+    def interface(self, interface: Optional[str] = None) -> Optional[str]:
         """Get or set the current interface.
 
         Args:

@@ -23,6 +23,10 @@ class WifiController(ABC):
     """Interface definition for a Wifi driver to be used by GoPro."""
 
     @abstractmethod
+    def __init__(self, interface: Optional[str]) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
         """Connect to a network.
 

@@ -254,6 +254,9 @@ async def ble_communicator(request):
 class WifiControllerTest(WifiController):
     # pylint: disable=signature-differs
 
+    def __init__(self, interface: Optional[str] = None) -> None:
+        self._interface = interface
+
     def connect(self, ssid: str, password: str, timeout: float) -> bool:
         return True if password == "password" else False
 
