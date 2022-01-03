@@ -1,4 +1,4 @@
 -e .
-../sdk_wireless_camera_control/
+open-gopro==0.7.1
 bleak==0.12.1
 requests==2.25.1

@@ -66,7 +66,7 @@ This is a very simple handler: response parsing will be expanded upon in the [ne
 
 ```python
 def notification_handler(handle: int, data: bytes) -> None:
-    logger.info(f'Received response at {handle=}: {hexlify(data, ":")}')
+    logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
 
     # If this is the correct handle and the status is success, the command was a success
     if client.services.characteristics[handle].uuid == response_uuid and data[2] == 0x00:
