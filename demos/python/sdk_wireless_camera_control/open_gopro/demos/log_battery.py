@@ -69,7 +69,6 @@ def process_battery_notifications(gopro: GoPro, initial_bars: BarsType, initial_
         initial_bars (BarsType): Initial bars level when notifications were enabled
         initial_percentage (int): Initial percentage when notifications were enabled
     """
-
     last_percentage = initial_percentage
     last_bars = initial_bars
 
