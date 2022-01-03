@@ -69,8 +69,7 @@ def process_battery_notifications(gopro: GoPro, initial_bars: BarsType, initial_
         initial_bars (BarsType): Initial bars level when notifications were enabled
         initial_percentage (int): Initial percentage when notifications were enabled
     """
-    global SAMPLE_INDEX
-    global SAMPLES
+
     last_percentage = initial_percentage
     last_bars = initial_bars
 
@@ -87,6 +86,7 @@ def process_battery_notifications(gopro: GoPro, initial_bars: BarsType, initial_
             notification.data[StatusId.BATT_LEVEL] if StatusId.BATT_LEVEL in notification.data else last_bars
         )
         # Append and print sample
+        global SAMPLE_INDEX
         SAMPLES.append(Sample(index=SAMPLE_INDEX, percentage=last_percentage, bars=last_bars))
         console.print(str(SAMPLES[-1]))
         SAMPLE_INDEX += 1
@@ -103,7 +103,6 @@ def main() -> int:
     logger = setup_logging(logger, log_location)
 
     global SAMPLE_INDEX
-    global SAMPLES
 
     gopro: Optional[GoPro] = None
     return_code = 0

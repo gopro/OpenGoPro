@@ -3,6 +3,7 @@
 
 """Any responses that are returned from GoPro commands."""
 
+from __future__ import annotations
 import enum
 import json
 import logging

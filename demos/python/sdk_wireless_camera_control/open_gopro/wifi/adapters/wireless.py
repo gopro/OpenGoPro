@@ -3,15 +3,17 @@
 
 """Manage a WiFI connection using native OS commands."""
 
-# TODO This file needs to be cleaned up...or really entirely rewritten.
-
+from __future__ import annotations
 import os
 import re
 import time
 import logging
 import tempfile
 from enum import Enum, auto
-from typing import List, Optional, Tuple, Any
+from distutils.version import LooseVersion
+from typing import List, Optional, Tuple, Any, Callable
+
+import wrapt
 
 from open_gopro.util import cmd
 from open_gopro.wifi import SsidState, WifiController
@@ -19,236 +21,199 @@ from open_gopro.wifi import SsidState, WifiController
 logger = logging.getLogger(__name__)
 
 
-def cmp(a: Any, b: Any) -> int:
-    """Define this since it is not implemented in Python 3.
-
-    Args:
-        a (Any): compare to
-        b (Any): compare against
-
-    Returns:
-        int: compare result
-    """
-    if a < b:
-        return -1
-
-    if a == b:
-        return 0
-
-    return 1
-
-
-def ensure_sudo() -> None:
+@wrapt.decorator
+def ensure_sudo(wrapped: Callable, _: Any, args: Any, kwargs: Any) -> Wireless:
     """Verify that we are running as root
 
     Raises:
         Exception: Program is running as a user other than root
+
+    Args:
+        wrapped (Callable): Class to verify
+        _ (Any): not used
+        args (Any): class constructor positional arguments
+        kwargs (Any): class constructor keyword arguments
+
+    Returns:
+        Wireless: class initialized via pass through after ensuring sudo
     """
     user = cmd("whoami")
     if "root" not in user:
         logger.error(f"You need to be the root user to run this program but you are running as {user}")
         raise Exception("Program needs to be run as root user.")
 
+    return wrapped(*args, **kwargs)
+
+
+@wrapt.decorator
+def pass_through_to_driver(wrapped: Callable, instance: Wireless, args: Any, kwargs: Any) -> Any:
+    """Call this same method on the _driver attribute
+
+    Args:
+        wrapped (Callable): method to call
+        instance (Wireless): instance to use to find driver
+        args (Any): positional arguments
+        kwargs (Any): keyword arguments
+
+    Returns:
+        Any: result after pass through to driver
+    """
+    driver_method = getattr(instance._driver, wrapped.__name__)
+    return driver_method(*args, **kwargs)
+
 
 class Wireless(WifiController):
     """Top level abstraction of different Wifi drivers.
 
-    If interface is not specified (i.e. it is None), we will attempt ot automatically Receive response -->
+    If interface is not specified (i.e. it is None), we will attempt to automatically
     disover a suitable interface
 
     Args:
         interface (str, optional): Interface. Defaults to None.
 
     Raises:
-        Exception: Failed to find a suitable driver or auto-detect the network interface.
+        Exception: We weren't able to find a suitable driver
+        Exception: We weren't able to auto-detect an interface after detecting driver
     """
 
-    _driver_name = "NOT INITIALIZED"
-    _driver: WifiController
+    def __init__(self, interface: Optional[str] = None) -> None:
+        WifiController.__init__(self, interface)
 
-    # init
-    def __init__(self, interface: Optional[str] = None):
         # detect and init appropriate driver
-        self._driver_name = self._detect_driver()
-        if self._driver_name == "nmcli":
-            self._driver = NmcliWireless(interface=interface)
-        elif self._driver_name == "nmcli0990":
-            self._driver = Nmcli0990Wireless(interface=interface)
-        elif self._driver_name == "wpa_supplicant":
-            self._driver = WpasupplicantWireless(interface=interface)
-        elif self._driver_name == "networksetup":
-            self._driver = NetworksetupWireless(interface=interface)
-        elif self._driver_name == "netsh":
-            self._driver = NetshWireless(interface=interface)
+        self._driver = self._detect_driver()
 
-        # attempt to auto detect the interface if none was provided
-        if self.interface() is None:
-            interfaces = self.interfaces()
-            if len(interfaces) > 0:
-                self.interface(interfaces[0])
+        # Attempt to set interface (will raise an exception if not able to auto-detect)
+        self.interface = interface  # type: ignore
 
-        # raise an error if there is still no interface defined
-        if self.interface() is None:
-            raise Exception("Unable to auto-detect the network interface.")
+        logger.debug(f"Using Wifi driver: {type(self)} with interface {self.interface}")
 
-        logger.debug(f"Using Wifi driver: {self._driver_name} with interface {self.interface()}")
-
-    def _detect_driver(self) -> str:
-        """Try to find a Wifi driver that can be used.
+    @staticmethod
+    def _detect_driver() -> WifiController:
+        """Try to find and instantiate a Wifi driver that can be used.
 
         Raises:
             Exception: We weren't able to find a suitable driver
+            Exception: We weren't able to auto-detect an interface after detecting driver
 
         Returns:
-            str: Name of discovered driver
+            WifiController: [description]
         """
         if os.name == "nt":
             # try netsh (Windows).
             response = cmd("where netsh")
             if len(response) > 0 and "not found" not in response and "not recognized" not in response:
-                return "netsh"
+                return NetshWireless()
             response = cmd("powershell get-command netsh")
             if len(response) > 0 and "not found" not in response and "not recognized" not in response:
-                return "netsh"
+                return NetshWireless()
         else:
             # try nmcli (Ubuntu 14.04)
             response = cmd("which nmcli")
             if len(response) > 0 and "not found" not in response:
-                response = cmd("nmcli --version")
-                parts = response.split()
-                ver = parts[-1]
-                compare = self.vercmp(ver, "0.9.9.0")
-                if compare >= 0:
-                    return "nmcli0990"
-
-                return "nmcli"
+                version = cmd("nmcli --version").split()[-1]
+                return (
+                    Nmcli0990Wireless()
+                    if LooseVersion(version) >= LooseVersion("0.9.9.0")
+                    else NmcliWireless()
+                )
 
             # try nmcli (Ubuntu w/o network-manager)
             response = cmd("which wpa_supplicant")
             if len(response) > 0 and "not found" not in response:
-                return "wpa_supplicant"
+                return WpasupplicantWireless()
 
         # try networksetup (Mac OS 10.10)
         response = cmd("which networksetup")
         if len(response) > 0 and "not found" not in response:
-            return "networksetup"
+            return NetworksetupWireless()
 
         raise Exception("Unable to find compatible wireless driver.")
 
-    @staticmethod
-    def vercmp(actual: Any, test: Any) -> int:
-        """Compare two versions.
-
-        Args:
-            actual (str): Version being compared
-            test (str): Thing that version is being compared to
-
-        Returns:
-            -1: a is less than b
-            0: a is equal to b
-            1: a is greater than b
-        """
-
-        def normalize(v: str) -> List[int]:
-            """Normalize a string vresion
-
-            Args:
-                v (str): input string
-
-            Returns:
-                List[int]: output int list
-            """
-            return [int(x) for x in re.sub(r"(\.0+)*$", "", v).split(".")]
-
-        return cmp(normalize(actual), normalize(test))
-
+    @pass_through_to_driver
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
-        """Wrapper to call the OS-specific driver method.
+        """Connect to a network.
 
         Args:
-            ssid (str): network SSID
-            password (str): network password
+            ssid (str): SSID of network to connect to
+            password (str): password of network to connect to
             timeout (float, optional): Time before considering connection failed (in seconds). Defaults to 15.
 
         Returns:
-            bool: True if the connect was successful, False otherwise
+            bool: True if successful, False otherwise
         """
-        return self._driver.connect(ssid, password, timeout)
 
+    @pass_through_to_driver
     def disconnect(self) -> bool:
-        """Wrapper to call the OS-specific driver method.
+        """Disconnect from a network.
 
         Returns:
-            bool: True if the disconnect was successful, False otherwise
+            bool: True if successful, False otherwise
         """
-        return self._driver.disconnect()
 
+    @pass_through_to_driver
     def current(self) -> Tuple[Optional[str], SsidState]:
-        """Wrapper to call the OS-specific driver method.
+        """Return the SSID and state of the current network.
 
         Returns:
-            Tuple[Optional[str], SsidState]: (ssid, network state)
+            Tuple[Optional[str], SsidState]: Tuple of SSID str and state. If SSID is None,
+            there is no current connection.
         """
-        return self._driver.current()
 
-    def interfaces(self) -> List[str]:
-        """Wrapper to call the OS-specific driver method.
+    @pass_through_to_driver
+    def available_interfaces(self) -> List[str]:
+        """[summary]
 
         Returns:
-            List[str]: list of discovered interfaces
+            List[str]: [description]
         """
-        return self._driver.interfaces()
 
-    def interface(self, interface: Optional[str] = None) -> Optional[str]:
-        """Wrapper to call the OS-specific driver method.
-
-        Use a str as interface to set it, otherwise use None to get it.
+    @pass_through_to_driver
+    def power(self, power: bool) -> bool:
+        """Enable / disable the wireless driver.
 
         Args:
-            interface (Optional[str], optional): get or set interface. Defaults to None.
+            power (bool, optional): Enable if True. Disable if False.
+        """
+
+    @property
+    def interface(self) -> str:
+        """Get the Wifi Interface
 
         Returns:
-            Optional[str]: Str if getting
+            str: interface
         """
-        return self._driver.interface(interface)
+        return self._driver.interface
+
+    @interface.setter
+    def interface(self, interface: Optional[str]) -> None:
+        """Set the Wifi interface.
+
+        If None is passed, interface will attempt to be auto-detected
+
+        Args:
+            interface (Optional[str]): interface (or None)
+
+        Raises:
+            Exception: Not able to automatically detect any interfaces
+        """
+        self._driver.interface = interface  # type: ignore
 
     @property
     def is_on(self) -> bool:
-        """Wrapper to call the OS-specific driver method.
+        """Is the wireless driver currently enabled.
 
         Returns:
-            bool: True if on, False if off
+            bool: True if yes. False if no.
         """
         return self._driver.is_on
 
-    def power(self, power: bool) -> bool:
-        """Wrapper to call the OS-specific driver method.
 
-        Args:
-            power (bool): [description]
-
-        Returns:
-            [type]: [description]
-        """
-        return self._driver.power(power)
-
-    def driver(self) -> str:
-        """Get the name of the driver currently being used.
-
-        Returns:
-            str: Driver name.
-        """
-        return self._driver_name
-
-
+@ensure_sudo
 class NmcliWireless(WifiController):
     """Linux nmcli Driver < 0.9.9.0."""
 
-    _interface = None
-
     def __init__(self, interface: Optional[str] = None) -> None:
-        ensure_sudo()
-        self.interface(interface)
+        WifiController.__init__(self, interface)
 
     @staticmethod
     def _clean(partial: str) -> None:
@@ -310,9 +275,7 @@ class NmcliWireless(WifiController):
             self._clean(current)
 
         # attempt to connect
-        response = cmd(
-            "nmcli dev wifi connect {} password {} iface {}".format(ssid, password, self._interface)
-        )
+        response = cmd(f"nmcli dev wifi connect {ssid} password {password} iface {self.interface}")
 
         # parse response
         return not self._error_in_response(response)
@@ -332,7 +295,7 @@ class NmcliWireless(WifiController):
             Tuple[Optional[str], SsidState]: [description]
         """
         # list active connections for all interfaces
-        response = cmd("nmcli con status | grep {}".format(self.interface()))
+        response = cmd(f"nmcli con status | grep {self.interface}")
 
         # the current network is in the first column
         for line in response.splitlines():
@@ -342,11 +305,11 @@ class NmcliWireless(WifiController):
         # return none if there was not an active connection
         return (None, SsidState.DISCONNECTED)
 
-    def interfaces(self) -> List[str]:
-        """[summary].
+    def available_interfaces(self) -> List[str]:
+        """Return a list of available Wifi Interface strings
 
         Returns:
-            List[str]: [description]
+            List[str]: list of interfaces
         """
         # grab list of interfaces
         response = cmd("nmcli dev")
@@ -360,20 +323,6 @@ class NmcliWireless(WifiController):
 
         # return list
         return interfaces
-
-    def interface(self, interface: Optional[str] = None) -> Optional[str]:
-        """[summary].
-
-        Args:
-            interface (Optional[str], optional): [description]. Defaults to None.
-
-        Returns:
-            Optional[str]: [description]
-        """
-        if interface is not None:
-            self._interface = interface
-            return None
-        return self._interface
 
     @property
     def is_on(self) -> bool:
@@ -401,14 +350,12 @@ class NmcliWireless(WifiController):
         return True
 
 
+@ensure_sudo
 class Nmcli0990Wireless(WifiController):
     """Linux nmcli Driver >= 0.9.9.0."""
 
-    _interface = None
-
     def __init__(self, interface: Optional[str] = None) -> None:
-        ensure_sudo()
-        self.interface(interface)
+        WifiController.__init__(self, interface)
 
     # TODO Is this needed?
     @staticmethod
@@ -422,13 +369,13 @@ class Nmcli0990Wireless(WifiController):
             partial (str): part of the connection name
         """
         # list matching connections
-        response = cmd("nmcli --fields UUID,NAME con show | grep {}".format(partial))
+        response = cmd(f"nmcli --fields UUID,NAME con show | grep {partial}")
 
         # delete all of the matching connections
         for line in response.splitlines():
             if len(line) > 0:
                 uuid = line.split()[0]
-                cmd("nmcli con delete uuid {}".format(uuid))
+                cmd(f"nmcli con delete uuid {uuid}")
 
     @staticmethod
     def _error_in_response(response: str) -> bool:
@@ -469,7 +416,7 @@ class Nmcli0990Wireless(WifiController):
         # Scan for networks. Don't bother checking: we'll allow the error to be passed from the connect.
         cmd("nmcli dev wifi list --rescan yes")
         # attempt to connect
-        response = cmd(f"nmcli dev wifi connect {ssid} password {password} ifname {self._interface}")
+        response = cmd(f"nmcli dev wifi connect {ssid} password {password} ifname {self.interface}")
 
         # TODO verify that we're connected (and use timeout)
 
@@ -491,7 +438,7 @@ class Nmcli0990Wireless(WifiController):
             Tuple[Optional[str], SsidState]: [description]
         """
         # list active connections for all interfaces
-        response = cmd("nmcli con | grep {}".format(self.interface()))
+        response = cmd(f"nmcli con | grep {self.interface}")
 
         # the current network is in the first column
         for line in response.splitlines():
@@ -501,11 +448,11 @@ class Nmcli0990Wireless(WifiController):
         # return none if there was not an active connection
         return (None, SsidState.DISCONNECTED)
 
-    def interfaces(self) -> List[str]:
-        """[summary].
+    def available_interfaces(self) -> List[str]:
+        """Return a list of available Wifi Interface strings
 
         Returns:
-            List[str]: [description]
+            List[str]: list of interfaces
         """
         # grab list of interfaces
         response = cmd("nmcli dev")
@@ -519,20 +466,6 @@ class Nmcli0990Wireless(WifiController):
 
         # return list
         return interfaces
-
-    def interface(self, interface: Optional[str] = None) -> Optional[str]:
-        """[summary].
-
-        Args:
-            interface (Optional[str], optional): [description]. Defaults to None.
-
-        Returns:
-            Optional[str]: [description]
-        """
-        if interface is not None:
-            self._interface = interface
-            return None
-        return self._interface
 
     @property
     def is_on(self) -> bool:
@@ -564,10 +497,9 @@ class WpasupplicantWireless(WifiController):
     """Linux wpa_supplicant Driver."""
 
     _file = "/tmp/wpa_supplicant.conf"
-    _interface = None
 
     def __init__(self, interface: Optional[str] = None) -> None:
-        self.interface(interface)
+        WifiController.__init__(self, interface)
 
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
         """[summary].
@@ -585,15 +517,15 @@ class WpasupplicantWireless(WifiController):
         cmd("sudo killall wpa_supplicant")
 
         # don't do DHCP for GoPros; can cause dropouts with the server
-        cmd("sudo ifconfig {} 10.5.5.10/24 up".format(self._interface))
+        cmd(f"sudo ifconfig {self.interface} 10.5.5.10/24 up")
 
         # create configuration file
-        f = open(self._file, "w")
-        f.write('network={{\n    ssid="{}"\n    psk="{}"\n}}\n'.format(ssid, password))
-        f.close()
+        with open(self._file, "w") as fp:
+            fp.write(f'network={{\n    ssid="{ssid}"\n    psk="{password}"\n}}\n')
+            fp.close()
 
         # attempt to connect
-        cmd("sudo wpa_supplicant -i{} -c{} -B".format(self._interface, self._file))
+        cmd(f"sudo wpa_supplicant -i{self.interface} -c{self._file} -B")
 
         # check that the connection was successful
         # i've never seen it take more than 3 seconds for the link to establish
@@ -604,7 +536,7 @@ class WpasupplicantWireless(WifiController):
 
         # attempt to grab an IP
         # better hope we are connected because the timeout here is really long
-        # cmd('sudo dhclient {}'.format(self._interface))
+        # cmd(f"sudo dhclient {self.interface}"")
 
         # parse response
         return True
@@ -624,7 +556,7 @@ class WpasupplicantWireless(WifiController):
             Tuple[Optional[str], SsidState]: [description]
         """
         # get interface status
-        response = cmd("iwconfig {}".format(self.interface()))
+        response = cmd(f"iwconfig {self.interface}")
 
         # the current network is on the first line like ESSID:"network"
         line = response.splitlines()[0]
@@ -638,11 +570,11 @@ class WpasupplicantWireless(WifiController):
         # return none if there was not an active connection
         return (None, SsidState.DISCONNECTED)
 
-    def interfaces(self) -> List[str]:
-        """[summary].
+    def available_interfaces(self) -> List[str]:
+        """Return a list of available Wifi Interface strings
 
         Returns:
-            List[str]: [description]
+            List[str]: list of interfaces
         """
         # grab list of interfaces
         response = cmd("iwconfig")
@@ -656,20 +588,6 @@ class WpasupplicantWireless(WifiController):
                     # this is a wireless interface
                     interfaces.append(line.split()[0])
         return interfaces
-
-    def interface(self, interface: Optional[str] = None) -> Optional[str]:
-        """[summary].
-
-        Args:
-            interface (Optional[str], optional): [description]. Defaults to None.
-
-        Returns:
-            Optional[str]: [description]
-        """
-        if interface is not None:
-            self._interface = interface
-            return None
-        return self._interface
 
     @property
     def is_on(self) -> bool:
@@ -696,10 +614,8 @@ class WpasupplicantWireless(WifiController):
 class NetworksetupWireless(WifiController):
     """OS X networksetup Driver."""
 
-    _interface = None
-
     def __init__(self, interface: Optional[str] = None) -> None:
-        self.interface(interface)
+        WifiController.__init__(self, interface)
 
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
         """[summary].
@@ -717,9 +633,7 @@ class NetworksetupWireless(WifiController):
         """
         # Escape single quotes
         ssid = ssid.replace(r"'", '''"'"''')
-        response = cmd(
-            "networksetup -setairportnetwork '{}' '{}' '{}'".format(self._interface, ssid, password)
-        )
+        response = cmd(f"networksetup -setairportnetwork '{self.interface}' '{ssid}' '{password}'")
 
         if "not find" in response.lower():
             return False
@@ -754,7 +668,7 @@ class NetworksetupWireless(WifiController):
             Tuple[Optional[str], SsidState]: [description]
         """
         # attempt to get current network
-        response = cmd("networksetup -getairportnetwork {}".format(self._interface))
+        response = cmd(f"networksetup -getairportnetwork {self.interface}")
 
         # parse response
         phrase = "Current Wi-Fi Network: "
@@ -762,11 +676,11 @@ class NetworksetupWireless(WifiController):
             return (response.replace("Current Wi-Fi Network: ", "").strip(), SsidState.CONNECTED)
         return (None, SsidState.DISCONNECTED)
 
-    def interfaces(self) -> List[str]:
-        """[summary].
+    def available_interfaces(self) -> List[str]:
+        """Return a list of available Wifi Interface strings
 
         Returns:
-            List[str]: [description]
+            List[str]: list of interfaces
         """
         # grab list of interfaces
         response = cmd("networksetup -listallhardwareports")
@@ -787,20 +701,6 @@ class NetworksetupWireless(WifiController):
         # return list
         return interfaces
 
-    def interface(self, interface: Optional[str] = None) -> Optional[str]:
-        """[summary].
-
-        Args:
-            interface (Optional[str], optional): [description]. Defaults to None.
-
-        Returns:
-            Optional[str]: [description]
-        """
-        if interface is not None:
-            self._interface = interface
-            return None
-        return self._interface
-
     @property
     def is_on(self) -> bool:
         """[summary].
@@ -808,7 +708,7 @@ class NetworksetupWireless(WifiController):
         Returns:
             bool: [description]
         """
-        return "On" in cmd("networksetup -getairportpower {}".format(self._interface))
+        return "On" in cmd(f"networksetup -getairportpower {self.interface}")
 
     def power(self, power: bool) -> bool:
         """Enable or disbale the Wifi controller
@@ -819,10 +719,7 @@ class NetworksetupWireless(WifiController):
         Returns:
             bool: True if success, False otherwise
         """
-        if power:
-            cmd("networksetup -setairportpower {} on".format(self._interface))
-        else:
-            cmd("networksetup -setairportpower {} off".format(self._interface))
+        cmd(f"networksetup -setairportpower {self.interface} {'on' if power else 'off'}")
 
         return True
 
@@ -861,8 +758,7 @@ class NetshWireless(WifiController):
 </WLANProfile>"""
 
     def __init__(self, interface: Optional[str] = None) -> None:
-        self._interface: Optional[str] = None
-        self.interface(interface)
+        WifiController.__init__(self, interface)
         self.ssid: Optional[str] = None
 
     def __del__(self) -> None:
@@ -904,7 +800,7 @@ class NetshWireless(WifiController):
 
         # Try to connect
         ssid_quotes = f'"{ssid}"'
-        response = cmd(f"netsh wlan connect ssid={ssid_quotes} name={ssid_quotes} interface={self._interface}")
+        response = cmd(f"netsh wlan connect ssid={ssid_quotes} name={ssid_quotes} interface={self.interface}")
         if "was completed successfully" not in response:
             raise Exception(response)
         # Wait for connection to establish
@@ -926,7 +822,7 @@ class NetshWireless(WifiController):
         Returns:
             bool: True if the disconnect was successful, False otherwise.
         """
-        response = cmd(f"netsh wlan disconnect interface={self.interface()}")
+        response = cmd(f"netsh wlan disconnect interface={self.interface}")
 
         return bool("completed successfully" in response.lower())
 
@@ -955,18 +851,13 @@ class NetshWireless(WifiController):
             PARSE_SSID = auto()
             PARSE_STATE = auto()
 
-        if self._interface is None:
-            self._interface = self.interfaces()[0]
-        if self._interface is None:
-            raise Exception("Can't auto-assign interface. None found.")
-
         response = cmd("netsh wlan show interfaces")
         parse_state = ParseState.PARSE_INTERFACE
         ssid: Optional[str] = None
         network_state: Optional[str] = None
         for field in response.split("\r\n"):
             if parse_state is ParseState.PARSE_INTERFACE:
-                if "Name" in field and self._interface in field:
+                if "Name" in field and self.interface in field:
                     parse_state = ParseState.PARSE_STATE
             elif parse_state is ParseState.PARSE_STATE:
                 if "State" in field:
@@ -985,7 +876,7 @@ class NetshWireless(WifiController):
             state = SsidState.ESTABLISHING
         return (ssid, state)
 
-    def interfaces(self) -> List[str]:
+    def available_interfaces(self) -> List[str]:
         """Discover all available interfaces.
 
         # We're parsing, for example, the following line to find "Wi-Fi":
@@ -1004,20 +895,6 @@ class NetshWireless(WifiController):
             interfaces.append(interface.strip()[2:])
 
         return interfaces
-
-    def interface(self, interface: Optional[str] = None) -> Optional[str]:
-        """Get or set the current interface.
-
-        Args:
-            interface (str, optional): String to set or None to get. Defaults to None.
-
-        Returns:
-            Optional[str]: If interface argument is None, this will be a string if there is a valid interface; otherwise None
-        """
-        if interface is not None:
-            self._interface = interface
-            return None
-        return self._interface
 
     @property
     def is_on(self) -> bool:

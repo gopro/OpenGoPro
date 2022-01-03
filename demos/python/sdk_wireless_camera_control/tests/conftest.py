@@ -255,7 +255,7 @@ class WifiControllerTest(WifiController):
     # pylint: disable=signature-differs
 
     def __init__(self, interface: Optional[str] = None) -> None:
-        self._interface = interface
+        ...
 
     def connect(self, ssid: str, password: str, timeout: float) -> bool:
         return True if password == "password" else False
@@ -266,11 +266,8 @@ class WifiControllerTest(WifiController):
     def current(self) -> Tuple[Optional[str], SsidState]:
         return "current_ssid", SsidState.CONNECTED
 
-    def interfaces(self) -> List[str]:
+    def available_interfaces(self) -> List[str]:
         return ["interface1", "interface2"]
-
-    def interface(self, interface: Optional[str]) -> Optional[str]:
-        return
 
     def power(self, power: bool) -> None:
         return

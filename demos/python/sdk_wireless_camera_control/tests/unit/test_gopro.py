@@ -17,7 +17,7 @@ import requests_mock
 from open_gopro.gopro import GoPro
 from open_gopro.ble import UUID
 from open_gopro.exceptions import InvalidConfiguration, ResponseTimeout
-from open_gopro.constants import CmdId, ErrorCode, StatusId
+from open_gopro.constants import CmdId, StatusId
 from open_gopro.responses import GoProResp
 
 
