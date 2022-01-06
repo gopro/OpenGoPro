@@ -1,10 +1,10 @@
 # wifi_media_get_screennail.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:06:06 PM
 
-import json
+import sys
 import logging
 import argparse
-from typing import Dict, Any, Optional
+from typing import Optional
 
 import requests
 
@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 
-def main():
+def main() -> None:
     # Get the media list
     media_list = get_media_list()
 
@@ -28,6 +28,7 @@ def main():
     else:
         raise Exception("Couldn't find a photo on the GoPro")
 
+    assert photo is not None
     # Build the url to get the screennail data for the photo
     logger.info(f"Getting the screennail for {photo}")
     url = GOPRO_BASE_URL + f"/gopro/media/screennail?path=100GOPRO/{photo}"
@@ -44,4 +45,10 @@ def main():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Get the screennail for a media file.")
     parser.parse_args()
-    main()
+
+    try:
+        main()
+    except:
+        sys.exit(-1)
+    else:
+        sys.exit(0)

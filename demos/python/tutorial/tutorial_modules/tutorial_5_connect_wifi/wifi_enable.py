@@ -1,13 +1,13 @@
 # wifi_enable.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:06:01 PM
 
-import bleak
+import sys
 import time
 import asyncio
 import logging
 import argparse
 from binascii import hexlify
-from typing import Tuple
+from typing import Tuple, Optional
 
 from bleak import BleakClient
 
@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 
-async def enable_wifi(identifier: str = None) -> Tuple[str, str]:
+async def enable_wifi(identifier: str = None) -> Tuple[str, str, BleakClient]:
     """Connect to a GoPro via BLE, find its WiFi AP SSID and password, and enable its WiFI AP
 
     If identifier is None, the first discovered GoPro will be connected to.
@@ -40,7 +40,7 @@ async def enable_wifi(identifier: str = None) -> Tuple[str, str]:
     client: BleakClient
 
     def notification_handler(handle: int, data: bytes) -> None:
-        logger.info(f'Received response at {handle=}: {hexlify(data, ":")}')
+        logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
 
         # If this is the correct handle and the status is success, the command was a success
         if client.services.characteristics[handle].uuid == COMMAND_RSP_UUID and data[2] == 0x00:
@@ -73,11 +73,21 @@ async def enable_wifi(identifier: str = None) -> Tuple[str, str]:
     await event.wait()  # Wait to receive the notification response
     logger.info("WiFi AP is enabled")
 
-    return ssid, password
+    return ssid, password, client
 
 
-async def main(identifier):
-    await enable_wifi(identifier)
+async def main(identifier: Optional[str], timeout: Optional[int]) -> None:
+    *_, client = await enable_wifi(identifier)
+
+    if not timeout:
+        logger.info("Maintaining BLE Connection indefinitely. Send keyboard interrupt to exit.")
+        while True:
+            time.sleep(1)
+    else:
+        logger.info(f"Maintaining BLE connection for {timeout} seconds")
+        time.sleep(timeout)
+
+    await client.disconnect()
 
 
 if __name__ == "__main__":
@@ -88,9 +98,22 @@ if __name__ == "__main__":
         "-i",
         "--identifier",
         type=str,
-        help="Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to",
+        help="Last 4 digits of GoPro serial number, which is the last 4 digits of the default \
+            camera SSID. If not used, first discovered GoPro will be connected to",
+        default=None,
+    )
+    parser.add_argument(
+        "-t",
+        "--timeout",
+        type=int,
+        help="time in seconds to maintain connection before disconnecting. If not set, will maintain connection indefinitely",
         default=None,
     )
     args = parser.parse_args()
 
-    asyncio.run(main(args.identifier))
+    try:
+        asyncio.run(main(args.identifier, args.timeout))
+    except:
+        sys.exit(-1)
+    else:
+        sys.exit(0)

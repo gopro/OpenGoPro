@@ -1,0 +1,37 @@
+[MASTER]
+
+accept-no-param-doc=yes
+accept-no-return-doc=yes
+default-docstring-type=google
+
+ignore=tests
+
+
+[MESSAGES CONTROL]
+
+disable=
+    bare-except,
+    missing-module-docstring,
+    missing-function-docstring,
+    abstract-method, # Pylint incorrectly assumes any function that raises NotImplementedError is abstract. We let mypy check for ABC errors.
+    cyclic-import,
+    missing-raises-doc,
+    redundant-returns-doc,
+    logging-fstring-interpolation,
+    logging-format-interpolation,
+    duplicate-code,
+    global-statement,
+    too-few-public-methods,
+    too-many-arguments,
+    too-many-instance-attributes,
+    too-many-branches,
+    too-many-locals,
+    too-many-lines,
+    too-many-statements,
+    fixme,
+    protected-access, # Maybe fix this one
+    invalid-name # We are passing these except for <= 2 character variable names. Should be able to configure via http://pylint.pycqa.org/en/1.9/user_guide/options.html#cmdoption-variable-rgx
+
+[FORMAT]
+
+max-line-length=160 # This is handled by black

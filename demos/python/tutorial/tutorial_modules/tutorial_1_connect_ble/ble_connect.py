@@ -2,10 +2,11 @@
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:05:56 PM
 
 import re
+import sys
 import asyncio
 import logging
 import argparse
-from typing import Dict, Any, List, Callable, Pattern
+from typing import Dict, Any, List, Callable, Optional
 
 from bleak import BleakScanner, BleakClient
 from bleak.backends.device import BLEDevice as BleakDevice
@@ -32,7 +33,7 @@ async def connect_ble(
     devices: Dict[str, BleakDevice] = {}
 
     # Scan for devices
-    logger.info(f"Scanning for bluetooth devices...")
+    logger.info("Scanning for bluetooth devices...")
     # Scan callback to also catch nonconnectable scan responses
     def _scan_callback(device: BleakDevice, _: Any) -> None:
         # Add to the dict if not unknown
@@ -83,8 +84,8 @@ async def connect_ble(
     return client
 
 
-async def main(identifier):
-    def dummy_notification_handler(handle: int, data: bytes) -> None:
+async def main(identifier: Optional[str]) -> None:
+    def dummy_notification_handler(*_: Any) -> None:
         ...
 
     client = await connect_ble(dummy_notification_handler, identifier)
@@ -103,4 +104,9 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    asyncio.run(main(args.identifier))
+    try:
+        asyncio.run(main(args.identifier))
+    except:
+        sys.exit(-1)
+    else:
+        sys.exit(0)

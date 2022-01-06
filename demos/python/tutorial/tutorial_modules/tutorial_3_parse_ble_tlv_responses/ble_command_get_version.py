@@ -1,11 +1,12 @@
 # ble_command_get_version.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:05:59 PM
 
+import sys
 import asyncio
 import logging
 import argparse
 from binascii import hexlify
-from typing import Dict
+from typing import Dict, Optional
 
 from bleak import BleakClient
 
@@ -15,7 +16,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 
-async def main(identifier):
+async def main(identifier: Optional[str]) -> None:
     # Synchronization event to wait until notification response is received
     event = asyncio.Event()
 
@@ -27,7 +28,7 @@ async def main(identifier):
     client: BleakClient
 
     def notification_handler(handle: int, data: bytes) -> None:
-        logger.info(f'Received response at {handle=}: {hexlify(data, ":")}')
+        logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
 
         # If this is the correct handle and the status is success, the command was a success
         if client.services.characteristics[handle].uuid == response_uuid:
@@ -67,6 +68,7 @@ async def main(identifier):
 
     await client.disconnect()
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Connect to a GoPro camera via BLE, then get the Open GoPro version."
@@ -80,4 +82,9 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    asyncio.run(main(args.identifier))
+    try:
+        asyncio.run(main(args.identifier))
+    except:
+        sys.exit(-1)
+    else:
+        sys.exit(0)

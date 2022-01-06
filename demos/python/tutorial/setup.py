@@ -7,12 +7,12 @@ import os
 from setuptools import find_packages, setup
 
 # Package meta-data.
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 NAME = "open_gopro_python_tutorials"
 DESCRIPTION = "Open GoPro Python Tutorials"
 URL = "https://github.com/gopro/OpenGoPro"
 EMAIL = "gopro.com"
-AUTHOR = "GoPro"
+AUTHOR = "Tim Camise"
 
 REQUIRED = ["bleak==0.12.1"]
 

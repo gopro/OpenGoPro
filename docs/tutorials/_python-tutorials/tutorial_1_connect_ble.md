@@ -34,7 +34,7 @@ This set of tutorials is accompanied by a Python package consisting of scripts (
 These can be found on [Github](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/). Once the Github repo has been cloned or downloaded to your
 local machine, the package can be installed as follows:
 
-1. Enter the python tutorials directory at `$INSTALL/tutorials/python/` where $INSTALL is the top level of the Open GoPro repo
+1. Enter the python tutorials directory at `$INSTALL/demos/python/tutorial/` where $INSTALL is the top level of the Open GoPro repo
    where it exists on your local machine
 2. Use pip to install the requirements file:
 
@@ -49,7 +49,7 @@ You can test that installation was successful by viewing the installed package's
 ```console
 $ pip show open-gopro-python-tutorials
 Name: open-gopro-python-tutorials
-Version: 0.0.1
+Version: 0.0.2
 Summary: Open GoPro Python Tutorials
 Home-page: https://github.com/gopro/OpenGoPro
 Author: GoPro
@@ -96,6 +96,13 @@ sequenceDiagram
     note over GoPro, PC: Ready to Communicate
 ```
 
+## A Special Consideration for BlueZ
+
+The Bleak BLE controller does not currently support autonomous pairing for the BlueZ backend. So if you are using
+BlueZ (i.e. Ubuntu, RaspberryPi, etc.), you need to first pair the camera from the command line as shown in the
+[BlueZ tutorial](https://gopro.github.io/OpenGoPro/tutorials/bash/bluez). There is work to add this feature
+and progress can be tracked on the [Github Issue](https://github.com/gopro/OpenGoPro/issues/29).
+
 ## Just Show me the Demo!!
 
 If you just want to run the demo, you can do:
@@ -130,7 +137,7 @@ by making _main_ async as such:
 ```python
 import asyncio
 
-async def main():
+async def main() -> None:
     # Put our code here
 
 if __name__ == "__main__":
