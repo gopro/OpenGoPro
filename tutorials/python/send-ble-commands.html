@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2021-12-16T16:01:20-08:00">
+  <meta property="article:published_time" content="2022-01-06T11:28:04-08:00">
 
 
 
@@ -420,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 2: Send BLE Commands">
     <meta itemprop="description" content="Python Tutorial 2: Send BLE Commands">
-    <meta itemprop="datePublished" content="2021-12-16T16:01:20-08:00">
+    <meta itemprop="datePublished" content="2022-01-06T11:28:04-08:00">
     
 
     <div class="page__inner-wrap">
@@ -545,7 +545,7 @@ this case, however, we are defining a meaningful (albeit naive) notification han
 <p>This is a very simple handler: response parsing will be expanded upon in the <a href="/OpenGoPro/tutorials/python/parse-ble-responses">next tutorial</a>.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
-    <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">'Received response at </span><span class="si">{</span><span class="n">handle</span><span class="o">=</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">hexlify</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">":"</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">'Received response at </span><span class="si">{</span><span class="n">handle</span><span class="o">=</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">hexlify</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">":"</span><span class="p">)</span><span class="err">!</span><span class="n">r</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
 
     <span class="c1"># If this is the correct handle and the status is success, the command was a success
 </span>    <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">response_uuid</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x00</span><span class="p">:</span>
@@ -629,7 +629,7 @@ Response” (UUID <code class="language-plaintext highlighter-rouge">b5f90075-aa
 </table>
 
 <div>
-    <ul class="tab" data-tab="91d9d323-a52a-4418-959d-571a6a18423f">
+    <ul class="tab" data-tab="91f39a1b-3afb-4c6a-8b39-3a1864249962">
         
             <li class="active">
                 <a href="">Set Shutter On </a>
@@ -640,7 +640,7 @@ Response” (UUID <code class="language-plaintext highlighter-rouge">b5f90075-aa
             </li>
         
         </ul>
-        <ul class="tab-content" id="91d9d323-a52a-4418-959d-571a6a18423f">
+        <ul class="tab-content" id="91f39a1b-3afb-4c6a-8b39-3a1864249962">
         
             <li class="active">
 <p>Now, let’s write the bytes to the “Command Request” UUID to turn the shutter on and start encoding!</p>
@@ -1105,10 +1105,10 @@ was higher, for example 5K, this would fail.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_d85d5abb-12b6-4569-bd69-9d3526791913" class="quiz">
+<div id="quiz_f898a7c3-5709-47ac-b3ba-1035a2142f02" class="quiz">
     <div>
-        <div id="question_d85d5abb-12b6-4569-bd69-9d3526791913" class="quiz__question">Which of the following is not a real preset group?</div>
-        <div id="answers_d85d5abb-12b6-4569-bd69-9d3526791913">
+        <div id="question_f898a7c3-5709-47ac-b3ba-1035a2142f02" class="quiz__question">Which of the following is not a real preset group?</div>
+        <div id="answers_f898a7c3-5709-47ac-b3ba-1035a2142f02">
         
             <input type="radio" name="question" value="A"><label>A: Timelapse</label>
             <br>
@@ -1124,19 +1124,19 @@ was higher, for example 5K, this would fail.</p>
         
         </div>
     </div>
-    <button onclick="showResults('d85d5abb-12b6-4569-bd69-9d3526791913', 'C')">Submit Answer</button>
-    <div id="results_d85d5abb-12b6-4569-bd69-9d3526791913" style="display: none">
-        <span id="correct_d85d5abb-12b6-4569-bd69-9d3526791913" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_d85d5abb-12b6-4569-bd69-9d3526791913" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('f898a7c3-5709-47ac-b3ba-1035a2142f02', 'C')">Submit Answer</button>
+    <div id="results_f898a7c3-5709-47ac-b3ba-1035a2142f02" style="display: none">
+        <span id="correct_f898a7c3-5709-47ac-b3ba-1035a2142f02" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_f898a7c3-5709-47ac-b3ba-1035a2142f02" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There are 3 preset groups (Timelapse, Photo, and Video). These can be
     set via the Load Preset Group command.
     </div>
 </div>
 
-<div id="quiz_c1417ac4-4dd7-488f-902c-75b646c95130" class="quiz">
+<div id="quiz_6d07b618-3235-481c-8078-014befa9b12e" class="quiz">
     <div>
-        <div id="question_c1417ac4-4dd7-488f-902c-75b646c95130" class="quiz__question">What of the following sets of FPS values are possible at 5K?</div>
-        <div id="answers_c1417ac4-4dd7-488f-902c-75b646c95130">
+        <div id="question_6d07b618-3235-481c-8078-014befa9b12e" class="quiz__question">What of the following sets of FPS values are possible at 5K?</div>
+        <div id="answers_6d07b618-3235-481c-8078-014befa9b12e">
         
             <input type="radio" name="question" value="A"><label>A: [24, 25, 30]</label>
             <br>
@@ -1152,19 +1152,19 @@ was higher, for example 5K, this would fail.</p>
         
         </div>
     </div>
-    <button onclick="showResults('c1417ac4-4dd7-488f-902c-75b646c95130', 'A')">Submit Answer</button>
-    <div id="results_c1417ac4-4dd7-488f-902c-75b646c95130" style="display: none">
-        <span id="correct_c1417ac4-4dd7-488f-902c-75b646c95130" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_c1417ac4-4dd7-488f-902c-75b646c95130" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('6d07b618-3235-481c-8078-014befa9b12e', 'A')">Submit Answer</button>
+    <div id="results_6d07b618-3235-481c-8078-014befa9b12e" style="display: none">
+        <span id="correct_6d07b618-3235-481c-8078-014befa9b12e" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_6d07b618-3235-481c-8078-014befa9b12e" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         Among these options, only 24 is possible. You're not actually expected to know
     this. But you should know where to find the information: https://gopro.github.io/OpenGoPro/ble#camera-capabilities
     </div>
 </div>
 
-<div id="quiz_33b36667-6f47-4e64-8e6b-cb6b72a89f36" class="quiz">
+<div id="quiz_3f6f08d4-2e5f-4900-92a6-50b37b140fd0" class="quiz">
     <div>
-        <div id="question_33b36667-6f47-4e64-8e6b-cb6b72a89f36" class="quiz__question">True or False: Every camera supports the same combination of resolution and FPS values.</div>
-        <div id="answers_33b36667-6f47-4e64-8e6b-cb6b72a89f36">
+        <div id="question_3f6f08d4-2e5f-4900-92a6-50b37b140fd0" class="quiz__question">True or False: Every camera supports the same combination of resolution and FPS values.</div>
+        <div id="answers_3f6f08d4-2e5f-4900-92a6-50b37b140fd0">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1174,10 +1174,10 @@ was higher, for example 5K, this would fail.</p>
         
         </div>
     </div>
-    <button onclick="showResults('33b36667-6f47-4e64-8e6b-cb6b72a89f36', 'B')">Submit Answer</button>
-    <div id="results_33b36667-6f47-4e64-8e6b-cb6b72a89f36" style="display: none">
-        <span id="correct_33b36667-6f47-4e64-8e6b-cb6b72a89f36" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_33b36667-6f47-4e64-8e6b-cb6b72a89f36" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('3f6f08d4-2e5f-4900-92a6-50b37b140fd0', 'B')">Submit Answer</button>
+    <div id="results_3f6f08d4-2e5f-4900-92a6-50b37b140fd0" style="display: none">
+        <span id="correct_3f6f08d4-2e5f-4900-92a6-50b37b140fd0" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_3f6f08d4-2e5f-4900-92a6-50b37b140fd0" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         The only way to know what values are supported is to first check the Open GoPro version.
     See the relevant version of the BLE or WiFi spec to see what is supported.
     </div>
@@ -1208,7 +1208,7 @@ a similar manner.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-12-16T16:01:20-08:00">December 16, 2021</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-01-06T11:28:04-08:00">January 6, 2022</time></p>
 
 
       </footer>
@@ -1290,7 +1290,7 @@ a similar manner.</p>
 </div>
 
 <div class="page__footer-copyright">
-    © 2021 GoPro. Powered by
+    © 2022 GoPro. Powered by
     <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
     <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
     <p>

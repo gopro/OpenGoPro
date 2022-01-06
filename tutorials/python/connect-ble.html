@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2021-12-16T16:01:20-08:00">
+  <meta property="article:published_time" content="2022-01-06T11:28:04-08:00">
 
 
 
@@ -420,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 1: Connect BLE">
     <meta itemprop="description" content="Python Tutorial 1: Connect BLE">
-    <meta itemprop="datePublished" content="2021-12-16T16:01:20-08:00">
+    <meta itemprop="datePublished" content="2022-01-06T11:28:04-08:00">
     
 
     <div class="page__inner-wrap">
@@ -442,7 +442,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          7 minute read
+          8 minute read
         
       </span>
     
@@ -472,6 +472,7 @@
 </li>
 <li>
 <a href="#basic-ble-tutorial">Basic BLE Tutorial</a><ul>
+<li><a href="#a-special-consideration-for-bluez">A Special Consideration for BlueZ</a></li>
 <li><a href="#just-show-me-the-demo">Just Show me the Demo!!</a></li>
 <li><a href="#asyncio">Asyncio</a></li>
 <li><a href="#advertise">Advertise</a></li>
@@ -531,7 +532,7 @@ These can be found on <a href="https://github.com/gopro/OpenGoPro/tree/main/demo
 local machine, the package can be installed as follows:</p>
 
 <ol>
-  <li>Enter the python tutorials directory at <code class="language-plaintext highlighter-rouge">$INSTALL/tutorials/python/</code> where $INSTALL is the top level of the Open GoPro repo
+  <li>Enter the python tutorials directory at <code class="language-plaintext highlighter-rouge">$INSTALL/demos/python/tutorial/</code> where $INSTALL is the top level of the Open GoPro repo
 where it exists on your local machine</li>
   <li>Use pip to install the requirements file:</li>
 </ol>
@@ -547,7 +548,7 @@ where it exists on your local machine</li>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>pip show open-gopro-python-tutorials
 <span class="go">Name: open-gopro-python-tutorials
-Version: 0.0.1
+Version: 0.0.2
 Summary: Open GoPro Python Tutorials
 Home-page: https://github.com/gopro/OpenGoPro
 Author: GoPro
@@ -572,6 +573,13 @@ for all future BLE tutorials.</p>
 sections:</p>
 
 <p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5wYXJ0aWNpcGFudCBQQyBhcyBPcGVuIEdvUHJvIHVzZXIgZGV2aWNlXG5wYXJ0aWNpcGFudCBHb1Byb1xuR29Qcm8tLT4-UEM6IEFkdmVydGlzaW5nXG5Hb1Byby0tPj5QQzogQWR2ZXJ0aXNpbmdcbm5vdGUgb3ZlciBQQzogU2Nhbm5pbmdcblBDLT4-R29Qcm86IENvbm5lY3Rcbm5vdGUgb3ZlciBHb1BybywgUEM6IENvbm5lY3RlZFxuYWx0IElmIG5vdCBQcmV2aW91c2x5IFBhaXJlZFxuUEMgLT4-IEdvUHJvOiBQYWlyIFJlcXVlc3RcbkdvUHJvIC0-PiBQQzogUGFpciBSZXNwb25zZVxuZWxzZVxuJSUtXG5lbmRcbm5vdGUgb3ZlciBHb1BybywgUEM6IFBhaXJlZFxuUEMgLT4-IEdvUHJvOiBFbmFibGUgTm90aWZpY2F0aW9ucyBvbiBDaGFyYWN0ZXJpc3RpYyAxXG5QQyAtPj4gR29Qcm86IEVuYWJsZSBOb3RpZmljYXRpb25zIG9uIENoYXJhY3RlcmlzdGljIDJcblBDIC0-PiBHb1BybzogRW5hYmxlIE5vdGlmaWNhdGlvbnMgb24gQ2hhcmFjdGVyaXN0aWMgLi5cblBDIC0-PiBHb1BybzogRW5hYmxlIE5vdGlmaWNhdGlvbnMgb24gQ2hhcmFjdGVyaXN0aWMgTlxubm90ZSBvdmVyIEdvUHJvLCBQQzogUmVhZHkgdG8gQ29tbXVuaWNhdGUiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9fQ"></p>
+
+<h2 id="a-special-consideration-for-bluez">A Special Consideration for BlueZ</h2>
+
+<p>The Bleak BLE controller does not currently support autonomous pairing for the BlueZ backend. So if you are using
+BlueZ (i.e. Ubuntu, RaspberryPi, etc.), you need to first pair the camera from the command line as shown in the
+<a href="https://gopro.github.io/OpenGoPro/tutorials/bash/bluez">BlueZ tutorial</a>. There is work to add this feature
+and progress can be tracked on the <a href="https://github.com/gopro/OpenGoPro/issues/29">Github Issue</a>.</p>
 
 <h2 id="just-show-me-the-demo">Just Show me the Demo!!</h2>
 
@@ -606,7 +614,7 @@ by making <em>main</em> async as such:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">asyncio</span>
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
     <span class="c1"># Put our code here
 </span>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
@@ -639,7 +647,7 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
 <h2 id="scan">Scan</h2>
 
 <div>
-    <ul class="tab" data-tab="6625d2be-e696-4297-bf21-0cdbd6e0896d">
+    <ul class="tab" data-tab="e59744a7-7fb0-4305-9a9c-c86d34f2db79">
         
             <li class="active">
                 <a href="">code </a>
@@ -650,7 +658,7 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="6625d2be-e696-4297-bf21-0cdbd6e0896d">
+        <ul class="tab-content" id="e59744a7-7fb0-4305-9a9c-c86d34f2db79">
         
             <li class="active">
 <p>Next, we must find the GoPro Camera using bleak. Let’s initialize an empty dict that will
@@ -730,7 +738,7 @@ your camera’s serial number.</p>
 <h2 id="connect">Connect</h2>
 
 <div>
-    <ul class="tab" data-tab="7bcaa514-c2e5-42c0-bc93-204077e6b139">
+    <ul class="tab" data-tab="b3d33992-18cf-425d-ab30-d0fedcdbc872">
         
             <li class="active">
                 <a href="">code </a>
@@ -741,7 +749,7 @@ your camera’s serial number.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="7bcaa514-c2e5-42c0-bc93-204077e6b139">
+        <ul class="tab-content" id="b3d33992-18cf-425d-ab30-d0fedcdbc872">
         
             <li class="active">
 <p>Now that we have discovered at least one GoPro device to connect to, the next step is to
@@ -795,7 +803,7 @@ catching the exception when it fails.</p>
 <h2 id="enable-notifications">Enable Notifications</h2>
 
 <div>
-    <ul class="tab" data-tab="b2e95551-9fda-49c6-8055-b1da4da69333">
+    <ul class="tab" data-tab="5df0a750-c92d-4130-9f4a-ce4d6aaff19b">
         
             <li class="active">
                 <a href="">enable </a>
@@ -806,7 +814,7 @@ catching the exception when it fails.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="b2e95551-9fda-49c6-8055-b1da4da69333">
+        <ul class="tab-content" id="5df0a750-c92d-4130-9f4a-ce4d6aaff19b">
         
             <li class="active">
 <p>As specified in the <a href="/OpenGoPro/ble#sending-and-receiving-messages">Open GoPro Bluetooth API</a>,
@@ -858,10 +866,10 @@ will be used in a future tutorial to send data.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_679063b0-a066-44dd-8f72-4e6c17b267e0" class="quiz">
+<div id="quiz_bd49c0fc-cf7c-4193-9e34-3907e479637a" class="quiz">
     <div>
-        <div id="question_679063b0-a066-44dd-8f72-4e6c17b267e0" class="quiz__question">How often is it necessary to pair?</div>
-        <div id="answers_679063b0-a066-44dd-8f72-4e6c17b267e0">
+        <div id="question_bd49c0fc-cf7c-4193-9e34-3907e479637a" class="quiz__question">How often is it necessary to pair?</div>
+        <div id="answers_bd49c0fc-cf7c-4193-9e34-3907e479637a">
         
             <input type="radio" name="question" value="A"><label>A: Pairing must occur every time to ensure safe BLE communication.</label>
             <br>
@@ -874,10 +882,10 @@ will be used in a future tutorial to send data.</p>
         
         </div>
     </div>
-    <button onclick="showResults('679063b0-a066-44dd-8f72-4e6c17b267e0', 'C')">Submit Answer</button>
-    <div id="results_679063b0-a066-44dd-8f72-4e6c17b267e0" style="display: none">
-        <span id="correct_679063b0-a066-44dd-8f72-4e6c17b267e0" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_679063b0-a066-44dd-8f72-4e6c17b267e0" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('bd49c0fc-cf7c-4193-9e34-3907e479637a', 'C')">Submit Answer</button>
+    <div id="results_bd49c0fc-cf7c-4193-9e34-3907e479637a" style="display: none">
+        <span id="correct_bd49c0fc-cf7c-4193-9e34-3907e479637a" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_bd49c0fc-cf7c-4193-9e34-3907e479637a" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Pairing is only needed once (assuming neither side deletes the keys). If the
     GoPro deletes the keys (via Connections-&gt;Reset Connections), the devices will need to re-pair.
     </div>
@@ -933,7 +941,7 @@ to send commands, you should advance to the next tutorial.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-12-16T16:01:20-08:00">December 16, 2021</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-01-06T11:28:04-08:00">January 6, 2022</time></p>
 
 
       </footer>
@@ -1014,7 +1022,7 @@ to send commands, you should advance to the next tutorial.</p>
 </div>
 
 <div class="page__footer-copyright">
-    © 2021 GoPro. Powered by
+    © 2022 GoPro. Powered by
     <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
     <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
     <p>
