@@ -681,7 +681,8 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
     def _close_wifi(self) -> None:
         """Terminate the Wifi connection."""
-        self._wifi.close()
+        if hasattr(self, "_wifi"):  # Corner case where instantication fails before superclass is initialized
+            self._wifi.close()
 
     @_ensure_initialized_acquire_ready_semaphore
     def _get(self, url: str) -> GoProResp:

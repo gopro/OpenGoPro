@@ -85,7 +85,7 @@ class Wireless(WifiController):
         # Attempt to set interface (will raise an exception if not able to auto-detect)
         self.interface = interface  # type: ignore
 
-        logger.debug(f"Using Wifi driver: {type(self)} with interface {self.interface}")
+        logger.debug(f"Using Wifi driver: {type(self).__name__} with interface {self.interface}")
 
     @staticmethod
     def _detect_driver() -> WifiController:

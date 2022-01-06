@@ -84,18 +84,25 @@ class WifiController(ABC):
         If None is passed, interface will attempt to be auto-detected
 
         Args:
-            interface (Optional[str]): interface (or None)
+            interface (Optional[str]): interface (or None to auto-detect)
 
         Raises:
+            Exception: Requested interface does not exist
             Exception: Not able to automatically detect any interfaces
         """
+        detected_interfaces = self.available_interfaces()
         if interface:
-            self._interface = interface
+            if interface in detected_interfaces:
+                self._interface = interface
+            else:
+                raise Exception(
+                    f"Requested WiFi interface [{interface}] not found among [{', '.join(detected_interfaces)}]"
+                )
         else:
-            if not (detected_interfaces := self.available_interfaces()):
+            if detected_interfaces:
+                self._interface = detected_interfaces[0]
+            else:
                 raise Exception("Can't auto-assign interface. None found.")
-
-            self._interface = detected_interfaces[0]
 
     @abstractmethod
     def power(self, power: bool) -> bool:

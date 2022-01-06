@@ -25,14 +25,14 @@ def main() -> int:
     Returns:
         int: program return code
     """
-    identifier, log_location, vlc_location = parse_arguments()
+    identifier, log_location, vlc_location, wifi_interface = parse_arguments()
     global logger
     logger = setup_logging(logger, log_location)
 
     gopro: Optional[GoPro] = None
     return_code = 0
     try:
-        with GoPro(identifier) as gopro:
+        with GoPro(identifier, wifi_interface=wifi_interface) as gopro:
             # Turn off the shutter if we are currently encoding
             if gopro.is_encoding:
                 assert gopro.ble_command.set_shutter(gopro.params.Shutter.OFF)
@@ -67,11 +67,11 @@ def main() -> int:
         return return_code  # pylint: disable=lost-exception
 
 
-def parse_arguments() -> Tuple[str, Path, Path]:
+def parse_arguments() -> Tuple[str, Path, Path, Optional[str]]:
     """Parse command line arguments
 
     Returns:
-        Tuple[str, Path, Path]: (identifier, path to save log, path to VLC)
+        Tuple[str, Path, Path, Optional[str]]: (identifier, path to save log, path to VLC, wifi interface)
     """
     parser = argparse.ArgumentParser(
         description="Connect to a GoPro camera, enable the preview stream, then open VLC to view it."
@@ -98,9 +98,16 @@ def parse_arguments() -> Tuple[str, Path, Path]:
         help="VLC location. If not set, the location will attempt to be automatically discovered.",
         default=None,
     )
+    parser.add_argument(
+        "-w",
+        "--wifi_interface",
+        type=str,
+        help="System Wifi Interface. If not set, first discovered interface will be used.",
+        default=None,
+    )
     args = parser.parse_args()
 
-    return args.identifier, args.log, args.vlc
+    return args.identifier, args.log, args.vlc, args.wifi_interface
 
 
 if __name__ == "__main__":

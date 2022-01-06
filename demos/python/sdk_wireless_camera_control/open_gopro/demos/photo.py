@@ -18,13 +18,16 @@ logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
 
 
-def main(identifier: Optional[str], log_location: Path, output_location: Path) -> int:
+def main(
+    identifier: Optional[str], log_location: Path, output_location: Path, wifi_interface: Optional[str]
+) -> int:
     """Main program functionality
 
     Args:
         identifier (Optional[str]): device to connect to
         log_location (Path): file to write detailed log
         output_location (Path): name of photo file
+        wifi_interface (Optional[str]): wifi interface (or None to auto detect)
 
     Returns:
         int: program return code
@@ -35,7 +38,7 @@ def main(identifier: Optional[str], log_location: Path, output_location: Path) -
     gopro: Optional[GoPro] = None
     return_code = 0
     try:
-        with GoPro(identifier) as gopro:
+        with GoPro(identifier, wifi_interface=wifi_interface) as gopro:
             # Turn off the shutter if we are currently encoding
             if gopro.is_encoding:
                 assert gopro.ble_command.set_shutter(gopro.params.Shutter.OFF).is_ok
@@ -79,11 +82,11 @@ def main(identifier: Optional[str], log_location: Path, output_location: Path) -
         return return_code  # pylint: disable=lost-exception
 
 
-def parse_arguments() -> Tuple[str, Path, Path]:
+def parse_arguments() -> Tuple[str, Path, Path, Optional[str]]:
     """Parse command line arguments
 
     Returns:
-        Tuple[str, Path, Path]: (identifier, path to save log, path to store photo)
+        Tuple[str, Path, Path, Optional[str]]: (identifier, path to save log, path to store photo, wifi interface)
     """
     parser = argparse.ArgumentParser(description="Connect to a GoPro camera, take a photo, then download it.")
     parser.add_argument(
@@ -108,9 +111,16 @@ def parse_arguments() -> Tuple[str, Path, Path]:
         help="Where to write the photo to. If not set, write to 'photo.jpg'",
         default=Path("photo.jpg"),
     )
+    parser.add_argument(
+        "-w",
+        "--wifi_interface",
+        type=str,
+        help="System Wifi Interface. If not set, first discovered interface will be used.",
+        default=None,
+    )
     args = parser.parse_args()
 
-    return args.identifier, args.log, args.output
+    return args.identifier, args.log, args.output, args.wifi_interface
 
 
 def entrypoint() -> None:
