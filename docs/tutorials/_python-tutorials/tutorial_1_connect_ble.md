@@ -96,6 +96,13 @@ sequenceDiagram
     note over GoPro, PC: Ready to Communicate
 ```
 
+## A Special Consideration for BlueZ
+
+The Bleak BLE controller does not currently support autonomous pairing for the BlueZ backend. So if you are using
+BlueZ (i.e. Ubuntu, RaspberryPi, etc.), you need to first pair the camera from the command line as shown in the
+[BlueZ tutorial](https://gopro.github.io/OpenGoPro/tutorials/bash/bluez). There is work to add this feature
+and progress can be tracked on the [Github Issue](https://github.com/gopro/OpenGoPro/issues/29).
+
 ## Just Show me the Demo!!
 
 If you just want to run the demo, you can do:
