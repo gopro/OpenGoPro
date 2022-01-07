@@ -40,7 +40,7 @@ from open_gopro.communication_client import GoProBle, GoProWifi
 logger = logging.getLogger(__name__)
 
 KEEP_ALIVE_INTERVAL: Final = 60
-WRITE_TIMEOUT: Final = 10
+WRITE_TIMEOUT: Final = 5
 HTTP_GET_RETRIES: Final = 5
 
 
@@ -182,6 +182,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
     def __enter__(self) -> "GoPro":  # pylint: disable=missing-return-doc
         self.open()
+        return self
 
     def __exit__(self, *_: Any) -> None:
         self.close()
@@ -469,7 +470,12 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         # Configure threads if desired
         if self._maintain_ble:
             self._state_thread.start()
-            self.ble_status.encoding_active.register_value_update()
+            while True:
+                try:
+                    self.ble_status.encoding_active.register_value_update()
+                    break
+                except:
+                    continue
             self.ble_status.system_ready.register_value_update()
             self._keep_alive_thread.start()
         logger.info("BLE is ready!")

@@ -88,8 +88,6 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
     def write(self, handle: BleakClient, uuid: str, data: bytearray) -> None:
         """Write data to a UUID.
 
-        Perform a write, then wait for event to be notified (from a notification handler)
-
         Args:
             handle (BleakClient): Device to write to
             uuid (str): characteristic UUID to write to
@@ -98,7 +96,8 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         async def _async_write() -> None:
             logger.debug(f"Writing to {uuid}: {data.hex(':')}")
-            await handle.write_gatt_char(uuid, data)
+            # TODO make with / without response configurable
+            await handle.write_gatt_char(uuid, data, response=True)
 
         self._as_coroutine(_async_write)
 
@@ -138,6 +137,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                     devices[device.name] = device
 
             # Now get list of connectable advertisements
+            # TODO allow service UUID's to be passed in as parameter
             for device in await BleakScanner(service_uuids=["FEA6"]).discover(
                 timeout=timeout, detection_callback=_scan_callback, service_uuids=["FEA6"]
             ):
