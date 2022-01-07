@@ -138,7 +138,9 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                     devices[device.name] = device
 
             # Now get list of connectable advertisements
-            for device in await BleakScanner.discover(timeout=timeout, detection_callback=_scan_callback):
+            for device in await BleakScanner(service_uuids=["FEA6"]).discover(
+                timeout=timeout, detection_callback=_scan_callback, service_uuids=["FEA6"]
+            ):
                 if device.name != "Unknown" and device.name is not None:
                     devices[device.name] = device
             for d in devices:

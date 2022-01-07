@@ -182,7 +182,6 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
     def __enter__(self) -> "GoPro":  # pylint: disable=missing-return-doc
         self.open()
-        return self
 
     def __exit__(self, *_: Any) -> None:
         self.close()
@@ -317,29 +316,36 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
         For Wifi: discover SSID and password, enable and connect. Or disable if not using.
 
+        Raises:
+            Any exceptions during opening are propagated through
+
         Args:
             timeout (int, optional): How long to wait for each connection before timing out. Defaults to 10.
             retries (int, optional): How many connection attempts before considering connection failed. Defaults to 5.
         """
-        # Establish BLE connection and start maintenance threads if desired
-        self._open_ble(timeout, retries)
-
-        # Find and configure API version
-        version = self.ble_command.get_open_gopro_api_version().flatten
-        version_str = f"{version.major}.{version.minor}"
         try:
-            self._api = api_versions[version_str](self, self)
-        except KeyError as e:
-            raise InvalidOpenGoProVersion(version_str) from e
-        logger.info(f"Using Open GoPro API version {version_str}")
+            # Establish BLE connection and start maintenance threads if desired
+            self._open_ble(timeout, retries)
 
-        # Establish Wifi connection if desired
-        if self._enable_wifi_during_init:
-            self._open_wifi(timeout, retries)
-        else:
-            # Otherwise, turn off Wifi
-            logger.info("Turning off the camera's Wifi radio")
-            self.ble_command.enable_wifi_ap(False)
+            # Find and configure API version
+            version = self.ble_command.get_open_gopro_api_version().flatten
+            version_str = f"{version.major}.{version.minor}"
+            try:
+                self._api = api_versions[version_str](self, self)
+            except KeyError as e:
+                raise InvalidOpenGoProVersion(version_str) from e
+            logger.info(f"Using Open GoPro API version {version_str}")
+
+            # Establish Wifi connection if desired
+            if self._enable_wifi_during_init:
+                self._open_wifi(timeout, retries)
+            else:
+                # Otherwise, turn off Wifi
+                logger.info("Turning off the camera's Wifi radio")
+                self.ble_command.enable_wifi_ap(False)
+        except Exception as e:
+            self.close()
+            raise e
 
     def close(self) -> None:
         """Safely stop the GoPro instance.
