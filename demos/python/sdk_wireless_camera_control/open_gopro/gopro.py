@@ -18,13 +18,13 @@ import requests
 from open_gopro.api.v1_0.api import ApiV1_0
 
 from open_gopro.exceptions import InvalidOpenGoProVersion, ResponseTimeout, InvalidConfiguration
-from open_gopro.ble import BLEController, UUID, BleDevice
+from open_gopro.ble import BLEController, BleUUID, BleDevice
 from open_gopro.ble.adapters import BleakWrapperController
 from open_gopro.wifi import WifiController
 from open_gopro.wifi.adapters import Wireless
 from open_gopro.util import SnapshotQueue
 from open_gopro.responses import GoProResp
-from open_gopro.constants import CmdId, ErrorCode, StatusId, QueryCmdId, ProducerType
+from open_gopro.constants import CmdId, ErrorCode, GoProUUIDs, StatusId, QueryCmdId, ProducerType
 from open_gopro.api import (
     Api,
     api_versions,
@@ -144,14 +144,20 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         self._maintain_ble = maintain_ble
 
         # Initialize GoPro Communication Client
-        GoProBle.__init__(self, ble_adapter(), self._disconnect_handler, self._notification_handler, target)
+        GoProBle.__init__(
+            self,
+            ble_adapter(),
+            self._disconnect_handler,
+            self._notification_handler,
+            (target, [GoProUUIDs.S_CONTROL_QUERY]),
+        )
         GoProWifi.__init__(self, wifi_adapter(wifi_interface))
 
         # We start with version 1.0. It will be updated once we query the version
         self._api: Api = ApiV1_0(self, self)
 
-        # Current accumulating synchronous responses, indexed by UUID. This assumes there can only be one active response per UUID
-        self._active_resp: Dict[UUID, GoProResp] = {}
+        # Current accumulating synchronous responses, indexed by GoProUUIDs. This assumes there can only be one active response per BleUUID
+        self._active_resp: Dict[BleUUID, GoProResp] = {}
         # Responses that we are waiting for.
         self._sync_resp_wait_q: SnapshotQueue = SnapshotQueue()
         # Synchronous response that has been parsed and are ready for their sender to receive as the response.
@@ -345,6 +351,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
                 logger.info("Turning off the camera's Wifi radio")
                 self.ble_command.enable_wifi_ap(False)
         except Exception as e:
+            logger.error(f"Error while opening: {e}")
             self.close()
             raise e
 
@@ -466,16 +473,11 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             ConnectFailed: Connection could not be established
         """
         # Establish connection, pair, etc.
-        self._ble.open(timeout, retries)
+        self._ble.open(timeout, retries, GoProUUIDs)
         # Configure threads if desired
         if self._maintain_ble:
             self._state_thread.start()
-            while True:
-                try:
-                    self.ble_status.encoding_active.register_value_update()
-                    break
-                except:
-                    continue
+            self.ble_status.encoding_active.register_value_update()
             self.ble_status.system_ready.register_value_update()
             self._keep_alive_thread.start()
         logger.info("BLE is ready!")
@@ -488,12 +490,10 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             handle (int): Attribute handle that notification was received on.
             data (bytes): Bytestream that was received.
         """
-        # Convert handle to UUID
-        uuid = self._ble.gatt_table.handle2uuid(handle)
         # Responses we don't care about. For now, just the BLE-spec defined battery characteristic
-        if uuid is UUID.BATT_LEVEL:
+        if (uuid := self._ble.gatt_db.handle2uuid(handle)) == GoProUUIDs.BATT_LEVEL:
             return
-        logger.debug(f'Received response on {uuid}: {data.hex(":")}')
+        logger.debug(f'Received response on BleUUID [{uuid}]: {data.hex(":")}')
 
         # Add to response dict if not already there
         if uuid not in self._active_resp:
@@ -577,14 +577,14 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             # raise ConnectionTerminated("Ble connection terminated.")
         self._ble_disconnect_event.set()
 
-    def _write_characteristic_receive_notification(self, uuid: UUID, data: bytearray) -> GoProResp:
+    def _write_characteristic_receive_notification(self, uuid: BleUUID, data: bytearray) -> GoProResp:
         """Perform a BLE write and wait for a corresponding notification response.
 
         There should hopefully not be a scenario where this needs to be called directly as it is generally
         called from the instance's API delegate (i.e. self)
 
         Args:
-            uuid (UUID): UUID to write to
+            uuid (BleUUID): BleUUID to write to
             data (bytearray): data to write
 
         Raises:
@@ -614,7 +614,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         # Store information on the response we are expecting
         self._sync_resp_wait_q.put(GoProResp._from_write_command(self._parser_map, uuid, data))
         # Perform write
-        self._ble.write(uuid.value, data)
+        self._ble.write(uuid, data)
         # Wait to be notified that response was received
         try:
             response = self._sync_resp_ready_q.get(timeout=WRITE_TIMEOUT)
@@ -646,14 +646,14 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
         return response
 
-    def _read_characteristic(self, uuid: UUID) -> GoProResp:
-        """Read a characteristic's data by UUID.
+    def _read_characteristic(self, uuid: BleUUID) -> GoProResp:
+        """Read a characteristic's data by GoProUUIDs.
 
         There should hopefully not be a scenario where this needs to be called directly as it is generally
         called from the instance's delegates (i.e. self.command, self.setting, self.ble_status)
 
         Args:
-            uuid (UUID): characteristic data to read
+            uuid (BleUUID): characteristic data to read
 
         Returns:
             bytearray: read data
@@ -666,7 +666,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             logger.debug(f"{uuid} has the semaphore")
             have_semaphore = True
 
-        received_data = self._ble.read(uuid.value)
+        received_data = self._ble.read(uuid)
 
         if self._maintain_ble and have_semaphore:
             self._ready.release()

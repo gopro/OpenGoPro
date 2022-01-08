@@ -69,14 +69,14 @@ async def main(identifier: Optional[str]) -> None:
 
     client = await connect_ble(notification_handler, identifier)
 
-    # Write to query UUID to poll the current resolution
+    # Write to query BleUUID to poll the current resolution
     logger.info("Getting the current resolution")
     event.clear()
     await client.write_gatt_char(QUERY_REQ_UUID, bytearray([0x02, 0x12, RESOLUTION_ID]))
     await event.wait()  # Wait to receive the notification response
     logger.info(f"Resolution is currently {resolution}")
 
-    # Write to command request UUID to change the video resolution (either to 1080 or 1440)
+    # Write to command request BleUUID to change the video resolution (either to 1080 or 1440)
     new_resolution = Resolution.RES_2_7K if resolution is Resolution.RES_1080 else Resolution.RES_1080
     logger.info(f"Changing the resolution to {new_resolution}...")
     event.clear()

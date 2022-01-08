@@ -101,7 +101,7 @@ async def main(identifier: Optional[str]) -> None:
 
     client = await connect_ble(notification_handler, identifier)
 
-    # Write to query UUID to poll the current resolution, fps, and fov
+    # Write to query BleUUID to poll the current resolution, fps, and fov
     logger.info("Getting the current resolution, fps, and fov,")
     event.clear()
     await client.write_gatt_char(QUERY_REQ_UUID, bytearray([0x04, 0x12, RESOLUTION_ID, FPS_ID, FOV_ID]))

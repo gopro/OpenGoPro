@@ -70,7 +70,7 @@ def test_gopro_ble_client_write(ble_client: BleClient):
 @pytest.mark.asyncio
 def test_get_gatt_table(ble_client: BleClient):
     ble_client._gatt_table = None
-    assert ble_client.gatt_table is not None
+    assert ble_client.gatt_db is not None
 
 
 @pytest.mark.asyncio

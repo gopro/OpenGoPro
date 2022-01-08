@@ -38,7 +38,7 @@ def setup_logging(logger: Any, output: Path, modules: Dict[str, int] = None) -> 
         "open_gopro.wifi.adapters.wireless": logging.DEBUG,
         "open_gopro.responses": logging.DEBUG,
         "open_gopro.util": logging.DEBUG,
-        "bleak": logging.DEBUG,
+        "bleak": logging.ERROR,
     }
 
     # Logging to file with millisecond timing

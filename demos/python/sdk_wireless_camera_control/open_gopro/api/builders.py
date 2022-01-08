@@ -40,13 +40,14 @@ from open_gopro.responses import (
 )
 from open_gopro.constants import (
     ActionId,
-    UUID,
+    BleUUID,
     CmdId,
     ResponseType,
     SettingId,
     QueryCmdId,
     StatusId,
     ErrorCode,
+    GoProUUIDs,
 )
 from open_gopro.communication_client import GoProBle, GoProWifi
 
@@ -166,11 +167,11 @@ class BleCommand(ABC):
 
     Args:
         communicator (GoProBle): BLE client to read / write
-        uuid (UUID): UUID to read / write to
+        uuid (BleUUID): BleUUID to read / write to
     """
 
     communicator: GoProBle
-    uuid: UUID
+    uuid: BleUUID
 
     def __post_init__(self) -> None:
         self.communicator._add_parser(self._identifier, self._response_parser)
@@ -188,11 +189,11 @@ class BleCommand(ABC):
 
 @dataclass
 class BleReadCommand(BleCommand):
-    """A BLE command that reads data from a UUID
+    """A BLE command that reads data from a BleUUID
 
     Args:
         communicator (GoProBle): BLE client to read
-        uuid (UUID): UUID to read to
+        uuid (BleUUID): BleUUID to read to
         response_parser (BytesParser): the parser that will parse the received bytestream into a JSON dict
     """
 
@@ -216,11 +217,11 @@ class BleReadCommand(BleCommand):
 
 @dataclass
 class BleWriteNoParamsCommand(BleCommand):
-    """A BLE command that writes to a UUID and does not accept any parameters
+    """A BLE command that writes to a BleUUID and does not accept any parameters
 
     Args:
         communicator (GoProBle): BLE client to write
-        uuid (UUID): UUID to write to
+        uuid (BleUUID): BleUUID to write to
         cmd (CmdId): Command ID that is being sent
         response_parser (Optional[ConstructBytesParser]): the parser that will parse the received bytestream into a JSON dict.
             Defaults to None
@@ -251,11 +252,11 @@ class BleWriteNoParamsCommand(BleCommand):
 
 @dataclass
 class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
-    """A BLE command that writes to a UUID and does not accept any parameters
+    """A BLE command that writes to a BleUUID and does not accept any parameters
 
     Args:
         communicator (GoProBle): BLE client to write
-        uuid (UUID): UUID to write to
+        uuid (BleUUID): BleUUID to write to
         cmd (CmdId): Command ID that is being sent
         param_builder (BytesBuilder): is responsible for building the bytestream to send from the input params
         response_parser (Optional[BytesParser]): the parser that will parse the received bytestream into a JSON dict
@@ -376,11 +377,11 @@ def build_protobuf_adapter(protobuf: Type[betterproto.Message]) -> Adapter:
 # Ignoring because hitting this mypy bug: https://github.com/python/mypy/issues/5374
 @dataclass  # type: ignore
 class BleProtoCommand(BleCommand):
-    """A BLE command that writes to a UUID and does not accept any parameters
+    """A BLE command that writes to a BleUUID and does not accept any parameters
 
     Args:
         communicator (GoProBle): BLE client to write
-        uuid (UUID): UUID to write to
+        uuid (BleUUID): BleUUID to write to
         feature_id (CmdId): Command ID that is being sent
         action_id (ActionId): protobuf specific action ID that is being sent
         request_proto (Type[betterproto.Message]): protobuf used to build command bytestream
@@ -455,8 +456,8 @@ class BleSetting(Generic[SettingValueType]):
     ) -> None:
         self.identifier = identifier
         self.communicator: GoProBle = communicator
-        self.setter_uuid: UUID = UUID.CQ_SETTINGS
-        self.reader_uuid: UUID = UUID.CQ_QUERY
+        self.setter_uuid: BleUUID = GoProUUIDs.CQ_SETTINGS
+        self.reader_uuid: BleUUID = GoProUUIDs.CQ_QUERY
         self.parser: BytesParser = parser_builder
         self.builder: BytesBuilder = parser_builder  # Just syntactic sugar
         communicator._add_parser(self.identifier, self.parser)
@@ -611,7 +612,7 @@ class BleStatus:
         identifier (StatusId): ID of status
     """
 
-    uuid = UUID.CQ_QUERY
+    uuid: BleUUID = GoProUUIDs.CQ_QUERY
 
     def __init__(self, communicator: GoProBle, identifier: StatusId, parser: BytesParser) -> None:
         self.identifier = identifier
@@ -641,10 +642,13 @@ class BleStatus:
         Returns:
             GoProResp: current status value
         """
-        self.communicator._register_listener((QueryCmdId.STATUS_VAL_PUSH, self.identifier))
-        return self.communicator._write_characteristic_receive_notification(
-            BleStatus.uuid, self._build_cmd(QueryCmdId.REG_STATUS_VAL_UPDATE)
-        )
+        if (
+            response := self.communicator._write_characteristic_receive_notification(
+                BleStatus.uuid, self._build_cmd(QueryCmdId.REG_STATUS_VAL_UPDATE)
+            )
+        ).is_ok:
+            self.communicator._register_listener((QueryCmdId.STATUS_VAL_PUSH, self.identifier))
+        return response
 
     @log_query
     def unregister_value_update(self) -> GoProResp:
@@ -653,10 +657,13 @@ class BleStatus:
         Returns:
             GoProResp: Status of unregister
         """
-        self.communicator._unregister_listener((QueryCmdId.STATUS_VAL_PUSH, self.identifier))
-        return self.communicator._write_characteristic_receive_notification(
-            BleStatus.uuid, self._build_cmd(QueryCmdId.UNREG_STATUS_VAL_UPDATE)
-        )
+        if (
+            response := self.communicator._write_characteristic_receive_notification(
+                BleStatus.uuid, self._build_cmd(QueryCmdId.UNREG_STATUS_VAL_UPDATE)
+            )
+        ).is_ok:
+            self.communicator._unregister_listener((QueryCmdId.STATUS_VAL_PUSH, self.identifier))
+        return response
 
     def _build_cmd(self, cmd: QueryCmdId) -> bytearray:
         """Build the data for a given status command.
@@ -695,7 +702,7 @@ class WifiGetJsonCommand:
 
 @dataclass
 class WifiGetJsonWithParams(WifiGetJsonCommand, Generic[CommandValueType]):
-    """A Wifi command that writes to a UUID (with parameters) and receives JSON as response
+    """A Wifi command that writes to a BleUUID (with parameters) and receives JSON as response
 
     Args:
         communicator (GoProWifi): Wifi client to write command
@@ -729,7 +736,7 @@ class WifiGetJsonWithParams(WifiGetJsonCommand, Generic[CommandValueType]):
 
 @dataclass
 class WifiGetJsonNoParams(WifiGetJsonCommand):
-    """A Wifi command that writes to a UUID (with parameters) and receives JSON as response
+    """A Wifi command that writes to a BleUUID (with parameters) and receives JSON as response
 
     Args:
         communicator (GoProWifi): Wifi client to write command
@@ -751,7 +758,7 @@ class WifiGetJsonNoParams(WifiGetJsonCommand):
 # Ignoring because hitting this mypy bug: https://github.com/python/mypy/issues/5374
 @dataclass  # type: ignore
 class WifiGetBinary(ABC):
-    """A Wifi command that writes to a UUID (with parameters) and receives a binary stream as response
+    """A Wifi command that writes to a BleUUID (with parameters) and receives a binary stream as response
 
     Args:
         communicator (GoProWifi): Wifi client to write command

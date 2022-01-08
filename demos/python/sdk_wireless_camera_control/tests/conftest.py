@@ -22,8 +22,8 @@ from open_gopro.ble import (
     BleHandle,
     DisconnectHandlerType,
     NotiHandlerType,
-    AttributeTable,
-    UUID,
+    GattDB,
+    BleUUID,
     Descriptor,
     Characteristic,
     Service,
@@ -31,7 +31,7 @@ from open_gopro.ble import (
 from open_gopro.wifi import WifiClient, WifiController, SsidState
 from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
 from open_gopro.responses import GoProResp
-from open_gopro.constants import ErrorCode, ProducerType, CmdId
+from open_gopro.constants import ErrorCode, ProducerType, CmdId, GoProUUIDs
 from open_gopro.communication_client import GoProBle, GoProWifi, GoProResponder
 from open_gopro.api import (
     api_versions,
@@ -119,20 +119,20 @@ def descriptor():
 def characteristic(descriptor):
     d = [descriptor, descriptor]
     yield Characteristic(
-        0xABCD, UUID.CQ_QUERY, ["readable", "writeable"], "test_characteristic", bytes([1, 2, 3, 4]), d
+        0xABCD, BleUUID.CQ_QUERY, ["readable", "writeable"], "test_characteristic", bytes([1, 2, 3, 4]), d
     )
 
 
 @pytest.fixture()
 def service(characteristic):
     c = {"test_char1": characteristic, "test_char2": characteristic}
-    yield Service(UUID.S_CONTROL_QUERY, "test_service", c)
+    yield Service(BleUUID.S_CONTROL_QUERY, "test_service", c)
 
 
 @pytest.fixture()
 def attribute_table(service):
-    s = {UUID.S_CONTROL_QUERY: service, UUID.S_CAMERA_MANAGEMENT: service}
-    yield AttributeTable(s)
+    s = {BleUUID.S_CONTROL_QUERY: service, BleUUID.S_CAMERA_MANAGEMENT: service}
+    yield GattDB(s)
 
 
 ##############################################################################################################
@@ -216,11 +216,11 @@ class BleCommunicatorTest(GoProBle):
         return 1
 
     def _write_characteristic_receive_notification(
-        self, uuid: UUID, data: bytearray
-    ) -> Tuple[UUID, bytearray]:
+        self, uuid: BleUUID, data: bytearray
+    ) -> Tuple[BleUUID, bytearray]:
         return uuid, data
 
-    def _read_characteristic(self, uuid: UUID) -> UUID:
+    def _read_characteristic(self, uuid: BleUUID) -> BleUUID:
         return uuid
 
     @property
@@ -361,7 +361,7 @@ class GoProTest(GoPro):
         self._api.ble_command.get_open_gopro_api_version = self._test_return_version
         self._ble.write = self._test_write
         self._ble._controller.disconnect = self._disconnect_handler
-        self._test_response_uuid = UUID.CQ_COMMAND
+        self._test_response_uuid = GoProUUIDs.CQ_COMMAND
         self._test_response_data = bytearray()
 
     def _open_wifi(self, timeout: int = 15, retries: int = 5) -> None:
@@ -374,10 +374,10 @@ class GoProTest(GoPro):
 
     def _write_characteristic_receive_notification(
         self,
-        uuid: UUID,
+        uuid: BleUUID,
         data: bytearray,
         response_data: List[bytearray] = None,
-        response_uuid: UUID = None,
+        response_uuid: BleUUID = None,
         response_id: Any = None,
     ) -> GoProResp:
         if response_uuid is None:
@@ -396,7 +396,7 @@ class GoProTest(GoPro):
     def _test_return_password(self) -> FlattenPatch:
         return FlattenPatch("password")
 
-    def _test_return_uuid(self, _) -> UUID:
+    def _test_return_uuid(self, _) -> BleUUID:
         return self._test_response_uuid
 
     def _test_write(self, uuid: str, data: bytearray) -> None:
@@ -433,7 +433,7 @@ class GoProTestMaintainBle(GoPro):
 
     def _open_ble(self, timeout: int, retries: int) -> None:
         super()._open_ble(timeout=timeout, retries=retries)
-        self._ble._gatt_table.handle2uuid = lambda *args: UUID.CQ_QUERY_RESP
+        self._ble._gatt_table.handle2uuid = lambda *args: BleUUID.CQ_QUERY_RESP
 
     def _test_return_version(self) -> FlattenPatch:
         return FlattenPatch(Version(*[int(x) for x in self._test_version.split(".")]))
@@ -471,11 +471,11 @@ class BleakWrapperTest(GoProBle):
         return 1
 
     def _write_characteristic_receive_notification(
-        self, uuid: UUID, data: bytearray
-    ) -> Tuple[UUID, bytearray]:
+        self, uuid: BleUUID, data: bytearray
+    ) -> Tuple[BleUUID, bytearray]:
         return uuid, data
 
-    def _read_characteristic(self, uuid: UUID) -> UUID:
+    def _read_characteristic(self, uuid: BleUUID) -> BleUUID:
         return uuid
 
 

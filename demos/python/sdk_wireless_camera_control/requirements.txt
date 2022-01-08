@@ -1,6 +1,5 @@
 -e .
-# bleak==0.13.0 ... replace once service UUID's arg gets added or macOS 12 bug gets fixed
--e git://github.com/hbldh/bleak.git@8f87fd9172cf689bf1e70133696d4ec27c9ae2b7#egg=bleak
+bleak==0.14.1
 construct==2.10.67
 rich== 9.13.0
 wrapt==1.12.1
