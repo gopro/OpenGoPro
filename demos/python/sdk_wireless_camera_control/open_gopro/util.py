@@ -32,6 +32,7 @@ def setup_logging(logger: Any, output: Path, modules: Dict[str, int] = None) -> 
     modules = modules or {
         "open_gopro.gopro": logging.DEBUG,
         "open_gopro.api.builders": logging.DEBUG,
+        "open_gopro.api.v1_0.wifi_commands": logging.DEBUG,
         "open_gopro.communication_client": logging.DEBUG,
         "open_gopro.ble.adapters.bleak_wrapper": logging.DEBUG,
         "open_gopro.wifi.adapters.wireless": logging.DEBUG,
@@ -43,7 +44,7 @@ def setup_logging(logger: Any, output: Path, modules: Dict[str, int] = None) -> 
     # Logging to file with millisecond timing
     fh = logging.FileHandler(output, mode="w")
     file_formatter = logging.Formatter(
-        fmt="%(threadName)13s:%(asctime)s.%(msecs)03d %(filename)-26s %(lineno)4s %(levelname)-8s | %(message)s",
+        fmt="%(threadName)13s:%(asctime)s.%(msecs)03d %(filename)-40s %(lineno)4s %(levelname)-8s | %(message)s",
         datefmt="%H:%M:%S",
     )
     fh.setFormatter(file_formatter)

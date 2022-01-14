@@ -325,7 +325,7 @@ byte data as well as by inspecting `response.id`.
 
 ```python
 def notification_handler(handle: int, data: bytes) -> None:
-    logger.info(f'Received response at {handle=}: {hexlify(data, ":")}')
+    logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
 
     response.accumulate(data)
 

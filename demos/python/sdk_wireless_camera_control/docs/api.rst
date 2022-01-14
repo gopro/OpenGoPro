@@ -10,7 +10,13 @@ this package implements can be found in the Open GoPro documentation linked from
    Not everything is exposed here. This section should only consist of the interface
    information that a user (not a developer) of the Open GoPro module should care about.
 
-Also, for a higher-level summary / usage, see the :ref:`usage<Usage>` section
+For a higher-level summary / usage, see the :ref:`usage<Usage>` section
+
+.. warning::
+   This documentation is not a substitute for the Open GoPro BLE and WiFi
+   `specifications <https://gopro.github.io/OpenGoPro/>`_. That is, this interface shows how to use the various
+   commands but is not an exhaustive source of information for what each command does. The Open GoPro specs
+   should be used simultaneously with this document for development.
 
 GoPro
 =====
@@ -53,11 +59,13 @@ These can be imported as:
 API
 ===
 
-This is both the base types that are used to implement the API (BLE Setting, Ble Status, etc). and the
+This is both the base types that are used to implement the API (BLE Setting, Ble Status, etc.) and the
 version-specific API's themselves.
 
-These should not be imported directly and instead should be accessed using the
-api(:attr:`open_gopro.gopro.GoPro.api`) attribute of a GoPro(:class:`open_gopro.gopro.GoPro`) instance.
+Since the API is configured (by version) dynamically after a connection is formed, these should not be imported
+directly and instead should be accessed using the relevant properties (`ble_command`, `wifi_setting`, etc.) of a
+GoPro(:class:`open_gopro.gopro.GoPro`) instance. Doing so will ensure that the correct parameters are selected
+and data is sent.
 
 Base Types
 ----------
@@ -84,6 +92,8 @@ WiFi Setting
 
 API Version 1.0
 ---------------
+
+This is the API that the user should actually use to interface with the camera.
 
 BLE 1.0 Commands
 ^^^^^^^^^^^^^^^^
@@ -130,6 +140,8 @@ All of these parameters can be accessed via:
 
 API Version 2.0
 ---------------
+
+This is the API that the user should actually use to interface with the camera.
 
 BLE 2.0 Commands
 ^^^^^^^^^^^^^^^^

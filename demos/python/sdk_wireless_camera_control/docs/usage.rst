@@ -85,9 +85,9 @@ API Version
 
 As mentioned above, one of the steps during the opening sequence is to query the camera's Open GoPro API version.
 Once this is done, the relevant commands, settings, and statuses properties of the `GoPro` instance are
-set to access a specific version. This means that the attributes of these properties can change depending on the camera that
-you connect to if different cameras support different Open GoPro versions. That is, different versions can, for
-example, have different commands and / or parameters.
+set to access a specific version. This means that the attributes of these properties can change depending on the
+camera that you connect to if you are connecting to cameras supporting different Open GoPro versions. That is,
+different versions can, for example, have different commands and / or parameters.
 
 Here are the relevant properties which will all be expanded upon (with accompanying example code) below:
 
@@ -108,6 +108,11 @@ For example,
 
     with GoPro() as gopro:
         print(f"This camera supports Open GoPro version {gopro.version}")
+
+.. note::
+    Since the API is set (by version) dynamically after connection, it is not possible to perform static type checking
+    on the top-level Open GoPro API calls. The benefit of this approach is that the user does not need to
+    manually choose the API to use.
 
 Camera Readiness
 ----------------
@@ -137,6 +142,7 @@ Sending Commands
 Once the `GoPro` instance has been :ref:`opened<opening>`, it is now possible to send commands to the camera
 (provided that the camera is :ref:`ready<camera readiness>`) using the Open GoPro API :ref:`version<API Version>`
 that the camera supports. This is done either via:
+
 - synchronous data operations
 - registering for asynchronous push notifications
 
@@ -148,7 +154,8 @@ Selecting Parameters
 Whenever a parameter is required for a command, it will be type-hinted in the method definition as either a basic Python type
 or an Enum from the version-specific `params` class (i.e. :class:`open_gopro.api.v1_0.params.ParamsV1_0` for version
 1.0). Since parameters can vary by open GoPro version, this params class should be accessed using the `GoPro` instance's
-`params` property (:meth:`open_gopro.gopro.GoPro.params`).
+`params` property (:meth:`open_gopro.gopro.GoPro.params`). Doing so will ensure that the correct parameter set
+is dynamically chosen.
 
 For example, if we want to send the "set shutter" command, we can see that it takes one parameter (`shutter`) which
 is of type `Shutter`:
@@ -305,11 +312,19 @@ Here is an example of registering for and receiving FOV updates:
 
 .. note:: It is probably desirable to have a separate thread to retrieve these updates as the demo examples do.
 
+It is also possible to register / unregister for all settings and / or statuses via one API call using the
+following commands:
+
+- register for all  setting notifications via :meth:`open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_settings`
+- register for all status notifications via :meth:`open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_statuses`
+- unregister for all  setting notifications via :meth:`open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_settings`
+- unregister for all status notifications via :meth:`open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_statuses`
+
 Handling Responses
 ==================
 
 Unless otherwise stated, all commands, settings, and status operations return a `GoProResp`
-(:class:`open_gopro.responses.GoProResp`) which is basically a JSON serializable dict with some helper functions.
+(:class:`open_gopro.responses.GoProResp`) which is a JSON serializable dict with some helper functions.
 
 Response Structure
 ------------------

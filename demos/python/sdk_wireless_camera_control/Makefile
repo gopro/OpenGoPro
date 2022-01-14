@@ -3,11 +3,13 @@
 
 # This must be run from the directory it exists in.
 
+SHELL				:= bash
+
 PACKAGE_DIR			:= open_gopro
 DOCS_DIR			:= docs
 DEMO_DIR			:= ${PACKAGE_DIR}/demos
 REPORTS_DIR			:= reports
-PROTO_SRC_DIR		:= ../../docs/protobuf
+PROTO_SRC_DIR		:= ../../../protobuf
 PROTO_OUT_DIR		:= ${PACKAGE_DIR}/proto
 COVERAGE_BADGE		:= ${DOCS_DIR}/_static/coverage.svg
 
@@ -59,10 +61,11 @@ generated: protos ## Create all generated code
 protos: ${PROTO_OBJS} ## Generate all protobuf python files
 
 %_pb.py: %.proto
-	mv ${PROTO_OUT_DIR}/__init__.py ${PROTO_OUT_DIR}/temp
-	${PROTOC} ${PROTOCFLAGS} $*.proto
-	mv ${PROTO_OUT_DIR}/${PACKAGE_DIR}.py ${PACKAGE_DIR}/proto/$(@F)
-	mv ${PROTO_OUT_DIR}/temp ${PROTO_OUT_DIR}/__init__.py
+	@echo "building $(@F) from $(^F) ..."
+	@mv ${PROTO_OUT_DIR}/__init__.py ${PROTO_OUT_DIR}/temp
+	@${PROTOC} ${PROTOCFLAGS} $*.proto > /dev/null 2> /dev/null 2>&1
+	@mv ${PROTO_OUT_DIR}/${PACKAGE_DIR}.py ${PROTO_OUT_DIR}/$(@F)
+	@mv ${PROTO_OUT_DIR}/temp ${PROTO_OUT_DIR}/__init__.py
 
 ########################################## Testing ###########################################################
 
@@ -103,9 +106,9 @@ format: ## Run Black to format code
 .PHONY: lint
 lint: reports ## Run mypy for static typing analysis and pylint for linting
 	@echo "Performing static typing analysis..."
-	@mypy ${PACKAGE_DIR} | tee ${REPORTS_DIR}/linting
+	@set -o pipefail; mypy ${PACKAGE_DIR} | tee ${REPORTS_DIR}/linting
 	@echo "Linting..."
-	@pylint ${PACKAGE_DIR} | tee -a ${REPORTS_DIR}/linting
+	@set -o pipefail; pylint ${PACKAGE_DIR} | tee -a ${REPORTS_DIR}/linting
 
 ######################################### Documentation ######################################################
 
@@ -118,7 +121,7 @@ clean_docs:  ## Remove generated docs
 .PHONY: docs-api-check
 docs-api-check: clean_artifacts ## Static analysis of docstrings for missing / errors
 	@echo "Validating docstrings..."
-	@pydocstyle -ve ${PACKAGE_DIR}/** | tee ${REPORTS_DIR}/docstrings
+	@set -o pipefail; pydocstyle -ve ${PACKAGE_DIR}/** | tee ${REPORTS_DIR}/docstrings
 
 .PHONY: sphinx
 sphinx: clean_docs reports ## Generate Sphinx documentation

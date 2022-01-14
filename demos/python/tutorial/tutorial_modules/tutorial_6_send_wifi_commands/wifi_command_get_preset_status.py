@@ -1,6 +1,7 @@
 # wifi_command_get_preset_status.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:06:02 PM
 
+import sys
 import json
 import logging
 import argparse
@@ -13,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 
-def main():
+def main() -> None:
     # Build the HTTP GET request
     url = GOPRO_BASE_URL + "/gopro/camera/presets/get"
     logger.info(f"Getting the current preset status: sending {url}")
@@ -30,4 +31,10 @@ def main():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Get the current preset status.")
     parser.parse_args()
-    main()
+
+    try:
+        main()
+    except:
+        sys.exit(-1)
+    else:
+        sys.exit(0)

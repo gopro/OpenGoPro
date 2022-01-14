@@ -7,7 +7,7 @@ from __future__ import annotations
 import logging
 from typing import Type
 
-from construct import Int8ub, Int32ub, Int64ub, Flag, GreedyString, GreedyBytes, Struct, Padding
+from construct import Int8ub, Int32ub, Int64ub, Flag, GreedyString, Struct, Padding, PaddedString, this, Hex
 
 from open_gopro import proto
 from open_gopro.responses import GoProResp
@@ -17,11 +17,20 @@ from open_gopro.api.builders import (
     BleSetting,
     BleWriteNoParamsCommand,
     BleWriteWithParamsCommand,
+    RegisterUnregisterAll,
     BleReadCommand,
     BleProtoCommand,
     build_enum_adapter,
+    DateTimeAdapter,
 )
-from open_gopro.constants import ActionId, UUID, SettingId, StatusId, CmdId
+from open_gopro.constants import (
+    ActionId,
+    CmdId,
+    QueryCmdId,
+    SettingId,
+    StatusId,
+    UUID,
+)
 from .params import ParamsV1_0 as Params
 
 logger = logging.getLogger(__name__)
@@ -40,43 +49,106 @@ class BleCommandsV1_0:
     """
 
     def __init__(self, communicator: GoProBle):
-        class SetShutter(BleWriteWithParamsCommand[Params.Shutter]):
-            ...
 
-        self.set_shutter = SetShutter(communicator, UUID.CQ_COMMAND, CmdId.SET_SHUTTER, Int8ub)
-        """Set shutter on or off."""
+        self.set_shutter = BleWriteWithParamsCommand[Params.Shutter](
+            communicator, UUID.CQ_COMMAND, CmdId.SET_SHUTTER, Int8ub
+        )
+        """Set shutter on or off.
+
+        Args:
+            value (Params.Shutter): on or off
+
+        Returns:
+            GoProResp: command status
+        """
 
         self.power_down = BleWriteNoParamsCommand(communicator, UUID.CQ_COMMAND, CmdId.POWER_DOWN)
-        """Power down the camera."""
+        """Power down the camera.
+
+        Returns:
+            GoProResp: command status
+        """
 
         self.sleep = BleWriteNoParamsCommand(communicator, UUID.CQ_COMMAND, CmdId.SLEEP)
-        """Put the camera in standby."""
+        """Put the camera in standby.
 
-        class EnableWifi(BleWriteWithParamsCommand[bool]):
-            ...
+        Returns:
+            GoProResp: command status
+        """
 
-        self.enable_wifi_ap = EnableWifi(communicator, UUID.CQ_COMMAND, CmdId.SET_WIFI, Int8ub)
-        """Enable / disable the Wi-Fi Access Point."""
+        self.enable_wifi_ap = BleWriteWithParamsCommand[bool](
+            communicator, UUID.CQ_COMMAND, CmdId.SET_WIFI, Int8ub
+        )
+        """Enable / disable the Wi-Fi Access Point.
 
-        self.get_hardware_info = BleWriteNoParamsCommand(communicator, UUID.CQ_COMMAND, CmdId.GET_HW_INFO)
-        """Get hardware information."""
+        Args:
+            value (bool): True to enable, False to disable
 
-        class PresetGroup(BleWriteWithParamsCommand[Params.PresetGroup]):
-            ...
+        Returns:
+            GoProResp: command status
+        """
 
-        self.load_preset_group = PresetGroup(communicator, UUID.CQ_COMMAND, CmdId.LOAD_PRESET_GROUP, Int32ub)
-        """Load a Preset Group."""
+        self.get_hardware_info = BleWriteNoParamsCommand(
+            communicator,
+            UUID.CQ_COMMAND,
+            CmdId.GET_HW_INFO,
+            response_parser=Struct(
+                Padding(1),
+                "model_number" / Int32ub,
+                "model_name_len" / Int8ub,
+                "model_name" / PaddedString(this.model_name_len, "utf-8"),
+                Padding(1),
+                "board_type" / Hex(Int32ub),
+                "firmware_version_len" / Int8ub,
+                "firmware_version" / PaddedString(this.firmware_version_len, "utf-8"),
+                "serial_number_len" / Int8ub,
+                "serial_number" / PaddedString(this.serial_number_len, "utf-8"),
+                "ap_ssid_len" / Int8ub,
+                "ap_ssid" / PaddedString(this.ap_ssid_len, "utf-8"),
+                "ap_mac_len" / Int8ub,
+                "ap_mac" / PaddedString(this.ap_mac_len, "utf-8"),
+            ),
+        )
+        """Get hardware information.
 
-        class Preset(BleWriteWithParamsCommand[Params.Preset]):
-            ...
+        Returns:
+            GoProResp: command status and hardware info (model name, etc.)
+        """
 
-        self.load_preset = Preset(communicator, UUID.CQ_COMMAND, CmdId.LOAD_PRESET, Int32ub)
-        """Load a Preset"""
+        self.load_preset_group = BleWriteWithParamsCommand[Params.PresetGroup](
+            communicator, UUID.CQ_COMMAND, CmdId.LOAD_PRESET_GROUP, Int32ub
+        )
+        """Load a Preset Group.
+
+        Once complete, the most recently used preset in this group will be active.
+
+        Args:
+            value (Params.PresetGroup): preset group to load.
+
+        Returns:
+            GoProResp: command status
+        """
+
+        self.load_preset = BleWriteWithParamsCommand[Params.Preset](
+            communicator, UUID.CQ_COMMAND, CmdId.LOAD_PRESET, Int32ub
+        )
+        """Load a Preset
+
+        Args:
+            value (Params.Preset): preset load.
+
+        Returns:
+            GoProResp: command status
+        """
 
         self.set_third_party_client_info = BleWriteNoParamsCommand(
             communicator, UUID.CQ_COMMAND, CmdId.SET_THIRD_PARTY_CLIENT_INFO
         )
-        """Flag as third party app."""
+        """Flag as third party app.
+
+        Returns:
+            GoProResp: command status
+        """
 
         self.get_open_gopro_api_version = BleWriteNoParamsCommand(
             communicator,
@@ -84,7 +156,11 @@ class BleCommandsV1_0:
             CmdId.GET_THIRD_PARTY_API_VERSION,
             response_parser=Struct(Padding(1), "major" / Int8ub, Padding(1), "minor" / Int8ub),
         )
-        """Get Open GoPro API version that is supported by the peer camera."""
+        """Get Open GoPro API version that is supported by the peer camera.
+
+        Returns:
+            GoProResp: command status and version (separate into major and minor fields)
+        """
 
         class TurboMode(BleProtoCommand):
             def __call__(self, active: bool) -> GoProResp:
@@ -98,7 +174,14 @@ class BleCommandsV1_0:
             proto.RequestSetTurboActive,
             proto.ResponseGeneric,
         )
-        """Enable / disable turbo mode."""
+        """Enable / disable turbo mode.
+
+        Args:
+            active (bool): True to enable, False to disable.
+
+        Returns:
+            TODO
+        """
 
         # @proto_cmd(
         #     UUID.CQ_COMMAND,
@@ -125,22 +208,93 @@ class BleCommandsV1_0:
         self.get_wifi_ssid = BleReadCommand(
             communicator, UUID.WAP_SSID, Struct("ssid" / GreedyString("utf-8"))
         )
-        """Get the Wifi SSID."""
+        """Get the Wifi SSID.
+
+        Returns:
+            GoProResp: command status and SSID
+        """
 
         self.get_wifi_password = BleReadCommand(
             communicator, UUID.WAP_PASSWORD, Struct("password" / GreedyString("utf-8"))
         )
-        """Get the Wifi password."""
+        """Get the Wifi password.
+
+        Returns:
+            GoProResp: command status and passworde
+        """
 
         self.get_camera_statuses = BleWriteNoParamsCommand(
             communicator, UUID.CQ_QUERY, CmdId.GET_CAMERA_STATUSES
         )
-        """Get all camera statuses."""
+        """Get all camera statuses.
+
+        Returns:
+            GoProResp: command status and current value of all statuses
+        """
 
         self.get_camera_settings = BleWriteNoParamsCommand(
             communicator, UUID.CQ_QUERY, CmdId.GET_CAMERA_SETTINGS
         )
-        """Get all camera settings."""
+        """Get all camera settings.
+
+        Returns:
+            GoProResp: command status and current value of all settings
+        """
+
+        self.register_for_all_statuses = RegisterUnregisterAll(
+            communicator,
+            UUID.CQ_QUERY,
+            CmdId.REGISTER_ALL_STATUSES,
+            producer=(StatusId, QueryCmdId.STATUS_VAL_PUSH),
+            action=RegisterUnregisterAll.Action.REGISTER,
+        )
+        """Register push notifications for all statuses
+
+        Returns:
+            GoProResp: command status and current value of all statuses
+        """
+
+        self.unregister_for_all_statuses = RegisterUnregisterAll(
+            communicator,
+            UUID.CQ_QUERY,
+            CmdId.UNREGISTER_ALL_STATUSES,
+            producer=(StatusId, QueryCmdId.STATUS_VAL_PUSH),
+            action=RegisterUnregisterAll.Action.UNREGISTER,
+        )
+        """Unregister push notifications for all statuses
+
+        Returns:
+            GoProResp: command status
+        """
+
+        self.register_for_all_settings = RegisterUnregisterAll(
+            communicator,
+            UUID.CQ_QUERY,
+            CmdId.REGISTER_ALL_SETTINGS,
+            producer=(SettingId, QueryCmdId.STATUS_VAL_PUSH),
+            action=RegisterUnregisterAll.Action.REGISTER,
+        )
+        """Register push notifications for all settings
+
+        Returns:
+            GoProResp: command status and current value of all settings
+        """
+
+        self.unregister_for_all_settings = RegisterUnregisterAll(
+            communicator,
+            UUID.CQ_QUERY,
+            CmdId.UNREGISTER_ALL_SETTINGS,
+            producer=(SettingId, QueryCmdId.STATUS_VAL_PUSH),
+            action=RegisterUnregisterAll.Action.UNREGISTER,
+        )
+        """Unregister push notifications for all settings
+
+        Returns:
+            GoProResp: command status
+        """
+
+        # TODO
+        # self.register_for_all_capabilities
 
 
 class BleSettingsV1_0:
@@ -151,6 +305,7 @@ class BleSettingsV1_0:
 
     Args:
         communicator (GoProBle): Adapter to read / write settings
+        params: (Type[Params]): the set of parameters to use to build the settings
     """
 
     class Iterator:
@@ -182,67 +337,45 @@ class BleSettingsV1_0:
     def __init__(self, communicator: GoProBle, params: Type[Params]):
         self.communicator = communicator
 
-        # Lots of boiler-plate here. This is because we need a way to keep the type-hinting on the "set" method.
-        # Every method I've tried to dynamically create the classes (metaclasses, class factories, and typ())
-        # loses the type hinting
-
-        class Resolution(BleSetting[Params.Resolution]):
-            ...
-
-        self.resolution = Resolution(
+        self.resolution: BleSetting = BleSetting[Params.Resolution](
             self.communicator, SettingId.RESOLUTION, build_enum_adapter(params.Resolution)
         )
-        """Resolution. Set with :py:class:`open_gopro.params.Resolution`"""
+        """Resolution. Set with :py:class:`Params.Resolution`"""
 
-        class FPS(BleSetting[Params.FPS]):
-            ...
+        self.fps: BleSetting = BleSetting[Params.FPS](
+            self.communicator, SettingId.FPS, build_enum_adapter(params.FPS)
+        )
+        """Frames per second. Set with :py:class:`Params.FPS`"""
 
-        self.fps = FPS(self.communicator, SettingId.FPS, build_enum_adapter(params.FPS))
-        """Frames per second. Set with :py:class:`open_gopro.params.FPS`"""
+        self.auto_off: BleSetting = BleSetting[Params.AutoOff](
+            self.communicator, SettingId.AUTO_OFF, build_enum_adapter(params.AutoOff)
+        )
+        """Set the auto off time. Set with :py:class:`Params.AutoOff`"""
 
-        class AutoOffTime(BleSetting[Params.AutoOff]):
-            ...
-
-        self.auto_off = AutoOffTime(self.communicator, SettingId.AUTO_OFF, build_enum_adapter(params.AutoOff))
-        """Set the auto off time."""
-
-        class VideoFOV(BleSetting[Params.VideoFOV]):
-            ...
-
-        self.video_field_of_view = VideoFOV(
+        self.video_field_of_view: BleSetting = BleSetting[Params.VideoFOV](
             self.communicator, SettingId.VIDEO_FOV, build_enum_adapter(params.VideoFOV)
         )
-        """Video FOV. Set with :py:class:`open_gopro.params.VideoFOV`"""
+        """Video FOV. Set with :py:class:`Params.VideoFOV`"""
 
-        class PhotoFOV(BleSetting[Params.PhotoFOV]):
-            ...
-
-        self.photo_field_of_view = PhotoFOV(
+        self.photo_field_of_view: BleSetting = BleSetting[Params.PhotoFOV](
             self.communicator, SettingId.PHOTO_FOV, build_enum_adapter(params.PhotoFOV)
         )
-        """Photo FOV. Set with :py:class:`open_gopro.params.PhotoFOV`"""
+        """Photo FOV. Set with :py:class:`Params.PhotoFOV`"""
 
-        class Multishot(BleSetting[Params.MultishotFOV]):
-            ...
-
-        self.multi_shot_field_of_view = Multishot(
+        self.multi_shot_field_of_view: BleSetting = BleSetting[Params.MultishotFOV](
             self.communicator, SettingId.MULTI_SHOT_FOV, build_enum_adapter(params.MultishotFOV)
         )
-        """Multi-shot FOV. Set with :py:class:`open_gopro.params.Multishot`"""
+        """Multi-shot FOV. Set with :py:class:`Params.Multishot`"""
 
-        class LED(BleSetting[Params.LED]):
-            ...
+        self.led: BleSetting = BleSetting[Params.LED](
+            self.communicator, SettingId.LED, build_enum_adapter(params.LED)
+        )
+        """Set the LED options (or also send the BLE keep alive signal). Set with :py:class:`Params.LED`"""
 
-        self.led = LED(self.communicator, SettingId.LED, build_enum_adapter(params.LED))
-        """Set the LED options (or also send the BLE keep alive signal). Set with :py:class:`open_gopro.params.LED`"""
-
-        class MaxLensMode(BleSetting[Params.MaxLensMode]):
-            ...
-
-        self.max_lens_mode = MaxLensMode(
+        self.max_lens_mode: BleSetting = BleSetting[Params.MaxLensMode](
             self.communicator, SettingId.MAX_LENS_MOD, build_enum_adapter(params.MaxLensMode)
         )
-        """Enable / disable max lens mod. Set with :py:class:`open_gopro.params.MaxLensMode`"""
+        """Enable / disable max lens mod. Set with :py:class:`Params.MaxLensMode`"""
 
     def __iter__(self) -> Iterator:
         """Return an iterable of this instance's attributes
@@ -259,6 +392,10 @@ class BleStatusesV1_0:
     """All of the BLE Statuses.
 
     To be used by a GoProBle delegate to build status commands.
+
+    Args:
+        communicator (GoProBle): Adapter to read / write settings
+        params: (Type[Params]): the set of parameters to use to build the statuses
     """
 
     class Iterator:
@@ -355,7 +492,7 @@ class BleStatusesV1_0:
         self.remote_ctrl_conn: BleStatus = BleStatus(self.communicator, StatusId.REMOTE_CTRL_CONN, Flag)
         """Is the remote control connected?"""
 
-        self.pair_state2: BleStatus = BleStatus(self.communicator, StatusId.PAIR_STATE2, GreedyBytes)
+        self.pair_state2: BleStatus = BleStatus(self.communicator, StatusId.PAIR_STATE2, Int8ub)
         """Wireless Pairing State."""
 
         self.wlan_ssid: BleStatus = BleStatus(
@@ -398,7 +535,7 @@ class BleStatusesV1_0:
         """Total number of videos on sdcard."""
 
         self.date_time: BleStatus = BleStatus(
-            self.communicator, StatusId.DATE_TIME, GreedyString(encoding="utf-8")
+            self.communicator, StatusId.DATE_TIME, DateTimeAdapter(GreedyString(encoding="utf-8"))
         )
         """Current date/time (format: %YY%MM%DD%HH%MM%SS, all values in hex)."""
 

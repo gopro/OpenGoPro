@@ -15,6 +15,7 @@ from typing import Any, Dict, Final, Optional, Type, Callable, Union, Generic, P
 
 import wrapt
 import requests
+from open_gopro.api.v1_0.api import ApiV1_0
 
 from open_gopro.exceptions import InvalidOpenGoProVersion, ResponseTimeout, InvalidConfiguration
 from open_gopro.ble import BLEController, UUID, BleDevice
@@ -144,8 +145,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         GoProWifi.__init__(self, wifi_adapter())
 
         # We start with version 1.0. It will be updated once we query the version
-        # TODO can we inherit instead of compose? The problem is it will dynamically change after instantication
-        self._api = Api(self, self)
+        self._api: Api = ApiV1_0(self, self)
 
         # Current accumulating synchronous responses, indexed by UUID. This assumes there can only be one active response per UUID
         self._active_resp: Dict[UUID, GoProResp] = {}
@@ -242,15 +242,15 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         return self._internal_state & GoPro._InternalState.SYSTEM_BUSY == 1
 
     @property
-    def version(self) -> str:
-        """What API version does the connected device support?
+    def version(self) -> float:
+        """The API version does the connected camera supports
 
         Note! If we have not yet connected and query the peer to find its version, this will be set to 1.0
 
         Returns:
-            str: version supported in MAJOR.MINOR format
+            float: supported version in decimal form
         """
-        return self._api.version
+        return float(self._api.version)
 
     @property
     def ble_command(self) -> BleCommands:
@@ -353,6 +353,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         """Get a notification that we received from a registered listener.
 
         If timeout is None, this will block until a notification is received.
+        The updates are received via FIFO
 
         Args:
             timeout (float, optional): Time to wait for a notification before returning. Defaults to None (wait forever)
@@ -440,7 +441,8 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         Args:
             producer (ProducerType): Producer to stop listening to.
         """
-        del self._listeners[producer]
+        if producer in self._listeners:
+            del self._listeners[producer]
 
     def _open_ble(self, timeout: int = 10, retries: int = 5) -> None:
         """Connect the instance to a device via BLE.
@@ -489,28 +491,37 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             response._parse()
 
             # Handle internal statuses
-            if (
-                response.cmd
-                in [QueryCmdId.REG_STATUS_VAL_UPDATE, QueryCmdId.GET_STATUS_VAL, QueryCmdId.STATUS_VAL_PUSH]
-                and StatusId.ENCODING in response.data
-            ):
-                with self._state_condition:
-                    if response[StatusId.ENCODING] is True:
-                        self._internal_state |= GoPro._InternalState.ENCODING
-                    else:
-                        self._internal_state &= ~GoPro._InternalState.ENCODING
-                    self._state_condition.notify()
-            if (
-                response.cmd
-                in [QueryCmdId.REG_STATUS_VAL_UPDATE, QueryCmdId.GET_STATUS_VAL, QueryCmdId.STATUS_VAL_PUSH]
-                and StatusId.SYSTEM_READY in response.data
-            ):
-                with self._state_condition:
-                    if response[StatusId.SYSTEM_READY] is True:
-                        self._internal_state &= ~GoPro._InternalState.SYSTEM_BUSY
-                    else:
-                        self._internal_state |= GoPro._InternalState.SYSTEM_BUSY
-                    self._state_condition.notify()
+            if self._maintain_ble:
+                if (
+                    response.cmd
+                    in [
+                        QueryCmdId.REG_STATUS_VAL_UPDATE,
+                        QueryCmdId.GET_STATUS_VAL,
+                        QueryCmdId.STATUS_VAL_PUSH,
+                    ]
+                    and StatusId.ENCODING in response.data
+                ):
+                    with self._state_condition:
+                        if response[StatusId.ENCODING] is True:
+                            self._internal_state |= GoPro._InternalState.ENCODING
+                        else:
+                            self._internal_state &= ~GoPro._InternalState.ENCODING
+                        self._state_condition.notify()
+                if (
+                    response.cmd
+                    in [
+                        QueryCmdId.REG_STATUS_VAL_UPDATE,
+                        QueryCmdId.GET_STATUS_VAL,
+                        QueryCmdId.STATUS_VAL_PUSH,
+                    ]
+                    and StatusId.SYSTEM_READY in response.data
+                ):
+                    with self._state_condition:
+                        if response[StatusId.SYSTEM_READY] is True:
+                            self._internal_state &= ~GoPro._InternalState.SYSTEM_BUSY
+                        else:
+                            self._internal_state |= GoPro._InternalState.SYSTEM_BUSY
+                        self._state_condition.notify()
 
             # Check if this is the awaited synchronous response (id matches). Note! these have to come in order.
             response_claimed = False
@@ -691,11 +702,13 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
                 request = requests.get(url)
                 request.raise_for_status()
                 response = GoProResp._from_http_response(self._parser_map, request)
+                break
             except requests.exceptions.HTTPError as e:
                 # The camera responded with an error. Break since we successfully sent the command and attempt
                 # to continue
                 logger.warning(e)
                 response = GoProResp._from_http_response(self._parser_map, e.response)
+                break
             # TODO figure out why these are failing. For now just retry
             except requests.exceptions.ConnectionError as e:
                 logger.warning(repr(e))

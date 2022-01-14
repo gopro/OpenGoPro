@@ -42,6 +42,8 @@ For more information on the API, see the relevant documentation:
 - `BLE API <https://gopro.github.io/OpenGoPro/ble>`_
 - `Wi-Fi API <https://gopro.github.io/OpenGoPro/wifi>`_
 
+.. warning::
+    This package has only been tested on Python 3.8.x
 
 Features
 --------

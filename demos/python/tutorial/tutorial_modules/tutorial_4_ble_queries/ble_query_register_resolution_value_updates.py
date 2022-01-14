@@ -1,11 +1,13 @@
 # ble_query_register_resolution_value_updates.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:06:00 PM
 
+import sys
 import time
 import enum
 import asyncio
 import logging
 import argparse
+from typing import Optional
 from binascii import hexlify
 
 from bleak import BleakClient
@@ -29,7 +31,7 @@ class Resolution(enum.Enum):
 resolution: Resolution
 
 
-async def main(identifier):
+async def main(identifier: Optional[str]) -> None:
     # Synchronization event to wait until notification response is received
     event = asyncio.Event()
 
@@ -45,7 +47,7 @@ async def main(identifier):
     response = Response()
 
     def notification_handler(handle: int, data: bytes) -> None:
-        logger.info(f'Received response at {handle=}: {hexlify(data, ":")}')
+        logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
 
         response.accumulate(data)
 
@@ -105,4 +107,9 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    asyncio.run(main(args.identifier))
+    try:
+        asyncio.run(main(args.identifier))
+    except:
+        sys.exit(-1)
+    else:
+        sys.exit(0)

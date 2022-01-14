@@ -15,12 +15,13 @@ from open_gopro.communication_client import GoProResponder
 from open_gopro.api import Api
 from open_gopro.constants import QueryCmdId, SettingId, StatusId, UUID
 from open_gopro.responses import GoProResp, ParserMapType
+from open_gopro.api.v1_0.api import ApiV1_0
 
 
 @pytest.fixture(scope="function")
 def parser_map() -> ParserMapType:
     responder = GoProResponder()
-    Api(responder, responder)
+    ApiV1_0(responder, responder)
     yield responder._parser_map
 
 

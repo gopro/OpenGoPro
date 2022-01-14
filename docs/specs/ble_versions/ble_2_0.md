@@ -283,7 +283,7 @@ The set of presets available to load at any moment depends on the value of certa
       <td>Preset ID</td>
     </tr>
     <tr>
-      <td rowspan="12">Video Performance Modes: Maximum Video Performance</td>
+      <td rowspan="12">Max Lens: OFF</td>
       <td>Standard</td>
       <td>0x00000000</td>
     </tr>
@@ -332,7 +332,40 @@ The set of presets available to load at any moment depends on the value of certa
       <td>0x00020002</td>
     </tr>
     <tr>
-      <td rowspan="11">Video Performance Modes: Extended Battery</td>
+      <td rowspan="3">Max Lens: ON</td>
+      <td>Max Video</td>
+      <td>0x00030000</td>
+    </tr>
+    <tr>
+      <td>Max Photo</td>
+      <td>0x00040000</td>
+    </tr>
+    <tr>
+      <td>Max Timewarp</td>
+      <td>0x00050000</td>
+    </tr>
+    <tr>
+      <td rowspan="15">Video Performance Mode: Maximum Video Performance</td>
+      <td>Standard</td>
+      <td>0x00000000</td>
+    </tr>
+    <tr>
+      <td>Activity</td>
+      <td>0x00000001</td>
+    </tr>
+    <tr>
+      <td>Cinematic</td>
+      <td>0x00000002</td>
+    </tr>
+    <tr>
+      <td>Ultra Slo-Mo</td>
+      <td>0x00000004</td>
+    </tr>
+    <tr>
+      <td>Basic</td>
+      <td>0x00000005</td>
+    </tr>
+    <tr>
       <td>Photo</td>
       <td>0x00010000</td>
     </tr>
@@ -359,6 +392,59 @@ The set of presets available to load at any moment depends on the value of certa
     <tr>
       <td>Night Lapse</td>
       <td>0x00020002</td>
+    </tr>
+    <tr>
+      <td>Max Video</td>
+      <td>0x00030000</td>
+    </tr>
+    <tr>
+      <td>Max Photo</td>
+      <td>0x00040000</td>
+    </tr>
+    <tr>
+      <td>Max Timewarp</td>
+      <td>0x00050000</td>
+    </tr>
+    <tr>
+      <td rowspan="14">Video Performance Mode: Extended Battery</td>
+      <td>Photo</td>
+      <td>0x00010000</td>
+    </tr>
+    <tr>
+      <td>Live Burst</td>
+      <td>0x00010001</td>
+    </tr>
+    <tr>
+      <td>Burst Photo</td>
+      <td>0x00010002</td>
+    </tr>
+    <tr>
+      <td>Night Photo</td>
+      <td>0x00010003</td>
+    </tr>
+    <tr>
+      <td>Time Warp</td>
+      <td>0x00020000</td>
+    </tr>
+    <tr>
+      <td>Time Lapse</td>
+      <td>0x00020001</td>
+    </tr>
+    <tr>
+      <td>Night Lapse</td>
+      <td>0x00020002</td>
+    </tr>
+    <tr>
+      <td>Max Video</td>
+      <td>0x00030000</td>
+    </tr>
+    <tr>
+      <td>Max Photo</td>
+      <td>0x00040000</td>
+    </tr>
+    <tr>
+      <td>Max Timewarp</td>
+      <td>0x00050000</td>
     </tr>
     <tr>
       <td>Standard [EB]</td>
@@ -377,7 +463,7 @@ The set of presets available to load at any moment depends on the value of certa
       <td>0x00080003</td>
     </tr>
     <tr>
-      <td rowspan="9">Video Performance Modes: Tripod / Stationary Video</td>
+      <td rowspan="12">Video Performance Mode: Tripod / Stationary Video</td>
       <td>Photo</td>
       <td>0x00010000</td>
     </tr>
@@ -404,6 +490,18 @@ The set of presets available to load at any moment depends on the value of certa
     <tr>
       <td>Night Lapse</td>
       <td>0x00020002</td>
+    </tr>
+    <tr>
+      <td>Max Video</td>
+      <td>0x00030000</td>
+    </tr>
+    <tr>
+      <td>Max Photo</td>
+      <td>0x00040000</td>
+    </tr>
+    <tr>
+      <td>Max Timewarp</td>
+      <td>0x00050000</td>
     </tr>
     <tr>
       <td>4K Tripod</td>
@@ -450,6 +548,45 @@ It is recommended that the user check for and--if necessary--disable Turbo Trans
 For details on which cameras are supported and how to enable and disable Turbo Transfer, see
 <a href="#OpenGoPro-BluetoothLowEnergyAPI(v2.0)-ProtobufCommands">Protobuf Commands</a>.
 </p>
+
+
+## Global Behaviors
+<p>
+In order to prevent undefined behavior between the camera and a connected app, simultaneous use of the camera and a 
+connected app is discouraged.
+</p>
+
+<p>
+Best practice for synchronizing user/app control is to use the <i>Set Camera Control Status</i> command and
+corresponding <i>Camera Control Status</i> (CCS) camera statuses in alignment with the finite state machine below:
+</p>
+
+```plantuml!
+
+
+' Define states
+IDLE: Control Status: Idle
+CAMERA_CONTROL: Control Status: Camera Control
+EXTERNAL_CONTROL: Control Status: External Control
+
+' Define transitions
+[*]              ->      IDLE
+
+IDLE             ->      IDLE: App sets CCS: Idle
+IDLE             -up->   CAMERA_CONTROL: User interacts with camera
+IDLE             -down-> EXTERNAL_CONTROL: App sets CCS: External Control
+
+CAMERA_CONTROL   ->      CAMERA_CONTROL: User interacts with camera
+CAMERA_CONTROL   -down-> IDLE: User returns camera to idle screen\nApp sets CCS: Idle
+
+EXTERNAL_CONTROL ->    EXTERNAL_CONTROL: App sets CCS: External Control
+EXTERNAL_CONTROL -up-> IDLE: App sets CCS: Idle\nUser interacts with camera
+EXTERNAL_CONTROL -up-> CAMERA_CONTROL: User interacts with camera
+
+
+
+
+```
 
 ## Limitations
 
@@ -779,6 +916,30 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>06:40:04:00:02:00:02</td>
       <td>02:40:00</td>
       <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Max Video</td>
+      <td>06:40:04:00:03:00:00</td>
+      <td>02:40:00</td>
+      <td>\&gt;= v01.20.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Max Photo</td>
+      <td>06:40:04:00:04:00:00</td>
+      <td>02:40:00</td>
+      <td>\&gt;= v01.20.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Max Timewarp</td>
+      <td>06:40:04:00:05:00:00</td>
+      <td>02:40:00</td>
+      <td>\&gt;= v01.20.00</td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x40</td>
@@ -1200,39 +1361,39 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>59</td>
-      <td>Auto Off</td>
-      <td>Set setup auto power down (id: 59) to never (id: 0)</td>
+      <td>Auto Power Down</td>
+      <td>Set auto power down (id: 59) to never (id: 0)</td>
       <td>03:3B:01:00</td>
       <td>01:3B:00</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>59</td>
-      <td>Auto Off</td>
-      <td>Set setup auto power down (id: 59) to 5 min (id: 4)</td>
+      <td>Auto Power Down</td>
+      <td>Set auto power down (id: 59) to 5 min (id: 4)</td>
       <td>03:3B:01:04</td>
       <td>01:3B:00</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>59</td>
-      <td>Auto Off</td>
-      <td>Set setup auto power down (id: 59) to 15 min (id: 6)</td>
+      <td>Auto Power Down</td>
+      <td>Set auto power down (id: 59) to 15 min (id: 6)</td>
       <td>03:3B:01:06</td>
       <td>01:3B:00</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>59</td>
-      <td>Auto Off</td>
-      <td>Set setup auto power down (id: 59) to 30 min (id: 7)</td>
+      <td>Auto Power Down</td>
+      <td>Set auto power down (id: 59) to 30 min (id: 7)</td>
       <td>03:3B:01:07</td>
       <td>01:3B:00</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
-      <td>Lens</td>
+      <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to wide (id: 0)</td>
       <td>03:79:01:00</td>
       <td>02:79:00</td>
@@ -1240,7 +1401,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
-      <td>Lens</td>
+      <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to narrow (id: 2)</td>
       <td>03:79:01:02</td>
       <td>02:79:00</td>
@@ -1248,7 +1409,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
-      <td>Lens</td>
+      <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to superview (id: 3)</td>
       <td>03:79:01:03</td>
       <td>02:79:00</td>
@@ -1256,7 +1417,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
-      <td>Lens</td>
+      <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to linear (id: 4)</td>
       <td>03:79:01:04</td>
       <td>02:79:00</td>
@@ -1264,7 +1425,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
-      <td>Lens</td>
+      <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to max superview (id: 7)</td>
       <td>03:79:01:07</td>
       <td>02:79:00</td>
@@ -1272,7 +1433,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
-      <td>Lens</td>
+      <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to linear + horizon leveling (id: 8)</td>
       <td>03:79:01:08</td>
       <td>02:79:00</td>
@@ -1280,7 +1441,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>122</td>
-      <td>Lens</td>
+      <td>Photo Digital Lenses</td>
       <td>Set photo digital lenses (id: 122) to narrow (id: 19)</td>
       <td>03:7A:01:13</td>
       <td>02:7A:00</td>
@@ -1288,7 +1449,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>122</td>
-      <td>Lens</td>
+      <td>Photo Digital Lenses</td>
       <td>Set photo digital lenses (id: 122) to max superview (id: 100)</td>
       <td>03:7A:01:64</td>
       <td>02:7A:00</td>
@@ -1296,7 +1457,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>122</td>
-      <td>Lens</td>
+      <td>Photo Digital Lenses</td>
       <td>Set photo digital lenses (id: 122) to wide (id: 101)</td>
       <td>03:7A:01:65</td>
       <td>02:7A:00</td>
@@ -1304,7 +1465,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>122</td>
-      <td>Lens</td>
+      <td>Photo Digital Lenses</td>
       <td>Set photo digital lenses (id: 122) to linear (id: 102)</td>
       <td>03:7A:01:66</td>
       <td>02:7A:00</td>
@@ -1312,56 +1473,72 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>123</td>
-      <td>Lens</td>
-      <td>Set multi shot digital lenses (id: 123) to narrow (id: 19)</td>
+      <td>Time Lapse Digital Lenses</td>
+      <td>Set time lapse digital lenses (id: 123) to narrow (id: 19)</td>
       <td>03:7B:01:13</td>
       <td>02:7B:00</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>123</td>
-      <td>Lens</td>
-      <td>Set multi shot digital lenses (id: 123) to max superview (id: 100)</td>
+      <td>Time Lapse Digital Lenses</td>
+      <td>Set time lapse digital lenses (id: 123) to max superview (id: 100)</td>
       <td>03:7B:01:64</td>
       <td>02:7B:00</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>123</td>
-      <td>Lens</td>
-      <td>Set multi shot digital lenses (id: 123) to wide (id: 101)</td>
+      <td>Time Lapse Digital Lenses</td>
+      <td>Set time lapse digital lenses (id: 123) to wide (id: 101)</td>
       <td>03:7B:01:65</td>
       <td>02:7B:00</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>123</td>
-      <td>Lens</td>
-      <td>Set multi shot digital lenses (id: 123) to linear (id: 102)</td>
+      <td>Time Lapse Digital Lenses</td>
+      <td>Set time lapse digital lenses (id: 123) to linear (id: 102)</td>
       <td>03:7B:01:66</td>
       <td>02:7B:00</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>162</td>
+      <td>Max Lens</td>
+      <td>Set max lens (id: 162) to off (id: 0)</td>
+      <td>03:A2:01:00</td>
+      <td>02:A2:00</td>
+      <td>\&gt;= v01.20.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>162</td>
+      <td>Max Lens</td>
+      <td>Set max lens (id: 162) to on (id: 1)</td>
+      <td>03:A2:01:01</td>
+      <td>02:A2:00</td>
+      <td>\&gt;= v01.20.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>173</td>
-      <td>Video Performance Modes</td>
-      <td>Set system power profile (id: 173) to maximum video performance (id: 0)</td>
+      <td>Video Performance Mode</td>
+      <td>Set video performance mode (id: 173) to maximum video performance (id: 0)</td>
       <td>03:AD:01:00</td>
       <td>02:AD:00</td>
       <td>\&gt;= v01.16.00</td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>173</td>
-      <td>Video Performance Modes</td>
-      <td>Set system power profile (id: 173) to extended battery (id: 1)</td>
+      <td>Video Performance Mode</td>
+      <td>Set video performance mode (id: 173) to extended battery (id: 1)</td>
       <td>03:AD:01:01</td>
       <td>02:AD:00</td>
       <td>\&gt;= v01.16.00</td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>173</td>
-      <td>Video Performance Modes</td>
-      <td>Set system power profile (id: 173) to tripod / stationary video (id: 2)</td>
+      <td>Video Performance Mode</td>
+      <td>Set video performance mode (id: 173) to tripod / stationary video (id: 2)</td>
       <td>03:AD:01:02</td>
       <td>02:AD:00</td>
       <td>\&gt;= v01.16.00</td>
@@ -1380,11 +1557,27 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Resolution</td>
       <td>Anti-Flicker</td>
       <td>Frames Per Second</td>
-      <td>Lens</td>
+      <td>Video Digital Lenses</td>
     </tr>
     <tr>
-      <td rowspan="38">1080</td>
-      <td rowspan="19">50Hz</td>
+      <td rowspan="48">1080</td>
+      <td rowspan="24">50Hz</td>
+      <td rowspan="5">24</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
       <td rowspan="5">25</td>
       <td>Wide</td>
     </tr>
@@ -1446,7 +1639,23 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="19">60Hz</td>
+      <td rowspan="24">60Hz</td>
+      <td rowspan="5">24</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
       <td rowspan="5">30</td>
       <td>Wide</td>
     </tr>
@@ -1781,9 +1990,9 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="8">4K 4:3</td>
-      <td rowspan="4">50Hz</td>
-      <td rowspan="4">50</td>
+      <td rowspan="24">4K 4:3</td>
+      <td rowspan="12">50Hz</td>
+      <td rowspan="4">24</td>
       <td>Wide</td>
     </tr>
     <tr>
@@ -1796,22 +2005,6 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="4">60Hz</td>
-      <td rowspan="4">60</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="16">5.3K</td>
-      <td rowspan="8">50Hz</td>
       <td rowspan="4">25</td>
       <td>Wide</td>
     </tr>
@@ -1838,7 +2031,20 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="8">60Hz</td>
+      <td rowspan="12">60Hz</td>
+      <td rowspan="4">24</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
       <td rowspan="4">30</td>
       <td>Wide</td>
     </tr>
@@ -1865,8 +2071,120 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="8">5K 4:3</td>
-      <td rowspan="4">50Hz</td>
+      <td rowspan="30">5.3K</td>
+      <td rowspan="15">50Hz</td>
+      <td rowspan="5">24</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="5">25</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="5">50</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="15">60Hz</td>
+      <td rowspan="5">24</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="5">30</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="5">60</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Superview</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
+      <td rowspan="16">5K 4:3</td>
+      <td rowspan="8">50Hz</td>
+      <td rowspan="4">24</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
       <td rowspan="4">25</td>
       <td>Wide</td>
     </tr>
@@ -1880,7 +2198,20 @@ Below are tables detailing supported features for Open GoPro cameras.
       <td>Linear + Horizon Leveling</td>
     </tr>
     <tr>
-      <td rowspan="4">60Hz</td>
+      <td rowspan="8">60Hz</td>
+      <td rowspan="4">24</td>
+      <td>Wide</td>
+    </tr>
+    <tr>
+      <td>Narrow</td>
+    </tr>
+    <tr>
+      <td>Linear</td>
+    </tr>
+    <tr>
+      <td>Linear + Horizon Leveling</td>
+    </tr>
+    <tr>
       <td rowspan="4">30</td>
       <td>Wide</td>
     </tr>
@@ -2747,6 +3078,14 @@ Below is a table of supported status codes.<br />
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
+      <td>114</td>
+      <td>Camera control status</td>
+      <td>Camera control status ID</td>
+      <td>integer</td>
+      <td>0: Camera Idle: No one is attempting to change camera settings<br />1: Camera Control: Camera is in a menu or changing settings. To intervene, app must request control<br />2: Camera External Control: An outside entity (app) has control and is in a menu or modifying settings<br /></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr>
       <td>115</td>
       <td>Usb connected</td>
       <td>Is the camera connected to a PC via USB?</td>
@@ -2817,7 +3156,14 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td>HERO10 Black</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>0xF1</td>
+      <td rowspan="2">0xF1</td>
+      <td>0x69</td>
+      <td>Request set camera control status</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/set_camera_control_status.proto">RequestSetCameraControlStatus</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">ResponseGeneric</a></td>
+      <td>\&gt;= v01.20.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x6B</td>
       <td>Request set turbo active</td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/turbo_transfer.proto">RequestSetTurboActive</a></td>
@@ -2839,6 +3185,26 @@ Below is a table of protobuf commands that can be sent to the camera and their e
 ## Protobuf Command Details
 Below are additional details about specific protobuf commands:
 
+
+### RequestSetCameraControlStatus
+<p>
+As part of the <b>Global Behaviors</b> feature, this command is used to tell the camera that the app
+(i.e. External Control) wants to be in control, which causes the camera to immediately exit any contextual menus and
+return to the idle screen.
+</p>
+
+<p>
+Developers can query who is currently claiming control of the camera from camera status 114.
+</p>
+
+<p>
+Developers can query whether the camera is currently in a contextual menu from camera status 63.
+</p>
+
+<p>
+When the user interacts with the camera UI, the camera reclaims control and updates camera status to <b>Control</b>.
+When the user returns the camera UI to the idle screen, the camera updates camera status to <b>Idle</b>. 
+</p>
 
 ### RequestSetTurboActive
 <p>

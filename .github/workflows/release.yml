@@ -1,51 +1,54 @@
 # release.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:35 PM
+# This copyright was auto-generated on Wed Dec 15 21:08:47 UTC 2021
 
-# Update the version, copyrights, make a commit, and tag the version
-
-name: Make a Tagged Release
+name: Release changes to external repo
 
 on:
+    push:
+        branches:
+            - release
     workflow_dispatch:
-        inputs:
-            version:
-                description: 'version'
-                required: true
 
 jobs:
-    version_and_tag:
+    release:
+        if: ${{ github.repository != 'gopro/OpenGoPro' }}
         runs-on: ubuntu-latest
-
         steps:
-            - name: Checkout source branch
+            - name: checkout release branch
               uses: actions/checkout@v2
               with:
+                  ref: release
+                  path: release
+                  token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
+                  fetch-depth: 2
+
+            - name: checkout Target branch
+              uses: actions/checkout@v2
+              with:
+                  repository: gopro/OpenGoPro
                   ref: main
+                  path: target
+                  token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
 
-            - name: Update version, copyrights, and make tag
+            - name: Copy changes
               shell: bash
               run: |
-                  git config core.fileMode false
-                  make version VERSION=${{ github.event.inputs.version }}
-
-            - name: Create commit
-              shell: bash
-              run: |
-                  git config core.fileMode false
+                  pushd release
+                  git log -1 --pretty=%B > ../message
+                  rm -rf .git
+                  popd
+                  pushd target
+                  git rm -rf .
+                  git clean -fxd
+                  shopt -s dotglob
+                  mv ../release/* .
                   git config user.name github-actions
                   git config user.email github-actions@github.com
-                  git commit -am "Set version to  $(VERSION) from github actions"
-
-            - name: Push to protected branch
-              uses: CasperWA/push-protected@v2
-              with:
-                  token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
-                  branch: main
-                  force: false
-                  unprotect_reviews: true
-
-            - name: Create tag
-              shell: bash
-              run: |
-                  git tag ${{ github.event.inputs.version }}
-                  git push origin ${{ github.event.inputs.version }}
+                  git add .
+                  num_modified=$(git diff --cached --numstat | wc -l)
+                  if [[ $num_modified == 0 ]]; then
+                    echo "Nothing to push"
+                  else
+                    git commit -a -F ../message
+                    git push
+                  fi

@@ -44,6 +44,7 @@ logger = logging.getLogger(__name__)
 BytesParser = Construct
 BytesBuilder = Construct
 BytesParserBuilder = Construct
+StringBuilder = Callable[[Any], str]
 
 
 class JsonParser(Protocol):
@@ -94,9 +95,9 @@ class GoProResp:
     """A flexible object to be used to encapsulate all GoPro responses.
 
     It can be instantiated with varying levels of information and filled out as more is received.
+    The end user should never need to create a response and will only be consuming them.
 
     It is mostly a wrapper around a JSON-like dictionary (GoProResp.data)
-
     For example, first send the command and store the response:
 
     >>> response = ble_setting.resolution.get_value()
@@ -244,7 +245,7 @@ class GoProResp:
         )
 
     def items(self) -> ItemsView[Any, Any]:
-        """Access data dict's "items" method
+        """Pass-through to access data dict's "items" method
 
         Returns:
             ItemsView[Any, Any]: [description]
@@ -252,7 +253,7 @@ class GoProResp:
         return self.data.items()
 
     def keys(self) -> KeysView[Any]:
-        """Access data dict's "keys" method
+        """Pass-through to access data dict's "keys" method
 
         Returns:
             ItemsView[Any, Any]: [description]
@@ -260,7 +261,7 @@ class GoProResp:
         return self.data.keys()
 
     def values(self) -> ValuesView[Any]:
-        """Access data dict's "values" method
+        """Pass-through to access data dict's "values" method
 
         Returns:
             ItemsView[Any, Any]: [description]
@@ -448,6 +449,7 @@ class GoProResp:
                     elif self.id in [
                         QueryCmdId.GET_STATUS_VAL,
                         QueryCmdId.REG_STATUS_VAL_UPDATE,
+                        QueryCmdId.UNREG_STATUS_VAL_UPDATE,
                         QueryCmdId.STATUS_VAL_PUSH,
                     ]:
                         identifier = StatusId
@@ -518,7 +520,7 @@ class GoProResp:
             json_data: Dict[str, Any] = self._raw_packet
             # Is there a parser for this? Most of them do not have one yet.
             try:
-                # Mypy can't follow that this parser is guarantted to be a JsonParser
+                # Mypy can't follow that this parser is guaranteed to be a JsonParser
                 self.data = self._parsers[self.id].parse(json_data, self._parsers)  # type: ignore
             except KeyError:
                 self.data = json_data

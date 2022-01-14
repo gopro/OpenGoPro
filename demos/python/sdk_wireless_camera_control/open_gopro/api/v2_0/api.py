@@ -3,6 +3,8 @@
 
 """Implementation of Open GoPro API version 2.0"""
 
+from typing import Type
+
 from open_gopro.api.v1_0.api import ApiV1_0
 from open_gopro.communication_client import GoProBle, GoProWifi
 from .ble_commands import BleCommandsV2_0, BleSettingsV2_0, BleStatusesV2_0
@@ -19,9 +21,9 @@ class ApiV2_0(ApiV1_0):
         self, ble_communicator: GoProBle, wifi_communicator: GoProWifi
     ) -> None:  # pylint: disable = super-init-not-called
         # No call to superclass's __init__ since we are overriding each individual attribute below. Would be redundant.
-        self.params = ParamsV2_0
-        self.ble_command = BleCommandsV2_0(ble_communicator)
-        self.ble_setting = BleSettingsV2_0(ble_communicator, self.params)
-        self.ble_status = BleStatusesV2_0(ble_communicator, self.params)
-        self.wifi_command = WifiCommandsV2_0(wifi_communicator)
-        self.wifi_setting = WifiSettingsV2_0(wifi_communicator, self.params)
+        self.params: Type[ParamsV2_0] = ParamsV2_0
+        self.ble_command: BleCommandsV2_0 = BleCommandsV2_0(ble_communicator)
+        self.ble_setting: BleSettingsV2_0 = BleSettingsV2_0(ble_communicator, self.params)
+        self.ble_status: BleStatusesV2_0 = BleStatusesV2_0(ble_communicator, self.params)
+        self.wifi_command: WifiCommandsV2_0 = WifiCommandsV2_0(wifi_communicator)
+        self.wifi_setting: WifiSettingsV2_0 = WifiSettingsV2_0(wifi_communicator, self.params)

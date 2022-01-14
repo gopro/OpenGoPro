@@ -1,7 +1,7 @@
-# hotfix_mirror.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# mirror.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Mon Sep 27 19:00:18 UTC 2021
 
-name: Mirror internal main to hotfix
+name: Mirror internal main to release
 
 on:
     push:
@@ -11,11 +11,11 @@ on:
 jobs:
     mirror:
         if: ${{ github.repository != 'gopro/OpenGoPro' }}
-        name: Mirror Main with Hotfix on internal repo
+        name: Mirror Main with release on internal repo
         runs-on: ubuntu-latest
         steps:
             - uses: zofrex/mirror-branch@v1.0.2
               with:
-                  target-branch: hotfix
+                  target-branch: release
                   token:  ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
                   force: true

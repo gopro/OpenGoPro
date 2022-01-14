@@ -1,10 +1,12 @@
 # ble_query_poll_multiple_setting_values.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:06:00 PM
 
+import sys
 import enum
 import asyncio
 import logging
 import argparse
+from typing import Optional
 from binascii import hexlify
 
 from bleak import BleakClient
@@ -37,6 +39,7 @@ class FPS(enum.Enum):
     FPS_24 = 10
     FPS_200 = 13
 
+
 # Note these may change based on the Open GoPro version!
 class VideoFOV(enum.Enum):
     FOV_WIDE = 0
@@ -52,7 +55,7 @@ fps: FPS
 video_fov: VideoFOV
 
 
-async def main(identifier):
+async def main(identifier: Optional[str]) -> None:
     # Synchronization event to wait until notification response is received
     event = asyncio.Event()
 
@@ -70,7 +73,7 @@ async def main(identifier):
     response = Response()
 
     def notification_handler(handle: int, data: bytes) -> None:
-        logger.info(f'Received response at {handle=}: {hexlify(data, ":")}')
+        logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
 
         response.accumulate(data)
 
@@ -121,4 +124,9 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    asyncio.run(main(args.identifier))
+    try:
+        asyncio.run(main(args.identifier))
+    except:
+        sys.exit(-1)
+    else:
+        sys.exit(0)

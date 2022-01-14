@@ -1,9 +1,10 @@
-# Docs output
 docs/build
+reports/
 
 # Test artifacts
 /*.jpg
 /*.mp4
+/*.gpmf
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

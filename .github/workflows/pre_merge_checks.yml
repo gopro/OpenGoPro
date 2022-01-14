@@ -8,7 +8,7 @@ name: Pre Merge Checks
 
 on:
     pull_request:
-        branches: [main, develop, hotfix]
+        branches: [main, develop, release]
 
 jobs:
     copyright:
@@ -57,24 +57,24 @@ jobs:
               run: make setup tests
 
     ensure_synchronization:
-        if: github.repository != 'gopro/OpenGoPro' &&  github.base_ref == 'hotfix'
+        if: github.repository != 'gopro/OpenGoPro' &&  github.base_ref == 'release'
         runs-on: ubuntu-latest
         steps:
             - name: Checkout source branch
               uses: actions/checkout@v2
               with:
-                  ref: hotfix
+                  ref: release
                   ssh-key: ${{ secrets.PUSH_FROM_WORKFLOW_TO_RETRIGGER }}
-            - name: Verify synchronized if hotfix
+            - name: Verify synchronized if release
               shell: bash
               run: |
                   hash=$( git rev-parse HEAD | cut -c1-7)
                   target_hash=$(git ls-remote git@github.com:gopro/OpenGoPro U main | cut -c1-7)
                   echo "Target hash is $target_hash"
-                  echo "Hotfix release hash is $hash"
+                  echo "release hash is $hash"
                   if [[ $hash == $target_hash ]]; then
                     exit 0
                   else
-                    echo "Hotfix branch is not synchronized with external main"
+                    echo "release branch is not synchronized with external main"
                     exit 1
                   fi

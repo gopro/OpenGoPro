@@ -1,6 +1,7 @@
 # wifi_command_load_group.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:06:03 PM
 
+import sys
 import json
 import logging
 import argparse
@@ -13,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 
-def main():
+def main() -> None:
     # Build the HTTP GET request
     url = GOPRO_BASE_URL + "/gopro/camera/presets/set_group?id=1000"
     logger.info(f"Loading the video preset group: sending {url}")
@@ -30,4 +31,10 @@ def main():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Load the video preset group.")
     parser.parse_args()
-    main()
+
+    try:
+        main()
+    except:
+        sys.exit(-1)
+    else:
+        sys.exit(0)

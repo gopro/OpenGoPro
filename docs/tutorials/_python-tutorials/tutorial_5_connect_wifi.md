@@ -200,14 +200,14 @@ As expected, the response was received on the correct handle and the status was 
 If you have been following through the `ble_enable_wifi.py` script, you will notice that it ends here such that
 we know the WiFi SSID and password and the WiFi AP is enabled and ready to connect to. This is because there
 are many different methods of connecting to the WiFi AP depending on your OS and the framework you are
-using to develop.
+using to develop. You could, for example, simply use your OS's WiFi GUI to connect.
 
-We do provide an example of this in the `ble_enable_wifi_and_connect.py` script. This script uses the
+We do provide a programmatic example of this in the `ble_enable_wifi_and_connect.py` script. This script uses the
 cross-platform `Wireless` module from the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/).
 Note that this has been imported as such:
 
 ```python
-from open_gopro.wifi_controller import Wireless
+from open_gopro.wifi.adapters import Wireless
 ```
 
 In order to do so, perform the following after the above steps have been completed:

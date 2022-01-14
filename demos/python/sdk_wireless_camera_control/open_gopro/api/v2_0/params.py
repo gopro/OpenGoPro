@@ -33,6 +33,9 @@ class ParamsV2_0(ParamsV1_0):
         TIME_WARP = 0x00020000
         TIME_LAPSE = 0x00020001
         NIGHT_LAPSE = 0x00020002
+        MAX_VIDEO = 0x00030000
+        MAX_PHOTO = 0x00040000
+        MAX_TIMEWARP = 0x00050000
         STANDARD_EB = 0x00080000
         ACTIVITY_EB = 0x00080001
         CINEMATIC_EB = 0x00080002
@@ -46,7 +49,7 @@ class ParamsV2_0(ParamsV1_0):
         FRONT_OFF_ONLY = 5
         BLE_KEEP_ALIVE = 66
 
-    class CameraControlStatus(GoProEnum):
+    class CameraControl(GoProEnum):
         IDLE = 0
         CAMERA = 1
         EXTERNAL = 2
