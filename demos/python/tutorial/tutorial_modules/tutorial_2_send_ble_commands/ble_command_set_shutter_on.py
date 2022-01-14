@@ -49,12 +49,12 @@ async def main(identifier: Optional[str]) -> None:
     await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([3, 1, 1, 1]))
     await event.wait()  # Wait to receive the notification response
 
-    time.sleep(2)  # If we're recording, let's wait 2 seconds (i.e. take a 2 second video)
-    # Write to command request UUID to turn the shutter off
-    logger.info("Setting the shutter off")
-    event.clear()
-    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([3, 1, 1, 0]))
-    await event.wait()  # Wait to receive the notification response
+    # time.sleep(2)  # If we're recording, let's wait 2 seconds (i.e. take a 2 second video)
+    # # Write to command request UUID to turn the shutter off
+    # logger.info("Setting the shutter off")
+    # event.clear()
+    # await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([3, 1, 1, 0]))
+    # await event.wait()  # Wait to receive the notification response
     await client.disconnect()
 
 
