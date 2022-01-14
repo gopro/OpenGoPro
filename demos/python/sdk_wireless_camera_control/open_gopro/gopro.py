@@ -144,13 +144,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         self._maintain_ble = maintain_ble
 
         # Initialize GoPro Communication Client
-        GoProBle.__init__(
-            self,
-            ble_adapter(),
-            self._disconnect_handler,
-            self._notification_handler,
-            (target, [GoProUUIDs.S_CONTROL_QUERY]),
-        )
+        GoProBle.__init__(self, ble_adapter(), self._disconnect_handler, self._notification_handler, target)
         GoProWifi.__init__(self, wifi_adapter(wifi_interface))
 
         # We start with version 1.0. It will be updated once we query the version
@@ -473,7 +467,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             ConnectFailed: Connection could not be established
         """
         # Establish connection, pair, etc.
-        self._ble.open(timeout, retries, GoProUUIDs)
+        self._ble.open(timeout, retries)
         # Configure threads if desired
         if self._maintain_ble:
             self._state_thread.start()

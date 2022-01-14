@@ -4,7 +4,6 @@
 """Generic BLE Client definition that is composed of a BLE Controller."""
 
 import re
-import csv
 import logging
 from pathlib import Path
 from typing import Generic, Optional, Union, Pattern, Type, Tuple, List
@@ -22,8 +21,6 @@ from .services import GattDB, BleUUID, UUIDs
 
 logger = logging.getLogger(__name__)
 
-BleTarget = Tuple[Union[Pattern, BleDevice], Optional[List[BleUUID]]]
-
 
 class BleClient(Generic[BleHandle, BleDevice]):
     """A BLE client that is composed of, among other things, a BLE interface
@@ -31,26 +28,45 @@ class BleClient(Generic[BleHandle, BleDevice]):
     The interface is generic and can be set with the 'controller' argument
     """
 
+    # uuids (Type[UUIDs], optional): Service BleUUID's to filter on when scanning. Defaults to None.
+
     def __init__(
         self,
         controller: BLEController,
         disconnected_cb: DisconnectHandlerType,
         notification_cb: NotiHandlerType,
-        target: BleTarget,
+        target: Tuple[Union[Pattern, BleDevice], Optional[List[BleUUID]]],
+        uuids: Type[UUIDs] = None,
     ) -> None:
+        """TODO
+
+        Args:
+            controller (BLEController): controller implementation to use for this client
+            disconnected_cb (DisconnectHandlerType): disconnected callback
+            notification_cb (NotiHandlerType): notification callback
+            target (Tuple[Union[Pattern, BleDevice], Optional[List[BleUUID]]]): Tuple of (device, service_uuids)
+                where device is the BleDevice (or regex) to connect to and service_uuids is a list of
+                service uuid's to filter for
+            uuids (Type[UUIDs], optional): Additional . Defaults to None. TODO
+
+        Raises:
+            ValueError: TODO
+        """
         if target is None:
             raise ValueError("Target can not be None!")
         if isinstance(target[0], str):
-            self._target = (re.compile(target[0]), target[1])
+            self._target = re.compile(target[0])
         else:
-            self._target = target
+            self._target = target[0]  # type: ignore
+        self._service_uuids: List[BleUUID] = target[1] or []
         self._controller = controller
         self._disconnected_cb = disconnected_cb
         self._notification_cb = notification_cb
         self._gatt_table: Optional[GattDB] = None
         self._device: Optional[BleDevice] = None
         self._handle: Optional[BleHandle] = None
-        self._identifier = None if isinstance(target, Pattern) else str(target)
+        self._identifier = None if isinstance(self._target, Pattern) else str(self._target)
+        self.uuids = uuids
 
     def __del__(self) -> None:
         logger.debug("In destructor...")
@@ -58,34 +74,32 @@ class BleClient(Generic[BleHandle, BleDevice]):
 
     def _find_device(self, timeout: int = 5, retries: int = 30) -> None:
         self._device = None
-        assert isinstance(self._target[0], Pattern)
+        assert isinstance(self._target, Pattern)
         for retry in range(1, retries):
             try:
-                self._device = self._controller.scan(self._target[0], timeout, self._target[1])
+                self._device = self._controller.scan(self._target, timeout, self._service_uuids)
                 return
             except FailedToFindDevice as e:
                 logger.warning(f"Failed to find a device in {timeout} seconds. Retrying #{retry}")
                 if retry == retries - 1:
                     raise FailedToFindDevice from e
 
-    def open(self, timeout: int = 10, retries: int = 5, uuids: Type[UUIDs] = None) -> None:
+    def open(self, timeout: int = 10, retries: int = 5) -> None:
         """Open the client resource so that it is ready to send and receive data.
 
         Args:
             timeout (int, optional): How long to try connecting (in seconds) before retrying. Defaults to 10.
             retries(int, optional): How many retries to attempt before giving up. Defaults to 5
-            uuids (Type[UUIDs], optional): Service BleUUID's to filter on when scanning. Defaults to None.
 
         Raises:
             ConnectFailed: The BLE connection was not able to establish
         """
-
         # If we need we need to find the device to connect
-        if isinstance(self._target[0], Pattern):
+        if isinstance(self._target, Pattern):
             self._find_device()
         # Otherwise we already have it
         else:
-            self._device = self._target[0]  # type: ignore
+            self._device = self._target  # type: ignore
         self._identifier = str(self._device)
 
         logger.info("Establishing the BLE connection")
@@ -102,7 +116,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
         # Attempt to pair
         self._controller.pair(self._handle)
         # Discover characteristics
-        self._gatt_table = self._controller.discover_chars(self._handle, uuids)
+        self._gatt_table = self._controller.discover_chars(self._handle, self.uuids)
         # Enable all GATT notifications
         self._controller.enable_notifications(self._handle, self._notification_cb)
 
@@ -178,23 +192,11 @@ class BleClient(Generic[BleHandle, BleDevice]):
         """
         return self._device is not None
 
-    def services_as_csv(self, dump_file: Path = Path("services.csv")) -> None:
+    def services_as_csv(self, file: Path = Path("services.csv")) -> None:
         """Dump the services as a .csv
 
         Args:
-            dump_file (Path, optional): Where to dump the csv. Defaults to Path("services.csv").
+            file (Path, optional): Where to dump the csv. Defaults to Path("services.csv").
         """
         assert self.gatt_db is not None
-        with open(dump_file, mode="w") as f:
-            logger.debug(f"Dumping discovered BLE characteristics to {dump_file}")
-            w = csv.writer(f, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            w.writerow(["handle", "description", "BleUUID", "properties", "value"])
-            # For each service in table
-            for s in self.gatt_db.services.values():
-                w.writerow(["SERVICE", s.name, s.uuid, "SERVICE", "SERVICE"])
-                # For each characteristic in service
-                for c in s.chars.values():
-                    w.writerow([c.handle, c.name, c.uuid, c.props, c.value])
-                    # For each descriptor in characteristic
-                    for d in c.descriptors.values():
-                        w.writerow([d.handle, "DESCRIPTOR", "", "", d.value])
+        self.gatt_db.dump_to_csv(file)

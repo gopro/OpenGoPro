@@ -40,6 +40,21 @@ bleak_props_to_enum = {
 }
 
 
+def uuid2bleak_string(uuid: BleUUID) -> str:
+    """Convert a BleUUID object to a string representation to appease bleak
+
+    Bleak identifies UUID's by str(). Since BleUUID has overridden that method, we manually convert to the
+    string representation that bleak expects.
+
+    Args:
+        uuid (BleUUID): uuid to convert
+
+    Returns:
+        str: bleakful string representation
+    """
+    return f"{uuid.hex[:8]}-{uuid.hex[8:12]}-{uuid.hex[12:16]}-{uuid.hex[16:20]}-{uuid.hex[20:]}"
+
+
 class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton):
     """Wrapper around bleak to manage a Bluetooth connection.
 
@@ -92,7 +107,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         async def _async_read() -> bytearray:  # pylint: disable=missing-return-doc
             logger.debug(f"Reading from {uuid}")
-            response = await handle.read_gatt_char(uuid.hex)
+            response = await handle.read_gatt_char(uuid2bleak_string(uuid))
             logger.debug(f'Received response on BleUUID [{uuid}]: {response.hex( ":")}')
             return response
 
@@ -108,11 +123,9 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         """
 
         async def _async_write() -> None:
-            bleak_uuid = uuid.hex
-            bleak_uuid = f"{bleak_uuid[:8]}-{bleak_uuid[8:12]}-{bleak_uuid[12:16]}-{bleak_uuid[16:20]}-{bleak_uuid[20:]}"
-            logger.debug(f"Writing to {uuid}: {data.hex(':')}")
+            logger.debug(f"Writing to {uuid}: {uuid.hex}")
             # TODO make with / without response configurable
-            await handle.write_gatt_char(bleak_uuid, data, response=True)
+            await handle.write_gatt_char(uuid2bleak_string(uuid), data, response=True)
 
         self._as_coroutine(_async_write)
 
@@ -282,47 +295,52 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         async def _async_discover_chars() -> GattDB:  # pylint: disable=missing-return-doc
             logger.info("Discovering characteristics...")
-            services: Dict[BleUUID, Service] = {}
-
+            services: List[Service] = []
             for service in handle.services:
-                # Create new service
-                service_uuid = uuids[service.uuid] if uuids else BleUUID(service.description, hex=service.uuid)
+                service_uuid = (
+                    uuids[service.uuid]
+                    if uuids and service.uuid in uuids
+                    else BleUUID(service.description, hex=service.uuid)
+                )
                 logger.debug(f"[Service] {service_uuid}")
-                services[service_uuid] = Service(service_uuid, service.handle, service_uuid.name)
 
                 # Loop over all chars in service
-                chars: Dict[BleUUID, Characteristic] = {}
+                chars: List[Characteristic] = []
                 for char in service.characteristics:
                     # Get any descriptors if they exist
-                    descriptors: Dict[BleUUID, Descriptor] = {}
+                    descriptors: List[Descriptor] = []
                     for descriptor in char.descriptors:
-                        descriptor_uuid = (
-                            uuids[descriptor.uuid]
-                            if uuids
-                            else BleUUID(descriptor.description, hex=descriptor.uuid)
+                        descriptors.append(
+                            Descriptor(
+                                handle=descriptor.handle,
+                                uuid=(
+                                    uuids[descriptor.uuid]
+                                    if uuids and descriptor.uuid in uuids
+                                    else BleUUID(descriptor.description, hex=descriptor.uuid)
+                                ),
+                                value=await handle.read_gatt_descriptor(descriptor.handle),
+                            )
                         )
-                        descriptor_value = await handle.read_gatt_descriptor(descriptor.handle)
-                        descriptors[descriptor_uuid] = Descriptor(
-                            descriptor.handle, descriptor_uuid, descriptor_value
+                    # Create new characteristic
+                    chars.append(
+                        Characteristic(
+                            handle=char.handle,
+                            uuid=(
+                                uuids[char.uuid]
+                                if uuids and char.uuid in uuids
+                                else BleUUID(char.description, hex=char.uuid)
+                            ),
+                            props=bleak_props_adapter(char.properties),
+                            value=bytes(await handle.read_gatt_char(char.uuid))
+                            if "read" in char.properties
+                            else b"",
+                            init_descriptors=descriptors,
                         )
-                    # Read char if applicable
-                    char_value = (
-                        bytes(await handle.read_gatt_char(char.uuid)) if "read" in char.properties else b""
                     )
-                    # Add characteristic to char dic
-                    char_uuid = uuids[char.uuid] if uuids else BleUUID(char.description, hex=char.uuid)
-                    chars[char_uuid] = Characteristic(
-                        handle=char.handle,
-                        descriptor_handle=char.handle + 1,
-                        uuid=char_uuid,
-                        props=bleak_props_adapter(char.properties),
-                        name=char_uuid.name,
-                        value=char_value,
-                        descriptors=descriptors,
-                    )
+                    logger.debug(f"\t[Characteristic] {chars[-1]}")
 
-                # Add char dict to service
-                services[service_uuid].chars = chars
+                # Create new service
+                services.append(Service(uuid=service_uuid, start_handle=service.handle, init_chars=chars))
 
             logger.info("Done discovering characteristics!")
             return GattDB(services)

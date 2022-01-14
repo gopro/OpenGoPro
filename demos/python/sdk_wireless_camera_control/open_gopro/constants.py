@@ -22,8 +22,8 @@ class GoProUUIDs(UUIDs):
 
     # GoPro Wifi Access Point Service
     S_WIFI_ACCESS_POINT = BleUUID("Wifi Access Point Service", hex=GOPRO_BASE_UUID.format("0001"))
-    WAP_SSID = BleUUID("Access Point SSID", hex=GOPRO_BASE_UUID.format("0002"))
-    WAP_PASSWORD = BleUUID("Access Point Password", hex=GOPRO_BASE_UUID.format("0003"))
+    WAP_SSID = BleUUID("Wifi AP SSID", hex=GOPRO_BASE_UUID.format("0002"))
+    WAP_PASSWORD = BleUUID("Wifi AP Password", hex=GOPRO_BASE_UUID.format("0003"))
     WAP_POWER = BleUUID("Wifi Power", hex=GOPRO_BASE_UUID.format("0004"))
     WAP_STATE = BleUUID("Wifi State", hex=GOPRO_BASE_UUID.format("0005"))
     WAP_CSI_PASSWORD = BleUUID("CSI Password", hex=GOPRO_BASE_UUID.format("0006"))
