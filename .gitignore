@@ -7,6 +7,9 @@ xcuserdata/
 **/temp
 /*.jpg
 /*.gpmf
+*.jpg
+*.mp4
+*.360
 
 # Vim
 *~

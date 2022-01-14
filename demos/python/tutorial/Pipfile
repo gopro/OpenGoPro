@@ -1,0 +1,15 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+open-gopro-python-tutorials = {editable = true, file = "file:///home/shunsuke/softroid/OpenGoPro/demos/python/tutorial"}
+open-gopro = {file = "file:///home/shunsuke/softroid/OpenGoPro/demos/python/sdk_wireless_camera_control"}
+bleak = "==0.12.1"
+requests = "==2.25.1"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
