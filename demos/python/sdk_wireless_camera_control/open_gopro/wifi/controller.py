@@ -22,6 +22,10 @@ class SsidState(IntEnum):
 class WifiController(ABC):
     """Interface definition for a Wifi driver to be used by GoPro."""
 
+    def __init__(self, interface: Optional[str] = None) -> None:
+        self._target_interface = interface
+        self._interface: str
+
     @abstractmethod
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
         """Connect to a network.
@@ -56,25 +60,49 @@ class WifiController(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def interfaces(self) -> List[str]:
-        """Return a list of wireless adapters.
+    def available_interfaces(self) -> List[str]:
+        """Return a list of available Wifi Interface strings
 
         Returns:
-            List[str]: adapters
+            List[str]: list of interfaces
         """
         raise NotImplementedError
 
-    @abstractmethod
-    def interface(self, interface: Optional[str]) -> Optional[str]:
-        """Get or set the currently used wireless adapter.
+    @property
+    def interface(self) -> str:
+        """Get the Wifi Interface
+
+        Returns:
+            str: interface
+        """
+        return self._interface
+
+    @interface.setter
+    def interface(self, interface: Optional[str]) -> None:
+        """Set the Wifi interface.
+
+        If None is passed, interface will attempt to be auto-detected
 
         Args:
-            interface (str, optional): Get if the interface parameter is None. Set otherwise. Defaults to None.
+            interface (Optional[str]): interface (or None to auto-detect)
 
-        Returns:
-            Optional[str]: Name of interface if get. None if set.
+        Raises:
+            Exception: Requested interface does not exist
+            Exception: Not able to automatically detect any interfaces
         """
-        raise NotImplementedError
+        detected_interfaces = self.available_interfaces()
+        if interface:
+            if interface in detected_interfaces:
+                self._interface = interface
+            else:
+                raise Exception(
+                    f"Requested WiFi interface [{interface}] not found among [{', '.join(detected_interfaces)}]"
+                )
+        else:
+            if detected_interfaces:
+                self._interface = detected_interfaces[0]
+            else:
+                raise Exception("Can't auto-assign interface. None found.")
 
     @abstractmethod
     def power(self, power: bool) -> bool:

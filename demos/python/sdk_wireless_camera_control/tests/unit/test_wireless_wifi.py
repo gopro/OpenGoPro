@@ -9,7 +9,7 @@ from dataclasses import dataclass
 
 import pytest
 
-from open_gopro.wifi.adapters.wireless import Wireless, ensure_sudo, SsidState, cmp
+from open_gopro.wifi.adapters.wireless import Wireless, ensure_sudo, SsidState
 
 # TODO add others
 operating_systems = ["windows"]
@@ -231,9 +231,3 @@ def test_is_on(wireless: Wireless, command_sender: CommandSender):
     assert wireless.is_on
     command_sender.interface_state = InterfaceState.DISABLED
     assert not wireless.is_on
-
-
-def test_cmp():
-    assert cmp(1, 2) == -1
-    assert cmp(1, 1) == 0
-    assert cmp(2, 1) == 1

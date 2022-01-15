@@ -41,18 +41,20 @@ For more information, do:
 .. code-block:: console
 
     $ gopro-photo --help
-    usage: gopro-photo [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT]
+    usage: gopro-photo [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT] [-w WIFI_INTERFACE]
 
     Connect to a GoPro camera, take a photo, then download it.
 
     optional arguments:
     -h, --help            show this help message and exit
     -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default
-                            camera SSID. If not used, first discovered GoPro will be connected to
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first
+                            discovered GoPro will be connected to
     -l LOG, --log LOG     Location to store detailed log
     -o OUTPUT, --output OUTPUT
                             Where to write the photo to. If not set, write to 'photo.jpg'
+    -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE
+                            System Wifi Interface. If not set, first discovered interface will be used.
 
 Video Demo
 ----------
@@ -69,21 +71,23 @@ For more information, do:
 .. code-block:: console
 
     $ gopro-video --help
-    usage: gopro-video [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT] record_time
+    usage: gopro-video [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT] [-w WIFI_INTERFACE] record_time
 
     Connect to a GoPro camera, take a video, then download it.
 
     positional arguments:
-      record_time           How long to record for
+    record_time           How long to record for
 
     optional arguments:
-      -h, --help            show this help message and exit
-      -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default
-                            camera SSID. If not used, first discovered GoPro will be connected to
-      -l LOG, --log LOG     Location to store detailed log
-      -o OUTPUT, --output OUTPUT
-                            Where to write the video to. If not set, write to 'video.jpg'
+    -h, --help            show this help message and exit
+    -i IDENTIFIER, --identifier IDENTIFIER
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first
+                            discovered GoPro will be connected to
+    -l LOG, --log LOG     Location to store detailed log
+    -o OUTPUT, --output OUTPUT
+                            Where to write the video to. If not set, write to 'video.mp4'
+    -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE
+                            System Wifi Interface. If not set, first discovered interface will be used.
 
 Battery Demo
 ------------
@@ -130,18 +134,19 @@ For more information, do:
 .. code-block:: console
 
     $ gopro-stream --help
-    usage: gopro-stream [-h] [-i IDENTIFIER] [-l LOG] [-v VLC]
+    usage: gopro-stream [-h] [-i IDENTIFIER] [-l LOG] [-v VLC] [-w WIFI_INTERFACE]
 
     Connect to a GoPro camera, enable the preview stream, then open VLC to view it.
 
     optional arguments:
     -h, --help            show this help message and exit
     -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default
-                            camera SSID. If not used, first discovered GoPro will be connected to
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first
+                            discovered GoPro will be connected to
     -l LOG, --log LOG     Location to store detailed log
-    -v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically
-                            discovered.
+    -v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically discovered.
+    -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE
+                            System Wifi Interface. If not set, first discovered interface will be used.
 
 WiFi Demo
 -----------
@@ -160,16 +165,18 @@ For more information, do:
 .. code-block:: console
 
     $ gopro-wif --help
-    usage: gopro-wifi [-h] [-i IDENTIFIER] [-l LOG]
+    usage: gopro-wifi [-h] [-i IDENTIFIER] [-l LOG] [-w WIFI_INTERFACE]
 
-    Connect to a GoPro cameras Wifi Access Point.
+    Connect to a GoPro camera's Wifi Access Point.
 
     optional arguments:
     -h, --help            show this help message and exit
     -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default
-                            camera SSID. If not used, first discovered GoPro will be connected to
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first
+                            discovered GoPro will be connected to
     -l LOG, --log LOG     Location to store detailed log
+    -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE
+                            System Wifi Interface. If not set, first discovered interface will be used.
 
 Big Demo
 --------
@@ -189,18 +196,19 @@ For more information, do:
 .. code-block:: console
 
     $ gopro-demo --help
-    usage: gopro-demo [-h] [-i IDENTIFIER] [-l LOG] [-v VLC]
+    usage: gopro-demo [-h] [-i IDENTIFIER] [-l LOG] [-v VLC] [-w WIFI_INTERFACE]
 
     Connect to a GoPro camera via BLE and Wifi and do some things.
 
     optional arguments:
     -h, --help            show this help message and exit
     -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default
-                            camera SSID. If not used, first discovered GoPro will be connected to
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first
+                            discovered GoPro will be connected to
     -l LOG, --log LOG     Location to store detailed log
-    -v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically
-                            discovered.
+    -v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically discovered.
+    -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE
+                            System Wifi Interface. If not set, first discovered interface will be used.
 
 The demo will perform the following, logging to the console as it goes as well as writing a
 more detailed log to a file (this file can be set with the --log parameter):

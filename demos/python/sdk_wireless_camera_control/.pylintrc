@@ -11,9 +11,13 @@ ignore=tests,proto
 [MESSAGES CONTROL]
 
 disable=
+    unspecified-encoding,
+    consider-using-with,
     abstract-method, # Pylint incorrectly assumes any function that raises NotImplementedError is abstract. We let mypy check for ABC errors.
     cyclic-import,
     missing-raises-doc,
+    useless-type-doc,
+    useless-param-doc,
     redundant-returns-doc,
     logging-fstring-interpolation,
     logging-format-interpolation,

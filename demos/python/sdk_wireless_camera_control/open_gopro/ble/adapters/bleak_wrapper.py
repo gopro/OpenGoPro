@@ -246,7 +246,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
             services: Dict[UUID, Service] = {}
 
             for service in handle.services:
-                logger.debug("[Service] {0}: {1}".format(service.uuid, service.description))
+                logger.debug(f"[Service] {service.uuid}: {service.description}")
                 try:
                     # Create new service
                     services[UUID(service.uuid)] = Service(UUID(service.uuid), service.description)

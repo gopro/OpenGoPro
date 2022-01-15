@@ -17,6 +17,7 @@ def test_photo_demo(camera):
             identifier=cameras[camera],
             log_location=Path("reports") / "logs" / "e2e" / "test_photo_demo.log",
             output_location=Path(".") / "photo.jpg",
+            wifi_interface=None,
         )
         == 0
     )

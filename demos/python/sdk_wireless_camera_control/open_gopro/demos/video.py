@@ -24,7 +24,7 @@ def main() -> int:
     Returns:
         int: program return code
     """
-    identifier, log_location, output_location, record_time = parse_arguments()
+    identifier, log_location, output_location, record_time, wifi_interface = parse_arguments()
 
     global logger
     logger = setup_logging(logger, log_location)
@@ -32,7 +32,7 @@ def main() -> int:
     gopro: Optional[GoPro] = None
     return_code = 0
     try:
-        with GoPro(identifier) as gopro:
+        with GoPro(identifier, wifi_interface=wifi_interface) as gopro:
             # Turn off the shutter if we are currently encoding
             if gopro.is_encoding:
                 assert gopro.ble_command.set_shutter(gopro.params.Shutter.OFF).is_ok
@@ -77,11 +77,12 @@ def main() -> int:
         return return_code  # pylint: disable=lost-exception
 
 
-def parse_arguments() -> Tuple[str, Path, Path, float]:
+def parse_arguments() -> Tuple[str, Path, Path, float, Optional[str]]:
     """Parse command line arguments
 
     Returns:
-        Tuple[str, Path, Path, float]: (identifier, path to save log, path to store video, record_time)
+        Tuple[str, Path, Path, float, Optional[str]]: (identifier, path to save log, path to store video,
+            record_time, wifi interface)
     """
     parser = argparse.ArgumentParser(description="Connect to a GoPro camera, take a video, then download it.")
     parser.add_argument(
@@ -111,9 +112,16 @@ def parse_arguments() -> Tuple[str, Path, Path, float]:
         help="Where to write the video to. If not set, write to 'video.mp4'",
         default=Path("video.mp4"),
     )
+    parser.add_argument(
+        "-w",
+        "--wifi_interface",
+        type=str,
+        help="System Wifi Interface. If not set, first discovered interface will be used.",
+        default=None,
+    )
     args = parser.parse_args()
 
-    return args.identifier, args.log, args.output, args.record_time
+    return args.identifier, args.log, args.output, args.record_time, args.wifi_interface
 
 
 if __name__ == "__main__":
