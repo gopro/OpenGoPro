@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Interfaces &mdash; Open GoPro Python SDK 0.7.1 documentation</title>
+  <title>Interfaces &mdash; Open GoPro Python SDK 0.7.2 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.7.1
+                0.7.2
               </div>
             
           
@@ -229,7 +229,7 @@ should be used simultaneously with this document for development.</p>
 <span class="target" id="module-open_gopro.gopro"></span><p>Implements top level interface to GoPro module.</p>
 <dl class="py class">
 <dt id="open_gopro.gopro.GoPro">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.gopro.</span></code><code class="sig-name descname"><span class="pre">GoPro</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">target:</span> <span class="pre">Optional[Union[Pattern</span></em>, <em class="sig-param"><span class="pre">BleDevice]]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">ble_adapter:</span> <span class="pre">Type[open_gopro.ble.controller.BLEController]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'open_gopro.ble.adapters.bleak_wrapper.BleakWrapperController'&gt;</span></em>, <em class="sig-param"><span class="pre">wifi_adapter:</span> <span class="pre">Type[open_gopro.wifi.controller.WifiController]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'open_gopro.wifi.adapters.wireless.Wireless'&gt;</span></em>, <em class="sig-param"><span class="pre">enable_wifi:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></em>, <em class="sig-param"><span class="pre">maintain_ble:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.gopro.GoPro" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.gopro.</span></code><code class="sig-name descname"><span class="pre">GoPro</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">target:</span> <span class="pre">Optional[Union[Pattern</span></em>, <em class="sig-param"><span class="pre">BleDevice]]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">ble_adapter:</span> <span class="pre">Type[open_gopro.ble.controller.BLEController]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'open_gopro.ble.adapters.bleak_wrapper.BleakWrapperController'&gt;</span></em>, <em class="sig-param"><span class="pre">wifi_adapter:</span> <span class="pre">Type[open_gopro.wifi.controller.WifiController]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'open_gopro.wifi.adapters.wireless.Wireless'&gt;</span></em>, <em class="sig-param"><span class="pre">wifi_interface:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">enable_wifi:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></em>, <em class="sig-param"><span class="pre">maintain_ble:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.gopro.GoPro" title="Permalink to this definition">¶</a></dt>
 <dd><p>The top-level BLE and Wifi interface to a GoPro device.</p>
 <p>See <a class="reference external" href="https://gopro.github.io/OpenGoPro/python_sdk">Open GoPro</a> for complete documentation.</p>
 <p>This will handle for BLE:</p>
@@ -274,6 +274,8 @@ to None (i.e. connect to first discovered GoPro)</p></li>
 Defaults to BleakController().</p></li>
 <li><p><strong>wifi_adapter</strong> (<em>WifiController</em><em>, </em><em>optional</em>) – Class used to control computer’s Wifi connection / send data.
 Defaults to Wireless().</p></li>
+<li><p><strong>wifi_interace</strong> (<em>str</em><em>, </em><em>optional</em>) – Set to specify the wifi interface the local machine will use to connect
+to the GoPro. If None (or not set), first discovered interface will be used.</p></li>
 <li><p><strong>enable_wifi</strong> (<em>bool</em><em>, </em><em>optional</em>) – Optionally do not enable Wifi if set to False. Defaults to True.</p></li>
 <li><p><strong>maintain_ble</strong> (<em>bool</em><em>, </em><em>optional</em>) – Optionally do not perform BLE housekeeping if set to False (used for
 testing). Defaults to True.</p></li>

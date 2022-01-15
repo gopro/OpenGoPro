@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>QuickStart Guide &mdash; Open GoPro Python SDK 0.7.1 documentation</title>
+  <title>QuickStart Guide &mdash; Open GoPro Python SDK 0.7.2 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.7.1
+                0.7.2
               </div>
             
           
@@ -210,18 +210,20 @@ photo to your local machine. To run, do:</p>
 </div>
 <p>For more information, do:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-photo --help
-<span class="go">usage: gopro-photo [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT]</span>
+<span class="go">usage: gopro-photo [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT] [-w WIFI_INTERFACE]</span>
 
 <span class="go">Connect to a GoPro camera, take a photo, then download it.</span>
 
 <span class="go">optional arguments:</span>
 <span class="go">-h, --help            show this help message and exit</span>
 <span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
-<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default</span>
-<span class="go">                        camera SSID. If not used, first discovered GoPro will be connected to</span>
+<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first</span>
+<span class="go">                        discovered GoPro will be connected to</span>
 <span class="go">-l LOG, --log LOG     Location to store detailed log</span>
 <span class="go">-o OUTPUT, --output OUTPUT</span>
 <span class="go">                        Where to write the photo to. If not set, write to &#39;photo.jpg&#39;</span>
+<span class="go">-w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE</span>
+<span class="go">                        System Wifi Interface. If not set, first discovered interface will be used.</span>
 </pre></div>
 </div>
 </div>
@@ -234,21 +236,23 @@ download the photo to your local machine. To run, do:</p>
 </div>
 <p>For more information, do:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-video --help
-<span class="go">usage: gopro-video [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT] record_time</span>
+<span class="go">usage: gopro-video [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT] [-w WIFI_INTERFACE] record_time</span>
 
 <span class="go">Connect to a GoPro camera, take a video, then download it.</span>
 
 <span class="go">positional arguments:</span>
-<span class="go">  record_time           How long to record for</span>
+<span class="go">record_time           How long to record for</span>
 
 <span class="go">optional arguments:</span>
-<span class="go">  -h, --help            show this help message and exit</span>
-<span class="go">  -i IDENTIFIER, --identifier IDENTIFIER</span>
-<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default</span>
-<span class="go">                        camera SSID. If not used, first discovered GoPro will be connected to</span>
-<span class="go">  -l LOG, --log LOG     Location to store detailed log</span>
-<span class="go">  -o OUTPUT, --output OUTPUT</span>
-<span class="go">                        Where to write the video to. If not set, write to &#39;video.jpg&#39;</span>
+<span class="go">-h, --help            show this help message and exit</span>
+<span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
+<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first</span>
+<span class="go">                        discovered GoPro will be connected to</span>
+<span class="go">-l LOG, --log LOG     Location to store detailed log</span>
+<span class="go">-o OUTPUT, --output OUTPUT</span>
+<span class="go">                        Where to write the video to. If not set, write to &#39;video.mp4&#39;</span>
+<span class="go">-w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE</span>
+<span class="go">                        System Wifi Interface. If not set, first discovered interface will be used.</span>
 </pre></div>
 </div>
 </div>
@@ -287,18 +291,19 @@ for the VLC executable.</p>
 </div>
 <p>For more information, do:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-stream --help
-<span class="go">usage: gopro-stream [-h] [-i IDENTIFIER] [-l LOG] [-v VLC]</span>
+<span class="go">usage: gopro-stream [-h] [-i IDENTIFIER] [-l LOG] [-v VLC] [-w WIFI_INTERFACE]</span>
 
 <span class="go">Connect to a GoPro camera, enable the preview stream, then open VLC to view it.</span>
 
 <span class="go">optional arguments:</span>
 <span class="go">-h, --help            show this help message and exit</span>
 <span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
-<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default</span>
-<span class="go">                        camera SSID. If not used, first discovered GoPro will be connected to</span>
+<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first</span>
+<span class="go">                        discovered GoPro will be connected to</span>
 <span class="go">-l LOG, --log LOG     Location to store detailed log</span>
-<span class="go">-v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically</span>
-<span class="go">                        discovered.</span>
+<span class="go">-v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically discovered.</span>
+<span class="go">-w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE</span>
+<span class="go">                        System Wifi Interface. If not set, first discovered interface will be used.</span>
 </pre></div>
 </div>
 </div>
@@ -312,16 +317,18 @@ to it via WiFi. This is useful if you want to send HTTP commands to it from some
 </div>
 <p>For more information, do:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-wif --help
-<span class="go">usage: gopro-wifi [-h] [-i IDENTIFIER] [-l LOG]</span>
+<span class="go">usage: gopro-wifi [-h] [-i IDENTIFIER] [-l LOG] [-w WIFI_INTERFACE]</span>
 
-<span class="go">Connect to a GoPro cameras Wifi Access Point.</span>
+<span class="go">Connect to a GoPro camera&#39;s Wifi Access Point.</span>
 
 <span class="go">optional arguments:</span>
 <span class="go">-h, --help            show this help message and exit</span>
 <span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
-<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default</span>
-<span class="go">                        camera SSID. If not used, first discovered GoPro will be connected to</span>
+<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first</span>
+<span class="go">                        discovered GoPro will be connected to</span>
 <span class="go">-l LOG, --log LOG     Location to store detailed log</span>
+<span class="go">-w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE</span>
+<span class="go">                        System Wifi Interface. If not set, first discovered interface will be used.</span>
 </pre></div>
 </div>
 </div>
@@ -336,18 +343,19 @@ behavior.</p>
 </div>
 <p>For more information, do:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-demo --help
-<span class="go">usage: gopro-demo [-h] [-i IDENTIFIER] [-l LOG] [-v VLC]</span>
+<span class="go">usage: gopro-demo [-h] [-i IDENTIFIER] [-l LOG] [-v VLC] [-w WIFI_INTERFACE]</span>
 
 <span class="go">Connect to a GoPro camera via BLE and Wifi and do some things.</span>
 
 <span class="go">optional arguments:</span>
 <span class="go">-h, --help            show this help message and exit</span>
 <span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
-<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default</span>
-<span class="go">                        camera SSID. If not used, first discovered GoPro will be connected to</span>
+<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first</span>
+<span class="go">                        discovered GoPro will be connected to</span>
 <span class="go">-l LOG, --log LOG     Location to store detailed log</span>
-<span class="go">-v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically</span>
-<span class="go">                        discovered.</span>
+<span class="go">-v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically discovered.</span>
+<span class="go">-w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE</span>
+<span class="go">                        System Wifi Interface. If not set, first discovered interface will be used.</span>
 </pre></div>
 </div>
 <p>The demo will perform the following, logging to the console as it goes as well as writing a
