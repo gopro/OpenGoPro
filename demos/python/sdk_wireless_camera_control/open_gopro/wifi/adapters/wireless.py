@@ -11,6 +11,7 @@ import logging
 import tempfile
 from enum import Enum, auto
 from distutils.version import LooseVersion
+from shutil import which
 from typing import List, Optional, Tuple, Any, Callable
 
 import wrapt
@@ -98,33 +99,21 @@ class Wireless(WifiController):
         Returns:
             WifiController: [description]
         """
-        if os.name == "nt":
-            # try netsh (Windows).
-            response = cmd("where netsh")
-            if len(response) > 0 and "not found" not in response and "not recognized" not in response:
-                return NetshWireless()
-            response = cmd("powershell get-command netsh")
-            if len(response) > 0 and "not found" not in response and "not recognized" not in response:
-                return NetshWireless()
-        else:
-            # try nmcli (Ubuntu 14.04)
-            response = cmd("which nmcli")
-            if len(response) > 0 and "not found" not in response:
-                version = cmd("nmcli --version").split()[-1]
-                return (
-                    Nmcli0990Wireless()
-                    if LooseVersion(version) >= LooseVersion("0.9.9.0")
-                    else NmcliWireless()
-                )
+        # Try netsh (Windows).
+        if os.name == "nt" and which("netsh"):
+            return NetshWireless()
 
-            # try nmcli (Ubuntu w/o network-manager)
-            response = cmd("which wpa_supplicant")
-            if len(response) > 0 and "not found" not in response:
-                return WpasupplicantWireless()
+        # Try Linux options
+        # try nmcli (Ubuntu 14.04)
+        if which("nmcli"):
+            version = cmd("nmcli --version").split()[-1]
+            return Nmcli0990Wireless() if LooseVersion(version) >= LooseVersion("0.9.9.0") else NmcliWireless()
+        # try nmcli (Ubuntu w/o network-manager)
+        if which("wpa_supplicant"):
+            return WpasupplicantWireless()
 
         # try networksetup (Mac OS 10.10)
-        response = cmd("which networksetup")
-        if len(response) > 0 and "not found" not in response:
+        if which("networksetup"):
             return NetworksetupWireless()
 
         raise Exception("Unable to find compatible wireless driver.")

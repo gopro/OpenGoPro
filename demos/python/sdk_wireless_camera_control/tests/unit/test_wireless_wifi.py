@@ -39,6 +39,10 @@ class CommandSender(ABC):
             raise NotImplementedError
 
     @abstractmethod
+    def which(self, request: str) -> str:
+        raise NotImplementedError
+
+    @abstractmethod
     def __call__(self, command: str) -> str:
         raise NotImplementedError
 
@@ -47,6 +51,10 @@ class WindowsCommandSender(CommandSender):
     def __init__(self) -> None:
         super().__init__()
         self.os: OS_TYPE = "windows"
+
+    def which(self, request: str) -> str:
+        if request == "netsh":
+            return "valid"
 
     def __call__(self, command: str) -> str:
         response = None
@@ -192,8 +200,10 @@ class MockOs:
 @pytest.fixture(scope="function", params=operating_systems)
 def command_sender(request, monkeypatch):
     command_sender = CommandSender.from_os(request.param)
+    mock_os = MockOs(request.param)
     monkeypatch.setattr("open_gopro.wifi.adapters.wireless.cmd", command_sender)
-    monkeypatch.setattr("open_gopro.wifi.adapters.wireless.os", MockOs(request.param))
+    monkeypatch.setattr("open_gopro.wifi.adapters.wireless.os", mock_os)
+    monkeypatch.setattr("open_gopro.wifi.adapters.wireless.which", command_sender.which)
     yield command_sender
 
 
