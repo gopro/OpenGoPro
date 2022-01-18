@@ -99,7 +99,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
             self._find_device()
         # Otherwise we already have it
         else:
-            self._device = self._target  # type: ignore
+            self._device = self._target
         self._identifier = str(self._device)
 
         logger.info("Establishing the BLE connection")

@@ -149,7 +149,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         async def _async_scan() -> BleakDevice:  # pylint: disable=missing-return-doc
             logger.info(f"Scanning for {token.pattern} bluetooth devices...")
             devices: Dict[str, BleakDevice] = {}
-            uuids = [] if service_uuids is None else [x.hex for x in service_uuids]
+            uuids = [] if service_uuids is None else [uuid2bleak_string(uuid) for uuid in service_uuids]
 
             def _scan_callback(device: BleakDevice, _: Any) -> None:
                 """Bleak optional scan callback to receive every scan result.
