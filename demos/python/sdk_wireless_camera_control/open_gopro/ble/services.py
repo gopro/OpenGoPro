@@ -254,14 +254,14 @@ class Service:
     Args:
         uuid (BleUUID) : the service's BleUUID
         start_handle(int): the attribute handle where the service begins
-        end_handle(int): the attribute handle where the service ends
+        end_handle(int): the attribute handle where the service ends. Defaults to 0xFFFF.
         init_chars (List[Characteristic]) : list of characteristics known at service instantation. Can be set
             later with the characteristics property
     """
 
     uuid: BleUUID
     start_handle: int
-    end_handle: int = 0xFFFF  # TODO
+    end_handle: int = 0xFFFF
     init_chars: InitVar[Optional[List[Characteristic]]] = None
 
     def __post_init__(self, init_characteristics: Optional[List[Characteristic]]) -> None:

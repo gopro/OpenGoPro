@@ -108,11 +108,11 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
     >>> gopro.close()
 
     Args:
-        identifier (Pattern, optional): Last 4 of camera name / serial number (i.e. 0456 for GoPro0456). Defaults
-            to None (i.e. connect to first discovered GoPro)
-        ble_adapter (BLEController, optional): Class used to control computer's BLE connection / send data.
+        target (Optional[Union[Pattern, BleDevice]], optional): Last 4 of camera name / serial number
+            (i.e. 0456 for GoPro0456). Defaults to None (i.e. connect to first discovered GoPro)
+        ble_adapter (Type[BLEController], optional): Class used to control computer's BLE connection / send data.
             Defaults to BleakController().
-        wifi_adapter (WifiController, optional): Class used to control computer's Wifi connection / send data.
+        wifi_adapter (Type[WifiController], optional): Class used to control computer's Wifi connection / send data.
             Defaults to Wireless().
         wifi_interace (str, optional): Set to specify the wifi interface the local machine will use to connect
             to the GoPro. If None (or not set), first discovered interface will be used.
@@ -139,6 +139,16 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         enable_wifi: bool = True,
         maintain_ble: bool = True,
     ) -> None:
+        """[summary]
+
+        Args:
+            target (Optional[Union[Pattern, BleDevice]], optional): [description]. Defaults to None.
+            ble_adapter (Type[BLEController], optional): [description]. Defaults to BleakWrapperController.
+            wifi_adapter (Type[WifiController], optional): [description]. Defaults to Wireless.
+            wifi_interface (Optional[str], optional): [description]. Defaults to None.
+            enable_wifi (bool, optional): [description]. Defaults to True.
+            maintain_ble (bool, optional): [description]. Defaults to True.
+        """
         # Store initialization information
         self._enable_wifi_during_init = enable_wifi
         self._maintain_ble = maintain_ble

@@ -59,7 +59,7 @@ These can be imported as:
 API
 ===
 
-This is both the base types that are used to implement the API (BLE Setting, Ble Status, etc.) and the
+These are both the base types that are used to implement the API (BLE Setting, Ble Status, etc.) and the
 version-specific API's themselves.
 
 Since the API is configured (by version) dynamically after a connection is formed, these should not be imported
