@@ -102,20 +102,15 @@ class Wireless(WifiController):
         # Try netsh (Windows).
         if os.name == "nt" and which("netsh"):
             return NetshWireless()
-        # Try Linux options
-        else:
-            # try nmcli (Ubuntu 14.04)
-            if which("nmcli"):
-                version = cmd("nmcli --version").split()[-1]
-                return (
-                    Nmcli0990Wireless()
-                    if LooseVersion(version) >= LooseVersion("0.9.9.0")
-                    else NmcliWireless()
-                )
 
-            # try nmcli (Ubuntu w/o network-manager)
-            if which("wpa_supplicant"):
-                return WpasupplicantWireless()
+        # Try Linux options
+        # try nmcli (Ubuntu 14.04)
+        if which("nmcli"):
+            version = cmd("nmcli --version").split()[-1]
+            return Nmcli0990Wireless() if LooseVersion(version) >= LooseVersion("0.9.9.0") else NmcliWireless()
+        # try nmcli (Ubuntu w/o network-manager)
+        if which("wpa_supplicant"):
+            return WpasupplicantWireless()
 
         # try networksetup (Mac OS 10.10)
         if which("networksetup"):
