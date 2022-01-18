@@ -11,6 +11,7 @@ import logging
 import tempfile
 from enum import Enum, auto
 from distutils.version import LooseVersion
+from shutil import which
 from typing import List, Optional, Tuple, Any, Callable
 
 import wrapt
@@ -100,16 +101,16 @@ class Wireless(WifiController):
         """
         if os.name == "nt":
             # try netsh (Windows).
-            response = cmd("where netsh")
-            if len(response) > 0 and "not found" not in response and "not recognized" not in response:
+            response = which("netsh")
+            if response:
                 return NetshWireless()
             response = cmd("powershell get-command netsh")
             if len(response) > 0 and "not found" not in response and "not recognized" not in response:
                 return NetshWireless()
         else:
             # try nmcli (Ubuntu 14.04)
-            response = cmd("which nmcli")
-            if len(response) > 0 and "not found" not in response:
+            response = which("nmcli")
+            if response:
                 version = cmd("nmcli --version").split()[-1]
                 return (
                     Nmcli0990Wireless()
@@ -118,13 +119,13 @@ class Wireless(WifiController):
                 )
 
             # try nmcli (Ubuntu w/o network-manager)
-            response = cmd("which wpa_supplicant")
-            if len(response) > 0 and "not found" not in response:
+            response = which("wpa_supplicant")
+            if response:
                 return WpasupplicantWireless()
 
         # try networksetup (Mac OS 10.10)
-        response = cmd("which networksetup")
-        if len(response) > 0 and "not found" not in response:
+        response = which("networksetup")
+        if response:
             return NetworksetupWireless()
 
         raise Exception("Unable to find compatible wireless driver.")
