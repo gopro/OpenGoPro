@@ -15,10 +15,8 @@ import requests
 import requests_mock
 
 from open_gopro.gopro import GoPro
-from open_gopro.ble import UUID
 from open_gopro.exceptions import InvalidConfiguration, ResponseTimeout
-from open_gopro.constants import CmdId, StatusId
-from open_gopro.responses import GoProResp
+from open_gopro.constants import CmdId, GoProUUIDs, StatusId
 
 
 ready = False
@@ -42,7 +40,7 @@ def test_ble_threads_start(gopro_client_maintain_ble: GoPro):
     assert not gopro_client_maintain_ble.is_encoding
     set_shutter = bytearray([0x02, 0x01, 0x00])
     assert gopro_client_maintain_ble._write_characteristic_receive_notification(
-        UUID.CQ_COMMAND, set_shutter
+        GoProUUIDs.CQ_COMMAND, set_shutter
     ).is_ok
 
 
@@ -130,10 +128,10 @@ def test_keep_alive(gopro_client: GoPro):
 @pytest.mark.asyncio
 def test_notification_handler(gopro_client: GoPro):
     response = gopro_client._write_characteristic_receive_notification(
-        UUID.CQ_COMMAND,
+        GoProUUIDs.CQ_COMMAND,
         bytearray([0x03, 0x01, 0x01, 0x01]),
         response_data=[bytearray([0x02, 0x01, 0x00])],
-        response_uuid=UUID.CQ_COMMAND_RESP,
+        response_uuid=GoProUUIDs.CQ_COMMAND_RESP,
         response_id=CmdId.SET_SHUTTER,
     )
     assert response.is_ok

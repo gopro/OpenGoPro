@@ -42,7 +42,7 @@ async def main(identifier: Optional[str]) -> None:
 
     client = await connect_ble(notification_handler, identifier)
 
-    # Write to command request UUID to load the cinematic preset
+    # Write to command request BleUUID to load the cinematic preset
     logger.info("Loading the cinematic preset...")
     event.clear()
     await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x06, 0x40, 0x04, 0x00, 0x00, 0x00, 0x02]))

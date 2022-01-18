@@ -33,7 +33,7 @@ def test_bleak_open(gopro_bleak_client: GoProBle):
 
 @pytest.mark.asyncio
 def test_bleak_attributes_discovered(gopro_bleak_client: GoProBle):
-    assert len(gopro_bleak_client._ble.gatt_table.services) > 0
+    assert len(gopro_bleak_client._ble.gatt_db.services) > 0
     gopro_bleak_client._ble.services_as_csv()
 
 

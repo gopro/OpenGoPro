@@ -4,15 +4,52 @@
 """Constant numbers shared across the GoPro module. These do not change across Open GoPro Versions"""
 
 from enum import Enum, EnumMeta
+from dataclasses import dataclass
 from typing import Union, Tuple, Iterator, Type, TypeVar
 
 import construct
 
-from open_gopro.ble import UUID
+from open_gopro.ble import BleUUID, UUIDs
 
 T = TypeVar("T")
 
 GOPRO_BASE_UUID = "b5f9{}-aa8d-11e3-9046-0002a5d5c51b"
+
+
+@dataclass(frozen=True)
+class GoProUUIDs(UUIDs):
+    """GoPro Proprietary BleUUID's."""
+
+    # GoPro Wifi Access Point Service
+    S_WIFI_ACCESS_POINT = BleUUID("Wifi Access Point Service", hex=GOPRO_BASE_UUID.format("0001"))
+    WAP_SSID = BleUUID("Wifi AP SSID", hex=GOPRO_BASE_UUID.format("0002"))
+    WAP_PASSWORD = BleUUID("Wifi AP Password", hex=GOPRO_BASE_UUID.format("0003"))
+    WAP_POWER = BleUUID("Wifi Power", hex=GOPRO_BASE_UUID.format("0004"))
+    WAP_STATE = BleUUID("Wifi State", hex=GOPRO_BASE_UUID.format("0005"))
+    WAP_CSI_PASSWORD = BleUUID("CSI Password", hex=GOPRO_BASE_UUID.format("0006"))
+
+    # GoPro Control & Query Service
+    S_CONTROL_QUERY = BleUUID("Control and Query Service", hex="0000fea6-0000-1000-8000-00805f9b34fb")
+    CQ_COMMAND = BleUUID("Command", hex=GOPRO_BASE_UUID.format("0072"))
+    CQ_COMMAND_RESP = BleUUID("Command Response", hex=GOPRO_BASE_UUID.format("0073"))
+    CQ_SETTINGS = BleUUID("Settings", hex=GOPRO_BASE_UUID.format("0074"))
+    CQ_SETTINGS_RESP = BleUUID("Settings Response", hex=GOPRO_BASE_UUID.format("0075"))
+    CQ_QUERY = BleUUID("Query", hex=GOPRO_BASE_UUID.format("0076"))
+    CQ_QUERY_RESP = BleUUID("Query Response", hex=GOPRO_BASE_UUID.format("0077"))
+    CQ_SENSOR = BleUUID("Sensor", hex=GOPRO_BASE_UUID.format("0078"))
+    CQ_SENSOR_RESP = BleUUID("Sensor Response", hex=GOPRO_BASE_UUID.format("0079"))
+
+    # GoPro Camera Management Service
+    S_CAMERA_MANAGEMENT = BleUUID("Camera Management Service", hex=GOPRO_BASE_UUID.format("0090"))
+    CM_NET_MGMT_COMM = BleUUID("Camera Management", hex=GOPRO_BASE_UUID.format("0091"))
+    CN_NET_MGMT_RESP = BleUUID("Camera Management Response", hex=GOPRO_BASE_UUID.format("0092"))
+
+    # Unknown
+    S_UNKNOWN = BleUUID("Unknown Service", hex=GOPRO_BASE_UUID.format("0080"))
+    INTERNAL_81 = BleUUID("Internal 81", hex=GOPRO_BASE_UUID.format("0081"))
+    INTERNAL_82 = BleUUID("Internal 82", hex=GOPRO_BASE_UUID.format("0082"))
+    INTERNAL_83 = BleUUID("Internal 83", hex=GOPRO_BASE_UUID.format("0083"))
+    INTERNAL_84 = BleUUID("Internal 84", hex=GOPRO_BASE_UUID.format("0084"))
 
 
 class GoProEnumMeta(EnumMeta):
@@ -45,7 +82,7 @@ class ErrorCode(GoProEnum):
 
 
 class CmdId(GoProEnum):
-    """Command ID's that are written to UUID.CQ_COMMAND."""
+    """Command ID's that are written to GoProUUIDs.CQ_COMMAND."""
 
     SET_SHUTTER = 0x01
     POWER_DOWN = 0x04
@@ -76,7 +113,7 @@ class ActionId(GoProEnum):
 
 
 class SettingId(GoProEnum):
-    """Setting ID's that identify settings and are written to UUID.CQ_SETTINGS."""
+    """Setting ID's that identify settings and are written to GoProUUIDs.CQ_SETTINGS."""
 
     RESOLUTION = 2
     FPS = 3
@@ -174,7 +211,7 @@ class SettingId(GoProEnum):
 
 
 class QueryCmdId(GoProEnum):
-    """Command ID that is written to UUID.CQ_QUERY."""
+    """Command ID that is written to GoProUUIDs.CQ_QUERY."""
 
     GET_SETTING_VAL = 0x12
     GET_STATUS_VAL = 0x13
@@ -194,7 +231,7 @@ class QueryCmdId(GoProEnum):
 
 
 class StatusId(GoProEnum):
-    """Status ID to identify statuses sent to UUID.CQ_QUERY or received from UUID.CQ_QUERY_RESP."""
+    """Status ID to identify statuses sent to GoProUUIDs.CQ_QUERY or received from GoProUUIDs.CQ_QUERY_RESP."""
 
     BATT_PRESENT = 1
     BATT_LEVEL = 2
@@ -305,5 +342,5 @@ ProducerType = Tuple[QueryCmdId, Union[SettingId, StatusId]]
 CmdType = Union[CmdId, QueryCmdId, ActionId]
 """Types that identify a command."""
 
-ResponseType = Union[CmdType, StatusId, SettingId, UUID, str, construct.Enum]
+ResponseType = Union[CmdType, StatusId, SettingId, BleUUID, str, construct.Enum]
 """Types that are used to identify a response."""

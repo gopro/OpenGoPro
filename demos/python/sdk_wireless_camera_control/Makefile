@@ -130,7 +130,7 @@ sphinx: clean_docs reports ## Generate Sphinx documentation
 	@rm -rf ${DOCS_DIR}/build/.doctrees ${DOCS_DIR}/build/_sources ${DOCS_DIR}/build/_static/fonts
 
 .PHONY: docs
-docs: docs-api-check sphinx ## Generate all documentation with prerequisite checks.
+docs: reports docs-api-check sphinx ## Generate all documentation with prerequisite checks.
 
 ############################################## Publishing ####################################################
 

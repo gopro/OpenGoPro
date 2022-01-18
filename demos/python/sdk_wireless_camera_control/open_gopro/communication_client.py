@@ -7,7 +7,7 @@ import re
 import logging
 from pathlib import Path
 from abc import ABC, abstractmethod
-from typing import Generic, Union, Pattern, Optional
+from typing import Generic, Optional, Union, Pattern
 
 from open_gopro.ble import (
     BleDevice,
@@ -16,11 +16,11 @@ from open_gopro.ble import (
     DisconnectHandlerType,
     NotiHandlerType,
     BleClient,
-    UUID,
+    BleUUID,
 )
 from open_gopro.wifi import WifiClient, WifiController
 from open_gopro.responses import GoProResp, ParserMapType, Parser
-from open_gopro.constants import ProducerType, ResponseType
+from open_gopro.constants import GoProUUIDs, ProducerType, ResponseType
 
 logger = logging.getLogger(__name__)
 
@@ -96,7 +96,10 @@ class GoProBle(ABC, GoProResponder, Generic[BleHandle, BleDevice]):
     """GoPro specific BLE Client
 
     Args:
-        controller (BleController): instance of BLE Controller to use for this client
+        controller (BLEController): controller implementation to use for this client
+        disconnected_cb (DisconnectHandlerType): disconnected callback
+        notification_cb (NotiHandlerType): notification callback
+        target (Union[Pattern, BleDevice]): regex or device to connect to
     """
 
     def __init__(
@@ -104,14 +107,15 @@ class GoProBle(ABC, GoProResponder, Generic[BleHandle, BleDevice]):
         controller: BLEController,
         disconnected_cb: DisconnectHandlerType,
         notification_cb: NotiHandlerType,
-        target: Optional[Union[Pattern, BleDevice]],
+        target: Union[Pattern, BleDevice],
     ) -> None:
         GoProResponder.__init__(self)
         self._ble: BleClient = BleClient(
             controller,
             disconnected_cb,
             notification_cb,
-            re.compile(r"GoPro [A-Z0-9]{4}") if target is None else target,
+            (re.compile(r"GoPro [A-Z0-9]{4}") if target is None else target, [GoProUUIDs.S_CONTROL_QUERY]),
+            uuids=GoProUUIDs,
         )
 
     @abstractmethod
@@ -145,9 +149,9 @@ class GoProBle(ABC, GoProResponder, Generic[BleHandle, BleDevice]):
         raise NotImplementedError
 
     @abstractmethod
-    def _write_characteristic_receive_notification(self, uuid: UUID, data: bytearray) -> GoProResp:
+    def _write_characteristic_receive_notification(self, uuid: BleUUID, data: bytearray) -> GoProResp:
         raise NotImplementedError
 
     @abstractmethod
-    def _read_characteristic(self, uuid: UUID) -> GoProResp:
+    def _read_characteristic(self, uuid: BleUUID) -> GoProResp:
         raise NotImplementedError

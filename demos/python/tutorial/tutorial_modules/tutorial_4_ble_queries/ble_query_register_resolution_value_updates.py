@@ -79,7 +79,7 @@ async def main(identifier: Optional[str]) -> None:
     logger.info("Successfully registered for resolution value updates.")
     logger.info(f"Resolution is currently {resolution}")
 
-    # Write to command request UUID to change the video resolution (either to 1080 or 2.7K)
+    # Write to command request BleUUID to change the video resolution (either to 1080 or 2.7K)
     new_resolution = Resolution.RES_2_7K if resolution is Resolution.RES_1080 else Resolution.RES_1080
     logger.info(f"Changing the resolution to {new_resolution}...")
     event.clear()

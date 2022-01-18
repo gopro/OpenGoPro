@@ -18,13 +18,13 @@ import requests
 from open_gopro.api.v1_0.api import ApiV1_0
 
 from open_gopro.exceptions import InvalidOpenGoProVersion, ResponseTimeout, InvalidConfiguration
-from open_gopro.ble import BLEController, UUID, BleDevice
+from open_gopro.ble import BLEController, BleUUID, BleDevice
 from open_gopro.ble.adapters import BleakWrapperController
 from open_gopro.wifi import WifiController
 from open_gopro.wifi.adapters import Wireless
 from open_gopro.util import SnapshotQueue
 from open_gopro.responses import GoProResp
-from open_gopro.constants import CmdId, ErrorCode, StatusId, QueryCmdId, ProducerType
+from open_gopro.constants import CmdId, ErrorCode, GoProUUIDs, StatusId, QueryCmdId, ProducerType
 from open_gopro.api import (
     Api,
     api_versions,
@@ -40,7 +40,7 @@ from open_gopro.communication_client import GoProBle, GoProWifi
 logger = logging.getLogger(__name__)
 
 KEEP_ALIVE_INTERVAL: Final = 60
-WRITE_TIMEOUT: Final = 10
+WRITE_TIMEOUT: Final = 5
 HTTP_GET_RETRIES: Final = 5
 
 
@@ -108,11 +108,11 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
     >>> gopro.close()
 
     Args:
-        identifier (Pattern, optional): Last 4 of camera name / serial number (i.e. 0456 for GoPro0456). Defaults
-            to None (i.e. connect to first discovered GoPro)
-        ble_adapter (BLEController, optional): Class used to control computer's BLE connection / send data.
+        target (Optional[Union[Pattern, BleDevice]], optional): Last 4 of camera name / serial number
+            (i.e. 0456 for GoPro0456). Defaults to None (i.e. connect to first discovered GoPro)
+        ble_adapter (Type[BLEController], optional): Class used to control computer's BLE connection / send data.
             Defaults to BleakController().
-        wifi_adapter (WifiController, optional): Class used to control computer's Wifi connection / send data.
+        wifi_adapter (Type[WifiController], optional): Class used to control computer's Wifi connection / send data.
             Defaults to Wireless().
         wifi_interace (str, optional): Set to specify the wifi interface the local machine will use to connect
             to the GoPro. If None (or not set), first discovered interface will be used.
@@ -139,6 +139,16 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         enable_wifi: bool = True,
         maintain_ble: bool = True,
     ) -> None:
+        """[summary]
+
+        Args:
+            target (Optional[Union[Pattern, BleDevice]], optional): [description]. Defaults to None.
+            ble_adapter (Type[BLEController], optional): [description]. Defaults to BleakWrapperController.
+            wifi_adapter (Type[WifiController], optional): [description]. Defaults to Wireless.
+            wifi_interface (Optional[str], optional): [description]. Defaults to None.
+            enable_wifi (bool, optional): [description]. Defaults to True.
+            maintain_ble (bool, optional): [description]. Defaults to True.
+        """
         # Store initialization information
         self._enable_wifi_during_init = enable_wifi
         self._maintain_ble = maintain_ble
@@ -150,8 +160,8 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         # We start with version 1.0. It will be updated once we query the version
         self._api: Api = ApiV1_0(self, self)
 
-        # Current accumulating synchronous responses, indexed by UUID. This assumes there can only be one active response per UUID
-        self._active_resp: Dict[UUID, GoProResp] = {}
+        # Current accumulating synchronous responses, indexed by GoProUUIDs. This assumes there can only be one active response per BleUUID
+        self._active_resp: Dict[BleUUID, GoProResp] = {}
         # Responses that we are waiting for.
         self._sync_resp_wait_q: SnapshotQueue = SnapshotQueue()
         # Synchronous response that has been parsed and are ready for their sender to receive as the response.
@@ -317,29 +327,37 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
         For Wifi: discover SSID and password, enable and connect. Or disable if not using.
 
+        Raises:
+            Any exceptions during opening are propagated through
+
         Args:
             timeout (int, optional): How long to wait for each connection before timing out. Defaults to 10.
             retries (int, optional): How many connection attempts before considering connection failed. Defaults to 5.
         """
-        # Establish BLE connection and start maintenance threads if desired
-        self._open_ble(timeout, retries)
-
-        # Find and configure API version
-        version = self.ble_command.get_open_gopro_api_version().flatten
-        version_str = f"{version.major}.{version.minor}"
         try:
-            self._api = api_versions[version_str](self, self)
-        except KeyError as e:
-            raise InvalidOpenGoProVersion(version_str) from e
-        logger.info(f"Using Open GoPro API version {version_str}")
+            # Establish BLE connection and start maintenance threads if desired
+            self._open_ble(timeout, retries)
 
-        # Establish Wifi connection if desired
-        if self._enable_wifi_during_init:
-            self._open_wifi(timeout, retries)
-        else:
-            # Otherwise, turn off Wifi
-            logger.info("Turning off the camera's Wifi radio")
-            self.ble_command.enable_wifi_ap(False)
+            # Find and configure API version
+            version = self.ble_command.get_open_gopro_api_version().flatten
+            version_str = f"{version.major}.{version.minor}"
+            try:
+                self._api = api_versions[version_str](self, self)
+            except KeyError as e:
+                raise InvalidOpenGoProVersion(version_str) from e
+            logger.info(f"Using Open GoPro API version {version_str}")
+
+            # Establish Wifi connection if desired
+            if self._enable_wifi_during_init:
+                self._open_wifi(timeout, retries)
+            else:
+                # Otherwise, turn off Wifi
+                logger.info("Turning off the camera's Wifi radio")
+                self.ble_command.enable_wifi_ap(False)
+        except Exception as e:
+            logger.error(f"Error while opening: {e}")
+            self.close()
+            raise e
 
     def close(self) -> None:
         """Safely stop the GoPro instance.
@@ -476,12 +494,10 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             handle (int): Attribute handle that notification was received on.
             data (bytes): Bytestream that was received.
         """
-        # Convert handle to UUID
-        uuid = self._ble.gatt_table.handle2uuid(handle)
         # Responses we don't care about. For now, just the BLE-spec defined battery characteristic
-        if uuid is UUID.BATT_LEVEL:
+        if (uuid := self._ble.gatt_db.handle2uuid(handle)) == GoProUUIDs.BATT_LEVEL:
             return
-        logger.debug(f'Received response on {uuid}: {data.hex(":")}')
+        logger.debug(f'Received response on BleUUID [{uuid}]: {data.hex(":")}')
 
         # Add to response dict if not already there
         if uuid not in self._active_resp:
@@ -565,14 +581,14 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             # raise ConnectionTerminated("Ble connection terminated.")
         self._ble_disconnect_event.set()
 
-    def _write_characteristic_receive_notification(self, uuid: UUID, data: bytearray) -> GoProResp:
+    def _write_characteristic_receive_notification(self, uuid: BleUUID, data: bytearray) -> GoProResp:
         """Perform a BLE write and wait for a corresponding notification response.
 
         There should hopefully not be a scenario where this needs to be called directly as it is generally
         called from the instance's API delegate (i.e. self)
 
         Args:
-            uuid (UUID): UUID to write to
+            uuid (BleUUID): BleUUID to write to
             data (bytearray): data to write
 
         Raises:
@@ -602,7 +618,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         # Store information on the response we are expecting
         self._sync_resp_wait_q.put(GoProResp._from_write_command(self._parser_map, uuid, data))
         # Perform write
-        self._ble.write(uuid.value, data)
+        self._ble.write(uuid, data)
         # Wait to be notified that response was received
         try:
             response = self._sync_resp_ready_q.get(timeout=WRITE_TIMEOUT)
@@ -634,14 +650,14 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
         return response
 
-    def _read_characteristic(self, uuid: UUID) -> GoProResp:
-        """Read a characteristic's data by UUID.
+    def _read_characteristic(self, uuid: BleUUID) -> GoProResp:
+        """Read a characteristic's data by GoProUUIDs.
 
         There should hopefully not be a scenario where this needs to be called directly as it is generally
         called from the instance's delegates (i.e. self.command, self.setting, self.ble_status)
 
         Args:
-            uuid (UUID): characteristic data to read
+            uuid (BleUUID): characteristic data to read
 
         Returns:
             bytearray: read data
@@ -654,7 +670,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             logger.debug(f"{uuid} has the semaphore")
             have_semaphore = True
 
-        received_data = self._ble.read(uuid.value)
+        received_data = self._ble.read(uuid)
 
         if self._maintain_ble and have_semaphore:
             self._ready.release()

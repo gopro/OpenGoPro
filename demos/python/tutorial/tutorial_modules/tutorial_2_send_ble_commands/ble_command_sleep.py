@@ -42,7 +42,7 @@ async def main(identifier: Optional[str]) -> None:
 
     client = await connect_ble(notification_handler, identifier)
 
-    # Write to command request UUID to put the camera to sleep
+    # Write to command request BleUUID to put the camera to sleep
     logger.info("Putting the camera to sleep")
     event.clear()
     await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x01, 0x05]))

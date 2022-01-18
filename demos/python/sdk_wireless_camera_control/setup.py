@@ -21,7 +21,7 @@ AUTHOR = "Tim Camise"
 TEST_REQUIRED = ["pytest", "pytest-cov", "pytest-asyncio", "pytest-html"]
 
 REQUIRED = [
-    "bleak==0.12.1",
+    "bleak>=0.13.0",
     "construct>=2.10",
     "wrapt>=1.12.1",
     "requests",

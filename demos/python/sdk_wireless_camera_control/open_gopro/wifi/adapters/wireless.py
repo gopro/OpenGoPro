@@ -215,7 +215,7 @@ class NmcliWireless(WifiController):
             partial (str): part of the connection name
         """
         # list matching connections
-        response = cmd(f"nmcli --fields UUID,NAME con list | grep {partial}")
+        response = cmd(f"nmcli --fields BleUUID,NAME con list | grep {partial}")
 
         # delete all of the matching connections
         for line in response.splitlines():

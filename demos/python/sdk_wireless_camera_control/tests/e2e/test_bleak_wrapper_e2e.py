@@ -15,6 +15,7 @@ from bleak.backends.device import BLEDevice as BleakDevice
 from tests import cameras
 from open_gopro.ble import FailedToFindDevice
 from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
+from open_gopro.constants import GoProUUIDs
 
 
 def disconnected_cb(_) -> None:
@@ -31,7 +32,9 @@ def device(bleak_wrapper: BleakWrapperController, request):
     retries = 10
     for retry in range(retries):
         try:
-            device = bleak_wrapper.scan(re.compile(cameras[request.param]), timeout=2)
+            device = bleak_wrapper.scan(
+                re.compile(cameras[request.param]), timeout=2, service_uuids=[GoProUUIDs.S_CONTROL_QUERY]
+            )
             if device is not None and "gopro" in device.name.lower():
                 yield device
                 return

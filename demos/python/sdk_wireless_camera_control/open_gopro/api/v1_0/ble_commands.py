@@ -29,7 +29,7 @@ from open_gopro.constants import (
     QueryCmdId,
     SettingId,
     StatusId,
-    UUID,
+    GoProUUIDs,
 )
 from .params import ParamsV1_0 as Params
 
@@ -51,7 +51,7 @@ class BleCommandsV1_0:
     def __init__(self, communicator: GoProBle):
 
         self.set_shutter = BleWriteWithParamsCommand[Params.Shutter](
-            communicator, UUID.CQ_COMMAND, CmdId.SET_SHUTTER, Int8ub
+            communicator, GoProUUIDs.CQ_COMMAND, CmdId.SET_SHUTTER, Int8ub
         )
         """Set shutter on or off.
 
@@ -62,14 +62,14 @@ class BleCommandsV1_0:
             GoProResp: command status
         """
 
-        self.power_down = BleWriteNoParamsCommand(communicator, UUID.CQ_COMMAND, CmdId.POWER_DOWN)
+        self.power_down = BleWriteNoParamsCommand(communicator, GoProUUIDs.CQ_COMMAND, CmdId.POWER_DOWN)
         """Power down the camera.
 
         Returns:
             GoProResp: command status
         """
 
-        self.sleep = BleWriteNoParamsCommand(communicator, UUID.CQ_COMMAND, CmdId.SLEEP)
+        self.sleep = BleWriteNoParamsCommand(communicator, GoProUUIDs.CQ_COMMAND, CmdId.SLEEP)
         """Put the camera in standby.
 
         Returns:
@@ -77,7 +77,7 @@ class BleCommandsV1_0:
         """
 
         self.enable_wifi_ap = BleWriteWithParamsCommand[bool](
-            communicator, UUID.CQ_COMMAND, CmdId.SET_WIFI, Int8ub
+            communicator, GoProUUIDs.CQ_COMMAND, CmdId.SET_WIFI, Int8ub
         )
         """Enable / disable the Wi-Fi Access Point.
 
@@ -90,7 +90,7 @@ class BleCommandsV1_0:
 
         self.get_hardware_info = BleWriteNoParamsCommand(
             communicator,
-            UUID.CQ_COMMAND,
+            GoProUUIDs.CQ_COMMAND,
             CmdId.GET_HW_INFO,
             response_parser=Struct(
                 Padding(1),
@@ -116,7 +116,7 @@ class BleCommandsV1_0:
         """
 
         self.load_preset_group = BleWriteWithParamsCommand[Params.PresetGroup](
-            communicator, UUID.CQ_COMMAND, CmdId.LOAD_PRESET_GROUP, Int32ub
+            communicator, GoProUUIDs.CQ_COMMAND, CmdId.LOAD_PRESET_GROUP, Int32ub
         )
         """Load a Preset Group.
 
@@ -130,7 +130,7 @@ class BleCommandsV1_0:
         """
 
         self.load_preset = BleWriteWithParamsCommand[Params.Preset](
-            communicator, UUID.CQ_COMMAND, CmdId.LOAD_PRESET, Int32ub
+            communicator, GoProUUIDs.CQ_COMMAND, CmdId.LOAD_PRESET, Int32ub
         )
         """Load a Preset
 
@@ -142,7 +142,7 @@ class BleCommandsV1_0:
         """
 
         self.set_third_party_client_info = BleWriteNoParamsCommand(
-            communicator, UUID.CQ_COMMAND, CmdId.SET_THIRD_PARTY_CLIENT_INFO
+            communicator, GoProUUIDs.CQ_COMMAND, CmdId.SET_THIRD_PARTY_CLIENT_INFO
         )
         """Flag as third party app.
 
@@ -152,7 +152,7 @@ class BleCommandsV1_0:
 
         self.get_open_gopro_api_version = BleWriteNoParamsCommand(
             communicator,
-            UUID.CQ_COMMAND,
+            GoProUUIDs.CQ_COMMAND,
             CmdId.GET_THIRD_PARTY_API_VERSION,
             response_parser=Struct(Padding(1), "major" / Int8ub, Padding(1), "minor" / Int8ub),
         )
@@ -168,7 +168,7 @@ class BleCommandsV1_0:
 
         self.set_turbo_mode = TurboMode(
             communicator,
-            UUID.CQ_COMMAND,
+            GoProUUIDs.CQ_COMMAND,
             CmdId.SET_TURBO_MODE,
             ActionId.SET_TURBO_MODE,
             proto.RequestSetTurboActive,
@@ -184,7 +184,7 @@ class BleCommandsV1_0:
         """
 
         # @proto_cmd(
-        #     UUID.CQ_COMMAND,
+        #     GoProUUIDs.CQ_COMMAND,
         #     CmdId.GET_PRESET_STATUS,
         #     ActionId.GET_PRESET_STATUS,
         #     proto.RequestGetPresetStatus,
@@ -206,7 +206,7 @@ class BleCommandsV1_0:
         #     """
 
         self.get_wifi_ssid = BleReadCommand(
-            communicator, UUID.WAP_SSID, Struct("ssid" / GreedyString("utf-8"))
+            communicator, GoProUUIDs.WAP_SSID, Struct("ssid" / GreedyString("utf-8"))
         )
         """Get the Wifi SSID.
 
@@ -215,7 +215,7 @@ class BleCommandsV1_0:
         """
 
         self.get_wifi_password = BleReadCommand(
-            communicator, UUID.WAP_PASSWORD, Struct("password" / GreedyString("utf-8"))
+            communicator, GoProUUIDs.WAP_PASSWORD, Struct("password" / GreedyString("utf-8"))
         )
         """Get the Wifi password.
 
@@ -224,7 +224,7 @@ class BleCommandsV1_0:
         """
 
         self.get_camera_statuses = BleWriteNoParamsCommand(
-            communicator, UUID.CQ_QUERY, CmdId.GET_CAMERA_STATUSES
+            communicator, GoProUUIDs.CQ_QUERY, CmdId.GET_CAMERA_STATUSES
         )
         """Get all camera statuses.
 
@@ -233,7 +233,7 @@ class BleCommandsV1_0:
         """
 
         self.get_camera_settings = BleWriteNoParamsCommand(
-            communicator, UUID.CQ_QUERY, CmdId.GET_CAMERA_SETTINGS
+            communicator, GoProUUIDs.CQ_QUERY, CmdId.GET_CAMERA_SETTINGS
         )
         """Get all camera settings.
 
@@ -243,7 +243,7 @@ class BleCommandsV1_0:
 
         self.register_for_all_statuses = RegisterUnregisterAll(
             communicator,
-            UUID.CQ_QUERY,
+            GoProUUIDs.CQ_QUERY,
             CmdId.REGISTER_ALL_STATUSES,
             producer=(StatusId, QueryCmdId.STATUS_VAL_PUSH),
             action=RegisterUnregisterAll.Action.REGISTER,
@@ -256,7 +256,7 @@ class BleCommandsV1_0:
 
         self.unregister_for_all_statuses = RegisterUnregisterAll(
             communicator,
-            UUID.CQ_QUERY,
+            GoProUUIDs.CQ_QUERY,
             CmdId.UNREGISTER_ALL_STATUSES,
             producer=(StatusId, QueryCmdId.STATUS_VAL_PUSH),
             action=RegisterUnregisterAll.Action.UNREGISTER,
@@ -269,7 +269,7 @@ class BleCommandsV1_0:
 
         self.register_for_all_settings = RegisterUnregisterAll(
             communicator,
-            UUID.CQ_QUERY,
+            GoProUUIDs.CQ_QUERY,
             CmdId.REGISTER_ALL_SETTINGS,
             producer=(SettingId, QueryCmdId.STATUS_VAL_PUSH),
             action=RegisterUnregisterAll.Action.REGISTER,
@@ -282,7 +282,7 @@ class BleCommandsV1_0:
 
         self.unregister_for_all_settings = RegisterUnregisterAll(
             communicator,
-            UUID.CQ_QUERY,
+            GoProUUIDs.CQ_QUERY,
             CmdId.UNREGISTER_ALL_SETTINGS,
             producer=(SettingId, QueryCmdId.STATUS_VAL_PUSH),
             action=RegisterUnregisterAll.Action.UNREGISTER,

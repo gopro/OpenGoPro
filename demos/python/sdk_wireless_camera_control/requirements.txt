@@ -1,5 +1,5 @@
 -e .
-bleak==0.12.1
+bleak>=0.14.1
 construct==2.10.67
 rich== 9.13.0
 wrapt==1.12.1
