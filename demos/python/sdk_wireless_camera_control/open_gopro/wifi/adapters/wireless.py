@@ -99,18 +99,13 @@ class Wireless(WifiController):
         Returns:
             WifiController: [description]
         """
-        if os.name == "nt":
-            # try netsh (Windows).
-            response = which("netsh")
-            if response:
-                return NetshWireless()
-            response = cmd("powershell get-command netsh")
-            if len(response) > 0 and "not found" not in response and "not recognized" not in response:
-                return NetshWireless()
+        # Try netsh (Windows).
+        if os.name == "nt" and which("netsh"):
+            return NetshWireless()
+        # Try Linux options
         else:
             # try nmcli (Ubuntu 14.04)
-            response = which("nmcli")
-            if response:
+            if which("nmcli"):
                 version = cmd("nmcli --version").split()[-1]
                 return (
                     Nmcli0990Wireless()
@@ -119,13 +114,11 @@ class Wireless(WifiController):
                 )
 
             # try nmcli (Ubuntu w/o network-manager)
-            response = which("wpa_supplicant")
-            if response:
+            if which("wpa_supplicant"):
                 return WpasupplicantWireless()
 
         # try networksetup (Mac OS 10.10)
-        response = which("networksetup")
-        if response:
+        if which("networksetup"):
             return NetworksetupWireless()
 
         raise Exception("Unable to find compatible wireless driver.")
