@@ -268,11 +268,11 @@ should be used simultaneously with this document for development.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>identifier</strong> (<em>Pattern</em><em>, </em><em>optional</em>) – Last 4 of camera name / serial number (i.e. 0456 for GoPro0456). Defaults
-to None (i.e. connect to first discovered GoPro)</p></li>
-<li><p><strong>ble_adapter</strong> (<em>BLEController</em><em>, </em><em>optional</em>) – Class used to control computer’s BLE connection / send data.
+<li><p><strong>target</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Pattern</em><em>, </em><em>BleDevice</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Last 4 of camera name / serial number
+(i.e. 0456 for GoPro0456). Defaults to None (i.e. connect to first discovered GoPro)</p></li>
+<li><p><strong>ble_adapter</strong> (<em>Type</em><em>[</em><em>BLEController</em><em>]</em><em>, </em><em>optional</em>) – Class used to control computer’s BLE connection / send data.
 Defaults to BleakController().</p></li>
-<li><p><strong>wifi_adapter</strong> (<em>WifiController</em><em>, </em><em>optional</em>) – Class used to control computer’s Wifi connection / send data.
+<li><p><strong>wifi_adapter</strong> (<em>Type</em><em>[</em><em>WifiController</em><em>]</em><em>, </em><em>optional</em>) – Class used to control computer’s Wifi connection / send data.
 Defaults to Wireless().</p></li>
 <li><p><strong>wifi_interace</strong> (<em>str</em><em>, </em><em>optional</em>) – Set to specify the wifi interface the local machine will use to connect
 to the GoPro. If None (or not set), first discovered interface will be used.</p></li>
@@ -448,8 +448,11 @@ scan for the camera for BLE.</p>
 start maintenance, and get Open GoPro version..</p>
 <p>For Wifi: discover SSID and password, enable and connect. Or disable if not using.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>Any exceptions during opening are propagated through</strong> – </p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>timeout</strong> (<em>int</em><em>, </em><em>optional</em>) – How long to wait for each connection before timing out. Defaults to 10.</p></li>
 <li><p><strong>retries</strong> (<em>int</em><em>, </em><em>optional</em>) – How many connection attempts before considering connection failed. Defaults to 5.</p></li>
 </ul>
@@ -525,7 +528,7 @@ start maintenance, and get Open GoPro version..</p>
 </div>
 <dl class="py class">
 <dt id="open_gopro.responses.GoProResp">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.responses.</span></code><code class="sig-name descname"><span class="pre">GoProResp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">parsers:</span> <span class="pre">Dict[Union[open_gopro.constants.CmdId,</span> <span class="pre">open_gopro.constants.QueryCmdId,</span> <span class="pre">open_gopro.constants.ActionId,</span> <span class="pre">open_gopro.constants.StatusId,</span> <span class="pre">open_gopro.constants.SettingId,</span> <span class="pre">open_gopro.ble.services.UUID,</span> <span class="pre">str,</span> <span class="pre">construct.core.Enum],</span> <span class="pre">Union[construct.core.Construct,</span> <span class="pre">open_gopro.responses.JsonParser]],</span> <span class="pre">info:</span> <span class="pre">List[Union[open_gopro.constants.CmdId,</span> <span class="pre">open_gopro.constants.QueryCmdId,</span> <span class="pre">open_gopro.constants.ActionId,</span> <span class="pre">open_gopro.constants.StatusId,</span> <span class="pre">open_gopro.constants.SettingId,</span> <span class="pre">open_gopro.ble.services.UUID,</span> <span class="pre">str,</span> <span class="pre">construct.core.Enum]],</span> <span class="pre">status:</span> <span class="pre">open_gopro.constants.ErrorCode</span> <span class="pre">=</span> <span class="pre">&lt;ErrorCode.SUCCESS:</span> <span class="pre">0&gt;,</span> <span class="pre">raw_packet:</span> <span class="pre">Optional[Union[bytearray,</span> <span class="pre">Dict[str,</span> <span class="pre">Any]]]</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.responses.GoProResp" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.responses.</span></code><code class="sig-name descname"><span class="pre">GoProResp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">parsers:</span> <span class="pre">Dict[Union[open_gopro.constants.CmdId,</span> <span class="pre">open_gopro.constants.QueryCmdId,</span> <span class="pre">open_gopro.constants.ActionId,</span> <span class="pre">open_gopro.constants.StatusId,</span> <span class="pre">open_gopro.constants.SettingId,</span> <span class="pre">open_gopro.ble.services.BleUUID,</span> <span class="pre">str,</span> <span class="pre">construct.core.Enum],</span> <span class="pre">Union[construct.core.Construct,</span> <span class="pre">open_gopro.responses.JsonParser]],</span> <span class="pre">info:</span> <span class="pre">List[Union[open_gopro.constants.CmdId,</span> <span class="pre">open_gopro.constants.QueryCmdId,</span> <span class="pre">open_gopro.constants.ActionId,</span> <span class="pre">open_gopro.constants.StatusId,</span> <span class="pre">open_gopro.constants.SettingId,</span> <span class="pre">open_gopro.ble.services.BleUUID,</span> <span class="pre">str,</span> <span class="pre">construct.core.Enum]],</span> <span class="pre">status:</span> <span class="pre">open_gopro.constants.ErrorCode</span> <span class="pre">=</span> <span class="pre">&lt;ErrorCode.SUCCESS:</span> <span class="pre">0&gt;,</span> <span class="pre">raw_packet:</span> <span class="pre">Optional[Union[bytearray,</span> <span class="pre">Dict[str,</span> <span class="pre">Any]]]</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.responses.GoProResp" title="Permalink to this definition">¶</a></dt>
 <dd><p>A flexible object to be used to encapsulate all GoPro responses.</p>
 <p>It can be instantiated with varying levels of information and filled out as more is received.
 The end user should never need to create a response and will only be consuming them.</p>
@@ -544,14 +547,14 @@ For example, first send the command and store the response:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">cmd</span><span class="p">)</span>
 <span class="go">QueryCmdId.GET_SETTING_VAL</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">uuid</span><span class="p">)</span>
-<span class="go">UUID.CQ_QUERY_RESP</span>
+<span class="go">GoProUUIDs.CQ_QUERY_RESP</span>
 </pre></div>
 </div>
 <p>Now let’s print it as (as JSON):</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 <span class="go">{</span>
 <span class="go">    &quot;status&quot;: &quot;SUCCESS&quot;,</span>
-<span class="go">    &quot;id&quot;: &quot;UUID.CQ_QUERY_RESP::QueryCmdId.GET_SETTING_VAL&quot;,</span>
+<span class="go">    &quot;id&quot;: &quot;GoProUUIDs.CQ_QUERY_RESP::QueryCmdId.GET_SETTING_VAL&quot;,</span>
 <span class="go">    &quot;SettingId.RESOLUTION&quot;: [</span>
 <span class="go">        &quot;RES_1080&quot;</span>
 <span class="go">    ]</span>
@@ -628,7 +631,7 @@ For example, first send the command and store the response:</p>
 <dd><p>Get the identifier of the response.</p>
 <p>Will vary depending on what type of response this is:</p>
 <ul class="simple">
-<li><p>for a direct BLE read / write to a characteristic, it will be a <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.constants.UUID</span></code></p></li>
+<li><p>for a direct BLE read / write to a characteristic, it will be a <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.constants.BleUUID</span></code></p></li>
 <li><p>for a BLE command response, it will be a <a class="reference internal" href="#open_gopro.constants.CmdType" title="open_gopro.constants.CmdType"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.constants.CmdType</span></code></a></p></li>
 <li><p>for a BLE setting / status response / update, it will be a <a class="reference internal" href="#open_gopro.constants.SettingId" title="open_gopro.constants.SettingId"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.constants.SettingId</span></code></a> or <a class="reference internal" href="#open_gopro.constants.StatusId" title="open_gopro.constants.StatusId"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.constants.StatusId</span></code></a></p></li>
 <li><p>for an HTTP response, it will be a string of the HTTP endpoint</p></li>
@@ -722,14 +725,14 @@ For example, first send the command and store the response:</p>
 <dl class="py method">
 <dt id="open_gopro.responses.GoProResp.uuid">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">uuid</span></code><a class="headerlink" href="#open_gopro.responses.GoProResp.uuid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Attempt to get the UUID the response was received on.</p>
-<p>If the response is not a BLE response, it won’t have a UUID.</p>
+<dd><p>Attempt to get the BleUUID the response was received on.</p>
+<p>If the response is not a BLE response, it won’t have a BleUUID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>UUID if relevant, otherwise None</p>
+<dd class="field-odd"><p>BleUUID if relevant, otherwise None</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Optional[UUID]</p>
+<dd class="field-even"><p>Optional[BleUUID]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -777,7 +780,7 @@ For example, first send the command and store the response:</p>
 <dl class="py class">
 <dt id="open_gopro.constants.CmdId">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.constants.</span></code><code class="sig-name descname"><span class="pre">CmdId</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.constants.CmdId" title="Permalink to this definition">¶</a></dt>
-<dd><p>Command ID’s that are written to UUID.CQ_COMMAND.</p>
+<dd><p>Command ID’s that are written to GoProUUIDs.CQ_COMMAND.</p>
 <dl class="py attribute">
 <dt id="open_gopro.constants.CmdId.GET_CAMERA_SETTINGS">
 <code class="sig-name descname"><span class="pre">GET_CAMERA_SETTINGS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">18</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.GET_CAMERA_SETTINGS" title="Permalink to this definition">¶</a></dt>
@@ -921,6 +924,127 @@ For example, first send the command and store the response:</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt id="open_gopro.constants.GoProUUIDs">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.constants.</span></code><code class="sig-name descname"><span class="pre">GoProUUIDs</span></code><a class="headerlink" href="#open_gopro.constants.GoProUUIDs" title="Permalink to this definition">¶</a></dt>
+<dd><p>GoPro Proprietary BleUUID’s.</p>
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.CM_NET_MGMT_COMM">
+<code class="sig-name descname"><span class="pre">CM_NET_MGMT_COMM</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Camera</span> <span class="pre">Management</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.CM_NET_MGMT_COMM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.CN_NET_MGMT_RESP">
+<code class="sig-name descname"><span class="pre">CN_NET_MGMT_RESP</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Camera</span> <span class="pre">Management</span> <span class="pre">Response</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.CN_NET_MGMT_RESP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.CQ_COMMAND">
+<code class="sig-name descname"><span class="pre">CQ_COMMAND</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Command</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.CQ_COMMAND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.CQ_COMMAND_RESP">
+<code class="sig-name descname"><span class="pre">CQ_COMMAND_RESP</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Command</span> <span class="pre">Response</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.CQ_COMMAND_RESP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.CQ_QUERY">
+<code class="sig-name descname"><span class="pre">CQ_QUERY</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Query</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.CQ_QUERY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.CQ_QUERY_RESP">
+<code class="sig-name descname"><span class="pre">CQ_QUERY_RESP</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Query</span> <span class="pre">Response</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.CQ_QUERY_RESP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.CQ_SENSOR">
+<code class="sig-name descname"><span class="pre">CQ_SENSOR</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Sensor</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.CQ_SENSOR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.CQ_SENSOR_RESP">
+<code class="sig-name descname"><span class="pre">CQ_SENSOR_RESP</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Sensor</span> <span class="pre">Response</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.CQ_SENSOR_RESP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.CQ_SETTINGS">
+<code class="sig-name descname"><span class="pre">CQ_SETTINGS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Settings</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.CQ_SETTINGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.CQ_SETTINGS_RESP">
+<code class="sig-name descname"><span class="pre">CQ_SETTINGS_RESP</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Settings</span> <span class="pre">Response</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.CQ_SETTINGS_RESP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.INTERNAL_81">
+<code class="sig-name descname"><span class="pre">INTERNAL_81</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Internal</span> <span class="pre">81</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.INTERNAL_81" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.INTERNAL_82">
+<code class="sig-name descname"><span class="pre">INTERNAL_82</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Internal</span> <span class="pre">82</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.INTERNAL_82" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.INTERNAL_83">
+<code class="sig-name descname"><span class="pre">INTERNAL_83</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Internal</span> <span class="pre">83</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.INTERNAL_83" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.INTERNAL_84">
+<code class="sig-name descname"><span class="pre">INTERNAL_84</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Internal</span> <span class="pre">84</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.INTERNAL_84" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.S_CAMERA_MANAGEMENT">
+<code class="sig-name descname"><span class="pre">S_CAMERA_MANAGEMENT</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Camera</span> <span class="pre">Management</span> <span class="pre">Service</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.S_CAMERA_MANAGEMENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.S_CONTROL_QUERY">
+<code class="sig-name descname"><span class="pre">S_CONTROL_QUERY</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Control</span> <span class="pre">and</span> <span class="pre">Query</span> <span class="pre">Service</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.S_CONTROL_QUERY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.S_UNKNOWN">
+<code class="sig-name descname"><span class="pre">S_UNKNOWN</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Unknown</span> <span class="pre">Service</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.S_UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.S_WIFI_ACCESS_POINT">
+<code class="sig-name descname"><span class="pre">S_WIFI_ACCESS_POINT</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Wifi</span> <span class="pre">Access</span> <span class="pre">Point</span> <span class="pre">Service</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.S_WIFI_ACCESS_POINT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.WAP_CSI_PASSWORD">
+<code class="sig-name descname"><span class="pre">WAP_CSI_PASSWORD</span></code><em class="property"> <span class="pre">=</span> <span class="pre">CSI</span> <span class="pre">Password</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.WAP_CSI_PASSWORD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.WAP_PASSWORD">
+<code class="sig-name descname"><span class="pre">WAP_PASSWORD</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Wifi</span> <span class="pre">AP</span> <span class="pre">Password</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.WAP_PASSWORD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.WAP_POWER">
+<code class="sig-name descname"><span class="pre">WAP_POWER</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Wifi</span> <span class="pre">Power</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.WAP_POWER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.WAP_SSID">
+<code class="sig-name descname"><span class="pre">WAP_SSID</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Wifi</span> <span class="pre">AP</span> <span class="pre">SSID</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.WAP_SSID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.GoProUUIDs.WAP_STATE">
+<code class="sig-name descname"><span class="pre">WAP_STATE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Wifi</span> <span class="pre">State</span></em><a class="headerlink" href="#open_gopro.constants.GoProUUIDs.WAP_STATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py data">
 <dt id="open_gopro.constants.ProducerType">
 <code class="sig-prename descclassname"><span class="pre">open_gopro.constants.</span></code><code class="sig-name descname"><span class="pre">ProducerType</span></code><a class="headerlink" href="#open_gopro.constants.ProducerType" title="Permalink to this definition">¶</a></dt>
@@ -931,7 +1055,7 @@ For example, first send the command and store the response:</p>
 <dl class="py class">
 <dt id="open_gopro.constants.QueryCmdId">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.constants.</span></code><code class="sig-name descname"><span class="pre">QueryCmdId</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.constants.QueryCmdId" title="Permalink to this definition">¶</a></dt>
-<dd><p>Command ID that is written to UUID.CQ_QUERY.</p>
+<dd><p>Command ID that is written to GoProUUIDs.CQ_QUERY.</p>
 <dl class="py attribute">
 <dt id="open_gopro.constants.QueryCmdId.GET_CAPABILITIES_NAME">
 <code class="sig-name descname"><span class="pre">GET_CAPABILITIES_NAME</span></code><em class="property"> <span class="pre">=</span> <span class="pre">66</span></em><a class="headerlink" href="#open_gopro.constants.QueryCmdId.GET_CAPABILITIES_NAME" title="Permalink to this definition">¶</a></dt>
@@ -1013,13 +1137,13 @@ For example, first send the command and store the response:</p>
 <dt id="open_gopro.constants.ResponseType">
 <code class="sig-prename descclassname"><span class="pre">open_gopro.constants.</span></code><code class="sig-name descname"><span class="pre">ResponseType</span></code><a class="headerlink" href="#open_gopro.constants.ResponseType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Types that are used to identify a response.</p>
-<p>alias of Union[open_gopro.constants.CmdId, open_gopro.constants.QueryCmdId, open_gopro.constants.ActionId, open_gopro.constants.StatusId, open_gopro.constants.SettingId, open_gopro.ble.services.UUID, str, construct.core.Enum]</p>
+<p>alias of Union[open_gopro.constants.CmdId, open_gopro.constants.QueryCmdId, open_gopro.constants.ActionId, open_gopro.constants.StatusId, open_gopro.constants.SettingId, open_gopro.ble.services.BleUUID, str, construct.core.Enum]</p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="open_gopro.constants.SettingId">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.constants.</span></code><code class="sig-name descname"><span class="pre">SettingId</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.constants.SettingId" title="Permalink to this definition">¶</a></dt>
-<dd><p>Setting ID’s that identify settings and are written to UUID.CQ_SETTINGS.</p>
+<dd><p>Setting ID’s that identify settings and are written to GoProUUIDs.CQ_SETTINGS.</p>
 <dl class="py attribute">
 <dt id="open_gopro.constants.SettingId.AUTO_OFF">
 <code class="sig-name descname"><span class="pre">AUTO_OFF</span></code><em class="property"> <span class="pre">=</span> <span class="pre">59</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.AUTO_OFF" title="Permalink to this definition">¶</a></dt>
@@ -1490,7 +1614,7 @@ For example, first send the command and store the response:</p>
 <dl class="py class">
 <dt id="open_gopro.constants.StatusId">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.constants.</span></code><code class="sig-name descname"><span class="pre">StatusId</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.constants.StatusId" title="Permalink to this definition">¶</a></dt>
-<dd><p>Status ID to identify statuses sent to UUID.CQ_QUERY or received from UUID.CQ_QUERY_RESP.</p>
+<dd><p>Status ID to identify statuses sent to GoProUUIDs.CQ_QUERY or received from GoProUUIDs.CQ_QUERY_RESP.</p>
 <dl class="py attribute">
 <dt id="open_gopro.constants.StatusId.ACC_MIC_STAT">
 <code class="sig-name descname"><span class="pre">ACC_MIC_STAT</span></code><em class="property"> <span class="pre">=</span> <span class="pre">74</span></em><a class="headerlink" href="#open_gopro.constants.StatusId.ACC_MIC_STAT" title="Permalink to this definition">¶</a></dt>
@@ -2001,7 +2125,7 @@ For example, first send the command and store the response:</p>
 </div>
 <div class="section" id="api">
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
-<p>This is both the base types that are used to implement the API (BLE Setting, Ble Status, etc.) and the
+<p>These are both the base types that are used to implement the API (BLE Setting, Ble Status, etc.) and the
 version-specific API’s themselves.</p>
 <p>Since the API is configured (by version) dynamically after a connection is formed, these should not be imported
 directly and instead should be accessed using the relevant properties (<cite>ble_command</cite>, <cite>wifi_setting</cite>, etc.) of a
