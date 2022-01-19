@@ -24,21 +24,15 @@ def main():
 
     # Get the media list
     media_list = get_media_list()
-    print(media_list["media"])
 
     # Find a photo. We're just taking the first one we find.
     photo: Optional[str] = []
     hero_video: Optional[str] = []
     sphere_video: Optional[str] = []
     for media_info in [x for x in media_list["media"][0]["fs"]]:
-        creation_unix_time = media_info["cre"]
-        creation_dt_jst_aware = datetime.datetime.fromtimestamp(float(creation_unix_time), datetime.timezone(datetime.timedelta(hours=9)))
-        print(dt_now_jst_aware.date())
-        print(creation_dt_jst_aware.date())
-        if dt_now_jst_aware.date() != creation_dt_jst_aware.date():
-            continue
-    
         media_file = media_info["n"]
+        if not media_file in args.fname:
+            continue
         if media_file.lower().endswith(".jpg"):
             logger.info(f"found a photo: {media_file}")
             photo.append(media_file)
@@ -52,9 +46,6 @@ def main():
     # if len(photo) == len(hero_video) == len(sphere_video) == 0:
     #     raise Exception("Couldn't find a any media on the GoPro")
 
-    # ディレクトリ内のファイル一覧取得
-    
-    file_paths_360 = glob.glob(f"{args.dir_path}/*.360")
 
     # Build the url to get the thumbnail data for the photo
     for media_list, file_ext in zip([photo, hero_video, sphere_video], [".jpg", ".mp4", ".360"]):
@@ -74,6 +65,6 @@ def main():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Find a media on the camera and download it to the computer.")
-    parser.add_argument("--dir_path", type=str)
+    parser.add_argument("--fname", type=str, nargs="*")
     args = parser.parse_args()
     main()
