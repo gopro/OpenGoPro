@@ -10,6 +10,7 @@ import requests
 
 from tutorial_modules import GOPRO_BASE_URL, get_media_list
 import glob
+import os
 import datetime
 
 
@@ -19,12 +20,15 @@ logger = logging.getLogger()
 
 def main():
     dt_now_jst_aware = datetime.datetime.now(
-    datetime.timezone(datetime.timedelta(hours=9))
-)
+    datetime.timezone(datetime.timedelta(hours=9)))
+
+    # ディレクトリ内のファイル一覧取得
+    
+    specified_file_paths = glob.glob(f"{args.dir_path}/*")
+    specified_file_names = [os.path.basename(file_path) for file_path in specified_file_paths]
 
     # Get the media list
     media_list = get_media_list()
-    print(media_list["media"])
 
     # Find a photo. We're just taking the first one we find.
     photo: Optional[str] = []
@@ -32,13 +36,17 @@ def main():
     sphere_video: Optional[str] = []
     for media_info in [x for x in media_list["media"][0]["fs"]]:
         creation_unix_time = media_info["cre"]
-        creation_dt_jst_aware = datetime.datetime.fromtimestamp(float(creation_unix_time), datetime.timezone(datetime.timedelta(hours=9)))
-        print(dt_now_jst_aware.date())
-        print(creation_dt_jst_aware.date())
+        creation_dt_jst_aware = datetime.datetime.fromtimestamp(float(creation_unix_time))
+ 
+        # 今日撮影されたファイルではない場合無視する
         if dt_now_jst_aware.date() != creation_dt_jst_aware.date():
             continue
-    
+        # 指定ディレクトリに存在するファイルだった場合は無視する
         media_file = media_info["n"]
+ 
+        if media_file in specified_file_names:
+            continue
+
         if media_file.lower().endswith(".jpg"):
             logger.info(f"found a photo: {media_file}")
             photo.append(media_file)
@@ -52,22 +60,19 @@ def main():
     # if len(photo) == len(hero_video) == len(sphere_video) == 0:
     #     raise Exception("Couldn't find a any media on the GoPro")
 
-    # ディレクトリ内のファイル一覧取得
-    
-    file_paths_360 = glob.glob(f"{args.dir_path}/*.360")
 
     # Build the url to get the thumbnail data for the photo
     for media_list, file_ext in zip([photo, hero_video, sphere_video], [".jpg", ".mp4", ".360"]):
         for media_file in media_list:
-            print(media_file)
             logger.info(f"Downloading {media_file}")
             url = GOPRO_BASE_URL + f"/videos/DCIM/100GOPRO/{media_file}"
             logger.info(f"Sending: {url}")
             with requests.get(url, stream=True) as request:
                 request.raise_for_status()
                 file = media_file.split(".")[0] + file_ext
-                with open(file, "wb") as f:
-                    logger.info(f"receiving binary stream to {file}...")
+                write_file_path = f"{args.dir_path}/{file}"
+                with open(write_file_path, "wb") as f:
+                    logger.info(f"receiving binary stream to {write_file_path}...")
                     for chunk in request.iter_content(chunk_size=8192):
                         f.write(chunk)
 
