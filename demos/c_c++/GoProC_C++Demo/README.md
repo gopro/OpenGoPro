@@ -17,7 +17,7 @@ C or C++ and work for MacOS, Linux and Windows.
 
 To connect to the camera:
 
-1. Connect [BLE](https://gopro.github.io/OpenGoPro/ble) to turn on AP and get [WiFi](https://gopro.github.io/OpenGoPro/wifi) SSID/PASSPHRASE
+1. Connect [BLE](https://gopro.github.io/OpenGoPro/ble) to turn on AP and get [WiFi](https://gopro.github.io/OpenGoPro/http) SSID/PASSPHRASE
 2. Use retrieved WiFi SSID/PASSPHRASE to connect system to GoPro WiFi
 
 <h2 id="media-commands">Media Commands</h2>

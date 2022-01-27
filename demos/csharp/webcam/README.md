@@ -1,6 +1,6 @@
 # CSharp Webcam Demo
 
-This demo implements a simple GUI to interact with a GoPro camera that supports [Open GoPro 2.0](https://gopro.github.io/OpenGoPro/wifi_2_0).
+This demo implements a simple GUI to interact with a GoPro camera that supports [Open GoPro 2.0](https://gopro.github.io/OpenGoPro/http_2_0).
 
 # Requirements
 
