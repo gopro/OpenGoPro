@@ -132,7 +132,7 @@
               <a href="/OpenGoPro/ble">BLE Specs</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/wifi">WiFi Specs</a>
+              <a href="/OpenGoPro/http">HTTP Specs</a>
             </li>
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/tutorials">Tutorials</a>
@@ -378,7 +378,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          28 minute read
+          29 minute read
         
       </span>
     
@@ -439,6 +439,7 @@
 <a href="#complex-command-responses">Complex Command Responses</a><ul>
 <li><a href="#get-hardware-info">Get Hardware Info</a></li>
 <li><a href="#open-gopro-version">Open GoPro Version</a></li>
+<li><a href="#get-datetime">Get Date/Time</a></li>
 </ul>
 </li>
 </ul>
@@ -448,9 +449,7 @@
 <li><a href="#settings-request-format">Settings Request Format</a></li>
 <li><a href="#settings-response-format">Settings Response Format</a></li>
 <li><a href="#settings-quick-reference">Settings Quick Reference</a></li>
-<li>
-<a href="#camera-capabilities">Camera Capabilities</a><ul><li><a href="#hero10-black-1">HERO10 Black</a></li></ul>
-</li>
+<li><a href="#camera-capabilities">Camera Capabilities</a></li>
 </ul>
 </li>
 <li>
@@ -471,6 +470,7 @@
 <li>
 <a href="#protobuf">Protobuf</a><ul>
 <li><a href="#protobuf-message-format">Protobuf Message Format</a></li>
+<li><a href="#protobuf-uuids">Protobuf UUIDs</a></li>
 <li><a href="#protobuf-commands">Protobuf Commands</a></li>
 <li>
 <a href="#protobuf-command-details">Protobuf Command Details</a><ul>
@@ -496,8 +496,7 @@
 Communicating with a GoPro camera via Bluetooth Low Energy involves writing to Bluetooth characteristics and, typically,
 waiting for a response notification from a corresponding characteristic.
 
-The camera organizes its Generic Attribute Profile (GATT) table by broad features: AP control, network management, 
-control &amp; query, etc.
+The camera organizes its Generic Attribute Profile (GATT) table by broad features: AP control, control &amp; query, etc.
 </p>
 
 <h2 id="supported-cameras">Supported Cameras</h2>
@@ -558,7 +557,7 @@ Note: GP-XXXX is shorthand for GoPro's 128-bit UUIDs: <b>b5f9xxxx-aa8d-11e3-9046
     <tr>
       <td>GP-0005</td>
       <td>WiFi AP State</td>
-      <td>Read / Notify</td>
+      <td>Read / Indicate</td>
     </tr>
     <tr>
       <td rowspan="6">FEA6</td>
@@ -729,7 +728,7 @@ For example, to send a camera control command, a client should write to GP-0072 
 </p>
 
 <p>
-Depending on the camera's state, it may not be ready to accept some commands.
+Depending on the camera's state, it may not be ready to accept specific commands.
 This ready state is dependent on the <b>System Busy</b> and the <b>Encoding Active</b> status flags. For example:
 </p>
 
@@ -740,7 +739,7 @@ This ready state is dependent on the <b>System Busy</b> and the <b>Encoding Acti
 
 <p>
 If the system is not ready, it should reject an incoming command; however, best practice is to always wait for the
-System Busy and Encode Active flags to go down before sending messages other than get status/setting queries.
+System Busy and Encode Active flags to be unset before sending messages other than get status/setting queries.
 </p>
 
 <h2 id="presets">Presets</h2>
@@ -753,6 +752,10 @@ A preset is a logical wrapper around a specific camera flatmode and a collection
 The set of presets available to load at any moment depends on the value of certain camera settings, which are outlined in the table below.
 </p>
 
+<p>
+For per-preset firmware compatibility information, see <a href="#OpenGoProBluetoothLowEnergyAPI(v2.0)-CommandsQuickReference">Commands Quick Reference</a>.
+</p>
+
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
@@ -761,233 +764,355 @@ The set of presets available to load at any moment depends on the value of certa
       <td>Preset ID</td>
     </tr>
     <tr>
-      <td rowspan="12">Max Lens: OFF</td>
-      <td>Standard</td>
-      <td>0x00000000</td>
+      <td rowspan="24">Max Lens: OFF</td>
+      <td rowspan="2">Standard</td>
+      <td rowspan="2">0x00000000</td>
     </tr>
     <tr>
-      <td>Activity</td>
-      <td>0x00000001</td>
     </tr>
     <tr>
-      <td>Cinematic</td>
-      <td>0x00000002</td>
+      <td rowspan="2">Activity</td>
+      <td rowspan="2">0x00000001</td>
     </tr>
     <tr>
-      <td>Ultra Slo-Mo</td>
-      <td>0x00000004</td>
     </tr>
     <tr>
-      <td>Basic</td>
-      <td>0x00000005</td>
+      <td rowspan="2">Cinematic</td>
+      <td rowspan="2">0x00000002</td>
     </tr>
     <tr>
-      <td>Photo</td>
-      <td>0x00010000</td>
     </tr>
     <tr>
-      <td>Live Burst</td>
-      <td>0x00010001</td>
+      <td rowspan="2">Ultra Slo-Mo</td>
+      <td rowspan="2">0x00000004</td>
     </tr>
     <tr>
-      <td>Burst Photo</td>
-      <td>0x00010002</td>
     </tr>
     <tr>
-      <td>Night Photo</td>
-      <td>0x00010003</td>
+      <td rowspan="2">Basic</td>
+      <td rowspan="2">0x00000005</td>
     </tr>
     <tr>
-      <td>Time Warp</td>
-      <td>0x00020000</td>
     </tr>
     <tr>
-      <td>Time Lapse</td>
-      <td>0x00020001</td>
+      <td rowspan="2">Photo</td>
+      <td rowspan="2">0x00010000</td>
     </tr>
     <tr>
-      <td>Night Lapse</td>
-      <td>0x00020002</td>
     </tr>
     <tr>
-      <td rowspan="3">Max Lens: ON</td>
-      <td>Max Video</td>
-      <td>0x00030000</td>
+      <td rowspan="2">Live Burst</td>
+      <td rowspan="2">0x00010001</td>
     </tr>
     <tr>
-      <td>Max Photo</td>
-      <td>0x00040000</td>
     </tr>
     <tr>
-      <td>Max Timewarp</td>
-      <td>0x00050000</td>
+      <td rowspan="2">Burst Photo</td>
+      <td rowspan="2">0x00010002</td>
     </tr>
     <tr>
-      <td rowspan="15">Video Performance Mode: Maximum Video Performance</td>
-      <td>Standard</td>
-      <td>0x00000000</td>
     </tr>
     <tr>
-      <td>Activity</td>
-      <td>0x00000001</td>
+      <td rowspan="2">Night Photo</td>
+      <td rowspan="2">0x00010003</td>
     </tr>
     <tr>
-      <td>Cinematic</td>
-      <td>0x00000002</td>
     </tr>
     <tr>
-      <td>Ultra Slo-Mo</td>
-      <td>0x00000004</td>
+      <td rowspan="2">Time Warp</td>
+      <td rowspan="2">0x00020000</td>
     </tr>
     <tr>
-      <td>Basic</td>
-      <td>0x00000005</td>
     </tr>
     <tr>
-      <td>Photo</td>
-      <td>0x00010000</td>
+      <td rowspan="2">Time Lapse</td>
+      <td rowspan="2">0x00020001</td>
     </tr>
     <tr>
-      <td>Live Burst</td>
-      <td>0x00010001</td>
     </tr>
     <tr>
-      <td>Burst Photo</td>
-      <td>0x00010002</td>
+      <td rowspan="2">Night Lapse</td>
+      <td rowspan="2">0x00020002</td>
     </tr>
     <tr>
-      <td>Night Photo</td>
-      <td>0x00010003</td>
     </tr>
     <tr>
-      <td>Time Warp</td>
-      <td>0x00020000</td>
+      <td rowspan="6">Max Lens: ON</td>
+      <td rowspan="2">Max Video</td>
+      <td rowspan="2">0x00030000</td>
     </tr>
     <tr>
-      <td>Time Lapse</td>
-      <td>0x00020001</td>
     </tr>
     <tr>
-      <td>Night Lapse</td>
-      <td>0x00020002</td>
+      <td rowspan="2">Max Photo</td>
+      <td rowspan="2">0x00040000</td>
     </tr>
     <tr>
-      <td>Max Video</td>
-      <td>0x00030000</td>
     </tr>
     <tr>
-      <td>Max Photo</td>
-      <td>0x00040000</td>
+      <td rowspan="2">Max Timewarp</td>
+      <td rowspan="2">0x00050000</td>
     </tr>
     <tr>
-      <td>Max Timewarp</td>
-      <td>0x00050000</td>
     </tr>
     <tr>
-      <td rowspan="14">Video Performance Mode: Extended Battery</td>
-      <td>Photo</td>
-      <td>0x00010000</td>
+      <td rowspan="36">Video Performance Mode: Maximum Video Performance</td>
+      <td rowspan="3">Standard</td>
+      <td rowspan="3">0x00000000</td>
     </tr>
     <tr>
-      <td>Live Burst</td>
-      <td>0x00010001</td>
     </tr>
     <tr>
-      <td>Burst Photo</td>
-      <td>0x00010002</td>
     </tr>
     <tr>
-      <td>Night Photo</td>
-      <td>0x00010003</td>
+      <td rowspan="3">Activity</td>
+      <td rowspan="3">0x00000001</td>
     </tr>
     <tr>
-      <td>Time Warp</td>
-      <td>0x00020000</td>
     </tr>
     <tr>
-      <td>Time Lapse</td>
-      <td>0x00020001</td>
     </tr>
     <tr>
-      <td>Night Lapse</td>
-      <td>0x00020002</td>
+      <td rowspan="3">Cinematic</td>
+      <td rowspan="3">0x00000002</td>
     </tr>
     <tr>
-      <td>Max Video</td>
-      <td>0x00030000</td>
     </tr>
     <tr>
-      <td>Max Photo</td>
-      <td>0x00040000</td>
     </tr>
     <tr>
-      <td>Max Timewarp</td>
-      <td>0x00050000</td>
+      <td rowspan="3">Ultra Slo-Mo</td>
+      <td rowspan="3">0x00000004</td>
     </tr>
     <tr>
-      <td>Standard [EB]</td>
-      <td>0x00080000</td>
     </tr>
     <tr>
-      <td>Activity [EB]</td>
-      <td>0x00080001</td>
     </tr>
     <tr>
-      <td>Cinematic [EB]</td>
-      <td>0x00080002</td>
+      <td rowspan="3">Basic</td>
+      <td rowspan="3">0x00000005</td>
     </tr>
     <tr>
-      <td>Slo-Mo [EB]</td>
-      <td>0x00080003</td>
     </tr>
     <tr>
-      <td rowspan="12">Video Performance Mode: Tripod / Stationary Video</td>
-      <td>Photo</td>
-      <td>0x00010000</td>
     </tr>
     <tr>
-      <td>Live Burst</td>
-      <td>0x00010001</td>
+      <td rowspan="3">Photo</td>
+      <td rowspan="3">0x00010000</td>
     </tr>
     <tr>
-      <td>Burst Photo</td>
-      <td>0x00010002</td>
     </tr>
     <tr>
-      <td>Night Photo</td>
-      <td>0x00010003</td>
     </tr>
     <tr>
-      <td>Time Warp</td>
-      <td>0x00020000</td>
+      <td rowspan="3">Live Burst</td>
+      <td rowspan="3">0x00010001</td>
     </tr>
     <tr>
-      <td>Time Lapse</td>
-      <td>0x00020001</td>
     </tr>
     <tr>
-      <td>Night Lapse</td>
-      <td>0x00020002</td>
     </tr>
     <tr>
-      <td>Max Video</td>
-      <td>0x00030000</td>
+      <td rowspan="3">Burst Photo</td>
+      <td rowspan="3">0x00010002</td>
     </tr>
     <tr>
-      <td>Max Photo</td>
-      <td>0x00040000</td>
     </tr>
     <tr>
-      <td>Max Timewarp</td>
-      <td>0x00050000</td>
     </tr>
     <tr>
-      <td>4K Tripod</td>
-      <td>0x00090000</td>
+      <td rowspan="3">Night Photo</td>
+      <td rowspan="3">0x00010003</td>
     </tr>
     <tr>
-      <td>5.3K Tripod</td>
-      <td>0x00090001</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Time Warp</td>
+      <td rowspan="3">0x00020000</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Time Lapse</td>
+      <td rowspan="3">0x00020001</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Night Lapse</td>
+      <td rowspan="3">0x00020002</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="33">Video Performance Mode: Extended Battery</td>
+      <td rowspan="3">Photo</td>
+      <td rowspan="3">0x00010000</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Live Burst</td>
+      <td rowspan="3">0x00010001</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Burst Photo</td>
+      <td rowspan="3">0x00010002</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Night Photo</td>
+      <td rowspan="3">0x00010003</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Time Warp</td>
+      <td rowspan="3">0x00020000</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Time Lapse</td>
+      <td rowspan="3">0x00020001</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Night Lapse</td>
+      <td rowspan="3">0x00020002</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Standard [EB]</td>
+      <td rowspan="3">0x00080000</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Activity [EB]</td>
+      <td rowspan="3">0x00080001</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Cinematic [EB]</td>
+      <td rowspan="3">0x00080002</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Slo-Mo [EB]</td>
+      <td rowspan="3">0x00080003</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="27">Video Performance Mode: Tripod / Stationary Video</td>
+      <td rowspan="3">Photo</td>
+      <td rowspan="3">0x00010000</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Live Burst</td>
+      <td rowspan="3">0x00010001</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Burst Photo</td>
+      <td rowspan="3">0x00010002</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Night Photo</td>
+      <td rowspan="3">0x00010003</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Time Warp</td>
+      <td rowspan="3">0x00020000</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Time Lapse</td>
+      <td rowspan="3">0x00020001</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">Night Lapse</td>
+      <td rowspan="3">0x00020002</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">4K Tripod</td>
+      <td rowspan="3">0x00090000</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="3">5.3K Tripod</td>
+      <td rowspan="3">0x00090001</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
     </tr>
   </tbody>
 </table>
@@ -1022,12 +1147,12 @@ Some cameras support Turbo Transfer mode, which allows media to be downloaded ov
 This special mode should only be used during media offload.
 It is recommended that the user check for and--if necessary--disable Turbo Transfer on connect.
 For details on which cameras are supported and how to enable and disable Turbo Transfer, see
-<a href="#OpenGoPro-BluetoothLowEnergyAPI(v2.0)-ProtobufCommands">Protobuf Commands</a>.
+<a href="#OpenGoProBluetoothLowEnergyAPI(v2.0)-ProtobufCommands">Protobuf Commands</a>.
 </p>
 
 <h2 id="global-behaviors">Global Behaviors</h2>
 <p>
-In order to prevent undefined behavior between the camera and a connected app, simultaneous use of the camera and a 
+In order to prevent undefined behavior between the camera and a connected app, simultaneous use of the camera and a
 connected app is discouraged.
 </p>
 
@@ -1050,6 +1175,7 @@ corresponding <i>Camera Control Status</i> (CCS) camera statuses in alignment wi
 <ul>
 <li>Unless changed by the user, GoPro cameras will automatically power off after some time (e.g. 5min, 15min, 30min). The Auto Power Down watchdog timer can be reset by sending periodic keep-alive messages to the camera. It is recommended to send a keep-alive at least once every 120 seconds.</li>
 <li>In general, querying the value for a setting that is not associated with the current preset/flatmode results in an undefined value. For example, the user should not try to query the current Photo Digital Lenses (FOV) value while in Standard preset (Video flatmode).</li>
+<li>USB command and control is not supported on HERO9 Black.</li>
 </ul>
 
 <h1 id="tlv">TLV</h1>
@@ -1079,6 +1205,14 @@ Command messages are sent to GP-0072 and responses/notifications are received on
     <tr>
       <td>0x05</td>
       <td>Sleep</td>
+    </tr>
+    <tr>
+      <td>0x0D</td>
+      <td>Set Date/Time</td>
+    </tr>
+    <tr>
+      <td>0x0E</td>
+      <td>Get Date/Time</td>
     </tr>
     <tr>
       <td>0x17</td>
@@ -1219,6 +1353,22 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Put camera to sleep</td>
       <td>01:05</td>
       <td>02:05:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>0x0D</td>
+      <td>Set Date/Time</td>
+      <td>Set date/time to 2022-01-02 03:04:05</td>
+      <td>09:0D:07:07:E6:01:02:03:04:05</td>
+      <td>02:0D:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x0E</td>
+      <td>Get Date/Time</td>
+      <td>Get date/time</td>
+      <td>01:0E</td>
+      <td>Complex</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
@@ -1576,7 +1726,7 @@ Below are clarifications for complex camera responses
 
 <h4 id="open-gopro-version">Open GoPro Version</h4>
 <p>
-Given the response <i>06:51:00:01:XX:01:YY</i>, the Open GoPro version would be vXX.YY.
+Given the response <i>06:51:00:01:01:01:00</i>, the Open GoPro version would be vXX.YY.
 </p>
 <table border="1">
   <tbody>
@@ -1611,6 +1761,63 @@ Given the response <i>06:51:00:01:XX:01:YY</i>, the Open GoPro version would be 
     <tr>
       <td>00</td>
       <td>Minor version: 0</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="get-datetime">Get Date/Time</h4>
+<p>
+Given the response <i>0b:0e:00:08:07:e5:01:02:03:04:05:06</i>, the date/time would be 2021-01-02 03:04:05 (Saturday).
+</p>
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Response Byte(s)</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td>0B</td>
+      <td>Packet length</td>
+    </tr>
+    <tr>
+      <td>0E</td>
+      <td>Command ID</td>
+    </tr>
+    <tr>
+      <td>00</td>
+      <td>Status (OK)</td>
+    </tr>
+    <tr>
+      <td>08</td>
+      <td>Date length (bytes)</td>
+    </tr>
+    <tr>
+      <td>07:E5</td>
+      <td>Year (big endian)</td>
+    </tr>
+    <tr>
+      <td>01</td>
+      <td>Month</td>
+    </tr>
+    <tr>
+      <td>02</td>
+      <td>Day</td>
+    </tr>
+    <tr>
+      <td>03</td>
+      <td>Hour</td>
+    </tr>
+    <tr>
+      <td>04</td>
+      <td>Minute</td>
+    </tr>
+    <tr>
+      <td>05</td>
+      <td>Second</td>
+    </tr>
+    <tr>
+      <td>06</td>
+      <td>Day of the week (Sun=0, Sat=6)</td>
     </tr>
   </tbody>
 </table>
@@ -1995,7 +2202,17 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
 <h3 id="camera-capabilities">Camera Capabilities</h3>
 <p>Below are tables detailing supported features for Open GoPro cameras.</p>
 
-<h4 id="hero10-black-1">HERO10 Black</h4>
+<div>
+    <ul class="tab" data-tab="ccea287f-0832-455f-a4fb-870c9c690490">
+        
+            <li class="active">
+                <a href="">HERO10 Black v01.30.00 </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="ccea287f-0832-455f-a4fb-870c9c690490">
+        
+            <li class="active">
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
@@ -2671,12 +2888,16 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     </tr>
   </tbody>
 </table>
+</li>
+        
+    </ul>
+</div>
 
 <h2 id="query">Query</h2>
 <p>
 The camera provides two basic types of state information: Camera status and settings.
 Camera status info includes information such as the current preset/mode, whether the system is encoding, remaining
-sdcard space, the date, etc.
+sdcard space, etc.
 Settings info gives the currently selected option for each setting;
 for example, this includes the current video resolution, frame rate, digital lens (FOV), etc.
 </p>
@@ -3108,14 +3329,6 @@ Below is a table of supported status codes.<br>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
-      <td>40</td>
-      <td>Date time</td>
-      <td>Current date/time (format: %YY%MM%DD%HH%MM%SS, all values in hex)</td>
-      <td>string</td>
-      <td>*</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
       <td>41</td>
       <td>Ota status</td>
       <td>The current status of Over The Air (OTA) update</td>
@@ -3171,14 +3384,6 @@ Below is a table of supported status codes.<br>
       <td>56</td>
       <td>Wifi bars</td>
       <td>WiFi signal strength in bars</td>
-      <td>integer</td>
-      <td>*</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
-      <td>57</td>
-      <td>Current time msec</td>
-      <td>System time in milliseconds since system was booted</td>
       <td>integer</td>
       <td>*</td>
       <td><span style="color:green">✔</span></td>
@@ -3587,6 +3792,15 @@ Below is a table of supported status codes.<br>
 </td>
       <td><span style="color:green">✔</span></td>
     </tr>
+    <tr>
+      <td>116</td>
+      <td>Allow control over usb</td>
+      <td>Camera control over USB state</td>
+      <td>integer</td>
+      <td>0: Disabled<br>1: Enabled<br>
+</td>
+      <td>&gt;= v01.30.00</td>
+    </tr>
   </tbody>
 </table>
 
@@ -3624,6 +3838,36 @@ Note: For commands that do not require any protobuf inputs, Value would be empty
       <td>1 byte</td>
       <td>1 byte</td>
       <td>Variable Length</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="protobuf-uuids">Protobuf UUIDs</h2>
+<p>
+Below is a map of Protobuf Feature IDs and the characteristics used to write/notify.
+For additional details, see <a href="#OpenGoProBluetoothLowEnergyAPI(v2.0)-ServicesandCharacteristics">Services and Characteristics</a>.
+</p>
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Feature ID</td>
+      <td>UUID</td>
+      <td>Response UUID</td>
+    </tr>
+    <tr>
+      <td>0xF1</td>
+      <td>GP-0072</td>
+      <td>GP-0073</td>
+    </tr>
+    <tr>
+      <td>0xF3</td>
+      <td>GP-0074</td>
+      <td>GP-0075</td>
+    </tr>
+    <tr>
+      <td>0xF5</td>
+      <td>GP-0076</td>
+      <td>GP-0077</td>
     </tr>
   </tbody>
 </table>
@@ -3720,8 +3964,19 @@ Some cameras are already optimized for WiFi transfer and do not gain additional 
 
 <h3 id="requestgetpresetstatus">RequestGetPresetStatus</h3>
 <p>
-This command is used to get information about what Preset Groups and Presets the camera supports in its current state.
+This command serves two purposes:
+</p>
+<ul>
+<li>Describe which Preset Groups and Presets the camera supports in its current state</li>
+<li>(Un)register to be notified when a Preset is modified (e.g. resolution changes from 1080p to 4K) or a Preset Group is modified (e.g. presets are reordered/create/deleted)</li>
+</ul>
+
+
+<p>
 Each Preset Group contains an ID, whether additional presets can be added, and an array of existing Presets.
+</p>
+
+<p>
 Each Preset contains information about its ID, associated flatmode, title, icon, whether it's a user-defined preset,
 whether the preset has been modified from its factory-default state (for factory-default presets only) and a list of 
 settings associated with the Preset.

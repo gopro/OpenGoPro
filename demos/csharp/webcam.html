@@ -9,8 +9,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>GoPro C/C++ Demos :  Open GoPro</title>
-<meta name="description" content="GoPro C/C++ Demos">
+<!-- begin _includes/seo.html --><title>CSharp Webcam Demo :  Open GoPro</title>
+<meta name="description" content="CSharp Webcam Demo">
 
 
   <meta name="author" content="GoPro">
@@ -22,11 +22,11 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
-<meta property="og:title" content="GoPro C/C++ Demos">
-<meta property="og:url" content="https://gopro.github.io/OpenGoPro/demos/c_c++/GoProC_C++Demo">
+<meta property="og:title" content="CSharp Webcam Demo">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/demos/csharp/webcam">
 
 
-  <meta property="og:description" content="GoPro C/C++ Demos">
+  <meta property="og:description" content="CSharp Webcam Demo">
 
 
 
@@ -41,7 +41,7 @@
 
 
 
-<link rel="canonical" href="https://gopro.github.io/OpenGoPro/demos/c_c++/GoProC_C++Demo">
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/demos/csharp/webcam">
 
 
 
@@ -199,7 +199,7 @@
       
         
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/OpenGoPro/c_c++" itemprop="item"><span itemprop="name">C_c++</span></a>
+          <a href="/OpenGoPro/csharp" itemprop="item"><span itemprop="name">Csharp</span></a>
           <meta itemprop="position" content="3">
         </li>
         <span class="sep">/</span>
@@ -207,7 +207,7 @@
     
       
       
-        <li class="current">GoPro C/C++ Demos</li>
+        <li class="current">CSharp Webcam Demo</li>
       
     
   </ol>
@@ -342,15 +342,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="GoPro C/C++ Demos">
-    <meta itemprop="description" content="GoPro C/C++ Demos">
+    <meta itemprop="headline" content="CSharp Webcam Demo">
+    <meta itemprop="description" content="CSharp Webcam Demo">
     <meta itemprop="datePublished" content="2022-01-27T11:01:15-08:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">GoPro C/C++ Demos
+          <h1 id="page-title" class="page__title" itemprop="headline">CSharp Webcam Demo
 </h1>
           
 
@@ -366,7 +366,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          1 minute read
+          less than 1 minute read
         
       </span>
     
@@ -384,99 +384,51 @@
 <i class="fas fa-file-alt"></i> On this page</h4></header>
               <ul class="toc__menu">
 <li><a href="#requirements">Requirements</a></li>
-<li><a href="#media-commands">Media Commands</a></li>
-<li><a href="#stream-commands">Stream Commands</a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#usage">Usage</a></li>
 </ul>
 
             </nav>
           </aside>
         
-        <button class="github-button" onclick="location.href='https://github.com/gopro/OpenGoPro/tree/main/demos/c_c++/GoProC_C++Demo'">
+        <button class="github-button" onclick="location.href='https://github.com/gopro/OpenGoPro/tree/main/demos/csharp/webcam'">
           <i class="fab fa-github"></i>
           View this Demo on Github
         </button>
-        <p><img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"></p>
+        <p>This demo implements a simple GUI to interact with a GoPro camera that supports <a href="https://gopro.github.io/OpenGoPro/wifi_2_0">Open GoPro 2.0</a>.</p>
 
-<p>This folder contains C and C++ examples to perform some Open GoPro functionality. There are two examples,
-each of which are detailed in a section below.</p>
+<h1 id="requirements">Requirements</h1>
+
+<p>This demo will only run on Windows.</p>
+
+<p>Visual Studio is required to run the solution. Visit <a href="https://visualstudio.microsoft.com/downloads/">VisualStudio</a> to download.</p>
+
+<p>The target .NET framework is v4.7.2</p>
+
+<p>GoPro camera must be paired before any other operations will succeed. Put the camera in
+<a href="https://gopro.github.io/OpenGoPro/tutorials/python/connect-ble#advertise">pairing mode</a> before attempting
+pairing with the app.</p>
+
+<h1 id="prerequisites">Prerequisites</h1>
+
+<p>The correct GoPro Webcam drivers must be installed. To verify this, ensure that you can first use your desired
+GoPro as a webcam following the steps <a href="https://community.gopro.com/t5/en/How-To-Use-Your-GoPro-As-A-Webcam/ta-p/665493">here</a>.</p>
+
+<h1 id="usage">Usage</h1>
 
 <ol>
-  <li><a href="#media-commands"><strong>Media Commands</strong></a></li>
-  <li><a href="#stream-commands"><strong>Stream Commands</strong></a></li>
+  <li>Connect the GoPro to your computer using the USB cable</li>
+  <li>Open the solution (GoProWebCamViewer.sln) in Visual Studio, build and run io to show the Webcam GUI</li>
+  <li>
+    <p>Select <code class="language-plaintext highlighter-rouge">Start Player</code> to start the VLC backend. Note that the log and status bar have updated. This will be
+true for all functionality.</p>
+
+    <p><img src="/assets/images/demos/webcam_start_player.png" alt="Start Player" width="600"></p>
+  </li>
+  <li>Select <code class="language-plaintext highlighter-rouge">Show Preview</code> to start a low quality preview stream</li>
+  <li>While in preview, feel free to update the FOV or change the zoom</li>
+  <li>Once you are ready, select <code class="language-plaintext highlighter-rouge">Start Webcam</code> to start full resolution streaming</li>
 </ol>
-
-<h2 id="requirements">Requirements</h2>
-
-<p>To build these demos as is, <a href="https://curl.se/download.html">libCurl</a> and <a href="https://github.com/DaveGamble/cJSON">cJSON</a> are necessary.
-libCurl is a client-side URL transfer library. This is used to make command requests to the camera over WiFi and get the JSON response.
-cJSON is an ultra-light JSON parser that can be used to parse the JSON responses from the WiFi commands. Both can be used in either
-C or C++ and work for MacOS, Linux and Windows.</p>
-
-<p>To connect to the camera:</p>
-
-<ol>
-  <li>Connect <a href="https://gopro.github.io/OpenGoPro/ble">BLE</a> to turn on AP and get <a href="https://gopro.github.io/OpenGoPro/wifi">WiFi</a> SSID/PASSPHRASE</li>
-  <li>Use retrieved WiFi SSID/PASSPHRASE to connect system to GoPro WiFi</li>
-</ol>
-
-<h2 id="media-commands">Media Commands</h2>
-
-<p>This demo demonstrates one way to get the media list and download the first media file. It also supports
-requests to get the media list, media info and downloading specific media files.</p>
-
-<p>Media List:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/media_commands &lt;<span class="nt">-l</span>, <span class="nt">--list_files</span><span class="o">&gt;</span>
-</code></pre></div></div>
-
-<p>Media List(Pretty Print):</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/media_commands &lt;<span class="nt">-f</span>, <span class="nt">--list_files_pretty</span><span class="o">&gt;</span>
-</code></pre></div></div>
-
-<p>Media Info:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/media_commands &lt;<span class="nt">-i</span>, <span class="nt">--info</span><span class="o">&gt;</span> &lt;camera_file_path&gt;
-</code></pre></div></div>
-
-<p>Media Info(Pretty Print):</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/media_commands &lt;<span class="nt">-p</span>, <span class="nt">--info_pretty</span><span class="o">&gt;</span> &lt;camera_file_path&gt;
-</code></pre></div></div>
-
-<p>Media Download:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/media_commands &lt;<span class="nt">-g</span>, <span class="nt">--download</span> &lt;camera_file_path&gt; &lt;output_path/output_file_name&gt;&gt;
-</code></pre></div></div>
-
-<p>Media Demo:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/media_commands &lt;<span class="nt">-d</span>, <span class="nt">--demo</span><span class="o">&gt;</span> &lt;output_path&gt;
-</code></pre></div></div>
-
-<h2 id="stream-commands">Stream Commands</h2>
-
-<p>This demo demonstrates one way to start and stop the preview stream.</p>
-
-<blockquote>
-  <p>Note: To run the Preview Stream demo. A media player (i.e: <a href="https://www.videolan.org/">VLC</a>) that supports UDP is needed to view the preview stream.
-The UDP address is <strong><em>udp://0.0.0.0:8554</em></strong></p>
-</blockquote>
-
-<p>Start Stream:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/stream_commands &lt;<span class="nt">-s</span>, <span class="nt">--start</span><span class="o">&gt;</span>
-</code></pre></div></div>
-
-<p>Stop Stream:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/stream_commands &lt;<span class="nt">-e</span>, <span class="nt">--end</span><span class="o">&gt;</span>
-</code></pre></div></div>
-
-<p>Preview Stream Demo:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/stream_commands &lt;<span class="nt">-d</span>, <span class="nt">--demo</span><span class="o">&gt;</span>
-</code></pre></div></div>
 
         
       </section>
@@ -498,10 +450,11 @@ The UDP address is <strong><em>udp://0.0.0.0:8554</em></strong></p>
       
   <nav class="pagination">
     
-      <a href="#" class="pagination--pager disabled">Previous</a>
-    
-    
       <a href="/OpenGoPro/demos/csharp/GoProCSharpSample" class="pagination--pager" title="GoProCSharpSample
+">Previous</a>
+    
+    
+      <a href="/OpenGoPro/demos/ionic/file_transfer" class="pagination--pager" title="Go Pro demo Ionic + Capacitor 3
 ">Next</a>
     
   </nav>

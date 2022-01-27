@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-01-18T13:18:39-08:00">
+  <meta property="article:published_time" content="2022-01-27T11:01:15-08:00">
 
 
 
@@ -136,7 +136,7 @@
               <a href="/OpenGoPro/ble">BLE Specs</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/wifi">WiFi Specs</a>
+              <a href="/OpenGoPro/http">HTTP Specs</a>
             </li>
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/tutorials">Tutorials</a>
@@ -420,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 7: Camera Media List">
     <meta itemprop="description" content="Python Tutorial 7: Camera Media List">
-    <meta itemprop="datePublished" content="2022-01-18T13:18:39-08:00">
+    <meta itemprop="datePublished" content="2022-01-27T11:01:15-08:00">
     
 
     <div class="page__inner-wrap">
@@ -479,7 +479,7 @@
           </aside>
         
         <p>This document will provide a walk-through tutorial to use the Python <a href="https://docs.python-requests.org/en/master/">requests</a>
-package to send Open GoPro <a href="/OpenGoPro/wifi">HTTP commands</a> to the GoPro,
+package to send Open GoPro <a href="/OpenGoPro/http">HTTP commands</a> to the GoPro,
 specifically to get the media list and perform operations on it (downloading pictures, videos, etc.)</p>
 
 <blockquote>
@@ -531,7 +531,7 @@ optional arguments:
 to send HTTP commands as in the <a href="/OpenGoPro/tutorials/python/send-wifi-commands">previous tutorial</a>.</p>
 
 <div>
-    <ul class="tab" data-tab="d6f8d045-2826-42f6-a4dc-7da97f80e5e6">
+    <ul class="tab" data-tab="d6fdb58d-193e-405c-8d6e-de59f8358a1e">
         
             <li class="active">
                 <a href="">Send Request </a>
@@ -542,11 +542,11 @@ to send HTTP commands as in the <a href="/OpenGoPro/tutorials/python/send-wifi-c
             </li>
         
         </ul>
-        <ul class="tab-content" id="d6f8d045-2826-42f6-a4dc-7da97f80e5e6">
+        <ul class="tab-content" id="d6fdb58d-193e-405c-8d6e-de59f8358a1e">
         
             <li class="active">
 <p>We get the media list via the
-<a href="/OpenGoPro/wifi#commands-quick-reference">Get Media List command</a>.
+<a href="/OpenGoPro/http#commands-quick-reference">Get Media List command</a>.
 This command will return a JSON structure of all of the media files (pictures, videos) on the camera with corresponding information about each media file.</p>
 
 <p>Let’s first build the endpoint:</p>
@@ -609,7 +609,7 @@ INFO\:root\:Response: {
 </span></code></pre></div></div>
 
 <p>The media list format is defined in the
-<a href="/OpenGoPro/wifi#media-list-format">Open GoPro Specification</a>.
+<a href="/OpenGoPro/http#media-list-format">Open GoPro Specification</a>.
 We won’t be rehashing that here but will provide examples below of using the media list.</p>
 
 <p>One common functionality is to get the list of media file names, which can be done as such:</p>
@@ -638,7 +638,7 @@ the GET response will contain a large binary chunk of information so we will loo
 <h2 id="download-media-file">Download Media File</h2>
 
 <p>The next command we will be sending is
-<a href="/OpenGoPro/wifi#downloading-media">Download Media</a>. Specifically, we
+<a href="/OpenGoPro/http#downloading-media">Download Media</a>. Specifically, we
 will be downloading a photo. The camera must have at least one photo in its media list in order for this to
 work.</p>
 
@@ -693,7 +693,7 @@ INFO\:root\:receiving binary stream to GOPR0987.jpg...
 <h2 id="get-media-gpmf">Get Media GPMF</h2>
 
 <p>The next command we will be sending is
-<a href="/OpenGoPro/wifi#commands-quick-reference">Get Media GPMF</a>. More
+<a href="/OpenGoPro/http#commands-quick-reference">Get Media GPMF</a>. More
 information about GPMF can be found <a href="https://github.com/gopro/gpmf-parser">here</a>. Specifically, we will be
 downloading the GPMF for a photo. The camera must have at least one photo in its media list in order for this to
 work.</p>
@@ -745,7 +745,7 @@ INFO\:root\:receiving binary stream to GOPR0987.gpmf...
 <h2 id="get-media-screennail">Get Media Screennail</h2>
 
 <p>The next command we will be sending is
-<a href="/OpenGoPro/wifi#downloading-media">Get Media Screennail </a>.
+<a href="/OpenGoPro/http#downloading-media">Get Media Screennail </a>.
 Specifically, we will be getting the screennail for a photo. The camera must have at least one photo in its
 media list in order for this to work.</p>
 
@@ -800,7 +800,7 @@ INFO\:root\:receiving binary stream to GOPR0987_screennail.jpg...
 <h2 id="get-media-thumbnail">Get Media Thumbnail</h2>
 
 <p>The next command we will be sending is
-<a href="/OpenGoPro/wifi#downloading-media">Get Media thumbnail </a>.
+<a href="/OpenGoPro/http#downloading-media">Get Media thumbnail </a>.
 Specifically, we will be getting the thumbnail for a photo. The camera must have at least one photo in its
 media list in order for this to work.</p>
 
@@ -878,7 +878,7 @@ inspiration check out some of the <a href="/OpenGoPro/demos">demos</a>.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-01-18T13:18:39-08:00">January 18, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-01-27T11:01:15-08:00">January 27, 2022</time></p>
 
 
       </footer>

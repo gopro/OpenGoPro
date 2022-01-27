@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>WiFi Specifications :  Open GoPro</title>
+<!-- begin _includes/seo.html --><title>HTTP Specifications :  Open GoPro</title>
 <meta name="description" content="Open Source GoPro Interface">
 
 
@@ -20,8 +20,8 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
-<meta property="og:title" content="WiFi Specifications">
-<meta property="og:url" content="https://gopro.github.io/OpenGoPro/wifi">
+<meta property="og:title" content="HTTP Specifications">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/http">
 
 
   <meta property="og:description" content="Open Source GoPro Interface">
@@ -37,7 +37,7 @@
 
 
 
-<link rel="canonical" href="https://gopro.github.io/OpenGoPro/wifi">
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/http">
 
 
 
@@ -132,7 +132,7 @@
               <a href="/OpenGoPro/ble">BLE Specs</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/wifi">WiFi Specs</a>
+              <a href="/OpenGoPro/http">HTTP Specs</a>
             </li>
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/tutorials">Tutorials</a>
@@ -183,7 +183,7 @@
         <span class="sep">/</span>
       
       
-        <li class="current">WiFi Specifications</li>
+        <li class="current">HTTP Specifications</li>
       
     
   </ol>
@@ -318,7 +318,7 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="WiFi Specifications">
+    <meta itemprop="headline" content="HTTP Specifications">
     
     
     
@@ -326,7 +326,7 @@
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">WiFi Specifications
+          <h1 id="page-title" class="page__title" itemprop="headline">HTTP Specifications
 </h1>
           
 
@@ -342,7 +342,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          less than 1 minute read
+          1 minute read
         
       </span>
     
@@ -360,17 +360,17 @@
 <i class="fas fa-file-alt"></i> On this page</h4></header>
               <ul class="toc__menu"><li>
 <a href="#versions">Versions</a><ul>
-<li><a href="#wifi-specification-20">WiFi Specification 2.0</a></li>
-<li><a href="#wifi-specification-10">WiFi Specification 1.0</a></li>
+<li><a href="#http-specification-20">HTTP Specification 2.0</a></li>
+<li><a href="#http-specification-10">HTTP Specification 1.0</a></li>
 </ul>
 </li></ul>
 
             </nav>
           </aside>
         
-        <p>This page will provide links to each version of the Open GoPro WiFi specification, as well
+        <p>This page will provide links to each version of the Open GoPro HTTP specification, as well
 as an overview of the changes from the previous version.
-Click on an individual spec to see it’s complete information including possible commands, settings, etc.</p>
+Click on an individual spec to see its complete information including possible commands, settings, etc.</p>
 
 <div class="note">
 <i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  Since the Open GoPro API varies based on the version, it is necessary to query the Open GoPro version
@@ -379,19 +379,23 @@ using the Get Version command upon connection</span>
 
 <h1 id="versions">Versions</h1>
 
-<h2 id="wifi-specification-20"><a href="/OpenGoPro/wifi_2_0">WiFi Specification 2.0</a></h2>
+<h2 id="http-specification-20"><a href="/OpenGoPro/http_2_0">HTTP Specification 2.0</a></h2>
 
 <ul>
-  <li>New Features:
+  <li>Hilights:
     <ul>
-      <li>Set third party client command</li>
-      <li>Set shutter command</li>
+      <li>Capture media</li>
+      <li>Track camera state</li>
+      <li>Get media list and download files / metadata</li>
+      <li>Load / edit presets</li>
+      <li>Configure and use as webcam</li>
+      <li>Add / remove hilights</li>
     </ul>
   </li>
   <li>Breaking changes:
     <ul>
       <li>Settings endpoint has changed to: <code class="language-plaintext highlighter-rouge">gopro/camera/setting?setting={setting}&amp;option={option}</code>
-See the <a href="/OpenGoPro/wifi_2_0#settings-quick-reference">quick reference</a> for more information</li>
+See the <a href="/OpenGoPro/http_2_0#settings-quick-reference">quick reference</a> for more information</li>
       <li>Video Digital Lens setting parameter changes:
         <ul>
           <li>Narrow changed from 6 to 2</li>
@@ -415,7 +419,7 @@ See the <a href="/OpenGoPro/wifi_2_0#settings-quick-reference">quick reference</
   </li>
 </ul>
 
-<h2 id="wifi-specification-10"><a href="/OpenGoPro/wifi_1_0">WiFi Specification 1.0</a></h2>
+<h2 id="http-specification-10"><a href="/OpenGoPro/http_1_0">HTTP Specification 1.0</a></h2>
 
 <ul>
   <li>Initial API</li>

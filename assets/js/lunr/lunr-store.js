@@ -17,6 +17,12 @@ var store = [{
         "url": "/OpenGoPro/demos/csharp/GoProCSharpSample",
         "teaser": "/OpenGoPro/assets/images/logos/logo.png"
       },{
+        "title": "CSharp Webcam Demo",
+        "excerpt":"This demo implements a simple GUI to interact with a GoPro camera that supports Open GoPro 2.0.   Requirements   This demo will only run on Windows.   Visual Studio is required to run the solution. Visit VisualStudio to download.   The target .NET framework is v4.7.2   GoPro camera must be paired before any other operations will succeed. Put the camera in pairing mode before attempting pairing with the app.   Prerequisites   The correct GoPro Webcam drivers must be installed. To verify this, ensure that you can first use your desired GoPro as a webcam following the steps here.   Usage      Connect the GoPro to your computer using the USB cable   Open the solution (GoProWebCamViewer.sln) in Visual Studio, build and run io to show the Webcam GUI        Select Start Player to start the VLC backend. Note that the log and status bar have updated. This will be true for all functionality.              Select Show Preview to start a low quality preview stream   While in preview, feel free to update the FOV or change the zoom   Once you are ready, select Start Webcam to start full resolution streaming  ","categories": [],
+        "tags": [],
+        "url": "/OpenGoPro/demos/csharp/webcam",
+        "teaser": "/OpenGoPro/assets/images/logos/logo.png"
+      },{
         "title": "Go Pro demo Ionic + Capacitor 3",
         "excerpt":"   Connect phone to GoPro via bluetooth   Send Bluetooth Commands (take photo, get wifi creds, shut down)   Connect phone to GoPro via WiFi   Download files to phone from GoPro via WiFi   You can also preview video demos for      iOS   Android   Dependencies      for bluetooth https://github.com/capacitor-community/bluetooth-le plugin is used   for WiFI https://github.com/digaus/community-capacitor-wifi plugin is used   Run on your computer      install ionic CLI   git clone https://github.com/gopro/OpenGoPro.git   cd project cd OpenGoPro/demos/ionic/file_transfer   run npm install   run ionic build   run ionic cap sync      for ios            run ionic cap open ios       connect real device       click run app button           for android            run ionic cap open android       connect real device       click run app           iOS     Android    ","categories": [],
         "tags": [],

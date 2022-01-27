@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-01-18T13:18:39-08:00">
+  <meta property="article:published_time" content="2022-01-27T11:01:15-08:00">
 
 
 
@@ -136,7 +136,7 @@
               <a href="/OpenGoPro/ble">BLE Specs</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/wifi">WiFi Specs</a>
+              <a href="/OpenGoPro/http">HTTP Specs</a>
             </li>
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/tutorials">Tutorials</a>
@@ -420,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 5: Connect WiFi">
     <meta itemprop="description" content="Python Tutorial 5: Connect WiFi">
-    <meta itemprop="datePublished" content="2022-01-18T13:18:39-08:00">
+    <meta itemprop="datePublished" content="2022-01-27T11:01:15-08:00">
     
 
     <div class="page__inner-wrap">
@@ -482,7 +482,7 @@
           </aside>
         
         <p>This document will provide a walk-through tutorial to use <a href="https://pypi.org/project/bleak/">bleak</a> to implement the
-<a href="/OpenGoPro/wifi">Open GoPro Interface</a> to enable the GoPro’s WiFi Access Point (AP) so that it
+<a href="/OpenGoPro/http">Open GoPro Interface</a> to enable the GoPro’s WiFi Access Point (AP) so that it
 can be connected to. It will also provide an example of connecting to the WiFi AP.</p>
 
 <blockquote>
@@ -685,10 +685,10 @@ INFO\:root\:Wifi Connected!
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_f12d1fc6-2c86-4973-91ad-27dd1dd3a2ab" class="quiz">
+<div id="quiz_9d3cccd3-7b11-4f53-adce-1fef806881ef" class="quiz">
     <div>
-        <div id="question_f12d1fc6-2c86-4973-91ad-27dd1dd3a2ab" class="quiz__question">How is the WiFi password response received?</div>
-        <div id="answers_f12d1fc6-2c86-4973-91ad-27dd1dd3a2ab">
+        <div id="question_9d3cccd3-7b11-4f53-adce-1fef806881ef" class="quiz__question">How is the WiFi password response received?</div>
+        <div id="answers_9d3cccd3-7b11-4f53-adce-1fef806881ef">
         
             <input type="radio" name="question" value="A"><label>A: As a read response from the WiFi AP Password characteristic</label>
             <br>
@@ -701,10 +701,10 @@ INFO\:root\:Wifi Connected!
         
         </div>
     </div>
-    <button onclick="showResults('f12d1fc6-2c86-4973-91ad-27dd1dd3a2ab', 'A')">Submit Answer</button>
-    <div id="results_f12d1fc6-2c86-4973-91ad-27dd1dd3a2ab" style="display: none">
-        <span id="correct_f12d1fc6-2c86-4973-91ad-27dd1dd3a2ab" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_f12d1fc6-2c86-4973-91ad-27dd1dd3a2ab" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('9d3cccd3-7b11-4f53-adce-1fef806881ef', 'A')">Submit Answer</button>
+    <div id="results_9d3cccd3-7b11-4f53-adce-1fef806881ef" style="display: none">
+        <span id="correct_9d3cccd3-7b11-4f53-adce-1fef806881ef" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_9d3cccd3-7b11-4f53-adce-1fef806881ef" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         This (and WiFi AP SSID) is an exception to the rule. Usually responses
     are received as notifications to a response characteristic. However, in this case, it is
     received as a direct read response (since we are reading from the characteristic and not
@@ -712,10 +712,10 @@ INFO\:root\:Wifi Connected!
     </div>
 </div>
 
-<div id="quiz_e8e0559d-75df-45b3-9ee8-fe548a73a1e7" class="quiz">
+<div id="quiz_8bbfffff-bec1-4acc-84a5-47437b0e009b" class="quiz">
     <div>
-        <div id="question_e8e0559d-75df-45b3-9ee8-fe548a73a1e7" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
-        <div id="answers_e8e0559d-75df-45b3-9ee8-fe548a73a1e7">
+        <div id="question_8bbfffff-bec1-4acc-84a5-47437b0e009b" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
+        <div id="answers_8bbfffff-bec1-4acc-84a5-47437b0e009b">
         
             <input type="radio" name="question" value="A"><label>A: It only needs to be enabled once and it will then always remain on</label>
             <br>
@@ -728,10 +728,10 @@ INFO\:root\:Wifi Connected!
         
         </div>
     </div>
-    <button onclick="showResults('e8e0559d-75df-45b3-9ee8-fe548a73a1e7', 'D')">Submit Answer</button>
-    <div id="results_e8e0559d-75df-45b3-9ee8-fe548a73a1e7" style="display: none">
-        <span id="correct_e8e0559d-75df-45b3-9ee8-fe548a73a1e7" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_e8e0559d-75df-45b3-9ee8-fe548a73a1e7" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('8bbfffff-bec1-4acc-84a5-47437b0e009b', 'D')">Submit Answer</button>
+    <div id="results_8bbfffff-bec1-4acc-84a5-47437b0e009b" style="display: none">
+        <span id="correct_8bbfffff-bec1-4acc-84a5-47437b0e009b" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_8bbfffff-bec1-4acc-84a5-47437b0e009b" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         Trick question! They are all false. While the WiFi AP will remain on for
     some time, it can and will eventually turn off so it is always recommended to first connect
     via BLE and ensure that it is enabled. The password and SSID will almost never change.
@@ -750,7 +750,7 @@ INFO\:root\:Wifi Connected!
 </div>
 
 <p>You are now connected to the GoPro’s Wifi AP and can send any of the HTTP commands defined in the
-<a href="/OpenGoPro/wifi">Open GoPro Interface</a>. Proceed to the next tutorial.</p>
+<a href="/OpenGoPro/http">Open GoPro Interface</a>. Proceed to the next tutorial.</p>
 
         
       </section>
@@ -762,7 +762,7 @@ INFO\:root\:Wifi Connected!
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-01-18T13:18:39-08:00">January 18, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-01-27T11:01:15-08:00">January 27, 2022</time></p>
 
 
       </footer>
