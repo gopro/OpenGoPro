@@ -519,6 +519,55 @@ start maintenance, and get Open GoPro version..</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt id="open_gopro.gopro.Interface">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.gopro.</span></code><code class="sig-name descname"><span class="pre">Interface</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.gopro.Interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enum to identify wireless interface</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_gopro.gopro.acquire_ready_semaphore">
+<code class="sig-prename descclassname"><span class="pre">open_gopro.gopro.</span></code><code class="sig-name descname"><span class="pre">acquire_ready_semaphore</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">wrapper=None</span></em>, <em class="sig-param"><span class="pre">enabled=None</span></em>, <em class="sig-param"><span class="pre">adapter=None</span></em>, <em class="sig-param"><span class="pre">proxy=&lt;class</span> <span class="pre">'FunctionWrapper'&gt;</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Any</span><a class="headerlink" href="#open_gopro.gopro.acquire_ready_semaphore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call method after acquiring ready semaphore.</p>
+<p>Release semaphore when done</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wrapped</strong> (<em>Callable</em>) – method to call</p></li>
+<li><p><strong>instance</strong> (<a class="reference internal" href="#open_gopro.gopro.GoPro" title="open_gopro.gopro.GoPro"><em>GoPro</em></a>) – instance that owns the method</p></li>
+<li><p><strong>args</strong> (<em>Any</em>) – positional arguments</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – keyword arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>result of method</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="open_gopro.gopro.ensure_initialized">
+<code class="sig-prename descclassname"><span class="pre">open_gopro.gopro.</span></code><code class="sig-name descname"><span class="pre">ensure_initialized</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interface</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#open_gopro.gopro.Interface" title="open_gopro.gopro.Interface"><span class="pre">open_gopro.gopro.Interface</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Callable</span><a class="headerlink" href="#open_gopro.gopro.ensure_initialized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise exception if relevant interface is not currently initialized</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interface</strong> (<a class="reference internal" href="#open_gopro.gopro.Interface" title="open_gopro.gopro.Interface"><em>Interface</em></a>) – wireless interface to verify</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>GoProNotInitialized</strong> – Wireless interface is not connected</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Direct pass-through of callable after verification</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Callable</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="responses">
 <h2>Responses<a class="headerlink" href="#responses" title="Permalink to this headline">¶</a></h2>
@@ -767,7 +816,12 @@ For example, first send the command and store the response:</p>
 <dd><p>Action ID’s that identify a protobuf command.</p>
 <dl class="py attribute">
 <dt id="open_gopro.constants.ActionId.GET_PRESET_STATUS">
-<code class="sig-name descname"><span class="pre">GET_PRESET_STATUS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.GET_PRESET_STATUS" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GET_PRESET_STATUS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">114</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.GET_PRESET_STATUS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.ActionId.SET_CAMERA_CONTROL">
+<code class="sig-name descname"><span class="pre">SET_CAMERA_CONTROL</span></code><em class="property"> <span class="pre">=</span> <span class="pre">105</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.SET_CAMERA_CONTROL" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -792,13 +846,13 @@ For example, first send the command and store the response:</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="open_gopro.constants.CmdId.GET_HW_INFO">
-<code class="sig-name descname"><span class="pre">GET_HW_INFO</span></code><em class="property"> <span class="pre">=</span> <span class="pre">60</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.GET_HW_INFO" title="Permalink to this definition">¶</a></dt>
+<dt id="open_gopro.constants.CmdId.GET_DATE_TIME">
+<code class="sig-name descname"><span class="pre">GET_DATE_TIME</span></code><em class="property"> <span class="pre">=</span> <span class="pre">14</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.GET_DATE_TIME" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="open_gopro.constants.CmdId.GET_PRESET_STATUS">
-<code class="sig-name descname"><span class="pre">GET_PRESET_STATUS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">245</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.GET_PRESET_STATUS" title="Permalink to this definition">¶</a></dt>
+<dt id="open_gopro.constants.CmdId.GET_HW_INFO">
+<code class="sig-name descname"><span class="pre">GET_HW_INFO</span></code><em class="property"> <span class="pre">=</span> <span class="pre">60</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.GET_HW_INFO" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -827,6 +881,11 @@ For example, first send the command and store the response:</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt id="open_gopro.constants.CmdId.PROTOBUF_COMMAND">
+<code class="sig-name descname"><span class="pre">PROTOBUF_COMMAND</span></code><em class="property"> <span class="pre">=</span> <span class="pre">241</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.PROTOBUF_COMMAND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt id="open_gopro.constants.CmdId.REGISTER_ALL_SETTINGS">
 <code class="sig-name descname"><span class="pre">REGISTER_ALL_SETTINGS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">82</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.REGISTER_ALL_SETTINGS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -834,6 +893,11 @@ For example, first send the command and store the response:</p>
 <dl class="py attribute">
 <dt id="open_gopro.constants.CmdId.REGISTER_ALL_STATUSES">
 <code class="sig-name descname"><span class="pre">REGISTER_ALL_STATUSES</span></code><em class="property"> <span class="pre">=</span> <span class="pre">83</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.REGISTER_ALL_STATUSES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.CmdId.SET_DATE_TIME">
+<code class="sig-name descname"><span class="pre">SET_DATE_TIME</span></code><em class="property"> <span class="pre">=</span> <span class="pre">13</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.SET_DATE_TIME" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -849,11 +913,6 @@ For example, first send the command and store the response:</p>
 <dl class="py attribute">
 <dt id="open_gopro.constants.CmdId.SET_THIRD_PARTY_CLIENT_INFO">
 <code class="sig-name descname"><span class="pre">SET_THIRD_PARTY_CLIENT_INFO</span></code><em class="property"> <span class="pre">=</span> <span class="pre">80</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.SET_THIRD_PARTY_CLIENT_INFO" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.constants.CmdId.SET_TURBO_MODE">
-<code class="sig-name descname"><span class="pre">SET_TURBO_MODE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">241</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.SET_TURBO_MODE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -904,6 +963,32 @@ For example, first send the command and store the response:</p>
 <code class="sig-name descname"><span class="pre">SUCCESS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#open_gopro.constants.ErrorCode.SUCCESS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt id="open_gopro.constants.ErrorCode.UNKNOWN">
+<code class="sig-name descname"><span class="pre">UNKNOWN</span></code><em class="property"> <span class="pre">=</span> <span class="pre">-1</span></em><a class="headerlink" href="#open_gopro.constants.ErrorCode.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="open_gopro.constants.FeatureId">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.constants.</span></code><code class="sig-name descname"><span class="pre">FeatureId</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.constants.FeatureId" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID’s that group protobuf commands</p>
+<dl class="py attribute">
+<dt id="open_gopro.constants.FeatureId.COMMAND">
+<code class="sig-name descname"><span class="pre">COMMAND</span></code><em class="property"> <span class="pre">=</span> <span class="pre">241</span></em><a class="headerlink" href="#open_gopro.constants.FeatureId.COMMAND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.FeatureId.QUERY">
+<code class="sig-name descname"><span class="pre">QUERY</span></code><em class="property"> <span class="pre">=</span> <span class="pre">245</span></em><a class="headerlink" href="#open_gopro.constants.FeatureId.QUERY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.FeatureId.SETTING">
+<code class="sig-name descname"><span class="pre">SETTING</span></code><em class="property"> <span class="pre">=</span> <span class="pre">243</span></em><a class="headerlink" href="#open_gopro.constants.FeatureId.SETTING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -917,11 +1002,6 @@ For example, first send the command and store the response:</p>
 <dt id="open_gopro.constants.GoProEnumMeta">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">open_gopro.constants.</span></code><code class="sig-name descname"><span class="pre">GoProEnumMeta</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classdict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.constants.GoProEnumMeta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Modify enum metaclass to build GoPro specific enums</p>
-<dl class="py attribute">
-<dt id="open_gopro.constants.GoProEnumMeta.ITER_SKIP_NAMES">
-<code class="sig-name descname"><span class="pre">ITER_SKIP_NAMES</span></code><em class="property"> <span class="pre">=</span> <span class="pre">['NOT_APPLICABLE']</span></em><a class="headerlink" href="#open_gopro.constants.GoProEnumMeta.ITER_SKIP_NAMES" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -1087,6 +1167,11 @@ For example, first send the command and store the response:</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt id="open_gopro.constants.QueryCmdId.PROTOBUF_QUERY">
+<code class="sig-name descname"><span class="pre">PROTOBUF_QUERY</span></code><em class="property"> <span class="pre">=</span> <span class="pre">245</span></em><a class="headerlink" href="#open_gopro.constants.QueryCmdId.PROTOBUF_QUERY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt id="open_gopro.constants.QueryCmdId.REG_CAPABILITIES_UPDATE">
 <code class="sig-name descname"><span class="pre">REG_CAPABILITIES_UPDATE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">98</span></em><a class="headerlink" href="#open_gopro.constants.QueryCmdId.REG_CAPABILITIES_UPDATE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1152,6 +1237,11 @@ For example, first send the command and store the response:</p>
 <dl class="py attribute">
 <dt id="open_gopro.constants.SettingId.FPS">
 <code class="sig-name descname"><span class="pre">FPS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.FPS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.SettingId.HYPERSMOOTH">
+<code class="sig-name descname"><span class="pre">HYPERSMOOTH</span></code><em class="property"> <span class="pre">=</span> <span class="pre">135</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.HYPERSMOOTH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1267,11 +1357,6 @@ For example, first send the command and store the response:</p>
 <dl class="py attribute">
 <dt id="open_gopro.constants.SettingId.INTERNAL_134">
 <code class="sig-name descname"><span class="pre">INTERNAL_134</span></code><em class="property"> <span class="pre">=</span> <span class="pre">134</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.INTERNAL_134" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.constants.SettingId.INTERNAL_135">
-<code class="sig-name descname"><span class="pre">INTERNAL_135</span></code><em class="property"> <span class="pre">=</span> <span class="pre">135</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.INTERNAL_135" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1595,6 +1680,11 @@ For example, first send the command and store the response:</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt id="open_gopro.constants.SettingId.PROTOBUF_SETTING">
+<code class="sig-name descname"><span class="pre">PROTOBUF_SETTING</span></code><em class="property"> <span class="pre">=</span> <span class="pre">243</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.PROTOBUF_SETTING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt id="open_gopro.constants.SettingId.RESOLUTION">
 <code class="sig-name descname"><span class="pre">RESOLUTION</span></code><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.RESOLUTION" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1701,8 +1791,13 @@ For example, first send the command and store the response:</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="open_gopro.constants.StatusId.DATE_TIME">
-<code class="sig-name descname"><span class="pre">DATE_TIME</span></code><em class="property"> <span class="pre">=</span> <span class="pre">40</span></em><a class="headerlink" href="#open_gopro.constants.StatusId.DATE_TIME" title="Permalink to this definition">¶</a></dt>
+<dt id="open_gopro.constants.StatusId.DEPRECATED_40">
+<code class="sig-name descname"><span class="pre">DEPRECATED_40</span></code><em class="property"> <span class="pre">=</span> <span class="pre">40</span></em><a class="headerlink" href="#open_gopro.constants.StatusId.DEPRECATED_40" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.constants.StatusId.DEPRECATED_92">
+<code class="sig-name descname"><span class="pre">DEPRECATED_92</span></code><em class="property"> <span class="pre">=</span> <span class="pre">92</span></em><a class="headerlink" href="#open_gopro.constants.StatusId.DEPRECATED_92" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2033,11 +2128,6 @@ For example, first send the command and store the response:</p>
 <dl class="py attribute">
 <dt id="open_gopro.constants.StatusId.TIMELAPSE_REM">
 <code class="sig-name descname"><span class="pre">TIMELAPSE_REM</span></code><em class="property"> <span class="pre">=</span> <span class="pre">64</span></em><a class="headerlink" href="#open_gopro.constants.StatusId.TIMELAPSE_REM" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.constants.StatusId.TIMEWARP_1X_ACTIVE">
-<code class="sig-name descname"><span class="pre">TIMEWARP_1X_ACTIVE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">92</span></em><a class="headerlink" href="#open_gopro.constants.StatusId.TIMEWARP_1X_ACTIVE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2472,6 +2562,26 @@ and data is sent.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_preset_status">
+<code class="sig-name descname"><span class="pre">get_preset_status</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_preset_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information about what Preset Groups and Presets the camera supports in its current state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>register_preset_status</strong> (<em>List</em><em>[</em><em>Params.RegisterPresetStatus</em><em>]</em><em>, </em><em>optional</em>) – [TODO]. Defaults to None.</p></li>
+<li><p><strong>unregister_preset_status</strong> (<em>List</em><em>[</em><em>Params.RegisterPresetStatus</em><em>]</em><em>, </em><em>optional</em>) – [TODO]. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TODO</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt id="open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_wifi_password">
 <code class="sig-name descname"><span class="pre">get_wifi_password</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.get_wifi_password" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the Wifi password.</p>
@@ -2616,7 +2726,10 @@ and data is sent.</p>
 <dd class="field-odd"><p><strong>active</strong> (<em>bool</em>) – True to enable, False to disable.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>TODO</p>
+<dd class="field-even"><p>result status (EnumResultGeneric)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2698,6 +2811,12 @@ and data is sent.</p>
 <dt id="open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.fps">
 <code class="sig-name descname"><span class="pre">fps</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleSetting" title="open_gopro.api.builders.BleSetting"><span class="pre">open_gopro.api.builders.BleSetting</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.fps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Frames per second. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.FPS</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.hypersmooth">
+<code class="sig-name descname"><span class="pre">hypersmooth</span></code><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleSettingsV1_0.hypersmooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set / disable hypersmooth. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.HypersmoothMode</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -2852,14 +2971,15 @@ and data is sent.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="open_gopro.api.v1_0.ble_commands.BleStatusesV1_0.date_time">
-<code class="sig-name descname"><span class="pre">date_time</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleStatus" title="open_gopro.api.builders.BleStatus"><span class="pre">open_gopro.api.builders.BleStatus</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleStatusesV1_0.date_time" title="Permalink to this definition">¶</a></dt>
-<dd><p>%YY%MM%DD%HH%MM%SS, all values in hex).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Current date/time (format</p>
-</dd>
-</dl>
+<dt id="open_gopro.api.v1_0.ble_commands.BleStatusesV1_0.deprecated_40">
+<code class="sig-name descname"><span class="pre">deprecated_40</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleStatus" title="open_gopro.api.builders.BleStatus"><span class="pre">open_gopro.api.builders.BleStatus</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleStatusesV1_0.deprecated_40" title="Permalink to this definition">¶</a></dt>
+<dd><p>This status is deprecated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v1_0.ble_commands.BleStatusesV1_0.deprecated_92">
+<code class="sig-name descname"><span class="pre">deprecated_92</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleStatus" title="open_gopro.api.builders.BleStatus"><span class="pre">open_gopro.api.builders.BleStatus</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleStatusesV1_0.deprecated_92" title="Permalink to this definition">¶</a></dt>
+<dd><p>This status is deprecated.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -3218,12 +3338,6 @@ and data is sent.</p>
 <dt id="open_gopro.api.v1_0.ble_commands.BleStatusesV1_0.timelapse_rem">
 <code class="sig-name descname"><span class="pre">timelapse_rem</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleStatus" title="open_gopro.api.builders.BleStatus"><span class="pre">open_gopro.api.builders.BleStatus</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleStatusesV1_0.timelapse_rem" title="Permalink to this definition">¶</a></dt>
 <dd><p>How many min of Timelapse video can be captured with current settings before sdcard is full?</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="open_gopro.api.v1_0.ble_commands.BleStatusesV1_0.timewarp_1x_active">
-<code class="sig-name descname"><span class="pre">timewarp_1x_active</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#open_gopro.api.builders.BleStatus" title="open_gopro.api.builders.BleStatus"><span class="pre">open_gopro.api.builders.BleStatus</span></a></em><a class="headerlink" href="#open_gopro.api.v1_0.ble_commands.BleStatusesV1_0.timewarp_1x_active" title="Permalink to this definition">¶</a></dt>
-<dd><p>Is Timewarp 1x active?</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -3648,6 +3762,12 @@ and data is sent.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt id="open_gopro.api.v1_0.wifi_commands.WifiSettingsV1_0.hypersmooth">
+<code class="sig-name descname"><span class="pre">hypersmooth</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiSettingsV1_0.hypersmooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set / disable hypersmooth. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.HypersmoothMode</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt id="open_gopro.api.v1_0.wifi_commands.WifiSettingsV1_0.max_lens_mode">
 <code class="sig-name descname"><span class="pre">max_lens_mode</span></code><a class="headerlink" href="#open_gopro.api.v1_0.wifi_commands.WifiSettingsV1_0.max_lens_mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable / disable max lens mod. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.Params.MaxLensMode</span></code></p>
@@ -3896,6 +4016,37 @@ and data is sent.</p>
 <dl class="py attribute">
 <dt id="open_gopro.api.v1_0.params.ParamsV1_0.Flatmode.VIDEO">
 <code class="sig-name descname"><span class="pre">VIDEO</span></code><em class="property"> <span class="pre">=</span> <span class="pre">12</span></em><a class="headerlink" href="#open_gopro.api.v1_0.params.ParamsV1_0.Flatmode.VIDEO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="open_gopro.api.v1_0.params.ParamsV1_0.HypersmoothMode">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">HypersmoothMode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v1_0.params.ParamsV1_0.HypersmoothMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt id="open_gopro.api.v1_0.params.ParamsV1_0.HypersmoothMode.BOOST">
+<code class="sig-name descname"><span class="pre">BOOST</span></code><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#open_gopro.api.v1_0.params.ParamsV1_0.HypersmoothMode.BOOST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v1_0.params.ParamsV1_0.HypersmoothMode.HIGH">
+<code class="sig-name descname"><span class="pre">HIGH</span></code><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#open_gopro.api.v1_0.params.ParamsV1_0.HypersmoothMode.HIGH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v1_0.params.ParamsV1_0.HypersmoothMode.OFF">
+<code class="sig-name descname"><span class="pre">OFF</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.v1_0.params.ParamsV1_0.HypersmoothMode.OFF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v1_0.params.ParamsV1_0.HypersmoothMode.STANDARD">
+<code class="sig-name descname"><span class="pre">STANDARD</span></code><em class="property"> <span class="pre">=</span> <span class="pre">100</span></em><a class="headerlink" href="#open_gopro.api.v1_0.params.ParamsV1_0.HypersmoothMode.STANDARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v1_0.params.ParamsV1_0.HypersmoothMode.UNKNOWN">
+<code class="sig-name descname"><span class="pre">UNKNOWN</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#open_gopro.api.v1_0.params.ParamsV1_0.HypersmoothMode.UNKNOWN" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -4313,6 +4464,12 @@ and data is sent.</p>
 
 </dd></dl>
 
+<dl class="py attribute">
+<dt id="open_gopro.api.v1_0.params.ParamsV1_0.RegisterPresetStatus">
+<code class="sig-name descname"><span class="pre">RegisterPresetStatus</span></code><a class="headerlink" href="#open_gopro.api.v1_0.params.ParamsV1_0.RegisterPresetStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.proto.request_get_preset_status_pb.EnumRegisterPresetStatus</span></code></p>
+</dd></dl>
+
 <dl class="py class">
 <dt id="open_gopro.api.v1_0.params.ParamsV1_0.Resolution">
 <em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Resolution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v1_0.params.ParamsV1_0.Resolution" title="Permalink to this definition">¶</a></dt>
@@ -4650,6 +4807,12 @@ and data is sent.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_date_time">
+<code class="sig-name descname"><span class="pre">get_date_time</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_date_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the camera’s date and time</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_hardware_info">
 <code class="sig-name descname"><span class="pre">get_hardware_info</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_hardware_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get hardware information.</p>
@@ -4673,6 +4836,26 @@ and data is sent.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_preset_status">
+<code class="sig-name descname"><span class="pre">get_preset_status</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.get_preset_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information about what Preset Groups and Presets the camera supports in its current state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>register_preset_status</strong> (<em>List</em><em>[</em><em>Params.RegisterPresetStatus</em><em>]</em><em>, </em><em>optional</em>) – [TODO]. Defaults to None.</p></li>
+<li><p><strong>unregister_preset_status</strong> (<em>List</em><em>[</em><em>Params.RegisterPresetStatus</em><em>]</em><em>, </em><em>optional</em>) – [TODO]. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TODO</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -4783,6 +4966,29 @@ and data is sent.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.set_camera_control">
+<code class="sig-name descname"><span class="pre">set_camera_control</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.set_camera_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable / disable turbo mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>active</strong> (<em>bool</em>) – True to enable, False to disable.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>result status (EnumResultGeneric)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.set_date_time">
+<code class="sig-name descname"><span class="pre">set_date_time</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.set_date_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the camera’s date and time</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt id="open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.set_shutter">
 <code class="sig-name descname"><span class="pre">set_shutter</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleCommandsV2_0.set_shutter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set shutter on or off.</p>
@@ -4822,7 +5028,10 @@ and data is sent.</p>
 <dd class="field-odd"><p><strong>active</strong> (<em>bool</em>) – True to enable, False to disable.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>TODO</p>
+<dd class="field-even"><p>result status (EnumResultGeneric)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -4883,6 +5092,12 @@ and data is sent.</p>
 <em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BleSettingsV1_0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.Iterator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterator to iterate through a BleSettings instance’s attributes</p>
 <p>Does not include the ‘communicator’ instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.hypersmooth">
+<code class="sig-name descname"><span class="pre">hypersmooth</span></code><a class="headerlink" href="#open_gopro.api.v2_0.ble_commands.BleSettingsV2_0.hypersmooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set / disable hypersmooth. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.HypersmoothMode</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -4980,6 +5195,12 @@ and data is sent.</p>
 <dd class="field-even"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_date_time">
+<code class="sig-name descname"><span class="pre">get_date_time</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.get_date_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the date and time of the camera. TODO</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -5140,6 +5361,12 @@ and data is sent.</p>
 <dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_date_time">
+<code class="sig-name descname"><span class="pre">set_date_time</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0.set_date_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the date and time of the camera. TODO</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -5315,6 +5542,12 @@ and data is sent.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt id="open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0.hypersmooth">
+<code class="sig-name descname"><span class="pre">hypersmooth</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0.hypersmooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set / disable hypersmooth. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.HypersmoothMode</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt id="open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0.max_lens_mode">
 <code class="sig-name descname"><span class="pre">max_lens_mode</span></code><a class="headerlink" href="#open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0.max_lens_mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable / disable max lens mod. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.Params.MaxLensMode</span></code></p>
@@ -5449,6 +5682,12 @@ and data is sent.</p>
 <code class="sig-name descname"><span class="pre">IDLE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.CameraControl.IDLE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.CameraControlStatus">
+<code class="sig-name descname"><span class="pre">CameraControlStatus</span></code><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.CameraControlStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.proto.set_camera_control_status_pb.EnumCameraControlStatus</span></code></p>
 </dd></dl>
 
 <dl class="py class">
@@ -5590,6 +5829,37 @@ and data is sent.</p>
 <dl class="py attribute">
 <dt id="open_gopro.api.v2_0.params.ParamsV2_0.Flatmode.VIDEO">
 <code class="sig-name descname"><span class="pre">VIDEO</span></code><em class="property"> <span class="pre">=</span> <span class="pre">12</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.Flatmode.VIDEO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.HypersmoothMode">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">HypersmoothMode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.HypersmoothMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.HypersmoothMode.BOOST">
+<code class="sig-name descname"><span class="pre">BOOST</span></code><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.HypersmoothMode.BOOST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.HypersmoothMode.HIGH">
+<code class="sig-name descname"><span class="pre">HIGH</span></code><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.HypersmoothMode.HIGH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.HypersmoothMode.OFF">
+<code class="sig-name descname"><span class="pre">OFF</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.HypersmoothMode.OFF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.HypersmoothMode.STANDARD">
+<code class="sig-name descname"><span class="pre">STANDARD</span></code><em class="property"> <span class="pre">=</span> <span class="pre">100</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.HypersmoothMode.STANDARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.HypersmoothMode.UNKNOWN">
+<code class="sig-name descname"><span class="pre">UNKNOWN</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.HypersmoothMode.UNKNOWN" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -6045,6 +6315,12 @@ and data is sent.</p>
 <code class="sig-name descname"><span class="pre">VIDE0</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1000</span></em><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.PresetGroup.VIDE0" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="open_gopro.api.v2_0.params.ParamsV2_0.RegisterPresetStatus">
+<code class="sig-name descname"><span class="pre">RegisterPresetStatus</span></code><a class="headerlink" href="#open_gopro.api.v2_0.params.ParamsV2_0.RegisterPresetStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.proto.request_get_preset_status_pb.EnumRegisterPresetStatus</span></code></p>
 </dd></dl>
 
 <dl class="py class">
