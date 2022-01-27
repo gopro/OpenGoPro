@@ -70,7 +70,7 @@ def main() -> int:
             set_logging_level(logger, logging.ERROR)
 
             console.print("\n\n🎆🎇✨ Success!! Wifi AP is connected 📡\n")
-            console.print("Send commands as per https://gopro.github.io/OpenGoPro/wifi")
+            console.print("Send commands as per https://gopro.github.io/OpenGoPro/http")
             while True:
                 time.sleep(1)
 
