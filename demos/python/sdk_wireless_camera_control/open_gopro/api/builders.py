@@ -8,7 +8,7 @@ import enum
 import logging
 from datetime import datetime
 from pathlib import Path
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 from abc import ABC, abstractmethod
 from typing import (
     Any,
@@ -40,6 +40,7 @@ from open_gopro.responses import (
 )
 from open_gopro.constants import (
     ActionId,
+    FeatureId,
     BleUUID,
     CmdId,
     ResponseType,
@@ -118,6 +119,26 @@ def build_enum_adapter(target: Type[enum.Enum]) -> Adapter:
 
 
 status_struct = Struct("status" / build_enum_adapter(ErrorCode))
+
+
+class DeprecatedAdapter(Adapter):
+    """Used to return "DEPRECATED" when a deprecated setting / status is attempted to be parsed / built"""
+
+    def _decode(self, *_: Any) -> str:
+        """Return "DEPRECATED" when parse() is called
+
+        Returns:
+            str: "DEPRECATED"
+        """
+        return "DEPRECATED"
+
+    def _encode(self, *_: Any) -> str:
+        """Return "DEPRECATED" when parse() is called
+
+        Returns:
+            str: "DEPRECATED"
+        """
+        return self._decode()
 
 
 class DateTimeAdapter(Adapter):
@@ -354,7 +375,7 @@ def build_protobuf_adapter(protobuf: Type[betterproto.Message]) -> Adapter:
     class ProtobufConstructAdapter(Adapter):
         """Adapt a protobuf to be used by Construct (for parsing only)"""
 
-        protobuf: Type[betterproto.Message]
+        protobuf: Type[betterproto.Message]  # TODO use instance instead of class
 
         def _decode(self, obj: bytearray, *_: Any) -> Dict[Any, Any]:
             """Parse a byte stream into a JSON dict using a protobuf
@@ -365,7 +386,20 @@ def build_protobuf_adapter(protobuf: Type[betterproto.Message]) -> Adapter:
             Returns:
                 Dict[Any, Any]: parsed JSON dict
             """
-            return self.protobuf.FromString(bytes(obj)).to_dict()
+            response = self.protobuf().FromString(bytes(obj))
+            data = response.to_dict()
+            # HACK to get actual enum from betterproto instead of string.
+            # TODO: Remove once https://github.com/danielgtaylor/python-betterproto/pull/203 is merged
+            for field in fields(response):
+                value = getattr(response, field.name)
+                meta = betterproto.FieldMetadata.get(field)
+                if meta.proto_type == betterproto.TYPE_ENUM:
+                    enum_values = list(self.protobuf()._betterproto.cls_by_field[field.name])
+                    if isinstance(value, list):
+                        data[field.name] = [enum_values[e] for e in value]
+                    else:
+                        data[field.name] = enum_values[value]
+            return data
 
         def _encode(self, *_: Any) -> Any:
             raise NotImplementedError
@@ -377,18 +411,18 @@ def build_protobuf_adapter(protobuf: Type[betterproto.Message]) -> Adapter:
 # Ignoring because hitting this mypy bug: https://github.com/python/mypy/issues/5374
 @dataclass  # type: ignore
 class BleProtoCommand(BleCommand):
-    """A BLE command that writes to a BleUUID and does not accept any parameters
+    """A BLE command that is sent and received as using the Protobuf protocol
 
     Args:
         communicator (GoProBle): BLE client to write
         uuid (BleUUID): BleUUID to write to
         feature_id (CmdId): Command ID that is being sent
-        action_id (ActionId): protobuf specific action ID that is being sent
+        action_id (FeatureId): protobuf specific action ID that is being sent
         request_proto (Type[betterproto.Message]): protobuf used to build command bytestream
         response_proto (Type[betterproto.Message]): protobuf used to parse received bytestream
     """
 
-    feature_id: CmdId
+    feature_id: FeatureId
     action_id: ActionId
     request_proto: Type[betterproto.Message]
     response_proto: Type[betterproto.Message]
@@ -399,9 +433,7 @@ class BleProtoCommand(BleCommand):
 
     @property
     def _response_parser(self) -> BytesParser:
-        return (
-            self.response_proto if self.response_proto is None else build_protobuf_adapter(self.response_proto)
-        )
+        return build_protobuf_adapter(self.response_proto)
 
     @abstractmethod
     @no_type_check
@@ -409,13 +441,13 @@ class BleProtoCommand(BleCommand):
     def __call__(self, *args: Any, **kwargs: Any) -> GoProResp:  # noqa: D102
         # The method that will actually build and send the protobuf command
 
-        # This method's signature shall be override by the subclass.
+        # This method's signature shall be overridden by the subclass.
         # The subclass shall then pass the arguments to this method and return it's returned response
 
         # This pattern is technically violating the Liskov substitution principle. But we are accepting this as a
         # tradeoff for exposing type hints on BLE Protobuf commands.
         logger.info(
-            f"<----------- {self.feature_id.name} : {' '.join([*[str(a) for a in args], *[str(a) for a in kwargs.values()]])}"
+            f"<----------- {self.action_id.name} : {' '.join([*[str(a) for a in args], *[str(a) for a in kwargs.values()]])}"
         )
 
         # Build request protobuf bytestream
@@ -717,7 +749,7 @@ class WifiGetJsonWithParams(WifiGetJsonCommand, Generic[CommandValueType]):
 
     # pylint: disable=missing-return-doc
     def __call__(self, value: CommandValueType) -> GoProResp:  # noqa: D102
-        logger.info(f"<----------- {self.endpoint} : {str(value)}")
+        logger.info(f"<----------- {self.endpoint.format(str(value))}")
 
         # Build list of args as they should be represented in URL
         url_params = []

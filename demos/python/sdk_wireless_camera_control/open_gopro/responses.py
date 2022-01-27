@@ -20,8 +20,8 @@ from typing import (
     ItemsView,
     ValuesView,
     KeysView,
+    Protocol,
 )
-from typing_extensions import Protocol
 
 import requests
 from construct import Construct
@@ -40,9 +40,9 @@ from open_gopro.constants import (
 )
 from open_gopro.util import scrub
 from open_gopro.ble import BleUUID
+from open_gopro.proto.response_generic_pb import EnumResultGeneric
 
 logger = logging.getLogger(__name__)
-
 BytesParser = Construct
 BytesBuilder = Construct
 BytesParserBuilder = Construct
@@ -295,7 +295,7 @@ class GoProResp:
         Returns:
             bool: True if the response is ok (i.e. there are no errors), False otherwise
         """
-        return self.status is ErrorCode.SUCCESS
+        return self.status in [ErrorCode.SUCCESS, ErrorCode.UNKNOWN]
 
     @property
     def id(self) -> ResponseType:
@@ -427,95 +427,120 @@ class GoProResp:
         if isinstance(self._raw_packet, bytearray):
             buf: bytearray = self._raw_packet
 
-            # BleUUID's whose responses contain multiple parameters to parse
-            if self.uuid in [GoProUUIDs.CQ_QUERY_RESP, GoProUUIDs.CQ_SETTINGS_RESP]:
-                identifier: Optional[Type[ResponseType]] = None
-                if self.uuid == GoProUUIDs.CQ_SETTINGS_RESP:
-                    self._info.append(SettingId(buf[0]))
+            # Find identifier or see if this is a protobuf or direct read
+            is_protobuf = False
+            is_direct_read = False
+            identifier: Optional[Type[ResponseType]] = None
+            if self.uuid == GoProUUIDs.CQ_SETTINGS_RESP:
+                self._info.append(SettingId(buf[0]))
+                identifier = SettingId
+            elif self.uuid == GoProUUIDs.CQ_QUERY_RESP:
+                self._info.append(QueryCmdId(buf[0]))
+                if self.id in [
+                    QueryCmdId.GET_SETTING_VAL,
+                    QueryCmdId.REG_SETTING_VAL_UPDATE,
+                    QueryCmdId.UNREG_SETTING_VAL_UPDATE,
+                    QueryCmdId.SETTING_VAL_PUSH,
+                    QueryCmdId.SETTING_CAPABILITY_PUSH,
+                    QueryCmdId.GET_CAPABILITIES_VAL,
+                    QueryCmdId.REG_CAPABILITIES_UPDATE,
+                    QueryCmdId.UNREG_CAPABILITIES_UPDATE,
+                ]:
                     identifier = SettingId
+                elif self.id is QueryCmdId.GET_SETTING_NAME:
+                    raise NotImplementedError
+                elif self.id in [
+                    QueryCmdId.GET_STATUS_VAL,
+                    QueryCmdId.REG_STATUS_VAL_UPDATE,
+                    QueryCmdId.UNREG_STATUS_VAL_UPDATE,
+                    QueryCmdId.STATUS_VAL_PUSH,
+                ]:
+                    identifier = StatusId
+                elif self.id in [QueryCmdId.PROTOBUF_QUERY, SettingId.PROTOBUF_SETTING]:
+                    is_protobuf = True
                 else:
-                    self._info.append(QueryCmdId(buf[0]))
-                    if self.id in [
-                        QueryCmdId.GET_SETTING_VAL,
-                        QueryCmdId.REG_SETTING_VAL_UPDATE,
-                        QueryCmdId.UNREG_SETTING_VAL_UPDATE,
-                        QueryCmdId.SETTING_VAL_PUSH,
-                        QueryCmdId.SETTING_CAPABILITY_PUSH,
-                        QueryCmdId.GET_CAPABILITIES_VAL,
-                        QueryCmdId.REG_CAPABILITIES_UPDATE,
-                        QueryCmdId.UNREG_CAPABILITIES_UPDATE,
-                    ]:
-                        identifier = SettingId
-                    elif self.id is QueryCmdId.GET_SETTING_NAME:
-                        raise NotImplementedError
-                    elif self.id in [
-                        QueryCmdId.GET_STATUS_VAL,
-                        QueryCmdId.REG_STATUS_VAL_UPDATE,
-                        QueryCmdId.UNREG_STATUS_VAL_UPDATE,
-                        QueryCmdId.STATUS_VAL_PUSH,
-                    ]:
-                        identifier = StatusId
-                    else:
-                        raise Exception("Unhandled parse state")
-
-                # Parse all parameters
-                self.status = ErrorCode(buf[1])
-                buf = buf[2:]
-                while len(buf) != 0:
-                    param_id = identifier(buf[0])
-                    param_len = buf[1]
-                    buf = buf[2:]
-                    # Special case where we register for a push notification for something that does not yet
-                    # have a value
-                    if param_len == 0:
-                        self.data[param_id] = []
-                        continue
-                    param_val = buf[:param_len]
-                    buf = buf[param_len:]
-
-                    # Add parsed value to response's data dict
-                    try:
-                        # These can be more than 1 value so use a list
-                        if self.cmd in [
-                            QueryCmdId.GET_CAPABILITIES_VAL,
-                            QueryCmdId.REG_CAPABILITIES_UPDATE,
-                            QueryCmdId.SETTING_CAPABILITY_PUSH,
-                        ]:
-                            # Parse using parser from map and append
-                            # Mypy can't follow that this parser is guarantted to be a ByteParser
-                            self.data[param_id].append(self._parsers[param_id].parse(param_val))  # type: ignore
-                        else:
-                            # Parse using parser from map and set
-                            # Mypy can't follow that this parser is guarantted to be a ByteParser
-                            self.data[param_id] = self._parsers[param_id].parse(param_val)  # type: ignore
-                    except KeyError:
-                        # We don't have defined params for all ID's yet. Just store raw bytes
-                        logger.warning(f"No parser defined for {param_id}")
-                        self.data[param_id] = param_val
-                    except ValueError:
-                        # This is the case where we receive a value that is not defined in our params.
-                        # This shouldn't happen and means the documentation needs to be updated. However, it
-                        # isn't functionally critical
-                        logger.warning(f"{param_id} does not contain a value {param_val}")
-                        self.data[param_id] = param_val
-
-            else:  # Other BleUUID's have responses that can be parsed monolithically
-                if self.uuid == GoProUUIDs.CQ_COMMAND_RESP:
+                    raise Exception("Unhandled parse state")
+            else:  # Other UUID's have responses that can be parsed monolithically
+                if self.uuid is GoProUUIDs.CQ_COMMAND_RESP:
                     self._info.append(CmdId(buf[0]))
                     # If this is a protobuf, first get the action ID (after stripping msb)
                     assert self.cmd is not None
-                    if self.cmd.value >= 0xF0:
-                        self._info.append(ActionId(buf[1] & 0x7F))
-                        buf = buf[1:]
-                    buf = buf[1:]
+                    if self.id == CmdId.PROTOBUF_COMMAND:
+                        is_protobuf = True
+                else:
+                    # This is a direct read from a characteristic
+                    is_direct_read = True
 
-                try:
-                    # Mypy can't follow that this parser is guarantted to be a ByteParser
+            # Additional parsing to add action ID fo protobuf
+            if is_protobuf:
+                self._info.append(ActionId(buf[1] & 0x7F))
+                buf = buf[1:]  # Pop off action ID
+
+            if not is_direct_read:
+                # Pop off ID
+                buf = buf[1:]
+
+            try:
+                # Parse based on identifier
+                if identifier in [SettingId, StatusId]:
+                    assert identifier is not None
+                    # Parse all parameters
+                    self.status = ErrorCode(buf[0])
+                    buf = buf[1:]
+                    while len(buf) != 0:
+                        param_id = identifier(buf[0])  # type: ignore
+                        param_len = buf[1]
+                        buf = buf[2:]
+                        # Special case where we register for a push notification for something that does not yet
+                        # have a value
+                        if param_len == 0:
+                            self.data[param_id] = []
+                            continue
+                        param_val = buf[:param_len]
+                        buf = buf[param_len:]
+
+                        # Add parsed value to response's data dict
+                        try:
+                            # These can be more than 1 value so use a list
+                            if self.cmd in [
+                                QueryCmdId.GET_CAPABILITIES_VAL,
+                                QueryCmdId.REG_CAPABILITIES_UPDATE,
+                                QueryCmdId.SETTING_CAPABILITY_PUSH,
+                            ]:
+                                # Parse using parser from map and append
+                                # Mypy can't follow that this parser is guarantted to be a ByteParser
+                                self.data[param_id].append(self._parsers[param_id].parse(param_val))  # type: ignore
+                            else:
+                                # Parse using parser from map and set
+                                # Mypy can't follow that this parser is guarantted to be a ByteParser
+                                self.data[param_id] = self._parsers[param_id].parse(param_val)  # type: ignore
+                        except KeyError:
+                            # We don't have defined params for all ID's yet. Just store raw bytes
+                            logger.warning(f"No parser defined for {param_id}")
+                            self.data[param_id] = param_val
+                        except ValueError:
+                            # This is the case where we receive a value that is not defined in our params.
+                            # This shouldn't happen and means the documentation needs to be updated. However, it
+                            # isn't functionally critical
+                            logger.warning(f"{param_id} does not contain a value {param_val}")
+                            self.data[param_id] = param_val
+                else:  # Commands,  Protobuf, and direct Reads
+                    # Parse
                     self.data = self._parsers[self.id].parse(buf)  # type: ignore
-                    self.status = self.data["status"] if "status" in self.data else self.status
-                except KeyError as e:
-                    self._state = GoProResp._State.ERROR
-                    raise ResponseParseError(str(self.id), buf) from e
+                    # Attempt to extract status
+                    if "status" in self.data:
+                        self.status = self.data["status"]
+                    elif "result" in self.data:
+                        self.status = (
+                            ErrorCode.SUCCESS
+                            if self.data["result"] == EnumResultGeneric.RESULT_SUCCESS
+                            else ErrorCode.ERROR
+                        )
+                    else:
+                        self.status = ErrorCode.UNKNOWN
+            except KeyError as e:
+                self._state = GoProResp._State.ERROR
+                raise ResponseParseError(str(self.id), buf) from e
 
         # Is this an HTTP response?
         elif isinstance(self._raw_packet, dict):

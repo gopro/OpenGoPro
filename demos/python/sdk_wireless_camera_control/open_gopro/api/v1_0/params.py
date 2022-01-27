@@ -10,10 +10,12 @@ Note these have to be IntEnum's in order to be correctly built when sending comm
 
 from open_gopro.constants import GoProEnum
 
-# from open_gopro.proto.request_get_preset_status_pb import EnumRegisterPresetStatus
+from open_gopro.proto.request_get_preset_status_pb import EnumRegisterPresetStatus
 
 
 class ParamsV1_0:
+    RegisterPresetStatus = EnumRegisterPresetStatus
+
     class Shutter(GoProEnum):
         ON = 1
         OFF = 0
@@ -215,3 +217,10 @@ class ParamsV1_0:
     class Toggle(GoProEnum):
         ENABLE = 1
         DISABLE = 0
+
+    class HypersmoothMode(GoProEnum):
+        OFF = 0
+        UNKNOWN = 1
+        HIGH = 2
+        BOOST = 3
+        STANDARD = 100

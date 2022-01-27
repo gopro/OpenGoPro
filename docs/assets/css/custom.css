@@ -228,7 +228,7 @@ img.mermaid {
     text-decoration: none;
 }
 
-/* Formatting specific to the specs (i.e. ble and wifi) */
+/* Formatting specific to the specs (i.e. ble and http) */
 
 .spec table {
     width: fit-content;

@@ -6,6 +6,7 @@
 from __future__ import annotations
 import logging
 from typing import Type
+from datetime import datetime
 
 from open_gopro.communication_client import GoProWifi
 from open_gopro.api.v1_0.wifi_commands import WifiCommandsV1_0, WifiSettingsV1_0
@@ -68,6 +69,16 @@ class WifiCommandsV2_0(WifiCommandsV1_0):
         Returns:
             GoProResp: command status
         """
+
+        self.set_date_time = WifiGetJsonWithParams[datetime](
+            communicator,
+            "gopro/camera/set_date_time?{}",
+            param_builder=lambda x: f"date={x.year}_{x.month}_{x.day}&time={x.hour}_{x.minute}_{x.second}",
+        )
+        """Update the date and time of the camera. TODO"""
+
+        self.get_date_time = WifiGetJsonNoParams(communicator, "gopro/camera/get_date_time")
+        """Update the date and time of the camera. TODO"""
 
 
 class WifiSettingsV2_0(WifiSettingsV1_0):

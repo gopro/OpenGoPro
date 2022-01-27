@@ -1,29 +1,36 @@
 ---
-title: 'Bluetooth Low Energy (BLE) Specification v2.0'
-permalink: /ble_2_0
+title: 'HTTP Specification v2.0'
+permalink: /http_2_0
 classes: spec
 ---
 
 
-# About This Page
-
-<p>This page describes the format, capabilities, and use of <a href="https://learn.adafruit.com/introduction-to-bluetooth-low-energy/introduction">Bluetooth Low Energy (BLE)</a> as it pertains to communicating with GoPro cameras. Messages are sent using either <a href="https://en.wikipedia.org/wiki/Type-length-value">TLV</a> or <a href="https://developers.google.com/protocol-buffers">Protobuf</a> format.</p>
-
-
-# General
+# Overview
 
 <p>
-Communicating with a GoPro camera via Bluetooth Low Energy involves writing to Bluetooth characteristics and, typically,
-waiting for a response notification from a corresponding characteristic.
+The GoPro API allows developers to create apps and utilities that interact with and control a GoPro camera.
+</p>
 
-The camera organizes its Generic Attribute Profile (GATT) table by broad features: AP control, control & query, etc.
+## What can you do with the GoPro API?
+
+<p>
+The GoPro API allows you to control and query the camera:
+<ul>
+<li>Capture photo/video media</li>
+<li>Get media list</li>
+<li>Change settings</li>
+<li>Get and set the date/time</li>
+<li>Get camera status</li>
+<li>Get media metadata (file size, width, height, duration, tags, etc)</li>
+<li>and more!</li>
+</ul>
 </p>
 
 
-## Supported Cameras
+# Supported Cameras
 
 <p>
-Below is a table of cameras that support GoPro's public BLE API:
+Below is a table of cameras that support GoPro's public HTTP API:
 </p>
 
 <table border="1">
@@ -44,224 +51,159 @@ Below is a table of cameras that support GoPro's public BLE API:
 </table>
 
 
-## Services and Characteristics
+# The Basics
 
+
+## Connection
+### WiFi
 <p>
-Note: GP-XXXX is shorthand for GoPro's 128-bit UUIDs: <b>b5f9xxxx-aa8d-11e3-9046-0002a5d5c51b</b>
+Connection to the camera via WiFi requires that the camera's WiFi Access Point be enabled.
+This can be done by connecting to the camera via
+<a href="https://gopro.github.io/OpenGoPro/ble">Bluetooth Low Energy (BLE)</a>
+and sending the AP Control command: WIFI AP ON.
 </p>
 
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Service UUID</td>
-      <td>Service</td>
-      <td>Characteristic UUID</td>
-      <td>Description</td>
-      <td>Permissions</td>
-    </tr>
-    <tr>
-      <td rowspan="4">GP-0001</td>
-      <td rowspan="4">GoPro WiFi Access Point</td>
-      <td>GP-0002</td>
-      <td>WiFi AP SSID</td>
-      <td>Read / Write</td>
-    </tr>
-    <tr>
-      <td>GP-0003</td>
-      <td>WiFi AP Password</td>
-      <td>Read / Write</td>
-    </tr>
-    <tr>
-      <td>GP-0004</td>
-      <td>WiFi AP Power</td>
-      <td>Write</td>
-    </tr>
-    <tr>
-      <td>GP-0005</td>
-      <td>WiFi AP State</td>
-      <td>Read / Indicate</td>
-    </tr>
-    <tr>
-      <td rowspan="6">FEA6</td>
-      <td rowspan="6">Control & Query</td>
-      <td>GP-0072</td>
-      <td>Command</td>
-      <td>Write</td>
-    </tr>
-    <tr>
-      <td>GP-0073</td>
-      <td>Command Response</td>
-      <td>Notify</td>
-    </tr>
-    <tr>
-      <td>GP-0074</td>
-      <td>Settings</td>
-      <td>Write</td>
-    </tr>
-    <tr>
-      <td>GP-0075</td>
-      <td>Settings Response</td>
-      <td>Notify</td>
-    </tr>
-    <tr>
-      <td>GP-0076</td>
-      <td>Query</td>
-      <td>Write</td>
-    </tr>
-    <tr>
-      <td>GP-0077</td>
-      <td>Query Response</td>
-      <td>Notify</td>
-    </tr>
-  </tbody>
-</table>
-
-
-## Packet Headers
-
+### USB
 <p>
-The Bluetooth Low Energy protocol limits messages to 20 Bytes per packet.
-To accommodate this limitation, the packet header rules below are used.
-All lengths are in bytes.
-The packet count starts at 0 for the first continuation packet.
-</p>
-
-### Packet Header Format
-
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-        <td colspan="8">Byte 1</td>
-        <td colspan="8">Byte 2 (optional)</td>
-        <td colspan="8">Byte 3 (optional)</td>
-    </tr>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-        <td>7</td>
-        <td>6</td>
-        <td>5</td>
-        <td>4</td>
-        <td>3</td>
-        <td>2</td>
-        <td>1</td>
-        <td>0</td>
-        <td>7</td>
-        <td>6</td>
-        <td>5</td>
-        <td>4</td>
-        <td>3</td>
-        <td>2</td>
-        <td>1</td>
-        <td>0</td>
-        <td>7</td>
-        <td>6</td>
-        <td>5</td>
-        <td>4</td>
-        <td>3</td>
-        <td>2</td>
-        <td>1</td>
-        <td>0</td>
-    </tr>
-    <tr>
-        <td>0: Start</td>
-        <td colspan="2">00: General</td>
-        <td colspan="5">Message Length: 5 bits</td>
-        <td colspan="16" style="background-color: rgb(198,210,229);"></td>
-    </tr>
-    <tr>
-        <td>0: Start</td>
-        <td colspan="2">01: Extended (13-bit)</td>
-        <td colspan="13">Message Length: 13 bits</td>
-        <td colspan="8" style="background-color: rgb(198,210,229);"></td>
-    </tr>
-    <tr>
-        <td>0: Start</td>
-        <td colspan="2">10: Extended (16-bit)</td>
-        <td colspan="5" style="background-color: rgb(198,210,229);"></td>
-        <td colspan="16">Message Length: 16 bits</td>
-    </tr>
-    <tr>
-        <td>0: Start</td>
-        <td colspan="2">11: Reserved</td>
-        <td colspan="21" style="background-color: rgb(198,210,229);"></td>
-    </tr>
-    <tr>
-        <td>1: Continuation</td>
-        <td colspan="24" style="background-color: rgb(198,210,229);"></td>
-    </tr>
-  </tbody>
-</table>
-
-
-## Discovery, Connection and Pairing
-
-### Advertisements
-<p>
-The camera will send BLE advertisements while it is ON and for the first 8 hours after the camera is put to sleep.
-During this time, the camera is discoverable and can be connected to.
-If the camera is in sleep mode, connecting to it will cause the camera to wake and boot up.
-</p>
-
-### Pairing
-<p>
-In order to communicate with a GoPro camera via BLE, a client must first be paired with the camera.
-The pairing procedure must be done once for each new client.
-If the camera is factory reset, all clients will need to pair again.
-To pair with the camera, use the UI to put it into pairing mode, connect via BLE and then initiate pairing.
-The camera will whitelist the client so subsequent connections do not require pairing.
-</p>
-
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Camera</td>
-      <td>To Enter Pairing Mode</td>
-    </tr>
-    <tr>
-      <td>HERO10 Black</td>
-      <td>Swipe down, swipe left >> Connections >> Connect Device >> GoPro Quik App</td>
-    </tr>
-  </tbody>
-</table>
-
-### Steps
-<p>
-Discovery of and connection to the GoPro camera can be done as follows:
-</p>
-
+OpenGoPro systems that utilize USB must support the Network Control Model (NCM) protocol.
+Connecting via USB requires the following steps:
 <ol>
-<li>Put the camera into pairing mode</li>
-<li>Scan to discover peripherals (which can be narrowed by limiting to peripherals that advertise service FEA6)</li>
-<li>Connect to the peripheral</li>
-<li>Finish pairing with the peripheral</li>
-<li>Discover all advertised services and characteristics</li>
-<li>Subscribe to notifications from all characteristics that have the notify flag set</li>
+<li>Physically connect the camera's USB-C port to your system</li>
+<li>Send HTTP command to enable wired USB control</li>
 </ol>
+</p>
 
 
+## Authentication
 
-## Sending and Receiving Messages
+### WiFi
 
 <p>
-In order to enable two-way communication with a GoPro camera, clients must connect to the camera and subscribe to characteristics that have the notify flag set.
-Messages are sent to the camera by writing to a write-enabled UUID and then waiting for a notification from the corresponding response UUID.
-Response notifications indicate whether the message was valid and will be (asynchronously) processed.
-For example, to send a camera control command, a client should write to GP-0072 and then wait for a response notification from GP-0073.
+Once the WiFi Access Point has been turned on, authentication with the camera simply requries connecting with the
+correct SSID and password. This information can be obtained in two ways:
+
+<ul>
+<li>Put the camera into <a href="https://community.gopro.com/t5/en/Pair-Your-Camera-with-the-GoPro-App/ta-p/394285">pairing mode</a> and tap the info button in the top-right corner of the screen.</li>
+<li>Read the SSID/password directly via Bluetooth Low Energy. See <i>Services and Characteristics</i> seciton in <a href="https://gopro.github.io/OpenGoPro/ble">BLE Specification</a> for details.</li>
+</ul>
 </p>
+
+### USB
+<p>
+No authentication is necessary.
+</p>
+
+
+## Socket Address
+
+### WiFi
+<p>
+The socket address for WiFi connections is <b>10.5.5.9:8080</b>.
+</p>
+
+### USB
+<p>
+The socket address for USB connections is <b>172.2X.1YZ.51:8080</b> where:
+
+<ul>
+<li>X is the 100's digit from the camera serial number</li>
+<li>Y is the 10's digit from the camera serial number</li>
+<li>Z is the 1's digit from the camera serial number</li>
+</ul>
+</p>
+
+<p>
+The camera's serial number can be obtained in any of the following ways:
+<ul>
+<li>Reading the sticker inside the camera's battery enclosure</li>
+<li>Camera UI: Preferences >> About >> Camera Info</li>
+<li>Bluetooth Low Energy by reading directly from Hardware Info . See <i>Commands</i> in <a href="https://gopro.github.io/OpenGoPro/ble">BLE Specification</a> for details.</li>
+</ul>
+</p>
+
+<p>
+For example, if the camera's serial number is C0000123456<b>789</b>, the IP address for USB connections would be 172.2<b>7</b>.1<b>89</b>.51.
+</p>
+
+<p>
+Alternatively, the IP address can be discovered via mDNS as the camera registers the <b>_gopro-web</b> service.
+</p>
+
+
+## Request and Response Formats
+<p>
+Most commands are sent via HTTP/GET and require no special headers.
+Responses come in two parts: The standard HTTP return codes and JSON containing any additional information.
+</p>
+
+<p>
+The typical use case is that the camera accepts a valid command, returns HTTP/200 (OK) and empty JSON
+(i.e. { }) and begins asynchronously working on the command.
+If an error occurs, the camera will return a standard HTTP error code and JSON with helpful error/debug information.
+</p>
+
+<p>
+Depending on the command sent, the camera can return JSON, binary, or Protobuf data. Some examples are listed below:
+</p>
+
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Command</td>
+      <td>Return Type</td>
+    </tr>
+    <tr>
+      <td>Get Camera State</td>
+      <td>JSON</td>
+    </tr>
+    <tr>
+      <td>Get Media Info</td>
+      <td>JSON</td>
+    </tr>
+    <tr>
+      <td>Get Media <a href="https://gopro.github.io/gpmf-parser">GPMF</a></td>
+      <td>Binary</td>
+    </tr>
+    <tr>
+      <td>Get Media List</td>
+      <td>JSON</td>
+    </tr>
+    <tr>
+      <td>Get Media Screennail (JPEG)</td>
+      <td>Binary</td>
+    </tr>
+    <tr>
+      <td>Get Media Thumbnail (JPEG)</td>
+      <td>Binary</td>
+    </tr>
+    <tr>
+      <td>Get Presets</td>
+      <td>JSON</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## Sending Commands
 
 <p>
 Depending on the camera's state, it may not be ready to accept specific commands.
 This ready state is dependent on the <b>System Busy</b> and the <b>Encoding Active</b> status flags. For example:
-</p>
 
 <ul>
 <li>System Busy flag is set while loading presets, changing settings, formatting sdcard, ...</li>
 <li>Encoding Active flag is set while capturing photo/video media</li>
 </ul>
+</p>
 
 <p>
 If the system is not ready, it should reject an incoming command; however, best practice is to always wait for the
-System Busy and Encode Active flags to be unset before sending messages other than get status/setting queries.
+System Busy and Encode Active flags to be unset before sending messages other than camera status queries.
+For details regarding camera state, see <a href="#status-codes">Status Codes</a>.
 </p>
+
+
+# Features
 
 
 ## Presets
@@ -275,7 +217,7 @@ The set of presets available to load at any moment depends on the value of certa
 </p>
 
 <p>
-For per-preset firmware compatibility information, see <a href="#OpenGoProBluetoothLowEnergyAPI(v2.0)-CommandsQuickReference">Commands Quick Reference</a>.
+For per-preset firmware compatibility information, see <a href="#commands-quick-reference">Commands Quick Reference</a>.
 </p>
 
 <table border="1">
@@ -640,41 +582,6 @@ For per-preset firmware compatibility information, see <a href="#OpenGoProBlueto
 </table>
 
 
-## Keep Alive
-<p>
-Unless changed by the user, GoPro cameras will automatically power off after some time (e.g. 5min, 15min, 30min).
-The Auto Power Down watchdog timer can be reset by sending periodic keep-alive messages to the camera, as below.
-It is recommended to send a keep-alive at least once every 120 seconds.
-</p>
-
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>UUID</td>
-      <td>Write</td>
-      <td>Response UUID</td>
-      <td>Response</td>
-    </tr>
-    <tr>
-      <td>GP-0074</td>
-      <td>03:5B:01:42</td>
-      <td>GP-0075</td>
-      <td>02:5B:00</td>
-    </tr>
-  </tbody>
-</table>
-
-
-## Turbo Transfer
-<p>
-Some cameras support Turbo Transfer mode, which allows media to be downloaded over WiFi more rapidly.
-This special mode should only be used during media offload.
-It is recommended that the user check for and--if necessary--disable Turbo Transfer on connect.
-For details on which cameras are supported and how to enable and disable Turbo Transfer, see
-<a href="#OpenGoProBluetoothLowEnergyAPI(v2.0)-ProtobufCommands">Protobuf Commands</a>.
-</p>
-
-
 ## Global Behaviors
 <p>
 In order to prevent undefined behavior between the camera and a connected app, simultaneous use of the camera and a
@@ -729,700 +636,723 @@ EXTERNAL_CONTROL -up-> CAMERA_CONTROL: User interacts with camera
 </ul>
 
 
-# TLV
+## Webcam
 
 <p>
-GoPro's BLE protocol comes in two flavors: TLV (Type Length Value) and Protobuf.
-This section describes TLV style messaging.
+The webcam feature enables developers who are interested in writing custom drivers to make the camera broadcast its
+video preview with a limited set of resolution and field of view options.
 </p>
-
-
-## Commands
 
 <p>
-The table below contains command IDs supported by Open GoPro.
-Command messages are sent to GP-0072 and responses/notifications are received on GP-0073.
+While active, the webcam feature runs a UDP client that sends raw Transport Stream data to the connected client on port 8554.
+To test basic functionality, connect the camera to your system, start the webcam, and use an application such as VLC to
+start a network stream on udp://@0.0.0.0:8554.
 </p>
 
+<p>
+For readers interested in using a GoPro camera as a webcam with preexisting tools, please see
+<a href="https://community.gopro.com/t5/en/How-To-Use-Your-GoPro-As-A-Webcam/ta-p/665493">How to use GoPro as a Webcam</a>.
+</p>
+
+### Webcam Finite State Machine
+```plantuml!
+
+
+' Source:
+'    https://wiki-dev.gopro.com/pages/viewpage.action?spaceKey=SBO&title=Webcam+Http+Endpoint+API
+
+' Define states
+OFF:    Webcam disabled
+IDLE:   Webcam ready
+HPP:    High power preview
+LPP:    Low power preview
+
+' Actions:
+'   Connect camera to system via USB
+'   Start
+'   Preview
+'   Stop
+'   Exit
+
+' Define transitions
+[*]  --> OFF
+
+OFF  --> IDLE: Connect USB
+
+IDLE --> IDLE: Stop\nExit
+IDLE --> HPP:  Start
+IDLE --> LPP:  Preview
+
+HPP  --> HPP:  Start
+HPP  --> LPP:  Preview
+HPP  --> IDLE: Stop\nExit
+
+LPP  --> LPP:  Preview
+LPP  --> HPP:  Start
+LPP  --> IDLE: Stop\nExit
+
+
+
+
+```
+
+### Webcam Commands
+For details about how to send webcam commands, see <a href="#commands-quick-reference">Commands Quick Reference</a>.
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Command ID</td>
+      <td>Command</td>
+      <td>Connections</td>
       <td>Description</td>
     </tr>
     <tr>
-      <td>0x01</td>
-      <td>Set shutter</td>
+      <td>Webcam: Start</td>
+      <td>USB</td>
+      <td>Enters webcam mode, uses default resolution and last-used fov, starts high-res stream to the IP address of caller</td>
     </tr>
     <tr>
-      <td>0x05</td>
-      <td>Sleep</td>
+      <td>Webcam: Start (with args)</td>
+      <td>USB</td>
+      <td>Enters webcam mode, uses specified resolution and/or fov, starts streaming to the IP address of caller</td>
     </tr>
     <tr>
-      <td>0x0D</td>
-      <td>Set Date/Time</td>
+      <td>Webcam: Preview</td>
+      <td>USB</td>
+      <td>Enters webcam mode, sets stream resolution and bitrate, starts low-res stream to the IP address of caller.<br />Can set Webcam Digital Lenses and Digital Zoom levels while streaming</td>
     </tr>
     <tr>
-      <td>0x0E</td>
-      <td>Get Date/Time</td>
+      <td>Webcam: Stop</td>
+      <td>USB</td>
+      <td>Stops the webcam stream</td>
     </tr>
     <tr>
-      <td>0x17</td>
-      <td>AP Control</td>
+      <td>Webcam: Exit</td>
+      <td>USB</td>
+      <td>Stops the webcam stream and exits webcam mode</td>
     </tr>
     <tr>
-      <td>0x3C</td>
-      <td>Get Hardware Info</td>
+      <td>Webcam: Status</td>
+      <td>WIFI, USB</td>
+      <td>Returns the current state of the webcam endpoint, including status and error codes (see tables below)</td>
     </tr>
     <tr>
-      <td>0x3E</td>
-      <td>Presets: Load Group</td>
-    </tr>
-    <tr>
-      <td>0x40</td>
-      <td>Presets: Load</td>
-    </tr>
-    <tr>
-      <td>0x50</td>
-      <td>Analytics</td>
-    </tr>
-    <tr>
-      <td>0x51</td>
-      <td>Open GoPro</td>
+      <td>Webcam: Version</td>
+      <td>WIFI, USB</td>
+      <td>Provides version information about webcam implementation in JSON format</td>
     </tr>
   </tbody>
 </table>
 
-### Command Format
+### Status Codes
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Header/Length</td>
-      <td>Command ID</td>
-      <td>Parameter Length</td>
-      <td>Parameter Value</td>
+      <td>Status</td>
+      <td>Code</td>
     </tr>
     <tr>
-      <td>1-2 bytes</td>
-      <td>1 byte</td>
-      <td>1 byte</td>
-      <td>Variable length</td>
-    </tr>
-  </tbody>
-</table>
-
-### Command Response
-<p>
-The GoPro camera sends responses to most commands received, indicating whether the command was valid and will be 
-processed or not.
-</p>
-
-<p>
-Unless indicated otherwise in the Quick Reference table below, command responses use the format below.
-</p>
-
-#### Command Response Format
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Header/Length</td>
-      <td>Command ID</td>
-      <td>Response Code</td>
-      <td>Response</td>
-    </tr>
-    <tr>
-      <td>1-2 bytes</td>
-      <td>1 byte</td>
-      <td>1 byte</td>
-      <td>Variable length</td>
-    </tr>
-  </tbody>
-</table>
-
-#### Command Response Error Codes
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Error Code</td>
-      <td>Description</td>
-    </tr>
-    <tr>
+      <td>OFF</td>
       <td>0</td>
-      <td>Success</td>
     </tr>
     <tr>
+      <td>IDLE</td>
       <td>1</td>
-      <td>Error</td>
     </tr>
     <tr>
+      <td>HIGH_POWER_PREVIEW</td>
       <td>2</td>
-      <td>Invalid Parameter</td>
     </tr>
     <tr>
-      <td>3..255</td>
-      <td>Reserved</td>
+      <td>LOW_POWER_PREVIEW</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
 
-### Commands Quick Reference
+### Error Codes
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Status</td>
+      <td>Code</td>
+    </tr>
+    <tr>
+      <td>NONE</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>SET_PRESET</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>SET_WINDOW_SIZE</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>EXEC_STREAM</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>SHUTTER</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>COM_TIMEOUT</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>INVALID_PARAM</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>UNAVAILABLE</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>EXIT</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+
+### Resolutions
+<p>
+Note: If resolution is not set, 1080p will be used by default
+</p>
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Resolution</td>
+      <td>ID</td>
+    </tr>
+    <tr>
+      <td>480</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>720</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>1080</td>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+
+### Webcam Digital Lenses (FOV)
+<p>
+Note: If fov is not set, camera will default to the last-set fov or Wide if fov has never been set.
+</p>
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Webcam Digital Lens (FOV)</td>
+      <td>ID</td>
+    </tr>
+    <tr>
+      <td>WIDE</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>NARROW</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>SUPERVIEW</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>LINEAR</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+
+
+# Commands
+Using the Open GoPro API, a client can perform various command, control, and query operations!
+
+## Commands Quick Reference
 <p>
 Below is a table of commands that can be sent to the camera and how to send them.<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
 >= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
 </p>
- 
+
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>ID</td>
       <td>Command</td>
       <td>Description</td>
-      <td>Request</td>
-      <td>Response</td>
+      <td>HTTP Method</td>
+      <td>Endpoint</td>
       <td>HERO10 Black</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>0x01</td>
-      <td>Set shutter</td>
-      <td>Shutter: off</td>
-      <td>03:01:01:00</td>
-      <td>02:01:00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x01</td>
-      <td>Set shutter</td>
-      <td>Shutter: on</td>
-      <td>03:01:01:01</td>
-      <td>02:01:00</td>
+      <td>Camera: Get State</td>
+      <td>Get camera state (status + settings)</td>
+      <td>GET</td>
+      <td>/gopro/camera/state</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
-      <td>0x05</td>
-      <td>Sleep</td>
-      <td>Put camera to sleep</td>
-      <td>01:05</td>
-      <td>02:05:00</td>
+      <td>Digital Zoom</td>
+      <td>Digital zoom 50%</td>
+      <td>GET</td>
+      <td>/gopro/camera/digital_zoom?percent=50</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>0x0D</td>
-      <td>Set Date/Time</td>
-      <td>Set date/time to 2022-01-02 03:04:05</td>
-      <td>09:0D:07:07:E6:01:02:03:04:05</td>
-      <td>02:0D:00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x0E</td>
       <td>Get Date/Time</td>
       <td>Get date/time</td>
-      <td>01:0E</td>
-      <td>Complex</td>
+      <td>GET</td>
+      <td>/gopro/camera/get_date_time</td>
+      <td>\&gt;= v01.30.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Keep-alive</td>
+      <td>Send keep-alive</td>
+      <td>GET</td>
+      <td>/gopro/camera/keep_alive</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>0x17</td>
-      <td>AP Control</td>
-      <td>WiFi AP: off</td>
-      <td>03:17:01:00</td>
-      <td>02:17:00</td>
+      <td>Media: GPMF</td>
+      <td>Get GPMF data (JPG)</td>
+      <td>GET</td>
+      <td>/gopro/media/gpmf?path=100GOPRO/XXX.JPG</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>0x17</td>
-      <td>AP Control</td>
-      <td>WiFi AP: on</td>
-      <td>03:17:01:01</td>
-      <td>02:17:00</td>
+      <td>Media: GPMF</td>
+      <td>Get GPMF data (MP4)</td>
+      <td>GET</td>
+      <td>/gopro/media/gpmf?path=100GOPRO/XXX.MP4</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
-      <td>0x3C</td>
-      <td>Get Hardware Info</td>
-      <td>Get camera hardware info</td>
-      <td>01:3C</td>
-      <td>Complex</td>
+      <td>Media: HiLight (Add)</td>
+      <td>Add hilight to 100GOPRO/xxx.JPG</td>
+      <td>GET</td>
+      <td>/gopro/media/hilight/file?path=100GOPRO/XXX.JPG</td>
+      <td>\&gt;= v01.30.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Media: HiLight (Add)</td>
+      <td>Add hilight to 100GOPRO/xxx.MP4 at offset 2500 ms</td>
+      <td>GET</td>
+      <td>/gopro/media/hilight/file?path=100GOPRO/XXX.MP4&ms=2500</td>
+      <td>\&gt;= v01.30.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Media: HiLight (Remove)</td>
+      <td>Remove hilight from 100GOPRO/xxx.JPG</td>
+      <td>GET</td>
+      <td>/gopro/media/hilight/remove?path=100GOPRO/XXX.JPG</td>
+      <td>\&gt;= v01.30.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Media: HiLight (Remove)</td>
+      <td>Remove hilight from 100GOPRO/xxx.MP4 at offset 2500ms</td>
+      <td>GET</td>
+      <td>/gopro/media/hilight/remove?path=100GOPRO/XXX.MP4&ms=2500</td>
+      <td>\&gt;= v01.30.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Media: HiLight moment</td>
+      <td>Hilight moment during encoding</td>
+      <td>GET</td>
+      <td>/gopro/media/hilight/moment</td>
+      <td>\&gt;= v01.30.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Media: Info</td>
+      <td>Get media info (JPG)</td>
+      <td>GET</td>
+      <td>/gopro/media/info?path=100GOPRO/XXX.JPG</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>0x3E</td>
-      <td>Presets: Load Group</td>
-      <td>Video</td>
-      <td>04:3E:02:03:E8</td>
-      <td>02:3E:00</td>
+      <td>Media: Info</td>
+      <td>Get media info (MP4)</td>
+      <td>GET</td>
+      <td>/gopro/media/info?path=100GOPRO/XXX.MP4</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Media: List</td>
+      <td>Get media list</td>
+      <td>GET</td>
+      <td>/gopro/media/list</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>0x3E</td>
-      <td>Presets: Load Group</td>
-      <td>Photo</td>
-      <td>04:3E:02:03:E9</td>
-      <td>02:3E:00</td>
+      <td>Media: Screennail</td>
+      <td>Get screennail for "100GOPRO/xxx.JPG"</td>
+      <td>GET</td>
+      <td>/gopro/media/screennail?path=100GOPRO/XXX.JPG</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>0x3E</td>
-      <td>Presets: Load Group</td>
-      <td>Timelapse</td>
-      <td>04:3E:02:03:EA</td>
-      <td>02:3E:00</td>
+      <td>Media: Screennail</td>
+      <td>Get screennail for "100GOPRO/xxx.MP4"</td>
+      <td>GET</td>
+      <td>/gopro/media/screennail?path=100GOPRO/XXX.MP4</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Standard</td>
-      <td>06:40:04:00:00:00:00</td>
-      <td>02:40:00</td>
+      <td>Media: Telemetry</td>
+      <td>Get telemetry track data (JPG)</td>
+      <td>GET</td>
+      <td>/gopro/media/telemetry?path=100GOPRO/XXX.JPG</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Activity</td>
-      <td>06:40:04:00:00:00:01</td>
-      <td>02:40:00</td>
+      <td>Media: Telemetry</td>
+      <td>Get telemetry track data (MP4)</td>
+      <td>GET</td>
+      <td>/gopro/media/telemetry?path=100GOPRO/XXX.MP4</td>
       <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Cinematic</td>
-      <td>06:40:04:00:00:00:02</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Ultra Slo-Mo</td>
-      <td>06:40:04:00:00:00:04</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Basic</td>
-      <td>06:40:04:00:00:00:05</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Photo</td>
-      <td>06:40:04:00:01:00:00</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Live Burst</td>
-      <td>06:40:04:00:01:00:01</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Burst Photo</td>
-      <td>06:40:04:00:01:00:02</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Night Photo</td>
-      <td>06:40:04:00:01:00:03</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Time Warp</td>
-      <td>06:40:04:00:02:00:00</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Time Lapse</td>
-      <td>06:40:04:00:02:00:01</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Night Lapse</td>
-      <td>06:40:04:00:02:00:02</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Max Video</td>
-      <td>06:40:04:00:03:00:00</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.20.00</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Max Photo</td>
-      <td>06:40:04:00:04:00:00</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.20.00</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Max Timewarp</td>
-      <td>06:40:04:00:05:00:00</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.20.00</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Standard [EB]</td>
-      <td>06:40:04:00:08:00:00</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Activity [EB]</td>
-      <td>06:40:04:00:08:00:01</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Cinematic [EB]</td>
-      <td>06:40:04:00:08:00:02</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Slo-Mo [EB]</td>
-      <td>06:40:04:00:08:00:03</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>4K Tripod</td>
-      <td>06:40:04:00:09:00:00</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>5.3K Tripod</td>
-      <td>06:40:04:00:09:00:01</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>0x50</td>
-      <td>Analytics</td>
-      <td>Set third party client</td>
-      <td>01:50</td>
-      <td>02:50:00</td>
+      <td>Media: Thumbnail</td>
+      <td>Get thumbnail for "100GOPRO/xxx.JPG"</td>
+      <td>GET</td>
+      <td>/gopro/media/thumbnail?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Media: Thumbnail</td>
+      <td>Get thumbnail for "100GOPRO/xxx.MP4"</td>
+      <td>GET</td>
+      <td>/gopro/media/thumbnail?path=100GOPRO/XXX.MP4</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
-      <td>0x51</td>
+      <td>Media: Turbo Transfer</td>
+      <td>Turbo transfer: off</td>
+      <td>GET</td>
+      <td>/gopro/media/turbo_transfer?p=0</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Media: Turbo Transfer</td>
+      <td>Turbo transfer: on</td>
+      <td>GET</td>
+      <td>/gopro/media/turbo_transfer?p=1</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>Open GoPro</td>
       <td>Get version</td>
-      <td>01:51</td>
-      <td>Complex</td>
+      <td>GET</td>
+      <td>/gopro/version</td>
       <td><span style="color:green">✔</span></td>
     </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Presets: Get Status</td>
+      <td>Get preset status</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/get</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Standard</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=0</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Activity</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=1</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Cinematic</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=2</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Ultra Slo-Mo</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=4</td>
+      <td>\&gt;= v01.16.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Basic</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=5</td>
+      <td>\&gt;= v01.16.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Photo</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=65536</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Live Burst</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=65537</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Burst Photo</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=65538</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Night Photo</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=65539</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Time Warp</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=131072</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Time Lapse</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=131073</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Night Lapse</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=131074</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Max Video</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=196608</td>
+      <td>\&gt;= v01.20.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Max Photo</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=262144</td>
+      <td>\&gt;= v01.20.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Max Timewarp</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=327680</td>
+      <td>\&gt;= v01.20.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Standard [EB]</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=524288</td>
+      <td>\&gt;= v01.16.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Activity [EB]</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=524289</td>
+      <td>\&gt;= v01.16.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Cinematic [EB]</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=524290</td>
+      <td>\&gt;= v01.16.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>Slo-Mo [EB]</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=524291</td>
+      <td>\&gt;= v01.16.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>4K Tripod</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=589824</td>
+      <td>\&gt;= v01.16.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Presets: Load</td>
+      <td>5.3K Tripod</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/load?id=589825</td>
+      <td>\&gt;= v01.16.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Presets: Load Group</td>
+      <td>Video</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/set_group?id=1000</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Presets: Load Group</td>
+      <td>Photo</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/set_group?id=1001</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Presets: Load Group</td>
+      <td>Timelapse</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/set_group?id=1002</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Set Camera Control Status</td>
+      <td>Set camera control status to idle</td>
+      <td>GET</td>
+      <td>/gopro/camera/control/set_ui_controller?p=0</td>
+      <td>\&gt;= v01.20.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Set Camera Control Status</td>
+      <td>Set camera control status to external_control</td>
+      <td>GET</td>
+      <td>/gopro/camera/control/set_ui_controller?p=2</td>
+      <td>\&gt;= v01.20.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Set Date/Time</td>
+      <td>Set date/time to 2022-01-02 03:04:05</td>
+      <td>GET</td>
+      <td>/gopro/camera/set_date_time?date=2022_1_2&time=3_4_5</td>
+      <td>\&gt;= v01.30.00</td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Set shutter</td>
+      <td>Shutter: on</td>
+      <td>GET</td>
+      <td>/gopro/camera/shutter/start</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Set shutter</td>
+      <td>Shutter: off</td>
+      <td>GET</td>
+      <td>/gopro/camera/shutter/stop</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Stream: Start</td>
+      <td>Start preview stream</td>
+      <td>GET</td>
+      <td>/gopro/camera/stream/start</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Stream: Stop</td>
+      <td>Stop preview stream</td>
+      <td>GET</td>
+      <td>/gopro/camera/stream/stop</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Webcam: Exit</td>
+      <td>Exit webcam mode</td>
+      <td>GET</td>
+      <td>/gopro/webcam/exit</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Webcam: Preview</td>
+      <td>Start preview stream</td>
+      <td>GET</td>
+      <td>/gopro/webcam/preview</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Webcam: Start</td>
+      <td>Start webcam</td>
+      <td>GET</td>
+      <td>/gopro/webcam/start</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Webcam: Start</td>
+      <td>Start webcam (res: 1080, fov: wide)</td>
+      <td>GET</td>
+      <td>/gopro/webcam/start?res=12&fov=0</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Webcam: Status</td>
+      <td>Get webcam status</td>
+      <td>GET</td>
+      <td>/gopro/webcam/status</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Webcam: Stop</td>
+      <td>Stop webcam</td>
+      <td>GET</td>
+      <td>/gopro/webcam/stop</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Webcam: Version</td>
+      <td>Get webcam api version</td>
+      <td>GET</td>
+      <td>/gopro/webcam/version</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Wired USB</td>
+      <td>Wired usb control: disabled</td>
+      <td>GET</td>
+      <td>/gopro/camera/control/wired_usb?p=0</td>
+      <td>\&gt;= v01.30.00</td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Wired USB</td>
+      <td>Wired usb control: enabled</td>
+      <td>GET</td>
+      <td>/gopro/camera/control/wired_usb?p=1</td>
+      <td>\&gt;= v01.30.00</td>
+    </tr>
   </tbody>
 </table>
 
 
-### Complex Command Responses
-
+# Settings
 <p>
-Below are clarifications for complex camera responses
+GoPro cameras have hundreds of setting options to choose from, all of which can be set using a single endpoint.
+The endpoint is configured with a <b>setting id</b> and an <b>option value</b>.
+Note that setting option values are not globally unique.
+While most option values are enumerated values, some are complex bitmasked values.
 </p>
 
-#### Get Hardware Info
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Response Packet</td>
-      <td>Response Byte(s)</td>
-      <td>Description</td>
-    </tr>
-    <tr>
-      <td rowspan="7">1</td>
-      <td>20</td>
-      <td>Start packet</td>
-    </tr>
-    <tr>
-      <td>51</td>
-      <td>Packet length</td>
-    </tr>
-    <tr>
-      <td>3C:00</td>
-      <td>Command 3C sent successfully</td>
-    </tr>
-    <tr>
-      <td>04</td>
-      <td>Length of model number</td>
-    </tr>
-    <tr>
-      <td>00:00:00:13</td>
-      <td>Model number</td>
-    </tr>
-    <tr>
-      <td>0B</td>
-      <td>Length of model name</td>
-    </tr>
-    <tr>
-      <td>48:45:52:4F:58:20:42:6C:61:63</td>
-      <td>"HEROX Blac"</td>
-    </tr>
-    <tr>
-      <td rowspan="6">2</td>
-      <td>80</td>
-      <td>Continuation packet</td>
-    </tr>
-    <tr>
-      <td>6B</td>
-      <td>"k"</td>
-    </tr>
-    <tr>
-      <td>04</td>
-      <td>Length of board type</td>
-    </tr>
-    <tr>
-      <td>30:78:30:35</td>
-      <td>"0x05"</td>
-    </tr>
-    <tr>
-      <td>0F</td>
-      <td>Length of firmware version</td>
-    </tr>
-    <tr>
-      <td>48:44:58:2E:58:58:2E:58:58:2E:58:58</td>
-      <td>"HDX.XX.XX.XX"</td>
-    </tr>
-    <tr>
-      <td rowspan="5">3</td>
-      <td>81</td>
-      <td>Continuation packet (1)</td>
-    </tr>
-    <tr>
-      <td>2E:58:58</td>
-      <td>".XX"</td>
-    </tr>
-    <tr>
-      <td>0E</td>
-      <td>Length of serial number</td>
-    </tr>
-    <tr>
-      <td>58:58:58:58:58:58:58:58:58:58:58:58:58:58</td>
-      <td>"XXXXXXXXXXXXXX"</td>
-    </tr>
-    <tr>
-      <td>0A</td>
-      <td>Length of AP SSID</td>
-    </tr>
-    <tr>
-      <td rowspan="4">4</td>
-      <td>82</td>
-      <td>Continuation packet (2)</td>
-    </tr>
-    <tr>
-      <td>47:50:32:34:35:30:58:58:58:58</td>
-      <td>"GP2450XXXX"</td>
-    </tr>
-    <tr>
-      <td>0C</td>
-      <td>AP MAC Address length</td>
-    </tr>
-    <tr>
-      <td>58:58:58:58:58:58:58:58</td>
-      <td>"XXXXXXXX"</td>
-    </tr>
-    <tr>
-      <td rowspan="2">5</td>
-      <td>83</td>
-      <td>Continuation packet (3)</td>
-    </tr>
-    <tr>
-      <td>58:58:58:58</td>
-      <td>"XXXX"</td>
-    </tr>
-  </tbody>
-</table>
-
-#### Open GoPro Version
+## Settings Quick Reference
 <p>
-Given the response <i>06:51:00:01:01:01:00</i>, the Open GoPro version would be vXX.YY.
-</p>
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Response Byte(s)</td>
-      <td>Description</td>
-    </tr>
-    <tr>
-      <td>06</td>
-      <td>Packet length</td>
-    </tr>
-    <tr>
-      <td>51</td>
-      <td>Command ID</td>
-    </tr>
-    <tr>
-      <td>00</td>
-      <td>Status (OK)</td>
-    </tr>
-    <tr>
-      <td>01</td>
-      <td>Length of major version</td>
-    </tr>
-    <tr>
-      <td>01</td>
-      <td>Major version: 1</td>
-    </tr>
-    <tr>
-      <td>01</td>
-      <td>Length of minor version</td>
-    </tr>
-    <tr>
-      <td>00</td>
-      <td>Minor version: 0</td>
-    </tr>
-  </tbody>
-</table>
-
-#### Get Date/Time
-<p>
-Given the response <i>0b:0e:00:08:07:e5:01:02:03:04:05:06</i>, the date/time would be 2021-01-02 03:04:05 (Saturday).
-</p>
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Response Byte(s)</td>
-      <td>Description</td>
-    </tr>
-    <tr>
-      <td>0B</td>
-      <td>Packet length</td>
-    </tr>
-    <tr>
-      <td>0E</td>
-      <td>Command ID</td>
-    </tr>
-    <tr>
-      <td>00</td>
-      <td>Status (OK)</td>
-    </tr>
-    <tr>
-      <td>08</td>
-      <td>Date length (bytes)</td>
-    </tr>
-    <tr>
-      <td>07:E5</td>
-      <td>Year (big endian)</td>
-    </tr>
-    <tr>
-      <td>01</td>
-      <td>Month</td>
-    </tr>
-    <tr>
-      <td>02</td>
-      <td>Day</td>
-    </tr>
-    <tr>
-      <td>03</td>
-      <td>Hour</td>
-    </tr>
-    <tr>
-      <td>04</td>
-      <td>Minute</td>
-    </tr>
-    <tr>
-      <td>05</td>
-      <td>Second</td>
-    </tr>
-    <tr>
-      <td>06</td>
-      <td>Day of the week (Sun=0, Sat=6)</td>
-    </tr>
-  </tbody>
-</table>
-
-
-## Settings
-<p>
-GoPro settings can be configured using the GP-Settings (GP-0074) UUID. Setting status is returned on GP-Settings-Status
-(GP-0075) UUID.
-</p>
-
-### Settings Request Format
-<p>
-This will configure a setting on the camera. Only one setting may be sent on a packet
-(GATT notify or write-no-response), although multiple packets may be sent back-to-back.
-</p>
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Request Length</td>
-      <td>Setting ID</td>
-      <td>Setting Value Length</td>
-      <td>Setting Value</td>
-    </tr>
-    <tr>
-      <td>1-2 bytes</td>
-      <td>1 byte</td>
-      <td>1 byte</td>
-      <td>(variable length)</td>
-    </tr>
-  </tbody>
-</table>
-
-### Settings Response Format
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Response Length</td>
-      <td>Setting ID</td>
-      <td>Response Code</td>
-    </tr>
-    <tr>
-      <td>1 byte</td>
-      <td>1 byte</td>
-      <td>1 byte</td>
-    </tr>
-  </tbody>
-</table>
-
-### Settings Quick Reference
-<p>
-All settings are sent to UUID GP-0074. All values are hexadecimal and length are in bytes.<br />
+Below is a table of setting options detailing how to set every option supported by Open GoPro cameras.<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
 >= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
@@ -1434,320 +1364,384 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Setting ID</td>
       <td>Setting</td>
       <td>Option</td>
-      <td>Request</td>
-      <td>Response</td>
+      <td>HTTP Method</td>
+      <td>Endpoint</td>
       <td>HERO10 Black</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
       <td>Resolution</td>
       <td>Set video resolution (id: 2) to 4k (id: 1)</td>
-      <td>03:02:01:01</td>
-      <td>02:02:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&amp;option=1</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
       <td>Resolution</td>
       <td>Set video resolution (id: 2) to 2.7k (id: 4)</td>
-      <td>03:02:01:04</td>
-      <td>02:02:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&amp;option=4</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
       <td>Resolution</td>
       <td>Set video resolution (id: 2) to 2.7k 4:3 (id: 6)</td>
-      <td>03:02:01:06</td>
-      <td>02:02:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&amp;option=6</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
       <td>Resolution</td>
       <td>Set video resolution (id: 2) to 1080 (id: 9)</td>
-      <td>03:02:01:09</td>
-      <td>02:02:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&amp;option=9</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
       <td>Resolution</td>
       <td>Set video resolution (id: 2) to 4k 4:3 (id: 18)</td>
-      <td>03:02:01:12</td>
-      <td>02:02:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&amp;option=18</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
       <td>Resolution</td>
       <td>Set video resolution (id: 2) to 5k 4:3 (id: 25)</td>
-      <td>03:02:01:19</td>
-      <td>02:02:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&amp;option=25</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
       <td>Resolution</td>
       <td>Set video resolution (id: 2) to 5.3k (id: 100)</td>
-      <td>03:02:01:64</td>
-      <td>02:02:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&amp;option=100</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
       <td>Set video fps (id: 3) to 240 (id: 0)</td>
-      <td>03:03:01:00</td>
-      <td>02:03:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=3&amp;option=0</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
       <td>Set video fps (id: 3) to 120 (id: 1)</td>
-      <td>03:03:01:01</td>
-      <td>02:03:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=3&amp;option=1</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
       <td>Set video fps (id: 3) to 100 (id: 2)</td>
-      <td>03:03:01:02</td>
-      <td>02:03:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=3&amp;option=2</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
       <td>Set video fps (id: 3) to 60 (id: 5)</td>
-      <td>03:03:01:05</td>
-      <td>02:03:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=3&amp;option=5</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
       <td>Set video fps (id: 3) to 50 (id: 6)</td>
-      <td>03:03:01:06</td>
-      <td>02:03:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=3&amp;option=6</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
       <td>Set video fps (id: 3) to 30 (id: 8)</td>
-      <td>03:03:01:08</td>
-      <td>02:03:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=3&amp;option=8</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
       <td>Set video fps (id: 3) to 25 (id: 9)</td>
-      <td>03:03:01:09</td>
-      <td>02:03:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=3&amp;option=9</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
       <td>Set video fps (id: 3) to 24 (id: 10)</td>
-      <td>03:03:01:0A</td>
-      <td>02:03:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=3&amp;option=10</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
       <td>Set video fps (id: 3) to 200 (id: 13)</td>
-      <td>03:03:01:0D</td>
-      <td>02:03:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=3&amp;option=13</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>43</td>
+      <td>Webcam Digital Lenses</td>
+      <td>Set webcam digital lenses (id: 43) to wide (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=43&amp;option=0</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>43</td>
+      <td>Webcam Digital Lenses</td>
+      <td>Set webcam digital lenses (id: 43) to narrow (id: 2)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=43&amp;option=2</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>43</td>
+      <td>Webcam Digital Lenses</td>
+      <td>Set webcam digital lenses (id: 43) to superview (id: 3)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=43&amp;option=3</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>43</td>
+      <td>Webcam Digital Lenses</td>
+      <td>Set webcam digital lenses (id: 43) to linear (id: 4)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=43&amp;option=4</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>59</td>
       <td>Auto Power Down</td>
       <td>Set auto power down (id: 59) to never (id: 0)</td>
-      <td>03:3B:01:00</td>
-      <td>01:3B:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=59&amp;option=0</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>59</td>
       <td>Auto Power Down</td>
       <td>Set auto power down (id: 59) to 5 min (id: 4)</td>
-      <td>03:3B:01:04</td>
-      <td>01:3B:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=59&amp;option=4</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>59</td>
       <td>Auto Power Down</td>
       <td>Set auto power down (id: 59) to 15 min (id: 6)</td>
-      <td>03:3B:01:06</td>
-      <td>01:3B:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=59&amp;option=6</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>59</td>
       <td>Auto Power Down</td>
       <td>Set auto power down (id: 59) to 30 min (id: 7)</td>
-      <td>03:3B:01:07</td>
-      <td>01:3B:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=59&amp;option=7</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to wide (id: 0)</td>
-      <td>03:79:01:00</td>
-      <td>02:79:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=121&amp;option=0</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to narrow (id: 2)</td>
-      <td>03:79:01:02</td>
-      <td>02:79:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=121&amp;option=2</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to superview (id: 3)</td>
-      <td>03:79:01:03</td>
-      <td>02:79:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=121&amp;option=3</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to linear (id: 4)</td>
-      <td>03:79:01:04</td>
-      <td>02:79:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=121&amp;option=4</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to max superview (id: 7)</td>
-      <td>03:79:01:07</td>
-      <td>02:79:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=121&amp;option=7</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to linear + horizon leveling (id: 8)</td>
-      <td>03:79:01:08</td>
-      <td>02:79:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=121&amp;option=8</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>122</td>
       <td>Photo Digital Lenses</td>
       <td>Set photo digital lenses (id: 122) to narrow (id: 19)</td>
-      <td>03:7A:01:13</td>
-      <td>02:7A:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=122&amp;option=19</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>122</td>
       <td>Photo Digital Lenses</td>
       <td>Set photo digital lenses (id: 122) to max superview (id: 100)</td>
-      <td>03:7A:01:64</td>
-      <td>02:7A:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=122&amp;option=100</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>122</td>
       <td>Photo Digital Lenses</td>
       <td>Set photo digital lenses (id: 122) to wide (id: 101)</td>
-      <td>03:7A:01:65</td>
-      <td>02:7A:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=122&amp;option=101</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>122</td>
       <td>Photo Digital Lenses</td>
       <td>Set photo digital lenses (id: 122) to linear (id: 102)</td>
-      <td>03:7A:01:66</td>
-      <td>02:7A:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=122&amp;option=102</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>123</td>
       <td>Time Lapse Digital Lenses</td>
       <td>Set time lapse digital lenses (id: 123) to narrow (id: 19)</td>
-      <td>03:7B:01:13</td>
-      <td>02:7B:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=123&amp;option=19</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>123</td>
       <td>Time Lapse Digital Lenses</td>
       <td>Set time lapse digital lenses (id: 123) to max superview (id: 100)</td>
-      <td>03:7B:01:64</td>
-      <td>02:7B:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=123&amp;option=100</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>123</td>
       <td>Time Lapse Digital Lenses</td>
       <td>Set time lapse digital lenses (id: 123) to wide (id: 101)</td>
-      <td>03:7B:01:65</td>
-      <td>02:7B:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=123&amp;option=101</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>123</td>
       <td>Time Lapse Digital Lenses</td>
       <td>Set time lapse digital lenses (id: 123) to linear (id: 102)</td>
-      <td>03:7B:01:66</td>
-      <td>02:7B:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=123&amp;option=102</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>128</td>
+      <td>Media Format</td>
+      <td>Set media format (id: 128) to time lapse video (id: 13)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=128&amp;option=13</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>128</td>
+      <td>Media Format</td>
+      <td>Set media format (id: 128) to time lapse photo (id: 20)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=128&amp;option=20</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>128</td>
+      <td>Media Format</td>
+      <td>Set media format (id: 128) to night lapse photo (id: 21)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=128&amp;option=21</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>128</td>
+      <td>Media Format</td>
+      <td>Set media format (id: 128) to night lapse video (id: 26)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=128&amp;option=26</td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>162</td>
       <td>Max Lens</td>
       <td>Set max lens (id: 162) to off (id: 0)</td>
-      <td>03:A2:01:00</td>
-      <td>02:A2:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=162&amp;option=0</td>
       <td>\&gt;= v01.20.00</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>162</td>
       <td>Max Lens</td>
       <td>Set max lens (id: 162) to on (id: 1)</td>
-      <td>03:A2:01:01</td>
-      <td>02:A2:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=162&amp;option=1</td>
       <td>\&gt;= v01.20.00</td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to maximum video performance (id: 0)</td>
-      <td>03:AD:01:00</td>
-      <td>02:AD:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=173&amp;option=0</td>
       <td>\&gt;= v01.16.00</td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to extended battery (id: 1)</td>
-      <td>03:AD:01:01</td>
-      <td>02:AD:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=173&amp;option=1</td>
       <td>\&gt;= v01.16.00</td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to tripod / stationary video (id: 2)</td>
-      <td>03:AD:01:02</td>
-      <td>02:AD:00</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=173&amp;option=2</td>
       <td>\&gt;= v01.16.00</td>
     </tr>
   </tbody>
@@ -2441,165 +2435,394 @@ Below are tables detailing supported features for Open GoPro cameras.
 
 
 
-## Query
+# Media
 <p>
-The camera provides two basic types of state information: Camera status and settings.
-Camera status info includes information such as the current preset/mode, whether the system is encoding, remaining
-sdcard space, etc.
-Settings info gives the currently selected option for each setting;
-for example, this includes the current video resolution, frame rate, digital lens (FOV), etc.
+The camera provides an endpoint to query basic details about media captured on the sdcard.
 </p>
 
-<p>
-Queries are sent to to GP-0076 and responses are received on GP-0077. All packets sent and received are in Big Endian.
-</p>
 
-### Query Format
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Header/Length</td>
-      <td>Query Command ID</td>
-      <td>Array of IDs</td>
-    </tr>
-    <tr>
-      <td>1-2 bytes</td>
-      <td>1 byte</td>
-      <td>Variable Length</td>
-    </tr>
-  </tbody>
-</table>
-
-### Query Commands
+## Chapters
 <p>
-All query commands are sent to GP-0076. Responses are received on GP-0077.
-</p>
-<p>
-Note: omitting <i>:xx:...</i> from (un)register query commands will result in being (un)registered for all possible
-updates
-</p>
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Query ID</td>
-      <td>Query</td>
-      <td>Request</td>
-      <td>Notes</td>
-    </tr>
-    <tr>
-      <td>0x12</td>
-      <td>Get setting value</td>
-      <td>02:12:xx</td>
-      <td>xx -> Setting ID</td>
-    </tr>
-    <tr>
-      <td>0x12</td>
-      <td>Get all setting values</td>
-      <td>01:12</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>0x13</td>
-      <td>Get status value</td>
-      <td>02:13:xx</td>
-      <td>xx -> status code</td>
-    </tr>
-    <tr>
-      <td>0x13</td>
-      <td>Get all status values</td>
-      <td>01:13</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>0x52</td>
-      <td>Register for setting updates</td>
-      <td>nn:52:xx:...</td>
-      <td>nn -> message length<br/>xx -> setting id</td>
-    </tr>
-    <tr>
-      <td>0x53</td>
-      <td>Register for status updates</td>
-      <td>nn:53:xx:...</td>
-      <td>nn -> message length<br/>xx -> status code</td>
-    </tr>
-    <tr>
-      <td>0x72</td>
-      <td>Unregister for setting updates</td>
-      <td>nn:72:xx:...</td>
-      <td>nn -> message length<br/>xx -> setting id</td>
-    </tr>
-    <tr>
-      <td>0x73</td>
-      <td>Unregister for status updates</td>
-      <td>nn:73:xx:...</td>
-      <td>nn -> message length<br/>xx -> status code</td>
-    </tr>
-  </tbody>
-</table>
-
-### Query Response Format
-<p>
-Query responses are pushed asynchronously in the following scenarios:
+All GoPro cameras break longer videos into chapters.
+GoPro cameras currently limit file sizes on sdcards to 4GB for both FAT32 and exFAT file systems.
+This limitation is most commonly seen when recording longer (10+ minute) videos.
+In practice, the camera will split video media into chapters named Gqccmmmm.MP4 (and ones for THM/LRV) such that:
 </p>
 
 <ul>
-<li>The user queries for current status/settings</li>
-<li>The user registers for settings/status updates</li>
-<li>The user is registered to receive updates for a status/setting and the value changes</li>
+<li>q: Quality Level (X: Extreme, H: High, M: Medium, L: Low)</li>
+<li>cc: Chapter Number (01-99)</li>
+<li>mmmm: Media ID (0001-9999)</li>
 </ul>
 
+<p>
+When media becomes chaptered, the camera increments subsequent Chapter Numbers while leaving the Media ID unchanged.
+For example, if the user records a long High-quality video that results in 4 chapters, the files on the sdcard may
+look like the following:
+</p>
+
+```
+-rwxrwxrwx@ 1 gopro  123456789  4006413091 Jan  1 00:00 GH010078.MP4
+-rwxrwxrwx@ 1 gopro  123456789       17663 Jan  1 00:00 GH010078.THM
+-rwxrwxrwx@ 1 gopro  123456789  4006001541 Jan  1 00:00 GH020078.MP4
+-rwxrwxrwx@ 1 gopro  123456789       17357 Jan  1 00:00 GH020078.THM
+-rwxrwxrwx@ 1 gopro  123456789  4006041985 Jan  1 00:00 GH030078.MP4
+-rwxrwxrwx@ 1 gopro  123456789       17204 Jan  1 00:00 GH030078.THM
+-rwxrwxrwx@ 1 gopro  123456789   756706872 Jan  1 00:00 GH040078.MP4
+-rwxrwxrwx@ 1 gopro  123456789       17420 Jan  1 00:00 GH040078.THM
+-rwxrwxrwx@ 1 gopro  123456789   184526939 Jan  1 00:00 GL010078.LRV
+-rwxrwxrwx@ 1 gopro  123456789   184519787 Jan  1 00:00 GL020078.LRV
+-rwxrwxrwx@ 1 gopro  123456789   184517614 Jan  1 00:00 GL030078.LRV
+-rwxrwxrwx@ 1 gopro  123456789    34877660 Jan  1 00:00 GL040078.LRV
+```
+
+
+## Media List Format
+<p>
+The format of the media list is given below.
+</p>
+
+```
+{
+    "id": "<MEDIA SESSION ID>",
+    "media": [
+        {
+            "d": "<DIRECTORY NAME>",
+            "fs": [
+                {<MEDIA ITEM INFO>},
+                ...
+            ]
+        },
+        ...
+    ]
+}
+```
+
+### Media List Keys
+The outer structure of the media list and the inner structure of individual media items use the keys in the table below.
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Message Length</td>
-      <td>Query ID</td>
-      <td>Command Status</td>
-      <td>Status ID</td>
-      <td>Status Value Length</td>
-      <td>Status Value</td>
+      <td>Key</td>
+      <td>Description</td>
     </tr>
     <tr>
-      <td>1-2 bytes</td>
-      <td>1 byte</td>
-      <td>1 byte</td>
-      <td>1 byte</td>
-      <td>1 byte</td>
-      <td>1-255 bytes</td>
+      <td>b</td>
+      <td>ID of first member of a group (for grouped media items)</td>
+    </tr>
+    <tr>
+      <td>d</td>
+      <td>Directory name</td>
+    </tr>
+    <tr>
+      <td>fs</td>
+      <td>File system. Contains listing of media items in directory</td>
+    </tr>
+    <tr>
+      <td>g</td>
+      <td>Group ID (if grouped media item)</td>
+    </tr>
+    <tr>
+      <td>id</td>
+      <td>Media list session identifier</td>
+    </tr>
+    <tr>
+      <td>l</td>
+      <td>ID of last member of a group (for grouped media items)</td>
+    </tr>
+    <tr>
+      <td>ls</td>
+      <td>Low resolution video file size</td>
+    </tr>
+    <tr>
+      <td>m</td>
+      <td>List of missing/deleted group member IDs (for grouped media items)</td>
+    </tr>
+    <tr>
+      <td>media</td>
+      <td>Contains media info for for each directory (e.g. 100GOPRO/, 101GOPRO/, ...)</td>
+    </tr>
+    <tr>
+      <td>mod</td>
+      <td>Last modified time (seconds since epoch)</td>
+    </tr>
+    <tr>
+      <td>n</td>
+      <td>Media filename</td>
+    </tr>
+    <tr>
+      <td>s</td>
+      <td>Size of (group) media in bytes</td>
+    </tr>
+    <tr>
+      <td>t</td>
+      <td>Group type (for grouped media items) (b -> burst, c -> continuous shot, n -> night lapse, t -> time lapse)</td>
     </tr>
   </tbody>
 </table>
 
-#### Multi-Value Responses
+### Grouped Media Items
 <p>
-When querying for or receiving a push notifications about more than one setting/status,
-the Status ID, Status Value Length, and Status Value fields become collectively repeatable.
+In order to minimize the size of the JSON transmitted by the camera, grouped media items such as Burst Photos,
+Time Lapse Photos, Night Lapse Photos, etc are represented with a single item in the media list with additional keys
+that allow the user to extrapolate individual filenames for each member of the group.
 </p>
 
 <p>
-Example:
+Filenames for group media items have the form "GXXXYYYY.ZZZ"
+where XXX is the group ID, YYY is the group member ID and ZZZ is the file extension.
 </p>
 
 <p>
-<code>
-[MESSAGE LENGTH]:[QUERY ID]:[COMMAND STATUS]:[ID1]:[LENGTH1]:[VALUE1]:[ID2]:[LENGTH2]:[VALUE2]:...
-</code>
+For example, take the media list below, which contains a Time Lapse Photo group media item:
 </p>
 
-#### Push Notification Responses
+```
+{
+    "id": "2530266050123724003",
+    "media": [
+        {
+            "d": "100GOPRO",
+            "fs": [
+                {
+                    "b": "8",
+                    "cre": "1613669353",
+                    "g": "1",
+                    "l": "396",
+                    "m": ['75', '139'],
+                    "mod": "1613669353",
+                    "n": "G0010008.JPG",
+                    "s": "773977407",
+                    "t": "t"
+                }
+            ]
+        }
+    ]
+}
+```
+
 <p>
-The Query ID for settings/status push notifications replaces the upper 4 bits with <code>1001</code> (nine).
-</p>
-<p>
-For example, if the original query comand ID was 0x52, the query ID of the push notification will be 0x92.
+The first filename in the group is "G0010008.JPG" (key: "n").<br/>
+The ID of the first group member in this case is "008" (key: "b").<br/>
+The ID of the last group member in this case is "396" (key: "l").<br/>
+The IDs of deleted members in this case are "75" and "139" (key: "m")<br/>
+Given this information, the user can extrapolate that the group currently contains
 </p>
 
-### Status Codes
+<p>
+G0010008.JPG, G0010009.JPG, G0010010.JPG,<br/>
+...,<br/>
+G0010074.JPG, G0010076.JPG,<br/>
+...,<br/>
+G0010138.JPG, G0010140.JPG,<br/>
+...,<br/>
+G0010394.JPG, G0010395.JPG. G0010396.JPG<br/>
+</p>
+
+
+
+## Media HiLights
+<p>
+The <a href="https://community.gopro.com/t5/en/What-Is-HiLight-Tagging-amp-How-Does-It-Work/ta-p/390286">HiLight Tags</a> feature allows the user to tag moments of interest either during video
+capture or on existing media.
+</p>
+
+### Add/Remove HiLights
+<p>
+Below is a table of all HiLight commands.
+For details on how to send HiLight commands, see <a href="#commands-quick-reference">Commands Quick Reference</a>.
+
+</p>
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Command</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td>Media: HiLight (Add)</td>
+      <td>Video: Add a tag at a specific time offset (ms)<br/>Photo: Add a tag</td>
+    </tr>
+    <tr>
+      <td>Media: HiLight (Remove)</td>
+      <td>Video: Remove a tag at a specific time offset (ms)<br/>Photo: Remove tag</td>
+    </tr>
+    <tr>
+      <td>Media: HiLight Moment</td>
+      <td>Add a tag to the current time offset (ms) while encoding video</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+Note: Attempting to add a HiLight tag at a time offset that exceeds the duration of the video
+or removing a non-existent HiLight tag will result in an HTTP/500 error.
+</p>
+
+### Get HiLights
+<p>
+Once HiLight tags have been added, they can be queried by calling the <a href="#commands-quick-reference">Media: Info</a> command;
+the response content will be JSON that contains HiLight information:
+</p>
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Media Type</td>
+      <td>Key</td>
+      <td>Value</td>
+    </tr>
+    <tr>
+      <td>Photo</td>
+      <td>hc</td>
+      <td>HiLight Count</td>
+    </tr>
+    <tr>
+      <td>Video</td>
+      <td>hc</td>
+      <td>HiLight Count</td>
+    </tr>
+    <tr>
+      <td>Video</td>
+      <td>hi</td>
+      <td>HiLights (list of time offsets in ms)</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Example
+<p>
+The JSON sample below shows media that contains three HiLights at time offsets 2502ms, 5839ms, and 11478ms.
+Note: Photo info will not have an "hi":[...] key-value pair.
+</p>
+
+```
+{
+  ...,
+  "hc":"3",
+  "hi":[2502,5839,11478],
+  ...,
+}
+```
+
+
+## Downloading Media
+<p>
+The URL to download/stream media from the DCIM/ directory on the sdcard is the Base URL plus <i>/videos/DCIM/XXX/YYY</i>
+where XXX is the directory name within DCIM/ given by the media list and YYY is the target media filename.
+</p>
+
+<p>
+For example: Given the following media list:
+</p>
+
+```
+{
+    "id": "3586667939918700960",
+    "media": [
+        {
+            "d": "100GOPRO",
+            "fs": [
+                {
+                    "n": "GH010397.MP4",
+                    "cre": "1613672729",
+                    "mod": "1613672729",
+                    "glrv": "1895626",
+                    "ls": "-1",
+                    "s": "19917136"
+                },
+                {
+                    "cre": "1614340213",
+                    "mod": "1614340213",
+                    "n": "GOPR0001.JPG",
+                    "s": "6961371"
+                }
+            ]
+        }
+    ]
+}
+```
+
+<p>
+The URL to download GH010397.MP4 over WiFi would be
+<a href="http://10.5.5.9:8080/videos/DCIM/100GOPRO/GH010397.MP4">http://10.5.5.9:8080/videos/DCIM/100GOPRO/GH010397.MP4</a>
+</p>
+
+<p>
+The URL to download GOPR0001.JPG over WiFi would be
+<a href="http://10.5.5.9:8080/videos/DCIM/100GOPRO/GOPR0001.JPG">http://10.5.5.9:8080/videos/DCIM/100GOPRO/GOPR0001.JPG</a>
+</p>
+
+
+## Turbo Transfer
+<p>
+Some cameras support Turbo Transfer mode, which allows media to be downloaded over WiFi more rapidly.
+This special mode should only be used during media offload.
+It is recommended that the user check for and--if necessary--disable Turbo Transfer on connect.
+For details on which cameras are supported and how to enable and disable Turbo Transfer, see
+<a href="#commands-quick-reference">Commands Quick Reference</a>.
+</p>
+
+
+## Downloading Preview Stream
+<p>
+When the preview stream is started, the camera starts up a UDP client and begins writing MPEG Transport Stream
+data to the connected client on port 8554.
+In order to stream and save this data, the user can implement a UDP server that binds to the same port and appends
+datagrams to a file when they are received.
+</p>
+
+
+# Camera State
+<p>
+The camera provides multiple types of state, all of which can be queried:
+</p>
+
+<ul>
+<li>Camera state: Contains information about camera status (photos taken, date, is-camera-encoding, etc) and settings (current video resolution, current frame rate, etc)</li>
+<li>Preset State: How presets are arranged into preset groups, their titles, icons, settings closely associated with each preset, etc</li>
+</ul>
+
+
+## Camera State Format
+Camera state is given in the following form:
+
+```
+{
+    "status": {
+        "1": <status 1 value>,
+        "2": <status 2 value>,
+        ...
+    },
+    "settings: {
+        "2": <setting 2 value>,
+        "3": <setting 3 value>,
+        ...
+    }
+}
+```
+
+<p>
+Where <b>status X value</b> and <b>setting X value</b> are almost always integer values.
+See Status Codes table in this document for exceptions.
+</p>
+
+<p>
+For status, keys are status codes and values are status values.
+</p>
+
+<p>
+For settings, keys are setting IDs, and values are option values
+</p>
+
+
+## Status Codes
 <p>
 Below is a table of supported status codes.<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
 >= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
 </p>
+
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
@@ -3302,187 +3525,9 @@ Below is a table of supported status codes.<br />
 </table>
 
 
-# Protobuf
-
+## Preset Status Format
 <p>
-In order to maximize BLE bandwidth, some complex messages are sent using
-<a href="https://developers.google.com/protocol-buffers">Google Protobuf (Protocol Buffers)</a>.
+Preset Status is returned as JSON, whose content is the serialization of the <a href="https://developers.google.com/protocol-buffers">protobuf</a> message:
+<a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">NotifyPresetStatus</a>.
+Using Google protobuf APIs, the JSON can be converted back into a programmatic object in the user's language of choice.
 </p>
-
-
-## Protobuf Message Format
-
-<p>
-Protobuf communications with the camera differ from TLV-style communications.
-Rather than having a Type, Length, and Value,
-protobuf messages sent to a GoPro device have a Command Type (called a Feature),
-a Sub-command Type (called an Action)
-and a Value (serialization of a protobuf object).
-</p>
-
-<p>
-Note: For commands that do not require any protobuf inputs, Value would be empty (0 bytes).
-</p>
-
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Message Length</td>
-      <td>Feature ID</td>
-      <td>Action ID</td>
-      <td>Protobuf Bytestream</td>
-    </tr>
-    <tr>
-      <td>1-2 bytes</td>
-      <td>1 byte</td>
-      <td>1 byte</td>
-      <td>Variable Length</td>
-    </tr>
-  </tbody>
-</table>
-
-## Protobuf UUIDs
-<p>
-Below is a map of Protobuf Feature IDs and the characteristics used to write/notify.
-For additional details, see <a href="#OpenGoProBluetoothLowEnergyAPI(v2.0)-ServicesandCharacteristics">Services and Characteristics</a>.
-</p>
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Feature ID</td>
-      <td>UUID</td>
-      <td>Response UUID</td>
-    </tr>
-    <tr>
-      <td>0xF1</td>
-      <td>GP-0072</td>
-      <td>GP-0073</td>
-    </tr>
-    <tr>
-      <td>0xF3</td>
-      <td>GP-0074</td>
-      <td>GP-0075</td>
-    </tr>
-    <tr>
-      <td>0xF5</td>
-      <td>GP-0076</td>
-      <td>GP-0077</td>
-    </tr>
-  </tbody>
-</table>
-
-
-## Protobuf Commands
-<p>
-Below is a table of protobuf commands that can be sent to the camera and their expected response..<br />
-<span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
-<span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
->= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
-</p>
-
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Feature ID</td>
-      <td>Action ID</td>
-      <td>Description</td>
-      <td>Request</td>
-      <td>Response</td>
-      <td>HERO10 Black</td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td rowspan="2">0xF1</td>
-      <td>0x69</td>
-      <td>Request set camera control status</td>
-      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/set_camera_control_status.proto">RequestSetCameraControlStatus</a></td>
-      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">ResponseGeneric</a></td>
-      <td>\&gt;= v01.20.00</td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x6B</td>
-      <td>Request set turbo active</td>
-      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/turbo_transfer.proto">RequestSetTurboActive</a></td>
-      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">ResponseGeneric</a></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0xF5</td>
-      <td>0x72</td>
-      <td>Request get preset status</td>
-      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto">RequestGetPresetStatus</a></td>
-      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">NotifyPresetStatus</a></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-  </tbody>
-</table>
-
-
-## Protobuf Command Details
-Below are additional details about specific protobuf commands:
-
-
-### RequestSetCameraControlStatus
-<p>
-As part of the <b>Global Behaviors</b> feature, this command is used to tell the camera that the app
-(i.e. External Control) wants to be in control, which causes the camera to immediately exit any contextual menus and
-return to the idle screen.
-</p>
-
-<p>
-Developers can query who is currently claiming control of the camera from camera status 114.
-</p>
-
-<p>
-Developers can query whether the camera is currently in a contextual menu from camera status 63.
-</p>
-
-<p>
-When the user interacts with the camera UI, the camera reclaims control and updates camera status to <b>Control</b>.
-When the user returns the camera UI to the idle screen, the camera updates camera status to <b>Idle</b>. 
-</p>
-
-### RequestSetTurboActive
-<p>
-Turbo Transfer Mode is a special feature that serves two purposes:
-<ul>
-<li>Temporarily modify low-level settings in the OS to prioritize WiFi offload speeds</li>
-<li>Put up a UI on the camera indicating that media is being transferred and preventing the user from inadvertently changing settings or capturing new media</li>
-</ul>
-</p>
-
-<p>
-Developers can query whether the camera is currently in Turbo Transfer Mode from camera status 113.
-</p>
-
-<p>
-While in Turbo Transfer Mode, if the user presses the <b>Mode/Power</b> or <b>Shutter</b> buttons on the camera,
-Turbo Transfer Mode will be deactivated.
-</p>
-
-<p>
-Some cameras are already optimized for WiFi transfer and do not gain additional speed from this feature.
-</p>
-
-### RequestGetPresetStatus
-<p>
-This command serves two purposes:
-<ul>
-<li>Describe which Preset Groups and Presets the camera supports in its current state</li>
-<li>(Un)register to be notified when a Preset is modified (e.g. resolution changes from 1080p to 4K) or a Preset Group is modified (e.g. presets are reordered/create/deleted)</li>
-</ul>
-</p>
-
-<p>
-Each Preset Group contains an ID, whether additional presets can be added, and an array of existing Presets.
-</p>
-
-<p>
-Each Preset contains information about its ID, associated flatmode, title, icon, whether it's a user-defined preset,
-whether the preset has been modified from its factory-default state (for factory-default presets only) and a list of 
-settings associated with the Preset.
-</p>
-
-<p>
-Preset Status should not be confused with camera status, which contains hundreds of camera/setting statuses on a system level.
-</p>
-

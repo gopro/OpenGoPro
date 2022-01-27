@@ -14,11 +14,13 @@ using the Get Version command upon connection %}
 
 ## [Bluetooth Low Energy (BLE) Specification 2.0](ble_versions/ble_2_0.md)
 
--   New features:
-    -   SD card rating check error status
-    -   SD card write speed error status
-    -   Camera control status status
-    -   Usb connected status
+-   Hilights:
+    -   Capture media
+    -   Track camera state
+    -   Get media list and download files / metadata
+    -   Load / edit presets
+    -   Configure and use as webcam
+    -   Add / remove hilights
 -   Breaking changes:
     -   Video Digital Lens setting parameter changes:
         -   Narrow changed from 6 to 2

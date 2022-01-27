@@ -27,7 +27,7 @@ build: clean prepare_demos ## Build but do not serve the jekyll pages
 	@JEKYLL_CONFIG=${JEKYLL_CONFIG} docker-compose run --rm jekyll bundle exec jekyll build --baseurl ${BASE_URL} --config _config.yml,_config-${JEKYLL_CONFIG}.yml
 
 .PHONY: serve
-serve: clean prepare_demos ## Serve the site locally at http://127.0.0.1:5000/
+serve: clean prepare_demos ## Serve the site locally at http://127.0.0.1:4998/
 	@echo "🚦 Serving the ${JEKYLL_CONFIG} site"
 	-@JEKYLL_CONFIG=${JEKYLL_CONFIG} docker-compose run --rm --service-ports jekyll
 
@@ -37,7 +37,7 @@ tests: build ## Clean everything, build, then serve in order to check all links.
 	@echo; echo "🚦 Serving the test site"
 	@JEKYLL_CONFIG=${JEKYLL_CONFIG} docker-compose run --rm --service-ports --detach jekyll
 	@echo; echo "⏳ Waiting for server to be ready..."
-	@until curl http://127.0.0.1:5000 > /dev/null 2>&1; do \
+	@until curl http://127.0.0.1:4998 > /dev/null 2>&1; do \
 		:; \
 	done
 	@echo; echo "🔗 Checking links"

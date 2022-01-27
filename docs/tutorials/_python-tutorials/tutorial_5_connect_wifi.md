@@ -8,7 +8,7 @@ lesson: 5
 # Python Tutorial 5: Connect WiFi
 
 This document will provide a walk-through tutorial to use [bleak](https://pypi.org/project/bleak/) to implement the
-[Open GoPro Interface]({% link specs/wifi.md %}) to enable the GoPro's WiFi Access Point (AP) so that it
+[Open GoPro Interface]({% link specs/http.md %}) to enable the GoPro's WiFi Access Point (AP) so that it
 can be connected to. It will also provide an example of connecting to the WiFi AP.
 
 > Note! It is recommended that you have first completed the [connecting]({% link _python-tutorials/tutorial_1_connect_ble.md %}), [sending commands]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}), and [parsing responses]({% link _python-tutorials/tutorial_3_parse_ble_tlv_responses.md %}) tutorials before proceeding
@@ -261,4 +261,4 @@ See the first tutorial's [troubleshooting section]({% link _python-tutorials/tut
 {% success Congratulations 🤙 %}
 
 You are now connected to the GoPro's Wifi AP and can send any of the HTTP commands defined in the
-[Open GoPro Interface]({% link specs/wifi.md %}). Proceed to the next tutorial.
+[Open GoPro Interface]({% link specs/http.md %}). Proceed to the next tutorial.

@@ -197,12 +197,12 @@ defaults:
           sidebar:
             nav: 'ble-specs'
     - scope:
-          path: 'specs/wifi_versions'
+          path: 'specs/http_versions'
       values:
-          identifier: wifi_spec
+          identifier: http_spec
           classes: spec
           sidebar:
-            nav: 'wifi-specs'
+            nav: 'http-specs'
 
 jekyll-spaceship:
     # default enabled processors

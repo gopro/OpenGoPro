@@ -5,21 +5,71 @@
 
 from __future__ import annotations
 import logging
+from datetime import datetime
 from typing import Type
 
-from construct import Flag, Int8ub
+from construct import Flag, Int8ub, Struct, Byte
 
-from open_gopro.constants import StatusId, SettingId
+from open_gopro import proto
+from open_gopro.proto.set_camera_control_status_pb import EnumCameraControlStatus
+from open_gopro.responses import GoProResp
+from open_gopro.constants import GoProUUIDs, StatusId, SettingId, CmdId, ActionId, FeatureId
 from open_gopro.api.v1_0.ble_commands import BleCommandsV1_0, BleSettingsV1_0, BleStatusesV1_0
 from open_gopro.communication_client import GoProBle
-from open_gopro.api.builders import BleSetting, BleStatus, build_enum_adapter
+from open_gopro.api.builders import (
+    BleSetting,
+    BleStatus,
+    build_enum_adapter,
+    BleWriteWithParamsCommand,
+    BleWriteNoParamsCommand,
+    BleProtoCommand,
+    DateTimeAdapter,
+)
 from .params import ParamsV2_0 as Params
 
 logger = logging.getLogger(__name__)
 
 
 class BleCommandsV2_0(BleCommandsV1_0):
+    # pylint: disable = missing-class-docstring, arguments-differ, useless-super-delegation, missing-return-doc
     """Implement updates to BLE commands for version 2.0"""
+
+    def __init__(self, communicator: GoProBle) -> None:
+        super().__init__(communicator)
+
+        self.set_date_time = BleWriteWithParamsCommand[datetime](
+            communicator, GoProUUIDs.CQ_COMMAND, CmdId.SET_DATE_TIME, DateTimeAdapter(Byte[7])
+        )
+        """Set the camera's date and time"""
+
+        self.get_date_time = BleWriteNoParamsCommand(
+            communicator,
+            GoProUUIDs.CQ_COMMAND,
+            CmdId.GET_DATE_TIME,
+            Struct("date_time" / DateTimeAdapter(Byte[8])),
+        )
+        """Get the camera's date and time"""
+
+        class SetCameraControl(BleProtoCommand):
+            def __call__(self, control: EnumCameraControlStatus) -> GoProResp:
+                return super().__call__(control)
+
+        self.set_camera_control = SetCameraControl(
+            communicator,
+            GoProUUIDs.CQ_COMMAND,
+            FeatureId.COMMAND,
+            ActionId.SET_CAMERA_CONTROL,
+            proto.RequestSetCameraControlStatus,
+            proto.ResponseGeneric,
+        )
+        """Enable / disable turbo mode.
+
+        Args:
+            active (bool): True to enable, False to disable.
+
+        Returns:
+            GoProResp: result status (EnumResultGeneric)
+        """
 
 
 class BleSettingsV2_0(BleSettingsV1_0):

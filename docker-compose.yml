@@ -10,15 +10,15 @@ services:
         volumes:
             - ./docs:/site
         ports:
-            - '5000:5000'
+            - '4998:4998'
         environment:
             - JEKYLL_ENV=docker # Set (to anything other develop) so that jekyll serve won't overwrite site.url
         # Set the default command to be run if no parameters are passed which will...
-        # Build, then serve, the jekyll site. Serve it from 0.0.0.0:5000 to satisfy docker. Enable incremental
+        # Build, then serve, the jekyll site. Serve it from 0.0.0.0:4998 to satisfy docker. Enable incremental
         # rebuilds on changes.
         # Use the default config file and then also an additional config file (chosen by JEKYLL_CONFIG
         # environment variable) to set the correct site.url.
-        command: bundle exec jekyll serve --host 0.0.0.0 --port 5000 --force_polling --incremental --config _config.yml,_config-\${JEKYLL_CONFIG}.yml
+        command: bundle exec jekyll serve --host 0.0.0.0 --port 4998 --force_polling --incremental --config _config.yml,_config-\${JEKYLL_CONFIG}.yml
         networks:
             open_gopro:
                 # Linkchecker can't use the docker container name to access via network so we hardcode an IP
@@ -28,7 +28,7 @@ services:
         image: linkchecker/linkchecker
         # Only show errors (no verbose). Check all URL's. Ignore camera URL's and theme URL
         # Use static IP defined in jekyll container.
-        command: --check-extern --ignore-url ".*10\.5\.5\.9.*" --timeout 5 -o text http://172.16.238.10:5000
+        command: --check-extern --ignore-url ".*10\.5\.5\.9.*" --timeout 5 -o text http://172.16.238.10:4998
         networks:
             open_gopro:
 

@@ -6,9 +6,9 @@
 import asyncio
 import logging
 import threading
-from typing import Pattern, Dict, Any, Callable, Optional, List, Type
+from typing import Pattern, Dict, Any, Callable, Optional, List, Tuple, Union, Type
 
-from bleak import BleakScanner, BleakClient
+from bleak import BleakScanner, BleakClient, BleakError
 from bleak.backends.device import BLEDevice as BleakDevice
 
 from open_gopro.exceptions import ConnectFailed
@@ -207,20 +207,68 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
             BleakClient: Connected device
         """
 
-        async def _async_connect() -> Optional[BleakClient]:  # pylint: disable=missing-return-doc
+        class ConnectSession:
+            """Transient connection manager to manage disconnects while connecting."""
+
+            def __init__(self) -> None:
+                self.disconnected = asyncio.Event()
+                self.disconnected.clear()
+
+            def disconnect_handler(self, _: Any) -> None:
+                """Disconnect handler which is only used while connection is being established.
+
+                Will be set to App's passed-in disconnect handler once connection is established
+
+                Args:
+                    _ (Any): Not used
+                """
+                # From sniffer capture analysis, this is always due to the slave not receiving the master's
+                # connection request. This is (potentially) normal BLE behavior.
+                self.disconnected.set()
+
+        async def _async_connect() -> Tuple[  # pylint: disable=missing-return-doc
+            Optional[BleakClient], Optional[Union[Exception, BaseException]]
+        ]:
             logger.info(f"Establishing BLE connection to {device}...")
-            bleak_client = BleakClient(device, disconnected_callback=disconnect_cb)
+
+            connect_session = ConnectSession()
+            bleak_client = BleakClient(
+                device, disconnected_callback=connect_session.disconnect_handler, use_cached=False
+            )
+            exception = None
             try:
-                await bleak_client.connect(timeout=timeout)
-            except Exception as e:  # pylint: disable= broad-except
-                logger.warning(f"Bleak failed to connect: {repr(e)}")
-                return None
+                task_connect = asyncio.create_task(bleak_client.connect(timeout=timeout), name="connect")
+                task_disconnected = asyncio.create_task(connect_session.disconnected.wait(), name="disconnect")
+                finished, unfinished = await asyncio.wait(
+                    [task_connect, task_disconnected],
+                    return_when=asyncio.FIRST_COMPLETED,
+                )
+                for task in finished:
+                    if task.exception() is not None:
+                        exception = task.exception()  # TODO this can apparently be blank?
+                        # Completion of these is tasks mutually exclusive so safe to stop now
+                        break
+                for task in unfinished:
+                    task.cancel()
+                if connect_session.disconnected.is_set():
+                    exception = Exception("Connection failed during establishment..")
+            except (BleakError, asyncio.TimeoutError) as e:
+                exception = e
 
-            return bleak_client
+            if not exception:
+                try:
+                    assert bleak_client.is_connected  # TODO is this needed?
+                    # Now set the application's desired disconnect callback
+                    bleak_client._disconnected_callback = disconnect_cb
+                except AssertionError:
+                    exception = Exception("Something happened during discovery (maybe?)")
 
-        client = self._as_coroutine(_async_connect)
-        if client is None:
-            raise ConnectFailed("Bleak Connection Timed out", timeout, 1)
+            return bleak_client, exception
+
+        client, exception = self._as_coroutine(_async_connect)
+        if exception:
+            logger.warning(exception)
+            raise ConnectFailed("BLE", 1, 1) from exception
         return client
 
     def pair(self, handle: BleakClient) -> None:

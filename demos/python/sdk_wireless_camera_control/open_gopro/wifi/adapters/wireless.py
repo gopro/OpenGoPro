@@ -793,11 +793,12 @@ class NetshWireless(WifiController):
         if "was completed successfully" not in response:
             raise Exception(response)
         # Wait for connection to establish
+        DELAY = 1
         while (current := self.current()) != (ssid, SsidState.CONNECTED):
-            logger.debug("Waiting 1 second for Wi-Fi connection to establish...")
-            time.sleep(1)
-            timeout -= 1
-            if timeout == 0 or current[1] is SsidState.DISCONNECTED:
+            logger.debug(f"Waiting {DELAY} second for Wi-Fi connection to establish...")
+            time.sleep(DELAY)
+            timeout -= DELAY
+            if timeout <= 0 or current[1] is SsidState.DISCONNECTED:
                 return False
 
         logger.info("Wifi connection established!")

@@ -8,11 +8,11 @@ assignees: ''
 ---
 
 **Component**
-What is the bug in? 
+What is the bug in?
 - Demos (python sdk, etc)
 - Tutorials
 - Documentation
-- Specs (ble , wifi)
+- Specs (BLE , HTTP)
 
 **Describe the bug**
 A clear and concise description of what the bug is.
@@ -32,7 +32,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Hardware**
 - Camera: Hero9, etc.
-- Desktop if applicable [e.g. Windows] 
+- Desktop if applicable [e.g. Windows]
 - Smartphone if applicable [e.g. iPhone6]
 
 **Additional context**

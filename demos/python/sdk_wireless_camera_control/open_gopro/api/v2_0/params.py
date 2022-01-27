@@ -8,8 +8,12 @@
 from open_gopro.constants import GoProEnum
 from open_gopro.api.v1_0.params import ParamsV1_0
 
+from open_gopro.proto.set_camera_control_status_pb import EnumCameraControlStatus
+
 
 class ParamsV2_0(ParamsV1_0):
+    CameraControlStatus = EnumCameraControlStatus
+
     class Resolution(GoProEnum):
         NOT_APPLICABLE = 0
         RES_4K = 1

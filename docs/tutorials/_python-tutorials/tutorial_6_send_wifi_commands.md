@@ -8,7 +8,7 @@ lesson: 6
 # Python Tutorial 6: Send WiFi Commands
 
 This document will provide a walk-through tutorial to use the Python [requests](https://pypi.org/project/requests/)
-package to send Open GoPro [HTTP commands]({% link specs/wifi.md %}) to the GoPro.
+package to send Open GoPro [HTTP commands]({% link specs/http.md %}) to the GoPro.
 
 > Note! It is required that you have first completed the [Connecting to Wifi]({% link _python-tutorials/tutorial_5_connect_wifi.md %}) tutorial.
 
@@ -86,7 +86,7 @@ sequenceDiagram
 ## Get Open GoPro Version
 
 The first command we will be sending is
-[Get Version]({% link specs/wifi.md %}#commands-quick-reference). This should be the first command you send
+[Get Version]({% link specs/http.md %}#commands-quick-reference). This should be the first command you send
 after connecting.
 
 {% warning It is imperative to know the Open GoPro version that the connected camera supports as setting values,
@@ -127,7 +127,7 @@ In this case, this camera supports version 2.0 of the Open GoPro spec. We will a
 ## Digital Zoom
 
 The next command we will be sending is
-[Digital Zoom]({% link specs/wifi.md %}#commands-quick-reference). The camera
+[Digital Zoom]({% link specs/http.md %}#commands-quick-reference). The camera
 must be in the [Photo Preset Group]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}#load-preset-group)
 for this command to succeed. The commands writes to the following endpoint:
 
@@ -168,7 +168,7 @@ INFO:root:Response: {}
 {% tab state Send Request %}
 
 The next command we will be sending is
-[Get State]({% link specs/wifi.md %}#commands-quick-reference). This command will
+[Get State]({% link specs/http.md %}#commands-quick-reference). This command will
 return all of the current settings and values. It is basically a combination of the
 [Get All Settings]({% link _python-tutorials/tutorial_4_ble_queries.md %}#query-all) and
 [Get All Statuses]({% link _python-tutorials/tutorial_4_ble_queries.md %}#query-all)
@@ -258,7 +258,7 @@ For example (for settings):
 {% tab stream Send Request %}
 
 The next command we will be sending is
-[Preview Stream]({% link specs/wifi.md %}#commands-quick-reference). This command will
+[Preview Stream]({% link specs/http.md %}#commands-quick-reference). This command will
 enable (or disable) the preview stream . It is then possible to view the preview stream from a media player.
 
 The commands write to the following endpoints:
@@ -322,7 +322,7 @@ Here is an example of viewing this using [VLC](https://www.videolan.org/):
 ## Load Preset Group
 
 The next command we will be sending is
-[Load Preset Group]({% link specs/wifi.md %}#commands-quick-reference). which is
+[Load Preset Group]({% link specs/http.md %}#commands-quick-reference). which is
 used to toggle between the 3 groups of presets (video, photo, and timelapse).
 
 Let's build the endpoint first to load the video preset group (the id comes from the command table linked above):
@@ -362,7 +362,7 @@ middle of the screen:
 ## Load Preset
 
 The next command we will be sending is
-[Load Preset]({% link specs/wifi.md %}#commands-quick-reference). which is
+[Load Preset]({% link specs/http.md %}#commands-quick-reference). which is
 used to select a specific preset that is part of a Preset Group.
 
 Let's build the endpoint first to load the Cinematic Preset (the id comes from the command table linked above):
@@ -405,7 +405,7 @@ this by seeing the preset name in the pill at bottom middle of the screen.
 {% tab preset Send Request %}
 
 The next command we will be sending is
-[Get Presets Status]({% link specs/wifi.md %}#commands-quick-reference). This
+[Get Presets Status]({% link specs/http.md %}#commands-quick-reference). This
 command is used to get the list of all currently available presets as well as the settings that comprise
 each preset. This includes both default and user-defined presets.
 
@@ -518,7 +518,7 @@ information.
 ## Keep Alive
 
 The next command we will be sending is
-[Keep Alive]({% link specs/wifi.md %}#commands-quick-reference). which is
+[Keep Alive]({% link specs/http.md %}#commands-quick-reference). which is
 used to prevent the camera from powering down. Unless changed by the user, GoPro cameras will automatically
 power off after some time (e.g. 5min, 15min, 30min). The Auto Power Down watchdog timer can be reset by
 periodically sending this message.
@@ -555,7 +555,7 @@ INFO:root:Response: {}
 ## Set Shutter
 
 The next command we will be sending is
-[Set Shutter]({% link specs/wifi.md %}#commands-quick-reference). which is
+[Set Shutter]({% link specs/http.md %}#commands-quick-reference). which is
 used to start and stop encoding.
 
 Let's build the endpoint first send the Set Shutter signal:
@@ -592,7 +592,7 @@ attempt to do so will result in an error response. %}
 
 ## Set Setting
 
-The next command will be sending is [Set Setting]({% link specs/wifi.md %}#settings-quick-reference).
+The next command will be sending is [Set Setting]({% link specs/http.md %}#settings-quick-reference).
 This end point is used to update all of the settings on the camera. It is analogous to BLE commands like
 [Set Video Resolution]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}#set-the-video-resolution).
 
@@ -703,6 +703,6 @@ between the PC and the GoPro.
 {% success Congratulations 🤙 %}
 
 You can now send any of the HTTP commands defined in the
-[Open GoPro Interface]({% link specs/wifi.md %}) that return JSON responses. You
+[Open GoPro Interface]({% link specs/http.md %}) that return JSON responses. You
 may have noted that we did not discuss one of these (Get Media List) in this tutorial. Proceed to the
 next tutorial to see how to get and perform operations using the media list.

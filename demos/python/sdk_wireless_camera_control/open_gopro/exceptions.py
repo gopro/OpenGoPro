@@ -7,9 +7,6 @@
 class GoProError(Exception):
     """Base class for other GoPro-level exceptions."""
 
-    def __init__(self, message: str) -> None:
-        super().__init__(f"GoPro Error: {message}")
-
 
 class ResponseParseError(GoProError):
     """The scan failed without finding a device."""
@@ -35,8 +32,8 @@ class InvalidConfiguration(GoProError):
 class GoProNotInitialized(GoProError):
     """A command was attempted without waiting for the GoPro instance to initialize."""
 
-    def __init__(self) -> None:
-        super().__init__("GoPro has not been initialized yet")
+    def __init__(self, message: str) -> None:
+        super().__init__(f"GoPro is not correctly initialized: {message}")
 
 
 class FailedToFindDevice(GoProError):

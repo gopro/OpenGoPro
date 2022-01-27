@@ -45,10 +45,20 @@ from open_gopro.api import (
     Params,
 )
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
+from open_gopro.util import setup_logging, set_logging_level
 
 ##############################################################################################################
 #                                             Log Management
 ##############################################################################################################
+
+logger = logging.getLogger(__name__)
+
+
+@pytest.fixture(scope="session", autouse=True)
+def configure_logging():
+    global logger
+    logger = setup_logging(logger)
+    set_logging_level(logger, logging.ERROR)
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -412,6 +422,7 @@ async def gopro_client(request):
     test_client = GoProTest(request.param)
     yield test_client
     GoProResp._parse = original_parse
+    test_client.close()
 
 
 class GoProTestMaintainBle(GoPro):

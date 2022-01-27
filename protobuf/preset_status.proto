@@ -1,8 +1,8 @@
 /* preset_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Wed, Sep  1, 2021  5:06:26 PM */
+/* This copyright was auto-generated on Wed Jan 26 22:41:52 UTC 2022 */
 
 /*
-Defines the structure of preset status protobuf messages from the camera
+Defines the structure of protobuf message received from camera containing preset status
 */
 
 syntax="proto2";
@@ -51,6 +51,7 @@ enum EnumFlatMode {
     FLAT_MODE_VIDEO = 12;
     FLAT_MODE_TIME_LAPSE_VIDEO = 13;
     FLAT_MODE_LOOPING = 15;
+    FLAT_MODE_PHOTO_SINGLE = 16;
     FLAT_MODE_PHOTO = 17;
     FLAT_MODE_PHOTO_NIGHT = 18;
     FLAT_MODE_PHOTO_BURST = 19;
@@ -107,7 +108,17 @@ enum EnumPresetTitle {
     PRESET_TITLE_MAX_VIDEO = 55;
     PRESET_TITLE_MAX_PHOTO = 56;
     PRESET_TITLE_MAX_TIMEWARP = 57;
-    PRESET_TITLE_MAX = 58;
+    PRESET_TITLE_BASIC = 58;
+    PRESET_TITLE_ULTRA_SLO_MO = 59;
+    PRESET_TITLE_STANDARD_ENDURANCE = 60;
+    PRESET_TITLE_ACTIVITY_ENDURANCE = 61;
+    PRESET_TITLE_CINEMATIC_ENDURANCE = 62;
+    PRESET_TITLE_SLOMO_ENDURANCE = 63;
+    PRESET_TITLE_STATIONARY_1 = 64;
+    PRESET_TITLE_STATIONARY_2 = 65;
+    PRESET_TITLE_STATIONARY_3 = 66;
+    PRESET_TITLE_STATIONARY_4 = 67 ;
+    PRESET_TITLE_MAX = 68;
 }
 
 
@@ -151,6 +162,16 @@ enum EnumPresetIcon {
     PRESET_ICON_MAX_VIDEO = 55;
     PRESET_ICON_MAX_PHOTO = 56;
     PRESET_ICON_MAX_TIMEWARP = 57;
+    PRESET_ICON_BASIC = 58;
+    PRESET_ICON_ULTRA_SLO_MO = 59;
+    PRESET_ICON_STANDARD_ENDURANCE = 60;
+    PRESET_ICON_ACTIVITY_ENDURANCE = 61;
+    PRESET_ICON_CINEMATIC_ENDURANCE = 62;
+    PRESET_ICON_SLOMO_ENDURANCE = 63;
+    PRESET_ICON_STATIONARY_1 = 64;
+    PRESET_ICON_STATIONARY_2 = 65;
+    PRESET_ICON_STATIONARY_3 = 66;
+    PRESET_ICON_STATIONARY_4 = 67;
     PRESET_ICON_TIMELAPSE_PHOTO = 1000;
     PRESET_ICON_NIGHTLAPSE_PHOTO = 1001;
     PRESET_ICON_MAX = 1002;

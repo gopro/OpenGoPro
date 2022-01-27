@@ -55,15 +55,15 @@ class GoProUUIDs(UUIDs):
 class GoProEnumMeta(EnumMeta):
     """Modify enum metaclass to build GoPro specific enums"""
 
-    ITER_SKIP_NAMES = ["NOT_APPLICABLE"]
+    _ITER_SKIP_NAMES = ["NOT_APPLICABLE"]
 
     def __iter__(cls: Type[T]) -> Iterator[T]:
-        """Do not return enum values whose name is in the ITER_SKIP_NAMES list
+        """Do not return enum values whose name is in the _ITER_SKIP_NAMES list
 
         Returns:
             Iterator[T]: enum iterator
         """
-        return iter([x[1] for x in cls._member_map_.items() if x[0] not in GoProEnumMeta.ITER_SKIP_NAMES])  # type: ignore
+        return iter([x[1] for x in cls._member_map_.items() if x[0] not in GoProEnumMeta._ITER_SKIP_NAMES])  # type: ignore
 
 
 class GoProEnum(Enum, metaclass=GoProEnumMeta):
@@ -79,6 +79,7 @@ class ErrorCode(GoProEnum):
     SUCCESS = 0
     ERROR = 1
     INVALID_PARAM = 2
+    UNKNOWN = -1
 
 
 class CmdId(GoProEnum):
@@ -88,6 +89,8 @@ class CmdId(GoProEnum):
     POWER_DOWN = 0x04
     SLEEP = 0x05
     SET_PAIRING_COMPLETE = 0x03
+    SET_DATE_TIME = 0x0D
+    GET_DATE_TIME = 0x0E
     GET_CAMERA_SETTINGS = 0x12
     GET_CAMERA_STATUSES = 0x13
     SET_WIFI = 0x17
@@ -101,15 +104,23 @@ class CmdId(GoProEnum):
     REGISTER_ALL_STATUSES = 0x53
     UNREGISTER_ALL_SETTINGS = 0x72
     UNREGISTER_ALL_STATUSES = 0x73
-    SET_TURBO_MODE = 0xF1
-    GET_PRESET_STATUS = 0xF5
+    PROTOBUF_COMMAND = 0xF1
 
 
 class ActionId(GoProEnum):
     """Action ID's that identify a protobuf command."""
 
+    SET_CAMERA_CONTROL = 0x69
     SET_TURBO_MODE = 0x6B
-    GET_PRESET_STATUS = 0x02
+    GET_PRESET_STATUS = 0x72
+
+
+class FeatureId(GoProEnum):
+    """ID's that group protobuf commands"""
+
+    COMMAND = 0xF1
+    SETTING = 0xF3
+    QUERY = 0xF5
 
 
 class SettingId(GoProEnum):
@@ -180,7 +191,7 @@ class SettingId(GoProEnum):
     INTERNAL_132 = 132
     INTERNAL_133 = 133
     INTERNAL_134 = 134
-    INTERNAL_135 = 135
+    HYPERSMOOTH = 135
     INTERNAL_139 = 139
     INTERNAL_142 = 142
     INTERNAL_144 = 144
@@ -207,6 +218,7 @@ class SettingId(GoProEnum):
     INTERNAL_168 = 168
     INTERNAL_169 = 169
     VIDEO_PERFORMANCE_MODE = 173
+    PROTOBUF_SETTING = 0xF3
     INVALID_FOR_TESTING = 0xFF
 
 
@@ -227,6 +239,7 @@ class QueryCmdId(GoProEnum):
     SETTING_VAL_PUSH = 0x92
     STATUS_VAL_PUSH = 0x93
     SETTING_CAPABILITY_PUSH = 0xA2
+    PROTOBUF_QUERY = 0xF5
     INVALID_FOR_TESTING = 0xFF
 
 
@@ -265,7 +278,7 @@ class StatusId(GoProEnum):
     NUM_GROUP_VIDEO = 37
     NUM_TOTAL_PHOTO = 38
     NUM_TOTAL_VIDEO = 39
-    DATE_TIME = 40
+    DEPRECATED_40 = 40
     OTA_STAT = 41
     DOWNLAD_CANCEL_PEND = 42
     MODE_GROUP = 43
@@ -309,7 +322,7 @@ class StatusId(GoProEnum):
     FLATMODE_ID = 89
     INTERNAL_90 = 90
     LOGS_READY = 91
-    TIMEWARP_1X_ACTIVE = 92
+    DEPRECATED_92 = 92
     VIDEO_PRESETS = 93
     PHOTO_PRESETS = 94
     TIMELAPSE_PRESETS = 95

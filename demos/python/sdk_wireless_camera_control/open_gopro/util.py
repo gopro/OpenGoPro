@@ -10,46 +10,105 @@ import subprocess
 from pathlib import Path
 from typing import Dict, Type, Any, List, Optional, Union
 
+import http.client as http_client
 from rich.logging import RichHandler
 from rich import traceback
 
 util_logger = logging.getLogger(__name__)
 
+# From https://stackoverflow.com/questions/2183233/how-to-add-a-custom-loglevel-to-pythons-logging-facility/35804945#35804945
+# pylint: disable=missing-param-doc, no-member
+def addLoggingLevel(levelName: str, levelNum: int) -> None:
+    """Comprehensively adds a new logging level to the `logging` module and the currently configured logging class.
 
-def setup_logging(logger: Any, output: Path, modules: Dict[str, int] = None) -> Any:
+    `levelName` becomes an attribute of the `logging` module with the value
+    `levelNum`. `methodName` becomes a convenience method for both `logging`
+    itself and the class returned by `logging.getLoggerClass()` (usually just
+    `logging.Logger`). If `methodName` is not specified, `levelName.lower()` is
+    used.
+
+    To avoid accidental clobberings of existing attributes, this method will
+    raise an `AttributeError` if the level name is already an attribute of the
+    `logging` module or if the method name is already present
+
+    Example:
+    --------
+    >>> addLoggingLevel('TRACE', logging.DEBUG - 5)
+    >>> logging.getLogger(__name__).setLevel("TRACE")
+    >>> logging.getLogger(__name__).trace('that worked')
+    >>> logging.trace('so did this')
+    >>> logging.TRACE
+    5
+
+    """
+    methodName = levelName.lower()
+
+    # This method was inspired by the answers to Stack Overflow post
+    # http://stackoverflow.com/q/2183233/2988730, especially
+    # http://stackoverflow.com/a/13638084/2988730
+    def logForLevel(self: Any, message: str, *args: Any, **kwargs: Any) -> None:
+        if self.isEnabledFor(levelNum):
+            self._log(levelNum, message, args, **kwargs)
+
+    def logToRoot(message: str, *args: Any, **kwargs: Any) -> None:
+        logging.log(levelNum, message, *args, **kwargs)
+
+    logging.addLevelName(levelNum, levelName)
+    setattr(logging, levelName, levelNum)
+    setattr(logging.getLoggerClass(), methodName, logForLevel)
+    setattr(logging, methodName, logToRoot)
+
+
+def setup_logging(logger: Any, output: Path = None, modules: Dict[str, int] = None) -> logging.Logger:
     """Configure open gopro modules for logging
 
     The application's logger is passed in, modified, and then returned
 
     Args:
         logger (Any): input logger that will be modified and then returned
-        output (Path): Path of log file for file stream handler
-        modules (Dict[str, int], optional): Optional override of modules / levels.
+        output (Path, optional): Path of log file for file stream handler. If not set, will not log to file.
+        modules (Dict[str, int], optional): Optional override of modules / levels. Will be merged into default
+            modules.
 
     Returns:
         Any: updated logger that the application can use for logging
     """
-    modules = modules or {
+    default_modules = {
         "open_gopro.gopro": logging.DEBUG,
         "open_gopro.api.builders": logging.DEBUG,
         "open_gopro.api.v1_0.wifi_commands": logging.DEBUG,
         "open_gopro.communication_client": logging.DEBUG,
         "open_gopro.ble.adapters.bleak_wrapper": logging.DEBUG,
-        "open_gopro.wifi.adapters.wireless": logging.DEBUG,
+        "open_gopro.ble.client": logging.DEBUG,
+        "open_gopro.wifi.adapters.wireless": logging.INFO,
         "open_gopro.responses": logging.DEBUG,
-        "open_gopro.util": logging.DEBUG,
-        "bleak": logging.ERROR,
+        "open_gopro.util": logging.INFO,
+        "bleak": logging.DEBUG,
+        "urllib3": logging.WARNING,
+        "http.client": logging.WARNING,
     }
 
-    # Logging to file with millisecond timing
-    fh = logging.FileHandler(output, mode="w")
-    file_formatter = logging.Formatter(
-        fmt="%(threadName)13s:%(asctime)s.%(msecs)03d %(filename)-40s %(lineno)4s %(levelname)-8s | %(message)s",
-        datefmt="%H:%M:%S",
-    )
-    fh.setFormatter(file_formatter)
-    fh.setLevel(logging.DEBUG)
-    logger.addHandler(fh)
+    logging_modules = {**default_modules, **modules} if modules else default_modules
+
+    # monkey-patch a `print` global into the http.client module; all calls to
+    # print() in that module will then use our logger's debug method
+    http_client.HTTPConnection.debuglevel = 1
+    http_client.print = lambda *args: logging.getLogger("http.client").debug(" ".join(args))  # type: ignore
+
+    addLoggingLevel("TRACE", logging.DEBUG - 5)
+
+    if output:
+        # Logging to file with millisecond timing
+        fh = logging.FileHandler(output, mode="w")
+        file_formatter = logging.Formatter(
+            fmt="%(threadName)13s:%(asctime)s.%(msecs)03d %(filename)-40s %(lineno)4s %(levelname)-8s | %(message)s",
+            datefmt="%H:%M:%S",
+        )
+        fh.setFormatter(file_formatter)
+        fh.setLevel(logging.TRACE)  # type: ignore
+        logger.addHandler(fh)
+    else:
+        fh = None
 
     # Use Rich for colorful console logging
     sh = RichHandler(rich_tracebacks=True, enable_link_path=True, show_time=False)
@@ -57,13 +116,14 @@ def setup_logging(logger: Any, output: Path, modules: Dict[str, int] = None) -> 
     sh.setFormatter(stream_formatter)
     sh.setLevel(logging.INFO)
     logger.addHandler(sh)
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.TRACE)  # type: ignore
 
     # Enable / disable logging in modules
-    for module, level in modules.items():
+    for module, level in logging_modules.items():
         l = logging.getLogger(module)
         l.setLevel(level)
-        l.addHandler(fh)
+        if fh:
+            l.addHandler(fh)
         l.addHandler(sh)
 
     traceback.install()  # Enable exception tracebacks in rich logger

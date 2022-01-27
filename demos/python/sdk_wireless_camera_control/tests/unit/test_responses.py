@@ -482,6 +482,7 @@ def test_complex_write_command(parser_map: ParserMapType):
     r._parse()
     assert r.is_parsed
     assert r.is_received
+    assert "DEPRECATED" in list(r.values())
     assert r.is_ok
     assert r.id is QueryCmdId.GET_STATUS_VAL
     assert r.cmd is QueryCmdId.GET_STATUS_VAL

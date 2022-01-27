@@ -20,7 +20,7 @@ Open GoPro Interface using [bleak](https://bleak.readthedocs.io/en/latest/api.ht
 for Bluetooth Low Energy (BLE) and [requests](https://docs.python-requests.org/en/master/) for HTTP.
 
 These tutorials are meant as an introduction to the Open GoPro specification. There is complete documentation
-available for [BLE]({% link specs/ble.md %}) and [WiFi]({% link specs/wifi.md %}) which will be the main
+available for [BLE]({% link specs/ble.md %}) and [HTTP]({% link specs/http.md %}) which will be the main
 source of reference after completing the tutorials.
 
 {% for tutorial in site.python-tutorials %}

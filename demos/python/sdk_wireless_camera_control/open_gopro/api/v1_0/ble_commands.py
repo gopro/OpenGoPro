@@ -5,11 +5,12 @@
 
 from __future__ import annotations
 import logging
-from typing import Type
+from typing import Type, List, Optional
 
 from construct import Int8ub, Int32ub, Int64ub, Flag, GreedyString, Struct, Padding, PaddedString, this, Hex
 
 from open_gopro import proto
+from open_gopro.proto.request_get_preset_status_pb import EnumRegisterPresetStatus
 from open_gopro.responses import GoProResp
 from open_gopro.communication_client import GoProBle
 from open_gopro.api.builders import (
@@ -21,10 +22,11 @@ from open_gopro.api.builders import (
     BleReadCommand,
     BleProtoCommand,
     build_enum_adapter,
-    DateTimeAdapter,
+    DeprecatedAdapter,
 )
 from open_gopro.constants import (
     ActionId,
+    FeatureId,
     CmdId,
     QueryCmdId,
     SettingId,
@@ -169,7 +171,7 @@ class BleCommandsV1_0:
         self.set_turbo_mode = TurboMode(
             communicator,
             GoProUUIDs.CQ_COMMAND,
-            CmdId.SET_TURBO_MODE,
+            FeatureId.COMMAND,
             ActionId.SET_TURBO_MODE,
             proto.RequestSetTurboActive,
             proto.ResponseGeneric,
@@ -180,30 +182,34 @@ class BleCommandsV1_0:
             active (bool): True to enable, False to disable.
 
         Returns:
-            TODO
+            GoProResp: result status (EnumResultGeneric)
         """
 
-        # @proto_cmd(
-        #     GoProUUIDs.CQ_COMMAND,
-        #     CmdId.GET_PRESET_STATUS,
-        #     ActionId.GET_PRESET_STATUS,
-        #     proto.RequestGetPresetStatus,
-        #     proto.NotifyPresetStatus,
-        # )
-        # def get_preset_status(
-        #     self,
-        #     register_preset_status: List[Params.RegisterPresetStatus] = None,
-        #     unregister_preset_status: List[Params.RegisterPresetStatus] = None,
-        # ) -> GoProResp:
-        #     """Get the preset status.
+        class GetPresetStatus(BleProtoCommand):
+            def __call__(
+                self,
+                register_preset_status: Optional[List[EnumRegisterPresetStatus]] = None,
+                unregister_preset_status: Optional[List[EnumRegisterPresetStatus]] = None,
+            ) -> GoProResp:
+                return super().__call__(register_preset_status or [], unregister_preset_status or [])
 
-        #     Args:
-        #         register_preset_status (List[Params.EnumRegisterPresetStatus], optional): [description]. Defaults to None.
-        #         unregister_preset_status (List[Params.EnumRegisterPresetStatus], optional): [description]. Defaults to None.
+        self.get_preset_status = GetPresetStatus(
+            communicator,
+            GoProUUIDs.CQ_QUERY,
+            FeatureId.QUERY,
+            ActionId.GET_PRESET_STATUS,
+            proto.RequestGetPresetStatus,
+            proto.NotifyPresetStatus,
+        )
+        """Get information about what Preset Groups and Presets the camera supports in its current state.
 
-        #     Returns:
-        #         GoProResp: the response
-        #     """
+        Args:
+            register_preset_status (List[Params.RegisterPresetStatus], optional): [TODO]. Defaults to None.
+            unregister_preset_status (List[Params.RegisterPresetStatus], optional): [TODO]. Defaults to None.
+
+        Returns:
+            GoProResp: TODO
+        """
 
         self.get_wifi_ssid = BleReadCommand(
             communicator, GoProUUIDs.WAP_SSID, Struct("ssid" / GreedyString("utf-8"))
@@ -377,6 +383,11 @@ class BleSettingsV1_0:
         )
         """Enable / disable max lens mod. Set with :py:class:`Params.MaxLensMode`"""
 
+        self.hypersmooth = BleSetting[Params.HypersmoothMode](
+            self.communicator, SettingId.HYPERSMOOTH, build_enum_adapter(params.HypersmoothMode)
+        )
+        """Set / disable hypersmooth. Set with :py:class:`Params.HypersmoothMode`"""
+
     def __iter__(self) -> Iterator:
         """Return an iterable of this instance's attributes
 
@@ -534,10 +545,10 @@ class BleStatusesV1_0:
         self.num_total_video: BleStatus = BleStatus(self.communicator, StatusId.NUM_TOTAL_VIDEO, Int32ub)
         """Total number of videos on sdcard."""
 
-        self.date_time: BleStatus = BleStatus(
-            self.communicator, StatusId.DATE_TIME, DateTimeAdapter(GreedyString(encoding="utf-8"))
+        self.deprecated_40: BleStatus = BleStatus(
+            self.communicator, StatusId.DEPRECATED_40, DeprecatedAdapter(GreedyString(encoding="utf-8"))
         )
-        """Current date/time (format: %YY%MM%DD%HH%MM%SS, all values in hex)."""
+        """This status is deprecated."""
 
         self.ota_stat: BleStatus = BleStatus(
             self.communicator, StatusId.OTA_STAT, build_enum_adapter(params.OTAStatus)
@@ -669,8 +680,10 @@ class BleStatusesV1_0:
         self.logs_ready: BleStatus = BleStatus(self.communicator, StatusId.LOGS_READY, Flag)
         """	Are system logs ready to be downloaded?"""
 
-        self.timewarp_1x_active: BleStatus = BleStatus(self.communicator, StatusId.TIMEWARP_1X_ACTIVE, Flag)
-        """Is Timewarp 1x active?"""
+        self.deprecated_92: BleStatus = BleStatus(
+            self.communicator, StatusId.DEPRECATED_92, DeprecatedAdapter(Flag)
+        )
+        """This status is deprecated."""
 
         self.video_presets: BleStatus = BleStatus(self.communicator, StatusId.VIDEO_PRESETS, Int32ub)
         """Current Video Preset (ID)."""

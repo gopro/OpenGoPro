@@ -109,7 +109,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
                 self._handle = self._controller.connect(self._disconnected_cb, self._device, timeout=timeout)
                 break
             except ConnectFailed as e:
-                logger.warning(f"Failed to connect in {timeout} seconds. Retrying #{retry}")
+                logger.warning(f"Failed to connect. Retrying #{retry}")
                 if retry == retries - 1:
                     raise ConnectFailed("BLE", timeout, retries) from e
 

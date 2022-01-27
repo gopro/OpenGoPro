@@ -314,6 +314,9 @@ class WifiSettingsV1_0:
         self.max_lens_mode = WifiSetting[Params.MaxLensMode](communicator, SettingId.MAX_LENS_MOD)
         """Enable / disable max lens mod. Set with :py:class:`open_gopro.Params.MaxLensMode`"""
 
+        self.hypersmooth = WifiSetting[Params.HypersmoothMode](communicator, SettingId.HYPERSMOOTH)
+        """Set / disable hypersmooth. Set with :py:class:`Params.HypersmoothMode`"""
+
     def __iter__(self) -> Iterator:
         """Return an iterable of this instance's attributes
 

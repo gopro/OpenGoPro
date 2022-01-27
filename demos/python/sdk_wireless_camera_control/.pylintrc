@@ -11,6 +11,7 @@ ignore=tests,proto
 [MESSAGES CONTROL]
 
 disable=
+    too-many-nested-blocks,
     unspecified-encoding,
     consider-using-with,
     abstract-method, # Pylint incorrectly assumes any function that raises NotImplementedError is abstract. We let mypy check for ABC errors.

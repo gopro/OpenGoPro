@@ -54,7 +54,7 @@ First, build and serve the site locally via:
 make serve
 ```
 
-The site can then be viewed at `http://127.0.0.1:5000`
+The site can then be viewed at `http://127.0.0.1:4998`
 
 > Note! This is different than the address from the Jekyll CLI output
 
