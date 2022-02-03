@@ -112,6 +112,7 @@ def parse_arguments() -> Tuple[Optional[str], Path, Path, float, Optional[str]]:
 
     return args.identifier, args.log, args.output, args.record_time, args.wifi_interface
 
+
 if __name__ == "__main__":
     # main()
     main()

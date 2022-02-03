@@ -54,7 +54,7 @@ async def test_set_resolution(gopro_ble_and_wifi: GoPro):
 @pytest.mark.asyncio
 @pytest.fixture(scope="class")
 async def media_list(gopro_ble_and_wifi: GoPro):
-    media_list = gopro_ble_and_wifi.wifi_command.get_media_list()["media"][0]["fs"]
+    media_list = gopro_ble_and_wifi.wifi_command.get_media_list().flatten
     yield media_list
 
 

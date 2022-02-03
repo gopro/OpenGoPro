@@ -101,6 +101,7 @@ class TestCommon:
             pytest.fail(f"Need to implement test for version {version}")
 
 
+@pytest.mark.skip("Not Currently supporting Hero9")
 @pytest.mark.parametrize("gopro_ble_no_wifi", ["HERO9"], indirect=True)
 class TestHero9Specific:
     @pytest.mark.asyncio

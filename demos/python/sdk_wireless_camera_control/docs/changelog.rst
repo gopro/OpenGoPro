@@ -9,7 +9,18 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
-0.7.2 (January-3-2021)
+0.8.0 (February-3-2022)
+-----------------------
+* Improve BLE connection Robustness
+* Deprecate support for Open GoPro Versions other than 2.0
+* Add set / date time commands
+* Implement remaining protobuf commands and fix protobuf parsing
+* Add hilight commands
+* Implement common UUID type
+* Add video performance mode
+* Remove deprecated status and setting ID's
+
+0.7.2 (January-3-2022)
 ----------------------
 * Allow for WiFi adapter to specify interface
 * Clean up Wifi adapter
