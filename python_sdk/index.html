@@ -199,7 +199,7 @@ For more information on the API, see the relevant documentation:</p>
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
 <ul>
 <li><p>Top-level GoPro class interface to use both BLE / WiFi</p></li>
-<li><p>Cross-platform (tested on MacOS Big Sur, Windows 10, and Ubuntu 20.04)</p>
+<li><p>Cross-platform (tested on Windows 10, and Ubuntu 20.04, and &gt;= MacOS Big Sur)</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>BLE controller implemented using <a class="reference external" href="https://pypi.org/project/bleak/">bleak</a></p></li>
@@ -207,7 +207,7 @@ For more information on the API, see the relevant documentation:</p>
 </ul>
 </div></blockquote>
 </li>
-<li><p>Supports all commands, settings, and statuses from the <a class="reference external" href="https://gopro.github.io/OpenGoPro/">Open GoPro API</a></p></li>
+<li><p>Supports all wireless commands, settings, and statuses from the <a class="reference external" href="https://gopro.github.io/OpenGoPro/">Open GoPro API</a></p></li>
 <li><p>Supports all versions of the Open GoPro API</p></li>
 <li><p>Automatically handles connection maintenance:</p>
 <blockquote>
@@ -291,8 +291,6 @@ this document in order):</p>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Interfaces</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api.html#gopro">GoPro</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#responses">Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#constants">Constants</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#api">API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="api.html#base-types">Base Types</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="api.html#ble-setting">BLE Setting</a></li>
@@ -300,26 +298,16 @@ this document in order):</p>
 <li class="toctree-l4"><a class="reference internal" href="api.html#wifi-setting">WiFi Setting</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#api-version-1-0">API Version 1.0</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api.html#ble-1-0-commands">BLE 1.0 Commands</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api.html#ble-1-0-settings">BLE 1.0 Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api.html#ble-1-0-statuses">BLE 1.0 Statuses</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api.html#wifi-1-0-commands">WiFi 1.0 Commands</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api.html#wifi-1-0-settings">WiFi 1.0 Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api.html#parameters">1.0 Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#ble-commands">BLE Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#ble-settings">BLE Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#ble-statuses">BLE Statuses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#wifi-commands">WiFi Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#wifi-settings">WiFi Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#parameters">Parameters</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#api-version-2-0">API Version 2.0</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api.html#ble-2-0-commands">BLE 2.0 Commands</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api.html#ble-2-0-settings">BLE 2.0 Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api.html#ble-2-0-statuses">BLE 2.0 Statuses</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api.html#wifi-2-0-commands">WiFi 2.0 Commands</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api.html#wifi-2-0-settings">WiFi 2.0 Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api.html#id1">2.0 Parameters</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#responses">Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#constants">Constants</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
