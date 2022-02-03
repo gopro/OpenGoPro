@@ -10,6 +10,7 @@ import time
 import logging
 import tempfile
 from enum import Enum, auto
+from getpass import getpass
 from distutils.version import LooseVersion
 from shutil import which
 from typing import List, Optional, Tuple, Any, Callable
@@ -20,30 +21,6 @@ from open_gopro.util import cmd
 from open_gopro.wifi import SsidState, WifiController
 
 logger = logging.getLogger(__name__)
-
-
-@wrapt.decorator
-def ensure_sudo(wrapped: Callable, _: Any, args: Any, kwargs: Any) -> Wireless:
-    """Verify that we are running as root
-
-    Raises:
-        Exception: Program is running as a user other than root
-
-    Args:
-        wrapped (Callable): Class to verify
-        _ (Any): not used
-        args (Any): class constructor positional arguments
-        kwargs (Any): class constructor keyword arguments
-
-    Returns:
-        Wireless: class initialized via pass through after ensuring sudo
-    """
-    user = cmd("whoami")
-    if "root" not in user:
-        logger.error(f"You need to be the root user to run this program but you are running as {user}")
-        raise Exception("Program needs to be run as root user.")
-
-    return wrapped(*args, **kwargs)
 
 
 @wrapt.decorator
@@ -103,18 +80,27 @@ class Wireless(WifiController):
         if os.name == "nt" and which("netsh"):
             return NetshWireless()
 
-        # Try Linux options
-        # try nmcli (Ubuntu 14.04)
-        if which("nmcli"):
-            version = cmd("nmcli --version").split()[-1]
-            return Nmcli0990Wireless() if LooseVersion(version) >= LooseVersion("0.9.9.0") else NmcliWireless()
-        # try nmcli (Ubuntu w/o network-manager)
-        if which("wpa_supplicant"):
-            return WpasupplicantWireless()
-
         # try networksetup (Mac OS 10.10)
         if which("networksetup"):
             return NetworksetupWireless()
+
+        # Try Linux options. Need password for sudo
+        password = getpass("Need to run as sudo. Enter password: ")
+        # Validate password
+        if "VALID PASSWORD" not in cmd(f'echo "{password}" | sudo -S echo "VALID PASSWORD"'):
+            raise Exception("Invalid password")
+
+        # try nmcli (Ubuntu 14.04)
+        if which("nmcli"):
+            version = cmd("nmcli --version").split()[-1]
+            return (
+                Nmcli0990Wireless(password=password)
+                if LooseVersion(version) >= LooseVersion("0.9.9.0")
+                else NmcliWireless(password=password)
+            )
+        # try nmcli (Ubuntu w/o network-manager)
+        if which("wpa_supplicant"):
+            return WpasupplicantWireless(password=password)
 
         raise Exception("Unable to find compatible wireless driver.")
 
@@ -197,15 +183,13 @@ class Wireless(WifiController):
         return self._driver.is_on
 
 
-@ensure_sudo
 class NmcliWireless(WifiController):
     """Linux nmcli Driver < 0.9.9.0."""
 
-    def __init__(self, interface: Optional[str] = None) -> None:
-        WifiController.__init__(self, interface)
+    def __init__(self, password: str, interface: Optional[str] = None) -> None:
+        WifiController.__init__(self, interface=interface, password=password)
 
-    @staticmethod
-    def _clean(partial: str) -> None:
+    def _clean(self, partial: str) -> None:
         """Clean up connections.
 
         This is needed to prevent the following error after extended use:
@@ -215,12 +199,12 @@ class NmcliWireless(WifiController):
             partial (str): part of the connection name
         """
         # list matching connections
-        response = cmd(f"nmcli --fields BleUUID,NAME con list | grep {partial}")
+        response = cmd(f'{self.sudo} nmcli --fields BleUUID,NAME con list | grep "{partial}"')
 
         # delete all of the matching connections
         for line in response.splitlines():
             if len(line) > 0:
-                cmd(f"nmcli con delete uuid {line.split()[0]}")
+                cmd(f"{self.sudo} nmcli con delete uuid {line.split()[0]}")
 
     @staticmethod
     def _error_in_response(response: str) -> bool:
@@ -264,7 +248,9 @@ class NmcliWireless(WifiController):
             self._clean(current)
 
         # attempt to connect
-        response = cmd(f"nmcli dev wifi connect {ssid} password {password} iface {self.interface}")
+        response = cmd(
+            f'{self.sudo} nmcli dev wifi connect "{ssid}" password "{password}" iface "{self.interface}"'
+        )
 
         # parse response
         return not self._error_in_response(response)
@@ -284,7 +270,7 @@ class NmcliWireless(WifiController):
             Tuple[Optional[str], SsidState]: [description]
         """
         # list active connections for all interfaces
-        response = cmd(f"nmcli con status | grep {self.interface}")
+        response = cmd(f'{self.sudo} nmcli con status | grep "{self.interface}"')
 
         # the current network is in the first column
         for line in response.splitlines():
@@ -301,7 +287,7 @@ class NmcliWireless(WifiController):
             List[str]: list of interfaces
         """
         # grab list of interfaces
-        response = cmd("nmcli dev")
+        response = cmd(f"{self.sudo} nmcli dev")
 
         # parse response
         interfaces = []
@@ -320,7 +306,7 @@ class NmcliWireless(WifiController):
         Returns:
             bool: [description]
         """
-        return "enabled" in cmd("nmcli nm wifi")
+        return "enabled" in cmd(f"{self.sudo} nmcli nm wifi")
 
     def power(self, power: bool) -> bool:
         """Enable or disbale the Wifi controller
@@ -332,23 +318,21 @@ class NmcliWireless(WifiController):
             bool: True if success, False otherwise
         """
         if power:
-            cmd("nmcli nm wifi on")
+            cmd(f"{self.sudo} nmcli nm wifi on")
         else:
-            cmd("nmcli nm wifi off")
+            cmd(f"{self.sudo} nmcli nm wifi off")
 
         return True
 
 
-@ensure_sudo
 class Nmcli0990Wireless(WifiController):
     """Linux nmcli Driver >= 0.9.9.0."""
 
-    def __init__(self, interface: Optional[str] = None) -> None:
-        WifiController.__init__(self, interface)
+    def __init__(self, password: str, interface: Optional[str] = None) -> None:
+        WifiController.__init__(self, interface=interface, password=password)
 
     # TODO Is this needed?
-    @staticmethod
-    def _clean(partial: str) -> None:
+    def _clean(self, partial: str) -> None:
         """Clean up connections.
 
         This is needed to prevent the following error after extended use:
@@ -358,13 +342,13 @@ class Nmcli0990Wireless(WifiController):
             partial (str): part of the connection name
         """
         # list matching connections
-        response = cmd(f"nmcli --fields UUID,NAME con show | grep {partial}")
+        response = cmd(f'{self.sudo} nmcli --fields UUID,NAME con show | grep "{partial}"')
 
         # delete all of the matching connections
         for line in response.splitlines():
             if len(line) > 0:
                 uuid = line.split()[0]
-                cmd(f"nmcli con delete uuid {uuid}")
+                cmd(f"{self.sudo} nmcli con delete uuid {uuid}")
 
     @staticmethod
     def _error_in_response(response: str) -> bool:
@@ -403,9 +387,11 @@ class Nmcli0990Wireless(WifiController):
             bool: [description]
         """
         # Scan for networks. Don't bother checking: we'll allow the error to be passed from the connect.
-        cmd("nmcli dev wifi list --rescan yes")
+        cmd(f"{self.sudo} nmcli dev wifi list --rescan yes")
         # attempt to connect
-        response = cmd(f"nmcli dev wifi connect {ssid} password {password} ifname {self.interface}")
+        response = cmd(
+            f'{self.sudo} nmcli dev wifi connect "{ssid}" password "{password}" ifname "{self.interface}"'
+        )
 
         # TODO verify that we're connected (and use timeout)
 
@@ -427,7 +413,7 @@ class Nmcli0990Wireless(WifiController):
             Tuple[Optional[str], SsidState]: [description]
         """
         # list active connections for all interfaces
-        response = cmd(f"nmcli con | grep {self.interface}")
+        response = cmd(f'{self.sudo} nmcli con | grep "{self.interface}"')
 
         # the current network is in the first column
         for line in response.splitlines():
@@ -444,7 +430,7 @@ class Nmcli0990Wireless(WifiController):
             List[str]: list of interfaces
         """
         # grab list of interfaces
-        response = cmd("nmcli dev")
+        response = cmd(f"{self.sudo} nmcli dev")
 
         # parse response
         interfaces = []
@@ -463,7 +449,7 @@ class Nmcli0990Wireless(WifiController):
         Returns:
             bool: [description]
         """
-        return "enabled" in cmd("nmcli r wifi")
+        return "enabled" in cmd(f"{self.sudo} nmcli r wifi")
 
     def power(self, power: bool) -> bool:
         """Enable or disbale the Wifi controller
@@ -475,9 +461,9 @@ class Nmcli0990Wireless(WifiController):
             bool: True if success, False otherwise
         """
         if power:
-            cmd("nmcli r wifi on")
+            cmd(f"{self.sudo} nmcli r wifi on")
         else:
-            cmd("nmcli r wifi off")
+            cmd(f"{self.sudo} nmcli r wifi off")
 
         return True
 
@@ -487,8 +473,8 @@ class WpasupplicantWireless(WifiController):
 
     _file = "/tmp/wpa_supplicant.conf"
 
-    def __init__(self, interface: Optional[str] = None) -> None:
-        WifiController.__init__(self, interface)
+    def __init__(self, password: str, interface: Optional[str] = None) -> None:
+        WifiController.__init__(self, interface=interface, password=password)
 
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
         """[summary].
@@ -503,10 +489,10 @@ class WpasupplicantWireless(WifiController):
         """
         # attempt to stop any active wpa_supplicant instances
         # ideally we do this just for the interface we care about
-        cmd("sudo killall wpa_supplicant")
+        cmd(f"{self.sudo} killall wpa_supplicant")
 
         # don't do DHCP for GoPros; can cause dropouts with the server
-        cmd(f"sudo ifconfig {self.interface} 10.5.5.10/24 up")
+        cmd(f'{self.sudo} ifconfig "{self.interface}" 10.5.5.10/24 up')
 
         # create configuration file
         with open(self._file, "w") as fp:
@@ -514,7 +500,7 @@ class WpasupplicantWireless(WifiController):
             fp.close()
 
         # attempt to connect
-        cmd(f"sudo wpa_supplicant -i{self.interface} -c{self._file} -B")
+        cmd(f'{self.sudo} wpa_supplicant -i"{self.interface}" -c"{self._file}" -B')
 
         # check that the connection was successful
         # i've never seen it take more than 3 seconds for the link to establish
@@ -525,7 +511,7 @@ class WpasupplicantWireless(WifiController):
 
         # attempt to grab an IP
         # better hope we are connected because the timeout here is really long
-        # cmd(f"sudo dhclient {self.interface}"")
+        # cmd(f"{self.sudo} dhclient {self.interface}"")
 
         # parse response
         return True
@@ -545,7 +531,7 @@ class WpasupplicantWireless(WifiController):
             Tuple[Optional[str], SsidState]: [description]
         """
         # get interface status
-        response = cmd(f"iwconfig {self.interface}")
+        response = cmd(f'{self.sudo} iwconfig "{self.interface}"')
 
         # the current network is on the first line like ESSID:"network"
         line = response.splitlines()[0]
@@ -566,7 +552,7 @@ class WpasupplicantWireless(WifiController):
             List[str]: list of interfaces
         """
         # grab list of interfaces
-        response = cmd("iwconfig")
+        response = cmd(f"{self.sudo} iwconfig")
 
         # parse response
         interfaces = []
@@ -585,7 +571,7 @@ class WpasupplicantWireless(WifiController):
         Returns:
             bool: [description]
         """
-        return "enabled" in cmd("nmcli r wifi")
+        return "enabled" in cmd(f"{self.sudo} nmcli r wifi")
 
     def power(self, power: bool) -> bool:
         """Enable or disbale the Wifi controller
@@ -657,7 +643,7 @@ class NetworksetupWireless(WifiController):
             Tuple[Optional[str], SsidState]: [description]
         """
         # attempt to get current network
-        response = cmd(f"networksetup -getairportnetwork {self.interface}")
+        response = cmd(f"networksetup -getairportnetwork '{self.interface}'")
 
         # parse response
         phrase = "Current Wi-Fi Network: "
@@ -697,7 +683,7 @@ class NetworksetupWireless(WifiController):
         Returns:
             bool: [description]
         """
-        return "On" in cmd(f"networksetup -getairportpower {self.interface}")
+        return "On" in cmd(f"networksetup -getairportpower '{self.interface}'")
 
     def power(self, power: bool) -> bool:
         """Enable or disbale the Wifi controller
@@ -708,7 +694,7 @@ class NetworksetupWireless(WifiController):
         Returns:
             bool: True if success, False otherwise
         """
-        cmd(f"networksetup -setairportpower {self.interface} {'on' if power else 'off'}")
+        cmd(f"networksetup -setairportpower '{self.interface}' {'on' if power else 'off'}")
 
         return True
 
@@ -788,8 +774,7 @@ class NetshWireless(WifiController):
         os.remove(filename)
 
         # Try to connect
-        ssid_quotes = f'"{ssid}"'
-        response = cmd(f"netsh wlan connect ssid={ssid_quotes} name={ssid_quotes} interface={self.interface}")
+        response = cmd(f'netsh wlan connect ssid="{ssid}" name="{ssid}" interface="{self.interface}"')
         if "was completed successfully" not in response:
             raise Exception(response)
         # Wait for connection to establish
@@ -812,7 +797,7 @@ class NetshWireless(WifiController):
         Returns:
             bool: True if the disconnect was successful, False otherwise.
         """
-        response = cmd(f"netsh wlan disconnect interface={self.interface}")
+        response = cmd(f'netsh wlan disconnect interface="{self.interface}"')
 
         return bool("completed successfully" in response.lower())
 
@@ -911,7 +896,7 @@ class NetshWireless(WifiController):
             bool: True if success, False otherwise
         """
         arg = "enable" if power else "disable"
-        response = cmd(f"netsh interface set interface {self._interface} {arg}")
+        response = cmd(f'netsh interface set interface "{self._interface}" "{arg}"')
         return "not exist" not in response
 
     @staticmethod

@@ -69,10 +69,6 @@ class BleClient(Generic[BleHandle, BleDevice]):
         self._identifier = None if isinstance(self._target, Pattern) else str(self._target)
         self.uuids = uuids
 
-    def __del__(self) -> None:
-        logger.debug("In destructor...")
-        self.close()
-
     def _find_device(self, timeout: int = 5, retries: int = 30) -> None:
         self._device = None
         assert isinstance(self._target, Pattern)

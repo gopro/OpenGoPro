@@ -9,7 +9,7 @@ from dataclasses import dataclass
 
 import pytest
 
-from open_gopro.wifi.adapters.wireless import Wireless, ensure_sudo, SsidState
+from open_gopro.wifi.adapters.wireless import Wireless, SsidState
 
 # TODO add others
 operating_systems = ["windows"]
@@ -159,11 +159,11 @@ There is no wireless interface on the system.
             response = r'Profile "GP24500456" is deleted from interface "Wi-Fi".'
         elif command == r"add_profile":
             response = r"Profile GP24500456 is added on interface Wi-Fi."
-        elif command == r'netsh wlan connect ssid="GP24500456" name="GP24500456" interface=Wi-Fi':
+        elif command == r'netsh wlan connect ssid="GP24500456" name="GP24500456" interface="Wi-Fi"':
             response = r"Connection request was completed successfully."
-        elif command == r"netsh interface set interface Wi-Fi enable":
+        elif command == r'netsh interface set interface "Wi-Fi" "enable"':
             response = r"This network connection does not exist."
-        elif command == r"netsh interface set interface Wi-Fi disable":
+        elif command == r'netsh interface set interface "Wi-Fi" "disable"':
             response = ""
         elif r"netsh wlan add profile filename" in command:
             response = r"Profile GP24500456 is added on interface Wi-Fi."
@@ -211,12 +211,6 @@ def command_sender(request, monkeypatch):
 def wireless(command_sender):
     test_client = Wireless()
     yield test_client
-
-
-def test_ensure_sudo(command_sender):
-    if command_sender.os == "windows":
-        with pytest.raises(Exception):
-            ensure_sudo()
 
 
 def test_power(wireless: Wireless):

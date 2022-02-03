@@ -88,9 +88,9 @@ def setup_logging(logger: Any, output: Path = None, modules: Dict[str, int] = No
         "open_gopro.communication_client": logging.DEBUG,
         "open_gopro.ble.adapters.bleak_wrapper": logging.WARNING,
         "open_gopro.ble.client": logging.DEBUG,
-        "open_gopro.wifi.adapters.wireless": logging.INFO,
+        "open_gopro.wifi.adapters.wireless": logging.DEBUG,
         "open_gopro.responses": logging.DEBUG,
-        "open_gopro.util": logging.INFO,
+        "open_gopro.util": logging.DEBUG,
         "bleak": logging.DEBUG,
         "urllib3": logging.WARNING,
         "http.client": logging.WARNING,
@@ -317,7 +317,12 @@ def cmd(command: str) -> str:
     Returns:
         str: response returned from shell
     """
-    util_logger.debug(f"Send cmd --> {command}")
+    # We don't want password showing in the log
+    if "sudo" in command:
+        logged_command = command[: command.find('"') + 1] + "********" + command[command.find(" | sudo") - 1 :]
+    else:
+        logged_command = command
+    util_logger.debug(f"Send cmd --> {logged_command}")
     # Note: Ignoring unicode characters in SSIDs to prevent intermittent UnicodeDecodeErrors from occurring
     # while trying to connect to SSID when *any* AP is nearby that has unicode characters in the name
     response = (
