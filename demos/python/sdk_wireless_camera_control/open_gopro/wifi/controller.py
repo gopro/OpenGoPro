@@ -132,6 +132,14 @@ class WifiController(ABC):
 
     @property
     def sudo(self) -> str:
+        """Return the sudo encapsulated password
+
+        Raises:
+            Exception: No password has been supplied
+
+        Returns:
+            str: echo "**********" | sudo -S
+        """
         if not self._password:
             raise Exception("Can't use sudo with empty password.")
         return f'echo "{self._password}" | sudo -S'
