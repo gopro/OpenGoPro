@@ -9,7 +9,7 @@ from dataclasses import dataclass
 
 import pytest
 
-from open_gopro.wifi.adapters.wireless import Wireless, ensure_sudo, SsidState
+from open_gopro.wifi.adapters.wireless import Wireless, SsidState
 
 # TODO add others
 operating_systems = ["windows"]
@@ -211,12 +211,6 @@ def command_sender(request, monkeypatch):
 def wireless(command_sender):
     test_client = Wireless()
     yield test_client
-
-
-def test_ensure_sudo(command_sender):
-    if command_sender.os == "windows":
-        with pytest.raises(Exception):
-            ensure_sudo()
 
 
 def test_power(wireless: Wireless):

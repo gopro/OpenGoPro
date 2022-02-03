@@ -20,11 +20,18 @@ class SsidState(IntEnum):
 
 
 class WifiController(ABC):
-    """Interface definition for a Wifi driver to be used by GoPro."""
+    """Interface definition for a Wifi driver to be used by GoPro.
 
-    def __init__(self, interface: Optional[str] = None) -> None:
+    Args:
+        interface (str, optional): Wifi interface to use. Defaults to None (auto-detect).
+        password (str, optional): user password to use for sudo. Defaults to None.
+    """
+
+    def __init__(self, interface: str = None, password: str = None) -> None:
+
         self._target_interface = interface
         self._interface: str
+        self._password = password
 
     @abstractmethod
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
@@ -122,3 +129,9 @@ class WifiController(ABC):
             bool: True if yes. False if no.
         """
         raise NotImplementedError
+
+    @property
+    def sudo(self) -> str:
+        if not self._password:
+            raise Exception("Can't use sudo with empty password.")
+        return f'echo "{self._password}" | sudo -S'
