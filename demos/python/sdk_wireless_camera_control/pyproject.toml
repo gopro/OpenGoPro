@@ -1,14 +1,37 @@
 [tool.poetry]
 name = "open_gopro"
-version = "0.1.0"
-description = ""
+version = "0.8.0"                            # TODO single source this
+description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+bleak = "=0.14.2"
+construct = "*"
+rich = "*"
+wrapt = "*"
+requests = "*"
+betterproto = "*"
+protobuf = "*"
+typing-extensions = "*"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "*"
+pytest-cov = "*"
+pytest-asyncio = "*"
+pytest-html = "*"
+requests-mock = "*"
+black = "*"
+pylint = "*"
+mypy = "*"
+types-requests = "*"
+pydocstyle = "*"
+sphinx = "*"
+sphinxcontrib-napoleon = "*"
+sphinx-rtd-theme = "*"
+twine = "*"
+coverage-badge = "=1.1.0"
+construct-typing = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
