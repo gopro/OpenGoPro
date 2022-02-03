@@ -5,4 +5,5 @@
 
 from open_gopro.gopro import GoPro
 from open_gopro.__version__ import __version__
+from open_gopro.api import Params
 from open_gopro.responses import GoProResp

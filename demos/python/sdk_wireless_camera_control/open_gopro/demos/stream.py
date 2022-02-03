@@ -12,7 +12,7 @@ from typing import Tuple, Optional
 
 from rich.console import Console
 
-from open_gopro import GoPro
+from open_gopro import GoPro, Params
 from open_gopro.util import launch_vlc, setup_logging
 
 logger = logging.getLogger(__name__)
@@ -35,7 +35,7 @@ def main() -> int:
         with GoPro(identifier, wifi_interface=wifi_interface) as gopro:
             # Turn off the shutter if we are currently encoding
             if gopro.is_encoding:
-                assert gopro.ble_command.set_shutter(gopro.params.Shutter.OFF)
+                assert gopro.ble_command.set_shutter(Params.Shutter.OFF)
 
             assert gopro.ble_command.set_turbo_mode(False).is_ok
 
@@ -46,25 +46,18 @@ def main() -> int:
             console.print("Launching VLC...")
             threading.Thread(target=launch_vlc, args=(vlc_location,), daemon=True).start()
 
-            console.print(
-                "Success!! :smiley: Stream has been enabled. VLC is viewing it at udp://@:8554",
-                style="bold green",
-            )
+            console.print("Success!! :smiley: Stream has been enabled. VLC is viewing it at udp://@:8554")
             console.print("Send keyboard interrupt to exit.")
 
             while True:
                 time.sleep(0.2)
 
-    except Exception as e:  # pylint: disable=broad-except
-        logger.error(repr(e))
-        return_code = 1
     except KeyboardInterrupt:
         console.print("Received keyboard interrupt. Shutting down...")
-    finally:
-        if gopro is not None:
-            gopro.close()
-        console.print("Exiting...")
-        return return_code  # pylint: disable=lost-exception
+    if gopro is not None:
+        gopro.close()
+    console.print("Exiting...")
+    return return_code
 
 
 def parse_arguments() -> Tuple[str, Path, Path, Optional[str]]:

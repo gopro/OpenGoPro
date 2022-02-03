@@ -34,6 +34,7 @@ Here is a guide for the levels:
 ===================  =======================
     Logging Level      Module use
 ===================  =======================
+logging.TRACE        Custom logging level with even more information then debug. You should not need this.
 logging.DEBUG        Maximum amount of information. Byte level tx / rx.
 logging.INFO         String-level tx / rx. This is very readable.
 logging.WARNING      Things that shouldn't have happened but won't break anything

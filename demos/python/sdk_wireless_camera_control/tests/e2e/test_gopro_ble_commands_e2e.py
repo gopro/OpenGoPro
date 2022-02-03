@@ -7,8 +7,7 @@ import time
 
 import pytest
 
-from open_gopro import GoPro, gopro
-from open_gopro.api.v1_0 import params
+from open_gopro import GoPro, Params
 
 
 class TestCommon:
@@ -77,13 +76,12 @@ class TestCommon:
     @pytest.mark.asyncio
     async def test_shutter(self, gopro_ble_no_wifi: GoPro):
         print("Setting shutter on...")
-        assert gopro_ble_no_wifi.ble_command.set_shutter(gopro_ble_no_wifi.params.Shutter.ON).is_ok
+        assert gopro_ble_no_wifi.ble_command.set_shutter(Params.Shutter.ON).is_ok
         time.sleep(1)
         print("Setting shutter off...")
-        assert gopro_ble_no_wifi.ble_command.set_shutter(gopro_ble_no_wifi.params.Shutter.OFF).is_ok
+        assert gopro_ble_no_wifi.ble_command.set_shutter(Params.Shutter.OFF).is_ok
 
     @pytest.mark.asyncio
-    @pytest.xfail  # TODO Hero9 is failing when disabling turbo mode. figure this out when verifying protobuf commands
     async def test_turbo_mode(self, gopro_ble_no_wifi: GoPro):
         if gopro_ble_no_wifi.version == "1.0":
             pytest.skip("HERO9 not accepting Turbo Mode Off")
@@ -96,9 +94,9 @@ class TestCommon:
     async def test_narrow_param_value(self, gopro_ble_no_wifi: GoPro):
         version = gopro_ble_no_wifi.version
         if version == 1.0:
-            assert gopro_ble_no_wifi.params.VideoFOV.NARROW.value == 6
+            assert Params.VideoFOV.NARROW.value == 6
         elif version == 2.0:
-            assert gopro_ble_no_wifi.params.VideoFOV.NARROW.value == 2
+            assert Params.VideoFOV.NARROW.value == 2
         else:
             pytest.fail(f"Need to implement test for version {version}")
 
@@ -107,7 +105,7 @@ class TestCommon:
 class TestHero9Specific:
     @pytest.mark.asyncio
     async def test_cycle_resolutions(self, gopro_ble_no_wifi: GoPro):
-        assert gopro_ble_no_wifi.ble_command.load_preset(gopro_ble_no_wifi.params.Preset.CINEMATIC).is_ok
+        assert gopro_ble_no_wifi.ble_command.load_preset(Params.Preset.CINEMATIC).is_ok
         time.sleep(2)
         response = gopro_ble_no_wifi.ble_setting.resolution.get_capabilities_values()
         assert response.is_ok
@@ -117,7 +115,7 @@ class TestHero9Specific:
 
     @pytest.mark.asyncio
     async def test_cycle_presets(self, gopro_ble_no_wifi: GoPro):
-        for preset in gopro_ble_no_wifi.params.Preset:
+        for preset in Params.Preset:
             print(f"Setting {preset=}")
             assert gopro_ble_no_wifi.ble_command.load_preset(preset).is_ok
 
@@ -126,13 +124,9 @@ class TestHero9Specific:
 class TestHero10Specific:
     @pytest.mark.asyncio
     async def test_cycle_resolutions(self, gopro_ble_no_wifi: GoPro):
-        assert gopro_ble_no_wifi.ble_setting.max_lens_mode.set(
-            gopro_ble_no_wifi.params.MaxLensMode.DEFAULT
-        ).is_ok
-        assert gopro_ble_no_wifi.ble_setting.video_performance_mode.set(
-            gopro_ble_no_wifi.params.VideoPerformanceMode.MAX_PERFORMANCE
-        )
-        assert gopro_ble_no_wifi.ble_command.load_preset(gopro_ble_no_wifi.params.Preset.CINEMATIC).is_ok
+        assert gopro_ble_no_wifi.ble_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT).is_ok
+        assert gopro_ble_no_wifi.ble_setting.video_performance_mode.set(Params.PerformanceMode.MAX_PERFORMANCE)
+        assert gopro_ble_no_wifi.ble_command.load_preset(Params.Preset.CINEMATIC).is_ok
         time.sleep(2)
         response = gopro_ble_no_wifi.ble_setting.resolution.get_capabilities_values()
         assert response.is_ok
@@ -144,24 +138,20 @@ class TestHero10Specific:
     async def test_cycle_presets(self, gopro_ble_no_wifi: GoPro):
         # First test for Max Lens-compatible presets only
         print("Testing Max-Lens-compatible presets...")
-        assert gopro_ble_no_wifi.ble_setting.max_lens_mode.set(
-            gopro_ble_no_wifi.params.MaxLensMode.MAX_LENS
-        ).is_ok
-        for preset in [x for x in gopro_ble_no_wifi.params.Preset if "max" in x.name.lower()]:
+        assert gopro_ble_no_wifi.ble_setting.max_lens_mode.set(Params.MaxLensMode.MAX_LENS).is_ok
+        for preset in [x for x in Params.Preset if "max" in x.name.lower()]:
             print(f"Setting {preset=}")
             assert gopro_ble_no_wifi.ble_command.load_preset(preset).is_ok
 
         # Now test non-Max Lens-compatible presets that are not extended battery
         print("Testing Max Performance Mode presets...")
-        assert gopro_ble_no_wifi.ble_setting.max_lens_mode.set(
-            gopro_ble_no_wifi.params.MaxLensMode.DEFAULT
-        ).is_ok
+        assert gopro_ble_no_wifi.ble_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT).is_ok
         assert gopro_ble_no_wifi.ble_setting.video_performance_mode.set(
-            gopro_ble_no_wifi.params.VideoPerformanceMode.MAX_PERFORMANCE
+            Params.PerformanceMode.MAX_PERFORMANCE
         ).is_ok
         for preset in [
             x
-            for x in gopro_ble_no_wifi.params.Preset
+            for x in Params.Preset
             if "max" not in x.name.lower()
             and not x.name.lower().endswith("_eb")
             and "tripod" not in x.name.lower()
@@ -172,25 +162,17 @@ class TestHero10Specific:
         # Now test extended battery presets
         print("Testing Extended Battery Presets")
         assert gopro_ble_no_wifi.ble_setting.video_performance_mode.set(
-            gopro_ble_no_wifi.params.VideoPerformanceMode.EXTENDED_BATTERY
+            Params.PerformanceMode.EXTENDED_BATTERY
         ).is_ok
-        for preset in [
-            x
-            for x in gopro_ble_no_wifi.params.Preset
-            if "max" not in x.name.lower() and x.name.endswith("_EB")
-        ]:
+        for preset in [x for x in Params.Preset if "max" not in x.name.lower() and x.name.endswith("_EB")]:
             print(f"Setting {preset=}")
             assert gopro_ble_no_wifi.ble_command.load_preset(preset).is_ok
 
         # Now test tripod presets
         print("Testing Tripod Presets")
         assert gopro_ble_no_wifi.ble_setting.video_performance_mode.set(
-            gopro_ble_no_wifi.params.VideoPerformanceMode.STATIONARY
+            Params.PerformanceMode.STATIONARY
         ).is_ok
-        for preset in [
-            x
-            for x in gopro_ble_no_wifi.params.Preset
-            if "max" not in x.name.lower() and "tripod" in x.name.lower()
-        ]:
+        for preset in [x for x in Params.Preset if "max" not in x.name.lower() and "tripod" in x.name.lower()]:
             print(f"Setting {preset=}")
             assert gopro_ble_no_wifi.ble_command.load_preset(preset).is_ok

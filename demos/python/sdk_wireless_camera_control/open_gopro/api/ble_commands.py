@@ -1,16 +1,16 @@
 # ble_commands.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Tue Sep  7 21:35:52 UTC 2021
 
-"""BLE API for Open GoPro version 1.0"""
+"""BLE API for Open GoPro"""
 
 from __future__ import annotations
 import logging
-from typing import Type, List, Optional
+from datetime import datetime
+from typing import List, Optional
 
 from construct import Int8ub, Int32ub, Int64ub, Flag, GreedyString, Struct, Padding, PaddedString, this, Hex
 
 from open_gopro import proto
-from open_gopro.proto.request_get_preset_status_pb import EnumRegisterPresetStatus
 from open_gopro.responses import GoProResp
 from open_gopro.communication_client import GoProBle
 from open_gopro.api.builders import (
@@ -23,6 +23,7 @@ from open_gopro.api.builders import (
     BleProtoCommand,
     build_enum_adapter,
     DeprecatedAdapter,
+    DateTimeAdapter,
 )
 from open_gopro.constants import (
     ActionId,
@@ -33,12 +34,12 @@ from open_gopro.constants import (
     StatusId,
     GoProUUIDs,
 )
-from .params import ParamsV1_0 as Params
+from . import params as Params
 
 logger = logging.getLogger(__name__)
 
 
-class BleCommandsV1_0:
+class BleCommands:
     # pylint: disable = missing-class-docstring, arguments-differ, useless-super-delegation, missing-return-doc
     """All of the BLE commands.
 
@@ -170,11 +171,11 @@ class BleCommandsV1_0:
 
         self.set_turbo_mode = TurboMode(
             communicator,
-            GoProUUIDs.CQ_COMMAND,
-            FeatureId.COMMAND,
-            ActionId.SET_TURBO_MODE,
-            proto.RequestSetTurboActive,
-            proto.ResponseGeneric,
+            uuid=GoProUUIDs.CQ_COMMAND,
+            feature_id=FeatureId.COMMAND,
+            action_id=ActionId.SET_TURBO_MODE,
+            request_proto=proto.RequestSetTurboActive,
+            response_proto=proto.ResponseGeneric,
         )
         """Enable / disable turbo mode.
 
@@ -188,18 +189,19 @@ class BleCommandsV1_0:
         class GetPresetStatus(BleProtoCommand):
             def __call__(
                 self,
-                register_preset_status: Optional[List[EnumRegisterPresetStatus]] = None,
-                unregister_preset_status: Optional[List[EnumRegisterPresetStatus]] = None,
+                register_preset_status: Optional[List[Params.RegisterPresetStatus]] = None,
+                unregister_preset_status: Optional[List[Params.RegisterPresetStatus]] = None,
             ) -> GoProResp:
                 return super().__call__(register_preset_status or [], unregister_preset_status or [])
 
         self.get_preset_status = GetPresetStatus(
             communicator,
-            GoProUUIDs.CQ_QUERY,
-            FeatureId.QUERY,
-            ActionId.GET_PRESET_STATUS,
-            proto.RequestGetPresetStatus,
-            proto.NotifyPresetStatus,
+            uuid=GoProUUIDs.CQ_QUERY,
+            feature_id=FeatureId.QUERY,
+            action_id=ActionId.GET_PRESET_STATUS,
+            request_proto=proto.RequestGetPresetStatus,
+            response_proto=proto.NotifyPresetStatus,
+            additional_matching_action_ids={ActionId.PRESET_MODIFIED_NOTIFICATION},
         )
         """Get information about what Preset Groups and Presets the camera supports in its current state.
 
@@ -226,7 +228,7 @@ class BleCommandsV1_0:
         """Get the Wifi password.
 
         Returns:
-            GoProResp: command status and passworde
+            GoProResp: command status and password
         """
 
         self.get_camera_statuses = BleWriteNoParamsCommand(
@@ -302,8 +304,42 @@ class BleCommandsV1_0:
         # TODO
         # self.register_for_all_capabilities
 
+        self.set_date_time = BleWriteWithParamsCommand[datetime](
+            communicator, GoProUUIDs.CQ_COMMAND, CmdId.SET_DATE_TIME, DateTimeAdapter(Int8ub[7])
+        )
+        """Set the camera's date and time"""
 
-class BleSettingsV1_0:
+        self.get_date_time = BleWriteNoParamsCommand(
+            communicator,
+            GoProUUIDs.CQ_COMMAND,
+            CmdId.GET_DATE_TIME,
+            Struct("date_time" / DateTimeAdapter(Int8ub[8])),
+        )
+        """Get the camera's date and time"""
+
+        class SetCameraControl(BleProtoCommand):
+            def __call__(self, control: Params.CameraControlStatus) -> GoProResp:
+                return super().__call__(control)
+
+        self.set_camera_control = SetCameraControl(
+            communicator,
+            uuid=GoProUUIDs.CQ_COMMAND,
+            feature_id=FeatureId.COMMAND,
+            action_id=ActionId.SET_CAMERA_CONTROL,
+            request_proto=proto.RequestSetCameraControlStatus,
+            response_proto=proto.ResponseGeneric,
+        )
+        """Enable / disable turbo mode.
+
+        Args:
+            active (bool): True to enable, False to disable.
+
+        Returns:
+            GoProResp: result status (EnumResultGeneric)
+        """
+
+
+class BleSettings:
     # pylint: disable=missing-class-docstring, unused-argument
     """The collection of all Settings.
 
@@ -320,7 +356,7 @@ class BleSettingsV1_0:
         Does not include the 'communicator' instance.
         """
 
-        def __init__(self, settings: "BleSettingsV1_0"):
+        def __init__(self, settings: "BleSettings"):
             self._index = 0
             self._setting_attributes = list(settings.__dict__.values())[1:]  # Skip communicator
 
@@ -340,53 +376,60 @@ class BleSettingsV1_0:
             # End of Iteration
             raise StopIteration
 
-    def __init__(self, communicator: GoProBle, params: Type[Params]):
+    def __init__(self, communicator: GoProBle):
         self.communicator = communicator
 
         self.resolution: BleSetting = BleSetting[Params.Resolution](
-            self.communicator, SettingId.RESOLUTION, build_enum_adapter(params.Resolution)
+            self.communicator, SettingId.RESOLUTION, build_enum_adapter(Params.Resolution)
         )
         """Resolution. Set with :py:class:`Params.Resolution`"""
 
         self.fps: BleSetting = BleSetting[Params.FPS](
-            self.communicator, SettingId.FPS, build_enum_adapter(params.FPS)
+            self.communicator, SettingId.FPS, build_enum_adapter(Params.FPS)
         )
         """Frames per second. Set with :py:class:`Params.FPS`"""
 
         self.auto_off: BleSetting = BleSetting[Params.AutoOff](
-            self.communicator, SettingId.AUTO_OFF, build_enum_adapter(params.AutoOff)
+            self.communicator, SettingId.AUTO_OFF, build_enum_adapter(Params.AutoOff)
         )
         """Set the auto off time. Set with :py:class:`Params.AutoOff`"""
 
         self.video_field_of_view: BleSetting = BleSetting[Params.VideoFOV](
-            self.communicator, SettingId.VIDEO_FOV, build_enum_adapter(params.VideoFOV)
+            self.communicator, SettingId.VIDEO_FOV, build_enum_adapter(Params.VideoFOV)
         )
         """Video FOV. Set with :py:class:`Params.VideoFOV`"""
 
         self.photo_field_of_view: BleSetting = BleSetting[Params.PhotoFOV](
-            self.communicator, SettingId.PHOTO_FOV, build_enum_adapter(params.PhotoFOV)
+            self.communicator, SettingId.PHOTO_FOV, build_enum_adapter(Params.PhotoFOV)
         )
         """Photo FOV. Set with :py:class:`Params.PhotoFOV`"""
 
         self.multi_shot_field_of_view: BleSetting = BleSetting[Params.MultishotFOV](
-            self.communicator, SettingId.MULTI_SHOT_FOV, build_enum_adapter(params.MultishotFOV)
+            self.communicator, SettingId.MULTI_SHOT_FOV, build_enum_adapter(Params.MultishotFOV)
         )
         """Multi-shot FOV. Set with :py:class:`Params.Multishot`"""
 
         self.led: BleSetting = BleSetting[Params.LED](
-            self.communicator, SettingId.LED, build_enum_adapter(params.LED)
+            self.communicator, SettingId.LED, build_enum_adapter(Params.LED)
         )
         """Set the LED options (or also send the BLE keep alive signal). Set with :py:class:`Params.LED`"""
 
         self.max_lens_mode: BleSetting = BleSetting[Params.MaxLensMode](
-            self.communicator, SettingId.MAX_LENS_MOD, build_enum_adapter(params.MaxLensMode)
+            self.communicator, SettingId.MAX_LENS_MOD, build_enum_adapter(Params.MaxLensMode)
         )
         """Enable / disable max lens mod. Set with :py:class:`Params.MaxLensMode`"""
 
         self.hypersmooth = BleSetting[Params.HypersmoothMode](
-            self.communicator, SettingId.HYPERSMOOTH, build_enum_adapter(params.HypersmoothMode)
+            self.communicator, SettingId.HYPERSMOOTH, build_enum_adapter(Params.HypersmoothMode)
         )
         """Set / disable hypersmooth. Set with :py:class:`Params.HypersmoothMode`"""
+
+        self.video_performance_mode = BleSetting[Params.PerformanceMode](
+            self.communicator,
+            SettingId.VIDEO_PERFORMANCE_MODE,
+            build_enum_adapter(Params.PerformanceMode),
+        )
+        """Video Performance Mode. Set with :py:class:`Params.PerformanceMode`"""
 
     def __iter__(self) -> Iterator:
         """Return an iterable of this instance's attributes
@@ -396,10 +439,10 @@ class BleSettingsV1_0:
         Returns:
             Iterator: next attribute
         """
-        return BleSettingsV1_0.Iterator(self)
+        return BleSettings.Iterator(self)
 
 
-class BleStatusesV1_0:
+class BleStatuses:
     """All of the BLE Statuses.
 
     To be used by a GoProBle delegate to build status commands.
@@ -415,7 +458,7 @@ class BleStatusesV1_0:
         Does not include the 'communicator' instance.
         """
 
-        def __init__(self, statuses: "BleStatusesV1_0"):
+        def __init__(self, statuses: "BleStatuses"):
             self._index = 0
             self._status_attributes = list(statuses.__dict__.values())[1:]  # Skip communicator
 
@@ -435,7 +478,7 @@ class BleStatusesV1_0:
             # End of Iteration
             raise StopIteration
 
-    def __init__(self, communicator: GoProBle, params: Type[Params]) -> None:
+    def __init__(self, communicator: GoProBle) -> None:
         self.communicator = communicator
 
         self.batt_present: BleStatus = BleStatus(self.communicator, StatusId.BATT_PRESENT, Flag)
@@ -472,12 +515,12 @@ class BleStatusesV1_0:
         """Are Wireless Connections enabled?"""
 
         self.pair_state: BleStatus = BleStatus(
-            self.communicator, StatusId.PAIR_STATE, build_enum_adapter(params.PairState)
+            self.communicator, StatusId.PAIR_STATE, build_enum_adapter(Params.PairState)
         )
         """What is the pair state?"""
 
         self.pair_type: BleStatus = BleStatus(
-            self.communicator, StatusId.PAIR_TYPE, build_enum_adapter(params.PairType)
+            self.communicator, StatusId.PAIR_TYPE, build_enum_adapter(Params.PairType)
         )
         """The last type of pairing that the camera was engaged in."""
 
@@ -485,7 +528,7 @@ class BleStatusesV1_0:
         """	Time (milliseconds) since boot of last successful pairing complete action."""
 
         self.wap_scan_state: BleStatus = BleStatus(
-            self.communicator, StatusId.WAP_SCAN_STATE, build_enum_adapter(params.WAPState)
+            self.communicator, StatusId.WAP_SCAN_STATE, build_enum_adapter(Params.WAPState)
         )
         """State of current scan for Wifi Access Points. Appears to only change for CAH-related scans."""
 
@@ -493,7 +536,7 @@ class BleStatusesV1_0:
         """The time, in milliseconds since boot that the Wifi Access Point scan completed."""
 
         self.wap_prov_stat: BleStatus = BleStatus(
-            self.communicator, StatusId.WAP_PROV_STAT, build_enum_adapter(params.WAPState)
+            self.communicator, StatusId.WAP_PROV_STAT, build_enum_adapter(Params.WAPState)
         )
         """Wifi AP provisioning state."""
 
@@ -523,7 +566,7 @@ class BleStatusesV1_0:
         """Is preview stream enabled?"""
 
         self.sd_status: BleStatus = BleStatus(
-            self.communicator, StatusId.SD_STATUS, build_enum_adapter(params.SDStatus)
+            self.communicator, StatusId.SD_STATUS, build_enum_adapter(Params.SDStatus)
         )
         """Primary Storage Status."""
 
@@ -551,7 +594,7 @@ class BleStatusesV1_0:
         """This status is deprecated."""
 
         self.ota_stat: BleStatus = BleStatus(
-            self.communicator, StatusId.OTA_STAT, build_enum_adapter(params.OTAStatus)
+            self.communicator, StatusId.OTA_STAT, build_enum_adapter(Params.OTAStatus)
         )
         """The current status of Over The Air (OTA) update."""
 
@@ -589,7 +632,7 @@ class BleStatusesV1_0:
         """The min time between camera status updates (msec). Do not poll for status more often than this."""
 
         self.analytics_rdy: BleStatus = BleStatus(
-            self.communicator, StatusId.ANALYTICS_RDY, build_enum_adapter(params.AnalyticsState)
+            self.communicator, StatusId.ANALYTICS_RDY, build_enum_adapter(Params.AnalyticsState)
         )
         """The current state of camera analytics."""
 
@@ -603,7 +646,7 @@ class BleStatusesV1_0:
         """How many min of Timelapse video can be captured with current settings before sdcard is full?"""
 
         self.exposure_type: BleStatus = BleStatus(
-            self.communicator, StatusId.EXPOSURE_TYPE, build_enum_adapter(params.ExposureMode)
+            self.communicator, StatusId.EXPOSURE_TYPE, build_enum_adapter(Params.ExposureMode)
         )
         """Liveview Exposure Select Mode."""
 
@@ -623,7 +666,7 @@ class BleStatusesV1_0:
         """Internal battery level (percent)."""
 
         self.acc_mic_stat: BleStatus = BleStatus(
-            self.communicator, StatusId.ACC_MIC_STAT, build_enum_adapter(params.ExposureMode)
+            self.communicator, StatusId.ACC_MIC_STAT, build_enum_adapter(Params.ExposureMode)
         )
         """Microphone Accesstory status."""
 
@@ -631,7 +674,7 @@ class BleStatusesV1_0:
         """	Digital Zoom level (percent)."""
 
         self.wireless_band: BleStatus = BleStatus(
-            self.communicator, StatusId.WIRELESS_BAND, build_enum_adapter(params.WifiBand)
+            self.communicator, StatusId.WIRELESS_BAND, build_enum_adapter(Params.WifiBand)
         )
         """Wireless Band."""
 
@@ -645,7 +688,7 @@ class BleStatusesV1_0:
         """Is the camera currently in First Time Use (FTU) UI flow?"""
 
         self.sec_sd_stat: BleStatus = BleStatus(
-            self.communicator, StatusId.SEC_SD_STAT, build_enum_adapter(params.SDStatus)
+            self.communicator, StatusId.SEC_SD_STAT, build_enum_adapter(Params.SDStatus)
         )
         """Secondary Storage Status (exclusive to Superbank)."""
 
@@ -662,7 +705,7 @@ class BleStatusesV1_0:
         """Is the camera getting too cold to continue recording?"""
 
         self.orientation: BleStatus = BleStatus(
-            self.communicator, StatusId.ORIENTATION, build_enum_adapter(params.Orientation)
+            self.communicator, StatusId.ORIENTATION, build_enum_adapter(Params.Orientation)
         )
         """The rotational orientation of the camera."""
 
@@ -673,7 +716,7 @@ class BleStatusesV1_0:
         """Is this camera capable of zooming while encoding (static value based on model, not settings)?"""
 
         self.flatmode_id: BleStatus = BleStatus(
-            self.communicator, StatusId.FLATMODE_ID, build_enum_adapter(params.Flatmode)
+            self.communicator, StatusId.FLATMODE_ID, build_enum_adapter(Params.Flatmode)
         )
         """Current flatmode ID."""
 
@@ -715,12 +758,12 @@ class BleStatusesV1_0:
         self.media_mod_mic_stat: BleStatus = BleStatus(
             self.communicator,
             StatusId.MEDIA_MOD_MIC_STAT,
-            build_enum_adapter(params.MediaModMicStatus),
+            build_enum_adapter(Params.MediaModMicStatus),
         )
         """Media mod State."""
 
         self.timewarp_speed_ramp: BleStatus = BleStatus(
-            self.communicator, StatusId.TIMEWARP_SPEED_RAMP, build_enum_adapter(params.TimeWarpSpeed)
+            self.communicator, StatusId.TIMEWARP_SPEED_RAMP, build_enum_adapter(Params.TimeWarpSpeed)
         )
         """Time Warp Speed."""
 
@@ -728,7 +771,7 @@ class BleStatusesV1_0:
         """Is the system's Linux core active?"""
 
         self.camera_lens_type: BleStatus = BleStatus(
-            self.communicator, StatusId.CAMERA_LENS_TYPE, build_enum_adapter(params.MaxLensMode)
+            self.communicator, StatusId.CAMERA_LENS_TYPE, build_enum_adapter(Params.MaxLensMode)
         )
         """Camera lens type (reflects changes to setting 162)."""
 
@@ -745,12 +788,35 @@ class BleStatusesV1_0:
         """Is the camera in the process of creating a custom preset?"""
 
         self.media_mod_stat: BleStatus = BleStatus(
-            self.communicator, StatusId.MEDIA_MOD_STAT, build_enum_adapter(params.MediaModStatus)
+            self.communicator, StatusId.MEDIA_MOD_STAT, build_enum_adapter(Params.MediaModStatus)
         )
         """Media Mode Status (bitmasked)."""
 
         self.turbo_mode: BleStatus = BleStatus(self.communicator, StatusId.TURBO_MODE, Flag)
         """Is Turbo Transfer active?"""
+
+        self.sd_rating_check_error: BleStatus = BleStatus(
+            self.communicator, StatusId.SD_RATING_CHECK_ERROR, Flag
+        )
+        """Does sdcard meet specified minimum write speed?"""
+
+        self.sd_write_speed_error: BleStatus = BleStatus(
+            self.communicator, StatusId.SD_WRITE_SPEED_ERROR, Int8ub
+        )
+        """Number of sdcard write speed errors since device booted"""
+
+        self.camera_control: BleStatus = BleStatus(
+            self.communicator, StatusId.CAMERA_CONTROL, build_enum_adapter(Params.CameraControlStatus)
+        )
+        """Camera control status ID"""
+
+        self.usb_connected: BleStatus = BleStatus(self.communicator, StatusId.USB_CONNECTED, Flag)
+        """Is the camera connected to a PC via USB?"""
+
+        self.control_allowed_over_usb: BleStatus = BleStatus(
+            self.communicator, StatusId.CONTROL_OVER_USB, Flag
+        )
+        """Is control allowed over USB?"""
 
     def __iter__(self) -> Iterator:
         """Return an iterable of this instance's attributes
@@ -760,4 +826,4 @@ class BleStatusesV1_0:
         Returns:
             Iterator: next attribute
         """
-        return BleStatusesV1_0.Iterator(self)
+        return BleStatuses.Iterator(self)

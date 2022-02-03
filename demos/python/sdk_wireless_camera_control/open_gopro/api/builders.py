@@ -5,11 +5,12 @@
 
 from __future__ import annotations
 import enum
+import types
 import logging
-from datetime import datetime
 from pathlib import Path
-from dataclasses import dataclass, fields
+from datetime import datetime
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from typing import (
     Any,
     ClassVar,
@@ -23,10 +24,11 @@ from typing import (
     Callable,
     Tuple,
     List,
+    Set,
 )
+from _collections_abc import Iterable
 
 import wrapt
-import requests
 import betterproto
 from construct import Int8ub, Int16ub, Struct, Adapter, GreedyBytes
 
@@ -51,6 +53,7 @@ from open_gopro.constants import (
     GoProUUIDs,
 )
 from open_gopro.communication_client import GoProBle, GoProWifi
+from open_gopro.util import build_log_rx_str, build_log_tx_str, custom_betterproto_to_dict
 
 logger = logging.getLogger(__name__)
 
@@ -66,9 +69,9 @@ def log_query(
     wrapped: Callable, instance: Union[BleSetting, BleStatus, WifiSetting], args: Any, kwargs: Any
 ) -> Callable:
     """Log a query write."""
-    logger.info(f"<----------- {wrapped.__name__} : {instance.identifier}")
+    logger.info(build_log_tx_str(f"{wrapped.__name__} : {instance.identifier}"))
     response = wrapped(*args, **kwargs)
-    logger.info(f"-----------> {response}")
+    logger.info(build_log_rx_str(response))
     return response
 
 
@@ -230,9 +233,9 @@ class BleReadCommand(BleCommand):
 
     # pylint: disable=missing-return-doc
     def __call__(self) -> GoProResp:  # noqa: D102
-        logger.info(f"<----------- {self.uuid.name}")
+        logger.info(build_log_tx_str(self.uuid.name))
         response = self.communicator._read_characteristic(self.uuid)
-        logger.info(f"-----------> {self.uuid.name} : {response}")
+        logger.info(build_log_rx_str(f"{self.uuid.name} : {response}"))
         return response
 
 
@@ -261,13 +264,13 @@ class BleWriteNoParamsCommand(BleCommand):
 
     # pylint: disable=missing-return-doc
     def __call__(self) -> GoProResp:  # noqa: D102
-        logger.info(f"<----------- {self.cmd.name}")
+        logger.info(build_log_tx_str(self.cmd.name))
         # Build data buffer
         data = bytearray([self.cmd.value])
         data.insert(0, len(data))
         # Send the data and receive the response
         response = self.communicator._write_characteristic_receive_notification(self.uuid, data)
-        logger.info(f"-----------> \n{response}")
+        logger.info(build_log_rx_str(response))
         return response
 
 
@@ -297,7 +300,7 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
 
     # pylint: disable=missing-return-doc
     def __call__(self, value: CommandValueType) -> GoProResp:  # noqa: D102
-        logger.info(f"<----------- {self.cmd.name}: {str(value)}")
+        logger.info(build_log_tx_str(f"{self.cmd.name}: {str(value)}"))
         # Build data buffer
         data = bytearray([self.cmd.value])
         # Mypy is not understanding the subclass check here
@@ -308,7 +311,7 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
         data.insert(0, len(data))
         # Send the data and receive the response
         response = self.communicator._write_characteristic_receive_notification(self.uuid, data)
-        logger.info(f"-----------> \n{response}")
+        logger.info(build_log_rx_str(response))
         return response
 
 
@@ -386,20 +389,9 @@ def build_protobuf_adapter(protobuf: Type[betterproto.Message]) -> Adapter:
             Returns:
                 Dict[Any, Any]: parsed JSON dict
             """
-            response = self.protobuf().FromString(bytes(obj))
-            data = response.to_dict()
-            # HACK to get actual enum from betterproto instead of string.
-            # TODO: Remove once https://github.com/danielgtaylor/python-betterproto/pull/203 is merged
-            for field in fields(response):
-                value = getattr(response, field.name)
-                meta = betterproto.FieldMetadata.get(field)
-                if meta.proto_type == betterproto.TYPE_ENUM:
-                    enum_values = list(self.protobuf()._betterproto.cls_by_field[field.name])
-                    if isinstance(value, list):
-                        data[field.name] = [enum_values[e] for e in value]
-                    else:
-                        data[field.name] = enum_values[value]
-            return data
+            response: betterproto.Message = self.protobuf().FromString(bytes(obj))
+            response.to_dict = types.MethodType(custom_betterproto_to_dict, response)  # type: ignore
+            return response.to_dict()  # type: ignore
 
         def _encode(self, *_: Any) -> Any:
             raise NotImplementedError
@@ -420,12 +412,21 @@ class BleProtoCommand(BleCommand):
         action_id (FeatureId): protobuf specific action ID that is being sent
         request_proto (Type[betterproto.Message]): protobuf used to build command bytestream
         response_proto (Type[betterproto.Message]): protobuf used to parse received bytestream
+        additional_matching_action_ids: (Optional[Set[ActionId]]): Other action ID's to share
+            this parser. Defaults to None.
     """
 
     feature_id: FeatureId
     action_id: ActionId
     request_proto: Type[betterproto.Message]
     response_proto: Type[betterproto.Message]
+    additional_matching_action_ids: Optional[Set[ActionId]] = None
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if self.additional_matching_action_ids:
+            for action_id in self.additional_matching_action_ids:
+                self.communicator._add_parser(action_id, self._response_parser)
 
     @property
     def _identifier(self) -> ResponseType:
@@ -447,7 +448,9 @@ class BleProtoCommand(BleCommand):
         # This pattern is technically violating the Liskov substitution principle. But we are accepting this as a
         # tradeoff for exposing type hints on BLE Protobuf commands.
         logger.info(
-            f"<----------- {self.action_id.name} : {' '.join([*[str(a) for a in args], *[str(a) for a in kwargs.values()]])}"
+            build_log_tx_str(
+                f"{self.action_id.name} : {' '.join([*[str(a) for a in args], *[str(a) for a in kwargs.values()]])}"
+            )
         )
 
         # Build request protobuf bytestream
@@ -470,7 +473,7 @@ class BleProtoCommand(BleCommand):
 
         # Allow exception to pass through if protobuf not completely initialized
         response = self.communicator._write_characteristic_receive_notification(self.uuid, request)
-        logger.info(f"-----------> \n{response}")
+        logger.info(build_log_rx_str(response))
         return response
 
 
@@ -506,7 +509,7 @@ class BleSetting(Generic[SettingValueType]):
         Returns:
             GoProResp: Status of set
         """
-        logger.info(f"<----------- Set {self.identifier.name}: {str(value)}")
+        logger.info(build_log_tx_str(f"Set {self.identifier.name}: {str(value)}"))
 
         data = bytearray([self.identifier.value])
         try:
@@ -517,7 +520,7 @@ class BleSetting(Generic[SettingValueType]):
         data.insert(0, len(data))
         response = self.communicator._write_characteristic_receive_notification(self.setter_uuid, data)
 
-        logger.info(f"-----------> \n{response}")
+        logger.info(build_log_rx_str(response))
         return response
 
     @log_query
@@ -749,7 +752,8 @@ class WifiGetJsonWithParams(WifiGetJsonCommand, Generic[CommandValueType]):
 
     # pylint: disable=missing-return-doc
     def __call__(self, value: CommandValueType) -> GoProResp:  # noqa: D102
-        logger.info(f"<----------- {self.endpoint.format(str(value))}")
+        values: List[CommandValueType] = [*value] if isinstance(value, Iterable) else [value]
+        logger.info(build_log_tx_str(f"{self.endpoint.format(*values)}"))
 
         # Build list of args as they should be represented in URL
         url_params = []
@@ -758,11 +762,11 @@ class WifiGetJsonWithParams(WifiGetJsonCommand, Generic[CommandValueType]):
         elif issubclass(type(value), enum.Enum):
             url_params.append(value.value)  # type: ignore
         else:
-            url_params.append(value)  # type: ignore
+            url_params.extend(values)  # type: ignore
         url = self.endpoint.format(*url_params)
         # Send to camera
         response = self.communicator._get(url)
-        logger.info(f"-----------> \n{response}")
+        logger.info(build_log_rx_str(response))
         return response
 
 
@@ -778,12 +782,11 @@ class WifiGetJsonNoParams(WifiGetJsonCommand):
 
     # pylint: disable=missing-return-doc
     def __call__(self) -> GoProResp:  # noqa: D102
-        logger.info(f"<----------- {self.endpoint}")
-
+        logger.info(build_log_tx_str(self.endpoint))
         url = self.endpoint
         # Send to camera
         response = self.communicator._get(url)
-        logger.info(f"-----------> \n{response}")
+        logger.info(build_log_rx_str(response))
         return response
 
 
@@ -805,27 +808,18 @@ class WifiGetBinary(ABC):
     # pylint: disable=missing-return-doc
     def __call__(self, /, **kwargs) -> Path:  # noqa: D102
         # The method that will actually send the command and receive the stream
-
         # This method's signature shall be override by the subclass.
         # The subclass shall then pass the arguments to this method and return it's returned response
-
         # This pattern is technically violating the Liskov substitution principle. But we are accepting this as a
-        # tradeoff for exposing type hints on BLE Protobuf commands.
-        logger.info(f'<----------- {self.endpoint} : {" ".join([str(x) for x in list(kwargs.values())])}')
+        # tradeoff for exposing type hints on commands.
         camera_file = kwargs["camera_file"]
-        try:
-            local_file = Path(kwargs["local_file"])
-        except KeyError:
-            local_file = Path(".") / camera_file
+        local_file = Path(kwargs["local_file"]) if "local_file" in kwargs else Path(".") / camera_file
+        logger.info(build_log_tx_str(f"{self.endpoint.format(camera_file)} ===> {local_file}"))
 
         url = self.endpoint.format(camera_file)
         # Send to camera
-        try:
-            self.communicator._stream_to_file(url, local_file)
-        except requests.exceptions.HTTPError as e:
-            logger.error(repr(e))
-        else:
-            logger.info("-----------> SUCCESS")
+        self.communicator._stream_to_file(url, local_file)
+        logger.info(build_log_rx_str("SUCCESS"))
         return local_file
 
 
@@ -856,7 +850,7 @@ class WifiSetting(Generic[SettingValueType]):
         Returns:
             GoProResp: Status of set
         """
-        logger.info(f"<----------- Setting {self.identifier}: {value}")
+        logger.info(build_log_tx_str(f"Setting {self.identifier}: {value}"))
         # Build url. TODO fix this type error with Mixin (or passing in endpoint as argument)
         value = value.value if isinstance(value, enum.Enum) else value
         url = self.communicator._api.wifi_setting.endpoint.format(self.identifier.value, value)  # type: ignore

@@ -12,7 +12,7 @@ from typing import Tuple, Optional
 
 from rich.console import Console
 
-from open_gopro import GoPro
+from open_gopro import GoPro, Params
 from open_gopro.constants import QueryCmdId
 from open_gopro.util import launch_vlc, setup_logging, set_logging_level
 
@@ -61,16 +61,14 @@ def main() -> int:
 
             with console.status("[bold green]Ensuring the shutter is off..."):
                 if gopro.is_encoding:
-                    assert gopro.ble_command.set_shutter(gopro.params.Shutter.OFF).is_ok
+                    assert gopro.ble_command.set_shutter(Params.Shutter.OFF).is_ok
 
             with console.status("[bold green]Starting with known state..."):
                 assert gopro.ble_command.set_turbo_mode(False).is_ok
-                # Ensure we are in a mode that can enter photo preset
-                if gopro.version >= 2.0:
-                    assert gopro.ble_setting.video_performance_mode.set(
-                        gopro.params.VideoPerformanceMode.MAX_PERFORMANCE
-                    ).is_ok
-                    assert gopro.ble_setting.max_lens_mode.set(gopro.params.MaxLensMode.DEFAULT).is_ok
+                assert gopro.ble_setting.video_performance_mode.set(
+                    Params.PerformanceMode.MAX_PERFORMANCE
+                ).is_ok
+                assert gopro.ble_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT).is_ok
 
             with console.status("[bold green]Getting all statuses via BLE..."):
                 for status, value in gopro.ble_command.get_camera_statuses().items():
@@ -88,7 +86,7 @@ def main() -> int:
                 console.print(f"Version is {version['major']}.{version['minor']}")
 
             with console.status("[bold green]Setting Cinematic preset..."):
-                assert gopro.ble_command.load_preset(gopro.params.Preset.CINEMATIC).is_ok
+                assert gopro.ble_command.load_preset(Params.Preset.CINEMATIC).is_ok
 
             with console.status("[bold green]Getting some individual values via BLE..."):
                 resolution = gopro.ble_setting.resolution.get_value().flatten
@@ -105,7 +103,7 @@ def main() -> int:
                 console.print(f"Current video FOV capabilities are: {fov_caps}")
 
             with console.status("[bold green]Registering for push notifications..."):
-                assert gopro.ble_setting.resolution.set(gopro.params.Resolution.RES_1080).is_ok
+                assert gopro.ble_setting.resolution.set(Params.Resolution.RES_1080).is_ok
                 fps_caps_update = gopro.ble_setting.fps.register_value_update().flatten
                 console.print(f"New fps capabilities are: {fps_caps_update}")
                 assert gopro.ble_setting.resolution.register_value_update().is_ok
@@ -116,31 +114,31 @@ def main() -> int:
                 assert gopro.ble_status.encoding_active.register_value_update().is_ok
 
             with console.status("[bold green]Taking a photo..."):
-                assert gopro.ble_command.load_preset(gopro.params.Preset.PHOTO).is_ok
-                assert gopro.ble_command.set_shutter(gopro.params.Shutter.ON).is_ok
+                assert gopro.ble_command.load_preset(Params.Preset.PHOTO).is_ok
+                assert gopro.ble_command.set_shutter(Params.Shutter.ON).is_ok
 
             with console.status("[bold green]Taking a video..."):
-                assert gopro.ble_command.load_preset(gopro.params.Preset.CINEMATIC).is_ok
-                assert gopro.ble_command.set_shutter(gopro.params.Shutter.ON).is_ok
+                assert gopro.ble_command.load_preset(Params.Preset.CINEMATIC).is_ok
+                assert gopro.ble_command.set_shutter(Params.Shutter.ON).is_ok
                 time.sleep(2)  # Take a 2 second video
-                assert gopro.ble_command.set_shutter(gopro.params.Shutter.OFF).is_ok
+                assert gopro.ble_command.set_shutter(Params.Shutter.OFF).is_ok
 
             with console.status("[bold green]Testing some capability pushes"):
-                assert gopro.ble_setting.resolution.set(gopro.params.Resolution.RES_1080).is_ok
-                assert gopro.ble_setting.fps.set(gopro.params.FPS.FPS_30).is_ok
-                assert gopro.ble_setting.fps.set(gopro.params.FPS.FPS_240).is_ok
+                assert gopro.ble_setting.resolution.set(Params.Resolution.RES_1080).is_ok
+                assert gopro.ble_setting.fps.set(Params.FPS.FPS_30).is_ok
+                assert gopro.ble_setting.fps.set(Params.FPS.FPS_240).is_ok
                 assert gopro.ble_setting.resolution.get_capabilities_values().is_ok
-                assert gopro.ble_setting.video_field_of_view.set(gopro.params.VideoFOV.LINEAR).is_ok
-                assert gopro.ble_setting.video_field_of_view.set(gopro.params.VideoFOV.NARROW).is_ok
-                assert gopro.ble_setting.video_field_of_view.set(gopro.params.VideoFOV.WIDE).is_ok
+                assert gopro.ble_setting.video_field_of_view.set(Params.VideoFOV.LINEAR).is_ok
+                assert gopro.ble_setting.video_field_of_view.set(Params.VideoFOV.NARROW).is_ok
+                assert gopro.ble_setting.video_field_of_view.set(Params.VideoFOV.WIDE).is_ok
                 # We expect this to fail as it is not valid with the current resolution
-                assert not gopro.ble_setting.video_field_of_view.set(gopro.params.VideoFOV.MAX_SUPERVIEW).is_ok
+                assert not gopro.ble_setting.video_field_of_view.set(Params.VideoFOV.MAX_SUPERVIEW).is_ok
                 # Cycle through resolutions. This will cause other settings (and their capabilities) to update
                 for resolution in resolution_caps:
                     assert gopro.ble_setting.resolution.set(resolution).is_ok
 
             with console.status("[bold green]Get media list and download some media..."):
-                assert gopro.wifi_command.set_preset(gopro.params.Preset.PHOTO).is_ok
+                assert gopro.wifi_command.set_preset(Params.Preset.PHOTO).is_ok
                 media_list = gopro.wifi_command.get_media_list()["media"][0]["fs"]
                 # Find a picture and download it
                 picture = ""
@@ -167,8 +165,8 @@ def main() -> int:
                 assert gopro.wifi_command.get_preset_status().is_ok
 
             with console.status("[bold green]Cycling through resolutions via Wifi..."):
-                assert gopro.wifi_command.set_preset(gopro.params.Preset.CINEMATIC).is_ok
-                for resolution in gopro.params.Resolution:
+                assert gopro.wifi_command.set_preset(Params.Preset.CINEMATIC).is_ok
+                for resolution in Params.Resolution:
                     assert gopro.wifi_setting.resolution.set(resolution).is_ok
 
             with console.status("[bold green]Starting the preview stream..."):

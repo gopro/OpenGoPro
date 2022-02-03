@@ -4,7 +4,6 @@
 from pathlib import Path
 
 from open_gopro.communication_client import GoProWifi
-from open_gopro.api import api_versions
 
 
 def test_get_with_no_params(wifi_communicator: GoProWifi):
@@ -16,6 +15,13 @@ def test_get_with_params(wifi_communicator: GoProWifi):
     zoom = 99
     url = wifi_communicator.wifi_command.set_digital_zoom(zoom)
     assert url == f"gopro/camera/digital_zoom?percent={zoom}"
+
+
+def test_with_multiple_params(wifi_communicator: GoProWifi):
+    media_file = "XXX.mp4"
+    offset_ms = 2500
+    url = wifi_communicator.wifi_command.add_video_hilight((media_file, offset_ms))
+    assert url == "gopro/media/hilight/file?path=100GOPRO/XXX.mp4&ms=2500"
 
 
 def test_get_binary(wifi_communicator: GoProWifi):

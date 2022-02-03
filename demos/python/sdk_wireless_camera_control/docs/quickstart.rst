@@ -8,7 +8,8 @@ QuickStart Guide
 
 
 Open GoPro installs with several command line demos to demonstrate BLE and Wi-Fi. The source code for these example
-can be found in `$INSTALL/demos` where $INSTALL can be found with:
+can be found on `Github <https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control/open_gopro/demos>`_
+or locally in `$INSTALL/demos` where $INSTALL can be found with:
 
 .. code-block:: console
 

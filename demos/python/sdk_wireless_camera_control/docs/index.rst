@@ -49,11 +49,11 @@ Features
 --------
 
 - Top-level GoPro class interface to use both BLE / WiFi
-- Cross-platform (tested on MacOS Big Sur, Windows 10, and Ubuntu 20.04)
+- Cross-platform (tested on Windows 10, and Ubuntu 20.04, and >= MacOS Big Sur)
 
     - BLE controller implemented using `bleak <https://pypi.org/project/bleak/>`_
     - Wi-Fi controller provided in the Open GoPro package (loosely based on the `Wireless Library <https://pypi.org/project/wireless/>`_ )
-- Supports all commands, settings, and statuses from the `Open GoPro API <https://gopro.github.io/OpenGoPro/>`_
+- Supports all wireless commands, settings, and statuses from the `Open GoPro API <https://gopro.github.io/OpenGoPro/>`_
 - Supports all versions of the Open GoPro API
 - Automatically handles connection maintenance:
 

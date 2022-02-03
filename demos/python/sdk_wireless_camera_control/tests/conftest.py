@@ -35,17 +35,11 @@ from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
 from open_gopro.responses import GoProResp
 from open_gopro.constants import ErrorCode, ProducerType, CmdId, GoProUUIDs
 from open_gopro.communication_client import GoProBle, GoProWifi, GoProResponder
-from open_gopro.api import (
-    api_versions,
-    BleCommands,
-    BleSettings,
-    BleStatuses,
-    WifiCommands,
-    WifiSettings,
-    Params,
-)
+from open_gopro.api import Api, BleCommands, BleSettings, BleStatuses, WifiCommands, WifiSettings, Params
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
 from open_gopro.util import setup_logging, set_logging_level
+
+api_versions = {"2.0": Api}
 
 ##############################################################################################################
 #                                             Log Management
@@ -224,13 +218,13 @@ class BleCommunicatorTest(GoProBle):
 
     def _write_characteristic_receive_notification(self, uuid: BleUUID, data: bytearray) -> GoProResp:
         response = good_response
-        response._info = [uuid]
+        response._meta = [uuid]
         response._raw_packet = data
         return response
 
     def _read_characteristic(self, uuid: BleUUID) -> GoProResp:
         response = good_response
-        response._info = [uuid]
+        response._meta = [uuid]
         return response
 
     @property
@@ -244,10 +238,6 @@ class BleCommunicatorTest(GoProBle):
     @property
     def ble_status(self) -> BleStatuses:
         return self._api.ble_status
-
-    @property
-    def params(self) -> Type[Params]:
-        return self._api.params
 
 
 @pytest.fixture(scope="module", params=versions)
@@ -313,10 +303,6 @@ class WifiCommunicatorTest(GoProWifi):
     def wifi_setting(self) -> WifiSettings:
         return self._api.wifi_setting
 
-    @property
-    def params(self) -> Type[Params]:
-        return self._api.params
-
 
 @pytest.fixture(scope="module", params=versions)
 async def wifi_communicator(request):
@@ -346,7 +332,7 @@ class FlattenPatch:
 
 good_response = GoProResp(
     parsers=None,
-    info=[],
+    meta=[],
     status=ErrorCode.SUCCESS,
 )
 
@@ -355,7 +341,7 @@ _test_response_id = CmdId.SET_SHUTTER
 
 def _test_parse(self: GoProResp) -> None:
     self._state = GoProResp._State.PARSED
-    self._info = [_test_response_id]
+    self._meta = [_test_response_id]
 
 
 class GoProTest(GoPro):
@@ -434,7 +420,7 @@ class GoProTestMaintainBle(GoPro):
             enable_wifi=True,
             maintain_ble=True,
         )
-        self._test_version = "1.0"
+        self._test_version = "2.0"
         self._api.ble_command.get_open_gopro_api_version = self._test_return_version
         self.ble_status.encoding_active.register_value_update = lambda *args: None
         self.ble_status.system_ready.register_value_update = lambda *args: None

@@ -30,32 +30,6 @@ This can be imported as:
 .. automodule:: open_gopro.gopro
    :members:
 
-Responses
-=========
-
-This can be imported via:
-
-.. code-block:: python
-
-   from open_gopro import GoProResp
-
-.. autoclass:: open_gopro.responses.GoProResp
-   :members:
-
-Constants
-=========
-
-These can be imported as:
-
-.. code-block:: python
-
-   from open_gopro import constants
-
-
-.. automodule:: open_gopro.constants
-   :members:
-   :undoc-members:
-
 API
 ===
 
@@ -90,104 +64,72 @@ WiFi Setting
 .. autoclass:: open_gopro.api.builders.WifiSetting
    :members:
 
-API Version 1.0
----------------
+BLE Commands
+------------
 
-This is the API that the user should actually use to interface with the camera.
-
-BLE 1.0 Commands
-^^^^^^^^^^^^^^^^
-
-.. autoclass:: open_gopro.api.v1_0.ble_commands.BleCommandsV1_0
+.. autoclass:: open_gopro.api.ble_commands.BleCommands
    :members:
 
-BLE 1.0 Settings
-^^^^^^^^^^^^^^^^
+BLE Settings
+------------
 
-.. autoclass:: open_gopro.api.v1_0.ble_commands.BleSettingsV1_0
+.. autoclass:: open_gopro.api.ble_commands.BleSettings
    :members:
 
-BLE 1.0 Statuses
-^^^^^^^^^^^^^^^^
+BLE Statuses
+------------
 
-.. autoclass:: open_gopro.api.v1_0.ble_commands.BleStatusesV1_0
+.. autoclass:: open_gopro.api.ble_commands.BleStatuses
    :members:
 
-WiFi 1.0 Commands
-^^^^^^^^^^^^^^^^^
+WiFi Commands
+-------------
 
-.. autoclass:: open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0
+.. autoclass:: open_gopro.api.wifi_commands.WifiCommands
    :members:
 
-WiFi 1.0 Settings
-^^^^^^^^^^^^^^^^^
+WiFi Settings
+-------------
 
-.. autoclass:: open_gopro.api.v1_0.wifi_commands.WifiSettingsV1_0
+.. autoclass:: open_gopro.api.wifi_commands.WifiSettings
    :members:
 
-1.0 Parameters
-^^^^^^^^^^^^^^
+Parameters
+----------
 
 All of these parameters can be accessed via:
 
 .. code-block:: python
 
-   from open_gopro import params
+   from open_gopro import Params
 
-.. autoclass:: open_gopro.api.v1_0.params.ParamsV1_0
+.. autoclass:: open_gopro.api.params
    :members:
    :undoc-members:
 
-API Version 2.0
----------------
+Responses
+=========
 
-This is the API that the user should actually use to interface with the camera.
-
-BLE 2.0 Commands
-^^^^^^^^^^^^^^^^
-
-.. autoclass:: open_gopro.api.v2_0.ble_commands.BleCommandsV2_0
-   :members:
-   :inherited-members:
-
-BLE 2.0 Settings
-^^^^^^^^^^^^^^^^
-
-.. autoclass:: open_gopro.api.v2_0.ble_commands.BleSettingsV2_0
-   :members:
-   :inherited-members:
-
-BLE 2.0 Statuses
-^^^^^^^^^^^^^^^^
-
-.. autoclass:: open_gopro.api.v2_0.ble_commands.BleStatusesV2_0
-   :members:
-   :inherited-members:
-
-WiFi 2.0 Commands
-^^^^^^^^^^^^^^^^^
-
-.. autoclass:: open_gopro.api.v2_0.wifi_commands.WifiCommandsV2_0
-   :members:
-   :inherited-members:
-
-WiFi 2.0 Settings
-^^^^^^^^^^^^^^^^^
-
-.. autoclass:: open_gopro.api.v2_0.wifi_commands.WifiSettingsV2_0
-   :members:
-   :inherited-members:
-
-2.0 Parameters
-^^^^^^^^^^^^^^
-
-All of these parameters can be accessed via:
+This can be imported via:
 
 .. code-block:: python
 
-   from open_gopro import params
+   from open_gopro import GoProResp
 
-.. autoclass:: open_gopro.api.v2_0.params.ParamsV2_0
+.. autoclass:: open_gopro.responses.GoProResp
+   :members:
+
+
+Constants
+=========
+
+These can be imported as:
+
+.. code-block:: python
+
+   from open_gopro import constants
+
+
+.. automodule:: open_gopro.constants
    :members:
    :undoc-members:
-   :inherited-members:

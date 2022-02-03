@@ -240,12 +240,12 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                 task_connect = asyncio.create_task(bleak_client.connect(timeout=timeout), name="connect")
                 task_disconnected = asyncio.create_task(connect_session.disconnected.wait(), name="disconnect")
                 finished, unfinished = await asyncio.wait(
-                    [task_connect, task_disconnected],
-                    return_when=asyncio.FIRST_COMPLETED,
+                    [task_connect, task_disconnected], return_when=asyncio.FIRST_COMPLETED
                 )
                 for task in finished:
-                    if task.exception() is not None:
-                        exception = task.exception()  # TODO this can apparently be blank?
+                    if exception := task.exception():
+                        if isinstance(task.exception(), asyncio.exceptions.TimeoutError):
+                            exception = Exception("Connection request timed out")
                         # Completion of these is tasks mutually exclusive so safe to stop now
                         break
                 for task in unfinished:
@@ -255,14 +255,16 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
             except (BleakError, asyncio.TimeoutError) as e:
                 exception = e
 
-            if not exception:
-                try:
-                    assert bleak_client.is_connected  # TODO is this needed?
-                    # Now set the application's desired disconnect callback
-                    bleak_client._disconnected_callback = disconnect_cb
-                except AssertionError:
-                    exception = Exception("Something happened during discovery (maybe?)")
+            # TODO is this needed?
+            # if not exception:
+            #     try:
+            #         assert bleak_client.is_connected
+            #         # Now set the application's desired disconnect callback
+            #         bleak_client._disconnected_callback = disconnect_cb
+            #     except AssertionError:
+            #         exception = Exception("Something happened during discovery")
 
+            bleak_client.set_disconnected_callback(disconnect_cb)
             return bleak_client, exception
 
         client, exception = self._as_coroutine(_async_connect)

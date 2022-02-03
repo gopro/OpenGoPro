@@ -46,7 +46,7 @@ def test_ble_threads_start(gopro_client_maintain_ble: GoPro):
 
 @pytest.mark.asyncio
 def test_gopro_is_instanciated(gopro_client: GoPro):
-    assert gopro_client.version == 1.0
+    assert gopro_client.version == 2.0
     assert gopro_client.identifier is None
     assert gopro_client._is_ble_initialized
     with pytest.raises(InvalidConfiguration):

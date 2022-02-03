@@ -74,16 +74,12 @@ def main() -> int:
             while True:
                 time.sleep(1)
 
-    except Exception as e:  # pylint: disable=broad-except
-        logger.error(repr(e))
-        return_code = 1
     except KeyboardInterrupt:
         logger.warning("Received keyboard interrupt. Shutting down...")
-    finally:
-        if gopro is not None:
-            gopro.close()
-        console.print("Exiting...")
-        return return_code  # pylint: disable=lost-exception
+    if gopro is not None:
+        gopro.close()
+    console.print("Exiting...")
+    return return_code
 
 
 if __name__ == "__main__":

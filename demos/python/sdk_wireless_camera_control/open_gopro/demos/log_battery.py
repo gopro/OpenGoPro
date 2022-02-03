@@ -138,19 +138,15 @@ def main() -> int:
                         SAMPLE_INDEX += 1
                         time.sleep(poll)
 
-    except Exception as e:  # pylint: disable=broad-except
-        logger.error(repr(e))
-        return_code = 1
     except KeyboardInterrupt:
         logger.warning("Received keyboard interrupt. Shutting down...")
-    finally:
-        if len(SAMPLES) > 0:
-            csv_location = Path(log_location.parent) / "battery_results.csv"
-            dump_results_as_csv(csv_location)
-        if gopro is not None:
-            gopro.close()
-        console.print("Exiting...")
-        return return_code  # pylint: disable=lost-exception
+    if len(SAMPLES) > 0:
+        csv_location = Path(log_location.parent) / "battery_results.csv"
+        dump_results_as_csv(csv_location)
+    if gopro is not None:
+        gopro.close()
+    console.print("Exiting...")
+    return return_code
 
 
 def parse_arguments() -> Tuple[str, Path, Optional[int]]:

@@ -113,6 +113,7 @@ class ActionId(GoProEnum):
     SET_CAMERA_CONTROL = 0x69
     SET_TURBO_MODE = 0x6B
     GET_PRESET_STATUS = 0x72
+    PRESET_MODIFIED_NOTIFICATION = 0x73
 
 
 class FeatureId(GoProEnum):
@@ -184,7 +185,7 @@ class SettingId(GoProEnum):
     INTERNAL_124 = 124
     INTERNAL_125 = 125
     INTERNAL_126 = 126
-    INTERNAL_128 = 128
+    MEDIA_FORMAT = 128
     INTERNAL_129 = 129
     INTERNAL_130 = 130
     INTERNAL_131 = 131
@@ -346,7 +347,7 @@ class StatusId(GoProEnum):
     TURBO_MODE = 113
     CAMERA_CONTROL = 114
     USB_CONNECTED = 115
-    INTERNAL_116 = 116
+    CONTROL_OVER_USB = 116
 
 
 ProducerType = Tuple[QueryCmdId, Union[SettingId, StatusId]]

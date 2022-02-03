@@ -16,7 +16,7 @@ yet) connected GoPro camera resource.
 Once a `GoPro` instance is :ref:`opened<Opening>`, it can be interacted with (via BLE and / or WiFi) by:
 
 - Performing synchronous :ref:`data operations<Synchronous Data Operations>` to send a command and receive a GoPro Response
-- Registering for :ref:`push notifications<Asynchronous Push Notifications>` and getting these after they are enqueued
+- Registering for :ref:`asynchronous push notifications<Asynchronous Push Notifications>` and getting these after they are enqueued
 
 .. note:: There is a lot of logging throughout the Open GoPro package. See :ref:`troubleshooting <troubleshooting>` for more info.
 
@@ -76,6 +76,8 @@ The `GoPro` class takes the following optional arguments:
 - **enable_wifi**: a boolean to optionally disable WiFi. This defaults to True (i.e. WiFi is enabled). If set
   to False, the camera's WiFI AP will not be discovered / connected to and a command will be sent to the camera to
   disable its WiFi.
+- **wifi_interface**: optionally specify the hardware  WiFi interface to use. If None (or not set), first
+  discovered interface will be used.
 - **maintain_ble**: a boolean to optionally disable some BLE housekeeping. This defaults to True. If set to
   False, the keep-alive signal will not be automatically sent and the camera's encoding / ready state will not
   be tracked. This is most likely not desirable for the user and is mostly used for testing.
@@ -84,35 +86,15 @@ API Version
 -----------
 
 As mentioned above, one of the steps during the opening sequence is to query the camera's Open GoPro API version.
-Once this is done, the relevant commands, settings, and statuses properties of the `GoPro` instance are
-set to access a specific version. This means that the attributes of these properties can change depending on the
-camera that you connect to if you are connecting to cameras supporting different Open GoPro versions. That is,
-different versions can, for example, have different commands and / or parameters.
+This SDK only supported Open GoPro API Version 2.0 so will raise an Exception if the connected camera is
+using anything else.
 
-Here are the relevant properties which will all be expanded upon (with accompanying example code) below:
-
-- :meth:`open_gopro.gopro.GoPro.params`
-- :meth:`open_gopro.gopro.GoPro.ble_command`
-- :meth:`open_gopro.gopro.GoPro.ble_setting`
-- :meth:`open_gopro.gopro.GoPro.ble_status`
-- :meth:`open_gopro.gopro.GoPro.wifi_command`
-- :meth:`open_gopro.gopro.GoPro.wifi_setting`
-
-Also, the version string can be accessed via the `version` property
+The version string can be accessed via the `version` property
 
 - :meth:`open_gopro.gopro.GoPro.version`
 
-For example,
+Also, the version string can be accessed via the `version` property
 
-.. code-block:: python
-
-    with GoPro() as gopro:
-        print(f"This camera supports Open GoPro version {gopro.version}")
-
-.. note::
-    Since the API is set (by version) dynamically after connection, it is not possible to perform static type checking
-    on the top-level Open GoPro API calls. The benefit of this approach is that the user does not need to
-    manually choose the API to use.
 
 Camera Readiness
 ----------------
@@ -133,15 +115,14 @@ For example,
         while gopro.is_encoding or gopro.is_ready:
             pass
 
-Just to reiterate...it is not needed or recommended to worry about this as all of this internal state is managed automatically
+Just to reiterate...it is not needed or recommended to worry about this as the internal state is managed automatically
 by the `GoPro` instance.
 
 Sending Commands
 ================
 
 Once the `GoPro` instance has been :ref:`opened<opening>`, it is now possible to send commands to the camera
-(provided that the camera is :ref:`ready<camera readiness>`) using the Open GoPro API :ref:`version<API Version>`
-that the camera supports. This is done either via:
+(provided that the camera is :ref:`ready<camera readiness>`). This is done either via:
 
 - synchronous data operations
 - registering for asynchronous push notifications
@@ -152,28 +133,16 @@ Selecting Parameters
 --------------------
 
 Whenever a parameter is required for a command, it will be type-hinted in the method definition as either a basic Python type
-or an Enum from the version-specific `params` class (i.e. :class:`open_gopro.api.v1_0.params.ParamsV1_0` for version
-1.0). Since parameters can vary by open GoPro version, this params class should be accessed using the `GoPro` instance's
-`params` property (:meth:`open_gopro.gopro.GoPro.params`). Doing so will ensure that the correct parameter set
-is dynamically chosen.
+or an Enum from the `params` module (`class:`open_gopro.api.params`).
 
-For example, if we want to send the "set shutter" command, we can see that it takes one parameter (`shutter`) which
-is of type `Shutter`:
-
-.. image:: _static/shows_param_type.png
-    :width: 80%
-
-The `Shutter` class can accessed via `gopro.params.Shutter` where a decent editor should show the available options:
-
-.. image:: _static/valid_params.png
-    :width: 60%
-
-Here is the full example for clarity:
+Here is a full example for clarity:
 
 .. code-block:: python
 
+    from open_gopro import GoPro, Params
+
     with GoPro() as gopro:
-        gopro.ble_command.set_shutter(gopro.params.Shutter.ON)
+        gopro.ble_command.set_shutter(Params.Shutter.ON)
 
 Synchronous Data Operations
 ---------------------------
@@ -184,16 +153,16 @@ the method will block until a :ref:`response<handling responses>` is received.
 Commands
 ^^^^^^^^
 
-Commands are instance methods of a version-specific Commands class instance
-(i.e. :class:`open_gopro.api.v1_0.ble_commands.BleCommandsV1_0` or
-:class:`open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0`), thus they can be called directly:
+Commands are callable instance attributes of a Commands class instance
+(i.e. :class:`open_gopro.api.ble_commands.BleCommands` or
+:class:`open_gopro.api.wifi_commands.WifiCommands`), thus they can be called directly:
 
 .. code-block:: python
 
     with GoPro() as gopro:
-        gopro.wifi_command.set_preset(gopro.params.Preset.ACTIVITY)
-        gopro.ble_command.set_shutter(gopro.params.Shutter.ON)
-        gopro.wifi_command.set_shutter(gopro.params.Shutter.OFF)
+        gopro.wifi_command.set_preset(Params.Preset.ACTIVITY)
+        gopro.ble_command.set_shutter(Params.Shutter.ON)
+        gopro.wifi_command.set_shutter(Params.Shutter.OFF)
 
 Statuses
 ^^^^^^^^
@@ -216,15 +185,15 @@ It is also possible to read all statuses at once via:
 
 .. note::
     WiFi can not access individual statuses. Instead it can use the `get_camera_state`
-    (:meth:`open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_camera_state`)
+    (:meth:`open_gopro.api.wifi_commands.WifiCommands.get_camera_state`)
     command to retrieve all of them (as well as all of the settings) at once
 
 Settings
 ^^^^^^^^
 
 Settings are instances of a BleSetting(:class:`open_gopro.api.builders.BleSetting`)
-or WifiSetting(:class:`open_gopro.api.builders.WifiSetting`). They cam be interacted synchronously in several
-ways:
+or WifiSetting(:class:`open_gopro.api.builders.WifiSetting`). They can be interacted synchronously in several
+ways.
 
 Their values can be read (via BLE) using the `get_value` method as such:
 
@@ -243,7 +212,7 @@ It is also possible to read all settings at once via:
 
 .. note::
     WiFi can not access individual settings. Instead it can use the `get_camera_state`
-    (:meth:`open_gopro.api.v1_0.wifi_commands.WifiCommandsV1_0.get_camera_state`)
+    (:meth:`open_gopro.api.wifi_commands.WifiCommands.get_camera_state`)
     command to retrieve all of them (as well as all of the statuses) at once.
 
 Depending on the camera's current state, settings will have differing capabilities. It is possible to query
@@ -262,8 +231,8 @@ Settings' values can be set (via either BLE or WiFI) using the `set` method as s
 .. code-block:: python
 
     with GoPro() as gopro:
-        gopro.ble_setting.resolution.set(gopro.params.Resolution.RES_4K)
-        gopro.wifi_setting.fps.set(gopro.params.FPS.FPS_30)
+        gopro.ble_setting.resolution.set(Params.Resolution.RES_4K)
+        gopro.wifi_setting.fps.set(Params.FPS.FPS_30)
 
 Asynchronous Push Notifications
 -------------------------------
@@ -279,7 +248,7 @@ It is possible to enable push notifications for any of the following:
 Firstly, the desired settings / id must be registered for.
 
 Once registered, the camera will send a push notification when the relevant setting / status changes. These
-responses are added to an internal queue of the `GoPro` instance be retrieved from via
+responses are added to an internal queue of the `GoPro` instance be retrieved via
 :meth:`open_gopro.gopro.get_update`.
 
 It is possible to stop receiving notifications by issuing the relevant unregister command, i.e.:
@@ -300,7 +269,7 @@ Here is an example of registering for and receiving FOV updates:
         print(f"Current FOV is {current_fov}")
         # Get updates until we get a FOV update
         while True:
-            update = gopro.get_update()
+            update = gopro.get_update() # Block until update is received
             if SettingId.VIDEO_FOV in update:
                 print(f"New resolution is {update[SettingId.VIDEO_FOV]}")
                 break
@@ -312,13 +281,13 @@ Here is an example of registering for and receiving FOV updates:
 
 .. note:: It is probably desirable to have a separate thread to retrieve these updates as the demo examples do.
 
-It is also possible to register / unregister for all settings and / or statuses via one API call using the
+It is also possible to register / unregister for **all** settings and / or statuses via one API call using the
 following commands:
 
-- register for all  setting notifications via :meth:`open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_settings`
-- register for all status notifications via :meth:`open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.register_for_all_statuses`
-- unregister for all  setting notifications via :meth:`open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_settings`
-- unregister for all status notifications via :meth:`open_gopro.api.v1_0.ble_commands.BleCommandsV1_0.unregister_for_all_statuses`
+- register for all  setting notifications via :meth:`open_gopro.api.ble_commands.BleCommands.register_for_all_settings`
+- register for all status notifications via :meth:`open_gopro.api.ble_commands.BleCommands.register_for_all_statuses`
+- unregister for all  setting notifications via :meth:`open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings`
+- unregister for all status notifications via :meth:`open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses`
 
 Handling Responses
 ==================
@@ -420,7 +389,7 @@ Similarly, `__contains__` and `__iter__` have also been overridden to operate on
     ['SettingId.RESOLUTION']
 
 .. note:: The `Open GoPro Documentation <https://gopro.github.io/OpenGoPro/>`_ should be referenced in regards
-    to how to access the JSON.
+    to how to access the JSON for each response.
 
 Value Flattening
 ----------------
@@ -466,7 +435,7 @@ for now, it will look ugly like this:
 Closing
 =======
 
-It is important to close the camera resource when you are done with it. This can be in two ways. If the context
+It is important to close the camera resource when you are done with it. This can be done in two ways. If the context
 manager was used, it will automatically be closed when exiting, i.e.:
 
 .. code-block:: python
@@ -491,5 +460,6 @@ Otherwise, you will need to manually call the `close` method, i.e.:
 The `close` method will handle gracefully disconnecting BLE and Wifi.
 
 .. warning::
-    If the resource is not closed correctly, it is possible that your OS will maintain the BLE connection to it.
-    This will cause reconnection problems as the device will not be advertising when you try to reconnect.
+    If the resource is not closed correctly, it is possible that your OS will maintain the BLE connection after
+    the program exits. This will cause reconnection problems as your OS will not discover devices it is
+    already connected to.

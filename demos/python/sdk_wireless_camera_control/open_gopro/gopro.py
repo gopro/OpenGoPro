@@ -15,7 +15,6 @@ from typing import Any, Dict, Final, Optional, Type, Callable, Union, Generic, P
 
 import wrapt
 import requests
-from open_gopro.api.v1_0.api import ApiV1_0
 
 from open_gopro.exceptions import (
     GoProNotInitialized,
@@ -28,19 +27,10 @@ from open_gopro.ble import BLEController, BleUUID, BleDevice
 from open_gopro.ble.adapters import BleakWrapperController
 from open_gopro.wifi import WifiController
 from open_gopro.wifi.adapters import Wireless
-from open_gopro.util import SnapshotQueue
+from open_gopro.util import SnapshotQueue, build_log_rx_str
 from open_gopro.responses import GoProResp
 from open_gopro.constants import CmdId, GoProUUIDs, StatusId, QueryCmdId, ProducerType
-from open_gopro.api import (
-    Api,
-    api_versions,
-    BleCommands,
-    BleSettings,
-    BleStatuses,
-    WifiCommands,
-    WifiSettings,
-    Params,
-)
+from open_gopro.api import Api, BleCommands, BleSettings, BleStatuses, WifiCommands, WifiSettings, Params
 from open_gopro.communication_client import GoProBle, GoProWifi
 
 logger = logging.getLogger(__name__)
@@ -141,13 +131,13 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
     It can be used via context manager:
 
     >>> with GoPro() as gopro:
-    >>>     gopro.ble_command.set_shutter(gopro.params.Shutter.ON)
+    >>>     gopro.ble_command.set_shutter(Params.Shutter.ON)
 
     Or without:
 
     >>> gopro = GoPro()
     >>> gopro.open()
-    >>> gopro.ble_command.set_shutter(gopro.params.Shutter.ON)
+    >>> gopro.ble_command.set_shutter(Params.Shutter.ON)
     >>> gopro.close()
 
     Args:
@@ -190,8 +180,8 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         GoProBle.__init__(self, ble_adapter(), self._disconnect_handler, self._notification_handler, target)
         GoProWifi.__init__(self, wifi_adapter(wifi_interface))
 
-        # We start with version 1.0. It will be updated once we query the version
-        self._api: Api = ApiV1_0(self, self)
+        # We currently only support version 2.0
+        self._api = Api(self, self)
 
         # Current accumulating synchronous responses, indexed by GoProUUIDs. This assumes there can only be one active response per BleUUID
         self._active_resp: Dict[BleUUID, GoProResp] = {}
@@ -291,7 +281,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
     def version(self) -> float:
         """The API version does the connected camera supports
 
-        Note! If we have not yet connected and query the peer to find its version, this will be set to 1.0
+        Only 2.0 is currently supported
 
         Returns:
             float: supported version in decimal form
@@ -343,15 +333,6 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         """
         return self._api.wifi_setting
 
-    @property
-    def params(self) -> Type[Params]:
-        """Version-specific parameters for BLE / Wifi commands, statuses, and settings
-
-        Returns:
-            Type[Params]: the parameters
-        """
-        return self._api.params
-
     def open(self, timeout: int = 10, retries: int = 5) -> None:
         """Perform all initialization commands for ble and wifi
 
@@ -374,10 +355,8 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             # Find and configure API version
             version = self.ble_command.get_open_gopro_api_version().flatten
             version_str = f"{version.major}.{version.minor}"
-            try:
-                self._api = api_versions[version_str](self, self)
-            except KeyError as e:
-                raise InvalidOpenGoProVersion(version_str) from e
+            if version_str != "2.0":
+                raise InvalidOpenGoProVersion(version)
             logger.info(f"Using Open GoPro API version {version_str}")
 
             # Establish Wifi connection if desired
@@ -427,7 +406,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         Returns:
             bool: True if it succeeded,. False otherwise
         """
-        return self.ble_setting.led.set(self.params.LED.BLE_KEEP_ALIVE).is_ok
+        return self.ble_setting.led.set(Params.LED.BLE_KEEP_ALIVE).is_ok
 
     ##########################################################################################################
     #                                 End Public API
@@ -536,7 +515,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
         # Add to response dict if not already there
         if uuid not in self._active_resp:
-            self._active_resp[uuid] = GoProResp(self._parser_map, info=[uuid])
+            self._active_resp[uuid] = GoProResp(self._parser_map, meta=[uuid])
 
         self._active_resp[uuid]._accumulate(data)
 
@@ -589,7 +568,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
             # If this wasn't the awaited synchronous response...
             if not response_claimed:
-                logger.info(f"--(ASYNC)--> {response}")
+                logger.info(build_log_rx_str(response, asynchronous=True))
                 # See if there are any registered responses that need to be enqueued for client consumption
                 for key in list(response.data.keys()):
                     if (response.cmd, key) not in self._listeners:
@@ -652,7 +631,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         # Store information on the response we are expecting
         self._sync_resp_wait_q.put(GoProResp._from_write_command(self._parser_map, uuid, data))
         # Perform write
-        logger.debug(f"Writing to {uuid.name}: {data.hex(':')}")
+        logger.debug(f"Writing to [{uuid.name}] UUID: {data.hex(':')}")
         self._ble.write(uuid, data)
         # Wait to be notified that response was received
         try:

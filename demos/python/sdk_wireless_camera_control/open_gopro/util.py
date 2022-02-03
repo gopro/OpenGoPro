@@ -4,13 +4,20 @@
 """Miscellaneous utilities for the GoPro package."""
 
 import sys
+import enum
+import json
+import types
 import queue
 import logging
 import subprocess
+import dataclasses
 from pathlib import Path
+from base64 import b64encode
+import http.client as http_client
+from datetime import timedelta, datetime
 from typing import Dict, Type, Any, List, Optional, Union
 
-import http.client as http_client
+import betterproto
 from rich.logging import RichHandler
 from rich import traceback
 
@@ -76,9 +83,10 @@ def setup_logging(logger: Any, output: Path = None, modules: Dict[str, int] = No
     default_modules = {
         "open_gopro.gopro": logging.DEBUG,
         "open_gopro.api.builders": logging.DEBUG,
-        "open_gopro.api.v1_0.wifi_commands": logging.DEBUG,
+        "open_gopro.api.wifi_commands": logging.DEBUG,
+        "open_gopro.api.ble_commands": logging.DEBUG,
         "open_gopro.communication_client": logging.DEBUG,
-        "open_gopro.ble.adapters.bleak_wrapper": logging.DEBUG,
+        "open_gopro.ble.adapters.bleak_wrapper": logging.WARNING,
         "open_gopro.ble.client": logging.DEBUG,
         "open_gopro.wifi.adapters.wireless": logging.INFO,
         "open_gopro.responses": logging.DEBUG,
@@ -141,6 +149,41 @@ def set_logging_level(logger: Any, level: int) -> None:
     for handler in logger.handlers:
         if isinstance(handler, RichHandler):
             handler.setLevel(level)
+
+
+ARROW_HEAD_COUNT = 8
+ARROW_TAIL_COUNT = 14
+
+
+def build_log_tx_str(stringable: Any) -> str:
+    """Build a string with Tx arrows
+
+    Args:
+        stringable (Any): stringable object to surround with arrows
+
+    Returns:
+        str: string surrounded by Tx arrows
+    """
+    arrow = f"{'<'*ARROW_HEAD_COUNT}{'-'*ARROW_TAIL_COUNT}"
+    return f"\n\n{arrow}\n\t{stringable}\n{arrow}\n"
+
+
+def build_log_rx_str(stringable: Any, asynchronous: bool = False) -> str:
+    """Build a string with Rx arrows
+
+    Args:
+        stringable (Any): stringable object to surround with arrows
+        asynchronous (bool, optional): Should the arrows contain ASYNC?. Defaults to False.
+
+    Returns:
+        str: string surrounded by Rx arrows
+    """
+    assert ARROW_TAIL_COUNT > 5
+    if asynchronous:
+        arrow = f"{'-'*(ARROW_TAIL_COUNT//2-3)}ASYNC{'-'*(ARROW_TAIL_COUNT//2-2)}{'>'*ARROW_HEAD_COUNT}"
+    else:
+        arrow = f"{'-'*ARROW_TAIL_COUNT}{'>'*ARROW_HEAD_COUNT}"
+    return f"\n\n{arrow}\n{stringable}\n{arrow}\n"
 
 
 def launch_vlc(location: Optional[Path]) -> None:
@@ -207,6 +250,64 @@ def scrub(obj: Any, bad_key: str) -> None:
         pass
 
 
+def pretty_print(obj: Any) -> str:
+    """Recursively iterate through object and turn elements into strings as desired for eventual json dumping
+
+    Args:
+        obj ([Any]): object to recurse through
+
+    Returns:
+        str: pretty-printed string
+    """
+
+    def stringify(elem: Any) -> Union[str, int, float]:
+        """Get the string value of an element if it is not a number (int, float, etc.)
+
+        Special case for IntEnum since json refuses to treat these as strings.
+
+        Args:
+            elem (Union[str, int, float]): element to potentially stringify
+
+        Returns:
+            str: string representation
+        """
+        if isinstance(elem, (bytes, bytearray)):
+            return elem.hex(":")
+        if isinstance(elem, enum.Enum) and isinstance(elem, int):
+            return str(elem)
+        if not isinstance(elem, (int, float)):
+            return str(elem)
+        return elem
+
+    def recurse(elem: Any) -> Any:
+        """Recursion function
+
+        Args:
+            elem (Any): current element to work on
+
+        Returns:
+            Any: element after recursion is done
+        """
+        if isinstance(elem, dict):
+            # nested dictionary
+            new_dic = {}
+            for k, v in elem.items():
+                if isinstance(v, (dict, list)):
+                    new_dic[recurse(k)] = recurse(v)
+                else:
+                    new_dic[recurse(k)] = stringify(v)
+
+            return new_dic
+
+        if isinstance(elem, list):
+            # nested list
+            return [recurse(t) for t in elem]
+
+        return stringify(elem)
+
+    return json.dumps(recurse(obj), indent=4)
+
+
 def cmd(command: str) -> str:
     """Send a command to the shell and return the result.
 
@@ -257,3 +358,80 @@ class SnapshotQueue(queue.Queue):
         """
         with self.mutex:
             return list(self.queue)
+
+
+# ============================================================================================================
+
+
+def custom_betterproto_to_dict(
+    self: betterproto.Message,
+    casing: betterproto.Casing = betterproto.Casing.CAMEL,
+    include_default_values: bool = False,
+) -> dict:
+    """[summary]
+
+    Args:
+        self (betterproto.Message): [description]
+        casing (betterproto.Casing, optional): [description]. Defaults to betterproto.Casing.CAMEL.
+        include_default_values (bool, optional): [description]. Defaults to False.
+
+    Returns:
+        dict: [description]
+    """
+    output: Dict[str, Any] = {}
+    for field in dataclasses.fields(self):
+        meta = betterproto.FieldMetadata.get(field)
+        v = getattr(self, field.name)
+        cased_name = casing(field.name).rstrip("_")  # type: ignore
+        if meta.proto_type == "message":
+            if isinstance(v, datetime):
+                if v != betterproto.DATETIME_ZERO or include_default_values:
+                    output[cased_name] = betterproto._Timestamp.timestamp_to_json(v)
+            elif isinstance(v, timedelta):
+                if v != timedelta(0) or include_default_values:
+                    output[cased_name] = betterproto._Duration.delta_to_json(v)
+            elif meta.wraps:
+                if v is not None or include_default_values:
+                    output[cased_name] = v
+            elif isinstance(v, list):
+                # Convert each item.
+                values = []
+                for i in v:
+                    i.to_dict = types.MethodType(custom_betterproto_to_dict, i)
+                    values.append(i.to_dict(casing, include_default_values))
+                if values or include_default_values:
+                    output[cased_name] = values
+            else:
+                if v._serialized_on_wire or include_default_values:
+                    v.to_dict = types.MethodType(custom_betterproto_to_dict, v)
+                    output[cased_name] = v.to_dict(casing, include_default_values)
+        elif meta.proto_type == "map":
+            for k in v:
+                if hasattr(v[k], "to_dict"):
+                    v.to_dict = types.MethodType(custom_betterproto_to_dict, v)
+                    v[k] = v[k].to_dict(casing, include_default_values)
+
+            if v or include_default_values:
+                output[cased_name] = v
+        elif v != self._get_field_default(field, meta) or include_default_values:
+            if meta.proto_type in betterproto.INT_64_TYPES:
+                if isinstance(v, list):
+                    output[cased_name] = [str(n) for n in v]
+                else:
+                    output[cased_name] = str(v)
+            elif meta.proto_type == betterproto.TYPE_BYTES:
+                if isinstance(v, list):
+                    output[cased_name] = [b64encode(b).decode("utf8") for b in v]
+                else:
+                    output[cased_name] = b64encode(v).decode("utf8")
+            elif meta.proto_type == betterproto.TYPE_ENUM:
+                enum_values = {}
+                for e in self._betterproto.cls._cls_for(field):
+                    enum_values[e.value] = e
+                if isinstance(v, list):
+                    output[cased_name] = [enum_values[e] for e in v]
+                else:
+                    output[cased_name] = enum_values[v]
+            else:
+                output[cased_name] = v
+    return output

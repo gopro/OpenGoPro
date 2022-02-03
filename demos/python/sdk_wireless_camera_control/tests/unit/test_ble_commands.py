@@ -5,19 +5,19 @@ from construct import Int32ub
 
 from open_gopro.communication_client import GoProBle
 from open_gopro.constants import SettingId, StatusId, GoProUUIDs, CmdId, QueryCmdId
-from open_gopro import proto
+from open_gopro import proto, Params
 
 
 def test_write_command_correct_uuid_cmd_id(ble_communicator: GoProBle):
-    response = ble_communicator.ble_command.set_shutter(ble_communicator.params.Shutter.ON)
+    response = ble_communicator.ble_command.set_shutter(Params.Shutter.ON)
     assert response.uuid == GoProUUIDs.CQ_COMMAND
     assert response._raw_packet[1] == CmdId.SET_SHUTTER.value
 
 
 def test_write_command_correct_parameter_data(ble_communicator: GoProBle):
-    response = ble_communicator.ble_command.load_preset(ble_communicator.params.Preset.TIME_LAPSE)
+    response = ble_communicator.ble_command.load_preset(Params.Preset.TIME_LAPSE)
     assert response.uuid == GoProUUIDs.CQ_COMMAND
-    assert Int32ub.parse(response._raw_packet[-4:]) == ble_communicator.params.Preset.TIME_LAPSE.value
+    assert Int32ub.parse(response._raw_packet[-4:]) == Params.Preset.TIME_LAPSE.value
 
 
 def test_read_command_correct_uuid(ble_communicator: GoProBle):
@@ -26,10 +26,10 @@ def test_read_command_correct_uuid(ble_communicator: GoProBle):
 
 
 def test_setting_set(ble_communicator: GoProBle):
-    response = ble_communicator.ble_setting.resolution.set(ble_communicator.params.Resolution.RES_1080)
+    response = ble_communicator.ble_setting.resolution.set(Params.Resolution.RES_1080)
     assert response.uuid == GoProUUIDs.CQ_SETTINGS
     assert response._raw_packet[1] == SettingId.RESOLUTION.value
-    assert response._raw_packet[3] == ble_communicator.params.Resolution.RES_1080.value
+    assert response._raw_packet[3] == Params.Resolution.RES_1080.value
 
 
 def test_setting_get_value(ble_communicator: GoProBle):
@@ -109,10 +109,10 @@ def test_proto_command_arg(ble_communicator: GoProBle):
 # def test_proto_command_kwargs(ble_communicator: GoProBle):
 #     response = ble_communicator.ble_command.get_preset_status(
 #         register_preset_status=[
-#             ble_communicator.params.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET,
-#             ble_communicator.params.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY,
+#             Params.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET,
+#             Params.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY,
 #         ],
-#         unregister_preset_status=[ble_communicator.params.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET],
+#         unregister_preset_status=[Params.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET],
 #     )
 #     assert response.uuid == GoProUUIDs.CQ_COMMAND
 #     assert data == b"\t\xf5\x02\n\x02\x01\x02\x12\x01\x01"
