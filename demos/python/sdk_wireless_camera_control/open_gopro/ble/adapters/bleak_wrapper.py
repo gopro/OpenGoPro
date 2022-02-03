@@ -372,6 +372,8 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                             )
                         )
                     # Create new characteristic
+                    # TODO read value was causing some bug in MacOS. It's also not needed and increases conenction
+                    # establishment time.
                     chars.append(
                         Characteristic(
                             handle=char.handle,
@@ -381,9 +383,9 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                                 else BleUUID(char.description, hex=char.uuid)
                             ),
                             props=bleak_props_adapter(char.properties),
-                            value=bytes(await handle.read_gatt_char(char.uuid))
-                            if "read" in char.properties
-                            else b"",
+                            # value=bytes(await handle.read_gatt_char(char.uuid))
+                            # if "read" in char.properties
+                            # else b"",
                             init_descriptors=descriptors,
                         )
                     )
