@@ -215,7 +215,7 @@ class NmcliWireless(WifiController):
             partial (str): part of the connection name
         """
         # list matching connections
-        response = cmd(f"nmcli --fields BleUUID,NAME con list | grep {partial}")
+        response = cmd(f'nmcli --fields BleUUID,NAME con list | grep "{partial}"')
 
         # delete all of the matching connections
         for line in response.splitlines():
@@ -264,7 +264,7 @@ class NmcliWireless(WifiController):
             self._clean(current)
 
         # attempt to connect
-        response = cmd(f"nmcli dev wifi connect {ssid} password {password} iface {self.interface}")
+        response = cmd(f'nmcli dev wifi connect "{ssid}" password "{password}" iface "{self.interface}"')
 
         # parse response
         return not self._error_in_response(response)
@@ -284,7 +284,7 @@ class NmcliWireless(WifiController):
             Tuple[Optional[str], SsidState]: [description]
         """
         # list active connections for all interfaces
-        response = cmd(f"nmcli con status | grep {self.interface}")
+        response = cmd(f'nmcli con status | grep "{self.interface}"')
 
         # the current network is in the first column
         for line in response.splitlines():
@@ -358,7 +358,7 @@ class Nmcli0990Wireless(WifiController):
             partial (str): part of the connection name
         """
         # list matching connections
-        response = cmd(f"nmcli --fields UUID,NAME con show | grep {partial}")
+        response = cmd(f'nmcli --fields UUID,NAME con show | grep "{partial}"')
 
         # delete all of the matching connections
         for line in response.splitlines():
@@ -405,7 +405,7 @@ class Nmcli0990Wireless(WifiController):
         # Scan for networks. Don't bother checking: we'll allow the error to be passed from the connect.
         cmd("nmcli dev wifi list --rescan yes")
         # attempt to connect
-        response = cmd(f"nmcli dev wifi connect {ssid} password {password} ifname {self.interface}")
+        response = cmd(f'nmcli dev wifi connect "{ssid}" password "{password}" ifname "{self.interface}"')
 
         # TODO verify that we're connected (and use timeout)
 
@@ -427,7 +427,7 @@ class Nmcli0990Wireless(WifiController):
             Tuple[Optional[str], SsidState]: [description]
         """
         # list active connections for all interfaces
-        response = cmd(f"nmcli con | grep {self.interface}")
+        response = cmd(f'nmcli con | grep "{self.interface}"')
 
         # the current network is in the first column
         for line in response.splitlines():
@@ -506,7 +506,7 @@ class WpasupplicantWireless(WifiController):
         cmd("sudo killall wpa_supplicant")
 
         # don't do DHCP for GoPros; can cause dropouts with the server
-        cmd(f"sudo ifconfig {self.interface} 10.5.5.10/24 up")
+        cmd(f'sudo ifconfig "{self.interface}" 10.5.5.10/24 up')
 
         # create configuration file
         with open(self._file, "w") as fp:
@@ -514,7 +514,7 @@ class WpasupplicantWireless(WifiController):
             fp.close()
 
         # attempt to connect
-        cmd(f"sudo wpa_supplicant -i{self.interface} -c{self._file} -B")
+        cmd(f'sudo wpa_supplicant -i"{self.interface}" -c"{self._file}" -B')
 
         # check that the connection was successful
         # i've never seen it take more than 3 seconds for the link to establish
@@ -545,7 +545,7 @@ class WpasupplicantWireless(WifiController):
             Tuple[Optional[str], SsidState]: [description]
         """
         # get interface status
-        response = cmd(f"iwconfig {self.interface}")
+        response = cmd(f'iwconfig "{self.interface}"')
 
         # the current network is on the first line like ESSID:"network"
         line = response.splitlines()[0]
@@ -657,7 +657,7 @@ class NetworksetupWireless(WifiController):
             Tuple[Optional[str], SsidState]: [description]
         """
         # attempt to get current network
-        response = cmd(f"networksetup -getairportnetwork {self.interface}")
+        response = cmd(f"networksetup -getairportnetwork '{self.interface}'")
 
         # parse response
         phrase = "Current Wi-Fi Network: "
@@ -697,7 +697,7 @@ class NetworksetupWireless(WifiController):
         Returns:
             bool: [description]
         """
-        return "On" in cmd(f"networksetup -getairportpower {self.interface}")
+        return "On" in cmd(f"networksetup -getairportpower '{self.interface}'")
 
     def power(self, power: bool) -> bool:
         """Enable or disbale the Wifi controller
@@ -708,7 +708,7 @@ class NetworksetupWireless(WifiController):
         Returns:
             bool: True if success, False otherwise
         """
-        cmd(f"networksetup -setairportpower {self.interface} {'on' if power else 'off'}")
+        cmd(f"networksetup -setairportpower '{self.interface}' {'on' if power else 'off'}")
 
         return True
 
@@ -788,8 +788,7 @@ class NetshWireless(WifiController):
         os.remove(filename)
 
         # Try to connect
-        ssid_quotes = f'"{ssid}"'
-        response = cmd(f"netsh wlan connect ssid={ssid_quotes} name={ssid_quotes} interface={self.interface}")
+        response = cmd(f'netsh wlan connect ssid="{ssid}" name="{ssid}" interface="{self.interface}"')
         if "was completed successfully" not in response:
             raise Exception(response)
         # Wait for connection to establish
@@ -812,7 +811,7 @@ class NetshWireless(WifiController):
         Returns:
             bool: True if the disconnect was successful, False otherwise.
         """
-        response = cmd(f"netsh wlan disconnect interface={self.interface}")
+        response = cmd(f'netsh wlan disconnect interface="{self.interface}"')
 
         return bool("completed successfully" in response.lower())
 
@@ -911,7 +910,7 @@ class NetshWireless(WifiController):
             bool: True if success, False otherwise
         """
         arg = "enable" if power else "disable"
-        response = cmd(f"netsh interface set interface {self._interface} {arg}")
+        response = cmd(f'netsh interface set interface "{self._interface}" "{arg}"')
         return "not exist" not in response
 
     @staticmethod
