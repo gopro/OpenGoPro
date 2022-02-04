@@ -6,22 +6,17 @@ from typing import Any
 import nox
 from nox_poetry import session
 
-PYTHON_VERSIONS = ["3.8"]
-
-package = "open_gopro"
 nox.options.sessions = "format", "lint", "tests", "docstrings", "docs", "safety"
-locations = "open_gopro", "tests", "noxfile.py", "docs/conf.py"
 
 
-@session(python=PYTHON_VERSIONS)
+@session(python=["3.9"])
 def format(session) -> None:
     """Run black code formatter."""
-    args = session.posargs or locations
     session.install("black")
-    session.run("black", *args)
+    session.run("black", "--check", "open_gopro", "tests", "noxfile.py", "docs/conf.py")
 
 
-@session(python=PYTHON_VERSIONS)
+@session(python=["3.8", "3.9", "3.10"])
 def lint(session) -> None:
     """Lint using flake8."""
     session.install(".")
@@ -35,7 +30,7 @@ def lint(session) -> None:
     session.run("pylint", "open_gopro")
 
 
-@session(python=PYTHON_VERSIONS)
+@session(python=["3.8", "3.9", "3.10"])
 def tests(session) -> None:
     """Run the test suite."""
     session.install(".")
@@ -51,14 +46,14 @@ def tests(session) -> None:
     session.run("pytest", "tests/unit", "--cov-fail-under=70")
 
 
-@session(python=PYTHON_VERSIONS)
+@session(python=["3.9"])
 def docstrings(session) -> None:
     """Validate docstrings."""
     session.install("darglint")
     session.run("darglint", "open_gopro")
 
 
-@session(python=PYTHON_VERSIONS)
+@session(python=["3.9"])
 def docs(session) -> None:
     """Build the documentation."""
     session.install(".")
@@ -71,7 +66,7 @@ def docs(session) -> None:
     session.run("sphinx-build", "docs", "docs/_build")
 
 
-@session(python=PYTHON_VERSIONS)
+@session(python=["3.8", "3.9", "3.10"])
 def safety(session) -> None:
     """Scan dependencies for insecure packages."""
     session.install("safety")
