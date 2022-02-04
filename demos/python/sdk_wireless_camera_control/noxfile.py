@@ -63,7 +63,7 @@ def docs(session) -> None:
         "sphinx-rtd-theme",
         "sphinxcontrib-napoleon",
     )
-    session.run("sphinx-build", "docs", "docs/_build")
+    session.run("sphinx-build", "docs", "docs/build")
 
 
 @session(python=["3.8", "3.9", "3.10"])
