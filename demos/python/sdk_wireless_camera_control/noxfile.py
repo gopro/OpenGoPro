@@ -1,18 +1,19 @@
 """Nox sessions."""
 
-import tempfile
+from pathlib import Path
 from typing import Any
 
 import nox
 from nox_poetry import session
 
+PYTHON_VERSIONS = ["3.8"]
 
 package = "open_gopro"
-nox.options.sessions = "lint", "types", "tests", "docs", "format"
+nox.options.sessions = "format", "lint", "tests", "docstrings", "docs", "safety"
 locations = "open_gopro", "tests", "noxfile.py", "docs/conf.py"
 
 
-@session(python=["3.8"])
+@session(python=PYTHON_VERSIONS)
 def format(session) -> None:
     """Run black code formatter."""
     args = session.posargs or locations
@@ -20,32 +21,21 @@ def format(session) -> None:
     session.run("black", *args)
 
 
-@session(python=["3.8"])
+@session(python=PYTHON_VERSIONS)
 def lint(session) -> None:
     """Lint using flake8."""
-    args = session.posargs or locations
+    session.install(".")
     session.install(
-        "flake8",
-        "flake8-annotations",
-        "flake8-bandit",
-        "flake8-black",
-        "flake8-bugbear",
-        "flake8-docstrings",
-        "flake8-import-order",
-        "darglint",
+        "pylint",
+        "mypy",
+        "types-requests",
+        "construct-typing",
     )
-    session.run("flake8", *args)
+    session.run("mypy", "open_gopro")
+    session.run("pylint", "open_gopro")
 
 
-@session(python=["3.8"])
-def types(session) -> None:
-    """Type-check using mypy."""
-    args = session.posargs or locations
-    session.install("mypy")
-    session.run("mypy", *args)
-
-
-@session(python=["3.8"])
+@session(python=PYTHON_VERSIONS)
 def tests(session) -> None:
     """Run the test suite."""
     session.install(".")
@@ -54,30 +44,40 @@ def tests(session) -> None:
         "pytest-cov",
         "pytest-asyncio",
         "pytest-mock",
+        "pytest-html",
         "coverage[toml]",
-        "requests-mock"
+        "requests-mock",
     )
-    session.run("pytest", "tests/unit_tests")
+    session.run("pytest", "tests/unit", "--cov-fail-under=70")
 
 
-@session(python=["3.8"])
+@session(python=PYTHON_VERSIONS)
+def docstrings(session) -> None:
+    """Validate docstrings."""
+    session.install("darglint")
+    session.run("darglint", "open_gopro")
+
+
+@session(python=PYTHON_VERSIONS)
 def docs(session) -> None:
     """Build the documentation."""
-    session.run("poetry", "install", "--no-dev", external=True)
-    session.install("sphinx", "sphinx-autodoc-typehints")
+    session.install(".")
+    session.install(
+        "sphinx",
+        "sphinx-autodoc-typehints",
+        "sphinx-rtd-theme",
+        "sphinxcontrib-napoleon",
+    )
     session.run("sphinx-build", "docs", "docs/_build")
 
 
-@session(python=["3.8"])
-def coverage(session) -> None:
-    """Upload coverage data."""
-    session.install("coverage[toml]", "codecov")
-    session.run("coverage", "xml", "--fail-under=0")
-    session.run("codecov", *session.posargs)
-
-
-@session(python=["3.8"])
+@session(python=PYTHON_VERSIONS)
 def safety(session) -> None:
     """Scan dependencies for insecure packages."""
     session.install("safety")
-    session.run("safety", "check", f"--file={requirements.name}", "--full-report")
+    session.run(
+        "safety",
+        "check",
+        f"--file={Path(session.virtualenv.location) / 'tmp' / 'requirements.txt'}",
+        "--full-report",
+    )

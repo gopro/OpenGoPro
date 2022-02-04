@@ -60,37 +60,32 @@ black = "*"
 pylint = "*"
 mypy = "*"
 types-requests = "*"
+construct-typing = "*"
 sphinx = "*"
 sphinxcontrib-napoleon = "*"
 sphinx-rtd-theme = "*"
 coverage-badge = "=1.1.0"
-construct-typing = "*"
 darglint = "*"
 poethepoet = "*"
-nox = "^2022.1.7"
-nox-poetry = "^0.9.0"
+nox = "*"
+nox-poetry = "*"
+safety = "*"
 
 #=======================================================================================
 #===================================== TASKS ===========================================
-safety = "^1.10.3"
 #=======================================================================================
 
 [tool.poe.tasks.unit_tests]
 cmd = "pytest tests/unit --cov-fail-under=70"
 help = "Run unit tests"
 
-
 [tool.poe.tasks.e2e_tests]
 cmd = "pytest tests/e2e --cov-fail-under=80"
 help = "Run end-to-end tests"
 
-[tool.poe.tasks.types]
-cmd = "mypy open_gopro"
-help = "Check types with mypy"
-
 [tool.poe.tasks.lint]
-cmd = "pylint open_gopro"
-help = "Lint code with pylint"
+cmd = "pylint open_gopro && mypy open_gopro"
+help = "Check types and Lint code with pylint"
 
 [tool.poe.tasks.format]
 cmd = "black open_gopro tests"
