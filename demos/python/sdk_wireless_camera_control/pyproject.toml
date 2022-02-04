@@ -94,7 +94,7 @@ cmd = "black open_gopro tests"
 help = "Apply black formatting to source code"
 
 [tool.poe.tasks.docstrings]
-cmd = "darglint open_gopro"
+cmd = "darglint -v 2 open_gopro"
 help = "validate docstrings"
 
 [tool.poe.tasks.sphinx]
@@ -103,6 +103,10 @@ sphinx-build -W -b html docs docs/build &&
 rm -rf docs/build/.doctrees /docs/build/_sources /docs/build/_static/fonts
 """
 help = "Build docs."
+
+[tool.poe.tasks.coverage]
+cmd = "coverage-badge -o docs/_static/coverage.svg"
+help = "update coverage badge"
 
 [tool.poe.tasks.clean_artifacts]
 cmd = """
@@ -131,7 +135,7 @@ cmd = "rm -rf dist"
 help = "Clean module build output"
 
 [tool.poe.tasks.docs]
-sequence=["docstrings", "sphinx"]
+sequence = ["docstrings", "sphinx"]
 help = "Validate docstrings and build docs"
 
 [tool.poe.tasks.clean]
@@ -153,7 +157,6 @@ warn_unused_ignores = true
 warn_unreachable = true
 show_error_context = true
 pretty = true
-exclude = "open_gopro/demos/"
 
 [tool.pytest.ini_options]
 log_auto_indent = true
@@ -202,12 +205,12 @@ disable = [
     "too-many-nested-blocks",
     "unspecified-encoding",
     "consider-using-with",
-    "abstract-method",               # Pylint incorrectly assumes any function that raises NotImplementedError is abstract. We let mypy check for ABC errors.
+    "abstract-method",               # handled by mypy
     "cyclic-import",
-    "missing-raises-doc",
-    "useless-type-doc",
-    "useless-param-doc",
-    "redundant-returns-doc",
+    "missing-raises-doc",            # handled by darglint
+    "useless-type-doc",              # handled by darglint
+    "useless-param-doc",             # handled by darglint
+    "redundant-returns-doc",         # hanlded by darglint
     "logging-fstring-interpolation",
     "logging-format-interpolation",
     "duplicate-code",
@@ -221,11 +224,11 @@ disable = [
     "too-many-statements",
     "fixme",
     "protected-access",              # Maybe fix this one
-    "invalid-name",                  # We are passing these except for <= 2 character variable names. Should be able to configure via http://pylint.pycqa.org/en/1.9/user_guide/options.html#cmdoption-variable-rgx
+    "invalid-name",
 ]
 
 [tool.pylint.'FORMAT']
-max-line-length = 160
+max-line-length = 160 # handled by black
 
 [tool.black]
 line-length = 111

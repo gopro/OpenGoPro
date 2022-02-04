@@ -53,7 +53,7 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
 
         Args:
             token (Pattern): Regex to scan for
-            timeout (int, optional): Time to scan (in seconds) before considering scanning as failed. Defaults to 5.
+            timeout (int): Time to scan (in seconds) before considering scanning as failed. Defaults to 5.
             service_uuids (List[BleUUID], optional): The list of BleUUID's to filter on. Defaults to None.
 
         Returns:
@@ -68,7 +68,7 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
         Args:
             disconnect_cb (DisconnectHandlerType): function to call when disconnect is received
             device (BleDevice): device to connect to
-            timeout (int, optional): How long to attempt connecting before giving up. Defaults to 15.
+            timeout (int): How long to attempt connecting before giving up. Defaults to 15.
 
         Returns:
             handle: handle that has been connected to
@@ -96,7 +96,7 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
 
         Args:
             handle (BleHandle): handle to enable notifications on
-            handler (Callable): notification handler
+            handler (NotiHandlerType): notification handler
         """
         raise NotImplementedError
 

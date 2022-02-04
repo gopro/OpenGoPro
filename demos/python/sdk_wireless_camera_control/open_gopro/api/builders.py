@@ -64,11 +64,20 @@ CommandValueType = TypeVar("CommandValueType")
 
 
 @wrapt.decorator
-# pylint: disable = E, W
 def log_query(
     wrapped: Callable, instance: Union[BleSetting, BleStatus, WifiSetting], args: Any, kwargs: Any
-) -> Callable:
-    """Log a query write."""
+) -> GoProResp:
+    """Log a query write
+
+    Args:
+        wrapped (Callable): query to log
+        instance (Union[BleSetting, BleStatus, WifiSetting]): status / setting that owns the write
+        args (Any): positional args
+        kwargs (Any): keyword args
+
+    Returns:
+        GoProResp: received response from write
+    """
     logger.info(build_log_tx_str(f"{wrapped.__name__} : {instance.identifier}"))
     response = wrapped(*args, **kwargs)
     logger.info(build_log_rx_str(response))
@@ -100,6 +109,7 @@ def build_enum_adapter(target: Type[enum.Enum]) -> Adapter:
 
             Args:
                 obj (bytearray): bytestream to parse
+                _ (Any): Not used
 
             Returns:
                 enum.Enum: Enum value
@@ -111,6 +121,7 @@ def build_enum_adapter(target: Type[enum.Enum]) -> Adapter:
 
             Args:
                 obj (Union[enum.Enum, int]): Enum to adapt
+                _ (Any): Not used
 
             Returns:
                 int: int value of Enum
@@ -130,6 +141,9 @@ class DeprecatedAdapter(Adapter):
     def _decode(self, *_: Any) -> str:
         """Return "DEPRECATED" when parse() is called
 
+        Args:
+            _ (Any): Not used
+
         Returns:
             str: "DEPRECATED"
         """
@@ -137,6 +151,9 @@ class DeprecatedAdapter(Adapter):
 
     def _encode(self, *_: Any) -> str:
         """Return "DEPRECATED" when parse() is called
+
+        Args:
+            _ (Any): Not used
 
         Returns:
             str: "DEPRECATED"
@@ -152,6 +169,10 @@ class DateTimeAdapter(Adapter):
 
         Args:
             obj (list): input
+            _ (Any): Not used
+
+        Raises:
+            TypeError: Unsupported input type
 
         Returns:
             datetime: built datetime
@@ -165,13 +186,17 @@ class DateTimeAdapter(Adapter):
             obj = obj[-7:]
             year = Int16ub.parse(bytes(obj[0:2]))
             return datetime(year, *[int(x) for x in obj[2:]])  # type: ignore
-        raise TypeError(f"Datetime decoder received invalid type: {type(obj)}")
+        raise TypeError(f"Type must be in (str, list)")
 
     def _encode(self, obj: Union[datetime, str], *_: Any) -> Union[bytes, str]:
         """Translate datetime into bytes or pass through string
 
         Args:
             obj (Union[datetime, str]): Input
+            _ (Any): Not used
+
+        Raises:
+            TypeError: Unsupported input type
 
         Returns:
             Union[bytes, str]: built bytes
@@ -181,7 +206,7 @@ class DateTimeAdapter(Adapter):
             return bytes([*year, obj.month, obj.day, obj.hour, obj.minute, obj.second])
         if isinstance(obj, str):
             return obj
-        raise TypeError(f"Datetime encoder received invalid type: {type(obj)}")
+        raise TypeError(f"Type must be in (datetime, str)")
 
 
 # Ignoring because hitting this mypy bug: https://github.com/python/mypy/issues/5374
@@ -385,6 +410,7 @@ def build_protobuf_adapter(protobuf: Type[betterproto.Message]) -> Adapter:
 
             Args:
                 obj (bytearray): byte stream to parse
+                _ (Any): Not used
 
             Returns:
                 Dict[Any, Any]: parsed JSON dict
@@ -504,7 +530,7 @@ class BleSetting(Generic[SettingValueType]):
         """Set the value of the setting.
 
         Args:
-            value (Any): The argument to use to set the setting value.
+            value (SettingValueType): The argument to use to set the setting value.
 
         Returns:
             GoProResp: Status of set
@@ -540,9 +566,6 @@ class BleSetting(Generic[SettingValueType]):
 
         Raises:
             NotImplementedError: This isn't implemented on the camera
-
-        Returns:
-            GoProResp: settings name
         """
         # return self.communicator._write_characteristic_receive_notification(
         #     self.reader_uuid, QueryCmdId.GET_SETTING_NAME, self._build_cmd(QueryCmdId.GET_SETTING_NAME)
@@ -566,9 +589,6 @@ class BleSetting(Generic[SettingValueType]):
 
         Raises:
             NotImplementedError: This isn't implemented on the camera
-
-        Returns:
-            GoProResp: settings capabilities names
         """
         # return self.communicator._write_characteristic_receive_notification(
         #     self.reader_uuid,
@@ -845,7 +865,7 @@ class WifiSetting(Generic[SettingValueType]):
         """Set the value of the setting.
 
         Args:
-            value (Any): value to set setting
+            value (SettingValueType): value to set setting
 
         Returns:
             GoProResp: Status of set

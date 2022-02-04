@@ -40,7 +40,7 @@ class WifiController(ABC):
         Args:
             ssid (str): SSID of network to connect to
             password (str): password of network to connect to
-            timeout (float, optional): Time before considering connection failed (in seconds). Defaults to 15.
+            timeout (float): Time before considering connection failed (in seconds). Defaults to 15.
 
         Returns:
             bool: True if successful, False otherwise
@@ -116,7 +116,7 @@ class WifiController(ABC):
         """Enable / disable the wireless driver.
 
         Args:
-            power (bool, optional): Enable if True. Disable if False.
+            power (bool): Enable if True. Disable if False.
         """
         raise NotImplementedError
 

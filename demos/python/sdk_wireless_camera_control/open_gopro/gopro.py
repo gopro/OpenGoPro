@@ -256,6 +256,9 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
     def is_encoding(self) -> bool:
         """Is the camera currently encoding?
 
+        Raises:
+            InvalidConfiguration: if maintain_state is False, there is no way to know the GoPro's state
+
         Returns:
             bool: True if yes, False if no
         """
@@ -266,6 +269,9 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
     @property
     def is_busy(self) -> bool:
         """Is the camera currently performing a task that prevents it from accepting commands?
+
+        Raises:
+            InvalidConfiguration: if maintain_state is False, there is no way to know the GoPro's state
 
         Returns:
             bool: True if yes, False if no
@@ -339,11 +345,12 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         For Wifi: discover SSID and password, enable and connect. Or disable if not using.
 
         Raises:
-            Any exceptions during opening are propagated through
+            Exception: Any exceptions during opening are propagated through
+            InvalidOpenGoProVersion: Only 2.0 is supported
 
         Args:
-            timeout (int, optional): How long to wait for each connection before timing out. Defaults to 10.
-            retries (int, optional): How many connection attempts before considering connection failed. Defaults to 5.
+            timeout (int): How long to wait for each connection before timing out. Defaults to 10.
+            retries (int): How many connection attempts before considering connection failed. Defaults to 5.
         """
         try:
             # Establish BLE connection and start maintenance threads if desired
@@ -380,7 +387,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         self._close_ble()
 
     @ensure_initialized(Interface.BLE)
-    def get_update(self, timeout: float = None) -> GoProResp:
+    def get_update(self, timeout: Optional[float] = None) -> GoProResp:
         """Get a notification that we received from a registered listener.
 
         If timeout is None, this will block until a notification is received.
@@ -480,12 +487,8 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         """Connect the instance to a device via BLE.
 
         Args:
-            device (BleDevice): Device to connect to
-            timeout (int, optional): Time in seconds before considering establishment failed. Defaults to 10 seconds.
-            retries (int, optional): How many tries to reconnect after failures. Defaults to 5.
-
-        Raises:
-            ConnectFailed: Connection could not be established
+            timeout (int): Time in seconds before considering establishment failed. Defaults to 10 seconds.
+            retries (int): How many tries to reconnect after failures. Defaults to 5.
         """
         # Establish connection, pair, etc.
         self._ble.open(timeout, retries)
@@ -503,7 +506,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
         Args:
             handle (int): Attribute handle that notification was received on.
-            data (bytes): Bytestream that was received.
+            data (bytearray): Bytestream that was received.
         """
         # Responses we don't care about. For now, just the BLE-spec defined battery characteristic
         if (uuid := self._ble.gatt_db.handle2uuid(handle)) == GoProUUIDs.BATT_LEVEL:
@@ -578,13 +581,21 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             del self._active_resp[uuid]
 
     def _close_ble(self) -> None:
+        """Terminate BLE connection if it is connected"""
         if self.is_ble_connected and self._ble is not None:
             self._ble_disconnect_event.clear()
             self._ble.close()
             self._ble_disconnect_event.wait()
 
     def _disconnect_handler(self, _: Any) -> None:
-        """Handle disconnects"""
+        """Disconnect callback from BLE controller
+
+        Args:
+            _ (Any): Not currently used
+
+        Raises:
+            ConnectionTerminated: We entered this callback in an unexpected state.
+        """
         if self._ble_disconnect_event.is_set():
             raise ConnectionTerminated("BLE connection terminated unexpectedly.")
         self._ble_disconnect_event.set()
@@ -602,12 +613,12 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             data (bytearray): data to write
 
         Raises:
-            Exception: Unexpected functionality occurred
+            ResponseTimeout: A response was not received in WRITE_TIMEOUT seconds
 
         Returns:
             GoProResp: parsed notification response data
         """
-        assert self._ble is not None
+        assert self._ble
         # Acquire ready semaphore unless we are initializing or this is a Set Shutter Off command
         have_semaphore = False
         if (
@@ -670,7 +681,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             uuid (BleUUID): characteristic data to read
 
         Returns:
-            bytearray: read data
+            GoProResp: response from UUID read
         """
         received_data = self._ble.read(uuid)
         logger.debug(f"Reading from {uuid.name}")
@@ -681,12 +692,8 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         """Connect to a GoPro device via Wifi.
 
         Args:
-            enable (bool): whether to enable or disable wifi
-            timeout (int, optional): Time before considering establishment failed. Defaults to 15 seconds.
-            retries (int, optional): How many tries to reconnect after failures. Defaults to 5.
-
-        Raises:
-            Exception: Wifi failed to connect.
+            timeout (int): Time before considering establishment failed. Defaults to 15 seconds.
+            retries (int): How many tries to reconnect after failures. Defaults to 5.
         """
         logger.info("Discovering Wifi AP info and enabling via BLE")
         password = self.ble_command.get_wifi_password().flatten
@@ -709,6 +716,10 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
         Args:
             url (str): endpoint URL
+
+        Raises:
+            GoProNotInitialized: WiFi is not currently connected
+            ResponseTimeout: Response was not received in GET_TIMEOUT seconds
 
         Returns:
             GoProResp: response

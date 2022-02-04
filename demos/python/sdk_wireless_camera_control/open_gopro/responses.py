@@ -145,6 +145,7 @@ class GoProResp:
         from the bytestream.
 
         Args:
+            parsers (ParserMapType): parsers to use to parse received data
             uuid (BleUUID): BleUUID that write command is writing to
             data (bytes): bytestream of the command
 
@@ -165,8 +166,9 @@ class GoProResp:
         """Build a GoProResp from a read response.
 
         Args:
+            parsers (ParserMapType): parsers to use to parse received data
             uuid (BleUUID): BleUUID that read command was received from
-            data (bytes): received bytestream
+            data (bytearray): received bytestream
 
         Returns:
             GoProResp: created instance
@@ -180,6 +182,7 @@ class GoProResp:
         """Build a GoProResp from an HTTP response from the requests package.
 
         Args:
+            parsers (ParserMapType): parsers to use to parse received data
             response (requests.models.Response): HTTP response
 
         Returns:
@@ -384,7 +387,13 @@ class GoProResp:
             self._state = GoProResp._State.ACCUMULATED
 
     def _parse(self) -> None:
-        """Parse the accumulated response (either from a BLE bytestream or an HTTP JSON dict)."""
+        """Parse the accumulated response (either from a BLE bytestream or an HTTP JSON dict).
+
+        Raises:
+            NotImplementedError: Parsing for this id is not yet supported
+            Exception: Unexpected state
+            ResponseParseError: Error when parsing data
+        """
         # Is this a BLE response?
         if isinstance(self._raw_packet, bytearray):
             buf: bytearray = self._raw_packet

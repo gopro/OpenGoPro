@@ -137,7 +137,7 @@ class GoProBle(ABC, GoProResponder, Generic[BleHandle, BleDevice]):
         raise NotImplementedError
 
     @abstractmethod
-    def get_update(self, timeout: float = None) -> GoProResp:
+    def get_update(self, timeout: Optional[float] = None) -> GoProResp:
         """Get a notification that was received from a registered producer.
 
         Args:

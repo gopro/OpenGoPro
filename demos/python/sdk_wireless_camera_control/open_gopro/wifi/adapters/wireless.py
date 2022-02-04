@@ -108,10 +108,12 @@ class Wireless(WifiController):
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
         """Connect to a network.
 
+        # noqa: DAR202
+
         Args:
             ssid (str): SSID of network to connect to
             password (str): password of network to connect to
-            timeout (float, optional): Time before considering connection failed (in seconds). Defaults to 15.
+            timeout (float): Time before considering connection failed (in seconds). Defaults to 15.
 
         Returns:
             bool: True if successful, False otherwise
@@ -121,6 +123,8 @@ class Wireless(WifiController):
     def disconnect(self) -> bool:
         """Disconnect from a network.
 
+        # noqa: DAR202
+
         Returns:
             bool: True if successful, False otherwise
         """
@@ -129,6 +133,8 @@ class Wireless(WifiController):
     def current(self) -> Tuple[Optional[str], SsidState]:
         """Return the SSID and state of the current network.
 
+        # noqa: DAR202
+
         Returns:
             Tuple[Optional[str], SsidState]: Tuple of SSID str and state. If SSID is None,
             there is no current connection.
@@ -136,18 +142,25 @@ class Wireless(WifiController):
 
     @pass_through_to_driver
     def available_interfaces(self) -> List[str]:
-        """[summary]
+        """Return a list of the available Wifi interfaces
+
+        # noqa: DAR202
 
         Returns:
-            List[str]: [description]
+            List[str]: list of available interfaces
         """
 
     @pass_through_to_driver
     def power(self, power: bool) -> bool:
         """Enable / disable the wireless driver.
 
+        # noqa: DAR202
+
         Args:
-            power (bool, optional): Enable if True. Disable if False.
+            power (bool): Enable if True. Disable if False.
+
+        Returns:
+            bool: True if successful, False otherrweise
         """
 
     @property
@@ -167,9 +180,6 @@ class Wireless(WifiController):
 
         Args:
             interface (Optional[str]): interface (or None)
-
-        Raises:
-            Exception: Not able to automatically detect any interfaces
         """
         self._driver.interface = interface  # type: ignore
 
@@ -237,7 +247,7 @@ class NmcliWireless(WifiController):
         Args:
             ssid (str): network SSID
             password (str): network password
-            timeout (float, optional): Time before considering connection failed (in seconds). Defaults to 15.
+            timeout (float): Time before considering connection failed (in seconds). Defaults to 15.
 
         Returns:
             bool: [description]
@@ -381,7 +391,7 @@ class Nmcli0990Wireless(WifiController):
         Args:
             ssid (str): network SSID
             password (str): network password
-            timeout (float, optional): Time before considering connection failed (in seconds). Defaults to 15.
+            timeout (float): Time before considering connection failed (in seconds). Defaults to 15.
 
         Returns:
             bool: [description]
@@ -482,7 +492,7 @@ class WpasupplicantWireless(WifiController):
         Args:
             ssid (str): network SSID
             password (str): network password
-            timeout (float, optional): Time before considering connection failed (in seconds). Defaults to 15.
+            timeout (float): Time before considering connection failed (in seconds). Defaults to 15.
 
         Returns:
             bool: [description]
@@ -598,10 +608,7 @@ class NetworksetupWireless(WifiController):
         Args:
             ssid (str): network SSID
             password (str): network password
-            timeout (float, optional): Time before considering connection failed (in seconds). Defaults to 15.
-
-        Raises:
-            Exception: [description]
+            timeout (float): Time before considering connection failed (in seconds). Defaults to 15.
 
         Returns:
             bool: [description]
@@ -748,7 +755,10 @@ class NetshWireless(WifiController):
         Args:
             ssid (str): SSID of network to connect to
             password (str): password of network to connect to
-            timeout (float, optional): Time before considering connection failed (in seconds). Defaults to 15.
+            timeout (float): Time before considering connection failed (in seconds). Defaults to 15.
+
+        Raises:
+            Exception: Can not add profile or request to connect to SSID fails
 
         Returns:
             bool: True if connected, False otherwise
@@ -811,9 +821,6 @@ class NetshWireless(WifiController):
         # Physical address       : 98:48:27:88:cb:18
         # State                  : connected
         # SSID                   : FunHouse
-
-        Raises:
-            Exception: Unexpected error.
 
         Returns:
             Tuple[Optional[str], SsidState]: Tuple of (ssid, network_state)

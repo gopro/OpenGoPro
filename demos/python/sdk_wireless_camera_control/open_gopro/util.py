@@ -47,12 +47,12 @@ def addLoggingLevel(levelName: str, levelNum: int) -> None:
     >>> logging.TRACE
     5
 
+    Args:
+        levelName (str): name of level (i.e. TRACE)
+        levelNum (int): integer level of new logging level
     """
     methodName = levelName.lower()
 
-    # This method was inspired by the answers to Stack Overflow post
-    # http://stackoverflow.com/q/2183233/2988730, especially
-    # http://stackoverflow.com/a/13638084/2988730
     def logForLevel(self: Any, message: str, *args: Any, **kwargs: Any) -> None:
         if self.isEnabledFor(levelNum):
             self._log(levelNum, message, args, **kwargs)
@@ -66,7 +66,7 @@ def addLoggingLevel(levelName: str, levelNum: int) -> None:
     setattr(logging, methodName, logToRoot)
 
 
-def setup_logging(logger: Any, output: Path = None, modules: Dict[str, int] = None) -> logging.Logger:
+def setup_logging(logger: Any, output: Optional[Path] = None, modules: Dict[str, int] = None) -> logging.Logger:
     """Configure open gopro modules for logging
 
     The application's logger is passed in, modified, and then returned
@@ -173,7 +173,7 @@ def build_log_rx_str(stringable: Any, asynchronous: bool = False) -> str:
 
     Args:
         stringable (Any): stringable object to surround with arrows
-        asynchronous (bool, optional): Should the arrows contain ASYNC?. Defaults to False.
+        asynchronous (bool): Should the arrows contain ASYNC?. Defaults to False.
 
     Returns:
         str: string surrounded by Rx arrows
@@ -254,7 +254,7 @@ def pretty_print(obj: Any) -> str:
     """Recursively iterate through object and turn elements into strings as desired for eventual json dumping
 
     Args:
-        obj ([Any]): object to recurse through
+        obj (Any): object to recurse through
 
     Returns:
         str: pretty-printed string
@@ -266,7 +266,7 @@ def pretty_print(obj: Any) -> str:
         Special case for IntEnum since json refuses to treat these as strings.
 
         Args:
-            elem (Union[str, int, float]): element to potentially stringify
+            elem (Any): element to potentially stringify
 
         Returns:
             str: string representation
@@ -340,9 +340,7 @@ class Singleton:
 
     _instances: Dict[Type["Singleton"], Type["Singleton"]] = {}
 
-    # pylint: disable=missing-return-doc, missing-return-type-doc
-    def __new__(cls, *args: Any, **kwargs: Any) -> Any:
-        """Check for existing instance."""
+    def __new__(cls, *args: Any, **kwargs: Any) -> Any: # noqa
         if cls not in cls._instances:
             # https://github.com/python/mypy/issues/6061
             cls._instances[cls] = object.__new__(cls, *args, **kwargs)  # type: ignore
@@ -373,12 +371,12 @@ def custom_betterproto_to_dict(
     casing: betterproto.Casing = betterproto.Casing.CAMEL,
     include_default_values: bool = False,
 ) -> dict:
-    """[summary]
+    """TODO
 
     Args:
         self (betterproto.Message): [description]
         casing (betterproto.Casing, optional): [description]. Defaults to betterproto.Casing.CAMEL.
-        include_default_values (bool, optional): [description]. Defaults to False.
+        include_default_values (bool): [description]. Defaults to False.
 
     Returns:
         dict: [description]
