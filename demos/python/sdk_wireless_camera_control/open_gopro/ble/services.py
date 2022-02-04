@@ -334,7 +334,6 @@ class GattDB:
 
         @no_type_check
         def keys(self) -> Generator[BleUUID, None, None]:  # pylint: disable=missing-return-doc
-
             def iter_keys():
                 for service in self._db.services.values():
                     for ble_uuid in service.characteristics.keys():

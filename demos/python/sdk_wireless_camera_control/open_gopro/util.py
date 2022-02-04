@@ -66,7 +66,9 @@ def addLoggingLevel(levelName: str, levelNum: int) -> None:
     setattr(logging, methodName, logToRoot)
 
 
-def setup_logging(logger: Any, output: Optional[Path] = None, modules: Dict[str, int] = None) -> logging.Logger:
+def setup_logging(
+    logger: Any, output: Optional[Path] = None, modules: Dict[str, int] = None
+) -> logging.Logger:
     """Configure open gopro modules for logging
 
     The application's logger is passed in, modified, and then returned
@@ -341,7 +343,7 @@ class Singleton:
     _instances: Dict[Type["Singleton"], Type["Singleton"]] = {}
 
     # pylint: disable=missing-return-doc
-    def __new__(cls, *args: Any, **kwargs: Any) -> Any: # noqa
+    def __new__(cls, *args: Any, **kwargs: Any) -> Any:  # noqa
         if cls not in cls._instances:
             # https://github.com/python/mypy/issues/6061
             cls._instances[cls] = object.__new__(cls, *args, **kwargs)  # type: ignore

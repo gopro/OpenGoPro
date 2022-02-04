@@ -74,7 +74,7 @@ nox-poetry = "*"
 safety = "*"
 
 #=======================================================================================
-#===================================== TASKS ===========================================
+#================================== POE TASKS ==========================================
 #=======================================================================================
 
 [tool.poe.tasks.unit_tests]
@@ -117,17 +117,7 @@ cmd = "coverage-badge -o docs/_static/coverage.svg"
 help = "update coverage badge"
 
 [tool.poe.tasks.clean_artifacts]
-cmd = """
-echo "Cleaning artifacts" && \
-find . -type f -name '*.py[co]' -delete -o -type d -name '__pycache__' -delete && \
-find . -type f -name '*.log' -delete && \
-find . -type f -name '*.jpg' -delete && \
-find . -type f -name '*.mp4' -delete && \
-find . -type f -name '*.JPG' -delete && \
-find . -type f -name '*.MP4' -delete && \
-find . -type f -name '*.csv' -delete && \
-rm -rf .mypy_cache && \
-"""
+cmd = "rm -rf **/__pycache__ *.csv *.mp4 *.jpg .mypy_cache .nox"
 help = "Clean testing artifacts and pycache"
 
 [tool.poe.tasks.clean_tests]
