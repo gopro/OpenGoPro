@@ -340,6 +340,7 @@ class Singleton:
 
     _instances: Dict[Type["Singleton"], Type["Singleton"]] = {}
 
+    # pylint: disable=missing-return-doc
     def __new__(cls, *args: Any, **kwargs: Any) -> Any: # noqa
         if cls not in cls._instances:
             # https://github.com/python/mypy/issues/6061

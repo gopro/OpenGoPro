@@ -85,9 +85,17 @@ help = "Run unit tests"
 cmd = "pytest tests/e2e --cov-fail-under=80"
 help = "Run end-to-end tests"
 
+[tool.poe.tasks.types]
+cmd = "mypy open_gopro"
+help = "Check types"
+
+[tool.poe.tasks.pylint]
+cmd = "pylint open_gopro"
+help = "Run pylint"
+
 [tool.poe.tasks.lint]
-cmd = "pylint open_gopro && mypy open_gopro"
-help = "Check types and Lint code with pylint"
+sequence = ["pylint", "types"]
+help = "Perform type checking and linting"
 
 [tool.poe.tasks.format]
 cmd = "black open_gopro tests"

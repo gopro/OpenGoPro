@@ -283,7 +283,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                 await handle.pair()
             except NotImplementedError:
                 # This is expected on Mac
-                passCallable
+                pass
             logger.debug("Pairing complete!")
 
         self._as_coroutine(_async_def_pair)

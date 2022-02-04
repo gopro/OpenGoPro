@@ -186,7 +186,7 @@ class DateTimeAdapter(Adapter):
             obj = obj[-7:]
             year = Int16ub.parse(bytes(obj[0:2]))
             return datetime(year, *[int(x) for x in obj[2:]])  # type: ignore
-        raise TypeError(f"Type must be in (str, list)")
+        raise TypeError("Type must be in (str, list)")
 
     def _encode(self, obj: Union[datetime, str], *_: Any) -> Union[bytes, str]:
         """Translate datetime into bytes or pass through string
@@ -206,7 +206,7 @@ class DateTimeAdapter(Adapter):
             return bytes([*year, obj.month, obj.day, obj.hour, obj.minute, obj.second])
         if isinstance(obj, str):
             return obj
-        raise TypeError(f"Type must be in (datetime, str)")
+        raise TypeError("Type must be in (datetime, str)")
 
 
 # Ignoring because hitting this mypy bug: https://github.com/python/mypy/issues/5374
