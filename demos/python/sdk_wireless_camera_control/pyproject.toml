@@ -99,38 +99,44 @@ help = "validate docstrings"
 
 [tool.poe.tasks.sphinx]
 cmd = """
-sphinx-build -W -b html docs docs/.build &&
+sphinx-build -W -b html docs docs/build &&
 rm -rf docs/build/.doctrees /docs/build/_sources /docs/build/_static/fonts
 """
 help = "Build docs."
 
 [tool.poe.tasks.clean_artifacts]
 cmd = """
-find . -type f -name '*.py[co]' -delete -o -type d -name '__pycache__' -delete
-find . -type f -name '*.log' -delete
-find . -type f -name '*.jpg' -delete
-find . -type f -name '*.mp4' -delete
-find . -type f -name '*.JPG' -delete
-find . -type f -name '*.MP4' -delete
-find . -type f -name '*.csv' -delete
-@rm -rf .mypy_cache
+echo "Cleaning artifacts" && \
+find . -type f -name '*.py[co]' -delete -o -type d -name '__pycache__' -delete && \
+find . -type f -name '*.log' -delete && \
+find . -type f -name '*.jpg' -delete && \
+find . -type f -name '*.mp4' -delete && \
+find . -type f -name '*.JPG' -delete && \
+find . -type f -name '*.MP4' -delete && \
+find . -type f -name '*.csv' -delete && \
+rm -rf .mypy_cache && \
 """
 help = "Clean testing artifacts and pycache"
 
 [tool.poe.tasks.clean_tests]
-cmd = "rm -rf .reports"
+cmd = "rm -rf .reports && rm -rf .pytest_cache"
 help = "Clean test reports"
 
 [tool.poe.tasks.clean_docs]
-cmd = """
-rm -f docs/modules.rst &&
-rm -rf docs/build
-"""
+cmd = "rm -f docs/modules.rst && rm -rf docs/build"
 help = "Clean built docs output"
 
-[tool.poe.tasks]
-docs = ["docstrings", "docs"]
-clean = ["clean_artifacts", "clean_tests", "clean_docs", "clean_build"]
+[tool.poe.tasks.clean_build]
+cmd = "rm -rf dist"
+help = "Clean module build output"
+
+[tool.poe.tasks.docs]
+sequence=["docstrings", "sphinx"]
+help = "Validate docstrings and build docs"
+
+[tool.poe.tasks.clean]
+sequence = ["clean_artifacts", "clean_tests", "clean_docs", "clean_build"]
+help = "Clean everything"
 
 #=======================================================================================
 #============================== TOOL CONFIGURATIONS ====================================
@@ -148,12 +154,6 @@ warn_unreachable = true
 show_error_context = true
 pretty = true
 exclude = "open_gopro/demos/"
-
-[tool.pydocstyle]
-convention = "google"
-add-ignore = ["D107", "D403", "D105", "D415"]
-add-select = ["D417"]
-match = "(?!.*(_pb|params)).*.py"
 
 [tool.pytest.ini_options]
 log_auto_indent = true
