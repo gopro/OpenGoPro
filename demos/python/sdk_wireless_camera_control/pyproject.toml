@@ -1,3 +1,7 @@
+#=======================================================================================
+#============================= PACKAGE CONFIGURATOIN  ==================================
+#=======================================================================================
+
 [tool.poetry]
 name = "open_gopro"
 version = "0.8.0" # TODO single source this
@@ -17,6 +21,23 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
 ]
+
+[tool.poetry.scripts]
+gopro-demo = "open_gopro.demos.demo:main"
+gopro-photo = "open_gopro.demos.photo:entrypoint"
+gopro-video = "open_gopro.demos.video:main"
+gopro-stream = "open_gopro.demos.stream:main"
+gopro-log-battery = "open_gopro.demos.log_battery:main"
+gopro-wifi = "open_gopro.demos.connect_wifi:main"
+gopro-ble-write = "open_gopro.demos.ble_write:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+#=======================================================================================
+#================================= DEPENDENCIES ========================================
+#=======================================================================================
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -40,26 +61,82 @@ black = "*"
 pylint = "*"
 mypy = "*"
 types-requests = "*"
-pydocstyle = "*"
+pydocstyle = {extras = ["toml"], version = "*"}
 sphinx = "*"
 sphinxcontrib-napoleon = "*"
 sphinx-rtd-theme = "*"
 twine = "*"
 coverage-badge = "=1.1.0"
 construct-typing = "*"
+poethepoet = "*"
 
-[tool.poetry.scripts]
-gopro-demo = "open_gopro.demos.demo:main"
-gopro-photo = "open_gopro.demos.photo:entrypoint"
-gopro-video = "open_gopro.demos.video:main"
-gopro-stream = "open_gopro.demos.stream:main"
-gopro-log-battery = "open_gopro.demos.log_battery:main"
-gopro-wifi = "open_gopro.demos.connect_wifi:main"
-gopro-ble-write = "open_gopro.demos.ble_write:main"
+#=======================================================================================
+#===================================== TASKS ===========================================
+#=======================================================================================
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.poe.tasks.unit_tests]
+cmd = "pytest tests/unit --cov-fail-under=70"
+help = "Run unit tests"
+
+
+[tool.poe.tasks.e2e_tests]
+cmd = "pytest tests/e2e --cov-fail-under=80"
+help = "Run end-to-end tests"
+
+[tool.poe.tasks.types]
+cmd = "mypy open_gopro"
+help = "Check types with mypy"
+
+[tool.poe.tasks.lint]
+cmd = "pylint open_gopro"
+help = "Lint code with pylint"
+
+[tool.poe.tasks.format]
+cmd = "black open_gopro tests"
+help = "Apply black formatting to source code"
+
+[tool.poe.tasks.docstrings]
+cmd = "pydocstyle -ve open_gopro/**"
+help = "validate docstrings"
+
+[tool.poe.tasks.sphinx]
+cmd = """
+sphinx-build -W -b html docs docs/.build &&
+rm -rf docs/build/.doctrees /docs/build/_sources /docs/build/_static/fonts
+"""
+help = "Build docs."
+
+[tool.poe.tasks.clean_artifacts]
+cmd = """
+find . -type f -name '*.py[co]' -delete -o -type d -name '__pycache__' -delete
+find . -type f -name '*.log' -delete
+find . -type f -name '*.jpg' -delete
+find . -type f -name '*.mp4' -delete
+find . -type f -name '*.JPG' -delete
+find . -type f -name '*.MP4' -delete
+find . -type f -name '*.csv' -delete
+@rm -rf .mypy_cache
+"""
+help = "Clean testing artifacts and pycache"
+
+[tool.poe.tasks.clean_tests]
+cmd = "rm -rf .reports"
+help = "Clean test reports"
+
+[tool.poe.tasks.clean_docs]
+cmd = """
+rm -f docs/modules.rst &&
+rm -rf docs/build
+"""
+help = "Clean built docs output"
+
+[tool.poe.tasks]
+docs = ["docstrings", "docs"]
+clean = ["clean_artifacts", "clean_tests", "clean_docs", "clean_build"]
+
+#=======================================================================================
+#============================== TOOL CONFIGURATIONS ====================================
+#=======================================================================================
 
 [tool.mypy]
 ignore_missing_imports = true
@@ -76,9 +153,9 @@ exclude = "open_gopro/demos/"
 
 [tool.pydocstyle]
 convention = "google"
-add-ignore = "D107, D403, D105, D415"
-add-select = "D417"
-match = '(?!.*_pb|params).*\.py'
+add-ignore = ["D107", "D403", "D105", "D415"]
+add-select = ["D417"]
+match = "(?!.*(_pb|params)).*.py"
 
 [tool.pytest.ini_options]
 log_auto_indent = true
@@ -111,7 +188,9 @@ omit = ["*/constants.py", "*/params.py", "open_gopro/demos*"]
 directory = ".reports/coverage"
 
 [tool.coverage.report]
-exclude_lines = ["raise NotImplementedError"] # Don't complain if tests don't hit defensive assertion code:
+exclude_lines = [
+    "raise NotImplementedError",
+] # Don't complain if tests don't hit defensive assertion code:
 
 [tool.pylint.'MASTER']
 load-plugins = "pylint.extensions.check_docs"
@@ -149,3 +228,7 @@ disable = [
 
 [tool.pylint.'FORMAT']
 max-line-length = 160
+
+[tool.black]
+line-length = 111
+exclude = ".venv"
