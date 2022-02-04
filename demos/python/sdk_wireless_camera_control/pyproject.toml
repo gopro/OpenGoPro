@@ -1,8 +1,22 @@
 [tool.poetry]
 name = "open_gopro"
-version = "0.8.0"                            # TODO single source this
+version = "0.8.0" # TODO single source this
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
+classifiers = [
+    # Trove classifiers
+    # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
+    "Intended Audience :: Developers",
+    "Topic :: Communications",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: Microsoft :: Windows :: Windows 10",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS :: MacOS X",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -16,6 +30,7 @@ protobuf = "*"
 typing-extensions = "*"
 
 [tool.poetry.dev-dependencies]
+coverage = { extras = ["toml"], version = "" }
 pytest = "*"
 pytest-cov = "*"
 pytest-asyncio = "*"
@@ -33,6 +48,104 @@ twine = "*"
 coverage-badge = "=1.1.0"
 construct-typing = "*"
 
+[tool.poetry.scripts]
+gopro-demo = "open_gopro.demos.demo:main"
+gopro-photo = "open_gopro.demos.photo:entrypoint"
+gopro-video = "open_gopro.demos.video:main"
+gopro-stream = "open_gopro.demos.stream:main"
+gopro-log-battery = "open_gopro.demos.log_battery:main"
+gopro-wifi = "open_gopro.demos.connect_wifi:main"
+gopro-ble-write = "open_gopro.demos.ble_write:main"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+ignore_missing_imports = true
+warn_redundant_casts = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = false
+warn_unused_ignores = true
+warn_unreachable = true
+show_error_context = true
+pretty = true
+exclude = "open_gopro/demos/"
+
+[tool.pydocstyle]
+convention = "google"
+add-ignore = "D107, D403, D105, D415"
+add-select = "D417"
+match = '(?!.*_pb|params).*\.py'
+
+[tool.pytest.ini_options]
+log_auto_indent = true
+log_cli = true
+log_cli_level = "ERROR"
+log_cli_format = "%(asctime)s %(levelname)s %(message)s"
+log_cli_date_format = "%H:%M:%S"
+log_file_level = "DEBUG"
+log_file_format = "%(threadName)13s: %(name)40s:%(lineno)5d %(asctime)s.%(msecs)03d %(levelname)-8s | %(message)s"
+log_file_date_format = "%H:%M:%S"
+filterwarnings = "ignore::DeprecationWarning"
+addopts = [
+    "-s",
+    "--capture=tee-sys",
+    "--cov=open_gopro",
+    "--cov-report=term",
+    "--cov-report=html",
+    "--cov-fail-under=75",
+    "--html=reports/test_report.html",
+    "--self-contained-html",
+]
+
+[tool.coverage.run]
+data_file = "reports/coverage/.coverage"
+branch = true
+source = ["open_gopro"]
+omit = ["*/constants.py", "*/params.py", "open_gopro/demos*"]
+
+[tool.coverage.html]
+directory = "reports/coverage"
+
+[tool.coverage.report]
+exclude_lines = ["raise NotImplementedError"] # Don't complain if tests don't hit defensive assertion code:
+
+[tool.pylint.'MASTER']
+load-plugins = "pylint.extensions.check_docs"
+accept-no-param-doc = "no"
+accept-no-return-doc = "no"
+default-docstring-type = "google"
+ignore = ["tests", "proto"]
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = [
+    "too-many-nested-blocks",
+    "unspecified-encoding",
+    "consider-using-with",
+    "abstract-method",               # Pylint incorrectly assumes any function that raises NotImplementedError is abstract. We let mypy check for ABC errors.
+    "cyclic-import",
+    "missing-raises-doc",
+    "useless-type-doc",
+    "useless-param-doc",
+    "redundant-returns-doc",
+    "logging-fstring-interpolation",
+    "logging-format-interpolation",
+    "duplicate-code",
+    "global-statement",
+    "too-few-public-methods",
+    "too-many-arguments",
+    "too-many-instance-attributes",
+    "too-many-branches",
+    "too-many-locals",
+    "too-many-lines",
+    "too-many-statements",
+    "fixme",
+    "protected-access",              # Maybe fix this one
+    "invalid-name",                  # We are passing these except for <= 2 character variable names. Should be able to configure via http://pylint.pycqa.org/en/1.9/user_guide/options.html#cmdoption-variable-rgx
+]
+
+[tool.pylint.'FORMAT']
+max-line-length = 160
