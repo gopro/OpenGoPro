@@ -60,7 +60,7 @@ def manage_logs(request):
     top_dir_stripped = Path(*Path(request.node.name).parts[1:])
     extension_changed = Path(str(top_dir_stripped).strip(".py") + ".log")
     request.config.pluginmanager.get_plugin("logging-plugin").set_log_path(
-        Path("reports") / "logs" / extension_changed
+        Path(".reports") / "logs" / extension_changed
     )
 
 

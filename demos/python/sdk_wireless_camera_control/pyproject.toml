@@ -97,18 +97,18 @@ addopts = [
     "--cov-report=term",
     "--cov-report=html",
     "--cov-fail-under=75",
-    "--html=reports/test_report.html",
+    "--html=.reports/test_report.html",
     "--self-contained-html",
 ]
 
 [tool.coverage.run]
-data_file = "reports/coverage/.coverage"
+data_file = ".reports/coverage/.coverage"
 branch = true
 source = ["open_gopro"]
 omit = ["*/constants.py", "*/params.py", "open_gopro/demos*"]
 
 [tool.coverage.html]
-directory = "reports/coverage"
+directory = ".reports/coverage"
 
 [tool.coverage.report]
 exclude_lines = ["raise NotImplementedError"] # Don't complain if tests don't hit defensive assertion code:

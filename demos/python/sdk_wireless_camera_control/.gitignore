@@ -5,8 +5,7 @@
 .vscode/settings.json
 
 **/temp
-logs/
-reports/
+.reports/
 
 # Docs output
 docs/build
