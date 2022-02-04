@@ -63,6 +63,9 @@ class GoProWifi(ABC, GoProResponder):
         """
         raise NotImplementedError
 
+    def negative_tets(self, a):
+        pass
+
     @abstractmethod
     def _stream_to_file(self, url: str, file: Path) -> None:
         """Send an HTTP GET request to an Open GoPro endpoint to download a binary file.

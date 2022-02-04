@@ -8,7 +8,6 @@ version = "0.8.0" # TODO single source this
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 classifiers = [
-    # Trove classifiers
     # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
     "Intended Audience :: Developers",
     "Topic :: Communications",
@@ -51,27 +50,29 @@ protobuf = "*"
 typing-extensions = "*"
 
 [tool.poetry.dev-dependencies]
-coverage = { extras = ["toml"], version = "" }
 pytest = "*"
 pytest-cov = "*"
 pytest-asyncio = "*"
 pytest-html = "*"
+coverage = { extras = ["toml"], version = "" }
 requests-mock = "*"
 black = "*"
 pylint = "*"
 mypy = "*"
 types-requests = "*"
-pydocstyle = {extras = ["toml"], version = "*"}
 sphinx = "*"
 sphinxcontrib-napoleon = "*"
 sphinx-rtd-theme = "*"
-twine = "*"
 coverage-badge = "=1.1.0"
 construct-typing = "*"
+darglint = "*"
 poethepoet = "*"
+nox = "^2022.1.7"
+nox-poetry = "^0.9.0"
 
 #=======================================================================================
 #===================================== TASKS ===========================================
+safety = "^1.10.3"
 #=======================================================================================
 
 [tool.poe.tasks.unit_tests]
@@ -96,7 +97,7 @@ cmd = "black open_gopro tests"
 help = "Apply black formatting to source code"
 
 [tool.poe.tasks.docstrings]
-cmd = "pydocstyle -ve open_gopro/**"
+cmd = "darglint open_gopro"
 help = "validate docstrings"
 
 [tool.poe.tasks.sphinx]

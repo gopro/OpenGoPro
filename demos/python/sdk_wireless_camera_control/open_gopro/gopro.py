@@ -54,9 +54,6 @@ def ensure_initialized(interface: Interface) -> Callable:
     Args:
         interface (Interface): wireless interface to verify
 
-    Raises:
-        GoProNotInitialized: Wireless interface is not connected
-
     Returns:
         Callable: Direct pass-through of callable after verification
     """
