@@ -47,11 +47,12 @@ construct = "*"
 rich = "*"
 wrapt = "*"
 requests = "*"
-betterproto = "*"
+betterproto = {extras = ["compiler"], version = "*"}
 protobuf = "*"
 typing-extensions = "*"
 
 [tool.poetry.dev-dependencies]
+grpcio-tools = "=1.43.0"
 pytest = "*"
 pytest-cov = "*"
 pytest-asyncio = "*"
@@ -113,8 +114,12 @@ rm -rf docs/build/.doctrees /docs/build/_sources /docs/build/_static/fonts
 help = "Build docs."
 
 [tool.poe.tasks.coverage]
-cmd = "coverage-badge -o docs/_static/coverage.svg"
+cmd = "coverage-badge -f -o docs/_static/coverage.svg"
 help = "update coverage badge"
+
+[tool.poe.tasks.protobuf]
+script = "open_gopro.util:build_protos"
+help = "generate protobuf source from .proto"
 
 [tool.poe.tasks.clean_artifacts]
 cmd = "rm -rf **/__pycache__ *.csv *.mp4 *.jpg .mypy_cache .nox"

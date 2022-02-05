@@ -441,3 +441,20 @@ def custom_betterproto_to_dict(
             else:
                 output[cased_name] = v
     return output
+
+
+def build_protos() -> None:
+    current_dir = Path(__file__).parent.resolve()
+    proto_src_dir = current_dir / ".." / ".." / ".." / ".." / "protobuf"
+    proto_out_dir = current_dir / "proto"
+    print(f"current dir: {current_dir}")
+    for file in proto_src_dir.iterdir():
+        proto_out = f"{file.name.split('.')[0]}_pb.py"
+        print(f"building {proto_out} from {file.name} ...")
+        cmd(f"mv {proto_out_dir / '__init__.py'} {proto_out_dir / 'temp'}")
+        cmd(
+            f"poetry run python -m grpc_tools.protoc  -I {proto_src_dir} --python_betterproto_out={proto_out_dir} {file}"
+        )
+        cmd(f"mv {proto_out_dir / 'open_gopro.py'} {proto_out_dir / proto_out}")
+        cmd(f"mv {proto_out_dir / 'temp'} {proto_out_dir / '__init__.py'}")
+
