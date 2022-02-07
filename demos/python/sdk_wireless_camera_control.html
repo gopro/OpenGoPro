@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-02-03T15:10:52-08:00">
+  <meta property="article:published_time" content="2022-02-07T14:06:12-08:00">
 
 
 
@@ -344,7 +344,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Open GoPro Python SDK">
     <meta itemprop="description" content="Open GoPro Python SDK">
-    <meta itemprop="datePublished" content="2022-02-03T15:10:52-08:00">
+    <meta itemprop="datePublished" content="2022-02-07T14:06:12-08:00">
     
 
     <div class="page__inner-wrap">
@@ -384,8 +384,8 @@
 <i class="fas fa-file-alt"></i> On this page</h4></header>
               <ul class="toc__menu">
 <li><a href="#documentation">Documentation</a></li>
-<li><a href="#installation">Installation</a></li>
 <li><a href="#features">Features</a></li>
+<li><a href="#installation">Installation</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#demos">Demos</a></li>
 </ul>
@@ -421,19 +421,10 @@ the preview stream.</p>
 <h2 id="documentation">Documentation</h2>
 
 <blockquote>
-  <p>This README is only an overview of the package.</p>
+  <p>Note! This README is only an overview of the package.</p>
 </blockquote>
 
 <p>Complete documentation can be found on <a href="https://gopro.github.io/OpenGoPro/python_sdk/">Open GoPro</a></p>
-
-<h2 id="installation">Installation</h2>
-
-<blockquote>
-  <p>Note! This package has only been tested on Python 3.8.x</p>
-</blockquote>
-
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">    $</span><span class="w"> </span>pip <span class="nb">install </span>open-gopro
-</code></pre></div></div>
 
 <h2 id="features">Features</h2>
 
@@ -467,24 +458,33 @@ the preview stream.</p>
   </li>
 </ul>
 
+<h2 id="installation">Installation</h2>
+
+<blockquote>
+  <p>Note! This package requires Python &gt;= 3.8</p>
+</blockquote>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">    $</span><span class="w"> </span>pip <span class="nb">install </span>open-gopro
+</code></pre></div></div>
+
 <h2 id="usage">Usage</h2>
 
 <p>To automatically connect to GoPro device via BLE and WiFI, set the preset, set video parameters, take a
 video, and download all files:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">GoPro</span>
+<span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">GoPro</span><span class="p">,</span> <span class="n">Params</span>
 
 <span class="k">with</span> <span class="n">GoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="n">load_preset</span><span class="p">(</span><span class="n">gopro</span><span class="p">.</span><span class="n">params</span><span class="p">.</span><span class="n">Preset</span><span class="p">.</span><span class="n">CINEMATIC</span><span class="p">)</span>
-    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">resolution</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">gopro</span><span class="p">.</span><span class="n">params</span><span class="p">.</span><span class="n">Resolution</span><span class="p">.</span><span class="n">RES_4K</span><span class="p">)</span>
-    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">fps</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">gopro</span><span class="p">.</span><span class="n">params</span><span class="p">.</span><span class="n">FPS</span><span class="p">.</span><span class="n">FPS_30</span><span class="p">)</span>
-    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">gopro</span><span class="p">.</span><span class="n">params</span><span class="p">.</span><span class="n">Shutter</span><span class="p">.</span><span class="n">ON</span><span class="p">)</span>
+    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="n">load_preset</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Preset</span><span class="p">.</span><span class="n">CINEMATIC</span><span class="p">)</span>
+    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">resolution</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Resolution</span><span class="p">.</span><span class="n">RES_4K</span><span class="p">)</span>
+    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">fps</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">FPS</span><span class="p">.</span><span class="n">FPS_30</span><span class="p">)</span>
+    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Shutter</span><span class="p">.</span><span class="n">ON</span><span class="p">)</span>
     <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Record for 2 seconds
-</span>    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">gopro</span><span class="p">.</span><span class="n">params</span><span class="p">.</span><span class="n">Shutter</span><span class="p">.</span><span class="n">OFF</span><span class="p">)</span>
+</span>    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Shutter</span><span class="p">.</span><span class="n">OFF</span><span class="p">)</span>
 
     <span class="c1"># Download all of the files from the camera
-</span>    <span class="n">media_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">gopro</span><span class="p">.</span><span class="n">wifi_command</span><span class="p">.</span><span class="n">get_media_list</span><span class="p">()[</span><span class="s">"media"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">"fs"</span><span class="p">]]</span>
+</span>    <span class="n">media_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">gopro</span><span class="p">.</span><span class="n">wifi_command</span><span class="p">.</span><span class="n">get_media_list</span><span class="p">().</span><span class="n">flatten</span>
     <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">:</span>
         <span class="n">gopro</span><span class="p">.</span><span class="n">wifi_command</span><span class="p">.</span><span class="n">download_file</span><span class="p">(</span><span class="n">camera_file</span><span class="o">=</span><span class="nb">file</span><span class="p">)</span>
 </code></pre></div></div>
@@ -500,36 +500,49 @@ video, and download all files:</p>
 <p>Demos can be found in the installed package in the “demos” folder. They are installed as a CLI entrypoint
 and can be run via:</p>
 
+<p>Capture a photo and download it to your computer:</p>
+
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-photo
 </code></pre></div></div>
+
+<p>Capture a video and download it to your computer:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-video
 </code></pre></div></div>
 
+<p>Start the preview stream and view it with <a href="https://www.videolan.org/">VLC</a>:</p>
+
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-stream
 </code></pre></div></div>
 
+<p>Connect to the GoPro and log battery consumption in to a .csv:</p>
+
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-log-battery
 </code></pre></div></div>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-log-battery
+<p>Connect to the GoPro’s Wi-Fi AP and maintain the connection:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-wifi
 </code></pre></div></div>
 
 <p>For more information on each, try running with help as such:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-photo <span class="nt">--help</span>
 
-usage: gopro-photo <span class="o">[</span><span class="nt">-h</span><span class="o">]</span> <span class="o">[</span><span class="nt">-i</span> IDENTIFIER] <span class="o">[</span><span class="nt">-l</span> LOG] <span class="o">[</span><span class="nt">-o</span> OUTPUT]
+usage: gopro-photo <span class="o">[</span><span class="nt">-h</span><span class="o">]</span> <span class="o">[</span><span class="nt">-i</span> IDENTIFIER] <span class="o">[</span><span class="nt">-l</span> LOG] <span class="o">[</span><span class="nt">-o</span> OUTPUT] <span class="o">[</span><span class="nt">-w</span> WIFI_INTERFACE]
 
 Connect to a GoPro camera, take a photo, <span class="k">then </span>download it.
 
 optional arguments:
   <span class="nt">-h</span>, <span class="nt">--help</span>            show this <span class="nb">help </span>message and <span class="nb">exit</span>
   <span class="nt">-i</span> IDENTIFIER, <span class="nt">--identifier</span> IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first
+                        discovered GoPro will be connected to
   <span class="nt">-l</span> LOG, <span class="nt">--log</span> LOG     Location to store detailed log
   <span class="nt">-o</span> OUTPUT, <span class="nt">--output</span> OUTPUT
                         Where to write the photo to. If not <span class="nb">set</span>, write to <span class="s1">'photo.jpg'</span>
+  <span class="nt">-w</span> WIFI_INTERFACE, <span class="nt">--wifi_interface</span> WIFI_INTERFACE
+                        System Wifi Interface. If not <span class="nb">set</span>, first discovered interface will be used.
 </code></pre></div></div>
 
         
@@ -542,7 +555,7 @@ optional arguments:
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-02-03T15:10:52-08:00">February 3, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-02-07T14:06:12-08:00">February 7, 2022</time></p>
 
 
       </footer>
