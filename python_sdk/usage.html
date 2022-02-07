@@ -1,74 +1,37 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Usage &mdash; Open GoPro Python SDK 0.8.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Usage &mdash; Open GoPro Python SDK 0.9.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Interfaces" href="api.html" />
     <link rel="prev" title="QuickStart Guide" href="quickstart.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="index.html" class="icon icon-home"> Open GoPro Python SDK
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                0.8.0
+                0.9.0
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -76,19 +39,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart Guide</a></li>
@@ -128,83 +80,38 @@
 <li class="toctree-l1"><a class="reference internal" href="future_work.html">Future Work</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Open GoPro Python SDK</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Usage</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-            
               <!-- User defined GitHub URL -->
               <a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control" class="fa fa-github"> Edit on GitHub</a>
-            
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="usage">
-<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h1>
 <p>This section will describe some high level information of how to use the Open GoPro module. For more detailed
 information, see the <a class="reference internal" href="api.html#interfaces"><span class="std std-ref">Interfaces</span></a> section. For just running the demo, see the
 <a class="reference internal" href="quickstart.html#quickstart-guide"><span class="std std-ref">QuickStart Guide</span></a> section.</p>
-<div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
 <p>The top level interface is the <a class="reference internal" href="api.html#gopro"><span class="std std-ref">GoPro</span></a> class. One <cite>GoPro</cite> instance corresponds to a (potentially not
 yet) connected GoPro camera resource.</p>
 <p>Once a <cite>GoPro</cite> instance is <a class="reference internal" href="#opening"><span class="std std-ref">opened</span></a>, it can be interacted with (via BLE and / or WiFi) by:</p>
@@ -216,9 +123,9 @@ yet) connected GoPro camera resource.</p>
 <p class="admonition-title">Note</p>
 <p>There is a lot of logging throughout the Open GoPro package. See <a class="reference internal" href="troubleshooting.html#troubleshooting"><span class="std std-ref">troubleshooting</span></a> for more info.</p>
 </div>
-</div>
-<div class="section" id="opening">
-<h2>Opening<a class="headerlink" href="#opening" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="opening">
+<h2>Opening<a class="headerlink" href="#opening" title="Permalink to this headline"></a></h2>
 <p>Before communicating with a camera, the camera resource must be “opened”. This can be done either with the
 context manager…</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">GoPro</span>
@@ -255,8 +162,8 @@ properties. All of the following will return True:</p>
 <span class="n">gopro</span><span class="o">.</span><span class="n">is_ble_initialized</span>
 </pre></div>
 </div>
-<div class="section" id="arguments">
-<h3>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h3>
+<section id="arguments">
+<h3>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline"></a></h3>
 <p>The <cite>GoPro</cite> class takes the following optional arguments:</p>
 <ul class="simple">
 <li><p><strong>target</strong>: either the last 4 digits of the GoPro name. The name can be found from the
@@ -271,9 +178,9 @@ discovered interface will be used.</p></li>
 False, the keep-alive signal will not be automatically sent and the camera’s encoding / ready state will not
 be tracked. This is most likely not desirable for the user and is mostly used for testing.</p></li>
 </ul>
-</div>
-<div class="section" id="api-version">
-<h3>API Version<a class="headerlink" href="#api-version" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="api-version">
+<h3>API Version<a class="headerlink" href="#api-version" title="Permalink to this headline"></a></h3>
 <p>As mentioned above, one of the steps during the opening sequence is to query the camera’s Open GoPro API version.
 This SDK only supported Open GoPro API Version 2.0 so will raise an Exception if the connected camera is
 using anything else.</p>
@@ -282,9 +189,9 @@ using anything else.</p>
 <li><p><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.version" title="open_gopro.gopro.GoPro.version"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.gopro.GoPro.version()</span></code></a></p></li>
 </ul>
 <p>Also, the version string can be accessed via the <cite>version</cite> property</p>
-</div>
-<div class="section" id="camera-readiness">
-<h3>Camera Readiness<a class="headerlink" href="#camera-readiness" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="camera-readiness">
+<h3>Camera Readiness<a class="headerlink" href="#camera-readiness" title="Permalink to this headline"></a></h3>
 <p>A command can not be sent to the camera if it is not ready where “ready” is defined as not encoding and not
 busy. These two states are managed automatically by the <cite>GoPro</cite> instance such that a call to any command will
 block until the camera is ready. It is possible to check these from the application via:</p>
@@ -301,10 +208,10 @@ block until the camera is ready. It is possible to check these from the applicat
 </div>
 <p>Just to reiterate…it is not needed or recommended to worry about this as the internal state is managed automatically
 by the <cite>GoPro</cite> instance.</p>
-</div>
-</div>
-<div class="section" id="sending-commands">
-<h2>Sending Commands<a class="headerlink" href="#sending-commands" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="sending-commands">
+<h2>Sending Commands<a class="headerlink" href="#sending-commands" title="Permalink to this headline"></a></h2>
 <p>Once the <cite>GoPro</cite> instance has been <a class="reference internal" href="#opening"><span class="std std-ref">opened</span></a>, it is now possible to send commands to the camera
 (provided that the camera is <a class="reference internal" href="#camera-readiness"><span class="std std-ref">ready</span></a>). This is done either via:</p>
 <ul class="simple">
@@ -312,8 +219,8 @@ by the <cite>GoPro</cite> instance.</p>
 <li><p>registering for asynchronous push notifications</p></li>
 </ul>
 <p>Both of these patterns will be expanded upon below. But first, a note on selecting parameters for use with commands…</p>
-<div class="section" id="selecting-parameters">
-<h3>Selecting Parameters<a class="headerlink" href="#selecting-parameters" title="Permalink to this headline">¶</a></h3>
+<section id="selecting-parameters">
+<h3>Selecting Parameters<a class="headerlink" href="#selecting-parameters" title="Permalink to this headline"></a></h3>
 <p>Whenever a parameter is required for a command, it will be type-hinted in the method definition as either a basic Python type
 or an Enum from the <cite>params</cite> module (<cite>class:`open_gopro.api.params</cite>).</p>
 <p>Here is a full example for clarity:</p>
@@ -323,13 +230,13 @@ or an Enum from the <cite>params</cite> module (<cite>class:`open_gopro.api.para
     <span class="n">gopro</span><span class="o">.</span><span class="n">ble_command</span><span class="o">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">Shutter</span><span class="o">.</span><span class="n">ON</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="synchronous-data-operations">
-<h3>Synchronous Data Operations<a class="headerlink" href="#synchronous-data-operations" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="synchronous-data-operations">
+<h3>Synchronous Data Operations<a class="headerlink" href="#synchronous-data-operations" title="Permalink to this headline"></a></h3>
 <p>This section refers to sending commands, getting settings / statuses, and setting settings. In all cases here,
 the method will block until a <a class="reference internal" href="#handling-responses"><span class="std std-ref">response</span></a> is received.</p>
-<div class="section" id="commands">
-<h4>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h4>
+<section id="commands">
+<h4>Commands<a class="headerlink" href="#commands" title="Permalink to this headline"></a></h4>
 <p>Commands are callable instance attributes of a Commands class instance
 (i.e. <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands" title="open_gopro.api.ble_commands.BleCommands"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.api.ble_commands.BleCommands</span></code></a> or
 <a class="reference internal" href="api.html#open_gopro.api.wifi_commands.WifiCommands" title="open_gopro.api.wifi_commands.WifiCommands"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.api.wifi_commands.WifiCommands</span></code></a>), thus they can be called directly:</p>
@@ -339,9 +246,9 @@ the method will block until a <a class="reference internal" href="#handling-resp
     <span class="n">gopro</span><span class="o">.</span><span class="n">wifi_command</span><span class="o">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">Shutter</span><span class="o">.</span><span class="n">OFF</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="statuses">
-<h4>Statuses<a class="headerlink" href="#statuses" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="statuses">
+<h4>Statuses<a class="headerlink" href="#statuses" title="Permalink to this headline"></a></h4>
 <p>Statuses are instances of a BleStatus(<a class="reference internal" href="api.html#open_gopro.api.builders.BleStatus" title="open_gopro.api.builders.BleStatus"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.api.builders.BleStatus</span></code></a>). They can be read
 synchronously using their <cite>get_value</cite> method as such:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">GoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
@@ -360,9 +267,9 @@ synchronously using their <cite>get_value</cite> method as such:</p>
 (<a class="reference internal" href="api.html#open_gopro.api.wifi_commands.WifiCommands.get_camera_state" title="open_gopro.api.wifi_commands.WifiCommands.get_camera_state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.wifi_commands.WifiCommands.get_camera_state()</span></code></a>)
 command to retrieve all of them (as well as all of the settings) at once</p>
 </div>
-</div>
-<div class="section" id="settings">
-<h4>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="settings">
+<h4>Settings<a class="headerlink" href="#settings" title="Permalink to this headline"></a></h4>
 <p>Settings are instances of a BleSetting(<a class="reference internal" href="api.html#open_gopro.api.builders.BleSetting" title="open_gopro.api.builders.BleSetting"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.api.builders.BleSetting</span></code></a>)
 or WifiSetting(<a class="reference internal" href="api.html#open_gopro.api.builders.WifiSetting" title="open_gopro.api.builders.WifiSetting"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.api.builders.WifiSetting</span></code></a>). They can be interacted synchronously in several
 ways.</p>
@@ -399,10 +306,10 @@ the current capabilities for a given setting (via BLE) using the <cite>get_capab
     <span class="n">gopro</span><span class="o">.</span><span class="n">wifi_setting</span><span class="o">.</span><span class="n">fps</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">FPS</span><span class="o">.</span><span class="n">FPS_30</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="asynchronous-push-notifications">
-<h3>Asynchronous Push Notifications<a class="headerlink" href="#asynchronous-push-notifications" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="asynchronous-push-notifications">
+<h3>Asynchronous Push Notifications<a class="headerlink" href="#asynchronous-push-notifications" title="Permalink to this headline"></a></h3>
 <p>This section describes how to register for and handle asynchronous push notifications. This is only relevant for BLE.</p>
 <p>It is possible to enable push notifications for any of the following:</p>
 <ul class="simple">
@@ -454,14 +361,14 @@ following commands:</p>
 <li><p>unregister for all  setting notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings" title="open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings()</span></code></a></p></li>
 <li><p>unregister for all status notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses" title="open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses()</span></code></a></p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="handling-responses">
-<h2>Handling Responses<a class="headerlink" href="#handling-responses" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="handling-responses">
+<h2>Handling Responses<a class="headerlink" href="#handling-responses" title="Permalink to this headline"></a></h2>
 <p>Unless otherwise stated, all commands, settings, and status operations return a <cite>GoProResp</cite>
 (<a class="reference internal" href="api.html#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.responses.GoProResp</span></code></a>) which is a JSON serializable dict with some helper functions.</p>
-<div class="section" id="response-structure">
-<h3>Response Structure<a class="headerlink" href="#response-structure" title="Permalink to this headline">¶</a></h3>
+<section id="response-structure">
+<h3>Response Structure<a class="headerlink" href="#response-structure" title="Permalink to this headline"></a></h3>
 <p>A <cite>GoProResp</cite> has 3 relevant attributes for the end user:</p>
 <ul>
 <li><div class="line-block">
@@ -522,9 +429,9 @@ the <cite>id</cite> and <cite>status</cite> attributes are appended to the JSON.
 <span class="go">UUID.CQ_QUERY_RESP</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="data-access">
-<h3>Data Access<a class="headerlink" href="#data-access" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="data-access">
+<h3>Data Access<a class="headerlink" href="#data-access" title="Permalink to this headline"></a></h3>
 <p>The response data is stored in the <cite>data</cite> attribute (<a class="reference internal" href="api.html#open_gopro.responses.GoProResp.data" title="open_gopro.responses.GoProResp.data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.responses.GoProResp.data()</span></code></a>) but can also
 be accessed via dict access on the instance since <cite>__getitem__</cite> has been overridden. For example, the must
 succinct way to access the current resolution from the response is:</p>
@@ -549,9 +456,9 @@ succinct way to access the current resolution from the response is:</p>
 <p>The <a class="reference external" href="https://gopro.github.io/OpenGoPro/">Open GoPro Documentation</a> should be referenced in regards
 to how to access the JSON for each response.</p>
 </div>
-</div>
-<div class="section" id="value-flattening">
-<h3>Value Flattening<a class="headerlink" href="#value-flattening" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="value-flattening">
+<h3>Value Flattening<a class="headerlink" href="#value-flattening" title="Permalink to this headline"></a></h3>
 <p>For short responses, it is rather unwieldy to access the JSON dict as described above. Therefore, you can attempt to use the
 <cite>flatten</cite> property (<a class="reference internal" href="api.html#open_gopro.responses.GoProResp.flatten" title="open_gopro.responses.GoProResp.flatten"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.responses.GoProResp.flatten()</span></code></a>) to flatten the data:</p>
 <p>Continuing with our example above, where previously we accessed the responded resolution as:</p>
@@ -581,10 +488,10 @@ for now, it will look ugly like this:</p>
 <span class="n">gopro</span><span class="o">.</span><span class="n">media_list</span> <span class="o">=</span> <span class="n">wifi_command</span><span class="o">.</span><span class="n">get_media_list</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;media&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;fs&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="closing">
-<h2>Closing<a class="headerlink" href="#closing" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="closing">
+<h2>Closing<a class="headerlink" href="#closing" title="Permalink to this headline"></a></h2>
 <p>It is important to close the camera resource when you are done with it. This can be done in two ways. If the context
 manager was used, it will automatically be closed when exiting, i.e.:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">GoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
@@ -610,55 +517,38 @@ manager was used, it will automatically be closed when exiting, i.e.:</p>
 the program exits. This will cause reconnection problems as your OS will not discover devices it is
 already connected to.</p>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="api.html" class="btn btn-neutral float-right" title="Interfaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="quickstart.html" class="btn btn-neutral float-left" title="QuickStart Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="Interfaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, GoPro Inc..
-
-    </p>
+    <p>&#169; Copyright 2022, GoPro Inc..</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

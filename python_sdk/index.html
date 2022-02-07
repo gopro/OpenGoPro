@@ -1,73 +1,36 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Open GoPro Python SDK &mdash; Open GoPro Python SDK 0.8.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Open GoPro Python SDK &mdash; Open GoPro Python SDK 0.9.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Installation" href="installation.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="#" class="icon icon-home"> Open GoPro Python SDK
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                0.8.0
+                0.9.0
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -75,19 +38,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart Guide</a></li>
@@ -100,88 +52,43 @@
 <li class="toctree-l1"><a class="reference internal" href="future_work.html">Future Work</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="#">Open GoPro Python SDK</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Open GoPro Python SDK</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-            
               <!-- User defined GitHub URL -->
               <a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control" class="fa fa-github"> Edit on GitHub</a>
-            
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="open-gopro-python-sdk">
-<h1>Open GoPro Python SDK<a class="headerlink" href="#open-gopro-python-sdk" title="Permalink to this headline">¶</a></h1>
-<div class="figure align-default">
+             
+  <section id="open-gopro-python-sdk">
+<h1>Open GoPro Python SDK<a class="headerlink" href="#open-gopro-python-sdk" title="Permalink to this headline"></a></h1>
+<figure class="align-default">
 <a class="reference internal image-reference" href="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png"><img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png" style="width: 50%;" /></a>
-</div>
+</figure>
 <a class="reference external image-reference" href="https://lbesson.mit-license.org/"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml"><img alt="Build and Test" src="https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Testing?label=Build%20and%20Test" /></a>
 <a class="reference external image-reference" href="https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_deploy_docs.yml"><img alt="Build Docs" src="https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Docs%20Build%20and%20Deploy?label=Docs" /></a>
 <a class="reference external image-reference" href="https://pypi.org/project/open-gopro/"><img alt="PyPI" src="https://img.shields.io/pypi/v/open-gopro" /></a>
 <a class="reference external image-reference" href="https://github.com/psf/black"><img alt="Black" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
-<img alt="Coverage" src="_images/coverage.svg" /><div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<img alt="Coverage" src="_images/coverage.svg" /><section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline"></a></h2>
 <p>Welcome to the Open GoPro Python package documentation. This is a Python package that provides an
 interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and Wi-Fi API’s.</p>
 <p>This package implements the API as defined in the <a class="reference external" href="https://gopro.github.io/OpenGoPro/">Open GoPro Specification</a> .
@@ -192,11 +99,11 @@ For more information on the API, see the relevant documentation:</p>
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This package has only been tested on Python 3.8.x</p>
+<p>This package requires Python &gt;= version 3.8</p>
 </div>
-</div>
-<div class="section" id="features">
-<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline"></a></h2>
 <ul>
 <li><p>Top-level GoPro class interface to use both BLE / WiFi</p></li>
 <li><p>Cross-platform (tested on Windows 10, and Ubuntu 20.04, and &gt;= MacOS Big Sur)</p>
@@ -229,9 +136,9 @@ For more information on the API, see the relevant documentation:</p>
 </div></blockquote>
 </li>
 </ul>
-</div>
-<div class="section" id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
 <p>Here is a suggested procedure for getting acquainted with this package (it is the same as reading through
 this document in order):</p>
 <ol class="arabic simple">
@@ -240,8 +147,15 @@ this document in order):</p>
 <li><p>Implement your own example, perhaps starting with a demo, with <a class="reference internal" href="usage.html#usage"><span class="std std-ref">usage</span></a> information</p></li>
 <li><p>If you need more detailed implementation reference, see the Interface <a class="reference internal" href="api.html#interfaces"><span class="std std-ref">documentation</span></a></p></li>
 </ol>
+</section>
+<section id="development">
+<h2>Development<a class="headerlink" href="#development" title="Permalink to this headline"></a></h2>
+<ol class="arabic simple">
+<li><p>Set up the <a class="reference internal" href="contributing.html#get-started"><span class="std std-ref">development environment</span></a></p></li>
+<li><p>Open a <a class="reference internal" href="contributing.html#pull-request-guidelines"><span class="std std-ref">Pull Request</span></a></p></li>
+</ol>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
@@ -258,7 +172,6 @@ this document in order):</p>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#battery-demo">Battery Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#stream-demo">Stream Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#wifi-demo">WiFi Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#big-demo">Big Demo</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
@@ -324,7 +237,11 @@ this document in order):</p>
 <li class="toctree-l3"><a class="reference internal" href="contributing.html#submit-feedback">Submit Feedback</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#steps">Steps</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
 </ul>
 </li>
@@ -334,6 +251,7 @@ this document in order):</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#february-7-2022">0.9.0 (February-7-2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#february-3-2022">0.8.0 (February-3-2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#january-3-2022">0.7.2 (January-3-2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#december-16-2021">0.7.1 (December-16-2021)</a></li>
@@ -372,54 +290,37 @@ this document in order):</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, GoPro Inc..
-
-    </p>
+    <p>&#169; Copyright 2022, GoPro Inc..</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

@@ -1,74 +1,37 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>QuickStart Guide &mdash; Open GoPro Python SDK 0.8.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>QuickStart Guide &mdash; Open GoPro Python SDK 0.9.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Usage" href="usage.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="index.html" class="icon icon-home"> Open GoPro Python SDK
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                0.8.0
+                0.9.0
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -76,19 +39,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">QuickStart Guide</a><ul>
@@ -98,7 +50,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#battery-demo">Battery Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stream-demo">Stream Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#wifi-demo">WiFi Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#big-demo">Big Demo</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
@@ -110,78 +61,33 @@
 <li class="toctree-l1"><a class="reference internal" href="future_work.html">Future Work</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Open GoPro Python SDK</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>QuickStart Guide</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-            
               <!-- User defined GitHub URL -->
               <a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control" class="fa fa-github"> Edit on GitHub</a>
-            
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="quickstart-guide">
-<h1>QuickStart Guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="quickstart-guide">
+<h1>QuickStart Guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this headline"></a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This section assumes you have successfully <a class="reference internal" href="installation.html#installation"><span class="std std-ref">installed</span></a> the package.</p>
@@ -195,15 +101,15 @@ or locally in <cite>$INSTALL/demos</cite> where $INSTALL can be found with:</p>
 <p>All of the demos have command-line help via the <cite>–help</cite> parameter. They also all log to the console as well
 as write a more detailed log to a file (this file can be set with the <cite>–log</cite> parameter). The detailed log
 is very helpful for diagnosing BLE / WiFi inconsistencies.</p>
-<div class="section" id="a-special-consideration-for-bluez">
-<h2>A Special Consideration for BlueZ<a class="headerlink" href="#a-special-consideration-for-bluez" title="Permalink to this headline">¶</a></h2>
+<section id="a-special-consideration-for-bluez">
+<h2>A Special Consideration for BlueZ<a class="headerlink" href="#a-special-consideration-for-bluez" title="Permalink to this headline"></a></h2>
 <p>The Bleak BLE controller does not currently support autonomous pairing for the BlueZ backend. So if you are using
 BlueZ (i.e. Ubuntu, RaspberryPi, etc.), you need to first pair the camera from the command line as shown in the
 <a class="reference external" href="https://gopro.github.io/OpenGoPro/tutorials/bash/bluez">BlueZ tutorial</a>. There is work to add this feature
 and progress can be tracked on the <a class="reference external" href="https://github.com/gopro/OpenGoPro/issues/29">Github Issue</a></p>
-</div>
-<div class="section" id="photo-demo">
-<h2>Photo Demo<a class="headerlink" href="#photo-demo" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="photo-demo">
+<h2>Photo Demo<a class="headerlink" href="#photo-demo" title="Permalink to this headline"></a></h2>
 <p>The <cite>photo</cite> demo will discover a GoPro camera, connect to it, take a photo, and then download the
 photo to your local machine. To run, do:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-photo
@@ -227,9 +133,9 @@ photo to your local machine. To run, do:</p>
 <span class="go">                        System Wifi Interface. If not set, first discovered interface will be used.</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="video-demo">
-<h2>Video Demo<a class="headerlink" href="#video-demo" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="video-demo">
+<h2>Video Demo<a class="headerlink" href="#video-demo" title="Permalink to this headline"></a></h2>
 <p>The video demo will discover a GoPro camera, connect to it, take a video for a given amount of time, and then
 download the photo to your local machine. To run, do:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-video <span class="m">2</span>
@@ -256,9 +162,9 @@ download the photo to your local machine. To run, do:</p>
 <span class="go">                        System Wifi Interface. If not set, first discovered interface will be used.</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="battery-demo">
-<h2>Battery Demo<a class="headerlink" href="#battery-demo" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="battery-demo">
+<h2>Battery Demo<a class="headerlink" href="#battery-demo" title="Permalink to this headline"></a></h2>
 <p>This demo will continuously read the battery level (either via polling or registering fro notifications as
 configured per the command line argument) and write
 the results to a .csv file. To run, do:</p>
@@ -281,9 +187,9 @@ the results to a .csv file. To run, do:</p>
 <span class="go">                        notified instead. Defaults to notifications.</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="stream-demo">
-<h2>Stream Demo<a class="headerlink" href="#stream-demo" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="stream-demo">
+<h2>Stream Demo<a class="headerlink" href="#stream-demo" title="Permalink to this headline"></a></h2>
 <p>The <cite>stream</cite> demo will discover a GoPro camera, connect to it, enable the preview stream, and then attempt to
 launch VLC to view the stream. It will attempt to automatically discover VLC if it is not passed a location
 for the VLC executable.</p>
@@ -307,9 +213,9 @@ for the VLC executable.</p>
 <span class="go">                        System Wifi Interface. If not set, first discovered interface will be used.</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="wifi-demo">
-<h2>WiFi Demo<a class="headerlink" href="#wifi-demo" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="wifi-demo">
+<h2>WiFi Demo<a class="headerlink" href="#wifi-demo" title="Permalink to this headline"></a></h2>
 <p>The <cite>wifi</cite> demo will discover a GoPro camera, connect to it, enable the camera’a WiFi AP, and then connect
 to it via WiFi. This is useful if you want to send HTTP commands to it from some external source such as curl.</p>
 <p>Note that this demo will run, thus maintaining the WiFi connection, until exited via keyboard interrupt.</p>
@@ -332,111 +238,38 @@ to it via WiFi. This is useful if you want to send HTTP commands to it from some
 <span class="go">                        System Wifi Interface. If not set, first discovered interface will be used.</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="big-demo">
-<h2>Big Demo<a class="headerlink" href="#big-demo" title="Permalink to this headline">¶</a></h2>
-<p>This is a superset of the above demos as well as other functionality as shown below. It might not be
-very useful to run this as a demo but the source code can be helpful for showing examples of various
-behavior.</p>
-<p>To run the demo;</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-demo
-</pre></div>
-</div>
-<p>For more information, do:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-demo --help
-<span class="go">usage: gopro-demo [-h] [-i IDENTIFIER] [-l LOG] [-v VLC] [-w WIFI_INTERFACE]</span>
-
-<span class="go">Connect to a GoPro camera via BLE and Wifi and do some things.</span>
-
-<span class="go">optional arguments:</span>
-<span class="go">-h, --help            show this help message and exit</span>
-<span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
-<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first</span>
-<span class="go">                        discovered GoPro will be connected to</span>
-<span class="go">-l LOG, --log LOG     Location to store detailed log</span>
-<span class="go">-v VLC, --vlc VLC     VLC location. If not set, the location will attempt to be automatically discovered.</span>
-<span class="go">-w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE</span>
-<span class="go">                        System Wifi Interface. If not set, first discovered interface will be used.</span>
-</pre></div>
-</div>
-<p>The demo will perform the following, logging to the console as it goes as well as writing a
-more detailed log to a file (this file can be set with the –log parameter):</p>
-<ol class="arabic simple">
-<li><p>Scan for advertising BLE Devices, displaying any it finds. Note it is possible to specify a device connect
-to via the –identifier CLI parameter.</p></li>
-<li><p>Connect to the first GoPro BLE Device it finds (if not passed an identifier)</p></li>
-<li><p>Read the Wifi SSID and password via BLE, then enable the WiFi access point</p></li>
-<li><p>Connect to the camera Wifi</p></li>
-<li><p>Dump the discovered BLE characteristics to a .csv file</p></li>
-<li><p>Disable the shutter and Turbo mode</p></li>
-<li><p>Get all statuses and settings</p></li>
-<li><p>Get and print some statuses, settings, and capabilities individually</p></li>
-<li><p>Register to receive push notifications of some statuses, settings, and capabilities</p></li>
-<li><p>Take a picture</p></li>
-<li><p>Take a video</p></li>
-<li><p>Get the media list</p></li>
-<li><p>Find a picture from the media list and download it</p></li>
-<li><p>Find a video from the media list and download it</p></li>
-<li><p>Get the media info for a video and a picture</p></li>
-<li><p>Get GPMF data for a picture</p></li>
-<li><p>Get the screen-nail of a video</p></li>
-<li><p>Get telemetry data for a video</p></li>
-<li><p>Get the thumbnail of a picture</p></li>
-<li><p>Get the preset status</p></li>
-<li><p>Cycle through resolutions, getting async notifications for push notifications that we registered for previously</p></li>
-<li><p>Enable the live stream.</p></li>
-<li><p>Attempt to open VLC to view the live stream. This should work if you installed VLC to the default location.</p></li>
-<li><p>Sleep until a keyboard interrupt is received, then disconnect, and exit</p></li>
-</ol>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="usage.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, GoPro Inc..
-
-    </p>
+    <p>&#169; Copyright 2022, GoPro Inc..</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
