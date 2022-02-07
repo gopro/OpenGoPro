@@ -22,7 +22,6 @@ from open_gopro.constants import CmdId, GoProUUIDs, StatusId
 ready = False
 
 
-@pytest.mark.asyncio
 def test_ble_threads_start(gopro_client_maintain_ble: GoPro):
     def open_client():
         gopro_client_maintain_ble.open()
@@ -44,7 +43,6 @@ def test_ble_threads_start(gopro_client_maintain_ble: GoPro):
     ).is_ok
 
 
-@pytest.mark.asyncio
 def test_gopro_is_instanciated(gopro_client: GoPro):
     assert gopro_client.version == 2.0
     assert gopro_client.identifier is None
@@ -55,7 +53,6 @@ def test_gopro_is_instanciated(gopro_client: GoPro):
         assert gopro_client.is_encoding
 
 
-@pytest.mark.asyncio
 def test_gopro_open(gopro_client: GoPro):
     gopro_client.open()
     assert gopro_client.is_ble_connected
@@ -63,7 +60,6 @@ def test_gopro_open(gopro_client: GoPro):
     assert gopro_client.identifier == "scanned_device"
 
 
-@pytest.mark.asyncio
 def test_http_get(gopro_client: GoPro, monkeypatch):
     endpoint = "gopro/camera/stream/start"
     session = requests.Session()
@@ -75,7 +71,6 @@ def test_http_get(gopro_client: GoPro, monkeypatch):
     assert response.is_ok
 
 
-@pytest.mark.asyncio
 def test_http_file(gopro_client: GoPro, monkeypatch):
     out_file = Path("test.mp4")
     endpoint = "videos/DCIM/100GOPRO/dummy.MP4"
@@ -88,7 +83,6 @@ def test_http_file(gopro_client: GoPro, monkeypatch):
     assert out_file.exists()
 
 
-@pytest.mark.asyncio
 def test_http_response_timeout(gopro_client: GoPro, monkeypatch):
     with pytest.raises(ResponseTimeout):
         endpoint = "gopro/camera/stream/start"
@@ -100,7 +94,6 @@ def test_http_response_timeout(gopro_client: GoPro, monkeypatch):
         gopro_client._get(endpoint)
 
 
-@pytest.mark.asyncio
 def test_http_response_error(gopro_client: GoPro, monkeypatch):
     endpoint = "gopro/camera/stream/start"
     session = requests.Session()
@@ -114,18 +107,15 @@ def test_http_response_error(gopro_client: GoPro, monkeypatch):
     assert not response.is_ok
 
 
-@pytest.mark.asyncio
 def test_get_update(gopro_client: GoPro):
     gopro_client._out_q.put(1)
     assert gopro_client.get_update() == 1
 
 
-@pytest.mark.asyncio
 def test_keep_alive(gopro_client: GoPro):
     assert gopro_client.keep_alive()
 
 
-@pytest.mark.asyncio
 def test_notification_handler(gopro_client: GoPro):
     response = gopro_client._write_characteristic_receive_notification(
         GoProUUIDs.CQ_COMMAND,
@@ -137,7 +127,6 @@ def test_notification_handler(gopro_client: GoPro):
     assert response.is_ok
 
 
-@pytest.mark.asyncio
 def test_gopro_close(gopro_client: GoPro):
     gopro_client.close()
     assert not gopro_client.is_ble_connected

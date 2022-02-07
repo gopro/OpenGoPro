@@ -16,14 +16,12 @@ def notification_cb(handle: int, data: bytearray) -> None:
     print("Entered test notification callback")
 
 
-@pytest.mark.asyncio
 def test_bleak_not_open(gopro_bleak_client: GoProBle):
     assert not gopro_bleak_client._ble.is_discovered
     assert not gopro_bleak_client._ble.is_connected
     assert gopro_bleak_client._ble.identifier is None
 
 
-@pytest.mark.asyncio
 def test_bleak_open(gopro_bleak_client: GoProBle):
     gopro_bleak_client._ble.open()
     assert gopro_bleak_client._ble.is_discovered
@@ -31,22 +29,20 @@ def test_bleak_open(gopro_bleak_client: GoProBle):
     assert gopro_bleak_client._ble.identifier is not None
 
 
-@pytest.mark.asyncio
 def test_bleak_attributes_discovered(gopro_bleak_client: GoProBle):
     assert len(gopro_bleak_client._ble.gatt_db.services) > 0
     gopro_bleak_client._ble.services_as_csv()
 
 
-# @pytest.mark.asyncio
+#
 # def test_bleak_write(gopro_bleak_client: GoProBle):
 #     gopro_bleak_client.write(uuid, data)
 
-# @pytest.mark.asyncio
+#
 # def test_bleak_read(gopro_bleak_client: GoProBle):
 #     result = gopro_bleak_client.read(uuid)
 
 
-@pytest.mark.asyncio
 def test_bleak_close(gopro_bleak_client: GoProBle):
     gopro_bleak_client._ble.close()
     assert not gopro_bleak_client._ble.is_connected

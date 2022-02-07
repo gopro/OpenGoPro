@@ -8,13 +8,11 @@ import pytest
 from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
 
 
-@pytest.mark.asyncio
 def test_singleton(bleak_wrapper: BleakWrapperController):
     new_bleak_wrapper = BleakWrapperController()
     assert bleak_wrapper is new_bleak_wrapper
 
 
-@pytest.mark.asyncio
 def test_module_loop_running(bleak_wrapper: BleakWrapperController):
     assert bleak_wrapper._module_thread.is_alive()
     assert bleak_wrapper._ready.is_set()
