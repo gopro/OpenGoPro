@@ -4,7 +4,7 @@
 
 [tool.poetry]
 name = "open_gopro"
-version = "0.8.0" # TODO single source this
+version = "0.9.0"
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 classifiers = [
@@ -107,11 +107,8 @@ cmd = "darglint -v 2 open_gopro"
 help = "validate docstrings"
 
 [tool.poe.tasks.sphinx]
-cmd = """
-sphinx-build -W -b html docs docs/build &&
-rm -rf docs/build/.doctrees /docs/build/_sources /docs/build/_static/fonts
-"""
-help = "Build docs."
+cmd = "sphinx-build -W -b html docs docs/build"
+help = "Build sphinx documentation."
 
 [tool.poe.tasks.coverage]
 cmd = "coverage-badge -f -o docs/_static/coverage.svg"
@@ -147,6 +144,7 @@ help = "Clean everything"
 
 [tool.poe.tasks.all]
 sequence = ["format", "types", "lint", "docstrings", "unit_tests"]
+help = "Format, check types, lint, check docstrings, and run unit tests"
 
 #=======================================================================================
 #============================== TOOL CONFIGURATIONS ====================================

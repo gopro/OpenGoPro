@@ -67,6 +67,10 @@ def docs(session) -> None:
         "sphinxcontrib-napoleon",
     )
     session.run("sphinx-build", "docs", "docs/build")
+    # Clean up for Jekyll consumption
+    session.run(
+        "rm", "-rf", "docs/build/.doctrees", "/docs/build/_sources", "/docs/build/_static/fonts", external=True
+    )
 
 
 @session(python=["3.8", "3.9", "3.10"])

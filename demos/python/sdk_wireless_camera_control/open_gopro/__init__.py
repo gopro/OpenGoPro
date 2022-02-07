@@ -3,7 +3,10 @@
 
 """All GoPro exports that the the user will want should be exported here."""
 
-__version__ = "0.9.0"
+# Extract version set from pyproject.toml
+import importlib.metadata as importlib_metadata
+
+__version__ = importlib_metadata.version(__name__)
 
 from open_gopro.gopro import GoPro
 from open_gopro.api import Params
