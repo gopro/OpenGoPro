@@ -44,9 +44,9 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                os: [macos-latest]
+                os: [ubuntu-latest]
                 include:
-                    - os: macos-latest
+                    - os: ubuntu-latest
                       path: ~/Library/Caches/pip
 
         steps:
@@ -55,16 +55,16 @@ jobs:
               with:
                   path: source
 
-            - name: Set up Python 3.8.8
+            - name: Set up Python 3.9.10
               uses: actions/setup-python@v2
               with:
-                  python-version: 3.8.8
+                  python-version: 3.9.10
 
             - name: Restore cached pip environment
               uses: actions/cache@v2
               with:
                   path: ${{ matrix.path }}
-                  key: ${{ runner.os }}-3.8.8-pip-${{ hashFiles('demos/python/sdk_wireless_camera_control/setup.py') }}-${{ hashFiles('demos/python/sdk_wireless_camera_control/requirements-dev.txt') }}
+                  key: ${{ runner.os }}-3.9.10-pip-${{ hashFiles('demos/python/sdk_wireless_camera_control/poetry.lock') }}
                   restore-keys: |
                       ${{ runner.os }}-pip-
 
@@ -72,13 +72,13 @@ jobs:
               working-directory: ./source/demos/python/sdk_wireless_camera_control/
               run: |
                   python -m pip install --upgrade pip wheel
-                  pip install .
-                  pip install -r requirements-dev.txt
+                  pip install nox==2022.1.7
+                  pip install nox-poetry==0.9.0
+                  pip install poetry
 
             - name: Build Sphinx Documentation
               working-directory: ./source/demos/python/sdk_wireless_camera_control/
-              run: |
-                  make sphinx
+              run: nox -s docs
 
             - name: Checkout target branch
               uses: actions/checkout@v2

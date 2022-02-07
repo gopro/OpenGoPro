@@ -86,7 +86,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         Args:
             action (Callable): function and parameters to run as corouting
-            timeout (float, optional): Time to wait for coroutine to return (in seconds). Defaults to None (wait forever).
+            timeout (float): Time to wait for coroutine to return (in seconds). Defaults to None (wait forever).
 
         Returns:
             Any: Passes return of coroutine through
@@ -132,15 +132,10 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
     def scan(self, token: Pattern, timeout: int = 5, service_uuids: List[BleUUID] = None) -> BleakDevice:
         """Scan for a regex in advertising data strings, optionally filtering on service BleUUID's
 
-        Warning! Mac OS >= 12 requires service_uuids to be not None
-
         Args:
             token (Pattern): Regex to look for when scanning.
-            timeout (int, optional): Time to scan. Defaults to 5.
+            timeout (int): Time to scan. Defaults to 5.
             service_uuids (List[BleUUID], optional): The list of BleUUID's to filter on. Defaults to None.
-
-        Raises:
-            FailedToFindDevice: Did not find any of the token when scanning.
 
         Returns:
             BleakDevice: The first matched device that was discovered
@@ -198,7 +193,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         Args:
             disconnect_cb (Callable): function called when a disconnect is received
             device (BleakDevice): Device to connect to
-            timeout (int, optional): How long to try connecting before timing out and raising exception. Defaults to 15.
+            timeout (int): How long to try connecting before timing out and raising exception. Defaults to 15.
 
         Raises:
             ConnectFailed: Connection failed to establish
@@ -300,7 +295,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         Args:
             handle (BleakClient): Device to enable notifications for
-            handler (Callable): Notification callback handler
+            handler (NotiHandlerType): Notification callback handler
         """
 
         async def _async_enable_notifications() -> None:
@@ -321,7 +316,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         be passed in with the uuids argument
 
         Args:
-            handle (BleHandle): BLE handle to discover for
+            handle (BleakClient): BLE handle to discover for
             uuids (Type[UUIDs], optional): Additional BleUUID information to use when building the
                 Gatt Database. Defaults to None.
 

@@ -31,8 +31,8 @@ class WifiClient:
         Args:
             ssid (str): [description]
             password (str): [description]
-            timeout (int, optional): [description]. Defaults to 15.
-            retries (int, optional): [description]. Defaults to 5.
+            timeout (int): [description]. Defaults to 15.
+            retries (int): [description]. Defaults to 5.
 
         Raises:
             ConnectFailed: [description]

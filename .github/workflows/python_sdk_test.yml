@@ -17,7 +17,7 @@ jobs:
         strategy:
             matrix:
                 os: [windows-latest, macos-latest, ubuntu-latest]
-                python-version: [3.8]
+                python-version: ["3.8", "3.9", "3.10"]
                 include:
                     - os: ubuntu-latest
                       path: ~/.cache/pip
@@ -38,7 +38,7 @@ jobs:
               uses: actions/cache@v2
               with:
                   path: ${{ matrix.path }}
-                  key: ${{ runner.os }}-${{ matrix.python-version }}-pip-${{ hashFiles('demos/python/sdk_wireless_camera_control/setup.py') }}-${{ hashFiles('demos/python/sdk_wireless_camera_control/requirements-dev.txt') }}
+                  key: ${{ runner.os }}-${{ matrix.python-version }}-pip-${{ hashFiles('demos/python/sdk_wireless_camera_control/poetry.lock') }}
                   restore-keys: ${{ runner.os }}-pip-
 
             - name: Install Bluez on Ubuntu
@@ -49,28 +49,18 @@ jobs:
               working-directory: ./demos/python/sdk_wireless_camera_control/
               run: |
                   python -m pip install --upgrade pip wheel
-                  pip install .
-                  pip install -r requirements-dev.txt
+                  pip install nox==2022.1.7
+                  pip install nox-poetry==0.9.0
+                  pip install poetry
 
-            - name: Lint code
-              shell: bash
+            - name: Perform checks (format, types, lint, docstrings, unit tests, docs, safety)
               working-directory: ./demos/python/sdk_wireless_camera_control/
-              run: make lint
-
-            - name: Run unit tests
-              shell: bash
-              working-directory: ./demos/python/sdk_wireless_camera_control/
-              run: make unit_tests
-
-            - name: Test docs build
-              shell: bash
-              working-directory: ./demos/python/sdk_wireless_camera_control/
-              run: make docs
+              run: nox -p ${{ matrix.python-version }}
 
             - name: Archive test report on failure
               uses: actions/upload-artifact@v2
               if: failure()
               with:
                   name: test-reports
-                  path: ./demos/python/sdk_wireless_camera_control/reports
+                  path: ./demos/python/sdk_wireless_camera_control/.reports
                   retention-days: 2

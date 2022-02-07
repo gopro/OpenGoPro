@@ -1,0 +1,243 @@
+#=======================================================================================
+#============================= PACKAGE CONFIGURATION  ==================================
+#=======================================================================================
+
+[tool.poetry]
+name = "open_gopro"
+version = "0.9.0"
+description = "Open GoPro API and Examples"
+authors = ["Tim Camise <tcamise@gopro.com>"]
+readme      = "README.md"
+license     = "MIT"
+repository  = "https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control"
+documentation = "https://gopro.github.io/OpenGoPro/"
+classifiers = [
+    # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
+    "Intended Audience :: Developers",
+    "Topic :: Communications",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: Microsoft :: Windows :: Windows 10",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS :: MacOS X",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+
+[tool.poetry.scripts]
+gopro-demo = "open_gopro.demos.demo:main"
+gopro-photo = "open_gopro.demos.photo:entrypoint"
+gopro-video = "open_gopro.demos.video:main"
+gopro-stream = "open_gopro.demos.stream:main"
+gopro-log-battery = "open_gopro.demos.log_battery:main"
+gopro-wifi = "open_gopro.demos.connect_wifi:main"
+gopro-ble-write = "open_gopro.demos.ble_write:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+#=======================================================================================
+#================================= DEPENDENCIES ========================================
+#=======================================================================================
+
+[tool.poetry.dependencies]
+python = "^3.8"
+bleak = "=0.14.2"
+construct = "*"
+rich = "*"
+wrapt = "*"
+requests = "*"
+betterproto = {extras = ["compiler"], version = "*"}
+protobuf = "*"
+typing-extensions = "*"
+
+[tool.poetry.dev-dependencies]
+grpcio-tools = "=1.43.0"
+pytest = "*"
+pytest-cov = "*"
+pytest-asyncio = "=0.17.2" # TODO 0.18.0 is breaking our tests
+pytest-html = "*"
+coverage = { extras = ["toml"], version = "" }
+requests-mock = "*"
+black = "*"
+pylint = "*"
+mypy = "*"
+types-requests = "*"
+construct-typing = "*"
+sphinx = "*"
+sphinxcontrib-napoleon = "*"
+sphinx-rtd-theme = "*"
+coverage-badge = "=1.1.0"
+darglint = "*"
+safety = "*"
+poethepoet = "*"
+nox = "=2022.1.7" # needs to match github-actions version
+nox-poetry = "=0.9.0"
+
+#=======================================================================================
+#================================== POE TASKS ==========================================
+#=======================================================================================
+
+[tool.poe.tasks.unit_tests]
+cmd = "pytest tests/unit --cov-fail-under=70"
+help = "Run unit tests"
+
+[tool.poe.tasks.e2e_tests]
+cmd = "pytest tests/e2e --cov-fail-under=80"
+help = "Run end-to-end tests"
+
+[tool.poe.tasks.types]
+cmd = "mypy open_gopro"
+help = "Check types"
+
+[tool.poe.tasks.pylint]
+cmd = "pylint open_gopro"
+help = "Run pylint"
+
+[tool.poe.tasks.lint]
+sequence = ["pylint", "types"]
+help = "Perform type checking and linting"
+
+[tool.poe.tasks.format]
+cmd = "black open_gopro tests"
+help = "Apply black formatting to source code"
+
+[tool.poe.tasks.docstrings]
+cmd = "darglint -v 2 open_gopro"
+help = "validate docstrings"
+
+[tool.poe.tasks.sphinx]
+cmd = "sphinx-build -W -b html docs docs/build"
+help = "Build sphinx documentation."
+
+[tool.poe.tasks.coverage]
+cmd = "coverage-badge -f -o docs/_static/coverage.svg"
+help = "update coverage badge"
+
+[tool.poe.tasks.protobuf]
+script = "open_gopro.util:build_protos"
+help = "generate protobuf source from .proto (does not work on Windows due to https://github.com/nat-n/poethepoet/issues/51)"
+
+[tool.poe.tasks.clean_artifacts]
+cmd = "rm -rf **/__pycache__ *.csv *.mp4 *.jpg .mypy_cache .nox"
+help = "Clean testing artifacts and pycache"
+
+[tool.poe.tasks.clean_tests]
+cmd = "rm -rf .reports && rm -rf .pytest_cache"
+help = "Clean test reports"
+
+[tool.poe.tasks.clean_docs]
+cmd = "rm -f docs/modules.rst && rm -rf docs/build"
+help = "Clean built docs output"
+
+[tool.poe.tasks.clean_build]
+cmd = "rm -rf dist"
+help = "Clean module build output"
+
+[tool.poe.tasks.docs]
+sequence = ["docstrings", "sphinx"]
+help = "Validate docstrings and build docs"
+
+[tool.poe.tasks.clean]
+sequence = ["clean_artifacts", "clean_tests", "clean_docs", "clean_build"]
+help = "Clean everything"
+
+[tool.poe.tasks.all]
+sequence = ["format", "types", "lint", "docstrings", "unit_tests"]
+help = "Format, check types, lint, check docstrings, and run unit tests"
+
+#=======================================================================================
+#============================== TOOL CONFIGURATIONS ====================================
+#=======================================================================================
+
+[tool.mypy]
+ignore_missing_imports = true
+warn_redundant_casts = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = false
+warn_unused_ignores = true
+warn_unreachable = true
+show_error_context = true
+pretty = true
+
+[tool.pytest.ini_options]
+log_auto_indent = true
+log_cli = true
+log_cli_level = "ERROR"
+log_cli_format = "%(asctime)s %(levelname)s %(message)s"
+log_cli_date_format = "%H:%M:%S"
+log_file_level = "DEBUG"
+log_file_format = "%(threadName)13s: %(name)40s:%(lineno)5d %(asctime)s.%(msecs)03d %(levelname)-8s | %(message)s"
+log_file_date_format = "%H:%M:%S"
+filterwarnings = "ignore::DeprecationWarning"
+addopts = [
+    "-s",
+    "--capture=tee-sys",
+    "--cov=open_gopro",
+    "--cov-report=term",
+    "--cov-report=html",
+    "--html=.reports/test_report.html",
+    "--self-contained-html",
+    "--asyncio-mode=auto",
+]
+
+[tool.coverage.run]
+data_file = ".reports/coverage/.coverage"
+branch = true
+source = ["open_gopro"]
+omit = ["*/constants.py", "*/params.py", "open_gopro/demos*"]
+
+[tool.coverage.html]
+directory = ".reports/coverage"
+
+[tool.coverage.report]
+exclude_lines = [
+    "raise NotImplementedError",
+] # Don't complain if tests don't hit defensive assertion code:
+
+[tool.pylint.'MASTER']
+load-plugins = "pylint.extensions.check_docs"
+accept-no-param-doc = "no"
+accept-no-return-doc = "no"
+default-docstring-type = "google"
+ignore = ["tests", "proto"]
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = [
+    "too-many-nested-blocks",
+    "unspecified-encoding",
+    "consider-using-with",
+    "abstract-method",               # handled by mypy
+    "cyclic-import",
+    "missing-raises-doc",            # handled by darglint
+    "useless-type-doc",              # handled by darglint
+    "useless-param-doc",             # handled by darglint
+    "redundant-returns-doc",         # hanlded by darglint
+    "logging-fstring-interpolation",
+    "logging-format-interpolation",
+    "duplicate-code",
+    "global-statement",
+    "too-few-public-methods",
+    "too-many-arguments",
+    "too-many-instance-attributes",
+    "too-many-branches",
+    "too-many-locals",
+    "too-many-lines",
+    "too-many-statements",
+    "fixme",
+    "protected-access",              # Maybe fix this one
+    "invalid-name",
+]
+
+[tool.pylint.'FORMAT']
+max-line-length = 160 # handled by black
+
+[tool.black]
+line-length = 111
+exclude = ".venv"

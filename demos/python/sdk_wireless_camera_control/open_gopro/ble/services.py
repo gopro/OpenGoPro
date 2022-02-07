@@ -334,8 +334,6 @@ class GattDB:
 
         @no_type_check
         def keys(self) -> Generator[BleUUID, None, None]:  # pylint: disable=missing-return-doc
-            """Return the UUID's"""
-
             def iter_keys():
                 for service in self._db.services.values():
                     for ble_uuid in service.characteristics.keys():
@@ -345,8 +343,6 @@ class GattDB:
 
         @no_type_check
         def values(self) -> Generator[Characteristic, None, None]:  # pylint: disable=missing-return-doc
-            """Return the characteristics"""
-
             def iter_values():
                 for service in self._db.services.values():
                     for char in service.characteristics.values():
@@ -358,8 +354,6 @@ class GattDB:
         def items(  # pylint: disable=missing-return-doc
             self,
         ) -> Generator[Tuple[BleUUID, Characteristic], None, None]:
-            """Return tuples of (uuid, characteristic)"""
-
             def iter_items():
                 for service in self._db.services.values():
                     for ble_uuid, char in service.characteristics.items():
@@ -414,9 +408,6 @@ class GattDB:
 
         Returns:
             int: the handle in the Gatt Database where this BleUUID resides
-
-        Raises:
-            KeyError: This BleUUID does not exist in the Gatt database
         """
         return self.characteristics[ble_uuid].handle
 
@@ -424,7 +415,7 @@ class GattDB:
         """Dump discovered services to a csv file.
 
         Args:
-            file (Path, optional): File to write to. Defaults to "./attributes.csv".
+            file (Path): File to write to. Defaults to "./attributes.csv".
         """
         with open(file, mode="w") as f:
             logger.debug(f"Dumping discovered BLE characteristics to {file}")

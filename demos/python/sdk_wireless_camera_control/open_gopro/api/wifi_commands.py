@@ -364,7 +364,7 @@ class WifiSettings:
                 StopIteration: Nothing left to iterate
 
             Returns:
-                Setting: Instance of setting
+                WifiSetting: Instance of setting
             """
             if self._index < len(self._setting_attributes):
                 setting = self._setting_attributes[self._index]

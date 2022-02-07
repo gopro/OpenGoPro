@@ -9,7 +9,6 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/gopro/OpenGoPro/blob/main/LICENSE)
 ![Coverage](https://raw.githubusercontent.com/gopro/OpenGoPro/main/demos/python/sdk_wireless_camera_control/docs/_static/coverage.svg)
 
-
 This is a Python package that provides an interface for the user to exercise the Open GoPro Bluetooth Low
 Energy (BLE) and Wi-Fi API's as well as install command line interfaces to take photos, videos, and view
 the preview stream.
@@ -20,17 +19,9 @@ the preview stream.
 
 ## Documentation
 
-> This README is only an overview of the package.
+> Note! This README is only an overview of the package.
 
 Complete documentation can be found on [Open GoPro](https://gopro.github.io/OpenGoPro/python_sdk/)
-
-## Installation
-
-> Note! This package has only been tested on Python 3.8.x
-
-```console
-    $ pip install open-gopro
-```
 
 ## Features
 
@@ -43,12 +34,20 @@ Complete documentation can be found on [Open GoPro](https://gopro.github.io/Open
 -   Automatically handles connection maintenance:
     -   manage camera ready / encoding
     -   periodically sends keep alive signals
-- Includes detailed logging for each module
+-   Includes detailed logging for each module
 -   Includes demo scripts installed as command-line applications to show BLE and WiFi functionality
     -   Take a photo
     -   Take a video
     -   View the live stream
     -   Log the battery
+
+## Installation
+
+> Note! This package requires Python >= 3.8
+
+```console
+    $ pip install open-gopro
+```
 
 ## Usage
 
@@ -57,18 +56,18 @@ video, and download all files:
 
 ```python
 import time
-from open_gopro import GoPro
+from open_gopro import GoPro, Params
 
 with GoPro() as gopro:
-    gopro.ble_command.load_preset(gopro.params.Preset.CINEMATIC)
-    gopro.ble_setting.resolution.set(gopro.params.Resolution.RES_4K)
-    gopro.ble_setting.fps.set(gopro.params.FPS.FPS_30)
-    gopro.ble_command.set_shutter(gopro.params.Shutter.ON)
+    gopro.ble_command.load_preset(Params.Preset.CINEMATIC)
+    gopro.ble_setting.resolution.set(Params.Resolution.RES_4K)
+    gopro.ble_setting.fps.set(Params.FPS.FPS_30)
+    gopro.ble_command.set_shutter(Params.Shutter.ON)
     time.sleep(2) # Record for 2 seconds
-    gopro.ble_command.set_shutter(gopro.params.Shutter.OFF)
+    gopro.ble_command.set_shutter(Params.Shutter.OFF)
 
     # Download all of the files from the camera
-    media_list = [x["n"] for x in gopro.wifi_command.get_media_list()["media"][0]["fs"]]
+    media_list = [x["n"] for x in gopro.wifi_command.get_media_list().flatten
     for file in media_list:
         gopro.wifi_command.download_file(camera_file=file)
 ```
@@ -82,24 +81,34 @@ And much more!
 Demos can be found in the installed package in the "demos" folder. They are installed as a CLI entrypoint
 and can be run via:
 
+Capture a photo and download it to your computer:
+
 ```bash
 $ gopro-photo
 ```
+
+Capture a video and download it to your computer:
 
 ```bash
 $ gopro-video
 ```
 
+Start the preview stream and view it with [VLC](https://www.videolan.org/):
+
 ```bash
 $ gopro-stream
 ```
 
+Connect to the GoPro and log battery consumption in to a .csv:
+
 ```bash
 $ gopro-log-battery
 ```
 
+Connect to the GoPro's Wi-Fi AP and maintain the connection:
+
 ```bash
-$ gopro-log-battery
+$ gopro-wifi
 ```
 
 For more information on each, try running with help as such:
@@ -107,15 +116,18 @@ For more information on each, try running with help as such:
 ```bash
 $ gopro-photo --help
 
-usage: gopro-photo [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT]
+usage: gopro-photo [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT] [-w WIFI_INTERFACE]
 
 Connect to a GoPro camera, take a photo, then download it.
 
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first
+                        discovered GoPro will be connected to
   -l LOG, --log LOG     Location to store detailed log
   -o OUTPUT, --output OUTPUT
                         Where to write the photo to. If not set, write to 'photo.jpg'
+  -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE
+                        System Wifi Interface. If not set, first discovered interface will be used.
 ```

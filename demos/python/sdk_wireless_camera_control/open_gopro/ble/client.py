@@ -85,8 +85,8 @@ class BleClient(Generic[BleHandle, BleDevice]):
         """Open the client resource so that it is ready to send and receive data.
 
         Args:
-            timeout (int, optional): How long to try connecting (in seconds) before retrying. Defaults to 10.
-            retries(int, optional): How many retries to attempt before giving up. Defaults to 5
+            timeout (int): How long to try connecting (in seconds) before retrying. Defaults to 10.
+            retries(int): How many retries to attempt before giving up. Defaults to 5
 
         Raises:
             ConnectFailed: The BLE connection was not able to establish
@@ -193,7 +193,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
         """Dump the services as a .csv
 
         Args:
-            file (Path, optional): Where to dump the csv. Defaults to Path("services.csv").
+            file (Path): Where to dump the csv. Defaults to Path("services.csv").
         """
         assert self.gatt_db is not None
         self.gatt_db.dump_to_csv(file)

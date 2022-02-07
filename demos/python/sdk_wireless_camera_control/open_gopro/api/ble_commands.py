@@ -367,7 +367,7 @@ class BleSettings:
                 StopIteration: Iteration has completed
 
             Returns:
-                Setting: next attribute
+                BleSetting: next attribute
             """
             if self._index < len(self._setting_attributes):
                 setting = self._setting_attributes[self._index]
@@ -469,7 +469,7 @@ class BleStatuses:
                 StopIteration: Iteration has completed
 
             Returns:
-                Setting: next attribute
+                BleStatus: next attribute
             """
             if self._index < len(self._status_attributes):
                 status = self._status_attributes[self._index]
