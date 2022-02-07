@@ -1,9 +1,3 @@
-# Need to unignore since it is ignored at a higher layer
-!.vscode
-# VSCode files we don't care about
-.vscode/PythonImportHelper-v2-Completion.json
-.vscode/settings.json
-
 **/temp
 .reports/
 
