@@ -43,7 +43,7 @@ For more information on the API, see the relevant documentation:
 - `Wi-Fi API <https://gopro.github.io/OpenGoPro/http>`_
 
 .. warning::
-    This package has only been tested on Python 3.8.x
+    This package requires Python >= version 3.8
 
 Features
 --------
@@ -77,6 +77,12 @@ this document in order):
 #. Try some of the :ref:`demos<QuickStart Guide>`
 #. Implement your own example, perhaps starting with a demo, with :ref:`usage<Usage>` information
 #. If you need more detailed implementation reference, see the Interface :ref:`documentation<Interfaces>`
+
+Development
+-----------
+
+#. Set up the :ref:`development environment<Get Started!>`
+#. Open a :ref:`Pull Request<Pull Request Guidelines>`
 
 .. toctree::
     :maxdepth: 4

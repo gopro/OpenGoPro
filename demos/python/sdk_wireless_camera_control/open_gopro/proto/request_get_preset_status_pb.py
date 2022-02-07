@@ -18,6 +18,4 @@ class EnumRegisterPresetStatus(betterproto.Enum):
 @dataclass
 class RequestGetPresetStatus(betterproto.Message):
     register_preset_status: List["EnumRegisterPresetStatus"] = betterproto.enum_field(1)
-    unregister_preset_status: List["EnumRegisterPresetStatus"] = betterproto.enum_field(
-        2
-    )
+    unregister_preset_status: List["EnumRegisterPresetStatus"] = betterproto.enum_field(2)

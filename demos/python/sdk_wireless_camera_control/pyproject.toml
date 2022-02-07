@@ -1,5 +1,5 @@
 #=======================================================================================
-#============================= PACKAGE CONFIGURATOIN  ==================================
+#============================= PACKAGE CONFIGURATION  ==================================
 #=======================================================================================
 
 [tool.poetry]
@@ -55,7 +55,7 @@ typing-extensions = "*"
 grpcio-tools = "=1.43.0"
 pytest = "*"
 pytest-cov = "*"
-pytest-asyncio = "*"
+pytest-asyncio = "=0.17.2" # TODO updating is breaking our tests
 pytest-html = "*"
 coverage = { extras = ["toml"], version = "" }
 requests-mock = "*"
@@ -144,6 +144,9 @@ help = "Validate docstrings and build docs"
 [tool.poe.tasks.clean]
 sequence = ["clean_artifacts", "clean_tests", "clean_docs", "clean_build"]
 help = "Clean everything"
+
+[tool.poe.tasks.all]
+sequence = ["format", "types", "lint", "docstrings", "unit_tests"]
 
 #=======================================================================================
 #============================== TOOL CONFIGURATIONS ====================================

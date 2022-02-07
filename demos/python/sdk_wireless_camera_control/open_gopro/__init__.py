@@ -3,7 +3,7 @@
 
 """All GoPro exports that the the user will want should be exported here."""
 
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 
 from open_gopro.gopro import GoPro
 from open_gopro.api import Params

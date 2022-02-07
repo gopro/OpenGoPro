@@ -444,6 +444,10 @@ def custom_betterproto_to_dict(
 
 
 def build_protos() -> None:
+    """Build the protobuf source .py files from the .proto files
+
+    This is meant to be the entrypoint for the poe task
+    """
     current_dir = Path(__file__).parent.resolve()
     proto_src_dir = current_dir / ".." / ".." / ".." / ".." / "protobuf"
     proto_out_dir = current_dir / "proto"
@@ -457,4 +461,3 @@ def build_protos() -> None:
         )
         cmd(f"mv {proto_out_dir / 'open_gopro.py'} {proto_out_dir / proto_out}")
         cmd(f"mv {proto_out_dir / 'temp'} {proto_out_dir / '__init__.py'}")
-

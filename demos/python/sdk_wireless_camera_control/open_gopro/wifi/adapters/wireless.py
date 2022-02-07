@@ -13,7 +13,7 @@ from enum import Enum, auto
 from getpass import getpass
 from distutils.version import LooseVersion
 from shutil import which
-from typing import List, Optional, Tuple, Any, Callable, Type
+from typing import List, Optional, Tuple, Any, Callable
 
 import wrapt
 
