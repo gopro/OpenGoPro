@@ -123,7 +123,7 @@ script = "open_gopro.util:build_protos"
 help = "generate protobuf source from .proto (does not work on Windows due to https://github.com/nat-n/poethepoet/issues/51)"
 
 [tool.poe.tasks.clean_artifacts]
-cmd = "rm -rf **/__pycache__ *.csv *.mp4 *.jpg .mypy_cache .nox"
+cmd = "rm -rf **/__pycache__ *.csv *.mp4 *.jpg *.log .mypy_cache .nox"
 help = "Clean testing artifacts and pycache"
 
 [tool.poe.tasks.clean_tests]
