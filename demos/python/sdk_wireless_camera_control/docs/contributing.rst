@@ -105,7 +105,7 @@ Steps
 
     .. code-block:: console
 
-        $ poetry run poe
+        $ poetry run poe --help
 
 #. Commit your changes, push your branch to GitHub, and submit a pull request into `main`. Once the Pull Request is made,
    Github Actions will test the changes across multiple OS's and Python versions.

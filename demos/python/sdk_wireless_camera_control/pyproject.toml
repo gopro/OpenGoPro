@@ -7,6 +7,10 @@ name = "open_gopro"
 version = "0.9.0"
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
+readme      = "README.md"
+license     = "MIT"
+repository  = "https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control"
+documentation = "https://gopro.github.io/OpenGoPro/"
 classifiers = [
     # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
     "Intended Audience :: Developers",
@@ -116,7 +120,7 @@ help = "update coverage badge"
 
 [tool.poe.tasks.protobuf]
 script = "open_gopro.util:build_protos"
-help = "generate protobuf source from .proto"
+help = "generate protobuf source from .proto (does not work on Windows due to https://github.com/nat-n/poethepoet/issues/51)"
 
 [tool.poe.tasks.clean_artifacts]
 cmd = "rm -rf **/__pycache__ *.csv *.mp4 *.jpg .mypy_cache .nox"

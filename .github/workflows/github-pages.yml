@@ -44,9 +44,9 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                os: [macos-latest]
+                os: [ubuntu-latest]
                 include:
-                    - os: macos-latest
+                    - os: ubuntu-latest
                       path: ~/Library/Caches/pip
 
         steps:
