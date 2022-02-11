@@ -183,7 +183,7 @@ defaults:
           author_profile: true
           read_time: true
           toc: true
-          toc_sticky: true
+          toc_sticky: false
     - scope:
           path: ''
           type: demos

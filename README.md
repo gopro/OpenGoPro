@@ -37,6 +37,7 @@ The `docs` folder [README](docs/README.md) has more detailed information on its 
 
 -   It is assumed that your environment has access to GNU or BSD tools (i.e. this will not run natively on Windows)
 -   [Docker](https://www.docker.com) must be installed
+-   To edit any files tracked by `.gitattributes`, git-lfs must be [installed](https://git-lfs.github.com/)
 
 ### Setup
 

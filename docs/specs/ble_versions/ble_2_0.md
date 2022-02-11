@@ -1711,6 +1711,86 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>128</td>
+      <td>Media Format</td>
+      <td>Set media format (id: 128) to time lapse video (id: 13)</td>
+      <td>03:80:01:0D</td>
+      <td>02:80:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>128</td>
+      <td>Media Format</td>
+      <td>Set media format (id: 128) to time lapse photo (id: 20)</td>
+      <td>03:80:01:14</td>
+      <td>02:80:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>128</td>
+      <td>Media Format</td>
+      <td>Set media format (id: 128) to night lapse photo (id: 21)</td>
+      <td>03:80:01:15</td>
+      <td>02:80:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>128</td>
+      <td>Media Format</td>
+      <td>Set media format (id: 128) to night lapse video (id: 26)</td>
+      <td>03:80:01:1A</td>
+      <td>02:80:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>134</td>
+      <td>Anti-Flicker</td>
+      <td>Set setup anti flicker (id: 134) to 60hz (id: 2)</td>
+      <td>03:86:01:02</td>
+      <td>02:86:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>134</td>
+      <td>Anti-Flicker</td>
+      <td>Set setup anti flicker (id: 134) to 50hz (id: 3)</td>
+      <td>03:86:01:03</td>
+      <td>02:86:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>135</td>
+      <td>Hypersmooth</td>
+      <td>Set video hypersmooth (id: 135) to off (id: 0)</td>
+      <td>03:87:01:00</td>
+      <td>02:87:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>135</td>
+      <td>Hypersmooth</td>
+      <td>Set video hypersmooth (id: 135) to high (id: 2)</td>
+      <td>03:87:01:02</td>
+      <td>02:87:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>135</td>
+      <td>Hypersmooth</td>
+      <td>Set video hypersmooth (id: 135) to boost (id: 3)</td>
+      <td>03:87:01:03</td>
+      <td>02:87:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>135</td>
+      <td>Hypersmooth</td>
+      <td>Set video hypersmooth (id: 135) to standard (id: 100)</td>
+      <td>03:87:01:64</td>
+      <td>02:87:00</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>162</td>
       <td>Max Lens</td>
       <td>Set max lens (id: 162) to off (id: 0)</td>
@@ -1718,7 +1798,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>02:A2:00</td>
       <td>\&gt;= v01.20.00</td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>162</td>
       <td>Max Lens</td>
       <td>Set max lens (id: 162) to on (id: 1)</td>
@@ -1726,7 +1806,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>02:A2:00</td>
       <td>\&gt;= v01.20.00</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to maximum video performance (id: 0)</td>
@@ -1734,7 +1814,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>02:AD:00</td>
       <td>\&gt;= v01.16.00</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to extended battery (id: 1)</td>
@@ -1742,7 +1822,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>02:AD:00</td>
       <td>\&gt;= v01.16.00</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to tripod / stationary video (id: 2)</td>
@@ -1754,691 +1834,121 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
 </table>
 
 
-### Camera Capabilities
-Below are tables detailing supported features for Open GoPro cameras.
+## Camera Capabilities
+<p>
+Camera capabilities usually change from one camera to another and often change from one release to the next.
+Below are documents that detail whitelists for basic video settings for every supported camera release.
+</p>
 
-{% tabs capabilities %}
+#### Note about Dependency Ordering and Blacklisting
+<p>
+Capability documents define supported camera states.
+Each state is comprised of a set of setting options that are presented in <b>dependency order</b>.
+This means each state is guaranteed to be attainable if and only if the setting options are set in the order presented.
+Failure to adhere to dependency ordering may result in the camera's blacklist rules rejecting a set-setting command.
+</p>
 
-{% tab capabilities HERO10 Black v01.30.00 %}
+#### Example
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Resolution</td>
-      <td>Anti-Flicker</td>
-      <td>Frames Per Second</td>
-      <td>Video Digital Lenses</td>
-    </tr>
-    <tr>
-      <td rowspan="48">1080</td>
-      <td rowspan="24">50Hz</td>
-      <td rowspan="5">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">25</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">50</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">100</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">200</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="24">60Hz</td>
-      <td rowspan="5">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">30</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">60</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">120</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">240</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="28">2.7K</td>
-      <td rowspan="14">50Hz</td>
-      <td rowspan="5">50</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">100</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">200</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="14">60Hz</td>
-      <td rowspan="5">60</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">120</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">240</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="16">2.7K 4:3</td>
-      <td rowspan="8">50Hz</td>
-      <td rowspan="4">50</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">100</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="8">60Hz</td>
-      <td rowspan="4">60</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">120</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="38">4K</td>
-      <td rowspan="19">50Hz</td>
-      <td rowspan="5">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">25</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">50</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">100</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="19">60Hz</td>
-      <td rowspan="5">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">30</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">60</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">120</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="24">4K 4:3</td>
-      <td rowspan="12">50Hz</td>
-      <td rowspan="4">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">25</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">50</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="12">60Hz</td>
-      <td rowspan="4">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">30</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">60</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="30">5.3K</td>
-      <td rowspan="15">50Hz</td>
-      <td rowspan="5">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">25</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">50</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="15">60Hz</td>
-      <td rowspan="5">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">30</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="5">60</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Superview</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="16">5K 4:3</td>
-      <td rowspan="8">50Hz</td>
-      <td rowspan="4">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">25</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="8">60Hz</td>
-      <td rowspan="4">24</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
-    </tr>
-    <tr>
-      <td rowspan="4">30</td>
-      <td>Wide</td>
-    </tr>
-    <tr>
-      <td>Narrow</td>
-    </tr>
-    <tr>
-      <td>Linear</td>
-    </tr>
-    <tr>
-      <td>Linear + Horizon Leveling</td>
+      <td>Camera</td>
+      <td>Command 1</td>
+      <td>Command 2</td>
+      <td>Command 3</td>
+      <td>Command 4</td>
+      <td>Command 5</td>
+      <td>Guaranteed Valid?</td>
+    </tr>
+    <tr>
+      <td>HERO10 Black</td>
+      <td>Res: 1080</td>
+      <td>Anti-Flicker: 60Hz (NTSC)</td>
+      <td>FPS: 240</td>
+      <td>FOV: Wide</td>
+      <td>Hypersmooth: OFF</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr>
+      <td>HERO10 Black</td>
+      <td>FPS: 240</td>
+      <td>Anti-Flicker: 60Hz (NTSC)</td>
+      <td>Res: 1080</td>
+      <td>FOV: Wide</td>
+      <td>Hypersmooth: OFF</td>
+      <td><span style="color:red">❌</span></td>
     </tr>
   </tbody>
 </table>
-{% endtab %}
+<p>
+In the example above, the first set of commands will always work for basic video presets such as Standard.
+</p>
 
-{% endtabs %}
+<p>
+In the second example, suppose the camera's Video Resolution was previously set to 4K.
+If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not supported.
+</p>
 
+### Capability Documents
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Documents</td>
+      <td>Product</td>
+      <td>Release</td>
+    </tr>
+    <tr>
+      <td rowspan="4"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="4">HERO10 Black</td>
+      <td>v01.30.00</td>
+    </tr>
+    <tr>
+      <td>v01.20.00</td>
+    </tr>
+    <tr>
+      <td>v01.16.00</td>
+    </tr>
+    <tr>
+      <td>v01.10.00</td>
+    </tr>
+  </tbody>
+</table>
+
+### Spreadsheet Format
+<p>
+The capabilities spreadsheet contains worksheets for every supported release.
+Each row in a worksheet represents a whitelisted state and is presented in dependency order as outlined above.
+</p>
+
+### JSON Format
+<p>
+The capabilities JSON contains a set of whitelist states for every supported release.
+Each state is comprised of a list of objects that contain setting and option IDs necessary to construct set-setting
+commands and are given in dependency order as outlined above.
+</p>
+
+<p>
+Below is a simplified example of the capabilities JSON file; a formal schema is also available here:
+<a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities_schema.json">capabilities_schema.json</a>
+</p>
+
+```
+{
+    "(PRODUCT_NAME)": {
+        "(RELEASE_VERSION)": {
+            "states": [
+                [
+                    {"setting_name": "(str)", "setting_id": (int), "option_name": "(str)", "option_id": (int)},
+                    ...
+                ],
+                ...
+            ],
+        },
+        ...
+    },
+    ...
+}
+```
 
 
 ## Query
@@ -3305,7 +2815,7 @@ Below is a table of supported status codes.<br />
 # Protobuf
 
 <p>
-In order to maximize BLE bandwidth, some complex messages are sent using
+In order to maximize BLE bandwidth, some messages and their corresponding notifications utilize
 <a href="https://developers.google.com/protocol-buffers">Google Protobuf (Protocol Buffers)</a>.
 </p>
 
@@ -3314,22 +2824,39 @@ In order to maximize BLE bandwidth, some complex messages are sent using
 
 <p>
 Protobuf communications with the camera differ from TLV-style communications.
-Rather than having a Type, Length, and Value,
-protobuf messages sent to a GoPro device have a Command Type (called a Feature),
-a Sub-command Type (called an Action)
-and a Value (serialization of a protobuf object).
+Rather than having a Type, Length, and Value, GoPro protobuf messages utilize the following:
+<ol>
+<li>Feature: Indicates command type (e.g. command, setting, query)</li>
+<li>Action: Specific camera action; value indicates whether message was sent or an (aync) notification was received</li>
+<li>Value: Serialized protobuf object</li>
+</ol>
 </p>
 
-<p>
-Note: For commands that do not require any protobuf inputs, Value would be empty (0 bytes).
-</p>
-
+### Requests Sent
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
       <td>Message Length</td>
       <td>Feature ID</td>
       <td>Action ID</td>
+      <td>Protobuf Bytestream</td>
+    </tr>
+    <tr>
+      <td>1-2 bytes</td>
+      <td>1 byte</td>
+      <td>1 byte</td>
+      <td>Variable Length</td>
+    </tr>
+  </tbody>
+</table>
+
+### Notifications Received
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Message Length</td>
+      <td>Feature ID</td>
+      <td>Response Action ID</td>
       <td>Protobuf Bytestream</td>
     </tr>
     <tr>
@@ -3349,21 +2876,25 @@ For additional details, see <a href="#OpenGoProBluetoothLowEnergyAPI(v2.0)-Servi
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Feature</td>
       <td>Feature ID</td>
       <td>UUID</td>
       <td>Response UUID</td>
     </tr>
     <tr>
+      <td>Command</td>
       <td>0xF1</td>
       <td>GP-0072</td>
       <td>GP-0073</td>
     </tr>
     <tr>
+      <td>Settings</td>
       <td>0xF3</td>
       <td>GP-0074</td>
       <td>GP-0075</td>
     </tr>
     <tr>
+      <td>Query</td>
       <td>0xF5</td>
       <td>GP-0076</td>
       <td>GP-0077</td>
@@ -3374,7 +2905,7 @@ For additional details, see <a href="#OpenGoProBluetoothLowEnergyAPI(v2.0)-Servi
 
 ## Protobuf Commands
 <p>
-Below is a table of protobuf commands that can be sent to the camera and their expected response..<br />
+Below is a table of protobuf commands that can be sent to the camera and their expected response.<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
 >= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
@@ -3385,6 +2916,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
       <td>Feature ID</td>
       <td>Action ID</td>
+      <td>Response Action ID</td>
       <td>Description</td>
       <td>Request</td>
       <td>Response</td>
@@ -3393,6 +2925,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
     <tr style="background-color: rgb(222,235,255);">
       <td rowspan="2">0xF1</td>
       <td>0x69</td>
+      <td>0xE9</td>
       <td>Request set camera control status</td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/set_camera_control_status.proto">RequestSetCameraControlStatus</a></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">ResponseGeneric</a></td>
@@ -3400,16 +2933,26 @@ Below is a table of protobuf commands that can be sent to the camera and their e
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x6B</td>
+      <td>0xEB</td>
       <td>Request set turbo active</td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/turbo_transfer.proto">RequestSetTurboActive</a></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">ResponseGeneric</a></td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
-      <td>0xF5</td>
+      <td rowspan="2">0xF5</td>
       <td>0x72</td>
+      <td>0xF2</td>
       <td>Request get preset status</td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto">RequestGetPresetStatus</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">NotifyPresetStatus</a></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td></td>
+      <td>0xF3</td>
+      <td>Async status update</td>
+      <td></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">NotifyPresetStatus</a></td>
       <td><span style="color:green">✔</span></td>
     </tr>

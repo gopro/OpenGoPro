@@ -1,5 +1,5 @@
 /* request_get_preset_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Wed Jan 26 22:41:52 UTC 2022 */
+/* This copyright was auto-generated on Wed Feb  9 22:14:14 UTC 2022 */
 
 /*
 Defines the structure of protobuf message for obtaining preset status
