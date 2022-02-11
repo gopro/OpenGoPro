@@ -21,6 +21,7 @@ jobs:
                   path: release
                   token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
                   fetch-depth: 2
+                  lfs: true
 
             - name: checkout Target branch
               uses: actions/checkout@v2
@@ -33,22 +34,35 @@ jobs:
             - name: Copy changes
               shell: bash
               run: |
+                  shopt -s dotglob
+                  shopt -s extglob
+
+                  # Clean target folder (except .git)
+                  pushd target
+                  rm -rf !(.git) || true
+                  popd
+
+                  # Get commit message to be used for release
                   pushd release
                   git log -1 --pretty=%B > ../message
-                  rm -rf .git
+
+                  # Move entire release folder (except .git) into target
+                  mv !(.git) * ../target || true
                   popd
-                  pushd target
-                  git rm -rf .
-                  git clean -fxd
-                  shopt -s dotglob
-                  mv ../release/* .
+
+                  # Stage changed files
+                  cd target
                   git config user.name github-actions
                   git config user.email github-actions@github.com
                   git add .
+
+                  # Check if there is actually anything to do (are there staged git changes?)
                   num_modified=$(git diff --cached --numstat | wc -l)
                   if [[ $num_modified == 0 ]]; then
                     echo "Nothing to push"
                   else
+                    #git lfs fetch --all $env:GITHUB_ACTION_REPOSITORY
+                    #git lfs push --all
                     git commit -a -F ../message
                     git push
                   fi
