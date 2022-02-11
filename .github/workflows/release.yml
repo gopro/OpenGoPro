@@ -39,7 +39,7 @@ jobs:
 
                   # Clean target folder (except .git)
                   pushd target
-                  rm -rf !(.git) || true
+                  rm -rf !(.git) > /dev/null 2>&1 || true
                   popd
 
                   # Get commit message to be used for release
@@ -47,7 +47,7 @@ jobs:
                   git log -1 --pretty=%B > ../message
 
                   # Move entire release folder (except .git) into target
-                  mv !(.git) * ../target || true
+                  mv !(.git) * ../target > /dev/null 2>&1 || true
                   popd
 
                   # Stage changed files
