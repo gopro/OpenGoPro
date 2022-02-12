@@ -58,8 +58,7 @@ var store = [
                         append: slug |
                         jsonify }},
             "teaser": ''
-        }
-      {%- unless last_file and last_section -%},{%- endunless -%}
+        },
     {%- endfor -%}
     {%- endfor -%}
 ]
