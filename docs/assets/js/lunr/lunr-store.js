@@ -2,14 +2,17 @@
 layout: none
 ---
 
-var store = [
-  {%- for c in site.collections -%}
-    {%- assign last_doc = false -%}
-    {%- if forloop.last -%}
-      {%- assign last_collection = true -%}
-    {%- endif -%}
+{% assign searchable_pages = site.pages | where_exp: "page", "page.title and page.search != false" %}
+{%- for collection in site.collections -%}
     {%- assign docs = c.docs | where_exp:'doc','doc.search != false' -%}
     {%- for doc in docs -%}
+        {% assign searchable_pages = searchable_pages | push: doc %}
+    {%- endfor -%}
+{%- endfor -%}
+
+
+var store = [
+    {%- for doc in searchable_pages -%}
       {%- assign last_section = false -%}
       {%- if forloop.last -%}
             {%- assign last_doc = true -%}
@@ -23,10 +26,12 @@ var store = [
         {%- assign tokens = section | split: "<br />" -%}
         {%- if forloop.first -%}
             {%- assign id = "" -%}
+            {%- assign slug = id -%}
         {% elsif tokens.size == 1 %}
             {%- continue -%}
         {% else %}
             {%- assign id = tokens[0] | remove: "#" | strip -%}
+            {%- assign slug = id | slugify -%}
         {% endif %}
         {
             "title": {{ doc.title | append: ": " | append: id | jsonify }},
@@ -39,24 +44,22 @@ var store = [
                 replace:"</h3>", " " |
                 replace:"</h4>", " " |
                 replace:"</h5>", " " |
-                replace:"</h6>", " "|
+                replace:"</h6>", " " |
                 strip_html |
+                remove: "#" |
+                remove_first: id |
                 strip_newlines |
+                strip |
                 jsonify }},
-            "categories": {{ doc.categories | jsonify }},
-            "tags": {{ doc.tags | jsonify }},
+            "categories": [],
+            "tags": [],
             "url": {{ doc.url | relative_url |
                         append: "#" |
-                        append: id |
-                        replace: " ", "-" |
-                        remove: "(" |
-                        remove: ")" |
-                        remove: "!" |
+                        append: slug |
                         jsonify }},
             "teaser": ''
         }
       {%- unless last_file and last_section -%},{%- endunless -%}
     {%- endfor -%}
     {%- endfor -%}
-  {%- endfor -%}
 ]

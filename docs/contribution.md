@@ -1,3 +1,7 @@
+---
+search: false
+--
+
 # Contribution
 
 This page will provide  examples for various documentation features available in this repo / theme.
