@@ -14,15 +14,8 @@ layout: none
 var store = [
     {%- for doc in searchable_pages -%}
       {%- assign last_section = false -%}
-      {%- if forloop.last -%}
-            {%- assign last_doc = true -%}
-      {%- endif -%}
       {%- assign sections = doc.content | newline_to_br | strip_newlines | split: "<br />#" -%}
       {%- for section in sections -%}
-        {%- if forloop.last -%}
-            {%- assign last_section = true -%}
-        {%- endif -%}
-
         {%- assign tokens = section | split: "<br />" -%}
         {%- if forloop.first -%}
             {%- assign id = "" -%}
@@ -53,10 +46,7 @@ var store = [
                 jsonify }},
             "categories": [],
             "tags": [],
-            "url": {{ doc.url | relative_url |
-                        append: "#" |
-                        append: slug |
-                        jsonify }},
+            "url": {{ doc.url | relative_url | append: "#" | append: slug | jsonify }},
             "teaser": ''
         },
     {%- endfor -%}
