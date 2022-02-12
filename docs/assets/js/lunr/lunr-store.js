@@ -1,6 +1,3 @@
-/* lunr-store.js/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Sat Feb 12 02:16:19 UTC 2022 */
-
 ---
 layout: none
 ---
@@ -17,15 +14,8 @@ layout: none
 var store = [
     {%- for doc in searchable_pages -%}
       {%- assign last_section = false -%}
-      {%- if forloop.last -%}
-            {%- assign last_doc = true -%}
-      {%- endif -%}
       {%- assign sections = doc.content | newline_to_br | strip_newlines | split: "<br />#" -%}
       {%- for section in sections -%}
-        {%- if forloop.last -%}
-            {%- assign last_section = true -%}
-        {%- endif -%}
-
         {%- assign tokens = section | split: "<br />" -%}
         {%- if forloop.first -%}
             {%- assign id = "" -%}
@@ -56,13 +46,9 @@ var store = [
                 jsonify }},
             "categories": [],
             "tags": [],
-            "url": {{ doc.url | relative_url |
-                        append: "#" |
-                        append: slug |
-                        jsonify }},
+            "url": {{ doc.url | relative_url | append: "#" | append: slug | jsonify }},
             "teaser": ''
-        }
-      {%- unless last_file and last_section -%},{%- endunless -%}
+        },
     {%- endfor -%}
     {%- endfor -%}
 ]
