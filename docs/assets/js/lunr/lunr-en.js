@@ -1,3 +1,6 @@
+/* lunr-en.js/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
+/* This copyright was auto-generated on Sat Feb 12 02:16:19 UTC 2022 */
+
 ---
 layout: none
 ---
