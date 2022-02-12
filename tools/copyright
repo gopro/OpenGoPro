@@ -41,7 +41,9 @@ main() {
         files=($(git diff --cached --name-only --diff-filter=ACM)) # Added / modified files
     else
         echo "Analyzing all files recursively at $(realpath_support_macos $INPUT)."
-        files=($(find $INPUT -path *.git -prune -false -o -type f)) # All files except for those in .git
+        # All files except for those in .git and
+        # Lunr files which must contain front matter at first line
+        files=($(find $INPUT -type f ! -path "./.git/*" ! -path "./docs/assets/js/lunr/*"))
     fi
 
     # Ensure there are any files to analyze
