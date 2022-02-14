@@ -4,7 +4,7 @@ layout: none
 
 {% assign searchable_pages = site.pages | where_exp: "page", "page.title and page.search != false" %}
 {%- for collection in site.collections -%}
-    {%- assign docs = c.docs | where_exp:'doc','doc.search != false' -%}
+    {%- assign docs = collection.docs | where_exp:'doc','doc.search != false' -%}
     {%- for doc in docs -%}
         {% assign searchable_pages = searchable_pages | push: doc %}
     {%- endfor -%}
@@ -13,7 +13,6 @@ layout: none
 
 var store = [
     {%- for doc in searchable_pages -%}
-      {%- assign last_section = false -%}
       {%- assign sections = doc.content | newline_to_br | strip_newlines | split: "<br />#" -%}
       {%- for section in sections -%}
         {%- assign tokens = section | split: "<br />" -%}
@@ -46,8 +45,7 @@ var store = [
                 jsonify }},
             "categories": [],
             "tags": [],
-            "url": {{ doc.url | relative_url | append: "#" | append: slug | jsonify }},
-            "teaser": ''
+            "url": {{ doc.url | relative_url | append: "#" | append: slug | jsonify }}
         },
     {%- endfor -%}
     {%- endfor -%}
