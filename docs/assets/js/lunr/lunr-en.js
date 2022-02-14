@@ -30,6 +30,7 @@ $(document).ready(function () {
         var resultdiv = $('#results');
         var query = $(this).val().toLowerCase();
         var results = idx.query(function (q) {
+            // Now add terms for individual words
             query.split(lunr.tokenizer.separator).forEach(function (term) {
                 // Actual search term with no wildcards get a big boost
                 q.term(term, { fields: ['excerpt'], boost: 100 });
@@ -37,23 +38,20 @@ $(document).ready(function () {
                 if (query.lastIndexOf(' ') != query.length - 1) {
                     q.term(term, {
                         fields: ['excerpt'],
-                        usePipeline: false,
                         wildcard: lunr.Query.wildcard.TRAILING,
                         boost: 10,
                     });
                 }
-                // Add fuzziness of 1 character change
-                // if (term != '') {
-                //     q.term(term, { fields: ['excerpt'], usePipeline: false, editDistance: 0.2, boost: 1 });
-                // }
+                // Add fuzziness of 1 character change with no boost
+                if (term != '') {
+                    q.term(term, { fields: ['excerpt'], editDistance: 1 });
+                }
             });
         });
         // Build and display the results
         resultdiv.empty();
         resultdiv.prepend(
-            '<p class="results__found">' +
-                results.length +
-                ' {{ site.data.ui-text[site.locale].results_found | default: "Result(s) found" }}</p>'
+            '<p class="results__found">' + results.length + ' Result(s) found</p>'
         );
         for (var item in results) {
             var ref = results[item].ref;
