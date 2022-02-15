@@ -45,8 +45,9 @@ Specific sections can also be linked. For example, to link to [this section]({% 
 {% endraw %}
 
 There is an exception to this when linking to a file in the `tutorials`. These are handled differently
-since `tutorials` is the base directory for all collections. Therefore, the `tutorials` directory should be omitted
-from the path. For example, to link to [the first python tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}):
+since `tutorials` is the base directory for all collections. Therefore, the `tutorials` directory should be
+omitted from the path. For example, to link to
+[the first python tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}):
 
 {% raw %}
 ```
@@ -125,15 +126,6 @@ This is for tips.
 {% tip %}
 This is for tips.
 {% endtip %}
-
-If one of the above options does not suit your use case, there is also the option for a simple callout using
-default markdown syntax via:
-
-```markdown
-> I'm a simple callout
-```
-
-> I'm a simple callout
 
 ### Collapsible Accordion
 
@@ -306,7 +298,8 @@ Happy clown --> 🤡
 
 ### Variable length / width cell tables
 
-For more information, see the Jekyll Spaceship [documentation](https://github.com/jeffreytse/jekyll-spaceship#1-table-usage)
+For more information, see the Jekyll Spaceship
+[documentation](https://github.com/jeffreytse/jekyll-spaceship#1-table-usage)
 
 Normal markdown tables work but you can also combine lines (via the trailing backslash):
 

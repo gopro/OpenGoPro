@@ -31,7 +31,8 @@ This tutorial will provide a walk-through to connect to the GoPro camera via BLE
 ### Tutorials Package
 
 This set of tutorials is accompanied by a Python package consisting of scripts (separated by tutorial module).
-These can be found on [Github](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/). Once the Github repo has been cloned or downloaded to your
+These can be found on [Github](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/). Once the
+Github repo has been cloned or downloaded to your
 local machine, the package can be installed as follows:
 
 1. Enter the python tutorials directory at `$INSTALL/demos/python/tutorial/` where $INSTALL is the top level of the Open GoPro repo
@@ -42,7 +43,10 @@ local machine, the package can be installed as follows:
 pip install -r requirements.txt
 ```
 
-> This will also install the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/) which will be used for some of the optional examples through these tutorials.
+{% note %}
+This will also install the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/) which will be
+used for some of the optional examples through these tutorials.
+{% endnote %}
 
 You can test that installation was successful by viewing the installed package's information:
 
@@ -126,7 +130,8 @@ Connect to a GoPro camera, pair, then enable notifications.
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
+                        SSID. If not used, first discovered GoPro will be connected to
 ```
 
 ## Asyncio
@@ -208,7 +213,8 @@ matched_devices = [device for name, device in devices.items() if token.match(nam
 
 Due to potential RF interference and the asynchronous nature of BLE advertising / scanning, it is possible that
 the advertising GoPro will not be discovered by the scanning PC in one scan. Therefore, you may need to redo
-the scan (as `ble_connect.py` does) until a GoPro is found. That is, `matched_device` must contain at least one device.
+the scan (as `ble_connect.py` does) until a GoPro is found. That is, `matched_device` must contain at least one
+device.
 
 When running the demo, discovered devices will be logged to the console as they are found. Click the output tab
 to see an example of this.
@@ -364,8 +370,9 @@ will be used in a future tutorial to send data.
 ## Device not connecting
 
 If the connection is not starting, it is likely because the camera is not advertising. This can be due to either:
+
 1. The camera is not in pairing mode. Ensure that this is achieved as done in
-[the advertise section]({% link _python-tutorials/tutorial_1_connect_ble.md %}#advertise).
+   [the advertise section]({% link _python-tutorials/tutorial_1_connect_ble.md %}#advertise).
 2. The devices never disconnected from the previous session so are thus already connected. If this is the case,
    perform the "Complete System Reset" shown below.
 
@@ -380,8 +387,8 @@ perform the following.
 
 ## Logs
 
-The demo program has enabled bleak logs and is also using the default [python logging module](https://docs.python.org/3/library/logging.html)
-to write its own logs.
+The demo program has enabled bleak logs and is also using the default
+[python logging module](https://docs.python.org/3/library/logging.html) to write its own logs.
 
 To enable more bleak logs, follow bleak's
 [troubleshooting section](https://bleak.readthedocs.io/en/latest/troubleshooting.html#enable-logging).

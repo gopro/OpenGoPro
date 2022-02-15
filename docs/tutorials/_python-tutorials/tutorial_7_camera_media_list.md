@@ -7,19 +7,25 @@ lesson: 7
 
 # Python Tutorial 7: Camera Media List
 
-This document will provide a walk-through tutorial to use the Python [requests](https://docs.python-requests.org/en/master/)
-package to send Open GoPro [HTTP commands]({% link specs/http.md %}) to the GoPro,
-specifically to get the media list and perform operations on it (downloading pictures, videos, etc.)
+This document will provide a walk-through tutorial to use the Python
+[requests](https://docs.python-requests.org/en/master/) package to send Open GoPro
+[HTTP commands]({% link specs/http.md %}) to the GoPro, specifically to get the media list and perform
+operations on it (downloading pictures, videos, etc.)
 
-> Note! It is required that you have first completed the [Connecting to Wifi]({% link _python-tutorials/tutorial_5_connect_wifi.md %}) and [Sending WiFi Commands]({% link _python-tutorials/tutorial_6_send_wifi_commands.md %}) tutorials.
+{% warning %}
+It is required that you have first completed the
+[Connecting to Wifi]({% link _python-tutorials/tutorial_5_connect_wifi.md %})
+and [Sending WiFi Commands]({% link _python-tutorials/tutorial_6_send_wifi_commands.md %}) tutorials.
+{% endwarning %}
 
-This tutorial only considers sending these commands as one-off commands. That is, it does not consider state management /
-synchronization when sending multiple commands. This will be discussed in a future lab.
+This tutorial only considers sending these commands as one-off commands. That is, it does not consider state
+management / synchronization when sending multiple commands. This will be discussed in a future lab.
 
 # Requirements
 
-It is assumed that the hardware and software requirements from the [connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
-are present and configured correctly.
+It is assumed that the hardware and software requirements from the
+[connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements) are present and
+configured correctly.
 
 The scripts that will be used for this tutorial can be found in the
 [Tutorial 7 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_7_camera_media_list).
@@ -33,7 +39,10 @@ to read this tutorial and just want to see the demo, for example, run:
 $ python wifi_media_download_file.py
 ```
 
-> Note! Python 3.8.x must be used as specified in [the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+{% warning %}
+Python >= 3.8.x must be used as specified in
+[the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+{% endwarning %}
 
 Note that each script has a command-line help which can be found via:
 
@@ -55,14 +64,16 @@ We must first connect to The GoPro's WiFi Access Point (AP) as was discussed in 
 # Get Media List
 
 Now that we are are connected via WiFi, we will get the media list using the same procedure
-to send HTTP commands as in the [previous tutorial]({% link _python-tutorials/tutorial_6_send_wifi_commands.md %}).
+to send HTTP commands as in the
+[previous tutorial]({% link _python-tutorials/tutorial_6_send_wifi_commands.md %}).
 
 {% tabs media %}
 {% tab media Send Request %}
 
 We get the media list via the
 [Get Media List command]({% link specs/http.md %}#commands-quick-reference).
-This command will return a JSON structure of all of the media files (pictures, videos) on the camera with corresponding information about each media file.
+This command will return a JSON structure of all of the media files (pictures, videos) on the camera with
+corresponding information about each media file.
 
 Let's first build the endpoint:
 
@@ -177,9 +188,10 @@ The next command we will be sending is
 will be downloading a photo. The camera must have at least one photo in its media list in order for this to
 work.
 
-First, we get the media list as in [Get Media List]({% link _python-tutorials/tutorial_7_camera_media_list.md %}#get-media-list) . Then we search through the list of file names in
-the media list looking for a photo (i.e. a file whose name ends in **.jpg**). Once we find a photo, we
-proceed:
+First, we get the media list as in
+[Get Media List]({% link _python-tutorials/tutorial_7_camera_media_list.md %}#get-media-list) .
+Then we search through the list of file names in the media list looking for a photo (i.e. a file whose name
+ends in **.jpg**). Once we find a photo, we proceed:
 
 ```python
 media_list = get_media_list()
@@ -235,11 +247,13 @@ Once complete, the `GOPR0987.jpg` file will be available from where the demo scr
 The next command we will be sending is
 [Get Media GPMF]({% link specs/http.md %}#commands-quick-reference). More
 information about GPMF can be found [here](https://github.com/gopro/gpmf-parser). Specifically, we will be
-downloading the GPMF for a photo. The camera must have at least one photo in its media list in order for this to
-work.
+downloading the GPMF for a photo. The camera must have at least one photo in its media list in order for this
+to work.
 
-First, we get the media list as in [Get Media List]({% link _python-tutorials/tutorial_7_camera_media_list.md %}#get-media-list) . Then we search through the list of file names in
-the media list looking for a photo (i.e. a file whose name ends in **.jpg**). Once we find a photo, we
+First, we get the media list as in
+[Get Media List]({% link _python-tutorials/tutorial_7_camera_media_list.md %}#get-media-list) . Then we search
+through the list of file names in the media list looking for a photo (i.e. a file whose name ends
+in **.jpg**). Once we find a photo, we
 proceed:
 
 ```python
@@ -298,8 +312,10 @@ media list in order for this to work.
 There is a separate command (shown below) to get a media "thumbnbail"
 {% endnote %}
 
-First, we get the media list as in [Get Media List]({% link _python-tutorials/tutorial_7_camera_media_list.md %}#get-media-list) . Then we search through the list of file names in
-the media list looking for a photo (i.e. a file whose name ends in **.jpg**). Once we find a photo, we
+First, we get the media list as in
+[Get Media List]({% link _python-tutorials/tutorial_7_camera_media_list.md %}#get-media-list) . Then we search
+through the list of file names in the media list looking for a photo (i.e. a file whose name ends in **.jpg**).
+Once we find a photo, we
 proceed:
 
 ```python
@@ -358,9 +374,10 @@ media list in order for this to work.
 There is a separate command (shown above) to get a media "screennail"
 {% endnote %}
 
-First, we get the media list as in [Get Media List]({% link _python-tutorials/tutorial_7_camera_media_list.md %}#get-media-list) . Then we search through the list of file names in
-the media list looking for a photo (i.e. a file whose name ends in **.jpg**). Once we find a photo, we
-proceed:
+First, we get the media list as in
+[Get Media List]({% link _python-tutorials/tutorial_7_camera_media_list.md %}#get-media-list) .
+Then we search through the list of file names in the media list looking for a photo (i.e. a file whose name
+ends in **.jpg**). Once we find a photo, we proceed:
 
 ```python
 media_list = get_media_list()
@@ -409,7 +426,8 @@ Once complete, the `GOPR0987_thumbnail.jpg` file will be available from where th
 
 # Troubleshooting
 
-See the previous tutorial's [troubleshooting section]({% link _python-tutorials/tutorial_6_send_wifi_commands.md %}#troubleshooting).
+See the previous tutorial's
+[troubleshooting section]({% link _python-tutorials/tutorial_6_send_wifi_commands.md %}#troubleshooting).
 
 # Good Job!
 
@@ -422,4 +440,3 @@ last tutorial. Stay tuned for more 👍
 
 At this point you should be able to start creating a useful example using the Open GoPro Interface. For some
 inspiration check out some of the [demos]({% link demos.md %}).
-

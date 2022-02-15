@@ -36,7 +36,6 @@ module Jekyll
             options.each { |option|
                 parts = option.split(":::", 2)
                 option_chars << parts[0]
-                # Strip off <p> tags
                 option_strings << convert_markdown(context, parts[1])
             }
 

@@ -12,32 +12,41 @@ This document will provide a walk-through tutorial to use [bleak](https://pypi.o
 
 Commands in this sense are specifically procedures that are initiated by either:
 
--   Writing to the Command Request UUID and receiving responses via the Command Response UUID. They are listed [here]({% link specs/ble.md %}#commands).
--   Writing to the Setting UUID and receiving responses via the Setting Response UUID. They are listed [here]({% link specs/ble.md %}#settings).
+-   Writing to the Command Request UUID and receiving responses via the Command Response UUID. They are
+    listed [here]({% link specs/ble.md %}#commands).
+-   Writing to the Setting UUID and receiving responses via the Setting Response UUID. They are listed
+    [here]({% link specs/ble.md %}#settings).
 
-> It is required that you have first completed the [connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements) before going through this tutorial.
+{% warning %}
+It is required that you have first completed the
+[connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements) before going through
+this tutorial.
+{% endwarning %}
 
-This tutorial only considers sending these commands as one-off commands. That is, it does not consider state management /
-synchronization when sending multiple commands. This will be discussed in a future lab.
+This tutorial only considers sending these commands as one-off commands. That is, it does not consider state
+management / synchronization when sending multiple commands. This will be discussed in a future lab.
 
 # Requirements
 
-It is assumed that the hardware and software requirements from the [connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %})
-are present and configured correctly.
+It is assumed that the hardware and software requirements from the
+[connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}) are present and configured correctly.
 
 The scripts that will be used for this tutorial can be found in the
 [Tutorial 2 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_2_send_ble_commands).
 
 # Just Show me the Demo(s)!!
 
-Each of the commands detailed in [Sending Commands](#sending-commands) has a corresponding script to demo it. If you don't want to read this
-tutorial and just want to see the demo, for example, run:
+Each of the commands detailed in [Sending Commands](#sending-commands) has a corresponding script to demo it.
+If you don't want to read this tutorial and just want to see the demo, for example, run:
 
 ```console
 $ python ble_command_set_shutter.py
 ```
 
-> Note! Python 3.8.x must be used as specified in [the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+{% warning %}
+Python >= 3.8.x must be used as specified in
+[the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+{% endwarning %}
 
 Note that each script has a command-line help which can be found via:
 
@@ -50,7 +59,8 @@ Connect to a GoPro camera, set the shutter on, wait 2 seconds, then set the shut
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
 ```
 
 # Setup
@@ -62,7 +72,8 @@ this case, however, we are defining a meaningful (albeit naive) notification han
 1. check if the response is what we expected
 1. set an event to notify the writer that the response was received
 
-This is a very simple handler: response parsing will be expanded upon in the [next tutorial]({% link _python-tutorials/tutorial_3_parse_ble_tlv_responses.md %}).
+This is a very simple handler: response parsing will be expanded upon in the
+[next tutorial]({% link _python-tutorials/tutorial_3_parse_ble_tlv_responses.md %}).
 
 ```python
 def notification_handler(handle: int, data: bytes) -> None:
@@ -113,11 +124,12 @@ sequenceDiagram
 
 # Sending Commands
 
-Now that we are are connected, paired, and have enabled notifications (using our defined callback), we can send commands.
+Now that we are are connected, paired, and have enabled notifications (using our defined callback), we can send
+commands.
 
-First, we need to define the attributes to write to and receive responses from, which, for commands, are the "Command Request"
-characteristic (UUID `b5f90072-aa8d-11e3-9046-0002a5d5c51b`) and "Command Response" characteristic (UUID
-`b5f90073-aa8d-11e3-9046-0002a5d5c51b`).
+First, we need to define the attributes to write to and receive responses from, which, for commands, are the
+"Command Request" characteristic (UUID `b5f90072-aa8d-11e3-9046-0002a5d5c51b`) and "Command Response"
+characteristic (UUID `b5f90073-aa8d-11e3-9046-0002a5d5c51b`).
 
 ```python
 COMMAND_REQ_UUID = GOPRO_BASE_UUID.format("0072")
@@ -138,7 +150,8 @@ We're using the GOPRO_BASE_UUID string imported from the module's `__init__.py `
 
 ## Set Shutter
 
-The first command we will be sending is [Set Shutter]({% link specs/ble.md %}#commands-quick-reference), which at byte level is:
+The first command we will be sending is [Set Shutter]({% link specs/ble.md %}#commands-quick-reference),
+which at byte level is:
 
 | Command         |        Bytes        |
 | --------------- | :-----------------: |
@@ -185,7 +198,9 @@ If you are recording a video, go to the next tab to set the shutter off.
 
 We can now set the shutter off:
 
-> We're waiting 2 seconds in case you are in video mode so that we can capture a 2 second video.
+{% tip %}
+We're waiting 2 seconds in case you are in video mode so that we can capture a 2 second video.
+{% endtip %}
 
 ```python
 time.sleep(2)
@@ -230,7 +245,8 @@ the notification callback.
 You should hear the camera beep display a spinner showing "Powering Off"
 
 Also note that we have received the "Command Status" notification response from the
-Command Response characteristic since we enabled its notifications in [Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications).. This can
+Command Response characteristic since we enabled its notifications in
+[Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications).. This can
 be seen in the demo log:
 
 ```console
@@ -275,7 +291,8 @@ middle of the screen:
 {% include figure image_path="/assets/images/tutorials/python/preset_group.png" alt="Preset Group" size="50%" caption="Load Preset Group" %}
 
 Also note that we have received the "Command Status" notification response from the
-Command Response characteristic since we enabled its notifications in [Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications).. This can
+Command Response characteristic since we enabled its notifications in
+[Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications).. This can
 be seen in the demo log:
 
 ```console
@@ -301,8 +318,9 @@ preset are:
 | Load Night Photo Preset | 0x06 0x40 0x04 0x00 0x01 0x00 0x03 |
 
 {% note %}
-It is possible that the preset ID values will vary in future cameras. The only absolutely correct way to know the
-preset ID is to read them from the "Get Preset Status" protobuf command. A future lab will discuss protobuf commands.
+It is possible that the preset ID values will vary in future cameras. The only absolutely correct way to know
+the preset ID is to read them from the "Get Preset Status" protobuf command. A future lab will discuss protobuf
+commands.
 {% endnote %}
 
 Now, let's write the bytes to the "Command Request" UUID to change the preset to Cinematic!
@@ -324,7 +342,8 @@ this by seeing the preset name in the pill at bottom middle of the screen.
 {% include figure image_path="/assets/images/tutorials/python/preset.png" alt="Preset" size="50%" caption="Load Preset" %}
 
 Also note that we have received the "Command Status" notification response from the
-Command Response characteristic since we enabled its notifications in [Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications).. This can
+Command Response characteristic since we enabled its notifications in
+[Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications).. This can
 be seen in the demo log:
 
 ```console
@@ -361,7 +380,8 @@ the notification callback.
 {% endsuccess %}
 
 Also note that we have received the "Command Status" notification response from the
-Command Response characteristic since we enabled its notifications in [Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications).. This can
+Command Response characteristic since we enabled its notifications in
+[Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications).. This can
 be seen in the demo log:
 
 ```console
@@ -376,11 +396,14 @@ As expected, the response was received on the correct handle and the status was 
 
 The next command we will be sending is
 [Set Video Resolution]({% link specs/ble.md %}#commands-quick-reference). This is
-used to change the value of the Video Resolution setting. It is important to note that this only affects **video**
-resolution (not photo). Therefore, the Video Preset Group must be active in order for it to succeed. This can be done
-either manually through the camera UI or by sending [Load Preset Group](#load-preset-group).
+used to change the value of the Video Resolution setting. It is important to note that this only affects
+**video** resolution (not photo). Therefore, the Video Preset Group must be active in order for it to succeed.
+This can be done either manually through the camera UI or by sending [Load Preset Group](#load-preset-group).
 
-> Additionally, this resolution only affects the current video preset. Each video preset can have its own independent values for video resolution.
+{% tip %}
+This resolution only affects the current video preset. Each video preset can have its own independent values
+for video resolution.
+{% endtip %}
 
 Here are some of the byte level commands for various video resolutions.
 
@@ -413,7 +436,8 @@ screen:
 {% include figure image_path="/assets/images/tutorials/python/video_resolution.png" alt="Video Resolution" size="50%" caption="Set Video Resolution" %}
 
 Also note that we have received the "Command Status" notification response from the
-Command Response characteristic since we enabled its notifications in [Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications).. This can
+Command Response characteristic since we enabled its notifications in
+[Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications).. This can
 be seen in the demo log:
 
 ```console
@@ -430,9 +454,9 @@ Group was not Video, the status will not be success.
 The next command we will be sending is
 [Set FPS]({% link specs/ble.md %}#commands-quick-reference). This is
 used to change the value of the FPS setting. It is important to note that this setting is dependent on the
-video resolution. That is, certain FPS values are not valid with certain resolutions. In general, higher resolutions
-only allow lower FPS values. Also, the current anti-flicker value may further limit possible FPS values. Check the
-[camera capabilities ]({% link specs/ble.md %}#camera-capabilities) to see which FPS
+video resolution. That is, certain FPS values are not valid with certain resolutions. In general, higher
+resolutions only allow lower FPS values. Also, the current anti-flicker value may further limit possible FPS
+values. Check the [camera capabilities ]({% link specs/ble.md %}#camera-capabilities) to see which FPS
 values are valid for given use cases.
 
 Therefore, for this step of the tutorial, it is assumed that the resolution has
@@ -469,7 +493,8 @@ screen:
 {% include figure image_path="/assets/images/tutorials/python/fps.png" alt="FPS" size="50%" caption="Set FPS" %}
 
 Also note that we have received the "Command Status" notification response from the
-Command Response characteristic since we enabled its notifications in [Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications).. This can
+Command Response characteristic since we enabled its notifications in
+[Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications).. This can
 be seen in the demo log:
 
 ```console
@@ -495,7 +520,7 @@ was higher, for example 5K, this would fail.
 %}
 
 {% quiz
-    question="What of the following sets of FPS values are possible at 5K?"
+    question="Which of the following sets of FPS values are possible at 5K?"
     option="A:::[24, 25, 30]"
     option="B:::[24, 25, 30, 60]"
     option="C:::[24, 25, 30, 60, 120]"
@@ -516,7 +541,8 @@ was higher, for example 5K, this would fail.
 
 # Troubleshooting
 
-See the first tutorial's [troubleshooting section]({% link _python-tutorials/tutorial_1_connect_ble.md %}#troubleshooting).
+See the first tutorial's
+[troubleshooting section]({% link _python-tutorials/tutorial_1_connect_ble.md %}#troubleshooting).
 
 # Good Job!
 

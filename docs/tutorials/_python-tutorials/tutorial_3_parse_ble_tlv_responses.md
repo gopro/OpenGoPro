@@ -7,21 +7,27 @@ lesson: 3
 
 # Python Tutorial 3: Parse BLE TLV Responses
 
-This document will provide a walk-through tutorial to use [bleak](https://pypi.org/project/bleak/) to implement the
-[Open GoPro Interface]({% link specs/ble.md %}) to parse BLE
+This document will provide a walk-through tutorial to use [bleak](https://pypi.org/project/bleak/) to implement
+the [Open GoPro Interface]({% link specs/ble.md %}) to parse BLE
 [Type-Length-Value](https://en.wikipedia.org/wiki/Type-length-value) (TLV) Responses.
 
 Besides TLV, some BLE commands instead return protobuf responses. These will be discussed in a future
 tutorial.
 
-> Note! It is required that you have first completed the [connect]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements) and [sending commands]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}) tutorials before going through this tutorial.
+{% warning %}
+It is required that you have first completed the
+[connect]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+and [sending commands]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}) tutorials before going
+through this tutorial.
+{% endwarning %}
 
 This tutorial will give an overview of types of responses, then give examples of parsing each type
 before finally providing a **Response** class that will be used in future tutorials.
 
 # Requirements
 
-It is assumed that the hardware and software requirements from the [connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %})
+It is assumed that the hardware and software requirements from the
+[connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %})
 are present and configured correctly.
 
 The scripts that will be used for this tutorial can be found in the
@@ -36,7 +42,10 @@ tutorial and just want to see the demo, for example, run:
 $ python ble_command_get_state.py
 ```
 
-> Note! Python 3.8.x must be used as specified in [the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+{% warning %}
+Python >= 3.8.x must be used as specified in
+[the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+{% endwarning %}
 
 Note that each script has a command-line help which can be found via:
 
@@ -49,12 +58,14 @@ Connect to a GoPro camera via BLE, then get its statuses and settings.
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
+                        SSID. If not used, first discovered GoPro will be connected to
 ```
 
 # Setup
 
-We must first connect as was discussed in the [connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}). When enabling notifications,
+We must first connect as was discussed in the
+[connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}). When enabling notifications,
 one of the notification handlers described in the following sections will be used.
 
 # Response Overview
@@ -105,7 +116,8 @@ is formatted as such:
 
 These are the only responses that we have seen thus far through the first 2 tutorials. They
 return a status but have a 0 length additional response. For example, consider
-[Set Shutter]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}#set-shutter). It returned a response of
+[Set Shutter]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}#set-shutter). It returned a response
+of:
 
 ```
 02:01:00
@@ -201,8 +213,8 @@ while index <= len:
     index += param_len
 ```
 
-From the complex response definition, we know these parameters equate to the major and the minor version so let's
-print them (and all of the other response information) as such:
+From the complex response definition, we know these parameters equate to the major and the minor version so
+let's print them (and all of the other response information) as such:
 
 ```python
 major, minor = params
@@ -490,8 +502,8 @@ At this point the response has been accumulated. See the next section for how to
 ## Query Responses
 
 This section is going to describe responses to to BLE status / setting queries. We don't actually
-introduce such queries until [the next tutorial]({% link _python-tutorials/tutorial_4_ble_queries.md %}) so for now, only the
-parsing of the response is important.
+introduce such queries until [the next tutorial]({% link _python-tutorials/tutorial_4_ble_queries.md %}) so
+for now, only the parsing of the response is important.
 
 {% tip %}
 While multi-packet responses are almost always Query Responses, they can also be from Command Complex \
@@ -511,8 +523,8 @@ This means that query responses will contain an array of additional TLV groups i
 | ------ | ------- | ------------- | ------ | ------- | ------------- | --- | ------ | ------- | ------------- |
 | 1 byte | 1 byte  | Length1 bytes | 1 byte | 1 byte  | Length2 bytes | ... | 1 byte | 1 byte  | LengthN bytes |
 
-Depending on the amount of query results in the response, this response can be one or multiple packets. Therefore,
-we need to account for the possibility that it may always be more than 1 packet.
+Depending on the amount of query results in the response, this response can be one or multiple packets.
+Therefore, we need to account for the possibility that it may always be more than 1 packet.
 
 We can see an example of such parsing in the **Response.parse** method:
 
@@ -521,16 +533,16 @@ We can see an example of such parsing in the **Response.parse** method:
 <div class="md_column">
 <div markdown="1">
 
-We have already parsed the length when we were accumulating the packet. So the next step is to parse the Query ID
-and Status:
+We have already parsed the length when we were accumulating the packet. So the next step is to parse the Query
+ID and Status:
 
 ```python
 self.id = self.bytes[0]
 self.status = self.bytes[1]
 ```
 
-We then continuously parse **Type (ID) - Length - Value** groups until we have consumed the response. We are storing
-each value in a dict indexed by ID for later access.
+We then continuously parse **Type (ID) - Length - Value** groups until we have consumed the response. We are
+storing each value in a dict indexed by ID for later access.
 
 ```python
 buf = self.bytes[2:]
@@ -641,7 +653,8 @@ See the next tutorial for more information on queries."
 
 # Troubleshooting
 
-See the first tutorial's [troubleshooting section]({% link _python-tutorials/tutorial_1_connect_ble.md %}#troubleshooting).
+See the first tutorial's
+[troubleshooting section]({% link _python-tutorials/tutorial_1_connect_ble.md %}#troubleshooting).
 
 # Good Job!
 
@@ -649,9 +662,9 @@ See the first tutorial's [troubleshooting section]({% link _python-tutorials/tut
 Congratulations 🤙
 {% endsuccess %}
 
-You can now parse any TLV response that is received from the GoPro, at least if it is received uninterrupted. There
-is additional logic required for a complete solution such as checking the UUID the response is received on and
-storing a dict of response per UUID. At the current time, this endeavor is left for the reader. For a complete
-example of this, see the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/).
+You can now parse any TLV response that is received from the GoPro, at least if it is received uninterrupted.
+There is additional logic required for a complete solution such as checking the UUID the response is received
+on and storing a dict of response per UUID. At the current time, this endeavor is left for the reader. For a
+complete example of this, see the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/).
 
 To learn more about queries, go to the next tutorial.

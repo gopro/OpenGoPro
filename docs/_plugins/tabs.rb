@@ -4,8 +4,6 @@
 require 'securerandom'
 require 'erb'
 
-require_relative 'common'
-
 module Jekyll
     module Tabs
         class TabsBlock < Liquid::Block
@@ -43,9 +41,11 @@ module Jekyll
             end
 
             def render(context)
+                site = context.registers[:site]
+                converter = site.find_converter_instance(::Jekyll::Converters::Markdown)
                 environment = context.environments.first
                 environment["tabs-#{@name}"] ||= {}
-                environment["tabs-#{@name}"][@tab] = convert_markdown(context, render_block(context))
+                environment["tabs-#{@name}"][@tab] = converter.convert(render_block(context))
             end
         end
     end

@@ -10,7 +10,10 @@ lesson: 6
 This document will provide a walk-through tutorial to use the Python [requests](https://pypi.org/project/requests/)
 package to send Open GoPro [HTTP commands]({% link specs/http.md %}) to the GoPro.
 
-> Note! It is required that you have first completed the [Connecting to Wifi]({% link _python-tutorials/tutorial_5_connect_wifi.md %}) tutorial.
+{% warning %}
+It is required that you have first completed the
+[Connecting to Wifi]({% link _python-tutorials/tutorial_5_connect_wifi.md %}) tutorial.
+{% endwarning %}
 
 This tutorial only considers sending these commands as one-off commands. That is, it does not consider state management /
 synchronization when sending multiple commands. This will be discussed in a future lab.
@@ -36,7 +39,9 @@ tutorial and just want to see the demo, for example, run:
 $ python wifi_command_zoom.py
 ```
 
-> Note! Python 3.8.x must be used as specified in [the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+{% warning %}
+Python >= 3.8.x must be used as specified in [the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+{% endwarning %}
 
 Note that each script has a command-line help which can be found via:
 
@@ -602,8 +607,8 @@ INFO:root:Turning the shutter on: sending http://10.5.5.9:8080/gopro/camera/shut
 INFO:root:Command sent successfully
 ```
 
-We then wait a few seconds and repeat the above procedure to set the shutter off. This time we use the following
-URL:
+We then wait a few seconds and repeat the above procedure to set the shutter off. This time we use the
+following URL:
 
 ```python
 url = GOPRO_BASE_URL + f"/gopro/camera/shutter/stop"
@@ -620,8 +625,8 @@ The next command will be sending is [Set Setting]({% link specs/http.md %}#setti
 This end point is used to update all of the settings on the camera. It is analogous to BLE commands like
 [Set Video Resolution]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}#set-the-video-resolution).
 
-It is important to note that many settings are dependent on the video resolution (and other settings). For example,
-certain FPS values are not valid with certain resolutions. In general, higher resolutions
+It is important to note that many settings are dependent on the video resolution (and other settings).
+For example, certain FPS values are not valid with certain resolutions. In general, higher resolutions
 only allow lower FPS values. Check the [camera capabilities]({% link specs/ble.md %}#camera-capabilities)
 to see which settings are valid for given use cases.
 
@@ -629,7 +634,8 @@ to see which settings are valid for given use cases.
 The following endpoint is different between Open GoPro 1.0 and 2.0.
 {% endtip %}
 
-Let's build the endpoint first to set the Video Resolution to 1080 (the setting_id and opt_value comes from the command table linked above). Click the relevant tab for the desired Open GoPro Version.
+Let's build the endpoint first to set the Video Resolution to 1080 (the setting_id and opt_value comes from
+the command table linked above). Click the relevant tab for the desired Open GoPro Version.
 
 {% tabs endpoint %}
 {% tab endpoint Version 1.0 %}
@@ -711,7 +717,8 @@ As a reader exercise, try using the [Get State] command to verify that the resol
     option="D:::Any FPS is valid in at 5k"
     correct="A"
     info="Among these options, only 24 is possible. You're not actually expected to know
-    this. But you should know where to find the information: https://gopro.github.io/OpenGoPro/ble#camera-capabilities"
+    this. But you should know where to find the
+    [information](https://gopro.github.io/OpenGoPro/ble#camera-capabilities)."
 %}
 
 # Troubleshooting
