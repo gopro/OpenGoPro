@@ -3,42 +3,32 @@
 
 require "liquid/tag/parser"
 
+require_relative 'common'
+
 module Jekyll
-  class Accordion < Liquid::Tag
-      # include all URL filters from Jekyll
-      include Jekyll::Filters::URLFilters
-      # include all standard liquid filters
-      include Liquid::StandardFilters
+    class Accordion < Liquid::Tag
+        # include all standard liquid filters
+        include Liquid::StandardFilters
 
-      def initialize(tag, args, tokens)
-          super
-          @raw_args = args
-          @tag = tag.to_sym
-          @args = Liquid::Tag::Parser.new(args)
-          @tokens = tokens
-      end
+        def initialize(tag, args, tokens)
+            super
+            @raw_args = args
+            @tag = tag.to_sym
+            @args = Liquid::Tag::Parser.new(args)
+            @tokens = tokens
+        end
 
-      def render(context)
-          # required for URLFilters
-          @context = context
-          # Extract arguments
-          question = @args[:question]
-          answer = @args[:answer]
-          # Load template file
-          currentDirectory = File.dirname(__FILE__)
-          templateFile = File.read(currentDirectory + '/accordion_template.erb')
-          template = ERB.new(templateFile)
-          output = template.result(binding)
-
-          return output
-      end
-
-      private
-
-      def config
-          @config ||= @context.registers[:site].config
-      end
-  end
+        def render(context)
+            # Extract arguments
+            question = convert_markdown(context, @args[:question])
+            answer = convert_markdown(context, @args[:answer])
+            # Load template file
+            currentDirectory = File.dirname(__FILE__)
+            templateFile = File.read(currentDirectory + '/accordion_template.erb')
+            template = ERB.new(templateFile)
+            return template.result(binding)
+        end
+    end
 end
 
 Liquid::Template.register_tag('accordion', Jekyll::Accordion)

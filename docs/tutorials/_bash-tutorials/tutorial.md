@@ -52,7 +52,9 @@ The screen should appear as such:
 
 {% include figure image_path="/assets/images/tutorials/quik.png" alt="Quik" size="50%" caption="Camera is discoverable." %}
 
-{% note This step may vary slightly by camera %}
+{% note %}
+This step may vary slightly by camera
+{% endnote %}
 
 ## Scan
 
@@ -346,15 +348,18 @@ the device should show up when querying `bluetoothctl` for paired devices:
 Device DF:34:ED:D1:DA:E8 GoPro 0456
 ```
 
-{% tip It is now no longer necessary to pair on subsequent connections. %}
+{% tip %}
+It is now no longer necessary to pair on subsequent connections.
+{% endtip %}
 
 ## Enable Notifications
 
 {% tabs notifications %}
 {% tab notifications Enter Gatt Menu %}
 
-As specified in the [Open GoPro Bluetooth API]({% link specs/ble.md %}#sending-and-receiving-messages), we must enable notifications for a given characteristic
-to receive responses from it. First, let's enter the `gatt` submenu:
+As specified in the [Open GoPro Bluetooth API]({% link specs/ble.md %}#sending-and-receiving-messages), we
+must enable notifications for a given characteristic to receive responses from it. First, let's enter the
+`gatt` submenu:
 
 ```console
 [GoPro 0456]# menu gatt
@@ -402,7 +407,10 @@ characteristic. So we only care about the "Command Response"
 characteristic which [has UUID]({% link specs/ble.md %}#services-and-characteristics)
 `b5f90073-aa8d-11e3-9046-0002a5d5c51b`.
 
-> You can see this UUID listed above when the connection was formed. All attributes can also be found again from bluetoothctl with `list-attributes`
+{% note %}
+You can see this UUID listed above when the connection was formed. All attributes can also be found again from
+bluetoothctl with `list-attributes`
+{% endnote %}
 
 To enable notifications, select the attribute then enable notifications:
 
@@ -436,7 +444,8 @@ be alerted of responses when the characteristic is notified.
     question="How often is it necessary to pair?"
     option="A:::Pairing must occur every time to ensure safe BLE communication"
     option="B:::We never need to pair as the GoPro does not require it to communicate"
-    option="C:::Pairing only needs to occur once as BlueZ will automatically re-use the shared keys for future connections"
+    option="C:::Pairing only needs to occur once as BlueZ will automatically re-use the shared keys for future
+            connections"
     correct="C"
     info="Pairing is only needed once (assuming neither side deletes the keys). If the
     GoPro deletes the keys (via Connections->Reset Connections or a factory reset), the devices will need to re-pair."
@@ -445,7 +454,8 @@ be alerted of responses when the characteristic is notified.
 ## Sending Commands
 
 Now that we are are connected, paired, and have enabled notifications, we can send commands.
-The command we will be sending is [Set Shutter]({% link specs/ble.md %}#commands-quick-reference), which at byte level is:
+The command we will be sending is [Set Shutter]({% link specs/ble.md %}#commands-quick-reference), which at
+byte level is:
 
 | Command         |        Bytes        |
 | --------------- | :-----------------: |
@@ -464,7 +474,9 @@ Characteristic - Vendor specific
         Flags: write
 ```
 
-{% success As a bonus, you can then call "attribute-info" to verify that this characteristic is writeable. %}
+{% success %}
+As a bonus, you can then call "attribute-info" to verify that this characteristic is writeable.
+{% endsuccess %}
 
 ### Send Commands
 
@@ -505,7 +517,9 @@ Attempting to write /org/bluez/hci0/dev_CA_D7_FF_49_B1_27/service0031/char0032
 
 ### Good Job!
 
-{% success Congratulations 🤙 %}
+{% success %}
+Congratulations 🤙
+{% endsuccess %}
 
 You can now send any of the other BLE commands detailed in the Open GoPro documentation in
 a similar manner.

@@ -10,7 +10,10 @@ lesson: 6
 This document will provide a walk-through tutorial to use the Python [requests](https://pypi.org/project/requests/)
 package to send Open GoPro [HTTP commands]({% link specs/http.md %}) to the GoPro.
 
-> Note! It is required that you have first completed the [Connecting to Wifi]({% link _python-tutorials/tutorial_5_connect_wifi.md %}) tutorial.
+{% warning %}
+It is required that you have first completed the
+[Connecting to Wifi]({% link _python-tutorials/tutorial_5_connect_wifi.md %}) tutorial.
+{% endwarning %}
 
 This tutorial only considers sending these commands as one-off commands. That is, it does not consider state management /
 synchronization when sending multiple commands. This will be discussed in a future lab.
@@ -36,7 +39,9 @@ tutorial and just want to see the demo, for example, run:
 $ python wifi_command_zoom.py
 ```
 
-> Note! Python 3.8.x must be used as specified in [the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+{% warning %}
+Python >= 3.8.x must be used as specified in [the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+{% endwarning %}
 
 Note that each script has a command-line help which can be found via:
 
@@ -66,8 +71,10 @@ Both Command Requests and Setting Requests follow the same procedure:
 1. Receive confirmation from GoPro (via HTTP response) that request was received.
 1. GoPro reacts to command
 
-{% note The HTTP response only indicates that the request was received correctly. The relevant behavior of the
-GoPro must be observed to verify when the command's effects have been applied. %}
+{% note %}
+The HTTP response only indicates that the request was received correctly. The relevant behavior of the
+GoPro must be observed to verify when the command's effects have been applied.
+{% endnote %}
 
 ```mermaid!
 sequenceDiagram
@@ -81,7 +88,9 @@ sequenceDiagram
   deactivate GoPro
 ```
 
-{% tip We are building the endpoints using the GOPRO_BASE_URL defined in the tutorial package's `__init__.py` %}
+{% tip %}
+We are building the endpoints using the GOPRO_BASE_URL defined in the tutorial package's `__init__.py`
+{% endtip %}
 
 ## Get Open GoPro Version
 
@@ -89,8 +98,10 @@ The first command we will be sending is
 [Get Version]({% link specs/http.md %}#commands-quick-reference). This should be the first command you send
 after connecting.
 
-{% warning It is imperative to know the Open GoPro version that the connected camera supports as setting values,
-endpoints, and more differ between versions %}
+{% warning %}
+It is imperative to know the Open GoPro version that the connected camera supports as setting values,
+endpoints, and more differ between versions
+{% endwarning %}
 
 Let's build the endpoint first send the Keep Alive signal:
 
@@ -160,7 +171,9 @@ INFO:root:Command sent successfully
 INFO:root:Response: {}
 ```
 
-{% success The response JSON is empty. This is expected in the case of a success. %}
+{% success %}
+The response JSON is empty. This is expected in the case of a success.
+{% endsuccess %}
 
 ## Get State
 
@@ -295,7 +308,9 @@ INFO:root:Command sent successfully
 INFO:root:Response: {}
 ```
 
-{% success The response JSON is empty. This is expected in the case of a success. %}
+{% success %}
+The response JSON is empty. This is expected in the case of a success.
+{% endsuccess %}
 
 Go to the next tab for an example of viewing the stream.
 
@@ -306,7 +321,9 @@ Once enabled, the stream can be viewed at `udp://@:8554`.
 
 Here is an example of viewing this using [VLC](https://www.videolan.org/):
 
-{% note The screen may slightly vary depending on your OS %}
+{% note %}
+The screen may slightly vary depending on your OS %}
+{% endnote %}
 
 1. Select **Media-->Open Network Stream**
 1. Enter the path as such:
@@ -352,7 +369,9 @@ INFO:root:Command sent successfully
 INFO:root:Response: {}
 ```
 
-{% success The response JSON is empty. This is expected in the case of a success. %}
+{% success %}
+The response JSON is empty. This is expected in the case of a success.
+{% endsuccess %}
 
 You should hear the camera beep and move to the Video Preset Group. You can tell this by the logo at the top
 middle of the screen:
@@ -392,7 +411,9 @@ INFO:root:Command sent successfully
 INFO:root:Response: {}
 ```
 
-{% success The response JSON is empty. This is expected in the case of a success. %}
+{% success %}
+The response JSON is empty. This is expected in the case of a success.
+{% endsuccess %}
 
 You should hear the camera beep and switch to the Cinematic Preset (assuming it wasn't already set). You can verify
 this by seeing the preset name in the pill at bottom middle of the screen.
@@ -507,7 +528,9 @@ information on creating / using custom presets, see the
 [GoPro Community Article](https://community.gopro.com/t5/en/How-To-Use-Your-GoPro-As-A-Webcam/ta-p/665493).
 A future lab may be created to demonstrate parsing this JSON directly into a protobuf-compiled object.
 
-{% note  The settings shown above are parsed the same as they were in the Get State command above %}
+{% note %}
+The settings shown above are parsed the same as they were in the Get State command above
+{% endnote %}
 
 As a reader exercise, try creating a custom preset on the camera and then using this command to view its
 information.
@@ -550,7 +573,9 @@ INFO:root:Command sent successfully
 INFO:root:Response: {}
 ```
 
-{% tip It is recommended to send a keep-alive at least once every 120 seconds. %}
+{% tip %}
+It is recommended to send a keep-alive at least once every 120 seconds.
+{% endtip %}
 
 ## Set Shutter
 
@@ -571,7 +596,9 @@ response = requests.get(url)
 response.raise_for_status()
 ```
 
-{% note This command does not return a JSON response so we don't print the response %}
+{% note %}
+This command does not return a JSON response so we don't print the response
+{% endnote %}
 
 This will log as such:
 
@@ -580,15 +607,17 @@ INFO:root:Turning the shutter on: sending http://10.5.5.9:8080/gopro/camera/shut
 INFO:root:Command sent successfully
 ```
 
-We then wait a few seconds and repeat the above procedure to set the shutter off. This time we use the following
-URL:
+We then wait a few seconds and repeat the above procedure to set the shutter off. This time we use the
+following URL:
 
 ```python
 url = GOPRO_BASE_URL + f"/gopro/camera/shutter/stop"
 ```
 
-{% warning The shutter can not be set on if the camera is encoding or set off if the camera is not encoding. An
-attempt to do so will result in an error response. %}
+{% warning %}
+The shutter can not be set on if the camera is encoding or set off if the camera is not encoding. An
+attempt to do so will result in an error response.
+{% endwarning %}
 
 ## Set Setting
 
@@ -596,14 +625,17 @@ The next command will be sending is [Set Setting]({% link specs/http.md %}#setti
 This end point is used to update all of the settings on the camera. It is analogous to BLE commands like
 [Set Video Resolution]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}#set-the-video-resolution).
 
-It is important to note that many settings are dependent on the video resolution (and other settings). For example,
-certain FPS values are not valid with certain resolutions. In general, higher resolutions
+It is important to note that many settings are dependent on the video resolution (and other settings).
+For example, certain FPS values are not valid with certain resolutions. In general, higher resolutions
 only allow lower FPS values. Check the [camera capabilities]({% link specs/ble.md %}#camera-capabilities)
 to see which settings are valid for given use cases.
 
-{% tip The following endpoint is different between Open GoPro 1.0 and 2.0. %}
+{% tip %}
+The following endpoint is different between Open GoPro 1.0 and 2.0.
+{% endtip %}
 
-Let's build the endpoint first to set the Video Resolution to 1080 (the setting_id and opt_value comes from the command table linked above). Click the relevant tab for the desired Open GoPro Version.
+Let's build the endpoint first to set the Video Resolution to 1080 (the setting_id and opt_value comes from
+the command table linked above). Click the relevant tab for the desired Open GoPro Version.
 
 {% tabs endpoint %}
 {% tab endpoint Version 1.0 %}
@@ -643,7 +675,9 @@ INFO:root:Command sent successfully
 INFO:root:Response: {}
 ```
 
-{% success The response JSON is empty. This is expected in the case of a success. %}
+{% success %}
+The response JSON is empty. This is expected in the case of a success.
+{% endsuccess %}
 
 You should hear the camera beep and see the video resolution change to 1080 in the pill in the bottom-middle of the
 screen:
@@ -683,7 +717,8 @@ As a reader exercise, try using the [Get State] command to verify that the resol
     option="D:::Any FPS is valid in at 5k"
     correct="A"
     info="Among these options, only 24 is possible. You're not actually expected to know
-    this. But you should know where to find the information: https://gopro.github.io/OpenGoPro/ble#camera-capabilities"
+    this. But you should know where to find the
+    [information](https://gopro.github.io/OpenGoPro/ble#camera-capabilities)."
 %}
 
 # Troubleshooting
@@ -700,7 +735,9 @@ between the PC and the GoPro.
 
 # Good Job!
 
-{% success Congratulations 🤙 %}
+{% success %}
+Congratulations 🤙
+{% endsuccess %}
 
 You can now send any of the HTTP commands defined in the
 [Open GoPro Interface]({% link specs/http.md %}) that return JSON responses. You

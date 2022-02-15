@@ -31,7 +31,8 @@ This tutorial will provide a walk-through to connect to the GoPro camera via BLE
 ### Tutorials Package
 
 This set of tutorials is accompanied by a Python package consisting of scripts (separated by tutorial module).
-These can be found on [Github](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/). Once the Github repo has been cloned or downloaded to your
+These can be found on [Github](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/). Once the
+Github repo has been cloned or downloaded to your
 local machine, the package can be installed as follows:
 
 1. Enter the python tutorials directory at `$INSTALL/demos/python/tutorial/` where $INSTALL is the top level of the Open GoPro repo
@@ -42,7 +43,10 @@ local machine, the package can be installed as follows:
 pip install -r requirements.txt
 ```
 
-> This will also install the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/) which will be used for some of the optional examples through these tutorials.
+{% note %}
+This will also install the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/) which will be
+used for some of the optional examples through these tutorials.
+{% endnote %}
 
 You can test that installation was successful by viewing the installed package's information:
 
@@ -111,7 +115,9 @@ If you just want to run the demo, you can do:
 python ble_connect.py
 ```
 
-{% warning Python 3.8.x must be used as specified in the requirements %}
+{% warning %}
+Python >= 3.8.x must be used as specified in the requirements
+{% endwarning %}
 
 See the help for parameter definition:
 
@@ -124,7 +130,8 @@ Connect to a GoPro camera, pair, then enable notifications.
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
+                        SSID. If not used, first discovered GoPro will be connected to
 ```
 
 ## Asyncio
@@ -206,7 +213,8 @@ matched_devices = [device for name, device in devices.items() if token.match(nam
 
 Due to potential RF interference and the asynchronous nature of BLE advertising / scanning, it is possible that
 the advertising GoPro will not be discovered by the scanning PC in one scan. Therefore, you may need to redo
-the scan (as `ble_connect.py` does) until a GoPro is found. That is, `matched_device` must contain at least one device.
+the scan (as `ble_connect.py` does) until a GoPro is found. That is, `matched_device` must contain at least one
+device.
 
 When running the demo, discovered devices will be logged to the console as they are found. Click the output tab
 to see an example of this.
@@ -288,7 +296,9 @@ catching the exception when it fails.
 
 Once paired, the camera should beep and display "Connection Successful".
 
-{% tip It is now no longer necessary to pair on subsequent connections. %}
+{% tip %}
+It is now no longer necessary to pair on subsequent connections.
+{% endtip %}
 
 ## Enable Notifications
 
@@ -298,9 +308,11 @@ Once paired, the camera should beep and display "Connection Successful".
 As specified in the [Open GoPro Bluetooth API]({% link specs/ble.md %}#sending-and-receiving-messages),
 we must enable notifications for a given characteristic to receive responses from it.
 
-{% note It is necessary to define a notification handler to pass to the bleak `start_notify` method. Since we
+{% note %}
+It is necessary to define a notification handler to pass to the bleak `start_notify` method. Since we
 only care about connecting to the device in this tutorial (and not actually receiving data), we are just passing
-an empty function. A future tutorial will demonstrate how to use this meaningfully. %}
+an empty function. A future tutorial will demonstrate how to use this meaningfully.
+{% endnote %}
 
 To enable notifications, we loop over each characteristic in each service and enable the characteristic
 for notification if it has `notify` properties:
@@ -358,8 +370,9 @@ will be used in a future tutorial to send data.
 ## Device not connecting
 
 If the connection is not starting, it is likely because the camera is not advertising. This can be due to either:
+
 1. The camera is not in pairing mode. Ensure that this is achieved as done in
-[the advertise section]({% link _python-tutorials/tutorial_1_connect_ble.md %}#advertise).
+   [the advertise section]({% link _python-tutorials/tutorial_1_connect_ble.md %}#advertise).
 2. The devices never disconnected from the previous session so are thus already connected. If this is the case,
    perform the "Complete System Reset" shown below.
 
@@ -374,15 +387,17 @@ perform the following.
 
 ## Logs
 
-The demo program has enabled bleak logs and is also using the default [python logging module](https://docs.python.org/3/library/logging.html)
-to write its own logs.
+The demo program has enabled bleak logs and is also using the default
+[python logging module](https://docs.python.org/3/library/logging.html) to write its own logs.
 
 To enable more bleak logs, follow bleak's
 [troubleshooting section](https://bleak.readthedocs.io/en/latest/troubleshooting.html#enable-logging).
 
 # Good Job!
 
-{% success Congratulations 🤙 %}
+{% success %}
+Congratulations 🤙
+{% endsuccess %}
 
 You can now successfully connect to the GoPro via BLE and prepare it to receive / send data. To see how
 to send commands, you should advance to the next tutorial.

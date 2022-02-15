@@ -7,15 +7,21 @@ lesson: 5
 
 # Python Tutorial 5: Connect WiFi
 
-This document will provide a walk-through tutorial to use [bleak](https://pypi.org/project/bleak/) to implement the
-[Open GoPro Interface]({% link specs/http.md %}) to enable the GoPro's WiFi Access Point (AP) so that it
+This document will provide a walk-through tutorial to use [bleak](https://pypi.org/project/bleak/) to implement
+the [Open GoPro Interface]({% link specs/http.md %}) to enable the GoPro's WiFi Access Point (AP) so that it
 can be connected to. It will also provide an example of connecting to the WiFi AP.
 
-> Note! It is recommended that you have first completed the [connecting]({% link _python-tutorials/tutorial_1_connect_ble.md %}), [sending commands]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}), and [parsing responses]({% link _python-tutorials/tutorial_3_parse_ble_tlv_responses.md %}) tutorials before proceeding
+{% warning %}
+It is recommended that you have first completed the
+[connecting]({% link _python-tutorials/tutorial_1_connect_ble.md %}),
+[sending commands]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}), and
+[parsing responses]({% link _python-tutorials/tutorial_3_parse_ble_tlv_responses.md %}) tutorials before proceeding.
+{% endwarning %}
 
 # Requirements
 
-It is assumed that the hardware and software requirements from the [connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+It is assumed that the hardware and software requirements from the
+[connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
 are present and configured correctly.
 
 The scripts that will be used for this tutorial can be found in the
@@ -34,7 +40,10 @@ If you don't want to read this tutorial and just want to see the demo, for examp
 $ python wifi_enable_and_connect.py
 ```
 
-> Note! Python 3.8.x must be used as specified in [the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+{% warning %}
+Python >= 3.8.x must be used as specified in
+[the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+{% endwarning %}
 
 Note that each script has a command-line help which can be found via:
 
@@ -47,18 +56,21 @@ Connect to a GoPro camera via BLE, get WiFi info, enable WiFi and connect.
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used,
-                        first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
+                        SSID. If not used, first discovered GoPro will be connected to
 ```
 
 # Setup
 
-We must first connect to BLE as was discussed in the [connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}). We are also
-using the same notification handler as was used in the [sending commands tutorial]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}#setup)
+We must first connect to BLE as was discussed in the
+[connect tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}). We are also
+using the same notification handler as was used in the
+[sending commands tutorial]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}#setup)
 
 # Connecting to WiFi AP
 
-Now that we are connected via BLE, paired, and have enabled notifications, we can send the command to enable the WiFi AP.
+Now that we are connected via BLE, paired, and have enabled notifications, we can send the command to enable
+the WiFi AP.
 
 Here is an outline of the steps to do so:
 
@@ -94,14 +106,14 @@ sequenceDiagram
     PC ->> GoProWiFi: Connect to WiFi AP
 ```
 
-Essentially we will be finding the WiFi AP information (SSID and password) via BLE, enabling the WiFi AP via BLE, then
-connecting to the WiFi AP.
+Essentially we will be finding the WiFi AP information (SSID and password) via BLE, enabling the WiFi AP via
+BLE, then connecting to the WiFi AP.
 
 ## Find WiFi Information
 
 Note that the process to get this information is different than all procedures described up to this point.
-Whereas the previous command, setting, and query procedures all followed the Write Request-Notification Response
-pattern, the WiFi Information is retrieved via direct Read Requests to BLE characteristics.
+Whereas the previous command, setting, and query procedures all followed the Write Request-Notification
+Response pattern, the WiFi Information is retrieved via direct Read Requests to BLE characteristics.
 
 ### Get WiFi SSID
 
@@ -122,7 +134,10 @@ ssid = await client.read_gatt_char(WIFI_AP_SSID_UUID)
 ssid = ssid.decode()
 ```
 
-{% tip There is no need for a synchronization event as the information is available when the `read_gatt_char` method returns. %}
+{% tip %}
+There is no need for a synchronization event as the information is available when the `read_gatt_char` method
+returns.
+{% endtip %}
 
 In the demo, this information is logged as such:
 
@@ -150,7 +165,10 @@ password = await client.read_gatt_char(WIFI_AP_PASSWORD_UUID)
 password = password.decode()
 ```
 
-{% tip There is no need for a synchronization event as the information is available when the `read_gatt_char` method returns. %}
+{% tip %}
+There is no need for a synchronization event as the information is available when the `read_gatt_char` method
+returns.
+{% endtip %}
 
 In the demo, this information is logged as such:
 
@@ -180,11 +198,15 @@ await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x03, 0x17, 0x01, 0x01
 await event.wait()  # Wait to receive the notification response
 ```
 
-{% success We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. %}
+{% success %}
+We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.
+{% endsuccess %}
 
 Note that we have received the "Command Status" notification response from the
 Command Response characteristic since we enabled it's notifications in
-[Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications). This can be seen in the demo log:
+[Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications). This can
+be seen in the demo log:
 
 ```console
 INFO:root:Enabling the WiFi AP
@@ -202,9 +224,10 @@ we know the WiFi SSID and password and the WiFi AP is enabled and ready to conne
 are many different methods of connecting to the WiFi AP depending on your OS and the framework you are
 using to develop. You could, for example, simply use your OS's WiFi GUI to connect.
 
-We do provide a programmatic example of this in the `ble_enable_wifi_and_connect.py` script. This script uses the
-cross-platform `Wireless` module from the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/).
-Note that this has been imported as such:
+We do provide a programmatic example of this in the `ble_enable_wifi_and_connect.py` script. This script uses
+the cross-platform `Wireless` module from the
+[Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/). Note that this has been imported as
+such:
 
 ```python
 from open_gopro.wifi.adapters import Wireless
@@ -254,11 +277,14 @@ INFO:root:Wifi Connected!
 
 # Troubleshooting
 
-See the first tutorial's [troubleshooting section]({% link _python-tutorials/tutorial_1_connect_ble.md %}#troubleshooting).
+See the first tutorial's
+[troubleshooting section]({% link _python-tutorials/tutorial_1_connect_ble.md %}#troubleshooting).
 
 # Good Job!
 
-{% success Congratulations 🤙 %}
+{% success %}
+Congratulations 🤙
+{% endsuccess %}
 
 You are now connected to the GoPro's Wifi AP and can send any of the HTTP commands defined in the
 [Open GoPro Interface]({% link specs/http.md %}). Proceed to the next tutorial.

@@ -5,10 +5,10 @@ require "liquid/tag/parser"
 require 'securerandom'
 require 'erb'
 
+require_relative 'common'
+
 module Jekyll
     class Quiz < Liquid::Tag
-        # include all URL filters from Jekyll
-        include Jekyll::Filters::URLFilters
         # include all standard liquid filters
         include Liquid::StandardFilters
 
@@ -22,16 +22,13 @@ module Jekyll
         end
 
         def render(context)
-            # required for URLFilters
-            @context = context
-
             # Need a unique ID for our quiz
             uuid = SecureRandom.uuid
 
             # Extract arguments
-            question = @args[:question]
+            question = convert_markdown(context, @args[:question])
             correct = @args[:correct]
-            info = @args[:info]
+            info = convert_markdown(context, @args[:info])
             option_chars = []
             option_strings = []
 
@@ -39,22 +36,15 @@ module Jekyll
             options.each { |option|
                 parts = option.split(":::", 2)
                 option_chars << parts[0]
-                option_strings << parts[1]
+                option_strings << convert_markdown(context, parts[1])
             }
 
             # Load template file
             currentDirectory = File.dirname(__FILE__)
             templateFile = File.read(currentDirectory + '/quiz_template.erb')
             template = ERB.new(templateFile)
-            output = template.result(binding)
 
-            return output
-        end
-
-        private
-
-        def config
-            @config ||= @context.registers[:site].config
+            return template.result(binding)
         end
     end
 end

@@ -1,6 +1,6 @@
 ---
 search: false
---
+---
 
 # Contribution
 
@@ -45,8 +45,9 @@ Specific sections can also be linked. For example, to link to [this section]({% 
 {% endraw %}
 
 There is an exception to this when linking to a file in the `tutorials`. These are handled differently
-since `tutorials` is the base directory for all collections. Therefore, the `tutorials` directory should be omitted
-from the path. For example, to link to [the first python tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}):
+since `tutorials` is the base directory for all collections. Therefore, the `tutorials` directory should be
+omitted from the path. For example, to link to
+[the first python tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}):
 
 {% raw %}
 ```
@@ -64,11 +65,15 @@ Blue colored notes via:
 {% raw %}
 
 ```markdown
-{% note This is a note. %}
+{% note %}
+This is a note.
+{% endnote %}
 ```
 
 {% endraw %}
-{% note This is a note. %}
+{% note %}
+This is a note.
+{% endnote %}
 
 
 #### Successes
@@ -78,11 +83,15 @@ Green colored success via:
 {% raw %}
 
 ```markdown
-{% success This is for when something good has happened. %}
+{% success %}
+This is for when something good has happened.
+{% endsuccess %}
 ```
 
 {% endraw %}
-{% success This is for when something good has happened. %}
+{% success %}
+This is for when something good has happened.
+{% endsuccess %}
 
 #### Warnings
 
@@ -91,11 +100,15 @@ Red colored warnings via:
 {% raw %}
 
 ```markdown
-{% warning This is for when something bad has happened. %}
+{% warning %}
+This is for when something bad has happened.
+{% endwarning %}
 ```
 
 {% endraw %}
-{% warning This is for when something bad has happened. %}
+{% warning %}
+This is for when something bad has happened.
+{% endwarning %}
 
 #### Tips
 
@@ -104,20 +117,15 @@ Yellow colored tips via:
 {% raw %}
 
 ```markdown
-{% tip This is for tips. %}
+{% tip %}
+This is for tips.
+{% endtip %}
 ```
 
 {% endraw %}
-{% tip This is for tips. %}
-
-If one of the above options does not suit your use case, there is also the option for a simple callout using
-default markdown syntax via:
-
-```markdown
-> I'm a simple callout
-```
-
-> I'm a simple callout
+{% tip %}
+This is for tips.
+{% endtip %}
 
 ### Collapsible Accordion
 
@@ -225,8 +233,10 @@ This is the content of the third tab.
 
 You can add Mermaid or PlantUML diagrams. They are centered by default.
 
-{% note Note for the following examples, you need 3 leading backticks instead of 2. We're only showing 2 here
-because there is no way to escape this properly. If this is unclear, just look at the .md file. %}
+{% note %}
+Note for the following examples, you need 3 leading backticks instead of 2. We're only showing 2 here
+because there is no way to escape this properly. If this is unclear, just look at the .md file.
+{% endnote %}
 
 #### Mermaid
 
@@ -288,7 +298,8 @@ Happy clown --> 🤡
 
 ### Variable length / width cell tables
 
-For more information, see the Jekyll Spaceship [documentation](https://github.com/jeffreytse/jekyll-spaceship#1-table-usage)
+For more information, see the Jekyll Spaceship
+[documentation](https://github.com/jeffreytse/jekyll-spaceship#1-table-usage)
 
 Normal markdown tables work but you can also combine lines (via the trailing backslash):
 
