@@ -1,6 +1,6 @@
 ---
 search: false
---
+---
 
 # Contribution
 
@@ -64,11 +64,15 @@ Blue colored notes via:
 {% raw %}
 
 ```markdown
-{% note This is a note. %}
+{% note %}
+This is a note.
+{% endnote %}
 ```
 
 {% endraw %}
-{% note This is a note. %}
+{% note %}
+This is a note.
+{% endnote %}
 
 
 #### Successes
@@ -78,11 +82,15 @@ Green colored success via:
 {% raw %}
 
 ```markdown
-{% success This is for when something good has happened. %}
+{% success %}
+This is for when something good has happened.
+{% endsuccess %}
 ```
 
 {% endraw %}
-{% success This is for when something good has happened. %}
+{% success %}
+This is for when something good has happened.
+{% endsuccess %}
 
 #### Warnings
 
@@ -91,11 +99,15 @@ Red colored warnings via:
 {% raw %}
 
 ```markdown
-{% warning This is for when something bad has happened. %}
+{% warning %}
+This is for when something bad has happened.
+{% endwarning %}
 ```
 
 {% endraw %}
-{% warning This is for when something bad has happened. %}
+{% warning %}
+This is for when something bad has happened.
+{% endwarning %}
 
 #### Tips
 
@@ -104,11 +116,15 @@ Yellow colored tips via:
 {% raw %}
 
 ```markdown
-{% tip This is for tips. %}
+{% tip %}
+This is for tips.
+{% endtip %}
 ```
 
 {% endraw %}
-{% tip This is for tips. %}
+{% tip %}
+This is for tips.
+{% endtip %}
 
 If one of the above options does not suit your use case, there is also the option for a simple callout using
 default markdown syntax via:
@@ -225,8 +241,10 @@ This is the content of the third tab.
 
 You can add Mermaid or PlantUML diagrams. They are centered by default.
 
-{% note Note for the following examples, you need 3 leading backticks instead of 2. We're only showing 2 here
-because there is no way to escape this properly. If this is unclear, just look at the .md file. %}
+{% note %}
+Note for the following examples, you need 3 leading backticks instead of 2. We're only showing 2 here
+because there is no way to escape this properly. If this is unclear, just look at the .md file.
+{% endnote %}
 
 #### Mermaid
 

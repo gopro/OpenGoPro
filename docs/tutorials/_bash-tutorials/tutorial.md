@@ -52,7 +52,9 @@ The screen should appear as such:
 
 {% include figure image_path="/assets/images/tutorials/quik.png" alt="Quik" size="50%" caption="Camera is discoverable." %}
 
-{% note This step may vary slightly by camera %}
+{% note %}
+This step may vary slightly by camera
+{% endnote %}
 
 ## Scan
 
@@ -346,7 +348,9 @@ the device should show up when querying `bluetoothctl` for paired devices:
 Device DF:34:ED:D1:DA:E8 GoPro 0456
 ```
 
-{% tip It is now no longer necessary to pair on subsequent connections. %}
+{% tip %}
+It is now no longer necessary to pair on subsequent connections.
+{% endtip %}
 
 ## Enable Notifications
 
@@ -464,7 +468,9 @@ Characteristic - Vendor specific
         Flags: write
 ```
 
-{% success As a bonus, you can then call "attribute-info" to verify that this characteristic is writeable. %}
+{% success %}
+As a bonus, you can then call "attribute-info" to verify that this characteristic is writeable.
+{% endsuccess %}
 
 ### Send Commands
 
@@ -505,7 +511,9 @@ Attempting to write /org/bluez/hci0/dev_CA_D7_FF_49_B1_27/service0031/char0032
 
 ### Good Job!
 
-{% success Congratulations 🤙 %}
+{% success %}
+Congratulations 🤙
+{% endsuccess %}
 
 You can now send any of the other BLE commands detailed in the Open GoPro documentation in
 a similar manner.

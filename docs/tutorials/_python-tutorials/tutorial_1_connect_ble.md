@@ -111,7 +111,9 @@ If you just want to run the demo, you can do:
 python ble_connect.py
 ```
 
-{% warning Python 3.8.x must be used as specified in the requirements %}
+{% warning %}
+Python >= 3.8.x must be used as specified in the requirements
+{% endwarning %}
 
 See the help for parameter definition:
 
@@ -288,7 +290,9 @@ catching the exception when it fails.
 
 Once paired, the camera should beep and display "Connection Successful".
 
-{% tip It is now no longer necessary to pair on subsequent connections. %}
+{% tip %}
+It is now no longer necessary to pair on subsequent connections.
+{% endtip %}
 
 ## Enable Notifications
 
@@ -298,9 +302,11 @@ Once paired, the camera should beep and display "Connection Successful".
 As specified in the [Open GoPro Bluetooth API]({% link specs/ble.md %}#sending-and-receiving-messages),
 we must enable notifications for a given characteristic to receive responses from it.
 
-{% note It is necessary to define a notification handler to pass to the bleak `start_notify` method. Since we
+{% note %}
+It is necessary to define a notification handler to pass to the bleak `start_notify` method. Since we
 only care about connecting to the device in this tutorial (and not actually receiving data), we are just passing
-an empty function. A future tutorial will demonstrate how to use this meaningfully. %}
+an empty function. A future tutorial will demonstrate how to use this meaningfully.
+{% endnote %}
 
 To enable notifications, we loop over each characteristic in each service and enable the characteristic
 for notification if it has `notify` properties:
@@ -382,7 +388,9 @@ To enable more bleak logs, follow bleak's
 
 # Good Job!
 
-{% success Congratulations 🤙 %}
+{% success %}
+Congratulations 🤙
+{% endsuccess %}
 
 You can now successfully connect to the GoPro via BLE and prepare it to receive / send data. To see how
 to send commands, you should advance to the next tutorial.

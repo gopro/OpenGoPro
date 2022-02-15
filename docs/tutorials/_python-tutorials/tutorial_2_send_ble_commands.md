@@ -92,8 +92,10 @@ Both Command Requests and Setting Requests follow the same procedure:
 1. Receive confirmation from GoPro (via notification from relevant response UUID) that request was received.
 1. GoPro reacts to command
 
-{% note The notification response only indicates that the request was received and whether it was accepted or rejected.
-The relevant behavior of the GoPro must be observed to verify when the command's effects have been applied. %}
+{% note %}
+The notification response only indicates that the request was received and whether it was accepted or rejected.
+The relevant behavior of the GoPro must be observed to verify when the command's effects have been applied.
+{% endnote %}
 
 Here is the procedure from power-on to finish:
 
@@ -130,7 +132,9 @@ SETTINGS_REQ_UUID = GOPRO_BASE_UUID.format("0074")
 SETTINGS_RSP_UUID = GOPRO_BASE_UUID.format("0075")
 ```
 
-{% tip We're using the GOPRO_BASE_UUID string imported from the module's `__init__.py ` to build these. %}
+{% tip %}
+We're using the GOPRO_BASE_UUID string imported from the module's `__init__.py ` to build these.
+{% endtip %}
 
 ## Set Shutter
 
@@ -153,7 +157,10 @@ await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([3, 1, 1, 1]))
 await event.wait() # Wait to receive the notification response
 ```
 
-{% success We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. %}
+{% success %}
+We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.
+{% endsuccess %}
 
 You should hear the camera beep and it will either take a picture or start recording
 depending on what mode it is in.
@@ -215,7 +222,10 @@ await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x01, 0x05]))
 await event.wait()  # Wait to receive the notification response
 ```
 
-{% success We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. %}
+{% success %}
+We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.
+{% endsuccess %}
 
 You should hear the camera beep display a spinner showing "Powering Off"
 
@@ -254,7 +264,10 @@ await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x04, 0x3E, 0x02, 0x03
 await event.wait()  # Wait to receive the notification response
 ```
 
-{% success We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. %}
+{% success %}
+We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.
+{% endsuccess %}
 
 You should hear the camera beep and move to the Video Preset Group. You can tell this by the logo at the top
 middle of the screen:
@@ -287,8 +300,10 @@ preset are:
 | Load Burst Photo Preset | 0x06 0x40 0x04 0x00 0x01 0x00 0x02 |
 | Load Night Photo Preset | 0x06 0x40 0x04 0x00 0x01 0x00 0x03 |
 
-{% note It is possible that the preset ID values will vary in future cameras. The only absolutely correct way to know the
-preset ID is to read them from the "Get Preset Status" protobuf command. A future lab will discuss protobuf commands. %}
+{% note %}
+It is possible that the preset ID values will vary in future cameras. The only absolutely correct way to know the
+preset ID is to read them from the "Get Preset Status" protobuf command. A future lab will discuss protobuf commands.
+{% endnote %}
 
 Now, let's write the bytes to the "Command Request" UUID to change the preset to Cinematic!
 
@@ -298,7 +313,10 @@ Now, let's write the bytes to the "Command Request" UUID to change the preset to
     await event.wait()  # Wait to receive the notification response
 ```
 
-{% success We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. %}
+{% success %}
+We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.
+{% endsuccess %}
 
 You should hear the camera beep and switch to the Cinematic Preset (assuming it wasn't already set). You can verify
 this by seeing the preset name in the pill at bottom middle of the screen.
@@ -337,7 +355,10 @@ await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x01, 0x50]))
 await event.wait()  # Wait to receive the notification response
 ```
 
-{% success We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. %}
+{% success %}
+We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.
+{% endsuccess %}
 
 Also note that we have received the "Command Status" notification response from the
 Command Response characteristic since we enabled its notifications in [Enable Notifications]({% link _python-tutorials/tutorial_1_connect_ble.md %}#enable-notifications).. This can
@@ -381,7 +402,10 @@ await client.write_gatt_char(SETTINGS_REQ_UUID, bytearray([0x03, 0x02, 0x01, 0x0
 await event.wait()  # Wait to receive the notification response
 ```
 
-{% success We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. %}
+{% success %}
+We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.
+{% endsuccess %}
 
 You should hear the camera beep and see the video resolution change to 1080 in the pill in the bottom-middle of the
 screen:
@@ -434,7 +458,10 @@ await client.write_gatt_char(SETTINGS_REQ_UUID, bytearray([0x03, 0x03, 0x01, 0x0
 await event.wait()  # Wait to receive the notification response
 ```
 
-{% success We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. %}
+{% success %}
+We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.
+{% endsuccess %}
 
 You should hear the camera beep and see the FPS change to 240 in the pill in the bottom-middle of the
 screen:
@@ -493,7 +520,9 @@ See the first tutorial's [troubleshooting section]({% link _python-tutorials/tut
 
 # Good Job!
 
-{% success Congratulations 🤙 %}
+{% success %}
+Congratulations 🤙
+{% endsuccess %}
 
 You can now send any of the other BLE commands detailed in the Open GoPro documentation in
 a similar manner.

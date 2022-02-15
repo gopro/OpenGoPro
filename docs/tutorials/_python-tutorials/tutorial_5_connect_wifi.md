@@ -122,7 +122,9 @@ ssid = await client.read_gatt_char(WIFI_AP_SSID_UUID)
 ssid = ssid.decode()
 ```
 
-{% tip There is no need for a synchronization event as the information is available when the `read_gatt_char` method returns. %}
+{% tip %}
+There is no need for a synchronization event as the information is available when the `read_gatt_char` method returns.
+{% endtip %}
 
 In the demo, this information is logged as such:
 
@@ -150,7 +152,9 @@ password = await client.read_gatt_char(WIFI_AP_PASSWORD_UUID)
 password = password.decode()
 ```
 
-{% tip There is no need for a synchronization event as the information is available when the `read_gatt_char` method returns. %}
+{% tip %}
+There is no need for a synchronization event as the information is available when the `read_gatt_char` method returns.
+{% endtip %}
 
 In the demo, this information is logged as such:
 
@@ -180,7 +184,10 @@ await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x03, 0x17, 0x01, 0x01
 await event.wait()  # Wait to receive the notification response
 ```
 
-{% success We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. %}
+{% success %}
+We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.
+{% endsuccess %}
 
 Note that we have received the "Command Status" notification response from the
 Command Response characteristic since we enabled it's notifications in
@@ -258,7 +265,9 @@ See the first tutorial's [troubleshooting section]({% link _python-tutorials/tut
 
 # Good Job!
 
-{% success Congratulations 🤙 %}
+{% success %}
+Congratulations 🤙
+{% endsuccess %}
 
 You are now connected to the GoPro's Wifi AP and can send any of the HTTP commands defined in the
 [Open GoPro Interface]({% link specs/http.md %}). Proceed to the next tutorial.

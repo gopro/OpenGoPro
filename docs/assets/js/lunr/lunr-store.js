@@ -42,6 +42,7 @@ var store = [
                 remove_first: id |
                 strip_newlines |
                 strip |
+                normalize_whitespace |
                 jsonify }},
             "categories": [],
             "tags": [],

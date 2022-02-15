@@ -133,8 +133,10 @@ From the [commands reference]({% link specs/ble.md %}#commands-quick-reference),
 The `ble_command_get_version.py` script demonstrates a simple parser for the Open GoPro
 Get Version command which we will walk through here.
 
-{% tip It is important to always query the version after connecting in order to know which API is supported.
-See the relevant version of the BLE and / or WiFi spec for more details about each version. %}
+{% tip %}
+It is important to always query the version after connecting in order to know which API is supported.
+See the relevant version of the BLE and / or WiFi spec for more details about each version.
+{% endtip %}
 
 First, we send the command to the Command Request [UUID]({% link specs/ble.md %}#services-and-characteristics):
 
@@ -145,7 +147,9 @@ await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x01, 0x51]))
 await event.wait()  # Wait to receive the notification response
 ```
 
-{% note The following snippets of code are taken from the `notification handler` %}
+{% note %}
+The following snippets of code are taken from the `notification handler`
+{% endnote %}
 
 We then receive a response at the expected handle. This is logged as:
 
@@ -398,7 +402,9 @@ graph TD
 
 We can see this in action when we send the _Get All Setting Values_ Query.
 
-{% note Queries aren't introduced until the next tutorial so for now, just pay attention to the response. %}
+{% note %}
+Queries aren't introduced until the next tutorial so for now, just pay attention to the response.
+{% endnote %}
 
 We send the command as such:
 
@@ -423,7 +429,9 @@ received the entire response, at which point we notify the writer that the respo
             event.set()
 ```
 
-{% note We also first parse the response but that will be described in the next section. %}
+{% note %}
+We also first parse the response but that will be described in the next section.
+{% endnote %}
 
 We can see the individual packets being accumulated in the log:
 
@@ -485,7 +493,11 @@ This section is going to describe responses to to BLE status / setting queries. 
 introduce such queries until [the next tutorial]({% link _python-tutorials/tutorial_4_ble_queries.md %}) so for now, only the
 parsing of the response is important.
 
-{% tip While multi-packet responses are almost always Query Responses, they can also be from Command Complex responses. In a real-world implementation, it is therefore necessary to check the received UUID to see how to parse. %}
+{% tip %}
+While multi-packet responses are almost always Query Responses, they can also be from Command Complex \
+responses. In a real-world implementation, it is therefore necessary to check the received UUID to see
+how to parse.
+{% endtip %}
 
 Query Responses contain one or more TLV groups in their Response data. To recap, the generic response format is:
 
@@ -633,7 +645,9 @@ See the first tutorial's [troubleshooting section]({% link _python-tutorials/tut
 
 # Good Job!
 
-{% success Congratulations 🤙 %}
+{% success %}
+Congratulations 🤙
+{% endsuccess %}
 
 You can now parse any TLV response that is received from the GoPro, at least if it is received uninterrupted. There
 is additional logic required for a complete solution such as checking the UUID the response is received on and

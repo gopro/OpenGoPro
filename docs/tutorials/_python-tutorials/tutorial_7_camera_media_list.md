@@ -198,7 +198,9 @@ Now let's build the endpoint to download the photo whose name we just found:
 url = GOPRO_BASE_URL + f"videos/DCIM/100GOPRO/{photo}"
 ```
 
-{% tip The endpoint will start with "videos" for both photos and videos %}
+{% tip %}
+The endpoint will start with "videos" for both photos and videos
+{% endtip %}
 
 Next we send the GET request and check the response for errors. Any errors will raise an exception.
 
@@ -292,7 +294,9 @@ The next command we will be sending is
 Specifically, we will be getting the screennail for a photo. The camera must have at least one photo in its
 media list in order for this to work.
 
-{% note There is a separate command (shown below) to get a media "thumbnbail" %}
+{% note %}
+There is a separate command (shown below) to get a media "thumbnbail"
+{% endnote %}
 
 First, we get the media list as in [Get Media List]({% link _python-tutorials/tutorial_7_camera_media_list.md %}#get-media-list) . Then we search through the list of file names in
 the media list looking for a photo (i.e. a file whose name ends in **.jpg**). Once we find a photo, we
@@ -350,7 +354,9 @@ The next command we will be sending is
 Specifically, we will be getting the thumbnail for a photo. The camera must have at least one photo in its
 media list in order for this to work.
 
-{% note Note! There is a separate command (shown above) to get a media "screennail" %}
+{% note %}
+There is a separate command (shown above) to get a media "screennail"
+{% endnote %}
 
 First, we get the media list as in [Get Media List]({% link _python-tutorials/tutorial_7_camera_media_list.md %}#get-media-list) . Then we search through the list of file names in
 the media list looking for a photo (i.e. a file whose name ends in **.jpg**). Once we find a photo, we
@@ -407,7 +413,9 @@ See the previous tutorial's [troubleshooting section]({% link _python-tutorials/
 
 # Good Job!
 
-{% success Congratulations 🤙 %}
+{% success %}
+Congratulations 🤙
+{% endsuccess %}
 
 You can now query the GoPro's media list and retrieve binary information for media file. This is currently
 last tutorial. Stay tuned for more 👍

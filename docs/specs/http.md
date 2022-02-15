@@ -7,8 +7,10 @@ This page will provide links to each version of the Open GoPro HTTP specificatio
 as an overview of the changes from the previous version.
 Click on an individual spec to see its complete information including possible commands, settings, etc.
 
-{% note Since the Open GoPro API varies based on the version, it is necessary to query the Open GoPro version
-using the Get Version command upon connection %}
+{% note %}
+Since the Open GoPro API varies based on the version, it is necessary to query the Open GoPro version
+using the Get Version command upon connection
+{% endnote %}
 
 # Versions
 

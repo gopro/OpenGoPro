@@ -99,7 +99,9 @@ It is possible to poll one or more setting / status values using the following
 where **xx** are setting / status ID(s) and **len** is the total length of the query (not including the length).
 There will be specific examples below.
 
-{% note Since they are two separate commands, combination of settings / statuses can not be polled simultaneously. %}
+{% note %}
+Since they are two separate commands, combination of settings / statuses can not be polled simultaneously. %
+{% endnote %}
 
 Here is a generic sequence diagram (the same is true for statuses):
 
@@ -191,7 +193,9 @@ FOV_ID = 121
 await client.write_gatt_char(QUERY_REQ_UUID, bytearray([0x04, 0x12, RESOLUTION_ID, FPS_ID, FOV_ID]))
 ```
 
-{% note The length (first byte of the command) has been increased to 4 to accommodate the extra settings %}
+{% note %}
+The length (first byte of the command) has been increased to 4 to accommodate the extra settings
+{% endnote %}
 
 We are also parsing the response to get all 3 values:
 
@@ -208,9 +212,11 @@ def notification_handler(handle: int, data: bytes) -> None:
             video_fov = VideoFOV(response.data[FOV_ID][0])
 ```
 
-{% tip When we are storing the updated setting, we are just taking the first byte (i..e index 0). A real-world
+{% tip %}
+When we are storing the updated setting, we are just taking the first byte (i..e index 0). A real-world
 implementation would need to know the length (and type) of the setting / status response by the ID. For example,
-sometimes settings / statuses are bytes, words, strings, etc. %}
+sometimes settings / statuses are bytes, words, strings, etc.
+{% endtip %}
 
 They are then printed to the log which will look like the following:
 
@@ -298,7 +304,9 @@ sequenceDiagram
 That is, after registering for push notifications for a given query, notification responses will continuously
 be sent whenever the query changes until the client unregisters for push notifications for the given query.
 
-{% tip The initial response to the Register command also contains the current setting / status value %}
+{% tip %}
+The initial response to the Register command also contains the current setting / status value.
+{% endtip %}
 
 We will walk through the `ble_query_register_resolution_value_updates.py` script to demonstrate this:
 
@@ -364,8 +372,10 @@ In this case, the Query ID is 0x92 (Setting Value Push Notification) as expected
 
 ---
 
-{% tip Multiple push notifications can be registered / received in a similar manner that multiple queries were
-polled above %}
+{% tip %}
+Multiple push notifications can be registered / received in a similar manner that multiple queries were
+polled above
+{% endtip %}
 
 **Quiz time! 📚 ✏️**
 
@@ -395,7 +405,9 @@ See the first tutorial's [troubleshooting section]({% link _python-tutorials/tut
 
 # Good Job!
 
-{% success Congratulations 🤙 %}
+{% success %}
+Congratulations 🤙
+{% endsuccess %}
 
 You can now query any of the settings / statuses from the camera using one of the above patterns.
 

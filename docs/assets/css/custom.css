@@ -100,42 +100,31 @@
 
 /* Callouts */
 
-.note {
+.callout {
     display: flex;
     align-items: center;
-    background-color: #c9e9ff;
-    border-left: solid 8px #3498db;
     overflow: hidden;
     margin: 1em;
     font-style: italic;
 }
 
-.success {
-    display: flex;
-    align-items: center;
-    background-color: #b4f3cb;
-    border-left: solid 8px #2dcb71;
-    overflow: hidden;
-    margin: 1em;
-    font-style: italic;
-}
-.warning {
-    display: flex;
-    align-items: center;
-    background-color: #fbbeb8;
-    border-left: solid 8px #df5142;
-    overflow: hidden;
-    margin: 1em;
-    font-style: italic;
-}
-.tip {
-    display: flex;
-    align-items: center;
+.callout.tip {
     background-color: #fff1ba;
     border-left: solid 8px #ebc21c;
-    overflow: hidden;
-    margin: 1em;
-    font-style: italic;
+}
+
+.callout.note {
+    background-color: #c9e9ff;
+    border-left: solid 8px #3498db;
+}
+
+.callout.success {
+    background-color: #b4f3cb;
+    border-left: solid 8px #2dcb71;
+}
+.callout.warning {
+    background-color: #fbbeb8;
+    border-left: solid 8px #df5142;
 }
 
 /* Header text color */
