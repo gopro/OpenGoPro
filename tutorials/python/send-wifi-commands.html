@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-02-11T18:53:31-08:00">
+  <meta property="article:published_time" content="2022-02-15T14:09:06-08:00">
 
 
 
@@ -420,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 6: Send WiFi Commands">
     <meta itemprop="description" content="Python Tutorial 6: Send WiFi Commands">
-    <meta itemprop="datePublished" content="2022-02-11T18:53:31-08:00">
+    <meta itemprop="datePublished" content="2022-02-15T14:09:06-08:00">
     
 
     <div class="page__inner-wrap">
@@ -488,9 +488,10 @@
         <p>This document will provide a walk-through tutorial to use the Python <a href="https://pypi.org/project/requests/">requests</a>
 package to send Open GoPro <a href="/OpenGoPro/http">HTTP commands</a> to the GoPro.</p>
 
-<blockquote>
-  <p>Note! It is required that you have first completed the <a href="/OpenGoPro/tutorials/python/connect-wifi">Connecting to Wifi</a> tutorial.</p>
-</blockquote>
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>It is required that you have first completed the
+<a href="/OpenGoPro/tutorials/python/connect-wifi">Connecting to Wifi</a> tutorial.</span>
+</div>
 
 <p>This tutorial only considers sending these commands as one-off commands. That is, it does not consider state management /
 synchronization when sending multiple commands. This will be discussed in a future lab.</p>
@@ -515,9 +516,9 @@ tutorial and just want to see the demo, for example, run:</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_zoom.py
 </code></pre></div></div>
 
-<blockquote>
-  <p>Note! Python 3.8.x must be used as specified in <a href="/OpenGoPro/tutorials/python/connect-ble#requirements">the requirements</a></p>
-</blockquote>
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.8.x must be used as specified in <a href="/OpenGoPro/tutorials/python/connect-ble#requirements">the requirements</a></span>
+</div>
 
 <p>Note that each script has a command-line help which can be found via:</p>
 
@@ -548,15 +549,15 @@ optional arguments:
   <li>GoPro reacts to command</li>
 </ol>
 
-<div class="note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  The HTTP response only indicates that the request was received correctly. The relevant behavior of the
-GoPro must be observed to verify when the command's effects have been applied.</span>
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>The HTTP response only indicates that the request was received correctly. The relevant behavior of the
+GoPro must be observed to verify when the command’s effects have been applied.</span>
 </div>
 
 <p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5wYXJ0aWNpcGFudCBQQyBhcyBPcGVuIEdvUHJvIHVzZXIgZGV2aWNlXG5wYXJ0aWNpcGFudCBHb1Byb1xubm90ZSBvdmVyIEdvUHJvLCBQQzogUEMgY29ubmVjdGVkIHRvIFdpRmkgQVBcblBDIC0-PiBHb1BybzogQ29tbWFuZCBSZXF1ZXN0IChHRVQpXG5hY3RpdmF0ZSBHb1Byb1xuR29Qcm8gLT4-IFBDOiBDb21tYW5kIFJlc3BvbnNlIChIVFRQIDIwMCBPSylcbkdvUHJvIC0-PiBHb1BybzogQXBwbHkgYWZmZWN0cyBvZiBjb21tYW5kIHdoZW4gYWJsZVxuZGVhY3RpdmF0ZSBHb1BybyIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19"></p>
 
-<div class="tip">
-<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  We are building the endpoints using the GOPRO_BASE_URL defined in the tutorial package's `__init__.py`</span>
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>We are building the endpoints using the GOPRO_BASE_URL defined in the tutorial package’s <code class="language-plaintext highlighter-rouge">__init__.py</code></span>
 </div>
 
 <h2 id="get-open-gopro-version">Get Open GoPro Version</h2>
@@ -565,8 +566,8 @@ GoPro must be observed to verify when the command's effects have been applied.</
 <a href="/OpenGoPro/http#commands-quick-reference">Get Version</a>. This should be the first command you send
 after connecting.</p>
 
-<div class="warning">
-<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142;margin: 0.25em;"></i><span>  It is imperative to know the Open GoPro version that the connected camera supports as setting values,
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>It is imperative to know the Open GoPro version that the connected camera supports as setting values,
 endpoints, and more differ between versions</span>
 </div>
 
@@ -630,14 +631,14 @@ INFO\:root\:Command sent successfully
 INFO\:root\:Response: {}
 </span></code></pre></div></div>
 
-<div class="success">
-<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  The response JSON is empty. This is expected in the case of a success.</span>
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>The response JSON is empty. This is expected in the case of a success.</span>
 </div>
 
 <h2 id="get-state">Get State</h2>
 
 <div>
-    <ul class="tab" data-tab="11acbf6f-f724-4c7c-bc11-2b7bccae95df">
+    <ul class="tab" data-tab="0cd6c570-055e-42f0-a088-cc7f9347a638">
         
             <li class="active">
                 <a href="">Send Request </a>
@@ -648,7 +649,7 @@ INFO\:root\:Response: {}
             </li>
         
         </ul>
-        <ul class="tab-content" id="11acbf6f-f724-4c7c-bc11-2b7bccae95df">
+        <ul class="tab-content" id="0cd6c570-055e-42f0-a088-cc7f9347a638">
         
             <li class="active">
 <p>The next command we will be sending is
@@ -739,7 +740,7 @@ INFO\:root\:Response: {
 <h2 id="preview-stream">Preview Stream</h2>
 
 <div>
-    <ul class="tab" data-tab="57a07a1c-8e2c-4722-a610-6c99f881d1af">
+    <ul class="tab" data-tab="c0c6d733-e0bd-46ac-a230-4b1b0fe4d3f7">
         
             <li class="active">
                 <a href="">Send Request </a>
@@ -750,7 +751,7 @@ INFO\:root\:Response: {
             </li>
         
         </ul>
-        <ul class="tab-content" id="57a07a1c-8e2c-4722-a610-6c99f881d1af">
+        <ul class="tab-content" id="c0c6d733-e0bd-46ac-a230-4b1b0fe4d3f7">
         
             <li class="active">
 <p>The next command we will be sending is
@@ -801,8 +802,8 @@ INFO\:root\:Command sent successfully
 INFO\:root\:Response: {}
 </span></code></pre></div></div>
 
-<div class="success">
-<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  The response JSON is empty. This is expected in the case of a success.</span>
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>The response JSON is empty. This is expected in the case of a success.</span>
 </div>
 
 <p>Go to the next tab for an example of viewing the stream.</p>
@@ -814,8 +815,8 @@ INFO\:root\:Response: {}
 
 <p>Here is an example of viewing this using <a href="https://www.videolan.org/">VLC</a>:</p>
 
-<div class="note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  The screen may slightly vary depending on your OS</span>
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>The screen may slightly vary depending on your OS %}</span>
 </div>
 
 <ol>
@@ -878,8 +879,8 @@ INFO\:root\:Command sent successfully
 INFO\:root\:Response: {}
 </span></code></pre></div></div>
 
-<div class="success">
-<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  The response JSON is empty. This is expected in the case of a success.</span>
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>The response JSON is empty. This is expected in the case of a success.</span>
 </div>
 
 <p>You should hear the camera beep and move to the Video Preset Group. You can tell this by the logo at the top
@@ -929,8 +930,8 @@ INFO\:root\:Command sent successfully
 INFO\:root\:Response: {}
 </span></code></pre></div></div>
 
-<div class="success">
-<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  The response JSON is empty. This is expected in the case of a success.</span>
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>The response JSON is empty. This is expected in the case of a success.</span>
 </div>
 
 <p>You should hear the camera beep and switch to the Cinematic Preset (assuming it wasn’t already set). You can verify
@@ -954,7 +955,7 @@ this by seeing the preset name in the pill at bottom middle of the screen.</p>
 <h2 id="get-preset-status">Get Preset Status</h2>
 
 <div>
-    <ul class="tab" data-tab="c5cb9df2-65d2-4fd1-8596-e51e90e6534e">
+    <ul class="tab" data-tab="f7826cb3-97fe-4e45-adbc-713694037124">
         
             <li class="active">
                 <a href="">Send Request </a>
@@ -965,7 +966,7 @@ this by seeing the preset name in the pill at bottom middle of the screen.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="c5cb9df2-65d2-4fd1-8596-e51e90e6534e">
+        <ul class="tab-content" id="f7826cb3-97fe-4e45-adbc-713694037124">
         
             <li class="active">
 <p>The next command we will be sending is
@@ -1067,8 +1068,8 @@ information on creating / using custom presets, see the
 <a href="https://community.gopro.com/t5/en/How-To-Use-Your-GoPro-As-A-Webcam/ta-p/665493">GoPro Community Article</a>.
 A future lab may be created to demonstrate parsing this JSON directly into a protobuf-compiled object.</p>
 
-<div class="note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  The settings shown above are parsed the same as they were in the Get State command above</span>
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>The settings shown above are parsed the same as they were in the Get State command above</span>
 </div>
 
 <p>As a reader exercise, try creating a custom preset on the camera and then using this command to view its
@@ -1110,8 +1111,8 @@ INFO\:root\:Command sent successfully
 INFO\:root\:Response: {}
 </span></code></pre></div></div>
 
-<div class="tip">
-<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  It is recommended to send a keep-alive at least once every 120 seconds.</span>
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>It is recommended to send a keep-alive at least once every 120 seconds.</span>
 </div>
 
 <h2 id="set-shutter">Set Shutter</h2>
@@ -1131,8 +1132,8 @@ used to start and stop encoding.</p>
 <span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
 </code></pre></div></div>
 
-<div class="note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  This command does not return a JSON response so we don't print the response</span>
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>This command does not return a JSON response so we don’t print the response</span>
 </div>
 
 <p>This will log as such:</p>
@@ -1141,14 +1142,14 @@ used to start and stop encoding.</p>
 INFO\:root\:Command sent successfully
 </span></code></pre></div></div>
 
-<p>We then wait a few seconds and repeat the above procedure to set the shutter off. This time we use the following
-URL:</p>
+<p>We then wait a few seconds and repeat the above procedure to set the shutter off. This time we use the
+following URL:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"/gopro/camera/shutter/stop"</span>
 </code></pre></div></div>
 
-<div class="warning">
-<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142;margin: 0.25em;"></i><span>  The shutter can not be set on if the camera is encoding or set off if the camera is not encoding. An
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>The shutter can not be set on if the camera is encoding or set off if the camera is not encoding. An
 attempt to do so will result in an error response.</span>
 </div>
 
@@ -1158,19 +1159,20 @@ attempt to do so will result in an error response.</span>
 This end point is used to update all of the settings on the camera. It is analogous to BLE commands like
 <a href="/OpenGoPro/tutorials/python/send-ble-commands#set-the-video-resolution">Set Video Resolution</a>.</p>
 
-<p>It is important to note that many settings are dependent on the video resolution (and other settings). For example,
-certain FPS values are not valid with certain resolutions. In general, higher resolutions
+<p>It is important to note that many settings are dependent on the video resolution (and other settings).
+For example, certain FPS values are not valid with certain resolutions. In general, higher resolutions
 only allow lower FPS values. Check the <a href="/OpenGoPro/ble#camera-capabilities">camera capabilities</a>
 to see which settings are valid for given use cases.</p>
 
-<div class="tip">
-<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  The following endpoint is different between Open GoPro 1.0 and 2.0.</span>
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>The following endpoint is different between Open GoPro 1.0 and 2.0.</span>
 </div>
 
-<p>Let’s build the endpoint first to set the Video Resolution to 1080 (the setting_id and opt_value comes from the command table linked above). Click the relevant tab for the desired Open GoPro Version.</p>
+<p>Let’s build the endpoint first to set the Video Resolution to 1080 (the setting_id and opt_value comes from
+the command table linked above). Click the relevant tab for the desired Open GoPro Version.</p>
 
 <div>
-    <ul class="tab" data-tab="51118a5e-3c3c-4ad7-a341-bc16eecf4bc3">
+    <ul class="tab" data-tab="a27a7659-78d1-4702-bd9a-bdb040940931">
         
             <li class="active">
                 <a href="">Version 1.0 </a>
@@ -1181,7 +1183,7 @@ to see which settings are valid for given use cases.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="51118a5e-3c3c-4ad7-a341-bc16eecf4bc3">
+        <ul class="tab-content" id="a27a7659-78d1-4702-bd9a-bdb040940931">
         
             <li class="active">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"/gopro/camera/setting?setting_id=2&amp;opt_value=9"</span>
@@ -1216,8 +1218,8 @@ INFO\:root\:Command sent successfully
 INFO\:root\:Response: {}
 </span></code></pre></div></div>
 
-<div class="success">
-<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  The response JSON is empty. This is expected in the case of a success.</span>
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>The response JSON is empty. This is expected in the case of a success.</span>
 </div>
 
 <p>You should hear the camera beep and see the video resolution change to 1080 in the pill in the bottom-middle of the
@@ -1242,10 +1244,10 @@ screen:</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_688278d9-fbd0-4274-9786-72a4fedee359" class="quiz">
+<div id="quiz_aa426f0e-8a84-433f-b248-9f0673d38f09" class="quiz">
     <div>
-        <div id="question_688278d9-fbd0-4274-9786-72a4fedee359" class="quiz__question">What is the significance of empty JSON in an HTTP response?</div>
-        <div id="answers_688278d9-fbd0-4274-9786-72a4fedee359">
+        <div id="question_aa426f0e-8a84-433f-b248-9f0673d38f09" class="quiz__question">What is the significance of empty JSON in an HTTP response?</div>
+        <div id="answers_aa426f0e-8a84-433f-b248-9f0673d38f09">
         
             <input type="radio" name="question" value="A"><label>A: Always an error! The command was not received correctly.</label>
             <br>
@@ -1258,19 +1260,19 @@ screen:</p>
         
         </div>
     </div>
-    <button onclick="showResults('688278d9-fbd0-4274-9786-72a4fedee359', 'B')">Submit Answer</button>
-    <div id="results_688278d9-fbd0-4274-9786-72a4fedee359" style="display: none">
-        <span id="correct_688278d9-fbd0-4274-9786-72a4fedee359" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_688278d9-fbd0-4274-9786-72a4fedee359" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('aa426f0e-8a84-433f-b248-9f0673d38f09', 'B')">Submit Answer</button>
+    <div id="results_aa426f0e-8a84-433f-b248-9f0673d38f09" style="display: none">
+        <span id="correct_aa426f0e-8a84-433f-b248-9f0673d38f09" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_aa426f0e-8a84-433f-b248-9f0673d38f09" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is common for the JSON response to be empty if the command was received successfully
     but there is no additional information to return at the current time.
     </div>
 </div>
 
-<div id="quiz_657787f8-545a-4933-819e-28fb0a0cd7fa" class="quiz">
+<div id="quiz_1d9a53c3-a74c-4846-93bc-89099b1d5a10" class="quiz">
     <div>
-        <div id="question_657787f8-545a-4933-819e-28fb0a0cd7fa" class="quiz__question">Which of the of the following is not a real preset group?</div>
-        <div id="answers_657787f8-545a-4933-819e-28fb0a0cd7fa">
+        <div id="question_1d9a53c3-a74c-4846-93bc-89099b1d5a10" class="quiz__question">Which of the of the following is not a real preset group?</div>
+        <div id="answers_1d9a53c3-a74c-4846-93bc-89099b1d5a10">
         
             <input type="radio" name="question" value="A"><label>A: Timelapse</label>
             <br>
@@ -1286,19 +1288,19 @@ screen:</p>
         
         </div>
     </div>
-    <button onclick="showResults('657787f8-545a-4933-819e-28fb0a0cd7fa', 'C')">Submit Answer</button>
-    <div id="results_657787f8-545a-4933-819e-28fb0a0cd7fa" style="display: none">
-        <span id="correct_657787f8-545a-4933-819e-28fb0a0cd7fa" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_657787f8-545a-4933-819e-28fb0a0cd7fa" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('1d9a53c3-a74c-4846-93bc-89099b1d5a10', 'C')">Submit Answer</button>
+    <div id="results_1d9a53c3-a74c-4846-93bc-89099b1d5a10" style="display: none">
+        <span id="correct_1d9a53c3-a74c-4846-93bc-89099b1d5a10" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_1d9a53c3-a74c-4846-93bc-89099b1d5a10" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There are 3 preset groups (Timelapse, Photo, and Video). These can be
     set via the Load Preset Group command.
     </div>
 </div>
 
-<div id="quiz_5f3fb14a-7190-4550-9300-35891056aaad" class="quiz">
+<div id="quiz_4d3d4522-e81e-41b6-9781-1c0157fd1d3b" class="quiz">
     <div>
-        <div id="question_5f3fb14a-7190-4550-9300-35891056aaad" class="quiz__question">What of the following sets of FPS values are possible at 5K?</div>
-        <div id="answers_5f3fb14a-7190-4550-9300-35891056aaad">
+        <div id="question_4d3d4522-e81e-41b6-9781-1c0157fd1d3b" class="quiz__question">What of the following sets of FPS values are possible at 5K?</div>
+        <div id="answers_4d3d4522-e81e-41b6-9781-1c0157fd1d3b">
         
             <input type="radio" name="question" value="A"><label>A: [24, 25, 30]</label>
             <br>
@@ -1314,12 +1316,13 @@ screen:</p>
         
         </div>
     </div>
-    <button onclick="showResults('5f3fb14a-7190-4550-9300-35891056aaad', 'A')">Submit Answer</button>
-    <div id="results_5f3fb14a-7190-4550-9300-35891056aaad" style="display: none">
-        <span id="correct_5f3fb14a-7190-4550-9300-35891056aaad" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_5f3fb14a-7190-4550-9300-35891056aaad" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
-        Among these options, only 24 is possible. You're not actually expected to know
-    this. But you should know where to find the information: https://gopro.github.io/OpenGoPro/ble#camera-capabilities
+    <button onclick="showResults('4d3d4522-e81e-41b6-9781-1c0157fd1d3b', 'A')">Submit Answer</button>
+    <div id="results_4d3d4522-e81e-41b6-9781-1c0157fd1d3b" style="display: none">
+        <span id="correct_4d3d4522-e81e-41b6-9781-1c0157fd1d3b" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_4d3d4522-e81e-41b6-9781-1c0157fd1d3b" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+        Among these options, only 24 is possible. You’re not actually expected to know
+    this. But you should know where to find the
+    <a href="https://gopro.github.io/OpenGoPro/ble#camera-capabilities">information</a>.
     </div>
 </div>
 
@@ -1352,8 +1355,8 @@ between the PC and the GoPro.</p>
 
 <h1 id="good-job">Good Job!</h1>
 
-<div class="success">
-<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  Congratulations 🤙</span>
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>Congratulations 🤙</span>
 </div>
 
 <p>You can now send any of the HTTP commands defined in the
@@ -1371,7 +1374,7 @@ next tutorial to see how to get and perform operations using the media list.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-02-11T18:53:31-08:00">February 11, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-02-15T14:09:06-08:00">February 15, 2022</time></p>
 
 
       </footer>

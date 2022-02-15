@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-02-11T18:53:31-08:00">
+  <meta property="article:published_time" content="2022-02-15T14:09:06-08:00">
 
 
 
@@ -420,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 5: Connect WiFi">
     <meta itemprop="description" content="Python Tutorial 5: Connect WiFi">
-    <meta itemprop="datePublished" content="2022-02-11T18:53:31-08:00">
+    <meta itemprop="datePublished" content="2022-02-15T14:09:06-08:00">
     
 
     <div class="page__inner-wrap">
@@ -481,17 +481,21 @@
             </nav>
           </aside>
         
-        <p>This document will provide a walk-through tutorial to use <a href="https://pypi.org/project/bleak/">bleak</a> to implement the
-<a href="/OpenGoPro/http">Open GoPro Interface</a> to enable the GoPro’s WiFi Access Point (AP) so that it
+        <p>This document will provide a walk-through tutorial to use <a href="https://pypi.org/project/bleak/">bleak</a> to implement
+the <a href="/OpenGoPro/http">Open GoPro Interface</a> to enable the GoPro’s WiFi Access Point (AP) so that it
 can be connected to. It will also provide an example of connecting to the WiFi AP.</p>
 
-<blockquote>
-  <p>Note! It is recommended that you have first completed the <a href="/OpenGoPro/tutorials/python/connect-ble">connecting</a>, <a href="/OpenGoPro/tutorials/python/send-ble-commands">sending commands</a>, and <a href="/OpenGoPro/tutorials/python/parse-ble-responses">parsing responses</a> tutorials before proceeding</p>
-</blockquote>
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>It is recommended that you have first completed the
+<a href="/OpenGoPro/tutorials/python/connect-ble">connecting</a>,
+<a href="/OpenGoPro/tutorials/python/send-ble-commands">sending commands</a>, and
+<a href="/OpenGoPro/tutorials/python/parse-ble-responses">parsing responses</a> tutorials before proceeding.</span>
+</div>
 
 <h1 id="requirements">Requirements</h1>
 
-<p>It is assumed that the hardware and software requirements from the <a href="/OpenGoPro/tutorials/python/connect-ble#requirements">connect tutorial</a>
+<p>It is assumed that the hardware and software requirements from the
+<a href="/OpenGoPro/tutorials/python/connect-ble#requirements">connect tutorial</a>
 are present and configured correctly.</p>
 
 <p>The scripts that will be used for this tutorial can be found in the
@@ -511,9 +515,10 @@ are present and configured correctly.</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_enable_and_connect.py
 </code></pre></div></div>
 
-<blockquote>
-  <p>Note! Python 3.8.x must be used as specified in <a href="/OpenGoPro/tutorials/python/connect-ble#requirements">the requirements</a></p>
-</blockquote>
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.8.x must be used as specified in
+<a href="/OpenGoPro/tutorials/python/connect-ble#requirements">the requirements</a></span>
+</div>
 
 <p>Note that each script has a command-line help which can be found via:</p>
 
@@ -525,31 +530,34 @@ Connect to a GoPro camera via BLE, get WiFi info, enable WiFi and connect.
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used,
-                        first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
+                        SSID. If not used, first discovered GoPro will be connected to
 </span></code></pre></div></div>
 
 <h1 id="setup">Setup</h1>
 
-<p>We must first connect to BLE as was discussed in the <a href="/OpenGoPro/tutorials/python/connect-ble">connect tutorial</a>. We are also
-using the same notification handler as was used in the <a href="/OpenGoPro/tutorials/python/send-ble-commands#setup">sending commands tutorial</a></p>
+<p>We must first connect to BLE as was discussed in the
+<a href="/OpenGoPro/tutorials/python/connect-ble">connect tutorial</a>. We are also
+using the same notification handler as was used in the
+<a href="/OpenGoPro/tutorials/python/send-ble-commands#setup">sending commands tutorial</a></p>
 
 <h1 id="connecting-to-wifi-ap">Connecting to WiFi AP</h1>
 
-<p>Now that we are connected via BLE, paired, and have enabled notifications, we can send the command to enable the WiFi AP.</p>
+<p>Now that we are connected via BLE, paired, and have enabled notifications, we can send the command to enable
+the WiFi AP.</p>
 
 <p>Here is an outline of the steps to do so:</p>
 
 <p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5wYXJ0aWNpcGFudCBQQyBhcyBPcGVuIEdvUHJvIHVzZXIgZGV2aWNlXG5wYXJ0aWNpcGFudCBHb1Byb0JMRVxucGFydGljaXBhbnQgR29Qcm9XaUZpXG5sb29wIFN0ZXBzIGZyb20gQ29ubmVjdCBUdXRvcmlhbFxuR29Qcm9CTEUtLT4-UEM6IEFkdmVydGlzaW5nXG5Hb1Byb0JMRS0tPj5QQzogQWR2ZXJ0aXNpbmdcbm5vdGUgb3ZlciBQQzogU2Nhbm5pbmdcblBDLT4-R29Qcm9CTEU6IENvbm5lY3Rcbm5vdGUgb3ZlciBHb1Byb0JMRSwgUEM6IENvbm5lY3RlZFxuYWx0IElmIG5vdCBQcmV2aW91c2x5IFBhaXJlZFxuUEMgLT4-IEdvUHJvQkxFOiBQYWlyIFJlcXVlc3RcbkdvUHJvQkxFIC0-PiBQQzogUGFpciBSZXNwb25zZVxuZWxzZVxuJSUtXG5lbmRcbm5vdGUgb3ZlciBHb1Byb0JMRSwgUEM6IFBhaXJlZFxuUEMgLT4-IEdvUHJvQkxFOiBFbmFibGUgTm90aWZpY2F0aW9ucyBvbiBDaGFyYWN0ZXJpc3RpYyAxXG5QQyAtPj4gR29Qcm9CTEU6IEVuYWJsZSBOb3RpZmljYXRpb25zIG9uIENoYXJhY3RlcmlzdGljIDJcblBDIC0-PiBHb1Byb0JMRTogRW5hYmxlIE5vdGlmaWNhdGlvbnMgb24gQ2hhcmFjdGVyaXN0aWMgLi5cblBDIC0-PiBHb1Byb0JMRTogRW5hYmxlIE5vdGlmaWNhdGlvbnMgb24gQ2hhcmFjdGVyaXN0aWMgTlxubm90ZSBvdmVyIEdvUHJvQkxFLCBQQzogUmVhZHkgdG8gQ29tbXVuaWNhdGVcbmVuZFxuUEMgLT4-IEdvUHJvQkxFOiBSZWFkIFdpZmkgQVAgU1NJRFxuUEMgLT4-IEdvUHJvQkxFOiBSZWFkIFdpZmkgQVAgUGFzc3dvcmRcblBDIC0-PiBHb1Byb0JMRTogV3JpdGUgdG8gRW5hYmxlIFdpRmkgQVBcbkdvUHJvQkxFIC0-PiBQQzogUmVzcG9uc2Ugc2VudCBhcyBub3RpZmljYXRpb25cbm5vdGUgb3ZlciBHb1Byb1dpRmk6IFdpRmkgQVAgZW5hYmxlZFxuUEMgLT4-IEdvUHJvV2lGaTogQ29ubmVjdCB0byBXaUZpIEFQIiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifX0"></p>
 
-<p>Essentially we will be finding the WiFi AP information (SSID and password) via BLE, enabling the WiFi AP via BLE, then
-connecting to the WiFi AP.</p>
+<p>Essentially we will be finding the WiFi AP information (SSID and password) via BLE, enabling the WiFi AP via
+BLE, then connecting to the WiFi AP.</p>
 
 <h2 id="find-wifi-information">Find WiFi Information</h2>
 
 <p>Note that the process to get this information is different than all procedures described up to this point.
-Whereas the previous command, setting, and query procedures all followed the Write Request-Notification Response
-pattern, the WiFi Information is retrieved via direct Read Requests to BLE characteristics.</p>
+Whereas the previous command, setting, and query procedures all followed the Write Request-Notification
+Response pattern, the WiFi Information is retrieved via direct Read Requests to BLE characteristics.</p>
 
 <h3 id="get-wifi-ssid">Get WiFi SSID</h3>
 
@@ -568,8 +576,9 @@ WiFi Access Point service.</p>
 <span class="n">ssid</span> <span class="o">=</span> <span class="n">ssid</span><span class="p">.</span><span class="n">decode</span><span class="p">()</span>
 </code></pre></div></div>
 
-<div class="tip">
-<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  There is no need for a synchronization event as the information is available when the `read_gatt_char` method returns.</span>
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>There is no need for a synchronization event as the information is available when the <code class="language-plaintext highlighter-rouge">read_gatt_char</code> method
+returns.</span>
 </div>
 
 <p>In the demo, this information is logged as such:</p>
@@ -595,8 +604,9 @@ WiFi Access Point service.</p>
 <span class="n">password</span> <span class="o">=</span> <span class="n">password</span><span class="p">.</span><span class="n">decode</span><span class="p">()</span>
 </code></pre></div></div>
 
-<div class="tip">
-<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  There is no need for a synchronization event as the information is available when the `read_gatt_char` method returns.</span>
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>There is no need for a synchronization event as the information is available when the <code class="language-plaintext highlighter-rouge">read_gatt_char</code> method
+returns.</span>
 </div>
 
 <p>In the demo, this information is logged as such:</p>
@@ -639,13 +649,15 @@ INFO\:root\:Password is g@6-Tj9-C7K
 <span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
 </span></code></pre></div></div>
 
-<div class="success">
-<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback.</span>
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.</span>
 </div>
 
 <p>Note that we have received the “Command Status” notification response from the
 Command Response characteristic since we enabled it’s notifications in
-<a href="/OpenGoPro/tutorials/python/connect-ble#enable-notifications">Enable Notifications</a>. This can be seen in the demo log:</p>
+<a href="/OpenGoPro/tutorials/python/connect-ble#enable-notifications">Enable Notifications</a>. This can
+be seen in the demo log:</p>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Enabling the WiFi AP
 INFO\:root\:Received response at handle=52: b'02\:17\:00'
@@ -662,9 +674,10 @@ we know the WiFi SSID and password and the WiFi AP is enabled and ready to conne
 are many different methods of connecting to the WiFi AP depending on your OS and the framework you are
 using to develop. You could, for example, simply use your OS’s WiFi GUI to connect.</p>
 
-<p>We do provide a programmatic example of this in the <code class="language-plaintext highlighter-rouge">ble_enable_wifi_and_connect.py</code> script. This script uses the
-cross-platform <code class="language-plaintext highlighter-rouge">Wireless</code> module from the <a href="https://gopro.github.io/OpenGoPro/python_sdk/">Open GoPro Python SDK</a>.
-Note that this has been imported as such:</p>
+<p>We do provide a programmatic example of this in the <code class="language-plaintext highlighter-rouge">ble_enable_wifi_and_connect.py</code> script. This script uses
+the cross-platform <code class="language-plaintext highlighter-rouge">Wireless</code> module from the
+<a href="https://gopro.github.io/OpenGoPro/python_sdk/">Open GoPro Python SDK</a>. Note that this has been imported as
+such:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">open_gopro.wifi.adapters</span> <span class="kn">import</span> <span class="n">Wireless</span>
 </code></pre></div></div>
@@ -685,10 +698,10 @@ INFO\:root\:Wifi Connected!
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_e6012ad5-ad2c-49ff-849c-e4e37697a9a2" class="quiz">
+<div id="quiz_b57304e2-c5a5-46d9-851a-2bf0445a759b" class="quiz">
     <div>
-        <div id="question_e6012ad5-ad2c-49ff-849c-e4e37697a9a2" class="quiz__question">How is the WiFi password response received?</div>
-        <div id="answers_e6012ad5-ad2c-49ff-849c-e4e37697a9a2">
+        <div id="question_b57304e2-c5a5-46d9-851a-2bf0445a759b" class="quiz__question">How is the WiFi password response received?</div>
+        <div id="answers_b57304e2-c5a5-46d9-851a-2bf0445a759b">
         
             <input type="radio" name="question" value="A"><label>A: As a read response from the WiFi AP Password characteristic</label>
             <br>
@@ -701,10 +714,10 @@ INFO\:root\:Wifi Connected!
         
         </div>
     </div>
-    <button onclick="showResults('e6012ad5-ad2c-49ff-849c-e4e37697a9a2', 'A')">Submit Answer</button>
-    <div id="results_e6012ad5-ad2c-49ff-849c-e4e37697a9a2" style="display: none">
-        <span id="correct_e6012ad5-ad2c-49ff-849c-e4e37697a9a2" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_e6012ad5-ad2c-49ff-849c-e4e37697a9a2" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('b57304e2-c5a5-46d9-851a-2bf0445a759b', 'A')">Submit Answer</button>
+    <div id="results_b57304e2-c5a5-46d9-851a-2bf0445a759b" style="display: none">
+        <span id="correct_b57304e2-c5a5-46d9-851a-2bf0445a759b" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_b57304e2-c5a5-46d9-851a-2bf0445a759b" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         This (and WiFi AP SSID) is an exception to the rule. Usually responses
     are received as notifications to a response characteristic. However, in this case, it is
     received as a direct read response (since we are reading from the characteristic and not
@@ -712,10 +725,10 @@ INFO\:root\:Wifi Connected!
     </div>
 </div>
 
-<div id="quiz_f0e9c1de-82b7-4fea-a55e-695be9f48dfb" class="quiz">
+<div id="quiz_67295c91-15f6-44c4-851b-ca0f00c8e2cc" class="quiz">
     <div>
-        <div id="question_f0e9c1de-82b7-4fea-a55e-695be9f48dfb" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
-        <div id="answers_f0e9c1de-82b7-4fea-a55e-695be9f48dfb">
+        <div id="question_67295c91-15f6-44c4-851b-ca0f00c8e2cc" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
+        <div id="answers_67295c91-15f6-44c4-851b-ca0f00c8e2cc">
         
             <input type="radio" name="question" value="A"><label>A: It only needs to be enabled once and it will then always remain on</label>
             <br>
@@ -728,10 +741,10 @@ INFO\:root\:Wifi Connected!
         
         </div>
     </div>
-    <button onclick="showResults('f0e9c1de-82b7-4fea-a55e-695be9f48dfb', 'D')">Submit Answer</button>
-    <div id="results_f0e9c1de-82b7-4fea-a55e-695be9f48dfb" style="display: none">
-        <span id="correct_f0e9c1de-82b7-4fea-a55e-695be9f48dfb" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_f0e9c1de-82b7-4fea-a55e-695be9f48dfb" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('67295c91-15f6-44c4-851b-ca0f00c8e2cc', 'D')">Submit Answer</button>
+    <div id="results_67295c91-15f6-44c4-851b-ca0f00c8e2cc" style="display: none">
+        <span id="correct_67295c91-15f6-44c4-851b-ca0f00c8e2cc" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_67295c91-15f6-44c4-851b-ca0f00c8e2cc" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         Trick question! They are all false. While the WiFi AP will remain on for
     some time, it can and will eventually turn off so it is always recommended to first connect
     via BLE and ensure that it is enabled. The password and SSID will almost never change.
@@ -741,12 +754,13 @@ INFO\:root\:Wifi Connected!
 
 <h1 id="troubleshooting">Troubleshooting</h1>
 
-<p>See the first tutorial’s <a href="/OpenGoPro/tutorials/python/connect-ble#troubleshooting">troubleshooting section</a>.</p>
+<p>See the first tutorial’s
+<a href="/OpenGoPro/tutorials/python/connect-ble#troubleshooting">troubleshooting section</a>.</p>
 
 <h1 id="good-job">Good Job!</h1>
 
-<div class="success">
-<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  Congratulations 🤙</span>
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>Congratulations 🤙</span>
 </div>
 
 <p>You are now connected to the GoPro’s Wifi AP and can send any of the HTTP commands defined in the
@@ -762,7 +776,7 @@ INFO\:root\:Wifi Connected!
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-02-11T18:53:31-08:00">February 11, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-02-15T14:09:06-08:00">February 15, 2022</time></p>
 
 
       </footer>

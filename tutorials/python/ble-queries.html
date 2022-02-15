@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-02-11T18:53:31-08:00">
+  <meta property="article:published_time" content="2022-02-15T14:09:06-08:00">
 
 
 
@@ -420,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 4: BLE Queries">
     <meta itemprop="description" content="Python Tutorial 4: BLE Queries">
-    <meta itemprop="datePublished" content="2022-02-11T18:53:31-08:00">
+    <meta itemprop="datePublished" content="2022-02-15T14:09:06-08:00">
     
 
     <div class="page__inner-wrap">
@@ -477,9 +477,9 @@
             </nav>
           </aside>
         
-        <p>This document will provide a walk-through tutorial to use <a href="https://pypi.org/project/bleak/">bleak</a> to implement the
-<a href="/OpenGoPro/ble">Open GoPro Interface</a> to query the camera’s setting and status information
-via BLE.</p>
+        <p>This document will provide a walk-through tutorial to use <a href="https://pypi.org/project/bleak/">bleak</a> to implement
+the <a href="/OpenGoPro/ble">Open GoPro Interface</a> to query the camera’s setting and status information via
+BLE.</p>
 
 <p>“Queries” in this sense are specifically procedures that:</p>
 
@@ -490,16 +490,21 @@ via BLE.</p>
 
 <p>This will be described in more detail below.</p>
 
-<blockquote>
-  <p>Note! It is required that you have first completed the <a href="/OpenGoPro/tutorials/python/connect-ble#requirements">connect</a>, <a href="/OpenGoPro/tutorials/python/send-ble-commands">sending commands</a>, and <a href="/OpenGoPro/tutorials/python/parse-ble-responses">parsing responses</a> tutorials before going through this tutorial.</p>
-</blockquote>
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>It is required that you have first completed the
+<a href="/OpenGoPro/tutorials/python/connect-ble#requirements">connect</a>,
+<a href="/OpenGoPro/tutorials/python/send-ble-commands">sending commands</a>, and
+<a href="/OpenGoPro/tutorials/python/parse-ble-responses">parsing responses</a> tutorials before going
+through this tutorial.</span>
+</div>
 
-<p>This tutorial only considers sending these queries as one-off commands. That is, it does not consider state management /
-synchronization when sending multiple commands. This will be discussed in a future lab.</p>
+<p>This tutorial only considers sending these queries as one-off commands. That is, it does not consider state
+management / synchronization when sending multiple commands. This will be discussed in a future lab.</p>
 
 <h1 id="requirements">Requirements</h1>
 
-<p>It is assumed that the hardware and software requirements from the <a href="/OpenGoPro/tutorials/python/connect-ble">connect tutorial</a>
+<p>It is assumed that the hardware and software requirements from the
+<a href="/OpenGoPro/tutorials/python/connect-ble">connect tutorial</a>
 are present and configured correctly.</p>
 
 <p>The scripts that will be used for this tutorial can be found in the
@@ -507,15 +512,16 @@ are present and configured correctly.</p>
 
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
-<p>Each of the commands detailed in this tutorial has a corresponding script to demo it. If you don’t want to read this
-tutorial and just want to see the demo, for example, run:</p>
+<p>Each of the commands detailed in this tutorial has a corresponding script to demo it. If you don’t want to
+read this tutorial and just want to see the demo, for example, run:</p>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_query_poll_resolution_value.py
 </code></pre></div></div>
 
-<blockquote>
-  <p>Note! Python 3.8.x must be used as specified in <a href="/OpenGoPro/tutorials/python/connect-ble#requirements">the requirements</a></p>
-</blockquote>
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.8.x must be used as specified in
+<a href="/OpenGoPro/tutorials/python/connect-ble#requirements">the requirements</a></span>
+</div>
 
 <p>Note that each script has a command-line help which can be found via:</p>
 
@@ -527,16 +533,19 @@ Connect to a GoPro camera then get the current resolution.
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
+                        SSID. If not used, first discovered GoPro will be connected to
 </span></code></pre></div></div>
 
 <h1 id="setup">Setup</h1>
 
-<p>We must first connect as was discussed in the <a href="/OpenGoPro/tutorials/python/connect-ble">connect tutorial</a>.</p>
+<p>We must first connect as was discussed in the
+<a href="/OpenGoPro/tutorials/python/connect-ble">connect tutorial</a>.</p>
 
 <p>We will also be using the <strong>Response</strong> class that was defined in the
-<a href="/OpenGoPro/tutorials/python/parse-ble-responses">parsing responses</a> tutorial to accumulate and parse
-notification responses to the Query Response <a href="/OpenGoPro/ble#services-and-characteristics">characteristic</a>.
+<a href="/OpenGoPro/tutorials/python/parse-ble-responses">parsing responses</a> tutorial to accumulate
+and parse notification responses to the Query Response
+<a href="/OpenGoPro/ble#services-and-characteristics">characteristic</a>.
 Throughout this tutorial, the query information that we will be reading is the Resolution Setting (ID 0x02).
 Therefore, we have slightly changed the notification handler to update a global resolution variable as it
 queries the resolution:</p>
@@ -554,7 +563,8 @@ queries the resolution:</p>
 </span>        <span class="n">event</span><span class="p">.</span><span class="nb">set</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p>There are two methods to query status / setting information, each of which will be described in a following section:</p>
+<p>There are two methods to query status / setting information, each of which will be described in a following
+section:</p>
 
 <ul>
   <li><a href="/OpenGoPro/tutorials/python/ble-queries#polling-query-information">Polling Query Information</a></li>
@@ -591,8 +601,8 @@ queries the resolution:</p>
 <p>where <strong>xx</strong> are setting / status ID(s) and <strong>len</strong> is the total length of the query (not including the length).
 There will be specific examples below.</p>
 
-<div class="note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  Since they are two separate commands, combination of settings / statuses can not be polled simultaneously.</span>
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>Since they are two separate commands, combination of settings / statuses can not be polled simultaneously. %</span>
 </div>
 
 <p>Here is a generic sequence diagram (the same is true for statuses):</p>
@@ -600,9 +610,10 @@ There will be specific examples below.</p>
 <p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5wYXJ0aWNpcGFudCBQQyBhcyBPcGVuIEdvUHJvIHVzZXIgZGV2aWNlXG5wYXJ0aWNpcGFudCBHb1Byb1xubm90ZSBvdmVyIFBDLCBHb1BybzogQ29ubmVjdGVkIChzdGVwcyBmcm9tIGNvbm5lY3QgdHV0b3JpYWwpXG5QQyAtPj4gR29Qcm86IEdldCBTZXR0aW5nIHZhbHVlKHMpIGNvbW1hbmQgd3JpdHRlbiB0byBRdWVyeSBVVUlEXG5Hb1BybyAtPj4gUEM6IFNldHRpbmcgdmFsdWVzIHJlc3BvbmRlZCB0byBRdWVyeSBSZXNwb25zZSBVVUlEXG5Hb1BybyAtPj4gUEM6IE1vcmUgc2V0dGluZyB2YWx1ZXMgcmVzcG9uZGVkIHRvIFF1ZXJ5IFJlc3BvbnNlIFVVSURcbkdvUHJvIC0-PiBQQzogLi4uXG5Hb1BybyAtPj4gUEM6IE1vcmUgc2V0dGluZyB2YWx1ZXMgcmVzcG9uZGVkIHRvIFF1ZXJ5IFJlc3BvbnNlIFVVSUQiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9fQ"></p>
 
 <p>The number of notification responses will vary depending on the amount of settings that have been queried.
-Note that setting values will be combined into one notification until it reaches the maximum notification size (20 bytes).
-At this point, a new response will be sent. Therefore, it is necessary to accumulate and then parse these
-responses as was described in <a href="/OpenGoPro/tutorials/python/parse-ble-responses#query-responses">parsing query responses</a></p>
+Note that setting values will be combined into one notification until it reaches the maximum notification
+size (20 bytes). At this point, a new response will be sent. Therefore, it is necessary to accumulate and then
+parse these responses as was described in
+<a href="/OpenGoPro/tutorials/python/parse-ble-responses#query-responses">parsing query responses</a></p>
 
 <h2 id="individual-query-poll">Individual Query Poll</h2>
 
@@ -669,8 +680,8 @@ INFO\:root\:Resolution is currently Resolution.RES_2_7K
 <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">QUERY_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x04</span><span class="p">,</span> <span class="mh">0x12</span><span class="p">,</span> <span class="n">RESOLUTION_ID</span><span class="p">,</span> <span class="n">FPS_ID</span><span class="p">,</span> <span class="n">FOV_ID</span><span class="p">]))</span>
 </code></pre></div></div>
 
-<div class="note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  The length (first byte of the command) has been increased to 4 to accommodate the extra settings</span>
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>The length (first byte of the command) has been increased to 4 to accommodate the extra settings</span>
 </div>
 
 <p>We are also parsing the response to get all 3 values:</p>
@@ -687,8 +698,8 @@ INFO\:root\:Resolution is currently Resolution.RES_2_7K
             <span class="n">video_fov</span> <span class="o">=</span> <span class="n">VideoFOV</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">FOV_ID</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 </code></pre></div></div>
 
-<div class="tip">
-<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  When we are storing the updated setting, we are just taking the first byte (i..e index 0). A real-world
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>When we are storing the updated setting, we are just taking the first byte (i..e index 0). A real-world
 implementation would need to know the length (and type) of the setting / status response by the ID. For example,
 sometimes settings / statuses are bytes, words, strings, etc.</span>
 </div>
@@ -729,19 +740,20 @@ INFO\:root\:FPS is currently FPS.FPS_120
 </table>
 
 <p>An example of this can be seen in the <code class="language-plaintext highlighter-rouge">ble_command_get_state.py</code> script described in the
-<a href="/OpenGoPro/tutorials/python/parse-ble-responses#query-responses">parsing query responses</a> tutorial</p>
+<a href="/OpenGoPro/tutorials/python/parse-ble-responses#query-responses">parsing query responses</a>
+tutorial</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_3b421f31-8f12-4064-9b74-f1742087a2ba" class="quiz">
+<div id="quiz_22e6c3fb-1bde-43c7-907a-c0eb4ed85546" class="quiz">
     <div>
-        <div id="question_3b421f31-8f12-4064-9b74-f1742087a2ba" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
-        <div id="answers_3b421f31-8f12-4064-9b74-f1742087a2ba">
+        <div id="question_22e6c3fb-1bde-43c7-907a-c0eb4ed85546" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
+        <div id="answers_22e6c3fb-1bde-43c7-907a-c0eb4ed85546">
         
-            <input type="radio" name="question" value="A"><label>A: Concatenate a 'Get Setting Value' command and a 'Get Status' command with the relevant ID's</label>
+            <input type="radio" name="question" value="A"><label>A: Concatenate a ‘Get Setting Value’ command and a ‘Get Status’ command with the relevant ID’s</label>
             <br>
         
-            <input type="radio" name="question" value="B"><label>B: Concatenate the 'Get All Setting' and 'Get All Status' commands.</label>
+            <input type="radio" name="question" value="B"><label>B: Concatenate the ‘Get All Setting’ and ‘Get All Status’ commands.</label>
             <br>
         
             <input type="radio" name="question" value="C"><label>C: It is not possible</label>
@@ -749,14 +761,14 @@ INFO\:root\:FPS is currently FPS.FPS_120
         
         </div>
     </div>
-    <button onclick="showResults('3b421f31-8f12-4064-9b74-f1742087a2ba', 'C')">Submit Answer</button>
-    <div id="results_3b421f31-8f12-4064-9b74-f1742087a2ba" style="display: none">
-        <span id="correct_3b421f31-8f12-4064-9b74-f1742087a2ba" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_3b421f31-8f12-4064-9b74-f1742087a2ba" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('22e6c3fb-1bde-43c7-907a-c0eb4ed85546', 'C')">Submit Answer</button>
+    <div id="results_22e6c3fb-1bde-43c7-907a-c0eb4ed85546" style="display: none">
+        <span id="correct_22e6c3fb-1bde-43c7-907a-c0eb4ed85546" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_22e6c3fb-1bde-43c7-907a-c0eb4ed85546" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         It is not possible to concatenate commands. This would result in an unknown sequence of bytes
-        from the camera's perspective. So it is not possible to get a setting value and a status value in one command.
-        The Get Setting command (with resolution ID) and Get Status command(with encoding ID) must be sent sequentially
-        in order to get this information.
+        from the camera’s perspective. So it is not possible to get a setting value and a status value in one
+        command. The Get Setting command (with resolution ID) and Get Status command(with encoding ID) must be
+        sent sequentially in order to get this information.
     </div>
 </div>
 
@@ -829,8 +841,8 @@ push notifications when the relevant query information changes.</p>
 <p>That is, after registering for push notifications for a given query, notification responses will continuously
 be sent whenever the query changes until the client unregisters for push notifications for the given query.</p>
 
-<div class="tip">
-<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  The initial response to the Register command also contains the current setting / status value</span>
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>The initial response to the Register command also contains the current setting / status value.</span>
 </div>
 
 <p>We will walk through the <code class="language-plaintext highlighter-rouge">ble_query_register_resolution_value_updates.py</code> script to demonstrate this:</p>
@@ -850,9 +862,9 @@ be sent whenever the query changes until the client unregisters for push notific
 <span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
 </span></code></pre></div></div>
 
-<p>and parse its response (which includes the current resolution value). This is very similar to the polling example
-with the exception that the Query ID is now 0x52 (Register Updates for Settings). This can be seen in the raw
-byte data as well as by inspecting <code class="language-plaintext highlighter-rouge">response.id</code>.</p>
+<p>and parse its response (which includes the current resolution value). This is very similar to the polling
+example with the exception that the Query ID is now 0x52 (Register Updates for Settings). This can be seen in
+the raw byte data as well as by inspecting <code class="language-plaintext highlighter-rouge">response.id</code>.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
     <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">'Received response at </span><span class="si">{</span><span class="n">handle</span><span class="o">=</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">hexlify</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">":"</span><span class="p">)</span><span class="err">!</span><span class="n">r</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
@@ -892,18 +904,18 @@ INFO\:root\:Resolution is now Resolution.RES_1080
 
 <hr>
 
-<div class="tip">
-<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  Multiple push notifications can be registered / received in a similar manner that multiple queries were
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>Multiple push notifications can be registered / received in a similar manner that multiple queries were
 polled above</span>
 </div>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_8130c9f7-ddc2-4bb6-b24a-3d34d515a736" class="quiz">
+<div id="quiz_deff3c4a-626e-4e75-90a0-1fbe6db5f54e" class="quiz">
     <div>
-        <div id="question_8130c9f7-ddc2-4bb6-b24a-3d34d515a736" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
+        <div id="question_deff3c4a-626e-4e75-90a0-1fbe6db5f54e" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
     receive push notifications for it.</div>
-        <div id="answers_8130c9f7-ddc2-4bb6-b24a-3d34d515a736">
+        <div id="answers_deff3c4a-626e-4e75-90a0-1fbe6db5f54e">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -913,20 +925,20 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('8130c9f7-ddc2-4bb6-b24a-3d34d515a736', 'A')">Submit Answer</button>
-    <div id="results_8130c9f7-ddc2-4bb6-b24a-3d34d515a736" style="display: none">
-        <span id="correct_8130c9f7-ddc2-4bb6-b24a-3d34d515a736" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_8130c9f7-ddc2-4bb6-b24a-3d34d515a736" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('deff3c4a-626e-4e75-90a0-1fbe6db5f54e', 'A')">Submit Answer</button>
+    <div id="results_deff3c4a-626e-4e75-90a0-1fbe6db5f54e" style="display: none">
+        <span id="correct_deff3c4a-626e-4e75-90a0-1fbe6db5f54e" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_deff3c4a-626e-4e75-90a0-1fbe6db5f54e" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         While there is probably not a good reason to do so, there is nothing preventing polling
         in this manner.
     </div>
 </div>
 
-<div id="quiz_5030857a-b07e-4d15-b20e-9fadabf5625d" class="quiz">
+<div id="quiz_739c082b-2bec-4358-a38c-d3ab9e9a24b1" class="quiz">
     <div>
-        <div id="question_5030857a-b07e-4d15-b20e-9fadabf5625d" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
+        <div id="question_739c082b-2bec-4358-a38c-d3ab9e9a24b1" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
     about one setting ID.</div>
-        <div id="answers_5030857a-b07e-4d15-b20e-9fadabf5625d">
+        <div id="answers_739c082b-2bec-4358-a38c-d3ab9e9a24b1">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -936,23 +948,24 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('5030857a-b07e-4d15-b20e-9fadabf5625d', 'B')">Submit Answer</button>
-    <div id="results_5030857a-b07e-4d15-b20e-9fadabf5625d" style="display: none">
-        <span id="correct_5030857a-b07e-4d15-b20e-9fadabf5625d" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_5030857a-b07e-4d15-b20e-9fadabf5625d" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
-        It is possible for push notifications to contain multiple setting ID's if both setting ID's have
+    <button onclick="showResults('739c082b-2bec-4358-a38c-d3ab9e9a24b1', 'B')">Submit Answer</button>
+    <div id="results_739c082b-2bec-4358-a38c-d3ab9e9a24b1" style="display: none">
+        <span id="correct_739c082b-2bec-4358-a38c-d3ab9e9a24b1" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_739c082b-2bec-4358-a38c-d3ab9e9a24b1" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+        It is possible for push notifications to contain multiple setting ID’s if both setting ID’s have
     push notifications registered and both settings change at the same time.
     </div>
 </div>
 
 <h1 id="troubleshooting">Troubleshooting</h1>
 
-<p>See the first tutorial’s <a href="/OpenGoPro/tutorials/python/connect-ble#troubleshooting">troubleshooting section</a>.</p>
+<p>See the first tutorial’s
+<a href="/OpenGoPro/tutorials/python/connect-ble#troubleshooting">troubleshooting section</a>.</p>
 
 <h1 id="good-job">Good Job!</h1>
 
-<div class="success">
-<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  Congratulations 🤙</span>
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>Congratulations 🤙</span>
 </div>
 
 <p>You can now query any of the settings / statuses from the camera using one of the above patterns.</p>
@@ -973,7 +986,7 @@ proceed to the next tutorial.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-02-11T18:53:31-08:00">February 11, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-02-15T14:09:06-08:00">February 15, 2022</time></p>
 
 
       </footer>

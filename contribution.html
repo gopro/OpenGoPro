@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Open GoPro</title>
+<!-- begin _includes/seo.html --><title>Contribution :  Open GoPro</title>
 <meta name="description" content="Open Source GoPro Interface">
 
 
@@ -20,7 +20,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
-<meta property="og:title" content="Open GoPro">
+<meta property="og:title" content="Contribution">
 <meta property="og:url" content="https://gopro.github.io/OpenGoPro/contribution.html">
 
 
@@ -183,11 +183,10 @@
         <span class="sep">/</span>
       
       
-        <li class="current">
+        <li class="current">Contribution</li>
       
     
-  </li>
-</ol>
+  </ol>
 </nav>
 
   
@@ -319,7 +318,7 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    
+    <meta itemprop="headline" content="Contribution">
     
     
     
@@ -327,7 +326,8 @@
     <div class="page__inner-wrap">
       
         <header>
-          
+          <h1 id="page-title" class="page__title" itemprop="headline">Contribution
+</h1>
           
 
   <p class="page__meta">
@@ -359,7 +359,6 @@
               <header><h4 class="nav__title">
 <i class="fas fa-file-alt"></i> On this page</h4></header>
               <ul class="toc__menu"><li>
-<a href="#contribution">Contribution</a><ul><li>
 <a href="#examples">Examples</a><ul>
 <li>
 <a href="#links">Links</a><ul>
@@ -390,18 +389,11 @@
 <li><a href="#figures">Figures</a></li>
 </ul>
 </li></ul>
-</li></ul>
 
             </nav>
           </aside>
         
-        <hr>
-<p>search: false
-–</p>
-
-<h1 id="contribution">Contribution</h1>
-
-<p>This page will provide  examples for various documentation features available in this repo / theme.</p>
+        <p>This page will provide  examples for various documentation features available in this repo / theme.</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -434,8 +426,9 @@ path to the file from the top of the directory.</p>
 </code></pre></div></div>
 
 <p>There is an exception to this when linking to a file in the <code class="language-plaintext highlighter-rouge">tutorials</code>. These are handled differently
-since <code class="language-plaintext highlighter-rouge">tutorials</code> is the base directory for all collections. Therefore, the <code class="language-plaintext highlighter-rouge">tutorials</code> directory should be omitted
-from the path. For example, to link to <a href="/OpenGoPro/tutorials/python/connect-ble">the first python tutorial</a>:</p>
+since <code class="language-plaintext highlighter-rouge">tutorials</code> is the base directory for all collections. Therefore, the <code class="language-plaintext highlighter-rouge">tutorials</code> directory should be
+omitted from the path. For example, to link to
+<a href="/OpenGoPro/tutorials/python/connect-ble">the first python tutorial</a>:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[the first python tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %})
 </code></pre></div></div>
@@ -446,55 +439,53 @@ from the path. For example, to link to <a href="/OpenGoPro/tutorials/python/conn
 
 <p>Blue colored notes via:</p>
 
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% note This is a note. %}
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% note %}
+This is a note.
+{% endnote %}
 </code></pre></div></div>
 
-<div class="note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  This is a note.</span>
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>This is a note.</span>
 </div>
 
 <h4 id="successes">Successes</h4>
 
 <p>Green colored success via:</p>
 
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% success This is for when something good has happened. %}
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% success %}
+This is for when something good has happened.
+{% endsuccess %}
 </code></pre></div></div>
 
-<div class="success">
-<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  This is for when something good has happened.</span>
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>This is for when something good has happened.</span>
 </div>
 
 <h4 id="warnings">Warnings</h4>
 
 <p>Red colored warnings via:</p>
 
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% warning This is for when something bad has happened. %}
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% warning %}
+This is for when something bad has happened.
+{% endwarning %}
 </code></pre></div></div>
 
-<div class="warning">
-<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142;margin: 0.25em;"></i><span>  This is for when something bad has happened.</span>
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>This is for when something bad has happened.</span>
 </div>
 
 <h4 id="tips">Tips</h4>
 
 <p>Yellow colored tips via:</p>
 
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% tip This is for tips. %}
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% tip %}
+This is for tips.
+{% endtip %}
 </code></pre></div></div>
 
-<div class="tip">
-<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  This is for tips.</span>
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>This is for tips.</span>
 </div>
-
-<p>If one of the above options does not suit your use case, there is also the option for a simple callout using
-default markdown syntax via:</p>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">&gt; I'm a simple callout</span>
-</code></pre></div></div>
-
-<blockquote>
-  <p>I’m a simple callout</p>
-</blockquote>
 
 <h3 id="collapsible-accordion">Collapsible Accordion</h3>
 
@@ -528,10 +519,10 @@ default markdown syntax via:</p>
 %}
 </code></pre></div></div>
 
-<div id="quiz_714cb7fa-60f2-4da5-8e49-22472276ffbd" class="quiz">
+<div id="quiz_3cb7b3ad-8c13-4840-b8c3-7cc291b782aa" class="quiz">
     <div>
-        <div id="question_714cb7fa-60f2-4da5-8e49-22472276ffbd" class="quiz__question">What is the question?</div>
-        <div id="answers_714cb7fa-60f2-4da5-8e49-22472276ffbd">
+        <div id="question_3cb7b3ad-8c13-4840-b8c3-7cc291b782aa" class="quiz__question">What is the question?</div>
+        <div id="answers_3cb7b3ad-8c13-4840-b8c3-7cc291b782aa">
         
             <input type="radio" name="question" value="A"><label>A: Option 1 (this one is correct)</label>
             <br>
@@ -544,10 +535,10 @@ default markdown syntax via:</p>
         
         </div>
     </div>
-    <button onclick="showResults('714cb7fa-60f2-4da5-8e49-22472276ffbd', 'A')">Submit Answer</button>
-    <div id="results_714cb7fa-60f2-4da5-8e49-22472276ffbd" style="display: none">
-        <span id="correct_714cb7fa-60f2-4da5-8e49-22472276ffbd" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_714cb7fa-60f2-4da5-8e49-22472276ffbd" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('3cb7b3ad-8c13-4840-b8c3-7cc291b782aa', 'A')">Submit Answer</button>
+    <div id="results_3cb7b3ad-8c13-4840-b8c3-7cc291b782aa" style="display: none">
+        <span id="correct_3cb7b3ad-8c13-4840-b8c3-7cc291b782aa" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_3cb7b3ad-8c13-4840-b8c3-7cc291b782aa" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         And here is some more info
     </div>
 </div>
@@ -563,10 +554,10 @@ default markdown syntax via:</p>
 %}
 </code></pre></div></div>
 
-<div id="quiz_7e51450f-c0ab-4071-971d-286122d28d0d" class="quiz">
+<div id="quiz_bdf92c34-cdf5-4800-b365-ae2b557a530c" class="quiz">
     <div>
-        <div id="question_7e51450f-c0ab-4071-971d-286122d28d0d" class="quiz__question">True or False?</div>
-        <div id="answers_7e51450f-c0ab-4071-971d-286122d28d0d">
+        <div id="question_bdf92c34-cdf5-4800-b365-ae2b557a530c" class="quiz__question">True or False?</div>
+        <div id="answers_bdf92c34-cdf5-4800-b365-ae2b557a530c">
         
             <input type="radio" name="question" value="True"><label>True: Option 1(this one is correct)</label>
             <br>
@@ -576,10 +567,10 @@ default markdown syntax via:</p>
         
         </div>
     </div>
-    <button onclick="showResults('7e51450f-c0ab-4071-971d-286122d28d0d', 'True')">Submit Answer</button>
-    <div id="results_7e51450f-c0ab-4071-971d-286122d28d0d" style="display: none">
-        <span id="correct_7e51450f-c0ab-4071-971d-286122d28d0d" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_7e51450f-c0ab-4071-971d-286122d28d0d" style="display: none"> Incorrect!! 😭 The correct answer is True.</span>
+    <button onclick="showResults('bdf92c34-cdf5-4800-b365-ae2b557a530c', 'True')">Submit Answer</button>
+    <div id="results_bdf92c34-cdf5-4800-b365-ae2b557a530c" style="display: none">
+        <span id="correct_bdf92c34-cdf5-4800-b365-ae2b557a530c" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_bdf92c34-cdf5-4800-b365-ae2b557a530c" style="display: none"> Incorrect!! 😭 The correct answer is True.</span>
         And here is some more info
     </div>
 </div>
@@ -602,7 +593,7 @@ This is the content of the third tab.
 </code></pre></div></div>
 
 <div>
-    <ul class="tab" data-tab="dd9d667c-90b1-4a3b-9029-f2f36e9a3a32">
+    <ul class="tab" data-tab="546bfd1d-2d31-4589-ac98-de297cc488ee">
         
             <li class="active">
                 <a href="">tab1 </a>
@@ -617,7 +608,7 @@ This is the content of the third tab.
             </li>
         
         </ul>
-        <ul class="tab-content" id="dd9d667c-90b1-4a3b-9029-f2f36e9a3a32">
+        <ul class="tab-content" id="546bfd1d-2d31-4589-ac98-de297cc488ee">
         
             <li class="active">
 <p>This is the content of the first tab.</p>
@@ -638,8 +629,8 @@ This is the content of the third tab.
 
 <p>You can add Mermaid or PlantUML diagrams. They are centered by default.</p>
 
-<div class="note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  Note for the following examples, you need 3 leading backticks instead of 2. We're only showing 2 here
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>Note for the following examples, you need 3 leading backticks instead of 2. We’re only showing 2 here
 because there is no way to escape this properly. If this is unclear, just look at the .md file.</span>
 </div>
 
@@ -692,7 +683,8 @@ Bob -&gt; Alice : hello world
 
 <h3 id="variable-length--width-cell-tables">Variable length / width cell tables</h3>
 
-<p>For more information, see the Jekyll Spaceship <a href="https://github.com/jeffreytse/jekyll-spaceship#1-table-usage">documentation</a></p>
+<p>For more information, see the Jekyll Spaceship
+<a href="https://github.com/jeffreytse/jekyll-spaceship#1-table-usage">documentation</a></p>
 
 <p>Normal markdown tables work but you can also combine lines (via the trailing backslash):</p>
 

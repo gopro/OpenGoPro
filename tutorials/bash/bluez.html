@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-02-11T18:53:31-08:00">
+  <meta property="article:published_time" content="2022-02-15T14:09:06-08:00">
 
 
 
@@ -344,7 +344,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="BlueZ Bash Tutorial">
     <meta itemprop="description" content="BlueZ Bash Tutorial">
-    <meta itemprop="datePublished" content="2022-02-11T18:53:31-08:00">
+    <meta itemprop="datePublished" content="2022-02-15T14:09:06-08:00">
     
 
     <div class="page__inner-wrap">
@@ -481,14 +481,14 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
 
         </figcaption></figure>
 
-<div class="note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  This step may vary slightly by camera</span>
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>This step may vary slightly by camera</span>
 </div>
 
 <h2 id="scan">Scan</h2>
 
 <div>
-    <ul class="tab" data-tab="7436fa4f-77dd-4627-a82b-371888e68e69">
+    <ul class="tab" data-tab="5e852f65-54ff-4836-9c02-0b1b462f1096">
         
             <li class="active">
                 <a href="">code </a>
@@ -507,7 +507,7 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="7436fa4f-77dd-4627-a82b-371888e68e69">
+        <ul class="tab-content" id="5e852f65-54ff-4836-9c02-0b1b462f1096">
         
             <li class="active">
 <p>Next, we must find the GoPro Camera using bleak. Let’s initialize an empty dict that will
@@ -553,7 +553,8 @@ from the command-line arguments.</p>
 
 <p>Due to potential RF interference and the asynchronous nature of BLE advertising / scanning, it is possible that
 the advertising GoPro will not be discovered by the scanning PC in one scan. Therefore, you may need to redo
-the scan (as <code class="language-plaintext highlighter-rouge">ble_connect.py</code> does) until a GoPro is found. That is, <code class="language-plaintext highlighter-rouge">matched_device</code> must contain at least one device.</p>
+the scan (as <code class="language-plaintext highlighter-rouge">ble_connect.py</code> does) until a GoPro is found. That is, <code class="language-plaintext highlighter-rouge">matched_device</code> must contain at least one
+device.</p>
 
 <p>When running the demo, discovered devices will be logged to the console as they are found. Click the output tab
 to see an example of this.</p>
@@ -615,7 +616,7 @@ in the example above). This is how the camera will be identified via <code class
 <h2 id="connect">Connect</h2>
 
 <div>
-    <ul class="tab" data-tab="f336ce19-858d-4e8d-ac97-f81cbe9c62c2">
+    <ul class="tab" data-tab="ff066952-b3e4-4a44-b170-a7e91e5c0948">
         
             <li class="active">
                 <a href="">Input </a>
@@ -626,7 +627,7 @@ in the example above). This is how the camera will be identified via <code class
             </li>
         
         </ul>
-        <ul class="tab-content" id="f336ce19-858d-4e8d-ac97-f81cbe9c62c2">
+        <ul class="tab-content" id="ff066952-b3e4-4a44-b170-a7e91e5c0948">
         
             <li class="active">
 <p>Now that we know the address to connect to, the next step is to establish a BLE connection
@@ -879,14 +880,14 @@ the device should show up when querying <code class="language-plaintext highligh
 <span class="go">Device DF\:34\:ED\:D1\:DA:E8 GoPro 0456
 </span></code></pre></div></div>
 
-<div class="tip">
-<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  It is now no longer necessary to pair on subsequent connections.</span>
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>It is now no longer necessary to pair on subsequent connections.</span>
 </div>
 
 <h2 id="enable-notifications">Enable Notifications</h2>
 
 <div>
-    <ul class="tab" data-tab="4df7db39-0191-4f8b-b059-644309949a73">
+    <ul class="tab" data-tab="1d794a82-a8d6-4f59-bd0e-3d4b3b6b42cb">
         
             <li class="active">
                 <a href="">Enter Gatt Menu </a>
@@ -897,11 +898,12 @@ the device should show up when querying <code class="language-plaintext highligh
             </li>
         
         </ul>
-        <ul class="tab-content" id="4df7db39-0191-4f8b-b059-644309949a73">
+        <ul class="tab-content" id="1d794a82-a8d6-4f59-bd0e-3d4b3b6b42cb">
         
             <li class="active">
-<p>As specified in the <a href="/OpenGoPro/ble#sending-and-receiving-messages">Open GoPro Bluetooth API</a>, we must enable notifications for a given characteristic
-to receive responses from it. First, let’s enter the <code class="language-plaintext highlighter-rouge">gatt</code> submenu:</p>
+<p>As specified in the <a href="/OpenGoPro/ble#sending-and-receiving-messages">Open GoPro Bluetooth API</a>, we
+must enable notifications for a given characteristic to receive responses from it. First, let’s enter the
+<code class="language-plaintext highlighter-rouge">gatt</code> submenu:</p>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[GoPro 0456]#</span><span class="w"> </span>menu gatt
 <span class="go">Menu gatt:
@@ -948,9 +950,10 @@ characteristic. So we only care about the “Command Response”
 characteristic which <a href="/OpenGoPro/ble#services-and-characteristics">has UUID</a>
 <code class="language-plaintext highlighter-rouge">b5f90073-aa8d-11e3-9046-0002a5d5c51b</code>.</p>
 
-<blockquote>
-  <p>You can see this UUID listed above when the connection was formed. All attributes can also be found again from bluetoothctl with <code class="language-plaintext highlighter-rouge">list-attributes</code></p>
-</blockquote>
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>You can see this UUID listed above when the connection was formed. All attributes can also be found again from
+bluetoothctl with <code class="language-plaintext highlighter-rouge">list-attributes</code></span>
+</div>
 
 <p>To enable notifications, select the attribute then enable notifications:</p>
 
@@ -970,10 +973,10 @@ be alerted of responses when the characteristic is notified.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_8ce24a2c-8624-49b6-8d53-498ca96db8b9" class="quiz">
+<div id="quiz_b3a54f76-fbca-4b39-8bf3-61afae2b17c5" class="quiz">
     <div>
-        <div id="question_8ce24a2c-8624-49b6-8d53-498ca96db8b9" class="quiz__question">How are responses to the Command Request characteristic received over BLE?</div>
-        <div id="answers_8ce24a2c-8624-49b6-8d53-498ca96db8b9">
+        <div id="question_b3a54f76-fbca-4b39-8bf3-61afae2b17c5" class="quiz__question">How are responses to the Command Request characteristic received over BLE?</div>
+        <div id="answers_b3a54f76-fbca-4b39-8bf3-61afae2b17c5">
         
             <input type="radio" name="question" value="A"><label>A: As write responses to the Command Request characteristic</label>
             <br>
@@ -989,19 +992,19 @@ be alerted of responses when the characteristic is notified.</p>
         
         </div>
     </div>
-    <button onclick="showResults('8ce24a2c-8624-49b6-8d53-498ca96db8b9', 'B')">Submit Answer</button>
-    <div id="results_8ce24a2c-8624-49b6-8d53-498ca96db8b9" style="display: none">
-        <span id="correct_8ce24a2c-8624-49b6-8d53-498ca96db8b9" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_8ce24a2c-8624-49b6-8d53-498ca96db8b9" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('b3a54f76-fbca-4b39-8bf3-61afae2b17c5', 'B')">Submit Answer</button>
+    <div id="results_b3a54f76-fbca-4b39-8bf3-61afae2b17c5" style="display: none">
+        <span id="correct_b3a54f76-fbca-4b39-8bf3-61afae2b17c5" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_b3a54f76-fbca-4b39-8bf3-61afae2b17c5" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         All GoPro commands follow the same behavior: a command is first sent on a request characteristic.
     The response is then notified on the response characteristic (assuming notifications are enabled).
     </div>
 </div>
 
-<div id="quiz_416d26ff-8df4-4ea2-a48f-fa5e180d87b1" class="quiz">
+<div id="quiz_dade21b8-afd9-4648-93d9-5be3d88d8668" class="quiz">
     <div>
-        <div id="question_416d26ff-8df4-4ea2-a48f-fa5e180d87b1" class="quiz__question">How often is it necessary to pair?</div>
-        <div id="answers_416d26ff-8df4-4ea2-a48f-fa5e180d87b1">
+        <div id="question_dade21b8-afd9-4648-93d9-5be3d88d8668" class="quiz__question">How often is it necessary to pair?</div>
+        <div id="answers_dade21b8-afd9-4648-93d9-5be3d88d8668">
         
             <input type="radio" name="question" value="A"><label>A: Pairing must occur every time to ensure safe BLE communication</label>
             <br>
@@ -1009,15 +1012,16 @@ be alerted of responses when the characteristic is notified.</p>
             <input type="radio" name="question" value="B"><label>B: We never need to pair as the GoPro does not require it to communicate</label>
             <br>
         
-            <input type="radio" name="question" value="C"><label>C: Pairing only needs to occur once as BlueZ will automatically re-use the shared keys for future connections</label>
+            <input type="radio" name="question" value="C"><label>C: Pairing only needs to occur once as BlueZ will automatically re-use the shared keys for future
+            connections</label>
             <br>
         
         </div>
     </div>
-    <button onclick="showResults('416d26ff-8df4-4ea2-a48f-fa5e180d87b1', 'C')">Submit Answer</button>
-    <div id="results_416d26ff-8df4-4ea2-a48f-fa5e180d87b1" style="display: none">
-        <span id="correct_416d26ff-8df4-4ea2-a48f-fa5e180d87b1" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_416d26ff-8df4-4ea2-a48f-fa5e180d87b1" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('dade21b8-afd9-4648-93d9-5be3d88d8668', 'C')">Submit Answer</button>
+    <div id="results_dade21b8-afd9-4648-93d9-5be3d88d8668" style="display: none">
+        <span id="correct_dade21b8-afd9-4648-93d9-5be3d88d8668" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_dade21b8-afd9-4648-93d9-5be3d88d8668" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Pairing is only needed once (assuming neither side deletes the keys). If the
     GoPro deletes the keys (via Connections-&gt;Reset Connections or a factory reset), the devices will need to re-pair.
     </div>
@@ -1026,7 +1030,8 @@ be alerted of responses when the characteristic is notified.</p>
 <h2 id="sending-commands">Sending Commands</h2>
 
 <p>Now that we are are connected, paired, and have enabled notifications, we can send commands.
-The command we will be sending is <a href="/OpenGoPro/ble#commands-quick-reference">Set Shutter</a>, which at byte level is:</p>
+The command we will be sending is <a href="/OpenGoPro/ble#commands-quick-reference">Set Shutter</a>, which at
+byte level is:</p>
 
 <table>
   <thead>
@@ -1058,14 +1063,14 @@ with UUID <code class="language-plaintext highlighter-rouge">b5f90072-aa8d-11e3-
         Flags: write
 </span></code></pre></div></div>
 
-<div class="success">
-<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  As a bonus, you can then call "attribute-info" to verify that this characteristic is writeable.</span>
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>As a bonus, you can then call “attribute-info” to verify that this characteristic is writeable.</span>
 </div>
 
 <h3 id="send-commands">Send Commands</h3>
 
 <div>
-    <ul class="tab" data-tab="01517b8a-695d-496b-b19d-fe77b2d24d30">
+    <ul class="tab" data-tab="e94cffa2-97d1-4848-867b-a0c32fc44064">
         
             <li class="active">
                 <a href="">Set Shutter On </a>
@@ -1076,7 +1081,7 @@ with UUID <code class="language-plaintext highlighter-rouge">b5f90072-aa8d-11e3-
             </li>
         
         </ul>
-        <ul class="tab-content" id="01517b8a-695d-496b-b19d-fe77b2d24d30">
+        <ul class="tab-content" id="e94cffa2-97d1-4848-867b-a0c32fc44064">
         
             <li class="active">
 <p>Now, let’s write the bytes to turn the shutter on and start encoding!</p>
@@ -1113,8 +1118,8 @@ Command Response characteristic since we acquired it’s notifications in [Enabl
 
 <h3 id="good-job">Good Job!</h3>
 
-<div class="success">
-<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  Congratulations 🤙</span>
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>Congratulations 🤙</span>
 </div>
 
 <p>You can now send any of the other BLE commands detailed in the Open GoPro documentation in
@@ -1188,7 +1193,7 @@ sudo btmon
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-02-11T18:53:31-08:00">February 11, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-02-15T14:09:06-08:00">February 15, 2022</time></p>
 
 
       </footer>

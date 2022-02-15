@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-02-11T18:53:31-08:00">
+  <meta property="article:published_time" content="2022-02-15T14:09:06-08:00">
 
 
 
@@ -420,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 1: Connect BLE">
     <meta itemprop="description" content="Python Tutorial 1: Connect BLE">
-    <meta itemprop="datePublished" content="2022-02-11T18:53:31-08:00">
+    <meta itemprop="datePublished" content="2022-02-15T14:09:06-08:00">
     
 
     <div class="page__inner-wrap">
@@ -528,7 +528,8 @@
 <h3 id="tutorials-package">Tutorials Package</h3>
 
 <p>This set of tutorials is accompanied by a Python package consisting of scripts (separated by tutorial module).
-These can be found on <a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/">Github</a>. Once the Github repo has been cloned or downloaded to your
+These can be found on <a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/">Github</a>. Once the
+Github repo has been cloned or downloaded to your
 local machine, the package can be installed as follows:</p>
 
 <ol>
@@ -540,9 +541,10 @@ where it exists on your local machine</li>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install -r requirements.txt
 </code></pre></div></div>
 
-<blockquote>
-  <p>This will also install the <a href="https://gopro.github.io/OpenGoPro/python_sdk/">Open GoPro Python SDK</a> which will be used for some of the optional examples through these tutorials.</p>
-</blockquote>
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>This will also install the <a href="https://gopro.github.io/OpenGoPro/python_sdk/">Open GoPro Python SDK</a> which will be
+used for some of the optional examples through these tutorials.</span>
+</div>
 
 <p>You can test that installation was successful by viewing the installed package’s information:</p>
 
@@ -588,8 +590,8 @@ and progress can be tracked on the <a href="https://github.com/gopro/OpenGoPro/i
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">python ble_connect.py
 </span></code></pre></div></div>
 
-<div class="warning">
-<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142;margin: 0.25em;"></i><span>  Python 3.8.x must be used as specified in the requirements</span>
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.8.x must be used as specified in the requirements</span>
 </div>
 
 <p>See the help for parameter definition:</p>
@@ -602,7 +604,8 @@ Connect to a GoPro camera, pair, then enable notifications.
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
+                        SSID. If not used, first discovered GoPro will be connected to
 </span></code></pre></div></div>
 
 <h2 id="asyncio">Asyncio</h2>
@@ -647,7 +650,7 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
 <h2 id="scan">Scan</h2>
 
 <div>
-    <ul class="tab" data-tab="b32fe090-572c-493a-b416-c7da0c03344c">
+    <ul class="tab" data-tab="c26196a0-272a-413a-8dab-2c711c2e05c8">
         
             <li class="active">
                 <a href="">code </a>
@@ -658,7 +661,7 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="b32fe090-572c-493a-b416-c7da0c03344c">
+        <ul class="tab-content" id="c26196a0-272a-413a-8dab-2c711c2e05c8">
         
             <li class="active">
 <p>Next, we must find the GoPro Camera using bleak. Let’s initialize an empty dict that will
@@ -704,7 +707,8 @@ from the command-line arguments.</p>
 
 <p>Due to potential RF interference and the asynchronous nature of BLE advertising / scanning, it is possible that
 the advertising GoPro will not be discovered by the scanning PC in one scan. Therefore, you may need to redo
-the scan (as <code class="language-plaintext highlighter-rouge">ble_connect.py</code> does) until a GoPro is found. That is, <code class="language-plaintext highlighter-rouge">matched_device</code> must contain at least one device.</p>
+the scan (as <code class="language-plaintext highlighter-rouge">ble_connect.py</code> does) until a GoPro is found. That is, <code class="language-plaintext highlighter-rouge">matched_device</code> must contain at least one
+device.</p>
 
 <p>When running the demo, discovered devices will be logged to the console as they are found. Click the output tab
 to see an example of this.</p>
@@ -738,7 +742,7 @@ your camera’s serial number.</p>
 <h2 id="connect">Connect</h2>
 
 <div>
-    <ul class="tab" data-tab="f3ed1faf-9b75-469c-881c-ac80f25b1683">
+    <ul class="tab" data-tab="037ed65b-27ce-4ecb-8652-c8ea3c8ffb77">
         
             <li class="active">
                 <a href="">code </a>
@@ -749,7 +753,7 @@ your camera’s serial number.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="f3ed1faf-9b75-469c-881c-ac80f25b1683">
+        <ul class="tab-content" id="037ed65b-27ce-4ecb-8652-c8ea3c8ffb77">
         
             <li class="active">
 <p>Now that we have discovered at least one GoPro device to connect to, the next step is to
@@ -796,14 +800,14 @@ catching the exception when it fails.</p>
 
 <p>Once paired, the camera should beep and display “Connection Successful”.</p>
 
-<div class="tip">
-<i class="fa fa-tools fa-2x" style="color: #ebc21c;margin: 0.25em;"></i><span>  It is now no longer necessary to pair on subsequent connections.</span>
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>It is now no longer necessary to pair on subsequent connections.</span>
 </div>
 
 <h2 id="enable-notifications">Enable Notifications</h2>
 
 <div>
-    <ul class="tab" data-tab="e1cda75d-ea34-49a4-b5f3-fb02ad360a27">
+    <ul class="tab" data-tab="02778a6e-a8e5-406e-bdfb-5aaa9da60f2c">
         
             <li class="active">
                 <a href="">enable </a>
@@ -814,14 +818,14 @@ catching the exception when it fails.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="e1cda75d-ea34-49a4-b5f3-fb02ad360a27">
+        <ul class="tab-content" id="02778a6e-a8e5-406e-bdfb-5aaa9da60f2c">
         
             <li class="active">
 <p>As specified in the <a href="/OpenGoPro/ble#sending-and-receiving-messages">Open GoPro Bluetooth API</a>,
 we must enable notifications for a given characteristic to receive responses from it.</p>
 
-<div class="note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db;margin: 0.25em;"></i><span>  It is necessary to define a notification handler to pass to the bleak `start_notify` method. Since we
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>It is necessary to define a notification handler to pass to the bleak <code class="language-plaintext highlighter-rouge">start_notify</code> method. Since we
 only care about connecting to the device in this tutorial (and not actually receiving data), we are just passing
 an empty function. A future tutorial will demonstrate how to use this meaningfully.</span>
 </div>
@@ -866,10 +870,10 @@ will be used in a future tutorial to send data.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_86807b71-88ef-49ca-bb38-665ec39f80cd" class="quiz">
+<div id="quiz_a0481a4e-46da-47de-bda0-7cd6f1934d30" class="quiz">
     <div>
-        <div id="question_86807b71-88ef-49ca-bb38-665ec39f80cd" class="quiz__question">How often is it necessary to pair?</div>
-        <div id="answers_86807b71-88ef-49ca-bb38-665ec39f80cd">
+        <div id="question_a0481a4e-46da-47de-bda0-7cd6f1934d30" class="quiz__question">How often is it necessary to pair?</div>
+        <div id="answers_a0481a4e-46da-47de-bda0-7cd6f1934d30">
         
             <input type="radio" name="question" value="A"><label>A: Pairing must occur every time to ensure safe BLE communication.</label>
             <br>
@@ -882,10 +886,10 @@ will be used in a future tutorial to send data.</p>
         
         </div>
     </div>
-    <button onclick="showResults('86807b71-88ef-49ca-bb38-665ec39f80cd', 'C')">Submit Answer</button>
-    <div id="results_86807b71-88ef-49ca-bb38-665ec39f80cd" style="display: none">
-        <span id="correct_86807b71-88ef-49ca-bb38-665ec39f80cd" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_86807b71-88ef-49ca-bb38-665ec39f80cd" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('a0481a4e-46da-47de-bda0-7cd6f1934d30', 'C')">Submit Answer</button>
+    <div id="results_a0481a4e-46da-47de-bda0-7cd6f1934d30" style="display: none">
+        <span id="correct_a0481a4e-46da-47de-bda0-7cd6f1934d30" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_a0481a4e-46da-47de-bda0-7cd6f1934d30" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Pairing is only needed once (assuming neither side deletes the keys). If the
     GoPro deletes the keys (via Connections-&gt;Reset Connections), the devices will need to re-pair.
     </div>
@@ -896,6 +900,7 @@ will be used in a future tutorial to send data.</p>
 <h2 id="device-not-connecting">Device not connecting</h2>
 
 <p>If the connection is not starting, it is likely because the camera is not advertising. This can be due to either:</p>
+
 <ol>
   <li>The camera is not in pairing mode. Ensure that this is achieved as done in
 <a href="/OpenGoPro/tutorials/python/connect-ble#advertise">the advertise section</a>.</li>
@@ -916,16 +921,16 @@ perform the following.</p>
 
 <h2 id="logs">Logs</h2>
 
-<p>The demo program has enabled bleak logs and is also using the default <a href="https://docs.python.org/3/library/logging.html">python logging module</a>
-to write its own logs.</p>
+<p>The demo program has enabled bleak logs and is also using the default
+<a href="https://docs.python.org/3/library/logging.html">python logging module</a> to write its own logs.</p>
 
 <p>To enable more bleak logs, follow bleak’s
 <a href="https://bleak.readthedocs.io/en/latest/troubleshooting.html#enable-logging">troubleshooting section</a>.</p>
 
 <h1 id="good-job">Good Job!</h1>
 
-<div class="success">
-<i class="fa fa-check-circle fa-2x" style="color: #2dcb71;margin: 0.25em;"></i><span>  Congratulations 🤙</span>
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>Congratulations 🤙</span>
 </div>
 
 <p>You can now successfully connect to the GoPro via BLE and prepare it to receive / send data. To see how
@@ -941,7 +946,7 @@ to send commands, you should advance to the next tutorial.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-02-11T18:53:31-08:00">February 11, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-02-15T14:09:06-08:00">February 15, 2022</time></p>
 
 
       </footer>
