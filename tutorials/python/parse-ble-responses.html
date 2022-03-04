@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Python Tutorial 3: Parse BLE TLV Responses :  Open GoPro</title>
-<meta name="description" content="Python Tutorial 3: Parse BLE TLV Responses">
+<meta name="description" content="This document will provide a walk-through tutorial to use bleak to implement the Open GoPro Interface to parse BLE Type-Length-Value (TLV) Responses.">
 
 
   <meta name="author" content="GoPro">
@@ -26,7 +26,7 @@
 <meta property="og:url" content="https://gopro.github.io/OpenGoPro/tutorials/python/parse-ble-responses">
 
 
-  <meta property="og:description" content="Python Tutorial 3: Parse BLE TLV Responses">
+  <meta property="og:description" content="This document will provide a walk-through tutorial to use bleak to implement the Open GoPro Interface to parse BLE Type-Length-Value (TLV) Responses.">
 
 
 
@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-03-04T11:41:53-08:00">
+  <meta property="article:published_time" content="2022-03-04T12:31:27-08:00">
 
 
 
@@ -419,8 +419,8 @@
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 3: Parse BLE TLV Responses">
-    <meta itemprop="description" content="Python Tutorial 3: Parse BLE TLV Responses">
-    <meta itemprop="datePublished" content="2022-03-04T11:41:53-08:00">
+    <meta itemprop="description" content="This document will provide a walk-through tutorial to use bleak to implementthe Open GoPro Interface to parse BLEType-Length-Value (TLV) Responses.">
+    <meta itemprop="datePublished" content="2022-03-04T12:31:27-08:00">
     
 
     <div class="page__inner-wrap">
@@ -590,7 +590,7 @@ return a status but have a 0 length additional response. For example, consider
 <a href="/OpenGoPro/tutorials/python/send-ble-commands#set-shutter">Set Shutter</a>. It returned a response
 of:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02\:01\:00
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02:01:00
 </code></pre></div></div>
 
 <p>This equates to:</p>
@@ -656,8 +656,8 @@ See the relevant version of the BLE and / or WiFi spec for more details about ea
 
 <p>We then receive a response at the expected handle. This is logged as:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Getting the Getting the Open GoPro version...
-INFO\:root\:Received response at handle=52: b'06\:51\:00\:01\:01\:01\:00'
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Getting the Getting the Open GoPro version...
+INFO:root:Received response at handle=52: b'06:51:00:01:01:01:00'
 </span></code></pre></div></div>
 
 <p>This equates to:</p>
@@ -761,15 +761,15 @@ let’s print them (and all of the other response information) as such:</p>
 
 <p>which shows on the log as:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Received a response to command_id=81 with status=0: version=1.0
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Received a response to command_id=81 with status=0: version=1.0
 </span></code></pre></div></div>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_781503ba-858b-496a-a125-c0e018b42a07" class="quiz">
+<div id="quiz_17da75db-7de1-49a5-bdae-e772ca4b5fec" class="quiz">
     <div>
-        <div id="question_781503ba-858b-496a-a125-c0e018b42a07" class="quiz__question">What is the maximum size of an individual notification response packet?</div>
-        <div id="answers_781503ba-858b-496a-a125-c0e018b42a07">
+        <div id="question_17da75db-7de1-49a5-bdae-e772ca4b5fec" class="quiz__question">What is the maximum size of an individual notification response packet?</div>
+        <div id="answers_17da75db-7de1-49a5-bdae-e772ca4b5fec">
         
             <input type="radio" name="question" value="A"><label>A: 20 bytes</label>
             <br>
@@ -782,19 +782,19 @@ let’s print them (and all of the other response information) as such:</p>
         
         </div>
     </div>
-    <button onclick="showResults('781503ba-858b-496a-a125-c0e018b42a07', 'A')">Submit Answer</button>
-    <div id="results_781503ba-858b-496a-a125-c0e018b42a07" style="display: none">
-        <span id="correct_781503ba-858b-496a-a125-c0e018b42a07" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_781503ba-858b-496a-a125-c0e018b42a07" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('17da75db-7de1-49a5-bdae-e772ca4b5fec', 'A')">Submit Answer</button>
+    <div id="results_17da75db-7de1-49a5-bdae-e772ca4b5fec" style="display: none">
+        <span id="correct_17da75db-7de1-49a5-bdae-e772ca4b5fec" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_17da75db-7de1-49a5-bdae-e772ca4b5fec" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         Responses can be composed of multiple packets where each packet is at
     maximum 20 bytes.
     </div>
 </div>
 
-<div id="quiz_36206953-a63c-4dfe-bc4e-49ccecdb3785" class="quiz">
+<div id="quiz_d81cde5e-6655-4a80-9bd7-0ad05d8574e4" class="quiz">
     <div>
-        <div id="question_36206953-a63c-4dfe-bc4e-49ccecdb3785" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
-        <div id="answers_36206953-a63c-4dfe-bc4e-49ccecdb3785">
+        <div id="question_d81cde5e-6655-4a80-9bd7-0ad05d8574e4" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
+        <div id="answers_d81cde5e-6655-4a80-9bd7-0ad05d8574e4">
         
             <input type="radio" name="question" value="A"><label>A: 20 bytes</label>
             <br>
@@ -807,18 +807,18 @@ let’s print them (and all of the other response information) as such:</p>
         
         </div>
     </div>
-    <button onclick="showResults('36206953-a63c-4dfe-bc4e-49ccecdb3785', 'C')">Submit Answer</button>
-    <div id="results_36206953-a63c-4dfe-bc4e-49ccecdb3785" style="display: none">
-        <span id="correct_36206953-a63c-4dfe-bc4e-49ccecdb3785" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_36206953-a63c-4dfe-bc4e-49ccecdb3785" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('d81cde5e-6655-4a80-9bd7-0ad05d8574e4', 'C')">Submit Answer</button>
+    <div id="results_d81cde5e-6655-4a80-9bd7-0ad05d8574e4" style="display: none">
+        <span id="correct_d81cde5e-6655-4a80-9bd7-0ad05d8574e4" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_d81cde5e-6655-4a80-9bd7-0ad05d8574e4" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There is no limit on the amount of packets that can comprise a response.
     </div>
 </div>
 
-<div id="quiz_4cc04cf0-bf1c-4448-b73a-1eed0c09ec16" class="quiz">
+<div id="quiz_0b5639c8-0299-468e-875f-9bb1b624e2f8" class="quiz">
     <div>
-        <div id="question_4cc04cf0-bf1c-4448-b73a-1eed0c09ec16" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
-        <div id="answers_4cc04cf0-bf1c-4448-b73a-1eed0c09ec16">
+        <div id="question_0b5639c8-0299-468e-875f-9bb1b624e2f8" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
+        <div id="answers_0b5639c8-0299-468e-875f-9bb1b624e2f8">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -831,20 +831,20 @@ let’s print them (and all of the other response information) as such:</p>
         
         </div>
     </div>
-    <button onclick="showResults('4cc04cf0-bf1c-4448-b73a-1eed0c09ec16', 'C')">Submit Answer</button>
-    <div id="results_4cc04cf0-bf1c-4448-b73a-1eed0c09ec16" style="display: none">
-        <span id="correct_4cc04cf0-bf1c-4448-b73a-1eed0c09ec16" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_4cc04cf0-bf1c-4448-b73a-1eed0c09ec16" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('0b5639c8-0299-468e-875f-9bb1b624e2f8', 'C')">Submit Answer</button>
+    <div id="results_0b5639c8-0299-468e-875f-9bb1b624e2f8" style="display: none">
+        <span id="correct_0b5639c8-0299-468e-875f-9bb1b624e2f8" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_0b5639c8-0299-468e-875f-9bb1b624e2f8" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Command responses are almost always 1 packet (just returning the status).
     The exception are complex responses which can be multiple packets (in the case of Get Hardware
     Info)
     </div>
 </div>
 
-<div id="quiz_ff254ce3-ef51-449c-a9fe-6902026847ca" class="quiz">
+<div id="quiz_e99ca746-6a40-4d43-a3b6-c94f8db2e257" class="quiz">
     <div>
-        <div id="question_ff254ce3-ef51-449c-a9fe-6902026847ca" class="quiz__question">How many packets are setting responses comprised of?</div>
-        <div id="answers_ff254ce3-ef51-449c-a9fe-6902026847ca">
+        <div id="question_e99ca746-6a40-4d43-a3b6-c94f8db2e257" class="quiz__question">How many packets are setting responses comprised of?</div>
+        <div id="answers_e99ca746-6a40-4d43-a3b6-c94f8db2e257">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -857,10 +857,10 @@ let’s print them (and all of the other response information) as such:</p>
         
         </div>
     </div>
-    <button onclick="showResults('ff254ce3-ef51-449c-a9fe-6902026847ca', 'A')">Submit Answer</button>
-    <div id="results_ff254ce3-ef51-449c-a9fe-6902026847ca" style="display: none">
-        <span id="correct_ff254ce3-ef51-449c-a9fe-6902026847ca" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_ff254ce3-ef51-449c-a9fe-6902026847ca" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('e99ca746-6a40-4d43-a3b6-c94f8db2e257', 'A')">Submit Answer</button>
+    <div id="results_e99ca746-6a40-4d43-a3b6-c94f8db2e257" style="display: none">
+        <span id="correct_e99ca746-6a40-4d43-a3b6-c94f8db2e257" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_e99ca746-6a40-4d43-a3b6-c94f8db2e257" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         Settings Responses only ever contain the command status. Furthermore, there
     is no concept of complex responses for setting commands.
     </div>
@@ -1037,50 +1037,50 @@ received the entire response, at which point we notify the writer that the respo
 
 <p>We can see the individual packets being accumulated in the log:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Getting the camera's settings...
-INFO\:root\:Received response at handle=62: b'21\:25\:12\:00\:02\:01\:09\:03\:01\:01\:05:0
-INFO\:root\:self.bytes_remaining=275
-INFO\:root\:Received response at handle=62: b'80\:01\:00\:18\:01\:00\:1e\:04\:00\:00\:00:0
-INFO\:root\:self.bytes_remaining=256
-INFO\:root\:Received response at handle=62: b'81\:0a\:25\:01\:00\:29\:01\:09\:2a\:01\:05:2
-INFO\:root\:self.bytes_remaining=237
-INFO\:root\:Received response at handle=62: b'82\:2f\:01\:04\:30\:01\:03\:36\:01\:00\:3b:0
-INFO\:root\:self.bytes_remaining=218
-INFO\:root\:Received response at handle=62: b'83\:04\:00\:00\:00\:00\:3e\:04\:00\:00\:00:0
-INFO\:root\:self.bytes_remaining=199
-INFO\:root\:Received response at handle=62: b'84\:00\:42\:04\:00\:00\:00\:00\:43\:04\:00:0
-INFO\:root\:self.bytes_remaining=180
-INFO\:root\:Received response at handle=62: b'85\:4f\:01\:00\:53\:01\:00\:54\:01\:00\:55:0
-INFO\:root\:self.bytes_remaining=161
-INFO\:root\:Received response at handle=62: b'86\:01\:28\:5b\:01\:02\:60\:01\:00\:66\:01:0
-INFO\:root\:self.bytes_remaining=142
-INFO\:root\:Received response at handle=62: b'87\:00\:6a\:01\:00\:6f\:01\:0a\:70\:01\:ff:7
-INFO\:root\:self.bytes_remaining=123
-INFO\:root\:Received response at handle=62: b'88\:75\:01\:00\:76\:01\:04\:79\:01\:00\:7a:0
-INFO\:root\:self.bytes_remaining=104
-INFO\:root\:Received response at handle=62: b'89\:01\:00\:7e\:01\:00\:80\:01\:0c\:81\:01:0
-INFO\:root\:self.bytes_remaining=85
-INFO\:root\:Received response at handle=62: b'8a\:0c\:85\:01\:09\:86\:01\:00\:87\:01\:01:8
-INFO\:root\:self.bytes_remaining=66
-INFO\:root\:Received response at handle=62: b'8b\:92\:01\:00\:93\:01\:00\:94\:01\:02\:95:0
-INFO\:root\:self.bytes_remaining=47
-INFO\:root\:Received response at handle=62: b'8c\:01\:00\:9c\:01\:00\:9d\:01\:00\:9e\:01:0
-INFO\:root\:self.bytes_remaining=28
-INFO\:root\:Received response at handle=62: b'8d\:00\:a2\:01\:00\:a3\:01\:01\:a4\:01\:00:a
-INFO\:root\:self.bytes_remaining=9
-INFO\:root\:Received response at handle=62: b'8e\:a8\:04\:00\:00\:00\:00\:a9\:01:01'
-INFO\:root\:self.bytes_remaining=0
-INFO\:root\:Successfully received the response
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Getting the camera's settings...
+INFO:root:Received response at handle=62: b'21:25:12:00:02:01:09:03:01:01:05:0
+INFO:root:self.bytes_remaining=275
+INFO:root:Received response at handle=62: b'80:01:00:18:01:00:1e:04:00:00:00:0
+INFO:root:self.bytes_remaining=256
+INFO:root:Received response at handle=62: b'81:0a:25:01:00:29:01:09:2a:01:05:2
+INFO:root:self.bytes_remaining=237
+INFO:root:Received response at handle=62: b'82:2f:01:04:30:01:03:36:01:00:3b:0
+INFO:root:self.bytes_remaining=218
+INFO:root:Received response at handle=62: b'83:04:00:00:00:00:3e:04:00:00:00:0
+INFO:root:self.bytes_remaining=199
+INFO:root:Received response at handle=62: b'84:00:42:04:00:00:00:00:43:04:00:0
+INFO:root:self.bytes_remaining=180
+INFO:root:Received response at handle=62: b'85:4f:01:00:53:01:00:54:01:00:55:0
+INFO:root:self.bytes_remaining=161
+INFO:root:Received response at handle=62: b'86:01:28:5b:01:02:60:01:00:66:01:0
+INFO:root:self.bytes_remaining=142
+INFO:root:Received response at handle=62: b'87:00:6a:01:00:6f:01:0a:70:01:ff:7
+INFO:root:self.bytes_remaining=123
+INFO:root:Received response at handle=62: b'88:75:01:00:76:01:04:79:01:00:7a:0
+INFO:root:self.bytes_remaining=104
+INFO:root:Received response at handle=62: b'89:01:00:7e:01:00:80:01:0c:81:01:0
+INFO:root:self.bytes_remaining=85
+INFO:root:Received response at handle=62: b'8a:0c:85:01:09:86:01:00:87:01:01:8
+INFO:root:self.bytes_remaining=66
+INFO:root:Received response at handle=62: b'8b:92:01:00:93:01:00:94:01:02:95:0
+INFO:root:self.bytes_remaining=47
+INFO:root:Received response at handle=62: b'8c:01:00:9c:01:00:9d:01:00:9e:01:0
+INFO:root:self.bytes_remaining=28
+INFO:root:Received response at handle=62: b'8d:00:a2:01:00:a3:01:01:a4:01:00:a
+INFO:root:self.bytes_remaining=9
+INFO:root:Received response at handle=62: b'8e:a8:04:00:00:00:00:a9:01:01'
+INFO:root:self.bytes_remaining=0
+INFO:root:Successfully received the response
 </span></code></pre></div></div>
 
 <p>At this point the response has been accumulated. See the next section for how to parse it.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_5a6d0159-62b5-44fc-b130-52c5c29a5b3c" class="quiz">
+<div id="quiz_53b9bf75-ba3f-4745-881c-e7dfed06cafe" class="quiz">
     <div>
-        <div id="question_5a6d0159-62b5-44fc-b130-52c5c29a5b3c" class="quiz__question">How can we know that a response has been completely received?</div>
-        <div id="answers_5a6d0159-62b5-44fc-b130-52c5c29a5b3c">
+        <div id="question_53b9bf75-ba3f-4745-881c-e7dfed06cafe" class="quiz__question">How can we know that a response has been completely received?</div>
+        <div id="answers_53b9bf75-ba3f-4745-881c-e7dfed06cafe">
         
             <input type="radio" name="question" value="A"><label>A: The stop bit will be set in the header</label>
             <br>
@@ -1093,10 +1093,10 @@ INFO\:root\:Successfully received the response
         
         </div>
     </div>
-    <button onclick="showResults('5a6d0159-62b5-44fc-b130-52c5c29a5b3c', 'B')">Submit Answer</button>
-    <div id="results_5a6d0159-62b5-44fc-b130-52c5c29a5b3c" style="display: none">
-        <span id="correct_5a6d0159-62b5-44fc-b130-52c5c29a5b3c" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_5a6d0159-62b5-44fc-b130-52c5c29a5b3c" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('53b9bf75-ba3f-4745-881c-e7dfed06cafe', 'B')">Submit Answer</button>
+    <div id="results_53b9bf75-ba3f-4745-881c-e7dfed06cafe" style="display: none">
+        <span id="correct_53b9bf75-ba3f-4745-881c-e7dfed06cafe" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_53b9bf75-ba3f-4745-881c-e7dfed06cafe" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         The length of the entire response is parsed from the first packet. We
         then accumulate packets, keeping track of the received length, until all of the bytes
         have been received. A and C are just made up 😜.
@@ -1221,7 +1221,7 @@ storing each value in a dict indexed by ID for later access.</p>
 
 <p>In the demo, we then log this entire dict after parsing is complete as such (abbreviated for brevity):</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Received settings
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Received settings
 : {
     "2": "09",
     "3": "01",
@@ -1229,9 +1229,9 @@ storing each value in a dict indexed by ID for later access.</p>
     "6": "01",
     "13": "01",
     "19": "00",
-    "30": "00\:00\:00:00",
+    "30": "00:00:00:00",
     "31": "00",
-    "32": "00\:00\:00:0a",
+    "32": "00:00:00:0a",
     "41": "09",
     "42": "05",
     "43": "00",
@@ -1251,7 +1251,7 @@ storing each value in a dict indexed by ID for later access.</p>
     "165": "00",
     "166": "00",
     "167": "04",
-    "168": "00\:00\:00:00",
+    "168": "00:00:00:00",
     "169": "01"
 }
 </span></code></pre></div></div>
@@ -1266,10 +1266,10 @@ storing each value in a dict indexed by ID for later access.</p>
   <li>ID 3 == 1 equates to FPS == 120</li>
 </ul>
 
-<div id="quiz_b9b348d5-b761-47c3-a2a2-0d7575d4f80b" class="quiz">
+<div id="quiz_bd256c9a-3ca5-49f5-a940-af985b635c4d" class="quiz">
     <div>
-        <div id="question_b9b348d5-b761-47c3-a2a2-0d7575d4f80b" class="quiz__question">How many packets are query responses?</div>
-        <div id="answers_b9b348d5-b761-47c3-a2a2-0d7575d4f80b">
+        <div id="question_bd256c9a-3ca5-49f5-a940-af985b635c4d" class="quiz__question">How many packets are query responses?</div>
+        <div id="answers_bd256c9a-3ca5-49f5-a940-af985b635c4d">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -1285,20 +1285,20 @@ storing each value in a dict indexed by ID for later access.</p>
         
         </div>
     </div>
-    <button onclick="showResults('b9b348d5-b761-47c3-a2a2-0d7575d4f80b', 'D')">Submit Answer</button>
-    <div id="results_b9b348d5-b761-47c3-a2a2-0d7575d4f80b" style="display: none">
-        <span id="correct_b9b348d5-b761-47c3-a2a2-0d7575d4f80b" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_b9b348d5-b761-47c3-a2a2-0d7575d4f80b" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('bd256c9a-3ca5-49f5-a940-af985b635c4d', 'D')">Submit Answer</button>
+    <div id="results_bd256c9a-3ca5-49f5-a940-af985b635c4d" style="display: none">
+        <span id="correct_bd256c9a-3ca5-49f5-a940-af985b635c4d" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_bd256c9a-3ca5-49f5-a940-af985b635c4d" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         Query responses can be one packet (if for example querying a specific
 setting) or multiple packets (when querying many or all settings as in the example here).
 See the next tutorial for more information on queries.
     </div>
 </div>
 
-<div id="quiz_644bb2ca-f124-421e-9ade-cd81ce697e1b" class="quiz">
+<div id="quiz_bd8e5c4b-fd67-4bd6-8515-338987c9c10e" class="quiz">
     <div>
-        <div id="question_644bb2ca-f124-421e-9ade-cd81ce697e1b" class="quiz__question">Which field is not common to all responses?</div>
-        <div id="answers_644bb2ca-f124-421e-9ade-cd81ce697e1b">
+        <div id="question_bd8e5c4b-fd67-4bd6-8515-338987c9c10e" class="quiz__question">Which field is not common to all responses?</div>
+        <div id="answers_bd8e5c4b-fd67-4bd6-8515-338987c9c10e">
         
             <input type="radio" name="question" value="A"><label>A: length</label>
             <br>
@@ -1311,10 +1311,10 @@ See the next tutorial for more information on queries.
         
         </div>
     </div>
-    <button onclick="showResults('644bb2ca-f124-421e-9ade-cd81ce697e1b', 'D')">Submit Answer</button>
-    <div id="results_644bb2ca-f124-421e-9ade-cd81ce697e1b" style="display: none">
-        <span id="correct_644bb2ca-f124-421e-9ade-cd81ce697e1b" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_644bb2ca-f124-421e-9ade-cd81ce697e1b" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('bd8e5c4b-fd67-4bd6-8515-338987c9c10e', 'D')">Submit Answer</button>
+    <div id="results_bd8e5c4b-fd67-4bd6-8515-338987c9c10e" style="display: none">
+        <span id="correct_bd8e5c4b-fd67-4bd6-8515-338987c9c10e" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_bd8e5c4b-fd67-4bd6-8515-338987c9c10e" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         Query responses can be one packet (if for example querying a specific
 setting) or multiple packets (when querying many or all settings as in the example here).
 See the next tutorial for more information on queries.
@@ -1349,7 +1349,7 @@ complete example of this, see the <a href="https://gopro.github.io/OpenGoPro/pyt
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-03-04T11:41:53-08:00">March 4, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-03-04T12:31:27-08:00">March 4, 2022</time></p>
 
 
       </footer>

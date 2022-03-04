@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Python Tutorial 4: BLE Queries :  Open GoPro</title>
-<meta name="description" content="Python Tutorial 4: BLE Queries">
+<meta name="description" content="This document will provide a walk-through tutorial to use bleak to implement the Open GoPro Interface to query the camera’s setting and status information via BLE.">
 
 
   <meta name="author" content="GoPro">
@@ -26,7 +26,7 @@
 <meta property="og:url" content="https://gopro.github.io/OpenGoPro/tutorials/python/ble-queries">
 
 
-  <meta property="og:description" content="Python Tutorial 4: BLE Queries">
+  <meta property="og:description" content="This document will provide a walk-through tutorial to use bleak to implement the Open GoPro Interface to query the camera’s setting and status information via BLE.">
 
 
 
@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-03-04T11:41:53-08:00">
+  <meta property="article:published_time" content="2022-03-04T12:31:27-08:00">
 
 
 
@@ -419,8 +419,8 @@
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 4: BLE Queries">
-    <meta itemprop="description" content="Python Tutorial 4: BLE Queries">
-    <meta itemprop="datePublished" content="2022-03-04T11:41:53-08:00">
+    <meta itemprop="description" content="This document will provide a walk-through tutorial to use bleak to implementthe Open GoPro Interface to query the camera’s setting and status information viaBLE.">
+    <meta itemprop="datePublished" content="2022-03-04T12:31:27-08:00">
     
 
     <div class="page__inner-wrap">
@@ -647,23 +647,23 @@ First, we define the UUID’s to write to and receive from:</p>
 
 <p>This all shows in the log as such:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Getting the current resolution
-INFO\:root\:Received response at handle=62: b'05\:12\:00\:02\:01:09'
-INFO\:root\:self.bytes_remaining=0
-INFO\:root\:Resolution is currently Resolution.RES_1080
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Getting the current resolution
+INFO:root:Received response at handle=62: b'05:12:00:02:01:09'
+INFO:root:self.bytes_remaining=0
+INFO:root:Resolution is currently Resolution.RES_1080
 </span></code></pre></div></div>
 
 <p>For verification purposes, we are then changing the resolution and polling again to verify that the setting
 has changed:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Changing the resolution to Resolution.RES_2_7K...
-INFO\:root\:Received response at handle=57: b'02\:02\:00'
-INFO\:root\:self.bytes_remaining=0
-INFO\:root\:Command sent successfully
-INFO\:root\:Polling the resolution to see if it has changed...
-INFO\:root\:Received response at handle=62: b'05\:12\:00\:02\:01:07'
-INFO\:root\:self.bytes_remaining=0
-INFO\:root\:Resolution is currently Resolution.RES_2_7K
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Changing the resolution to Resolution.RES_2_7K...
+INFO:root:Received response at handle=57: b'02:02:00'
+INFO:root:self.bytes_remaining=0
+INFO:root:Command sent successfully
+INFO:root:Polling the resolution to see if it has changed...
+INFO:root:Received response at handle=62: b'05:12:00:02:01:07'
+INFO:root:self.bytes_remaining=0
+INFO:root:Resolution is currently Resolution.RES_2_7K
 </span></code></pre></div></div>
 
 <h2 id="multiple-simultaneous-query-polls">Multiple Simultaneous Query Polls</h2>
@@ -706,11 +706,11 @@ sometimes settings / statuses are bytes, words, strings, etc.</span>
 
 <p>They are then printed to the log which will look like the following:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Received response at handle=62: b'0b\:12\:00\:02\:01\:07\:03\:01\:01\:79\:01:00'
-INFO\:root\:self.bytes_remaining=0
-INFO\:root\:Resolution is currently Resolution.RES_2_7K
-INFO\:root\:Video FOV is currently VideoFOV.FOV_WIDE
-INFO\:root\:FPS is currently FPS.FPS_120
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Received response at handle=62: b'0b:12:00:02:01:07:03:01:01:79:01:00'
+INFO:root:self.bytes_remaining=0
+INFO:root:Resolution is currently Resolution.RES_2_7K
+INFO:root:Video FOV is currently VideoFOV.FOV_WIDE
+INFO:root:FPS is currently FPS.FPS_120
 </span></code></pre></div></div>
 
 <h2 id="query-all">Query All</h2>
@@ -745,10 +745,10 @@ tutorial</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_55149c3d-e621-480c-8076-d4fe360726e8" class="quiz">
+<div id="quiz_7f59a9a8-5308-4bd7-82fb-0b7d9dbad3ad" class="quiz">
     <div>
-        <div id="question_55149c3d-e621-480c-8076-d4fe360726e8" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
-        <div id="answers_55149c3d-e621-480c-8076-d4fe360726e8">
+        <div id="question_7f59a9a8-5308-4bd7-82fb-0b7d9dbad3ad" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
+        <div id="answers_7f59a9a8-5308-4bd7-82fb-0b7d9dbad3ad">
         
             <input type="radio" name="question" value="A"><label>A: Concatenate a ‘Get Setting Value’ command and a ‘Get Status’ command with the relevant ID’s</label>
             <br>
@@ -761,10 +761,10 @@ tutorial</p>
         
         </div>
     </div>
-    <button onclick="showResults('55149c3d-e621-480c-8076-d4fe360726e8', 'C')">Submit Answer</button>
-    <div id="results_55149c3d-e621-480c-8076-d4fe360726e8" style="display: none">
-        <span id="correct_55149c3d-e621-480c-8076-d4fe360726e8" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_55149c3d-e621-480c-8076-d4fe360726e8" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('7f59a9a8-5308-4bd7-82fb-0b7d9dbad3ad', 'C')">Submit Answer</button>
+    <div id="results_7f59a9a8-5308-4bd7-82fb-0b7d9dbad3ad" style="display: none">
+        <span id="correct_7f59a9a8-5308-4bd7-82fb-0b7d9dbad3ad" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_7f59a9a8-5308-4bd7-82fb-0b7d9dbad3ad" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         It is not possible to concatenate commands. This would result in an unknown sequence of bytes
         from the camera’s perspective. So it is not possible to get a setting value and a status value in one
         command. The Get Setting command (with resolution ID) and Get Status command(with encoding ID) must be
@@ -883,21 +883,21 @@ the raw byte data as well as by inspecting <code class="language-plaintext highl
 
 <p>This will show in the log as such:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Registering for resolution updates
-INFO\:root\:Received response at handle=62: b'05\:52\:00\:02\:01:07'
-INFO\:root\:self.bytes_remaining=0
-INFO\:root\:Successfully registered for resolution value updates.
-INFO\:root\:Resolution is currently Resolution.RES_2_7K
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Registering for resolution updates
+INFO:root:Received response at handle=62: b'05:52:00:02:01:07'
+INFO:root:self.bytes_remaining=0
+INFO:root:Successfully registered for resolution value updates.
+INFO:root:Resolution is currently Resolution.RES_2_7K
 </span></code></pre></div></div>
 
 <p>We are now successfully registered for resolution value updates and will receive push notifications whenever
 the resolution changes. We verify this is the demo by then changing the resolution. This will show in the log
 as:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Successfully changed the resolution
-INFO\:root\:Received response at handle=62: b'05\:92\:00\:02\:01:09'
-INFO\:root\:self.bytes_remaining=0
-INFO\:root\:Resolution is now Resolution.RES_1080
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Successfully changed the resolution
+INFO:root:Received response at handle=62: b'05:92:00:02:01:09'
+INFO:root:self.bytes_remaining=0
+INFO:root:Resolution is now Resolution.RES_1080
 </span></code></pre></div></div>
 
 <p>In this case, the Query ID is 0x92 (Setting Value Push Notification) as expected.</p>
@@ -911,11 +911,11 @@ polled above</span>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_8e2f439f-4b0a-4e97-befc-34cdc3316ae7" class="quiz">
+<div id="quiz_eb46ef44-9d03-4b64-b594-ffc0f3f55899" class="quiz">
     <div>
-        <div id="question_8e2f439f-4b0a-4e97-befc-34cdc3316ae7" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
+        <div id="question_eb46ef44-9d03-4b64-b594-ffc0f3f55899" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
     receive push notifications for it.</div>
-        <div id="answers_8e2f439f-4b0a-4e97-befc-34cdc3316ae7">
+        <div id="answers_eb46ef44-9d03-4b64-b594-ffc0f3f55899">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -925,20 +925,20 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('8e2f439f-4b0a-4e97-befc-34cdc3316ae7', 'A')">Submit Answer</button>
-    <div id="results_8e2f439f-4b0a-4e97-befc-34cdc3316ae7" style="display: none">
-        <span id="correct_8e2f439f-4b0a-4e97-befc-34cdc3316ae7" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_8e2f439f-4b0a-4e97-befc-34cdc3316ae7" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('eb46ef44-9d03-4b64-b594-ffc0f3f55899', 'A')">Submit Answer</button>
+    <div id="results_eb46ef44-9d03-4b64-b594-ffc0f3f55899" style="display: none">
+        <span id="correct_eb46ef44-9d03-4b64-b594-ffc0f3f55899" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_eb46ef44-9d03-4b64-b594-ffc0f3f55899" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         While there is probably not a good reason to do so, there is nothing preventing polling
         in this manner.
     </div>
 </div>
 
-<div id="quiz_77f02595-23d5-4fff-b665-23943c5a6aee" class="quiz">
+<div id="quiz_f06f4d92-2ca2-4beb-89e0-a608c793513c" class="quiz">
     <div>
-        <div id="question_77f02595-23d5-4fff-b665-23943c5a6aee" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
+        <div id="question_f06f4d92-2ca2-4beb-89e0-a608c793513c" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
     about one setting ID.</div>
-        <div id="answers_77f02595-23d5-4fff-b665-23943c5a6aee">
+        <div id="answers_f06f4d92-2ca2-4beb-89e0-a608c793513c">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -948,10 +948,10 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('77f02595-23d5-4fff-b665-23943c5a6aee', 'B')">Submit Answer</button>
-    <div id="results_77f02595-23d5-4fff-b665-23943c5a6aee" style="display: none">
-        <span id="correct_77f02595-23d5-4fff-b665-23943c5a6aee" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_77f02595-23d5-4fff-b665-23943c5a6aee" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('f06f4d92-2ca2-4beb-89e0-a608c793513c', 'B')">Submit Answer</button>
+    <div id="results_f06f4d92-2ca2-4beb-89e0-a608c793513c" style="display: none">
+        <span id="correct_f06f4d92-2ca2-4beb-89e0-a608c793513c" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_f06f4d92-2ca2-4beb-89e0-a608c793513c" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is possible for push notifications to contain multiple setting ID’s if both setting ID’s have
     push notifications registered and both settings change at the same time.
     </div>
@@ -986,7 +986,7 @@ proceed to the next tutorial.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-03-04T11:41:53-08:00">March 4, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-03-04T12:31:27-08:00">March 4, 2022</time></p>
 
 
       </footer>

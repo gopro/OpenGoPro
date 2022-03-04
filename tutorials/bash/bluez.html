@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-03-04T11:41:53-08:00">
+  <meta property="article:published_time" content="2022-03-04T12:31:27-08:00">
 
 
 
@@ -344,7 +344,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="BlueZ Bash Tutorial">
     <meta itemprop="description" content="BlueZ Bash Tutorial">
-    <meta itemprop="datePublished" content="2022-03-04T11:41:53-08:00">
+    <meta itemprop="datePublished" content="2022-03-04T12:31:27-08:00">
     
 
     <div class="page__inner-wrap">
@@ -454,7 +454,7 @@ After completing this tutorial, you will need to reference it for future develop
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>bluetoothctl
 <span class="go">Agent registered
-[CHG] Controller FC\:44\:82\:DD\:5A:3F Pairable: yes
+[CHG] Controller FC:44:82:DD:5A:3F Pairable: yes
 </span><span class="gp">[bluetooth]#</span><span class="w">
 </span></code></pre></div></div>
 
@@ -488,7 +488,7 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
 <h2 id="scan">Scan</h2>
 
 <div>
-    <ul class="tab" data-tab="ff37fad9-f6e7-41f5-ae8b-81b2915ff289">
+    <ul class="tab" data-tab="1fa4d49c-7f36-456f-8dfc-e83ab056bc1e">
         
             <li class="active">
                 <a href="">code </a>
@@ -507,7 +507,7 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="ff37fad9-f6e7-41f5-ae8b-81b2915ff289">
+        <ul class="tab-content" id="1fa4d49c-7f36-456f-8dfc-e83ab056bc1e">
         
             <li class="active">
 <p>Next, we must find the GoPro Camera using bleak. Let’s initialize an empty dict that will
@@ -566,15 +566,15 @@ to see an example of this.</p>
 includes several rescans until the devices was found.
 
 </span><span class="gp">$</span><span class="w"> </span>python ble_connect.py
-<span class="go">INFO\:root\:Scanning for bluetooth devices...
-INFO\:root\:      Discovered:
-INFO\:root\:      Discovered: TR8600 seri
-INFO\:root\:Found 0 matching devices.
-INFO\:root\:      Discovered:
-INFO\:root\:      Discovered: TR8600 seri
-INFO\:root\:      Discovered: GoPro Cam
-INFO\:root\:      Discovered: GoPro 0456
-INFO\:root\:Found 1 matching devices.
+<span class="go">INFO:root:Scanning for bluetooth devices...
+INFO:root:      Discovered:
+INFO:root:      Discovered: TR8600 seri
+INFO:root:Found 0 matching devices.
+INFO:root:      Discovered:
+INFO:root:      Discovered: TR8600 seri
+INFO:root:      Discovered: GoPro Cam
+INFO:root:      Discovered: GoPro 0456
+INFO:root:Found 1 matching devices.
 </span></code></pre></div></div>
 
 <p>Among other devices, you should see <code class="language-plaintext highlighter-rouge">GoPro XXXX</code> where XXXX is the last four digits of
@@ -597,11 +597,11 @@ your camera’s serial number.</p>
             <li>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[bluetooth]#</span><span class="w"> </span>scan on
 <span class="go">Discovery started
-[CHG] Controller FC\:44\:82\:DD\:5A:3F Discovering: yes
-[NEW] Device 6E\:0A\:B0\:76\:36:49 6E-0A-B0-76-36-49
-[NEW] Device DF\:34\:ED\:D1\:DA:E8 GoPro 0456
-[NEW] Device 26\:A2\:8C\:82\:74:6E 26-A2-8C-82-74-6E
-[CHG] Device F8\:A2\:6D\:4C\:5D:E0 RSSI: -60
+[CHG] Controller FC:44:82:DD:5A:3F Discovering: yes
+[NEW] Device 6E:0A:B0:76:36:49 6E-0A-B0-76-36-49
+[NEW] Device DF:34:ED:D1:DA:E8 GoPro 0456
+[NEW] Device 26:A2:8C:82:74:6E 26-A2-8C-82-74-6E
+[CHG] Device F8:A2:6D:4C:5D:E0 RSSI: -60
 </span></code></pre></div></div>
 
 <p>Among other devices, you should see <code class="language-plaintext highlighter-rouge">GoPro XXXX</code> where XXXX is the last four digits of
@@ -616,7 +616,7 @@ in the example above). This is how the camera will be identified via <code class
 <h2 id="connect">Connect</h2>
 
 <div>
-    <ul class="tab" data-tab="4dd47ff7-1633-4a8e-a20a-4e9b8a63dcb7">
+    <ul class="tab" data-tab="aaba3bef-1590-4a3f-b947-4ff5b915b80e">
         
             <li class="active">
                 <a href="">Input </a>
@@ -627,13 +627,13 @@ in the example above). This is how the camera will be identified via <code class
             </li>
         
         </ul>
-        <ul class="tab-content" id="4dd47ff7-1633-4a8e-a20a-4e9b8a63dcb7">
+        <ul class="tab-content" id="aaba3bef-1590-4a3f-b947-4ff5b915b80e">
         
             <li class="active">
 <p>Now that we know the address to connect to, the next step is to establish a BLE connection
 to the camera as such:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[bluetooth]#</span><span class="w"> </span>connect DF\:34\:ED\:D1\:DA:E8
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[bluetooth]#</span><span class="w"> </span>connect DF:34:ED:D1:DA:E8
 </code></pre></div></div>
 
 <p>Click the output tab to see the output.</p>
@@ -646,7 +646,7 @@ will be displayed as such:</p>
 
 <p>We will make use of these attributes later on.</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">[CHG] Device DF\:34\:ED\:D1\:DA:E8 Connected: yes
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">[CHG] Device DF:34:ED:D1:DA:E8 Connected: yes
 Connection successful
 [NEW] Primary Service (Handle 0xe461)
         /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service0001
@@ -840,19 +840,19 @@ Connection successful
         /org/bluez/hci0/dev_DF_34_ED_D1_DA_E8/service004c/char0055/desc0057
         00002902-0000-1000-8000-00805f9b34fb
         Client Characteristic Configuration
-[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: 00001800-0000-1000-8000-00805f9b34fb
-[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: 00001801-0000-1000-8000-00805f9b34fb
-[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: 00001804-0000-1000-8000-00805f9b34fb
-[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: 0000180a-0000-1000-8000-00805f9b34fb
-[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: 0000180f-0000-1000-8000-00805f9b34fb
-[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: 0000fea6-0000-1000-8000-00805f9b34fb
-[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: b5f90001-aa8d-11e3-9046-0002a5d5c51b
-[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: b5f90080-aa8d-11e3-9046-0002a5d5c51b
-[CHG] Device DF\:34\:ED\:D1\:DA:E8 UUIDs: b5f90090-aa8d-11e3-9046-0002a5d5c51b
-[CHG] Device DF\:34\:ED\:D1\:DA:E8 ServicesResolved: yes
-[CHG] Device DF\:34\:ED\:D1\:DA:E8 Appearance: 0x0080
-[CHG] Device DF\:34\:ED\:D1\:DA:E8 Icon: computer
-[NEW] Device 6C\:4A\:85\:45\:04:D4 6C-4A-85-45-04-D4
+[CHG] Device DF:34:ED:D1:DA:E8 UUIDs: 00001800-0000-1000-8000-00805f9b34fb
+[CHG] Device DF:34:ED:D1:DA:E8 UUIDs: 00001801-0000-1000-8000-00805f9b34fb
+[CHG] Device DF:34:ED:D1:DA:E8 UUIDs: 00001804-0000-1000-8000-00805f9b34fb
+[CHG] Device DF:34:ED:D1:DA:E8 UUIDs: 0000180a-0000-1000-8000-00805f9b34fb
+[CHG] Device DF:34:ED:D1:DA:E8 UUIDs: 0000180f-0000-1000-8000-00805f9b34fb
+[CHG] Device DF:34:ED:D1:DA:E8 UUIDs: 0000fea6-0000-1000-8000-00805f9b34fb
+[CHG] Device DF:34:ED:D1:DA:E8 UUIDs: b5f90001-aa8d-11e3-9046-0002a5d5c51b
+[CHG] Device DF:34:ED:D1:DA:E8 UUIDs: b5f90080-aa8d-11e3-9046-0002a5d5c51b
+[CHG] Device DF:34:ED:D1:DA:E8 UUIDs: b5f90090-aa8d-11e3-9046-0002a5d5c51b
+[CHG] Device DF:34:ED:D1:DA:E8 ServicesResolved: yes
+[CHG] Device DF:34:ED:D1:DA:E8 Appearance: 0x0080
+[CHG] Device DF:34:ED:D1:DA:E8 Icon: computer
+[NEW] Device 6C:4A:85:45:04:D4 6C-4A-85-45-04-D4
 </span><span class="gp">[GoPro 0456]#</span><span class="w">
 </span></code></pre></div></div>
 
@@ -868,8 +868,8 @@ writing to. Now that you are connected (the prompt should now show <code class="
 <code class="language-plaintext highlighter-rouge">bluetooth</code>), do:</p>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[GoPro 0456]#</span><span class="w"> </span>pair
-<span class="go">Attempting to pair with DF\:34\:ED\:D1\:DA:E8
-[CHG] Device DF\:34\:ED\:D1\:DA:E8 Paired: yes
+<span class="go">Attempting to pair with DF:34:ED:D1:DA:E8
+[CHG] Device DF:34:ED:D1:DA:E8 Paired: yes
 Pairing successful
 </span></code></pre></div></div>
 
@@ -877,7 +877,7 @@ Pairing successful
 the device should show up when querying <code class="language-plaintext highlighter-rouge">bluetoothctl</code> for paired devices:</p>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[GoPro 0456]#</span><span class="w"> </span>paired-devices
-<span class="go">Device DF\:34\:ED\:D1\:DA:E8 GoPro 0456
+<span class="go">Device DF:34:ED:D1:DA:E8 GoPro 0456
 </span></code></pre></div></div>
 
 <div class="callout tip">
@@ -887,7 +887,7 @@ the device should show up when querying <code class="language-plaintext highligh
 <h2 id="enable-notifications">Enable Notifications</h2>
 
 <div>
-    <ul class="tab" data-tab="22535513-74c9-4f89-82ea-0fbc3f11c62f">
+    <ul class="tab" data-tab="e53029f7-2cdc-4f50-8a5d-87c0d6df6f9e">
         
             <li class="active">
                 <a href="">Enter Gatt Menu </a>
@@ -898,7 +898,7 @@ the device should show up when querying <code class="language-plaintext highligh
             </li>
         
         </ul>
-        <ul class="tab-content" id="22535513-74c9-4f89-82ea-0fbc3f11c62f">
+        <ul class="tab-content" id="e53029f7-2cdc-4f50-8a5d-87c0d6df6f9e">
         
             <li class="active">
 <p>As specified in the <a href="/OpenGoPro/ble#sending-and-receiving-messages">Open GoPro Bluetooth API</a>, we
@@ -973,10 +973,10 @@ be alerted of responses when the characteristic is notified.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_ae7e016f-5753-4714-ab1a-6891a72609f6" class="quiz">
+<div id="quiz_0a50efc4-be6f-4ae0-8392-45621c1fd6c5" class="quiz">
     <div>
-        <div id="question_ae7e016f-5753-4714-ab1a-6891a72609f6" class="quiz__question">How are responses to the Command Request characteristic received over BLE?</div>
-        <div id="answers_ae7e016f-5753-4714-ab1a-6891a72609f6">
+        <div id="question_0a50efc4-be6f-4ae0-8392-45621c1fd6c5" class="quiz__question">How are responses to the Command Request characteristic received over BLE?</div>
+        <div id="answers_0a50efc4-be6f-4ae0-8392-45621c1fd6c5">
         
             <input type="radio" name="question" value="A"><label>A: As write responses to the Command Request characteristic</label>
             <br>
@@ -992,19 +992,19 @@ be alerted of responses when the characteristic is notified.</p>
         
         </div>
     </div>
-    <button onclick="showResults('ae7e016f-5753-4714-ab1a-6891a72609f6', 'B')">Submit Answer</button>
-    <div id="results_ae7e016f-5753-4714-ab1a-6891a72609f6" style="display: none">
-        <span id="correct_ae7e016f-5753-4714-ab1a-6891a72609f6" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_ae7e016f-5753-4714-ab1a-6891a72609f6" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('0a50efc4-be6f-4ae0-8392-45621c1fd6c5', 'B')">Submit Answer</button>
+    <div id="results_0a50efc4-be6f-4ae0-8392-45621c1fd6c5" style="display: none">
+        <span id="correct_0a50efc4-be6f-4ae0-8392-45621c1fd6c5" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_0a50efc4-be6f-4ae0-8392-45621c1fd6c5" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         All GoPro commands follow the same behavior: a command is first sent on a request characteristic.
     The response is then notified on the response characteristic (assuming notifications are enabled).
     </div>
 </div>
 
-<div id="quiz_876b4c99-3485-44f1-960f-50d247d68712" class="quiz">
+<div id="quiz_d0d3044b-4be2-4563-8a68-4adb23e41d97" class="quiz">
     <div>
-        <div id="question_876b4c99-3485-44f1-960f-50d247d68712" class="quiz__question">How often is it necessary to pair?</div>
-        <div id="answers_876b4c99-3485-44f1-960f-50d247d68712">
+        <div id="question_d0d3044b-4be2-4563-8a68-4adb23e41d97" class="quiz__question">How often is it necessary to pair?</div>
+        <div id="answers_d0d3044b-4be2-4563-8a68-4adb23e41d97">
         
             <input type="radio" name="question" value="A"><label>A: Pairing must occur every time to ensure safe BLE communication</label>
             <br>
@@ -1018,10 +1018,10 @@ be alerted of responses when the characteristic is notified.</p>
         
         </div>
     </div>
-    <button onclick="showResults('876b4c99-3485-44f1-960f-50d247d68712', 'C')">Submit Answer</button>
-    <div id="results_876b4c99-3485-44f1-960f-50d247d68712" style="display: none">
-        <span id="correct_876b4c99-3485-44f1-960f-50d247d68712" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_876b4c99-3485-44f1-960f-50d247d68712" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('d0d3044b-4be2-4563-8a68-4adb23e41d97', 'C')">Submit Answer</button>
+    <div id="results_d0d3044b-4be2-4563-8a68-4adb23e41d97" style="display: none">
+        <span id="correct_d0d3044b-4be2-4563-8a68-4adb23e41d97" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_d0d3044b-4be2-4563-8a68-4adb23e41d97" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Pairing is only needed once (assuming neither side deletes the keys). If the
     GoPro deletes the keys (via Connections-&gt;Reset Connections or a factory reset), the devices will need to re-pair.
     </div>
@@ -1070,7 +1070,7 @@ with UUID <code class="language-plaintext highlighter-rouge">b5f90072-aa8d-11e3-
 <h3 id="send-commands">Send Commands</h3>
 
 <div>
-    <ul class="tab" data-tab="444c3d34-37c8-40a1-980c-6edbb10c7a84">
+    <ul class="tab" data-tab="f5baa419-3b8d-4f51-ad9b-542c9013d1b9">
         
             <li class="active">
                 <a href="">Set Shutter On </a>
@@ -1081,7 +1081,7 @@ with UUID <code class="language-plaintext highlighter-rouge">b5f90072-aa8d-11e3-
             </li>
         
         </ul>
-        <ul class="tab-content" id="444c3d34-37c8-40a1-980c-6edbb10c7a84">
+        <ul class="tab-content" id="f5baa419-3b8d-4f51-ad9b-542c9013d1b9">
         
             <li class="active">
 <p>Now, let’s write the bytes to turn the shutter on and start encoding!</p>
@@ -1145,13 +1145,13 @@ perform the following.</p>
     <div class="language-console highlighter-rouge">
 <div class="highlight"><pre class="highlight"><code><span class="gp"> [bluetooth]#</span><span class="w"> </span>power off
 <span class="go"> Changing power off succeeded
- [CHG] Controller FC\:44\:82\:DD\:5A:3F Powered: no
- [CHG] Controller FC\:44\:82\:DD\:5A:3F Discovering: no
- [CHG] Controller FC\:44\:82\:DD\:5A:3F Class: 0x00000000
+ [CHG] Controller FC:44:82:DD:5A:3F Powered: no
+ [CHG] Controller FC:44:82:DD:5A:3F Discovering: no
+ [CHG] Controller FC:44:82:DD:5A:3F Class: 0x00000000
 </span><span class="gp"> [bluetooth]#</span><span class="w"> </span>power on
-<span class="go"> [CHG] Controller FC\:44\:82\:DD\:5A:3F Class: 0x002c010c
+<span class="go"> [CHG] Controller FC:44:82:DD:5A:3F Class: 0x002c010c
  Changing power on succeeded
- [CHG] Controller FC\:44\:82\:DD\:5A:3F Powered: yes
+ [CHG] Controller FC:44:82:DD:5A:3F Powered: yes
 </span></code></pre></div>    </div>
   </li>
   <li>
@@ -1159,8 +1159,8 @@ perform the following.</p>
 
     <div class="language-console highlighter-rouge">
 <div class="highlight"><pre class="highlight"><code><span class="gp"> [bluetooth]#</span><span class="w"> </span>paired-devices
-<span class="go"> Device DF\:34\:ED\:D1\:DA:E8 GoPro 0456
-</span><span class="gp"> [bluetooth]#</span><span class="w"> </span>remove DF\:34\:ED\:D1\:DA:E8
+<span class="go"> Device DF:34:ED:D1:DA:E8 GoPro 0456
+</span><span class="gp"> [bluetooth]#</span><span class="w"> </span>remove DF:34:ED:D1:DA:E8
 </code></pre></div>    </div>
   </li>
   <li>Restart the procedure detailed above</li>
@@ -1193,7 +1193,7 @@ sudo btmon
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-03-04T11:41:53-08:00">March 4, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-03-04T12:31:27-08:00">March 4, 2022</time></p>
 
 
       </footer>

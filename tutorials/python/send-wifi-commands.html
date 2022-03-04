@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Python Tutorial 6: Send WiFi Commands :  Open GoPro</title>
-<meta name="description" content="Python Tutorial 6: Send WiFi Commands">
+<meta name="description" content="This document will provide a walk-through tutorial to use the Python requests package to send Open GoPro HTTP commands to the GoPro.">
 
 
   <meta name="author" content="GoPro">
@@ -26,7 +26,7 @@
 <meta property="og:url" content="https://gopro.github.io/OpenGoPro/tutorials/python/send-wifi-commands">
 
 
-  <meta property="og:description" content="Python Tutorial 6: Send WiFi Commands">
+  <meta property="og:description" content="This document will provide a walk-through tutorial to use the Python requests package to send Open GoPro HTTP commands to the GoPro.">
 
 
 
@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-03-04T11:41:53-08:00">
+  <meta property="article:published_time" content="2022-03-04T12:31:27-08:00">
 
 
 
@@ -419,8 +419,8 @@
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 6: Send WiFi Commands">
-    <meta itemprop="description" content="Python Tutorial 6: Send WiFi Commands">
-    <meta itemprop="datePublished" content="2022-03-04T11:41:53-08:00">
+    <meta itemprop="description" content="This document will provide a walk-through tutorial to use the Python requestspackage to send Open GoPro HTTP commands to the GoPro.">
+    <meta itemprop="datePublished" content="2022-03-04T12:31:27-08:00">
     
 
     <div class="page__inner-wrap">
@@ -589,9 +589,9 @@ endpoints, and more differ between versions</span>
 
 <p>This will log as such:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Getting the Open GoPro version: sending http://10.5.5.9:8080/gopro/version
-INFO\:root\:Command sent successfully
-INFO\:root\:Response: {
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Getting the Open GoPro version: sending http://10.5.5.9:8080/gopro/version
+INFO:root:Command sent successfully
+INFO:root:Response: {
     "version": "2.0"
 }
 </span></code></pre></div></div>
@@ -626,9 +626,9 @@ for this command to succeed. The commands writes to the following endpoint:</p>
 
 <p>This will log as such:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Setting digital zoom to 50%: sending http://10.5.5.9:8080/gopro/camera/digital_zoom?percent=50
-INFO\:root\:Command sent successfully
-INFO\:root\:Response: {}
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Setting digital zoom to 50%: sending http://10.5.5.9:8080/gopro/camera/digital_zoom?percent=50
+INFO:root:Command sent successfully
+INFO:root:Response: {}
 </span></code></pre></div></div>
 
 <div class="callout success">
@@ -638,7 +638,7 @@ INFO\:root\:Response: {}
 <h2 id="get-state">Get State</h2>
 
 <div>
-    <ul class="tab" data-tab="26949878-67b7-4220-b78c-e14992ad433c">
+    <ul class="tab" data-tab="d497dbff-1fbf-4218-9fe1-b4376be582ae">
         
             <li class="active">
                 <a href="">Send Request </a>
@@ -649,7 +649,7 @@ INFO\:root\:Response: {}
             </li>
         
         </ul>
-        <ul class="tab-content" id="26949878-67b7-4220-b78c-e14992ad433c">
+        <ul class="tab-content" id="d497dbff-1fbf-4218-9fe1-b4376be582ae">
         
             <li class="active">
 <p>The next command we will be sending is
@@ -688,9 +688,9 @@ setting / status information via WiFi.</p>
             <li>
 <p>The response will log as such (abbreviated for brevity):</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Getting GoPro's status and settings: sending http://10.5.5.9:8080/gopro/camera/state
-INFO\:root\:Command sent successfully
-INFO\:root\:Response: {
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Getting GoPro's status and settings: sending http://10.5.5.9:8080/gopro/camera/state
+INFO:root:Command sent successfully
+INFO:root:Response: {
     "status": {
         "1": 1,
         "2": 2,
@@ -740,7 +740,7 @@ INFO\:root\:Response: {
 <h2 id="preview-stream">Preview Stream</h2>
 
 <div>
-    <ul class="tab" data-tab="a65e777b-8d7e-41da-9c8c-5c8ab97960ee">
+    <ul class="tab" data-tab="625dac7f-6479-465e-afe1-fc46da5267c7">
         
             <li class="active">
                 <a href="">Send Request </a>
@@ -751,7 +751,7 @@ INFO\:root\:Response: {
             </li>
         
         </ul>
-        <ul class="tab-content" id="a65e777b-8d7e-41da-9c8c-5c8ab97960ee">
+        <ul class="tab-content" id="625dac7f-6479-465e-afe1-fc46da5267c7">
         
             <li class="active">
 <p>The next command we will be sending is
@@ -797,9 +797,9 @@ enable (or disable) the preview stream . It is then possible to view the preview
 
 <p>This will log as such:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Starting the preview stream: sending http://10.5.5.9:8080/gopro/camera/stream/start
-INFO\:root\:Command sent successfully
-INFO\:root\:Response: {}
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Starting the preview stream: sending http://10.5.5.9:8080/gopro/camera/stream/start
+INFO:root:Command sent successfully
+INFO:root:Response: {}
 </span></code></pre></div></div>
 
 <div class="callout success">
@@ -874,9 +874,9 @@ used to toggle between the 3 groups of presets (video, photo, and timelapse).</p
 
 <p>This will log as such:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Loading the video preset group: sending http://10.5.5.9:8080/gopro/camera/presets/set_group?id=1000
-INFO\:root\:Command sent successfully
-INFO\:root\:Response: {}
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Loading the video preset group: sending http://10.5.5.9:8080/gopro/camera/presets/set_group?id=1000
+INFO:root:Command sent successfully
+INFO:root:Response: {}
 </span></code></pre></div></div>
 
 <div class="callout success">
@@ -925,9 +925,9 @@ used to select a specific preset that is part of a Preset Group.</p>
 
 <p>This will log as such:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Loading the cinematic preset: sending http://10.5.5.9:8080/gopro/camera/presets/load?id=2
-INFO\:root\:Command sent successfully
-INFO\:root\:Response: {}
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Loading the cinematic preset: sending http://10.5.5.9:8080/gopro/camera/presets/load?id=2
+INFO:root:Command sent successfully
+INFO:root:Response: {}
 </span></code></pre></div></div>
 
 <div class="callout success">
@@ -955,7 +955,7 @@ this by seeing the preset name in the pill at bottom middle of the screen.</p>
 <h2 id="get-preset-status">Get Preset Status</h2>
 
 <div>
-    <ul class="tab" data-tab="c7a95dc6-3a52-47ec-a802-940d54657b39">
+    <ul class="tab" data-tab="16b6cd12-6e6a-4fdc-b9e1-e1a2d06e14a8">
         
             <li class="active">
                 <a href="">Send Request </a>
@@ -966,7 +966,7 @@ this by seeing the preset name in the pill at bottom middle of the screen.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="c7a95dc6-3a52-47ec-a802-940d54657b39">
+        <ul class="tab-content" id="16b6cd12-6e6a-4fdc-b9e1-e1a2d06e14a8">
         
             <li class="active">
 <p>The next command we will be sending is
@@ -997,9 +997,9 @@ each preset. This includes both default and user-defined presets.</p>
             <li>
 <p>The response will log as such (abbreviated for brevity):</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Getting the current preset status: sending http://10.5.5.9:8080/gopro/camera/presets/get
-INFO\:root\:Command sent successfully
-INFO\:root\:Response: {
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Getting the current preset status: sending http://10.5.5.9:8080/gopro/camera/presets/get
+INFO:root:Command sent successfully
+INFO:root:Response: {
     "presetGroupArray": [
         {
             "id": "PRESET_GROUP_ID_VIDEO",
@@ -1065,7 +1065,7 @@ INFO\:root\:Response: {
 an ID, array of settings, and other descriptive information. In the example above, we can
 see that there is a user-defined looping preset and a default video preset. For more
 information on creating / using custom presets, see the
-<a href="https://community.gopro.com/t5/en/How-To-Use-Your-GoPro-As-A-Webcam/ta-p/665493">GoPro Community Article</a>.
+<a href="https://community.gopro.com/s/article/GoPro-Webcam?language=en_US">GoPro Community Article</a>.
 A future lab may be created to demonstrate parsing this JSON directly into a protobuf-compiled object.</p>
 
 <div class="callout note">
@@ -1106,9 +1106,9 @@ periodically sending this message.</p>
 
 <p>This will log as such:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Sending the keep alive signal: sending http://10.5.5.9:8080/gopro/camera/keep_alive
-INFO\:root\:Command sent successfully
-INFO\:root\:Response: {}
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Sending the keep alive signal: sending http://10.5.5.9:8080/gopro/camera/keep_alive
+INFO:root:Command sent successfully
+INFO:root:Response: {}
 </span></code></pre></div></div>
 
 <div class="callout tip">
@@ -1138,8 +1138,8 @@ used to start and stop encoding.</p>
 
 <p>This will log as such:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Turning the shutter on: sending http://10.5.5.9:8080/gopro/camera/shutter/start
-INFO\:root\:Command sent successfully
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Turning the shutter on: sending http://10.5.5.9:8080/gopro/camera/shutter/start
+INFO:root:Command sent successfully
 </span></code></pre></div></div>
 
 <p>We then wait a few seconds and repeat the above procedure to set the shutter off. This time we use the
@@ -1172,7 +1172,7 @@ to see which settings are valid for given use cases.</p>
 the command table linked above). Click the relevant tab for the desired Open GoPro Version.</p>
 
 <div>
-    <ul class="tab" data-tab="075801a8-24f0-4398-9d29-bb1be07c4912">
+    <ul class="tab" data-tab="0f1efe5f-615c-4008-bb5d-641dc792f120">
         
             <li class="active">
                 <a href="">Version 1.0 </a>
@@ -1183,7 +1183,7 @@ the command table linked above). Click the relevant tab for the desired Open GoP
             </li>
         
         </ul>
-        <ul class="tab-content" id="075801a8-24f0-4398-9d29-bb1be07c4912">
+        <ul class="tab-content" id="0f1efe5f-615c-4008-bb5d-641dc792f120">
         
             <li class="active">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"/gopro/camera/setting?setting_id=2&amp;opt_value=9"</span>
@@ -1213,9 +1213,9 @@ the command table linked above). Click the relevant tab for the desired Open GoP
 
 <p>This will log as such:</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO\:root\:Setting the video resolution to 1080: sending http://10.5.5.9:8080/gopro/camera/setting?setting_id=2&opt_value=9
-INFO\:root\:Command sent successfully
-INFO\:root\:Response: {}
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Setting the video resolution to 1080: sending http://10.5.5.9:8080/gopro/camera/setting?setting_id=2&opt_value=9
+INFO:root:Command sent successfully
+INFO:root:Response: {}
 </span></code></pre></div></div>
 
 <div class="callout success">
@@ -1244,10 +1244,10 @@ screen:</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_123f936f-7320-4a8d-8aad-2878a0e96bff" class="quiz">
+<div id="quiz_61887ce8-18a5-458f-9905-ea106cc2a55c" class="quiz">
     <div>
-        <div id="question_123f936f-7320-4a8d-8aad-2878a0e96bff" class="quiz__question">What is the significance of empty JSON in an HTTP response?</div>
-        <div id="answers_123f936f-7320-4a8d-8aad-2878a0e96bff">
+        <div id="question_61887ce8-18a5-458f-9905-ea106cc2a55c" class="quiz__question">What is the significance of empty JSON in an HTTP response?</div>
+        <div id="answers_61887ce8-18a5-458f-9905-ea106cc2a55c">
         
             <input type="radio" name="question" value="A"><label>A: Always an error! The command was not received correctly.</label>
             <br>
@@ -1260,19 +1260,19 @@ screen:</p>
         
         </div>
     </div>
-    <button onclick="showResults('123f936f-7320-4a8d-8aad-2878a0e96bff', 'B')">Submit Answer</button>
-    <div id="results_123f936f-7320-4a8d-8aad-2878a0e96bff" style="display: none">
-        <span id="correct_123f936f-7320-4a8d-8aad-2878a0e96bff" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_123f936f-7320-4a8d-8aad-2878a0e96bff" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('61887ce8-18a5-458f-9905-ea106cc2a55c', 'B')">Submit Answer</button>
+    <div id="results_61887ce8-18a5-458f-9905-ea106cc2a55c" style="display: none">
+        <span id="correct_61887ce8-18a5-458f-9905-ea106cc2a55c" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_61887ce8-18a5-458f-9905-ea106cc2a55c" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is common for the JSON response to be empty if the command was received successfully
     but there is no additional information to return at the current time.
     </div>
 </div>
 
-<div id="quiz_e364444f-ab59-44d5-99a5-3d97cc487214" class="quiz">
+<div id="quiz_32e03908-6397-4d6f-af4e-f56e9a88da14" class="quiz">
     <div>
-        <div id="question_e364444f-ab59-44d5-99a5-3d97cc487214" class="quiz__question">Which of the of the following is not a real preset group?</div>
-        <div id="answers_e364444f-ab59-44d5-99a5-3d97cc487214">
+        <div id="question_32e03908-6397-4d6f-af4e-f56e9a88da14" class="quiz__question">Which of the of the following is not a real preset group?</div>
+        <div id="answers_32e03908-6397-4d6f-af4e-f56e9a88da14">
         
             <input type="radio" name="question" value="A"><label>A: Timelapse</label>
             <br>
@@ -1288,19 +1288,19 @@ screen:</p>
         
         </div>
     </div>
-    <button onclick="showResults('e364444f-ab59-44d5-99a5-3d97cc487214', 'C')">Submit Answer</button>
-    <div id="results_e364444f-ab59-44d5-99a5-3d97cc487214" style="display: none">
-        <span id="correct_e364444f-ab59-44d5-99a5-3d97cc487214" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_e364444f-ab59-44d5-99a5-3d97cc487214" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('32e03908-6397-4d6f-af4e-f56e9a88da14', 'C')">Submit Answer</button>
+    <div id="results_32e03908-6397-4d6f-af4e-f56e9a88da14" style="display: none">
+        <span id="correct_32e03908-6397-4d6f-af4e-f56e9a88da14" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_32e03908-6397-4d6f-af4e-f56e9a88da14" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There are 3 preset groups (Timelapse, Photo, and Video). These can be
     set via the Load Preset Group command.
     </div>
 </div>
 
-<div id="quiz_c0ba862d-bd8f-4114-9553-2a4ec0624494" class="quiz">
+<div id="quiz_853da722-5e83-4a90-8f4f-d9bfece6e002" class="quiz">
     <div>
-        <div id="question_c0ba862d-bd8f-4114-9553-2a4ec0624494" class="quiz__question">What of the following sets of FPS values are possible at 5K?</div>
-        <div id="answers_c0ba862d-bd8f-4114-9553-2a4ec0624494">
+        <div id="question_853da722-5e83-4a90-8f4f-d9bfece6e002" class="quiz__question">What of the following sets of FPS values are possible at 5K?</div>
+        <div id="answers_853da722-5e83-4a90-8f4f-d9bfece6e002">
         
             <input type="radio" name="question" value="A"><label>A: [24, 25, 30]</label>
             <br>
@@ -1316,10 +1316,10 @@ screen:</p>
         
         </div>
     </div>
-    <button onclick="showResults('c0ba862d-bd8f-4114-9553-2a4ec0624494', 'A')">Submit Answer</button>
-    <div id="results_c0ba862d-bd8f-4114-9553-2a4ec0624494" style="display: none">
-        <span id="correct_c0ba862d-bd8f-4114-9553-2a4ec0624494" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_c0ba862d-bd8f-4114-9553-2a4ec0624494" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('853da722-5e83-4a90-8f4f-d9bfece6e002', 'A')">Submit Answer</button>
+    <div id="results_853da722-5e83-4a90-8f4f-d9bfece6e002" style="display: none">
+        <span id="correct_853da722-5e83-4a90-8f4f-d9bfece6e002" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_853da722-5e83-4a90-8f4f-d9bfece6e002" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         Among these options, only 24 is possible. You’re not actually expected to know
     this. But you should know where to find the
     <a href="https://gopro.github.io/OpenGoPro/ble#camera-capabilities">information</a>.
@@ -1374,7 +1374,7 @@ next tutorial to see how to get and perform operations using the media list.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-03-04T11:41:53-08:00">March 4, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-03-04T12:31:27-08:00">March 4, 2022</time></p>
 
 
       </footer>
