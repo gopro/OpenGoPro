@@ -92,7 +92,7 @@ def setup_logging(
         "open_gopro.ble.client": logging.DEBUG,
         "open_gopro.wifi.adapters.wireless": logging.DEBUG,
         "open_gopro.responses": logging.DEBUG,
-        "open_gopro.util": logging.INFO,
+        "open_gopro.util": logging.DEBUG,
         "bleak": logging.WARNING,
         "urllib3": logging.WARNING,
         "http.client": logging.WARNING,

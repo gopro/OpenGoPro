@@ -8,6 +8,11 @@ import importlib.metadata as importlib_metadata
 
 __version__ = importlib_metadata.version(__name__)
 
+# Set up custom logging level
+from open_gopro.util import addLoggingLevel
+import logging
+addLoggingLevel("TRACE", logging.DEBUG - 5)
+
 from open_gopro.gopro import GoPro
 from open_gopro.api import Params
 from open_gopro.responses import GoProResp
