@@ -17,7 +17,7 @@ pairing with the app.
 # Prerequisites
 
 The correct GoPro Webcam drivers must be installed. To verify this, ensure that you can first use your desired
-GoPro as a webcam following the steps [here](https://community.gopro.com/t5/en/How-To-Use-Your-GoPro-As-A-Webcam/ta-p/665493).
+GoPro as a webcam following the steps [here](https://community.gopro.com/s/article/GoPro-Webcam?language=en_US).
 
 # Usage
 

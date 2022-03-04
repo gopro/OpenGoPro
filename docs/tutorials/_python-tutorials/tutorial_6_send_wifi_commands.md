@@ -525,7 +525,7 @@ The JSON **presetGroupArray** tag is a list of presets where each preset is comp
 an ID, array of settings, and other descriptive information. In the example above, we can
 see that there is a user-defined looping preset and a default video preset. For more
 information on creating / using custom presets, see the
-[GoPro Community Article](https://community.gopro.com/t5/en/How-To-Use-Your-GoPro-As-A-Webcam/ta-p/665493).
+[GoPro Community Article](https://community.gopro.com/s/article/GoPro-Webcam?language=en_US).
 A future lab may be created to demonstrate parsing this JSON directly into a protobuf-compiled object.
 
 {% note %}
