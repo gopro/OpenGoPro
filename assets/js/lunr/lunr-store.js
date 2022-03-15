@@ -22,7 +22,7 @@ var store = [
         },
         {
             "title": "Demos: ",
-            "excerpt": "C C++ GoPro C/C++ Demos Two C / C++ demos to send media commands and start/stop the preview stream Csharp GoProCSharpSample A C demo for discovering, pairing, connecting and controlling a camera CSharp Webcam Demo A C demo to demonstrate webcam functionality Ionic Go Pro demo Ionic + Capacitor 3 Ionic demo for transfering files from GoPro to Mobile over Wi-Fi here are demos for iOS &amp; Android Python Open GoPro Python SDK A Python package to easily exercise the Open GoPro APIs + CLIs for taking pictures, videos, etc Swift Swift Enable WiFi Demo A swift demo for discovering, connecting and enabling Wi-Fi on a GoPro camera",
+            "excerpt": "C C++ GoPro C/C++ Demos Two C / C++ demos to send media commands and start/stop the preview stream GoPro Low Latency Stream Demo Low latency webcam/preview stream demo Csharp GoProCSharpSample A C demo for discovering, pairing, connecting and controlling a camera CSharp Webcam Demo A C demo to demonstrate webcam functionality Ionic Go Pro demo Ionic + Capacitor 3 Ionic demo for transfering files from GoPro to Mobile over Wi-Fi here are demos for iOS &amp; Android Python Open GoPro Python SDK A Python package to easily exercise the Open GoPro APIs + CLIs for taking pictures, videos, etc Swift Swift Enable WiFi Demo A swift demo for discovering, connecting and enabling Wi-Fi on a GoPro camera",
             "categories": [],
             "tags": [],
             "url": "/OpenGoPro/demos#"
@@ -96,6 +96,13 @@ var store = [
             "categories": [],
             "tags": [],
             "url": "/OpenGoPro/demos/c_c++/GoProC_C++Demo#"
+        },
+        {
+            "title": "GoPro Low Latency Stream Demo: ",
+            "excerpt": "This demostrates how to decode the GoPro webcam or 16x9 video preview stream using the ffmpeg library. To use this demo, plug in a hero 9 or hero 10 camera while in a standard video mode and run the app. The webcam stream at 1080p should be displayed in the window. The display output is not optimized. To switch to preview stream (720p non processed stream), uncomment the define in GoProStreamDemo.h //define USE_PREVIEW_STREAM",
+            "categories": [],
+            "tags": [],
+            "url": "/OpenGoPro/demos/c_c++/GoProStreamDemo#"
         },
         {
             "title": "GoProCSharpSample: ",

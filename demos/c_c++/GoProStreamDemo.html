@@ -9,8 +9,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Go Pro demo Ionic + Capacitor 3 :  Open GoPro</title>
-<meta name="description" content="Go Pro demo Ionic + Capacitor 3">
+<!-- begin _includes/seo.html --><title>GoPro Low Latency Stream Demo :  Open GoPro</title>
+<meta name="description" content="GoPro Low Latency Stream Demo">
 
 
   <meta name="author" content="GoPro">
@@ -22,11 +22,11 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
-<meta property="og:title" content="Go Pro demo Ionic + Capacitor 3">
-<meta property="og:url" content="https://gopro.github.io/OpenGoPro/demos/ionic/file_transfer">
+<meta property="og:title" content="GoPro Low Latency Stream Demo">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/demos/c_c++/GoProStreamDemo">
 
 
-  <meta property="og:description" content="Go Pro demo Ionic + Capacitor 3">
+  <meta property="og:description" content="GoPro Low Latency Stream Demo">
 
 
 
@@ -41,7 +41,7 @@
 
 
 
-<link rel="canonical" href="https://gopro.github.io/OpenGoPro/demos/ionic/file_transfer">
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/demos/c_c++/GoProStreamDemo">
 
 
 
@@ -199,7 +199,7 @@
       
         
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/OpenGoPro/ionic" itemprop="item"><span itemprop="name">Ionic</span></a>
+          <a href="/OpenGoPro/c_c++" itemprop="item"><span itemprop="name">C_c++</span></a>
           <meta itemprop="position" content="3">
         </li>
         <span class="sep">/</span>
@@ -207,7 +207,7 @@
     
       
       
-        <li class="current">Go Pro demo Ionic + Capacitor 3</li>
+        <li class="current">GoPro Low Latency Stream Demo</li>
       
     
   </ol>
@@ -342,15 +342,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Go Pro demo Ionic + Capacitor 3">
-    <meta itemprop="description" content="Go Pro demo Ionic + Capacitor 3">
+    <meta itemprop="headline" content="GoPro Low Latency Stream Demo">
+    <meta itemprop="description" content="GoPro Low Latency Stream Demo">
     <meta itemprop="datePublished" content="2022-03-15T11:49:16-07:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Go Pro demo Ionic + Capacitor 3
+          <h1 id="page-title" class="page__title" itemprop="headline">GoPro Low Latency Stream Demo
 </h1>
           
 
@@ -382,83 +382,19 @@
             <nav class="toc">
               <header><h4 class="nav__title">
 <i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu">
-<li><a href="#you-can-also-preview-video-demos-for">You can also preview video demos for</a></li>
-<li><a href="#dependencies">Dependencies</a></li>
-<li><a href="#run-on-your-computer">Run on your computer</a></li>
-<li><a href="#ios">iOS</a></li>
-<li><a href="#android">Android</a></li>
-</ul>
+              
 
             </nav>
           </aside>
         
-        <button class="github-button" onclick="location.href='https://github.com/gopro/OpenGoPro/tree/main/demos/ionic/file_transfer'">
+        <button class="github-button" onclick="location.href='https://github.com/gopro/OpenGoPro/tree/main/demos/c_c++/GoProStreamDemo'">
           <i class="fab fa-github"></i>
           View this Demo on Github
         </button>
-        <ol>
-  <li>Connect phone to GoPro via bluetooth</li>
-  <li>Send Bluetooth Commands (take photo, get wifi creds, shut down)</li>
-  <li>Connect phone to GoPro via WiFi</li>
-  <li>Download files to phone from GoPro via WiFi</li>
-</ol>
-
-<h1 id="you-can-also-preview-video-demos-for">You can also preview video demos for</h1>
-
-<ul>
-  <li><a href="#iOS">iOS</a></li>
-  <li><a href="#Android">Android</a></li>
-</ul>
-
-<h1 id="dependencies">Dependencies</h1>
-
-<ol>
-  <li>for bluetooth https://github.com/capacitor-community/bluetooth-le plugin is used</li>
-  <li>for WiFI https://github.com/digaus/community-capacitor-wifi plugin is used</li>
-</ol>
-
-<h1 id="run-on-your-computer">Run on your computer</h1>
-
-<ol>
-  <li><a href="https://ionicframework.com/docs/angular/your-first-app#install-ionic-tooling">install ionic CLI</a></li>
-  <li>git clone https://github.com/gopro/OpenGoPro.git</li>
-  <li>cd project <code class="language-plaintext highlighter-rouge">cd OpenGoPro/demos/ionic/file_transfer</code>
-</li>
-  <li>run <code class="language-plaintext highlighter-rouge">npm install</code>
-</li>
-  <li>run <code class="language-plaintext highlighter-rouge">ionic build</code>
-</li>
-  <li>run <code class="language-plaintext highlighter-rouge">ionic cap sync</code>
-</li>
-</ol>
-
-<ul>
-  <li>for ios
-    <ul>
-      <li>run <code class="language-plaintext highlighter-rouge">ionic cap open ios</code>
-</li>
-      <li>connect real device</li>
-      <li>click run app button</li>
-    </ul>
-  </li>
-  <li>for android
-    <ul>
-      <li>run <code class="language-plaintext highlighter-rouge">ionic cap open android</code>
-</li>
-      <li>connect real device</li>
-      <li>click run app</li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="ios">iOS</h1>
-
-<video src="https://user-images.githubusercontent.com/12681781/132084434-80958292-d4c7-4491-bbc5-1d1708f2a497.MOV" controls="controls" style="max-width: 450px;"></video>
-
-<h1 id="android">Android</h1>
-
-<video src="https://user-images.githubusercontent.com/12681781/132084437-e9af193a-6d9a-4957-aad3-be69276627dc.MOV" controls="controls" style="max-width: 450px;"></video>
+        <p>This demostrates how to decode the GoPro webcam or 16x9 video preview stream using the ffmpeg library.
+To use this demo, plug in a hero 9 or hero 10 camera while in a standard video mode and run the app.  The webcam stream at 1080p should be displayed in the window. The display output is not optimized.
+To switch to preview stream (720p non processed stream), uncomment the #define in GoProStreamDemo.h
+//#define USE_PREVIEW_STREAM</p>
 
         
       </section>
@@ -480,11 +416,11 @@
       
   <nav class="pagination">
     
-      <a href="/OpenGoPro/demos/csharp/webcam" class="pagination--pager" title="CSharp Webcam Demo
+      <a href="/OpenGoPro/demos/c_c++/GoProC_C++Demo" class="pagination--pager" title="GoPro C/C++ Demos
 ">Previous</a>
     
     
-      <a href="/OpenGoPro/demos/python/sdk_wireless_camera_control" class="pagination--pager" title="Open GoPro Python SDK
+      <a href="/OpenGoPro/demos/csharp/GoProCSharpSample" class="pagination--pager" title="GoProCSharpSample
 ">Next</a>
     
   </nav>
