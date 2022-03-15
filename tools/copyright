@@ -68,7 +68,8 @@ main() {
         # Is there a copyright?
         # Note! We're only looking at the first 7 lines as an optimization to avoid reading large files.
         # In actuality, there is no reason for it be after the 3rd line.
-        copyright=$(head -n 7 $file | cat -n | grep -m1 '(C) Copyright' | sed -e 's/^[[:space:]]*//') # Add line numbers when cat'ing, then trim leading whitespace.
+        copyright=$(head -n 7 $file | cat -n | grep -m1 '(C) Copyright.*GoPro' | sed -e 's/^[[:space:]]*//') # Add line numbers when cat'ing, then trim leading whitespace.
+        generic_copyright=$(head -n 7 $file | cat -n | grep -i -m1 'copyright' | sed -e 's/^[[:space:]]*//')
         if [[ "$copyright" ]]; then
             # If this file explicitely does not get a copyright, continue
             if  [[ $(echo "$copyright" | grep -c "No (C) Copyright") > 0 ]]; then
@@ -92,6 +93,10 @@ main() {
                 lines="$line_start,$line_end"
                 sed -i.bak "$lines"'d' $file && rm "$file".bak # The .bak is to appease MacOS
             fi
+        elif [[ "$generic_copyright" ]]; then
+            #this file has a copyright that is potentially not our own
+            printf "$FORMAT\n" "$file" "" "" "" "*"
+            continue
         fi
 
         # The copyright was either missing or had an incorrect version. Now see if this file deserves a copyright.
