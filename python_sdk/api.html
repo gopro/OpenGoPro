@@ -1006,6 +1006,12 @@ and data is sent.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.tag_hilight">
+<span class="sig-name descname"><span class="pre">tag_hilight</span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.tag_hilight" title="Permalink to this definition"></a></dt>
+<dd><p>Tag a highlight during encoding</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings">
 <span class="sig-name descname"><span class="pre">unregister_for_all_settings</span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings" title="Permalink to this definition"></a></dt>
 <dd><p>Unregister push notifications for all settings</p>
@@ -1056,6 +1062,12 @@ and data is sent.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.api.ble_commands.BleSettings" title="open_gopro.api.ble_commands.BleSettings"><span class="pre">open_gopro.api.ble_commands.BleSettings</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.ble_commands.BleSettings.Iterator" title="Permalink to this definition"></a></dt>
 <dd><p>Iterator to iterate through a BleSettings instance’s attributes</p>
 <p>Does not include the ‘communicator’ instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleSettings.anti_flicker">
+<span class="sig-name descname"><span class="pre">anti_flicker</span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleSettings.anti_flicker" title="Permalink to this definition"></a></dt>
+<dd><p>Anti Flicker frequency. Set with <code class="xref py py-class docutils literal notranslate"><span class="pre">Params.AntiFlicker</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -2681,6 +2693,11 @@ For example, first send the command and store the response:</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.CmdId.TAG_HILIGHT">
+<span class="sig-name descname"><span class="pre">TAG_HILIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">24</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.TAG_HILIGHT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.CmdId.UNREGISTER_ALL_SETTINGS">
 <span class="sig-name descname"><span class="pre">UNREGISTER_ALL_SETTINGS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">114</span></em><a class="headerlink" href="#open_gopro.constants.CmdId.UNREGISTER_ALL_SETTINGS" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -2985,6 +3002,11 @@ For example, first send the command and store the response:</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">open_gopro.constants.</span></span><span class="sig-name descname"><span class="pre">SettingId</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.constants.SettingId" title="Permalink to this definition"></a></dt>
 <dd><p>Setting ID’s that identify settings and are written to GoProUUIDs.CQ_SETTINGS.</p>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.SettingId.ANTI_FLICKER">
+<span class="sig-name descname"><span class="pre">ANTI_FLICKER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">134</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.ANTI_FLICKER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.SettingId.AUTO_OFF">
 <span class="sig-name descname"><span class="pre">AUTO_OFF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">59</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.AUTO_OFF" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -3102,11 +3124,6 @@ For example, first send the command and store the response:</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.SettingId.INTERNAL_133">
 <span class="sig-name descname"><span class="pre">INTERNAL_133</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">133</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.INTERNAL_133" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="open_gopro.constants.SettingId.INTERNAL_134">
-<span class="sig-name descname"><span class="pre">INTERNAL_134</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">134</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.INTERNAL_134" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
