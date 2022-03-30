@@ -35,10 +35,10 @@ def main() -> int:
         with GoPro(identifier, wifi_interface=wifi_interface) as gopro:
             # Configure settings to prepare for video
             if gopro.is_encoding:
-                assert gopro.ble_command.set_shutter(Params.Shutter.OFF).is_ok
-            assert gopro.ble_setting.video_performance_mode.set(Params.PerformanceMode.MAX_PERFORMANCE).is_ok
-            assert gopro.ble_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT).is_ok
-            assert gopro.ble_command.set_turbo_mode(False).is_ok
+                gopro.ble_command.set_shutter(Params.Shutter.OFF)
+            gopro.ble_setting.video_performance_mode.set(Params.PerformanceMode.MAX_PERFORMANCE)
+            gopro.ble_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT)
+            gopro.ble_command.set_turbo_mode(False)
             assert gopro.ble_command.load_preset(Params.Preset.CINEMATIC).is_ok
 
             # Get the media list before

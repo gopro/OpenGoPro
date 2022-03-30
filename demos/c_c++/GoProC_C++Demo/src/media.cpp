@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include <curl/curl.h>
-#include "cJSON.h"
+#include <cjson/cJSON.h>
+#include <cstring>
 #include <stdio.h>
 /**
  * MEDIA COMMANDS DEMO:
@@ -25,6 +26,9 @@ enum MediaRequest
     eMediaInfo,
     eMediaInfoPretty,
     eDownloadMedia,
+    eHilightFile,
+    eHilightMoment,
+    eHilightRemove,
     eDemo
 };
 
@@ -51,7 +55,7 @@ long perform_request(CURL *curlReq)
     // Check if curl request succeeded
     if(curlCode != CURLE_OK)
     {
-        printf("\nFailed to perform curl request - received error code:%d", curlCode);
+        printf("\nFailed to perform curl request - received error code:%d\n", curlCode);
         return ERR_FAILURE;
     }
 
@@ -59,7 +63,7 @@ long perform_request(CURL *curlReq)
     long resp_code = get_response_code(curlReq);
     if(resp_code != HTTP_ERR_CODE_OK)
     {
-        printf("\nRequest returned http error code:%ld", resp_code);
+        printf("\nRequest returned http error code:%ld\n", resp_code);
         return ERR_FAILURE;
     }
     return ERR_SUCCESS;
@@ -80,8 +84,9 @@ size_t file_response_callback(char *contents, size_t size, size_t mem, void *dat
     return file_size;
 }
 
-MediaRequest check_user_request(int num_inputs, char *input)
+MediaRequest check_user_request(int num_inputs, char *input_array[])
 {
+    char* input = input_array[1];
     if(num_inputs == 2)
     {
         if((strcmp(input, "--list_files") == 0) || (strcmp(input, "-l") == 0))
@@ -91,6 +96,10 @@ MediaRequest check_user_request(int num_inputs, char *input)
         if((strcmp(input, "--list_files_pretty") == 0) || (strcmp(input, "-f") == 0))
         {
             return eListFilesPretty;
+        }
+        if(strcmp(input, "--tag-moment") == 0)
+        {
+            return eHilightMoment;
         }
         return eUnknown;
     }
@@ -109,12 +118,30 @@ MediaRequest check_user_request(int num_inputs, char *input)
         {
             return eDemo;
         }
+        if(strcmp(input, "--tag-photo") == 0)
+        {
+            return eHilightFile;
+        }
+        if(strcmp(input, "--tag-photo-remove") == 0)
+        {
+            return eHilightRemove;
+        }
     }
-    if(num_inputs == 4)
+
+    if(num_inputs >= 4)
     {
         if((strcmp(input, "--download") == 0) || (strcmp(input, "-g") == 0))
         {
             return eDownloadMedia;
+        }
+
+        if(strcmp(input, "--tag-video") == 0)
+        {
+            return eHilightFile;
+        }
+        if(strcmp(input, "--tag-video-remove") == 0)
+        {
+            return eHilightRemove;
         }
     }
     return eUnknown;
@@ -131,7 +158,7 @@ int send_write_request(CURL *curl, const char *path, const char* curl_response, 
     CURLcode code = curl_easy_setopt(curl, CURLOPT_URL, path);
     if(code != CURLE_OK)
     {
-        printf("\nFailed to get media list - received error code:%d", code);
+        printf("\nFailed to perform curl operation - received error code:%d", code);
         curl_easy_cleanup(curl);
         return ERR_FAILURE;
     }
@@ -172,8 +199,11 @@ int send_write_request(CURL *curl, const char *path, const char* curl_response, 
         }
     }
 
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT, 15L);
+
     if(perform_request(curl) == ERR_FAILURE)
     {
+        printf("\nFailed to perform request:%s", path);
         curl_easy_cleanup(curl);
         return ERR_FAILURE;
     }
@@ -210,12 +240,17 @@ int download_media_file(CURL *curl, const char *media_file, const char *out_file
 void help()
 {
     printf("\nUsage");
-    printf("\n\t./media_commands -l, --list_files");
-    printf("\n\t./media_commands -f, --list_files_pretty");
-    printf("\n\t./media_commands -i, --info <camera_file_path>(i.e: 100GOPRO/GH010433.MP4");
-    printf("\n\t./media_commands -p, --info_pretty <camera_file_path>(i.e: 100GOPRO/GH010433.MP4");
-    printf("\n\t./media_commands -g, --download <camera_file_path> <output_path/output_file_name>");
-    printf("\n\t./media_commands -d, --demo <output_path>\n");
+    printf("\n\t./media_commands <-l, --list_files>");
+    printf("\n\t./media_commands <-f, --list_files_pretty>");
+    printf("\n\t./media_commands <-i, --info> <camera_file_path>(i.e: 100GOPRO/GH010433.MP4");
+    printf("\n\t./media_commands <-p, --info_pretty> <camera_file_path>(i.e: 100GOPRO/GH010433.MP4");
+    printf("\n\t./media_commands <-g, --download> <camera_file_path> <output_path/output_file_name>");
+    printf("\n\t./media_commands --tag-moment");
+    printf("\n\t./media_commands --tag-video <video_file_path> <offset_ms>");
+    printf("\n\t./media_commands --tag-photo <photo_file_path>");
+    printf("\n\t./media_commands --tag-video-remove <video_file_path> <offset_ms>");
+    printf("\n\t./media_commands --tag-photo-remove <photo_file_path>");
+    printf("\n\t./media_commands <-d, --demo> <output_path>\n");
 }
 
 int download_first_file(CURL *curl, cJSON *fs_array, const char* directory, const char* output_path)
@@ -246,13 +281,13 @@ int download_first_file(CURL *curl, cJSON *fs_array, const char* directory, cons
 
 int main(int argc, char* argv[])
 {
-    if(argc < 2 || argc > 4)
+    if(argc < 2 || argc > 5)
     {
         help();
         return ERR_FAILURE;
     }
 
-    MediaRequest request = check_user_request(argc, argv[1]);
+    MediaRequest request = check_user_request(argc, argv);
     if(request == eUnknown)
     {
         help();
@@ -284,8 +319,7 @@ int main(int argc, char* argv[])
                 const string& path = "http://10.5.5.9:8080/gopro/media/list";
                 if(send_write_request(curl, path.c_str(), curl_response, NULL) != ERR_SUCCESS)
                 {
-                    ret =  ERR_FAILURE;
-                    break;
+                    return ERR_FAILURE;
                 }
                 cJSON *json = cJSON_Parse(curl_response);
                 const char *json_pretty = cJSON_Print(json);
@@ -299,8 +333,7 @@ int main(int argc, char* argv[])
                 printf("\n%s info:", file.c_str());
                 if(send_write_request(curl, path.c_str(), curl_response, NULL) != ERR_SUCCESS)
                 {
-                    ret =  ERR_FAILURE;
-                    break;
+                    return ERR_FAILURE;
                 }
                 printf("\n%s\n", curl_response);
                 break;
@@ -312,8 +345,7 @@ int main(int argc, char* argv[])
                 printf("\n%s info:", file.c_str());
                 if(send_write_request(curl, path.c_str(), curl_response, NULL) != ERR_SUCCESS)
                 {
-                    ret =  ERR_FAILURE;
-                    break;
+                    return ERR_FAILURE;
                 }
                 cJSON *json = cJSON_Parse(curl_response);
                 if(json == NULL)
@@ -333,6 +365,48 @@ int main(int argc, char* argv[])
                 ret = download_media_file(curl, media_file.c_str(), out_file.c_str());
                 break;
             }
+            case eHilightFile:
+            {
+                string file(argv[2]);
+                // Get the offset for the tag. Value should be in ms.
+                // Note: if file is a photo, no offset should be given
+                string offset_ms = "";
+                if(argc >= 4)
+                    offset_ms = "&ms=" + string(argv[3]);
+                const string& path = "http://10.5.5.9:8080/gopro/media/hilight/file?path=" + file + offset_ms;
+                if(send_write_request(curl, path.c_str(), curl_response, NULL) != ERR_SUCCESS)
+                {
+                    return ERR_FAILURE;
+                }
+                printf("\n%s\n", curl_response);
+                break;                break;
+            }
+            case eHilightRemove:
+            {
+                string file(argv[2]);
+                // Get the offset for the tag. Value should be in ms
+                // Note: if file is a photo, no offset should be given
+                string offset_ms = "";
+                if(argc >= 4)
+                    offset_ms = "&ms=" + string(argv[3]);
+                const string& path = "http://10.5.5.9:8080/gopro/media/hilight/remove?path=" + file + offset_ms;
+                if(send_write_request(curl, path.c_str(), curl_response, NULL) != ERR_SUCCESS)
+                {
+                    return ERR_FAILURE;
+                }
+                printf("\n%s\n", curl_response);
+                break;                break;
+            }
+            case eHilightMoment:
+            {
+                const string& path = "http://10.5.5.9:8080/gopro/media/hilight/moment";
+                if(send_write_request(curl, path.c_str(), curl_response, NULL) != ERR_SUCCESS)
+                {
+                    return ERR_FAILURE;
+                }
+                printf("\n%s\n", curl_response);
+                break;                break;
+            }
             case eDemo:
             {
                 /*
@@ -341,8 +415,7 @@ int main(int argc, char* argv[])
                 const string& path = "http://10.5.5.9:8080/gopro/media/list";
                 if(send_write_request(curl, path.c_str(), curl_response, NULL) != ERR_SUCCESS)
                 {
-                    ret =  ERR_FAILURE;
-                    break;
+                    return ERR_FAILURE;
                 }
                 cJSON *json = cJSON_Parse(curl_response);
                 if(json == NULL)

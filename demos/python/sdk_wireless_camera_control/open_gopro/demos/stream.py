@@ -35,9 +35,9 @@ def main() -> int:
         with GoPro(identifier, wifi_interface=wifi_interface) as gopro:
             # Turn off the shutter if we are currently encoding
             if gopro.is_encoding:
-                assert gopro.ble_command.set_shutter(Params.Shutter.OFF)
+                gopro.ble_command.set_shutter(Params.Shutter.OFF)
 
-            assert gopro.ble_command.set_turbo_mode(False).is_ok
+            gopro.ble_command.set_turbo_mode(False)
 
             console.print("Starting the preview stream...")
             assert gopro.wifi_command.stop_preview_stream().is_ok

@@ -2,8 +2,11 @@
 /* This copyright was auto-generated on Wed, Sep  1, 2021  5:05:40 PM */
 
 #include <curl/curl.h>
-#include <unistd.h>
 #include <string.h>
+#include <stdint.h>
+#include <chrono>
+#include <thread>
+
 /**
  * PREVIEW STREAM COMMANDS DEMO:
  * Commands used in this demo can be found in the WiFi documentation here: https://github.com/gopro/OpenGoPro/tree/main/docs/wifi
@@ -158,6 +161,7 @@ int main(int argc, char *argv[])
                 // Prompt to see how long the user wants the preview stream to run
                 printf("\nEnter stream duration(seconds): ");
                 int result = scanf("%u", &duration);
+
                 if (result != 1)
                 {
                     printf("\nStream duration was invalid, exiting demo");
@@ -178,7 +182,7 @@ int main(int argc, char *argv[])
                 }
 
                 printf("\nStream will run for %u seconds\n", duration);
-                sleep(duration);
+                std::this_thread::sleep_for(std::chrono::seconds(duration));
 
                 if(stop_stream(curl) == ERR_FAILURE)
                 {

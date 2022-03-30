@@ -1,15 +1,14 @@
 #=======================================================================================
 #============================= PACKAGE CONFIGURATION  ==================================
 #=======================================================================================
-
 [tool.poetry]
 name = "open_gopro"
 version = "0.9.0"
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
-readme      = "README.md"
-license     = "MIT"
-repository  = "https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control"
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control"
 documentation = "https://gopro.github.io/OpenGoPro/"
 classifiers = [
     # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -43,7 +42,6 @@ build-backend = "poetry.core.masonry.api"
 #=======================================================================================
 #================================= DEPENDENCIES ========================================
 #=======================================================================================
-
 [tool.poetry.dependencies]
 python = "^3.8"
 bleak = "=0.14.2"
@@ -51,7 +49,7 @@ construct = "*"
 rich = "*"
 wrapt = "*"
 requests = "*"
-betterproto = {extras = ["compiler"], version = "*"}
+betterproto = { extras = ["compiler"], version = "*" }
 protobuf = "*"
 typing-extensions = "*"
 
@@ -81,7 +79,6 @@ nox-poetry = "=0.9.0"
 #=======================================================================================
 #================================== POE TASKS ==========================================
 #=======================================================================================
-
 [tool.poe.tasks.unit_tests]
 cmd = "pytest tests/unit --cov-fail-under=70"
 help = "Run unit tests"
@@ -153,7 +150,6 @@ help = "Format, check types, lint, check docstrings, and run unit tests"
 #=======================================================================================
 #============================== TOOL CONFIGURATIONS ====================================
 #=======================================================================================
-
 [tool.mypy]
 ignore_missing_imports = true
 warn_redundant_casts = true
@@ -213,12 +209,12 @@ disable = [
     "too-many-nested-blocks",
     "unspecified-encoding",
     "consider-using-with",
-    "abstract-method",               # handled by mypy
+    "abstract-method", # handled by mypy
     "cyclic-import",
-    "missing-raises-doc",            # handled by darglint
-    "useless-type-doc",              # handled by darglint
-    "useless-param-doc",             # handled by darglint
-    "redundant-returns-doc",         # hanlded by darglint
+    "missing-raises-doc", # handled by darglint
+    "useless-type-doc", # handled by darglint
+    "useless-param-doc", # handled by darglint
+    "redundant-returns-doc", # hanlded by darglint
     "logging-fstring-interpolation",
     "logging-format-interpolation",
     "duplicate-code",
@@ -231,7 +227,7 @@ disable = [
     "too-many-lines",
     "too-many-statements",
     "fixme",
-    "protected-access",              # Maybe fix this one
+    "protected-access", # Maybe fix this one
     "invalid-name",
 ]
 

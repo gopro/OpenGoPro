@@ -65,6 +65,9 @@ class BleCommands:
             GoProResp: command status
         """
 
+        self.tag_hilight = BleWriteNoParamsCommand(communicator, GoProUUIDs.CQ_COMMAND, CmdId.TAG_HILIGHT)
+        """Tag a highlight during encoding"""
+
         self.power_down = BleWriteNoParamsCommand(communicator, GoProUUIDs.CQ_COMMAND, CmdId.POWER_DOWN)
         """Power down the camera.
 
@@ -430,6 +433,13 @@ class BleSettings:
             build_enum_adapter(Params.PerformanceMode),
         )
         """Video Performance Mode. Set with :py:class:`Params.PerformanceMode`"""
+
+        self.anti_flicker = BleSetting[Params.AntiFlicker](
+            self.communicator,
+            SettingId.ANTI_FLICKER,
+            build_enum_adapter(Params.AntiFlicker),
+        )
+        """Anti Flicker frequency. Set with :py:class:`Params.AntiFlicker`"""
 
     def __iter__(self) -> Iterator:
         """Return an iterable of this instance's attributes

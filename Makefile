@@ -22,12 +22,12 @@ prepare_demos: ## Copy demos into docs folder for Jekyll building and add front 
 	@tools/prepare_demos
 
 .PHONY: build
-build: clean prepare_demos ## Build but do not serve the jekyll pages
+build: setup clean prepare_demos ## Build but do not serve the jekyll pages
 	@echo "🏗️ Building jekyll site..."
 	@JEKYLL_CONFIG=${JEKYLL_CONFIG} docker-compose run --rm jekyll bundle exec jekyll build --baseurl ${BASE_URL} --config _config.yml,_config-${JEKYLL_CONFIG}.yml
 
 .PHONY: serve
-serve: clean prepare_demos ## Serve the site locally at http://127.0.0.1:4998/
+serve: setup clean prepare_demos ## Serve the site locally at http://127.0.0.1:4998/
 	@echo "🚦 Serving the ${JEKYLL_CONFIG} site"
 	-@JEKYLL_CONFIG=${JEKYLL_CONFIG} docker-compose run --rm --service-ports jekyll
 

@@ -1,5 +1,5 @@
 /* preset_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Wed Feb  9 22:14:14 UTC 2022 */
+/* This copyright was auto-generated on Tue Mar 29 21:48:50 UTC 2022 */
 
 /*
 Defines the structure of protobuf message received from camera containing preset status
@@ -62,6 +62,7 @@ enum EnumFlatMode {
     FLAT_MODE_LIVE_BURST = 25;
     FLAT_MODE_NIGHT_LAPSE_VIDEO = 26;
     FLAT_MODE_SLOMO = 27;
+    FLAT_MODE_IDLE = 28;
 }
 
 

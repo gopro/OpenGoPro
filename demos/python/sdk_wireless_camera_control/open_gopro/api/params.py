@@ -54,8 +54,10 @@ class Resolution(GoProEnum):
     RES_4K = 1
     RES_2_7K = 4
     RES_2_7K_4_3 = 6
+    RES_1440 = 7
     RES_1080 = 9
     RES_4K_4_3 = 18
+    RES_5K = 24
     RES_5_K_4_3 = 25
     RES_5_3_K = 100
 
@@ -276,6 +278,11 @@ class MediaFormat(GoProEnum):
     TIME_LAPSE_PHOTO = 20
     NIGHT_LAPSE_PHOTO = 21
     NIGHT_LAPSE_VIDEO = 26
+
+
+class AntiFlicker(GoProEnum):
+    HZ_60 = 2
+    HZ_50 = 3
 
 
 # Abstractions from protobuf definitions

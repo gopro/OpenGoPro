@@ -454,7 +454,6 @@ class GoProResp:
             try:
                 # Parse based on identifier
                 if identifier in [SettingId, StatusId]:
-                    assert identifier is not None
                     # Parse all parameters
                     self.status = ErrorCode(buf[0])
                     buf = buf[1:]

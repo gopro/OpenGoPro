@@ -11,16 +11,16 @@ from open_gopro import GoPro, Params
 
 
 class TestCommon:
-    async def test_get_individual_statuses(self, gopro_ble_no_wifi: GoPro):
-        for status in gopro_ble_no_wifi.ble_status:
-            print(f"Getting {status} value...")
-            assert status.get_value().is_ok
-
     async def test_get_all_statuses(self, gopro_ble_no_wifi: GoPro):
         assert gopro_ble_no_wifi.ble_command.get_camera_statuses()
 
     async def test_get_all_settings(self, gopro_ble_no_wifi: GoPro):
         assert gopro_ble_no_wifi.ble_command.get_camera_settings()
+
+    async def test_get_individual_statuses(self, gopro_ble_no_wifi: GoPro):
+        for status in gopro_ble_no_wifi.ble_status:
+            print(f"Getting {status} value...")
+            assert status.get_value().is_ok
 
     async def test_get_individual_setting_values(self, gopro_ble_no_wifi: GoPro):
         for setting in gopro_ble_no_wifi.ble_setting:
@@ -88,7 +88,6 @@ class TestCommon:
             pytest.fail(f"Need to implement test for version {version}")
 
 
-@pytest.mark.skip("Not Currently supporting Hero9")
 @pytest.mark.parametrize("gopro_ble_no_wifi", ["HERO9"], indirect=True)
 class TestHero9Specific:
     async def test_cycle_resolutions(self, gopro_ble_no_wifi: GoPro):

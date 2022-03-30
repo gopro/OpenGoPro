@@ -39,14 +39,6 @@ The `docs` folder [README](docs/README.md) has more detailed information on its 
 -   [Docker](https://www.docker.com) must be installed
 -   To edit any files tracked by `.gitattributes`, git-lfs must be [installed](https://git-lfs.github.com/)
 
-### Setup
-
-1. Build the docker image via:
-
-```
-make setup
-```
-
 ### Usage
 
 First, build and serve the site locally via:
