@@ -88,6 +88,15 @@ class WifiCommands:
             GoProResp: command status and media info as JSON
         """
 
+        self.delete_media = WifiGetJsonWithParams[str](communicator, "gopro/media/delete/file?path=100GOPRO/{}")
+        """Delete a file from the camera.
+
+        Args:
+            value (str): Media file to delete (eg: GOPR0001.MP4)
+
+        Returns:
+            GoProResp: command status as JSON
+        """
         self.get_media_list = WifiGetJsonNoParams(
             communicator, "gopro/media/list", lambda x, _: {"files": x["media"][0]["fs"]}  # type: ignore
         )

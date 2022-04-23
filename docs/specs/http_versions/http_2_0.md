@@ -1240,6 +1240,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
+      <td>Media: Delete File</td>
+      <td>Delete File "100GOPRO/xxx.JPG"</td>
+      <td>GET</td>
+      <td>/gopro/media/delete/file?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>Open GoPro</td>
       <td>Get version</td>
       <td>GET</td>
