@@ -40,6 +40,7 @@ WRITE_TIMEOUT: Final = 5
 GET_TIMEOUT: Final = 5
 HTTP_GET_RETRIES: Final = 5
 
+
 class Interface(enum.Enum):
     """Enum to identify wireless interface"""
 

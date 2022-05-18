@@ -454,7 +454,6 @@ class UUIDsMeta(type):
     """
 
     @no_type_check
-
     def __new__(cls, name, bases, dct) -> UUIDsMeta:  # noqa
         x = super().__new__(cls, name, bases, dct)
         x._int2uuid = {}

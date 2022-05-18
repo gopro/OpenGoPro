@@ -157,7 +157,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
                 Args:
                     device (BleakDevice): discovered device
-                    _ : advertisement that we're ignoring
+                    _ (Any) : advertisement that we're ignoring
                 """
                 # Add to the dict if not unknown
                 if device.name != "Unknown" and device.name is not None:
@@ -221,9 +221,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                 # connection request. This is (potentially) normal BLE behavior.
                 self.disconnected.set()
 
-        async def _async_connect() -> Tuple[
-            Optional[BleakClient], Optional[Union[Exception, BaseException]]
-        ]:
+        async def _async_connect() -> Tuple[Optional[BleakClient], Optional[Union[Exception, BaseException]]]:
             logger.info(f"Establishing BLE connection to {device}...")
 
             connect_session = ConnectSession()

@@ -256,7 +256,6 @@ class BleReadCommand(BleCommand):
     def _response_parser(self) -> BytesParser:
         return self.response_parser
 
-
     def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(build_log_tx_str(self.uuid.name))
         response = self.communicator._read_characteristic(self.uuid)
@@ -286,7 +285,6 @@ class BleWriteNoParamsCommand(BleCommand):
     @property
     def _response_parser(self) -> BytesParser:
         return status_struct if self.response_parser is None else status_struct + self.response_parser
-
 
     def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(build_log_tx_str(self.cmd.name))
@@ -322,7 +320,6 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
     @property
     def _response_parser(self) -> BytesParser:
         return status_struct if self.response_parser is None else status_struct + self.response_parser
-
 
     def __call__(self, value: CommandValueType) -> GoProResp:  # noqa: D102
         logger.info(build_log_tx_str(f"{self.cmd.name}: {str(value)}"))
@@ -368,7 +365,6 @@ class RegisterUnregisterAll(BleWriteNoParamsCommand):
         # TODO refactor to not use dataclasses since derived classes can't have non default members if base classes do
         assert self.producer is not None
         assert self.action is not None
-
 
     def __call__(self) -> GoProResp:  # noqa: D102
         assert self.producer is not None
@@ -464,7 +460,6 @@ class BleProtoCommand(BleCommand):
 
     @abstractmethod
     @no_type_check
-
     def __call__(self, *args: Any, **kwargs: Any) -> GoProResp:  # noqa: D102
         # The method that will actually build and send the protobuf command
 
@@ -770,7 +765,6 @@ class WifiGetJsonWithParams(WifiGetJsonCommand, Generic[CommandValueType]):
     response_parser: Optional[JsonParser] = None
     param_builder: Optional[StringBuilder] = None
 
-
     def __call__(self, value: CommandValueType) -> GoProResp:  # noqa: D102
         values: List[CommandValueType] = [*value] if isinstance(value, Iterable) else [value]
         logger.info(build_log_tx_str(f"{self.endpoint.format(*values)}"))
@@ -800,7 +794,6 @@ class WifiGetJsonNoParams(WifiGetJsonCommand):
         response_parser (Optional[JsonParser]): the parser that will parse the received bytestream into a JSON dict
     """
 
-
     def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(build_log_tx_str(self.endpoint))
         url = self.endpoint
@@ -825,7 +818,6 @@ class WifiGetBinary(ABC):
 
     @abstractmethod
     @no_type_check
-
     def __call__(self, /, **kwargs) -> Path:  # noqa: D102
         # The method that will actually send the command and receive the stream
         # This method's signature shall be override by the subclass.
