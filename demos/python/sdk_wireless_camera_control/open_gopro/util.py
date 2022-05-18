@@ -24,7 +24,6 @@ from rich import traceback
 util_logger = logging.getLogger(__name__)
 
 # From https://stackoverflow.com/questions/2183233/how-to-add-a-custom-loglevel-to-pythons-logging-facility/35804945#35804945
-# pylint: disable=missing-param-doc, no-member
 def addLoggingLevel(levelName: str, levelNum: int) -> None:
     """Comprehensively adds a new logging level to the `logging` module and the currently configured logging class.
 
@@ -342,7 +341,6 @@ class Singleton:
 
     _instances: Dict[Type["Singleton"], Type["Singleton"]] = {}
 
-    # pylint: disable=missing-return-doc
     def __new__(cls, *args: Any, **kwargs: Any) -> Any:  # noqa
         if cls not in cls._instances:
             # https://github.com/python/mypy/issues/6061

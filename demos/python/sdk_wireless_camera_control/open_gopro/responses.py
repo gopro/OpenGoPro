@@ -197,16 +197,16 @@ class GoProResp:
         resp._parse()
         return resp
 
-    def __getitem__(self, key: Any) -> Any:  # pylint: disable=missing-return-doc
+    def __getitem__(self, key: Any) -> Any:
         return self.data[key]
 
-    def __contains__(self, item: Any) -> bool:  # pylint: disable=missing-return-doc
+    def __contains__(self, item: Any) -> bool:
         return item in self.data
 
-    def __iter__(self) -> Iterator:  # pylint: disable=missing-return-doc
+    def __iter__(self) -> Iterator:
         return iter(self.data)
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return pretty_print(
             {"status": self.status.name, "id": "::".join([str(x) for x in self._meta]), **self.data}
         )

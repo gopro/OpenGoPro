@@ -42,6 +42,7 @@ build-backend = "poetry.core.masonry.api"
 #=======================================================================================
 #================================= DEPENDENCIES ========================================
 #=======================================================================================
+
 [tool.poetry.dependencies]
 python = "^3.8"
 bleak = "=0.14.2"
@@ -158,7 +159,7 @@ disallow_untyped_defs = true
 disallow_incomplete_defs = true
 disallow_untyped_decorators = false
 warn_unused_ignores = true
-warn_unreachable = true
+warn_unreachable = false # handled by linter
 show_error_context = true
 pretty = true
 
@@ -198,10 +199,6 @@ exclude_lines = [
 ] # Don't complain if tests don't hit defensive assertion code:
 
 [tool.pylint.'MASTER']
-load-plugins = "pylint.extensions.check_docs"
-accept-no-param-doc = "no"
-accept-no-return-doc = "no"
-default-docstring-type = "google"
 ignore = ["tests", "proto"]
 
 [tool.pylint.'MESSAGES CONTROL']
@@ -211,10 +208,6 @@ disable = [
     "consider-using-with",
     "abstract-method", # handled by mypy
     "cyclic-import",
-    "missing-raises-doc", # handled by darglint
-    "useless-type-doc", # handled by darglint
-    "useless-param-doc", # handled by darglint
-    "redundant-returns-doc", # hanlded by darglint
     "logging-fstring-interpolation",
     "logging-format-interpolation",
     "duplicate-code",

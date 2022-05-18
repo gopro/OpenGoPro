@@ -36,7 +36,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
         disconnected_cb: DisconnectHandlerType,
         notification_cb: NotiHandlerType,
         target: Tuple[Union[Pattern, BleDevice], Optional[List[BleUUID]]],
-        uuids: Type[UUIDs] = None,
+        uuids: Optional[Type[UUIDs]] = None,
     ) -> None:
         """A BLE device that is to be connected to.
 
@@ -66,7 +66,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
         self._gatt_table: Optional[GattDB] = None
         self._device: Optional[BleDevice] = None
         self._handle: Optional[BleHandle] = None
-        self._identifier = None if isinstance(self._target, Pattern) else str(self._target)
+        self._identifier: Optional[str] = None if isinstance(self._target, Pattern) else str(self._target)
         self.uuids = uuids
 
     def _find_device(self, timeout: int = 5, retries: int = 30) -> None:

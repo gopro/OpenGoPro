@@ -40,7 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class BleCommands:
-    # pylint: disable = missing-class-docstring, arguments-differ, useless-super-delegation, missing-return-doc
+    # pylint: disable = missing-class-docstring, arguments-differ, useless-super-delegation
     """All of the BLE commands.
 
     To be used as a delegate for a GoProBle instance to build commands

@@ -105,7 +105,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
             bytearray: read data
         """
 
-        async def _async_read() -> bytearray:  # pylint: disable=missing-return-doc
+        async def _async_read() -> bytearray:
             logger.debug(f"Reading from {uuid}")
             response = await handle.read_gatt_char(uuid2bleak_string(uuid))
             logger.debug(f'Received response on BleUUID [{uuid}]: {response.hex( ":")}')
@@ -141,7 +141,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
             BleakDevice: The first matched device that was discovered
         """
 
-        async def _async_scan() -> BleakDevice:  # pylint: disable=missing-return-doc
+        async def _async_scan() -> BleakDevice:
             logger.info(f"Scanning for {token.pattern} bluetooth devices...")
             devices: Dict[str, BleakDevice] = {}
             uuids = [] if service_uuids is None else [uuid2bleak_string(uuid) for uuid in service_uuids]
@@ -221,7 +221,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                 # connection request. This is (potentially) normal BLE behavior.
                 self.disconnected.set()
 
-        async def _async_connect() -> Tuple[  # pylint: disable=missing-return-doc
+        async def _async_connect() -> Tuple[
             Optional[BleakClient], Optional[Union[Exception, BaseException]]
         ]:
             logger.info(f"Establishing BLE connection to {device}...")
@@ -338,7 +338,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                 props |= bleak_props_to_enum[prop]
             return props
 
-        async def _async_discover_chars() -> GattDB:  # pylint: disable=missing-return-doc
+        async def _async_discover_chars() -> GattDB:
             logger.info("Discovering characteristics...")
             services: List[Service] = []
             for service in handle.services:

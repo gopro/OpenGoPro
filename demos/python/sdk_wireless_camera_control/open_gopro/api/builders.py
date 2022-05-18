@@ -256,7 +256,7 @@ class BleReadCommand(BleCommand):
     def _response_parser(self) -> BytesParser:
         return self.response_parser
 
-    # pylint: disable=missing-return-doc
+
     def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(build_log_tx_str(self.uuid.name))
         response = self.communicator._read_characteristic(self.uuid)
@@ -287,7 +287,7 @@ class BleWriteNoParamsCommand(BleCommand):
     def _response_parser(self) -> BytesParser:
         return status_struct if self.response_parser is None else status_struct + self.response_parser
 
-    # pylint: disable=missing-return-doc
+
     def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(build_log_tx_str(self.cmd.name))
         # Build data buffer
@@ -323,7 +323,7 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
     def _response_parser(self) -> BytesParser:
         return status_struct if self.response_parser is None else status_struct + self.response_parser
 
-    # pylint: disable=missing-return-doc
+
     def __call__(self, value: CommandValueType) -> GoProResp:  # noqa: D102
         logger.info(build_log_tx_str(f"{self.cmd.name}: {str(value)}"))
         # Build data buffer
@@ -369,7 +369,7 @@ class RegisterUnregisterAll(BleWriteNoParamsCommand):
         assert self.producer is not None
         assert self.action is not None
 
-    # pylint: disable=missing-return-doc
+
     def __call__(self) -> GoProResp:  # noqa: D102
         assert self.producer is not None
         assert self.action is not None
@@ -464,7 +464,7 @@ class BleProtoCommand(BleCommand):
 
     @abstractmethod
     @no_type_check
-    # pylint: disable=missing-return-doc
+
     def __call__(self, *args: Any, **kwargs: Any) -> GoProResp:  # noqa: D102
         # The method that will actually build and send the protobuf command
 
@@ -523,7 +523,7 @@ class BleSetting(Generic[SettingValueType]):
         self.builder: BytesBuilder = parser_builder  # Just syntactic sugar
         communicator._add_parser(self.identifier, self.parser)
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return str(self.identifier.name)
 
     def set(self, value: SettingValueType) -> GoProResp:
@@ -676,7 +676,7 @@ class BleStatus:
         # Add to response parsing map
         communicator._add_parser(self.identifier, self.parser)
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return str(self.identifier.name)
 
     @log_query
@@ -770,7 +770,7 @@ class WifiGetJsonWithParams(WifiGetJsonCommand, Generic[CommandValueType]):
     response_parser: Optional[JsonParser] = None
     param_builder: Optional[StringBuilder] = None
 
-    # pylint: disable=missing-return-doc
+
     def __call__(self, value: CommandValueType) -> GoProResp:  # noqa: D102
         values: List[CommandValueType] = [*value] if isinstance(value, Iterable) else [value]
         logger.info(build_log_tx_str(f"{self.endpoint.format(*values)}"))
@@ -800,7 +800,7 @@ class WifiGetJsonNoParams(WifiGetJsonCommand):
         response_parser (Optional[JsonParser]): the parser that will parse the received bytestream into a JSON dict
     """
 
-    # pylint: disable=missing-return-doc
+
     def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(build_log_tx_str(self.endpoint))
         url = self.endpoint
@@ -825,7 +825,7 @@ class WifiGetBinary(ABC):
 
     @abstractmethod
     @no_type_check
-    # pylint: disable=missing-return-doc
+
     def __call__(self, /, **kwargs) -> Path:  # noqa: D102
         # The method that will actually send the command and receive the stream
         # This method's signature shall be override by the subclass.
@@ -858,7 +858,7 @@ class WifiSetting(Generic[SettingValueType]):
         # Note! It is assumed that BLE and WiFi settings are symmetric so we only add to the communicator's
         # parser in the BLE Setting.
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return str(self.identifier.name)
 
     def set(self, value: SettingValueType) -> GoProResp:

@@ -40,7 +40,6 @@ WRITE_TIMEOUT: Final = 5
 GET_TIMEOUT: Final = 5
 HTTP_GET_RETRIES: Final = 5
 
-
 class Interface(enum.Enum):
     """Enum to identify wireless interface"""
 
@@ -59,9 +58,7 @@ def ensure_initialized(interface: Interface) -> Callable:
     """
 
     @wrapt.decorator
-    def wrapper(  # pylint: disable=missing-return-doc
-        wrapped: Callable, instance: GoPro, args: Any, kwargs: Any
-    ) -> Any:
+    def wrapper(wrapped: Callable, instance: GoPro, args: Any, kwargs: Any) -> Any:
         if interface is Interface.BLE and not instance.is_ble_connected:
             raise GoProNotInitialized("BLE not connected")
         if interface is Interface.WIFI and not instance.is_wifi_connected:
@@ -210,7 +207,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             self._internal_state = GoPro._InternalState.ENCODING | GoPro._InternalState.SYSTEM_BUSY
             self._state_thread = threading.Thread(target=self._maintain_state, name="state", daemon=True)
 
-    def __enter__(self) -> "GoPro":  # pylint: disable=missing-return-doc
+    def __enter__(self) -> "GoPro":
         self.open()
         return self
 

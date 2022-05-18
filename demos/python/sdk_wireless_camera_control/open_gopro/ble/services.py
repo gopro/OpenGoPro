@@ -92,10 +92,10 @@ class BleUUID(uuid.UUID):
         object.__setattr__(self, "name", name)  # needed to work around immutability in base class
         super().__init__(hex=hex, bytes=bytes, bytes_le=bytes_le, int=int)
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return self.hex if self.name == "" else self.name
 
-    def __repr__(self) -> str:  # pylint: disable=missing-return-doc
+    def __repr__(self) -> str:
         return self.__str__()
 
 
@@ -113,7 +113,7 @@ class Descriptor:
     uuid: BleUUID
     value: Optional[bytes] = None
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return json.dumps(asdict(self), indent=4, default=str)
 
     @property
@@ -155,7 +155,7 @@ class Characteristic:
         if self.descriptor_handle is None:
             self.descriptor_handle = self.handle + 1
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return f"{self.name} @ handle {self.handle}: {self.props.name}"
 
     @property
@@ -269,7 +269,7 @@ class Service:
         # Mypy should eventually support this: see https://github.com/python/mypy/issues/3004
         self.characteristics = init_characteristics or []  # type: ignore
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return self.name
 
     @property
@@ -311,14 +311,14 @@ class GattDB:
         def __init__(self, db: "GattDB") -> None:
             self._db = db
 
-        def __getitem__(self, key: BleUUID) -> Characteristic:  # pylint: disable=missing-return-doc
+        def __getitem__(self, key: BleUUID) -> Characteristic:
             for service in self._db.services.values():
                 for char in service.characteristics.values():
                     if char.uuid == key:
                         return char
             raise KeyError
 
-        def __contains__(self, key: object) -> bool:  # pylint: disable=missing-return-doc
+        def __contains__(self, key: object) -> bool:
             for service in self._db.services.values():
                 for char in service.characteristics.values():
                     if char.uuid == key:
@@ -326,14 +326,14 @@ class GattDB:
             return False
 
         @no_type_check
-        def __iter__(self) -> Iterator[Characteristic]:  # pylint: disable=missing-return-doc
+        def __iter__(self) -> Iterator[Characteristic]:
             return iter(self.values())
 
-        def __len__(self) -> int:  # pylint: disable=missing-return-doc
+        def __len__(self) -> int:
             return sum(len(service.characteristics) for service in self._db.services.values())
 
         @no_type_check
-        def keys(self) -> Generator[BleUUID, None, None]:  # pylint: disable=missing-return-doc
+        def keys(self) -> Generator[BleUUID, None, None]:
             def iter_keys():
                 for service in self._db.services.values():
                     for ble_uuid in service.characteristics.keys():
@@ -342,7 +342,7 @@ class GattDB:
             return iter_keys()
 
         @no_type_check
-        def values(self) -> Generator[Characteristic, None, None]:  # pylint: disable=missing-return-doc
+        def values(self) -> Generator[Characteristic, None, None]:
             def iter_values():
                 for service in self._db.services.values():
                     for char in service.characteristics.values():
@@ -351,7 +351,7 @@ class GattDB:
             return iter_values()
 
         @no_type_check
-        def items(  # pylint: disable=missing-return-doc
+        def items(
             self,
         ) -> Generator[Tuple[BleUUID, Characteristic], None, None]:
             def iter_items():
@@ -454,7 +454,7 @@ class UUIDsMeta(type):
     """
 
     @no_type_check
-    # pylint: disable=missing-return-doc
+
     def __new__(cls, name, bases, dct) -> UUIDsMeta:  # noqa
         x = super().__new__(cls, name, bases, dct)
         x._int2uuid = {}
@@ -466,7 +466,7 @@ class UUIDsMeta(type):
         return x
 
     @no_type_check
-    def __getitem__(cls, key: Union[uuid.UUID, int, str]) -> BleUUID:  # pylint: disable=missing-return-doc
+    def __getitem__(cls, key: Union[uuid.UUID, int, str]) -> BleUUID:
         if isinstance(key, uuid.UUID):
             return cls._int2uuid[key.int]
         if isinstance(key, int):
@@ -476,7 +476,7 @@ class UUIDsMeta(type):
         raise TypeError("Key must be of type Union[uuid.UUID, int, str]")
 
     @no_type_check
-    def __contains__(cls, key: Union[uuid.UUID, int, str]) -> bool:  # pylint: disable=missing-return-doc
+    def __contains__(cls, key: Union[uuid.UUID, int, str]) -> bool:
         if isinstance(key, uuid.UUID):
             return key.int in cls._int2uuid
         if isinstance(key, int):
@@ -487,7 +487,7 @@ class UUIDsMeta(type):
         raise TypeError("Key must be of type Union[uuid.UUID, int, str]")
 
     @no_type_check
-    def __iter__(cls):  # pylint: disable=missing-return-doc
+    def __iter__(cls):
         for item in cls._int2uuid.items():
             yield item
 
