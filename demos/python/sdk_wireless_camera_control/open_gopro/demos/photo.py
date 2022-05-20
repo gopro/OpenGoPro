@@ -17,7 +17,6 @@ from open_gopro.util import setup_logging
 logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
 
-
 def main(
     identifier: Optional[str], log_location: Path, output_location: Path, wifi_interface: Optional[str]
 ) -> int:
@@ -35,10 +34,13 @@ def main(
     global logger
     logger = setup_logging(logger, log_location)
 
+    def exception_cb(exception: Exception) -> None:
+        logger.error(f"IN MAIN ==> {exception}")
+
     gopro: Optional[GoPro] = None
     return_code = 0
     try:
-        with GoPro(identifier, wifi_interface=wifi_interface) as gopro:
+        with GoPro(identifier, wifi_interface=wifi_interface, exception_cb=exception_cb) as gopro:
             # Configure settings to prepare for photo
             if gopro.is_encoding:
                 gopro.ble_command.set_shutter(Params.Shutter.OFF)

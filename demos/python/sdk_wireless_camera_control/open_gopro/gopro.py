@@ -40,6 +40,8 @@ WRITE_TIMEOUT: Final = 5
 GET_TIMEOUT: Final = 5
 HTTP_GET_RETRIES: Final = 5
 
+ExceptionHandler = Callable[[Exception], None]
+
 
 class Interface(enum.Enum):
     """Enum to identify wireless interface"""
@@ -70,10 +72,10 @@ def ensure_initialized(interface: Interface) -> Callable:
 
 
 @wrapt.decorator
-def acquire_ready_semaphore(wrapped: Callable, instance: GoPro, args: Any, kwargs: Any) -> Any:
-    """Call method after acquiring ready semaphore.
+def acquire_ready_lock(wrapped: Callable, instance: GoPro, args: Any, kwargs: Any) -> Any:
+    """Call method after acquiring ready lock.
 
-    Release semaphore when done
+    Release lock when done
 
     Args:
         wrapped (Callable): method to call
@@ -85,14 +87,14 @@ def acquire_ready_semaphore(wrapped: Callable, instance: GoPro, args: Any, kwarg
         Any: result of method
     """
     if instance._maintain_ble:
-        logger.trace(f"{wrapped.__name__} acquiring semaphore")  # type: ignore
+        logger.trace(f"{wrapped.__name__} acquiring lock")  # type: ignore
         with instance._ready:
-            logger.trace(f"{wrapped.__name__} has the semaphore")  # type: ignore
+            logger.trace(f"{wrapped.__name__} has the lock")  # type: ignore
             ret = wrapped(*args, **kwargs)
     else:
         ret = wrapped(*args, **kwargs)
     if instance._maintain_ble:
-        logger.trace(f"{wrapped.__name__} released the semaphore")  # type: ignore
+        logger.trace(f"{wrapped.__name__} released the lock")  # type: ignore
     return ret
 
 
@@ -145,8 +147,6 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         wifi_interace (str, optional): Set to specify the wifi interface the local machine will use to connect
             to the GoPro. If None (or not set), first discovered interface will be used.
         enable_wifi (bool, optional): Optionally do not enable Wifi if set to False. Defaults to True.
-        maintain_ble (bool, optional): Optionally do not perform BLE housekeeping if set to False (used for
-            testing). Defaults to True.
     """
 
     _base_url = "http://10.5.5.9:8080/"  #: Hard-coded Open GoPro base URL
@@ -161,18 +161,26 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
     def __init__(
         self,
         target: Optional[Union[Pattern, BleDevice]] = None,
-        ble_adapter: Type[BLEController] = BleakWrapperController,
-        wifi_adapter: Type[WifiController] = Wireless,
         wifi_interface: Optional[str] = None,
         enable_wifi: bool = True,
-        maintain_ble: bool = True,
+        exception_cb: Optional[ExceptionHandler] = None,
+        **kwargs,
     ) -> None:
         # Store initialization information
         self._enable_wifi_during_init = enable_wifi
-        self._maintain_ble = maintain_ble
+        self._exception_cb = exception_cb
+        self._maintain_ble = kwargs.get("maintain_ble", True)
+        ble_adapter = kwargs.get("ble_adapter", BleakWrapperController)
+        wifi_adapter = kwargs.get("wifi_adapter", Wireless)
 
         # Initialize GoPro Communication Client
-        GoProBle.__init__(self, ble_adapter(), self._disconnect_handler, self._notification_handler, target)
+        GoProBle.__init__(
+            self,
+            ble_adapter(self._handle_exception),
+            self._disconnect_handler,
+            self._notification_handler,
+            target,
+        )
         GoProWifi.__init__(self, wifi_adapter(wifi_interface))
 
         # We currently only support version 2.0
@@ -192,6 +200,8 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         # Set up events
         self._ble_disconnect_event = threading.Event()
         self._ble_disconnect_event.set()
+        self._encoding_started = threading.Event()
+        self._encoding_started.clear()
 
         # Set up threads
         self._threads_waiting = 0
@@ -203,7 +213,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
                 target=self._periodic_keep_alive, name="keep_alive", daemon=True
             )
             # Set up thread to block until camera is ready to receive commands
-            self._ready = threading.BoundedSemaphore(value=1)
+            self._ready = threading.Lock()
             self._state_condition = threading.Condition()
             self._internal_state = GoPro._InternalState.ENCODING | GoPro._InternalState.SYSTEM_BUSY
             self._state_thread = threading.Thread(target=self._maintain_state, name="state", daemon=True)
@@ -262,7 +272,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         """
         if not self._maintain_ble:
             raise InvalidConfiguration("Not maintaining BLE state so encoding is not applicable")
-        return self._internal_state & GoPro._InternalState.ENCODING == 1
+        return bool(self._internal_state & GoPro._InternalState.ENCODING)
 
     @property
     def is_busy(self) -> bool:
@@ -276,7 +286,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         """
         if not self._maintain_ble:
             raise InvalidConfiguration("Not maintaining BLE state so busy is not applicable")
-        return self._internal_state & GoPro._InternalState.SYSTEM_BUSY == 1
+        return bool(self._internal_state & GoPro._InternalState.SYSTEM_BUSY)
 
     @property
     def version(self) -> float:
@@ -423,44 +433,64 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         """
         return self._threads_waiting == 0
 
-    def _maintain_state(self) -> None:
-        """Thread to keep track of ready / encoding and acquire / release ready semaphore."""
-        self._ready.acquire()
-        while self.is_ble_connected:
-            internal_status_previous = self._internal_state
-            with self._state_condition:
-                self._state_condition.wait()
-                # If we were ready but not now we're not, acquire the semaphore
-                if internal_status_previous == 0 and self._internal_state != 0:
-                    logger.trace("Control acquiring semaphore")  # type: ignore
-                    self._ready.acquire()
-                    logger.trace("Control has semaphore")  # type: ignore
-                # If we weren't ready but now we are, release the semaphore
-                elif internal_status_previous != 0 and self._internal_state == 0:
-                    # If this is the first time, mark that we might now be initialized
-                    if not self._is_ble_initialized:
-                        self._threads_waiting -= 1
-                    self._ready.release()
-                    logger.trace("Control released semaphore")  # type: ignore
+    def _handle_exception(self, source: Any, context: Dict):
+        # context["message"] will always be there; but context["exception"] may not
+        if exception := context.get("exception", False):
+            logger.error(f"Received exception {exception} from {source}")
+            if self._exception_cb:
+                self._exception_cb(exception)
+        else:
+            logger.error(f"Caught unknown message: {context['message']} from {source}")
 
-        self._threads_waiting += 1
-        logger.debug("Maintain state thread exiting...")
+    def _maintain_state(self) -> None:
+        """Thread to keep track of ready / encoding and acquire / release ready lock."""
+        try:
+            self._ready.acquire()
+            have_lock = True
+            while self.is_ble_connected:
+
+                with self._state_condition:
+                    self._state_condition.wait()
+
+                    if have_lock and not (self.is_busy or self.is_encoding):
+                        # If this is the first time, mark that we might now be initialized
+                        if not self._is_ble_initialized:
+                            self._threads_waiting -= 1
+                        self._ready.release()
+                        have_lock = False
+                        logger.trace("Control released lock")  # type: ignore
+                    elif not have_lock and (self.is_busy or self.is_encoding):
+                        logger.trace("Control acquiring lock")  # type: ignore
+                        self._ready.acquire()
+                        logger.trace("Control has lock")  # type: ignore
+                        have_lock = True
+                        if self.is_encoding:
+                            logger.trace("Control setting encoded started")  # type: ignore
+                            self._encoding_started.set()
+
+            self._threads_waiting += 1
+            logger.debug("Maintain state thread exiting...")
+        except Exception as e:
+            self._handle_exception(threading.current_thread().name, {"exception": e})
 
     def _periodic_keep_alive(self) -> None:
         """Thread to periodically send the keep alive message via BLE."""
-        while self.is_ble_connected:
-            if not self._is_ble_initialized:
-                self._threads_waiting -= 1
-            try:
-                if self.keep_alive():
-                    time.sleep(KEEP_ALIVE_INTERVAL)
-            except Exception:  # pylint: disable=broad-except
-                # If the connection disconnects while we were trying to send, there can be any number
-                # of exceptions. This is expected and this thread will exit on the next while check.
-                pass
+        try:
+            while self.is_ble_connected:
+                if not self._is_ble_initialized:
+                    self._threads_waiting -= 1
+                try:
+                    if self.keep_alive():
+                        time.sleep(KEEP_ALIVE_INTERVAL)
+                except Exception:  # pylint: disable=broad-except
+                    # If the connection disconnects while we were trying to send, there can be any number
+                    # of exceptions. This is expected and this thread will exit on the next while check.
+                    pass
 
-        self._threads_waiting += 1
-        logger.debug("periodic keep alive thread exiting...")
+            self._threads_waiting += 1
+            logger.debug("periodic keep alive thread exiting...")
+        except Exception as e:
+            self._handle_exception(threading.current_thread().name, {"exception": e})
 
     def _register_listener(self, producer: ProducerType) -> None:
         """Register a producer to store notifications from.
@@ -498,6 +528,39 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             self._keep_alive_thread.start()
         logger.info("BLE is ready!")
 
+    def _update_internal_state(self, response: GoProResp) -> None:
+        if self._maintain_ble:
+            if (
+                response.cmd
+                in [
+                    QueryCmdId.REG_STATUS_VAL_UPDATE,
+                    QueryCmdId.GET_STATUS_VAL,
+                    QueryCmdId.STATUS_VAL_PUSH,
+                ]
+                and StatusId.ENCODING in response.data
+            ):
+                with self._state_condition:
+                    if response[StatusId.ENCODING] is True:
+                        self._internal_state |= GoPro._InternalState.ENCODING
+                    else:
+                        self._internal_state &= ~GoPro._InternalState.ENCODING
+                    self._state_condition.notify()
+            if (
+                response.cmd
+                in [
+                    QueryCmdId.REG_STATUS_VAL_UPDATE,
+                    QueryCmdId.GET_STATUS_VAL,
+                    QueryCmdId.STATUS_VAL_PUSH,
+                ]
+                and StatusId.SYSTEM_READY in response.data
+            ):
+                with self._state_condition:
+                    if response[StatusId.SYSTEM_READY] is True:
+                        self._internal_state &= ~GoPro._InternalState.SYSTEM_BUSY
+                    else:
+                        self._internal_state |= GoPro._InternalState.SYSTEM_BUSY
+                    self._state_condition.notify()
+
     # TODO refactor this into smaller methods
     def _notification_handler(self, handle: int, data: bytearray) -> None:
         """Receive notifications from the BLE controller.
@@ -506,6 +569,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             handle (int): Attribute handle that notification was received on.
             data (bytearray): Bytestream that was received.
         """
+
         # Responses we don't care about. For now, just the BLE-spec defined battery characteristic
         if (uuid := self._ble.gatt_db.handle2uuid(handle)) == GoProUUIDs.BATT_LEVEL:
             return
@@ -521,38 +585,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             response = self._active_resp[uuid]
             response._parse()
 
-            # Handle internal statuses
-            if self._maintain_ble:
-                if (
-                    response.cmd
-                    in [
-                        QueryCmdId.REG_STATUS_VAL_UPDATE,
-                        QueryCmdId.GET_STATUS_VAL,
-                        QueryCmdId.STATUS_VAL_PUSH,
-                    ]
-                    and StatusId.ENCODING in response.data
-                ):
-                    with self._state_condition:
-                        if response[StatusId.ENCODING] is True:
-                            self._internal_state |= GoPro._InternalState.ENCODING
-                        else:
-                            self._internal_state &= ~GoPro._InternalState.ENCODING
-                        self._state_condition.notify()
-                if (
-                    response.cmd
-                    in [
-                        QueryCmdId.REG_STATUS_VAL_UPDATE,
-                        QueryCmdId.GET_STATUS_VAL,
-                        QueryCmdId.STATUS_VAL_PUSH,
-                    ]
-                    and StatusId.SYSTEM_READY in response.data
-                ):
-                    with self._state_condition:
-                        if response[StatusId.SYSTEM_READY] is True:
-                            self._internal_state &= ~GoPro._InternalState.SYSTEM_BUSY
-                        else:
-                            self._internal_state |= GoPro._InternalState.SYSTEM_BUSY
-                        self._state_condition.notify()
+            self._update_internal_state(response)
 
             # Check if this is the awaited synchronous response (id matches). Note! these have to come in order.
             response_claimed = False
@@ -561,7 +594,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
                 if queue_snapshot[0].id is response.id:
                     # Dequeue it and put this on the ready queue
                     self._sync_resp_wait_q.get_nowait()
-                    self._sync_resp_ready_q.put(response)
+                    self._sync_resp_ready_q.put_nowait(response)
                     response_claimed = True
 
             # If this wasn't the awaited synchronous response...
@@ -573,7 +606,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
                         del response.data[key]
                 # Enqueue the response if there is anything left
                 if len(response.data) > 0:
-                    self._out_q.put(response)
+                    self._out_q.put_nowait(response)
 
             # Clear active response from response dict
             del self._active_resp[uuid]
@@ -598,7 +631,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             raise ConnectionTerminated("BLE connection terminated unexpectedly.")
         self._ble_disconnect_event.set()
 
-    # TODO refactor to allow use of semaphore decorator which will require a state table for commands/  responses
+    # TODO refactor to allow use of lock decorator which will require a state table for commands/  responses
     @ensure_initialized(Interface.BLE)
     def _write_characteristic_receive_notification(self, uuid: BleUUID, data: bytearray) -> GoProResp:
         """Perform a BLE write and wait for a corresponding notification response.
@@ -617,25 +650,22 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             GoProResp: parsed notification response data
         """
         assert self._ble
-        # Acquire ready semaphore unless we are initializing or this is a Set Shutter Off command
-        have_semaphore = False
+        # Build response stub to be filled out as it is received
+        response = GoProResp._from_write_command(self._parser_map, uuid, data)
+        # Acquire ready lock unless we are initializing or this is a Set Shutter Off command
+        have_lock = False
         if (
             self._maintain_ble
             and self._is_ble_initialized
-            and not (
-                GoProResp._from_write_command(self._parser_map, uuid, data).id is CmdId.SET_SHUTTER
-                and data[-1] == 0
-            )
+            and not (response.id is CmdId.SET_SHUTTER and data[-1] == 0)
         ):
-            logger.trace(  # type: ignore
-                f"{GoProResp._from_write_command(self._parser_map, uuid, data).id} acquiring semaphore"
-            )
+            logger.trace(f"{response.id} acquiring lock")  # type: ignore
             self._ready.acquire()
-            logger.trace(f"{GoProResp._from_write_command(self._parser_map, uuid, data).id} has semaphore")  # type: ignore
-            have_semaphore = True
+            logger.trace(f"{response.id} has lock")  # type: ignore
+            have_lock = True
 
         # Store information on the response we are expecting
-        self._sync_resp_wait_q.put(GoProResp._from_write_command(self._parser_map, uuid, data))
+        self._sync_resp_wait_q.put(response)
         # Perform write
         logger.debug(f"Writing to [{uuid.name}] UUID: {data.hex(':')}")
         self._ble.write(uuid, data)
@@ -651,24 +681,18 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             logger.warning(f"Received non-success status: {response.status}")
 
         if self._maintain_ble:
+            # Release the lock if we acquired it
+            if have_lock:
+                self._ready.release()
+                logger.trace(f"{response.id} released the lock")  # type: ignore
             # If this was set shutter on, we need to wait to be notified that encoding has started
             if response.cmd is CmdId.SET_SHUTTER and data[-1] == 1:
-                while not self.is_encoding:
-                    # We don't want to use the application's loop, can't use any of our loops due to potential deadlock,
-                    # and don't want to spawn a new thread for this. So just poll ¯\_(ツ)_/¯
-                    # A read to an int is atomic anyway.
-                    time.sleep(0.1)
-            # Release the semaphore if we acquired it
-            if have_semaphore:
-                self._ready.release()
-                logger.trace(  # type: ignore
-                    f"{GoProResp._from_write_command(self._parser_map, uuid, data).id} released the semaphore"
-                )
+                self._encoding_started.wait()
 
         return response
 
     @ensure_initialized(Interface.BLE)
-    @acquire_ready_semaphore
+    @acquire_ready_lock
     def _read_characteristic(self, uuid: BleUUID) -> GoProResp:
         """Read a characteristic's data by GoProUUIDs.
 
@@ -705,7 +729,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             self._wifi.close()
 
     @ensure_initialized(Interface.WIFI)
-    @acquire_ready_semaphore
+    @acquire_ready_lock
     def _get(self, url: str) -> GoProResp:
         """Send an HTTP GET request to an Open GoPro endpoint.
 
@@ -751,7 +775,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         return response
 
     @ensure_initialized(Interface.WIFI)
-    @acquire_ready_semaphore
+    @acquire_ready_lock
     def _stream_to_file(self, url: str, file: Path) -> None:
         """Send an HTTP GET request to an Open GoPro endpoint to download a binary file.
 

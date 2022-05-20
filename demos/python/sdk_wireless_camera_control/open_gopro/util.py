@@ -82,7 +82,7 @@ def setup_logging(
         Any: updated logger that the application can use for logging
     """
     default_modules = {
-        "open_gopro.gopro": logging.DEBUG,
+        "open_gopro.gopro": logging.TRACE,
         "open_gopro.api.builders": logging.DEBUG,
         "open_gopro.api.wifi_commands": logging.DEBUG,
         "open_gopro.api.ble_commands": logging.DEBUG,
