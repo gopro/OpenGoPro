@@ -17,7 +17,7 @@ to implement basic functionality to interact with a GoPro device using Python.
 
 The tutorials support Open GoPro Versions 1.0 and 2.0. They will provide a walk-through to use Python to exercise the
 Open GoPro Interface using [bleak](https://bleak.readthedocs.io/en/latest/api.html)
-for Bluetooth Low Energy (BLE) and [requests](https://docs.python-requests.org/en/master/) for HTTP.
+for Bluetooth Low Energy (BLE) and [requests](https://pypi.org/project/requests/) for HTTP.
 
 These tutorials are meant as an introduction to the Open GoPro specification. There is complete documentation
 available for [BLE]({% link specs/ble.md %}) and [HTTP]({% link specs/http.md %}) which will be the main

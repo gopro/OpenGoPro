@@ -8,7 +8,7 @@ lesson: 7
 # Python Tutorial 7: Camera Media List
 
 This document will provide a walk-through tutorial to use the Python
-[requests](https://docs.python-requests.org/en/master/) package to send Open GoPro
+[requests](https://pypi.org/project/requests/) package to send Open GoPro
 [HTTP commands]({% link specs/http.md %}) to the GoPro, specifically to get the media list and perform
 operations on it (downloading pictures, videos, etc.)
 
