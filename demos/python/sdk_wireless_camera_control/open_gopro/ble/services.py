@@ -183,7 +183,7 @@ class Characteristic:
 
     @property
     def is_readable(self) -> bool:
-        """Does this characteric have readable property?
+        """Does this characteristic have readable property?
 
         Returns:
             bool: True if readable, False if not
@@ -192,7 +192,7 @@ class Characteristic:
 
     @property
     def is_writeable_with_response(self) -> bool:
-        """Does this characteric have writeable-with-response property?
+        """Does this characteristic have writeable-with-response property?
 
         Returns:
             bool: True if writeable-with-response, False if not
@@ -201,7 +201,7 @@ class Characteristic:
 
     @property
     def is_writeable_without_response(self) -> bool:
-        """Does this characteric have writeable-without-response property?
+        """Does this characteristic have writeable-without-response property?
 
         Returns:
             bool: True if writeable-without-response, False if not
@@ -210,7 +210,7 @@ class Characteristic:
 
     @property
     def is_writeable(self) -> bool:
-        """Does this characteric have writeable property?
+        """Does this characteristic have writeable property?
 
         That is, does it have writeable-with-response or writeable-without-response property
 
@@ -221,7 +221,7 @@ class Characteristic:
 
     @property
     def is_notifiable(self) -> bool:
-        """Does this characteric have notifiable property?
+        """Does this characteristic have notifiable property?
 
         Returns:
             bool: True if notifiable, False if not
@@ -230,7 +230,7 @@ class Characteristic:
 
     @property
     def is_indicatable(self) -> bool:
-        """Does this characteric have indicatable property?
+        """Does this characteristic have indicatable property?
 
         Returns:
             bool: True if indicatable, False if not

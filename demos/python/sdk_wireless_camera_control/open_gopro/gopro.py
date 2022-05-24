@@ -432,7 +432,15 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         """
         return self._threads_waiting == 0
 
-    def _handle_exception(self, source: Any, context: Dict) -> None:
+    def _handle_exception(self, source: Any, context: Dict[str, Any]) -> None:
+        """Gather exceptions from module threads and send through callback if registered.
+
+        Note that this function signature matches asyncio's exception callback requirement.
+
+        Args:
+            source (Any): Where did the exception come from?
+            context (Dict): Access exception via context["exception"]
+        """
         # context["message"] will always be there; but context["exception"] may not
         if exception := context.get("exception", False):
             logger.error(f"Received exception {exception} from {source}")
@@ -528,6 +536,13 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         logger.info("BLE is ready!")
 
     def _update_internal_state(self, response: GoProResp) -> None:
+        """Update the internal state based on the received response.
+
+        Update encoding and / or busy status and notify state maintenance thread.
+
+        Args:
+            response (GoProResp): received response to parse for state changes
+        """
         if self._maintain_ble:
             if (
                 response.cmd
@@ -568,7 +583,6 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             handle (int): Attribute handle that notification was received on.
             data (bytearray): Bytestream that was received.
         """
-
         # Responses we don't care about. For now, just the BLE-spec defined battery characteristic
         if (uuid := self._ble.gatt_db.handle2uuid(handle)) == GoProUUIDs.BATT_LEVEL:
             return
@@ -619,9 +633,6 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
     def _disconnect_handler(self, _: Any) -> None:
         """Disconnect callback from BLE controller
-
-        Args:
-            _ (Any): Not currently used
 
         Raises:
             ConnectionTerminated: We entered this callback in an unexpected state.

@@ -228,11 +228,13 @@ class BleCommand(ABC):
     @property
     @abstractmethod
     def _identifier(self) -> ResponseType:
+        """The most accurate identifier for this command."""
         raise NotImplementedError
 
     @property
     @abstractmethod
     def _response_parser(self) -> BytesParser:
+        """Get the response parser associated with this command."""
         raise NotImplementedError
 
 

@@ -70,6 +70,15 @@ class BleClient(Generic[BleHandle, BleDevice]):
         self.uuids = uuids
 
     def _find_device(self, timeout: int = 5, retries: int = 30) -> None:
+        """Scan for the target device.
+
+        Args:
+            timeout (int): how long (seconds) to scan before considering the attempt a failure. Defaults to 5.
+            retries (int): How many attempts before giving up. Defaults to 30.
+
+        Raises:
+            FailedToFindDevice: No matching device was found
+        """
         self._device = None
         assert isinstance(self._target, Pattern)
         for retry in range(1, retries):

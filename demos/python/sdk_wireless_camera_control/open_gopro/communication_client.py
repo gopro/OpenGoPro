@@ -34,9 +34,20 @@ class GoProResponder:
 
     @property
     def _parser_map(self) -> ParserMapType:
+        """Return the map of parsers
+
+        Returns:
+            ParserMapType: map of parsers
+        """
         return self._response_parsers
 
     def _add_parser(self, identifier: ResponseType, parser: Parser) -> None:
+        """Add a parser to the parser map
+
+        Args:
+            identifier (ResponseType): identifier of parser
+            parser (Parser): parser to add
+        """
         self._response_parsers[identifier] = parser
 
 
@@ -150,8 +161,31 @@ class GoProBle(ABC, GoProResponder, Generic[BleHandle, BleDevice]):
 
     @abstractmethod
     def _write_characteristic_receive_notification(self, uuid: BleUUID, data: bytearray) -> GoProResp:
+        """Write a characteristic and block until its corresponding notification response is received.
+
+        Args:
+            uuid (BleUUID): _description_
+            data (bytearray): _description_
+
+        Raises:
+            NotImplementedError: _description_
+
+        Returns:
+            GoProResp: _description_
+        """
         raise NotImplementedError
 
     @abstractmethod
     def _read_characteristic(self, uuid: BleUUID) -> GoProResp:
+        """Read a characteristic and block until its corresponding notification response is received.
+
+        Args:
+            uuid (BleUUID): _description_
+
+        Raises:
+            NotImplementedError: _description_
+
+        Returns:
+            GoProResp: _description_
+        """
         raise NotImplementedError
