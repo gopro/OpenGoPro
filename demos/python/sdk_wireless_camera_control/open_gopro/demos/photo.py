@@ -17,6 +17,7 @@ from open_gopro.util import setup_logging
 logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
 
+
 def main(
     identifier: Optional[str], log_location: Path, output_location: Path, wifi_interface: Optional[str]
 ) -> int:

@@ -150,6 +150,9 @@ class GattTable:
 class BleControllerTest(BLEController, Generic[BleHandle, BleDevice]):
     # pylint: disable=signature-differs
 
+    def __init__(self, *args, **kwargs) -> None:
+        pass
+
     def scan(self, token: Pattern, timeout: int, service_uuids: List[BleUUID] = None) -> str:
         if token == re.compile("device"):
             return "scanned_device"

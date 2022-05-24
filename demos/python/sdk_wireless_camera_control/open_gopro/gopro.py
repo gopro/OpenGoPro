@@ -11,7 +11,7 @@ import logging
 import threading
 from queue import Queue
 from pathlib import Path
-from typing import Any, Dict, Final, Optional, Type, Callable, Union, Generic, Pattern
+from typing import Any, Dict, Final, Optional, Callable, Union, Generic, Pattern
 
 import wrapt
 import requests
@@ -23,9 +23,8 @@ from open_gopro.exceptions import (
     InvalidConfiguration,
     ConnectionTerminated,
 )
-from open_gopro.ble import BLEController, BleUUID, BleDevice
+from open_gopro.ble import BleUUID, BleDevice
 from open_gopro.ble.adapters import BleakWrapperController
-from open_gopro.wifi import WifiController
 from open_gopro.wifi.adapters import Wireless
 from open_gopro.util import SnapshotQueue, build_log_rx_str
 from open_gopro.responses import GoProResp
@@ -164,7 +163,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         wifi_interface: Optional[str] = None,
         enable_wifi: bool = True,
         exception_cb: Optional[ExceptionHandler] = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         # Store initialization information
         self._enable_wifi_during_init = enable_wifi
@@ -433,7 +432,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         """
         return self._threads_waiting == 0
 
-    def _handle_exception(self, source: Any, context: Dict):
+    def _handle_exception(self, source: Any, context: Dict) -> None:
         # context["message"] will always be there; but context["exception"] may not
         if exception := context.get("exception", False):
             logger.error(f"Received exception {exception} from {source}")
@@ -470,7 +469,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
             self._threads_waiting += 1
             logger.debug("Maintain state thread exiting...")
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-except
             self._handle_exception(threading.current_thread().name, {"exception": e})
 
     def _periodic_keep_alive(self) -> None:
@@ -489,7 +488,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
             self._threads_waiting += 1
             logger.debug("periodic keep alive thread exiting...")
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-except
             self._handle_exception(threading.current_thread().name, {"exception": e})
 
     def _register_listener(self, producer: ProducerType) -> None:
@@ -671,7 +670,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         self._ble.write(uuid, data)
         # Wait to be notified that response was received
         try:
-            response: GoProResp = self._sync_resp_ready_q.get(timeout=WRITE_TIMEOUT)
+            response = self._sync_resp_ready_q.get(timeout=WRITE_TIMEOUT)
         except queue.Empty as e:
             logger.error(f"Response timeout of {WRITE_TIMEOUT} seconds!")
             raise ResponseTimeout(WRITE_TIMEOUT) from e

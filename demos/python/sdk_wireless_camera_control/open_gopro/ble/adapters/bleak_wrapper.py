@@ -55,10 +55,12 @@ def uuid2bleak_string(uuid: BleUUID) -> str:
     return f"{uuid.hex[:8]}-{uuid.hex[8:12]}-{uuid.hex[12:16]}-{uuid.hex[16:20]}-{uuid.hex[20:]}"
 
 
-class BleakWrapperController(BLEController[BleakDevice, BleakClient]):
-    """Wrapper around bleak to manage a Bluetooth connection."""
+class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton):
+    """Wrapper around bleak to manage a Bluetooth connection.
 
-    def __init__(self, exception_handler: Callable) -> None:
+    Note, this is a singleton.
+    """
+    def __init__(self, exception_handler: Callable = None) -> None:
         # Thread to run ble controller asyncio loop (to abstract asyncio from client as well as handle async notifications)
         self._module_loop: asyncio.AbstractEventLoop  # Will be set when module thread starts
         self._module_thread = threading.Thread(daemon=True, target=self._run, name="data")
