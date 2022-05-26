@@ -38,22 +38,81 @@ classes: main__splash
             </figure>
         </div>
 
-        <p style="margin-bottom: 0.1em">
+        <p>
             The Open GoPro API is the primary way for users to interact with a GoPro
-            camera. The camera provides interfaces to HTTP (wired and wireless) and Bluetooth Low Energy that
-            allow users to perform command, control, and query actions including, but not
-            limited to:
+            camera. The camera provides interfaces to HTTP (wired and wireless) and
+            Bluetooth Low Energy that allow users to perform command, control, and query
+            actions including, but not limited to:
         </p>
-        <ul>
-            <li>Capture media</li>
-            <li>Track camera state</li>
-            <li>Get media list and download files / metadata </li>
-            <li>Load / edit presets</li>
-            <li>Configure and use as webcam</li>
-            <li>Add / remove hilights</li>
-        </ul>
-
-        <hr />
+        <div style="display: flex; flex-direction: column; align-items: center">
+            <table style="margin: none; width: fit-content">
+                <thead>
+                    <tr>
+                        <th style="min-width: 150px">Feature</th>
+                        <th style="min-width: 50px">BLE</th>
+                        <th style="min-width: 50px">WiFi</th>
+                        <th style="min-width: 50px">USB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Camera Connect / Wake</td>
+                        <td>✔️</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Retrieve Camera State</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td>Press Shutter</td>
+                        <td>✔️</td>
+                        <td>✔️*</td>
+                        <td>✔️*</td>
+                    </tr>
+                    <tr>
+                        <td>Change Settings / Modes</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td>Live Preview</td>
+                        <td></td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td>Webcam / UDP Streaming (up to 1080P)</td>
+                        <td></td>
+                        <td></td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td>Media Management</td>
+                        <td></td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td>Metadata File Extraction</td>
+                        <td></td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td>External Power via same I/O</td>
+                        <td></td>
+                        <td></td>
+                        <td>✔️</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size: 0.7em">* = From Hero 10 onwards</p>
+        </div>
 
         <div class="grid">
             <div class="unit one-third">
