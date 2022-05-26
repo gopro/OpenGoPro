@@ -228,11 +228,13 @@ class BleCommand(ABC):
     @property
     @abstractmethod
     def _identifier(self) -> ResponseType:
+        """The most accurate identifier for this command."""
         raise NotImplementedError
 
     @property
     @abstractmethod
     def _response_parser(self) -> BytesParser:
+        """Get the response parser associated with this command."""
         raise NotImplementedError
 
 
@@ -256,7 +258,6 @@ class BleReadCommand(BleCommand):
     def _response_parser(self) -> BytesParser:
         return self.response_parser
 
-    # pylint: disable=missing-return-doc
     def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(build_log_tx_str(self.uuid.name))
         response = self.communicator._read_characteristic(self.uuid)
@@ -287,7 +288,6 @@ class BleWriteNoParamsCommand(BleCommand):
     def _response_parser(self) -> BytesParser:
         return status_struct if self.response_parser is None else status_struct + self.response_parser
 
-    # pylint: disable=missing-return-doc
     def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(build_log_tx_str(self.cmd.name))
         # Build data buffer
@@ -323,7 +323,6 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
     def _response_parser(self) -> BytesParser:
         return status_struct if self.response_parser is None else status_struct + self.response_parser
 
-    # pylint: disable=missing-return-doc
     def __call__(self, value: CommandValueType) -> GoProResp:  # noqa: D102
         logger.info(build_log_tx_str(f"{self.cmd.name}: {str(value)}"))
         # Build data buffer
@@ -369,7 +368,6 @@ class RegisterUnregisterAll(BleWriteNoParamsCommand):
         assert self.producer is not None
         assert self.action is not None
 
-    # pylint: disable=missing-return-doc
     def __call__(self) -> GoProResp:  # noqa: D102
         assert self.producer is not None
         assert self.action is not None
@@ -464,7 +462,6 @@ class BleProtoCommand(BleCommand):
 
     @abstractmethod
     @no_type_check
-    # pylint: disable=missing-return-doc
     def __call__(self, *args: Any, **kwargs: Any) -> GoProResp:  # noqa: D102
         # The method that will actually build and send the protobuf command
 
@@ -504,17 +501,18 @@ class BleProtoCommand(BleCommand):
 
 
 class BleSetting(Generic[SettingValueType]):
-    """An individual camera setting that is interacted with via BLE.
-
-    Args:
-        communicator (GoProBle): Adapter to read / write settings data
-        identifier (SettingId): ID of setting
-        parser_builder (BytesParserBuilder): object to both parse and build setting
-    """
+    """An individual camera setting that is interacted with via BLE."""
 
     def __init__(
         self, communicator: GoProBle, identifier: SettingId, parser_builder: BytesParserBuilder
     ) -> None:
+        """Constructor
+
+        Args:
+            communicator (GoProBle): Adapter to read / write settings data
+            identifier (SettingId): ID of setting
+            parser_builder (BytesParserBuilder): object to both parse and build setting
+        """
         self.identifier = identifier
         self.communicator: GoProBle = communicator
         self.setter_uuid: BleUUID = GoProUUIDs.CQ_SETTINGS
@@ -523,7 +521,7 @@ class BleSetting(Generic[SettingValueType]):
         self.builder: BytesBuilder = parser_builder  # Just syntactic sugar
         communicator._add_parser(self.identifier, self.parser)
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return str(self.identifier.name)
 
     def set(self, value: SettingValueType) -> GoProResp:
@@ -660,23 +658,24 @@ class BleSetting(Generic[SettingValueType]):
 
 
 class BleStatus:
-    """An individual camera status that is interacted with via BLE.
-
-    Args:
-        communicator (GoProBle): Adapter to read status data
-        identifier (StatusId): ID of status
-    """
+    """An individual camera status that is interacted with via BLE."""
 
     uuid: BleUUID = GoProUUIDs.CQ_QUERY
 
     def __init__(self, communicator: GoProBle, identifier: StatusId, parser: BytesParser) -> None:
+        """Constructor
+
+        Args:
+            communicator (GoProBle): Adapter to read status data
+            identifier (StatusId): ID of status
+            parser (BytesParser): parser used to build response
+        """
         self.identifier = identifier
         self.communicator = communicator
-        self.parser = parser
         # Add to response parsing map
-        communicator._add_parser(self.identifier, self.parser)
+        communicator._add_parser(self.identifier, parser)
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return str(self.identifier.name)
 
     @log_query
@@ -770,7 +769,6 @@ class WifiGetJsonWithParams(WifiGetJsonCommand, Generic[CommandValueType]):
     response_parser: Optional[JsonParser] = None
     param_builder: Optional[StringBuilder] = None
 
-    # pylint: disable=missing-return-doc
     def __call__(self, value: CommandValueType) -> GoProResp:  # noqa: D102
         values: List[CommandValueType] = [*value] if isinstance(value, Iterable) else [value]
         logger.info(build_log_tx_str(f"{self.endpoint.format(*values)}"))
@@ -800,7 +798,6 @@ class WifiGetJsonNoParams(WifiGetJsonCommand):
         response_parser (Optional[JsonParser]): the parser that will parse the received bytestream into a JSON dict
     """
 
-    # pylint: disable=missing-return-doc
     def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(build_log_tx_str(self.endpoint))
         url = self.endpoint
@@ -825,7 +822,6 @@ class WifiGetBinary(ABC):
 
     @abstractmethod
     @no_type_check
-    # pylint: disable=missing-return-doc
     def __call__(self, /, **kwargs) -> Path:  # noqa: D102
         # The method that will actually send the command and receive the stream
         # This method's signature shall be override by the subclass.
@@ -844,21 +840,21 @@ class WifiGetBinary(ABC):
 
 
 class WifiSetting(Generic[SettingValueType]):
-    """An individual camera setting that is interacted with via Wifi.
-
-    Args:
-        communicator (WifiCommunicator): Adapter to read / write settings data
-        id (SettingId): ID of setting
-        endpoint (str): HTTP endpoint to be used to set setting value
-    """
+    """An individual camera setting that is interacted with via Wifi."""
 
     def __init__(self, communicator: GoProWifi, identifier: SettingId) -> None:
+        """Constructor
+
+        Args:
+            communicator (GoProWifi): Adapter to read / write settings data
+            identifier (SettingId): ID of setting
+        """
         self.identifier = identifier
         self.communicator = communicator
         # Note! It is assumed that BLE and WiFi settings are symmetric so we only add to the communicator's
         # parser in the BLE Setting.
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return str(self.identifier.name)
 
     def set(self, value: SettingValueType) -> GoProResp:

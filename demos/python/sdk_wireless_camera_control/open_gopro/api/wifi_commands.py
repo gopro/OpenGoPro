@@ -19,18 +19,20 @@ logger = logging.getLogger(__name__)
 
 
 class WifiCommands:
-    # pylint: disable = missing-class-docstring, arguments-differ, useless-super-delegation, missing-return-doc
     """All of the Wifi commands.
 
     To be used as a delegate for a GoProWifi to build commands
 
     All of these return a GoProResp
-
-    Args:
-        communicator (GoProWifi):  Adapter to read / write commands
     """
 
+    # pylint: disable = missing-class-docstring, arguments-differ, useless-super-delegation
     def __init__(self, communicator: GoProWifi):
+        """Constructor
+
+        Args:
+            communicator (GoProWifi):  Adapter to read / write commands
+        """
         self.communicator = communicator
 
         class CameraFileToLocalFile(WifiGetBinary):
@@ -337,23 +339,24 @@ class WifiCommands:
 
 
 class WifiSettings:
-    # pylint: disable=missing-class-docstring
-    # pylint: disable=unused-argument
-    """The collection of all Settings.
+    # pylint: disable=missing-class-docstring, unused-argument
+    """Iterator to iterate through a BleSettings instance's attributes
 
-    Args:
-        communicator (GoProWifi): Adapter to read / write settings
-        params: (Type[Params]): the set of parameters to use to build the settings
-        endpoint (str): the endpoint to write to to set a setting
+    Does not include the 'communicator' instance.
     """
 
     class Iterator:
-        """Iterator to iterate through a BleSettings instance's attributes
+        """Iterator to iterate through a WifiSettings instance's attributes
 
         Does not include the 'communicator' instance.
         """
 
         def __init__(self, settings: "WifiSettings"):
+            """Constructor
+
+            Args:
+                settings (WifiSettings): Settings to iterate through
+            """
             self._index = 0
             self._setting_attributes = list(settings.__dict__.values())[1:]  # Skip communicator
 
@@ -373,11 +376,13 @@ class WifiSettings:
             # End of Iteration
             raise StopIteration
 
-    def __init__(
-        self,
-        communicator: GoProWifi,
-        endpoint: str = "gopro/camera/setting?setting={}&option={}",
-    ):
+    def __init__(self, communicator: GoProWifi, endpoint: str = "gopro/camera/setting?setting={}&option={}"):
+        """The collection of all WiFi Settings
+
+        Args:
+            communicator (GoProWifi): Adapter to read / write settings
+            endpoint (str): HTTP endpoint for command. Defaults to "gopro/camera/setting?setting={}&option={}".
+        """
         self.endpoint = endpoint
 
         self.resolution = WifiSetting[Params.Resolution](communicator, SettingId.RESOLUTION)

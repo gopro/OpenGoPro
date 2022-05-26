@@ -23,12 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class BleClient(Generic[BleHandle, BleDevice]):
-    """A BLE client that is composed of, among other things, a BLE interface
-
-    The interface is generic and can be set with the 'controller' argument
-    """
-
-    # uuids (Type[UUIDs], optional): Service BleUUID's to filter on when scanning. Defaults to None.
+    """A BLE device that is to be connected to."""
 
     def __init__(
         self,
@@ -36,9 +31,9 @@ class BleClient(Generic[BleHandle, BleDevice]):
         disconnected_cb: DisconnectHandlerType,
         notification_cb: NotiHandlerType,
         target: Tuple[Union[Pattern, BleDevice], Optional[List[BleUUID]]],
-        uuids: Type[UUIDs] = None,
+        uuids: Optional[Type[UUIDs]] = None,
     ) -> None:
-        """A BLE device that is to be connected to.
+        """Constructor
 
         Args:
             controller (BLEController): controller implementation to use for this client
@@ -66,10 +61,19 @@ class BleClient(Generic[BleHandle, BleDevice]):
         self._gatt_table: Optional[GattDB] = None
         self._device: Optional[BleDevice] = None
         self._handle: Optional[BleHandle] = None
-        self._identifier = None if isinstance(self._target, Pattern) else str(self._target)
+        self._identifier: Optional[str] = None if isinstance(self._target, Pattern) else str(self._target)
         self.uuids = uuids
 
     def _find_device(self, timeout: int = 5, retries: int = 30) -> None:
+        """Scan for the target device.
+
+        Args:
+            timeout (int): how long (seconds) to scan before considering the attempt a failure. Defaults to 5.
+            retries (int): How many attempts before giving up. Defaults to 30.
+
+        Raises:
+            FailedToFindDevice: No matching device was found
+        """
         self._device = None
         assert isinstance(self._target, Pattern)
         for retry in range(1, retries):
