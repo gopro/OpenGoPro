@@ -29,59 +29,65 @@ async def connect_ble(
     Returns:
         BleakClient: connected client
     """
-    # Map of discovered devices indexed by name
-    devices: Dict[str, BleakDevice] = {}
 
-    # Scan for devices
-    logger.info("Scanning for bluetooth devices...")
-    # Scan callback to also catch nonconnectable scan responses
-    def _scan_callback(device: BleakDevice, _: Any) -> None:
-        # Add to the dict if not unknown
-        if device.name != "Unknown" and device.name is not None:
-            devices[device.name] = device
+    for retry in range(10):
+        try:
+            # Map of discovered devices indexed by name
+            devices: Dict[str, BleakDevice] = {}
 
-    # Scan until we find devices
-    matched_devices: List[BleakDevice] = []
-    while len(matched_devices) == 0:
-        # Now get list of connectable advertisements
-        for device in await BleakScanner.discover(timeout=5, detection_callback=_scan_callback):
-            if device.name != "Unknown" and device.name is not None:
-                devices[device.name] = device
-        # Log every device we discovered
-        for d in devices:
-            logger.info(f"\tDiscovered: {d}")
-        # Now look for our matching device(s)
-        token = re.compile(r"GoPro [A-Z0-9]{4}" if identifier is None else f"GoPro {identifier}")
-        matched_devices = [device for name, device in devices.items() if token.match(name)]
-        logger.info(f"Found {len(matched_devices)} matching devices.")
+            # Scan for devices
+            logger.info("Scanning for bluetooth devices...")
+            # Scan callback to also catch nonconnectable scan responses
+            def _scan_callback(device: BleakDevice, _: Any) -> None:
+                # Add to the dict if not unknown
+                if device.name != "Unknown" and device.name is not None:
+                    devices[device.name] = device
 
-    # Connect to first matching Bluetooth device
-    device = matched_devices[0]
+            # Scan until we find devices
+            matched_devices: List[BleakDevice] = []
+            while len(matched_devices) == 0:
+                # Now get list of connectable advertisements
+                for device in await BleakScanner.discover(timeout=5, detection_callback=_scan_callback):
+                    if device.name != "Unknown" and device.name is not None:
+                        devices[device.name] = device
+                # Log every device we discovered
+                for d in devices:
+                    logger.info(f"\tDiscovered: {d}")
+                # Now look for our matching device(s)
+                token = re.compile(r"GoPro [A-Z0-9]{4}" if identifier is None else f"GoPro {identifier}")
+                matched_devices = [device for name, device in devices.items() if token.match(name)]
+                logger.info(f"Found {len(matched_devices)} matching devices.")
 
-    logger.info(f"Establishing BLE connection to {device}...")
-    client = BleakClient(device)
-    await client.connect(timeout=15)
-    logger.info("BLE Connected!")
+            # Connect to first matching Bluetooth device
+            device = matched_devices[0]
 
-    # Try to pair (on some OS's this will expectedly fail)
-    logger.info("Attempting to pair...")
-    try:
-        await client.pair()
-    except NotImplementedError:
-        # This is expected on Mac
-        pass
-    logger.info("Pairing complete!")
+            logger.info(f"Establishing BLE connection to {device}...")
+            client = BleakClient(device)
+            await client.connect(timeout=15)
+            logger.info("BLE Connected!")
 
-    # Enable notifications on all notifiable characteristics
-    logger.info("Enabling notifications...")
-    for service in client.services:
-        for char in service.characteristics:
-            if "notify" in char.properties:
-                logger.info(f"Enabling notification on char {char.uuid}")
-                await client.start_notify(char, notification_handler)
-    logger.info("Done enabling notifications")
+            # Try to pair (on some OS's this will expectedly fail)
+            logger.info("Attempting to pair...")
+            try:
+                await client.pair()
+            except NotImplementedError:
+                # This is expected on Mac
+                pass
+            logger.info("Pairing complete!")
 
-    return client
+            # Enable notifications on all notifiable characteristics
+            logger.info("Enabling notifications...")
+            for service in client.services:
+                for char in service.characteristics:
+                    if "notify" in char.properties:
+                        logger.info(f"Enabling notification on char {char.uuid}")
+                        await client.start_notify(char, notification_handler)
+            logger.info("Done enabling notifications")
+
+            return client
+        except Exception as e:
+            logger.error(f"Connection establishment failed: {e}")
+            logger.warning(f"Retrying # {retry:= retry +1}")
 
 
 async def main(identifier: Optional[str]) -> None:

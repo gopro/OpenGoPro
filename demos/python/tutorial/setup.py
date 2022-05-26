@@ -7,14 +7,18 @@ import os
 from setuptools import find_packages, setup
 
 # Package meta-data.
-VERSION = "0.0.2"
+VERSION = "0.0.3"
 NAME = "open_gopro_python_tutorials"
 DESCRIPTION = "Open GoPro Python Tutorials"
 URL = "https://github.com/gopro/OpenGoPro"
 EMAIL = "gopro.com"
 AUTHOR = "Tim Camise"
 
-REQUIRED = ["bleak==0.12.1"]
+REQUIRED = [
+    "bleak==0.14.2",
+    "open-gopro==0.9.0",
+    "requests>=2.25",
+]
 
 here = os.path.abspath(os.path.dirname(__file__))
 with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:

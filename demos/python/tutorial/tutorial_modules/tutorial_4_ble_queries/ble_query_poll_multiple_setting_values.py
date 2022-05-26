@@ -43,7 +43,7 @@ class FPS(enum.Enum):
 # Note these may change based on the Open GoPro version!
 class VideoFOV(enum.Enum):
     FOV_WIDE = 0
-    FOV_NARROW = 6
+    FOV_NARROW = 2
     FOV_SUPERVIEW = 3
     FOV_LINEAR = 4
     FOV_MAX_SUPERVIEW = 7

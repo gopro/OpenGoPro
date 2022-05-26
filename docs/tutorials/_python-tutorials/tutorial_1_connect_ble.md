@@ -26,7 +26,7 @@ This tutorial will provide a walk-through to connect to the GoPro camera via BLE
 
 ### Python
 
--   Python 3.8.x must be installed. See this [Python installation guide](https://docs.python-guide.org/starting/installation/).
+-   Python >= 3.8.x must be installed. See this [Python installation guide](https://docs.python-guide.org/starting/installation/).
 
 ### Tutorials Package
 
@@ -37,10 +37,10 @@ local machine, the package can be installed as follows:
 
 1. Enter the python tutorials directory at `$INSTALL/demos/python/tutorial/` where $INSTALL is the top level of the Open GoPro repo
    where it exists on your local machine
-2. Use pip to install the requirements file:
+2. Use pip to install the package (in editable mode in case you want to test out some changes):
 
 ```
-pip install -r requirements.txt
+pip install -e .
 ```
 
 {% note %}
@@ -56,11 +56,11 @@ Name: open-gopro-python-tutorials
 Version: 0.0.2
 Summary: Open GoPro Python Tutorials
 Home-page: https://github.com/gopro/OpenGoPro
-Author: GoPro
+Author: Tim Camise
 Author-email: gopro.com
 License: MIT
-Location: c:\gopro\opengopro\tutorials\python\bleak
-Requires: bleak
+Location: c:\users\tim\gopro\opengopro\demos\python\tutorial
+Requires: bleak, open-gopro, requests
 Required-by:
 ```
 
