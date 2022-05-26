@@ -30,7 +30,7 @@ def lint(session) -> None:
         "construct-typing",
     )
     session.run("mypy", "open_gopro")
-    session.run("pylint", "open_gopro")
+    session.run("pylint", r"--no-docstring-rgx=__ open_gopro", "open_gopro")
 
 
 @session(python=["3.8", "3.9", "3.10"])
@@ -53,6 +53,8 @@ def tests(session) -> None:
 def docstrings(session) -> None:
     """Validate docstrings."""
     session.install("darglint")
+    session.install("pydocstyle")
+    session.run("pydocstyle", "open_gopro")
     session.run("darglint", "open_gopro")
 
 

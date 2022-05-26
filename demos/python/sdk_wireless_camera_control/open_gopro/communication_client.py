@@ -104,14 +104,7 @@ class GoProWifi(ABC, GoProResponder):
 
 
 class GoProBle(ABC, GoProResponder, Generic[BleHandle, BleDevice]):
-    """GoPro specific BLE Client
-
-    Args:
-        controller (BLEController): controller implementation to use for this client
-        disconnected_cb (DisconnectHandlerType): disconnected callback
-        notification_cb (NotiHandlerType): notification callback
-        target (Union[Pattern, BleDevice]): regex or device to connect to
-    """
+    """GoPro specific BLE Client"""
 
     def __init__(
         self,
@@ -120,6 +113,14 @@ class GoProBle(ABC, GoProResponder, Generic[BleHandle, BleDevice]):
         notification_cb: NotiHandlerType,
         target: Union[Pattern, BleDevice],
     ) -> None:
+        """Constructor
+
+        Args:
+            controller (BLEController): controller implementation to use for this client
+            disconnected_cb (DisconnectHandlerType): disconnected callback
+            notification_cb (NotiHandlerType): notification callback
+            target (Union[Pattern, BleDevice]): regex or device to connect to
+        """
         GoProResponder.__init__(self)
         self._ble: BleClient = BleClient(
             controller,

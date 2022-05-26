@@ -95,12 +95,6 @@ class GoProResp:
             "RES_1080"
         ]
     }
-
-
-    Args:
-        meta (List[ResponseType]): A list of all information known about the response.
-        status (ErrorCode, optional): A status if known at time of instantiation. Defaults to ErrorCode.SUCCESS.
-        raw_packet (InputType, optional): The unparsed input if known at time of instantiation. Defaults to None.
     """
 
     class _State(enum.Enum):
@@ -116,8 +110,16 @@ class GoProResp:
         parsers: ParserMapType,
         meta: List[ResponseType],
         status: ErrorCode = ErrorCode.SUCCESS,
-        raw_packet: InputType = None,
+        raw_packet: Optional[InputType] = None,
     ) -> None:
+        """Constructor
+
+        Args:
+            parsers (ParserMapType): The map of parsers to be used to build a GoProResp.
+            meta (List[ResponseType]): A list of all information known about the response.
+            status (ErrorCode): A status if known at time of instantiation. Defaults to ErrorCode.SUCCESS.
+            raw_packet (InputType, optional): The unparsed input if known at time of instantiation. Defaults to None.
+        """
         # A list describing all of the currently known information about the response.
         # This will be appended to as more information is discovered. The various properties of GoProResp will
         # use this list to parse out their relevant information.
@@ -215,7 +217,7 @@ class GoProResp:
         """Pass-through to access data dict's "items" method
 
         Returns:
-            ItemsView[Any, Any]: [description]
+            ItemsView[Any, Any]: all of data's keys
         """
         return self.data.items()
 
@@ -223,7 +225,7 @@ class GoProResp:
         """Pass-through to access data dict's "keys" method
 
         Returns:
-            ItemsView[Any, Any]: [description]
+            ItemsView[Any, Any]: all of data's items
         """
         return self.data.keys()
 
@@ -231,7 +233,7 @@ class GoProResp:
         """Pass-through to access data dict's "values" method
 
         Returns:
-            ItemsView[Any, Any]: [description]
+            ItemsView[Any, Any]: all of data's values
         """
         return self.data.values()
 

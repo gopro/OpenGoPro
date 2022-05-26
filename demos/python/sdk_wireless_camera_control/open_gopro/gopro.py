@@ -139,13 +139,11 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
     Args:
         target (Optional[Union[Pattern, BleDevice]], optional): Last 4 of camera name / serial number
             (i.e. 0456 for GoPro0456). Defaults to None (i.e. connect to first discovered GoPro)
-        ble_adapter (Type[BLEController], optional): Class used to control computer's BLE connection / send data.
-            Defaults to BleakController().
-        wifi_adapter (Type[WifiController], optional): Class used to control computer's Wifi connection / send data.
-            Defaults to Wireless().
-        wifi_interace (str, optional): Set to specify the wifi interface the local machine will use to connect
+        wifi_interface (str): Set to specify the wifi interface the local machine will use to connect
             to the GoPro. If None (or not set), first discovered interface will be used.
-        enable_wifi (bool, optional): Optionally do not enable Wifi if set to False. Defaults to True.
+        enable_wifi (bool): Optionally do not enable Wifi if set to False. Defaults to True.
+        exception_cb (ExceptionHandler): callback to be notified when exception occurs in a thread besides main
+        kwargs (Dict): additional parameters for internal use / testing
     """
 
     _base_url = "http://10.5.5.9:8080/"  #: Hard-coded Open GoPro base URL

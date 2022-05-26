@@ -23,12 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class BleClient(Generic[BleHandle, BleDevice]):
-    """A BLE client that is composed of, among other things, a BLE interface
-
-    The interface is generic and can be set with the 'controller' argument
-    """
-
-    # uuids (Type[UUIDs], optional): Service BleUUID's to filter on when scanning. Defaults to None.
+    """A BLE device that is to be connected to."""
 
     def __init__(
         self,
@@ -38,7 +33,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
         target: Tuple[Union[Pattern, BleDevice], Optional[List[BleUUID]]],
         uuids: Optional[Type[UUIDs]] = None,
     ) -> None:
-        """A BLE device that is to be connected to.
+        """Constructor
 
         Args:
             controller (BLEController): controller implementation to use for this client

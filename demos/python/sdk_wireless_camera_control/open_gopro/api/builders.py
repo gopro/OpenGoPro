@@ -501,17 +501,18 @@ class BleProtoCommand(BleCommand):
 
 
 class BleSetting(Generic[SettingValueType]):
-    """An individual camera setting that is interacted with via BLE.
-
-    Args:
-        communicator (GoProBle): Adapter to read / write settings data
-        identifier (SettingId): ID of setting
-        parser_builder (BytesParserBuilder): object to both parse and build setting
-    """
+    """An individual camera setting that is interacted with via BLE."""
 
     def __init__(
         self, communicator: GoProBle, identifier: SettingId, parser_builder: BytesParserBuilder
     ) -> None:
+        """Constructor
+
+        Args:
+            communicator (GoProBle): Adapter to read / write settings data
+            identifier (SettingId): ID of setting
+            parser_builder (BytesParserBuilder): object to both parse and build setting
+        """
         self.identifier = identifier
         self.communicator: GoProBle = communicator
         self.setter_uuid: BleUUID = GoProUUIDs.CQ_SETTINGS
@@ -657,21 +658,22 @@ class BleSetting(Generic[SettingValueType]):
 
 
 class BleStatus:
-    """An individual camera status that is interacted with via BLE.
-
-    Args:
-        communicator (GoProBle): Adapter to read status data
-        identifier (StatusId): ID of status
-    """
+    """An individual camera status that is interacted with via BLE."""
 
     uuid: BleUUID = GoProUUIDs.CQ_QUERY
 
     def __init__(self, communicator: GoProBle, identifier: StatusId, parser: BytesParser) -> None:
+        """Constructor
+
+        Args:
+            communicator (GoProBle): Adapter to read status data
+            identifier (StatusId): ID of status
+            parser (BytesParser): parser used to build response
+        """
         self.identifier = identifier
         self.communicator = communicator
-        self.parser = parser
         # Add to response parsing map
-        communicator._add_parser(self.identifier, self.parser)
+        communicator._add_parser(self.identifier, parser)
 
     def __str__(self) -> str:
         return str(self.identifier.name)
@@ -838,15 +840,15 @@ class WifiGetBinary(ABC):
 
 
 class WifiSetting(Generic[SettingValueType]):
-    """An individual camera setting that is interacted with via Wifi.
-
-    Args:
-        communicator (WifiCommunicator): Adapter to read / write settings data
-        id (SettingId): ID of setting
-        endpoint (str): HTTP endpoint to be used to set setting value
-    """
+    """An individual camera setting that is interacted with via Wifi."""
 
     def __init__(self, communicator: GoProWifi, identifier: SettingId) -> None:
+        """Constructor
+
+        Args:
+            communicator (GoProWifi): Adapter to read / write settings data
+            identifier (SettingId): ID of setting
+        """
         self.identifier = identifier
         self.communicator = communicator
         # Note! It is assumed that BLE and WiFi settings are symmetric so we only add to the communicator's

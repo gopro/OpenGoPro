@@ -14,6 +14,12 @@ class Api:
     version = "2.0"
 
     def __init__(self, ble_communicator: GoProBle, wifi_communicator: GoProWifi) -> None:
+        """Constructor
+
+        Args:
+            ble_communicator (GoProBle): used to communicate via BLE
+            wifi_communicator (GoProWifi): used to communicate via WiFi
+        """
         self.ble_command = BleCommands(ble_communicator)
         self.ble_setting = BleSettings(ble_communicator)
         self.ble_status = BleStatuses(ble_communicator)

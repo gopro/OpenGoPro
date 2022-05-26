@@ -3,7 +3,7 @@
 #=======================================================================================
 [tool.poetry]
 name = "open_gopro"
-version = "0.9.1"
+version = "0.9.0"
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 readme = "README.md"
@@ -52,6 +52,7 @@ requests = "*"
 betterproto = { extras = ["compiler"], version = "*" }
 protobuf = "*"
 typing-extensions = "*"
+pydocstyle = "^6.1.1"
 
 [tool.poetry.dev-dependencies]
 grpcio-tools = "=1.43.0"
@@ -103,9 +104,17 @@ help = "Perform type checking and linting"
 cmd = "black open_gopro tests"
 help = "Apply black formatting to source code"
 
-[tool.poe.tasks.docstrings]
+[tool.poe.tasks.pydocstyle]
+cmd = "pydocstyle open_gopro"
+help = "check docstrings style"
+
+[tool.poe.tasks.darglint]
 cmd = "darglint -v 2 open_gopro"
 help = "validate docstrings"
+
+[tool.poe.tasks.docstrings]
+sequence = ["pydocstyle", "darglint"]
+help = "Format, check types, lint, check docstrings, and run unit tests"
 
 [tool.poe.tasks.sphinx]
 cmd = "sphinx-build -W -b html docs docs/build"
@@ -117,7 +126,7 @@ help = "update coverage badge"
 
 [tool.poe.tasks.protobuf]
 script = "open_gopro.util:build_protos"
-help = "generate protobuf source from .proto (does not work on Windows due to https://github.com/nat-n/poethepoet/issues/51)"
+help = "generate protobuf source from .proto"
 
 [tool.poe.tasks.clean_artifacts]
 cmd = "rm -rf **/__pycache__ *.csv *.mp4 *.jpg *.log .mypy_cache .nox"
@@ -199,8 +208,8 @@ exclude_lines = [
 
 [tool.pylint.'MASTER']
 load-plugins = "pylint.extensions.docparams"
-accept-no-param-doc = "yes"
-accept-no-return-doc = "yes"
+accept-no-param-doc = "yes" # handled by darglint
+accept-no-return-doc = "yes" # handled by darglint
 default-docstring-type = "google"
 ignore = ["tests", "proto"]
 
@@ -234,3 +243,8 @@ max-line-length = 160 # handled by black
 [tool.black]
 line-length = 111
 exclude = ".venv"
+
+[tool.pydocstyle]
+convention="google"
+add-ignore="D415, D107, D105"
+match='(?!params|.*pb).*\.py'

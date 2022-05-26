@@ -56,12 +56,16 @@ def uuid2bleak_string(uuid: BleUUID) -> str:
 
 
 class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton):
-    """Wrapper around bleak to manage a Bluetooth connection.
+    """Wrapper around bleak to manage a Bluetooth connection."""
 
-    Note, this is a singleton.
-    """
+    def __init__(self, exception_handler: Optional[Callable] = None) -> None:
+        """Constructor
 
-    def __init__(self, exception_handler: Callable = None) -> None:
+        Note, this is a singleton.
+
+        Args:
+            exception_handler (Callable, optional): Used to catch asyncio exceptions from other tasks. Defaults to None.
+        """
         # Thread to run ble controller asyncio loop (to abstract asyncio from client as well as handle async notifications)
         self._module_loop: asyncio.AbstractEventLoop  # Will be set when module thread starts
         self._module_thread = threading.Thread(daemon=True, target=self._run, name="data")
@@ -363,7 +367,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                             )
                         )
                     # Create new characteristic
-                    # TODO read value was causing some bug in MacOS. It's also not needed and increases conenction
+                    # TODO read value was causing some bug in MacOS. It's also not needed and increases connection
                     # establishment time.
                     chars.append(
                         Characteristic(

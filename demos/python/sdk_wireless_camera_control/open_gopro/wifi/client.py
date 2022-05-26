@@ -13,12 +13,16 @@ logger = logging.getLogger(__name__)
 
 
 class WifiClient:
-    """A Wifi client that is composed of, among other things, a Wifi interface
-
-    The interface is generic and can be set with the 'controller' argument
-    """
+    """A Wifi client that is composed of, among other things, a Wifi interface"""
 
     def __init__(self, controller: WifiController) -> None:
+        """Constructor
+
+        The interface is generic and can be set with the 'controller' argument
+
+        Args:
+            controller (WifiController): controller implementation to use for this client
+        """
         self._controller = controller
         self.ssid: Optional[str]
         self.password: Optional[str]

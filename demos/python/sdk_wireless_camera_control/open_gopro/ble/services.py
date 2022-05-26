@@ -57,9 +57,9 @@ class UuidLength(IntEnum):
 
 
 class BleUUID(uuid.UUID):
-    """Used to identify BLE BleUUID's
+    """An extension of the standard UUID to associate a string name with the UUID and allow 8-bit UUID input
 
-    A extension of the standard UUID to associate a string name with the UUID and allow 8-bit UUID input
+    Can only be initialized with one of [hex, bytes, bytes_le, int]
     """
 
     # pylint: disable=redefined-builtin
@@ -72,6 +72,20 @@ class BleUUID(uuid.UUID):
         bytes_le: Optional[bytes] = None,
         int: Optional[int] = None,
     ) -> None:
+        """Constructor
+
+        Args:
+            name (str): human readable name
+            uuid_format (UuidLength): 16 or 128 bit format. Defaults to UuidLength.BIT_128.
+            hex (str, optional): build from hex string. Defaults to None.
+            bytes (bytes, optional): build from big-endian bytes. Defaults to None.
+            bytes_le (bytes, optional): build from little-endian bytes. Defaults to None.
+            int (int, optional): build from int. Defaults to None.
+
+        Raises:
+            ValueError: Attempt to initialize with more than one option
+            ValueError: Badly formed input
+        """
         self.name: str
         if uuid_format is UuidLength.BIT_16:
             if [hex, bytes, bytes_le, int].count(None) != 3:
@@ -101,7 +115,7 @@ class BleUUID(uuid.UUID):
 
 @dataclass
 class Descriptor:
-    """A charactersistic descriptor.
+    """A characteristic descriptor.
 
     Args:
         handle (int) : the handle of the attribute table that the descriptor resides at
@@ -128,7 +142,7 @@ class Descriptor:
 
 @dataclass
 class Characteristic:
-    """A BLE charactersistic.
+    """A BLE characteristic.
 
     Args:
         handle (int) : the handle of the attribute table that the characteristic resides at
@@ -255,7 +269,7 @@ class Service:
         uuid (BleUUID) : the service's BleUUID
         start_handle(int): the attribute handle where the service begins
         end_handle(int): the attribute handle where the service ends. Defaults to 0xFFFF.
-        init_chars (List[Characteristic]) : list of characteristics known at service instantation. Can be set
+        init_chars (List[Characteristic]) : list of characteristics known at service instantiation. Can be set
             later with the characteristics property
     """
 
@@ -300,7 +314,7 @@ class GattDB:
     """The attribute table to store / look up BLE services, characteristics, and attributes.
 
     Args:
-        init_services (List[Service]): A list of serices known at instantiation time. Can be updated later
+        init_services (List[Service]): A list of services known at instantiation time. Can be updated later
             with the services property
     """
 
@@ -333,7 +347,7 @@ class GattDB:
             return sum(len(service.characteristics) for service in self._db.services.values())
 
         @no_type_check
-        def keys(self) -> Generator[BleUUID, None, None]:
+        def keys(self) -> Generator[BleUUID, None, None]:  # noqa: D102
             def iter_keys():
                 for service in self._db.services.values():
                     for ble_uuid in service.characteristics.keys():
@@ -342,7 +356,7 @@ class GattDB:
             return iter_keys()
 
         @no_type_check
-        def values(self) -> Generator[Characteristic, None, None]:
+        def values(self) -> Generator[Characteristic, None, None]:  # noqa: D102
             def iter_values():
                 for service in self._db.services.values():
                     for char in service.characteristics.values():
@@ -353,7 +367,7 @@ class GattDB:
         @no_type_check
         def items(
             self,
-        ) -> Generator[Tuple[BleUUID, Characteristic], None, None]:
+        ) -> Generator[Tuple[BleUUID, Characteristic], None, None]:  # noqa: D102
             def iter_items():
                 for service in self._db.services.values():
                     for ble_uuid, char in service.characteristics.items():
