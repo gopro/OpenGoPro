@@ -11,11 +11,11 @@ import logging
 import tempfile
 from enum import Enum, auto
 from getpass import getpass
-from distutils.version import LooseVersion
 from shutil import which
 from typing import List, Optional, Tuple, Any, Callable
 
 import wrapt
+from packaging.version import Version
 
 from open_gopro.util import cmd
 from open_gopro.wifi import SsidState, WifiController
@@ -98,7 +98,7 @@ class Wireless(WifiController):
             version = cmd("nmcli --version").split()[-1]
             return (
                 Nmcli0990Wireless(password=password)
-                if LooseVersion(version) >= LooseVersion("0.9.9.0")
+                if Version(version) >= Version("0.9.9.0")
                 else NmcliWireless(password=password)
             )
         # try nmcli (Ubuntu w/o network-manager)

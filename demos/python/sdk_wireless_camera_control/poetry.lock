@@ -534,7 +534,7 @@ tomlkit = ">=0.7.0,<0.8.0"
 name = "packaging"
 version = "21.3"
 description = "Core utilities for Python packages"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -712,7 +712,7 @@ pyobjc-core = ">=8.5"
 name = "pyparsing"
 version = "3.0.9"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6.8"
 
@@ -1131,7 +1131,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "8b51f4fed7a0692e3b0f55c914c45987eb879dfa23c74ab1d7830d1051aef121"
+content-hash = "f627861eace60cde405c3ce18784689ba2a6b03506ff838f50f4bbb64a2ce9f9"
 
 [metadata.files]
 alabaster = [

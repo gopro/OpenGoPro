@@ -53,6 +53,7 @@ betterproto = { extras = ["compiler"], version = "*" }
 protobuf = "*"
 typing-extensions = "*"
 pydocstyle = "^6.1.1"
+packaging = "^21.3"
 
 [tool.poetry.dev-dependencies]
 grpcio-tools = "=1.43.0"
@@ -92,13 +93,9 @@ help = "Run end-to-end tests"
 cmd = "mypy open_gopro"
 help = "Check types"
 
-[tool.poe.tasks.pylint]
+[tool.poe.tasks.lint]
 cmd = "pylint --no-docstring-rgx=__ open_gopro"
 help = "Run pylint"
-
-[tool.poe.tasks.lint]
-sequence = ["pylint", "types"]
-help = "Perform type checking and linting"
 
 [tool.poe.tasks.format]
 cmd = "black open_gopro tests"
