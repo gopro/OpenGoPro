@@ -124,7 +124,7 @@ should be used simultaneously with this document for development.</p>
 <span class="target" id="module-open_gopro.gopro"></span><p>Implements top level interface to GoPro module.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="open_gopro.gopro.GoPro">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">open_gopro.gopro.</span></span><span class="sig-name descname"><span class="pre">GoPro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target:</span> <span class="pre">typing.Optional[typing.Union[typing.Pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">open_gopro.ble.controller.BleDevice]]</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ble_adapter:</span> <span class="pre">typing.Type[open_gopro.ble.controller.BLEController]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'open_gopro.ble.adapters.bleak_wrapper.BleakWrapperController'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wifi_adapter:</span> <span class="pre">typing.Type[open_gopro.wifi.controller.WifiController]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'open_gopro.wifi.adapters.wireless.Wireless'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wifi_interface:</span> <span class="pre">typing.Optional[str]</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_wifi:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maintain_ble:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.gopro.GoPro" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">open_gopro.gopro.</span></span><span class="sig-name descname"><span class="pre">GoPro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Pattern</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">open_gopro.ble.controller.BleDevice</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wifi_interface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_wifi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exception_cb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Exception</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.gopro.GoPro" title="Permalink to this definition"></a></dt>
 <dd><p>The top-level BLE and Wifi interface to a GoPro device.</p>
 <p>See <a class="reference external" href="https://gopro.github.io/OpenGoPro/python_sdk">Open GoPro</a> for complete documentation.</p>
 <p>This will handle for BLE:</p>
@@ -165,15 +165,11 @@ should be used simultaneously with this document for development.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>target</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Pattern</em><em>, </em><em>BleDevice</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Last 4 of camera name / serial number
 (i.e. 0456 for GoPro0456). Defaults to None (i.e. connect to first discovered GoPro)</p></li>
-<li><p><strong>ble_adapter</strong> (<em>Type</em><em>[</em><em>BLEController</em><em>]</em><em>, </em><em>optional</em>) – Class used to control computer’s BLE connection / send data.
-Defaults to BleakController().</p></li>
-<li><p><strong>wifi_adapter</strong> (<em>Type</em><em>[</em><em>WifiController</em><em>]</em><em>, </em><em>optional</em>) – Class used to control computer’s Wifi connection / send data.
-Defaults to Wireless().</p></li>
-<li><p><strong>wifi_interace</strong> (<em>str</em><em>, </em><em>optional</em>) – Set to specify the wifi interface the local machine will use to connect
+<li><p><strong>wifi_interface</strong> (<em>str</em>) – Set to specify the wifi interface the local machine will use to connect
 to the GoPro. If None (or not set), first discovered interface will be used.</p></li>
-<li><p><strong>enable_wifi</strong> (<em>bool</em><em>, </em><em>optional</em>) – Optionally do not enable Wifi if set to False. Defaults to True.</p></li>
-<li><p><strong>maintain_ble</strong> (<em>bool</em><em>, </em><em>optional</em>) – Optionally do not perform BLE housekeeping if set to False (used for
-testing). Defaults to True.</p></li>
+<li><p><strong>enable_wifi</strong> (<em>bool</em>) – Optionally do not enable Wifi if set to False. Defaults to True.</p></li>
+<li><p><strong>exception_cb</strong> (<em>ExceptionHandler</em>) – callback to be notified when exception occurs in a thread besides main</p></li>
+<li><p><strong>kwargs</strong> (<em>Dict</em>) – additional parameters for internal use / testing</p></li>
 </ul>
 </dd>
 </dl>
@@ -416,10 +412,10 @@ start maintenance, and get Open GoPro version..</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="open_gopro.gopro.acquire_ready_semaphore">
-<span class="sig-prename descclassname"><span class="pre">open_gopro.gopro.</span></span><span class="sig-name descname"><span class="pre">acquire_ready_semaphore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wrapper=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapter=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy=&lt;class</span> <span class="pre">'FunctionWrapper'&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#open_gopro.gopro.acquire_ready_semaphore" title="Permalink to this definition"></a></dt>
-<dd><p>Call method after acquiring ready semaphore.</p>
-<p>Release semaphore when done</p>
+<dt class="sig sig-object py" id="open_gopro.gopro.acquire_ready_lock">
+<span class="sig-prename descclassname"><span class="pre">open_gopro.gopro.</span></span><span class="sig-name descname"><span class="pre">acquire_ready_lock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wrapper=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapter=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy=&lt;class</span> <span class="pre">'FunctionWrapper'&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#open_gopro.gopro.acquire_ready_lock" title="Permalink to this definition"></a></dt>
+<dd><p>Call method after acquiring ready lock.</p>
+<p>Release lock when done</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -473,15 +469,6 @@ and data is sent.</p>
 <dt class="sig sig-object py" id="open_gopro.api.builders.BleSetting">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">open_gopro.api.builders.</span></span><span class="sig-name descname"><span class="pre">BleSetting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">open_gopro.communication_client.GoProBle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.constants.SettingId" title="open_gopro.constants.SettingId"><span class="pre">open_gopro.constants.SettingId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser_builder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">construct.core.Construct</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.builders.BleSetting" title="Permalink to this definition"></a></dt>
 <dd><p>An individual camera setting that is interacted with via BLE.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>communicator</strong> (<em>GoProBle</em>) – Adapter to read / write settings data</p></li>
-<li><p><strong>identifier</strong> (<a class="reference internal" href="#open_gopro.constants.SettingId" title="open_gopro.constants.SettingId"><em>SettingId</em></a>) – ID of setting</p></li>
-<li><p><strong>parser_builder</strong> (<em>BytesParserBuilder</em>) – object to both parse and build setting</p></li>
-</ul>
-</dd>
-</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.builders.BleSetting.get_capabilities_names">
 <span class="sig-name descname"><span class="pre">get_capabilities_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><span class="pre">open_gopro.responses.GoProResp</span></a></span></span><a class="headerlink" href="#open_gopro.api.builders.BleSetting.get_capabilities_names" title="Permalink to this definition"></a></dt>
@@ -614,14 +601,6 @@ and data is sent.</p>
 <dt class="sig sig-object py" id="open_gopro.api.builders.BleStatus">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">open_gopro.api.builders.</span></span><span class="sig-name descname"><span class="pre">BleStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">open_gopro.communication_client.GoProBle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.constants.StatusId" title="open_gopro.constants.StatusId"><span class="pre">open_gopro.constants.StatusId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">construct.core.Construct</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.builders.BleStatus" title="Permalink to this definition"></a></dt>
 <dd><p>An individual camera status that is interacted with via BLE.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>communicator</strong> (<em>GoProBle</em>) – Adapter to read status data</p></li>
-<li><p><strong>identifier</strong> (<a class="reference internal" href="#open_gopro.constants.StatusId" title="open_gopro.constants.StatusId"><em>StatusId</em></a>) – ID of status</p></li>
-</ul>
-</dd>
-</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.builders.BleStatus.get_value">
 <span class="sig-name descname"><span class="pre">get_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><span class="pre">open_gopro.responses.GoProResp</span></a></span></span><a class="headerlink" href="#open_gopro.api.builders.BleStatus.get_value" title="Permalink to this definition"></a></dt>
@@ -673,15 +652,6 @@ and data is sent.</p>
 <dt class="sig sig-object py" id="open_gopro.api.builders.WifiSetting">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">open_gopro.api.builders.</span></span><span class="sig-name descname"><span class="pre">WifiSetting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">open_gopro.communication_client.GoProWifi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.constants.SettingId" title="open_gopro.constants.SettingId"><span class="pre">open_gopro.constants.SettingId</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.builders.WifiSetting" title="Permalink to this definition"></a></dt>
 <dd><p>An individual camera setting that is interacted with via Wifi.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>communicator</strong> (<em>WifiCommunicator</em>) – Adapter to read / write settings data</p></li>
-<li><p><strong>id</strong> (<a class="reference internal" href="#open_gopro.constants.SettingId" title="open_gopro.constants.SettingId"><em>SettingId</em></a>) – ID of setting</p></li>
-<li><p><strong>endpoint</strong> (<em>str</em>) – HTTP endpoint to be used to set setting value</p></li>
-</ul>
-</dd>
-</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.builders.WifiSetting.set">
 <span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">open_gopro.api.builders.SettingValueType</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><span class="pre">open_gopro.responses.GoProResp</span></a></span></span><a class="headerlink" href="#open_gopro.api.builders.WifiSetting.set" title="Permalink to this definition"></a></dt>
@@ -711,11 +681,6 @@ and data is sent.</p>
 <dd><p>All of the BLE commands.</p>
 <p>To be used as a delegate for a GoProBle instance to build commands</p>
 <p>All of these return a GoProResp</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>communicator</strong> (<em>GoProBle</em>) – GoPro BLE communicator that will send the commands</p>
-</dd>
-</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.enable_wifi_ap">
 <span class="sig-name descname"><span class="pre">enable_wifi_ap</span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.enable_wifi_ap" title="Permalink to this definition"></a></dt>
@@ -1047,7 +1012,7 @@ and data is sent.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleSettings">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">open_gopro.api.ble_commands.</span></span><span class="sig-name descname"><span class="pre">BleSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">open_gopro.communication_client.GoProBle</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.ble_commands.BleSettings" title="Permalink to this definition"></a></dt>
-<dd><p>The collection of all Settings.</p>
+<dd><p>The collection of all BLE Settings.</p>
 <p>To be used by a GoProBle delegate to build setting commands.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1746,11 +1711,6 @@ and data is sent.</p>
 <dd><p>All of the Wifi commands.</p>
 <p>To be used as a delegate for a GoProWifi to build commands</p>
 <p>All of these return a GoProResp</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>communicator</strong> (<em>GoProWifi</em>) – Adapter to read / write commands</p>
-</dd>
-</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.wifi_commands.WifiCommands.add_photo_hilight">
 <span class="sig-name descname"><span class="pre">add_photo_hilight</span></span><a class="headerlink" href="#open_gopro.api.wifi_commands.WifiCommands.add_photo_hilight" title="Permalink to this definition"></a></dt>
@@ -2237,20 +2197,12 @@ and data is sent.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="open_gopro.api.wifi_commands.WifiSettings">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">open_gopro.api.wifi_commands.</span></span><span class="sig-name descname"><span class="pre">WifiSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">open_gopro.communication_client.GoProWifi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gopro/camera/setting?setting={}&amp;option={}'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.wifi_commands.WifiSettings" title="Permalink to this definition"></a></dt>
-<dd><p>The collection of all Settings.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>communicator</strong> (<em>GoProWifi</em>) – Adapter to read / write settings</p></li>
-<li><p><strong>params</strong> – (Type[Params]): the set of parameters to use to build the settings</p></li>
-<li><p><strong>endpoint</strong> (<em>str</em>) – the endpoint to write to to set a setting</p></li>
-</ul>
-</dd>
-</dl>
+<dd><p>Iterator to iterate through a BleSettings instance’s attributes</p>
+<p>Does not include the ‘communicator’ instance.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="open_gopro.api.wifi_commands.WifiSettings.Iterator">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.api.wifi_commands.WifiSettings" title="open_gopro.api.wifi_commands.WifiSettings"><span class="pre">open_gopro.api.wifi_commands.WifiSettings</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.wifi_commands.WifiSettings.Iterator" title="Permalink to this definition"></a></dt>
-<dd><p>Iterator to iterate through a BleSettings instance’s attributes</p>
+<dd><p>Iterator to iterate through a WifiSettings instance’s attributes</p>
 <p>Does not include the ‘communicator’ instance.</p>
 </dd></dl>
 
@@ -2372,15 +2324,6 @@ For example, first send the command and store the response:</p>
 <span class="go">}</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>meta</strong> (<em>List</em><em>[</em><em>ResponseType</em><em>]</em>) – A list of all information known about the response.</p></li>
-<li><p><strong>status</strong> (<a class="reference internal" href="#open_gopro.constants.ErrorCode" title="open_gopro.constants.ErrorCode"><em>ErrorCode</em></a><em>, </em><em>optional</em>) – A status if known at time of instantiation. Defaults to ErrorCode.SUCCESS.</p></li>
-<li><p><strong>raw_packet</strong> (<em>InputType</em><em>, </em><em>optional</em>) – The unparsed input if known at time of instantiation. Defaults to None.</p></li>
-</ul>
-</dd>
-</dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="open_gopro.responses.GoProResp.cmd">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cmd</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.constants.CmdId" title="open_gopro.constants.CmdId"><span class="pre">open_gopro.constants.CmdId</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.constants.QueryCmdId" title="open_gopro.constants.QueryCmdId"><span class="pre">open_gopro.constants.QueryCmdId</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.constants.ActionId" title="open_gopro.constants.ActionId"><span class="pre">open_gopro.constants.ActionId</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.responses.GoProResp.cmd" title="Permalink to this definition"></a></dt>
@@ -2505,7 +2448,7 @@ For example, first send the command and store the response:</p>
 <dd><p>Pass-through to access data dict’s “items” method</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>[description]</p>
+<dd class="field-odd"><p>all of data’s keys</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>ItemsView[Any, Any]</p>
@@ -2519,7 +2462,7 @@ For example, first send the command and store the response:</p>
 <dd><p>Pass-through to access data dict’s “keys” method</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>[description]</p>
+<dd class="field-odd"><p>all of data’s items</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>ItemsView[Any, Any]</p>
@@ -2554,7 +2497,7 @@ For example, first send the command and store the response:</p>
 <dd><p>Pass-through to access data dict’s “values” method</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>[description]</p>
+<dd class="field-odd"><p>all of data’s values</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>ItemsView[Any, Any]</p>
