@@ -30,7 +30,7 @@ def lint(session) -> None:
         "construct-typing",
     )
     session.run("mypy", "open_gopro")
-    session.run("pylint", r"--no-docstring-rgx=__ open_gopro", "open_gopro")
+    session.run("pylint", "--no-docstring-rgx=__", "open_gopro")
 
 
 @session(python=["3.8", "3.9", "3.10"])
