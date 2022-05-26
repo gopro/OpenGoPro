@@ -341,10 +341,9 @@ class Singleton:
 
     _instances: Dict[Type["Singleton"], Type["Singleton"]] = {}
 
-    def __new__(cls, *args: Any, **kwargs: Any) -> Any:  # noqa
+    def __new__(cls, *_: Any) -> Any:  # noqa https://github.com/PyCQA/pydocstyle/issues/515
         if cls not in cls._instances:
-            # https://github.com/python/mypy/issues/6061
-            cls._instances[cls] = object.__new__(cls, *args, **kwargs)  # type: ignore
+            cls._instances[cls] = object.__new__(cls)  # type: ignore
         return cls._instances[cls]
 
 
