@@ -53,7 +53,7 @@ def tests(session) -> None:
 def docstrings(session) -> None:
     """Validate docstrings."""
     session.install("darglint")
-    session.install("pydocstyle")
+    session.install("pydocstyle[toml]")
     session.run("pydocstyle", "open_gopro")
     session.run("darglint", "open_gopro")
 
