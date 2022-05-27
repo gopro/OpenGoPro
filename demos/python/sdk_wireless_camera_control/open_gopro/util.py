@@ -3,6 +3,7 @@
 
 """Miscellaneous utilities for the GoPro package."""
 
+from __future__ import annotations
 import sys
 import enum
 import json
@@ -339,12 +340,11 @@ def cmd(command: str) -> str:
 class Singleton:
     """To be subclassed to create a singleton class."""
 
-    _instances: Dict[Type["Singleton"], Type["Singleton"]] = {}
+    _instances: Dict[Type[Singleton], Singleton] = {}
 
-    def __new__(cls, *args: Any, **kwargs: Any) -> Any:  # noqa
+    def __new__(cls, *_: Any) -> Any:  # noqa https://github.com/PyCQA/pydocstyle/issues/515
         if cls not in cls._instances:
-            # https://github.com/python/mypy/issues/6061
-            cls._instances[cls] = object.__new__(cls, *args, **kwargs)  # type: ignore
+            cls._instances[cls] = object.__new__(cls)
         return cls._instances[cls]
 
 
