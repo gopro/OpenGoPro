@@ -13,8 +13,7 @@ from open_gopro.wifi.adapters import Wireless
 
 from tutorial_modules import enable_wifi
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
+from tutorial_modules import logger
 
 
 async def connect_wifi(identifier: str = None) -> Tuple[Wireless, BleakClient]:
@@ -78,7 +77,8 @@ if __name__ == "__main__":
         asyncio.run(main(args.identifier, args.timeout))
     except KeyboardInterrupt:
         sys.exit(0)
-    except:
+    except Exception as e:
+        logger.error(e)
         sys.exit(-1)
     else:
         sys.exit(0)

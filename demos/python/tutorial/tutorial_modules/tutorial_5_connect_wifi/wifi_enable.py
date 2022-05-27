@@ -13,8 +13,7 @@ from bleak import BleakClient
 
 from tutorial_modules import GOPRO_BASE_UUID, connect_ble
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
+from tutorial_modules import logger
 
 
 async def enable_wifi(identifier: str = None) -> Tuple[str, str, BleakClient]:
@@ -113,7 +112,8 @@ if __name__ == "__main__":
 
     try:
         asyncio.run(main(args.identifier, args.timeout))
-    except:
+    except Exception as e:
+        logger.error(e)
         sys.exit(-1)
     else:
         sys.exit(0)

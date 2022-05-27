@@ -13,8 +13,7 @@ from bleak import BleakClient
 
 from tutorial_modules import GOPRO_BASE_UUID, connect_ble
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
+from tutorial_modules import logger
 
 
 async def main(identifier: Optional[str]) -> None:
@@ -52,7 +51,7 @@ async def main(identifier: Optional[str]) -> None:
     time.sleep(2)  # If we're recording, let's wait 2 seconds (i.e. take a 2 second video)
     # Write to command request BleUUID to turn the shutter off
     logger.info("Setting the shutter off")
-    event.clear()
+    # event.clear()
     await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([3, 1, 1, 0]))
     await event.wait()  # Wait to receive the notification response
     await client.disconnect()
@@ -73,7 +72,8 @@ if __name__ == "__main__":
 
     try:
         asyncio.run(main(args.identifier))
-    except:
+    except Exception as e:
+        logger.error(e)
         sys.exit(-1)
     else:
         sys.exit(0)

@@ -20,7 +20,7 @@ This tutorial will provide a walk-through to connect to the GoPro camera via BLE
     - Linux distribution with [BlueZ](http://www.bluez.org/) >= 5.43
     - OS X/macOS support via Core Bluetooth API, from at least OS X version 10.11
 
-1. A GoPro camera that is [supported by Open GoPro]({% link specs/ble.md %}#supported-cameras)
+1. A GoPro camera that is [supported by Open GoPro]({% link specs/ble_versions/ble_2_0.md %}#supported-cameras)
 
 ## Software
 
@@ -43,17 +43,18 @@ local machine, the package can be installed as follows:
 pip install -e .
 ```
 
-{% note %}
-This will also install the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/) which will be
-used for some of the optional examples through these tutorials.
-{% endnote %}
+{% tip %}
+While it is out of the scope of this tutorial to describe, it is recommended to install the package in to a
+[virtual environment](https://realpython.com/python-virtual-environments-a-primer/#why-do-you-need-virtual-environments)
+in order to isolate system dependencies.
+{% endtip %}
 
 You can test that installation was successful by viewing the installed package's information:
 
 ```console
 $ pip show open-gopro-python-tutorials
 Name: open-gopro-python-tutorials
-Version: 0.0.2
+Version: 0.0.3
 Summary: Open GoPro Python Tutorials
 Home-page: https://github.com/gopro/OpenGoPro
 Author: Tim Camise
@@ -63,6 +64,11 @@ Location: c:\users\tim\gopro\opengopro\demos\python\tutorial
 Requires: bleak, open-gopro, requests
 Required-by:
 ```
+
+{% note %}
+This will also install the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/) which will be
+used for some of the optional examples through these tutorials.
+{% endnote %}
 
 The scripts that will be used for this tutorial can be found in the
 [Tutorial 1 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_1_connect_ble).
@@ -195,6 +201,11 @@ Now we can search through the discovered devices to see if we found a GoPro. Any
 device name will be structured as `GoPro XXXX` where XXXX is the last four digits of
 your camera's serial number.
 
+{% warning %}
+If you have renamed your GoPro to something other than the default, you will need to update the below
+steps accordingly.
+{% endwarning %}
+
 First, we define a regex which is either "GoPro " followed by any four alphanumeric characters if no identifier was passed,
 or "GoPro " concatenated with the identifier if it exists. In the demo `ble_connect.py`, the identifier is taken
 from the command-line arguments.
@@ -291,7 +302,7 @@ except NotImplementedError:
     pass
 ```
 
-Not all OS's allow pairing but some require it. Rather than checking for the OS, we are just
+Not all OS's allow pairing (at this time) but some require it. Rather than checking for the OS, we are just
 catching the exception when it fails.
 
 Once paired, the camera should beep and display "Connection Successful".

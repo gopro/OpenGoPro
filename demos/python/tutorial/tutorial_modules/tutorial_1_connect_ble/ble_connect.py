@@ -4,33 +4,45 @@
 import re
 import sys
 import asyncio
-import logging
 import argparse
 from typing import Dict, Any, List, Callable, Optional
 
 from bleak import BleakScanner, BleakClient
 from bleak.backends.device import BLEDevice as BleakDevice
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
+from tutorial_modules import logger
+
+
+def exception_handler(loop: asyncio.AbstractEventLoop, context: Dict[str, Any]) -> None:
+    msg = context.get("exception", context["message"])
+    logger.error(f"Caught exception: {msg}")
 
 
 async def connect_ble(
-    notification_handler: Callable[[int, bytes], None], identifier: str = None
+    notification_handler: Callable[[int, bytes], None],
+    identifier: Optional[str] = None,
 ) -> BleakClient:
     """Connect to a GoPro, then pair, and enable notifications
 
     If identifier is None, the first discovered GoPro will be connected to.
 
+    Retry 10 times
+
     Args:
         notification_handler (Callable[[int, bytes], None]): callback when notification is received
         identifier (str, optional): Last 4 digits of GoPro serial number. Defaults to None.
+
+    Raises:
+        Exception: couldn't establish connection after retrying 10 times
 
     Returns:
         BleakClient: connected client
     """
 
-    for retry in range(10):
+    asyncio.get_event_loop().set_exception_handler(exception_handler)
+
+    RETRIES = 10
+    for retry in range(RETRIES):
         try:
             # Map of discovered devices indexed by name
             devices: Dict[str, BleakDevice] = {}
@@ -87,7 +99,9 @@ async def connect_ble(
             return client
         except Exception as e:
             logger.error(f"Connection establishment failed: {e}")
-            logger.warning(f"Retrying # {retry:= retry +1}")
+            logger.warning(f"Retrying #{retry}")
+
+    raise Exception(f"Couldn't establish BLE connection after {RETRIES} retries")
 
 
 async def main(identifier: Optional[str]) -> None:
@@ -112,7 +126,8 @@ if __name__ == "__main__":
 
     try:
         asyncio.run(main(args.identifier))
-    except:
+    except Exception as e:
+        logger.error(e)
         sys.exit(-1)
     else:
         sys.exit(0)

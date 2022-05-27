@@ -14,11 +14,7 @@ URL = "https://github.com/gopro/OpenGoPro"
 EMAIL = "gopro.com"
 AUTHOR = "Tim Camise"
 
-REQUIRED = [
-    "bleak==0.14.2",
-    "open-gopro==0.9.0",
-    "requests>=2.25",
-]
+REQUIRED = ["bleak==0.14.2", "open-gopro==0.9.1", "requests>=2.25", "rich >= 12.4.4"]
 
 here = os.path.abspath(os.path.dirname(__file__))
 with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:

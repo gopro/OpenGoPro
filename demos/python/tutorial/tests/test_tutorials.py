@@ -190,16 +190,16 @@ class TestTutorial6SendWifiCommands:
         wifi_command_load_group()
 
     def test_wifi_command_load_preset(self, connect_wifi):
-        wifi_command_load_preset()
+        wifi_command_load_preset(2)
+
+    def test_wifi_command_zoom(self, connect_wifi):
+        wifi_command_zoom(50)
 
     def test_wifi_command_preview_stream(self, connect_wifi):
         wifi_command_preview_stream()
 
     def test_wifi_command_set_resolution(self, connect_wifi):
         wifi_command_set_resolution()
-
-    def test_wifi_command_zoom(self, connect_wifi):
-        wifi_command_zoom(50)
 
     def test_wifi_command_set_shutter(self, connect_wifi):
         wifi_command_set_shutter()
