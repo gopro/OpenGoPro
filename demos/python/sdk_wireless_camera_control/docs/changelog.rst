@@ -9,6 +9,11 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
+0.9.1 (May-27-2022)
+-----------------------
+* Improve non-main thread and asyncio exception handling
+* Add pydocstyle verification
+
 0.9.0 (February-7-2022)
 -----------------------
 * Move to Poetry-based development environment
