@@ -227,6 +227,9 @@ the advertising GoPro will not be discovered by the scanning PC in one scan. The
 the scan (as `ble_connect.py` does) until a GoPro is found. That is, `matched_device` must contain at least one
 device.
 
+Similarly, connection establishment can fail for reasons out of our control. Therefore, the connection process
+is also wrapped in retry logic.
+
 When running the demo, discovered devices will be logged to the console as they are found. Click the output tab
 to see an example of this.
 
