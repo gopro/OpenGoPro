@@ -2,7 +2,7 @@
 # This copyright was auto-generated on Fri Sep 10 01:35:03 UTC 2021
 
 # pylint: disable=redefined-outer-name
-# pylint: disable=missing-return-doc
+
 
 """Unit testing of GoPro Client"""
 

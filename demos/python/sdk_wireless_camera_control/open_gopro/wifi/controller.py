@@ -20,15 +20,15 @@ class SsidState(IntEnum):
 
 
 class WifiController(ABC):
-    """Interface definition for a Wifi driver to be used by GoPro.
+    """Interface definition for a Wifi driver to be used by GoPro."""
 
-    Args:
-        interface (str, optional): Wifi interface to use. Defaults to None (auto-detect).
-        password (str, optional): user password to use for sudo. Defaults to None.
-    """
+    def __init__(self, interface: Optional[str] = None, password: Optional[str] = None) -> None:
+        """Constructor
 
-    def __init__(self, interface: str = None, password: str = None) -> None:
-
+        Args:
+            interface (str, optional): Wifi interface to use. Defaults to None (auto-detect).
+            password (str, optional): user password to use for sudo. Defaults to None.
+        """
         self._target_interface = interface
         self._interface: str
         self._password = password

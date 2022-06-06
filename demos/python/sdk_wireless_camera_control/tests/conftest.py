@@ -2,7 +2,7 @@
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:05:52 PM
 
 # pylint: disable=redefined-outer-name
-# pylint: disable=missing-return-doc
+
 
 import re
 import asyncio
@@ -149,6 +149,9 @@ class GattTable:
 
 class BleControllerTest(BLEController, Generic[BleHandle, BleDevice]):
     # pylint: disable=signature-differs
+
+    def __init__(self, *args, **kwargs) -> None:
+        pass
 
     def scan(self, token: Pattern, timeout: int, service_uuids: List[BleUUID] = None) -> str:
         if token == re.compile("device"):

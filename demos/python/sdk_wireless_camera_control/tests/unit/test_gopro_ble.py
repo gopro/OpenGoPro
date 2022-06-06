@@ -2,7 +2,7 @@
 # This copyright was auto-generated on Tue Sep  7 21:35:52 UTC 2021
 
 # pylint: disable=redefined-outer-name
-# pylint: disable=missing-return-doc
+
 
 """Unit testing of GoPro BLE Client"""
 

@@ -56,7 +56,7 @@ tests: clean_tests ## Run all tests (unit, e2e, and demos) and calculate coverag
 .PHONY: format
 format: ## Run Black to format code
 	@echo "Running black to format all python code..."
-	@black . --line-length 111 --exclude venv --exclude tests
+	@black --line-length 111 tutorial_modules tests setup.py
 
 .PHONY: lint
 lint: reports ## Run mypy for static typing analysis and pylint for linting

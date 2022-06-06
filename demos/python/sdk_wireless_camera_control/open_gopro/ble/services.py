@@ -57,9 +57,9 @@ class UuidLength(IntEnum):
 
 
 class BleUUID(uuid.UUID):
-    """Used to identify BLE BleUUID's
+    """An extension of the standard UUID to associate a string name with the UUID and allow 8-bit UUID input
 
-    A extension of the standard UUID to associate a string name with the UUID and allow 8-bit UUID input
+    Can only be initialized with one of [hex, bytes, bytes_le, int]
     """
 
     # pylint: disable=redefined-builtin
@@ -72,6 +72,20 @@ class BleUUID(uuid.UUID):
         bytes_le: Optional[bytes] = None,
         int: Optional[int] = None,
     ) -> None:
+        """Constructor
+
+        Args:
+            name (str): human readable name
+            uuid_format (UuidLength): 16 or 128 bit format. Defaults to UuidLength.BIT_128.
+            hex (str, optional): build from hex string. Defaults to None.
+            bytes (bytes, optional): build from big-endian bytes. Defaults to None.
+            bytes_le (bytes, optional): build from little-endian bytes. Defaults to None.
+            int (int, optional): build from int. Defaults to None.
+
+        Raises:
+            ValueError: Attempt to initialize with more than one option
+            ValueError: Badly formed input
+        """
         self.name: str
         if uuid_format is UuidLength.BIT_16:
             if [hex, bytes, bytes_le, int].count(None) != 3:
@@ -92,16 +106,16 @@ class BleUUID(uuid.UUID):
         object.__setattr__(self, "name", name)  # needed to work around immutability in base class
         super().__init__(hex=hex, bytes=bytes, bytes_le=bytes_le, int=int)
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return self.hex if self.name == "" else self.name
 
-    def __repr__(self) -> str:  # pylint: disable=missing-return-doc
+    def __repr__(self) -> str:
         return self.__str__()
 
 
 @dataclass
 class Descriptor:
-    """A charactersistic descriptor.
+    """A characteristic descriptor.
 
     Args:
         handle (int) : the handle of the attribute table that the descriptor resides at
@@ -113,7 +127,7 @@ class Descriptor:
     uuid: BleUUID
     value: Optional[bytes] = None
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return json.dumps(asdict(self), indent=4, default=str)
 
     @property
@@ -128,7 +142,7 @@ class Descriptor:
 
 @dataclass
 class Characteristic:
-    """A BLE charactersistic.
+    """A BLE characteristic.
 
     Args:
         handle (int) : the handle of the attribute table that the characteristic resides at
@@ -155,7 +169,7 @@ class Characteristic:
         if self.descriptor_handle is None:
             self.descriptor_handle = self.handle + 1
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return f"{self.name} @ handle {self.handle}: {self.props.name}"
 
     @property
@@ -183,7 +197,7 @@ class Characteristic:
 
     @property
     def is_readable(self) -> bool:
-        """Does this characteric have readable property?
+        """Does this characteristic have readable property?
 
         Returns:
             bool: True if readable, False if not
@@ -192,7 +206,7 @@ class Characteristic:
 
     @property
     def is_writeable_with_response(self) -> bool:
-        """Does this characteric have writeable-with-response property?
+        """Does this characteristic have writeable-with-response property?
 
         Returns:
             bool: True if writeable-with-response, False if not
@@ -201,7 +215,7 @@ class Characteristic:
 
     @property
     def is_writeable_without_response(self) -> bool:
-        """Does this characteric have writeable-without-response property?
+        """Does this characteristic have writeable-without-response property?
 
         Returns:
             bool: True if writeable-without-response, False if not
@@ -210,7 +224,7 @@ class Characteristic:
 
     @property
     def is_writeable(self) -> bool:
-        """Does this characteric have writeable property?
+        """Does this characteristic have writeable property?
 
         That is, does it have writeable-with-response or writeable-without-response property
 
@@ -221,7 +235,7 @@ class Characteristic:
 
     @property
     def is_notifiable(self) -> bool:
-        """Does this characteric have notifiable property?
+        """Does this characteristic have notifiable property?
 
         Returns:
             bool: True if notifiable, False if not
@@ -230,7 +244,7 @@ class Characteristic:
 
     @property
     def is_indicatable(self) -> bool:
-        """Does this characteric have indicatable property?
+        """Does this characteristic have indicatable property?
 
         Returns:
             bool: True if indicatable, False if not
@@ -255,7 +269,7 @@ class Service:
         uuid (BleUUID) : the service's BleUUID
         start_handle(int): the attribute handle where the service begins
         end_handle(int): the attribute handle where the service ends. Defaults to 0xFFFF.
-        init_chars (List[Characteristic]) : list of characteristics known at service instantation. Can be set
+        init_chars (List[Characteristic]) : list of characteristics known at service instantiation. Can be set
             later with the characteristics property
     """
 
@@ -269,7 +283,7 @@ class Service:
         # Mypy should eventually support this: see https://github.com/python/mypy/issues/3004
         self.characteristics = init_characteristics or []  # type: ignore
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return self.name
 
     @property
@@ -300,7 +314,7 @@ class GattDB:
     """The attribute table to store / look up BLE services, characteristics, and attributes.
 
     Args:
-        init_services (List[Service]): A list of serices known at instantiation time. Can be updated later
+        init_services (List[Service]): A list of services known at instantiation time. Can be updated later
             with the services property
     """
 
@@ -311,14 +325,14 @@ class GattDB:
         def __init__(self, db: "GattDB") -> None:
             self._db = db
 
-        def __getitem__(self, key: BleUUID) -> Characteristic:  # pylint: disable=missing-return-doc
+        def __getitem__(self, key: BleUUID) -> Characteristic:
             for service in self._db.services.values():
                 for char in service.characteristics.values():
                     if char.uuid == key:
                         return char
             raise KeyError
 
-        def __contains__(self, key: object) -> bool:  # pylint: disable=missing-return-doc
+        def __contains__(self, key: object) -> bool:
             for service in self._db.services.values():
                 for char in service.characteristics.values():
                     if char.uuid == key:
@@ -326,14 +340,14 @@ class GattDB:
             return False
 
         @no_type_check
-        def __iter__(self) -> Iterator[Characteristic]:  # pylint: disable=missing-return-doc
+        def __iter__(self) -> Iterator[Characteristic]:
             return iter(self.values())
 
-        def __len__(self) -> int:  # pylint: disable=missing-return-doc
+        def __len__(self) -> int:
             return sum(len(service.characteristics) for service in self._db.services.values())
 
         @no_type_check
-        def keys(self) -> Generator[BleUUID, None, None]:  # pylint: disable=missing-return-doc
+        def keys(self) -> Generator[BleUUID, None, None]:  # noqa: D102
             def iter_keys():
                 for service in self._db.services.values():
                     for ble_uuid in service.characteristics.keys():
@@ -342,7 +356,7 @@ class GattDB:
             return iter_keys()
 
         @no_type_check
-        def values(self) -> Generator[Characteristic, None, None]:  # pylint: disable=missing-return-doc
+        def values(self) -> Generator[Characteristic, None, None]:  # noqa: D102
             def iter_values():
                 for service in self._db.services.values():
                     for char in service.characteristics.values():
@@ -351,9 +365,9 @@ class GattDB:
             return iter_values()
 
         @no_type_check
-        def items(  # pylint: disable=missing-return-doc
+        def items(
             self,
-        ) -> Generator[Tuple[BleUUID, Characteristic], None, None]:
+        ) -> Generator[Tuple[BleUUID, Characteristic], None, None]:  # noqa: D102
             def iter_items():
                 for service in self._db.services.values():
                     for ble_uuid, char in service.characteristics.items():
@@ -454,7 +468,6 @@ class UUIDsMeta(type):
     """
 
     @no_type_check
-    # pylint: disable=missing-return-doc
     def __new__(cls, name, bases, dct) -> UUIDsMeta:  # noqa
         x = super().__new__(cls, name, bases, dct)
         x._int2uuid = {}
@@ -466,7 +479,7 @@ class UUIDsMeta(type):
         return x
 
     @no_type_check
-    def __getitem__(cls, key: Union[uuid.UUID, int, str]) -> BleUUID:  # pylint: disable=missing-return-doc
+    def __getitem__(cls, key: Union[uuid.UUID, int, str]) -> BleUUID:
         if isinstance(key, uuid.UUID):
             return cls._int2uuid[key.int]
         if isinstance(key, int):
@@ -476,7 +489,7 @@ class UUIDsMeta(type):
         raise TypeError("Key must be of type Union[uuid.UUID, int, str]")
 
     @no_type_check
-    def __contains__(cls, key: Union[uuid.UUID, int, str]) -> bool:  # pylint: disable=missing-return-doc
+    def __contains__(cls, key: Union[uuid.UUID, int, str]) -> bool:
         if isinstance(key, uuid.UUID):
             return key.int in cls._int2uuid
         if isinstance(key, int):
@@ -487,7 +500,7 @@ class UUIDsMeta(type):
         raise TypeError("Key must be of type Union[uuid.UUID, int, str]")
 
     @no_type_check
-    def __iter__(cls):  # pylint: disable=missing-return-doc
+    def __iter__(cls):
         for item in cls._int2uuid.items():
             yield item
 

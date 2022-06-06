@@ -56,16 +56,21 @@ def uuid2bleak_string(uuid: BleUUID) -> str:
 
 
 class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton):
-    """Wrapper around bleak to manage a Bluetooth connection.
+    """Wrapper around bleak to manage a Bluetooth connection."""
 
-    Note, this is a singleton.
-    """
+    def __init__(self, exception_handler: Optional[Callable] = None) -> None:
+        """Constructor
 
-    def __init__(self) -> None:
+        Note, this is a singleton.
+
+        Args:
+            exception_handler (Callable, optional): Used to catch asyncio exceptions from other tasks. Defaults to None.
+        """
         # Thread to run ble controller asyncio loop (to abstract asyncio from client as well as handle async notifications)
         self._module_loop: asyncio.AbstractEventLoop  # Will be set when module thread starts
         self._module_thread = threading.Thread(daemon=True, target=self._run, name="data")
         self._ready = threading.Event()
+        self._exception_handler = exception_handler
         self._module_thread.start()
         self._ready.wait()
 
@@ -74,6 +79,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         # Create loop for this new thread
         self._module_loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self._module_loop)
+        self._module_loop.set_exception_handler(self._exception_handler)
 
         # Run forever
         self._ready.set()
@@ -95,7 +101,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         return asyncio.run_coroutine_threadsafe(action(), self._module_loop).result(timeout)
 
     def read(self, handle: BleakClient, uuid: BleUUID) -> bytearray:
-        """read data from a BleUUID.
+        """Read data from a BleUUID.
 
         Args:
             handle (BleakClient): client to read from
@@ -105,7 +111,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
             bytearray: read data
         """
 
-        async def _async_read() -> bytearray:  # pylint: disable=missing-return-doc
+        async def _async_read() -> bytearray:
             logger.debug(f"Reading from {uuid}")
             response = await handle.read_gatt_char(uuid2bleak_string(uuid))
             logger.debug(f'Received response on BleUUID [{uuid}]: {response.hex( ":")}')
@@ -141,7 +147,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
             BleakDevice: The first matched device that was discovered
         """
 
-        async def _async_scan() -> BleakDevice:  # pylint: disable=missing-return-doc
+        async def _async_scan() -> BleakDevice:
             logger.info(f"Scanning for {token.pattern} bluetooth devices...")
             devices: Dict[str, BleakDevice] = {}
             uuids = [] if service_uuids is None else [uuid2bleak_string(uuid) for uuid in service_uuids]
@@ -157,7 +163,6 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
                 Args:
                     device (BleakDevice): discovered device
-                    _ : advertisement that we're ignoring
                 """
                 # Add to the dict if not unknown
                 if device.name != "Unknown" and device.name is not None:
@@ -213,17 +218,12 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                 """Disconnect handler which is only used while connection is being established.
 
                 Will be set to App's passed-in disconnect handler once connection is established
-
-                Args:
-                    _ (Any): Not used
                 """
                 # From sniffer capture analysis, this is always due to the slave not receiving the master's
                 # connection request. This is (potentially) normal BLE behavior.
                 self.disconnected.set()
 
-        async def _async_connect() -> Tuple[  # pylint: disable=missing-return-doc
-            Optional[BleakClient], Optional[Union[Exception, BaseException]]
-        ]:
+        async def _async_connect() -> Tuple[Optional[BleakClient], Optional[Union[Exception, BaseException]]]:
             logger.info(f"Establishing BLE connection to {device}...")
 
             connect_session = ConnectSession()
@@ -269,7 +269,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         return client
 
     def pair(self, handle: BleakClient) -> None:
-        """pair to a device after connection.
+        """Pair to a device after connection.
 
         This is required for Windows and not allowed on Mac...
 
@@ -289,7 +289,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         self._as_coroutine(_async_def_pair)
 
     def enable_notifications(self, handle: BleakClient, handler: NotiHandlerType) -> None:
-        """enable all notifications.
+        """Enable all notifications.
 
         Search through all characteristics and enable any that have notification property.
 
@@ -338,7 +338,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                 props |= bleak_props_to_enum[prop]
             return props
 
-        async def _async_discover_chars() -> GattDB:  # pylint: disable=missing-return-doc
+        async def _async_discover_chars() -> GattDB:
             logger.info("Discovering characteristics...")
             services: List[Service] = []
             for service in handle.services:
@@ -367,7 +367,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                             )
                         )
                     # Create new characteristic
-                    # TODO read value was causing some bug in MacOS. It's also not needed and increases conenction
+                    # TODO read value was causing some bug in MacOS. It's also not needed and increases connection
                     # establishment time.
                     chars.append(
                         Characteristic(

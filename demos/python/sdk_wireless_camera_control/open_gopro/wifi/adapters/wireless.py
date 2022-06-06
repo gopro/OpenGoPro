@@ -11,11 +11,11 @@ import logging
 import tempfile
 from enum import Enum, auto
 from getpass import getpass
-from distutils.version import LooseVersion
 from shutil import which
 from typing import List, Optional, Tuple, Any, Callable
 
 import wrapt
+from packaging.version import Version
 
 from open_gopro.util import cmd
 from open_gopro.wifi import SsidState, WifiController
@@ -44,17 +44,20 @@ class Wireless(WifiController):
     """Top level abstraction of different Wifi drivers.
 
     If interface is not specified (i.e. it is None), we will attempt to automatically
-    disover a suitable interface
-
-    Args:
-        interface (str, optional): Interface. Defaults to None.
-
-    Raises:
-        Exception: We weren't able to find a suitable driver
-        Exception: We weren't able to auto-detect an interface after detecting driver
+    discover a suitable interface
     """
 
     def __init__(self, interface: Optional[str] = None) -> None:
+        """Constructor
+
+        Args:
+            interface (str, optional): Interface. Defaults to None.
+
+        #noqa: DAR402
+
+        Raises:
+            Exception: We weren't able to find a suitable driver or auto-detect an interface after detecting driver
+        """
         WifiController.__init__(self, interface)
 
         # detect and init appropriate driver
@@ -95,7 +98,7 @@ class Wireless(WifiController):
             version = cmd("nmcli --version").split()[-1]
             return (
                 Nmcli0990Wireless(password=password)
-                if LooseVersion(version) >= LooseVersion("0.9.9.0")
+                if Version(version) >= Version("0.9.9.0")
                 else NmcliWireless(password=password)
             )
         # try nmcli (Ubuntu w/o network-manager)

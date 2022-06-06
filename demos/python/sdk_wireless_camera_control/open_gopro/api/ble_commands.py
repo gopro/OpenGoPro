@@ -40,19 +40,20 @@ logger = logging.getLogger(__name__)
 
 
 class BleCommands:
-    # pylint: disable = missing-class-docstring, arguments-differ, useless-super-delegation, missing-return-doc
     """All of the BLE commands.
 
     To be used as a delegate for a GoProBle instance to build commands
 
     All of these return a GoProResp
-
-    Args:
-        communicator (GoProBle): GoPro BLE communicator that will send the commands
     """
 
+    # pylint: disable = missing-class-docstring, arguments-differ, useless-super-delegation
     def __init__(self, communicator: GoProBle):
+        """Constructor
 
+        Args:
+            communicator (GoProBle): GoPro BLE communicator that will send the commands
+        """
         self.set_shutter = BleWriteWithParamsCommand[Params.Shutter](
             communicator, GoProUUIDs.CQ_COMMAND, CmdId.SET_SHUTTER, Int8ub
         )
@@ -344,7 +345,7 @@ class BleCommands:
 
 class BleSettings:
     # pylint: disable=missing-class-docstring, unused-argument
-    """The collection of all Settings.
+    """The collection of all BLE Settings.
 
     To be used by a GoProBle delegate to build setting commands.
 

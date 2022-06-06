@@ -286,6 +286,5 @@ class AntiFlicker(GoProEnum):
 
 
 # Abstractions from protobuf definitions
-
 RegisterPresetStatus = EnumRegisterPresetStatus
 CameraControlStatus = EnumCameraControlStatus

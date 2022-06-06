@@ -36,7 +36,7 @@ class Sample:
     def __post_init__(self) -> None:
         self.time = datetime.now()
 
-    def __str__(self) -> str:  # pylint: disable=missing-return-doc
+    def __str__(self) -> str:
         return f"Index {self.index} @ time {self.time.strftime('%H:%M:%S')} --> bars: {self.bars}, percentage: {self.percentage}"
 
 
