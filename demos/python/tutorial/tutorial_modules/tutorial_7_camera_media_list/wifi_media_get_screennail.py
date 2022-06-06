@@ -10,8 +10,7 @@ import requests
 
 from tutorial_modules import GOPRO_BASE_URL, get_media_list
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
+from tutorial_modules import logger
 
 
 def main() -> None:
@@ -48,7 +47,8 @@ if __name__ == "__main__":
 
     try:
         main()
-    except:
+    except Exception as e:
+        logger.error(e)
         sys.exit(-1)
     else:
         sys.exit(0)

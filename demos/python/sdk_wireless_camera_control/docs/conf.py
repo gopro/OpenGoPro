@@ -29,4 +29,7 @@ html_context = {
 # for |version| and |release|, also used in various other places throughout
 # the built documents.
 
-version = release = open_gopro.__version__
+# Extract version set from pyproject.toml
+import importlib.metadata as importlib_metadata
+
+version = importlib_metadata.version("open_gopro")

@@ -7,11 +7,6 @@
 
 import logging
 
-# Extract version set from pyproject.toml
-import importlib.metadata as importlib_metadata
-
-__version__ = importlib_metadata.version(__name__)
-
 from open_gopro.util import addLoggingLevel
 
 addLoggingLevel("TRACE", logging.DEBUG - 5)

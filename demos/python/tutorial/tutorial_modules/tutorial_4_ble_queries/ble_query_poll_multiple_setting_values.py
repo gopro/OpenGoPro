@@ -13,9 +13,7 @@ from bleak import BleakClient
 
 from tutorial_modules import GOPRO_BASE_UUID, connect_ble, Response
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
-
+from tutorial_modules import logger
 
 # Note these may change based on the Open GoPro version!
 class Resolution(enum.Enum):
@@ -43,7 +41,7 @@ class FPS(enum.Enum):
 # Note these may change based on the Open GoPro version!
 class VideoFOV(enum.Enum):
     FOV_WIDE = 0
-    FOV_NARROW = 6
+    FOV_NARROW = 2
     FOV_SUPERVIEW = 3
     FOV_LINEAR = 4
     FOV_MAX_SUPERVIEW = 7
@@ -126,7 +124,8 @@ if __name__ == "__main__":
 
     try:
         asyncio.run(main(args.identifier))
-    except:
+    except Exception as e:
+        logger.error(e)
         sys.exit(-1)
     else:
         sys.exit(0)
