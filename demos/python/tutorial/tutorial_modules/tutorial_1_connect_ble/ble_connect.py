@@ -15,7 +15,8 @@ from tutorial_modules import logger
 
 def exception_handler(loop: asyncio.AbstractEventLoop, context: Dict[str, Any]) -> None:
     msg = context.get("exception", context["message"])
-    logger.error(f"Caught exception: {msg}")
+    logger.error(f"Caught exception from async task: {msg}")
+    logger.critical("This is unexpected and unrecoverable.")
 
 
 async def connect_ble(

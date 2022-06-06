@@ -15,7 +15,7 @@ from tutorial_modules import logger
 
 def main(preset_id: int) -> None:
     # Build the HTTP GET request
-    url = GOPRO_BASE_URL + "/gopro/camera/presets/load?id={preset_id}"
+    url = GOPRO_BASE_URL + f"/gopro/camera/presets/load?id={preset_id}"
     logger.info(f"Loading preset id {preset_id}: sending {url}")
 
     # Send the GET request and retrieve the response
@@ -33,7 +33,7 @@ if __name__ == "__main__":
         "-i",
         "--identifier",
         type=int,
-        help="Preset ID to load. Default to 2 (Cinematic)",
+        help="Preset ID to load. Default to 0 (Standard video)",
         default=2,
     )
     args = parser.parse_args()
