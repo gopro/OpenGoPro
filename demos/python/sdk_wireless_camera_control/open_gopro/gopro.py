@@ -139,12 +139,15 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
     >>> gopro.close()
 
     Args:
-        target (Optional[Union[Pattern, BleDevice]], optional): Last 4 of camera name / serial number
+        target (Union[Pattern, BleDevice], optional): Last 4 of camera name / serial number
             (i.e. 0456 for GoPro0456). Defaults to None (i.e. connect to first discovered GoPro)
-        wifi_interface (str): Set to specify the wifi interface the local machine will use to connect
+        wifi_interface (str, optional): Set to specify the wifi interface the local machine will use to connect
             to the GoPro. If None (or not set), first discovered interface will be used.
+        sudo_password (str, optional): User password for sudo. If not passed, you will be prompted if a password
+            is needed.
         enable_wifi (bool): Optionally do not enable Wifi if set to False. Defaults to True.
-        exception_cb (ExceptionHandler): callback to be notified when exception occurs in a thread besides main
+        exception_cb (ExceptionHandler, optional): callback to be notified when exception occurs in a thread
+            besides main
         kwargs (Dict): additional parameters for internal use / testing
     """
 
