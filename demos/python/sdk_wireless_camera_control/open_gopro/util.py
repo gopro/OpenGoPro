@@ -10,6 +10,7 @@ import json
 import types
 import queue
 import logging
+import argparse
 import subprocess
 import dataclasses
 from pathlib import Path
@@ -364,9 +365,6 @@ class SnapshotQueue(queue.Queue):
             return list(self.queue)
 
 
-# ============================================================================================================
-
-
 def custom_betterproto_to_dict(
     self: betterproto.Message,
     casing: betterproto.Casing = betterproto.Casing.CAMEL,
@@ -459,3 +457,48 @@ def build_protos() -> None:
         )
         cmd(f"mv {proto_out_dir / 'open_gopro.py'} {proto_out_dir / proto_out}")
         cmd(f"mv {proto_out_dir / 'temp'} {proto_out_dir / '__init__.py'}")
+
+
+def add_cli_args(
+    parser: argparse.ArgumentParser,
+    bluetooth: bool = True,
+    wifi: bool = True,
+) -> argparse.ArgumentParser:
+    # Common args
+    parser.add_argument(
+        "-l",
+        "--log",
+        type=Path,
+        help="Location to store detailed log",
+        default="gopro_wifi.log",
+    )
+
+    if bluetooth:
+        parser.add_argument(
+            "-i",
+            "--identifier",
+            type=str,
+            help="Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. \
+                If not used, first discovered GoPro will be connected to",
+            default=None,
+        )
+
+    if wifi:
+        parser.add_argument(
+            "-w",
+            "--wifi_interface",
+            type=str,
+            help="System Wifi Interface. If not set, first discovered interface will be used.",
+            default=None,
+        )
+        parser.add_argument(
+            "-p",
+            "--password",
+            action="store_true",
+            help="set to read sudo password from stdin. If not set, you will be prompted for password if needed",
+        )
+
+        args = parser.parse_args()
+        args.password = sys.stdin.readline() if args.password else None
+
+    return parser

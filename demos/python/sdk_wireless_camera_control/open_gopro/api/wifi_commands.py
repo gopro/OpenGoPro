@@ -26,7 +26,6 @@ class WifiCommands:
     All of these return a GoProResp
     """
 
-    # pylint: disable = missing-class-docstring, arguments-differ, useless-super-delegation
     def __init__(self, communicator: GoProWifi):
         """Constructor
 

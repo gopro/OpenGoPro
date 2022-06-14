@@ -11,13 +11,13 @@ import threading
 from pathlib import Path
 from datetime import datetime
 from dataclasses import dataclass
-from typing import Optional, Tuple, Literal, List
+from typing import Optional, Literal, List
 
 from rich.console import Console
 
 from open_gopro import GoPro
 from open_gopro.constants import StatusId
-from open_gopro.util import setup_logging, set_logging_level
+from open_gopro.util import setup_logging, set_logging_level, add_cli_args
 
 logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
@@ -91,26 +91,32 @@ def process_battery_notifications(gopro: GoPro, initial_bars: BarsType, initial_
         SAMPLE_INDEX += 1
 
 
-def main() -> int:
-    """Main program functionality
-
-    Returns:
-        int: program return code
-    """
-    identifier, log_location, poll = parse_arguments()
+def main(args: argparse.Namespace):
     global logger
-    logger = setup_logging(logger, log_location)
+    logger = setup_logging(logger, args.log)
 
     global SAMPLE_INDEX
 
     gopro: Optional[GoPro] = None
-    return_code = 0
     try:
-        with GoPro(identifier, enable_wifi=False) as gopro:
+        with GoPro(args.identifier, enable_wifi=False) as gopro:
             set_logging_level(logger, logging.ERROR)
 
-            # # Setup notifications if we are not polling
-            if poll is None:
+            if args.poll:
+                with console.status("[bold green]Polling the battery until it dies..."):
+                    while True:
+                        SAMPLES.append(
+                            Sample(
+                                index=SAMPLE_INDEX,
+                                percentage=gopro.ble_status.int_batt_per.get_value().flatten,
+                                bars=gopro.ble_status.batt_level.get_value().flatten,
+                            )
+                        )
+                        console.print(str(SAMPLES[-1]))
+                        SAMPLE_INDEX += 1
+                        time.sleep(args.poll)
+            # Otherwise set up notifications
+            else:
                 console.print("Configuring battery notifications...")
                 # Enable notifications of the relevant battery statuses. Also store initial values.
                 bars = gopro.ble_status.batt_level.register_value_update().flatten
@@ -123,56 +129,22 @@ def main() -> int:
                     # Sleep forever, allowing notification handler thread to deal with battery level notifications
                     while True:
                         time.sleep(1)
-            # Otherwise, poll
-            else:
-                with console.status("[bold green]Polling the battery until it dies..."):
-                    while True:
-                        SAMPLES.append(
-                            Sample(
-                                index=SAMPLE_INDEX,
-                                percentage=gopro.ble_status.int_batt_per.get_value().flatten,
-                                bars=gopro.ble_status.batt_level.get_value().flatten,
-                            )
-                        )
-                        console.print(str(SAMPLES[-1]))
-                        SAMPLE_INDEX += 1
-                        time.sleep(poll)
 
     except KeyboardInterrupt:
         logger.warning("Received keyboard interrupt. Shutting down...")
     if len(SAMPLES) > 0:
-        csv_location = Path(log_location.parent) / "battery_results.csv"
+        csv_location = Path(args.log.parent) / "battery_results.csv"
         dump_results_as_csv(csv_location)
-    if gopro is not None:
+    if gopro:
         gopro.close()
     console.print("Exiting...")
-    return return_code
 
 
-def parse_arguments() -> Tuple[str, Path, Optional[int]]:
-    """Parse command line arguments
-
-    Returns:
-        Tuple[str, Path, Path]: (identifier, path to save log, path to VLC)
-    """
+def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Connect to the GoPro via BLE only and continuously read the battery (either by polling or notifications)."
     )
-    parser.add_argument(
-        "-i",
-        "--identifier",
-        type=str,
-        help="Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. \
-            If not used, first discovered GoPro will be connected to",
-        default=None,
-    )
-    parser.add_argument(
-        "-l",
-        "--log",
-        type=Path,
-        help="Location to store detailed log",
-        default="log_battery.log",
-    )
+    parser = add_cli_args(parser, wifi=False)
     parser.add_argument(
         "-p",
         "--poll",
@@ -180,10 +152,13 @@ def parse_arguments() -> Tuple[str, Path, Optional[int]]:
         help="Set to poll the battery at a given interval. If not set, battery level will be notified instead. Defaults to notifications.",
         default=None,
     )
-    args = parser.parse_args()
+    return parser.parse_args()
 
-    return args.identifier, args.log, args.poll
+
+# Needed for poetry scripts defined in pyproject.toml
+def entrypoint() -> None:
+    main(parse_arguments())
 
 
 if __name__ == "__main__":
-    main()
+    entrypoint()

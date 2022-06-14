@@ -27,13 +27,11 @@ classifiers = [
 ]
 
 [tool.poetry.scripts]
-gopro-demo = "open_gopro.demos.demo:main"
 gopro-photo = "open_gopro.demos.photo:entrypoint"
-gopro-video = "open_gopro.demos.video:main"
-gopro-stream = "open_gopro.demos.stream:main"
-gopro-log-battery = "open_gopro.demos.log_battery:main"
-gopro-wifi = "open_gopro.demos.connect_wifi:main"
-gopro-ble-write = "open_gopro.demos.ble_write:main"
+gopro-video = "open_gopro.demos.video:entrypoint"
+gopro-stream = "open_gopro.demos.stream:entrypoint"
+gopro-log-battery = "open_gopro.demos.log_battery:entrypoint"
+gopro-wifi = "open_gopro.demos.connect_wifi:entrypoint"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -3,17 +3,14 @@
 
 """Connect to the Wifi AP of a GoPro camera."""
 
-import sys
-import time
 import logging
 import argparse
-from pathlib import Path
-from typing import Optional, Tuple
+from typing import Optional
 
 from rich.console import Console
 
 from open_gopro import GoPro
-from open_gopro.util import setup_logging, set_logging_level
+from open_gopro.util import setup_logging, set_logging_level, add_cli_args
 
 logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
@@ -21,65 +18,35 @@ console = Console()  # rich consoler printer
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Connect to a GoPro camera's Wifi Access Point.")
-    parser.add_argument(
-        "-i",
-        "--identifier",
-        type=str,
-        help="Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. \
-            If not used, first discovered GoPro will be connected to",
-        default=None,
-    )
-    parser.add_argument(
-        "-l",
-        "--log",
-        type=Path,
-        help="Location to store detailed log",
-        default="gopro_wifi.log",
-    )
-    parser.add_argument(
-        "-w",
-        "--wifi_interface",
-        type=str,
-        help="System Wifi Interface. If not set, first discovered interface will be used.",
-        default=None,
-    )
-    parser.add_argument(
-        "-p",
-        "--password",
-        action="store_true",
-        help="set to read sudo password from stdin",
-    )
-
-    args = parser.parse_args()
-    args.password = sys.stdin.readline() if args.password else None
-    return args
+    return add_cli_args(parser).parse_args()
 
 
-def main(args: argparse.Namespace) -> int:
+def main(args: argparse.Namespace) -> None:
     global logger
     logger = setup_logging(logger, args.log)
 
     gopro: Optional[GoPro] = None
-    return_code = 0
-    try:
-        with GoPro(args.identifier, wifi_interface=args.wifi_interface, wifi_password=args.password, enable_wifi=False) as gopro:
-            # Now we only want errors
-            set_logging_level(logger, logging.ERROR)
 
-            gopro.wifi_command.set_keep_alive()
+    with GoPro(args.identifier, wifi_interface=args.wifi_interface, sudo_password=args.password) as gopro:
+        # Now we only want errors
+        set_logging_level(logger, logging.ERROR)
 
-            console.print("\n\n🎆🎇✨ Success!! Wifi AP is connected 📡\n")
-            console.print("Send commands as per https://gopro.github.io/OpenGoPro/http")
-            while True:
-                time.sleep(1)
+        gopro.wifi_command.set_keep_alive()
 
-    except KeyboardInterrupt:
-        logger.warning("Received keyboard interrupt. Shutting down...")
-    if gopro is not None:
+        console.print("\n\n🎆🎇✨ Success!! Wifi AP is connected 📡\n")
+        console.print("Send commands as per https://gopro.github.io/OpenGoPro/http")
+
+        input("\nPress enter to disconnect Wifi and exit...")
+        console.print("Exiting...")
+
+    if gopro:
         gopro.close()
-    console.print("Exiting...")
-    return return_code
+
+
+# Needed for poetry scripts defined in pyproject.toml
+def entrypoint() -> None:
+    main(parse_arguments())
 
 
 if __name__ == "__main__":
-    main(parse_arguments())
+    entrypoint()

@@ -609,7 +609,9 @@ class BleStatuses:
         )
         """The current status of Over The Air (OTA) update."""
 
-        self.download_cancel_pend: BleStatus = BleStatus(self._communicator, StatusId.DOWNLAD_CANCEL_PEND, Flag)
+        self.download_cancel_pend: BleStatus = BleStatus(
+            self._communicator, StatusId.DOWNLAD_CANCEL_PEND, Flag
+        )
         """Is download firmware update cancel request pending?"""
 
         self.mode_group: BleStatus = BleStatus(self._communicator, StatusId.MODE_GROUP, Int8ub)

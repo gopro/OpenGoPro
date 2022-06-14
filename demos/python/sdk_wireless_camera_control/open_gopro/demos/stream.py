@@ -8,31 +8,24 @@ import logging
 import argparse
 import threading
 from pathlib import Path
-from typing import Tuple, Optional
+from typing import Optional
 
 from rich.console import Console
 
 from open_gopro import GoPro, Params
-from open_gopro.util import launch_vlc, setup_logging
+from open_gopro.util import launch_vlc, setup_logging, add_cli_args
 
 logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
 
 
-def main() -> int:
-    """Main functionality
-
-    Returns:
-        int: program return code
-    """
-    identifier, log_location, vlc_location, wifi_interface = parse_arguments()
+def main(args: argparse.Namespace) -> None:
     global logger
-    logger = setup_logging(logger, log_location)
+    logger = setup_logging(logger, args.log)
 
     gopro: Optional[GoPro] = None
-    return_code = 0
     try:
-        with GoPro(identifier, wifi_interface=wifi_interface) as gopro:
+        with GoPro(args.identifier, wifi_interface=args.wifi_interface, sudo_password=args.password) as gopro:
             # Turn off the shutter if we are currently encoding
             if gopro.is_encoding:
                 gopro.ble_command.set_shutter(Params.Shutter.OFF)
@@ -44,7 +37,7 @@ def main() -> int:
             assert gopro.wifi_command.start_preview_stream().is_ok
 
             console.print("Launching VLC...")
-            threading.Thread(target=launch_vlc, args=(vlc_location,), daemon=True).start()
+            threading.Thread(target=launch_vlc, args=(args.vlc_location,), daemon=True).start()
 
             console.print("Success!! :smiley: Stream has been enabled. VLC is viewing it at udp://@:8554")
             console.print("Send keyboard interrupt to exit.")
@@ -54,36 +47,16 @@ def main() -> int:
 
     except KeyboardInterrupt:
         console.print("Received keyboard interrupt. Shutting down...")
-    if gopro is not None:
+    if gopro:
         gopro.close()
     console.print("Exiting...")
-    return return_code
 
 
-def parse_arguments() -> Tuple[str, Path, Path, Optional[str]]:
-    """Parse command line arguments
-
-    Returns:
-        Tuple[str, Path, Path, Optional[str]]: (identifier, path to save log, path to VLC, wifi interface)
-    """
+def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Connect to a GoPro camera, enable the preview stream, then open VLC to view it."
     )
-    parser.add_argument(
-        "-i",
-        "--identifier",
-        type=str,
-        help="Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If \
-            not used, first discovered GoPro will be connected to",
-        default=None,
-    )
-    parser.add_argument(
-        "-l",
-        "--log",
-        type=Path,
-        help="Location to store detailed log",
-        default=Path("stream.log"),
-    )
+    parser = add_cli_args(parser)
     parser.add_argument(
         "-v",
         "--vlc",
@@ -91,17 +64,13 @@ def parse_arguments() -> Tuple[str, Path, Path, Optional[str]]:
         help="VLC location. If not set, the location will attempt to be automatically discovered.",
         default=None,
     )
-    parser.add_argument(
-        "-w",
-        "--wifi_interface",
-        type=str,
-        help="System Wifi Interface. If not set, first discovered interface will be used.",
-        default=None,
-    )
-    args = parser.parse_args()
+    return parser.parse_args()
 
-    return args.identifier, args.log, args.vlc, args.wifi_interface
+
+# Needed for poetry scripts defined in pyproject.toml
+def entrypoint() -> None:
+    main(parse_arguments())
 
 
 if __name__ == "__main__":
-    main()
+    entrypoint()

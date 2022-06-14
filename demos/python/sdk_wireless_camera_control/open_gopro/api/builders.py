@@ -817,7 +817,7 @@ class WifiGetBinary(ABC):
         endpoint (str): endpoint to GET
     """
 
-    communicator: GoProWifi
+    _communicator: GoProWifi
     endpoint: str
 
     @abstractmethod

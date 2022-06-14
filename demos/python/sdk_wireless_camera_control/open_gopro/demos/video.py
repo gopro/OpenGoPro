@@ -7,32 +7,29 @@ import time
 import logging
 import argparse
 from pathlib import Path
-from typing import Tuple, Optional
+from typing import Optional
 
 from rich.console import Console
 
 from open_gopro import GoPro, Params
-from open_gopro.util import setup_logging
+from open_gopro.util import setup_logging, add_cli_args
 
 logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
 
 
-def main() -> int:
+def main(args: argparse.Namespace) -> None:
     """Main program functionality
 
     Returns:
         int: program return code
     """
-    identifier, log_location, output_location, record_time, wifi_interface = parse_arguments()
-
     global logger
-    logger = setup_logging(logger, log_location)
+    logger = setup_logging(logger, args.log)
 
     gopro: Optional[GoPro] = None
-    return_code = 0
     try:
-        with GoPro(identifier, wifi_interface=wifi_interface) as gopro:
+        with GoPro(args.identifier, wifi_interface=args.wifi_interface, sudo_password=args.password) as gopro:
             # Configure settings to prepare for video
             if gopro.is_encoding:
                 gopro.ble_command.set_shutter(Params.Shutter.OFF)
@@ -46,7 +43,7 @@ def main() -> int:
             # Take a video
             console.print("Capturing a video...")
             assert gopro.ble_command.set_shutter(Params.Shutter.ON).is_ok
-            time.sleep(record_time)
+            time.sleep(args.record_time)
             assert gopro.ble_command.set_shutter(Params.Shutter.OFF).is_ok
 
             # Get the media list after
@@ -55,44 +52,23 @@ def main() -> int:
             video = media_set_after.difference(media_set_before).pop()
             # Download the video
             console.print("Downloading the video...")
-            gopro.wifi_command.download_file(camera_file=video, local_file=output_location)
-            console.print(f"Success!! :smiley: File has been downloaded to {output_location}")
-
+            gopro.wifi_command.download_file(camera_file=video, local_file=args.output)
+            console.print(f"Success!! :smiley: File has been downloaded to {args.output}")
     except KeyboardInterrupt:
         logger.warning("Received keyboard interrupt. Shutting down...")
-    if gopro is not None:
+
+    if gopro:
         gopro.close()
     console.print("Exiting...")
-    return return_code
 
 
-def parse_arguments() -> Tuple[Optional[str], Path, Path, float, Optional[str]]:
-    """Parse command line arguments
-
-    Returns:
-        Tuple[str, Path, Path, float, Optional[str]]: (identifier, path to save log, path to store video,
-            record_time, wifi interface)
-    """
+def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Connect to a GoPro camera, take a video, then download it.")
+    parser = add_cli_args(parser)
     parser.add_argument(
         "record_time",
         type=float,
         help="How long to record for",
-    )
-    parser.add_argument(
-        "-i",
-        "--identifier",
-        type=str,
-        help="Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If \
-            not used, first discovered GoPro will be connected to",
-        default=None,
-    )
-    parser.add_argument(
-        "-l",
-        "--log",
-        type=Path,
-        help="Location to store detailed log",
-        default=Path("video.log"),
     )
     parser.add_argument(
         "-o",
@@ -101,18 +77,13 @@ def parse_arguments() -> Tuple[Optional[str], Path, Path, float, Optional[str]]:
         help="Where to write the video to. If not set, write to 'video.mp4'",
         default=Path("video.mp4"),
     )
-    parser.add_argument(
-        "-w",
-        "--wifi_interface",
-        type=str,
-        help="System Wifi Interface. If not set, first discovered interface will be used.",
-        default=None,
-    )
-    args = parser.parse_args()
+    return parser.parse_args()
 
-    return args.identifier, args.log, args.output, args.record_time, args.wifi_interface
+
+# Needed for poetry scripts defined in pyproject.toml
+def entrypoint() -> None:
+    main(parse_arguments())
 
 
 if __name__ == "__main__":
-    # main()
-    main()
+    entrypoint()

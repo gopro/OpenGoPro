@@ -58,7 +58,7 @@ class Wireless(WifiController):
         Raises:
             Exception: We weren't able to find a suitable driver or auto-detect an interface after detecting driver
         """
-        WifiController.__init__(self, interface)
+        WifiController.__init__(self, interface, password)
 
         # detect and init appropriate driver
         self._driver = self._detect_driver(password)
@@ -66,7 +66,10 @@ class Wireless(WifiController):
         # Attempt to set interface (will raise an exception if not able to auto-detect)
         self.interface = interface  # type: ignore
 
-        logger.debug(f"Using Wifi driver: {type(self).__name__} with interface {self.interface}")
+        logger.debug(f"Wifi setup. Using {self}")
+
+    def __str__(self) -> str:
+        return f"[{type(self).__name__}] driver::[{self.interface}] interface"
 
     @staticmethod
     def _detect_driver(password: Optional[str] = None) -> WifiController:
