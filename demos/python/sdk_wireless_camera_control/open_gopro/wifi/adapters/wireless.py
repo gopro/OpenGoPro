@@ -47,7 +47,7 @@ class Wireless(WifiController):
     discover a suitable interface
     """
 
-    def __init__(self, interface: Optional[str] = None) -> None:
+    def __init__(self, interface: Optional[str] = None, password: Optional[str] = None) -> None:
         """Constructor
 
         Args:
@@ -61,7 +61,7 @@ class Wireless(WifiController):
         WifiController.__init__(self, interface)
 
         # detect and init appropriate driver
-        self._driver = self._detect_driver()
+        self._driver = self._detect_driver(password)
 
         # Attempt to set interface (will raise an exception if not able to auto-detect)
         self.interface = interface  # type: ignore
@@ -69,7 +69,7 @@ class Wireless(WifiController):
         logger.debug(f"Using Wifi driver: {type(self).__name__} with interface {self.interface}")
 
     @staticmethod
-    def _detect_driver() -> WifiController:
+    def _detect_driver(password: Optional[str] = None) -> WifiController:
         """Try to find and instantiate a Wifi driver that can be used.
 
         Raises:
@@ -88,7 +88,8 @@ class Wireless(WifiController):
             return NetworksetupWireless()
 
         # Try Linux options. Need password for sudo
-        password = getpass("Need to run as sudo. Enter password: ")
+        if not password:
+            password = getpass("Need to run as sudo. Enter password: ")
         # Validate password
         if "VALID PASSWORD" not in cmd(f'echo "{password}" | sudo -S echo "VALID PASSWORD"'):
             raise Exception("Invalid password")

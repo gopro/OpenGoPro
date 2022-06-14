@@ -219,11 +219,11 @@ class BleCommand(ABC):
         uuid (BleUUID): BleUUID to read / write to
     """
 
-    communicator: GoProBle
+    _communicator: GoProBle
     uuid: BleUUID
 
     def __post_init__(self) -> None:
-        self.communicator._add_parser(self._identifier, self._response_parser)
+        self._communicator._add_parser(self._identifier, self._response_parser)
 
     @property
     @abstractmethod
@@ -260,7 +260,7 @@ class BleReadCommand(BleCommand):
 
     def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(build_log_tx_str(self.uuid.name))
-        response = self.communicator._read_characteristic(self.uuid)
+        response = self._communicator._read_characteristic(self.uuid)
         logger.info(build_log_rx_str(f"{self.uuid.name} : {response}"))
         return response
 
@@ -294,7 +294,7 @@ class BleWriteNoParamsCommand(BleCommand):
         data = bytearray([self.cmd.value])
         data.insert(0, len(data))
         # Send the data and receive the response
-        response = self.communicator._write_characteristic_receive_notification(self.uuid, data)
+        response = self._communicator._write_characteristic_receive_notification(self.uuid, data)
         logger.info(build_log_rx_str(response))
         return response
 
@@ -334,7 +334,7 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
         data.extend([len(param), *param])
         data.insert(0, len(data))
         # Send the data and receive the response
-        response = self.communicator._write_characteristic_receive_notification(self.uuid, data)
+        response = self._communicator._write_characteristic_receive_notification(self.uuid, data)
         logger.info(build_log_rx_str(response))
         return response
 
@@ -377,9 +377,9 @@ class RegisterUnregisterAll(BleWriteNoParamsCommand):
         if response.is_ok:
             for element in element_set:
                 (
-                    self.communicator._register_listener
+                    self._communicator._register_listener
                     if self.action is RegisterUnregisterAll.Action.REGISTER
-                    else self.communicator._unregister_listener
+                    else self._communicator._unregister_listener
                 )(
                     # Ignoring typing because this seems correct and looks like mypy error
                     (responded_command, element)  # type: ignore
@@ -450,7 +450,7 @@ class BleProtoCommand(BleCommand):
         super().__post_init__()
         if self.additional_matching_action_ids:
             for action_id in self.additional_matching_action_ids:
-                self.communicator._add_parser(action_id, self._response_parser)
+                self._communicator._add_parser(action_id, self._response_parser)
 
     @property
     def _identifier(self) -> ResponseType:
@@ -495,7 +495,7 @@ class BleProtoCommand(BleCommand):
         request.insert(0, len(request))
 
         # Allow exception to pass through if protobuf not completely initialized
-        response = self.communicator._write_characteristic_receive_notification(self.uuid, request)
+        response = self._communicator._write_characteristic_receive_notification(self.uuid, request)
         logger.info(build_log_rx_str(response))
         return response
 
@@ -514,7 +514,7 @@ class BleSetting(Generic[SettingValueType]):
             parser_builder (BytesParserBuilder): object to both parse and build setting
         """
         self.identifier = identifier
-        self.communicator: GoProBle = communicator
+        self._communicator: GoProBle = communicator
         self.setter_uuid: BleUUID = GoProUUIDs.CQ_SETTINGS
         self.reader_uuid: BleUUID = GoProUUIDs.CQ_QUERY
         self.parser: BytesParser = parser_builder
@@ -542,7 +542,7 @@ class BleSetting(Generic[SettingValueType]):
         except IndexError:
             pass
         data.insert(0, len(data))
-        response = self.communicator._write_characteristic_receive_notification(self.setter_uuid, data)
+        response = self._communicator._write_characteristic_receive_notification(self.setter_uuid, data)
 
         logger.info(build_log_rx_str(response))
         return response
@@ -554,7 +554,7 @@ class BleSetting(Generic[SettingValueType]):
         Returns:
             GoProResp: settings value
         """
-        return self.communicator._write_characteristic_receive_notification(
+        return self._communicator._write_characteristic_receive_notification(
             self.reader_uuid, self._build_cmd(QueryCmdId.GET_SETTING_VAL)
         )
 
@@ -565,7 +565,7 @@ class BleSetting(Generic[SettingValueType]):
         Raises:
             NotImplementedError: This isn't implemented on the camera
         """
-        # return self.communicator._write_characteristic_receive_notification(
+        # return self._communicator._write_characteristic_receive_notification(
         #     self.reader_uuid, QueryCmdId.GET_SETTING_NAME, self._build_cmd(QueryCmdId.GET_SETTING_NAME)
         # )
         raise NotImplementedError("Not implemented on camera!")
@@ -577,7 +577,7 @@ class BleSetting(Generic[SettingValueType]):
         Returns:
             GoProResp: settings capabilities values
         """
-        return self.communicator._write_characteristic_receive_notification(
+        return self._communicator._write_characteristic_receive_notification(
             self.reader_uuid, self._build_cmd(QueryCmdId.GET_CAPABILITIES_VAL)
         )
 
@@ -588,7 +588,7 @@ class BleSetting(Generic[SettingValueType]):
         Raises:
             NotImplementedError: This isn't implemented on the camera
         """
-        # return self.communicator._write_characteristic_receive_notification(
+        # return self._communicator._write_characteristic_receive_notification(
         #     self.reader_uuid,
         #     QueryCmdId.GET_CAPABILITIES_NAME,
         #     self._build_cmd(QueryCmdId.GET_CAPABILITIES_NAME),
@@ -602,8 +602,8 @@ class BleSetting(Generic[SettingValueType]):
         Returns:
             GoProResp: Current value of respective setting ID
         """
-        self.communicator._register_listener((QueryCmdId.SETTING_VAL_PUSH, self.identifier))
-        return self.communicator._write_characteristic_receive_notification(
+        self._communicator._register_listener((QueryCmdId.SETTING_VAL_PUSH, self.identifier))
+        return self._communicator._write_characteristic_receive_notification(
             self.reader_uuid, self._build_cmd(QueryCmdId.REG_SETTING_VAL_UPDATE)
         )
 
@@ -614,8 +614,8 @@ class BleSetting(Generic[SettingValueType]):
         Returns:
             GoProResp: Status of unregister
         """
-        self.communicator._unregister_listener((QueryCmdId.SETTING_VAL_PUSH, self.identifier))
-        return self.communicator._write_characteristic_receive_notification(
+        self._communicator._unregister_listener((QueryCmdId.SETTING_VAL_PUSH, self.identifier))
+        return self._communicator._write_characteristic_receive_notification(
             self.reader_uuid, self._build_cmd(QueryCmdId.UNREG_SETTING_VAL_UPDATE)
         )
 
@@ -626,8 +626,8 @@ class BleSetting(Generic[SettingValueType]):
         Returns:
             GoProResp: Current capabilities of respective setting ID
         """
-        self.communicator._register_listener((QueryCmdId.SETTING_CAPABILITY_PUSH, self.identifier))
-        return self.communicator._write_characteristic_receive_notification(
+        self._communicator._register_listener((QueryCmdId.SETTING_CAPABILITY_PUSH, self.identifier))
+        return self._communicator._write_characteristic_receive_notification(
             self.reader_uuid, self._build_cmd(QueryCmdId.REG_CAPABILITIES_UPDATE)
         )
 
@@ -638,8 +638,8 @@ class BleSetting(Generic[SettingValueType]):
         Returns:
             GoProResp: Status of unregister
         """
-        self.communicator._unregister_listener((QueryCmdId.SETTING_CAPABILITY_PUSH, self.identifier))
-        return self.communicator._write_characteristic_receive_notification(
+        self._communicator._unregister_listener((QueryCmdId.SETTING_CAPABILITY_PUSH, self.identifier))
+        return self._communicator._write_characteristic_receive_notification(
             self.reader_uuid, self._build_cmd(QueryCmdId.UNREG_CAPABILITIES_UPDATE)
         )
 
@@ -671,7 +671,7 @@ class BleStatus:
             parser (BytesParser): parser used to build response
         """
         self.identifier = identifier
-        self.communicator = communicator
+        self._communicator = communicator
         # Add to response parsing map
         communicator._add_parser(self.identifier, parser)
 
@@ -685,7 +685,7 @@ class BleStatus:
         Returns:
             GoProResp: current status value
         """
-        return self.communicator._write_characteristic_receive_notification(
+        return self._communicator._write_characteristic_receive_notification(
             BleStatus.uuid, self._build_cmd(QueryCmdId.GET_STATUS_VAL)
         )
 
@@ -697,11 +697,11 @@ class BleStatus:
             GoProResp: current status value
         """
         if (
-            response := self.communicator._write_characteristic_receive_notification(
+            response := self._communicator._write_characteristic_receive_notification(
                 BleStatus.uuid, self._build_cmd(QueryCmdId.REG_STATUS_VAL_UPDATE)
             )
         ).is_ok:
-            self.communicator._register_listener((QueryCmdId.STATUS_VAL_PUSH, self.identifier))
+            self._communicator._register_listener((QueryCmdId.STATUS_VAL_PUSH, self.identifier))
         return response
 
     @log_query
@@ -712,11 +712,11 @@ class BleStatus:
             GoProResp: Status of unregister
         """
         if (
-            response := self.communicator._write_characteristic_receive_notification(
+            response := self._communicator._write_characteristic_receive_notification(
                 BleStatus.uuid, self._build_cmd(QueryCmdId.UNREG_STATUS_VAL_UPDATE)
             )
         ).is_ok:
-            self.communicator._unregister_listener((QueryCmdId.STATUS_VAL_PUSH, self.identifier))
+            self._communicator._unregister_listener((QueryCmdId.STATUS_VAL_PUSH, self.identifier))
         return response
 
     def _build_cmd(self, cmd: QueryCmdId) -> bytearray:
@@ -745,13 +745,13 @@ class WifiGetJsonCommand:
         endpoint (str): endpoint to GET
     """
 
-    communicator: GoProWifi
+    _communicator: GoProWifi
     endpoint: str
     response_parser: Optional[JsonParser] = None
 
     def __post_init__(self) -> None:
         if self.response_parser is not None:
-            self.communicator._add_parser(self.endpoint, self.response_parser)
+            self._communicator._add_parser(self.endpoint, self.response_parser)
 
 
 @dataclass
@@ -764,7 +764,7 @@ class WifiGetJsonWithParams(WifiGetJsonCommand, Generic[CommandValueType]):
         response_parser (Optional[JsonParser]): the parser that will parse the received bytestream into a JSON dict
     """
 
-    communicator: GoProWifi
+    _communicator: GoProWifi
     endpoint: str
     response_parser: Optional[JsonParser] = None
     param_builder: Optional[StringBuilder] = None
@@ -783,7 +783,7 @@ class WifiGetJsonWithParams(WifiGetJsonCommand, Generic[CommandValueType]):
             url_params.extend(values)  # type: ignore
         url = self.endpoint.format(*url_params)
         # Send to camera
-        response = self.communicator._get(url)
+        response = self._communicator._get(url)
         logger.info(build_log_rx_str(response))
         return response
 
@@ -802,7 +802,7 @@ class WifiGetJsonNoParams(WifiGetJsonCommand):
         logger.info(build_log_tx_str(self.endpoint))
         url = self.endpoint
         # Send to camera
-        response = self.communicator._get(url)
+        response = self._communicator._get(url)
         logger.info(build_log_rx_str(response))
         return response
 
@@ -834,7 +834,7 @@ class WifiGetBinary(ABC):
 
         url = self.endpoint.format(camera_file)
         # Send to camera
-        self.communicator._stream_to_file(url, local_file)
+        self._communicator._stream_to_file(url, local_file)
         logger.info(build_log_rx_str("SUCCESS"))
         return local_file
 
@@ -850,7 +850,7 @@ class WifiSetting(Generic[SettingValueType]):
             identifier (SettingId): ID of setting
         """
         self.identifier = identifier
-        self.communicator = communicator
+        self._communicator = communicator
         # Note! It is assumed that BLE and WiFi settings are symmetric so we only add to the communicator's
         # parser in the BLE Setting.
 
@@ -869,9 +869,9 @@ class WifiSetting(Generic[SettingValueType]):
         logger.info(build_log_tx_str(f"Setting {self.identifier}: {value}"))
         # Build url. TODO fix this type error with Mixin (or passing in endpoint as argument)
         value = value.value if isinstance(value, enum.Enum) else value
-        url = self.communicator._api.wifi_setting.endpoint.format(self.identifier.value, value)  # type: ignore
+        url = self._communicator._api.wifi_setting.endpoint.format(self.identifier.value, value)  # type: ignore
         # Send to camera
-        response = self.communicator._get(url)
+        response = self._communicator._get(url)
         if response is not None:
             logger.info(f"-----------> \n{response}")
         return response

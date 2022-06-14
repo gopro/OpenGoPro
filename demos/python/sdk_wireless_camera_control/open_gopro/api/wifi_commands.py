@@ -33,7 +33,6 @@ class WifiCommands:
         Args:
             communicator (GoProWifi):  Adapter to read / write commands
         """
-        self.communicator = communicator
 
         class CameraFileToLocalFile(WifiGetBinary):
             def __call__(self, /, camera_file: str, local_file: Optional[Path] = None) -> Path:

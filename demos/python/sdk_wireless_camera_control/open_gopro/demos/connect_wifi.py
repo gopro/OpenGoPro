@@ -3,6 +3,7 @@
 
 """Connect to the Wifi AP of a GoPro camera."""
 
+import sys
 import time
 import logging
 import argparse
@@ -18,12 +19,7 @@ logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
 
 
-def parse_arguments() -> Tuple[Optional[str], Path, Optional[str]]:
-    """Parse the command line arguments
-
-    Returns:
-        Tuple[Optional[str], Path, Optional[str]]: (identifier, log location, wifi interface)
-    """
+def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Connect to a GoPro camera's Wifi Access Point.")
     parser.add_argument(
         "-i",
@@ -47,27 +43,30 @@ def parse_arguments() -> Tuple[Optional[str], Path, Optional[str]]:
         help="System Wifi Interface. If not set, first discovered interface will be used.",
         default=None,
     )
+    parser.add_argument(
+        "-p",
+        "--password",
+        action="store_true",
+        help="set to read sudo password from stdin",
+    )
+
     args = parser.parse_args()
+    args.password = sys.stdin.readline() if args.password else None
+    return args
 
-    return args.identifier, args.log, args.wifi_interface
 
-
-def main() -> int:
-    """Main functionality
-
-    Returns:
-        int: program return code
-    """
-    identifier, log_location, wifi_interface = parse_arguments()
+def main(args: argparse.Namespace) -> int:
     global logger
-    logger = setup_logging(logger, log_location)
+    logger = setup_logging(logger, args.log)
 
     gopro: Optional[GoPro] = None
     return_code = 0
     try:
-        with GoPro(identifier, wifi_interface=wifi_interface):
+        with GoPro(args.identifier, wifi_interface=args.wifi_interface, wifi_password=args.password, enable_wifi=False) as gopro:
             # Now we only want errors
             set_logging_level(logger, logging.ERROR)
+
+            gopro.wifi_command.set_keep_alive()
 
             console.print("\n\n🎆🎇✨ Success!! Wifi AP is connected 📡\n")
             console.print("Send commands as per https://gopro.github.io/OpenGoPro/http")
@@ -83,4 +82,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    main()
+    main(parse_arguments())
