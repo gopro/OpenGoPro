@@ -464,12 +464,6 @@ class BleProtoCommand(BleCommand):
     @no_type_check
     def __call__(self, *args: Any, **kwargs: Any) -> GoProResp:  # noqa: D102
         # The method that will actually build and send the protobuf command
-
-        # This method's signature shall be overridden by the subclass.
-        # The subclass shall then pass the arguments to this method and return it's returned response
-
-        # This pattern is technically violating the Liskov substitution principle. But we are accepting this as a
-        # tradeoff for exposing type hints on BLE Protobuf commands.
         logger.info(
             build_log_tx_str(
                 f"{self.action_id.name} : {' '.join([*[str(a) for a in args], *[str(a) for a in kwargs.values()]])}"
@@ -824,10 +818,6 @@ class WifiGetBinary(ABC):
     @no_type_check
     def __call__(self, /, **kwargs) -> Path:  # noqa: D102
         # The method that will actually send the command and receive the stream
-        # This method's signature shall be override by the subclass.
-        # The subclass shall then pass the arguments to this method and return it's returned response
-        # This pattern is technically violating the Liskov substitution principle. But we are accepting this as a
-        # tradeoff for exposing type hints on commands.
         camera_file = kwargs["camera_file"]
         local_file = Path(kwargs["local_file"]) if "local_file" in kwargs else Path(".") / camera_file
         logger.info(build_log_tx_str(f"{self.endpoint.format(camera_file)} ===> {local_file}"))

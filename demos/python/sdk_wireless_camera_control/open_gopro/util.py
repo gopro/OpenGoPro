@@ -464,6 +464,16 @@ def add_cli_args(
     bluetooth: bool = True,
     wifi: bool = True,
 ) -> argparse.ArgumentParser:
+    """Append common argparse arguments to an argument parser
+
+    Args:
+        parser (argparse.ArgumentParser): input parser to modify
+        bluetooth (bool): Add bluetooth args?. Defaults to True.
+        wifi (bool): Add WiFi args?. Defaults to True.
+
+    Returns:
+        argparse.ArgumentParser: modified argument parser
+    """
     # Common args
     parser.add_argument(
         "-l",

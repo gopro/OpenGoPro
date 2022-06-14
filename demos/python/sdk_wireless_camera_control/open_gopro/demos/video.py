@@ -19,11 +19,6 @@ console = Console()  # rich consoler printer
 
 
 def main(args: argparse.Namespace) -> None:
-    """Main program functionality
-
-    Returns:
-        int: program return code
-    """
     global logger
     logger = setup_logging(logger, args.log)
 

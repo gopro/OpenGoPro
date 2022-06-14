@@ -91,7 +91,7 @@ def process_battery_notifications(gopro: GoPro, initial_bars: BarsType, initial_
         SAMPLE_INDEX += 1
 
 
-def main(args: argparse.Namespace):
+def main(args: argparse.Namespace) -> None:
     global logger
     logger = setup_logging(logger, args.log)
 

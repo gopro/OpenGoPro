@@ -181,7 +181,8 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             self._notification_handler,
             target,
         )
-        [enable_wifi and GoProWifi.__init__(self, wifi_adapter(wifi_interface, password=sudo_password))]
+        if enable_wifi:
+            GoProWifi.__init__(self, wifi_adapter(wifi_interface, password=sudo_password))
 
         # We currently only support version 2.0
         self._api = Api(self, self)

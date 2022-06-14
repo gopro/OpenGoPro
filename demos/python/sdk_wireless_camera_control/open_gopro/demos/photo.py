@@ -3,11 +3,10 @@
 
 """Entrypoint for taking a picture demo."""
 
-import sys
 import logging
 import argparse
 from pathlib import Path
-from typing import Tuple, Optional
+from typing import Optional
 
 from rich.console import Console
 
