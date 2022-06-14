@@ -13,7 +13,7 @@ from typing import Optional
 from rich.console import Console
 
 from open_gopro import GoPro, Params
-from open_gopro.util import launch_vlc, setup_logging, add_cli_args
+from open_gopro.util import launch_vlc, setup_logging, add_cli_args_and_parse
 
 logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
@@ -56,7 +56,6 @@ def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Connect to a GoPro camera, enable the preview stream, then open VLC to view it."
     )
-    parser = add_cli_args(parser)
     parser.add_argument(
         "-v",
         "--vlc",
@@ -64,7 +63,7 @@ def parse_arguments() -> argparse.Namespace:
         help="VLC location. If not set, the location will attempt to be automatically discovered.",
         default=None,
     )
-    return parser.parse_args()
+    return add_cli_args_and_parse(parser)
 
 
 # Needed for poetry scripts defined in pyproject.toml

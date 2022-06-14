@@ -17,7 +17,7 @@ from rich.console import Console
 
 from open_gopro import GoPro
 from open_gopro.constants import StatusId
-from open_gopro.util import setup_logging, set_logging_level, add_cli_args
+from open_gopro.util import setup_logging, set_logging_level, add_cli_args_and_parse
 
 logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
@@ -144,7 +144,6 @@ def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Connect to the GoPro via BLE only and continuously read the battery (either by polling or notifications)."
     )
-    parser = add_cli_args(parser, wifi=False)
     parser.add_argument(
         "-p",
         "--poll",
@@ -152,7 +151,7 @@ def parse_arguments() -> argparse.Namespace:
         help="Set to poll the battery at a given interval. If not set, battery level will be notified instead. Defaults to notifications.",
         default=None,
     )
-    return parser.parse_args()
+    return add_cli_args_and_parse(parser, wifi=False)
 
 
 # Needed for poetry scripts defined in pyproject.toml

@@ -459,12 +459,15 @@ def build_protos() -> None:
         cmd(f"mv {proto_out_dir / 'temp'} {proto_out_dir / '__init__.py'}")
 
 
-def add_cli_args(
+def add_cli_args_and_parse(
     parser: argparse.ArgumentParser,
     bluetooth: bool = True,
     wifi: bool = True,
-) -> argparse.ArgumentParser:
+) -> argparse.Namespace:
     """Append common argparse arguments to an argument parser
+
+    WARNING!! This will also parse the arguments (i.e. call parser.parse_args) so ensure to add any additional
+    arguments to the parser before passing it to this function.
 
     Args:
         parser (argparse.ArgumentParser): input parser to modify
@@ -505,10 +508,11 @@ def add_cli_args(
             "-p",
             "--password",
             action="store_true",
-            help="set to read sudo password from stdin. If not set, you will be prompted for password if needed",
+            help="Set to read sudo password from stdin. If not set, you will be prompted for password if needed",
         )
 
-        args = parser.parse_args()
+    args = parser.parse_args()
+    if wifi:
         args.password = sys.stdin.readline() if args.password else None
 
-    return parser
+    return args

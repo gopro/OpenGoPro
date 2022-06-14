@@ -12,7 +12,7 @@ from typing import Optional
 from rich.console import Console
 
 from open_gopro import GoPro, Params
-from open_gopro.util import setup_logging, add_cli_args
+from open_gopro.util import setup_logging, add_cli_args_and_parse
 
 logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
@@ -59,7 +59,6 @@ def main(args: argparse.Namespace) -> None:
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Connect to a GoPro camera, take a video, then download it.")
-    parser = add_cli_args(parser)
     parser.add_argument(
         "record_time",
         type=float,
@@ -72,7 +71,7 @@ def parse_arguments() -> argparse.Namespace:
         help="Where to write the video to. If not set, write to 'video.mp4'",
         default=Path("video.mp4"),
     )
-    return parser.parse_args()
+    return add_cli_args_and_parse(parser)
 
 
 # Needed for poetry scripts defined in pyproject.toml
