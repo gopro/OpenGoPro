@@ -163,12 +163,15 @@ should be used simultaneously with this document for development.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>target</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Pattern</em><em>, </em><em>BleDevice</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Last 4 of camera name / serial number
+<li><p><strong>target</strong> (<em>Union</em><em>[</em><em>Pattern</em><em>, </em><em>BleDevice</em><em>]</em><em>, </em><em>optional</em>) – Last 4 of camera name / serial number
 (i.e. 0456 for GoPro0456). Defaults to None (i.e. connect to first discovered GoPro)</p></li>
-<li><p><strong>wifi_interface</strong> (<em>str</em>) – Set to specify the wifi interface the local machine will use to connect
+<li><p><strong>wifi_interface</strong> (<em>str</em><em>, </em><em>optional</em>) – Set to specify the wifi interface the local machine will use to connect
 to the GoPro. If None (or not set), first discovered interface will be used.</p></li>
+<li><p><strong>sudo_password</strong> (<em>str</em><em>, </em><em>optional</em>) – User password for sudo. If not passed, you will be prompted if a password
+is needed.</p></li>
 <li><p><strong>enable_wifi</strong> (<em>bool</em>) – Optionally do not enable Wifi if set to False. Defaults to True.</p></li>
-<li><p><strong>exception_cb</strong> (<em>ExceptionHandler</em>) – callback to be notified when exception occurs in a thread besides main</p></li>
+<li><p><strong>exception_cb</strong> (<em>ExceptionHandler</em><em>, </em><em>optional</em>) – callback to be notified when exception occurs in a thread
+besides main</p></li>
 <li><p><strong>kwargs</strong> (<em>Dict</em>) – additional parameters for internal use / testing</p></li>
 </ul>
 </dd>
