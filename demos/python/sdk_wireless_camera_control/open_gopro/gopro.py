@@ -63,7 +63,9 @@ def ensure_initialized(interface: Interface) -> Callable:
     def wrapper(wrapped: Callable, instance: GoPro, args: Any, kwargs: Any) -> Any:
         if interface is Interface.BLE and not instance.is_ble_connected:
             raise GoProNotInitialized("BLE not connected")
-        if interface is Interface.WIFI and not instance.is_wifi_connected:
+        if interface is Interface.WIFI and not (
+            hasattr(instance, "is_wifi_connected") and instance.is_wifi_connected
+        ):
             raise GoProNotInitialized("Wifi not connected")
         return wrapped(*args, **kwargs)
 
@@ -159,6 +161,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         self,
         target: Optional[Union[Pattern, BleDevice]] = None,
         wifi_interface: Optional[str] = None,
+        sudo_password: Optional[str] = None,
         enable_wifi: bool = True,
         exception_cb: Optional[ExceptionHandler] = None,
         **kwargs: Any,
@@ -178,7 +181,8 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             self._notification_handler,
             target,
         )
-        GoProWifi.__init__(self, wifi_adapter(wifi_interface))
+        if enable_wifi:
+            GoProWifi.__init__(self, wifi_adapter(wifi_interface, password=sudo_password))
 
         # We currently only support version 2.0
         self._api = Api(self, self)
@@ -191,7 +195,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         self._sync_resp_ready_q: SnapshotQueue = SnapshotQueue()
 
         # For outputting asynchronously received information
-        self._out_q: "Queue[GoProResp]" = Queue()
+        self._out_q: Queue[GoProResp] = Queue()
         self._listeners: Dict[ProducerType, bool] = {}
 
         # Set up events
@@ -215,7 +219,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             self._internal_state = GoPro._InternalState.ENCODING | GoPro._InternalState.SYSTEM_BUSY
             self._state_thread = threading.Thread(target=self._maintain_state, name="state", daemon=True)
 
-    def __enter__(self) -> "GoPro":
+    def __enter__(self) -> GoPro:
         self.open()
         return self
 

@@ -26,18 +26,20 @@ class WifiCommands:
     All of these return a GoProResp
     """
 
-    # pylint: disable = missing-class-docstring, arguments-differ, useless-super-delegation
     def __init__(self, communicator: GoProWifi):
         """Constructor
 
         Args:
             communicator (GoProWifi):  Adapter to read / write commands
         """
-        self.communicator = communicator
 
         class CameraFileToLocalFile(WifiGetBinary):
-            def __call__(self, /, camera_file: str, local_file: Optional[Path] = None) -> Path:
-                return super().__call__(camera_file=camera_file, local_file=local_file or camera_file)
+            """A command that takes camera file and local file as input parameters"""
+
+            def __call__(self, /, camera_file: str, local_file: Optional[Path] = None, **kwargs: Any) -> Path:
+                return super().__call__(
+                    camera_file=camera_file, local_file=local_file or camera_file, **kwargs
+                )
 
         # ======================================== Commands
 

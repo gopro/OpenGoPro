@@ -10,6 +10,7 @@ import json
 import types
 import queue
 import logging
+import argparse
 import subprocess
 import dataclasses
 from pathlib import Path
@@ -364,9 +365,6 @@ class SnapshotQueue(queue.Queue):
             return list(self.queue)
 
 
-# ============================================================================================================
-
-
 def custom_betterproto_to_dict(
     self: betterproto.Message,
     casing: betterproto.Casing = betterproto.Casing.CAMEL,
@@ -459,3 +457,62 @@ def build_protos() -> None:
         )
         cmd(f"mv {proto_out_dir / 'open_gopro.py'} {proto_out_dir / proto_out}")
         cmd(f"mv {proto_out_dir / 'temp'} {proto_out_dir / '__init__.py'}")
+
+
+def add_cli_args_and_parse(
+    parser: argparse.ArgumentParser,
+    bluetooth: bool = True,
+    wifi: bool = True,
+) -> argparse.Namespace:
+    """Append common argparse arguments to an argument parser
+
+    WARNING!! This will also parse the arguments (i.e. call parser.parse_args) so ensure to add any additional
+    arguments to the parser before passing it to this function.
+
+    Args:
+        parser (argparse.ArgumentParser): input parser to modify
+        bluetooth (bool): Add bluetooth args?. Defaults to True.
+        wifi (bool): Add WiFi args?. Defaults to True.
+
+    Returns:
+        argparse.ArgumentParser: modified argument parser
+    """
+    # Common args
+    parser.add_argument(
+        "-l",
+        "--log",
+        type=Path,
+        help="Location to store detailed log",
+        default="gopro_wifi.log",
+    )
+
+    if bluetooth:
+        parser.add_argument(
+            "-i",
+            "--identifier",
+            type=str,
+            help="Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. \
+                If not used, first discovered GoPro will be connected to",
+            default=None,
+        )
+
+    if wifi:
+        parser.add_argument(
+            "-w",
+            "--wifi_interface",
+            type=str,
+            help="System Wifi Interface. If not set, first discovered interface will be used.",
+            default=None,
+        )
+        parser.add_argument(
+            "-p",
+            "--password",
+            action="store_true",
+            help="Set to read sudo password from stdin. If not set, you will be prompted for password if needed",
+        )
+
+    args = parser.parse_args()
+    if wifi:
+        args.password = sys.stdin.readline() if args.password else None
+
+    return args

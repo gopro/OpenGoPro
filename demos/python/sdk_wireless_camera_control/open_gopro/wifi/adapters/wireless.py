@@ -47,18 +47,19 @@ class Wireless(WifiController):
     discover a suitable interface
     """
 
-    def __init__(self, interface: Optional[str] = None) -> None:
+    def __init__(self, interface: Optional[str] = None, password: Optional[str] = None) -> None:
         """Constructor
 
         Args:
             interface (str, optional): Interface. Defaults to None.
+            password (str, optional): User Password for sudo. Defaults to None.
 
         #noqa: DAR402
 
         Raises:
             Exception: We weren't able to find a suitable driver or auto-detect an interface after detecting driver
         """
-        WifiController.__init__(self, interface)
+        WifiController.__init__(self, interface, password)
 
         # detect and init appropriate driver
         self._driver = self._detect_driver()
@@ -66,10 +67,12 @@ class Wireless(WifiController):
         # Attempt to set interface (will raise an exception if not able to auto-detect)
         self.interface = interface  # type: ignore
 
-        logger.debug(f"Using Wifi driver: {type(self).__name__} with interface {self.interface}")
+        logger.debug(f"Wifi setup. Using {self}")
 
-    @staticmethod
-    def _detect_driver() -> WifiController:
+    def __str__(self) -> str:
+        return f"[{type(self).__name__}] driver::[{self.interface}] interface"
+
+    def _detect_driver(self) -> WifiController:
         """Try to find and instantiate a Wifi driver that can be used.
 
         Raises:
@@ -88,22 +91,23 @@ class Wireless(WifiController):
             return NetworksetupWireless()
 
         # Try Linux options. Need password for sudo
-        password = getpass("Need to run as sudo. Enter password: ")
+        if not self._password:
+            self._password = getpass("Need to run as sudo. Enter password: ")
         # Validate password
-        if "VALID PASSWORD" not in cmd(f'echo "{password}" | sudo -S echo "VALID PASSWORD"'):
+        if "VALID PASSWORD" not in cmd(f'echo "{self._password}" | sudo -S echo "VALID PASSWORD"'):
             raise Exception("Invalid password")
 
         # try nmcli (Ubuntu 14.04)
         if which("nmcli"):
             version = cmd("nmcli --version").split()[-1]
             return (
-                Nmcli0990Wireless(password=password)
+                Nmcli0990Wireless(password=self._password)
                 if Version(version) >= Version("0.9.9.0")
-                else NmcliWireless(password=password)
+                else NmcliWireless(password=self._password)
             )
         # try nmcli (Ubuntu w/o network-manager)
         if which("wpa_supplicant"):
-            return WpasupplicantWireless(password=password)
+            return WpasupplicantWireless(password=self._password)
 
         raise Exception("Unable to find compatible wireless driver.")
 

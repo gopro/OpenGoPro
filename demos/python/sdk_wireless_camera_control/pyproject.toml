@@ -27,13 +27,11 @@ classifiers = [
 ]
 
 [tool.poetry.scripts]
-gopro-demo = "open_gopro.demos.demo:main"
 gopro-photo = "open_gopro.demos.photo:entrypoint"
-gopro-video = "open_gopro.demos.video:main"
-gopro-stream = "open_gopro.demos.stream:main"
-gopro-log-battery = "open_gopro.demos.log_battery:main"
-gopro-wifi = "open_gopro.demos.connect_wifi:main"
-gopro-ble-write = "open_gopro.demos.ble_write:main"
+gopro-video = "open_gopro.demos.video:entrypoint"
+gopro-stream = "open_gopro.demos.stream:entrypoint"
+gopro-log-battery = "open_gopro.demos.log_battery:entrypoint"
+gopro-wifi = "open_gopro.demos.connect_wifi:entrypoint"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -94,7 +92,7 @@ cmd = "mypy open_gopro"
 help = "Check types"
 
 [tool.poe.tasks.lint]
-cmd = "pylint --no-docstring-rgx=__ open_gopro"
+cmd = "pylint --no-docstring-rgx=__|main|parse_arguments|entrypoint open_gopro"
 help = "Run pylint"
 
 [tool.poe.tasks.format]
@@ -102,7 +100,7 @@ cmd = "black open_gopro tests"
 help = "Apply black formatting to source code"
 
 [tool.poe.tasks.pydocstyle]
-cmd = "pydocstyle open_gopro"
+cmd = "pydocstyle -v open_gopro"
 help = "check docstrings style"
 
 [tool.poe.tasks.darglint]
@@ -245,3 +243,4 @@ exclude = ".venv"
 convention="google"
 add-ignore="D415, D107, D105"
 match='(?!params|.*pb).*\.py'
+match-dir='(?!.*demos).*'
