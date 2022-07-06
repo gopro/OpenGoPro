@@ -25,7 +25,7 @@ services:
                 ipv4_address: 172.16.238.10
 
     linkchecker:
-        image: linkchecker/linkchecker
+        image: ghcr.io/linkchecker/linkchecker:latest
         # Only show errors (no verbose). Check all URL's. Ignore camera URL's and theme URL
         # Use static IP defined in jekyll container.
         command: --check-extern --ignore-url ".*10\.5\.5\.9.*" --timeout 5 -o text http://172.16.238.10:4998
