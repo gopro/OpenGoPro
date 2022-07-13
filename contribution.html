@@ -342,7 +342,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          5 minute read
+          6 minute read
         
       </span>
     
@@ -491,18 +491,19 @@ This is for tips.
 
 <p>Collapsible accordion sections can be added, for example with use for FAQ’s via:</p>
 
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% accordion
-  question="Question"
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% accordion Question %}
   answer="Answer"
-%}
+{% endaccordion %}
 
 </code></pre></div></div>
 
 <p>Here is an example:</p>
 
 <div class="accordion-container">
-    <button class="accordion">Question</button>
-    <div class="panel"><p>Answer</p></div>
+    <button class="accordion">Question<i class="fa fa-chevron-down"></i>&lt;/i&gt;</button>
+    <div class="panel">
+<p>answer=”Answer”</p>
+</div>
 </div>
 
 <h3 id="quiz">Quiz</h3>
@@ -519,10 +520,10 @@ This is for tips.
 %}
 </code></pre></div></div>
 
-<div id="quiz_487cd1a1-8df1-4f2e-88bc-0788fd5f47c6" class="quiz">
+<div id="quiz_b1245371-8e91-4fc4-bf94-8bf6e6548f30" class="quiz">
     <div>
-        <div id="question_487cd1a1-8df1-4f2e-88bc-0788fd5f47c6" class="quiz__question">What is the question?</div>
-        <div id="answers_487cd1a1-8df1-4f2e-88bc-0788fd5f47c6">
+        <div id="question_b1245371-8e91-4fc4-bf94-8bf6e6548f30" class="quiz__question">What is the question?</div>
+        <div id="answers_b1245371-8e91-4fc4-bf94-8bf6e6548f30">
         
             <input type="radio" name="question" value="A"><label>A: Option 1 (this one is correct)</label>
             <br>
@@ -535,10 +536,10 @@ This is for tips.
         
         </div>
     </div>
-    <button onclick="showResults('487cd1a1-8df1-4f2e-88bc-0788fd5f47c6', 'A')">Submit Answer</button>
-    <div id="results_487cd1a1-8df1-4f2e-88bc-0788fd5f47c6" style="display: none">
-        <span id="correct_487cd1a1-8df1-4f2e-88bc-0788fd5f47c6" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_487cd1a1-8df1-4f2e-88bc-0788fd5f47c6" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('b1245371-8e91-4fc4-bf94-8bf6e6548f30', 'A')">Submit Answer</button>
+    <div id="results_b1245371-8e91-4fc4-bf94-8bf6e6548f30" style="display: none">
+        <span id="correct_b1245371-8e91-4fc4-bf94-8bf6e6548f30" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_b1245371-8e91-4fc4-bf94-8bf6e6548f30" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         And here is some more info
     </div>
 </div>
@@ -554,10 +555,10 @@ This is for tips.
 %}
 </code></pre></div></div>
 
-<div id="quiz_59128473-75d4-4309-b807-f77496f8dffc" class="quiz">
+<div id="quiz_fc2ed66e-9040-4ec3-8e35-db78e42988fa" class="quiz">
     <div>
-        <div id="question_59128473-75d4-4309-b807-f77496f8dffc" class="quiz__question">True or False?</div>
-        <div id="answers_59128473-75d4-4309-b807-f77496f8dffc">
+        <div id="question_fc2ed66e-9040-4ec3-8e35-db78e42988fa" class="quiz__question">True or False?</div>
+        <div id="answers_fc2ed66e-9040-4ec3-8e35-db78e42988fa">
         
             <input type="radio" name="question" value="True"><label>True: Option 1(this one is correct)</label>
             <br>
@@ -567,10 +568,10 @@ This is for tips.
         
         </div>
     </div>
-    <button onclick="showResults('59128473-75d4-4309-b807-f77496f8dffc', 'True')">Submit Answer</button>
-    <div id="results_59128473-75d4-4309-b807-f77496f8dffc" style="display: none">
-        <span id="correct_59128473-75d4-4309-b807-f77496f8dffc" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_59128473-75d4-4309-b807-f77496f8dffc" style="display: none"> Incorrect!! 😭 The correct answer is True.</span>
+    <button onclick="showResults('fc2ed66e-9040-4ec3-8e35-db78e42988fa', 'True')">Submit Answer</button>
+    <div id="results_fc2ed66e-9040-4ec3-8e35-db78e42988fa" style="display: none">
+        <span id="correct_fc2ed66e-9040-4ec3-8e35-db78e42988fa" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_fc2ed66e-9040-4ec3-8e35-db78e42988fa" style="display: none"> Incorrect!! 😭 The correct answer is True.</span>
         And here is some more info
     </div>
 </div>
@@ -593,7 +594,7 @@ This is the content of the third tab.
 </code></pre></div></div>
 
 <div>
-    <ul class="tab" data-tab="937b92ef-60cb-462f-86b2-9d067473e77a">
+    <ul class="tab" data-tab="5ab14e96-531d-4a63-930e-8cbb679251fa">
         
             <li class="active">
                 <a href="">tab1 </a>
@@ -608,7 +609,7 @@ This is the content of the third tab.
             </li>
         
         </ul>
-        <ul class="tab-content" id="937b92ef-60cb-462f-86b2-9d067473e77a">
+        <ul class="tab-content" id="5ab14e96-531d-4a63-930e-8cbb679251fa">
         
             <li class="active">
 <p>This is the content of the first tab.</p>

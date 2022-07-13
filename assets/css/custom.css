@@ -238,6 +238,10 @@ img.mermaid {
     outline: none !important;
 }
 
+.accordion i {
+    float: right;
+}
+
 .accordion-active {
     margin: 0.4em 0 0 0;
     background-color: #ccc;
@@ -259,7 +263,6 @@ img.mermaid {
     border-radius: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    transition: 0.4s !important;
 }
 
 .panel p {
