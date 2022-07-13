@@ -6,27 +6,35 @@ require "liquid/tag/parser"
 require_relative 'common'
 
 module Jekyll
-    class Accordion < Liquid::Tag
+    class Accordion < Liquid::Block
+        alias_method :render_block, :render
+
         # include all standard liquid filters
         include Liquid::StandardFilters
 
-        def initialize(tag, args, tokens)
+        def initialize(block_name, markup, tokens)
             super
-            @raw_args = args
-            @tag = tag.to_sym
-            @args = Liquid::Tag::Parser.new(args)
-            @tokens = tokens
+            if markup == ''
+                raise SyntaxError.new("Block #{block_name} requires 1 attribute")
+            end
+            @title=markup
         end
 
         def render(context)
-            # Extract arguments
-            question = convert_markdown(context, @args[:question])
-            answer = convert_markdown(context, @args[:answer])
-            # Load template file
-            currentDirectory = File.dirname(__FILE__)
-            templateFile = File.read(currentDirectory + '/accordion_template.erb')
-            template = ERB.new(templateFile)
-            return template.result(binding)
+            # Get converter
+            site = context.registers[:site]
+            converter = site.find_converter_instance(::Jekyll::Converters::Markdown)
+            # Convert content
+            title = convert_markdown(context, @title)
+            content = converter.convert(render_block(context))
+            # Place results into html
+            output = <<~EOS
+            <div class="accordion-container">
+                <button class="accordion">#{title}<i class="fa fa-chevron-down"></i></i></button>
+                <div class="panel">#{content}</div>
+            </div>
+            EOS
+            return output
         end
     end
 end

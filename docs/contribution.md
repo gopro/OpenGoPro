@@ -133,20 +133,18 @@ Collapsible accordion sections can be added, for example with use for FAQ's via:
 
 {% raw %}
 ```markdown
-{% accordion
-  question="Question"
+{% accordion Question %}
   answer="Answer"
-%}
+{% endaccordion %}
 
 ```
 {% endraw %}
 
 Here is an example:
 
-{% accordion
-  question="Question"
+{% accordion Question %}
   answer="Answer"
-%}
+{% endaccordion %}
 
 
 ### Quiz
