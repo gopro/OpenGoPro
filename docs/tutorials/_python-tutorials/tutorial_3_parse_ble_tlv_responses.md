@@ -34,23 +34,52 @@ The scripts that will be used for this tutorial can be found in the
 [Tutorial 3 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_3_parse_ble_tlv_responses).
 
 # Just Show me the Demo(s)!!
+If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the [Open GoPro GitHub repo]( https://github.com/gopro/OpenGoPro).
 
-Each of the examples described below has a corresponding script to demo it. If you don't want to read this
-tutorial and just want to see the demo, for example, run:
+{% warning %}
+Python >= 3.8.x must be used as specified in the requirements
+{% endwarning %}
 
+{% note %}
+Each of the scripts for this tutorial can be found in this directory of the repo: 
+`demos/python/tutorial/tutorial_modules/tutorial_3_parse_ble_tlv_responses/`
+{% endnote %}
+
+{% accordion Parsing a One Packet TLV Response %}
+
+You can test parsing a one packet TLV response with your camera through BLE using the following script:
+```console
+$ python ble_command_get_version.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_get_version.py --help
+usage: ble_command_get_version.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera via BLE, then get the Open GoPro version.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
+
+{% accordion Parsing Multiple Packet TLV Responses %}
+
+You can test parsing multiple packet TVL responses with your camera through BLE using the following script:
 ```console
 $ python ble_command_get_state.py
 ```
 
-{% warning %}
-Python >= 3.8.x must be used as specified in
-[the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
-{% endwarning %}
-
-Note that each script has a command-line help which can be found via:
+See the help for parameter definitions:
 
 ```console
-$ python ./ble_command_get_state.py --help
+$ python ble_command_get_state.py --help
 usage: ble_command_get_state.py [-h] [-i IDENTIFIER]
 
 Connect to a GoPro camera via BLE, then get its statuses and settings.
@@ -58,9 +87,10 @@ Connect to a GoPro camera via BLE, then get its statuses and settings.
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
-                        SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
 ```
+{% endaccordion %}
 
 # Setup
 

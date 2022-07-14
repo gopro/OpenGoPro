@@ -36,22 +36,28 @@ The scripts that will be used for this tutorial can be found in the
 
 # Just Show me the Demo(s)!!
 
-Each of the commands detailed in [Sending Commands](#sending-commands) has a corresponding script to demo it.
-If you don't want to read this tutorial and just want to see the demo, for example, run:
+If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the [Open GoPro GitHub repo]( https://github.com/gopro/OpenGoPro).
 
+{% warning %}
+Python >= 3.8.x must be used as specified in the requirements
+{% endwarning %}
+
+{% note %}
+Each of the scripts for this tutorial can be found in this directory of the repo: 
+`demos/python/tutorial/tutorial_modules/tutorial_2_send_ble_commands/`
+{% endnote %}
+
+{% accordion Set Shutter %}
+
+You can test sending the Set Shutter command to your camera through BLE using the following script:
 ```console
 $ python ble_command_set_shutter.py
 ```
 
-{% warning %}
-Python >= 3.8.x must be used as specified in
-[the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
-{% endwarning %}
-
-Note that each script has a command-line help which can be found via:
+See the help for parameter definitions:
 
 ```console
-$ python ./ble_command_set_shutter.py --help
+$ python ble_command_set_shutter.py --help
 usage: ble_command_set_shutter.py [-h] [-i IDENTIFIER]
 
 Connect to a GoPro camera, set the shutter on, wait 2 seconds, then set the shutter off.
@@ -62,6 +68,152 @@ optional arguments:
                         Last 4 digits of GoPro serial number, which is the last 4 digits of the
                         default camera SSID. If not used, first discovered GoPro will be connected to
 ```
+{% endaccordion %}
+
+
+{% accordion Sleep %}
+
+You can test sending the Sleep command to your camera through BLE using the following script:
+```console
+$ python ble_command_sleep.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_sleep.py --help
+usage: ble_command_sleep.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then put the camera to sleep.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
+
+{% accordion Load Preset Group %}
+
+You can test sending the Load Preset Group command to your camera through BLE using the following script:
+```console
+$ python ble_command_load_group.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_load_group.py --help
+usage: ble_command_load_group.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then change the Preset Group to Video.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
+
+{% accordion Load Preset %}
+
+You can test sending the Load Preset command to your camera through BLE using the following script:
+```console
+$ python ble_command_load_preset.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_load_preset.py --help
+usage: ble_command_load_preset.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then change the preset to Cinematic.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
+
+{% accordion Enable Analytics %}
+
+You can test sending the Enable Analytics command to your camera through BLE using the following script:
+```console
+$ python ble_command_enable_analytics.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_enable_analytics.py --help
+usage: ble_command_enable_analytics.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then set third party client info (enable analytics).
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
+
+{% accordion Set the Video Resolution %}
+
+You can test sending the Set Video Resolution command to your camera through BLE using the following script:
+```console
+$ python ble_command_set_resolution.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_set_resolution.py --help
+usage: ble_command_set_resolution.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then change the resolution to 1080.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
+
+{% accordion Set the Frames Per Second (FPS) %}
+
+You can test sending the Set FPS command to your camera through BLE using the following script:
+```console
+$ python ble_command_set_fps.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_set_fps.py --help
+usage: ble_command_set_fps.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then attempt to change the fps to 240.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
 
 # Setup
 

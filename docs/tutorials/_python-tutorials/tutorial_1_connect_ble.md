@@ -115,17 +115,25 @@ and progress can be tracked on the [Github Issue](https://github.com/gopro/OpenG
 
 ## Just Show me the Demo!!
 
-If you just want to run the demo, you can do:
-
-```console
-python ble_connect.py
-```
+If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the [Open GoPro GitHub repo]( https://github.com/gopro/OpenGoPro).
 
 {% warning %}
 Python >= 3.8.x must be used as specified in the requirements
 {% endwarning %}
 
-See the help for parameter definition:
+{% note %}
+Each of the scripts for this tutorial can be found in this directory of the repo: 
+`demos/python/tutorial/tutorial_modules/tutorial_1_connect_ble/`
+{% endnote %}
+
+{% accordion Connect %}
+
+You can test connecting to your camera through BLE using the following script:
+```console
+python ble_connect.py
+```
+
+See the help for parameter definitions:
 
 ```console
 $ python ble_connect.py --help
@@ -139,6 +147,7 @@ optional arguments:
                         Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
                         SSID. If not used, first discovered GoPro will be connected to
 ```
+{% endaccordion %}
 
 ## Asyncio
 

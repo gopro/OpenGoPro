@@ -32,18 +32,50 @@ The scripts that will be used for this tutorial can be found in the
 
 # Just Show me the Demo(s)!!
 
-Each of the commands detailed below has a corresponding script to demo it. If you don't want to read this
-tutorial and just want to see the demo, for example, run:
+If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the [Open GoPro GitHub repo]( https://github.com/gopro/OpenGoPro).
 
+{% warning %}
+Python >= 3.8.x must be used as specified in the requirements
+{% endwarning %}
+
+{% note %}
+Each of the scripts for this tutorial can be found in this directory of the repo: 
+`demos/python/tutorial/tutorial_modules/tutorial_6_send_wifi_commands/`
+{% endnote %}
+
+{% warning %}
+You must be connected to the camera via WiFi in order to run these scripts. You can do this by manually to the SSID and password listed on your camera or by leaving the `Establish Connection to WiFi AP` script from [Tutorial 5]({% link _python-tutorials/tutorial_5_connect_wifi.md %}#just-show-me-the-demos) running in the background.
+{% endwarning %}
+
+{% accordion Get Open GoPro Version %}
+
+You can test querying the Open GoPro version on your camera with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_get_version.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_get_version.py --help
+usage: wifi_command_get_version.py [-h]
+
+Get the camera's supported Open GoPro version.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Digital Zoom %}
+
+You can test setting the digital zoom level on your camera with HTTP over WiFi using the following script:
 ```console
 $ python wifi_command_zoom.py
 ```
 
-{% warning %}
-Python >= 3.8.x must be used as specified in [the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
-{% endwarning %}
-
-Note that each script has a command-line help which can be found via:
+See the help for parameter definitions:
 
 ```console
 $ python wifi_command_zoom.py --help
@@ -55,6 +87,198 @@ optional arguments:
   -h, --help            show this help message and exit
   -z ZOOM, --zoom ZOOM  Zoom percentage (0-100)
 ```
+{% endaccordion %}
+
+
+{% accordion Get State %}
+
+You can test querying the state of your camera with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_get_state.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_get_state.py --help
+usage: wifi_command_get_state.py [-h]
+
+Get the state of the GoPro (status and settings).
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Preview Stream %}
+
+You can test enabling the UDP preview stream with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_preview_stream.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_preview_stream.py --help
+usage: wifi_command_preview_stream.py [-h]
+
+Enable the preview stream.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+
+Once enabled the stream can be viewed at `udp://@:8554` (For more details see the View Stream tab in the [Preview Stream]({% link _python-tutorials/tutorial_6_send_wifi_commands.md %}#preview-stream) section below.
+{% endaccordion %}
+
+
+{% accordion Load Preset Group %}
+
+You can test sending the load preset group command with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_load_group.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_load_group.py --help
+usage: wifi_command_load_group.py [-h]
+
+Load the video preset group.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Load Preset %}
+
+You can test sending the load preset command with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_load_preset.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_load_preset.py --help
+usage: wifi_command_load_preset.py [-h]
+
+Load a preset by ID.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Get Preset Status %}
+
+You can test querying the preset status with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_get_preset_status.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_get_preset_status.py --help
+usage: wifi_command_get_preset_status.py [-h]
+
+Get the current preset status.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Keep Alive %}
+
+You can test sending the Keep Alive command with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_keep_alive.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_keep_alive.py --help
+usage: wifi_command_keep_alive.py [-h]
+
+Send the keep alive signal.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Set Shutter %}
+
+You can test sending the Set Shutter command with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_set_shutter.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_set_shutter.py --help
+usage: wifi_command_set_shutter.py [-h]
+
+Take a 3 second video.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Set Setting %}
+
+You can test setting the resolution setting with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_set_resolution.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_set_resolution.py --help
+usage: wifi_command_set_resolution.py [-h]
+
+Set the video resolution to 1080.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Get Media List %}
+
+You can test the Get Media List command with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_get_media_list.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_get_media_list.py --help
+usage: wifi_command_get_media_list.py [-h]
+
+Get the media list.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
 
 # Setup
 

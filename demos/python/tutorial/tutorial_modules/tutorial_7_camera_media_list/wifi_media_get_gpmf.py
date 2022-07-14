@@ -43,7 +43,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Get the GPMF for a media file and TODO argument for media file."
+        description="Get the GPMF for a media file."
     )
     parser.parse_args()
 

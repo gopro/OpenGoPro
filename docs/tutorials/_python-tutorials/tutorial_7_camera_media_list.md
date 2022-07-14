@@ -32,19 +32,29 @@ The scripts that will be used for this tutorial can be found in the
 
 # Just Show me the Demo(s)!!
 
-Each of the operations detailed below has a corresponding script to demo it. If you don't want
-to read this tutorial and just want to see the demo, for example, run:
+If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the [Open GoPro GitHub repo]( https://github.com/gopro/OpenGoPro).
 
+{% warning %}
+Python >= 3.8.x must be used as specified in the requirements
+{% endwarning %}
+
+{% note %}
+Each of the scripts for this tutorial can be found in this directory of the repo: 
+`demos/python/tutorial/tutorial_modules/tutorial_7_camera_media_list/`
+{% endnote %}
+
+{% warning %}
+You must be connected to the camera via WiFi in order to run these scripts. You can do this by manually to the SSID and password listed on your camera or by leaving the `Establish Connection to WiFi AP` script from [Tutorial 5]({% link _python-tutorials/tutorial_5_connect_wifi.md %}#just-show-me-the-demos) running in the background.
+{% endwarning %}
+
+{% accordion Download Media File %}
+
+You can downloading a file from your camera with HTTP over WiFi using the following script:
 ```console
 $ python wifi_media_download_file.py
 ```
 
-{% warning %}
-Python >= 3.8.x must be used as specified in
-[the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
-{% endwarning %}
-
-Note that each script has a command-line help which can be found via:
+See the help for parameter definitions:
 
 ```console
 $ python wifi_media_download_file.py --help
@@ -55,6 +65,70 @@ Find a photo on the camera and download it to the computer.
 optional arguments:
   -h, --help  show this help message and exit
 ```
+{% endaccordion %}
+
+
+{% accordion Get Media GPMF %}
+
+You can downloading the GPMF for a media file from your camera with HTTP over WiFi using the following script:
+```console
+$ python wifi_media_get_gpmf.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_media_get_gpmf.py --help
+usage: wifi_media_get_gpmf.py [-h]
+
+Get the GPMF for a media file.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Get Media Screennail %}
+
+You can downloading the screennail (higher resolution thumbnail) for a media file from your camera with HTTP over WiFi using the following script:
+```console
+$ python wifi_media_get_screennail.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_media_get_screennail.py --help
+usage: wifi_media_get_screennail.py [-h]
+
+Get the screennail for a media file.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Get Media Thumbnail %}
+
+You can downloading the thumbnail for a media file from your camera with HTTP over WiFi using the following script:
+```console
+$ python wifi_media_get_thumbnail.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_media_get_thumbnail.py --help
+usage: wifi_media_get_thumbnail.py [-h]
+
+Get the thumbnail for a media file.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
 
 # Setup
 

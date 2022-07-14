@@ -29,36 +29,69 @@ The scripts that will be used for this tutorial can be found in the
 
 # Just Show me the Demo(s)!!
 
-There are two relevant scripts that will be discussed here:
-
--   wifi_enable.py
--   wifi_enable_and_connect.py
-
-If you don't want to read this tutorial and just want to see the demo, for example, run:
-
-```console
-$ python wifi_enable_and_connect.py
-```
+If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the [Open GoPro GitHub repo]( https://github.com/gopro/OpenGoPro).
 
 {% warning %}
-Python >= 3.8.x must be used as specified in
-[the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+Python >= 3.8.x must be used as specified in the requirements
 {% endwarning %}
 
-Note that each script has a command-line help which can be found via:
+{% note %}
+Each of the scripts for this tutorial can be found in this directory of the repo: 
+`demos/python/tutorial/tutorial_modules/tutorial_5_connect_wifi/`
+{% endnote %}
+
+{% accordion Enable WiFi AP %}
+
+You can test querying the current Resolution on your camera through BLE using the following script:
+```console
+$ python wifi_enable.py
+```
+
+See the help for parameter definitions:
 
 ```console
-python wifi_enable_and_connect.py --help
-usage: wifi_enable_and_connect.py [-h] [-i IDENTIFIER]
+$ python wifi_enable.py --help
+usage: wifi_enable.py [-h] [-i IDENTIFIER] [-t TIMEOUT]
 
-Connect to a GoPro camera via BLE, get WiFi info, enable WiFi and connect.
+Connect to a GoPro camera via BLE, get WiFi info, and enable WiFi.
 
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
-                        SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+  -t TIMEOUT, --timeout TIMEOUT
+                        time in seconds to maintain connection before disconnecting. If not set, will
+                        maintain connection indefinitely
 ```
+{% endaccordion %}
+
+
+{% accordion Establish Connection to WiFi AP %}
+
+You can test querying the current Resolution on your camera through BLE using the following script:
+```console
+$ python wifi_enable_and_connect.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_enable_and_connect.py --help
+usage: wifi_enable_and_connect.py [-h] [-i IDENTIFIER] [-t TIMEOUT]
+
+Connect to a GoPro camera via BLE, get WiFi info, enable WiFi and connect. Send keyboard interrupt to exit.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+  -t TIMEOUT, --timeout TIMEOUT
+                        time in seconds to maintain connection before disconnecting. If not set, will
+                        maintain connection indefinitely
+```
+{% endaccordion %}
 
 # Setup
 
