@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-07-13T16:09:56-07:00">
+  <meta property="article:published_time" content="2022-07-14T14:48:13-07:00">
 
 
 
@@ -344,7 +344,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Open GoPro Python SDK">
     <meta itemprop="description" content="Open GoPro Python SDK">
-    <meta itemprop="datePublished" content="2022-07-13T16:09:56-07:00">
+    <meta itemprop="datePublished" content="2022-07-14T14:48:13-07:00">
     
 
     <div class="page__inner-wrap">
@@ -400,7 +400,7 @@
         <p><img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"></p>
 
 <p><a href="https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml"><img src="https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Testing?label=Build%20and%20Test" alt="Build and Test"></a>
-<a href="https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_deploy_docs.yml"><img src="https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Docs%20Build%20and%20Deploy?label=Docs" alt="Build Docs"></a>
+<a href="https://github.com/gopro/OpenGoPro/actions/workflows/github-pages.yml"><img src="https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Docs%20Build%20and%20Deploy?label=Docs" alt="Build Docs"></a>
 <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black"></a>
 <a href="https://pypi.org/project/open-gopro/"><img src="https://img.shields.io/pypi/v/open-gopro" alt="PyPI"></a>
 <a href="https://github.com/gopro/OpenGoPro/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License"></a>
@@ -452,7 +452,7 @@ the preview stream.</p>
     <ul>
       <li>Take a photo</li>
       <li>Take a video</li>
-      <li>View the live stream</li>
+      <li>View the live / preview stream</li>
       <li>Log the battery</li>
     </ul>
   </li>
@@ -461,7 +461,7 @@ the preview stream.</p>
 <h2 id="installation">Installation</h2>
 
 <blockquote>
-  <p>Note! This package requires Python &gt;= 3.8</p>
+  <p>Note! This package requires Python &gt;= 3.8 and &lt;=3.10</p>
 </blockquote>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">    $</span><span class="w"> </span>pip <span class="nb">install </span>open-gopro
@@ -510,9 +510,14 @@ and can be run via:</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-video
 </code></pre></div></div>
 
-<p>Start the preview stream and view it with <a href="https://www.videolan.org/">VLC</a>:</p>
+<p>Start the preview stream and view it:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-stream
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-preview-stream
+</code></pre></div></div>
+
+<p>Start the live stream and view it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gopro-live-stream
 </code></pre></div></div>
 
 <p>Connect to the GoPro and log battery consumption in to a .csv:</p>
@@ -555,7 +560,7 @@ optional arguments:
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-07-13T16:09:56-07:00">July 13, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-07-14T14:48:13-07:00">July 14, 2022</time></p>
 
 
       </footer>
