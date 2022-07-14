@@ -3,6 +3,8 @@
 
 """Exceptions that pertain to Gopro-level functionality."""
 
+from typing import Callable
+
 
 class GoProError(Exception):
     """Base class for other GoPro-level exceptions."""
@@ -70,3 +72,7 @@ class ResponseTimeout(GoProError):
 
     def __init__(self, timeout: float) -> None:
         super().__init__(f"Response timeout occurred of {timeout} seconds")
+
+
+ExceptionHandler = Callable[[Exception], None]
+"""Exception handler callback type"""

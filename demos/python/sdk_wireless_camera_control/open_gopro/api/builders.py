@@ -5,10 +5,8 @@
 
 from __future__ import annotations
 import enum
-import types
 import logging
 from pathlib import Path
-from datetime import datetime
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import (
@@ -25,12 +23,17 @@ from typing import (
     Tuple,
     List,
     Set,
+    Final,
 )
 from _collections_abc import Iterable
 
+import pytz
 import wrapt
-import betterproto
-from construct import Int8ub, Int16ub, Struct, Adapter, GreedyBytes
+import google.protobuf.json_format
+from google.protobuf import descriptor
+from google.protobuf.message import Message as Protobuf
+from google.protobuf.json_format import MessageToDict as ProtobufToDict
+from construct import Int8ub, Int16ub, Int16sb, Struct, Adapter, GreedyBytes, Flag
 
 from open_gopro.responses import (
     BytesParser,
@@ -51,14 +54,19 @@ from open_gopro.constants import (
     StatusId,
     ErrorCode,
     GoProUUIDs,
+    enum_factory,
 )
 from open_gopro.communication_client import GoProBle, GoProWifi
-from open_gopro.util import build_log_rx_str, build_log_tx_str, custom_betterproto_to_dict
+from open_gopro.util import build_log_rx_str, build_log_tx_str
+from . import params as Params
 
 logger = logging.getLogger(__name__)
 
 SettingValueType = TypeVar("SettingValueType")
 CommandValueType = TypeVar("CommandValueType")
+
+ProtobufPrinter = google.protobuf.json_format._Printer  # type: ignore # noqa
+original_field_to_json = ProtobufPrinter._FieldToJsonObject
 
 ####################################################### General ##############################################
 
@@ -164,8 +172,8 @@ class DeprecatedAdapter(Adapter):
 class DateTimeAdapter(Adapter):
     """Translate between different date time representations"""
 
-    def _decode(self, obj: Union[List, str], *_: Any) -> datetime:
-        """Translate string or list of bytes into datetime
+    def _decode(self, obj: Union[List, str], *_: Any) -> Params.DstDateTime:
+        """Translate string or list of bytes into potentially dst-aware datetime
 
         Args:
             obj (list): input
@@ -175,24 +183,35 @@ class DateTimeAdapter(Adapter):
             TypeError: Unsupported input type
 
         Returns:
-            datetime: built datetime
+            Params.DstDateTime: built datetime
         """
         if isinstance(obj, str):
             # comes as '%14%01%02%03%09%2F'
             year, *remaining = [int(x, 16) for x in obj.split("%")[1:]]
-            return datetime(year + 2000, *remaining)  # type: ignore
+            return Params.DstDateTime(year + 2000, *remaining)
         if isinstance(obj, list):
             # When received from BLE, it includes garbage first byte
-            obj = obj[-7:]
+            obj.pop(0)
             year = Int16ub.parse(bytes(obj[0:2]))
-            return datetime(year, *[int(x) for x in obj[2:]])  # type: ignore
+
+            # Has no tz / dst
+            if self.subcon.count == 8:  # type: ignore
+                return Params.DstDateTime(year, *[int(x) for x in obj[2:7]])
+            # Has tz / dst
+            return Params.DstDateTime(
+                year,
+                *[int(x) for x in obj[2:7]],
+                tzinfo=pytz.FixedOffset(Int16sb.parse(bytes(obj[7:9]))),
+                is_dst=bool(obj[9]),
+            )
+
         raise TypeError("Type must be in (str, list)")
 
-    def _encode(self, obj: Union[datetime, str], *_: Any) -> Union[bytes, str]:
-        """Translate datetime into bytes or pass through string
+    def _encode(self, obj: Union[Params.DstDateTime, str], *_: Any) -> Union[bytes, str]:
+        """Translate potentially dst-aware datetime into bytes or pass through string
 
         Args:
-            obj (Union[datetime, str]): Input
+            obj (Union[Params.DstDateTime, str]): Input
             _ (Any): Not used
 
         Raises:
@@ -201,12 +220,18 @@ class DateTimeAdapter(Adapter):
         Returns:
             Union[bytes, str]: built bytes
         """
-        if isinstance(obj, datetime):
+        if isinstance(obj, Params.DstDateTime):  # TODO abstract offset minutes away from main interface
             year = [int(x) for x in Int16ub.build(obj.year)]
-            return bytes([*year, obj.month, obj.day, obj.hour, obj.minute, obj.second])
+            offset = Int16sb.build(obj.tzinfo._minutes if isinstance(obj.tzinfo, pytz._FixedOffset) else 0)  # type: ignore
+            dst = Flag.build(obj.is_dst)
+            byte_data = [*year, obj.month, obj.day, obj.hour, obj.minute, obj.second]
+            # Include dst and timezone
+            if self.subcon.count == 10:  # type: ignore
+                byte_data.extend([*offset, *dst])
+            return bytes(byte_data)
         if isinstance(obj, str):
             return obj
-        raise TypeError("Type must be in (datetime, str)")
+        raise TypeError("Type must be in (Params.DstDateTime, str)")
 
 
 # Ignoring because hitting this mypy bug: https://github.com/python/mypy/issues/5374
@@ -223,12 +248,16 @@ class BleCommand(ABC):
     uuid: BleUUID
 
     def __post_init__(self) -> None:
-        self._communicator._add_parser(self._identifier, self._response_parser)
+        self._communicator._add_parser(self._parser_id, self._response_parser)
 
     @property
     @abstractmethod
-    def _identifier(self) -> ResponseType:
-        """The most accurate identifier for this command."""
+    def _parser_id(self) -> ResponseType:
+        """What is the identifier of the expected response for this command?
+
+        Returns:
+            ResponseType: resposne identifier
+        """
         raise NotImplementedError
 
     @property
@@ -251,7 +280,7 @@ class BleReadCommand(BleCommand):
     response_parser: BytesParser
 
     @property
-    def _identifier(self) -> ResponseType:
+    def _parser_id(self) -> ResponseType:
         return self.uuid
 
     @property
@@ -281,7 +310,7 @@ class BleWriteNoParamsCommand(BleCommand):
     response_parser: Optional[BytesParser] = None
 
     @property
-    def _identifier(self) -> ResponseType:
+    def _parser_id(self) -> ResponseType:
         return self.cmd
 
     @property
@@ -292,9 +321,10 @@ class BleWriteNoParamsCommand(BleCommand):
         logger.info(build_log_tx_str(self.cmd.name))
         # Build data buffer
         data = bytearray([self.cmd.value])
-        data.insert(0, len(data))
         # Send the data and receive the response
-        response = self._communicator._write_characteristic_receive_notification(self.uuid, data)
+        response = self._communicator._write_characteristic_receive_notification(
+            self.uuid, data, self._parser_id
+        )
         logger.info(build_log_rx_str(response))
         return response
 
@@ -316,7 +346,7 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
     response_parser: Optional[BytesParser] = None
 
     @property
-    def _identifier(self) -> ResponseType:
+    def _parser_id(self) -> ResponseType:
         return self.cmd
 
     @property
@@ -324,7 +354,7 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
         return status_struct if self.response_parser is None else status_struct + self.response_parser
 
     def __call__(self, value: CommandValueType) -> GoProResp:  # noqa: D102
-        logger.info(build_log_tx_str(f"{self.cmd.name}: {str(value)}"))
+        logger.info(build_log_tx_str(f'{self.cmd.name} : "{str(value)}"'))
         # Build data buffer
         data = bytearray([self.cmd.value])
         # Mypy is not understanding the subclass check here
@@ -332,9 +362,10 @@ class BleWriteWithParamsCommand(BleCommand, Generic[CommandValueType]):
         # There must be a param builder if we have a param
         param = self.param_builder.build(param)
         data.extend([len(param), *param])
-        data.insert(0, len(data))
         # Send the data and receive the response
-        response = self._communicator._write_characteristic_receive_notification(self.uuid, data)
+        response = self._communicator._write_characteristic_receive_notification(
+            self.uuid, data, self._parser_id
+        )
         logger.info(build_log_rx_str(response))
         return response
 
@@ -388,11 +419,11 @@ class RegisterUnregisterAll(BleWriteNoParamsCommand):
         return response
 
 
-def build_protobuf_adapter(protobuf: Type[betterproto.Message]) -> Adapter:
+def protobuf_construct_adapter_factory(protobuf: Type[Protobuf]) -> Adapter:
     """Build a protobuf to Construct parsing (only) adapter
 
     Args:
-        protobuf (Type[betterproto.Message]): protobuf to use as parser
+        protobuf (Type[Protobuf]): protobuf to use as parser
 
     Returns:
         Adapter: adapter to be used by Construct
@@ -401,7 +432,7 @@ def build_protobuf_adapter(protobuf: Type[betterproto.Message]) -> Adapter:
     class ProtobufConstructAdapter(Adapter):
         """Adapt a protobuf to be used by Construct (for parsing only)"""
 
-        protobuf: Type[betterproto.Message]  # TODO use instance instead of class
+        protobuf: Type[Protobuf]
 
         def _decode(self, obj: bytearray, *_: Any) -> Dict[Any, Any]:
             """Parse a byte stream into a JSON dict using a protobuf
@@ -413,9 +444,15 @@ def build_protobuf_adapter(protobuf: Type[betterproto.Message]) -> Adapter:
             Returns:
                 Dict[Any, Any]: parsed JSON dict
             """
-            response: betterproto.Message = self.protobuf().FromString(bytes(obj))
-            response.to_dict = types.MethodType(custom_betterproto_to_dict, response)  # type: ignore
-            return response.to_dict()  # type: ignore
+            response: Protobuf = self.protobuf().FromString(bytes(obj))
+
+            # Monkey patch the field-to-json function to use our enum translation
+            ProtobufPrinter._FieldToJsonObject = (
+                lambda self, field, value: enum_factory(field.enum_type)(value)
+                if field.cpp_type == descriptor.FieldDescriptor.CPPTYPE_ENUM
+                else original_field_to_json(self, field, value)
+            )
+            return ProtobufToDict(response)
 
         def _encode(self, *_: Any) -> Any:
             raise NotImplementedError
@@ -434,62 +471,60 @@ class BleProtoCommand(BleCommand):
         uuid (BleUUID): BleUUID to write to
         feature_id (CmdId): Command ID that is being sent
         action_id (FeatureId): protobuf specific action ID that is being sent
-        request_proto (Type[betterproto.Message]): protobuf used to build command bytestream
-        response_proto (Type[betterproto.Message]): protobuf used to parse received bytestream
-        additional_matching_action_ids: (Optional[Set[ActionId]]): Other action ID's to share
-            this parser. Defaults to None.
+        response_action_id (ActionId):  the action ID that will be in the response
+        request_proto (Type[Protobuf]): protobuf used to build command bytestream
+        response_proto (Type[Protobuf]): protobuf used to parse received bytestream
+        additional_matching_ids: (Optional[Set[ActionId]]): Other action ID's to share
+            this parser. This is used, for example, if a notification shares the same ID as the
+            synchronous resposne. Defaults to None.
     """
 
     feature_id: FeatureId
     action_id: ActionId
-    request_proto: Type[betterproto.Message]
-    response_proto: Type[betterproto.Message]
-    additional_matching_action_ids: Optional[Set[ActionId]] = None
+    response_action_id: ActionId
+    request_proto: Type[Protobuf]
+    response_proto: Type[Protobuf]
+    additional_matching_ids: Optional[Set[Union[ActionId, CmdId]]] = None
 
     def __post_init__(self) -> None:
         super().__post_init__()
-        if self.additional_matching_action_ids:
-            for action_id in self.additional_matching_action_ids:
+        if self.additional_matching_ids:
+            for action_id in self.additional_matching_ids:
                 self._communicator._add_parser(action_id, self._response_parser)
 
     @property
-    def _identifier(self) -> ResponseType:
-        return self.action_id
+    def _parser_id(self) -> ResponseType:
+        return self.response_action_id
 
     @property
     def _response_parser(self) -> BytesParser:
-        return build_protobuf_adapter(self.response_proto)
+        return protobuf_construct_adapter_factory(self.response_proto)
 
     @abstractmethod
     @no_type_check
-    def __call__(self, *args: Any, **kwargs: Any) -> GoProResp:  # noqa: D102
+    # pylint: disable=missing-return-doc
+    def __call__(self, /, **kwargs) -> GoProResp:  # noqa: D102
         # The method that will actually build and send the protobuf command
         logger.info(
             build_log_tx_str(
-                f"{self.action_id.name} : {' '.join([*[str(a) for a in args], *[str(a) for a in kwargs.values()]])}"
+                self.action_id.name
+                + ":\n\t\t"
+                + "\n\t\t".join([f'"{attr}" : "{str(arg)}"' for attr, arg in kwargs.items()])
             )
         )
 
         # Build request protobuf bytestream
         proto = self.request_proto()
-        # Add args to protobuf request
-        attrs = iter(self.__call__.__annotations__.keys())
-        for arg in args:
-            param = arg.value if issubclass(type(arg), enum.Enum) else arg
-            setattr(proto, next(attrs), param)
-        # Add kwargs to protobuf request
-        for name, arg in kwargs.items():
-            if arg is not None:
-                param = arg.value if issubclass(type(arg), enum.Enum) else arg
-                setattr(proto, name, param)
-
+        # Add args and kwargs to protobuf request
+        for attr, arg in kwargs.items():
+            setattr(proto, attr, arg.value if issubclass(type(arg), enum.Enum) else arg)
         # Prepend headers and serialize
         request = bytearray([self.feature_id.value, self.action_id.value, *proto.SerializeToString()])
-        # Prepend length
-        request.insert(0, len(request))
 
         # Allow exception to pass through if protobuf not completely initialized
-        response = self._communicator._write_characteristic_receive_notification(self.uuid, request)
+        response = self._communicator._write_characteristic_receive_notification(
+            self.uuid, request, self._parser_id
+        )
         logger.info(build_log_rx_str(response))
         return response
 
@@ -509,8 +544,8 @@ class BleSetting(Generic[SettingValueType]):
         """
         self.identifier = identifier
         self._communicator: GoProBle = communicator
-        self.setter_uuid: BleUUID = GoProUUIDs.CQ_SETTINGS
-        self.reader_uuid: BleUUID = GoProUUIDs.CQ_QUERY
+        self.setter_uuid: Final[BleUUID] = GoProUUIDs.CQ_SETTINGS
+        self.reader_uuid: Final[BleUUID] = GoProUUIDs.CQ_QUERY
         self.parser: BytesParser = parser_builder
         self.builder: BytesBuilder = parser_builder  # Just syntactic sugar
         communicator._add_parser(self.identifier, self.parser)
@@ -527,7 +562,7 @@ class BleSetting(Generic[SettingValueType]):
         Returns:
             GoProResp: Status of set
         """
-        logger.info(build_log_tx_str(f"Set {self.identifier.name}: {str(value)}"))
+        logger.info(build_log_tx_str(f'Set {self.identifier.name} : "{str(value)}"'))
 
         data = bytearray([self.identifier.value])
         try:
@@ -535,8 +570,9 @@ class BleSetting(Generic[SettingValueType]):
             data.extend([len(param), *param])
         except IndexError:
             pass
-        data.insert(0, len(data))
-        response = self._communicator._write_characteristic_receive_notification(self.setter_uuid, data)
+        response = self._communicator._write_characteristic_receive_notification(
+            self.setter_uuid, data, self.identifier
+        )
 
         logger.info(build_log_rx_str(response))
         return response
@@ -549,7 +585,7 @@ class BleSetting(Generic[SettingValueType]):
             GoProResp: settings value
         """
         return self._communicator._write_characteristic_receive_notification(
-            self.reader_uuid, self._build_cmd(QueryCmdId.GET_SETTING_VAL)
+            self.reader_uuid, self._build_cmd(QueryCmdId.GET_SETTING_VAL), QueryCmdId.GET_SETTING_VAL
         )
 
     @log_query
@@ -572,7 +608,7 @@ class BleSetting(Generic[SettingValueType]):
             GoProResp: settings capabilities values
         """
         return self._communicator._write_characteristic_receive_notification(
-            self.reader_uuid, self._build_cmd(QueryCmdId.GET_CAPABILITIES_VAL)
+            self.reader_uuid, self._build_cmd(QueryCmdId.GET_CAPABILITIES_VAL), QueryCmdId.GET_CAPABILITIES_VAL
         )
 
     @log_query
@@ -582,11 +618,6 @@ class BleSetting(Generic[SettingValueType]):
         Raises:
             NotImplementedError: This isn't implemented on the camera
         """
-        # return self._communicator._write_characteristic_receive_notification(
-        #     self.reader_uuid,
-        #     QueryCmdId.GET_CAPABILITIES_NAME,
-        #     self._build_cmd(QueryCmdId.GET_CAPABILITIES_NAME),
-        # )
         raise NotImplementedError("Not implemented on camera!")
 
     @log_query
@@ -598,7 +629,9 @@ class BleSetting(Generic[SettingValueType]):
         """
         self._communicator._register_listener((QueryCmdId.SETTING_VAL_PUSH, self.identifier))
         return self._communicator._write_characteristic_receive_notification(
-            self.reader_uuid, self._build_cmd(QueryCmdId.REG_SETTING_VAL_UPDATE)
+            self.reader_uuid,
+            self._build_cmd(QueryCmdId.REG_SETTING_VAL_UPDATE),
+            QueryCmdId.REG_SETTING_VAL_UPDATE,
         )
 
     @log_query
@@ -610,7 +643,9 @@ class BleSetting(Generic[SettingValueType]):
         """
         self._communicator._unregister_listener((QueryCmdId.SETTING_VAL_PUSH, self.identifier))
         return self._communicator._write_characteristic_receive_notification(
-            self.reader_uuid, self._build_cmd(QueryCmdId.UNREG_SETTING_VAL_UPDATE)
+            self.reader_uuid,
+            self._build_cmd(QueryCmdId.UNREG_SETTING_VAL_UPDATE),
+            QueryCmdId.UNREG_SETTING_VAL_UPDATE,
         )
 
     @log_query
@@ -622,7 +657,9 @@ class BleSetting(Generic[SettingValueType]):
         """
         self._communicator._register_listener((QueryCmdId.SETTING_CAPABILITY_PUSH, self.identifier))
         return self._communicator._write_characteristic_receive_notification(
-            self.reader_uuid, self._build_cmd(QueryCmdId.REG_CAPABILITIES_UPDATE)
+            self.reader_uuid,
+            self._build_cmd(QueryCmdId.REG_CAPABILITIES_UPDATE),
+            QueryCmdId.REG_CAPABILITIES_UPDATE,
         )
 
     @log_query
@@ -634,7 +671,9 @@ class BleSetting(Generic[SettingValueType]):
         """
         self._communicator._unregister_listener((QueryCmdId.SETTING_CAPABILITY_PUSH, self.identifier))
         return self._communicator._write_characteristic_receive_notification(
-            self.reader_uuid, self._build_cmd(QueryCmdId.UNREG_CAPABILITIES_UPDATE)
+            self.reader_uuid,
+            self._build_cmd(QueryCmdId.UNREG_CAPABILITIES_UPDATE),
+            QueryCmdId.UNREG_CAPABILITIES_UPDATE,
         )
 
     def _build_cmd(self, cmd: QueryCmdId) -> bytearray:
@@ -647,14 +686,13 @@ class BleSetting(Generic[SettingValueType]):
             bytearray: data to send over-the-air
         """
         ret = bytearray([cmd.value, self.identifier.value])
-        ret.insert(0, len(ret))
         return ret
 
 
 class BleStatus:
     """An individual camera status that is interacted with via BLE."""
 
-    uuid: BleUUID = GoProUUIDs.CQ_QUERY
+    uuid: Final[BleUUID] = GoProUUIDs.CQ_QUERY
 
     def __init__(self, communicator: GoProBle, identifier: StatusId, parser: BytesParser) -> None:
         """Constructor
@@ -680,7 +718,7 @@ class BleStatus:
             GoProResp: current status value
         """
         return self._communicator._write_characteristic_receive_notification(
-            BleStatus.uuid, self._build_cmd(QueryCmdId.GET_STATUS_VAL)
+            BleStatus.uuid, self._build_cmd(QueryCmdId.GET_STATUS_VAL), QueryCmdId.GET_STATUS_VAL
         )
 
     @log_query
@@ -692,7 +730,9 @@ class BleStatus:
         """
         if (
             response := self._communicator._write_characteristic_receive_notification(
-                BleStatus.uuid, self._build_cmd(QueryCmdId.REG_STATUS_VAL_UPDATE)
+                BleStatus.uuid,
+                self._build_cmd(QueryCmdId.REG_STATUS_VAL_UPDATE),
+                QueryCmdId.REG_STATUS_VAL_UPDATE,
             )
         ).is_ok:
             self._communicator._register_listener((QueryCmdId.STATUS_VAL_PUSH, self.identifier))
@@ -707,7 +747,9 @@ class BleStatus:
         """
         if (
             response := self._communicator._write_characteristic_receive_notification(
-                BleStatus.uuid, self._build_cmd(QueryCmdId.UNREG_STATUS_VAL_UPDATE)
+                BleStatus.uuid,
+                self._build_cmd(QueryCmdId.UNREG_STATUS_VAL_UPDATE),
+                QueryCmdId.UNREG_STATUS_VAL_UPDATE,
             )
         ).is_ok:
             self._communicator._unregister_listener((QueryCmdId.STATUS_VAL_PUSH, self.identifier))
@@ -723,7 +765,6 @@ class BleStatus:
             bytearray: data to send over-the-air
         """
         ret = bytearray([cmd.value, self.identifier.value])
-        ret.insert(0, len(ret))
         return ret
 
 
@@ -815,8 +856,7 @@ class WifiGetBinary(ABC):
     endpoint: str
 
     @abstractmethod
-    @no_type_check
-    def __call__(self, /, **kwargs) -> Path:  # noqa: D102
+    def __call__(self, /, **kwargs: Any) -> Path:  # noqa: D102
         # The method that will actually send the command and receive the stream
         camera_file = kwargs["camera_file"]
         local_file = Path(kwargs["local_file"]) if "local_file" in kwargs else Path(".") / camera_file

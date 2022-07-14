@@ -1,5 +1,5 @@
 /* preset_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue Mar 29 21:48:50 UTC 2022 */
+/* This copyright was auto-generated on Thu Jul 14 19:12:49 UTC 2022 */
 
 /*
 Defines the structure of protobuf message received from camera containing preset status
@@ -41,6 +41,7 @@ message Preset {
     optional EnumPresetIcon icon = 6;
     repeated PresetSetting setting_array = 7;
     optional bool is_modified = 8;
+    optional bool is_fixed = 9;
 }
 
 
@@ -57,6 +58,7 @@ enum EnumFlatMode {
     FLAT_MODE_PHOTO_BURST = 19;
     FLAT_MODE_TIME_LAPSE_PHOTO = 20;
     FLAT_MODE_NIGHT_LAPSE_PHOTO = 21;
+    FLAT_MODE_BROADCAST_RECORD = 22;
     FLAT_MODE_BROADCAST_BROADCAST = 23;
     FLAT_MODE_TIME_WARP_VIDEO = 24;
     FLAT_MODE_LIVE_BURST = 25;
@@ -118,8 +120,16 @@ enum EnumPresetTitle {
     PRESET_TITLE_STATIONARY_1 = 64;
     PRESET_TITLE_STATIONARY_2 = 65;
     PRESET_TITLE_STATIONARY_3 = 66;
-    PRESET_TITLE_STATIONARY_4 = 67 ;
-    PRESET_TITLE_MAX = 68;
+    PRESET_TITLE_STATIONARY_4 = 67;
+    PRESET_TITLE_SIMPLE_VIDEO = 68;
+    PRESET_TITLE_SIMPLE_TIME_WARP = 69;
+    PRESET_TITLE_SIMPLE_SUPER_PHOTO = 70;
+    PRESET_TITLE_SIMPLE_NIGHT_PHOTO = 71;
+    PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE = 72;
+    PRESET_TITLE_EASY_MAXIMUM    = 73;
+    PRESET_TITLE_EASY_STANDARD   = 74;
+    PRESET_TITLE_EASY_BASIC      = 75;
+    PRESET_TITLE_MAX = 79;
 }
 
 
@@ -159,7 +169,6 @@ enum EnumPresetIcon {
     PRESET_ICON_WATER = 32;
     PRESET_ICON_LOOPING = 33;
     /* Reserved 34 - 50 for Custom presets */
-    /* Add icons below for new presets starting from 51 */
     PRESET_ICON_MAX_VIDEO = 55;
     PRESET_ICON_MAX_PHOTO = 56;
     PRESET_ICON_MAX_TIMEWARP = 57;

@@ -19,39 +19,13 @@ from open_gopro.ble import (
     BleUUID,
 )
 from open_gopro.wifi import WifiClient, WifiController
-from open_gopro.responses import GoProResp, ParserMapType, Parser
+from open_gopro.responses import GoProResp, GoProDataHandler
 from open_gopro.constants import GoProUUIDs, ProducerType, ResponseType
 
 logger = logging.getLogger(__name__)
 
 
-class GoProResponder:
-    """Interface implementation for accumulating response GoPro response parsers"""
-
-    def __init__(self) -> None:
-        # Will be filled out by Command, Setting, Status class's when instantiated
-        self._response_parsers: ParserMapType = {}
-
-    @property
-    def _parser_map(self) -> ParserMapType:
-        """Return the map of parsers
-
-        Returns:
-            ParserMapType: map of parsers
-        """
-        return self._response_parsers
-
-    def _add_parser(self, identifier: ResponseType, parser: Parser) -> None:
-        """Add a parser to the parser map
-
-        Args:
-            identifier (ResponseType): identifier of parser
-            parser (Parser): parser to add
-        """
-        self._response_parsers[identifier] = parser
-
-
-class GoProWifi(ABC, GoProResponder):
+class GoProWifi(ABC, GoProDataHandler):
     """GoPro specific WiFi Client
 
     Args:
@@ -59,7 +33,7 @@ class GoProWifi(ABC, GoProResponder):
     """
 
     def __init__(self, controller: WifiController):
-        GoProResponder.__init__(self)
+        GoProDataHandler.__init__(self)
         self._wifi: WifiClient = WifiClient(controller)
 
     @abstractmethod
@@ -103,8 +77,15 @@ class GoProWifi(ABC, GoProResponder):
         return self._wifi.ssid
 
 
-class GoProBle(ABC, GoProResponder, Generic[BleHandle, BleDevice]):
-    """GoPro specific BLE Client"""
+class GoProBle(ABC, GoProDataHandler, Generic[BleHandle, BleDevice]):
+    """GoPro specific BLE Client
+
+    Args:
+        controller (BLEController): controller implementation to use for this client
+        disconnected_cb (DisconnectHandlerType): disconnected callback
+        notification_cb (NotiHandlerType): notification callback
+        target (Union[Pattern, BleDevice]): regex or device to connect to
+    """
 
     def __init__(
         self,
@@ -113,15 +94,7 @@ class GoProBle(ABC, GoProResponder, Generic[BleHandle, BleDevice]):
         notification_cb: NotiHandlerType,
         target: Union[Pattern, BleDevice],
     ) -> None:
-        """Constructor
-
-        Args:
-            controller (BLEController): controller implementation to use for this client
-            disconnected_cb (DisconnectHandlerType): disconnected callback
-            notification_cb (NotiHandlerType): notification callback
-            target (Union[Pattern, BleDevice]): regex or device to connect to
-        """
-        GoProResponder.__init__(self)
+        GoProDataHandler.__init__(self)
         self._ble: BleClient = BleClient(
             controller,
             disconnected_cb,
@@ -149,11 +122,11 @@ class GoProBle(ABC, GoProResponder, Generic[BleHandle, BleDevice]):
         raise NotImplementedError
 
     @abstractmethod
-    def get_update(self, timeout: Optional[float] = None) -> GoProResp:
+    def get_notification(self, timeout: Optional[float] = None) -> GoProResp:
         """Get a notification that was received from a registered producer.
 
         Args:
-            timeout (float, optional): Time to wait for a notification before returning. Defaults to None (wait forever)
+            timeout (float, Optional): Time to wait for a notification before returning. Defaults to None (wait forever)
 
         Returns:
             GoProResp: the received update
@@ -161,15 +134,15 @@ class GoProBle(ABC, GoProResponder, Generic[BleHandle, BleDevice]):
         raise NotImplementedError
 
     @abstractmethod
-    def _write_characteristic_receive_notification(self, uuid: BleUUID, data: bytearray) -> GoProResp:
+    def _write_characteristic_receive_notification(
+        self, uuid: BleUUID, data: bytearray, response_id: ResponseType
+    ) -> GoProResp:
         """Write a characteristic and block until its corresponding notification response is received.
 
         Args:
             uuid (BleUUID): _description_
             data (bytearray): _description_
-
-        Raises:
-            NotImplementedError: _description_
+            response_id (ResponseType): identifier of expected response. used to find correct parser
 
         Returns:
             GoProResp: _description_
@@ -182,9 +155,6 @@ class GoProBle(ABC, GoProResponder, Generic[BleHandle, BleDevice]):
 
         Args:
             uuid (BleUUID): _description_
-
-        Raises:
-            NotImplementedError: _description_
 
         Returns:
             GoProResp: _description_

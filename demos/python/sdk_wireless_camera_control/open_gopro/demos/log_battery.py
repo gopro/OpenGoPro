@@ -74,7 +74,7 @@ def process_battery_notifications(gopro: GoPro, initial_bars: BarsType, initial_
 
     while True:
         # Block until we receive an update
-        notification = gopro.get_update()
+        notification = gopro.get_notification()
         # Update data points if they have changed
         last_percentage = (
             notification.data[StatusId.INT_BATT_PER]
@@ -154,7 +154,6 @@ def parse_arguments() -> argparse.Namespace:
     return add_cli_args_and_parse(parser, wifi=False)
 
 
-# Needed for poetry scripts defined in pyproject.toml
 def entrypoint() -> None:
     main(parse_arguments())
 

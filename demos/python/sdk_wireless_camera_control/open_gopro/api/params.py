@@ -1,17 +1,73 @@
 # params.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Tue Sep  7 21:35:52 UTC 2021
 
-# pylint: disable=missing-class-docstring
+# pylint: disable=missing-class-docstring, no-member
 
-"""Parameter definitions for GoPro BLE and WiFi commands for Open GoPro version 2.0
+"""Parameter definitions for GoPro BLE and WiFi commands for Open GoPro version 2.0"""
 
-Note these have to be IntEnum's in order to be correctly built when sending commands
-"""
+from __future__ import annotations
+from datetime import datetime
+from typing import no_type_check
 
 from open_gopro.constants import GoProEnum
 
-from open_gopro.proto.request_get_preset_status_pb import EnumRegisterPresetStatus
-from open_gopro.proto.set_camera_control_status_pb import EnumCameraControlStatus
+# Import required parameters from protobuf
+import open_gopro.proto.live_streaming_pb2
+import open_gopro.proto.network_management_pb2
+import open_gopro.proto.request_get_preset_status_pb2
+import open_gopro.proto.set_camera_control_status_pb2
+
+
+class LensType(GoProEnum):
+    WIDE = open_gopro.proto.live_streaming_pb2.EnumLens.LENS_WIDE
+    LINEAR = open_gopro.proto.live_streaming_pb2.EnumLens.LENS_LINEAR
+    SUPERVIEW = open_gopro.proto.live_streaming_pb2.EnumLens.LENS_SUPERVIEW
+
+
+class WindowSize(GoProEnum):
+    SIZE_480 = open_gopro.proto.live_streaming_pb2.EnumWindowSize.WINDOW_SIZE_480
+    SIZE_720 = open_gopro.proto.live_streaming_pb2.EnumWindowSize.WINDOW_SIZE_720
+    SIZE_1080 = open_gopro.proto.live_streaming_pb2.EnumWindowSize.WINDOW_SIZE_1080
+
+
+class ProvisioningState(GoProEnum):
+    UNKNOWN = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_UNKNOWN
+    NEVER_STARTED = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_NEVER_STARTED
+    STARTED = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_STARTED
+    ABORTED_BY_SYSTEM = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_ABORTED_BY_SYSTEM
+    CANCELLED_BY_USER = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_CANCELLED_BY_USER
+    SUCCESS_NEW_AP = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_SUCCESS_NEW_AP
+    SUCCESS_OLD_AP = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_SUCCESS_OLD_AP
+    ERROR_FAILED_TO_ASSOCIATE = (
+        open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_ERROR_FAILED_TO_ASSOCIATE
+    )
+    ERROR_PASSWORD_AUTH = (
+        open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_ERROR_PASSWORD_AUTH
+    )
+    ERROR_EULA_BLOCKING = (
+        open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_ERROR_EULA_BLOCKING
+    )
+    ERROR_NO_INTERNET = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_ERROR_NO_INTERNET
+    ERROR_UNSUPPORTED_TYPE = (
+        open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_ERROR_UNSUPPORTED_TYPE
+    )
+
+
+class RegisterPreset(GoProEnum):
+    PRESET = (
+        open_gopro.proto.request_get_preset_status_pb2.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET
+    )
+    PRESET_GROUP_ARRAY = (
+        open_gopro.proto.request_get_preset_status_pb2.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY
+    )
+
+
+class CameraControlStatus(GoProEnum):
+    IDLE = open_gopro.proto.set_camera_control_status_pb2.EnumCameraControlStatus.CAMERA_IDLE
+    CONTROL = open_gopro.proto.set_camera_control_status_pb2.EnumCameraControlStatus.CAMERA_CONTROL
+    EXTERNAL_CONTROL = (
+        open_gopro.proto.set_camera_control_status_pb2.EnumCameraControlStatus.CAMERA_EXTERNAL_CONTROL
+    )
 
 
 class Shutter(GoProEnum):
@@ -285,6 +341,30 @@ class AntiFlicker(GoProEnum):
     HZ_50 = 3
 
 
-# Abstractions from protobuf definitions
-RegisterPresetStatus = EnumRegisterPresetStatus
-CameraControlStatus = EnumCameraControlStatus
+class DstDateTime(datetime):
+    """A daylight-savings-time aware subclass of datetime"""
+
+    @no_type_check
+    def __new__(cls, *args, **kwargs) -> DstDateTime:  # noqa
+        is_dst = kwargs.pop("is_dst", False)
+        dt = datetime.__new__(cls, *args, **kwargs)
+        dt._is_dst = is_dst
+        return dt
+
+    @property
+    def is_dst(self) -> bool:
+        """Is DST enabled?
+
+        Returns:
+            bool: True if yes, False otherwise
+        """
+        return self._is_dst
+
+    @is_dst.setter
+    def is_dst(self, dst: bool) -> None:
+        """Set DST enabled (or not)
+
+        Args:
+            dst (bool): Is DST enabled?
+        """
+        self._is_dst = dst

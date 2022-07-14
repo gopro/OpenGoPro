@@ -21,17 +21,13 @@ def main(args: argparse.Namespace) -> None:
     global logger
     logger = setup_logging(logger, args.log)
 
-    def exception_cb(exception: Exception) -> None:
+    # TODO show how to use this
+    def exception_cb(exception: Exception) -> None:  # pylint: disable=unused-variable
         logger.error(f"IN MAIN ==> {exception}")
 
     gopro: Optional[GoPro] = None
     try:
-        with GoPro(
-            args.identifier,
-            wifi_interface=args.wifi_interface,
-            sudo_password=args.password,
-            exception_cb=exception_cb,
-        ) as gopro:
+        with GoPro(args.identifier, wifi_interface=args.wifi_interface) as gopro:
             # Configure settings to prepare for photo
             if gopro.is_encoding:
                 gopro.ble_command.set_shutter(Params.Shutter.OFF)

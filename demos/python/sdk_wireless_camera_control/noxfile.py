@@ -9,7 +9,7 @@ from typing import Any
 import nox
 from nox_poetry import session
 
-nox.options.sessions = "format", "lint", "tests", "docstrings", "docs", "safety"
+nox.options.sessions = "format", "lint", "tests", "docstrings", "docs"
 
 
 @session(python=["3.9"])
@@ -21,13 +21,15 @@ def format(session) -> None:
 
 @session(python=["3.8", "3.9", "3.10"])
 def lint(session) -> None:
-    """Lint using flake8."""
+    """Lint using pylint and check types with mypy."""
     session.install(".")
     session.install(
         "pylint",
         "mypy",
         "types-requests",
         "construct-typing",
+        "mypy-protobuf",
+        "types-pytz",
     )
     session.run("mypy", "open_gopro")
     session.run("pylint", "--no-docstring-rgx=__|main|parse_arguments|entrypoint", "open_gopro")
@@ -72,16 +74,4 @@ def docs(session) -> None:
     # Clean up for Jekyll consumption
     session.run(
         "rm", "-rf", "docs/build/.doctrees", "/docs/build/_sources", "/docs/build/_static/fonts", external=True
-    )
-
-
-@session(python=["3.8", "3.9", "3.10"])
-def safety(session) -> None:
-    """Scan dependencies for insecure packages."""
-    session.install("safety")
-    session.run(
-        "safety",
-        "check",
-        f"--file={Path(session.virtualenv.location) / 'tmp' / 'requirements.txt'}",
-        "--full-report",
     )

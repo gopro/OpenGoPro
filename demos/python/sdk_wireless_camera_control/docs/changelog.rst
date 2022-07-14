@@ -12,6 +12,10 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 Unreleased
 ----------
 * Add sudo password argument to Wifi Controller and expose through CLI demos via stdin
+* Add more protobuf commands and missing protobuf ID parsing functionality
+* Add livestream demo GUI
+* Change preview stream demo to be a GUI
+* Add support for fragmenting long data packets when sending BLE data
 
 0.9.2 (June-16-2022)
 -----------------------

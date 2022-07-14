@@ -7,19 +7,14 @@ from __future__ import annotations
 import sys
 import enum
 import json
-import types
 import queue
 import logging
 import argparse
 import subprocess
-import dataclasses
 from pathlib import Path
-from base64 import b64encode
 import http.client as http_client
-from datetime import timedelta, datetime
-from typing import Dict, Type, Any, List, Optional, Union
+from typing import Dict, Type, Any, List, Optional, Union, Final, Tuple
 
-import betterproto
 from rich.logging import RichHandler
 from rich import traceback
 
@@ -68,7 +63,10 @@ def addLoggingLevel(levelName: str, levelNum: int) -> None:
 
 
 def setup_logging(
-    logger: Any, output: Optional[Path] = None, modules: Dict[str, int] = None
+    logger: Any,
+    output: Optional[Path] = None,
+    modules: Optional[Dict[str, int]] = None,
+    handlers: Optional[Tuple[logging.Handler]] = None,
 ) -> logging.Logger:
     """Configure open gopro modules for logging
 
@@ -76,9 +74,10 @@ def setup_logging(
 
     Args:
         logger (Any): input logger that will be modified and then returned
-        output (Path, optional): Path of log file for file stream handler. If not set, will not log to file.
-        modules (Dict[str, int], optional): Optional override of modules / levels. Will be merged into default
+        output (Path, Optional): Path of log file for file stream handler. If not set, will not log to file.
+        modules (Dict[str, int], Optional): Optional override of modules / levels. Will be merged into default
             modules.
+        handlers (Tuple[logging.Handler], Optional): additional logging handlers to append to standard handlers
 
     Returns:
         Any: updated logger that the application can use for logging
@@ -129,6 +128,11 @@ def setup_logging(
     logger.addHandler(sh)
     logger.setLevel(logging.TRACE)  # type: ignore # pylint: disable=no-member
 
+    # Add any additioinal logger
+    if handlers:
+        for handler in handlers:
+            logger.addHandler(handler)
+
     # Enable / disable logging in modules
     for module, level in logging_modules.items():
         l = logging.getLogger(module)
@@ -136,6 +140,9 @@ def setup_logging(
         if fh:
             l.addHandler(fh)
         l.addHandler(sh)
+        if handlers:
+            for handler in handlers:
+                l.addHandler(handler)
 
     traceback.install()  # Enable exception tracebacks in rich logger
 
@@ -154,8 +161,8 @@ def set_logging_level(logger: Any, level: int) -> None:
             handler.setLevel(level)
 
 
-ARROW_HEAD_COUNT = 8
-ARROW_TAIL_COUNT = 14
+ARROW_HEAD_COUNT: Final = 8
+ARROW_TAIL_COUNT: Final = 14
 
 
 def build_log_tx_str(stringable: Any) -> str:
@@ -181,52 +188,13 @@ def build_log_rx_str(stringable: Any, asynchronous: bool = False) -> str:
     Returns:
         str: string surrounded by Rx arrows
     """
+    s = str(stringable).strip("{").strip("}").strip("\n")
     assert ARROW_TAIL_COUNT > 5
     if asynchronous:
         arrow = f"{'-'*(ARROW_TAIL_COUNT//2-3)}ASYNC{'-'*(ARROW_TAIL_COUNT//2-2)}{'>'*ARROW_HEAD_COUNT}"
     else:
         arrow = f"{'-'*ARROW_TAIL_COUNT}{'>'*ARROW_HEAD_COUNT}"
-    return f"\n\n{arrow}\n{stringable}\n{arrow}\n"
-
-
-def launch_vlc(location: Optional[Path]) -> None:
-    """Launch VLC
-
-    Args:
-        location (Optional[Path]): path to VLC. If None, it will be automatically discovered
-    """
-    # This is a fairly lazy way to find VLC. We'll call it best effort.
-    potential_vlc_locations: List[Union[Path, str]] = []
-    command = "echo Invalid Platform"
-    if "linux" in sys.platform.lower():
-        potential_vlc_locations = [r'"/snap/bin/vlc"']
-        command = 'su $(id -un 1000) -c "{} udp://@:8554 > /dev/null 2>&1 &"'
-    elif "darwin" in sys.platform.lower():
-        potential_vlc_locations = [r'"/Applications/VLC.app/Contents/MacOS/VLC"']
-        command = "{} udp://@:8554 > /dev/null 2>&1 &"
-    elif "win" in sys.platform.lower():
-        potential_vlc_locations = [
-            r'"/c/Program Files/VideoLAN/VLC/vlc.exe"',
-            r'"/c/Program Files (x86)/VideoLAN/VLC/vlc.exe"',
-            r'"C:\Program Files (x86)\VideoLAN\VLC\vlc.exe"',
-            r'"C:\Program Files\VideoLAN\VLC\vlc.exe"',
-        ]
-        command = "{} udp://@:8554 &"
-
-    potential_vlc_locations = potential_vlc_locations if location is None else [location]
-    for vlc in potential_vlc_locations:
-        response = cmd(command.format(vlc)).lower()
-
-        if (
-            " not " not in response
-            and " no " not in response
-            and " cannot " not in response
-            and " unexpected " not in response
-        ):
-            util_logger.info("VLC launched")
-            return
-
-    util_logger.error("Failed to find VLC")
+    return f"\n\n{arrow}\n{s}\n{arrow}\n"
 
 
 def scrub(obj: Any, bad_key: str) -> None:
@@ -365,100 +333,6 @@ class SnapshotQueue(queue.Queue):
             return list(self.queue)
 
 
-def custom_betterproto_to_dict(
-    self: betterproto.Message,
-    casing: betterproto.Casing = betterproto.Casing.CAMEL,
-    include_default_values: bool = False,
-) -> dict:
-    """TODO
-
-    Args:
-        self (betterproto.Message): [description]
-        casing (betterproto.Casing, optional): [description]. Defaults to betterproto.Casing.CAMEL.
-        include_default_values (bool): [description]. Defaults to False.
-
-    Returns:
-        dict: [description]
-    """
-    output: Dict[str, Any] = {}
-    for field in dataclasses.fields(self):
-        meta = betterproto.FieldMetadata.get(field)
-        v = getattr(self, field.name)
-        cased_name = casing(field.name).rstrip("_")  # type: ignore
-        if meta.proto_type == "message":
-            if isinstance(v, datetime):
-                if v != betterproto.DATETIME_ZERO or include_default_values:
-                    output[cased_name] = betterproto._Timestamp.timestamp_to_json(v)
-            elif isinstance(v, timedelta):
-                if v != timedelta(0) or include_default_values:
-                    output[cased_name] = betterproto._Duration.delta_to_json(v)
-            elif meta.wraps:
-                if v is not None or include_default_values:
-                    output[cased_name] = v
-            elif isinstance(v, list):
-                # Convert each item.
-                values = []
-                for i in v:
-                    i.to_dict = types.MethodType(custom_betterproto_to_dict, i)
-                    values.append(i.to_dict(casing, include_default_values))
-                if values or include_default_values:
-                    output[cased_name] = values
-            else:
-                if v._serialized_on_wire or include_default_values:
-                    v.to_dict = types.MethodType(custom_betterproto_to_dict, v)
-                    output[cased_name] = v.to_dict(casing, include_default_values)
-        elif meta.proto_type == "map":
-            for k in v:
-                if hasattr(v[k], "to_dict"):
-                    v.to_dict = types.MethodType(custom_betterproto_to_dict, v)
-                    v[k] = v[k].to_dict(casing, include_default_values)
-
-            if v or include_default_values:
-                output[cased_name] = v
-        elif v != self._get_field_default(field, meta) or include_default_values:
-            if meta.proto_type in betterproto.INT_64_TYPES:
-                if isinstance(v, list):
-                    output[cased_name] = [str(n) for n in v]
-                else:
-                    output[cased_name] = str(v)
-            elif meta.proto_type == betterproto.TYPE_BYTES:
-                if isinstance(v, list):
-                    output[cased_name] = [b64encode(b).decode("utf8") for b in v]
-                else:
-                    output[cased_name] = b64encode(v).decode("utf8")
-            elif meta.proto_type == betterproto.TYPE_ENUM:
-                enum_values = {}
-                for e in self._betterproto.cls._cls_for(field):
-                    enum_values[e.value] = e
-                if isinstance(v, list):
-                    output[cased_name] = [enum_values[e] for e in v]
-                else:
-                    output[cased_name] = enum_values[v]
-            else:
-                output[cased_name] = v
-    return output
-
-
-def build_protos() -> None:
-    """Build the protobuf source .py files from the .proto files
-
-    This is meant to be the entrypoint for the poe task
-    """
-    current_dir = Path(__file__).parent.resolve()
-    proto_src_dir = current_dir / ".." / ".." / ".." / ".." / "protobuf"
-    proto_out_dir = current_dir / "proto"
-    print(f"current dir: {current_dir}")
-    for file in proto_src_dir.iterdir():
-        proto_out = f"{file.name.split('.')[0]}_pb.py"
-        print(f"building {proto_out} from {file.name} ...")
-        cmd(f"mv {proto_out_dir / '__init__.py'} {proto_out_dir / 'temp'}")
-        cmd(
-            f"poetry run python -m grpc_tools.protoc  -I {proto_src_dir} --python_betterproto_out={proto_out_dir} {file}"
-        )
-        cmd(f"mv {proto_out_dir / 'open_gopro.py'} {proto_out_dir / proto_out}")
-        cmd(f"mv {proto_out_dir / 'temp'} {proto_out_dir / '__init__.py'}")
-
-
 def add_cli_args_and_parse(
     parser: argparse.ArgumentParser,
     bluetooth: bool = True,
@@ -483,7 +357,7 @@ def add_cli_args_and_parse(
         "--log",
         type=Path,
         help="Location to store detailed log",
-        default="gopro_wifi.log",
+        default="gopro_demo.log",
     )
 
     if bluetooth:

@@ -3,7 +3,7 @@
 <img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"/>
 
 [![Build and Test](https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Testing?label=Build%20and%20Test)](https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml)
-[![Build Docs](https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Docs%20Build%20and%20Deploy?label=Docs)](https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_deploy_docs.yml)
+[![Build Docs](https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Docs%20Build%20and%20Deploy?label=Docs)](https://github.com/gopro/OpenGoPro/actions/workflows/github-pages.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PyPI](https://img.shields.io/pypi/v/open-gopro)](https://pypi.org/project/open-gopro/)
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/gopro/OpenGoPro/blob/main/LICENSE)
@@ -38,12 +38,12 @@ Complete documentation can be found on [Open GoPro](https://gopro.github.io/Open
 -   Includes demo scripts installed as command-line applications to show BLE and WiFi functionality
     -   Take a photo
     -   Take a video
-    -   View the live stream
+    -   View the live / preview stream
     -   Log the battery
 
 ## Installation
 
-> Note! This package requires Python >= 3.8
+> Note! This package requires Python >= 3.8 and <=3.10
 
 ```console
     $ pip install open-gopro
@@ -93,10 +93,16 @@ Capture a video and download it to your computer:
 $ gopro-video
 ```
 
-Start the preview stream and view it with [VLC](https://www.videolan.org/):
+Start the preview stream and view it:
 
 ```bash
-$ gopro-stream
+$ gopro-preview-stream
+```
+
+Start the live stream and view it:
+
+```bash
+$ gopro-live-stream
 ```
 
 Connect to the GoPro and log battery consumption in to a .csv:

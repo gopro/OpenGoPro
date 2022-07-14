@@ -4,17 +4,34 @@
 """Any responses that are returned from GoPro commands."""
 
 from __future__ import annotations
+import re
 import enum
 import logging
 from collections import defaultdict
-from typing import Any, Dict, Callable, List, Optional, Union, Iterator, Type, ItemsView, ValuesView, KeysView
+from typing import (
+    Any,
+    Dict,
+    Callable,
+    List,
+    Optional,
+    Union,
+    Iterator,
+    Type,
+    ItemsView,
+    ValuesView,
+    KeysView,
+    Final,
+    Generator,
+)
 
 import requests
-from construct import Construct
+from construct import BitStruct, BitsInteger, Padding, Const, Bit, Construct
 
 from open_gopro.exceptions import ResponseParseError
 from open_gopro.constants import (
     ActionId,
+    FeatureId,
+    GoProEnum,
     StatusId,
     CmdId,
     ErrorCode,
@@ -23,10 +40,11 @@ from open_gopro.constants import (
     ResponseType,
     CmdType,
     GoProUUIDs,
+    GOPRO_BASE_UUID,
 )
 from open_gopro.util import scrub, pretty_print
 from open_gopro.ble import BleUUID
-from open_gopro.proto.response_generic_pb import EnumResultGeneric
+from open_gopro.proto.response_generic_pb2 import EnumResultGeneric
 
 logger = logging.getLogger(__name__)
 
@@ -36,29 +54,28 @@ BytesParserBuilder = Construct
 StringBuilder = Callable[[Any], str]
 JsonParser = Callable[[Dict[str, Dict[Any, BytesParserBuilder]]], Dict[Any, Any]]
 Parser = Union[BytesParser, JsonParser]
-
-# Type of data that will be parsed into a GoPro Response.
 InputType = Optional[Union[bytearray, Dict[str, Any]]]
-
-
 ParserMapType = Dict[ResponseType, Parser]
 
-CONT_MASK = 0b10000000
-HDR_MASK = 0b01100000
-GEN_LEN_MASK = 0b00011111
-EXT_13_BYTE0_MASK = 0b00011111
+CONT_MASK: Final = 0b10000000
+HDR_MASK: Final = 0b01100000
+GEN_LEN_MASK: Final = 0b00011111
+EXT_13_BYTE0_MASK: Final = 0b00011111
 
-id_map: Dict[BleUUID, Callable] = {
-    GoProUUIDs.CQ_SETTINGS_RESP: SettingId,
-    GoProUUIDs.CQ_COMMAND_RESP: CmdId,
-    GoProUUIDs.CQ_QUERY_RESP: QueryCmdId,
-}
+MAX_BLE_PKT_LEN = 20
 
-response_map: Dict[BleUUID, BleUUID] = {
-    GoProUUIDs.CQ_SETTINGS: GoProUUIDs.CQ_SETTINGS_RESP,
-    GoProUUIDs.CQ_COMMAND: GoProUUIDs.CQ_COMMAND_RESP,
-    GoProUUIDs.CQ_QUERY: GoProUUIDs.CQ_QUERY_RESP,
-}
+beginning, end = GOPRO_BASE_UUID.replace("-", "").split("{}")
+inverse_uuid_regex: Final = re.compile(f"(?<={beginning}).*(?={end})")
+
+
+class Header(enum.Enum):
+    """Packet Headers."""
+
+    GENERAL = 0b00
+    EXT_13 = 0b01
+    EXT_16 = 0b10
+    RESERVED = 0b11
+    CONT = enum.auto()
 
 
 class GoProResp:
@@ -118,7 +135,7 @@ class GoProResp:
             parsers (ParserMapType): The map of parsers to be used to build a GoProResp.
             meta (List[ResponseType]): A list of all information known about the response.
             status (ErrorCode): A status if known at time of instantiation. Defaults to ErrorCode.SUCCESS.
-            raw_packet (InputType, optional): The unparsed input if known at time of instantiation. Defaults to None.
+            raw_packet (InputType, Optional): The unparsed input if known at time of instantiation. Defaults to None.
         """
         # A list describing all of the currently known information about the response.
         # This will be appended to as more information is discovered. The various properties of GoProResp will
@@ -138,30 +155,6 @@ class GoProResp:
         self._raw_packet = raw_packet
         self._bytes_remaining = 0
         self._state: GoProResp._State = GoProResp._State.INITIALIZED
-
-    @classmethod
-    def _from_write_command(cls, parsers: ParserMapType, uuid: BleUUID, data: bytes) -> "GoProResp":
-        """Build a GoProResp from a write command.
-
-        This will discover the expected response BleUUID from the command BleUUID as well as parse the ID
-        from the bytestream.
-
-        Args:
-            parsers (ParserMapType): parsers to use to parse received data
-            uuid (BleUUID): BleUUID that write command is writing to
-            data (bytes): bytestream of the command
-
-        Returns:
-            GoProResp: created instance
-        """
-        # Find expected response and ID from the data
-        response_uuid = response_map[uuid]
-        cmd_id = id_map[response_uuid](data[1])
-        meta = [response_uuid, cmd_id]
-        # If this is a protobuf command, it also has an action id
-        if cmd_id.value >= 0xF0:
-            meta.append(ActionId(data[2]))
-        return cls(parsers, meta=meta)
 
     @classmethod
     def _from_read_response(cls, parsers: ParserMapType, uuid: BleUUID, data: bytearray) -> "GoProResp":
@@ -199,6 +192,61 @@ class GoProResp:
         resp._parse()
         return resp
 
+    @classmethod
+    def _get_response_meta(cls, data: bytes, uuid: BleUUID) -> List[ResponseType]:
+        """Get a response's meta information from raw bytes and the UUID it was received on
+
+        Args:
+            data (bytes): bytes received as BLE notification
+            uuid (BleUUID): UUID response was received on
+
+        Raises:
+            ValueError: unable to determine meta
+
+        Returns:
+            List[ResponseType]: List of meta information in order from least to most specific
+        """
+        meta: List[ResponseType] = [uuid]
+
+        if uuid is GoProUUIDs.CQ_SETTINGS_RESP:
+            meta.append(SettingId(data[0]))
+        elif uuid is GoProUUIDs.CQ_QUERY_RESP:
+            meta.append(QueryCmdId(data[0]))
+        elif uuid in [GoProUUIDs.CQ_COMMAND_RESP, GoProUUIDs.CN_NET_MGMT_RESP]:
+            # It's a protobuf command
+            if (identifier := data[0]) in FeatureId:
+                # Add response action ID mapped from command Action ID
+                meta.append(ActionId(data[1]))
+            # It's a TLV command
+            elif identifier in CmdId:
+                meta.append(CmdId(data[0]))
+            else:
+                raise ValueError(f"Unable to determine response identifier from {identifier}")
+        # Else case is a direct read
+        return meta
+
+    @classmethod
+    def get_id_from_request(cls, data: bytes, uuid: BleUUID) -> ResponseType:
+        """Get a response identifier from raw response bytes and the UUID the response was received on
+
+        Args:
+            data (bytes): bytes received as BLE notificatoin
+            uuid (BleUUID): UUID response was received on
+
+        Returns:
+            ResponseType: identifier of response
+        """
+        incremented_uuid = int(re.findall(inverse_uuid_regex, uuid.hex)[0]) + 1
+        response_uuid = GoProUUIDs[GOPRO_BASE_UUID.format(f"{incremented_uuid:04d}")]  # type: ignore
+        return cls._get_response_meta(data, response_uuid)[-1]
+
+    def __eq__(self, obj: object) -> bool:
+        if isinstance(obj, GoProEnum):
+            return self.identifier == obj
+        if isinstance(obj, GoProResp):
+            return self.identifier == obj.identifier
+        raise TypeError("Equal can only compare GoProResp and ResponseType")
+
     def __getitem__(self, key: Any) -> Any:
         return self.data[key]
 
@@ -212,6 +260,9 @@ class GoProResp:
         return pretty_print(
             {"status": self.status.name, "id": "::".join([str(x) for x in self._meta]), **self.data}
         )
+
+    def __repr__(self) -> str:
+        return f"GoProResp <{self.identifier}: {self._state}>"
 
     def items(self) -> ItemsView[Any, Any]:
         """Pass-through to access data dict's "items" method
@@ -265,14 +316,15 @@ class GoProResp:
         return self.status in [ErrorCode.SUCCESS, ErrorCode.UNKNOWN]
 
     @property
-    def id(self) -> ResponseType:
+    def identifier(self) -> ResponseType:
         """Get the identifier of the response.
 
         Will vary depending on what type of response this is:
 
-        - for a direct BLE read / write to a characteristic, it will be a :py:class:`open_gopro.constants.BleUUID`
+        - for a direct BLE read / write to a characteristic, it will be a :py:class:`open_gopro.ble.services.BleUUID`
         - for a BLE command response, it will be a :py:class:`open_gopro.constants.CmdType`
-        - for a BLE setting / status response / update, it will be a :py:class:`open_gopro.constants.SettingId` or :py:class:`open_gopro.constants.StatusId`
+        - for a BLE setting / status response / update, it will be a :py:class:`open_gopro.constants.SettingId`
+            or :py:class:`open_gopro.constants.StatusId`
         - for an HTTP response, it will be a string of the HTTP endpoint
 
         Returns:
@@ -323,6 +375,24 @@ class GoProResp:
         return None
 
     @property
+    def is_protobuf(self) -> bool:
+        """Is this response a protobuf response
+
+        Returns:
+            bool: Yes if true, No otherwise
+        """
+        return bool({ActionId, FeatureId}.intersection({type(x) for x in self._meta}))
+
+    @property
+    def is_direct_read(self) -> bool:
+        """Is this response a direct read of a BLE characteristic
+
+        Returns:
+            bool: Yes if true, No otherwise
+        """
+        return len(self._meta) == 1 and isinstance(self.identifier, BleUUID)
+
+    @property
     def flatten(self) -> Any:
         """Attempt to flatten / simplify the JSON response (GoProResp.data).
 
@@ -351,16 +421,6 @@ class GoProResp:
         Args:
             data (bytes): byte level BLE data
         """
-
-        class Header(enum.Enum):
-            """Packet Headers."""
-
-            GENERAL = 0b00
-            EXT_13 = 0b01
-            EXT_16 = 0b10
-            RESERVED = 0b11
-            CONT = enum.auto()
-
         buf = bytearray(data)
         if buf[0] & CONT_MASK:
             buf.pop(0)
@@ -398,69 +458,39 @@ class GoProResp:
         """
         # Is this a BLE response?
         if isinstance(self._raw_packet, bytearray):
+            assert self.uuid
             buf: bytearray = self._raw_packet
+            self._meta = self._get_response_meta(buf, self.uuid)
 
-            # Find identifier or see if this is a protobuf or direct read
-            is_protobuf = False
-            is_direct_read = False
-            identifier: Optional[Type[ResponseType]] = None
-            if self.uuid == GoProUUIDs.CQ_SETTINGS_RESP:
-                self._meta.append(SettingId(buf[0]))
-                identifier = SettingId
-            elif self.uuid == GoProUUIDs.CQ_QUERY_RESP:
-                self._meta.append(QueryCmdId(buf[0]))
-                if self.id in [
-                    QueryCmdId.GET_SETTING_VAL,
-                    QueryCmdId.REG_SETTING_VAL_UPDATE,
-                    QueryCmdId.UNREG_SETTING_VAL_UPDATE,
-                    QueryCmdId.SETTING_VAL_PUSH,
-                    QueryCmdId.SETTING_CAPABILITY_PUSH,
-                    QueryCmdId.GET_CAPABILITIES_VAL,
-                    QueryCmdId.REG_CAPABILITIES_UPDATE,
-                    QueryCmdId.UNREG_CAPABILITIES_UPDATE,
-                ]:
-                    identifier = SettingId
-                elif self.id is QueryCmdId.GET_SETTING_NAME:
-                    raise NotImplementedError
-                elif self.id in [
-                    QueryCmdId.GET_STATUS_VAL,
-                    QueryCmdId.REG_STATUS_VAL_UPDATE,
-                    QueryCmdId.UNREG_STATUS_VAL_UPDATE,
-                    QueryCmdId.STATUS_VAL_PUSH,
-                ]:
-                    identifier = StatusId
-                elif self.id in [QueryCmdId.PROTOBUF_QUERY, SettingId.PROTOBUF_SETTING]:
-                    is_protobuf = True
-                else:
-                    raise Exception("Unhandled parse state")
-            else:  # Other UUID's have responses that can be parsed monolithically
-                if self.uuid is GoProUUIDs.CQ_COMMAND_RESP:
-                    self._meta.append(CmdId(buf[0]))
-                    # If this is a protobuf, first get the action ID (after stripping msb)
-                    assert self.cmd is not None
-                    if self.id == CmdId.PROTOBUF_COMMAND:
-                        is_protobuf = True
-                else:
-                    # This is a direct read from a characteristic
-                    is_direct_read = True
-
-            # Additional parsing to add action ID fo protobuf
-            if is_protobuf:
-                self._meta.append(ActionId(buf[1] & 0x7F))
-                buf = buf[1:]  # Pop off action ID
-
-            if not is_direct_read:
-                # Pop off ID
-                buf = buf[1:]
+            if not self.is_direct_read:  # length byte
+                buf.pop(0)
+            if self.is_protobuf:  # feature ID byte
+                buf.pop(0)
 
             try:
-                # Parse based on identifier
-                if identifier in [SettingId, StatusId]:
+                parse_type: Optional[Union[Type[StatusId], Type[SettingId], StatusId, SettingId]] = None
+                # Need to delineate QueryCmd responses between settngs and status
+                if isinstance(self.identifier, (SettingId, StatusId)):
+                    parse_type = self.identifier
+                elif isinstance(self.identifier, QueryCmdId):
+                    if self.identifier in [
+                        QueryCmdId.GET_STATUS_VAL,
+                        QueryCmdId.REG_STATUS_VAL_UPDATE,
+                        QueryCmdId.UNREG_STATUS_VAL_UPDATE,
+                        QueryCmdId.STATUS_VAL_PUSH,
+                    ]:
+                        parse_type = StatusId
+                    elif self.identifier is QueryCmdId.GET_SETTING_NAME:
+                        raise NotImplementedError
+                    else:
+                        parse_type = SettingId
+
+                if parse_type:
                     # Parse all parameters
                     self.status = ErrorCode(buf[0])
                     buf = buf[1:]
                     while len(buf) != 0:
-                        param_id = identifier(buf[0])  # type: ignore
+                        param_id = parse_type(buf[0])  # type: ignore
                         param_len = buf[1]
                         buf = buf[2:]
                         # Special case where we register for a push notification for something that does not yet
@@ -498,11 +528,10 @@ class GoProResp:
                             self.data[param_id] = param_val
                 else:  # Commands,  Protobuf, and direct Reads
                     # Parse payload
-                    self.data = self._parsers[self.id].parse(buf)  # type: ignore
+                    self.data = self._parsers[self.identifier].parse(buf)  # type: ignore
                     # Attempt to determine and / or extract status
-                    if is_direct_read and len(
-                        self._raw_packet
-                    ):  # Assume success on direct reads if there was any data
+                    if self.is_direct_read and len(self._raw_packet):
+                        # Assume success on direct reads if there was any data
                         self.status = ErrorCode.SUCCESS
                     elif "status" in self.data:  # Check if the response contains a status
                         self.status = self.data["status"]
@@ -516,13 +545,13 @@ class GoProResp:
                         self.status = ErrorCode.UNKNOWN
             except KeyError as e:
                 self._state = GoProResp._State.ERROR
-                raise ResponseParseError(str(self.id), buf) from e
+                raise ResponseParseError(str(self.identifier), buf) from e
 
         # Is this an HTTP response?
         elif isinstance(self._raw_packet, dict):
             json_data: Dict[str, Any] = self._raw_packet
             # Is there a parser for this? Most of them do not have one yet.
-            self.data = self._parsers[self.id](json_data, self._parsers) if self.id in self._parsers else json_data  # type: ignore
+            self.data = self._parsers[self.identifier](json_data, self._parsers) if self.identifier in self._parsers else json_data  # type: ignore
         else:
             raise Exception(
                 f"Unexpected data type ({str(type(self._raw_packet))}) when attempting to parse response"
@@ -532,3 +561,93 @@ class GoProResp:
         scrub(self.data, "_io")
         scrub(self.data, "status")
         self._state = GoProResp._State.PARSED
+
+
+general_header = BitStruct(
+    "continuation" / Const(0, Bit),
+    "header" / Const(Header.GENERAL.value, BitsInteger(2)),
+    "length" / BitsInteger(5),
+)
+
+extended_13_header = BitStruct(
+    "continuation" / Const(0, Bit),
+    "header" / Const(Header.EXT_13.value, BitsInteger(2)),
+    "length" / BitsInteger(13),
+)
+
+extended_16_header = BitStruct(
+    "continuation" / Const(0, Bit),
+    "header" / Const(Header.EXT_16.value, BitsInteger(2)),
+    "padding" / Padding(5),
+    "length" / BitsInteger(16),
+)
+
+continuation_header = BitStruct(
+    "continuation" / Const(1, Bit),
+    "padding" / Padding(7),
+)
+
+
+class GoProDataHandler:
+    """A class that can both send and receive GoPro data
+
+    This supports fragmentation of data if necessary if it is > MAX_BLE_PKT_LEN.
+    """
+
+    def __init__(self) -> None:
+        # Will be filled out by Command, Setting, Status class's when instantiated
+        self._response_parsers: ParserMapType = {}
+
+    @property
+    def _parser_map(self) -> ParserMapType:
+        """The superset of all resposnse parsers index by resposne ID
+
+        Returns:
+            ParserMapType: parser map
+        """
+        return self._response_parsers
+
+    def _add_parser(self, identifier: ResponseType, parser: Parser) -> None:
+        """Add a parser to the parser map
+
+        Args:
+            identifier (ResponseType): response identifier
+            parser (Parser): parser used to parse this response ID
+        """
+        self._response_parsers[identifier] = parser
+
+    @classmethod
+    def _fragment(cls, data: bytearray) -> Generator[bytearray, None, None]:
+        """Fragment data in to MAX_BLE_PKT_LEN length packets
+
+        Args:
+            data (bytearray): data to fragment
+
+        Raises:
+            ValueError: data is too long
+
+        Yields:
+            Generator[bytearray, None, None]: Generator of packets as bytearrays
+        """
+        header: Construct
+        if (data_len := len(data)) < (2**5 - 1):
+            header = general_header
+        elif data_len < (2**13 - 1):
+            header = extended_13_header
+        elif data_len < (2**16 - 1):
+            header = extended_16_header
+        else:
+            raise ValueError(f"Data length {data_len} is too long")
+
+        assert header
+        while data:
+            if header == continuation_header:
+                packet = bytearray(header.build({}))
+            else:
+                packet = bytearray(header.build(dict(length=data_len)))
+                header = continuation_header
+
+            bytes_remaining = MAX_BLE_PKT_LEN - len(packet)
+            current, data = (data[:bytes_remaining], data[bytes_remaining:])
+            packet.extend(current)
+            yield packet

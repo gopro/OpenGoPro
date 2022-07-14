@@ -18,7 +18,7 @@ console = Console()  # rich consoler printer
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Connect to a GoPro camera's Wifi Access Point.")
-    return add_cli_args_and_parse(parser).parse_args()
+    return add_cli_args_and_parse(parser)
 
 
 def main(args: argparse.Namespace) -> None:

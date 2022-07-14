@@ -54,7 +54,7 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
         Args:
             token (Pattern): Regex to scan for
             timeout (int): Time to scan (in seconds) before considering scanning as failed. Defaults to 5.
-            service_uuids (List[BleUUID], optional): The list of BleUUID's to filter on. Defaults to None.
+            service_uuids (List[BleUUID], Optional): The list of BleUUID's to filter on. Defaults to None.
 
         Returns:
             BleDevice: discovered device (shall not be multiple devices)
@@ -109,7 +109,7 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
 
         Args:
             handle (BleHandle): BLE handle to discover for
-            uuids (Type[UUIDs], optional): Additional BleUUID information to use when building the
+            uuids (Type[UUIDs], Optional): Additional BleUUID information to use when building the
                 Gatt Database. Defaults to None.
 
         Returns:

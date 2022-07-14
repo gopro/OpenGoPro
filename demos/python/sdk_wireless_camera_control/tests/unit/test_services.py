@@ -8,7 +8,7 @@ from typing import List, Dict
 
 import pytest
 
-from open_gopro.ble.services import UUIDs, UUIDsMeta, UuidLength, BLE_BASE_UUID
+from open_gopro.ble.services import UUIDs, UUIDsMeta, BLE_BASE_UUID
 from open_gopro.constants import BleUUID
 from open_gopro.ble import Descriptor, Characteristic, Service, GattDB, BleUUID
 from tests.conftest import gatt_db
@@ -29,23 +29,23 @@ def test_128_bit_uuid():
 
 
 def test_16_bit_uuid():
-    u = BleUUID("16 bit from str", uuid_format=UuidLength.BIT_16, hex="FEA6")
+    u = BleUUID("16 bit from str", format=BleUUID.Format.BIT_16, hex="FEA6")
     assert len(u.hex)
-    u = BleUUID("16 bit from int", uuid_format=UuidLength.BIT_16, int=1234)
+    u = BleUUID("16 bit from int", format=BleUUID.Format.BIT_16, int=1234)
     assert len(u.hex)
-    u = BleUUID("16 bit from bytes", uuid_format=UuidLength.BIT_16, bytes=bytes([0xAB, 0xCD]))
+    u = BleUUID("16 bit from bytes", format=BleUUID.Format.BIT_16, bytes=bytes([0xAB, 0xCD]))
     assert len(u.hex)
 
 
 def test_uuid_negative():
     with pytest.raises(ValueError):
-        u = BleUUID("16 bit from bytes le", uuid_format=UuidLength.BIT_16, bytes_le=bytes([0xCD, 0xAB]))
+        u = BleUUID("16 bit from bytes le", format=BleUUID.Format.BIT_16, bytes_le=bytes([0xCD, 0xAB]))
     with pytest.raises(ValueError):
-        u = BleUUID("Multiple inputs", uuid_format=UuidLength.BIT_16, hex="", int=1)
+        u = BleUUID("Multiple inputs", format=BleUUID.Format.BIT_16, hex="", int=1)
     with pytest.raises(ValueError):
-        u = BleUUID("Bad string", uuid_format=UuidLength.BIT_16, hex="AB")
+        u = BleUUID("Bad string", format=BleUUID.Format.BIT_16, hex="AB")
     with pytest.raises(ValueError):
-        u = BleUUID("Bad bytes", uuid_format=UuidLength.BIT_16, bytes=bytes([0xAB, 0xCD, 0xEF]))
+        u = BleUUID("Bad bytes", format=BleUUID.Format.BIT_16, bytes=bytes([0xAB, 0xCD, 0xEF]))
 
 
 def test_ble_uuids():

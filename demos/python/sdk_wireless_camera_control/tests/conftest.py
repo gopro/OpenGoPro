@@ -33,8 +33,8 @@ from open_gopro.ble import (
 from open_gopro.wifi import WifiClient, WifiController, SsidState
 from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
 from open_gopro.responses import GoProResp
-from open_gopro.constants import ErrorCode, ProducerType, CmdId, GoProUUIDs
-from open_gopro.communication_client import GoProBle, GoProWifi, GoProResponder
+from open_gopro.constants import ErrorCode, ProducerType, CmdId, GoProUUIDs, ResponseType
+from open_gopro.communication_client import GoProBle, GoProWifi, GoProDataHandler
 from open_gopro.api import Api, BleCommands, BleSettings, BleStatuses, WifiCommands, WifiSettings, Params
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
 from open_gopro.util import setup_logging, set_logging_level
@@ -208,7 +208,7 @@ class BleCommunicatorTest(GoProBle):
         super().__init__(
             BleControllerTest(), disconnection_handler, notification_handler, re.compile("target")
         )
-        self._api = api_versions[test_version](self, GoProResponder())
+        self._api = api_versions[test_version](self, GoProDataHandler())
 
     def _register_listener(self, _) -> None:
         return True
@@ -216,10 +216,12 @@ class BleCommunicatorTest(GoProBle):
     def _unregister_listener(self, _) -> None:
         return True
 
-    def get_update(self, timeout: float) -> int:
+    def get_notification(self, timeout: float) -> int:
         return 1
 
-    def _write_characteristic_receive_notification(self, uuid: BleUUID, data: bytearray) -> GoProResp:
+    def _write_characteristic_receive_notification(
+        self, uuid: BleUUID, data: bytearray, response_id: ResponseType
+    ) -> GoProResp:
         response = good_response
         response._meta = [uuid]
         response._raw_packet = data
@@ -290,7 +292,7 @@ class WifiCommunicatorTest(GoProWifi):
 
     def __init__(self, test_version: str):
         super().__init__(WifiControllerTest())
-        self._api = api_versions[test_version](GoProResponder(), self)
+        self._api = api_versions[test_version](GoProDataHandler(), self)
 
     def _get(self, url: str, _=None):
         return url
@@ -387,7 +389,7 @@ class GoProTest(GoPro):
             global _test_response_id
             _test_response_id = response_id
             self._ble.write = self._test_write
-            return super()._write_characteristic_receive_notification(uuid, data)
+            return super()._write_characteristic_receive_notification(uuid, data, response_id)
 
     def _test_return_version(self) -> FlattenPatch:
         return FlattenPatch(Version(*[int(x) for x in self._test_version.split(".")]))
@@ -467,7 +469,7 @@ class BleakWrapperTest(GoProBle):
     def _unregister_listener(self, producer: ProducerType) -> None:
         return True
 
-    def get_update(self, timeout: float) -> int:
+    def get_notification(self, timeout: float) -> int:
         return 1
 
     def _write_characteristic_receive_notification(

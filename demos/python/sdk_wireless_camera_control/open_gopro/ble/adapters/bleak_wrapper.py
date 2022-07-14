@@ -64,7 +64,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         Note, this is a singleton.
 
         Args:
-            exception_handler (Callable, optional): Used to catch asyncio exceptions from other tasks. Defaults to None.
+            exception_handler (Callable, Optional): Used to catch asyncio exceptions from other tasks. Defaults to None.
         """
         # Thread to run ble controller asyncio loop (to abstract asyncio from client as well as handle async notifications)
         self._module_loop: asyncio.AbstractEventLoop  # Will be set when module thread starts
@@ -141,7 +141,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         Args:
             token (Pattern): Regex to look for when scanning.
             timeout (int): Time to scan. Defaults to 5.
-            service_uuids (List[BleUUID], optional): The list of BleUUID's to filter on. Defaults to None.
+            service_uuids (List[BleUUID], Optional): The list of BleUUID's to filter on. Defaults to None.
 
         Returns:
             BleakDevice: The first matched device that was discovered
@@ -317,7 +317,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         Args:
             handle (BleakClient): BLE handle to discover for
-            uuids (Type[UUIDs], optional): Additional BleUUID information to use when building the
+            uuids (Type[UUIDs], Optional): Additional BleUUID information to use when building the
                 Gatt Database. Defaults to None.
 
         Returns:
@@ -367,8 +367,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                             )
                         )
                     # Create new characteristic
-                    # TODO read value was causing some bug in MacOS. It's also not needed and increases connection
-                    # establishment time.
+                    # TODO add option or other method to read values also.
                     chars.append(
                         Characteristic(
                             handle=char.handle,
@@ -378,9 +377,6 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                                 else BleUUID(char.description, hex=char.uuid)
                             ),
                             props=bleak_props_adapter(char.properties),
-                            # value=bytes(await handle.read_gatt_char(char.uuid))
-                            # if "read" in char.properties
-                            # else b"",
                             init_descriptors=descriptors,
                         )
                     )

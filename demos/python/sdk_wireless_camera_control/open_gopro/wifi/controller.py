@@ -26,8 +26,8 @@ class WifiController(ABC):
         """Constructor
 
         Args:
-            interface (str, optional): Wifi interface to use. Defaults to None (auto-detect).
-            password (str, optional): user password to use for sudo. Defaults to None.
+            interface (str, Optional): Wifi interface to use. Defaults to None (auto-detect).
+            password (str, Optional): user password to use for sudo. Defaults to None.
         """
         self._target_interface = interface
         self._interface: str

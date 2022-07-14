@@ -11,11 +11,11 @@ import uuid
 from pathlib import Path
 from enum import IntFlag, IntEnum
 from dataclasses import dataclass, asdict, InitVar
-from typing import Dict, Iterator, Generator, Mapping, Optional, Tuple, Type, no_type_check, Union, List
+from typing import Dict, Iterator, Generator, Mapping, Optional, Tuple, no_type_check, Union, List, Final
 
 logger = logging.getLogger(__name__)
 
-BLE_BASE_UUID = "0000{}-0000-1000-8000-00805F9B34FB"
+BLE_BASE_UUID: Final = "0000{}-0000-1000-8000-00805F9B34FB"
 
 
 class CharProps(IntFlag):
@@ -49,24 +49,23 @@ class SpecUuidNumber(IntEnum):
     CHAR_AGGREGATE_FORMAT = 0x2905
 
 
-class UuidLength(IntEnum):
-    """Used to specify 8-bit or 128-bit UUIDs"""
-
-    BIT_16 = 2
-    BIT_128 = 16
-
-
 class BleUUID(uuid.UUID):
     """An extension of the standard UUID to associate a string name with the UUID and allow 8-bit UUID input
 
     Can only be initialized with one of [hex, bytes, bytes_le, int]
     """
 
+    class Format(IntEnum):
+        """Used to specify 8-bit or 128-bit UUIDs"""
+
+        BIT_16 = 2
+        BIT_128 = 16
+
     # pylint: disable=redefined-builtin
     def __init__(
         self,
         name: str,
-        uuid_format: UuidLength = UuidLength.BIT_128,
+        format: BleUUID.Format = Format.BIT_128,
         hex: Optional[str] = None,
         bytes: Optional[bytes] = None,
         bytes_le: Optional[bytes] = None,
@@ -76,18 +75,18 @@ class BleUUID(uuid.UUID):
 
         Args:
             name (str): human readable name
-            uuid_format (UuidLength): 16 or 128 bit format. Defaults to UuidLength.BIT_128.
-            hex (str, optional): build from hex string. Defaults to None.
-            bytes (bytes, optional): build from big-endian bytes. Defaults to None.
-            bytes_le (bytes, optional): build from little-endian bytes. Defaults to None.
-            int (int, optional): build from int. Defaults to None.
+            format (BleUUID.Format, Optional): 16 or 128 bit format. Defaults to BleUUID.Format.BIT_128.
+            hex (str, Optional): build from hex string. Defaults to None.
+            bytes (bytes, Optional): build from big-endian bytes. Defaults to None.
+            bytes_le (bytes, Optional): build from little-endian bytes. Defaults to None.
+            int (int, Optional): build from int. Defaults to None.
 
         Raises:
             ValueError: Attempt to initialize with more than one option
             ValueError: Badly formed input
         """
         self.name: str
-        if uuid_format is UuidLength.BIT_16:
+        if format is BleUUID.Format.BIT_16:
             if [hex, bytes, bytes_le, int].count(None) != 3:
                 raise ValueError("Only one of [hex, bytes, bytes_le, int] can be set.")
             if hex:
@@ -106,7 +105,16 @@ class BleUUID(uuid.UUID):
         object.__setattr__(self, "name", name)  # needed to work around immutability in base class
         super().__init__(hex=hex, bytes=bytes, bytes_le=bytes_le, int=int)
 
-    def __str__(self) -> str:
+    @property
+    def format(self) -> BleUUID.Format:
+        """Is this a 16 bit or 128 bit UUID?
+
+        Returns:
+            BleUUID.Format: format of UUID
+        """
+        return BleUUID.Format.BIT_16 if len(self.hex) == BleUUID.Format.BIT_16 else BleUUID.Format.BIT_128
+
+    def __str__(self) -> str:  # pylint: disable=missing-return-doc
         return self.hex if self.name == "" else self.name
 
     def __repr__(self) -> str:
@@ -318,7 +326,6 @@ class GattDB:
             with the services property
     """
 
-    # TODO fix typing here
     class CharacteristicView(Mapping[BleUUID, Characteristic]):
         """Represent the GattDB mapping as characteristics indexed by BleUUID"""
 
@@ -348,6 +355,12 @@ class GattDB:
 
         @no_type_check
         def keys(self) -> Generator[BleUUID, None, None]:  # noqa: D102
+            """Generate dict-like keys view
+
+            Returns:
+                Generator[BleUUID, None, None]: keys generator
+            """
+
             def iter_keys():
                 for service in self._db.services.values():
                     for ble_uuid in service.characteristics.keys():
@@ -357,6 +370,12 @@ class GattDB:
 
         @no_type_check
         def values(self) -> Generator[Characteristic, None, None]:  # noqa: D102
+            """Generate dict-like values view
+
+            Returns:
+                Generator[Characteristic, None, None]: values generator
+            """
+
             def iter_values():
                 for service in self._db.services.values():
                     for char in service.characteristics.values():
@@ -368,6 +387,12 @@ class GattDB:
         def items(
             self,
         ) -> Generator[Tuple[BleUUID, Characteristic], None, None]:  # noqa: D102
+            """Generate dict-like items view
+
+            Returns:
+                Generator[Tuple[BleUUID, Characteristic], None, None]: items generator
+            """
+
             def iter_items():
                 for service in self._db.services.values():
                     for ble_uuid, char in service.characteristics.items():
@@ -512,59 +537,58 @@ class UUIDs(metaclass=UUIDsMeta):
     Also functions as a dict to look up UUID's by str, int, or BleUUID
     """
 
-    @no_type_check
-    def __new__(cls: Type[UUIDs]) -> Type[UUIDs]:  # noqa
-        raise Exception("This class shall not be instantiated")
+    def __new__(*_) -> UUIDs:  # noqa  # pylint: disable=no-method-argument
+        raise RuntimeError("This class shall not be instantiated")
 
     # GATT Identifiers
     PRIMARY_SERVICE = BleUUID(
         "Primary Service",
-        uuid_format=UuidLength.BIT_16,
+        format=BleUUID.Format.BIT_16,
         int=SpecUuidNumber.PRIMARY_SERVICE,
     )
     SECONDARY_SERVICE = BleUUID(
         "Secondary Service",
-        uuid_format=UuidLength.BIT_16,
+        format=BleUUID.Format.BIT_16,
         int=SpecUuidNumber.SECONDARY_SERVICE,
     )
     INCLUDE = BleUUID(
         "Characteristic Include Descriptor",
-        uuid_format=UuidLength.BIT_16,
+        format=BleUUID.Format.BIT_16,
         int=SpecUuidNumber.INCLUDE,
     )
     CHAR_DECLARATION = BleUUID(
         "Characteristic Declaration",
-        uuid_format=UuidLength.BIT_16,
+        format=BleUUID.Format.BIT_16,
         int=SpecUuidNumber.CHAR_DECLARATION,
     )
     CHAR_EXTENDED_PROPS = BleUUID(
         "Characteristic Extended Properties",
-        uuid_format=UuidLength.BIT_16,
+        format=BleUUID.Format.BIT_16,
         int=SpecUuidNumber.CHAR_EXTENDED_PROPS,
     )
     CHAR_USER_DESCR = BleUUID(
         "Characteristic User Description",
-        uuid_format=UuidLength.BIT_16,
+        format=BleUUID.Format.BIT_16,
         int=SpecUuidNumber.CHAR_USER_DESCR,
     )
     CLIENT_CHAR_CONFIG = BleUUID(
         "Client Characteristic Configuration",
-        uuid_format=UuidLength.BIT_16,
+        format=BleUUID.Format.BIT_16,
         int=SpecUuidNumber.CLIENT_CHAR_CONFIG,
     )
     SERVER_CHAR_CONFIG = BleUUID(
         "Server Characteristic Configuration",
-        uuid_format=UuidLength.BIT_16,
+        format=BleUUID.Format.BIT_16,
         int=SpecUuidNumber.SERVER_CHAR_CONFIG,
     )
     CHAR_FORMAT = BleUUID(
         "Characteristic Format",
-        uuid_format=UuidLength.BIT_16,
+        format=BleUUID.Format.BIT_16,
         int=SpecUuidNumber.CHAR_FORMAT,
     )
     CHAR_AGGREGATE_FORMAT = BleUUID(
         "Characteristic Aggregate Format",
-        uuid_format=UuidLength.BIT_16,
+        format=BleUUID.Format.BIT_16,
         int=SpecUuidNumber.CHAR_AGGREGATE_FORMAT,
     )
 

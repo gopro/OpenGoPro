@@ -5,9 +5,8 @@
 
 from __future__ import annotations
 import logging
-import datetime
 from pathlib import Path
-from typing import Any, Optional, Tuple, Dict
+from typing import Any, Optional, Tuple, Dict, no_type_check
 
 from open_gopro.communication_client import GoProWifi
 from open_gopro.constants import SettingId, StatusId
@@ -36,6 +35,7 @@ class WifiCommands:
         class CameraFileToLocalFile(WifiGetBinary):
             """A command that takes camera file and local file as input parameters"""
 
+            @no_type_check
             def __call__(self, /, camera_file: str, local_file: Optional[Path] = None, **kwargs: Any) -> Path:
                 return super().__call__(
                     camera_file=camera_file, local_file=local_file or camera_file, **kwargs
@@ -76,7 +76,7 @@ class WifiCommands:
 
         Args:
             camera_file (str): filename on camera to operate on
-            local_file (Optional[Path], optional): Location on computer to write output. Defaults to None.
+            local_file (Optional[Path], Optional): Location on computer to write output. Defaults to None.
 
         Returns:
             Path: Path to local_file that output was written to
@@ -108,7 +108,7 @@ class WifiCommands:
 
         Args:
             camera_file (str): filename on camera to operate on
-            local_file (Optional[Path], optional): Location on computer to write output. Defaults to None.
+            local_file (Optional[Path], Optional): Location on computer to write output. Defaults to None.
 
         Returns:
             Path: Path to local_file that output was written to
@@ -121,7 +121,7 @@ class WifiCommands:
 
         Args:
             camera_file (str): filename on camera to operate on
-            local_file (Optional[Path], optional): Location on computer to write output. Defaults to None.
+            local_file (Optional[Path], Optional): Location on computer to write output. Defaults to None.
 
         Returns:
             Path: Path to local_file that output was written to
@@ -133,7 +133,7 @@ class WifiCommands:
         """Enable or disable Turbo transfer mode.
 
         Args:
-            value (Params.Toggle): enable / disable turbo mode
+            value (open_gopro.api.params.Toggle): enable / disable turbo mode
 
         Returns:
             GoProResp: command status
@@ -164,7 +164,7 @@ class WifiCommands:
         The most recently used Preset in this group will be set.
 
         Args:
-            value (Params.PresetGroup): desired Preset Group
+            value (open_gopro.api.params.PresetGroup): desired Preset Group
 
         Returns:
             GoProResp: command status
@@ -191,7 +191,7 @@ class WifiCommands:
 
         Args:
             camera_file (str): filename on camera to operate on
-            local_file (Optional[Path], optional): Location on computer to write output. Defaults to None.
+            local_file (Optional[Path], Optional): Location on computer to write output. Defaults to None.
 
         Returns:
             Path: Path to local_file that output was written to
@@ -204,7 +204,7 @@ class WifiCommands:
 
         Args:
             camera_file (str): filename on camera to operate on
-            local_file (Optional[Path], optional): Location on computer to write output. Defaults to None.
+            local_file (Optional[Path], Optional): Location on computer to write output. Defaults to None.
 
         Returns:
             Path: Path to local_file that output was written to
@@ -243,13 +243,13 @@ class WifiCommands:
         """Configure global behaviors by setting camera control (to i.e. Idle, External)
 
         Args:
-            value (Params.CameraControl): desired camera control value
+            value (open_gopro.api.params.CameraControl): desired camera control value
 
         Returns:
             GoProResp: command status
         """
 
-        self.set_date_time = WifiGetJsonWithParams[datetime.datetime](
+        self.set_date_time = WifiGetJsonWithParams[Params.DstDateTime](
             communicator,
             "gopro/camera/set_date_time?{}",
             param_builder=lambda x: f"date={x.year}_{x.month}_{x.day}&time={x.hour}_{x.minute}_{x.second}",
@@ -257,7 +257,7 @@ class WifiCommands:
         """Update the date and time of the camera.
 
         Args:
-            value (datetime.datetime): Time to set
+            value (open_gopro.api.params.DstDateTime): Time to set
 
         Returns:
             GoProResp: command status
@@ -267,7 +267,7 @@ class WifiCommands:
         """Read the current date and time of the camera.
 
         Returns:
-            GoProResp: command status that includes datetime.datetime
+            GoProResp: command status that includes Params.DstDateTime
         """
 
         self.get_webcam_status = WifiGetJsonNoParams(communicator, "gopro/webcam/status")
@@ -388,30 +388,30 @@ class WifiSettings:
         self.endpoint = endpoint
 
         self.resolution = WifiSetting[Params.Resolution](communicator, SettingId.RESOLUTION)
-        """Resolution. Set with :py:class:`open_gopro.Params.Resolution`"""
+        """Resolution. Set with :py:class:`open_gopro.api.params.Resolution`"""
 
         self.fps = WifiSetting[Params.FPS](communicator, SettingId.FPS)
-        """Frames per second. Set with :py:class:`open_gopro.Params.FPS`"""
+        """Frames per second. Set with :py:class:`open_gopro.api.params.FPS`"""
 
         self.auto_off = WifiSetting[Params.AutoOff](communicator, SettingId.AUTO_OFF)
-        """Set the auto off time. Set with :py:class:`Params.AutoOff`"""
+        """Set the auto off time. Set with :py:class:`open_gopro.api.params.AutoOff`"""
 
         self.video_field_of_view = WifiSetting[Params.VideoFOV](communicator, SettingId.VIDEO_FOV)
-        """Video FOV. Set with :py:class:`open_gopro.Params.FieldOfView`"""
+        """Video FOV. Set with :py:class:`open_gopro.api.params.VideoFOV`"""
 
         self.photo_field_of_view = WifiSetting[Params.PhotoFOV](communicator, SettingId.PHOTO_FOV)
-        """Photo FOV. Set with :py:class:`open_gopro.Params.FieldOfView`"""
+        """Photo FOV. Set with :py:class:`open_gopro.api.params.PhotoFOV`"""
 
         self.multi_shot_field_of_view = WifiSetting[Params.MultishotFOV](
             communicator, SettingId.MULTI_SHOT_FOV
         )
-        """Multi-shot FOV. Set with :py:class:`open_gopro.Params.FieldOfView`"""
+        """Multi-shot FOV. Set with :py:class:`open_gopro.api.params.MultishotFOV`"""
 
         self.max_lens_mode = WifiSetting[Params.MaxLensMode](communicator, SettingId.MAX_LENS_MOD)
-        """Enable / disable max lens mod. Set with :py:class:`open_gopro.Params.MaxLensMode`"""
+        """Enable / disable max lens mod. Set with :py:class:`open_gopro.api.params.MaxLensMode`"""
 
         self.hypersmooth = WifiSetting[Params.HypersmoothMode](communicator, SettingId.HYPERSMOOTH)
-        """Set / disable hypersmooth. Set with :py:class:`Params.HypersmoothMode`"""
+        """Set / disable hypersmooth. Set with :py:class:`open_gopro.api.params.HypersmoothMode`"""
 
         self.video_performance_mode = WifiSetting[Params.PerformanceMode](
             communicator, SettingId.VIDEO_PERFORMANCE_MODE
@@ -442,7 +442,7 @@ def parse_camera_state(
 
     Args:
         buf (Dict[str, Any]): input dict to parse
-        additional_parsers (Dict[Any, BytesParserBuilder], optional): additional parsers to be used. Defaults to None
+        additional_parsers (Dict[Any, BytesParserBuilder], Optional): additional parsers to be used. Defaults to None
 
     Returns:
         Dict[Any, Any]: parsed output dict

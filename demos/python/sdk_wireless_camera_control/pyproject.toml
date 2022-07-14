@@ -3,7 +3,7 @@
 #=======================================================================================
 [tool.poetry]
 name = "open_gopro"
-version = "0.9.2"
+version = "0.10.0"
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 readme = "README.md"
@@ -29,7 +29,8 @@ classifiers = [
 [tool.poetry.scripts]
 gopro-photo = "open_gopro.demos.photo:entrypoint"
 gopro-video = "open_gopro.demos.video:entrypoint"
-gopro-stream = "open_gopro.demos.stream:entrypoint"
+gopro-preview-stream = "open_gopro.demos.preview_stream:main"
+gopro-live-stream = "open_gopro.demos.live_stream:main"
 gopro-log-battery = "open_gopro.demos.log_battery:entrypoint"
 gopro-wifi = "open_gopro.demos.connect_wifi:entrypoint"
 
@@ -41,40 +42,45 @@ build-backend = "poetry.core.masonry.api"
 #================================= DEPENDENCIES ========================================
 #=======================================================================================
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8,<3.11"
 bleak = "=0.14.2"
-construct = "*"
-rich = "*"
-wrapt = "*"
-requests = "*"
-betterproto = { extras = ["compiler"], version = "*" }
-protobuf = "*"
-typing-extensions = "*"
-pydocstyle = "^6.1.1"
+construct = "^2.10"
+wrapt = "^1.14"
+requests = "^2.28"
+protobuf = "^3"
+typing-extensions = "^4.3"
+pytz = "^2022.1"
 packaging = "^21.3"
+# TODO make the below optional
+opencv-python = "^4.6.0"
+tk = "^0.1.0"
+Pillow = "^9.1.1"
+rich = "^12.4"
 
 [tool.poetry.dev-dependencies]
-grpcio-tools = "=1.43.0"
-pytest = "*"
-pytest-cov = "*"
+pydocstyle = { extras = ["toml"], version = "^6.1.1" }
+pytest = "^7.1"
+pytest-cov = "^3.0"
 pytest-asyncio = "=0.17.2" # TODO 0.18.0 is breaking our tests
-pytest-html = "*"
-coverage = { extras = ["toml"], version = "" }
-requests-mock = "*"
+pytest-html = "^3.1"
+coverage = { extras = ["toml"], version = "^6.4" }
+requests-mock = "^1.9"
 black = "*"
-pylint = "*"
+pylint = "^2.13"
 mypy = "*"
-types-requests = "*"
-construct-typing = "*"
+types-requests = "^2.28"
+types-pytz = "^2022.1.1"
+mypy-protobuf = "^3.2.0"
+construct-typing = "^0.5"
 sphinx = "*"
-sphinxcontrib-napoleon = "*"
-sphinx-rtd-theme = "*"
+sphinxcontrib-napoleon = "^0.7"
+sphinx-rtd-theme = "^1.0"
 coverage-badge = "=1.1.0"
-darglint = "*"
-safety = "*"
-poethepoet = "*"
+darglint = "^1.8"
+poethepoet = "^0.15"
 nox = "=2022.1.7" # needs to match github-actions version
 nox-poetry = "=0.9.0"
+protoletariat = "^0.9.4"
 
 #=======================================================================================
 #================================== POE TASKS ==========================================
@@ -100,7 +106,7 @@ cmd = "black open_gopro tests"
 help = "Apply black formatting to source code"
 
 [tool.poe.tasks.pydocstyle]
-cmd = "pydocstyle -v open_gopro"
+cmd = "pydocstyle --config pyproject.toml -v open_gopro"
 help = "check docstrings style"
 
 [tool.poe.tasks.darglint]
@@ -112,7 +118,7 @@ sequence = ["pydocstyle", "darglint"]
 help = "Format, check types, lint, check docstrings, and run unit tests"
 
 [tool.poe.tasks.sphinx]
-cmd = "sphinx-build -W -b html docs docs/build"
+cmd = "sphinx-build -W --keep-going -a -E -b html docs docs/build"
 help = "Build sphinx documentation."
 
 [tool.poe.tasks.coverage]
@@ -120,8 +126,8 @@ cmd = "coverage-badge -f -o docs/_static/coverage.svg"
 help = "update coverage badge"
 
 [tool.poe.tasks.protobuf]
-script = "open_gopro.util:build_protos"
-help = "generate protobuf source from .proto"
+cmd = "sh ./tools/build_protos.sh"
+help = "generate protobuf source from .proto (assumes protoc >= 3.20.1 available)"
 
 [tool.poe.tasks.clean_artifacts]
 cmd = "rm -rf **/__pycache__ *.csv *.mp4 *.jpg *.log .mypy_cache .nox"
@@ -148,7 +154,7 @@ sequence = ["clean_artifacts", "clean_tests", "clean_docs", "clean_build"]
 help = "Clean everything"
 
 [tool.poe.tasks.all]
-sequence = ["format", "types", "lint", "docstrings", "unit_tests"]
+sequence = ["format", "types", "lint", "docstrings", "unit_tests", "docs"]
 help = "Format, check types, lint, check docstrings, and run unit tests"
 
 #=======================================================================================
@@ -210,6 +216,8 @@ ignore = ["tests", "proto"]
 
 [tool.pylint.'MESSAGES CONTROL']
 disable = [
+    "too-many-ancestors",
+    "no-name-in-module", # does not appear to work with stub files
     "too-many-nested-blocks",
     "unspecified-encoding",
     "consider-using-with",
@@ -230,6 +238,8 @@ disable = [
     "fixme",
     "protected-access", # Maybe fix this one
     "invalid-name",
+    "unsubscriptable-object", # remove when we deprecate Python 3.8 support
+
 ]
 
 [tool.pylint.'FORMAT']
@@ -240,7 +250,7 @@ line-length = 111
 exclude = ".venv"
 
 [tool.pydocstyle]
-convention="google"
-add-ignore="D415, D107, D105"
-match='(?!params|.*pb).*\.py'
-match-dir='(?!.*demos).*'
+convention = "google"
+add-ignore = "D415, D107, D105"
+match = '(?!params|.*pb).*\.py'
+match-dir = '(?!.*demos).*'

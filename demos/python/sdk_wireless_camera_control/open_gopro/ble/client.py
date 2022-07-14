@@ -42,7 +42,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
             target (Tuple[Union[Pattern, BleDevice], Optional[List[BleUUID]]]): Tuple of (device, service_uuids)
                 where device is the BleDevice (or regex) to connect to and service_uuids is a list of
                 service uuid's to filter for
-            uuids (Type[UUIDs], optional): Additional UUIDs that will be used when discovering characteristic.
+            uuids (Type[UUIDs], Optional): Additional UUIDs that will be used when discovering characteristic.
                 Defaults to None in which case any unknown UUIDs will be set to "unknown".
 
         Raises:
@@ -104,7 +104,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
         self._identifier = str(self._device)
 
         logger.info("Establishing the BLE connection")
-        for retry in range(retries):
+        for retry in range(1, retries):
             try:
                 self._handle = self._controller.connect(self._disconnected_cb, self._device, timeout=timeout)
                 break

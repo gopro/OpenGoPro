@@ -51,8 +51,8 @@ class Wireless(WifiController):
         """Constructor
 
         Args:
-            interface (str, optional): Interface. Defaults to None.
-            password (str, optional): User Password for sudo. Defaults to None.
+            interface (str, Optional): Interface. Defaults to None.
+            password (str, Optional): User Password for sudo. Defaults to None.
 
         #noqa: DAR402
 

@@ -1,0 +1,63 @@
+/* network_management.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
+/* This copyright was auto-generated on Thu Jul 14 19:12:49 UTC 2022 */
+
+/*
+Defines the structure of protobuf message for network management
+*/
+
+syntax="proto2";
+package open_gopro;
+
+
+import "response_generic.proto";
+enum EnumProvisioning{
+    PROVISIONING_UNKNOWN = 0;
+    PROVISIONING_NEVER_STARTED = 1;
+    PROVISIONING_STARTED = 2;
+    PROVISIONING_ABORTED_BY_SYSTEM = 3;
+    PROVISIONING_CANCELLED_BY_USER = 4;
+    PROVISIONING_SUCCESS_NEW_AP = 5;
+    PROVISIONING_SUCCESS_OLD_AP = 6;
+    PROVISIONING_ERROR_FAILED_TO_ASSOCIATE = 7;
+    PROVISIONING_ERROR_PASSWORD_AUTH = 8;
+    PROVISIONING_ERROR_EULA_BLOCKING = 9;
+    PROVISIONING_ERROR_NO_INTERNET = 10;
+    PROVISIONING_ERROR_UNSUPPORTED_TYPE = 11;
+}
+
+
+enum EnumDeprecated{
+    DEPRECATED_1 = 0x00;
+    DEPRECATED_2 = 0x01;
+    DEPRECATED_3 = 0x02;
+    DEPRECATED_4 = 0x03;
+    DEPRECATED_5 = 0x04;
+    DEPRECATED_6 = 0x08;
+    DEPRECATED_7 = 0x10;
+}
+
+
+message RequestConnectNew{
+    required string ssid = 1;
+    required string password = 2;
+    optional bytes static_ip = 3;
+    optional bytes gateway = 4;
+    optional bytes subnet = 5;
+    optional bytes dns_primary = 6;
+    optional bytes dns_secondary = 7;
+    optional bool set_to_least_preferred_ap = 8;
+    optional EnumDeprecated deprecated = 9;
+}
+
+
+message ResponseConnectNew{
+    required EnumResultGeneric result = 1;
+    required EnumProvisioning provisioning_state = 2;
+    required int32 timeout_seconds = 3;
+}
+
+
+message NotifProvisioningState{
+    required EnumProvisioning provisioning_state = 1;
+}
+

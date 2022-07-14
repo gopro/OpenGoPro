@@ -7,7 +7,10 @@ classes: spec
 
 # About This Page
 
-<p>This page describes the format, capabilities, and use of <a href="https://learn.adafruit.com/introduction-to-bluetooth-low-energy/introduction">Bluetooth Low Energy (BLE)</a> as it pertains to communicating with GoPro cameras. Messages are sent using either <a href="https://en.wikipedia.org/wiki/Type-length-value">TLV</a> or <a href="https://developers.google.com/protocol-buffers">Protobuf</a> format.</p>
+<p>
+This page describes the format, capabilities, and use of <a href="https://learn.adafruit.com/introduction-to-bluetooth-low-energy">Bluetooth Low Energy (BLE)</a> as it pertains to communicating with GoPro cameras.
+Messages are sent using either <a href="https://en.wikipedia.org/wiki/Type-length-value">TLV</a> or <a href="https://developers.google.com/protocol-buffers">Protobuf</a> format.
+</p>
 
 
 # General
@@ -86,6 +89,18 @@ Note: GP-XXXX is shorthand for GoPro's 128-bit UUIDs: <b>b5f9xxxx-aa8d-11e3-9046
       <td>GP-0005</td>
       <td>WiFi AP State</td>
       <td>Read / Indicate</td>
+    </tr>
+    <tr>
+      <td rowspan="2">GP-0090</td>
+      <td rowspan="2">GoPro Camera Management</td>
+      <td>GP-0091</td>
+      <td>Network Management Command</td>
+      <td>Write</td>
+    </tr>
+    <tr>
+      <td>GP-0092</td>
+      <td>Network Management Response</td>
+      <td>Notify</td>
     </tr>
     <tr>
       <td rowspan="6">FEA6</td>
@@ -274,526 +289,107 @@ System Busy and Encode Active flags to be unset before sending messages other th
 </p>
 
 
-## Presets
+## Parsing Responses
 <p>
-The camera organizes modes of operation into presets.
-A preset is a logical wrapper around a specific camera flatmode and a collection of settings that target different ways of capturing media.
+In order to communicate fully with the camera, the user will need to be able to parse response and event notifications in TLV or Protobuf format as needed.
 </p>
 
 <p>
-The set of presets available to load at any moment depends on the value of certain camera settings, which are outlined in the table below.
+TLV and Protobuf responses have very different formats.
+Parsing TLV data requires a parser to be written locally.
+Parsing Protobuf data can be done using code generated from <a href="#protobuf-commands">Protobuf files</a> linked in this document.
+Typically, the camera will send TLV responses/events for commands sent in TLV format and Protobuf responses/events for commands sent in Protobuf format.
 </p>
 
 <p>
-For per-preset firmware compatibility information, see <a href="#OpenGoProBluetoothLowEnergyAPI(v2.0)-CommandsQuickReference">Commands Quick Reference</a>.
+The pseudocode and flowcharts below refer to the following tables:
 </p>
 
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Setting</td>
-      <td>Preset</td>
-      <td>Preset ID</td>
-    </tr>
-    <tr>
-      <td rowspan="56">Max Lens: OFF</td>
-      <td rowspan="5">Standard</td>
-      <td rowspan="5">0x00000000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="5">Activity</td>
-      <td rowspan="5">0x00000001</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="5">Cinematic</td>
-      <td rowspan="5">0x00000002</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="3">Ultra Slo-Mo</td>
-      <td rowspan="3">0x00000004</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="3">Basic</td>
-      <td rowspan="3">0x00000005</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="5">Photo</td>
-      <td rowspan="5">0x00010000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="5">Live Burst</td>
-      <td rowspan="5">0x00010001</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="5">Burst Photo</td>
-      <td rowspan="5">0x00010002</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="5">Night Photo</td>
-      <td rowspan="5">0x00010003</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="5">Time Warp</td>
-      <td rowspan="5">0x00020000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="5">Time Lapse</td>
-      <td rowspan="5">0x00020001</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="5">Night Lapse</td>
-      <td rowspan="5">0x00020002</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="15">Max Lens: ON</td>
-      <td rowspan="5">Max Video</td>
-      <td rowspan="5">0x00030000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="5">Max Photo</td>
-      <td rowspan="5">0x00040000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="5">Max Timewarp</td>
-      <td rowspan="5">0x00050000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="48">Video Performance Mode: Maximum Video Performance</td>
-      <td rowspan="4">Standard</td>
-      <td rowspan="4">0x00000000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Activity</td>
-      <td rowspan="4">0x00000001</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Cinematic</td>
-      <td rowspan="4">0x00000002</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Ultra Slo-Mo</td>
-      <td rowspan="4">0x00000004</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Basic</td>
-      <td rowspan="4">0x00000005</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Photo</td>
-      <td rowspan="4">0x00010000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Live Burst</td>
-      <td rowspan="4">0x00010001</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Burst Photo</td>
-      <td rowspan="4">0x00010002</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Night Photo</td>
-      <td rowspan="4">0x00010003</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Time Warp</td>
-      <td rowspan="4">0x00020000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Time Lapse</td>
-      <td rowspan="4">0x00020001</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Night Lapse</td>
-      <td rowspan="4">0x00020002</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="44">Video Performance Mode: Extended Battery</td>
-      <td rowspan="4">Photo</td>
-      <td rowspan="4">0x00010000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Live Burst</td>
-      <td rowspan="4">0x00010001</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Burst Photo</td>
-      <td rowspan="4">0x00010002</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Night Photo</td>
-      <td rowspan="4">0x00010003</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Time Warp</td>
-      <td rowspan="4">0x00020000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Time Lapse</td>
-      <td rowspan="4">0x00020001</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Night Lapse</td>
-      <td rowspan="4">0x00020002</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Standard [EB]</td>
-      <td rowspan="4">0x00080000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Activity [EB]</td>
-      <td rowspan="4">0x00080001</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Cinematic [EB]</td>
-      <td rowspan="4">0x00080002</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Slo-Mo [EB]</td>
-      <td rowspan="4">0x00080003</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="36">Video Performance Mode: Tripod / Stationary Video</td>
-      <td rowspan="4">Photo</td>
-      <td rowspan="4">0x00010000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Live Burst</td>
-      <td rowspan="4">0x00010001</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Burst Photo</td>
-      <td rowspan="4">0x00010002</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Night Photo</td>
-      <td rowspan="4">0x00010003</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Time Warp</td>
-      <td rowspan="4">0x00020000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Time Lapse</td>
-      <td rowspan="4">0x00020001</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">Night Lapse</td>
-      <td rowspan="4">0x00020002</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">4K Tripod</td>
-      <td rowspan="4">0x00090000</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td rowspan="4">5.3K Tripod</td>
-      <td rowspan="4">0x00090001</td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-  </tbody>
-</table>
+<ul>
+<li><a href="#protobuf-ids">Protobuf IDs Table</a></li>
+<li><a href="#protobuf-commands">Protobuf Commands Table</a></li>
+<li><a href="#command-response-format">Command Response Format</a></li>
+<li><a href="#settings-response-format">Settings Response Format</a></li>
+<li><a href="#query-response-format">Query Response Format</a></li>
+</ul> 
+
+
+### Pseudocode
+<p>
+Below is pseudocode describing how to determine whether a respose is TLV or Protobuf and then parse it appropriately.
+</p>
+
+```
+Camera sends response R (array of bytes) from UUID U (string) with payload P (array of bytes)
+// Is it a Protobuf response?
+for each row in the Protobuf IDs table {
+    F (int) = Feature ID
+    A (array of int) = Action IDs
+    if P[0] == F and P[1] in A {
+        R is a protobuf message
+        Match Feature ID P[0] and Action ID P[1] to a Response message in the Protobuf Commands Table
+        Use matched Response message to parse payload into useful data structure
+        Exit
+    }
+}
+// Nope. It is a TLV response
+if U == GP-0072 (Command) {
+    Parse using Command Response Format table
+}
+else if U == GP-0074 (Settings) {
+    Parse using Settings Response Format table
+}
+else if U == GP-0076 (Query) {
+    Parse using Query Response Format table
+}
+Exit
+```
+
+### Flowchart
+<p>
+Below is a flowchart describing how to determine whether a respose is TLV or Protobuf and then parse it appropriately.
+</p>
+
+```plantuml!
+
+
+' Note: The weird whitespace is used to make the text look better on the image
+
+start
+
+:Receive response R;
+:Extract payload P;
+
+if (\nP[0] == Feature ID from row N of Protobuf IDs Table\nAND\nP[1] in Action IDs list from row N of Protobuf IDs Table\n) then (yes)
+    :R is a protobuf message;
+else (no)
+    :R is a TLV message;
+endif
+
+switch (Response R)
+case ( TLV message)
+   switch (Response UUID)
+   case ( GP-0072\n (Control))
+      :R is a Command response;
+   case (   GP-0074\n   (Settings))
+      :R is a Settings response;
+   case ( GP-0076\n (Query))
+      :R is a Query response;
+   endswitch
+   :Parse accordingly;
+case ( Protobuf message)
+   :Feature ID = P[0]\nAction ID = P[1];
+   :Use: Protobuf Commands Table;
+   :Parse using appropriate protobuf message;
+endswitch
+
+:Knowledge!;
+stop
+
+
+
+
+```
 
 
 ## Keep Alive
@@ -820,55 +416,6 @@ It is recommended to send a keep-alive at least once every 120 seconds.
   </tbody>
 </table>
 
-
-## Turbo Transfer
-<p>
-Some cameras support Turbo Transfer mode, which allows media to be downloaded over WiFi more rapidly.
-This special mode should only be used during media offload.
-It is recommended that the user check for and--if necessary--disable Turbo Transfer on connect.
-For details on which cameras are supported and how to enable and disable Turbo Transfer, see
-<a href="#OpenGoProBluetoothLowEnergyAPI(v2.0)-ProtobufCommands">Protobuf Commands</a>.
-</p>
-
-
-## Global Behaviors
-<p>
-In order to prevent undefined behavior between the camera and a connected app, simultaneous use of the camera and a
-connected app is discouraged.
-</p>
-
-<p>
-Best practice for synchronizing user/app control is to use the <i>Set Camera Control Status</i> command and
-corresponding <i>Camera Control Status</i> (CCS) camera statuses in alignment with the finite state machine below:
-</p>
-
-```plantuml!
-
-
-' Define states
-IDLE: Control Status: Idle
-CAMERA_CONTROL: Control Status: Camera Control
-EXTERNAL_CONTROL: Control Status: External Control
-
-' Define transitions
-[*]              ->      IDLE
-
-IDLE             ->      IDLE: App sets CCS: Idle
-IDLE             -up->   CAMERA_CONTROL: User interacts with camera
-IDLE             -down-> EXTERNAL_CONTROL: App sets CCS: External Control
-
-CAMERA_CONTROL   ->      CAMERA_CONTROL: User interacts with camera
-CAMERA_CONTROL   -down-> IDLE: User returns camera to idle screen\nApp sets CCS: Idle
-
-EXTERNAL_CONTROL ->    EXTERNAL_CONTROL: App sets CCS: External Control
-EXTERNAL_CONTROL -up-> IDLE: App sets CCS: Idle\nUser interacts with camera
-EXTERNAL_CONTROL -up-> CAMERA_CONTROL: User interacts with camera
-
-
-
-
-```
-
 ## Limitations
 
 ### HERO10 Black
@@ -884,11 +431,11 @@ EXTERNAL_CONTROL -up-> CAMERA_CONTROL: User interacts with camera
 
 <ul>
 <li>Unless changed by the user, GoPro cameras will automatically power off after some time (e.g. 5min, 15min, 30min). The Auto Power Down watchdog timer can be reset by sending periodic keep-alive messages to the camera. It is recommended to send a keep-alive at least once every 120 seconds.</li>
-<li>In general, querying the value for a setting that is not associated with the current preset/flatmode results in an undefined value. For example, the user should not try to query the current Photo Digital Lenses (FOV) value while in Standard preset (Video flatmode).</li>
+<li>In general, querying the value for a setting that is not associated with the current preset/core mode results in an undefined value. For example, the user should not try to query the current Photo Digital Lenses (FOV) value while in Standard preset (Video mode).</li>
 </ul>
 
 
-# TLV
+# Type Length Value
 
 <p>
 GoPro's BLE protocol comes in two flavors: TLV (Type Length Value) and Protobuf.
@@ -924,6 +471,10 @@ Command messages are sent to GP-0072 and responses/notifications are received on
     <tr>
       <td>0x0E</td>
       <td>Get Date/Time</td>
+    </tr>
+    <tr>
+      <td>0x15</td>
+      <td>Set Livestream Mode</td>
     </tr>
     <tr>
       <td>0x17</td>
@@ -1093,6 +644,15 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>0x15</td>
+      <td>Set Livestream Mode</td>
+      <td>Set live stream mode: url: str, encode: true, window size: windowsize.size_720, cert: none</td>
+      <td>20:15:F1:79:0A:03:73:74:72:10:01:18:07:38:7B:40:95:06:48:C8:80:03:50:00</td>
+      <td>02:15:00</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>0x17</td>
       <td>AP Control</td>
       <td>WiFi AP: off</td>
@@ -1101,7 +661,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>0x17</td>
       <td>AP Control</td>
       <td>WiFi AP: on</td>
@@ -1110,7 +670,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x18</td>
       <td>Media: HiLight Moment</td>
       <td>Hilight moment during encoding</td>
@@ -1119,7 +679,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>0x3C</td>
       <td>Get Hardware Info</td>
       <td>Get camera hardware info</td>
@@ -1128,7 +688,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x3E</td>
       <td>Presets: Load Group</td>
       <td>Video</td>
@@ -1137,7 +697,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x3E</td>
       <td>Presets: Load Group</td>
       <td>Photo</td>
@@ -1146,7 +706,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x3E</td>
       <td>Presets: Load Group</td>
       <td>Timelapse</td>
@@ -1155,196 +715,16 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Standard</td>
-      <td>06:40:04:00:00:00:00</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Activity</td>
-      <td>06:40:04:00:00:00:01</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Cinematic</td>
-      <td>06:40:04:00:00:00:02</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Ultra Slo-Mo</td>
-      <td>06:40:04:00:00:00:04</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-      <td><span style="color:red">❌</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Basic</td>
-      <td>06:40:04:00:00:00:05</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-      <td><span style="color:red">❌</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Photo</td>
-      <td>06:40:04:00:01:00:00</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Live Burst</td>
-      <td>06:40:04:00:01:00:01</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Burst Photo</td>
-      <td>06:40:04:00:01:00:02</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Night Photo</td>
-      <td>06:40:04:00:01:00:03</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Time Warp</td>
-      <td>06:40:04:00:02:00:00</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Time Lapse</td>
-      <td>06:40:04:00:02:00:01</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Night Lapse</td>
-      <td>06:40:04:00:02:00:02</td>
-      <td>02:40:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Max Video</td>
-      <td>06:40:04:00:03:00:00</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.20.00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Max Photo</td>
-      <td>06:40:04:00:04:00:00</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.20.00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Max Timewarp</td>
-      <td>06:40:04:00:05:00:00</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.20.00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Standard [EB]</td>
-      <td>06:40:04:00:08:00:00</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-      <td><span style="color:red">❌</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Activity [EB]</td>
-      <td>06:40:04:00:08:00:01</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-      <td><span style="color:red">❌</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Cinematic [EB]</td>
-      <td>06:40:04:00:08:00:02</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-      <td><span style="color:red">❌</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>Slo-Mo [EB]</td>
-      <td>06:40:04:00:08:00:03</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-      <td><span style="color:red">❌</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>4K Tripod</td>
-      <td>06:40:04:00:09:00:00</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-      <td><span style="color:red">❌</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>0x40</td>
-      <td>Presets: Load</td>
-      <td>5.3K Tripod</td>
-      <td>06:40:04:00:09:00:01</td>
-      <td>02:40:00</td>
-      <td>\&gt;= v01.16.00</td>
-      <td><span style="color:red">❌</span></td>
-    </tr>
     <tr style="background-color: rgb(245,249,255);">
+      <td>0x40</td>
+      <td>Presets: Load</td>
+      <td>Example <a href="#presets">preset id</a>: 0x1234ABCD</td>
+      <td>06:40:04:12:34:AB:CD</td>
+      <td>02:40:00</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x50</td>
       <td>Analytics</td>
       <td>Set third party client</td>
@@ -1353,7 +733,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>0x51</td>
       <td>Open GoPro</td>
       <td>Get version</td>
@@ -1658,35 +1038,8 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
       <td>Resolution</td>
-      <td>Set video resolution (id: 2) to 4k (id: 1)</td>
-      <td>03:02:01:01</td>
-      <td>02:02:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>2</td>
-      <td>Resolution</td>
       <td>Set video resolution (id: 2) to 2.7k (id: 4)</td>
       <td>03:02:01:04</td>
-      <td>02:02:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>2</td>
-      <td>Resolution</td>
-      <td>Set video resolution (id: 2) to 2.7k (id: 4)</td>
-      <td>03:02:01:04</td>
-      <td>02:02:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>2</td>
-      <td>Resolution</td>
-      <td>Set video resolution (id: 2) to 2.7k 4:3 (id: 6)</td>
-      <td>03:02:01:06</td>
       <td>02:02:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1712,24 +1065,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
       <td>Resolution</td>
-      <td>Set video resolution (id: 2) to 1440 (id: 7)</td>
-      <td>03:02:01:07</td>
-      <td>02:02:00</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>2</td>
-      <td>Resolution</td>
-      <td>Set video resolution (id: 2) to 1080 (id: 9)</td>
-      <td>03:02:01:09</td>
-      <td>02:02:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>2</td>
-      <td>Resolution</td>
       <td>Set video resolution (id: 2) to 1080 (id: 9)</td>
       <td>03:02:01:09</td>
       <td>02:02:00</td>
@@ -1743,24 +1078,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:02:01:12</td>
       <td>02:02:00</td>
       <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>2</td>
-      <td>Resolution</td>
-      <td>Set video resolution (id: 2) to 4k 4:3 (id: 18)</td>
-      <td>03:02:01:12</td>
-      <td>02:02:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>2</td>
-      <td>Resolution</td>
-      <td>Set video resolution (id: 2) to 5k (id: 24)</td>
-      <td>03:02:01:18</td>
-      <td>02:02:00</td>
-      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
@@ -1802,35 +1119,8 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
-      <td>Set video fps (id: 3) to 240 (id: 0)</td>
-      <td>03:03:01:00</td>
-      <td>02:03:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>3</td>
-      <td>Frames Per Second</td>
       <td>Set video fps (id: 3) to 120 (id: 1)</td>
       <td>03:03:01:01</td>
-      <td>02:03:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>3</td>
-      <td>Frames Per Second</td>
-      <td>Set video fps (id: 3) to 120 (id: 1)</td>
-      <td>03:03:01:01</td>
-      <td>02:03:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>3</td>
-      <td>Frames Per Second</td>
-      <td>Set video fps (id: 3) to 100 (id: 2)</td>
-      <td>03:03:01:02</td>
       <td>02:03:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1856,35 +1146,8 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
-      <td>Set video fps (id: 3) to 60 (id: 5)</td>
-      <td>03:03:01:05</td>
-      <td>02:03:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>3</td>
-      <td>Frames Per Second</td>
       <td>Set video fps (id: 3) to 50 (id: 6)</td>
       <td>03:03:01:06</td>
-      <td>02:03:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>3</td>
-      <td>Frames Per Second</td>
-      <td>Set video fps (id: 3) to 50 (id: 6)</td>
-      <td>03:03:01:06</td>
-      <td>02:03:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>3</td>
-      <td>Frames Per Second</td>
-      <td>Set video fps (id: 3) to 30 (id: 8)</td>
-      <td>03:03:01:08</td>
       <td>02:03:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1910,35 +1173,8 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
       <td>Frames Per Second</td>
-      <td>Set video fps (id: 3) to 25 (id: 9)</td>
-      <td>03:03:01:09</td>
-      <td>02:03:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>3</td>
-      <td>Frames Per Second</td>
       <td>Set video fps (id: 3) to 24 (id: 10)</td>
       <td>03:03:01:0A</td>
-      <td>02:03:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>3</td>
-      <td>Frames Per Second</td>
-      <td>Set video fps (id: 3) to 24 (id: 10)</td>
-      <td>03:03:01:0A</td>
-      <td>02:03:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>3</td>
-      <td>Frames Per Second</td>
-      <td>Set video fps (id: 3) to 200 (id: 13)</td>
-      <td>03:03:01:0D</td>
       <td>02:03:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1964,24 +1200,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>59</td>
       <td>Auto Power Down</td>
-      <td>Set auto power down (id: 59) to never (id: 0)</td>
-      <td>03:3B:01:00</td>
-      <td>01:3B:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>59</td>
-      <td>Auto Power Down</td>
-      <td>Set auto power down (id: 59) to 5 min (id: 4)</td>
-      <td>03:3B:01:04</td>
-      <td>01:3B:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>59</td>
-      <td>Auto Power Down</td>
       <td>Set auto power down (id: 59) to 5 min (id: 4)</td>
       <td>03:3B:01:04</td>
       <td>01:3B:00</td>
@@ -1993,24 +1211,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Auto Power Down</td>
       <td>Set auto power down (id: 59) to 15 min (id: 6)</td>
       <td>03:3B:01:06</td>
-      <td>01:3B:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>59</td>
-      <td>Auto Power Down</td>
-      <td>Set auto power down (id: 59) to 15 min (id: 6)</td>
-      <td>03:3B:01:06</td>
-      <td>01:3B:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>59</td>
-      <td>Auto Power Down</td>
-      <td>Set auto power down (id: 59) to 30 min (id: 7)</td>
-      <td>03:3B:01:07</td>
       <td>01:3B:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2036,35 +1236,8 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
-      <td>Set video digital lenses (id: 121) to wide (id: 0)</td>
-      <td>03:79:01:00</td>
-      <td>02:79:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>121</td>
-      <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to narrow (id: 2)</td>
       <td>03:79:01:02</td>
-      <td>02:79:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>121</td>
-      <td>Video Digital Lenses</td>
-      <td>Set video digital lenses (id: 121) to narrow (id: 2)</td>
-      <td>03:79:01:02</td>
-      <td>02:79:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>121</td>
-      <td>Video Digital Lenses</td>
-      <td>Set video digital lenses (id: 121) to superview (id: 3)</td>
-      <td>03:79:01:03</td>
       <td>02:79:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2090,35 +1263,8 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
-      <td>Set video digital lenses (id: 121) to linear (id: 4)</td>
-      <td>03:79:01:04</td>
-      <td>02:79:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>121</td>
-      <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to max superview (id: 7)</td>
       <td>03:79:01:07</td>
-      <td>02:79:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>121</td>
-      <td>Video Digital Lenses</td>
-      <td>Set video digital lenses (id: 121) to max superview (id: 7)</td>
-      <td>03:79:01:07</td>
-      <td>02:79:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>121</td>
-      <td>Video Digital Lenses</td>
-      <td>Set video digital lenses (id: 121) to linear + horizon leveling (id: 8)</td>
-      <td>03:79:01:08</td>
       <td>02:79:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2144,35 +1290,8 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>122</td>
       <td>Photo Digital Lenses</td>
-      <td>Set photo digital lenses (id: 122) to narrow (id: 19)</td>
-      <td>03:7A:01:13</td>
-      <td>02:7A:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>122</td>
-      <td>Photo Digital Lenses</td>
       <td>Set photo digital lenses (id: 122) to max superview (id: 100)</td>
       <td>03:7A:01:64</td>
-      <td>02:7A:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>122</td>
-      <td>Photo Digital Lenses</td>
-      <td>Set photo digital lenses (id: 122) to max superview (id: 100)</td>
-      <td>03:7A:01:64</td>
-      <td>02:7A:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>122</td>
-      <td>Photo Digital Lenses</td>
-      <td>Set photo digital lenses (id: 122) to wide (id: 101)</td>
-      <td>03:7A:01:65</td>
       <td>02:7A:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2192,24 +1311,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo digital lenses (id: 122) to linear (id: 102)</td>
       <td>03:7A:01:66</td>
       <td>02:7A:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>122</td>
-      <td>Photo Digital Lenses</td>
-      <td>Set photo digital lenses (id: 122) to linear (id: 102)</td>
-      <td>03:7A:01:66</td>
-      <td>02:7A:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>123</td>
-      <td>Time Lapse Digital Lenses</td>
-      <td>Set time lapse digital lenses (id: 123) to narrow (id: 19)</td>
-      <td>03:7B:01:13</td>
-      <td>02:7B:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
@@ -2243,24 +1344,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(245,249,255);">
       <td>123</td>
       <td>Time Lapse Digital Lenses</td>
-      <td>Set time lapse digital lenses (id: 123) to wide (id: 101)</td>
-      <td>03:7B:01:65</td>
-      <td>02:7B:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>123</td>
-      <td>Time Lapse Digital Lenses</td>
-      <td>Set time lapse digital lenses (id: 123) to linear (id: 102)</td>
-      <td>03:7B:01:66</td>
-      <td>02:7B:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>123</td>
-      <td>Time Lapse Digital Lenses</td>
       <td>Set time lapse digital lenses (id: 123) to linear (id: 102)</td>
       <td>03:7B:01:66</td>
       <td>02:7B:00</td>
@@ -2272,24 +1355,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Media Format</td>
       <td>Set media format (id: 128) to time lapse video (id: 13)</td>
       <td>03:80:01:0D</td>
-      <td>02:80:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>128</td>
-      <td>Media Format</td>
-      <td>Set media format (id: 128) to time lapse video (id: 13)</td>
-      <td>03:80:01:0D</td>
-      <td>02:80:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>128</td>
-      <td>Media Format</td>
-      <td>Set media format (id: 128) to time lapse photo (id: 20)</td>
-      <td>03:80:01:14</td>
       <td>02:80:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2315,24 +1380,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>128</td>
       <td>Media Format</td>
-      <td>Set media format (id: 128) to night lapse photo (id: 21)</td>
-      <td>03:80:01:15</td>
-      <td>02:80:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>128</td>
-      <td>Media Format</td>
-      <td>Set media format (id: 128) to night lapse video (id: 26)</td>
-      <td>03:80:01:1A</td>
-      <td>02:80:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>128</td>
-      <td>Media Format</td>
       <td>Set media format (id: 128) to night lapse video (id: 26)</td>
       <td>03:80:01:1A</td>
       <td>02:80:00</td>
@@ -2344,24 +1391,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Anti-Flicker</td>
       <td>Set setup anti flicker (id: 134) to 60hz (id: 2)</td>
       <td>03:86:01:02</td>
-      <td>02:86:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>134</td>
-      <td>Anti-Flicker</td>
-      <td>Set setup anti flicker (id: 134) to 60hz (id: 2)</td>
-      <td>03:86:01:02</td>
-      <td>02:86:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>134</td>
-      <td>Anti-Flicker</td>
-      <td>Set setup anti flicker (id: 134) to 50hz (id: 3)</td>
-      <td>03:86:01:03</td>
       <td>02:86:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2387,24 +1416,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>135</td>
       <td>Hypersmooth</td>
-      <td>Set video hypersmooth (id: 135) to off (id: 0)</td>
-      <td>03:87:01:00</td>
-      <td>02:87:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>135</td>
-      <td>Hypersmooth</td>
-      <td>Set video hypersmooth (id: 135) to on (id: 1)</td>
-      <td>03:87:01:01</td>
-      <td>02:87:00</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>135</td>
-      <td>Hypersmooth</td>
       <td>Set video hypersmooth (id: 135) to on (id: 1)</td>
       <td>03:87:01:01</td>
       <td>02:87:00</td>
@@ -2416,24 +1427,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Hypersmooth</td>
       <td>Set video hypersmooth (id: 135) to high (id: 2)</td>
       <td>03:87:01:02</td>
-      <td>02:87:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>135</td>
-      <td>Hypersmooth</td>
-      <td>Set video hypersmooth (id: 135) to high (id: 2)</td>
-      <td>03:87:01:02</td>
-      <td>02:87:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>135</td>
-      <td>Hypersmooth</td>
-      <td>Set video hypersmooth (id: 135) to boost (id: 3)</td>
-      <td>03:87:01:03</td>
       <td>02:87:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2461,24 +1454,6 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Max Lens</td>
       <td>Set max lens (id: 162) to off (id: 0)</td>
       <td>03:A2:01:00</td>
-      <td>02:A2:00</td>
-      <td>\&gt;= v01.20.00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>162</td>
-      <td>Max Lens</td>
-      <td>Set max lens (id: 162) to off (id: 0)</td>
-      <td>03:A2:01:00</td>
-      <td>02:A2:00</td>
-      <td>\&gt;= v01.20.00</td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>162</td>
-      <td>Max Lens</td>
-      <td>Set max lens (id: 162) to on (id: 1)</td>
-      <td>03:A2:01:01</td>
       <td>02:A2:00</td>
       <td>\&gt;= v01.20.00</td>
       <td><span style="color:green">✔</span></td>
@@ -2587,8 +1562,11 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="6"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
-      <td rowspan="5">HERO10 Black</td>
+      <td rowspan="7"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="6">HERO10 Black</td>
+      <td>v01.42.00</td>
+    </tr>
+    <tr>
       <td>v01.40.00</td>
     </tr>
     <tr>
@@ -3144,7 +2122,7 @@ Below is a table of supported status codes.<br />
     <tr>
       <td>55</td>
       <td>Supported</td>
-      <td>Is preview stream supported in current recording/flatmode/secondary-stream?</td>
+      <td>Is preview stream supported in current recording/mode/secondary-stream?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
       <td><span style="color:green">✔</span></td>
@@ -3349,6 +2327,15 @@ Below is a table of supported status codes.<br />
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
+      <td>87</td>
+      <td>Thermal mitigation mode</td>
+      <td>Can camera use high resolution/fps (based on temperature)? (HERO7 Silver/White only)</td>
+      <td>boolean</td>
+      <td>0: False<br />1: True<br /></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
       <td>88</td>
       <td>Zoom while encoding</td>
       <td>Is this camera capable of zooming while encoding (static value based on model, not settings)</td>
@@ -3374,6 +2361,15 @@ Below is a table of supported status codes.<br />
       <td>0: False<br />1: True<br /></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr>
+      <td>92</td>
+      <td>Timewarp 1x active</td>
+      <td>Is Timewarp 1x active?</td>
+      <td>boolean</td>
+      <td>0: False<br />1: True<br /></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
     </tr>
     <tr>
       <td>93</td>
@@ -3538,6 +2534,24 @@ Below is a table of supported status codes.<br />
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
+      <td>111</td>
+      <td>Sd rating check error</td>
+      <td>Does sdcard meet specified minimum write speed?</td>
+      <td>boolean</td>
+      <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>112</td>
+      <td>Sd write speed error</td>
+      <td>Number of sdcard write speed errors since device booted</td>
+      <td>integer</td>
+      <td>*</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
       <td>113</td>
       <td>Turbo transfer</td>
       <td>Is Turbo Transfer active?</td>
@@ -3545,6 +2559,42 @@ Below is a table of supported status codes.<br />
       <td>0: False<br />1: True<br /></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr>
+      <td>114</td>
+      <td>Camera control status</td>
+      <td>Camera control status ID</td>
+      <td>integer</td>
+      <td>0: Camera Idle: No one is attempting to change camera settings<br />1: Camera Control: Camera is in a menu or changing settings. To intervene, app must request control<br />2: Camera External Control: An outside entity (app) has control and is in a menu or modifying settings<br /></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>115</td>
+      <td>Usb connected</td>
+      <td>Is the camera connected to a PC via USB?</td>
+      <td>boolean</td>
+      <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>116</td>
+      <td>Allow control over usb</td>
+      <td>Camera control over USB state</td>
+      <td>integer</td>
+      <td>0: Disabled<br />1: Enabled<br /></td>
+      <td>\&gt;= v01.30.00</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>117</td>
+      <td>Total sd space bytes</td>
+      <td>Total SD card capacity in bytes</td>
+      <td>integer</td>
+      <td>*</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
     </tr>
   </tbody>
 </table>
@@ -3555,6 +2605,10 @@ Below is a table of supported status codes.<br />
 <p>
 In order to maximize BLE bandwidth, some messages and their corresponding notifications utilize
 <a href="https://developers.google.com/protocol-buffers">Google Protobuf (Protocol Buffers)</a>.
+</p>
+
+<p>
+Open GoPro currently uses <a href="https://developers.google.com/protocol-buffers/docs/reference/proto2-spec">Protocol Buffers Version 2</a>.
 </p>
 
 
@@ -3606,34 +2660,42 @@ Rather than having a Type, Length, and Value, GoPro protobuf messages utilize th
   </tbody>
 </table>
 
-## Protobuf UUIDs
 <p>
-Below is a map of Protobuf Feature IDs and the characteristics used to write/notify.
-For additional details, see <a href="#OpenGoProBluetoothLowEnergyAPI(v2.0)-ServicesandCharacteristics">Services and Characteristics</a>.
+See <a href="#parsing-responses">Parsing Responses</a> for details on how to detect and parse a protobuf response.
+</p>
+
+## Protobuf IDs
+<p>
+Below is a table that links Protobuf Feature/Action IDs together with the UUIDs to write to and Response UUIDs to read notifications from.
+For additional details, see <a href="#services-and-characteristics">Services and Characteristics</a>.
 </p>
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
       <td>Feature</td>
       <td>Feature ID</td>
+      <td>Action IDs</td>
       <td>UUID</td>
       <td>Response UUID</td>
     </tr>
     <tr>
+      <td>Network Management</td>
+      <td>0x02</td>
+      <td>0x05, 0x0C, 0x85</td>
+      <td>GP-0091</td>
+      <td>GP-0092</td>
+    </tr>
+    <tr>
       <td>Command</td>
       <td>0xF1</td>
+      <td>0x69, 0x6B, 0x79, 0xE9, 0xEB, 0xF9</td>
       <td>GP-0072</td>
       <td>GP-0073</td>
     </tr>
     <tr>
-      <td>Settings</td>
-      <td>0xF3</td>
-      <td>GP-0074</td>
-      <td>GP-0075</td>
-    </tr>
-    <tr>
       <td>Query</td>
       <td>0xF5</td>
+      <td>0x72, 0x74, 0xF2, 0xF3, 0xF4, 0xF5</td>
       <td>GP-0076</td>
       <td>GP-0077</td>
     </tr>
@@ -3662,7 +2724,26 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td>HERO9 Black</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td rowspan="2">0xF1</td>
+      <td rowspan="2">0x02</td>
+      <td>0x05</td>
+      <td>0x85</td>
+      <td>Connect new</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">RequestConnectNew</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseConnectNew</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td></td>
+      <td>0x0C</td>
+      <td>Async status update</td>
+      <td></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">NotifProvisioningState</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td rowspan="3">0xF1</td>
       <td>0x69</td>
       <td>0xE9</td>
       <td>Request set camera control status</td>
@@ -3671,7 +2752,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td>\&gt;= v01.20.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>0x6B</td>
       <td>0xEB</td>
       <td>Request set turbo active</td>
@@ -3681,7 +2762,16 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
-      <td rowspan="2">0xF5</td>
+      <td>0x79</td>
+      <td>0xF9</td>
+      <td>Request set live stream</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">RequestSetLiveStreamMode</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">ResponseGeneric</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td rowspan="4">0xF5</td>
       <td>0x72</td>
       <td>0xF2</td>
       <td>Request get preset status</td>
@@ -3690,7 +2780,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td></td>
       <td>0xF3</td>
       <td>Async status update</td>
@@ -3699,76 +2789,517 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>0x74</td>
+      <td>0xF4</td>
+      <td>Request get live stream status</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">RequestGetLiveStreamStatus</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">NotifyLiveStreamStatus</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td></td>
+      <td>0xF5</td>
+      <td>Async status update</td>
+      <td></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">NotifyLiveStreamStatus</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
   </tbody>
 </table>
 
 
-## Protobuf Command Details
-Below are additional details about specific protobuf commands:
+# Features
 
-
-### RequestSetCameraControlStatus
 <p>
-As part of the <b>Global Behaviors</b> feature, this command is used to tell the camera that the app
-(i.e. External Control) wants to be in control, which causes the camera to immediately exit any contextual menus and
-return to the idle screen.
+Below are details about Open GoPro features.
+</p>
+
+
+## Presets
+<p>
+The camera organizes modes of operation into presets.
+A preset is a logical wrapper around a specific camera mode, title, icon, and a set of settings that enhance different styles of capturing media.
 </p>
 
 <p>
-Developers can query who is currently claiming control of the camera from camera status 114.
+Depending on the camera's state, different collections of presets will be available for immediate loading and use.
+Below is a table of settings that affect the current preset collection and thereby which presets can be loaded:
 </p>
 
-<p>
-Developers can query whether the camera is currently in a contextual menu from camera status 63.
-</p>
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>ID</td>
+      <td>Setting</td>
+    </tr>
+    <tr>
+      <td>162</td>
+      <td>Max Lens</td>
+    </tr>
+    <tr>
+      <td>173</td>
+      <td>Video Performance Mode</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>
-When the user interacts with the camera UI, the camera reclaims control and updates camera status to <b>Control</b>.
-When the user returns the camera UI to the idle screen, the camera updates camera status to <b>Idle</b>. 
+To determine which presets are available for immediate use, get <b>Preset Status</b>.
 </p>
 
-### RequestSetTurboActive
+### Preset Status
 <p>
-Turbo Transfer Mode is a special feature that serves two purposes:
+All cameras support basic query and subscription mechanics that allow the user to:
+</p>
+
 <ul>
-<li>Temporarily modify low-level settings in the OS to prioritize WiFi offload speeds</li>
-<li>Put up a UI on the camera indicating that media is being transferred and preventing the user from inadvertently changing settings or capturing new media</li>
+<li>Get hierarchical data describing the Preset Groups, Presets, and Settings that are available in the camera's current state</li>
+<li>(Un)register to be notified when a Preset is modified (e.g. resolution changes from 1080p to 4K) or a Preset Group is modified (e.g. presets are reordered/created/deleted)</li>
+</ul>
+
+<p>
+Preset Status should not be confused with camera status:
+<ul>
+<li>Preset Status contains information about current preset groups and presets</li>
+<li>Camera status contains numerous statuses about current settings and camera system state</li>
 </ul>
 </p>
 
-<p>
-Developers can query whether the camera is currently in Turbo Transfer Mode from camera status 113.
-</p>
-
-<p>
-While in Turbo Transfer Mode, if the user presses the <b>Mode/Power</b> or <b>Shutter</b> buttons on the camera,
-Turbo Transfer Mode will be deactivated.
-</p>
-
-<p>
-Some cameras are already optimized for WiFi transfer and do not gain additional speed from this feature.
-</p>
-
-### RequestGetPresetStatus
-<p>
-This command serves two purposes:
-<ul>
-<li>Describe which Preset Groups and Presets the camera supports in its current state</li>
-<li>(Un)register to be notified when a Preset is modified (e.g. resolution changes from 1080p to 4K) or a Preset Group is modified (e.g. presets are reordered/create/deleted)</li>
-</ul>
-</p>
-
+#### Preset Groups
 <p>
 Each Preset Group contains an ID, whether additional presets can be added, and an array of existing Presets.
 </p>
 
+#### Presets
 <p>
-Each Preset contains information about its ID, associated flatmode, title, icon, whether it's a user-defined preset,
-whether the preset has been modified from its factory-default state (for factory-default presets only) and a list of 
-settings associated with the Preset.
+Each Preset contains information about its ID, associated core mode, title, icon, whether it's a user-defined preset,
+whether the preset has been modified from its factory-default state (for factory-default presets only) and an array of 
+Settings associated with the Preset.
+</p>
+
+<p><i>
+Important Note: The Preset ID is required to load a Preset via the <b>Presets: Load</b> command.
+</i></p>
+
+<p>
+For details on which cameras are supported and how to get Preset Status, see <a href="#protobuf-commands">Protobuf Commands</a>.
+</p>
+
+
+## Global Behaviors
+<p>
+In order to prevent undefined behavior between the camera and a connected app, simultaneous use of the camera and a
+connected app is discouraged.
 </p>
 
 <p>
-Preset Status should not be confused with camera status, which contains hundreds of camera/setting statuses on a system level.
+Best practice for synchronizing user/app control is to use the <i>Set Camera Control Status</i> command and
+corresponding <i>Camera Control Status</i> (CCS) camera statuses in alignment with the finite state machine below:
 </p>
 
+```plantuml!
+
+
+' Define states
+IDLE: Control Status: Idle
+CAMERA_CONTROL: Control Status: Camera Control
+EXTERNAL_CONTROL: Control Status: External Control
+
+' Define transitions
+[*]              ->      IDLE
+
+IDLE             ->      IDLE: App sets CCS: Idle
+IDLE             -up->   CAMERA_CONTROL: User interacts with camera
+IDLE             -down-> EXTERNAL_CONTROL: App sets CCS: External Control
+
+CAMERA_CONTROL   ->      CAMERA_CONTROL: User interacts with camera
+CAMERA_CONTROL   -down-> IDLE: User returns camera to idle screen\nApp sets CCS: Idle
+
+EXTERNAL_CONTROL ->    EXTERNAL_CONTROL: App sets CCS: External Control
+EXTERNAL_CONTROL -up-> IDLE: App sets CCS: Idle\nUser interacts with camera
+EXTERNAL_CONTROL -up-> CAMERA_CONTROL: User interacts with camera
+
+
+
+
+```
+
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Control Status</td>
+      <td>ID</td>
+    </tr>
+    <tr>
+      <td>IDLE</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>CONTROL</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>EXTERNAL_CONTROL</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+
+### Set Camera Control Status
+<p>
+This command is used to tell the camera that the app (i.e. External Control) wishes to claim control of the camera.
+This causes the camera to immediately exit any contextual menus and return to the idle screen.
+Any interaction with the camera's physical buttons will cause the camera to reclaim control and update control status accordingly.
+If the user returns the camera UI to the idle screen, the camera updates control status to Idle.
+</p>
+
+<p>
+Note:
+<ul>
+<li>The entity currently claiming control of the camera is advertised in camera status 114</li>
+<li>Information about whether the camera is in a contextual menu or not is advertised in camera status 63.</li>
+</ul>
+</p>
+
+<p>
+For details on which cameras are supported and how to set Camera Control Status, see
+<a href="#protobuf-commands">Protobuf Commands</a>.
+</p>
+
+
+## Station Mode
+<p>
+The camera supports being put into <a href="https://en.wikipedia.org/wiki/Station_(networking)">Station Mode (STA)</a>.
+This is necessary for features like Live Streaming, where the camera needs to connect to an access point.
+</p>
+
+### Station Mode Sequence
+<p>
+Put visually, the process of connecting the camera to an access point is as follows:
+</p>
+
+```plantuml!
+
+
+actor Central
+participant "GP-0091" as GP0091
+participant "GP-0092" as GP0092
+
+Central  -> GP0091  : RequestConnectNew
+Central <-- GP0092  : ResponseConnectNew
+loop until SUCCESS_NEW_AP
+    Central <-- GP0092  : NotifProvisionState
+end loop
+
+
+
+
+```
+
+### Request a new Connection
+<p>
+To connect the camera to an access point, send a <a href="#protobuf-commands">RequestConnectNew</a> command:
+</p>
+
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Parameter</td>
+      <td>Type</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td>ssid</td>
+      <td>string</td>
+      <td>AP SSID</td>
+    </tr>
+    <tr>
+      <td>password</td>
+      <td>string</td>
+      <td>AP password</td>
+    </tr>
+    <tr>
+      <td>static_ip</td>
+      <td>bytes</td>
+      <td>Static IP address (optional)</td>
+    </tr>
+    <tr>
+      <td>gateway</td>
+      <td>bytes</td>
+      <td>Gateway IP address (optional)</td>
+    </tr>
+    <tr>
+      <td>subnet</td>
+      <td>bytes</td>
+      <td>Subnet mask (optional)</td>
+    </tr>
+    <tr>
+      <td>dns_primary</td>
+      <td>bytes</td>
+      <td>Primary DNS (optional)</td>
+    </tr>
+    <tr>
+      <td>dns_secondary</td>
+      <td>bytes</td>
+      <td>Secondary DNS (optional)</td>
+    </tr>
+  </tbody>
+</table>
+
+### Polling for State
+<p>
+After sending a new connection request, wait for a <a href="#protobuf-commands">NotifProvisioningState</a> notification from GP-0092
+that indicates a <i>PROVISIONING_SUCCESS_NEW_AP</i>. 
+</p> 
+
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Parameter</td>
+      <td>Type</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td>provisioning_state</td>
+      <td>EnumProvisioning</td>
+      <td>Basic provisioning/connection state</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## Turbo Transfer
+<p>
+Some cameras support Turbo Transfer mode, which allows media to be downloaded over WiFi more rapidly.
+This is done by temporarily modifying low-level settings in the OS to prioritize WiFi offload speeds.
+</p>
+
+<p>
+When Turbo Transfer is active, theh camera displays an OSD indicating that media is being transferred in order to 
+prevent the user from inadvertently changing settings or capturing media.
+</p>
+
+<p>
+Turbo Transfer should only be used during media offload.
+It is recommended that the user check for and--if necessary--disable Turbo Transfer on connect.
+Developers can query whether the camera is currently in Turbo Transfer Mode from camera status 113.
+</p>
+
+<p>
+Note:
+<ul>
+<li>Pressing MODE/POWER or Shutter buttons on the camera will deactivate Turbo Transfer feature.</li>
+<li>Some cameras are already optimized for WiFi transfer and do not gain additional speed from this feature.</li>
+</ul>
+</p>
+
+<p>
+For details on which cameras are supported and how to enable and disable Turbo Transfer, see
+<a href="#protobuf-commands">Protobuf Commands</a>.
+</p>
+
+
+## Live Streaming
+<p>
+The camera supports the ability to stream to social media platforms such as Twitch, YouTube, and Facebook or any other
+site that accepts RTMP URLs. For additional details about getting started with RTMP, see
+<a href="https://gopro.com/en/us/news/how-to-live-stream-on-gopro">How to Stream</a>.
+</p>
+
+### Overview
+<p>
+Live streaming with camera is accomplished as follows:
+</p>
+
+<ol>
+<li>Put the camera into <b>Station Mode</b> and connect it to an access point</li>
+<li>Set the <b>Live Stream Mode</b></li>
+<li>Poll for <b>Live Stream Status</b> until the camera indicates it is ready</li>
+<li>Set the shutter to begin live streaming!</li>
+</ol>
+
+### Live Streaming Sequence
+```plantuml!
+
+
+actor Central
+participant "GP-0091" as GP0091
+participant "GP-0092" as GP0092
+participant "GP-0072" as GP0072
+participant "GP-0073" as GP0073
+participant "GP-0076" as GP0076
+participant "GP-0077" as GP0077
+
+note over Central, GP0091: Station Mode: Connect to AP
+Central  -> GP0091  : RequestConnectNew
+Central <-- GP0092  : ResponseConnectNew
+loop until SUCCESS_NEW_AP
+    Central <-- GP0092  : NotifProvisionState
+end loop
+
+note over Central, GP0091: Set Live Stream Mode
+Central  -> GP0072 : RequestSetLiveStreamMode
+Central <-- GP0073 : ResponseGeneric
+
+note over Central, GP0091: Poll Live Stream Status until ready
+loop until LIVE_STREAM_STATE_READY
+Central  -> GP0076 : RequestGetLiveStreamStatus
+Central <-- GP0077 : NotifyLiveStreamStatus
+end loop
+
+note over Central, GP0091: Start live streaming!
+Central  -> GP0072 : Set shutter
+Central <-- GP0073 : response
+note over Central, GP0091: Stop live streaming
+Central  -> GP0072 : Unset shutter
+Central <-- GP0073 : response
+
+
+
+
+```
+
+### Set Live Stream Mode
+<p>
+Setting the live stream mode is accomplished by sending a <b>RequestSetLiveStreamMode</b> command.
+</p>
+
+<p>
+Command and enum details are available in <a href="#protobuf-commands">Protobuf Comands</a>.
+</p>
+
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Parameter</td>
+      <td>Type</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td>url</td>
+      <td>string</td>
+      <td>RTMP url used to stream. Set to empty string to invalidate/cancel stream</td>
+    </tr>
+    <tr>
+      <td>encode</td>
+      <td>bool</td>
+      <td>Whether to encode video to sdcard while streaming or not</td>
+    </tr>
+    <tr>
+      <td>window_size</td>
+      <td>EnumWindowSize</td>
+      <td>Streaming video resolution</td>
+    </tr>
+    <tr>
+      <td>cert</td>
+      <td>string</td>
+      <td>Certificate from a trusted root for streaming services that use encryption</td>
+    </tr>
+    <tr>
+      <td>minimum_bitrate</td>
+      <td>int32</td>
+      <td>Desired minimum streaming bitrate (min possible: 800)</td>
+    </tr>
+    <tr>
+      <td>maximum_bitrate</td>
+      <td>int32</td>
+      <td>Desired maximum streaming bitrate (max possible: 8000)</td>
+    </tr>
+    <tr>
+      <td>starting_bitrate</td>
+      <td>int32</td>
+      <td>Initial streaming bitrate (honored if 800 <= value <= 8000)</td>
+    </tr>
+    <tr>
+      <td>lens</td>
+      <td>EnumLens</td>
+      <td>Streaming Field of View</td>
+    </tr>
+  </tbody>
+</table>
+
+### Get Live Stream Status
+<p>
+Current status of the live stream is obtained by sending a <b>RequestGetLiveStreamStatus</b> command to the camera.
+This command serves two purposes:
+<ul>
+<li>Get current state of the live stream</li> 
+<li>(Un)register to be notified when live stream state changes</li>
+</ul>
+</p>
+
+<p>
+Responses and notifications come as a <b>NotifyLiveStreamStatus</b> message with properties outlined in the table below.
+</p>
+
+<p>
+Command and enum details are available in <a href="#protobuf-commands">Protobuf Comands</a>.
+</p>
+
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Parameter</td>
+      <td>Type</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td>live_stream_status</td>
+      <td>EnumLiveStreamStatus</td>
+      <td>Basic streaming state (idle, ready, streaming, failed, etc)</td>
+    </tr>
+    <tr>
+      <td>live_stream_error</td>
+      <td>EnumLiveStreamError</td>
+      <td>Error codes for specific streaming errors</td>
+    </tr>
+    <tr>
+      <td>live_stream_encode</td>
+      <td>bool</td>
+      <td>Whether camera is encoding video to sdcard while encoding or not</td>
+    </tr>
+    <tr>
+      <td>live_stream_bitrate</td>
+      <td>int32</td>
+      <td>Current streaming bitrate (Kbps)</td>
+    </tr>
+    <tr>
+      <td>live_stream_window_size_supported_array</td>
+      <td>EnumWindowSize</td>
+      <td>Defines supported streaming resolutions</td>
+    </tr>
+    <tr>
+      <td>live_stream_encode_supported</td>
+      <td>bool</td>
+      <td>Does this camera support encoding while streaming?</td>
+    </tr>
+    <tr>
+      <td>live_stream_max_lens_unsupported</td>
+      <td>bool</td>
+      <td>Does camera lack support for streaming with Max Lens feature?</td>
+    </tr>
+    <tr>
+      <td>live_stream_minimum_stream_bitrate</td>
+      <td>int32</td>
+      <td>Minimum possible bitrate (static) (Kbps)</td>
+    </tr>
+    <tr>
+      <td>live_stream_maximum_stream_bitrate</td>
+      <td>int32</td>
+      <td>Maximum possible bitrate (static) (Kbps)</td>
+    </tr>
+    <tr>
+      <td>live_stream_lens_supported</td>
+      <td>bool</td>
+      <td>Does camera support multiple streaming FOVs?</td>
+    </tr>
+    <tr>
+      <td>live_stream_lens_supported_array</td>
+      <td>EnumLens</td>
+      <td>Defines supported Field of View values</td>
+    </tr>
+  </tbody>
+</table>

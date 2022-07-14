@@ -6,12 +6,13 @@ from construct import Int32ub
 from open_gopro.communication_client import GoProBle
 from open_gopro.constants import SettingId, StatusId, GoProUUIDs, CmdId, QueryCmdId
 from open_gopro import proto, Params
+from open_gopro.responses import GoProResp
 
 
 def test_write_command_correct_uuid_cmd_id(ble_communicator: GoProBle):
     response = ble_communicator.ble_command.set_shutter(Params.Shutter.ON)
     assert response.uuid == GoProUUIDs.CQ_COMMAND
-    assert response._raw_packet[1] == CmdId.SET_SHUTTER.value
+    assert response._raw_packet[0] == CmdId.SET_SHUTTER.value
 
 
 def test_write_command_correct_parameter_data(ble_communicator: GoProBle):
@@ -28,82 +29,81 @@ def test_read_command_correct_uuid(ble_communicator: GoProBle):
 def test_setting_set(ble_communicator: GoProBle):
     response = ble_communicator.ble_setting.resolution.set(Params.Resolution.RES_1080)
     assert response.uuid == GoProUUIDs.CQ_SETTINGS
-    assert response._raw_packet[1] == SettingId.RESOLUTION.value
-    assert response._raw_packet[3] == Params.Resolution.RES_1080.value
+    assert response._raw_packet[0] == SettingId.RESOLUTION.value
+    assert response._raw_packet[2] == Params.Resolution.RES_1080.value
 
 
 def test_setting_get_value(ble_communicator: GoProBle):
     response = ble_communicator.ble_setting.resolution.get_value()
     assert response.uuid == GoProUUIDs.CQ_QUERY
-    assert response._raw_packet[1] == QueryCmdId.GET_SETTING_VAL.value
-    assert response._raw_packet[2] == SettingId.RESOLUTION.value
+    assert response._raw_packet[0] == QueryCmdId.GET_SETTING_VAL.value
+    assert response._raw_packet[1] == SettingId.RESOLUTION.value
 
 
 def test_setting_get_capabilities_values(ble_communicator: GoProBle):
     response = ble_communicator.ble_setting.resolution.get_capabilities_values()
     assert response.uuid == GoProUUIDs.CQ_QUERY
-    assert response._raw_packet[1] == QueryCmdId.GET_CAPABILITIES_VAL.value
-    assert response._raw_packet[2] == SettingId.RESOLUTION.value
+    assert response._raw_packet[0] == QueryCmdId.GET_CAPABILITIES_VAL.value
+    assert response._raw_packet[1] == SettingId.RESOLUTION.value
 
 
 def test_setting_register_value_update(ble_communicator: GoProBle):
     response = ble_communicator.ble_setting.resolution.register_value_update()
     assert response.uuid == GoProUUIDs.CQ_QUERY
-    assert response._raw_packet[1] == QueryCmdId.REG_SETTING_VAL_UPDATE.value
-    assert response._raw_packet[2] == SettingId.RESOLUTION.value
+    assert response._raw_packet[0] == QueryCmdId.REG_SETTING_VAL_UPDATE.value
+    assert response._raw_packet[1] == SettingId.RESOLUTION.value
 
 
 def test_setting_unregister_value_update(ble_communicator: GoProBle):
     response = ble_communicator.ble_setting.resolution.unregister_value_update()
     assert response.uuid == GoProUUIDs.CQ_QUERY
-    assert response._raw_packet[1] == QueryCmdId.UNREG_SETTING_VAL_UPDATE.value
-    assert response._raw_packet[2] == SettingId.RESOLUTION.value
+    assert response._raw_packet[0] == QueryCmdId.UNREG_SETTING_VAL_UPDATE.value
+    assert response._raw_packet[1] == SettingId.RESOLUTION.value
 
 
 def test_setting_register_capability_update(ble_communicator: GoProBle):
     response = ble_communicator.ble_setting.resolution.register_capability_update()
     assert response.uuid == GoProUUIDs.CQ_QUERY
-    assert response._raw_packet[1] == QueryCmdId.REG_CAPABILITIES_UPDATE.value
-    assert response._raw_packet[2] == SettingId.RESOLUTION.value
+    assert response._raw_packet[0] == QueryCmdId.REG_CAPABILITIES_UPDATE.value
+    assert response._raw_packet[1] == SettingId.RESOLUTION.value
 
 
 def test_setting_unregister_capability_update(ble_communicator: GoProBle):
     response = ble_communicator.ble_setting.resolution.unregister_capability_update()
     assert response.uuid == GoProUUIDs.CQ_QUERY
-    assert response._raw_packet[1] == QueryCmdId.UNREG_CAPABILITIES_UPDATE.value
-    assert response._raw_packet[2] == SettingId.RESOLUTION.value
+    assert response._raw_packet[0] == QueryCmdId.UNREG_CAPABILITIES_UPDATE.value
+    assert response._raw_packet[1] == SettingId.RESOLUTION.value
 
 
 def test_status_get_value(ble_communicator: GoProBle):
     response = ble_communicator.ble_status.encoding_active.get_value()
     assert response.uuid == GoProUUIDs.CQ_QUERY
-    assert response._raw_packet[1] == QueryCmdId.GET_STATUS_VAL.value
-    assert response._raw_packet[2] == StatusId.ENCODING.value
+    assert response._raw_packet[0] == QueryCmdId.GET_STATUS_VAL.value
+    assert response._raw_packet[1] == StatusId.ENCODING.value
 
 
 def test_status_register_value_update(ble_communicator: GoProBle):
     assert ble_communicator._register_listener(None)
     response = ble_communicator.ble_status.encoding_active.register_value_update()
     assert response.uuid == GoProUUIDs.CQ_QUERY
-    assert response._raw_packet[1] == QueryCmdId.REG_STATUS_VAL_UPDATE.value
-    assert response._raw_packet[2] == StatusId.ENCODING.value
+    assert response._raw_packet[0] == QueryCmdId.REG_STATUS_VAL_UPDATE.value
+    assert response._raw_packet[1] == StatusId.ENCODING.value
 
 
 def test_status_unregister_value_update(ble_communicator: GoProBle):
     assert ble_communicator._unregister_listener(None)
     response = ble_communicator.ble_status.encoding_active.unregister_value_update()
     assert response.uuid == GoProUUIDs.CQ_QUERY
-    assert response._raw_packet[1] == QueryCmdId.UNREG_STATUS_VAL_UPDATE.value
-    assert response._raw_packet[2] == StatusId.ENCODING.value
+    assert response._raw_packet[0] == QueryCmdId.UNREG_STATUS_VAL_UPDATE.value
+    assert response._raw_packet[1] == StatusId.ENCODING.value
 
 
 def test_proto_command_arg(ble_communicator: GoProBle):
     response = ble_communicator.ble_command.set_turbo_mode(True)
     assert response.uuid == GoProUUIDs.CQ_COMMAND
-    assert response._raw_packet == bytearray(b"\x04\xf1k\x08\x01")
-    out = proto.ResponseGeneric.FromString(response._raw_packet[3:])
+    assert response._raw_packet == bytearray(b"\xf1k\x08\x01")
+    out = proto.ResponseGeneric.FromString(response._raw_packet[2:])
     str(out)
-    out.to_dict()
 
 
 # def test_proto_command_kwargs(ble_communicator: GoProBle):
