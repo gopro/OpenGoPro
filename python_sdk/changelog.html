@@ -14,6 +14,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -30,7 +31,7 @@
             <a href="index.html" class="icon icon-home"> Open GoPro Python SDK
           </a>
               <div class="version">
-                0.9.2
+                0.10.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -115,38 +116,42 @@
            <div itemprop="articleBody">
              
   <section id="changelog">
-<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline"></a></h1>
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this heading"></a></h1>
 <p>All notable changes to this project will be documented in this file.</p>
 <p>The format is based on <a class="reference external" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
 and this project adheres to <a class="reference external" href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <section id="unreleased">
-<h2>Unreleased<a class="headerlink" href="#unreleased" title="Permalink to this headline"></a></h2>
+<h2>Unreleased<a class="headerlink" href="#unreleased" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Add sudo password argument to Wifi Controller and expose through CLI demos via stdin</p></li>
+<li><p>Add more protobuf commands and missing protobuf ID parsing functionality</p></li>
+<li><p>Add livestream demo GUI</p></li>
+<li><p>Change preview stream demo to be a GUI</p></li>
+<li><p>Add support for fragmenting long data packets when sending BLE data</p></li>
 </ul>
 </section>
 <section id="june-16-2022">
-<h2>0.9.2 (June-16-2022)<a class="headerlink" href="#june-16-2022" title="Permalink to this headline"></a></h2>
+<h2>0.9.2 (June-16-2022)<a class="headerlink" href="#june-16-2022" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Remove use of importlib.metadata as it was complicating pyinstaller use of this package</p></li>
 </ul>
 </section>
 <section id="may-27-2022">
-<h2>0.9.1 (May-27-2022)<a class="headerlink" href="#may-27-2022" title="Permalink to this headline"></a></h2>
+<h2>0.9.1 (May-27-2022)<a class="headerlink" href="#may-27-2022" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Improve non-main thread and asyncio exception handling</p></li>
 <li><p>Add pydocstyle verification</p></li>
 </ul>
 </section>
 <section id="february-7-2022">
-<h2>0.9.0 (February-7-2022)<a class="headerlink" href="#february-7-2022" title="Permalink to this headline"></a></h2>
+<h2>0.9.0 (February-7-2022)<a class="headerlink" href="#february-7-2022" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Move to Poetry-based development environment</p></li>
 <li><p>Fix docstring inconsistencies</p></li>
 </ul>
 </section>
 <section id="february-3-2022">
-<h2>0.8.0 (February-3-2022)<a class="headerlink" href="#february-3-2022" title="Permalink to this headline"></a></h2>
+<h2>0.8.0 (February-3-2022)<a class="headerlink" href="#february-3-2022" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Improve BLE connection Robustness</p></li>
 <li><p>Deprecate support for Open GoPro Versions other than 2.0</p></li>
@@ -159,7 +164,7 @@ and this project adheres to <a class="reference external" href="https://semver.o
 </ul>
 </section>
 <section id="january-3-2022">
-<h2>0.7.2 (January-3-2022)<a class="headerlink" href="#january-3-2022" title="Permalink to this headline"></a></h2>
+<h2>0.7.2 (January-3-2022)<a class="headerlink" href="#january-3-2022" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Allow for WiFi adapter to specify interface</p></li>
 <li><p>Clean up Wifi adapter</p></li>
@@ -167,7 +172,7 @@ and this project adheres to <a class="reference external" href="https://semver.o
 </ul>
 </section>
 <section id="december-16-2021">
-<h2>0.7.1 (December-16-2021)<a class="headerlink" href="#december-16-2021" title="Permalink to this headline"></a></h2>
+<h2>0.7.1 (December-16-2021)<a class="headerlink" href="#december-16-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Add global behaviors commands and camera control status</p></li>
 <li><p>Add register / unregister all for settings and statuses</p></li>
@@ -176,25 +181,25 @@ and this project adheres to <a class="reference external" href="https://semver.o
 </ul>
 </section>
 <section id="october-27-2021">
-<h2>0.7.0 (October-27-2021)<a class="headerlink" href="#october-27-2021" title="Permalink to this headline"></a></h2>
+<h2>0.7.0 (October-27-2021)<a class="headerlink" href="#october-27-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Add video performance mode functionality</p></li>
 </ul>
 </section>
 <section id="october-7-2021">
-<h2>0.6.3 (October-7-2021)<a class="headerlink" href="#october-7-2021" title="Permalink to this headline"></a></h2>
+<h2>0.6.3 (October-7-2021)<a class="headerlink" href="#october-7-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Decouple response accumulating from parsing</p></li>
 </ul>
 </section>
 <section id="september-28-2021">
-<h2>0.6.2 (September-28-2021)<a class="headerlink" href="#september-28-2021" title="Permalink to this headline"></a></h2>
+<h2>0.6.2 (September-28-2021)<a class="headerlink" href="#september-28-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Fix setup.py entrypoints for demo programs</p></li>
 </ul>
 </section>
 <section id="september-20-2021">
-<h2>0.6.1 (September-20-2021)<a class="headerlink" href="#september-20-2021" title="Permalink to this headline"></a></h2>
+<h2>0.6.1 (September-20-2021)<a class="headerlink" href="#september-20-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>make parsers available at instantiation</p></li>
 <li><p>use GoPro specific enums to handle invalid parameter cases</p></li>
@@ -204,7 +209,7 @@ and this project adheres to <a class="reference external" href="https://semver.o
 </ul>
 </section>
 <section id="september-2-2021">
-<h2>0.6.0 (September-2-2021)<a class="headerlink" href="#september-2-2021" title="Permalink to this headline"></a></h2>
+<h2>0.6.0 (September-2-2021)<a class="headerlink" href="#september-2-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Major refactor to support multiple Open GoPro API versions and different BLE / WiFi adapters</p></li>
 <li><p>Improve BLE connection robustness by ensuring disconnects</p></li>
@@ -216,45 +221,45 @@ and this project adheres to <a class="reference external" href="https://semver.o
 </ul>
 </section>
 <section id="august-10-2021">
-<h2>0.5.8 (August-10-2021)<a class="headerlink" href="#august-10-2021" title="Permalink to this headline"></a></h2>
+<h2>0.5.8 (August-10-2021)<a class="headerlink" href="#august-10-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Add option to start GoPro communication without WiFi (i.e only use BLE)</p></li>
 <li><p>Add battery logging example</p></li>
 </ul>
 </section>
 <section id="june-7-2021">
-<h2>0.5.7 (June-7-2021)<a class="headerlink" href="#june-7-2021" title="Permalink to this headline"></a></h2>
+<h2>0.5.7 (June-7-2021)<a class="headerlink" href="#june-7-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Fix wifi driver for Windows</p></li>
 </ul>
 </section>
 <section id="may-26-2021">
-<h2>0.5.6 (May-26-2021)<a class="headerlink" href="#may-26-2021" title="Permalink to this headline"></a></h2>
+<h2>0.5.6 (May-26-2021)<a class="headerlink" href="#may-26-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Minor documentation updates</p></li>
 </ul>
 </section>
 <section id="id1">
-<h2>0.5.5 (May-26-2021)<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
+<h2>0.5.5 (May-26-2021)<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Documentation link updates</p></li>
 </ul>
 </section>
 <section id="may-6-2021">
-<h2>0.5.4 (May-6-2021)<a class="headerlink" href="#may-6-2021" title="Permalink to this headline"></a></h2>
+<h2>0.5.4 (May-6-2021)<a class="headerlink" href="#may-6-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Update documentation to coexist with jekyll on Github pages</p></li>
 </ul>
 </section>
 <section id="april-15-2021">
-<h2>0.5.3 (April-15-2021)<a class="headerlink" href="#april-15-2021" title="Permalink to this headline"></a></h2>
+<h2>0.5.3 (April-15-2021)<a class="headerlink" href="#april-15-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Documentation updates</p></li>
 <li><p>Move into Open GoPro repo</p></li>
 </ul>
 </section>
 <section id="april-2-2021">
-<h2>0.5.2 (April-2-2021)<a class="headerlink" href="#april-2-2021" title="Permalink to this headline"></a></h2>
+<h2>0.5.2 (April-2-2021)<a class="headerlink" href="#april-2-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Add entrypoints for video, photo, and stream</p></li>
 <li><p>Updates to response interface for usability</p></li>
@@ -262,27 +267,27 @@ and this project adheres to <a class="reference external" href="https://semver.o
 </ul>
 </section>
 <section id="april-1-2021">
-<h2>0.5.1 (April-1-2021)<a class="headerlink" href="#april-1-2021" title="Permalink to this headline"></a></h2>
+<h2>0.5.1 (April-1-2021)<a class="headerlink" href="#april-1-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Add photo, video, and stream entry points</p></li>
 <li><p>Change active accumulating response to a dict indexed by UUID’s to handle simultaneous active responses</p></li>
 </ul>
 </section>
 <section id="march-30-2021">
-<h2>0.5.0 (March-30-2021)<a class="headerlink" href="#march-30-2021" title="Permalink to this headline"></a></h2>
+<h2>0.5.0 (March-30-2021)<a class="headerlink" href="#march-30-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Add support for Ubuntu 20.04</p></li>
 <li><p>Upgrade to bleak 0.11.0</p></li>
 </ul>
 </section>
 <section id="march-29-2021">
-<h2>0.4.6 (March-29-2021)<a class="headerlink" href="#march-29-2021" title="Permalink to this headline"></a></h2>
+<h2>0.4.6 (March-29-2021)<a class="headerlink" href="#march-29-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Fix bug where multiple simultaneous sync responses weren’t handled</p></li>
 </ul>
 </section>
 <section id="id2">
-<h2>0.4.5 (March-29-2021)<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h2>
+<h2>0.4.5 (March-29-2021)<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><dl class="simple">
 <dt>Infrastructure updates:</dt><dd><ul>
@@ -295,7 +300,7 @@ and this project adheres to <a class="reference external" href="https://semver.o
 </ul>
 </section>
 <section id="march-27-2021">
-<h2>0.4.4 (March-27-2021)<a class="headerlink" href="#march-27-2021" title="Permalink to this headline"></a></h2>
+<h2>0.4.4 (March-27-2021)<a class="headerlink" href="#march-27-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><dl class="simple">
 <dt>Infrastructure updates:</dt><dd><ul>
@@ -308,25 +313,25 @@ and this project adheres to <a class="reference external" href="https://semver.o
 </ul>
 </section>
 <section id="march-26-2021">
-<h2>0.4.3 (March-26-2021)<a class="headerlink" href="#march-26-2021" title="Permalink to this headline"></a></h2>
+<h2>0.4.3 (March-26-2021)<a class="headerlink" href="#march-26-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Make BLE interface controller-agnostic</p></li>
 </ul>
 </section>
 <section id="march-25-2021">
-<h2>0.4.2 (March-25-2021)<a class="headerlink" href="#march-25-2021" title="Permalink to this headline"></a></h2>
+<h2>0.4.2 (March-25-2021)<a class="headerlink" href="#march-25-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Fix line endings that were causing PyPi failures</p></li>
 </ul>
 </section>
 <section id="id3">
-<h2>0.4.1 (March-25-2021)<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h2>
+<h2>0.4.1 (March-25-2021)<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Fix install error by adding protobuf requirement</p></li>
 </ul>
 </section>
 <section id="id4">
-<h2>0.4.0 (March-25-2021)<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h2>
+<h2>0.4.0 (March-25-2021)<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Merge BLE and WiFi classes into one GoPro class</p></li>
 <li><p>Automatically periodically send keep alive</p></li>
@@ -334,7 +339,7 @@ and this project adheres to <a class="reference external" href="https://semver.o
 </ul>
 </section>
 <section id="march-22-2021">
-<h2>0.3.3 (March-22-2021)<a class="headerlink" href="#march-22-2021" title="Permalink to this headline"></a></h2>
+<h2>0.3.3 (March-22-2021)<a class="headerlink" href="#march-22-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Add support to wait for encoding and system ready statuses in BLE</p></li>
 <li><p>Add protobuf framework (not being sent yet)</p></li>
@@ -342,33 +347,33 @@ and this project adheres to <a class="reference external" href="https://semver.o
 </ul>
 </section>
 <section id="march-15-2021">
-<h2>0.3.2 (March-15-2021)<a class="headerlink" href="#march-15-2021" title="Permalink to this headline"></a></h2>
+<h2>0.3.2 (March-15-2021)<a class="headerlink" href="#march-15-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Handle case where BLE parameter has length 0</p></li>
 <li><p>Doc updates</p></li>
 </ul>
 </section>
 <section id="march-12-2021">
-<h2>0.3.1 (March-12-2021)<a class="headerlink" href="#march-12-2021" title="Permalink to this headline"></a></h2>
+<h2>0.3.1 (March-12-2021)<a class="headerlink" href="#march-12-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Add automatic VLC opening</p></li>
 </ul>
 </section>
 <section id="march-11-2021">
-<h2>0.3.0 (March-11-2021)<a class="headerlink" href="#march-11-2021" title="Permalink to this headline"></a></h2>
+<h2>0.3.0 (March-11-2021)<a class="headerlink" href="#march-11-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Wrote documentation and did some refactoring</p></li>
 </ul>
 </section>
 <section id="march-10-2021">
-<h2>0.2.0 (March-10-2021)<a class="headerlink" href="#march-10-2021" title="Permalink to this headline"></a></h2>
+<h2>0.2.0 (March-10-2021)<a class="headerlink" href="#march-10-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>first usable Beta package.</p></li>
 <li><p>Should work on Windows and Mac</p></li>
 </ul>
 </section>
 <section id="x-march-10-2021">
-<h2>0.1.x (March-10-2021)<a class="headerlink" href="#x-march-10-2021" title="Permalink to this headline"></a></h2>
+<h2>0.1.x (March-10-2021)<a class="headerlink" href="#x-march-10-2021" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>open_gopro created. Incremental updates until the package could actually install</p></li>
 </ul>

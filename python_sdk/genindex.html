@@ -13,6 +13,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
@@ -27,7 +28,7 @@
             <a href="index.html" class="icon icon-home"> Open GoPro Python SDK
           </a>
               <div class="version">
-                0.9.2
+                0.10.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -106,11 +107,15 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.WAPState.ABORTED">ABORTED (open_gopro.api.params.WAPState attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.ProvisioningState.ABORTED_BY_SYSTEM">ABORTED_BY_SYSTEM (open_gopro.api.params.ProvisioningState attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.acc_mic_stat">acc_mic_stat (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.ACC_MIC_STAT">ACC_MIC_STAT (open_gopro.constants.StatusId attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.gopro.acquire_ready_lock">acquire_ready_lock() (in module open_gopro.gopro)</a>
+      <li><a href="api.html#open_gopro.api.params.AccMicStatus">AccMicStatus (class in open_gopro.api.params)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.ActionId">ActionId (class in open_gopro.constants)</a>
 </li>
@@ -118,23 +123,35 @@
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.ACTIVE_PRESET">ACTIVE_PRESET (open_gopro.constants.StatusId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.Preset.ACTIVITY">ACTIVITY (open_gopro.api.params.Preset attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Preset.ACTIVITY_EB">ACTIVITY_EB (open_gopro.api.params.Preset attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.add_photo_hilight">add_photo_hilight (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.add_video_hilight">add_video_hilight (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.LED.ALL_OFF">ALL_OFF (open_gopro.api.params.LED attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.LED.ALL_ON">ALL_ON (open_gopro.api.params.LED attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.analytics_rdy">analytics_rdy (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.ANALYTICS_RDY">ANALYTICS_RDY (open_gopro.constants.StatusId attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.analytics_size">analytics_size (open_gopro.api.ble_commands.BleStatuses attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.analytics_size">analytics_size (open_gopro.api.ble_commands.BleStatuses attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.constants.StatusId.ANALYTICS_SIZE">ANALYTICS_SIZE (open_gopro.constants.StatusId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.AnalyticsState">AnalyticsState (class in open_gopro.api.params)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleSettings.anti_flicker">anti_flicker (open_gopro.api.ble_commands.BleSettings attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.SettingId.ANTI_FLICKER">ANTI_FLICKER (open_gopro.constants.SettingId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.AntiFlicker">AntiFlicker (class in open_gopro.api.params)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.ap_ssid">ap_ssid (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
@@ -148,6 +165,8 @@
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.APP_COUNT">APP_COUNT (open_gopro.constants.StatusId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.ExposureMode.AUTO">AUTO (open_gopro.api.params.ExposureMode attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleSettings.auto_off">auto_off (open_gopro.api.ble_commands.BleSettings attribute)</a>
 
       <ul>
@@ -156,15 +175,25 @@
       </ul></li>
       <li><a href="api.html#open_gopro.constants.SettingId.AUTO_OFF">AUTO_OFF (open_gopro.constants.SettingId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.AutoOff">AutoOff (class in open_gopro.api.params)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.WifiBand.BAND_2_4_GHZ">BAND_2_4_GHZ (open_gopro.api.params.WifiBand attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.WifiBand.BAND_5_GHZ">BAND_5_GHZ (open_gopro.api.params.WifiBand attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.band_5ghz_avail">band_5ghz_avail (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.BAND_5GHZ_AVAIL">BAND_5GHZ_AVAIL (open_gopro.constants.StatusId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.WifiBand.BAND_MAX">BAND_MAX (open_gopro.api.params.WifiBand attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Preset.BASIC">BASIC (open_gopro.api.params.Preset attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.batt_level">batt_level (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
@@ -179,6 +208,8 @@
       <li><a href="api.html#open_gopro.constants.StatusId.BATT_PRESENT">BATT_PRESENT (open_gopro.constants.StatusId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.gopro.GoPro.ble_command">ble_command (open_gopro.gopro.GoPro property)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.LED.BLE_KEEP_ALIVE">BLE_KEEP_ALIVE (open_gopro.api.params.LED attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -200,12 +231,28 @@
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.Iterator">BleStatuses.Iterator (class in open_gopro.api.ble_commands)</a>
 </li>
+      <li><a href="api.html#open_gopro.ble.services.BleUUID">BleUUID (class in open_gopro.ble.services)</a>
+</li>
+      <li><a href="api.html#open_gopro.ble.services.BleUUID.Format">BleUUID.Format (class in open_gopro.ble.services)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.HypersmoothMode.BOOST">BOOST (open_gopro.api.params.HypersmoothMode attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Flatmode.BURST_PHOTO">BURST_PHOTO (open_gopro.api.params.Flatmode attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.Preset.BURST_PHOTO">(open_gopro.api.params.Preset attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.SDStatus.BUSY">BUSY (open_gopro.api.params.SDStatus attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.CameraControl.CAMERA">CAMERA (open_gopro.api.params.CameraControl attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.camera_control">camera_control (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.CAMERA_CONTROL">CAMERA_CONTROL (open_gopro.constants.StatusId attribute)</a>
@@ -214,11 +261,23 @@
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.CAMERA_LENS_TYPE">CAMERA_LENS_TYPE (open_gopro.constants.StatusId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.CameraControl">CameraControl (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.CameraControlStatus">CameraControlStatus (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.WAPState.CANCELED">CANCELED (open_gopro.api.params.WAPState attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.ProvisioningState.CANCELLED_BY_USER">CANCELLED_BY_USER (open_gopro.api.params.ProvisioningState attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.capt_delay_active">capt_delay_active (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.CAPT_DELAY_ACTIVE">CAPT_DELAY_ACTIVE (open_gopro.constants.StatusId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.CAPTURE_DELAY">CAPTURE_DELAY (open_gopro.constants.StatusId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Preset.CINEMATIC">CINEMATIC (open_gopro.api.params.Preset attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Preset.CINEMATIC_EB">CINEMATIC_EB (open_gopro.api.params.Preset attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.gopro.GoPro.close">close() (open_gopro.gopro.GoPro method)</a>
 </li>
@@ -232,10 +291,22 @@
 </li>
       <li><a href="api.html#open_gopro.constants.GoProUUIDs.CN_NET_MGMT_RESP">CN_NET_MGMT_RESP (open_gopro.constants.GoProUUIDs attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.constants.FeatureId.COMMAND">COMMAND (open_gopro.constants.FeatureId attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.constants.FeatureId.COMMAND">COMMAND (open_gopro.constants.FeatureId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.WAPState.COMPLETED">COMPLETED (open_gopro.api.params.WAPState attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.AccMicStatus.CONNECTED">CONNECTED (open_gopro.api.params.AccMicStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.AccMicStatus.CONNECTED_AND_PLUGGED_IN">CONNECTED_AND_PLUGGED_IN (open_gopro.api.params.AccMicStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.exceptions.ConnectFailed">ConnectFailed</a>
+</li>
+      <li><a href="api.html#open_gopro.exceptions.ConnectionTerminated">ConnectionTerminated</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.CameraControlStatus.CONTROL">CONTROL (open_gopro.api.params.CameraControlStatus attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.control_allowed_over_usb">control_allowed_over_usb (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.CONTROL_OVER_USB">CONTROL_OVER_USB (open_gopro.constants.StatusId attribute)</a>
@@ -272,6 +343,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.responses.GoProResp.data">data (open_gopro.responses.GoProResp attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.MaxLensMode.DEFAULT">DEFAULT (open_gopro.api.params.MaxLensMode attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.deprecated_40">deprecated_40 (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.DEPRECATED_40">DEPRECATED_40 (open_gopro.constants.StatusId attribute)</a>
@@ -282,19 +355,31 @@
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.dig_zoom_active">dig_zoom_active (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.StatusId.DIG_ZOOM_ACTIVE">DIG_ZOOM_ACTIVE (open_gopro.constants.StatusId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.digital_zoom">digital_zoom (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.StatusId.DIGITAL_ZOOM">DIGITAL_ZOOM (open_gopro.constants.StatusId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Toggle.DISABLE">DISABLE (open_gopro.api.params.Toggle attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.ExposureMode.DISABLED">DISABLED (open_gopro.api.params.ExposureMode attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.DOWNLAD_CANCEL_PEND">DOWNLAD_CANCEL_PEND (open_gopro.constants.StatusId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.download_cancel_pend">download_cancel_pend (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.OTAStatus.DOWNLOAD_FAILED">DOWNLOAD_FAILED (open_gopro.api.params.OTAStatus attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.download_file">download_file (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.OTAStatus.DOWNLOADING">DOWNLOADING (open_gopro.api.params.OTAStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.DstDateTime">DstDateTime (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.LensMode.DUAL">DUAL (open_gopro.api.params.LensMode attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -302,6 +387,8 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.Toggle.ENABLE">ENABLE (open_gopro.api.params.Toggle attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.enable_wifi_ap">enable_wifi_ap (open_gopro.api.ble_commands.BleCommands attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.ENCODING">ENCODING (open_gopro.constants.StatusId attribute)</a>
@@ -310,16 +397,28 @@
 </li>
       <li><a href="api.html#open_gopro.responses.GoProResp.endpoint">endpoint (open_gopro.responses.GoProResp property)</a>
 </li>
-      <li><a href="api.html#open_gopro.gopro.ensure_initialized">ensure_initialized() (in module open_gopro.gopro)</a>
+      <li><a href="api.html#open_gopro.constants.enum_factory">enum_factory() (in module open_gopro.constants)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.ErrorCode.ERROR">ERROR (open_gopro.constants.ErrorCode attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.ProvisioningState.ERROR_EULA_BLOCKING">ERROR_EULA_BLOCKING (open_gopro.api.params.ProvisioningState attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.ProvisioningState.ERROR_FAILED_TO_ASSOCIATE">ERROR_FAILED_TO_ASSOCIATE (open_gopro.api.params.ProvisioningState attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.ProvisioningState.ERROR_NO_INTERNET">ERROR_NO_INTERNET (open_gopro.api.params.ProvisioningState attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.ProvisioningState.ERROR_PASSWORD_AUTH">ERROR_PASSWORD_AUTH (open_gopro.api.params.ProvisioningState attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.ProvisioningState.ERROR_UNSUPPORTED_TYPE">ERROR_UNSUPPORTED_TYPE (open_gopro.api.params.ProvisioningState attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.constants.ErrorCode">ErrorCode (class in open_gopro.constants)</a>
 </li>
-      <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.exposure_type">exposure_type (open_gopro.api.ble_commands.BleStatuses attribute)</a>
+      <li><a href="api.html#open_gopro.exceptions.ExceptionHandler">ExceptionHandler (in module open_gopro.exceptions)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.exposure_type">exposure_type (open_gopro.api.ble_commands.BleStatuses attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.constants.StatusId.EXPOSURE_TYPE">EXPOSURE_TYPE (open_gopro.constants.StatusId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.exposure_x">exposure_x (open_gopro.api.ble_commands.BleStatuses attribute)</a>
@@ -330,6 +429,8 @@
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.EXPOSURE_Y">EXPOSURE_Y (open_gopro.constants.StatusId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.ExposureMode">ExposureMode (class in open_gopro.api.params)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.ext_batt_level">ext_batt_level (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.EXT_BATT_LEVEL">EXT_BATT_LEVEL (open_gopro.constants.StatusId attribute)</a>
@@ -338,25 +439,41 @@
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.EXT_BATT_PRESENT">EXT_BATT_PRESENT (open_gopro.constants.StatusId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.PerformanceMode.EXTENDED_BATTERY">EXTENDED_BATTERY (open_gopro.api.params.PerformanceMode attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.CameraControl.EXTERNAL">EXTERNAL (open_gopro.api.params.CameraControl attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.CameraControlStatus.EXTERNAL_CONTROL">EXTERNAL_CONTROL (open_gopro.api.params.CameraControlStatus attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.PairState.FAILED">FAILED (open_gopro.api.params.PairState attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.exceptions.FailedToFindDevice">FailedToFindDevice</a>
+</li>
       <li><a href="api.html#open_gopro.constants.FeatureId">FeatureId (class in open_gopro.constants)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.first_time">first_time (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.FIRST_TIME">FIRST_TIME (open_gopro.constants.StatusId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.Flatmode">Flatmode (class in open_gopro.api.params)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.flatmode_id">flatmode_id (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.StatusId.FLATMODE_ID">FLATMODE_ID (open_gopro.constants.StatusId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.responses.GoProResp.flatten">flatten (open_gopro.responses.GoProResp property)</a>
+</li>
+      <li><a href="api.html#open_gopro.ble.services.BleUUID.format">format (open_gopro.ble.services.BleUUID property)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.SDStatus.FORMAT_ERROR">FORMAT_ERROR (open_gopro.api.params.SDStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.FPS">FPS (class in open_gopro.api.params)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleSettings.fps">fps (open_gopro.api.ble_commands.BleSettings attribute)</a>
 
@@ -364,7 +481,31 @@
         <li><a href="api.html#open_gopro.api.wifi_commands.WifiSettings.fps">(open_gopro.api.wifi_commands.WifiSettings attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.SettingId.FPS">FPS (open_gopro.constants.SettingId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.FPS.FPS_100">FPS_100 (open_gopro.api.params.FPS attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.FPS.FPS_120">FPS_120 (open_gopro.api.params.FPS attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.FPS.FPS_200">FPS_200 (open_gopro.api.params.FPS attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.FPS.FPS_24">FPS_24 (open_gopro.api.params.FPS attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.FPS.FPS_240">FPS_240 (open_gopro.api.params.FPS attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.FPS.FPS_25">FPS_25 (open_gopro.api.params.FPS attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.FPS.FPS_30">FPS_30 (open_gopro.api.params.FPS attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.FPS.FPS_50">FPS_50 (open_gopro.api.params.FPS attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.FPS.FPS_60">FPS_60 (open_gopro.api.params.FPS attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.LED.FRONT_OFF_ONLY">FRONT_OFF_ONLY (open_gopro.api.params.LED attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.SDStatus.FULL">FULL (open_gopro.api.params.SDStatus attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -398,17 +539,25 @@
       </ul></li>
       <li><a href="api.html#open_gopro.constants.CmdId.GET_DATE_TIME">GET_DATE_TIME (open_gopro.constants.CmdId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.constants.CmdId.GET_DATE_TIME_DST">GET_DATE_TIME_DST (open_gopro.constants.CmdId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.get_date_time_tz_dst">get_date_time_tz_dst (open_gopro.api.ble_commands.BleCommands attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.get_gpmf_data">get_gpmf_data (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.get_hardware_info">get_hardware_info (open_gopro.api.ble_commands.BleCommands attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.CmdId.GET_HW_INFO">GET_HW_INFO (open_gopro.constants.CmdId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.responses.GoProResp.get_id_from_request">get_id_from_request() (open_gopro.responses.GoProResp class method)</a>
+</li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.get_media_info">get_media_info (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.get_media_list">get_media_list (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.builders.BleSetting.get_name">get_name() (open_gopro.api.builders.BleSetting method)</a>
+</li>
+      <li><a href="api.html#open_gopro.gopro.GoPro.get_notification">get_notification() (open_gopro.gopro.GoPro method)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.get_open_gopro_api_version">get_open_gopro_api_version (open_gopro.api.ble_commands.BleCommands attribute)</a>
 
@@ -422,10 +571,12 @@
         <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.get_preset_status">(open_gopro.api.wifi_commands.WifiCommands attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.ActionId.GET_PRESET_STATUS">GET_PRESET_STATUS (open_gopro.constants.ActionId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.constants.ActionId.GET_PRESET_STATUS_RSP">GET_PRESET_STATUS_RSP (open_gopro.constants.ActionId attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.get_screennail">get_screennail (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.QueryCmdId.GET_SETTING_NAME">GET_SETTING_NAME (open_gopro.constants.QueryCmdId attribute)</a>
@@ -441,8 +592,6 @@
       <li><a href="api.html#open_gopro.constants.CmdId.GET_THIRD_PARTY_API_VERSION">GET_THIRD_PARTY_API_VERSION (open_gopro.constants.CmdId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.get_thumbnail">get_thumbnail (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
-</li>
-      <li><a href="api.html#open_gopro.gopro.GoPro.get_update">get_update() (open_gopro.gopro.GoPro method)</a>
 </li>
       <li><a href="api.html#open_gopro.api.builders.BleSetting.get_value">get_value() (open_gopro.api.builders.BleSetting method)</a>
 
@@ -460,9 +609,23 @@
 </li>
       <li><a href="api.html#open_gopro.gopro.GoPro">GoPro (class in open_gopro.gopro)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.OTAStatus.GOPRO_APP_DOWNLOAD_FAILED">GOPRO_APP_DOWNLOAD_FAILED (open_gopro.api.params.OTAStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.OTAStatus.GOPRO_APP_DOWNLOADING">GOPRO_APP_DOWNLOADING (open_gopro.api.params.OTAStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.OTAStatus.GOPRO_APP_READY">GOPRO_APP_READY (open_gopro.api.params.OTAStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.OTAStatus.GOPRO_APP_VERIFY_FAILED">GOPRO_APP_VERIFY_FAILED (open_gopro.api.params.OTAStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.OTAStatus.GOPRO_APP_VERIFYING">GOPRO_APP_VERIFYING (open_gopro.api.params.OTAStatus attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.constants.GoProEnum">GoProEnum (class in open_gopro.constants)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.GoProEnumMeta">GoProEnumMeta (class in open_gopro.constants)</a>
+</li>
+      <li><a href="api.html#open_gopro.exceptions.GoProError">GoProError</a>
+</li>
+      <li><a href="api.html#open_gopro.exceptions.GoProNotInitialized">GoProNotInitialized</a>
 </li>
       <li><a href="api.html#open_gopro.responses.GoProResp">GoProResp (class in open_gopro.responses)</a>
 </li>
@@ -478,6 +641,10 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.ExposureMode.HEMISPHERE">HEMISPHERE (open_gopro.api.params.ExposureMode attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.HypersmoothMode.HIGH">HIGH (open_gopro.api.params.HypersmoothMode attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleSettings.hypersmooth">hypersmooth (open_gopro.api.ble_commands.BleSettings attribute)</a>
 
       <ul>
@@ -488,25 +655,41 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.SettingId.HYPERSMOOTH">HYPERSMOOTH (open_gopro.constants.SettingId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.HypersmoothMode">HypersmoothMode (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.AntiFlicker.HZ_50">HZ_50 (open_gopro.api.params.AntiFlicker attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.AntiFlicker.HZ_60">HZ_60 (open_gopro.api.params.AntiFlicker attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#open_gopro.responses.GoProResp.id">id (open_gopro.responses.GoProResp property)</a>
-</li>
       <li><a href="api.html#open_gopro.gopro.GoPro.identifier">identifier (open_gopro.gopro.GoPro property)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.responses.GoProResp.identifier">(open_gopro.responses.GoProResp property)</a>
 </li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.CameraControl.IDLE">IDLE (open_gopro.api.params.CameraControl attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.CameraControlStatus.IDLE">(open_gopro.api.params.CameraControlStatus attribute)</a>
+</li>
+        <li><a href="api.html#open_gopro.api.params.OTAStatus.IDLE">(open_gopro.api.params.OTAStatus attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.in_context_menu">in_context_menu (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.IN_CONTEXT_MENU">IN_CONTEXT_MENU (open_gopro.constants.StatusId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.PairState.IN_PROGRESS">IN_PROGRESS (open_gopro.api.params.PairState attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.int_batt_per">int_batt_per (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.INT_BATT_PER">INT_BATT_PER (open_gopro.constants.StatusId attribute)</a>
-</li>
-      <li><a href="api.html#open_gopro.gopro.Interface">Interface (class in open_gopro.gopro)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.SettingId.INTERNAL_102">INTERNAL_102 (open_gopro.constants.SettingId attribute)</a>
 </li>
@@ -600,12 +783,12 @@
 </li>
       <li><a href="api.html#open_gopro.constants.SettingId.INTERNAL_169">INTERNAL_169 (open_gopro.constants.SettingId attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.SettingId.INTERNAL_19">INTERNAL_19 (open_gopro.constants.SettingId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.SettingId.INTERNAL_24">INTERNAL_24 (open_gopro.constants.SettingId attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.SettingId.INTERNAL_30">INTERNAL_30 (open_gopro.constants.SettingId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.SettingId.INTERNAL_31">INTERNAL_31 (open_gopro.constants.SettingId attribute)</a>
@@ -704,9 +887,17 @@
       </ul></li>
       <li><a href="api.html#open_gopro.constants.ErrorCode.INVALID_PARAM">INVALID_PARAM (open_gopro.constants.ErrorCode attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.exceptions.InvalidConfiguration">InvalidConfiguration</a>
+</li>
+      <li><a href="api.html#open_gopro.exceptions.InvalidOpenGoProVersion">InvalidOpenGoProVersion</a>
+</li>
       <li><a href="api.html#open_gopro.gopro.GoPro.is_ble_connected">is_ble_connected (open_gopro.gopro.GoPro property)</a>
 </li>
       <li><a href="api.html#open_gopro.gopro.GoPro.is_busy">is_busy (open_gopro.gopro.GoPro property)</a>
+</li>
+      <li><a href="api.html#open_gopro.responses.GoProResp.is_direct_read">is_direct_read (open_gopro.responses.GoProResp property)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.DstDateTime.is_dst">is_dst (open_gopro.api.params.DstDateTime property)</a>
 </li>
       <li><a href="api.html#open_gopro.gopro.GoPro.is_encoding">is_encoding (open_gopro.gopro.GoPro property)</a>
 </li>
@@ -714,9 +905,13 @@
 </li>
       <li><a href="api.html#open_gopro.responses.GoProResp.is_parsed">is_parsed (open_gopro.responses.GoProResp property)</a>
 </li>
+      <li><a href="api.html#open_gopro.responses.GoProResp.is_protobuf">is_protobuf (open_gopro.responses.GoProResp property)</a>
+</li>
       <li><a href="api.html#open_gopro.responses.GoProResp.is_received">is_received (open_gopro.responses.GoProResp property)</a>
 </li>
       <li><a href="api.html#open_gopro.gopro.GoPro.is_wifi_connected">is_wifi_connected (open_gopro.gopro.GoPro property)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.ExposureMode.ISO_LOCK">ISO_LOCK (open_gopro.api.params.ExposureMode attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.responses.GoProResp.items">items() (open_gopro.responses.GoProResp method)</a>
 </li>
@@ -746,20 +941,42 @@
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.LCD_LOCK_ACTIVE">LCD_LOCK_ACTIVE (open_gopro.constants.StatusId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.LED">LED (class in open_gopro.api.params)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleSettings.led">led (open_gopro.api.ble_commands.BleSettings attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.SettingId.LED">LED (open_gopro.constants.SettingId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.LensMode">LensMode (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.LensType">LensType (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.LensType.LINEAR">LINEAR (open_gopro.api.params.LensType attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.PhotoFOV.LINEAR">(open_gopro.api.params.PhotoFOV attribute)</a>
+</li>
+        <li><a href="api.html#open_gopro.api.params.VideoFOV.LINEAR">(open_gopro.api.params.VideoFOV attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.VideoFOV.LINEAR_HORIZON">LINEAR_HORIZON (open_gopro.api.params.VideoFOV attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.linux_core_active">linux_core_active (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.LINUX_CORE_ACTIVE">LINUX_CORE_ACTIVE (open_gopro.constants.StatusId attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.Flatmode.LIVE_BURST">LIVE_BURST (open_gopro.api.params.Flatmode attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.Preset.LIVE_BURST">(open_gopro.api.params.Preset attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.live_burst_rem">live_burst_rem (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.LIVE_BURST_REM">LIVE_BURST_REM (open_gopro.constants.StatusId attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.live_burst_total">live_burst_total (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.LIVE_BURST_TOTAL">LIVE_BURST_TOTAL (open_gopro.constants.StatusId attribute)</a>
@@ -780,12 +997,16 @@
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.LOGS_READY">LOGS_READY (open_gopro.constants.StatusId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.Flatmode.LOOPING">LOOPING (open_gopro.api.params.Flatmode attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.MaxLensMode.MAX_LENS">MAX_LENS (open_gopro.api.params.MaxLensMode attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.constants.SettingId.MAX_LENS_MOD">MAX_LENS_MOD (open_gopro.constants.SettingId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleSettings.max_lens_mode">max_lens_mode (open_gopro.api.ble_commands.BleSettings attribute)</a>
@@ -794,6 +1015,24 @@
         <li><a href="api.html#open_gopro.api.wifi_commands.WifiSettings.max_lens_mode">(open_gopro.api.wifi_commands.WifiSettings attribute)</a>
 </li>
       </ul></li>
+      <li><a href="api.html#open_gopro.api.params.PerformanceMode.MAX_PERFORMANCE">MAX_PERFORMANCE (open_gopro.api.params.PerformanceMode attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Preset.MAX_PHOTO">MAX_PHOTO (open_gopro.api.params.Preset attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MultishotFOV.MAX_SUPERVIEW">MAX_SUPERVIEW (open_gopro.api.params.MultishotFOV attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.PhotoFOV.MAX_SUPERVIEW">(open_gopro.api.params.PhotoFOV attribute)</a>
+</li>
+        <li><a href="api.html#open_gopro.api.params.VideoFOV.MAX_SUPERVIEW">(open_gopro.api.params.VideoFOV attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.Preset.MAX_TIMEWARP">MAX_TIMEWARP (open_gopro.api.params.Preset attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Preset.MAX_VIDEO">MAX_VIDEO (open_gopro.api.params.Preset attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MaxLensMode">MaxLensMode (class in open_gopro.api.params)</a>
+</li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiSettings.media_format">media_format (open_gopro.api.wifi_commands.WifiSettings attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.SettingId.MEDIA_FORMAT">MEDIA_FORMAT (open_gopro.constants.SettingId attribute)</a>
@@ -806,10 +1045,22 @@
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.MEDIA_MOD_STAT">MEDIA_MOD_STAT (open_gopro.constants.StatusId attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.mobile_video">mobile_video (open_gopro.api.ble_commands.BleStatuses attribute)</a>
+      <li><a href="api.html#open_gopro.api.params.MediaFormat">MediaFormat (class in open_gopro.api.params)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.MediaModMicStatus">MediaModMicStatus (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MediaModStatus">MediaModStatus (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.AutoOff.MIN_15">MIN_15 (open_gopro.api.params.AutoOff attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.AutoOff.MIN_30">MIN_30 (open_gopro.api.params.AutoOff attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.AutoOff.MIN_5">MIN_5 (open_gopro.api.params.AutoOff attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.mobile_video">mobile_video (open_gopro.api.ble_commands.BleStatuses attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.constants.StatusId.MOBILE_VIDEO">MOBILE_VIDEO (open_gopro.constants.StatusId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.mode_group">mode_group (open_gopro.api.ble_commands.BleStatuses attribute)</a>
@@ -820,9 +1071,11 @@
     module
 
       <ul>
+        <li><a href="api.html#module-open_gopro.api.params">open_gopro.api.params</a>
+</li>
         <li><a href="api.html#module-open_gopro.constants">open_gopro.constants</a>
 </li>
-        <li><a href="api.html#module-open_gopro.gopro">open_gopro.gopro</a>
+        <li><a href="api.html#module-open_gopro.exceptions">open_gopro.exceptions</a>
 </li>
       </ul></li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.multi_count_down">multi_count_down (open_gopro.api.ble_commands.BleStatuses attribute)</a>
@@ -837,15 +1090,75 @@
       </ul></li>
       <li><a href="api.html#open_gopro.constants.SettingId.MULTI_SHOT_FOV">MULTI_SHOT_FOV (open_gopro.constants.SettingId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.MultishotFOV">MultishotFOV (class in open_gopro.api.params)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.constants.ProtobufDescriptor.name">name (open_gopro.constants.ProtobufDescriptor property)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MultishotFOV.NARROW">NARROW (open_gopro.api.params.MultishotFOV attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.PhotoFOV.NARROW">(open_gopro.api.params.PhotoFOV attribute)</a>
+</li>
+        <li><a href="api.html#open_gopro.api.params.VideoFOV.NARROW">(open_gopro.api.params.VideoFOV attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.constants.FeatureId.NETWORK_MANAGEMENT">NETWORK_MANAGEMENT (open_gopro.constants.FeatureId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.AutoOff.NEVER">NEVER (open_gopro.api.params.AutoOff attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.ProvisioningState.NEVER_STARTED">NEVER_STARTED (open_gopro.api.params.ProvisioningState attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.WAPState.NEVER_STARTED">(open_gopro.api.params.WAPState attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.next_poll">next_poll (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.NEXT_POLL">NEXT_POLL (open_gopro.constants.StatusId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Preset.NIGHT_LAPSE">NIGHT_LAPSE (open_gopro.api.params.Preset attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Flatmode.NIGHT_LAPSE_PHOTO">NIGHT_LAPSE_PHOTO (open_gopro.api.params.Flatmode attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.MediaFormat.NIGHT_LAPSE_PHOTO">(open_gopro.api.params.MediaFormat attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.Flatmode.NIGHT_LAPSE_VIDEO">NIGHT_LAPSE_VIDEO (open_gopro.api.params.Flatmode attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.MediaFormat.NIGHT_LAPSE_VIDEO">(open_gopro.api.params.MediaFormat attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.Flatmode.NIGHT_PHOTO">NIGHT_PHOTO (open_gopro.api.params.Flatmode attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.Preset.NIGHT_PHOTO">(open_gopro.api.params.Preset attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.MultishotFOV.NOT_APPLICABLE">NOT_APPLICABLE (open_gopro.api.params.MultishotFOV attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.PhotoFOV.NOT_APPLICABLE">(open_gopro.api.params.PhotoFOV attribute)</a>
+</li>
+        <li><a href="api.html#open_gopro.api.params.Resolution.NOT_APPLICABLE">(open_gopro.api.params.Resolution attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.AccMicStatus.NOT_CONNECTED">NOT_CONNECTED (open_gopro.api.params.AccMicStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.PairType.NOT_PAIRING">NOT_PAIRING (open_gopro.api.params.PairType attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.AnalyticsState.NOT_READY">NOT_READY (open_gopro.api.params.AnalyticsState attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.NOTIF_PROVIS_STATE">NOTIF_PROVIS_STATE (open_gopro.constants.ActionId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.num_group_photo">num_group_photo (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
@@ -855,8 +1168,6 @@
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.NUM_GROUP_VIDEO">NUM_GROUP_VIDEO (open_gopro.constants.StatusId attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.num_hilights">num_hilights (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.NUM_HILIGHTS">NUM_HILIGHTS (open_gopro.constants.StatusId attribute)</a>
@@ -875,8 +1186,35 @@
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.HypersmoothMode.OFF">OFF (open_gopro.api.params.HypersmoothMode attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.Shutter.OFF">(open_gopro.api.params.Shutter attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.SDStatus.OK">OK (open_gopro.api.params.SDStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Shutter.ON">ON (open_gopro.api.params.Shutter attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.AnalyticsState.ON_CONNECT">ON_CONNECT (open_gopro.api.params.AnalyticsState attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Orientation.ON_LEFT_SIDE">ON_LEFT_SIDE (open_gopro.api.params.Orientation attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Orientation.ON_RIGHT_SIDE">ON_RIGHT_SIDE (open_gopro.api.params.Orientation attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MediaModMicStatus.ONLY">ONLY (open_gopro.api.params.MediaModMicStatus attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.gopro.GoPro.open">open() (open_gopro.gopro.GoPro method)</a>
 </li>
+      <li>
+    open_gopro.api.params
+
+      <ul>
+        <li><a href="api.html#module-open_gopro.api.params">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     open_gopro.constants
 
@@ -885,14 +1223,14 @@
 </li>
       </ul></li>
       <li>
-    open_gopro.gopro
+    open_gopro.exceptions
 
       <ul>
-        <li><a href="api.html#module-open_gopro.gopro">module</a>
+        <li><a href="api.html#module-open_gopro.exceptions">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.Orientation">Orientation (class in open_gopro.api.params)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.orientation">orientation (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.ORIENTATION">ORIENTATION (open_gopro.constants.StatusId attribute)</a>
@@ -900,6 +1238,8 @@
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.ota_stat">ota_stat (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.OTA_STAT">OTA_STAT (open_gopro.constants.StatusId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.OTAStatus">OTAStatus (class in open_gopro.api.params)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -923,8 +1263,24 @@
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.PAIR_TYPE">PAIR_TYPE (open_gopro.constants.StatusId attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.api.params">params (in module open_gopro.api)</a>
+      <li><a href="api.html#open_gopro.api.params.PairType.PAIRING_APP">PAIRING_APP (open_gopro.api.params.PairType attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.PairType.PAIRING_BLUETOOTH">PAIRING_BLUETOOTH (open_gopro.api.params.PairType attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.PairType.PAIRING_REMOTE_CONTROL">PAIRING_REMOTE_CONTROL (open_gopro.api.params.PairType attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.PairState">PairState (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.PairType">PairType (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.PerformanceMode">PerformanceMode (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Preset.PHOTO">PHOTO (open_gopro.api.params.Preset attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.PresetGroup.PHOTO">(open_gopro.api.params.PresetGroup attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleSettings.photo_field_of_view">photo_field_of_view (open_gopro.api.ble_commands.BleSettings attribute)</a>
 
       <ul>
@@ -939,6 +1295,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.PhotoFOV">PhotoFOV (class in open_gopro.api.params)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.photos_rem">photos_rem (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.PHOTOS_REM">PHOTOS_REM (open_gopro.constants.StatusId attribute)</a>
@@ -947,11 +1305,19 @@
 </li>
       <li><a href="api.html#open_gopro.constants.CmdId.POWER_DOWN">POWER_DOWN (open_gopro.constants.CmdId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.Preset">Preset (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.RegisterPreset.PRESET">PRESET (open_gopro.api.params.RegisterPreset attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.RegisterPreset.PRESET_GROUP_ARRAY">PRESET_GROUP_ARRAY (open_gopro.api.params.RegisterPreset attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.preset_modified">preset_modified (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.PRESET_MODIFIED">PRESET_MODIFIED (open_gopro.constants.StatusId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.ActionId.PRESET_MODIFIED_NOTIFICATION">PRESET_MODIFIED_NOTIFICATION (open_gopro.constants.ActionId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.PresetGroup">PresetGroup (class in open_gopro.api.params)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.presets_group">presets_group (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
@@ -963,11 +1329,13 @@
 </li>
       <li><a href="api.html#open_gopro.constants.ProducerType">ProducerType (in module open_gopro.constants)</a>
 </li>
-      <li><a href="api.html#open_gopro.constants.CmdId.PROTOBUF_COMMAND">PROTOBUF_COMMAND (open_gopro.constants.CmdId attribute)</a>
-</li>
       <li><a href="api.html#open_gopro.constants.QueryCmdId.PROTOBUF_QUERY">PROTOBUF_QUERY (open_gopro.constants.QueryCmdId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.SettingId.PROTOBUF_SETTING">PROTOBUF_SETTING (open_gopro.constants.SettingId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ProtobufDescriptor">ProtobufDescriptor (class in open_gopro.constants)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.ProvisioningState">ProvisioningState (class in open_gopro.api.params)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -991,6 +1359,12 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.AnalyticsState.READY">READY (open_gopro.api.params.AnalyticsState attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.OTAStatus.READY">(open_gopro.api.params.OTAStatus attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api.html#open_gopro.constants.QueryCmdId.REG_CAPABILITIES_UPDATE">REG_CAPABILITIES_UPDATE (open_gopro.constants.QueryCmdId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.QueryCmdId.REG_SETTING_VAL_UPDATE">REG_SETTING_VAL_UPDATE (open_gopro.constants.QueryCmdId attribute)</a>
@@ -1013,8 +1387,8 @@
         <li><a href="api.html#open_gopro.api.builders.BleStatus.register_value_update">(open_gopro.api.builders.BleStatus method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.RegisterPreset">RegisterPreset (class in open_gopro.api.params)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.remote_ctrl_conn">remote_ctrl_conn (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.REMOTE_CTRL_CONN">REMOTE_CTRL_CONN (open_gopro.constants.StatusId attribute)</a>
@@ -1027,6 +1401,40 @@
 </li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.remove_video_hilight">remove_video_hilight (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.MediaModMicStatus.REMOVED">REMOVED (open_gopro.api.params.MediaModMicStatus attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.SDStatus.REMOVED">(open_gopro.api.params.SDStatus attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.request_wifi_connect">request_wifi_connect (open_gopro.api.ble_commands.BleCommands attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT">REQUEST_WIFI_CONNECT (open_gopro.constants.ActionId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_RSP">REQUEST_WIFI_CONNECT_RSP (open_gopro.constants.ActionId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Resolution.RES_1080">RES_1080 (open_gopro.api.params.Resolution attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Resolution.RES_1440">RES_1440 (open_gopro.api.params.Resolution attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Resolution.RES_2_7K">RES_2_7K (open_gopro.api.params.Resolution attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Resolution.RES_2_7K_4_3">RES_2_7K_4_3 (open_gopro.api.params.Resolution attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Resolution.RES_4K">RES_4K (open_gopro.api.params.Resolution attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Resolution.RES_4K_4_3">RES_4K_4_3 (open_gopro.api.params.Resolution attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Resolution.RES_5_3_K">RES_5_3_K (open_gopro.api.params.Resolution attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Resolution.RES_5_K_4_3">RES_5_K_4_3 (open_gopro.api.params.Resolution attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Resolution.RES_5K">RES_5K (open_gopro.api.params.Resolution attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Resolution">Resolution (class in open_gopro.api.params)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleSettings.resolution">resolution (open_gopro.api.ble_commands.BleSettings attribute)</a>
 
       <ul>
@@ -1034,6 +1442,10 @@
 </li>
       </ul></li>
       <li><a href="api.html#open_gopro.constants.SettingId.RESOLUTION">RESOLUTION (open_gopro.constants.SettingId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.exceptions.ResponseParseError">ResponseParseError</a>
+</li>
+      <li><a href="api.html#open_gopro.exceptions.ResponseTimeout">ResponseTimeout</a>
 </li>
       <li><a href="api.html#open_gopro.constants.ResponseType">ResponseType (in module open_gopro.constants)</a>
 </li>
@@ -1047,7 +1459,7 @@
 </li>
       <li><a href="api.html#open_gopro.constants.GoProUUIDs.S_CONTROL_QUERY">S_CONTROL_QUERY (open_gopro.constants.GoProUUIDs attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.constants.GoProUUIDs.S_UNKNOWN">S_UNKNOWN (open_gopro.constants.GoProUUIDs attribute)</a>
+      <li><a href="api.html#open_gopro.constants.GoProUUIDs.S_INTERNAL">S_INTERNAL (open_gopro.constants.GoProUUIDs attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.GoProUUIDs.S_WIFI_ACCESS_POINT">S_WIFI_ACCESS_POINT (open_gopro.constants.GoProUUIDs attribute)</a>
 </li>
@@ -1071,9 +1483,27 @@
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.SD_WRITE_SPEED_ERROR">SD_WRITE_SPEED_ERROR (open_gopro.constants.StatusId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.SDStatus">SDStatus (class in open_gopro.api.params)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.sec_sd_stat">sec_sd_stat (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.SEC_SD_STAT">SEC_SD_STAT (open_gopro.constants.StatusId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MediaModStatus.SELFIE_0_HDMI_0_MEDIAMODCONNECTED_FALSE">SELFIE_0_HDMI_0_MEDIAMODCONNECTED_FALSE (open_gopro.api.params.MediaModStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MediaModStatus.SELFIE_0_HDMI_0_MEDIAMODCONNECTED_TRUE">SELFIE_0_HDMI_0_MEDIAMODCONNECTED_TRUE (open_gopro.api.params.MediaModStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MediaModStatus.SELFIE_0_HDMI_1_MEDIAMODCONNECTED_FALSE">SELFIE_0_HDMI_1_MEDIAMODCONNECTED_FALSE (open_gopro.api.params.MediaModStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MediaModStatus.SELFIE_0_HDMI_1_MEDIAMODCONNECTED_TRUE">SELFIE_0_HDMI_1_MEDIAMODCONNECTED_TRUE (open_gopro.api.params.MediaModStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MediaModStatus.SELFIE_1_HDMI_0_MEDIAMODCONNECTED_FALSE">SELFIE_1_HDMI_0_MEDIAMODCONNECTED_FALSE (open_gopro.api.params.MediaModStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MediaModStatus.SELFIE_1_HDMI_0_MEDIAMODCONNECTED_TRUE">SELFIE_1_HDMI_0_MEDIAMODCONNECTED_TRUE (open_gopro.api.params.MediaModStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MediaModStatus.SELFIE_1_HDMI_1_MEDIAMODCONNECTED_FALSE">SELFIE_1_HDMI_1_MEDIAMODCONNECTED_FALSE (open_gopro.api.params.MediaModStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MediaModStatus.SELFIE_1_HDMI_1_MEDIAMODCONNECTED_TRUE">SELFIE_1_HDMI_1_MEDIAMODCONNECTED_TRUE (open_gopro.api.params.MediaModStatus attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.builders.BleSetting.set">set() (open_gopro.api.builders.BleSetting method)</a>
 
@@ -1089,6 +1519,8 @@
       </ul></li>
       <li><a href="api.html#open_gopro.constants.ActionId.SET_CAMERA_CONTROL">SET_CAMERA_CONTROL (open_gopro.constants.ActionId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.constants.ActionId.SET_CAMERA_CONTROL_RSP">SET_CAMERA_CONTROL_RSP (open_gopro.constants.ActionId attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.set_date_time">set_date_time (open_gopro.api.ble_commands.BleCommands attribute)</a>
 
       <ul>
@@ -1097,9 +1529,19 @@
       </ul></li>
       <li><a href="api.html#open_gopro.constants.CmdId.SET_DATE_TIME">SET_DATE_TIME (open_gopro.constants.CmdId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.constants.CmdId.SET_DATE_TIME_DST">SET_DATE_TIME_DST (open_gopro.constants.CmdId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.set_date_time_tz_dst">set_date_time_tz_dst (open_gopro.api.ble_commands.BleCommands attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.set_digital_zoom">set_digital_zoom (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.set_keep_alive">set_keep_alive (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.set_livestream_mode">set_livestream_mode (open_gopro.api.ble_commands.BleCommands attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.SET_LIVESTREAM_MODE">SET_LIVESTREAM_MODE (open_gopro.constants.ActionId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.SET_LIVESTREAM_MODE_RSP">SET_LIVESTREAM_MODE_RSP (open_gopro.constants.ActionId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.CmdId.SET_PAIRING_COMPLETE">SET_PAIRING_COMPLETE (open_gopro.constants.CmdId attribute)</a>
 </li>
@@ -1111,8 +1553,6 @@
 </li>
       <li><a href="api.html#open_gopro.constants.CmdId.SET_SHUTTER">SET_SHUTTER (open_gopro.constants.CmdId attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.set_shutter_off">set_shutter_off (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.set_shutter_on">set_shutter_on (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
@@ -1133,8 +1573,12 @@
       </ul></li>
       <li><a href="api.html#open_gopro.constants.ActionId.SET_TURBO_MODE">SET_TURBO_MODE (open_gopro.constants.ActionId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.constants.ActionId.SET_TURBO_MODE_RSP">SET_TURBO_MODE_RSP (open_gopro.constants.ActionId attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.constants.CmdId.SET_WIFI">SET_WIFI (open_gopro.constants.CmdId attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.FeatureId.SETTING">SETTING (open_gopro.constants.FeatureId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.QueryCmdId.SETTING_CAPABILITY_PUSH">SETTING_CAPABILITY_PUSH (open_gopro.constants.QueryCmdId attribute)</a>
@@ -1143,15 +1587,75 @@
 </li>
       <li><a href="api.html#open_gopro.constants.SettingId">SettingId (class in open_gopro.constants)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.Shutter">Shutter (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.LensMode.SINGLE">SINGLE (open_gopro.api.params.LensMode attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Flatmode.SINGLE_PHOTO">SINGLE_PHOTO (open_gopro.api.params.Flatmode attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.WindowSize.SIZE_1080">SIZE_1080 (open_gopro.api.params.WindowSize attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.WindowSize.SIZE_480">SIZE_480 (open_gopro.api.params.WindowSize attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.WindowSize.SIZE_720">SIZE_720 (open_gopro.api.params.WindowSize attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.sleep">sleep (open_gopro.api.ble_commands.BleCommands attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.CmdId.SLEEP">SLEEP (open_gopro.constants.CmdId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Flatmode.SLO_MO">SLO_MO (open_gopro.api.params.Flatmode attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Preset.SLOMO_EB">SLOMO_EB (open_gopro.api.params.Preset attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.space_rem">space_rem (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.SPACE_REM">SPACE_REM (open_gopro.constants.StatusId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed.SPEED_10X">SPEED_10X (open_gopro.api.params.TimeWarpSpeed attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed.SPEED_150X">SPEED_150X (open_gopro.api.params.TimeWarpSpeed attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed.SPEED_15X">SPEED_15X (open_gopro.api.params.TimeWarpSpeed attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed.SPEED_1800X">SPEED_1800X (open_gopro.api.params.TimeWarpSpeed attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed.SPEED_1X">SPEED_1X (open_gopro.api.params.TimeWarpSpeed attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed.SPEED_2X">SPEED_2X (open_gopro.api.params.TimeWarpSpeed attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed.SPEED_300X">SPEED_300X (open_gopro.api.params.TimeWarpSpeed attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed.SPEED_30X">SPEED_30X (open_gopro.api.params.TimeWarpSpeed attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed.SPEED_5X">SPEED_5X (open_gopro.api.params.TimeWarpSpeed attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed.SPEED_60X">SPEED_60X (open_gopro.api.params.TimeWarpSpeed attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed.SPEED_900X">SPEED_900X (open_gopro.api.params.TimeWarpSpeed attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed.SPEED_AUTO">SPEED_AUTO (open_gopro.api.params.TimeWarpSpeed attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed.SPEED_HALF">SPEED_HALF (open_gopro.api.params.TimeWarpSpeed attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.HypersmoothMode.STANDARD">STANDARD (open_gopro.api.params.HypersmoothMode attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.Preset.STANDARD">(open_gopro.api.params.Preset attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.Preset.STANDARD_EB">STANDARD_EB (open_gopro.api.params.Preset attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.start_preview_stream">start_preview_stream (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.START_SCAN">START_SCAN (open_gopro.constants.ActionId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.ProvisioningState.STARTED">STARTED (open_gopro.api.params.ProvisioningState attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.WAPState.STARTED">(open_gopro.api.params.WAPState attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.PerformanceMode.STATIONARY">STATIONARY (open_gopro.api.params.PerformanceMode attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.responses.GoProResp.status">status (open_gopro.responses.GoProResp attribute)</a>
 </li>
@@ -1161,11 +1665,29 @@
 </li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands.stop_preview_stream">stop_preview_stream (open_gopro.api.wifi_commands.WifiCommands attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.PairState.STOPPED">STOPPED (open_gopro.api.params.PairState attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.streaming_supp">streaming_supp (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.STREAMING_SUPP">STREAMING_SUPP (open_gopro.constants.StatusId attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.constants.ErrorCode.SUCCESS">SUCCESS (open_gopro.constants.ErrorCode attribute)</a>
+      <li><a href="api.html#open_gopro.api.params.PairState.SUCCESS">SUCCESS (open_gopro.api.params.PairState attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.constants.ErrorCode.SUCCESS">(open_gopro.constants.ErrorCode attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.ProvisioningState.SUCCESS_NEW_AP">SUCCESS_NEW_AP (open_gopro.api.params.ProvisioningState attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.ProvisioningState.SUCCESS_OLD_AP">SUCCESS_OLD_AP (open_gopro.api.params.ProvisioningState attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.LensType.SUPERVIEW">SUPERVIEW (open_gopro.api.params.LensType attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.VideoFOV.SUPERVIEW">(open_gopro.api.params.VideoFOV attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.SDStatus.SWAPPED">SWAPPED (open_gopro.api.params.SDStatus attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.system_busy">system_busy (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
@@ -1193,12 +1715,32 @@
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.THERMAL_MIT_MODE">THERMAL_MIT_MODE (open_gopro.constants.StatusId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.Preset.TIME_LAPSE">TIME_LAPSE (open_gopro.api.params.Preset attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Flatmode.TIME_LAPSE_PHOTO">TIME_LAPSE_PHOTO (open_gopro.api.params.Flatmode attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.MediaFormat.TIME_LAPSE_PHOTO">(open_gopro.api.params.MediaFormat attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.Flatmode.TIME_LAPSE_VIDEO">TIME_LAPSE_VIDEO (open_gopro.api.params.Flatmode attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.MediaFormat.TIME_LAPSE_VIDEO">(open_gopro.api.params.MediaFormat attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.api.params.Preset.TIME_WARP">TIME_WARP (open_gopro.api.params.Preset attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Flatmode.TIME_WARP_VIDEO">TIME_WARP_VIDEO (open_gopro.api.params.Flatmode attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.PresetGroup.TIMELAPSE">TIMELAPSE (open_gopro.api.params.PresetGroup attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.timelapse_presets">timelapse_presets (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.TIMELAPSE_PRESETS">TIMELAPSE_PRESETS (open_gopro.constants.StatusId attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.timelapse_rem">timelapse_rem (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.TIMELAPSE_REM">TIMELAPSE_REM (open_gopro.constants.StatusId attribute)</a>
@@ -1206,6 +1748,14 @@
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.timewarp_speed_ramp">timewarp_speed_ramp (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.TIMEWARP_SPEED_RAMP">TIMEWARP_SPEED_RAMP (open_gopro.constants.StatusId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.TimeWarpSpeed">TimeWarpSpeed (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Toggle">Toggle (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Preset.TRIPOD_4K">TRIPOD_4K (open_gopro.api.params.Preset attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Preset.TRIPOD_5_3K">TRIPOD_5_3K (open_gopro.api.params.Preset attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.turbo_mode">turbo_mode (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
@@ -1217,8 +1767,18 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#open_gopro.constants.ErrorCode.UNKNOWN">UNKNOWN (open_gopro.constants.ErrorCode attribute)</a>
+      <li><a href="api.html#open_gopro.api.params.Preset.ULTRA_SLOMO">ULTRA_SLOMO (open_gopro.api.params.Preset attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.HypersmoothMode.UNKNOWN">UNKNOWN (open_gopro.api.params.HypersmoothMode attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.ProvisioningState.UNKNOWN">(open_gopro.api.params.ProvisioningState attribute)</a>
+</li>
+        <li><a href="api.html#open_gopro.api.params.SDStatus.UNKNOWN">(open_gopro.api.params.SDStatus attribute)</a>
+</li>
+        <li><a href="api.html#open_gopro.constants.ErrorCode.UNKNOWN">(open_gopro.constants.ErrorCode attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api.html#open_gopro.constants.QueryCmdId.UNREG_CAPABILITIES_UPDATE">UNREG_CAPABILITIES_UPDATE (open_gopro.constants.QueryCmdId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.QueryCmdId.UNREG_SETTING_VAL_UPDATE">UNREG_SETTING_VAL_UPDATE (open_gopro.constants.QueryCmdId attribute)</a>
@@ -1229,10 +1789,10 @@
 </li>
       <li><a href="api.html#open_gopro.constants.CmdId.UNREGISTER_ALL_STATUSES">UNREGISTER_ALL_STATUSES (open_gopro.constants.CmdId attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.api.builders.BleSetting.unregister_capability_update">unregister_capability_update() (open_gopro.api.builders.BleSetting method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.builders.BleSetting.unregister_capability_update">unregister_capability_update() (open_gopro.api.builders.BleSetting method)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings">unregister_for_all_settings (open_gopro.api.ble_commands.BleCommands attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses">unregister_for_all_statuses (open_gopro.api.ble_commands.BleCommands attribute)</a>
@@ -1243,6 +1803,10 @@
         <li><a href="api.html#open_gopro.api.builders.BleStatus.unregister_value_update">(open_gopro.api.builders.BleStatus method)</a>
 </li>
       </ul></li>
+      <li><a href="api.html#open_gopro.api.params.Orientation.UPRIGHT">UPRIGHT (open_gopro.api.params.Orientation attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Orientation.UPSIDE_DOWN">UPSIDE_DOWN (open_gopro.api.params.Orientation attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.usb_connected">usb_connected (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.USB_CONNECTED">USB_CONNECTED (open_gopro.constants.StatusId attribute)</a>
@@ -1257,7 +1821,19 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.responses.GoProResp.values">values() (open_gopro.responses.GoProResp method)</a>
 </li>
+      <li><a href="api.html#open_gopro.constants.ProtobufDescriptor.values_by_name">values_by_name (open_gopro.constants.ProtobufDescriptor property)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ProtobufDescriptor.values_by_number">values_by_number (open_gopro.constants.ProtobufDescriptor property)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.OTAStatus.VERIFY_FAILED">VERIFY_FAILED (open_gopro.api.params.OTAStatus attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.OTAStatus.VERIFYING">VERIFYING (open_gopro.api.params.OTAStatus attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.gopro.GoPro.version">version (open_gopro.gopro.GoPro property)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.PresetGroup.VIDE0">VIDE0 (open_gopro.api.params.PresetGroup attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.Flatmode.VIDEO">VIDEO (open_gopro.api.params.Flatmode attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleSettings.video_field_of_view">video_field_of_view (open_gopro.api.ble_commands.BleSettings attribute)</a>
 
@@ -1269,14 +1845,14 @@
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.video_hindsight">video_hindsight (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.StatusId.VIDEO_HINDSIGHT">VIDEO_HINDSIGHT (open_gopro.constants.StatusId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.video_low_temp">video_low_temp (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.VIDEO_LOW_TEMP">VIDEO_LOW_TEMP (open_gopro.constants.StatusId attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.api.ble_commands.BleSettings.video_performance_mode">video_performance_mode (open_gopro.api.ble_commands.BleSettings attribute)</a>
 
       <ul>
@@ -1296,6 +1872,8 @@
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.video_rem">video_rem (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.VIDEO_REM">VIDEO_REM (open_gopro.constants.StatusId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.VideoFOV">VideoFOV (class in open_gopro.api.params)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1325,15 +1903,29 @@
 </li>
       <li><a href="api.html#open_gopro.constants.GoProUUIDs.WAP_STATE">WAP_STATE (open_gopro.constants.GoProUUIDs attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.wifi_bars">wifi_bars (open_gopro.api.ble_commands.BleStatuses attribute)</a>
+      <li><a href="api.html#open_gopro.api.params.WAPState">WAPState (class in open_gopro.api.params)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.LensType.WIDE">WIDE (open_gopro.api.params.LensType attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.params.MultishotFOV.WIDE">(open_gopro.api.params.MultishotFOV attribute)</a>
+</li>
+        <li><a href="api.html#open_gopro.api.params.PhotoFOV.WIDE">(open_gopro.api.params.PhotoFOV attribute)</a>
+</li>
+        <li><a href="api.html#open_gopro.api.params.VideoFOV.WIDE">(open_gopro.api.params.VideoFOV attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.wifi_bars">wifi_bars (open_gopro.api.ble_commands.BleStatuses attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.constants.StatusId.WIFI_BARS">WIFI_BARS (open_gopro.constants.StatusId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.gopro.GoPro.wifi_command">wifi_command (open_gopro.gopro.GoPro property)</a>
 </li>
       <li><a href="api.html#open_gopro.gopro.GoPro.wifi_setting">wifi_setting (open_gopro.gopro.GoPro property)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.WifiBand">WifiBand (class in open_gopro.api.params)</a>
 </li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiCommands">WifiCommands (class in open_gopro.api.wifi_commands)</a>
 </li>
@@ -1343,6 +1935,8 @@
 </li>
       <li><a href="api.html#open_gopro.api.wifi_commands.WifiSettings.Iterator">WifiSettings.Iterator (class in open_gopro.api.wifi_commands)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.WindowSize">WindowSize (class in open_gopro.api.params)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.wireless_band">wireless_band (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.WIRELESS_BAND">WIRELESS_BAND (open_gopro.constants.StatusId attribute)</a>
@@ -1350,6 +1944,8 @@
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.wireless_enabled">wireless_enabled (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.WIRELESS_ENABLED">WIRELESS_ENABLED (open_gopro.constants.StatusId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.MediaModMicStatus.WITH_EXTERNAL">WITH_EXTERNAL (open_gopro.api.params.MediaModMicStatus attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.wlan_ssid">wlan_ssid (open_gopro.api.ble_commands.BleStatuses attribute)</a>
 </li>

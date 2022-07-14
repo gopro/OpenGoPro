@@ -43,7 +43,7 @@ For more information on the API, see the relevant documentation:
 - `Wi-Fi API <https://gopro.github.io/OpenGoPro/http>`_
 
 .. warning::
-    This package requires Python >= version 3.8
+    This package requires Python >= version 3.8 and <= 3.10
 
 Features
 --------
@@ -64,7 +64,7 @@ Features
 
     - Take a photo
     - Take a video
-    - View the live stream
+    - View the live / preview stream
     - Log the battery
 
 Getting Started

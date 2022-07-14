@@ -70,31 +70,30 @@ Arguments
 
 The `GoPro` class takes the following optional arguments:
 
-- **target**: either the last 4 digits of the GoPro name. The name can be found from the
-  camera via Preferences-->About-->Camera Info-->Camera Name. If no target is passed, the first discovered
+- **target**: A regex to search for the target GoPro's name. For example, the Last 4 digis of camera name /
+  serial number (i.e. 0456 for GoPro0456). The name can be found from the camera via
+  Preferences-->About-->Camera Info-->Camera Name. If no target is passed, the first discovered
   GoPro BLE device will be connected to.
-- **enable_wifi**: a boolean to optionally disable WiFi. This defaults to True (i.e. WiFi is enabled). If set
-  to False, the camera's WiFI AP will not be discovered / connected to and a command will be sent to the camera to
+- **wifi_interface**: optionally specify the hardware WiFi interface (OS system adapter) to use. If None (or
+  not set), first discovered interface will be used.
+- **sudo_password**:  User password for sudo. If not passed, you will be prompted if a password is
+  needed (Only relevant for \*Nix systems).
+- **enable_wifi**: a boolean to optionally disable the camera's WiFi. This defaults to True (i.e. WiFi is enabled).
+  If set to False, the camera's WiFI AP will not be discovered / connected to and a command will be sent to the camera to
   disable its WiFi.
-- **wifi_interface**: optionally specify the hardware  WiFi interface to use. If None (or not set), first
-  discovered interface will be used.
-- **maintain_ble**: a boolean to optionally disable some BLE housekeeping. This defaults to True. If set to
-  False, the keep-alive signal will not be automatically sent and the camera's encoding / ready state will not
-  be tracked. This is most likely not desirable for the user and is mostly used for testing.
+- **exception_cb**: optional callback to be notified when exception occurs in a thread besides main. This is
+  useful if you anticipate unexpected BLE connection drops
 
 API Version
 -----------
 
 As mentioned above, one of the steps during the opening sequence is to query the camera's Open GoPro API version.
-This SDK only supported Open GoPro API Version 2.0 so will raise an Exception if the connected camera is
+This SDK only supports Open GoPro API Version 2.0 so will raise an `InvalidOpenGoProVersion` if the connected camera is
 using anything else.
 
 The version string can be accessed via the `version` property
 
 - :meth:`open_gopro.gopro.GoPro.version`
-
-Also, the version string can be accessed via the `version` property
-
 
 Camera Readiness
 ----------------
@@ -115,7 +114,7 @@ For example,
         while gopro.is_encoding or gopro.is_ready:
             pass
 
-Just to reiterate...it is not needed or recommended to worry about this as the internal state is managed automatically
+To reiterate...it is not needed or recommended to worry about this as the internal state is managed automatically
 by the `GoPro` instance.
 
 Sending Commands
@@ -133,7 +132,7 @@ Selecting Parameters
 --------------------
 
 Whenever a parameter is required for a command, it will be type-hinted in the method definition as either a basic Python type
-or an Enum from the `params` module (`class:`open_gopro.api.params`).
+or an Enum from the :ref:`Params<parameters>` module.
 
 Here is a full example for clarity:
 
@@ -248,8 +247,8 @@ It is possible to enable push notifications for any of the following:
 Firstly, the desired settings / id must be registered for.
 
 Once registered, the camera will send a push notification when the relevant setting / status changes. These
-responses are added to an internal queue of the `GoPro` instance be retrieved via
-:meth:`open_gopro.gopro.get_update`.
+responses are added to an internal queue of the `GoPro` instance and can be retrieved via
+:meth:`open_gopro.gopro.GoPro.get_notification`.
 
 It is possible to stop receiving notifications by issuing the relevant unregister command, i.e.:
 
@@ -269,7 +268,7 @@ Here is an example of registering for and receiving FOV updates:
         print(f"Current FOV is {current_fov}")
         # Get updates until we get a FOV update
         while True:
-            update = gopro.get_update() # Block until update is received
+            update = gopro.get_notification() # Block until update is received
             if SettingId.VIDEO_FOV in update:
                 print(f"New resolution is {update[SettingId.VIDEO_FOV]}")
                 break
@@ -300,7 +299,7 @@ Response Structure
 
 A `GoProResp` has 3 relevant attributes for the end user:
 
-- | **id** (:meth:`open_gopro.responses.GoProResp.id`): identifier of the completed operation.
+- | **identifier** (:meth:`open_gopro.responses.GoProResp.identifier`): identifier of the completed operation.
   | This will vary based on what type the response is and will also contain the most specific identification information.
 
     - UUID if a direct BLE characteristic read
@@ -309,7 +308,7 @@ A `GoProResp` has 3 relevant attributes for the end user:
 - **status** (:meth:`open_gopro.responses.GoProResp.status`): the status returned from the camera
 - **data** (:meth:`open_gopro.responses.GoProResp.data`): JSON serializable dict containing the responded data
 
-Besides the `id` attribute which always contains the most specific identification information, there are properties
+Besides the `identifier` attribute which always contains the most specific identification information, there are properties
 to attempt to access other identification information. If the property is not valid for the given response,
 it will return `None`.
 
@@ -322,7 +321,7 @@ There is also a property to check that the `status` is Success:
 - **is_ok**: :meth:`open_gopro.responses.GoProResp.is_ok`
 
 The response object can be serialized to a JSON string with the default Python `str()` function. Note that
-the `id` and `status` attributes are appended to the JSON.
+the `identifier` and `status` attributes are appended to the JSON.
 
 For example, first let's connect, send a command, and then store the response:
 
@@ -340,7 +339,7 @@ Now let's print the response (as JSON):
     >>> print(response)
     {
         "status": "SUCCESS",
-        "id": "UUID.CQ_QUERY_RESP::QueryCmdId.GET_SETTING_VAL",
+        "identifier": "UUID.CQ_QUERY_RESP::QueryCmdId.GET_SETTING_VAL",
         "SettingId.RESOLUTION": "RES_5_3_K"
     }
 
@@ -352,7 +351,7 @@ Now let's inspect the responses various attributes / properties:
     ErrorCode.SUCCESS
     >>> print(response.is_ok)
     True
-    >>> print(response.id)
+    >>> print(response.identifier)
     QueryCmdId.GET_SETTING_VAL
     >>> print(response.cmd)
     QueryCmdId.GET_SETTING_VAL
@@ -379,7 +378,7 @@ However, it is also possible to this as:
     >>> print(response.data[SettingId.RESOLUTION])
     RES_5_3_K
 
-Similarly, `__contains__` and `__iter__` have also been overridden to operate on the `data` attribute:
+Similarly, `__contains__`, `__keys__`, `__values__`, and `__items__` and `__iter__` have also been overridden to operate on the `data` attribute:
 
 .. code-block:: console
 

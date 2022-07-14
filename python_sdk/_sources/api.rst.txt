@@ -27,7 +27,7 @@ This can be imported as:
 
    from open_gopro import GoPro
 
-.. automodule:: open_gopro.gopro
+.. autoclass:: open_gopro.gopro.GoPro
    :members:
 
 API
@@ -103,9 +103,10 @@ All of these parameters can be accessed via:
 
    from open_gopro import Params
 
-.. autoclass:: open_gopro.api.params
+.. automodule:: open_gopro.api.params
    :members:
    :undoc-members:
+
 
 Responses
 =========
@@ -133,3 +134,16 @@ These can be imported as:
 .. automodule:: open_gopro.constants
    :members:
    :undoc-members:
+
+Exceptions
+==========
+
+.. automodule:: open_gopro.exceptions
+   :members:
+   :undoc-members:
+
+Bluetooth Services
+==================
+
+.. autoclass:: open_gopro.ble.services.BleUUID
+   :members:
