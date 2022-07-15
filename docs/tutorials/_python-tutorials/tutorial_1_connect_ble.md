@@ -328,7 +328,7 @@ It is now no longer necessary to pair on subsequent connections.
 {% tabs notification %}
 {% tab notification enable %}
 
-As specified in the [Open GoPro Bluetooth API]({% link specs/ble.md %}#sending-and-receiving-messages),
+As specified in the [Open GoPro Bluetooth API]({% link specs/ble_versions/ble_2_0.md %}#sending-and-receiving-messages),
 we must enable notifications for a given characteristic to receive responses from it.
 
 {% note %}
@@ -370,7 +370,7 @@ INFO:root:Done enabling notifications
 ```
 
 The characteristics that correspond to each UUID listed in the log can be found in the
-[Open GoPro API]({% link specs/ble.md %}#services-and-characteristics). These
+[Open GoPro API]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics). These
 will be used in a future tutorial to send data.
 
 {% endtab %}

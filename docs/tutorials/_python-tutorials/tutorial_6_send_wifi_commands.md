@@ -8,7 +8,7 @@ lesson: 6
 # Python Tutorial 6: Send WiFi Commands
 
 This document will provide a walk-through tutorial to use the Python [requests](https://pypi.org/project/requests/)
-package to send Open GoPro [HTTP commands]({% link specs/http.md %}) to the GoPro.
+package to send Open GoPro [HTTP commands]({% link specs/http_versions/http_2_0.md %}) to the GoPro.
 
 {% warning %}
 It is required that you have first completed the
@@ -319,7 +319,7 @@ We are building the endpoints using the GOPRO_BASE_URL defined in the tutorial p
 ## Get Open GoPro Version
 
 The first command we will be sending is
-[Get Version]({% link specs/http.md %}#commands-quick-reference). This should be the first command you send
+[Get Version]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). This should be the first command you send
 after connecting.
 
 {% warning %}
@@ -362,7 +362,7 @@ In this case, this camera supports version 2.0 of the Open GoPro spec. We will a
 ## Digital Zoom
 
 The next command we will be sending is
-[Digital Zoom]({% link specs/http.md %}#commands-quick-reference). The camera
+[Digital Zoom]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). The camera
 must be in the [Photo Preset Group]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}#load-preset-group)
 for this command to succeed. The commands writes to the following endpoint:
 
@@ -405,7 +405,7 @@ The response JSON is empty. This is expected in the case of a success.
 {% tab state Send Request %}
 
 The next command we will be sending is
-[Get State]({% link specs/http.md %}#commands-quick-reference). This command will
+[Get State]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). This command will
 return all of the current settings and values. It is basically a combination of the
 [Get All Settings]({% link _python-tutorials/tutorial_4_ble_queries.md %}#query-all) and
 [Get All Statuses]({% link _python-tutorials/tutorial_4_ble_queries.md %}#query-all)
@@ -479,7 +479,7 @@ INFO:root:Response: {
 ```
 
 We can see what each of these values mean by looking at the
-[Open GoPro Interface]({% link specs/ble.md %}#settings-quick-reference).
+[Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}#settings-quick-reference).
 
 For example (for settings):
 
@@ -495,7 +495,7 @@ For example (for settings):
 {% tab stream Send Request %}
 
 The next command we will be sending is
-[Preview Stream]({% link specs/http.md %}#commands-quick-reference). This command will
+[Preview Stream]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). This command will
 enable (or disable) the preview stream . It is then possible to view the preview stream from a media player.
 
 The commands write to the following endpoints:
@@ -563,7 +563,7 @@ The screen may slightly vary depending on your OS %}
 ## Load Preset Group
 
 The next command we will be sending is
-[Load Preset Group]({% link specs/http.md %}#commands-quick-reference). which is
+[Load Preset Group]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). which is
 used to toggle between the 3 groups of presets (video, photo, and timelapse).
 
 Let's build the endpoint first to load the video preset group (the id comes from the command table linked above):
@@ -605,7 +605,7 @@ middle of the screen:
 ## Load Preset
 
 The next command we will be sending is
-[Load Preset]({% link specs/http.md %}#commands-quick-reference). which is
+[Load Preset]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). which is
 used to select a specific preset that is part of a Preset Group.
 
 Let's build the endpoint first to load the Cinematic Preset (the id comes from the command table linked above):
@@ -650,7 +650,7 @@ this by seeing the preset name in the pill at bottom middle of the screen.
 {% tab preset Send Request %}
 
 The next command we will be sending is
-[Get Presets Status]({% link specs/http.md %}#commands-quick-reference). This
+[Get Presets Status]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). This
 command is used to get the list of all currently available presets as well as the settings that comprise
 each preset. This includes both default and user-defined presets.
 
@@ -765,7 +765,7 @@ information.
 ## Keep Alive
 
 The next command we will be sending is
-[Keep Alive]({% link specs/http.md %}#commands-quick-reference). which is
+[Keep Alive]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). which is
 used to prevent the camera from powering down. Unless changed by the user, GoPro cameras will automatically
 power off after some time (e.g. 5min, 15min, 30min). The Auto Power Down watchdog timer can be reset by
 periodically sending this message.
@@ -804,7 +804,7 @@ It is recommended to send a keep-alive at least once every 120 seconds.
 ## Set Shutter
 
 The next command we will be sending is
-[Set Shutter]({% link specs/http.md %}#commands-quick-reference). which is
+[Set Shutter]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). which is
 used to start and stop encoding.
 
 Let's build the endpoint first send the Set Shutter signal:
@@ -845,13 +845,13 @@ attempt to do so will result in an error response.
 
 ## Set Setting
 
-The next command will be sending is [Set Setting]({% link specs/http.md %}#settings-quick-reference).
+The next command will be sending is [Set Setting]({% link specs/http_versions/http_2_0.md %}#settings-quick-reference).
 This end point is used to update all of the settings on the camera. It is analogous to BLE commands like
 [Set Video Resolution]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}#set-the-video-resolution).
 
 It is important to note that many settings are dependent on the video resolution (and other settings).
 For example, certain FPS values are not valid with certain resolutions. In general, higher resolutions
-only allow lower FPS values. Check the [camera capabilities]({% link specs/ble.md %}#camera-capabilities)
+only allow lower FPS values. Check the [camera capabilities]({% link specs/ble_versions/ble_2_0.md %}#camera-capabilities)
 to see which settings are valid for given use cases.
 
 {% tip %}
@@ -942,7 +942,7 @@ As a reader exercise, try using the [Get State] command to verify that the resol
     correct="A"
     info="Among these options, only 24 is possible. You're not actually expected to know
     this. But you should know where to find the
-    [information](https://gopro.github.io/OpenGoPro/ble#camera-capabilities)."
+    [information](https://gopro.github.io/OpenGoPro/ble_2_0#camera-capabilities)."
 %}
 
 # Troubleshooting
@@ -964,6 +964,6 @@ Congratulations 🤙
 {% endsuccess %}
 
 You can now send any of the HTTP commands defined in the
-[Open GoPro Interface]({% link specs/http.md %}) that return JSON responses. You
+[Open GoPro Interface]({% link specs/http_versions/http_2_0.md %}) that return JSON responses. You
 may have noted that we did not discuss one of these (Get Media List) in this tutorial. Proceed to the
 next tutorial to see how to get and perform operations using the media list.

@@ -8,14 +8,14 @@ lesson: 2
 # Python Tutorial 2: Send BLE Commands
 
 This document will provide a walk-through tutorial to use [bleak](https://pypi.org/project/bleak/) to implement the
-[Open GoPro Interface]({% link specs/ble.md %}) to send commands and receive responses.
+[Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}) to send commands and receive responses.
 
 Commands in this sense are specifically procedures that are initiated by either:
 
 -   Writing to the Command Request UUID and receiving responses via the Command Response UUID. They are
-    listed [here]({% link specs/ble.md %}#commands).
+    listed [here]({% link specs/ble_versions/ble_2_0.md %}#commands).
 -   Writing to the Setting UUID and receiving responses via the Setting Response UUID. They are listed
-    [here]({% link specs/ble.md %}#settings).
+    [here]({% link specs/ble_versions/ble_2_0.md %}#settings).
 
 {% warning %}
 It is required that you have first completed the
@@ -302,7 +302,7 @@ We're using the GOPRO_BASE_UUID string imported from the module's `__init__.py `
 
 ## Set Shutter
 
-The first command we will be sending is [Set Shutter]({% link specs/ble.md %}#commands-quick-reference),
+The first command we will be sending is [Set Shutter]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference),
 which at byte level is:
 
 | Command         |        Bytes        |
@@ -375,7 +375,7 @@ INFO:root:Shutter command sent successfully
 ## Sleep
 
 The next command we will be sending is
-[Sleep]({% link specs/ble.md %}#commands-quick-reference), which at byte level is:
+[Sleep]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), which at byte level is:
 
 | Command |   Bytes   |
 | ------- | :-------: |
@@ -415,7 +415,7 @@ Since the camera has gone to sleep, it must be reconnected to via BLE to communi
 ## Load Preset Group
 
 The next command we will be sending is
-[Load Preset Group]({% link specs/ble.md %}#commands-quick-reference), which is used
+[Load Preset Group]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), which is used
 to toggle between the 3 groups of presets (video, photo, and timelapse). At byte level, the commands are:
 
 | Command                     |          Bytes           |
@@ -458,7 +458,7 @@ As expected, the response was received on the correct handle and the status was 
 ## Load Preset
 
 The next command we will be sending is
-[Load Preset]({% link specs/ble.md %}#commands-quick-reference), which is used
+[Load Preset]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), which is used
 to select a specific preset that is part of a Preset Group. At byte level, some of the commands for the various
 preset are:
 
@@ -509,7 +509,7 @@ As expected, the response was received on the correct handle and the status was 
 ## Enable Analytics
 
 The next command we will be sending is
-[Enable Analytics]({% link specs/ble.md %}#commands-quick-reference), which at byte level is:
+[Enable Analytics]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), which at byte level is:
 
 | Command          |   Bytes   |
 | ---------------- | :-------: |
@@ -547,7 +547,7 @@ As expected, the response was received on the correct handle and the status was 
 ## Set the Video Resolution
 
 The next command we will be sending is
-[Set Video Resolution]({% link specs/ble.md %}#commands-quick-reference). This is
+[Set Video Resolution]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference). This is
 used to change the value of the Video Resolution setting. It is important to note that this only affects
 **video** resolution (not photo). Therefore, the Video Preset Group must be active in order for it to succeed.
 This can be done either manually through the camera UI or by sending [Load Preset Group](#load-preset-group).
@@ -604,11 +604,11 @@ Group was not Video, the status will not be success.
 ## Set the Frames Per Second (FPS)
 
 The next command we will be sending is
-[Set FPS]({% link specs/ble.md %}#commands-quick-reference). This is
+[Set FPS]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference). This is
 used to change the value of the FPS setting. It is important to note that this setting is dependent on the
 video resolution. That is, certain FPS values are not valid with certain resolutions. In general, higher
 resolutions only allow lower FPS values. Also, the current anti-flicker value may further limit possible FPS
-values. Check the [camera capabilities ]({% link specs/ble.md %}#camera-capabilities) to see which FPS
+values. Check the [camera capabilities ]({% link specs/ble_versions/ble_2_0.md %}#camera-capabilities) to see which FPS
 values are valid for given use cases.
 
 Therefore, for this step of the tutorial, it is assumed that the resolution has
@@ -679,7 +679,7 @@ was higher, for example 5K, this would fail.
     option="D:::Any FPS is valid in at 5k"
     correct="A"
     info="Among these options, only 24 is possible. You're not actually expected to know
-    this. But you should know where to find the information: https://gopro.github.io/OpenGoPro/ble#camera-capabilities"
+    this. But you should know where to find the information: https://gopro.github.io/OpenGoPro/ble_2_0#camera-capabilities"
 %}
 
 {% quiz

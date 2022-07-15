@@ -8,7 +8,7 @@ lesson: 4
 # Python Tutorial 4: BLE Queries
 
 This document will provide a walk-through tutorial to use [bleak](https://pypi.org/project/bleak/) to implement
-the [Open GoPro Interface]({% link specs/ble.md %}) to query the camera's setting and status information via
+the [Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}) to query the camera's setting and status information via
 BLE.
 
 "Queries" in this sense are specifically procedures that:
@@ -130,7 +130,7 @@ We must first connect as was discussed in the
 We will also be using the **Response** class that was defined in the
 [parsing responses]({% link _python-tutorials/tutorial_3_parse_ble_tlv_responses.md %}) tutorial to accumulate
 and parse notification responses to the Query Response
-[characteristic]({% link specs/ble.md %}#services-and-characteristics).
+[characteristic]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics).
 Throughout this tutorial, the query information that we will be reading is the Resolution Setting (ID 0x02).
 Therefore, we have slightly changed the notification handler to update a global resolution variable as it
 queries the resolution:
@@ -158,7 +158,7 @@ section:
 # Polling Query Information
 
 It is possible to poll one or more setting / status values using the following
-[commands]({% link specs/ble.md %}#query-commands):
+[commands]({% link specs/ble_versions/ble_2_0.md %}#query-commands):
 
 | Query ID | Request              | Query        |
 | -------- | -------------------- | ------------ |
@@ -330,7 +330,7 @@ tutorial
 Rather than polling the query information, it is also possible to use an interrupt scheme to register for
 push notifications when the relevant query information changes.
 
-The relevant [commands]({% link specs/ble.md %}#query-commands) are:
+The relevant [commands]({% link specs/ble_versions/ble_2_0.md %}#query-commands) are:
 
 | Query ID | Request                           | Query        |
 | -------- | --------------------------------- | ------------ |

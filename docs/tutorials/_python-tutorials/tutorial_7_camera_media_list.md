@@ -9,7 +9,7 @@ lesson: 7
 
 This document will provide a walk-through tutorial to use the Python
 [requests](https://pypi.org/project/requests/) package to send Open GoPro
-[HTTP commands]({% link specs/http.md %}) to the GoPro, specifically to get the media list and perform
+[HTTP commands]({% link specs/http_versions/http_2_0.md %}) to the GoPro, specifically to get the media list and perform
 operations on it (downloading pictures, videos, etc.)
 
 {% warning %}
@@ -145,7 +145,7 @@ to send HTTP commands as in the
 {% tab media Send Request %}
 
 We get the media list via the
-[Get Media List command]({% link specs/http.md %}#commands-quick-reference).
+[Get Media List command]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference).
 This command will return a JSON structure of all of the media files (pictures, videos) on the camera with
 corresponding information about each media file.
 
@@ -213,7 +213,7 @@ INFO:root:Response: {
 ```
 
 The media list format is defined in the
-[Open GoPro Specification]({% link specs/http.md %}#media-list-format).
+[Open GoPro Specification]({% link specs/http_versions/http_2_0.md %}#media-list-format).
 We won't be rehashing that here but will provide examples below of using the media list.
 
 One common functionality is to get the list of media file names, which can be done as such:
@@ -258,7 +258,7 @@ sequenceDiagram
 ## Download Media File
 
 The next command we will be sending is
-[Download Media]({% link specs/http.md %}#downloading-media). Specifically, we
+[Download Media]({% link specs/http_versions/http_2_0.md %}#downloading-media). Specifically, we
 will be downloading a photo. The camera must have at least one photo in its media list in order for this to
 work.
 
@@ -319,7 +319,7 @@ Once complete, the `GOPR0987.jpg` file will be available from where the demo scr
 ## Get Media GPMF
 
 The next command we will be sending is
-[Get Media GPMF]({% link specs/http.md %}#commands-quick-reference). More
+[Get Media GPMF]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). More
 information about GPMF can be found [here](https://github.com/gopro/gpmf-parser). Specifically, we will be
 downloading the GPMF for a photo. The camera must have at least one photo in its media list in order for this
 to work.
@@ -378,7 +378,7 @@ Once complete, the `GOPR0987.gpm`f file will be available from where the demo sc
 ## Get Media Screennail
 
 The next command we will be sending is
-[Get Media Screennail ]({% link specs/http.md %}#downloading-media).
+[Get Media Screennail ]({% link specs/http_versions/http_2_0.md %}#downloading-media).
 Specifically, we will be getting the screennail for a photo. The camera must have at least one photo in its
 media list in order for this to work.
 
@@ -440,7 +440,7 @@ Once complete, the `GOPR0987_screennail.jpg` file will be available from where t
 ## Get Media Thumbnail
 
 The next command we will be sending is
-[Get Media thumbnail ]({% link specs/http.md %}#downloading-media).
+[Get Media thumbnail ]({% link specs/http_versions/http_2_0.md %}#downloading-media).
 Specifically, we will be getting the thumbnail for a photo. The camera must have at least one photo in its
 media list in order for this to work.
 

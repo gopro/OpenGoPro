@@ -8,7 +8,7 @@ lesson: 5
 # Python Tutorial 5: Connect WiFi
 
 This document will provide a walk-through tutorial to use [bleak](https://pypi.org/project/bleak/) to implement
-the [Open GoPro Interface]({% link specs/http.md %}) to enable the GoPro's WiFi Access Point (AP) so that it
+the [Open GoPro Interface]({% link specs/http_versions/http_2_0.md %}) to enable the GoPro's WiFi Access Point (AP) so that it
 can be connected to. It will also provide an example of connecting to the WiFi AP.
 
 {% warning %}
@@ -151,7 +151,7 @@ Response pattern, the WiFi Information is retrieved via direct Read Requests to 
 ### Get WiFi SSID
 
 The WiFi SSID can be found by reading from the WiFi AP SSID
-[characteristic]({% link specs/ble.md %}#services-and-characteristics) of the
+[characteristic]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics) of the
 WiFi Access Point service.
 
 First, we need to define the attribute to read from:
@@ -182,7 +182,7 @@ INFO:root:SSID is GP24500456
 ### Get WiFi Password
 
 The WiFi password can be found by reading from the WiFi AP password
-[characteristic]({% link specs/ble.md %}#services-and-characteristics) of the
+[characteristic]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics) of the
 WiFi Access Point service.
 
 First, we need to define the attribute to read from:
@@ -213,7 +213,7 @@ INFO:root:Password is g@6-Tj9-C7K
 ## Enable WiFi AP
 
 Before we can connect to the WiFi AP, we have to make sure it is enabled. This is accomplished by using the
-"AP Control" [command]({% link specs/ble.md %}#commands-quick-reference):
+"AP Control" [command]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference):
 
 | Command            |        Bytes        |
 | ------------------ | :-----------------: |
@@ -320,4 +320,4 @@ Congratulations 🤙
 {% endsuccess %}
 
 You are now connected to the GoPro's Wifi AP and can send any of the HTTP commands defined in the
-[Open GoPro Interface]({% link specs/http.md %}). Proceed to the next tutorial.
+[Open GoPro Interface]({% link specs/http_versions/http_2_0.md %}). Proceed to the next tutorial.
