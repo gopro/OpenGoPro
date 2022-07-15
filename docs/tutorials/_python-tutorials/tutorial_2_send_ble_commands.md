@@ -582,7 +582,7 @@ We make sure to clear the synchronization event before writing, then pend on the
 the notification callback.
 {% endsuccess %}
 
-You should hear the camera beep and see the video resolution change to 1080 in the pill in the bottom-middle of the
+You should see the video resolution change to 1080 in the pill in the bottom-middle of the
 screen:
 
 {% include figure image_path="/assets/images/tutorials/python/video_resolution.png" alt="Video Resolution" size="50%" caption="Set Video Resolution" %}
@@ -639,7 +639,7 @@ We make sure to clear the synchronization event before writing, then pend on the
 the notification callback.
 {% endsuccess %}
 
-You should hear the camera beep and see the FPS change to 240 in the pill in the bottom-middle of the
+You should see the FPS change to 240 in the pill in the bottom-middle of the
 screen:
 
 {% include figure image_path="/assets/images/tutorials/python/fps.png" alt="FPS" size="50%" caption="Set FPS" %}

@@ -16,7 +16,7 @@ It is required that you have first completed the
 {% endwarning %}
 
 This tutorial only considers sending these commands as one-off commands. That is, it does not consider state management /
-synchronization when sending multiple commands. This will be discussed in a future lab.
+synchronization when sending multiple commands. This will be discussed in a future tutorial.
 
 There are two types of responses that can be received from the HTTP commands: JSON and binary. This section
 will deal with commands that return JSON responses. For commands with binary responses (as well as commands with
@@ -546,7 +546,7 @@ Once enabled, the stream can be viewed at `udp://@:8554`.
 Here is an example of viewing this using [VLC](https://www.videolan.org/):
 
 {% note %}
-The screen may slightly vary depending on your OS %}
+The screen may slightly vary depending on your OS
 {% endnote %}
 
 1. Select **Media-->Open Network Stream**
@@ -750,7 +750,7 @@ an ID, array of settings, and other descriptive information. In the example abov
 see that there is a user-defined looping preset and a default video preset. For more
 information on creating / using custom presets, see the
 [GoPro Community Article](https://community.gopro.com/s/article/GoPro-Webcam?language=en_US).
-A future lab may be created to demonstrate parsing this JSON directly into a protobuf-compiled object.
+A future tutorial may be created to demonstrate parsing this JSON directly into a protobuf-compiled object.
 
 {% note %}
 The settings shown above are parsed the same as they were in the Get State command above

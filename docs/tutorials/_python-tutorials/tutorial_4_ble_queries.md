@@ -165,7 +165,7 @@ It is possible to poll one or more setting / status values using the following
 | 0x12     | Get Setting value(s) | len:12:xx:xx |
 | 0x13     | Get Status value(s)  | len:13:xx:xx |
 
-where **xx** are setting / status ID(s) and **len** is the total length of the query (not including the length).
+where **xx** are setting / status ID(s) and **len** is the length of the rest of the query (the number of query bytes plus one for the request ID byte).
 There will be specific examples below.
 
 {% note %}
@@ -339,7 +339,7 @@ The relevant [commands]({% link specs/ble_versions/ble_2_0.md %}#query-commands)
 | 0x72     | Unregister updates for setting(s) | len:72:xx:xx |
 | 0x73     | Unregister updates for status(es) | len:73:xx:xx |
 
-where **xx** are setting / status ID(s) and **len** is the total length of the query (not including the length).
+where **xx** are setting / status ID(s) and **len** is the length of the rest of the query (the number of query bytes plus one for the request ID byte).
 
 The Query ID's for push notification responses are as follows:
 

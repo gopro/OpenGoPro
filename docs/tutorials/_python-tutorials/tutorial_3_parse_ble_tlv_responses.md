@@ -190,13 +190,13 @@ await event.wait()  # Wait to receive the notification response
 ```
 
 {% note %}
-The following snippets of code are taken from the `notification handler`
+The snippets of code included in this section are taken from the `notification handler`
 {% endnote %}
 
 We then receive a response at the expected handle. This is logged as:
 
 ```console
-INFO:root:Getting the Getting the Open GoPro version...
+INFO:root:Getting the Open GoPro version...
 INFO:root:Received response at handle=52: b'06:51:00:01:01:01:00'
 ```
 

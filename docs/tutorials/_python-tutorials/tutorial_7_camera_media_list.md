@@ -19,7 +19,7 @@ and [Sending WiFi Commands]({% link _python-tutorials/tutorial_6_send_wifi_comma
 {% endwarning %}
 
 This tutorial only considers sending these commands as one-off commands. That is, it does not consider state
-management / synchronization when sending multiple commands. This will be discussed in a future lab.
+management / synchronization when sending multiple commands. This will be discussed in a future tutorial.
 
 # Requirements
 
