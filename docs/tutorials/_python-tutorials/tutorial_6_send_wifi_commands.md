@@ -934,15 +934,13 @@ As a reader exercise, try using the [Get State] command to verify that the resol
 %}
 
 {% quiz
-    question="What of the following sets of FPS values are possible at 5K?"
-    option="A:::[24, 25, 30]"
-    option="B:::[24, 25, 30, 60]"
-    option="C:::[24, 25, 30, 60, 120]"
-    option="D:::Any FPS is valid in at 5k"
-    correct="A"
-    info="Among these options, only 24 is possible. You're not actually expected to know
-    this. But you should know where to find the
-    [information](https://gopro.github.io/OpenGoPro/ble_2_0#camera-capabilities)."
+    question="How do you query the current video resolution setting (id = 2) via WiFi?"
+    option="A:::Send GET to `/gopro/camera/state?setting_id=2`"
+    option="B:::Send GET to `/gopro/camera/state?get_setting=2`"
+    option="C:::Send POST to `/gopro/camera/state` with request 'setting_id=2'"
+    option="D:::None of the Above"
+    correct="D"
+    info="You can't query individual settings or statuses with the HTTP API. In order to get the value of a specific setting you'll need to send a GET to `/gopro/camera/state` and parse the value of the desired setting from the JSON response."
 %}
 
 # Troubleshooting

@@ -675,6 +675,7 @@ See the next tutorial for more information on queries."
     option="A:::length"
     option="B:::status"
     option="C:::ID"
+    option="D:::None of the Above"
     correct="D"
     info="Query responses can be one packet (if for example querying a specific
 setting) or multiple packets (when querying many or all settings as in the example here).

@@ -301,11 +301,12 @@ INFO:root:Wifi Connected!
     option="A:::It only needs to be enabled once and it will then always remain on"
     option="B:::The WiFi password will never change"
     option="C:::The WiFi SSID will never change"
+    option="D:::None of the Above"
     correct="D"
-    info="Trick question! They are all false. While the WiFi AP will remain on for
-    some time, it can and will eventually turn off so it is always recommended to first connect
-    via BLE and ensure that it is enabled. The password and SSID will almost never change.
-    However, they will change if the connections are reset via Connections->Reset Connections."
+    info="While the WiFi AP will remain on for some time, it can and will eventually turn off so
+    it is always recommended to first connect via BLE and ensure that it is enabled. The password
+    and SSID will almost never change. However, they will change if the connections are reset via
+    Connections->Reset Connections."
 %}
 
 # Troubleshooting
