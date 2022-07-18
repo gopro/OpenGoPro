@@ -8,7 +8,7 @@ lesson: 4
 # Python Tutorial 4: BLE Queries
 
 This document will provide a walk-through tutorial to use [bleak](https://pypi.org/project/bleak/) to implement
-the [Open GoPro Interface]({% link specs/ble.md %}) to query the camera's setting and status information via
+the [Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}) to query the camera's setting and status information via
 BLE.
 
 "Queries" in this sense are specifically procedures that:
@@ -40,32 +40,87 @@ The scripts that will be used for this tutorial can be found in the
 
 # Just Show me the Demo(s)!!
 
-Each of the commands detailed in this tutorial has a corresponding script to demo it. If you don't want to
-read this tutorial and just want to see the demo, for example, run:
-
-```console
-$ python ble_query_poll_resolution_value.py
-```
+If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the [Open GoPro GitHub repo]( https://github.com/gopro/OpenGoPro).
 
 {% warning %}
-Python >= 3.8.x must be used as specified in
-[the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+Python >= 3.8.x must be used as specified in the requirements
 {% endwarning %}
 
-Note that each script has a command-line help which can be found via:
+{% note %}
+Each of the scripts for this tutorial can be found in this directory of the repo: 
+`demos/python/tutorial/tutorial_modules/tutorial_4_ble_queries/`
+{% endnote %}
+
+{% accordion Individual Query Poll %}
+
+You can test an individual query poll with your camera through BLE using the following script:
+```console
+$ python ble_command_poll_resolution_value.py
+```
+
+See the help for parameter definitions:
 
 ```console
-$ python ./ble_command_poll_resolution_value.py --help
-usage: ble_query_poll_resolution_value.py [-h] [-i IDENTIFIER]
+$ python ble_command_poll_resolution_value.py --help
+usage: ble_command_poll_resolution_value.py [-h] [-i IDENTIFIER]
 
-Connect to a GoPro camera then get the current resolution.
+Connect to a GoPro camera, get the current resolution, modify the resolution, and confirm the change was successful.
 
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
-                        SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
 ```
+{% endaccordion %}
+
+
+{% accordion Multiple Simultaneous Query Polls %}
+
+You can test querying multiple queries simultaneously with your camera through BLE using the following script:
+```console
+$ python ble_command_poll_multiple_setting_values.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_poll_multiple_setting_values.py --help
+usage: ble_command_poll_multiple_setting_values.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera then get the current resolution, fps, and fov.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
+
+{% accordion Registering for Query Push Notifications %}
+
+You can test registering for querties and receiving push notifications with your camera through BLE using the following script:
+```console
+$ python ble_command_register_resolution_value_updates.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_register_resolution_value_updates.py --help
+usage: ble_command_register_resolution_value_updates.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, register for updates to the resolution, receive the current resolution, modify the resolution, and confirm receipt of the change notification.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
 
 # Setup
 
@@ -75,7 +130,7 @@ We must first connect as was discussed in the
 We will also be using the **Response** class that was defined in the
 [parsing responses]({% link _python-tutorials/tutorial_3_parse_ble_tlv_responses.md %}) tutorial to accumulate
 and parse notification responses to the Query Response
-[characteristic]({% link specs/ble.md %}#services-and-characteristics).
+[characteristic]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics).
 Throughout this tutorial, the query information that we will be reading is the Resolution Setting (ID 0x02).
 Therefore, we have slightly changed the notification handler to update a global resolution variable as it
 queries the resolution:
@@ -103,14 +158,14 @@ section:
 # Polling Query Information
 
 It is possible to poll one or more setting / status values using the following
-[commands]({% link specs/ble.md %}#query-commands):
+[commands]({% link specs/ble_versions/ble_2_0.md %}#query-commands):
 
 | Query ID | Request              | Query        |
 | -------- | -------------------- | ------------ |
 | 0x12     | Get Setting value(s) | len:12:xx:xx |
 | 0x13     | Get Status value(s)  | len:13:xx:xx |
 
-where **xx** are setting / status ID(s) and **len** is the total length of the query (not including the length).
+where **xx** are setting / status ID(s) and **len** is the length of the rest of the query (the number of query bytes plus one for the request ID byte).
 There will be specific examples below.
 
 {% note %}
@@ -275,7 +330,7 @@ tutorial
 Rather than polling the query information, it is also possible to use an interrupt scheme to register for
 push notifications when the relevant query information changes.
 
-The relevant [commands]({% link specs/ble.md %}#query-commands) are:
+The relevant [commands]({% link specs/ble_versions/ble_2_0.md %}#query-commands) are:
 
 | Query ID | Request                           | Query        |
 | -------- | --------------------------------- | ------------ |
@@ -284,7 +339,7 @@ The relevant [commands]({% link specs/ble.md %}#query-commands) are:
 | 0x72     | Unregister updates for setting(s) | len:72:xx:xx |
 | 0x73     | Unregister updates for status(es) | len:73:xx:xx |
 
-where **xx** are setting / status ID(s) and **len** is the total length of the query (not including the length).
+where **xx** are setting / status ID(s) and **len** is the length of the rest of the query (the number of query bytes plus one for the request ID byte).
 
 The Query ID's for push notification responses are as follows:
 

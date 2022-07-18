@@ -10,6 +10,7 @@ ignore=tests
 [MESSAGES CONTROL]
 
 disable=
+    broad-except, # This is useful for our contrived demos
     bare-except,
     missing-module-docstring,
     missing-function-docstring,
@@ -28,7 +29,6 @@ disable=
     too-many-locals,
     too-many-lines,
     too-many-statements,
-    fixme,
     protected-access, # Maybe fix this one
     invalid-name # We are passing these except for <= 2 character variable names. Should be able to configure via http://pylint.pycqa.org/en/1.9/user_guide/options.html#cmdoption-variable-rgx
 

@@ -4,7 +4,6 @@
 import sys
 import enum
 import asyncio
-import logging
 import argparse
 from typing import Optional
 from binascii import hexlify
@@ -75,7 +74,7 @@ async def main(identifier: Optional[str]) -> None:
     await event.wait()  # Wait to receive the notification response
     logger.info(f"Resolution is currently {resolution}")
 
-    # Write to command request BleUUID to change the video resolution (either to 1080 or 1440)
+    # Write to command request BleUUID to change the video resolution (either to 1080 or 2.7K)
     new_resolution = Resolution.RES_2_7K if resolution is Resolution.RES_1080 else Resolution.RES_1080
     logger.info(f"Changing the resolution to {new_resolution}...")
     event.clear()
@@ -94,7 +93,9 @@ async def main(identifier: Optional[str]) -> None:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Connect to a GoPro camera then get the current resolution.")
+    parser = argparse.ArgumentParser(
+        description="Connect to a GoPro camera, get the current resolution, modify the resolution, and confirm the change was successful."
+    )
     parser.add_argument(
         "-i",
         "--identifier",

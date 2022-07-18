@@ -4,16 +4,13 @@
 import sys
 import time
 import asyncio
-import logging
 import argparse
 from typing import Optional, Tuple
 
 from bleak import BleakClient
 from open_gopro.wifi.adapters import Wireless
 
-from tutorial_modules import enable_wifi
-
-from tutorial_modules import logger
+from tutorial_modules import enable_wifi, logger
 
 
 async def connect_wifi(identifier: str = None) -> Tuple[Wireless, BleakClient]:

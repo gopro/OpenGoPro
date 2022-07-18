@@ -8,7 +8,7 @@ lesson: 3
 # Python Tutorial 3: Parse BLE TLV Responses
 
 This document will provide a walk-through tutorial to use [bleak](https://pypi.org/project/bleak/) to implement
-the [Open GoPro Interface]({% link specs/ble.md %}) to parse BLE
+the [Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}) to parse BLE
 [Type-Length-Value](https://en.wikipedia.org/wiki/Type-length-value) (TLV) Responses.
 
 Besides TLV, some BLE commands instead return protobuf responses. These will be discussed in a future
@@ -34,23 +34,52 @@ The scripts that will be used for this tutorial can be found in the
 [Tutorial 3 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_3_parse_ble_tlv_responses).
 
 # Just Show me the Demo(s)!!
+If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the [Open GoPro GitHub repo]( https://github.com/gopro/OpenGoPro).
 
-Each of the examples described below has a corresponding script to demo it. If you don't want to read this
-tutorial and just want to see the demo, for example, run:
+{% warning %}
+Python >= 3.8.x must be used as specified in the requirements
+{% endwarning %}
 
+{% note %}
+Each of the scripts for this tutorial can be found in this directory of the repo: 
+`demos/python/tutorial/tutorial_modules/tutorial_3_parse_ble_tlv_responses/`
+{% endnote %}
+
+{% accordion Parsing a One Packet TLV Response %}
+
+You can test parsing a one packet TLV response with your camera through BLE using the following script:
+```console
+$ python ble_command_get_version.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_get_version.py --help
+usage: ble_command_get_version.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera via BLE, then get the Open GoPro version.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
+
+{% accordion Parsing Multiple Packet TLV Responses %}
+
+You can test parsing multiple packet TVL responses with your camera through BLE using the following script:
 ```console
 $ python ble_command_get_state.py
 ```
 
-{% warning %}
-Python >= 3.8.x must be used as specified in
-[the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
-{% endwarning %}
-
-Note that each script has a command-line help which can be found via:
+See the help for parameter definitions:
 
 ```console
-$ python ./ble_command_get_state.py --help
+$ python ble_command_get_state.py --help
 usage: ble_command_get_state.py [-h] [-i IDENTIFIER]
 
 Connect to a GoPro camera via BLE, then get its statuses and settings.
@@ -58,9 +87,10 @@ Connect to a GoPro camera via BLE, then get its statuses and settings.
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
-                        SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
 ```
+{% endaccordion %}
 
 # Setup
 
@@ -85,7 +115,7 @@ sequenceDiagram
 ```
 
 In actuality, responses can be more complicated. As described in the
-[Open GoPro Interface]({% link specs/ble.md %}#packet-headers), responses can be
+[Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}#packet-headers), responses can be
 be comprised of multiple packets where each packet is <= 20 bytes such as:
 
 ```mermaid!
@@ -137,7 +167,7 @@ response will be used for most Commands and Setting Responses as seen in the
 ## Complex Command Response
 
 There are some commands that do return additional response data. These are called "complex responses."
-From the [commands reference]({% link specs/ble.md %}#commands-quick-reference), we can see that these are:
+From the [commands reference]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), we can see that these are:
 
 -   Get Open GoPro Version (ID == 0x51)
 -   Get Hardware Info (ID == 0x3C)
@@ -150,7 +180,7 @@ It is important to always query the version after connecting in order to know wh
 See the relevant version of the BLE and / or WiFi spec for more details about each version.
 {% endtip %}
 
-First, we send the command to the Command Request [UUID]({% link specs/ble.md %}#services-and-characteristics):
+First, we send the command to the Command Request [UUID]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics):
 
 ```python
 COMMAND_REQ_UUID = GOPRO_BASE_UUID.format("0072")
@@ -160,13 +190,13 @@ await event.wait()  # Wait to receive the notification response
 ```
 
 {% note %}
-The following snippets of code are taken from the `notification handler`
+The snippets of code included in this section are taken from the `notification handler`
 {% endnote %}
 
 We then receive a response at the expected handle. This is logged as:
 
 ```console
-INFO:root:Getting the Getting the Open GoPro version...
+INFO:root:Getting the Open GoPro version...
 INFO:root:Received response at handle=52: b'06:51:00:01:01:01:00'
 ```
 
@@ -178,7 +208,7 @@ This equates to:
 | 0x06            | 0x51 == Get Version           | 0x00 == Success | 0x01 0x01 0x01 0x00 |
 
 We can see that this "complex response" contains 4 additional bytes that need to be parsed. Using the information
-from the [interface description]({% link specs/ble.md %}#complex-command-responses),
+from the [interface description]({% link specs/ble_versions/ble_2_0.md %}#complex-command-responses),
 we know to parse this as:
 
 | Byte | Meaning                        |
@@ -621,7 +651,7 @@ INFO:root:Received settings
 ```
 
 We can see what each of these values mean by looking at the
-[Open GoPro Interface]({% link specs/ble.md %}#settings-quick-reference).
+[Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}#settings-quick-reference).
 
 For example:
 
@@ -645,6 +675,7 @@ See the next tutorial for more information on queries."
     option="A:::length"
     option="B:::status"
     option="C:::ID"
+    option="D:::None of the Above"
     correct="D"
     info="Query responses can be one packet (if for example querying a specific
 setting) or multiple packets (when querying many or all settings as in the example here).

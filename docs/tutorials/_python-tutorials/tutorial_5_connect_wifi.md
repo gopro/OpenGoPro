@@ -8,7 +8,7 @@ lesson: 5
 # Python Tutorial 5: Connect WiFi
 
 This document will provide a walk-through tutorial to use [bleak](https://pypi.org/project/bleak/) to implement
-the [Open GoPro Interface]({% link specs/http.md %}) to enable the GoPro's WiFi Access Point (AP) so that it
+the [Open GoPro Interface]({% link specs/http_versions/http_2_0.md %}) to enable the GoPro's WiFi Access Point (AP) so that it
 can be connected to. It will also provide an example of connecting to the WiFi AP.
 
 {% warning %}
@@ -29,36 +29,69 @@ The scripts that will be used for this tutorial can be found in the
 
 # Just Show me the Demo(s)!!
 
-There are two relevant scripts that will be discussed here:
-
--   wifi_enable.py
--   wifi_enable_and_connect.py
-
-If you don't want to read this tutorial and just want to see the demo, for example, run:
-
-```console
-$ python wifi_enable_and_connect.py
-```
+If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the [Open GoPro GitHub repo]( https://github.com/gopro/OpenGoPro).
 
 {% warning %}
-Python >= 3.8.x must be used as specified in
-[the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
+Python >= 3.8.x must be used as specified in the requirements
 {% endwarning %}
 
-Note that each script has a command-line help which can be found via:
+{% note %}
+Each of the scripts for this tutorial can be found in this directory of the repo: 
+`demos/python/tutorial/tutorial_modules/tutorial_5_connect_wifi/`
+{% endnote %}
+
+{% accordion Enable WiFi AP %}
+
+You can test querying the current Resolution on your camera through BLE using the following script:
+```console
+$ python wifi_enable.py
+```
+
+See the help for parameter definitions:
 
 ```console
-python wifi_enable_and_connect.py --help
-usage: wifi_enable_and_connect.py [-h] [-i IDENTIFIER]
+$ python wifi_enable.py --help
+usage: wifi_enable.py [-h] [-i IDENTIFIER] [-t TIMEOUT]
 
-Connect to a GoPro camera via BLE, get WiFi info, enable WiFi and connect.
+Connect to a GoPro camera via BLE, get WiFi info, and enable WiFi.
 
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
-                        SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+  -t TIMEOUT, --timeout TIMEOUT
+                        time in seconds to maintain connection before disconnecting. If not set, will
+                        maintain connection indefinitely
 ```
+{% endaccordion %}
+
+
+{% accordion Establish Connection to WiFi AP %}
+
+You can test querying the current Resolution on your camera through BLE using the following script:
+```console
+$ python wifi_enable_and_connect.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_enable_and_connect.py --help
+usage: wifi_enable_and_connect.py [-h] [-i IDENTIFIER] [-t TIMEOUT]
+
+Connect to a GoPro camera via BLE, get WiFi info, enable WiFi and connect. Send keyboard interrupt to exit.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+  -t TIMEOUT, --timeout TIMEOUT
+                        time in seconds to maintain connection before disconnecting. If not set, will
+                        maintain connection indefinitely
+```
+{% endaccordion %}
 
 # Setup
 
@@ -118,7 +151,7 @@ Response pattern, the WiFi Information is retrieved via direct Read Requests to 
 ### Get WiFi SSID
 
 The WiFi SSID can be found by reading from the WiFi AP SSID
-[characteristic]({% link specs/ble.md %}#services-and-characteristics) of the
+[characteristic]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics) of the
 WiFi Access Point service.
 
 First, we need to define the attribute to read from:
@@ -149,7 +182,7 @@ INFO:root:SSID is GP24500456
 ### Get WiFi Password
 
 The WiFi password can be found by reading from the WiFi AP password
-[characteristic]({% link specs/ble.md %}#services-and-characteristics) of the
+[characteristic]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics) of the
 WiFi Access Point service.
 
 First, we need to define the attribute to read from:
@@ -180,7 +213,7 @@ INFO:root:Password is g@6-Tj9-C7K
 ## Enable WiFi AP
 
 Before we can connect to the WiFi AP, we have to make sure it is enabled. This is accomplished by using the
-"AP Control" [command]({% link specs/ble.md %}#commands-quick-reference):
+"AP Control" [command]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference):
 
 | Command            |        Bytes        |
 | ------------------ | :-----------------: |
@@ -268,11 +301,12 @@ INFO:root:Wifi Connected!
     option="A:::It only needs to be enabled once and it will then always remain on"
     option="B:::The WiFi password will never change"
     option="C:::The WiFi SSID will never change"
+    option="D:::None of the Above"
     correct="D"
-    info="Trick question! They are all false. While the WiFi AP will remain on for
-    some time, it can and will eventually turn off so it is always recommended to first connect
-    via BLE and ensure that it is enabled. The password and SSID will almost never change.
-    However, they will change if the connections are reset via Connections->Reset Connections."
+    info="While the WiFi AP will remain on for some time, it can and will eventually turn off so
+    it is always recommended to first connect via BLE and ensure that it is enabled. The password
+    and SSID will almost never change. However, they will change if the connections are reset via
+    Connections->Reset Connections."
 %}
 
 # Troubleshooting
@@ -287,4 +321,4 @@ Congratulations 🤙
 {% endsuccess %}
 
 You are now connected to the GoPro's Wifi AP and can send any of the HTTP commands defined in the
-[Open GoPro Interface]({% link specs/http.md %}). Proceed to the next tutorial.
+[Open GoPro Interface]({% link specs/http_versions/http_2_0.md %}). Proceed to the next tutorial.

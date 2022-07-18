@@ -2,9 +2,17 @@
 
 This package is designed to be used with the accompanying Python [tutorials](https://gopro.github.io/OpenGoPro/tutorials/).
 
-If you are a user of the tutorials, please visit the above link. Developer's of these tutorials can continue reading.
+If you are a user of the tutorials, please visit the above link. Developer's of these tutorials should continue reading.
 
 # Developer Information
+
+## Development Environment Setup
+
+With Python >= 3.8 and < 3.11, perform:
+
+```
+pip install -r requirements-dev.txt
+```
 
 ## Tutorial Documentation
 

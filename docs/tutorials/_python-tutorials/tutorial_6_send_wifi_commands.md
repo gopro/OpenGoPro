@@ -8,7 +8,7 @@ lesson: 6
 # Python Tutorial 6: Send WiFi Commands
 
 This document will provide a walk-through tutorial to use the Python [requests](https://pypi.org/project/requests/)
-package to send Open GoPro [HTTP commands]({% link specs/http.md %}) to the GoPro.
+package to send Open GoPro [HTTP commands]({% link specs/http_versions/http_2_0.md %}) to the GoPro.
 
 {% warning %}
 It is required that you have first completed the
@@ -16,7 +16,7 @@ It is required that you have first completed the
 {% endwarning %}
 
 This tutorial only considers sending these commands as one-off commands. That is, it does not consider state management /
-synchronization when sending multiple commands. This will be discussed in a future lab.
+synchronization when sending multiple commands. This will be discussed in a future tutorial.
 
 There are two types of responses that can be received from the HTTP commands: JSON and binary. This section
 will deal with commands that return JSON responses. For commands with binary responses (as well as commands with
@@ -32,18 +32,50 @@ The scripts that will be used for this tutorial can be found in the
 
 # Just Show me the Demo(s)!!
 
-Each of the commands detailed below has a corresponding script to demo it. If you don't want to read this
-tutorial and just want to see the demo, for example, run:
+If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the [Open GoPro GitHub repo]( https://github.com/gopro/OpenGoPro).
 
+{% warning %}
+Python >= 3.8.x must be used as specified in the requirements
+{% endwarning %}
+
+{% note %}
+Each of the scripts for this tutorial can be found in this directory of the repo: 
+`demos/python/tutorial/tutorial_modules/tutorial_6_send_wifi_commands/`
+{% endnote %}
+
+{% warning %}
+You must be connected to the camera via WiFi in order to run these scripts. You can do this by manually to the SSID and password listed on your camera or by leaving the `Establish Connection to WiFi AP` script from [Tutorial 5]({% link _python-tutorials/tutorial_5_connect_wifi.md %}#just-show-me-the-demos) running in the background.
+{% endwarning %}
+
+{% accordion Get Open GoPro Version %}
+
+You can test querying the Open GoPro version on your camera with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_get_version.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_get_version.py --help
+usage: wifi_command_get_version.py [-h]
+
+Get the camera's supported Open GoPro version.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Digital Zoom %}
+
+You can test setting the digital zoom level on your camera with HTTP over WiFi using the following script:
 ```console
 $ python wifi_command_zoom.py
 ```
 
-{% warning %}
-Python >= 3.8.x must be used as specified in [the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
-{% endwarning %}
-
-Note that each script has a command-line help which can be found via:
+See the help for parameter definitions:
 
 ```console
 $ python wifi_command_zoom.py --help
@@ -55,6 +87,198 @@ optional arguments:
   -h, --help            show this help message and exit
   -z ZOOM, --zoom ZOOM  Zoom percentage (0-100)
 ```
+{% endaccordion %}
+
+
+{% accordion Get State %}
+
+You can test querying the state of your camera with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_get_state.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_get_state.py --help
+usage: wifi_command_get_state.py [-h]
+
+Get the state of the GoPro (status and settings).
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Preview Stream %}
+
+You can test enabling the UDP preview stream with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_preview_stream.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_preview_stream.py --help
+usage: wifi_command_preview_stream.py [-h]
+
+Enable the preview stream.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+
+Once enabled the stream can be viewed at `udp://@:8554` (For more details see the View Stream tab in the [Preview Stream]({% link _python-tutorials/tutorial_6_send_wifi_commands.md %}#preview-stream) section below.
+{% endaccordion %}
+
+
+{% accordion Load Preset Group %}
+
+You can test sending the load preset group command with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_load_group.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_load_group.py --help
+usage: wifi_command_load_group.py [-h]
+
+Load the video preset group.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Load Preset %}
+
+You can test sending the load preset command with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_load_preset.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_load_preset.py --help
+usage: wifi_command_load_preset.py [-h]
+
+Load a preset by ID.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Get Preset Status %}
+
+You can test querying the preset status with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_get_preset_status.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_get_preset_status.py --help
+usage: wifi_command_get_preset_status.py [-h]
+
+Get the current preset status.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Keep Alive %}
+
+You can test sending the Keep Alive command with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_keep_alive.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_keep_alive.py --help
+usage: wifi_command_keep_alive.py [-h]
+
+Send the keep alive signal.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Set Shutter %}
+
+You can test sending the Set Shutter command with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_set_shutter.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_set_shutter.py --help
+usage: wifi_command_set_shutter.py [-h]
+
+Take a 3 second video.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Set Setting %}
+
+You can test setting the resolution setting with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_set_resolution.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_set_resolution.py --help
+usage: wifi_command_set_resolution.py [-h]
+
+Set the video resolution to 1080.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Get Media List %}
+
+You can test the Get Media List command with HTTP over WiFi using the following script:
+```console
+$ python wifi_command_get_media_list.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_command_get_media_list.py --help
+usage: wifi_command_get_media_list.py [-h]
+
+Get the media list.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
 
 # Setup
 
@@ -95,7 +319,7 @@ We are building the endpoints using the GOPRO_BASE_URL defined in the tutorial p
 ## Get Open GoPro Version
 
 The first command we will be sending is
-[Get Version]({% link specs/http.md %}#commands-quick-reference). This should be the first command you send
+[Get Version]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). This should be the first command you send
 after connecting.
 
 {% warning %}
@@ -138,7 +362,7 @@ In this case, this camera supports version 2.0 of the Open GoPro spec. We will a
 ## Digital Zoom
 
 The next command we will be sending is
-[Digital Zoom]({% link specs/http.md %}#commands-quick-reference). The camera
+[Digital Zoom]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). The camera
 must be in the [Photo Preset Group]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}#load-preset-group)
 for this command to succeed. The commands writes to the following endpoint:
 
@@ -181,7 +405,7 @@ The response JSON is empty. This is expected in the case of a success.
 {% tab state Send Request %}
 
 The next command we will be sending is
-[Get State]({% link specs/http.md %}#commands-quick-reference). This command will
+[Get State]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). This command will
 return all of the current settings and values. It is basically a combination of the
 [Get All Settings]({% link _python-tutorials/tutorial_4_ble_queries.md %}#query-all) and
 [Get All Statuses]({% link _python-tutorials/tutorial_4_ble_queries.md %}#query-all)
@@ -255,7 +479,7 @@ INFO:root:Response: {
 ```
 
 We can see what each of these values mean by looking at the
-[Open GoPro Interface]({% link specs/ble.md %}#settings-quick-reference).
+[Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}#settings-quick-reference).
 
 For example (for settings):
 
@@ -271,7 +495,7 @@ For example (for settings):
 {% tab stream Send Request %}
 
 The next command we will be sending is
-[Preview Stream]({% link specs/http.md %}#commands-quick-reference). This command will
+[Preview Stream]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). This command will
 enable (or disable) the preview stream . It is then possible to view the preview stream from a media player.
 
 The commands write to the following endpoints:
@@ -322,7 +546,7 @@ Once enabled, the stream can be viewed at `udp://@:8554`.
 Here is an example of viewing this using [VLC](https://www.videolan.org/):
 
 {% note %}
-The screen may slightly vary depending on your OS %}
+The screen may slightly vary depending on your OS
 {% endnote %}
 
 1. Select **Media-->Open Network Stream**
@@ -339,7 +563,7 @@ The screen may slightly vary depending on your OS %}
 ## Load Preset Group
 
 The next command we will be sending is
-[Load Preset Group]({% link specs/http.md %}#commands-quick-reference). which is
+[Load Preset Group]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). which is
 used to toggle between the 3 groups of presets (video, photo, and timelapse).
 
 Let's build the endpoint first to load the video preset group (the id comes from the command table linked above):
@@ -381,7 +605,7 @@ middle of the screen:
 ## Load Preset
 
 The next command we will be sending is
-[Load Preset]({% link specs/http.md %}#commands-quick-reference). which is
+[Load Preset]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). which is
 used to select a specific preset that is part of a Preset Group.
 
 Let's build the endpoint first to load the Cinematic Preset (the id comes from the command table linked above):
@@ -426,7 +650,7 @@ this by seeing the preset name in the pill at bottom middle of the screen.
 {% tab preset Send Request %}
 
 The next command we will be sending is
-[Get Presets Status]({% link specs/http.md %}#commands-quick-reference). This
+[Get Presets Status]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). This
 command is used to get the list of all currently available presets as well as the settings that comprise
 each preset. This includes both default and user-defined presets.
 
@@ -526,7 +750,7 @@ an ID, array of settings, and other descriptive information. In the example abov
 see that there is a user-defined looping preset and a default video preset. For more
 information on creating / using custom presets, see the
 [GoPro Community Article](https://community.gopro.com/s/article/GoPro-Webcam?language=en_US).
-A future lab may be created to demonstrate parsing this JSON directly into a protobuf-compiled object.
+A future tutorial may be created to demonstrate parsing this JSON directly into a protobuf-compiled object.
 
 {% note %}
 The settings shown above are parsed the same as they were in the Get State command above
@@ -541,7 +765,7 @@ information.
 ## Keep Alive
 
 The next command we will be sending is
-[Keep Alive]({% link specs/http.md %}#commands-quick-reference). which is
+[Keep Alive]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). which is
 used to prevent the camera from powering down. Unless changed by the user, GoPro cameras will automatically
 power off after some time (e.g. 5min, 15min, 30min). The Auto Power Down watchdog timer can be reset by
 periodically sending this message.
@@ -580,7 +804,7 @@ It is recommended to send a keep-alive at least once every 120 seconds.
 ## Set Shutter
 
 The next command we will be sending is
-[Set Shutter]({% link specs/http.md %}#commands-quick-reference). which is
+[Set Shutter]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). which is
 used to start and stop encoding.
 
 Let's build the endpoint first send the Set Shutter signal:
@@ -621,13 +845,13 @@ attempt to do so will result in an error response.
 
 ## Set Setting
 
-The next command will be sending is [Set Setting]({% link specs/http.md %}#settings-quick-reference).
+The next command will be sending is [Set Setting]({% link specs/http_versions/http_2_0.md %}#settings-quick-reference).
 This end point is used to update all of the settings on the camera. It is analogous to BLE commands like
 [Set Video Resolution]({% link _python-tutorials/tutorial_2_send_ble_commands.md %}#set-the-video-resolution).
 
 It is important to note that many settings are dependent on the video resolution (and other settings).
 For example, certain FPS values are not valid with certain resolutions. In general, higher resolutions
-only allow lower FPS values. Check the [camera capabilities]({% link specs/ble.md %}#camera-capabilities)
+only allow lower FPS values. Check the [camera capabilities]({% link specs/ble_versions/ble_2_0.md %}#camera-capabilities)
 to see which settings are valid for given use cases.
 
 {% tip %}
@@ -710,15 +934,13 @@ As a reader exercise, try using the [Get State] command to verify that the resol
 %}
 
 {% quiz
-    question="What of the following sets of FPS values are possible at 5K?"
-    option="A:::[24, 25, 30]"
-    option="B:::[24, 25, 30, 60]"
-    option="C:::[24, 25, 30, 60, 120]"
-    option="D:::Any FPS is valid in at 5k"
-    correct="A"
-    info="Among these options, only 24 is possible. You're not actually expected to know
-    this. But you should know where to find the
-    [information](https://gopro.github.io/OpenGoPro/ble#camera-capabilities)."
+    question="How do you query the current video resolution setting (id = 2) via WiFi?"
+    option="A:::Send GET to `/gopro/camera/state?setting_id=2`"
+    option="B:::Send GET to `/gopro/camera/state?get_setting=2`"
+    option="C:::Send POST to `/gopro/camera/state` with request 'setting_id=2'"
+    option="D:::None of the Above"
+    correct="D"
+    info="You can't query individual settings or statuses with the HTTP API. In order to get the value of a specific setting you'll need to send a GET to `/gopro/camera/state` and parse the value of the desired setting from the JSON response."
 %}
 
 # Troubleshooting
@@ -740,6 +962,6 @@ Congratulations 🤙
 {% endsuccess %}
 
 You can now send any of the HTTP commands defined in the
-[Open GoPro Interface]({% link specs/http.md %}) that return JSON responses. You
+[Open GoPro Interface]({% link specs/http_versions/http_2_0.md %}) that return JSON responses. You
 may have noted that we did not discuss one of these (Get Media List) in this tutorial. Proceed to the
 next tutorial to see how to get and perform operations using the media list.

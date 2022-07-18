@@ -9,7 +9,7 @@ lesson: 7
 
 This document will provide a walk-through tutorial to use the Python
 [requests](https://pypi.org/project/requests/) package to send Open GoPro
-[HTTP commands]({% link specs/http.md %}) to the GoPro, specifically to get the media list and perform
+[HTTP commands]({% link specs/http_versions/http_2_0.md %}) to the GoPro, specifically to get the media list and perform
 operations on it (downloading pictures, videos, etc.)
 
 {% warning %}
@@ -19,7 +19,7 @@ and [Sending WiFi Commands]({% link _python-tutorials/tutorial_6_send_wifi_comma
 {% endwarning %}
 
 This tutorial only considers sending these commands as one-off commands. That is, it does not consider state
-management / synchronization when sending multiple commands. This will be discussed in a future lab.
+management / synchronization when sending multiple commands. This will be discussed in a future tutorial.
 
 # Requirements
 
@@ -32,19 +32,29 @@ The scripts that will be used for this tutorial can be found in the
 
 # Just Show me the Demo(s)!!
 
-Each of the operations detailed below has a corresponding script to demo it. If you don't want
-to read this tutorial and just want to see the demo, for example, run:
+If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the [Open GoPro GitHub repo]( https://github.com/gopro/OpenGoPro).
 
+{% warning %}
+Python >= 3.8.x must be used as specified in the requirements
+{% endwarning %}
+
+{% note %}
+Each of the scripts for this tutorial can be found in this directory of the repo: 
+`demos/python/tutorial/tutorial_modules/tutorial_7_camera_media_list/`
+{% endnote %}
+
+{% warning %}
+You must be connected to the camera via WiFi in order to run these scripts. You can do this by manually to the SSID and password listed on your camera or by leaving the `Establish Connection to WiFi AP` script from [Tutorial 5]({% link _python-tutorials/tutorial_5_connect_wifi.md %}#just-show-me-the-demos) running in the background.
+{% endwarning %}
+
+{% accordion Download Media File %}
+
+You can downloading a file from your camera with HTTP over WiFi using the following script:
 ```console
 $ python wifi_media_download_file.py
 ```
 
-{% warning %}
-Python >= 3.8.x must be used as specified in
-[the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
-{% endwarning %}
-
-Note that each script has a command-line help which can be found via:
+See the help for parameter definitions:
 
 ```console
 $ python wifi_media_download_file.py --help
@@ -55,6 +65,70 @@ Find a photo on the camera and download it to the computer.
 optional arguments:
   -h, --help  show this help message and exit
 ```
+{% endaccordion %}
+
+
+{% accordion Get Media GPMF %}
+
+You can downloading the GPMF for a media file from your camera with HTTP over WiFi using the following script:
+```console
+$ python wifi_media_get_gpmf.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_media_get_gpmf.py --help
+usage: wifi_media_get_gpmf.py [-h]
+
+Get the GPMF for a media file.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Get Media Screennail %}
+
+You can downloading the screennail (higher resolution thumbnail) for a media file from your camera with HTTP over WiFi using the following script:
+```console
+$ python wifi_media_get_screennail.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_media_get_screennail.py --help
+usage: wifi_media_get_screennail.py [-h]
+
+Get the screennail for a media file.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
+
+
+{% accordion Get Media Thumbnail %}
+
+You can downloading the thumbnail for a media file from your camera with HTTP over WiFi using the following script:
+```console
+$ python wifi_media_get_thumbnail.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python wifi_media_get_thumbnail.py --help
+usage: wifi_media_get_thumbnail.py [-h]
+
+Get the thumbnail for a media file.
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+{% endaccordion %}
 
 # Setup
 
@@ -71,7 +145,7 @@ to send HTTP commands as in the
 {% tab media Send Request %}
 
 We get the media list via the
-[Get Media List command]({% link specs/http.md %}#commands-quick-reference).
+[Get Media List command]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference).
 This command will return a JSON structure of all of the media files (pictures, videos) on the camera with
 corresponding information about each media file.
 
@@ -139,7 +213,7 @@ INFO:root:Response: {
 ```
 
 The media list format is defined in the
-[Open GoPro Specification]({% link specs/http.md %}#media-list-format).
+[Open GoPro Specification]({% link specs/http_versions/http_2_0.md %}#media-list-format).
 We won't be rehashing that here but will provide examples below of using the media list.
 
 One common functionality is to get the list of media file names, which can be done as such:
@@ -184,7 +258,7 @@ sequenceDiagram
 ## Download Media File
 
 The next command we will be sending is
-[Download Media]({% link specs/http.md %}#downloading-media). Specifically, we
+[Download Media]({% link specs/http_versions/http_2_0.md %}#downloading-media). Specifically, we
 will be downloading a photo. The camera must have at least one photo in its media list in order for this to
 work.
 
@@ -245,7 +319,7 @@ Once complete, the `GOPR0987.jpg` file will be available from where the demo scr
 ## Get Media GPMF
 
 The next command we will be sending is
-[Get Media GPMF]({% link specs/http.md %}#commands-quick-reference). More
+[Get Media GPMF]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). More
 information about GPMF can be found [here](https://github.com/gopro/gpmf-parser). Specifically, we will be
 downloading the GPMF for a photo. The camera must have at least one photo in its media list in order for this
 to work.
@@ -304,7 +378,7 @@ Once complete, the `GOPR0987.gpm`f file will be available from where the demo sc
 ## Get Media Screennail
 
 The next command we will be sending is
-[Get Media Screennail ]({% link specs/http.md %}#downloading-media).
+[Get Media Screennail ]({% link specs/http_versions/http_2_0.md %}#downloading-media).
 Specifically, we will be getting the screennail for a photo. The camera must have at least one photo in its
 media list in order for this to work.
 
@@ -366,7 +440,7 @@ Once complete, the `GOPR0987_screennail.jpg` file will be available from where t
 ## Get Media Thumbnail
 
 The next command we will be sending is
-[Get Media thumbnail ]({% link specs/http.md %}#downloading-media).
+[Get Media thumbnail ]({% link specs/http_versions/http_2_0.md %}#downloading-media).
 Specifically, we will be getting the thumbnail for a photo. The camera must have at least one photo in its
 media list in order for this to work.
 

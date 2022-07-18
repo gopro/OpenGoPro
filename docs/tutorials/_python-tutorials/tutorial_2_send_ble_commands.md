@@ -8,14 +8,14 @@ lesson: 2
 # Python Tutorial 2: Send BLE Commands
 
 This document will provide a walk-through tutorial to use [bleak](https://pypi.org/project/bleak/) to implement the
-[Open GoPro Interface]({% link specs/ble.md %}) to send commands and receive responses.
+[Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}) to send commands and receive responses.
 
 Commands in this sense are specifically procedures that are initiated by either:
 
 -   Writing to the Command Request UUID and receiving responses via the Command Response UUID. They are
-    listed [here]({% link specs/ble.md %}#commands).
+    listed [here]({% link specs/ble_versions/ble_2_0.md %}#commands).
 -   Writing to the Setting UUID and receiving responses via the Setting Response UUID. They are listed
-    [here]({% link specs/ble.md %}#settings).
+    [here]({% link specs/ble_versions/ble_2_0.md %}#settings).
 
 {% warning %}
 It is required that you have first completed the
@@ -36,22 +36,28 @@ The scripts that will be used for this tutorial can be found in the
 
 # Just Show me the Demo(s)!!
 
-Each of the commands detailed in [Sending Commands](#sending-commands) has a corresponding script to demo it.
-If you don't want to read this tutorial and just want to see the demo, for example, run:
+If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the [Open GoPro GitHub repo]( https://github.com/gopro/OpenGoPro).
 
+{% warning %}
+Python >= 3.8.x must be used as specified in the requirements
+{% endwarning %}
+
+{% note %}
+Each of the scripts for this tutorial can be found in this directory of the repo: 
+`demos/python/tutorial/tutorial_modules/tutorial_2_send_ble_commands/`
+{% endnote %}
+
+{% accordion Set Shutter %}
+
+You can test sending the Set Shutter command to your camera through BLE using the following script:
 ```console
 $ python ble_command_set_shutter.py
 ```
 
-{% warning %}
-Python >= 3.8.x must be used as specified in
-[the requirements]({% link _python-tutorials/tutorial_1_connect_ble.md %}#requirements)
-{% endwarning %}
-
-Note that each script has a command-line help which can be found via:
+See the help for parameter definitions:
 
 ```console
-$ python ./ble_command_set_shutter.py --help
+$ python ble_command_set_shutter.py --help
 usage: ble_command_set_shutter.py [-h] [-i IDENTIFIER]
 
 Connect to a GoPro camera, set the shutter on, wait 2 seconds, then set the shutter off.
@@ -62,6 +68,152 @@ optional arguments:
                         Last 4 digits of GoPro serial number, which is the last 4 digits of the
                         default camera SSID. If not used, first discovered GoPro will be connected to
 ```
+{% endaccordion %}
+
+
+{% accordion Sleep %}
+
+You can test sending the Sleep command to your camera through BLE using the following script:
+```console
+$ python ble_command_sleep.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_sleep.py --help
+usage: ble_command_sleep.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then put the camera to sleep.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
+
+{% accordion Load Preset Group %}
+
+You can test sending the Load Preset Group command to your camera through BLE using the following script:
+```console
+$ python ble_command_load_group.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_load_group.py --help
+usage: ble_command_load_group.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then change the Preset Group to Video.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
+
+{% accordion Load Preset %}
+
+You can test sending the Load Preset command to your camera through BLE using the following script:
+```console
+$ python ble_command_load_preset.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_load_preset.py --help
+usage: ble_command_load_preset.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then change the preset to Cinematic.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
+
+{% accordion Enable Analytics %}
+
+You can test sending the Enable Analytics command to your camera through BLE using the following script:
+```console
+$ python ble_command_enable_analytics.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_enable_analytics.py --help
+usage: ble_command_enable_analytics.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then set third party client info (enable analytics).
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
+
+{% accordion Set the Video Resolution %}
+
+You can test sending the Set Video Resolution command to your camera through BLE using the following script:
+```console
+$ python ble_command_set_resolution.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_set_resolution.py --help
+usage: ble_command_set_resolution.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then change the resolution to 1080.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
+
+{% accordion Set the Frames Per Second (FPS) %}
+
+You can test sending the Set FPS command to your camera through BLE using the following script:
+```console
+$ python ble_command_set_fps.py
+```
+
+See the help for parameter definitions:
+
+```console
+$ python ble_command_set_fps.py --help
+usage: ble_command_set_fps.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then attempt to change the fps to 240.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+```
+{% endaccordion %}
+
 
 # Setup
 
@@ -150,7 +302,7 @@ We're using the GOPRO_BASE_UUID string imported from the module's `__init__.py `
 
 ## Set Shutter
 
-The first command we will be sending is [Set Shutter]({% link specs/ble.md %}#commands-quick-reference),
+The first command we will be sending is [Set Shutter]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference),
 which at byte level is:
 
 | Command         |        Bytes        |
@@ -223,7 +375,7 @@ INFO:root:Shutter command sent successfully
 ## Sleep
 
 The next command we will be sending is
-[Sleep]({% link specs/ble.md %}#commands-quick-reference), which at byte level is:
+[Sleep]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), which at byte level is:
 
 | Command |   Bytes   |
 | ------- | :-------: |
@@ -263,7 +415,7 @@ Since the camera has gone to sleep, it must be reconnected to via BLE to communi
 ## Load Preset Group
 
 The next command we will be sending is
-[Load Preset Group]({% link specs/ble.md %}#commands-quick-reference), which is used
+[Load Preset Group]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), which is used
 to toggle between the 3 groups of presets (video, photo, and timelapse). At byte level, the commands are:
 
 | Command                     |          Bytes           |
@@ -306,7 +458,7 @@ As expected, the response was received on the correct handle and the status was 
 ## Load Preset
 
 The next command we will be sending is
-[Load Preset]({% link specs/ble.md %}#commands-quick-reference), which is used
+[Load Preset]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), which is used
 to select a specific preset that is part of a Preset Group. At byte level, some of the commands for the various
 preset are:
 
@@ -357,7 +509,7 @@ As expected, the response was received on the correct handle and the status was 
 ## Enable Analytics
 
 The next command we will be sending is
-[Enable Analytics]({% link specs/ble.md %}#commands-quick-reference), which at byte level is:
+[Enable Analytics]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), which at byte level is:
 
 | Command          |   Bytes   |
 | ---------------- | :-------: |
@@ -395,7 +547,7 @@ As expected, the response was received on the correct handle and the status was 
 ## Set the Video Resolution
 
 The next command we will be sending is
-[Set Video Resolution]({% link specs/ble.md %}#commands-quick-reference). This is
+[Set Video Resolution]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference). This is
 used to change the value of the Video Resolution setting. It is important to note that this only affects
 **video** resolution (not photo). Therefore, the Video Preset Group must be active in order for it to succeed.
 This can be done either manually through the camera UI or by sending [Load Preset Group](#load-preset-group).
@@ -430,7 +582,7 @@ We make sure to clear the synchronization event before writing, then pend on the
 the notification callback.
 {% endsuccess %}
 
-You should hear the camera beep and see the video resolution change to 1080 in the pill in the bottom-middle of the
+You should see the video resolution change to 1080 in the pill in the bottom-middle of the
 screen:
 
 {% include figure image_path="/assets/images/tutorials/python/video_resolution.png" alt="Video Resolution" size="50%" caption="Set Video Resolution" %}
@@ -452,11 +604,11 @@ Group was not Video, the status will not be success.
 ## Set the Frames Per Second (FPS)
 
 The next command we will be sending is
-[Set FPS]({% link specs/ble.md %}#commands-quick-reference). This is
+[Set FPS]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference). This is
 used to change the value of the FPS setting. It is important to note that this setting is dependent on the
 video resolution. That is, certain FPS values are not valid with certain resolutions. In general, higher
 resolutions only allow lower FPS values. Also, the current anti-flicker value may further limit possible FPS
-values. Check the [camera capabilities ]({% link specs/ble.md %}#camera-capabilities) to see which FPS
+values. Check the [camera capabilities ]({% link specs/ble_versions/ble_2_0.md %}#camera-capabilities) to see which FPS
 values are valid for given use cases.
 
 Therefore, for this step of the tutorial, it is assumed that the resolution has
@@ -487,7 +639,7 @@ We make sure to clear the synchronization event before writing, then pend on the
 the notification callback.
 {% endsuccess %}
 
-You should hear the camera beep and see the FPS change to 240 in the pill in the bottom-middle of the
+You should see the FPS change to 240 in the pill in the bottom-middle of the
 screen:
 
 {% include figure image_path="/assets/images/tutorials/python/fps.png" alt="FPS" size="50%" caption="Set FPS" %}
@@ -520,14 +672,11 @@ was higher, for example 5K, this would fail.
 %}
 
 {% quiz
-    question="Which of the following sets of FPS values are possible at 5K?"
-    option="A:::[24, 25, 30]"
-    option="B:::[24, 25, 30, 60]"
-    option="C:::[24, 25, 30, 60, 120]"
-    option="D:::Any FPS is valid in at 5k"
-    correct="A"
-    info="Among these options, only 24 is possible. You're not actually expected to know
-    this. But you should know where to find the information: https://gopro.github.io/OpenGoPro/ble#camera-capabilities"
+    question="True or False: Every combination of resolution and FPS value is valid."
+    option="A:::True"
+    option="B:::False"
+    correct="B"
+    info="Each resolution can support all or only some FPS values. You can find out which resolutions support which fps values by consulting the [capabilities section of the spec](https://gopro.github.io/OpenGoPro/ble_2_0#camera-capabilities)."
 %}
 
 {% quiz

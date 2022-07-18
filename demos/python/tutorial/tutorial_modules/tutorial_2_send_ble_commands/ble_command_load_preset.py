@@ -3,16 +3,13 @@
 
 import sys
 import asyncio
-import logging
 import argparse
 from typing import Optional
 from binascii import hexlify
 
 from bleak import BleakClient
 
-from tutorial_modules import GOPRO_BASE_UUID, connect_ble
-
-from tutorial_modules import logger
+from tutorial_modules import GOPRO_BASE_UUID, connect_ble, logger
 
 
 async def main(identifier: Optional[str]) -> None:

@@ -11,6 +11,7 @@ import pytest
 #                                             Log Management
 ##############################################################################################################
 
+
 @pytest.fixture(scope="class", autouse=True)
 def manage_logs(request):
     log_file = Path(request.node.name + ".log")

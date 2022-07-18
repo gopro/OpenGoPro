@@ -8,7 +8,7 @@ import logging
 from rich.logging import RichHandler
 from rich import traceback
 
-logger = logging.getLogger("tutorial_logger")
+logger: logging.Logger = logging.getLogger("tutorial_logger")
 sh = RichHandler(rich_tracebacks=True, enable_link_path=True, show_time=False)
 stream_formatter = logging.Formatter("%(asctime)s.%(msecs)03d %(message)s", datefmt="%H:%M:%S")
 sh.setFormatter(stream_formatter)
