@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-07-14T14:48:13-07:00">
+  <meta property="article:published_time" content="2022-07-18T11:11:14-07:00">
 
 
 
@@ -420,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 4: BLE Queries">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to use bleak to implementthe Open GoPro Interface to query the camera’s setting and status information viaBLE.">
-    <meta itemprop="datePublished" content="2022-07-14T14:48:13-07:00">
+    <meta itemprop="datePublished" content="2022-07-18T11:11:14-07:00">
     
 
     <div class="page__inner-wrap">
@@ -442,7 +442,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          8 minute read
+          9 minute read
         
       </span>
     
@@ -478,7 +478,7 @@
           </aside>
         
         <p>This document will provide a walk-through tutorial to use <a href="https://pypi.org/project/bleak/">bleak</a> to implement
-the <a href="/OpenGoPro/ble">Open GoPro Interface</a> to query the camera’s setting and status information via
+the <a href="/OpenGoPro/ble_2_0">Open GoPro Interface</a> to query the camera’s setting and status information via
 BLE.</p>
 
 <p>“Queries” in this sense are specifically procedures that:</p>
@@ -512,30 +512,85 @@ are present and configured correctly.</p>
 
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
-<p>Each of the commands detailed in this tutorial has a corresponding script to demo it. If you don’t want to
-read this tutorial and just want to see the demo, for example, run:</p>
-
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_query_poll_resolution_value.py
-</code></pre></div></div>
+<p>If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the <a href="https://github.com/gopro/OpenGoPro">Open GoPro GitHub repo</a>.</p>
 
 <div class="callout warning">
-<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.8.x must be used as specified in
-<a href="/OpenGoPro/tutorials/python/connect-ble#requirements">the requirements</a></span>
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.8.x must be used as specified in the requirements</span>
 </div>
 
-<p>Note that each script has a command-line help which can be found via:</p>
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>Each of the scripts for this tutorial can be found in this directory of the repo: 
+<code class="language-plaintext highlighter-rouge">demos/python/tutorial/tutorial_modules/tutorial_4_ble_queries/</code></span>
+</div>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ./ble_command_poll_resolution_value.py <span class="nt">--help</span>
-<span class="go">usage: ble_query_poll_resolution_value.py [-h] [-i IDENTIFIER]
+<div class="accordion-container">
+    <button class="accordion">Individual Query Poll<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test an individual query poll with your camera through BLE using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_poll_resolution_value.py
+</code></pre></div></div>
 
-Connect to a GoPro camera then get the current resolution.
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_poll_resolution_value.py <span class="nt">--help</span>
+<span class="go">usage: ble_command_poll_resolution_value.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, get the current resolution, modify the resolution, and confirm the change was successful.
 
 optional arguments:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
-                        SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
 </span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Multiple Simultaneous Query Polls<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test querying multiple queries simultaneously with your camera through BLE using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_poll_multiple_setting_values.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_poll_multiple_setting_values.py <span class="nt">--help</span>
+<span class="go">usage: ble_command_poll_multiple_setting_values.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera then get the current resolution, fps, and fov.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+</span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Registering for Query Push Notifications<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test registering for querties and receiving push notifications with your camera through BLE using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_register_resolution_value_updates.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_register_resolution_value_updates.py <span class="nt">--help</span>
+<span class="go">usage: ble_command_register_resolution_value_updates.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, register for updates to the resolution, receive the current resolution, modify the resolution, and confirm receipt of the change notification.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+</span></code></pre></div></div>
+</div>
+</div>
 
 <h1 id="setup">Setup</h1>
 
@@ -545,7 +600,7 @@ optional arguments:
 <p>We will also be using the <strong>Response</strong> class that was defined in the
 <a href="/OpenGoPro/tutorials/python/parse-ble-responses">parsing responses</a> tutorial to accumulate
 and parse notification responses to the Query Response
-<a href="/OpenGoPro/ble#services-and-characteristics">characteristic</a>.
+<a href="/OpenGoPro/ble_2_0#services-and-characteristics">characteristic</a>.
 Throughout this tutorial, the query information that we will be reading is the Resolution Setting (ID 0x02).
 Therefore, we have slightly changed the notification handler to update a global resolution variable as it
 queries the resolution:</p>
@@ -574,7 +629,7 @@ section:</p>
 <h1 id="polling-query-information">Polling Query Information</h1>
 
 <p>It is possible to poll one or more setting / status values using the following
-<a href="/OpenGoPro/ble#query-commands">commands</a>:</p>
+<a href="/OpenGoPro/ble_2_0#query-commands">commands</a>:</p>
 
 <table>
   <thead>
@@ -598,7 +653,7 @@ section:</p>
   </tbody>
 </table>
 
-<p>where <strong>xx</strong> are setting / status ID(s) and <strong>len</strong> is the total length of the query (not including the length).
+<p>where <strong>xx</strong> are setting / status ID(s) and <strong>len</strong> is the length of the rest of the query (the number of query bytes plus one for the request ID byte).
 There will be specific examples below.</p>
 
 <div class="callout note">
@@ -745,10 +800,10 @@ tutorial</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_de405f04-fef0-4227-b80b-1bf5d237b0f1" class="quiz">
+<div id="quiz_2288d919-6229-436b-936a-13c3b1e3a79c" class="quiz">
     <div>
-        <div id="question_de405f04-fef0-4227-b80b-1bf5d237b0f1" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
-        <div id="answers_de405f04-fef0-4227-b80b-1bf5d237b0f1">
+        <div id="question_2288d919-6229-436b-936a-13c3b1e3a79c" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
+        <div id="answers_2288d919-6229-436b-936a-13c3b1e3a79c">
         
             <input type="radio" name="question" value="A"><label>A: Concatenate a ‘Get Setting Value’ command and a ‘Get Status’ command with the relevant ID’s</label>
             <br>
@@ -761,10 +816,10 @@ tutorial</p>
         
         </div>
     </div>
-    <button onclick="showResults('de405f04-fef0-4227-b80b-1bf5d237b0f1', 'C')">Submit Answer</button>
-    <div id="results_de405f04-fef0-4227-b80b-1bf5d237b0f1" style="display: none">
-        <span id="correct_de405f04-fef0-4227-b80b-1bf5d237b0f1" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_de405f04-fef0-4227-b80b-1bf5d237b0f1" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('2288d919-6229-436b-936a-13c3b1e3a79c', 'C')">Submit Answer</button>
+    <div id="results_2288d919-6229-436b-936a-13c3b1e3a79c" style="display: none">
+        <span id="correct_2288d919-6229-436b-936a-13c3b1e3a79c" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_2288d919-6229-436b-936a-13c3b1e3a79c" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         It is not possible to concatenate commands. This would result in an unknown sequence of bytes
         from the camera’s perspective. So it is not possible to get a setting value and a status value in one
         command. The Get Setting command (with resolution ID) and Get Status command(with encoding ID) must be
@@ -777,7 +832,7 @@ tutorial</p>
 <p>Rather than polling the query information, it is also possible to use an interrupt scheme to register for
 push notifications when the relevant query information changes.</p>
 
-<p>The relevant <a href="/OpenGoPro/ble#query-commands">commands</a> are:</p>
+<p>The relevant <a href="/OpenGoPro/ble_2_0#query-commands">commands</a> are:</p>
 
 <table>
   <thead>
@@ -811,7 +866,7 @@ push notifications when the relevant query information changes.</p>
   </tbody>
 </table>
 
-<p>where <strong>xx</strong> are setting / status ID(s) and <strong>len</strong> is the total length of the query (not including the length).</p>
+<p>where <strong>xx</strong> are setting / status ID(s) and <strong>len</strong> is the length of the rest of the query (the number of query bytes plus one for the request ID byte).</p>
 
 <p>The Query ID’s for push notification responses are as follows:</p>
 
@@ -911,11 +966,11 @@ polled above</span>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_0827e7da-2798-46a2-b300-719eb3948c8e" class="quiz">
+<div id="quiz_7035da48-f349-416a-a1a1-eda37dee1c05" class="quiz">
     <div>
-        <div id="question_0827e7da-2798-46a2-b300-719eb3948c8e" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
+        <div id="question_7035da48-f349-416a-a1a1-eda37dee1c05" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
     receive push notifications for it.</div>
-        <div id="answers_0827e7da-2798-46a2-b300-719eb3948c8e">
+        <div id="answers_7035da48-f349-416a-a1a1-eda37dee1c05">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -925,20 +980,20 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('0827e7da-2798-46a2-b300-719eb3948c8e', 'A')">Submit Answer</button>
-    <div id="results_0827e7da-2798-46a2-b300-719eb3948c8e" style="display: none">
-        <span id="correct_0827e7da-2798-46a2-b300-719eb3948c8e" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_0827e7da-2798-46a2-b300-719eb3948c8e" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('7035da48-f349-416a-a1a1-eda37dee1c05', 'A')">Submit Answer</button>
+    <div id="results_7035da48-f349-416a-a1a1-eda37dee1c05" style="display: none">
+        <span id="correct_7035da48-f349-416a-a1a1-eda37dee1c05" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_7035da48-f349-416a-a1a1-eda37dee1c05" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         While there is probably not a good reason to do so, there is nothing preventing polling
         in this manner.
     </div>
 </div>
 
-<div id="quiz_b4be5463-784b-46ff-95ad-322c29015fe7" class="quiz">
+<div id="quiz_68528beb-30c5-4982-b7ea-faafb704e4ee" class="quiz">
     <div>
-        <div id="question_b4be5463-784b-46ff-95ad-322c29015fe7" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
+        <div id="question_68528beb-30c5-4982-b7ea-faafb704e4ee" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
     about one setting ID.</div>
-        <div id="answers_b4be5463-784b-46ff-95ad-322c29015fe7">
+        <div id="answers_68528beb-30c5-4982-b7ea-faafb704e4ee">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -948,10 +1003,10 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('b4be5463-784b-46ff-95ad-322c29015fe7', 'B')">Submit Answer</button>
-    <div id="results_b4be5463-784b-46ff-95ad-322c29015fe7" style="display: none">
-        <span id="correct_b4be5463-784b-46ff-95ad-322c29015fe7" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_b4be5463-784b-46ff-95ad-322c29015fe7" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('68528beb-30c5-4982-b7ea-faafb704e4ee', 'B')">Submit Answer</button>
+    <div id="results_68528beb-30c5-4982-b7ea-faafb704e4ee" style="display: none">
+        <span id="correct_68528beb-30c5-4982-b7ea-faafb704e4ee" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_68528beb-30c5-4982-b7ea-faafb704e4ee" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is possible for push notifications to contain multiple setting ID’s if both setting ID’s have
     push notifications registered and both settings change at the same time.
     </div>
@@ -986,7 +1041,7 @@ proceed to the next tutorial.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-07-14T14:48:13-07:00">July 14, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-07-18T11:11:14-07:00">July 18, 2022</time></p>
 
 
       </footer>

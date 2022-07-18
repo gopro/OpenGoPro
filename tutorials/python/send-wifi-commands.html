@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-07-14T14:48:13-07:00">
+  <meta property="article:published_time" content="2022-07-18T11:11:14-07:00">
 
 
 
@@ -420,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 6: Send WiFi Commands">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to use the Python requestspackage to send Open GoPro HTTP commands to the GoPro.">
-    <meta itemprop="datePublished" content="2022-07-14T14:48:13-07:00">
+    <meta itemprop="datePublished" content="2022-07-18T11:11:14-07:00">
     
 
     <div class="page__inner-wrap">
@@ -442,7 +442,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          13 minute read
+          16 minute read
         
       </span>
     
@@ -486,7 +486,7 @@
           </aside>
         
         <p>This document will provide a walk-through tutorial to use the Python <a href="https://pypi.org/project/requests/">requests</a>
-package to send Open GoPro <a href="/OpenGoPro/http">HTTP commands</a> to the GoPro.</p>
+package to send Open GoPro <a href="/OpenGoPro/http_2_0">HTTP commands</a> to the GoPro.</p>
 
 <div class="callout warning">
 <i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>It is required that you have first completed the
@@ -494,7 +494,7 @@ package to send Open GoPro <a href="/OpenGoPro/http">HTTP commands</a> to the Go
 </div>
 
 <p>This tutorial only considers sending these commands as one-off commands. That is, it does not consider state management /
-synchronization when sending multiple commands. This will be discussed in a future lab.</p>
+synchronization when sending multiple commands. This will be discussed in a future tutorial.</p>
 
 <p>There are two types of responses that can be received from the HTTP commands: JSON and binary. This section
 will deal with commands that return JSON responses. For commands with binary responses (as well as commands with
@@ -510,17 +510,49 @@ are present and configured correctly.</p>
 
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
-<p>Each of the commands detailed below has a corresponding script to demo it. If you don’t want to read this
-tutorial and just want to see the demo, for example, run:</p>
+<p>If you just want to run the demo, you can find Python scripts for each of the concepts in this tutorial in the <a href="https://github.com/gopro/OpenGoPro">Open GoPro GitHub repo</a>.</p>
 
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.8.x must be used as specified in the requirements</span>
+</div>
+
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>Each of the scripts for this tutorial can be found in this directory of the repo: 
+<code class="language-plaintext highlighter-rouge">demos/python/tutorial/tutorial_modules/tutorial_6_send_wifi_commands/</code></span>
+</div>
+
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>You must be connected to the camera via WiFi in order to run these scripts. You can do this by manually to the SSID and password listed on your camera or by leaving the <code class="language-plaintext highlighter-rouge">Establish Connection to WiFi AP</code> script from <a href="/OpenGoPro/tutorials/python/connect-wifi#just-show-me-the-demos">Tutorial 5</a> running in the background.</span>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Get Open GoPro Version<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test querying the Open GoPro version on your camera with HTTP over WiFi using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_get_version.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_get_version.py <span class="nt">--help</span>
+<span class="go">usage: wifi_command_get_version.py [-h]
+
+Get the camera's supported Open GoPro version.
+
+optional arguments:
+  -h, --help  show this help message and exit
+</span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Digital Zoom<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test setting the digital zoom level on your camera with HTTP over WiFi using the following script:</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_zoom.py
 </code></pre></div></div>
 
-<div class="callout warning">
-<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.8.x must be used as specified in <a href="/OpenGoPro/tutorials/python/connect-ble#requirements">the requirements</a></span>
-</div>
-
-<p>Note that each script has a command-line help which can be found via:</p>
+<p>See the help for parameter definitions:</p>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_zoom.py <span class="nt">--help</span>
 <span class="go">usage: wifi_command_zoom.py [-h] [-z ZOOM]
@@ -531,6 +563,190 @@ optional arguments:
   -h, --help            show this help message and exit
   -z ZOOM, --zoom ZOOM  Zoom percentage (0-100)
 </span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Get State<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test querying the state of your camera with HTTP over WiFi using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_get_state.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_get_state.py <span class="nt">--help</span>
+<span class="go">usage: wifi_command_get_state.py [-h]
+
+Get the state of the GoPro (status and settings).
+
+optional arguments:
+  -h, --help  show this help message and exit
+</span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Preview Stream<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test enabling the UDP preview stream with HTTP over WiFi using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_preview_stream.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_preview_stream.py <span class="nt">--help</span>
+<span class="go">usage: wifi_command_preview_stream.py [-h]
+
+Enable the preview stream.
+
+optional arguments:
+  -h, --help  show this help message and exit
+</span></code></pre></div></div>
+
+<p>Once enabled the stream can be viewed at <code class="language-plaintext highlighter-rouge">udp://@:8554</code> (For more details see the View Stream tab in the <a href="/OpenGoPro/tutorials/python/send-wifi-commands#preview-stream">Preview Stream</a> section below.</p>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Load Preset Group<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test sending the load preset group command with HTTP over WiFi using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_load_group.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_load_group.py <span class="nt">--help</span>
+<span class="go">usage: wifi_command_load_group.py [-h]
+
+Load the video preset group.
+
+optional arguments:
+  -h, --help  show this help message and exit
+</span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Load Preset<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test sending the load preset command with HTTP over WiFi using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_load_preset.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_load_preset.py <span class="nt">--help</span>
+<span class="go">usage: wifi_command_load_preset.py [-h]
+
+Load a preset by ID.
+
+optional arguments:
+  -h, --help  show this help message and exit
+</span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Get Preset Status<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test querying the preset status with HTTP over WiFi using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_get_preset_status.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_get_preset_status.py <span class="nt">--help</span>
+<span class="go">usage: wifi_command_get_preset_status.py [-h]
+
+Get the current preset status.
+
+optional arguments:
+  -h, --help  show this help message and exit
+</span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Keep Alive<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test sending the Keep Alive command with HTTP over WiFi using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_keep_alive.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_keep_alive.py <span class="nt">--help</span>
+<span class="go">usage: wifi_command_keep_alive.py [-h]
+
+Send the keep alive signal.
+
+optional arguments:
+  -h, --help  show this help message and exit
+</span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Set Shutter<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test sending the Set Shutter command with HTTP over WiFi using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_set_shutter.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_set_shutter.py <span class="nt">--help</span>
+<span class="go">usage: wifi_command_set_shutter.py [-h]
+
+Take a 3 second video.
+
+optional arguments:
+  -h, --help  show this help message and exit
+</span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Set Setting<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test setting the resolution setting with HTTP over WiFi using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_set_resolution.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_set_resolution.py <span class="nt">--help</span>
+<span class="go">usage: wifi_command_set_resolution.py [-h]
+
+Set the video resolution to 1080.
+
+optional arguments:
+  -h, --help  show this help message and exit
+</span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Get Media List<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test the Get Media List command with HTTP over WiFi using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_get_media_list.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_get_media_list.py <span class="nt">--help</span>
+<span class="go">usage: wifi_command_get_media_list.py [-h]
+
+Get the media list.
+
+optional arguments:
+  -h, --help  show this help message and exit
+</span></code></pre></div></div>
+</div>
+</div>
 
 <h1 id="setup">Setup</h1>
 
@@ -563,7 +779,7 @@ GoPro must be observed to verify when the command’s effects have been applied.
 <h2 id="get-open-gopro-version">Get Open GoPro Version</h2>
 
 <p>The first command we will be sending is
-<a href="/OpenGoPro/http#commands-quick-reference">Get Version</a>. This should be the first command you send
+<a href="/OpenGoPro/http_2_0#commands-quick-reference">Get Version</a>. This should be the first command you send
 after connecting.</p>
 
 <div class="callout warning">
@@ -602,7 +818,7 @@ INFO:root:Response: {
 <h2 id="digital-zoom">Digital Zoom</h2>
 
 <p>The next command we will be sending is
-<a href="/OpenGoPro/http#commands-quick-reference">Digital Zoom</a>. The camera
+<a href="/OpenGoPro/http_2_0#commands-quick-reference">Digital Zoom</a>. The camera
 must be in the <a href="/OpenGoPro/tutorials/python/send-ble-commands#load-preset-group">Photo Preset Group</a>
 for this command to succeed. The commands writes to the following endpoint:</p>
 
@@ -638,7 +854,7 @@ INFO:root:Response: {}
 <h2 id="get-state">Get State</h2>
 
 <div>
-    <ul class="tab" data-tab="35c928ec-1874-49ec-a746-48a61ddb6aa5">
+    <ul class="tab" data-tab="241c2ebd-3640-4e87-9b9c-594d176e6800">
         
             <li class="active">
                 <a href="">Send Request </a>
@@ -649,11 +865,11 @@ INFO:root:Response: {}
             </li>
         
         </ul>
-        <ul class="tab-content" id="35c928ec-1874-49ec-a746-48a61ddb6aa5">
+        <ul class="tab-content" id="241c2ebd-3640-4e87-9b9c-594d176e6800">
         
             <li class="active">
 <p>The next command we will be sending is
-<a href="/OpenGoPro/http#commands-quick-reference">Get State</a>. This command will
+<a href="/OpenGoPro/http_2_0#commands-quick-reference">Get State</a>. This command will
 return all of the current settings and values. It is basically a combination of the
 <a href="/OpenGoPro/tutorials/python/ble-queries#query-all">Get All Settings</a> and
 <a href="/OpenGoPro/tutorials/python/ble-queries#query-all">Get All Statuses</a>
@@ -723,7 +939,7 @@ INFO:root:Response: {
 </span></code></pre></div></div>
 
 <p>We can see what each of these values mean by looking at the
-<a href="/OpenGoPro/ble#settings-quick-reference">Open GoPro Interface</a>.</p>
+<a href="/OpenGoPro/ble_2_0#settings-quick-reference">Open GoPro Interface</a>.</p>
 
 <p>For example (for settings):</p>
 
@@ -740,7 +956,7 @@ INFO:root:Response: {
 <h2 id="preview-stream">Preview Stream</h2>
 
 <div>
-    <ul class="tab" data-tab="fd1dd7fa-7c0f-4afc-af62-023c7819f85a">
+    <ul class="tab" data-tab="6ee16e48-0555-4a01-9d0f-ec840ddc810e">
         
             <li class="active">
                 <a href="">Send Request </a>
@@ -751,11 +967,11 @@ INFO:root:Response: {
             </li>
         
         </ul>
-        <ul class="tab-content" id="fd1dd7fa-7c0f-4afc-af62-023c7819f85a">
+        <ul class="tab-content" id="6ee16e48-0555-4a01-9d0f-ec840ddc810e">
         
             <li class="active">
 <p>The next command we will be sending is
-<a href="/OpenGoPro/http#commands-quick-reference">Preview Stream</a>. This command will
+<a href="/OpenGoPro/http_2_0#commands-quick-reference">Preview Stream</a>. This command will
 enable (or disable) the preview stream . It is then possible to view the preview stream from a media player.</p>
 
 <p>The commands write to the following endpoints:</p>
@@ -816,7 +1032,7 @@ INFO:root:Response: {}
 <p>Here is an example of viewing this using <a href="https://www.videolan.org/">VLC</a>:</p>
 
 <div class="callout note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>The screen may slightly vary depending on your OS %}</span>
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>The screen may slightly vary depending on your OS</span>
 </div>
 
 <ol>
@@ -853,7 +1069,7 @@ INFO:root:Response: {}
 <h2 id="load-preset-group">Load Preset Group</h2>
 
 <p>The next command we will be sending is
-<a href="/OpenGoPro/http#commands-quick-reference">Load Preset Group</a>. which is
+<a href="/OpenGoPro/http_2_0#commands-quick-reference">Load Preset Group</a>. which is
 used to toggle between the 3 groups of presets (video, photo, and timelapse).</p>
 
 <p>Let’s build the endpoint first to load the video preset group (the id comes from the command table linked above):</p>
@@ -904,7 +1120,7 @@ middle of the screen:</p>
 <h2 id="load-preset">Load Preset</h2>
 
 <p>The next command we will be sending is
-<a href="/OpenGoPro/http#commands-quick-reference">Load Preset</a>. which is
+<a href="/OpenGoPro/http_2_0#commands-quick-reference">Load Preset</a>. which is
 used to select a specific preset that is part of a Preset Group.</p>
 
 <p>Let’s build the endpoint first to load the Cinematic Preset (the id comes from the command table linked above):</p>
@@ -955,7 +1171,7 @@ this by seeing the preset name in the pill at bottom middle of the screen.</p>
 <h2 id="get-preset-status">Get Preset Status</h2>
 
 <div>
-    <ul class="tab" data-tab="2f4661a6-5d69-4070-b368-143c66bca293">
+    <ul class="tab" data-tab="d4f7e18e-6cb5-4112-84c6-ec57ae7019ad">
         
             <li class="active">
                 <a href="">Send Request </a>
@@ -966,11 +1182,11 @@ this by seeing the preset name in the pill at bottom middle of the screen.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="2f4661a6-5d69-4070-b368-143c66bca293">
+        <ul class="tab-content" id="d4f7e18e-6cb5-4112-84c6-ec57ae7019ad">
         
             <li class="active">
 <p>The next command we will be sending is
-<a href="/OpenGoPro/http#commands-quick-reference">Get Presets Status</a>. This
+<a href="/OpenGoPro/http_2_0#commands-quick-reference">Get Presets Status</a>. This
 command is used to get the list of all currently available presets as well as the settings that comprise
 each preset. This includes both default and user-defined presets.</p>
 
@@ -1066,7 +1282,7 @@ an ID, array of settings, and other descriptive information. In the example abov
 see that there is a user-defined looping preset and a default video preset. For more
 information on creating / using custom presets, see the
 <a href="https://community.gopro.com/s/article/GoPro-Webcam?language=en_US">GoPro Community Article</a>.
-A future lab may be created to demonstrate parsing this JSON directly into a protobuf-compiled object.</p>
+A future tutorial may be created to demonstrate parsing this JSON directly into a protobuf-compiled object.</p>
 
 <div class="callout note">
 <i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>The settings shown above are parsed the same as they were in the Get State command above</span>
@@ -1083,7 +1299,7 @@ information.</p>
 <h2 id="keep-alive">Keep Alive</h2>
 
 <p>The next command we will be sending is
-<a href="/OpenGoPro/http#commands-quick-reference">Keep Alive</a>. which is
+<a href="/OpenGoPro/http_2_0#commands-quick-reference">Keep Alive</a>. which is
 used to prevent the camera from powering down. Unless changed by the user, GoPro cameras will automatically
 power off after some time (e.g. 5min, 15min, 30min). The Auto Power Down watchdog timer can be reset by
 periodically sending this message.</p>
@@ -1118,7 +1334,7 @@ INFO:root:Response: {}
 <h2 id="set-shutter">Set Shutter</h2>
 
 <p>The next command we will be sending is
-<a href="/OpenGoPro/http#commands-quick-reference">Set Shutter</a>. which is
+<a href="/OpenGoPro/http_2_0#commands-quick-reference">Set Shutter</a>. which is
 used to start and stop encoding.</p>
 
 <p>Let’s build the endpoint first send the Set Shutter signal:</p>
@@ -1155,13 +1371,13 @@ attempt to do so will result in an error response.</span>
 
 <h2 id="set-setting">Set Setting</h2>
 
-<p>The next command will be sending is <a href="/OpenGoPro/http#settings-quick-reference">Set Setting</a>.
+<p>The next command will be sending is <a href="/OpenGoPro/http_2_0#settings-quick-reference">Set Setting</a>.
 This end point is used to update all of the settings on the camera. It is analogous to BLE commands like
 <a href="/OpenGoPro/tutorials/python/send-ble-commands#set-the-video-resolution">Set Video Resolution</a>.</p>
 
 <p>It is important to note that many settings are dependent on the video resolution (and other settings).
 For example, certain FPS values are not valid with certain resolutions. In general, higher resolutions
-only allow lower FPS values. Check the <a href="/OpenGoPro/ble#camera-capabilities">camera capabilities</a>
+only allow lower FPS values. Check the <a href="/OpenGoPro/ble_2_0#camera-capabilities">camera capabilities</a>
 to see which settings are valid for given use cases.</p>
 
 <div class="callout tip">
@@ -1172,7 +1388,7 @@ to see which settings are valid for given use cases.</p>
 the command table linked above). Click the relevant tab for the desired Open GoPro Version.</p>
 
 <div>
-    <ul class="tab" data-tab="d17163f9-3e31-44cf-9417-34b5a14ee01c">
+    <ul class="tab" data-tab="8654f020-fe10-4159-a861-e263f62e7c88">
         
             <li class="active">
                 <a href="">Version 1.0 </a>
@@ -1183,7 +1399,7 @@ the command table linked above). Click the relevant tab for the desired Open GoP
             </li>
         
         </ul>
-        <ul class="tab-content" id="d17163f9-3e31-44cf-9417-34b5a14ee01c">
+        <ul class="tab-content" id="8654f020-fe10-4159-a861-e263f62e7c88">
         
             <li class="active">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"/gopro/camera/setting?setting_id=2&amp;opt_value=9"</span>
@@ -1244,10 +1460,10 @@ screen:</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_f0814213-33bb-4287-a391-2f8c587c4713" class="quiz">
+<div id="quiz_70b34694-49e9-4d77-a7b4-a2e6036bcb37" class="quiz">
     <div>
-        <div id="question_f0814213-33bb-4287-a391-2f8c587c4713" class="quiz__question">What is the significance of empty JSON in an HTTP response?</div>
-        <div id="answers_f0814213-33bb-4287-a391-2f8c587c4713">
+        <div id="question_70b34694-49e9-4d77-a7b4-a2e6036bcb37" class="quiz__question">What is the significance of empty JSON in an HTTP response?</div>
+        <div id="answers_70b34694-49e9-4d77-a7b4-a2e6036bcb37">
         
             <input type="radio" name="question" value="A"><label>A: Always an error! The command was not received correctly.</label>
             <br>
@@ -1260,19 +1476,19 @@ screen:</p>
         
         </div>
     </div>
-    <button onclick="showResults('f0814213-33bb-4287-a391-2f8c587c4713', 'B')">Submit Answer</button>
-    <div id="results_f0814213-33bb-4287-a391-2f8c587c4713" style="display: none">
-        <span id="correct_f0814213-33bb-4287-a391-2f8c587c4713" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_f0814213-33bb-4287-a391-2f8c587c4713" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('70b34694-49e9-4d77-a7b4-a2e6036bcb37', 'B')">Submit Answer</button>
+    <div id="results_70b34694-49e9-4d77-a7b4-a2e6036bcb37" style="display: none">
+        <span id="correct_70b34694-49e9-4d77-a7b4-a2e6036bcb37" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_70b34694-49e9-4d77-a7b4-a2e6036bcb37" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is common for the JSON response to be empty if the command was received successfully
     but there is no additional information to return at the current time.
     </div>
 </div>
 
-<div id="quiz_3b8c075c-1894-4f54-9362-c6c7ced7e45b" class="quiz">
+<div id="quiz_921a8068-b8b8-44c5-a3ba-7c0061b76dab" class="quiz">
     <div>
-        <div id="question_3b8c075c-1894-4f54-9362-c6c7ced7e45b" class="quiz__question">Which of the of the following is not a real preset group?</div>
-        <div id="answers_3b8c075c-1894-4f54-9362-c6c7ced7e45b">
+        <div id="question_921a8068-b8b8-44c5-a3ba-7c0061b76dab" class="quiz__question">Which of the of the following is not a real preset group?</div>
+        <div id="answers_921a8068-b8b8-44c5-a3ba-7c0061b76dab">
         
             <input type="radio" name="question" value="A"><label>A: Timelapse</label>
             <br>
@@ -1288,41 +1504,39 @@ screen:</p>
         
         </div>
     </div>
-    <button onclick="showResults('3b8c075c-1894-4f54-9362-c6c7ced7e45b', 'C')">Submit Answer</button>
-    <div id="results_3b8c075c-1894-4f54-9362-c6c7ced7e45b" style="display: none">
-        <span id="correct_3b8c075c-1894-4f54-9362-c6c7ced7e45b" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_3b8c075c-1894-4f54-9362-c6c7ced7e45b" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('921a8068-b8b8-44c5-a3ba-7c0061b76dab', 'C')">Submit Answer</button>
+    <div id="results_921a8068-b8b8-44c5-a3ba-7c0061b76dab" style="display: none">
+        <span id="correct_921a8068-b8b8-44c5-a3ba-7c0061b76dab" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_921a8068-b8b8-44c5-a3ba-7c0061b76dab" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There are 3 preset groups (Timelapse, Photo, and Video). These can be
     set via the Load Preset Group command.
     </div>
 </div>
 
-<div id="quiz_551b44dc-0144-4f18-96ef-3e017907eb32" class="quiz">
+<div id="quiz_34bec685-cab8-4b93-a814-d5178bf54694" class="quiz">
     <div>
-        <div id="question_551b44dc-0144-4f18-96ef-3e017907eb32" class="quiz__question">What of the following sets of FPS values are possible at 5K?</div>
-        <div id="answers_551b44dc-0144-4f18-96ef-3e017907eb32">
+        <div id="question_34bec685-cab8-4b93-a814-d5178bf54694" class="quiz__question">How do you query the current video resolution setting (id = 2) via WiFi?</div>
+        <div id="answers_34bec685-cab8-4b93-a814-d5178bf54694">
         
-            <input type="radio" name="question" value="A"><label>A: [24, 25, 30]</label>
+            <input type="radio" name="question" value="A"><label>A: Send GET to <code class="language-plaintext highlighter-rouge">/gopro/camera/state?setting_id=2</code></label>
             <br>
         
-            <input type="radio" name="question" value="B"><label>B: [24, 25, 30, 60]</label>
+            <input type="radio" name="question" value="B"><label>B: Send GET to <code class="language-plaintext highlighter-rouge">/gopro/camera/state?get_setting=2</code></label>
             <br>
         
-            <input type="radio" name="question" value="C"><label>C: [24, 25, 30, 60, 120]</label>
+            <input type="radio" name="question" value="C"><label>C: Send POST to <code class="language-plaintext highlighter-rouge">/gopro/camera/state</code> with request ‘setting_id=2’</label>
             <br>
         
-            <input type="radio" name="question" value="D"><label>D: Any FPS is valid in at 5k</label>
+            <input type="radio" name="question" value="D"><label>D: None of the Above</label>
             <br>
         
         </div>
     </div>
-    <button onclick="showResults('551b44dc-0144-4f18-96ef-3e017907eb32', 'A')">Submit Answer</button>
-    <div id="results_551b44dc-0144-4f18-96ef-3e017907eb32" style="display: none">
-        <span id="correct_551b44dc-0144-4f18-96ef-3e017907eb32" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_551b44dc-0144-4f18-96ef-3e017907eb32" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
-        Among these options, only 24 is possible. You’re not actually expected to know
-    this. But you should know where to find the
-    <a href="https://gopro.github.io/OpenGoPro/ble#camera-capabilities">information</a>.
+    <button onclick="showResults('34bec685-cab8-4b93-a814-d5178bf54694', 'D')">Submit Answer</button>
+    <div id="results_34bec685-cab8-4b93-a814-d5178bf54694" style="display: none">
+        <span id="correct_34bec685-cab8-4b93-a814-d5178bf54694" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_34bec685-cab8-4b93-a814-d5178bf54694" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+        You can’t query individual settings or statuses with the HTTP API. In order to get the value of a specific setting you’ll need to send a GET to <code class="language-plaintext highlighter-rouge">/gopro/camera/state</code> and parse the value of the desired setting from the JSON response.
     </div>
 </div>
 
@@ -1360,7 +1574,7 @@ between the PC and the GoPro.</p>
 </div>
 
 <p>You can now send any of the HTTP commands defined in the
-<a href="/OpenGoPro/http">Open GoPro Interface</a> that return JSON responses. You
+<a href="/OpenGoPro/http_2_0">Open GoPro Interface</a> that return JSON responses. You
 may have noted that we did not discuss one of these (Get Media List) in this tutorial. Proceed to the
 next tutorial to see how to get and perform operations using the media list.</p>
 
@@ -1374,7 +1588,7 @@ next tutorial to see how to get and perform operations using the media list.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-07-14T14:48:13-07:00">July 14, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-07-18T11:11:14-07:00">July 18, 2022</time></p>
 
 
       </footer>
