@@ -672,11 +672,11 @@ was higher, for example 5K, this would fail.
 %}
 
 {% quiz
-    question="True or False: Every combination of resolution and FPS values is valid."
+    question="True or False: Every combination of resolution and FPS value is valid."
     option="A:::True"
     option="B:::False"
     correct="B"
-    info="Each resolution can support all or only some FPS values. You can find out which resolutions support which fps values by consulting the capabilities documentation: [XLSX](https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx) [JSON](https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json)"
+    info="Each resolution can support all or only some FPS values. You can find out which resolutions support which fps values by consulting the [capabilities section of the spec](https://gopro.github.io/OpenGoPro/ble_2_0#camera-capabilities)."
 %}
 
 {% quiz
