@@ -2,15 +2,12 @@
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:06:05 PM
 
 import sys
-import logging
 import argparse
 from typing import Optional
 
 import requests
 
-from tutorial_modules import GOPRO_BASE_URL, get_media_list
-
-from tutorial_modules import logger
+from tutorial_modules import GOPRO_BASE_URL, get_media_list, logger
 
 
 def main() -> None:
@@ -42,9 +39,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Get the GPMF for a media file."
-    )
+    parser = argparse.ArgumentParser(description="Get the GPMF for a media file.")
     parser.parse_args()
 
     try:

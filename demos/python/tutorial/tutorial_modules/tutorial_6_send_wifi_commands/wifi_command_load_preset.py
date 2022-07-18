@@ -3,14 +3,11 @@
 
 import sys
 import json
-import logging
 import argparse
 
 import requests
 
-from tutorial_modules import GOPRO_BASE_URL
-
-from tutorial_modules import logger
+from tutorial_modules import GOPRO_BASE_URL, logger
 
 
 def main(preset_id: int) -> None:

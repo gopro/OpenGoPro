@@ -5,16 +5,13 @@ import sys
 import json
 import enum
 import asyncio
-import logging
 import argparse
 from binascii import hexlify
 from typing import Dict, Optional
 
 from bleak import BleakClient
 
-from tutorial_modules import GOPRO_BASE_UUID, connect_ble
-
-from tutorial_modules import logger
+from tutorial_modules import GOPRO_BASE_UUID, connect_ble, logger
 
 
 class Response:

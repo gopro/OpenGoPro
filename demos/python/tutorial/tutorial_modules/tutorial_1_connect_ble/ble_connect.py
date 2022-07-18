@@ -15,7 +15,7 @@ from tutorial_modules import logger
 
 def exception_handler(loop: asyncio.AbstractEventLoop, context: Dict[str, Any]) -> None:
     msg = context.get("exception", context["message"])
-    logger.error(f"Caught exception from async task: {msg}")
+    logger.error(f"Caught exception {str(loop)}: {msg}")
     logger.critical("This is unexpected and unrecoverable.")
 
 
@@ -51,9 +51,10 @@ async def connect_ble(
             # Scan for devices
             logger.info("Scanning for bluetooth devices...")
             # Scan callback to also catch nonconnectable scan responses
+            # pylint: disable=cell-var-from-loop
             def _scan_callback(device: BleakDevice, _: Any) -> None:
                 # Add to the dict if not unknown
-                if device.name != "Unknown" and device.name is not None:
+                if device.name and device.name != "Unknown":
                     devices[device.name] = device
 
             # Scan until we find devices

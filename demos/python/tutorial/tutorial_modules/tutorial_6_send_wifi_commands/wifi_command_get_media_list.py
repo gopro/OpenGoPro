@@ -3,15 +3,12 @@
 
 import sys
 import json
-import logging
 import argparse
 from typing import Dict, Any
 
 import requests
 
-from tutorial_modules import GOPRO_BASE_URL
-
-from tutorial_modules import logger
+from tutorial_modules import GOPRO_BASE_URL, logger
 
 
 def get_media_list() -> Dict[str, Any]:

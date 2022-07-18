@@ -4,7 +4,6 @@
 import sys
 import enum
 import asyncio
-import logging
 import argparse
 from typing import Optional
 from binascii import hexlify
@@ -94,7 +93,9 @@ async def main(identifier: Optional[str]) -> None:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Connect to a GoPro camera, get the current resolution, modify the resolution, and confirm the change was successful.")
+    parser = argparse.ArgumentParser(
+        description="Connect to a GoPro camera, get the current resolution, modify the resolution, and confirm the change was successful."
+    )
     parser.add_argument(
         "-i",
         "--identifier",
