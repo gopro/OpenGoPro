@@ -13,6 +13,7 @@ for more information.
 | swift/EnableWiFiDemo               | A swift demo for discovering, connecting and enabling Wi-Fi on a GoPro camera                                 | ❌      | ❌  | ❌    | ✔️     |
 | csharp/GoProCSharpSample           | A C# demo for discovering, pairing, connecting and controlling a camera                                       | ✔️      | ❌  | ❌    | ❌     |
 | csharp/webcam                      | A C# demo to demonstrate webcam functionality                                                                 | ✔️      | ❌  | ❌    | ❌     |
+| csharp/websocket           | A C# demo for discovering, pairing, connecting and controlling a camera with websocket and python client example | ✔️      | ❌  | ❌    | ❌     |
 | c_c++/GoProC_C++Demo               | Two C / C++ demos to send media commands and start/stop the preview stream                                    | ✔️      | ✔️  | ✔️    | ❌     |
 | c_c++/GoProStreamDemo              | Low latency webcam/preview stream demo                                                                        | ✔️      | ❌  | ❌    | ❌     |
 
