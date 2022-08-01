@@ -1,0 +1,52 @@
+﻿<Window x:Class="GoProCSharpSample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GoProCSharpSample"
+        mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Title="GoPro C# Sample" Height="378" Width="400" ResizeMode="NoResize">
+    <Window.Resources>
+        <local:BrushBoolColorConverter x:Key="BConverter"></local:BrushBoolColorConverter>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Devices" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="lbDevices" ItemsSource="{Binding Devices}" DisplayMemberPath="DeviceInfo.Name" HorizontalAlignment="Left" Height="167" Margin="10,33,0,0" VerticalAlignment="Top" Width="174"/>
+        <GroupBox Grid.Column="1" Header="BLE" HorizontalAlignment="Left" Height="190" Margin="10,10,0,0" VerticalAlignment="Top" Width="180"/>
+
+        <Button x:Name="btnScanBLE" Content="Scan" Grid.Column="1" HorizontalAlignment="Left" Margin="20,33,0,0" VerticalAlignment="Top" Width="75" Click="BtnScanBLE_Click"/>
+        <Button x:Name="btnPair" Content="Pair" Grid.Column="1" HorizontalAlignment="Right" Margin="0,33,20,0" VerticalAlignment="Top" Width="75" Click="BtnPair_Click"/>
+        <Button x:Name="btnConnect" Content="Connect" Grid.Column="1" HorizontalAlignment="Left" Margin="20,58,0,0" VerticalAlignment="Top" Width="75" Click="BtnConnect_Click" />
+        <Button x:Name="btnReadAPName" Content="Read AP Name" Grid.Column="1" HorizontalAlignment="Left" Margin="20,83,0,0" VerticalAlignment="Top" Width="160" Click="BtnReadAPName_Click"/>
+        <Button x:Name="btnReadAPPass" Content="Read AP Pass" Grid.Column="1" HorizontalAlignment="Left" Margin="20,108,0,0" VerticalAlignment="Top" Width="160" Click="BtnReadAPPass_Click" />
+        <Button x:Name="btnTurnWifiOn" Content="Wifi AP on" Grid.Column="1" HorizontalAlignment="Left" Margin="20,133,0,0" VerticalAlignment="Top" Width="75" Click="BtnTurnWifiOn_Click"  />
+        <Button x:Name="btnTurnWifiOff" Content="Wifi AP off" Grid.Column="1" HorizontalAlignment="Left" Margin="105,133,0,0" VerticalAlignment="Top" Width="75" Click="BtnTurnWifiOff_Click"  />
+        <Button x:Name="btnShutterOn" Content="Shutter on" Grid.Column="1" HorizontalAlignment="Left" Margin="20,158,0,0" VerticalAlignment="Top" Width="75" Click="BtnShutterOn_Click" />
+        <Button x:Name="btnShutterOff" Content="Shutter off" Grid.Column="1" HorizontalAlignment="Left" Margin="105,158,0,0" VerticalAlignment="Top" Width="75" Click="BtnShutterOff_Click" />
+
+        
+        <GroupBox Grid.Column="1" Header="Status" HorizontalAlignment="Left" Height="117" Margin="10,205,0,0" VerticalAlignment="Top" Width="180"/>
+        <Label Content="Encoding" HorizontalAlignment="Left" Margin="117,222,0,0" VerticalAlignment="Top" Padding="0" Grid.Column="1"/>
+        <Rectangle Fill="{Binding Encoding, Converter={StaticResource BConverter}}" HorizontalAlignment="Left" Height="23" Margin="117,238,0,0" Stroke="Black" VerticalAlignment="Top" Width="63" Grid.Column="1"/>
+        <Label Content="Battery Level" HorizontalAlignment="Left" Margin="20,228,0,0" VerticalAlignment="Top" Padding="0" Grid.Column="1"/>
+        <ProgressBar x:Name="prgBatteryLevel" HorizontalAlignment="Left" Height="11" Margin="20,245,0,0" VerticalAlignment="Top" Width="75" Value="{Binding BatteryLevel, Mode=OneWay}" ToolTip="{Binding BatteryLevel, Mode=OneWay}" Maximum="100" Grid.Column="1"/>
+        <Label Content="Wifi On" HorizontalAlignment="Left" Margin="117,273,0,0" VerticalAlignment="Top" Padding="0" Grid.Column="1"/>
+        <Rectangle Fill="{Binding WifiOn, Converter={StaticResource BConverter}}" HorizontalAlignment="Left" Height="23" Margin="117,289,0,0" Stroke="Black" VerticalAlignment="Top" Width="63" Grid.Column="1"/>
+
+        <Label Content="Camera Wifi AP Name" HorizontalAlignment="Left" Margin="10,207,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtAPName" HorizontalAlignment="Left" Height="23" Margin="10,233,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="174"/>
+        <Label Content="Camera Wifi AP Password" HorizontalAlignment="Left" Margin="10,263,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtAPPassword" HorizontalAlignment="Left" Height="23" Margin="10,289,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="174"/>
+
+        <StatusBar Grid.ColumnSpan="2" Height="20" Margin="0,0,0,0" VerticalAlignment="Bottom">
+            <StatusBarItem Padding="0">
+                <TextBlock Name="txtStatusBar" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="12" Padding="0,0,0,0"></TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
