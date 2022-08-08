@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-07-18T11:11:14-07:00">
+  <meta property="article:published_time" content="2022-08-08T11:40:22-07:00">
 
 
 
@@ -420,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 5: Connect WiFi">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to use bleak to implementthe Open GoPro Interface to enable the GoPro’s WiFi Access Point (AP) so that itcan be connected to. It will also provide an example of connecting to the WiFi AP.">
-    <meta itemprop="datePublished" content="2022-07-18T11:11:14-07:00">
+    <meta itemprop="datePublished" content="2022-08-08T11:40:22-07:00">
     
 
     <div class="page__inner-wrap">
@@ -442,7 +442,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          6 minute read
+          5 minute read
         
       </span>
     
@@ -510,7 +510,7 @@ are present and configured correctly.</p>
 </div>
 
 <div class="callout note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>Each of the scripts for this tutorial can be found in this directory of the repo: 
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>Each of the scripts for this tutorial can be found in this directory of the repo:
 <code class="language-plaintext highlighter-rouge">demos/python/tutorial/tutorial_modules/tutorial_5_connect_wifi/</code></span>
 </div>
 
@@ -527,32 +527,6 @@ are present and configured correctly.</p>
 <span class="go">usage: wifi_enable.py [-h] [-i IDENTIFIER] [-t TIMEOUT]
 
 Connect to a GoPro camera via BLE, get WiFi info, and enable WiFi.
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
-                        default camera SSID. If not used, first discovered GoPro will be connected to
-  -t TIMEOUT, --timeout TIMEOUT
-                        time in seconds to maintain connection before disconnecting. If not set, will
-                        maintain connection indefinitely
-</span></code></pre></div></div>
-</div>
-</div>
-
-<div class="accordion-container">
-    <button class="accordion">Establish Connection to WiFi AP<i class="fa fa-chevron-down"></i></button>
-    <div class="panel">
-<p>You can test querying the current Resolution on your camera through BLE using the following script:</p>
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_enable_and_connect.py
-</code></pre></div></div>
-
-<p>See the help for parameter definitions:</p>
-
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_enable_and_connect.py <span class="nt">--help</span>
-<span class="go">usage: wifi_enable_and_connect.py [-h] [-i IDENTIFIER] [-t TIMEOUT]
-
-Connect to a GoPro camera via BLE, get WiFi info, enable WiFi and connect. Send keyboard interrupt to exit.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -706,34 +680,17 @@ we know the WiFi SSID and password and the WiFi AP is enabled and ready to conne
 are many different methods of connecting to the WiFi AP depending on your OS and the framework you are
 using to develop. You could, for example, simply use your OS’s WiFi GUI to connect.</p>
 
-<p>We do provide a programmatic example of this in the <code class="language-plaintext highlighter-rouge">ble_enable_wifi_and_connect.py</code> script. This script uses
-the cross-platform <code class="language-plaintext highlighter-rouge">Wireless</code> module from the
-<a href="https://gopro.github.io/OpenGoPro/python_sdk/">Open GoPro Python SDK</a>. Note that this has been imported as
-such:</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">open_gopro.wifi.adapters</span> <span class="kn">import</span> <span class="n">Wireless</span>
-</code></pre></div></div>
-
-<p>In order to do so, perform the following after the above steps have been completed:</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">wifi</span> <span class="o">=</span> <span class="n">Wireless</span><span class="p">()</span>
-<span class="n">wifi</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p>This will log something similar to the following (it will vary slightly based on your OS):</p>
-
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Connecting to GoPro WiFi AP
-INFO:open_gopro.wifi_controller:Attempting to establish WiFi connection to GP24500456...
-INFO:open_gopro.wifi_controller:Wifi connection established!
-INFO:root:Wifi Connected!
-</span></code></pre></div></div>
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>While out of the scope of these tutorials, there is a programmatic example of this in the cross-platform
+<code class="language-plaintext highlighter-rouge">WiFi Demo</code> from the <a href="https://gopro.github.io/OpenGoPro/python_sdk/quickstart.html#wifi-demo">Open GoPro Python SDK</a>.</span>
+</div>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_0e8f2d06-2a69-4c70-a33a-975c4a448a0e" class="quiz">
+<div id="quiz_1e2ff7ad-9ea0-48e1-b7ed-e9000a6912da" class="quiz">
     <div>
-        <div id="question_0e8f2d06-2a69-4c70-a33a-975c4a448a0e" class="quiz__question">How is the WiFi password response received?</div>
-        <div id="answers_0e8f2d06-2a69-4c70-a33a-975c4a448a0e">
+        <div id="question_1e2ff7ad-9ea0-48e1-b7ed-e9000a6912da" class="quiz__question">How is the WiFi password response received?</div>
+        <div id="answers_1e2ff7ad-9ea0-48e1-b7ed-e9000a6912da">
         
             <input type="radio" name="question" value="A"><label>A: As a read response from the WiFi AP Password characteristic</label>
             <br>
@@ -746,10 +703,10 @@ INFO:root:Wifi Connected!
         
         </div>
     </div>
-    <button onclick="showResults('0e8f2d06-2a69-4c70-a33a-975c4a448a0e', 'A')">Submit Answer</button>
-    <div id="results_0e8f2d06-2a69-4c70-a33a-975c4a448a0e" style="display: none">
-        <span id="correct_0e8f2d06-2a69-4c70-a33a-975c4a448a0e" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_0e8f2d06-2a69-4c70-a33a-975c4a448a0e" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('1e2ff7ad-9ea0-48e1-b7ed-e9000a6912da', 'A')">Submit Answer</button>
+    <div id="results_1e2ff7ad-9ea0-48e1-b7ed-e9000a6912da" style="display: none">
+        <span id="correct_1e2ff7ad-9ea0-48e1-b7ed-e9000a6912da" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_1e2ff7ad-9ea0-48e1-b7ed-e9000a6912da" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         This (and WiFi AP SSID) is an exception to the rule. Usually responses
     are received as notifications to a response characteristic. However, in this case, it is
     received as a direct read response (since we are reading from the characteristic and not
@@ -757,10 +714,10 @@ INFO:root:Wifi Connected!
     </div>
 </div>
 
-<div id="quiz_2c41b7c7-8540-4eeb-a026-608d4d38d2ca" class="quiz">
+<div id="quiz_a7cd6928-37d4-4187-8480-78ad09ce096d" class="quiz">
     <div>
-        <div id="question_2c41b7c7-8540-4eeb-a026-608d4d38d2ca" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
-        <div id="answers_2c41b7c7-8540-4eeb-a026-608d4d38d2ca">
+        <div id="question_a7cd6928-37d4-4187-8480-78ad09ce096d" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
+        <div id="answers_a7cd6928-37d4-4187-8480-78ad09ce096d">
         
             <input type="radio" name="question" value="A"><label>A: It only needs to be enabled once and it will then always remain on</label>
             <br>
@@ -776,10 +733,10 @@ INFO:root:Wifi Connected!
         
         </div>
     </div>
-    <button onclick="showResults('2c41b7c7-8540-4eeb-a026-608d4d38d2ca', 'D')">Submit Answer</button>
-    <div id="results_2c41b7c7-8540-4eeb-a026-608d4d38d2ca" style="display: none">
-        <span id="correct_2c41b7c7-8540-4eeb-a026-608d4d38d2ca" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_2c41b7c7-8540-4eeb-a026-608d4d38d2ca" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('a7cd6928-37d4-4187-8480-78ad09ce096d', 'D')">Submit Answer</button>
+    <div id="results_a7cd6928-37d4-4187-8480-78ad09ce096d" style="display: none">
+        <span id="correct_a7cd6928-37d4-4187-8480-78ad09ce096d" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_a7cd6928-37d4-4187-8480-78ad09ce096d" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         While the WiFi AP will remain on for some time, it can and will eventually turn off so
     it is always recommended to first connect via BLE and ensure that it is enabled. The password
     and SSID will almost never change. However, they will change if the connections are reset via
@@ -811,7 +768,7 @@ INFO:root:Wifi Connected!
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-07-18T11:11:14-07:00">July 18, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-08-08T11:40:22-07:00">August 8, 2022</time></p>
 
 
       </footer>

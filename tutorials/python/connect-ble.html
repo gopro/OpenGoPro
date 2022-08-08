@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-07-18T11:11:14-07:00">
+  <meta property="article:published_time" content="2022-08-08T11:40:22-07:00">
 
 
 
@@ -420,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 1: Connect BLE">
     <meta itemprop="description" content="This tutorial will provide a walk-through to connect to the GoPro camera via BLE usingbleak.">
-    <meta itemprop="datePublished" content="2022-07-18T11:11:14-07:00">
+    <meta itemprop="datePublished" content="2022-08-08T11:40:22-07:00">
     
 
     <div class="page__inner-wrap">
@@ -558,14 +558,9 @@ Author: Tim Camise
 Author-email: gopro.com
 License: MIT
 Location: c:\users\tim\gopro\opengopro\demos\python\tutorial
-Requires: bleak, open-gopro, requests
+Requires: bleak, requests
 Required-by:
 </span></code></pre></div></div>
-
-<div class="callout note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>This will also install the <a href="https://gopro.github.io/OpenGoPro/python_sdk/">Open GoPro Python SDK</a> which will be
-used for some of the optional examples through these tutorials.</span>
-</div>
 
 <p>The scripts that will be used for this tutorial can be found in the
 <a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_1_connect_ble">Tutorial 1 Folder</a>.</p>
@@ -598,7 +593,7 @@ and progress can be tracked on the <a href="https://github.com/gopro/OpenGoPro/i
 </div>
 
 <div class="callout note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>Each of the scripts for this tutorial can be found in this directory of the repo: 
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>Each of the scripts for this tutorial can be found in this directory of the repo:
 <code class="language-plaintext highlighter-rouge">demos/python/tutorial/tutorial_modules/tutorial_1_connect_ble/</code></span>
 </div>
 
@@ -667,7 +662,7 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
 <h2 id="scan">Scan</h2>
 
 <div>
-    <ul class="tab" data-tab="dd2069f7-c5ef-4ab2-8784-14b5ffb59eb7">
+    <ul class="tab" data-tab="59931ebc-8843-456d-adea-332c0de8040e">
         
             <li class="active">
                 <a href="">code </a>
@@ -678,7 +673,7 @@ Connections –&gt; Connect Device –&gt; Quik App</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="dd2069f7-c5ef-4ab2-8784-14b5ffb59eb7">
+        <ul class="tab-content" id="59931ebc-8843-456d-adea-332c0de8040e">
         
             <li class="active">
 <p>Next, we must find the GoPro Camera using bleak. Let’s initialize an empty dict that will
@@ -767,7 +762,7 @@ your camera’s serial number.</p>
 <h2 id="connect">Connect</h2>
 
 <div>
-    <ul class="tab" data-tab="3423f9af-fe09-4fc8-8f83-4b534a7ec6d2">
+    <ul class="tab" data-tab="3a554cff-c786-43e1-b63e-48469ca87cac">
         
             <li class="active">
                 <a href="">code </a>
@@ -778,7 +773,7 @@ your camera’s serial number.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="3423f9af-fe09-4fc8-8f83-4b534a7ec6d2">
+        <ul class="tab-content" id="3a554cff-c786-43e1-b63e-48469ca87cac">
         
             <li class="active">
 <p>Now that we have discovered at least one GoPro device to connect to, the next step is to
@@ -832,7 +827,7 @@ catching the exception when it fails.</p>
 <h2 id="enable-notifications">Enable Notifications</h2>
 
 <div>
-    <ul class="tab" data-tab="651e0d64-1cac-4417-9ab7-44cd7bc7a68b">
+    <ul class="tab" data-tab="8bcb98b6-bd3f-42fb-9e93-682aa436650a">
         
             <li class="active">
                 <a href="">enable </a>
@@ -843,7 +838,7 @@ catching the exception when it fails.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="651e0d64-1cac-4417-9ab7-44cd7bc7a68b">
+        <ul class="tab-content" id="8bcb98b6-bd3f-42fb-9e93-682aa436650a">
         
             <li class="active">
 <p>As specified in the <a href="/OpenGoPro/ble_2_0#sending-and-receiving-messages">Open GoPro Bluetooth API</a>,
@@ -895,10 +890,10 @@ will be used in a future tutorial to send data.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_8f1a0b4d-dcbf-4661-8cdb-22eeb7a6d9a1" class="quiz">
+<div id="quiz_6368b7b0-146d-400a-ba43-8807c615fbea" class="quiz">
     <div>
-        <div id="question_8f1a0b4d-dcbf-4661-8cdb-22eeb7a6d9a1" class="quiz__question">How often is it necessary to pair?</div>
-        <div id="answers_8f1a0b4d-dcbf-4661-8cdb-22eeb7a6d9a1">
+        <div id="question_6368b7b0-146d-400a-ba43-8807c615fbea" class="quiz__question">How often is it necessary to pair?</div>
+        <div id="answers_6368b7b0-146d-400a-ba43-8807c615fbea">
         
             <input type="radio" name="question" value="A"><label>A: Pairing must occur every time to ensure safe BLE communication.</label>
             <br>
@@ -911,10 +906,10 @@ will be used in a future tutorial to send data.</p>
         
         </div>
     </div>
-    <button onclick="showResults('8f1a0b4d-dcbf-4661-8cdb-22eeb7a6d9a1', 'C')">Submit Answer</button>
-    <div id="results_8f1a0b4d-dcbf-4661-8cdb-22eeb7a6d9a1" style="display: none">
-        <span id="correct_8f1a0b4d-dcbf-4661-8cdb-22eeb7a6d9a1" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_8f1a0b4d-dcbf-4661-8cdb-22eeb7a6d9a1" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('6368b7b0-146d-400a-ba43-8807c615fbea', 'C')">Submit Answer</button>
+    <div id="results_6368b7b0-146d-400a-ba43-8807c615fbea" style="display: none">
+        <span id="correct_6368b7b0-146d-400a-ba43-8807c615fbea" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_6368b7b0-146d-400a-ba43-8807c615fbea" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Pairing is only needed once (assuming neither side deletes the keys). If the
     GoPro deletes the keys (via Connections-&gt;Reset Connections), the devices will need to re-pair.
     </div>
@@ -971,7 +966,7 @@ to send commands, you should advance to the next tutorial.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-07-18T11:11:14-07:00">July 18, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-08-08T11:40:22-07:00">August 8, 2022</time></p>
 
 
       </footer>
