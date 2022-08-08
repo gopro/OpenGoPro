@@ -52,20 +52,18 @@ async def enable_wifi(identifier: str = None) -> Tuple[str, str, BleakClient]:
 
     # Read from WiFi AP SSID BleUUID
     logger.info("Reading the WiFi AP SSID")
-    ssid = await client.read_gatt_char(WIFI_AP_SSID_UUID)
-    ssid = ssid.decode()
+    ssid = (await client.read_gatt_char(WIFI_AP_SSID_UUID)).decode()
     logger.info(f"SSID is {ssid}")
 
     # Read from WiFi AP Password BleUUID
     logger.info("Reading the WiFi AP password")
-    password = await client.read_gatt_char(WIFI_AP_PASSWORD_UUID)
-    password = password.decode()
+    password = (await client.read_gatt_char(WIFI_AP_PASSWORD_UUID)).decode()
     logger.info(f"Password is {password}")
 
     # Write to the Command Request BleUUID to enable WiFi
     logger.info("Enabling the WiFi AP")
     event.clear()
-    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x03, 0x17, 0x01, 0x01]))
+    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x03, 0x17, 0x01, 0x01]), response=True)
     await event.wait()  # Wait to receive the notification response
     logger.info("WiFi AP is enabled")
 

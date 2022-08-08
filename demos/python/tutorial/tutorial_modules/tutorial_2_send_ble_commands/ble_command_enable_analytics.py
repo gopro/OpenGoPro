@@ -41,7 +41,7 @@ async def main(identifier: Optional[str]) -> None:
     # Write to command request BleUUID to enable analytics
     logger.info("Enabling analytics...")
     event.clear()
-    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x01, 0x50]))
+    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x01, 0x50]), response=True)
     await event.wait()  # Wait to receive the notification response
     await client.disconnect()
 

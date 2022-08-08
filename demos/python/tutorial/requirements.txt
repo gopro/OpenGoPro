@@ -1,5 +1,4 @@
 -e .
-open-gopro==0.9.1
-bleak==0.14.2
-requests==2.25.1
-rich==12.4.4
+bleak==0.15.1
+requests>=2.25
+rich>=12.4.4
