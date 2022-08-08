@@ -61,14 +61,9 @@ Author: Tim Camise
 Author-email: gopro.com
 License: MIT
 Location: c:\users\tim\gopro\opengopro\demos\python\tutorial
-Requires: bleak, open-gopro, requests
+Requires: bleak, requests
 Required-by:
 ```
-
-{% note %}
-This will also install the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/) which will be
-used for some of the optional examples through these tutorials.
-{% endnote %}
 
 The scripts that will be used for this tutorial can be found in the
 [Tutorial 1 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_1_connect_ble).
@@ -122,7 +117,7 @@ Python >= 3.8.x must be used as specified in the requirements
 {% endwarning %}
 
 {% note %}
-Each of the scripts for this tutorial can be found in this directory of the repo: 
+Each of the scripts for this tutorial can be found in this directory of the repo:
 `demos/python/tutorial/tutorial_modules/tutorial_1_connect_ble/`
 {% endnote %}
 

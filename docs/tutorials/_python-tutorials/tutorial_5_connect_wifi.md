@@ -36,7 +36,7 @@ Python >= 3.8.x must be used as specified in the requirements
 {% endwarning %}
 
 {% note %}
-Each of the scripts for this tutorial can be found in this directory of the repo: 
+Each of the scripts for this tutorial can be found in this directory of the repo:
 `demos/python/tutorial/tutorial_modules/tutorial_5_connect_wifi/`
 {% endnote %}
 
@@ -54,33 +54,6 @@ $ python wifi_enable.py --help
 usage: wifi_enable.py [-h] [-i IDENTIFIER] [-t TIMEOUT]
 
 Connect to a GoPro camera via BLE, get WiFi info, and enable WiFi.
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
-                        default camera SSID. If not used, first discovered GoPro will be connected to
-  -t TIMEOUT, --timeout TIMEOUT
-                        time in seconds to maintain connection before disconnecting. If not set, will
-                        maintain connection indefinitely
-```
-{% endaccordion %}
-
-
-{% accordion Establish Connection to WiFi AP %}
-
-You can test querying the current Resolution on your camera through BLE using the following script:
-```console
-$ python wifi_enable_and_connect.py
-```
-
-See the help for parameter definitions:
-
-```console
-$ python wifi_enable_and_connect.py --help
-usage: wifi_enable_and_connect.py [-h] [-i IDENTIFIER] [-t TIMEOUT]
-
-Connect to a GoPro camera via BLE, get WiFi info, enable WiFi and connect. Send keyboard interrupt to exit.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -257,30 +230,11 @@ we know the WiFi SSID and password and the WiFi AP is enabled and ready to conne
 are many different methods of connecting to the WiFi AP depending on your OS and the framework you are
 using to develop. You could, for example, simply use your OS's WiFi GUI to connect.
 
-We do provide a programmatic example of this in the `ble_enable_wifi_and_connect.py` script. This script uses
-the cross-platform `Wireless` module from the
-[Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/). Note that this has been imported as
-such:
+{% tip %}
+While out of the scope of these tutorials, there is a programmatic example of this in the cross-platform
+`WiFi Demo` from the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/quickstart.html#wifi-demo).
 
-```python
-from open_gopro.wifi.adapters import Wireless
-```
-
-In order to do so, perform the following after the above steps have been completed:
-
-```python
-wifi = Wireless()
-wifi.connect(ssid, password)
-```
-
-This will log something similar to the following (it will vary slightly based on your OS):
-
-```console
-INFO:root:Connecting to GoPro WiFi AP
-INFO:open_gopro.wifi_controller:Attempting to establish WiFi connection to GP24500456...
-INFO:open_gopro.wifi_controller:Wifi connection established!
-INFO:root:Wifi Connected!
-```
+{% endtip %}
 
 **Quiz time! 📚 ✏️**
 
