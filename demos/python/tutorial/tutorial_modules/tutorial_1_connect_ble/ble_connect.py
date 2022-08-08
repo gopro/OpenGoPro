@@ -40,7 +40,7 @@ async def connect_ble(
         BleakClient: connected client
     """
 
-    asyncio.get_event_loop().set_exception_handler(exception_handler)
+    # asyncio.get_event_loop().set_exception_handler(exception_handler)
 
     RETRIES = 10
     for retry in range(RETRIES):

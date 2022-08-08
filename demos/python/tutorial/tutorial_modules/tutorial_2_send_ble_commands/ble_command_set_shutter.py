@@ -12,44 +12,50 @@ from bleak import BleakClient
 
 from tutorial_modules import GOPRO_BASE_UUID, connect_ble, logger
 
+event: asyncio.Event
+client: BleakClient
+response_uuid: str
+
+
+def notification_handler(handle: int, data: bytes) -> None:
+    logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
+
+    # If this is the correct handle and the status is success, the command was a success
+    if client.services.characteristics[handle].uuid == response_uuid and data[2] == 0x00:
+        logger.info("Command sent successfully")
+    # Anything else is unexpected. This shouldn't happen
+    else:
+        logger.error("Unexpected response")
+
+    # Notify the writer
+    event.set()
+
 
 async def main(identifier: Optional[str]) -> None:
     # Synchronization event to wait until notification response is received
+    global event
     event = asyncio.Event()
 
     # UUIDs to write to and receive responses from
     COMMAND_REQ_UUID = GOPRO_BASE_UUID.format("0072")
     COMMAND_RSP_UUID = GOPRO_BASE_UUID.format("0073")
+    global response_uuid
     response_uuid = COMMAND_RSP_UUID
 
-    client: BleakClient
-
-    def notification_handler(handle: int, data: bytes) -> None:
-        logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
-
-        # If this is the correct handle and the status is success, the command was a success
-        if client.services.characteristics[handle].uuid == response_uuid and data[2] == 0x00:
-            logger.info("Command sent successfully")
-        # Anything else is unexpected. This shouldn't happen
-        else:
-            logger.error("Unexpected response")
-
-        # Notify the writer
-        event.set()
-
+    global client
     client = await connect_ble(notification_handler, identifier)
 
     # Write to command request BleUUID to turn the shutter on
     logger.info("Setting the shutter on")
     event.clear()
-    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([3, 1, 1, 1]))
+    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([3, 1, 1, 1]), response=True)
     await event.wait()  # Wait to receive the notification response
 
     time.sleep(2)  # If we're recording, let's wait 2 seconds (i.e. take a 2 second video)
     # Write to command request BleUUID to turn the shutter off
     logger.info("Setting the shutter off")
     # event.clear()
-    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([3, 1, 1, 0]))
+    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([3, 1, 1, 0]), response=True)
     await event.wait()  # Wait to receive the notification response
     await client.disconnect()
 

@@ -65,7 +65,7 @@ async def enable_wifi(identifier: str = None) -> Tuple[str, str, BleakClient]:
     # Write to the Command Request BleUUID to enable WiFi
     logger.info("Enabling the WiFi AP")
     event.clear()
-    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x03, 0x17, 0x01, 0x01]))
+    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x03, 0x17, 0x01, 0x01]), response=True)
     await event.wait()  # Wait to receive the notification response
     logger.info("WiFi AP is enabled")
 

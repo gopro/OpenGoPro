@@ -41,7 +41,7 @@ async def main(identifier: Optional[str]) -> None:
     # Write to command request BleUUID to change the fps to 240
     logger.info("Setting the fps to 240")
     event.clear()
-    await client.write_gatt_char(SETTINGS_REQ_UUID, bytearray([0x03, 0x03, 0x01, 0x00]))
+    await client.write_gatt_char(SETTINGS_REQ_UUID, bytearray([0x03, 0x03, 0x01, 0x00]), response=True)
     await event.wait()  # Wait to receive the notification response
     await client.disconnect()
 

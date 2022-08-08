@@ -4,12 +4,8 @@
 # Simply run each demo for some naive sanity checking
 
 import time
-import asyncio
-import threading
 
 import pytest
-from open_gopro.wifi.adapters.wireless import Wireless
-from open_gopro.wifi.controller import SsidState
 
 from tutorial_modules.tutorial_1_connect_ble.ble_connect import main as ble_connect
 from tutorial_modules.tutorial_2_send_ble_commands.ble_command_enable_analytics import (
@@ -43,7 +39,6 @@ from tutorial_modules.tutorial_4_ble_queries.ble_query_register_resolution_value
     main as ble_query_register_resolution_value_updates,
 )
 from tutorial_modules.tutorial_5_connect_wifi.wifi_enable import main as wifi_enable
-from tutorial_modules.tutorial_5_connect_wifi.wifi_enable_and_connect import main as wifi_enable_and_connect
 from tutorial_modules.tutorial_6_send_wifi_commands.wifi_command_get_media_list import (
     main as wifi_command_get_media_list,
 )
@@ -89,19 +84,9 @@ from tutorial_modules.tutorial_7_camera_media_list.wifi_media_get_thumbnail impo
 
 @pytest.fixture(scope="module")
 def connect_wifi():
-    def maintain_wifi():
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(wifi_enable_and_connect(None, None))
-
-    threading.Thread(target=maintain_wifi, daemon=True).start()
-    wifi = Wireless()
-    while wifi.current()[1] is not SsidState.CONNECTED:
-        time.sleep(2)
-        print("Waiting for WiFi to connect...")
+    print("Press enter when WiFi is connected to GoPro camera...")
+    input("")
     yield
-
-    wifi.disconnect()
 
 
 class TestTutorial1ConnectBle:
