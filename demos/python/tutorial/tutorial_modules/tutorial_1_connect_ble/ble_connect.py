@@ -40,7 +40,7 @@ async def connect_ble(
         BleakClient: connected client
     """
 
-    # asyncio.get_event_loop().set_exception_handler(exception_handler)
+    asyncio.get_event_loop().set_exception_handler(exception_handler)
 
     RETRIES = 10
     for retry in range(RETRIES):
@@ -95,7 +95,7 @@ async def connect_ble(
                 for char in service.characteristics:
                     if "notify" in char.properties:
                         logger.info(f"Enabling notification on char {char.uuid}")
-                        await client.start_notify(char, notification_handler)
+                        await client.start_notify(char, notification_handler)  # type: ignore
             logger.info("Done enabling notifications")
 
             return client

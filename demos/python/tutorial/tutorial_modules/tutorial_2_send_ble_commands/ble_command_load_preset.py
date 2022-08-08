@@ -41,7 +41,9 @@ async def main(identifier: Optional[str]) -> None:
     # Write to command request BleUUID to load the cinematic preset
     logger.info("Loading the cinematic preset...")
     event.clear()
-    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x06, 0x40, 0x04, 0x00, 0x00, 0x00, 0x02]), response=True)
+    await client.write_gatt_char(
+        COMMAND_REQ_UUID, bytearray([0x06, 0x40, 0x04, 0x00, 0x00, 0x00, 0x02]), response=True
+    )
     await event.wait()  # Wait to receive the notification response
     await client.disconnect()
 

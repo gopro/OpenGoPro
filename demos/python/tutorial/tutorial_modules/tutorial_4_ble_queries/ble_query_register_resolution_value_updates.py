@@ -80,7 +80,9 @@ async def main(identifier: Optional[str]) -> None:
     new_resolution = Resolution.RES_2_7K if resolution is Resolution.RES_1080 else Resolution.RES_1080
     logger.info(f"Changing the resolution to {new_resolution}...")
     event.clear()
-    await client.write_gatt_char(SETTINGS_REQ_UUID, bytearray([0x03, 0x02, 0x01, new_resolution.value]), response=True)
+    await client.write_gatt_char(
+        SETTINGS_REQ_UUID, bytearray([0x03, 0x02, 0x01, new_resolution.value]), response=True
+    )
     await event.wait()  # Wait to receive the notification response
     logger.info("Successfully changed the resolution")
 

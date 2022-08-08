@@ -84,7 +84,7 @@ from tutorial_modules.tutorial_7_camera_media_list.wifi_media_get_thumbnail impo
 
 @pytest.fixture(scope="module")
 def connect_wifi():
-    print("Press enter when WiFi is connected to GoPro camera...")
+    print("\n\nPress enter when WiFi is connected to GoPro camera...\n")
     input("")
     yield
 

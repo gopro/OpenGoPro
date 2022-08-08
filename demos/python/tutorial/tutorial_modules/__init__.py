@@ -17,7 +17,7 @@ logger.addHandler(sh)
 logger.setLevel(logging.INFO)
 
 bleak_logger = logging.getLogger("bleak")
-bleak_logger.setLevel(logging.DEBUG)
+bleak_logger.setLevel(logging.WARNING)
 bleak_logger.addHandler(sh)
 
 traceback.install()  # Enable exception tracebacks in rich logger

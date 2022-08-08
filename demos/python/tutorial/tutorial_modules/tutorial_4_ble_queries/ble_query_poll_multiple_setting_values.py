@@ -101,7 +101,9 @@ async def main(identifier: Optional[str]) -> None:
     # Write to query BleUUID to poll the current resolution, fps, and fov
     logger.info("Getting the current resolution, fps, and fov,")
     event.clear()
-    await client.write_gatt_char(QUERY_REQ_UUID, bytearray([0x04, 0x12, RESOLUTION_ID, FPS_ID, FOV_ID]), response=True)
+    await client.write_gatt_char(
+        QUERY_REQ_UUID, bytearray([0x04, 0x12, RESOLUTION_ID, FPS_ID, FOV_ID]), response=True
+    )
     await event.wait()  # Wait to receive the notification response
     logger.info(f"Resolution is currently {resolution}")
     logger.info(f"Video FOV is currently {video_fov}")
