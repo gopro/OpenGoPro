@@ -117,14 +117,14 @@ async def main(identifier: Optional[str]) -> None:
     # Write to command request BleUUID to put the camera to sleep
     logger.info("Getting the camera's settings...")
     event.clear()
-    await client.write_gatt_char(QUERY_REQ_UUID, bytearray([0x01, 0x12]))
+    await client.write_gatt_char(QUERY_REQ_UUID, bytearray([0x01, 0x12]), response=True)
     await event.wait()  # Wait to receive the notification response
     logger.info(f"Received settings\n: {response}")
 
     # Write to command request BleUUID to put the camera to sleep
     logger.info("Getting the camera's statuses...")
     event.clear()
-    await client.write_gatt_char(QUERY_REQ_UUID, bytearray([0x01, 0x13]))
+    await client.write_gatt_char(QUERY_REQ_UUID, bytearray([0x01, 0x13]), response=True)
     await event.wait()  # Wait to receive the notification response
     logger.info(f"Received statuses\n: {response}")
 

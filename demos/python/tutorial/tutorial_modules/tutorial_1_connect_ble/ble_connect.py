@@ -95,7 +95,7 @@ async def connect_ble(
                 for char in service.characteristics:
                     if "notify" in char.properties:
                         logger.info(f"Enabling notification on char {char.uuid}")
-                        await client.start_notify(char, notification_handler)
+                        await client.start_notify(char, notification_handler)  # type: ignore
             logger.info("Done enabling notifications")
 
             return client

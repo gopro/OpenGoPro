@@ -59,7 +59,7 @@ async def main(identifier: Optional[str]) -> None:
     # Write to command request BleUUID to get the Open GoPro Version
     logger.info("Getting the Open GoPro version...")
     event.clear()
-    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x01, 0x51]))
+    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x01, 0x51]), response=True)
     await event.wait()  # Wait to receive the notification response
 
     await client.disconnect()
