@@ -1,5 +1,5 @@
 /* network_management.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Thu Jul 14 19:12:49 UTC 2022 */
+/* This copyright was auto-generated on Mon Aug 22 19:59:07 UTC 2022 */
 
 /*
 Defines the structure of protobuf message for network management
@@ -7,9 +7,20 @@ Defines the structure of protobuf message for network management
 
 syntax="proto2";
 package open_gopro;
-
-
 import "response_generic.proto";
+
+
+enum EnumDeprecated{
+    DEPRECATED_1 = 0x00;
+    DEPRECATED_2 = 0x01;
+    DEPRECATED_3 = 0x02;
+    DEPRECATED_2_OR_CLOUD = 0x03;
+    DEPRECATED_5 = 0x04;
+    DEPRECATED_6 = 0x08;
+    DEPRECATED_7 = 0x10;
+}
+
+
 enum EnumProvisioning{
     PROVISIONING_UNKNOWN = 0;
     PROVISIONING_NEVER_STARTED = 1;
@@ -26,14 +37,8 @@ enum EnumProvisioning{
 }
 
 
-enum EnumDeprecated{
-    DEPRECATED_1 = 0x00;
-    DEPRECATED_2 = 0x01;
-    DEPRECATED_3 = 0x02;
-    DEPRECATED_4 = 0x03;
-    DEPRECATED_5 = 0x04;
-    DEPRECATED_6 = 0x08;
-    DEPRECATED_7 = 0x10;
+message NotifProvisioningState{
+    required EnumProvisioning provisioning_state = 1;
 }
 
 
@@ -54,10 +59,5 @@ message ResponseConnectNew{
     required EnumResultGeneric result = 1;
     required EnumProvisioning provisioning_state = 2;
     required int32 timeout_seconds = 3;
-}
-
-
-message NotifProvisioningState{
-    required EnumProvisioning provisioning_state = 1;
 }
 
