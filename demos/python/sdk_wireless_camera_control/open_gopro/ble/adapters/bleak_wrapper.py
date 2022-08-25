@@ -135,13 +135,13 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         self._as_coroutine(_async_write)
 
-    def scan(self, token: Pattern, timeout: int = 5, service_uuids: list[BleUUID] = None) -> BleakDevice:
+    def scan(self, token: Pattern, timeout: int = 5, service_uuids: Optional[List[BleUUID]] = None) -> BleakDevice:
         """Scan for a regex in advertising data strings, optionally filtering on service BleUUID's
 
         Args:
             token (Pattern): Regex to look for when scanning.
             timeout (int): Time to scan. Defaults to 5.
-            service_uuids (list[BleUUID], Optional): The list of BleUUID's to filter on. Defaults to None.
+            service_uuids (Optional[List[BleUUID]]): The list of BleUUID's to filter on. Defaults to None.
 
         Returns:
             BleakDevice: The first matched device that was discovered
@@ -149,7 +149,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         async def _async_scan() -> BleakDevice:
             logger.info(f"Scanning for {token.pattern} bluetooth devices...")
-            devices: dict[str, BleakDevice] = {}
+            devices: Dict[str, BleakDevice] = {}
             uuids = [] if service_uuids is None else [uuid2bleak_string(uuid) for uuid in service_uuids]
 
             def _scan_callback(device: BleakDevice, _: Any) -> None:
