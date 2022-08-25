@@ -135,7 +135,9 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         self._as_coroutine(_async_write)
 
-    def scan(self, token: Pattern, timeout: int = 5, service_uuids: Optional[List[BleUUID]] = None) -> BleakDevice:
+    def scan(
+        self, token: Pattern, timeout: int = 5, service_uuids: Optional[List[BleUUID]] = None
+    ) -> BleakDevice:
         """Scan for a regex in advertising data strings, optionally filtering on service BleUUID's
 
         Args:
