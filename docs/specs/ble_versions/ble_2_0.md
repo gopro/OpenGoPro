@@ -141,10 +141,19 @@ Note: GP-XXXX is shorthand for GoPro's 128-bit UUIDs: <b>b5f9xxxx-aa8d-11e3-9046
 ## Packet Headers
 
 <p>
-The Bluetooth Low Energy protocol limits messages to 20 Bytes per packet.
-To accommodate this limitation, the packet header rules below are used.
+The Bluetooth Low Energy protocol limits messages to 20 bytes per packet.
+To accommodate this limitation, GoPro cameras use the packet header format below.
 All lengths are in bytes.
-The packet count starts at 0 for the first continuation packet.
+</p>
+
+<p>
+Messages sent to and received from the camera are expected to be packetized and sent in 20 byte chunks.
+Messages received from the camera will always use the header with the smallest possible message length.
+For example, a three byte response will use the 5-bit General header, not the 13-bit or 16-bit Extended headers.
+</p>
+
+<p>
+Messages sent to the camera can use either the 5-bit General header or the 13-bit Extended header.
 </p>
 
 ### Packet Header Format
@@ -207,7 +216,135 @@ The packet count starts at 0 for the first continuation packet.
     </tr>
     <tr>
         <td>1: Continuation</td>
-        <td colspan="24" style="background-color: rgb(198,210,229);"></td>
+        <td colspan="3" style="background-color: rgb(198,210,229);"></td>
+        <td colspan="4">Counter (4-bit)</td>
+        <td colspan="16" style="background-color: rgb(198,210,229);"></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+Note: Continuation packet counters start at 0x0 and reset after 0xF.
+</p>
+
+### Example: Packetizing a 5-bit General Message
+<p>
+<b>Message Length:</b> 17 bytes
+</p>
+<p>
+<b>Message:</b> 01:02:03:04:05:06:07:08:09:0A:0B:0C:0D:0E:0F:10:11
+</p>
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Packet</td>
+      <td>Type</td>
+      <td>Byte(s)</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td rowspan="2">1</td>
+      <td>Header</td>
+      <td>11</td>
+      <td>(0) start packet<br/>(00) 5-bit General message<br/>(10001) message length: 17</td>
+    </tr>
+    <tr>
+      <td>Payload</td>
+      <td>01:02:03:04:05:06:07:08:09:0A:0B:0C:0D:0E:0F:10:11</td>
+      <td>Message</td>
+    </tr>
+  </tbody>
+</table>
+
+### Example: Packetizing a 13-bit Extended Message
+<p>
+<b>Message Length:</b> 50 bytes
+</p>
+<p>
+<b>Message:</b> 01:02:03:04:05:06:07:08:09:0A:0B:0C:0D:0E:0F:10:11:12:13:14:15:16:17:18:19:1A:1B:1C:1D:1E:1F:20:21:22:23:24:25:26:27:28:29:2A:2B:2C:2D:2E:2F:30:31:32
+</p>
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Packet</td>
+      <td>Type</td>
+      <td>Byte(s)</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td rowspan="2">1</td>
+      <td>Header</td>
+      <td>20:32</td>
+      <td>(0) start packet<br/>(01) 13-bit Extended message<br/>(0000000110010) message length: 50</td>
+    </tr>
+    <tr>
+      <td>Payload</td>
+      <td>01:02:03:04:05:06:07:08:09:0A:0B:0C:0D:0E:0F:10:11:12</td>
+      <td>Message (chunk 1 of 3)</td>
+    </tr>
+    <tr>
+      <td rowspan="2">2</td>
+      <td>Header</td>
+      <td>80</td>
+      <td>(0) continuation packet<br/>(000) ignored<br/>(0000) counter: 0</td>
+    </tr>
+    <tr>
+      <td>Payload</td>
+      <td>13:14:15:16:17:18:19:1A:1B:1C:1D:1E:1F:20:21:22:23:24:25</td>
+      <td>Message (chunk 2 of 3)</td>
+    </tr>
+    <tr>
+      <td rowspan="2">3</td>
+      <td>Header</td>
+      <td>81</td>
+      <td>(0) continuation packet<br/>(000) ignored<br/>(0001) counter: 1</td>
+    </tr>
+    <tr>
+      <td>Payload</td>
+      <td>26:27:28:29:2A:2B:2C:2D:2E:2F:30:31:32</td>
+      <td>Message (chunk 3 of 3)</td>
+    </tr>
+  </tbody>
+</table>
+
+### Example: Depacketizing a Mutli-Packet Message
+<p>
+<b>Packets Received:</b> 5
+</p>
+<p>
+Once the packet headers are identified and removed from each packet, the complete response message can be assembled by concatenating the remaining packet data in the order it was received.
+</p>
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Packet</td>
+      <td>Byte(s)</td>
+      <td>Header</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td><b>20:57</b>:01:02:03:04:05:06:07:08:09:0A:0B:0C:0D:0E:0F:10:11:12</td>
+      <td>20:57<br/>(0) start packet<br/>(01) 13-bit Extended message<br/>(0000001010111) message length: 87</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><b>80</b>:13:14:15:16:17:18:19:1A:1B:1C:1D:1E:1F:20:21:22:23:24:25</td>
+      <td>80<br/>(1) continuation packet<br/>(000) ignored<br/>(0000) counter: 0</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><b>81</b>:26:27:28:29:2A:2B:2C:2D:2E:2F:30:31:32:33:34:35:36:37:38</td>
+      <td>81<br/>(1) continuation packet<br/>(000) ignored<br/>(0001) counter: 1</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><b>82</b>:39:3A:3B:3C:3D:3E:3F:40:41:42:43:44:45:46:47:48:49:4A:4B</td>
+      <td>82<br/>(1) continuation packet<br/>(000) ignored<br/>(0010) counter: 2</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><b>83</b>:4C:4D:4E:4F:50:51:52:53:54:55:56:57</td>
+      <td>83<br/>(1) continuation packet<br/>(000) ignored<br/>(0011) counter: 3</td>
     </tr>
   </tbody>
 </table>
@@ -239,11 +376,11 @@ The camera will whitelist the client so subsequent connections do not require pa
     </tr>
     <tr>
       <td>HERO10 Black</td>
-      <td>Swipe down, swipe left >> Connections >> Connect Device >> GoPro Quik App</td>
+      <td>Swipe down, swipe left, Connections >> Connect Device >> GoPro Quik App</td>
     </tr>
     <tr>
       <td>HERO9 Black</td>
-      <td>Swipe down, swipe left >> Connections >> Connect Device >> GoPro App</td>
+      <td>Swipe down, swipe left, Connections >> Connect Device >> GoPro App</td>
     </tr>
   </tbody>
 </table>
@@ -440,6 +577,10 @@ It is recommended to send a keep-alive at least once every 120 seconds.
 <p>
 GoPro's BLE protocol comes in two flavors: TLV (Type Length Value) and Protobuf.
 This section describes TLV style messaging.
+</p>
+
+<p>
+Note: All TLV messages (payloads) must be packetized and wrapped with <a href="https://gopro.github.io/OpenGoPro/ble_2_0#packet-headers">Packet Headers</a> as outlined in this document.
 </p>
 
 
@@ -767,7 +908,7 @@ Below are clarifications for complex camera responses
     </tr>
     <tr>
       <td>51</td>
-      <td>Packet length</td>
+      <td>Response length</td>
     </tr>
     <tr>
       <td>3C:00</td>
@@ -2609,6 +2750,10 @@ In order to maximize BLE bandwidth, some messages and their corresponding notifi
 
 <p>
 Open GoPro currently uses <a href="https://developers.google.com/protocol-buffers/docs/reference/proto2-spec">Protocol Buffers Version 2</a>.
+</p>
+
+<p>
+Note: All Protobuf messages (i.e. payloads, which are serialized protobuf objects) must be packetized and wrapped with <a href="https://gopro.github.io/OpenGoPro/ble_2_0#packet-headers">Packet Headers</a> as outlined in this document.
 </p>
 
 

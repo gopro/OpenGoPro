@@ -12,6 +12,34 @@ import typing_extensions
 
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
+class _EnumDeprecated:
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: typing_extensions.TypeAlias = ValueType
+
+class _EnumDeprecatedEnumTypeWrapper(
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumDeprecated.ValueType], builtins.type
+):
+    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    DEPRECATED_1: _EnumDeprecated.ValueType
+    DEPRECATED_2: _EnumDeprecated.ValueType
+    DEPRECATED_3: _EnumDeprecated.ValueType
+    DEPRECATED_2_OR_CLOUD: _EnumDeprecated.ValueType
+    DEPRECATED_5: _EnumDeprecated.ValueType
+    DEPRECATED_6: _EnumDeprecated.ValueType
+    DEPRECATED_7: _EnumDeprecated.ValueType
+
+class EnumDeprecated(_EnumDeprecated, metaclass=_EnumDeprecatedEnumTypeWrapper):
+    pass
+
+DEPRECATED_1: EnumDeprecated.ValueType
+DEPRECATED_2: EnumDeprecated.ValueType
+DEPRECATED_3: EnumDeprecated.ValueType
+DEPRECATED_2_OR_CLOUD: EnumDeprecated.ValueType
+DEPRECATED_5: EnumDeprecated.ValueType
+DEPRECATED_6: EnumDeprecated.ValueType
+DEPRECATED_7: EnumDeprecated.ValueType
+global___EnumDeprecated = EnumDeprecated
+
 class _EnumProvisioning:
     ValueType = typing.NewType("ValueType", builtins.int)
     V: typing_extensions.TypeAlias = ValueType
@@ -50,33 +78,22 @@ PROVISIONING_ERROR_NO_INTERNET: EnumProvisioning.ValueType
 PROVISIONING_ERROR_UNSUPPORTED_TYPE: EnumProvisioning.ValueType
 global___EnumProvisioning = EnumProvisioning
 
-class _EnumDeprecated:
-    ValueType = typing.NewType("ValueType", builtins.int)
-    V: typing_extensions.TypeAlias = ValueType
+class NotifProvisioningState(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    PROVISIONING_STATE_FIELD_NUMBER: builtins.int
+    provisioning_state: global___EnumProvisioning.ValueType
 
-class _EnumDeprecatedEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumDeprecated.ValueType], builtins.type
-):
-    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
-    DEPRECATED_1: _EnumDeprecated.ValueType
-    DEPRECATED_2: _EnumDeprecated.ValueType
-    DEPRECATED_3: _EnumDeprecated.ValueType
-    DEPRECATED_4: _EnumDeprecated.ValueType
-    DEPRECATED_5: _EnumDeprecated.ValueType
-    DEPRECATED_6: _EnumDeprecated.ValueType
-    DEPRECATED_7: _EnumDeprecated.ValueType
+    def __init__(
+        self, *, provisioning_state: typing.Optional[global___EnumProvisioning.ValueType] = ...
+    ) -> None: ...
+    def HasField(
+        self, field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"]
+    ) -> builtins.bool: ...
+    def ClearField(
+        self, field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"]
+    ) -> None: ...
 
-class EnumDeprecated(_EnumDeprecated, metaclass=_EnumDeprecatedEnumTypeWrapper):
-    pass
-
-DEPRECATED_1: EnumDeprecated.ValueType
-DEPRECATED_2: EnumDeprecated.ValueType
-DEPRECATED_3: EnumDeprecated.ValueType
-DEPRECATED_4: EnumDeprecated.ValueType
-DEPRECATED_5: EnumDeprecated.ValueType
-DEPRECATED_6: EnumDeprecated.ValueType
-DEPRECATED_7: EnumDeprecated.ValueType
-global___EnumDeprecated = EnumDeprecated
+global___NotifProvisioningState = NotifProvisioningState
 
 class RequestConnectNew(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -201,20 +218,3 @@ class ResponseConnectNew(google.protobuf.message.Message):
     ) -> None: ...
 
 global___ResponseConnectNew = ResponseConnectNew
-
-class NotifProvisioningState(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    PROVISIONING_STATE_FIELD_NUMBER: builtins.int
-    provisioning_state: global___EnumProvisioning.ValueType
-
-    def __init__(
-        self, *, provisioning_state: typing.Optional[global___EnumProvisioning.ValueType] = ...
-    ) -> None: ...
-    def HasField(
-        self, field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"]
-    ) -> builtins.bool: ...
-    def ClearField(
-        self, field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"]
-    ) -> None: ...
-
-global___NotifProvisioningState = NotifProvisioningState

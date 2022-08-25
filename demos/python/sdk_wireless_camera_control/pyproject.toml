@@ -11,7 +11,6 @@ license = "MIT"
 repository = "https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control"
 documentation = "https://gopro.github.io/OpenGoPro/"
 classifiers = [
-    # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
     "Intended Audience :: Developers",
     "Topic :: Communications",
     "License :: OSI Approved :: MIT License",
