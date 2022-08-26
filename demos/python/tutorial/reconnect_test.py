@@ -1,3 +1,6 @@
+# reconnect_test.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Fri Aug 26 23:10:01 UTC 2022
+
 import asyncio
 
 from tutorial_modules import connect_ble
