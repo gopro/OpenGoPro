@@ -129,10 +129,10 @@
               <a href="/OpenGoPro/">Home</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/ble">BLE Specs</a>
+              <a href="/OpenGoPro/ble">BLE Spec</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/http">HTTP Specs</a>
+              <a href="/OpenGoPro/http">HTTP Spec</a>
             </li>
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/tutorials">Tutorials</a>
@@ -405,6 +405,14 @@ to VLC caching. See the Preview Stream tutorial for more information.</p>
 </div>
 </div>
 
+<div class="accordion-container">
+    <button class="accordion">Which cameras are supported by Open GoPro?<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>The answer at a high level is &gt;= Hero 9. However, there are also certain firmware requirements. For a complete
+answer, see the <a href="/OpenGoPro/ble_2_0#supported-cameras">Specification</a>.</p>
+</div>
+</div>
+
 <h2 id="troubleshooting">Troubleshooting</h2>
 
 <p>If you are able to consistently reproduce a problem, please file a bug on <a href="https://github.com/gopro/OpenGoPro/issues">Github Issues</a></p>
@@ -416,6 +424,14 @@ to VLC caching. See the Preview Stream tutorial for more information.</p>
 camera into pairing mode (Connections-&gt;Connect Device-&gt;Quick App). If you have already
 paired, then the camera should be advertising and ready to connect. If it is not advertising, it is possible
 you are already connected to it from a previous session. To be sure, power cycle both the camera and the peer device.</p>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Why am I failing to connect to the cameras Wifi Access Point?<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>On &gt;= Hero 11, try disabling and then re-enabling the camera’s Wifi AP using the
+<a href="/OpenGoPro/ble_2_0#commands">AP Control BLE Command</a></p>
 </div>
 </div>
 
