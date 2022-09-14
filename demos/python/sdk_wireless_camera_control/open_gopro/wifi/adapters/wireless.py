@@ -12,7 +12,7 @@ import tempfile
 from enum import Enum, auto
 from getpass import getpass
 from shutil import which
-from typing import List, Optional, Tuple, Any, Callable
+from typing import Optional, Any, Callable
 
 import wrapt
 from packaging.version import Version
@@ -137,24 +137,24 @@ class Wireless(WifiController):
         """
 
     @pass_through_to_driver
-    def current(self) -> Tuple[Optional[str], SsidState]:
+    def current(self) -> tuple[Optional[str], SsidState]:
         """Return the SSID and state of the current network.
 
         # noqa: DAR202
 
         Returns:
-            Tuple[Optional[str], SsidState]: Tuple of SSID str and state. If SSID is None,
+            tuple[Optional[str], SsidState]: Tuple of SSID str and state. If SSID is None,
             there is no current connection.
         """
 
     @pass_through_to_driver
-    def available_interfaces(self) -> List[str]:
+    def available_interfaces(self) -> list[str]:
         """Return a list of the available Wifi interfaces
 
         # noqa: DAR202
 
         Returns:
-            List[str]: list of available interfaces
+            list[str]: list of available interfaces
         """
 
     @pass_through_to_driver
@@ -280,11 +280,11 @@ class NmcliWireless(WifiController):
         """
         return False
 
-    def current(self) -> Tuple[Optional[str], SsidState]:
+    def current(self) -> tuple[Optional[str], SsidState]:
         """[summary].
 
         Returns:
-            Tuple[Optional[str], SsidState]: [description]
+            tuple[Optional[str], SsidState]: [description]
         """
         # list active connections for all interfaces
         response = cmd(f'{self.sudo} nmcli con status | grep "{self.interface}"')
@@ -297,11 +297,11 @@ class NmcliWireless(WifiController):
         # return none if there was not an active connection
         return (None, SsidState.DISCONNECTED)
 
-    def available_interfaces(self) -> List[str]:
+    def available_interfaces(self) -> list[str]:
         """Return a list of available Wifi Interface strings
 
         Returns:
-            List[str]: list of interfaces
+            list[str]: list of interfaces
         """
         # grab list of interfaces
         response = cmd(f"{self.sudo} nmcli dev")
@@ -348,7 +348,6 @@ class Nmcli0990Wireless(WifiController):
     def __init__(self, password: str, interface: Optional[str] = None) -> None:
         WifiController.__init__(self, interface=interface, password=password)
 
-    # TODO Is this needed?
     def _clean(self, partial: str) -> None:
         """Clean up connections.
 
@@ -410,8 +409,6 @@ class Nmcli0990Wireless(WifiController):
             f'{self.sudo} nmcli dev wifi connect "{ssid}" password "{password}" ifname "{self.interface}"'
         )
 
-        # TODO verify that we're connected (and use timeout)
-
         # parse response
         return not self._error_in_response(response)
 
@@ -423,11 +420,11 @@ class Nmcli0990Wireless(WifiController):
         """
         return False
 
-    def current(self) -> Tuple[Optional[str], SsidState]:
+    def current(self) -> tuple[Optional[str], SsidState]:
         """[summary].
 
         Returns:
-            Tuple[Optional[str], SsidState]: [description]
+            tuple[Optional[str], SsidState]: [description]
         """
         # list active connections for all interfaces
         response = cmd(f'{self.sudo} nmcli con | grep "{self.interface}"')
@@ -440,11 +437,11 @@ class Nmcli0990Wireless(WifiController):
         # return none if there was not an active connection
         return (None, SsidState.DISCONNECTED)
 
-    def available_interfaces(self) -> List[str]:
+    def available_interfaces(self) -> list[str]:
         """Return a list of available Wifi Interface strings
 
         Returns:
-            List[str]: list of interfaces
+            list[str]: list of interfaces
         """
         # grab list of interfaces
         response = cmd(f"{self.sudo} nmcli dev")
@@ -541,11 +538,11 @@ class WpasupplicantWireless(WifiController):
         """
         return False
 
-    def current(self) -> Tuple[Optional[str], SsidState]:
+    def current(self) -> tuple[Optional[str], SsidState]:
         """[summary].
 
         Returns:
-            Tuple[Optional[str], SsidState]: [description]
+            tuple[Optional[str], SsidState]: [description]
         """
         # get interface status
         response = cmd(f'{self.sudo} iwconfig "{self.interface}"')
@@ -562,11 +559,11 @@ class WpasupplicantWireless(WifiController):
         # return none if there was not an active connection
         return (None, SsidState.DISCONNECTED)
 
-    def available_interfaces(self) -> List[str]:
+    def available_interfaces(self) -> list[str]:
         """Return a list of available Wifi Interface strings
 
         Returns:
-            List[str]: list of interfaces
+            list[str]: list of interfaces
         """
         # grab list of interfaces
         response = cmd(f"{self.sudo} iwconfig")
@@ -591,7 +588,7 @@ class WpasupplicantWireless(WifiController):
         return "enabled" in cmd(f"{self.sudo} nmcli r wifi")
 
     def power(self, power: bool) -> bool:
-        """Enable or disbale the Wifi controller
+        """Enable or disable the Wifi controller
 
         Args:
             power (bool): True to enable, False to Disable
@@ -599,7 +596,6 @@ class WpasupplicantWireless(WifiController):
         Returns:
             bool: True if success, False otherwise
         """
-        # TODO
         return False
 
 
@@ -637,7 +633,7 @@ class NetworksetupWireless(WifiController):
             if timeout == 0:
                 return False
 
-        # TODO There is some delay required here, presumably because the network is not ready.
+        # There is some delay required here, presumably because the network is not ready.
         time.sleep(5)
 
         return True
@@ -650,11 +646,11 @@ class NetworksetupWireless(WifiController):
         """
         return False
 
-    def current(self) -> Tuple[Optional[str], SsidState]:
+    def current(self) -> tuple[Optional[str], SsidState]:
         """[summary].
 
         Returns:
-            Tuple[Optional[str], SsidState]: [description]
+            tuple[Optional[str], SsidState]: [description]
         """
         # attempt to get current network
         response = cmd(f"networksetup -getairportnetwork '{self.interface}'")
@@ -665,11 +661,11 @@ class NetworksetupWireless(WifiController):
             return (response.replace("Current Wi-Fi Network: ", "").strip(), SsidState.CONNECTED)
         return (None, SsidState.DISCONNECTED)
 
-    def available_interfaces(self) -> List[str]:
+    def available_interfaces(self) -> list[str]:
         """Return a list of available Wifi Interface strings
 
         Returns:
-            List[str]: list of interfaces
+            list[str]: list of interfaces
         """
         # grab list of interfaces
         response = cmd("networksetup -listallhardwareports")
@@ -818,7 +814,7 @@ class NetshWireless(WifiController):
 
         return bool("completed successfully" in response.lower())
 
-    def current(self) -> Tuple[Optional[str], SsidState]:
+    def current(self) -> tuple[Optional[str], SsidState]:
         """Get the current network SSID and state.
 
         # Here is an example of what we are parsing (i.e. to find FunHouse SSID):
@@ -830,7 +826,7 @@ class NetshWireless(WifiController):
         # SSID                   : FunHouse
 
         Returns:
-            Tuple[Optional[str], SsidState]: Tuple of (ssid, network_state)
+            tuple[Optional[str], SsidState]: Tuple of (ssid, network_state)
         """
 
         class ParseState(Enum):
@@ -865,14 +861,14 @@ class NetshWireless(WifiController):
             state = SsidState.ESTABLISHING
         return (ssid, state)
 
-    def available_interfaces(self) -> List[str]:
+    def available_interfaces(self) -> list[str]:
         """Discover all available interfaces.
 
         # We're parsing, for example, the following line to find "Wi-Fi":
         # Name                   : Wi-Fi
 
         Returns:
-            List[str]: List of interfaces
+            list[str]: List of interfaces
         """
         response = cmd("netsh wlan show interfaces")
         interfaces = []

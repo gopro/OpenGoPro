@@ -12,4 +12,4 @@ Development Lead
 Contributors
 ------------
 
-* Hopefully someone...
+* Ben Freeland <bfreeland@gopro.com>

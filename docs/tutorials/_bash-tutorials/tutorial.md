@@ -15,7 +15,7 @@ After completing this tutorial, you will need to reference it for future develop
 ## Hardware
 
 1. A platform that is [supported by Bluez](http://www.bluez.org/about/)
-1. A GoPro camera that is [supported by Open GoPro]({% link specs/ble.md %}#supported-cameras)
+1. A GoPro camera that is [supported by Open GoPro]({% link specs/ble_versions/ble_2_0.md %}#supported-cameras)
 
 ## Software
 
@@ -357,7 +357,7 @@ It is now no longer necessary to pair on subsequent connections.
 {% tabs notifications %}
 {% tab notifications Enter Gatt Menu %}
 
-As specified in the [Open GoPro Bluetooth API]({% link specs/ble.md %}#sending-and-receiving-messages), we
+As specified in the [Open GoPro Bluetooth API]({% link specs/ble_versions/ble_2_0.md %}#sending-and-receiving-messages), we
 must enable notifications for a given characteristic to receive responses from it. First, let's enter the
 `gatt` submenu:
 
@@ -404,7 +404,7 @@ Now, we need to enable notifications for the relevant characteristic.
 In this demo, we will only be setting the shutter. This command is sent on the "Command Request"
 characteristic and it's responses are received as notifications on the "Command Response"
 characteristic. So we only care about the "Command Response"
-characteristic which [has UUID]({% link specs/ble.md %}#services-and-characteristics)
+characteristic which [has UUID]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics)
 `b5f90073-aa8d-11e3-9046-0002a5d5c51b`.
 
 {% note %}
@@ -454,7 +454,7 @@ be alerted of responses when the characteristic is notified.
 ## Sending Commands
 
 Now that we are are connected, paired, and have enabled notifications, we can send commands.
-The command we will be sending is [Set Shutter]({% link specs/ble.md %}#commands-quick-reference), which at
+The command we will be sending is [Set Shutter]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), which at
 byte level is:
 
 | Command         |        Bytes        |

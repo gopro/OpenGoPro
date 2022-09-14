@@ -280,19 +280,22 @@ Here is an example of registering for and receiving FOV updates:
 
 .. note:: It is probably desirable to have a separate thread to retrieve these updates as the demo examples do.
 
-It is also possible to register / unregister for **all** settings and / or statuses via one API call using the
-following commands:
+It is also possible to register / unregister for **all** settings, statuses, and / or capabilities
+via one API call using the following commands:
 
-- register for all  setting notifications via :meth:`open_gopro.api.ble_commands.BleCommands.register_for_all_settings`
+- register for all setting notifications via :meth:`open_gopro.api.ble_commands.BleCommands.register_for_all_settings`
 - register for all status notifications via :meth:`open_gopro.api.ble_commands.BleCommands.register_for_all_statuses`
-- unregister for all  setting notifications via :meth:`open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings`
+- register for all capability notifications via :meth:`open_gopro.api.ble_commands.BleCommands.register_for_all_capabilities`
+- unregister for all setting notifications via :meth:`open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings`
 - unregister for all status notifications via :meth:`open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses`
+- unregister for all capability notifications via :meth:`open_gopro.api.ble_commands.BleCommands.unregister_for_all_capabilities`
 
 Handling Responses
 ==================
 
 Unless otherwise stated, all commands, settings, and status operations return a `GoProResp`
-(:class:`open_gopro.responses.GoProResp`) which is a JSON serializable dict with some helper functions.
+(:class:`open_gopro.responses.GoProResp`) which is a container around a JSON serializable dict with some helper
+functions.
 
 Response Structure
 ------------------

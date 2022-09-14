@@ -11,13 +11,12 @@ import pytest
 
 from open_gopro.wifi.adapters.wireless import Wireless, SsidState
 
-# TODO add others
 operating_systems = ["windows"]
 
 OS_TYPE = Literal["windows"]
 
 SSID = "GP24500456"
-PASSWORD = "bkF-wvn-6PR"
+PASSWORD = "TEST_PASSWORD"
 
 
 class InterfaceState(Enum):

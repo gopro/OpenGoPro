@@ -3,39 +3,38 @@
 
 """Nox sessions."""
 
-from pathlib import Path
-from typing import Any
-
 import nox
 from nox_poetry import session
 
 nox.options.sessions = "format", "lint", "tests", "docstrings", "docs"
 
+SUPPORTED_VERSIONS = ["3.9", "3.10"]
 
-@session(python=["3.9"])
+
+@session(python=SUPPORTED_VERSIONS[-1])
 def format(session) -> None:
     """Run black code formatter."""
     session.install("black")
     session.run("black", "--check", "open_gopro", "tests", "noxfile.py", "docs/conf.py")
 
 
-@session(python=["3.8", "3.9", "3.10"])
+@session(python=SUPPORTED_VERSIONS)
 def lint(session) -> None:
     """Lint using pylint and check types with mypy."""
     session.install(".")
     session.install(
         "pylint",
         "mypy",
-        "types-requests",
         "construct-typing",
         "mypy-protobuf",
-        "types-pytz",
+        "types-requests",
+        "types-attrs",
     )
     session.run("mypy", "open_gopro")
     session.run("pylint", "--no-docstring-rgx=__|main|parse_arguments|entrypoint", "open_gopro")
 
 
-@session(python=["3.8", "3.9", "3.10"])
+@session(python=SUPPORTED_VERSIONS)
 def tests(session) -> None:
     """Run the test suite."""
     session.install(".")
@@ -51,7 +50,7 @@ def tests(session) -> None:
     session.run("pytest", "tests/unit", "--cov-fail-under=70")
 
 
-@session(python=["3.9"])
+@session(python=SUPPORTED_VERSIONS[-1])
 def docstrings(session) -> None:
     """Validate docstrings."""
     session.install("darglint")
@@ -60,7 +59,7 @@ def docstrings(session) -> None:
     session.run("darglint", "open_gopro")
 
 
-@session(python=["3.9"])
+@session(python=SUPPORTED_VERSIONS[-1])
 def docs(session) -> None:
     """Build the documentation."""
     session.install(".")
@@ -69,6 +68,7 @@ def docs(session) -> None:
         "sphinx-autodoc-typehints",
         "sphinx-rtd-theme",
         "sphinxcontrib-napoleon",
+        "darglint",
     )
     session.run("sphinx-build", "docs", "docs/build")
     # Clean up for Jekyll consumption

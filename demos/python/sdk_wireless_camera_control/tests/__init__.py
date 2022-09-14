@@ -4,9 +4,7 @@
 # Open GoPro API Versions to test
 versions = ["2.0"]
 
-# Cameras to test. This assumes that a camera with the given name is advertising.
-# TODO make these input parameters to pytest
-cameras = {
-    "HERO9": "GoPro 0456",
-    # "HERO10": "GoPro 0480",
-}
+from open_gopro.api import Api
+
+# The global parser map only gets set when API is instantiated. So ensure this is done.
+Api(None)  # type: ignore

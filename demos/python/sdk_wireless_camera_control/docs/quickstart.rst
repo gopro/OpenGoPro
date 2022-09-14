@@ -98,6 +98,43 @@ For more information, do:
     -p, --password        Set to read sudo password from stdin. If not set, you will be prompted
                             for password if needed
 
+Stream Demos
+------------
+
+The livestream and preview stream demos have been merged into the below GUI
+
+API GUI Demo
+-------------
+
+.. warning::
+    This is a work in progress and some complex responses are not yet easily viewed.
+
+This is a GUI which allows the user to connect a camera and send any command, view status / setting
+updates, view a video stream, and log sent / received messages. It can be started with:
+
+.. code-block:: console
+
+    $ gopro-gui
+
+This will launch a camera chooser screen where the user can either manually enter a camera to connect to
+or automatically connect to the first found camera. Once connected, the GUI will appear. Usages is as follows:
+
+- Choose a command from the Command Pallette on the left
+
+  - Note that besides supporting all of the commands from the Open GoPro API, there is also a "Compound" commands
+    section which contains commands that combine API functionality. One of these, for example, is Livestream
+    which will connect Wifi, configure and start livestreaming.
+- Once chosen, enter the desired parameters in the entry form at the top middle
+- In the same entry form, click the button to send the command
+- The sent command and received response will be logged in the log in the bottom middle as well as any
+  asynchronously received messages.
+- Any log messages with a down arrow can be expanded to view their details
+- Any received statuses, settings, and setting capabilities will be updated in the pane at the top right.
+
+  - The most recently received updates will be highlighted in blue
+- A network stream can be started using the video pane in the bottom right. This will automatically get started
+  after sending the Livestream command
+
 Battery Demo
 ------------
 
@@ -128,30 +165,6 @@ For more information, do:
                             Last 4 digits of GoPro serial number, which is the last 4 digits of the
                             default camera SSID. If not used, first discovered GoPro will be
                             connected to
-
-GUI Stream Demos
-----------------
-
-There are two small GUI to demonstrate live streaming and preview streaming. They can be invoked, respspectively,
-as:
-
-.. code-block:: console
-
-    $ gopro-live-stream
-
-and...
-
-.. code-block:: console
-
-    $ gopro-preview-stream
-
-These GUI's will allow the user to enter stream parameters, connect to the first discovered camera, then start
-the relevant streaming and display the video using `OpenCV <https://pypi.org/project/opencv-python/>`_
-
-.. warning::
-    For the livestream demo, it is assumed that the user has a url of a running RTMP server that they want to
-    live stream to. If not, there is a script to use Docker to start a local server at $INSTALL/tools/start_rtmp_server.sh.
-    Of course this assumes that Docker is installed and on the path.
 
 WiFi Demo
 -----------

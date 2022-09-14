@@ -11,7 +11,7 @@ import uuid
 from pathlib import Path
 from enum import IntFlag, IntEnum
 from dataclasses import dataclass, asdict, InitVar
-from typing import Dict, Iterator, Generator, Mapping, Optional, Tuple, no_type_check, Union, List, Final
+from typing import Iterator, Generator, Mapping, Optional, no_type_check, Union, Final
 
 logger = logging.getLogger(__name__)
 
@@ -157,7 +157,7 @@ class Characteristic:
         uuid (BleUUID) : the BleUUID of the characteristic
         props (CharProps) : the characteristic's properties (READ, WRITE, NOTIFY, etc)
         value (bytes) : the current byte stream value of the characteristic value
-        init_descriptors (Optional[List[Descriptor]]) : Descriptors known at initialization (can also be
+        init_descriptors (Optional[list[Descriptor]]) : Descriptors known at initialization (can also be
             set later using the descriptors property)
         descriptor_handle (Optional[int]) : handle of this characteristic's declaration descriptor. If not
             passed, defaults to handle + 1
@@ -167,11 +167,11 @@ class Characteristic:
     uuid: BleUUID
     props: CharProps
     value: Optional[bytes] = None
-    init_descriptors: InitVar[Optional[List[Descriptor]]] = None
+    init_descriptors: InitVar[Optional[list[Descriptor]]] = None
     descriptor_handle: Optional[int] = None
 
-    def __post_init__(self, init_descriptors: Optional[List[Descriptor]]) -> None:
-        self._descriptors: Dict[BleUUID, Descriptor] = {}
+    def __post_init__(self, init_descriptors: Optional[list[Descriptor]]) -> None:
+        self._descriptors: dict[BleUUID, Descriptor] = {}
         # Mypy should eventually support this: see https://github.com/python/mypy/issues/3004
         self.descriptors = init_descriptors or []  # type: ignore
         if self.descriptor_handle is None:
@@ -181,16 +181,16 @@ class Characteristic:
         return f"{self.name} @ handle {self.handle}: {self.props.name}"
 
     @property
-    def descriptors(self) -> Dict[BleUUID, Descriptor]:
+    def descriptors(self) -> dict[BleUUID, Descriptor]:
         """Return uuid-to-descriptor mapping
 
         Returns:
-            Dict[BleUUID, Descriptor]: dictionary of descriptors indexed by BleUUID
+            dict[BleUUID, Descriptor]: dictionary of descriptors indexed by BleUUID
         """
         return self._descriptors
 
     @descriptors.setter
-    def descriptors(self, descriptors: List[Descriptor]) -> None:
+    def descriptors(self, descriptors: list[Descriptor]) -> None:
         for descriptor in descriptors:
             self._descriptors[descriptor.uuid] = descriptor
 
@@ -277,17 +277,17 @@ class Service:
         uuid (BleUUID) : the service's BleUUID
         start_handle(int): the attribute handle where the service begins
         end_handle(int): the attribute handle where the service ends. Defaults to 0xFFFF.
-        init_chars (List[Characteristic]) : list of characteristics known at service instantiation. Can be set
+        init_chars (list[Characteristic]) : list of characteristics known at service instantiation. Can be set
             later with the characteristics property
     """
 
     uuid: BleUUID
     start_handle: int
     end_handle: int = 0xFFFF
-    init_chars: InitVar[Optional[List[Characteristic]]] = None
+    init_chars: InitVar[Optional[list[Characteristic]]] = None
 
-    def __post_init__(self, init_characteristics: Optional[List[Characteristic]]) -> None:
-        self._characteristics: Dict[BleUUID, Characteristic] = {}
+    def __post_init__(self, init_characteristics: Optional[list[Characteristic]]) -> None:
+        self._characteristics: dict[BleUUID, Characteristic] = {}
         # Mypy should eventually support this: see https://github.com/python/mypy/issues/3004
         self.characteristics = init_characteristics or []  # type: ignore
 
@@ -295,16 +295,16 @@ class Service:
         return self.name
 
     @property
-    def characteristics(self) -> Dict[BleUUID, Characteristic]:
+    def characteristics(self) -> dict[BleUUID, Characteristic]:
         """Return uuid-to-characteristic mapping
 
         Returns:
-            Dict[BleUUID, Characteristic]: Dict of characteristics indexed by uuid
+            dict[BleUUID, Characteristic]: Dict of characteristics indexed by uuid
         """
         return self._characteristics
 
     @characteristics.setter
-    def characteristics(self, characteristics: List[Characteristic]) -> None:
+    def characteristics(self, characteristics: list[Characteristic]) -> None:
         for characteristic in characteristics:
             self._characteristics[characteristic.uuid] = characteristic
 
@@ -322,7 +322,7 @@ class GattDB:
     """The attribute table to store / look up BLE services, characteristics, and attributes.
 
     Args:
-        init_services (List[Service]): A list of services known at instantiation time. Can be updated later
+        init_services (list[Service]): A list of services known at instantiation time. Can be updated later
             with the services property
     """
 
@@ -386,11 +386,11 @@ class GattDB:
         @no_type_check
         def items(
             self,
-        ) -> Generator[Tuple[BleUUID, Characteristic], None, None]:  # noqa: D102
+        ) -> Generator[tuple[BleUUID, Characteristic], None, None]:  # noqa: D102
             """Generate dict-like items view
 
             Returns:
-                Generator[Tuple[BleUUID, Characteristic], None, None]: items generator
+                Generator[tuple[BleUUID, Characteristic], None, None]: items generator
             """
 
             def iter_items():
@@ -400,24 +400,23 @@ class GattDB:
 
             return iter_items()
 
-    def __init__(self, init_services: List[Service]) -> None:
-        self._services: Dict[BleUUID, Service] = {}
-        # TODO add ServicesView to align with characteristics
+    def __init__(self, init_services: list[Service]) -> None:
+        self._services: dict[BleUUID, Service] = {}
         # Mypy should eventually support this: see https://github.com/python/mypy/issues/3004
         self.services = init_services  # type: ignore
         self.characteristics = self.CharacteristicView(self)
 
     @property
-    def services(self) -> Dict[BleUUID, Service]:
+    def services(self) -> dict[BleUUID, Service]:
         """Return uuid-to-service mapping
 
         Returns:
-            Dict[BleUUID, Service]: Dict of services indexed by uuid
+            dict[BleUUID, Service]: Dict of services indexed by uuid
         """
         return self._services
 
     @services.setter
-    def services(self, services: List[Service]) -> None:
+    def services(self, services: list[Service]) -> None:
         for service in services:
             self._services[service.uuid] = service
 

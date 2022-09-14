@@ -26,8 +26,6 @@ class WifiClient:
         self._controller = controller
         self.ssid: Optional[str]
         self.password: Optional[str]
-        # TODO handle multiple interfaces / devices
-        # self._interface: str
 
     def open(self, ssid: str, password: str, timeout: int = 15, retries: int = 5) -> None:
         """Open the WiFi client resource so that it is ready to send and receive data

@@ -4,20 +4,9 @@
 """Constant numbers shared across the GoPro module. These do not change across Open GoPro Versions"""
 
 from __future__ import annotations
-from enum import Enum, EnumMeta
+from enum import IntEnum, Enum, EnumMeta
 from dataclasses import dataclass
-from typing import (
-    Protocol,
-    Union,
-    Tuple,
-    Iterator,
-    Type,
-    TypeVar,
-    Any,
-    no_type_check,
-    Dict,
-    Final,
-)
+from typing import Protocol, Union, Iterator, TypeVar, Any, no_type_check, Final
 
 import construct
 
@@ -45,23 +34,23 @@ class ProtobufDescriptor(Protocol):
         """
 
     @property
-    def values_by_name(self) -> Dict:
+    def values_by_name(self) -> dict:
         """Get the enum values by name
 
         # noqa: DAR202
 
         Returns:
-            Dict: Dict of enum values mapped by name
+            dict: Dict of enum values mapped by name
         """
 
     @property
-    def values_by_number(self) -> Dict:
+    def values_by_number(self) -> dict:
         """Get the enum values by number
 
         # noqa: DAR202
 
         Returns:
-            Dict: dict of enum numbers mapped by numberf
+            dict: dict of enum numbers mapped by numberf
         """
 
 
@@ -92,7 +81,7 @@ class GoProEnumMeta(EnumMeta):
             f"unsupported operand type(s) for 'in': {type(obj).__qualname__} and {cls.__class__.__qualname__}"
         )
 
-    def __iter__(cls: Type[T]) -> Iterator[T]:
+    def __iter__(cls: type[T]) -> Iterator[T]:
         """Do not return enum values whose name is in the _iter_skip_names list
 
         Returns:
@@ -101,7 +90,7 @@ class GoProEnumMeta(EnumMeta):
         return iter([x[1] for x in cls._member_map_.items() if x[0] not in GoProEnumMeta._iter_skip_names])  # type: ignore
 
 
-class GoProEnum(Enum, metaclass=GoProEnumMeta):
+class GoProEnum(IntEnum, metaclass=GoProEnumMeta):
     """GoPro specific enum to be used for all settings, statuses, and parameters
 
     The names NOT_APPLICABLE and DESCRIPTOR are special as they will not be returned as part of the enum iterator
@@ -118,11 +107,11 @@ class GoProEnum(Enum, metaclass=GoProEnumMeta):
             raise TypeError(f"Unexpected case: proto enum can only be str or int, not {type(other)}")
         return super().__eq__(other)
 
-    def __hash__(self) -> Any:  # pylint: disable=useless-super-delegation
-        return super().__hash__()
+    def __hash__(self) -> Any:
+        return hash(self.name + str(self.value))
 
 
-def enum_factory(proto_enum: ProtobufDescriptor) -> Type[GoProEnum]:
+def enum_factory(proto_enum: ProtobufDescriptor) -> type[GoProEnum]:
     """Dynamically build a GoProEnum from a protobuf enum
 
     Args:
@@ -132,7 +121,7 @@ def enum_factory(proto_enum: ProtobufDescriptor) -> Type[GoProEnum]:
         GoProEnum: generated GoProEnum
     """
     return GoProEnum(  # type: ignore # pylint: disable=too-many-function-args
-        proto_enum.name,
+        proto_enum.name,  # type: ignore
         {
             **dict(
                 zip(
@@ -210,6 +199,7 @@ class CmdId(GoProEnum):
     GET_DATE_TIME_DST = 0x10
     GET_CAMERA_SETTINGS = 0x12
     GET_CAMERA_STATUSES = 0x13
+    GET_CAMERA_CAPABILITIES = 0x32
     SET_WIFI = 0x17
     TAG_HILIGHT = 0x18
     GET_SETTINGS_JSON = 0x3B
@@ -222,25 +212,29 @@ class CmdId(GoProEnum):
     REGISTER_ALL_STATUSES = 0x53
     UNREGISTER_ALL_SETTINGS = 0x72
     UNREGISTER_ALL_STATUSES = 0x73
+    REGISTER_ALL_CAPABILITIES = 0x62
+    UNREGISTER_ALL_CAPABILITIES = 0x82
 
 
 class ActionId(GoProEnum):
     """Action ID's that identify a protobuf command."""
 
-    START_SCAN = 0x02
     REQUEST_WIFI_CONNECT = 0x05
     NOTIF_PROVIS_STATE = 0x0C
     SET_CAMERA_CONTROL = 0x69
     SET_TURBO_MODE = 0x6B
     GET_PRESET_STATUS = 0x72
-    PRESET_MODIFIED_NOTIFICATION = 0x73
+    GET_LIVESTREAM_STATUS = 0x74
     SET_LIVESTREAM_MODE = 0x79
-    # Responses
     REQUEST_WIFI_CONNECT_RSP = 0x85
     SET_CAMERA_CONTROL_RSP = 0xE9
     SET_TURBO_MODE_RSP = 0xEB
     GET_PRESET_STATUS_RSP = 0xF2
+    PRESET_MODIFIED_NOTIFICATION = 0xF3
+    LIVESTREAM_STATUS_RSP = 0xF4
+    LIVESTREAM_STATUS_NOTIF = 0xF5
     SET_LIVESTREAM_MODE_RSP = 0xF9
+    INTERNAL_FF = 0xFF
 
 
 class FeatureId(GoProEnum):
@@ -329,6 +323,8 @@ class SettingId(GoProEnum):
     INTERNAL_147 = 147
     INTERNAL_148 = 148
     INTERNAL_149 = 149
+    VIDEO_HORIZON_LEVELING = 150
+    PHOTO_HORIZON_LEVELING = 151
     INTERNAL_153 = 153
     INTERNAL_154 = 154
     INTERNAL_155 = 155
@@ -347,6 +343,13 @@ class SettingId(GoProEnum):
     INTERNAL_168 = 168
     INTERNAL_169 = 169
     VIDEO_PERFORMANCE_MODE = 173
+    INTERNAL_174 = 174
+    CAMERA_UX_MODE = 175
+    VIDEO_EASY_MODE = 176
+    PHOTO_EASY_MODE = 177
+    WIFI_BAND = 178
+    STAR_TRAIL_LENGTH = 179
+    SYSTEM_VIDEO_MODE = 180
     PROTOBUF_SETTING = 0xF3
     INVALID_FOR_TESTING = 0xFF
 
@@ -409,7 +412,7 @@ class StatusId(GoProEnum):
     NUM_TOTAL_VIDEO = 39
     DEPRECATED_40 = 40
     OTA_STAT = 41
-    DOWNLAD_CANCEL_PEND = 42
+    DOWNLOAD_CANCEL_PEND = 42
     MODE_GROUP = 43
     LOCATE_ACTIVE = 45
     INTERNAL_46 = 46
@@ -446,7 +449,7 @@ class StatusId(GoProEnum):
     CAPTURE_DELAY = 84
     VIDEO_LOW_TEMP = 85
     ORIENTATION = 86
-    THERMAL_MIT_MODE = 87
+    DEPRECATED_87 = 87
     ZOOM_ENCODING = 88
     FLATMODE_ID = 89
     INTERNAL_90 = 90
@@ -476,9 +479,10 @@ class StatusId(GoProEnum):
     CAMERA_CONTROL = 114
     USB_CONNECTED = 115
     CONTROL_OVER_USB = 116
+    TOTAL_SD_SPACE_KB = 117
 
 
-ProducerType = Tuple[QueryCmdId, Union[SettingId, StatusId]]
+ProducerType = tuple[QueryCmdId, Union[SettingId, StatusId]]
 """Types that can be registered for."""
 
 CmdType = Union[CmdId, QueryCmdId, ActionId]

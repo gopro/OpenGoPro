@@ -11,25 +11,16 @@ import pytest
 import requests_mock
 
 from open_gopro import GoPro
-from open_gopro.communication_client import GoProDataHandler
-from open_gopro.api import Api
 from open_gopro.constants import ActionId, CmdId, GoProUUIDs, QueryCmdId, SettingId, StatusId
 from open_gopro.responses import GoProResp, ParserMapType
-from open_gopro.api import Api
-
-
-@pytest.fixture(scope="function")
-def parser_map() -> ParserMapType:
-    responder = GoProDataHandler()
-    Api(responder, responder)
-    yield responder._parser_map
+from open_gopro.api.wifi_commands import WifiParsers
 
 
 test_push_receive_no_parameter = bytearray([0x08, 0xA2, 0x00, 0x02, 0x00, 0x03, 0x00, 0x79, 0x00])
 
 
-def test_push_response_no_parameter_values(parser_map: ParserMapType):
-    r = GoProResp(parser_map, [GoProUUIDs.CQ_QUERY_RESP])
+def test_push_response_no_parameter_values():
+    r = GoProResp([GoProUUIDs.CQ_QUERY_RESP])
     r._accumulate(test_push_receive_no_parameter)
     assert r.is_received
     r._parse()
@@ -46,8 +37,8 @@ def test_push_response_no_parameter_values(parser_map: ParserMapType):
 test_read_receive = bytearray([0x64, 0x62, 0x32, 0x2D, 0x73, 0x58, 0x56, 0x2D, 0x66, 0x62, 0x38])
 
 
-def test_read_command(parser_map: ParserMapType):
-    r = GoProResp._from_read_response(parser_map, GoProUUIDs.WAP_PASSWORD, test_read_receive)
+def test_read_command():
+    r = GoProResp._from_read_response(GoProUUIDs.WAP_PASSWORD, test_read_receive)
     assert r.is_parsed
     assert r.is_received
     assert r.is_received
@@ -64,10 +55,8 @@ test_write_send = bytearray([0x05])  ## Sleep
 test_write_recieve = bytearray([0x02, 0x05, 0x00])
 
 
-def test_write_command(parser_map: ParserMapType):
-    identifier = GoProResp.get_id_from_request(test_write_send, GoProUUIDs.CQ_COMMAND)
-    assert identifier is CmdId.SLEEP
-    r = GoProResp(parser_map, [GoProUUIDs.CQ_COMMAND_RESP, identifier])
+def test_write_command():
+    r = GoProResp([GoProUUIDs.CQ_COMMAND_RESP, CmdId.SLEEP])
     r._accumulate(test_write_recieve)
     assert r.is_received
     r._parse()
@@ -473,10 +462,8 @@ test_complex_write_receive = bytes(
 )
 
 
-def test_complex_write_command(parser_map: ParserMapType):
-    identifier = GoProResp.get_id_from_request(test_complex_write_send, GoProUUIDs.CQ_QUERY)
-    assert identifier is QueryCmdId.GET_STATUS_VAL
-    r = GoProResp(parser_map, [GoProUUIDs.CQ_QUERY_RESP, identifier])
+def test_complex_write_command():
+    r = GoProResp([GoProUUIDs.CQ_QUERY_RESP, CmdId.GET_CAMERA_STATUSES])
     idx = 0
     while not r.is_received:
         end = len(test_complex_write_receive) if idx + 20 > len(test_complex_write_receive) else idx + 20
@@ -635,7 +622,7 @@ test_json = {
         "86": 0,
         "87": 40,
         "88": 64,
-        "91": 2,
+        "91": 3,
         "102": 8,
         "103": 3,
         "105": 0,
@@ -648,13 +635,13 @@ test_json = {
         "117": 0,
         "118": 4,
         "121": 0,
-        "122": 22,
-        "123": 22,
+        "122": 19,
+        "123": 19,
         "124": 100,
         "125": 0,
         "126": 0,
-        "128": 12,
-        "129": 2,
+        "128": 13,
+        "129": 13,
         "130": 1,
         "131": 3,
         "132": 12,
@@ -686,13 +673,13 @@ test_json = {
 }
 
 
-def test_http_response_with_extra_parsing(parser_map: ParserMapType):
+def test_http_response_with_extra_parsing():
     url = "gopro/camera/state"
     url = GoPro._base_url + url
     with requests_mock.Mocker() as m:
         m.get(url, json=test_json)
         response = requests.get(url)
-        r = GoProResp._from_http_response(parser_map, response)
+        r = GoProResp._from_http_response(WifiParsers.CameraStateParser, response)
 
         assert r.is_parsed
         assert r.is_received
@@ -704,15 +691,12 @@ def test_http_response_with_extra_parsing(parser_map: ParserMapType):
         assert r.endpoint
 
 
-send_proto = bytearray(b"\xf1k\x08\x01")
-receive_proto = bytearray(b"\x04\xf1\xeb\x08\x01")
+receive_proto = bytes([0x0D, 0xF5, 0xFF, 0x28, 0x07, 0x30, 0x01, 0x38, 0x03, 0x40, 0x00, 0x80, 0x01, 0x01])
 
 
-def test_proto(parser_map: ParserMapType):
-    identifier = GoProResp.get_id_from_request(send_proto, GoProUUIDs.CQ_COMMAND)
-    assert identifier is ActionId.SET_TURBO_MODE
-    r = GoProResp(parser_map, [GoProUUIDs.CQ_COMMAND_RESP, identifier])
+def test_proto():
 
+    r = GoProResp([GoProUUIDs.CQ_QUERY_RESP])
     r._accumulate(receive_proto)
     assert r.is_received
     r._parse()

@@ -14,9 +14,9 @@ import pytest
 import requests
 import requests_mock
 
-from open_gopro.gopro import GoPro
+from open_gopro.gopro import GoPro, Params, GoProResp
 from open_gopro.exceptions import InvalidConfiguration, ResponseTimeout
-from open_gopro.constants import CmdId, GoProUUIDs, StatusId
+from open_gopro.constants import StatusId, SettingId
 
 
 ready = False
@@ -37,10 +37,6 @@ def test_ble_threads_start(gopro_client_maintain_ble: GoPro):
     gopro_client_maintain_ble._notification_handler(0xFF, not_busy)
     assert not gopro_client_maintain_ble.is_busy
     assert not gopro_client_maintain_ble.is_encoding
-    set_shutter = bytearray([0x02, 0x01, 0x00])
-    assert gopro_client_maintain_ble._write_characteristic_receive_notification(
-        GoProUUIDs.CQ_COMMAND, set_shutter, None
-    ).is_ok
 
 
 def test_gopro_is_instanciated(gopro_client: GoPro):
@@ -116,8 +112,13 @@ def test_keep_alive(gopro_client: GoPro):
     assert gopro_client.keep_alive()
 
 
+def test_get_param_values_by_id(gopro_client: GoPro):
+    vector = list(Params.Resolution)[0]
+    assert GoProResp._get_setting_possibilities(SettingId.RESOLUTION)(vector.value) == vector
+
+
 # def test_notification_handler(gopro_client: GoPro):
-#     response = gopro_client._write_characteristic_receive_notification(
+#     response = gopro_client._send_ble_command(
 #         GoProUUIDs.CQ_COMMAND,
 #         bytearray([0x03, 0x01, 0x01, 0x01]),
 #         response_data=[bytearray([0x02, 0x01, 0x00])],

@@ -58,7 +58,7 @@ Ready to contribute? Here's how to set up Open GoPro for local development.
 Requirements
 ~~~~~~~~~~~~
 
-* Python (3.8 or higher)
+* Python (3.9 or higher)
 * `Poetry <https://python-poetry.org/docs/#installation>`_ : Needed to install dependencies / development tasks
 
 Steps

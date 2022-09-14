@@ -6,7 +6,7 @@
 import logging
 from abc import ABC, abstractmethod
 from enum import IntEnum, auto
-from typing import Optional, List, Tuple
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -57,21 +57,21 @@ class WifiController(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def current(self) -> Tuple[Optional[str], SsidState]:
+    def current(self) -> tuple[Optional[str], SsidState]:
         """Return the SSID and state of the current network.
 
         Returns:
-            Tuple[Optional[str], SsidState]: Tuple of SSID str and state. If SSID is None,
+            tuple[Optional[str], SsidState]: Tuple of SSID str and state. If SSID is None,
             there is no current connection.
         """
         raise NotImplementedError
 
     @abstractmethod
-    def available_interfaces(self) -> List[str]:
+    def available_interfaces(self) -> list[str]:
         """Return a list of available Wifi Interface strings
 
         Returns:
-            List[str]: list of interfaces
+            list[str]: list of interfaces
         """
         raise NotImplementedError
 
@@ -109,7 +109,9 @@ class WifiController(ABC):
             if detected_interfaces:
                 self._interface = detected_interfaces[0]
             else:
-                raise Exception("Can't auto-assign interface. None found.")
+                raise Exception(
+                    "Can't auto-assign Wifi interface: no interfaces found. Please configure manually."
+                )
 
     @abstractmethod
     def power(self, power: bool) -> bool:

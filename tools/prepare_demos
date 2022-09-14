@@ -26,9 +26,9 @@ EOF
 quoteRe() { sed -e 's/[^^]/[&]/g; s/\^/\\^/g; $!a\'$'\n''\\n' <<<"$1" | tr -d '\n'; }
 
 main() {
-    # Clean the target directory, then move all .md's into it (except for the top level)
+    # Clean the target directory, then move all README.md's into it (except for the top level)
     rm -rf docs/tutorials/_demos && mkdir -p docs/tutorials/_demos
-    for i in $(find demos/**/* -name '*.md' -not -path *venv*); do
+    for i in $(find demos/**/* -iname 'README.md' -not -path *venv*); do
         mkdir -p docs/tutorials/$(dirname $i)
         cp $i docs/tutorials/$(dirname $i)
     done

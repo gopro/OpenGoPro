@@ -99,7 +99,7 @@ def test_service(service: Service):
 
 def test_characteristic_view(gatt_db: GattDB):
     # Get all attributes by nested looping through services
-    chars: List[Characteristic] = []
+    chars: list[Characteristic] = []
     for service in gatt_db.services.values():
         for char in service.characteristics.values():
             chars.append(char)

@@ -3,22 +3,23 @@
 
 from construct import Int32ub
 
-from open_gopro.communication_client import GoProBle
+from open_gopro.interface import GoProBle
 from open_gopro.constants import SettingId, StatusId, GoProUUIDs, CmdId, QueryCmdId
 from open_gopro import proto, Params
 from open_gopro.responses import GoProResp
+from tests.conftest import BleCommunicatorTest
 
 
 def test_write_command_correct_uuid_cmd_id(ble_communicator: GoProBle):
-    response = ble_communicator.ble_command.set_shutter(Params.Shutter.ON)
+    response = ble_communicator.ble_command.set_shutter(Params.Toggle.ENABLE)
     assert response.uuid == GoProUUIDs.CQ_COMMAND
     assert response._raw_packet[0] == CmdId.SET_SHUTTER.value
 
 
 def test_write_command_correct_parameter_data(ble_communicator: GoProBle):
-    response = ble_communicator.ble_command.load_preset(Params.Preset.TIME_LAPSE)
+    response = ble_communicator.ble_command.load_preset(5)
     assert response.uuid == GoProUUIDs.CQ_COMMAND
-    assert Int32ub.parse(response._raw_packet[-4:]) == Params.Preset.TIME_LAPSE.value
+    assert Int32ub.parse(response._raw_packet[-4:]) == 5
 
 
 def test_read_command_correct_uuid(ble_communicator: GoProBle):
@@ -106,13 +107,39 @@ def test_proto_command_arg(ble_communicator: GoProBle):
     str(out)
 
 
-# def test_proto_command_kwargs(ble_communicator: GoProBle):
-#     response = ble_communicator.ble_command.get_preset_status(
-#         register_preset_status=[
-#             Params.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET,
-#             Params.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY,
-#         ],
-#         unregister_preset_status=[Params.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET],
-#     )
-#     assert response.uuid == GoProUUIDs.CQ_COMMAND
-#     assert data == b"\t\xf5\x02\n\x02\x01\x02\x12\x01\x01"
+def test_commands_iteration(ble_communicator: BleCommunicatorTest):
+    for commands in [
+        ble_communicator._api.ble_command,
+        ble_communicator._api.ble_setting,
+        ble_communicator._api.ble_status,
+        ble_communicator._api.wifi_command,
+        ble_communicator._api.wifi_setting,
+    ]:
+        count = 0
+        for _ in commands:
+            count += 1
+        assert count > 0
+
+
+def test_commands_subscriptable(ble_communicator: BleCommunicatorTest):
+    for commands, identifier in zip(
+        [
+            ble_communicator._api.ble_command,
+            ble_communicator._api.ble_setting,
+            ble_communicator._api.ble_status,
+            # ble_communicator._api.wifi_command,
+            ble_communicator._api.wifi_setting,
+        ],
+        [
+            CmdId,
+            SettingId,
+            StatusId,
+            # CmdId,
+            SettingId,
+        ],
+    ):
+        try:
+            assert commands[list(identifier)[0]]
+        except TypeError:
+            assert True
+            continue

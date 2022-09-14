@@ -4,9 +4,9 @@
 main:
     - title: 'Home'
       url: /
-    - title: 'BLE Specs'
+    - title: 'BLE Spec'
       url: /ble
-    - title: 'HTTP Specs'
+    - title: 'HTTP Spec'
       url: /http
     - title: 'Tutorials'
       url: /tutorials
@@ -34,11 +34,7 @@ python-tutorials:
 ble-specs:
     - title: 'BLE 2.0'
       url: /ble_2_0
-    - title: 'BLE 1.0'
-      url: /ble_1_0
 
 http-specs:
     - title: 'HTTP 2.0'
       url: /http_2_0
-    - title: 'HTTP 1.0'
-      url: /http_1_0

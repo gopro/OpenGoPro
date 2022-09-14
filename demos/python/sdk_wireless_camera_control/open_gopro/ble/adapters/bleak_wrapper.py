@@ -6,7 +6,7 @@
 import asyncio
 import logging
 import threading
-from typing import Pattern, Dict, Any, Callable, Optional, List, Tuple, Union, Type
+from typing import Pattern, Any, Callable, Optional, Union
 
 from bleak import BleakScanner, BleakClient, BleakError
 from bleak.backends.device import BLEDevice as BleakDevice
@@ -135,13 +135,15 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         self._as_coroutine(_async_write)
 
-    def scan(self, token: Pattern, timeout: int = 5, service_uuids: List[BleUUID] = None) -> BleakDevice:
+    def scan(
+        self, token: Pattern, timeout: int = 5, service_uuids: Optional[list[BleUUID]] = None
+    ) -> BleakDevice:
         """Scan for a regex in advertising data strings, optionally filtering on service BleUUID's
 
         Args:
             token (Pattern): Regex to look for when scanning.
             timeout (int): Time to scan. Defaults to 5.
-            service_uuids (List[BleUUID], Optional): The list of BleUUID's to filter on. Defaults to None.
+            service_uuids (Optional[list[BleUUID]]): The list of BleUUID's to filter on. Defaults to None.
 
         Returns:
             BleakDevice: The first matched device that was discovered
@@ -149,37 +151,27 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         async def _async_scan() -> BleakDevice:
             logger.info(f"Scanning for {token.pattern} bluetooth devices...")
-            devices: Dict[str, BleakDevice] = {}
+            devices: dict[str, BleakDevice] = {}
             uuids = [] if service_uuids is None else [uuid2bleak_string(uuid) for uuid in service_uuids]
 
             def _scan_callback(device: BleakDevice, _: Any) -> None:
-                """Bleak optional scan callback to receive every scan result.
+                """Only keep devices that have a device name token
 
-                We need this because the GoPro will sometimes only show as a
-                nonconnectable scan response from bleak.
-
-                Also, if the device shows as both the above as well as a connectable advertisement,
-                the latter must be used in order to avoid an exception from CoreBluetooth on Mac.
+                For GoPro, this must be coming from the scan response
 
                 Args:
                     device (BleakDevice): discovered device
                 """
-                # Add to the dict if not unknown
-                if device.name != "Unknown" and device.name is not None:
-                    devices[device.name] = device
+                if (name := device.name) and name not in devices:
+                    devices[name] = device
+                    logger.info(f"\tDiscovered: {device}")
 
             # Now get list of connectable advertisements
-            for device in await BleakScanner(service_uuids=uuids).discover(
+            await BleakScanner(service_uuids=uuids).discover(
                 timeout=timeout, detection_callback=_scan_callback, service_uuids=uuids
-            ):
-                if device.name != "Unknown" and device.name is not None:
-                    devices[device.name] = device
-            for d in devices:
-                logger.info(f"\tDiscovered: {d}")
-
+            )
             # Now look for our matching device(s)
-            matched_devices = [device for name, device in devices.items() if token.match(name)]
-            if len(matched_devices) == 0:
+            if not (matched_devices := [device for name, device in devices.items() if token.match(name)]):
                 raise FailedToFindDevice
             logger.info(f"Found {len(matched_devices)} matching devices.")
             # If there's more than 1, the first one gets lucky.
@@ -223,7 +215,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                 # connection request. This is (potentially) normal BLE behavior.
                 self.disconnected.set()
 
-        async def _async_connect() -> Tuple[Optional[BleakClient], Optional[Union[Exception, BaseException]]]:
+        async def _async_connect() -> tuple[Optional[BleakClient], Optional[Union[Exception, BaseException]]]:
             logger.info(f"Establishing BLE connection to {device}...")
 
             connect_session = ConnectSession()
@@ -249,15 +241,6 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                     exception = Exception("Connection failed during establishment..")
             except (BleakError, asyncio.TimeoutError) as e:
                 exception = e
-
-            # TODO is this needed?
-            # if not exception:
-            #     try:
-            #         assert bleak_client.is_connected
-            #         # Now set the application's desired disconnect callback
-            #         bleak_client._disconnected_callback = disconnect_cb
-            #     except AssertionError:
-            #         exception = Exception("Something happened during discovery")
 
             bleak_client.set_disconnected_callback(disconnect_cb)
             return bleak_client, exception
@@ -309,7 +292,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         self._as_coroutine(_async_enable_notifications)
 
-    def discover_chars(self, handle: BleakClient, uuids: Type[UUIDs] = None) -> GattDB:
+    def discover_chars(self, handle: BleakClient, uuids: type[UUIDs] = None) -> GattDB:
         """Discover all characteristics for a connected handle.
 
         By default, the BLE controller only knows Spec-Defined BleUUID's so any additional BleUUID's should
@@ -317,18 +300,18 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         Args:
             handle (BleakClient): BLE handle to discover for
-            uuids (Type[UUIDs], Optional): Additional BleUUID information to use when building the
+            uuids (type[UUIDs], Optional): Additional BleUUID information to use when building the
                 Gatt Database. Defaults to None.
 
         Returns:
             GattDB: Gatt Database
         """
 
-        def bleak_props_adapter(bleak_props: List[str]) -> CharProps:
+        def bleak_props_adapter(bleak_props: list[str]) -> CharProps:
             """Convert a list of bleak string properties into a CharProps
 
             Args:
-                bleak_props (List[str]): bleak strings to convert
+                bleak_props (list[str]): bleak strings to convert
 
             Returns:
                 CharProps: converted Enum
@@ -340,7 +323,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         async def _async_discover_chars() -> GattDB:
             logger.info("Discovering characteristics...")
-            services: List[Service] = []
+            services: list[Service] = []
             for service in handle.services:
                 service_uuid = (
                     uuids[service.uuid]
@@ -350,10 +333,10 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                 logger.debug(f"[Service] {service_uuid}")
 
                 # Loop over all chars in service
-                chars: List[Characteristic] = []
+                chars: list[Characteristic] = []
                 for char in service.characteristics:
                     # Get any descriptors if they exist
-                    descriptors: List[Descriptor] = []
+                    descriptors: list[Descriptor] = []
                     for descriptor in char.descriptors:
                         descriptors.append(
                             Descriptor(
@@ -367,7 +350,6 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                             )
                         )
                     # Create new characteristic
-                    # TODO add option or other method to read values also.
                     chars.append(
                         Characteristic(
                             handle=char.handle,

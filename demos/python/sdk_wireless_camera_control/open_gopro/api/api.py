@@ -5,7 +5,7 @@
 
 from typing import Final
 
-from open_gopro.communication_client import GoProBle, GoProWifi
+from open_gopro.interface import GoProInterface
 from .ble_commands import BleCommands, BleSettings, BleStatuses, BleAsyncResponses
 from .wifi_commands import WifiCommands, WifiSettings
 
@@ -15,16 +15,16 @@ class Api:
 
     version: Final = "2.0"
 
-    def __init__(self, ble_communicator: GoProBle, wifi_communicator: GoProWifi) -> None:
+    def __init__(self, communicator: GoProInterface) -> None:
         """Constructor
 
         Args:
-            ble_communicator (GoProBle): used to communicate via BLE
-            wifi_communicator (GoProWifi): used to communicate via WiFi
+            communicator (GoProInterface): used to communicate via BLE and Wifi
         """
-        self.ble_command = BleCommands(ble_communicator)
-        self.ble_setting = BleSettings(ble_communicator)
-        self.ble_status = BleStatuses(ble_communicator)
-        BleAsyncResponses.add_parsers(ble_communicator)
-        self.wifi_command = WifiCommands(wifi_communicator)
-        self.wifi_setting = WifiSettings(wifi_communicator)
+        self._communicator = communicator
+        self.ble_command = BleCommands(communicator)
+        self.ble_setting = BleSettings(communicator)
+        self.ble_status = BleStatuses(communicator)
+        BleAsyncResponses.add_parsers()
+        self.wifi_command = WifiCommands(communicator)
+        self.wifi_setting = WifiSettings(communicator)

@@ -10,9 +10,8 @@ from typing import Optional
 from rich.console import Console
 
 from open_gopro import GoPro
-from open_gopro.util import setup_logging, set_logging_level, add_cli_args_and_parse
+from open_gopro.util import setup_logging, set_stream_logging_level, add_cli_args_and_parse
 
-logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
 
 
@@ -22,14 +21,12 @@ def parse_arguments() -> argparse.Namespace:
 
 
 def main(args: argparse.Namespace) -> None:
-    global logger
-    logger = setup_logging(logger, args.log)
-
+    setup_logging(__name__, args.log)
     gopro: Optional[GoPro] = None
 
     with GoPro(args.identifier, wifi_interface=args.wifi_interface, sudo_password=args.password) as gopro:
         # Now we only want errors
-        set_logging_level(logger, logging.ERROR)
+        set_stream_logging_level(logging.ERROR)
 
         gopro.wifi_command.set_keep_alive()
 

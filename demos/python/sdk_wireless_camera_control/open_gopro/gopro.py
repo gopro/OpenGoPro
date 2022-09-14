@@ -8,24 +8,25 @@ import time
 import enum
 import queue
 import logging
+import traceback
 import threading
 from queue import Queue
 from pathlib import Path
-from typing import Any, Dict, Final, Optional, Callable, Generic, Pattern
+from typing import Any, Final, Optional, Callable, Pattern
 
 import wrapt
 import requests
 
 import open_gopro.exceptions as GpException
 from open_gopro.exceptions import ExceptionHandler
-from open_gopro.ble import BleUUID, BleDevice
+from open_gopro.ble import BleUUID
 from open_gopro.ble.adapters import BleakWrapperController
 from open_gopro.wifi.adapters import Wireless
-from open_gopro.util import SnapshotQueue, build_log_rx_str
-from open_gopro.responses import GoProResp
-from open_gopro.constants import CmdId, GoProUUIDs, ResponseType, StatusId, QueryCmdId, ProducerType
+from open_gopro.util import SnapshotQueue, Logger
+from open_gopro.responses import GoProResp, ResponseType
+from open_gopro.constants import CmdId, GoProUUIDs, StatusId, QueryCmdId, ProducerType
 from open_gopro.api import Api, BleCommands, BleSettings, BleStatuses, WifiCommands, WifiSettings, Params
-from open_gopro.communication_client import GoProBle, GoProWifi
+from open_gopro.interface import GoProInterface, JsonParser
 
 logger = logging.getLogger(__name__)
 
@@ -92,7 +93,7 @@ def acquire_ready_lock(wrapped: Callable, instance: GoPro, args: Any, kwargs: An
     return ret
 
 
-class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
+class GoPro(GoProInterface):
     """The top-level BLE and Wifi interface to a GoPro device.
 
     See `Open GoPro <https://gopro.github.io/OpenGoPro/python_sdk>`_ for complete documentation.
@@ -122,13 +123,13 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
     It can be used via context manager:
 
     >>> with GoPro() as gopro:
-    >>>     gopro.ble_command.set_shutter(Params.Shutter.ON)
+    >>>     gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
 
     Or without:
 
     >>> gopro = GoPro()
     >>> gopro.open()
-    >>> gopro.ble_command.set_shutter(Params.Shutter.ON)
+    >>> gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
     >>> gopro.close()
 
     Args:
@@ -171,21 +172,19 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         wifi_adapter = kwargs.get("wifi_adapter", Wireless)
 
         # Initialize GoPro Communication Client
-        GoProBle.__init__(
-            self,
-            ble_adapter(self._handle_exception),
-            self._disconnect_handler,
-            self._notification_handler,
-            target,
+        super().__init__(
+            ble_controller=ble_adapter(self._handle_exception),
+            wifi_controller=wifi_adapter(wifi_interface, password=sudo_password) if enable_wifi else None,
+            disconnected_cb=self._disconnect_handler,
+            notification_cb=self._notification_handler,
+            target=target,
         )
-        if enable_wifi:
-            GoProWifi.__init__(self, wifi_adapter(wifi_interface, password=sudo_password))
 
         # We currently only support version 2.0
-        self._api = Api(self, self)
+        self._api = Api(self)
 
         # Current accumulating synchronous responses, indexed by GoProUUIDs. This assumes there can only be one active response per BleUUID
-        self._active_resp: Dict[BleUUID, GoProResp] = {}
+        self._active_resp: dict[BleUUID, GoProResp] = {}
         # Responses that we are waiting for.
         self._sync_resp_wait_q: SnapshotQueue = SnapshotQueue()
         # Synchronous response that has been parsed and are ready for their sender to receive as the response.
@@ -193,7 +192,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
         # For outputting asynchronously received information
         self._out_q: Queue[GoProResp] = Queue()
-        self._listeners: Dict[ProducerType, bool] = {}
+        self._listeners: dict[ProducerType, bool] = {}
 
         # Set up events
         self._ble_disconnect_event = threading.Event()
@@ -288,7 +287,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
     @property
     def version(self) -> float:
-        """The API version does the connected camera supports
+        """The API version that the connected camera supports
 
         Only 2.0 is currently supported
 
@@ -393,7 +392,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         self._close_ble()
 
     @ensure_initialized(Interface.BLE)
-    def get_notification(self, timeout: Optional[float] = None) -> GoProResp:
+    def get_notification(self, timeout: Optional[float] = None) -> Optional[GoProResp]:
         """Get a notification that we received from a registered listener.
 
         If timeout is None, this will block until a notification is received.
@@ -403,9 +402,13 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             timeout (float, Optional): Time to wait for a notification before returning. Defaults to None (wait forever)
 
         Returns:
-            GoProResp: Received notification
+            GoProResp: Received notification if there is one in the queue
+            None otherwise
         """
-        return self._out_q.get(timeout=timeout)
+        try:
+            return self._out_q.get(timeout=timeout)
+        except queue.Empty:
+            return None
 
     @ensure_initialized(Interface.BLE)
     def keep_alive(self) -> bool:
@@ -431,7 +434,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         """
         return self._threads_waiting == 0
 
-    def _handle_exception(self, source: Any, context: Dict[str, Any]) -> None:
+    def _handle_exception(self, source: Any, context: dict[str, Any]) -> None:
         """Gather exceptions from module threads and send through callback if registered.
 
         Note that this function signature matches asyncio's exception callback requirement.
@@ -443,6 +446,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         # context["message"] will always be there; but context["exception"] may not
         if exception := context.get("exception", False):
             logger.error(f"Received exception {exception} from {source}")
+            logger.error(traceback.format_exc())
             if self._exception_cb:
                 self._exception_cb(exception)
         else:
@@ -588,7 +592,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
         # Add to response dict if not already there
         if uuid not in self._active_resp:
-            self._active_resp[uuid] = GoProResp(self._parser_map, meta=[uuid])
+            self._active_resp[uuid] = GoProResp(meta=[uuid])
 
         self._active_resp[uuid]._accumulate(data)
 
@@ -609,7 +613,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
             # If this wasn't the awaited synchronous response...
             if not response_claimed:
-                logger.info(build_log_rx_str(response, asynchronous=True))
+                logger.info(Logger.build_log_rx_str(response, asynchronous=True))
                 # See if there are any registered responses that need to be enqueued for client consumption
                 for key in list(response.data.keys()):
                     if (response.cmd, key) not in self._listeners and not response.is_protobuf:
@@ -638,26 +642,20 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             raise GpException.ConnectionTerminated("BLE connection terminated unexpectedly.")
         self._ble_disconnect_event.set()
 
-    # TODO refactor to allow use of lock decorator which will require a state table for commands/  responses
     @ensure_initialized(Interface.BLE)
-    def _write_characteristic_receive_notification(
-        self, uuid: BleUUID, data: bytearray, response_id: ResponseType
-    ) -> GoProResp:
-        """Perform a BLE write and wait for a corresponding notification response.
-
-        There should hopefully not be a scenario where this needs to be called directly as it is generally
-        called from the instance's API delegate (i.e. self)
+    def _send_ble_command(self, uuid: BleUUID, data: bytearray, response_id: ResponseType) -> GoProResp:
+        """Write a characteristic and block until its corresponding notification response is received.
 
         Args:
-            uuid (BleUUID): BleUUID to write to
-            data (bytearray): data to write
-            response_id (ResponseType): identifier of expected response. used to find correct parser
+            uuid (BleUUID): characteristic to write to
+            data (bytearray): bytes to write
+            response_id (ResponseType): identifier to claim parsed response in notification handler
 
         Raises:
-            ResponseTimeout: A response was not received in WRITE_TIMEOUT seconds
+            ResponseTimeout: did not receive a response before timing out
 
         Returns:
-            GoProResp: parsed notification response data
+            GoProResp: received response
         """
         assert self._ble
         # Acquire ready lock unless we are initializing or this is a Set Shutter Off command
@@ -667,9 +665,9 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             and self._is_ble_initialized
             and not (data[0] == CmdId.SET_SHUTTER.value and data[-1] == 0)
         ):
-            logger.trace("_write_characteristic_receive_notification acquiring lock")  # type: ignore
+            logger.trace("_send_ble_command acquiring lock")  # type: ignore
             self._ready.acquire()
-            logger.trace("_write_characteristic_receive_notification has lock")  # type: ignore
+            logger.trace("_send_ble_command has lock")  # type: ignore
             have_lock = True
 
         # Store information on the response we are expecting
@@ -695,10 +693,10 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             # Release the lock if we acquired it
             if have_lock:
                 self._ready.release()
-                logger.trace(f"{response_id} released the lock")  # type: ignore
+                logger.trace("command released the lock")  # type: ignore
             # If this was set shutter on, we need to wait to be notified that encoding has started
             if response.cmd is CmdId.SET_SHUTTER and data[-1] == 1:
-                logger.trace("Waiting to receive encoding statred.")  # type: ignore
+                logger.trace("Waiting to receive encoding started.")  # type: ignore
                 self._encoding_started.wait()
 
         return response
@@ -719,7 +717,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         """
         received_data = self._ble.read(uuid)
         logger.debug(f"Reading from {uuid.name}")
-        return GoProResp._from_read_response(self._parser_map, uuid, received_data)
+        return GoProResp._from_read_response(uuid, received_data)
 
     @ensure_initialized(Interface.BLE)
     def _open_wifi(self, timeout: int = 15, retries: int = 5) -> None:
@@ -732,8 +730,15 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
         logger.info("Discovering Wifi AP info and enabling via BLE")
         password = self.ble_command.get_wifi_password().flatten
         ssid = self.ble_command.get_wifi_ssid().flatten
-        self.ble_command.enable_wifi_ap(True)
-        self._wifi.open(ssid, password, timeout, retries)
+        for retry in range(1, retries):
+            try:
+                assert self.ble_command.enable_wifi_ap(True).is_ok
+                self._wifi.open(ssid, password, timeout, 1)
+                break
+            except GpException.ConnectFailed:
+                logger.warning(f"Wifi connection failed. Retrying #{retry}")
+                # In case camera Wifi is in strange disable, reset it
+                assert self.ble_command.enable_wifi_ap(False).is_ok
 
     def _close_wifi(self) -> None:
         """Terminate the Wifi connection."""
@@ -742,7 +747,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
     @ensure_initialized(Interface.WIFI)
     @acquire_ready_lock
-    def _get(self, url: str) -> GoProResp:
+    def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
         """Send an HTTP GET request to an Open GoPro endpoint.
 
         There should hopefully not be a scenario where this needs to be called directly as it is generally
@@ -750,6 +755,8 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
         Args:
             url (str): endpoint URL
+            parser (Optional[JsonParser]): Optional parser to further parse received JSON dict. Defaults to
+                None.
 
         Raises:
             GoProNotInitialized: WiFi is not currently connected
@@ -769,13 +776,13 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
             try:
                 request = requests.get(url, timeout=GET_TIMEOUT)
                 request.raise_for_status()
-                response = GoProResp._from_http_response(self._parser_map, request)
+                response = GoProResp._from_http_response(parser, request)
                 break
             except requests.exceptions.HTTPError as e:
                 # The camera responded with an error. Break since we successfully sent the command and attempt
                 # to continue
                 logger.warning(e)
-                response = GoProResp._from_http_response(self._parser_map, e.response)
+                response = GoProResp._from_http_response(parser, e.response)
                 break
             except requests.exceptions.ConnectionError as e:
                 logger.warning(repr(e))
@@ -802,7 +809,7 @@ class GoPro(GoProBle, GoProWifi, Generic[BleDevice]):
 
         url = GoPro._base_url + url
         logger.debug(f"Sending: {url}")
-        with requests.get(url, stream=True) as request:
+        with requests.get(url, stream=True, timeout=GET_TIMEOUT) as request:
             request.raise_for_status()
             with open(file, "wb") as f:
                 logger.debug(f"receiving stream to {file}...")

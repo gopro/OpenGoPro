@@ -6,7 +6,7 @@
 import re
 import logging
 from pathlib import Path
-from typing import Generic, Optional, Union, Pattern, Type, Tuple, List
+from typing import Generic, Optional, Union, Pattern
 
 from open_gopro.ble import BleUUID
 from open_gopro.exceptions import FailedToFindDevice, ConnectFailed
@@ -30,8 +30,8 @@ class BleClient(Generic[BleHandle, BleDevice]):
         controller: BLEController,
         disconnected_cb: DisconnectHandlerType,
         notification_cb: NotiHandlerType,
-        target: Tuple[Union[Pattern, BleDevice], Optional[List[BleUUID]]],
-        uuids: Optional[Type[UUIDs]] = None,
+        target: tuple[Union[Pattern, BleDevice], Optional[list[BleUUID]]],
+        uuids: Optional[type[UUIDs]] = None,
     ) -> None:
         """Constructor
 
@@ -39,10 +39,10 @@ class BleClient(Generic[BleHandle, BleDevice]):
             controller (BLEController): controller implementation to use for this client
             disconnected_cb (DisconnectHandlerType): disconnected callback
             notification_cb (NotiHandlerType): notification callback
-            target (Tuple[Union[Pattern, BleDevice], Optional[List[BleUUID]]]): Tuple of (device, service_uuids)
+            target (tuple[Union[Pattern, BleDevice], Optional[list[BleUUID]]]): Tuple of (device, service_uuids)
                 where device is the BleDevice (or regex) to connect to and service_uuids is a list of
                 service uuid's to filter for
-            uuids (Type[UUIDs], Optional): Additional UUIDs that will be used when discovering characteristic.
+            uuids (type[UUIDs], Optional): Additional UUIDs that will be used when discovering characteristic.
                 Defaults to None in which case any unknown UUIDs will be set to "unknown".
 
         Raises:
@@ -54,7 +54,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
             self._target = re.compile(target[0])
         else:
             self._target = target[0]  # type: ignore
-        self._service_uuids: List[BleUUID] = target[1] or []
+        self._service_uuids: list[BleUUID] = target[1] or []
         self._controller = controller
         self._disconnected_cb = disconnected_cb
         self._notification_cb = notification_cb

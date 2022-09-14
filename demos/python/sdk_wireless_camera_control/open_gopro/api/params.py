@@ -6,8 +6,6 @@
 """Parameter definitions for GoPro BLE and WiFi commands for Open GoPro version 2.0"""
 
 from __future__ import annotations
-from datetime import datetime
-from typing import no_type_check
 
 from open_gopro.constants import GoProEnum
 
@@ -16,6 +14,18 @@ import open_gopro.proto.live_streaming_pb2
 import open_gopro.proto.network_management_pb2
 import open_gopro.proto.request_get_preset_status_pb2
 import open_gopro.proto.set_camera_control_status_pb2
+
+
+class LiveStreamStatus(GoProEnum):
+    IDLE = open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_IDLE
+    CONFIG = open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_CONFIG
+    READY = open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_READY
+    STREAMING = open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_STREAMING
+    STAY_ON_COMPLETE = (
+        open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_COMPLETE_STAY_ON
+    )
+    STAY_ON_FAILED = open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_FAILED_STAY_ON
+    RECONNECTING = open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_RECONNECTING
 
 
 class LensType(GoProEnum):
@@ -62,6 +72,14 @@ class RegisterPreset(GoProEnum):
     )
 
 
+class RegisterLiveStream(GoProEnum):
+    MODE = open_gopro.proto.live_streaming_pb2.EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_MODE
+    ERROR = open_gopro.proto.live_streaming_pb2.EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_ERROR
+    STATUS = (
+        open_gopro.proto.live_streaming_pb2.EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_STATUS
+    )
+
+
 class CameraControlStatus(GoProEnum):
     IDLE = open_gopro.proto.set_camera_control_status_pb2.EnumCameraControlStatus.CAMERA_IDLE
     CONTROL = open_gopro.proto.set_camera_control_status_pb2.EnumCameraControlStatus.CAMERA_CONTROL
@@ -70,37 +88,8 @@ class CameraControlStatus(GoProEnum):
     )
 
 
-class Shutter(GoProEnum):
-    ON = 1
-    OFF = 0
-
-
-class Preset(GoProEnum):
-    STANDARD = 0x00000000
-    ACTIVITY = 0x00000001
-    CINEMATIC = 0x00000002
-    ULTRA_SLOMO = 0x00000004
-    BASIC = 0x00000005
-    PHOTO = 0x00010000
-    LIVE_BURST = 0x00010001
-    BURST_PHOTO = 0x00010002
-    NIGHT_PHOTO = 0x00010003
-    TIME_WARP = 0x00020000
-    TIME_LAPSE = 0x00020001
-    NIGHT_LAPSE = 0x00020002
-    MAX_VIDEO = 0x00030000
-    MAX_PHOTO = 0x00040000
-    MAX_TIMEWARP = 0x00050000
-    STANDARD_EB = 0x00080000
-    ACTIVITY_EB = 0x00080001
-    CINEMATIC_EB = 0x00080002
-    SLOMO_EB = 0x00080003
-    TRIPOD_4K = 0x00090000
-    TRIPOD_5_3K = 0x00090001
-
-
 class PresetGroup(GoProEnum):
-    VIDE0 = 1000
+    VIDEO = 1000
     PHOTO = 1001
     TIMELAPSE = 1002
 
@@ -115,6 +104,9 @@ class Resolution(GoProEnum):
     RES_4K_4_3 = 18
     RES_5K = 24
     RES_5_K_4_3 = 25
+    RES_5_3_K_8_7 = 26
+    RES_5_3_K_4_3 = 27
+    RES_4_K_8_7 = 28
     RES_5_3_K = 100
 
 
@@ -148,15 +140,19 @@ class VideoFOV(GoProEnum):
     SUPERVIEW = 3
     LINEAR = 4
     MAX_SUPERVIEW = 7
-    LINEAR_HORIZON = 8
+    LINEAR_HORIZON_LEVELING = 8
+    HYPERVIEW = 9
+    LINEAR_HORIZON_LOCK = 10
 
 
 class PhotoFOV(GoProEnum):
     NOT_APPLICABLE = 0
+    HYPERVIEW = 9
+    NARROW = 19
     WIDE = 101
     LINEAR = 102
-    NARROW = 19
     MAX_SUPERVIEW = 100
+    LINEAR_HORIZON = 121
 
 
 class MultishotFOV(GoProEnum):
@@ -164,9 +160,11 @@ class MultishotFOV(GoProEnum):
     NARROW = 19
     MAX_SUPERVIEW = 100
     WIDE = 101
+    LINEAR = 102
 
 
 class LED(GoProEnum):
+    LED_2 = 2
     ALL_ON = 3
     ALL_OFF = 4
     FRONT_OFF_ONLY = 5
@@ -314,6 +312,7 @@ class HypersmoothMode(GoProEnum):
     UNKNOWN = 1
     HIGH = 2
     BOOST = 3
+    AUTO_BOOST = 4
     STANDARD = 100
 
 
@@ -341,30 +340,47 @@ class AntiFlicker(GoProEnum):
     HZ_50 = 3
 
 
-class DstDateTime(datetime):
-    """A daylight-savings-time aware subclass of datetime"""
+class CameraUxMode(GoProEnum):
+    EASY = 0
+    PRO = 1
 
-    @no_type_check
-    def __new__(cls, *args, **kwargs) -> DstDateTime:  # noqa
-        is_dst = kwargs.pop("is_dst", False)
-        dt = datetime.__new__(cls, *args, **kwargs)
-        dt._is_dst = is_dst
-        return dt
 
-    @property
-    def is_dst(self) -> bool:
-        """Is DST enabled?
+class HorizonLeveling(GoProEnum):
+    OFF = 0
+    LOCKED = 2
 
-        Returns:
-            bool: True if yes, False otherwise
-        """
-        return self._is_dst
 
-    @is_dst.setter
-    def is_dst(self, dst: bool) -> None:
-        """Set DST enabled (or not)
+class Speed(GoProEnum):
+    ULTRA_SLO_MO_8X = 0
+    SUPER_SLO_MO_4X = 1
+    SLO_MO_2X = 2
+    LOW_LIGHT_1X = 3
+    SUPER_SLO_MO_4X_EXT_BATT = 4
+    SLO_MO_2X_EXT_BATT = 5
+    LOW_LIGHT_1X_EXT_BATT = 6
+    ULTRA_SLO_MO_8X_50_HZ = 7
+    SUPER_SLO_MO_4X_50_HZ = 8
+    SLO_MO_2X_50_HZ = 9
+    LOW_LIGHT_1X_50_HZ = 10
+    SUPER_SLO_MO_4X_EXT_BATT_50_HZ = 11
+    SLO_MO_2X_EXT_BATT_50_HZ = 12
+    LOW_LIGHT_1X_EXT_BATT_50_HZ = 13
 
-        Args:
-            dst (bool): Is DST enabled?
-        """
-        self._is_dst = dst
+
+class PhotoEasyMode(GoProEnum):
+    OFF = 0
+    ON = 1
+    SUPER_PHOTO = 100
+    NIGHT_PHOTO = 101
+
+
+class StarTrailLength(GoProEnum):
+    NOT_APPLICABLE = 0
+    SHORT = 1
+    LONG = 2
+    MAX = 3
+
+
+class SystemVideoMode(GoProEnum):
+    HIGHEST_QUALITY = 0
+    EXTENDED_BATTERY = 1

@@ -8,13 +8,13 @@ import re
 import asyncio
 import logging
 from pathlib import Path
-from typing import Pattern, Generic, Tuple, Optional, List, Any, Type
-from dataclasses import dataclass
+from typing import Pattern, Generic, Optional, Any
+from dataclasses import dataclass, field
 
 import pytest
 from open_gopro.ble.services import CharProps
 
-from tests import versions, cameras
+from tests import versions
 from open_gopro import GoPro
 from open_gopro.ble import (
     BleClient,
@@ -34,7 +34,7 @@ from open_gopro.wifi import WifiClient, WifiController, SsidState
 from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
 from open_gopro.responses import GoProResp
 from open_gopro.constants import ErrorCode, ProducerType, CmdId, GoProUUIDs, ResponseType
-from open_gopro.communication_client import GoProBle, GoProWifi, GoProDataHandler
+from open_gopro.interface import GoProBle, GoProWifi, GoProDataHandler, BleCommand
 from open_gopro.api import Api, BleCommands, BleSettings, BleStatuses, WifiCommands, WifiSettings, Params
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
 from open_gopro.util import setup_logging, set_logging_level
@@ -52,7 +52,7 @@ logger = logging.getLogger(__name__)
 def configure_logging():
     global logger
     logger = setup_logging(logger)
-    set_logging_level(logger, logging.ERROR)
+    set_logging_level(logging.ERROR)
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -153,7 +153,7 @@ class BleControllerTest(BLEController, Generic[BleHandle, BleDevice]):
     def __init__(self, *args, **kwargs) -> None:
         pass
 
-    def scan(self, token: Pattern, timeout: int, service_uuids: List[BleUUID] = None) -> str:
+    def scan(self, token: Pattern, timeout: int, service_uuids: list[BleUUID] = None) -> str:
         if token == re.compile("device"):
             return "scanned_device"
         raise FailedToFindDevice
@@ -175,7 +175,7 @@ class BleControllerTest(BLEController, Generic[BleHandle, BleDevice]):
     def enable_notifications(self, handle: BleHandle, handler: NotiHandlerType) -> None:
         return
 
-    def discover_chars(self, handle: BleHandle, service_uuids: List[BleUUID] = None) -> GattTable:
+    def discover_chars(self, handle: BleHandle, service_uuids: list[BleUUID] = None) -> GattTable:
         return GattTable()
 
     def disconnect(self, handle: BleHandle) -> None:
@@ -208,7 +208,7 @@ class BleCommunicatorTest(GoProBle):
         super().__init__(
             BleControllerTest(), disconnection_handler, notification_handler, re.compile("target")
         )
-        self._api = api_versions[test_version](self, GoProDataHandler())
+        self._api = api_versions[test_version](self)
 
     def _register_listener(self, _) -> None:
         return True
@@ -219,9 +219,7 @@ class BleCommunicatorTest(GoProBle):
     def get_notification(self, timeout: float) -> int:
         return 1
 
-    def _write_characteristic_receive_notification(
-        self, uuid: BleUUID, data: bytearray, response_id: ResponseType
-    ) -> GoProResp:
+    def _send_ble_command(self, uuid: BleUUID, data: bytearray, response_id: ResponseType) -> GoProResp:
         response = good_response
         response._meta = [uuid]
         response._raw_packet = data
@@ -268,10 +266,10 @@ class WifiControllerTest(WifiController):
     def disconnect(self) -> bool:
         return True
 
-    def current(self) -> Tuple[Optional[str], SsidState]:
+    def current(self) -> tuple[Optional[str], SsidState]:
         return "current_ssid", SsidState.CONNECTED
 
-    def available_interfaces(self) -> List[str]:
+    def available_interfaces(self) -> list[str]:
         return ["interface1", "interface2"]
 
     def power(self, power: bool) -> None:
@@ -287,15 +285,21 @@ async def wifi_client():
     yield test_client
 
 
+@dataclass
+class DummyWifiResponse:
+    url: str
+    _meta: list = field(default_factory=list)
+
+
 class WifiCommunicatorTest(GoProWifi):
     # pylint: disable=signature-differs
 
     def __init__(self, test_version: str):
         super().__init__(WifiControllerTest())
-        self._api = api_versions[test_version](GoProDataHandler(), self)
+        self._api = api_versions[test_version](self)
 
     def _get(self, url: str, _=None):
-        return url
+        return DummyWifiResponse(url)
 
     def _stream_to_file(self, url: str, file: Path):
         return url, file
@@ -335,11 +339,7 @@ class FlattenPatch:
         return self.value
 
 
-good_response = GoProResp(
-    parsers=None,
-    meta=[],
-    status=ErrorCode.SUCCESS,
-)
+good_response = GoProResp(meta=[], status=ErrorCode.SUCCESS)
 
 _test_response_id = CmdId.SET_SHUTTER
 
@@ -373,13 +373,13 @@ class GoProTest(GoPro):
         super()._open_ble(timeout=timeout, retries=retries)
         self._ble._gatt_table.handle2uuid = self._test_return_uuid
 
-    def _write_characteristic_receive_notification(
+    def _send_ble_command(
         self,
         uuid: BleUUID,
         data: bytearray,
-        response_data: List[bytearray] = None,
+        response_id: ResponseType,
+        response_data: list[bytearray] = None,
         response_uuid: BleUUID = None,
-        response_id: Any = None,
     ) -> GoProResp:
         if response_uuid is None:
             return good_response
@@ -389,7 +389,7 @@ class GoProTest(GoPro):
             global _test_response_id
             _test_response_id = response_id
             self._ble.write = self._test_write
-            return super()._write_characteristic_receive_notification(uuid, data, response_id)
+            return super()._send_ble_command(uuid, data, response_id)
 
     def _test_return_version(self) -> FlattenPatch:
         return FlattenPatch(Version(*[int(x) for x in self._test_version.split(".")]))
@@ -445,62 +445,3 @@ class GoProTestMaintainBle(GoPro):
 async def gopro_client_maintain_ble():
     test_client = GoProTestMaintainBle()
     yield test_client
-
-
-##############################################################################################################
-#                                             End-to-end Testing
-##############################################################################################################
-
-
-class BleakWrapperTest(GoProBle):
-    # pylint: disable=signature-differs
-
-    def __init__(self, camera: str) -> None:
-        super().__init__(
-            controller=BleakWrapperController(),
-            disconnected_cb=disconnection_handler,
-            notification_cb=notification_handler,
-            target=re.compile(camera),
-        )
-
-    def _register_listener(self, producer: ProducerType) -> None:
-        return True
-
-    def _unregister_listener(self, producer: ProducerType) -> None:
-        return True
-
-    def get_notification(self, timeout: float) -> int:
-        return 1
-
-    def _write_characteristic_receive_notification(
-        self, uuid: BleUUID, data: bytearray
-    ) -> Tuple[BleUUID, bytearray]:
-        return uuid, data
-
-    def _read_characteristic(self, uuid: BleUUID) -> BleUUID:
-        return uuid
-
-
-@pytest.fixture(scope="module", params=list(cameras.keys()))
-async def gopro_bleak_client(request):
-    yield BleakWrapperTest(cameras[request.param])
-
-
-@pytest.fixture(scope="module", params=list(cameras.keys()))
-async def gopro_ble_no_wifi(request):
-    print(f"\nConnecting to a {request.param} for ble tests...")
-    g = GoPro(target=cameras[request.param], enable_wifi=False)
-    g.open()
-    print("Connected!")
-    yield g
-    g.close()
-
-
-@pytest.fixture(scope="module", params=list(cameras.keys()))
-async def gopro_ble_and_wifi(request):
-    print(f"\nConnecting to a {request.param} for wifi tests...")
-    g = GoPro(target=cameras[request.param])
-    g.open()
-    print("Connected!")
-    yield g
-    g.close()

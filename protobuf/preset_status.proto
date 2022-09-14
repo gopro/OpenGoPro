@@ -1,5 +1,5 @@
 /* preset_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Mon Aug 22 19:59:07 UTC 2022 */
+/* This copyright was auto-generated on Tue Sep 13 00:39:25 UTC 2022 */
 
 /*
 Defines the structure of protobuf message received from camera containing preset status
@@ -29,6 +29,9 @@ enum EnumFlatMode {
     FLAT_MODE_NIGHT_LAPSE_VIDEO = 26;
     FLAT_MODE_SLOMO = 27;
     FLAT_MODE_IDLE = 28;
+    FLAT_MODE_VIDEO_STAR_TRAIL = 29;
+    FLAT_MODE_VIDEO_LIGHT_PAINTING = 30;
+    FLAT_MODE_VIDEO_LIGHT_TRAIL = 31;
 }
 
 
@@ -92,6 +95,10 @@ enum EnumPresetIcon {
     PRESET_ICON_STATIONARY_2 = 65;
     PRESET_ICON_STATIONARY_3 = 66;
     PRESET_ICON_STATIONARY_4 = 67;
+    PRESET_ICON_STAR_TRAIL     = 76;
+    PRESET_ICON_LIGHT_PAINTING = 77;
+    PRESET_ICON_LIGHT_TRAIL    = 78;
+    PRESET_ICON_FULL_FRAME     = 79;
     PRESET_ICON_TIMELAPSE_PHOTO = 1000;
     PRESET_ICON_NIGHTLAPSE_PHOTO = 1001;
 }
@@ -150,6 +157,15 @@ enum EnumPresetTitle {
     PRESET_TITLE_STATIONARY_2 = 65;
     PRESET_TITLE_STATIONARY_3 = 66;
     PRESET_TITLE_STATIONARY_4 = 67;
+    PRESET_TITLE_SIMPLE_VIDEO = 68;
+    PRESET_TITLE_SIMPLE_TIME_WARP = 69;
+    PRESET_TITLE_SIMPLE_SUPER_PHOTO = 70;
+    PRESET_TITLE_SIMPLE_NIGHT_PHOTO = 71;
+    PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE = 72;
+    PRESET_TITLE_STAR_TRAIL      = 76;
+    PRESET_TITLE_LIGHT_PAINTING  = 77;
+    PRESET_TITLE_LIGHT_TRAIL     = 78;
+    PRESET_TITLE_FULL_FRAME      = 79;
 }
 
 

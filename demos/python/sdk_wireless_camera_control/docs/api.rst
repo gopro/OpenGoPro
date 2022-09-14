@@ -36,10 +36,8 @@ API
 These are both the base types that are used to implement the API (BLE Setting, Ble Status, etc.) and the
 version-specific API's themselves.
 
-Since the API is configured (by version) dynamically after a connection is formed, these should not be imported
-directly and instead should be accessed using the relevant properties (`ble_command`, `wifi_setting`, etc.) of a
-GoPro(:class:`open_gopro.gopro.GoPro`) instance. Doing so will ensure that the correct parameters are selected
-and data is sent.
+These should not be imported directly and instead should be accessed using the relevant properties (`ble_command`,
+`wifi_setting`, etc.) of a GoPro(:class:`open_gopro.gopro.GoPro`) instance.
 
 Base Types
 ----------
@@ -51,6 +49,7 @@ BLE Setting
 
 .. autoclass:: open_gopro.api.builders.BleSetting
    :members:
+   :exclude-members: get_name, get_capabilities_names
 
 BLE Status
 ^^^^^^^^^^
@@ -81,6 +80,7 @@ BLE Statuses
 
 .. autoclass:: open_gopro.api.ble_commands.BleStatuses
    :members:
+   :exclude-members: deprecated_40, deprecated_92
 
 WiFi Commands
 -------------

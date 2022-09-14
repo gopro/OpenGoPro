@@ -4,28 +4,24 @@
 """Any responses that are returned from GoPro commands."""
 
 from __future__ import annotations
-import re
 import enum
 import logging
 from collections import defaultdict
 from typing import (
     Any,
-    Dict,
-    Callable,
-    List,
     Optional,
     Union,
     Iterator,
-    Type,
     ItemsView,
     ValuesView,
     KeysView,
     Final,
-    Generator,
+    ClassVar,
+    Protocol,
+    TypeVar,
 )
 
 import requests
-from construct import BitStruct, BitsInteger, Padding, Const, Bit, Construct
 
 from open_gopro.exceptions import ResponseParseError
 from open_gopro.constants import (
@@ -40,32 +36,116 @@ from open_gopro.constants import (
     ResponseType,
     CmdType,
     GoProUUIDs,
-    GOPRO_BASE_UUID,
 )
-from open_gopro.util import scrub, pretty_print
+from open_gopro.util import scrub, jsonify
 from open_gopro.ble import BleUUID
 from open_gopro.proto.response_generic_pb2 import EnumResultGeneric
 
 logger = logging.getLogger(__name__)
-
-BytesParser = Construct
-BytesBuilder = Construct
-BytesParserBuilder = Construct
-StringBuilder = Callable[[Any], str]
-JsonParser = Callable[[Dict[str, Dict[Any, BytesParserBuilder]]], Dict[Any, Any]]
-Parser = Union[BytesParser, JsonParser]
-InputType = Optional[Union[bytearray, Dict[str, Any]]]
-ParserMapType = Dict[ResponseType, Parser]
 
 CONT_MASK: Final = 0b10000000
 HDR_MASK: Final = 0b01100000
 GEN_LEN_MASK: Final = 0b00011111
 EXT_13_BYTE0_MASK: Final = 0b00011111
 
-MAX_BLE_PKT_LEN = 20
+T_co = TypeVar("T_co", covariant=True)
 
-beginning, end = GOPRO_BASE_UUID.replace("-", "").split("{}")
-inverse_uuid_regex: Final = re.compile(f"(?<={beginning}).*(?={end})")
+
+class BytesParser(Protocol[T_co]):
+    """Base bytes parser protocol definition"""
+
+    def parse(self, data: bytes) -> T_co:
+        """Parse byte data into desired object
+
+        # noqa: DAR202
+
+        Args:
+            data (bytes): data to parse
+
+        Returns:
+            T_co: parsed object
+        """
+
+
+class CustomBytesParser(BytesParser[dict]):
+    """Bytes parser protocol to be used by non-construct parsers"""
+
+    def parse(self, data: bytes) -> dict:
+        """Parse byte data into dict
+
+        # noqa: DAR202
+
+        Args:
+            data (bytes): data to parse
+
+        Returns:
+            dict: parsed dict
+        """
+
+
+class BytesBuilder(Protocol):
+    """Base bytes serializer protocol definition"""
+
+    def build(self, obj: Any) -> bytes:
+        """Build bytestream from object
+
+        # noqa: DAR202
+
+        Args:
+            obj (Any): object to serialize
+
+        Returns:
+            bytes: serialized bytestream
+        """
+
+
+class BytesParserBuilder(BytesParser[T_co], BytesBuilder):
+    """Class capable of both building / parsing bytes to / from object"""
+
+    def parse(self, data: bytes) -> T_co:
+        """Parse byte data into dict
+
+        # noqa: DAR202
+
+        Args:
+            data (bytes): data to parse
+
+        Returns:
+            T_co: parsed dict
+        """
+
+    def build(self, obj: Any) -> bytes:
+        """Build bytestream from object
+
+        # noqa: DAR202
+
+        Args:
+            obj (Any): object to serialize
+
+        Returns:
+            bytes: serialized bytestream
+        """
+
+
+class JsonParser(Protocol):
+    """Protocol definition for a JSON parser"""
+
+    @classmethod
+    def parse(cls, json: dict[str, Any]) -> dict:
+        """Parse JSON into a proprietary dict
+
+        # noqa: DAR202
+
+        Args:
+            json (dict[str, Any]): input JSON
+
+        Returns:
+            dict: output parsed dict
+        """
+
+
+ParserType = Union[BytesParser, JsonParser]
+ParserMapType = dict[ResponseType, ParserType]
 
 
 class Header(enum.Enum):
@@ -107,12 +187,15 @@ class GoProResp:
     >>> print(response.data)
     {
         "status": "SUCCESS",
-        "id": "GoProUUIDs.CQ_QUERY_RESP::QueryCmdId.GET_SETTING_VAL",
+        "id": "GoProUUIDs.CQ_QUERY_RESP.QueryCmdId.GET_SETTING_VAL",
         "SettingId.RESOLUTION": [
             "RES_1080"
         ]
     }
     """
+
+    _feature_action_id_map: ClassVar[dict[FeatureId, list[ActionId]]] = defaultdict(list)
+    _global_parsers: ClassVar[ParserMapType] = {}
 
     class _State(enum.Enum):
         """Describes the state of the GoProResp."""
@@ -122,34 +205,42 @@ class GoProResp:
         PARSED = enum.auto()
         ERROR = enum.auto()
 
+    class Protocol(enum.Enum):
+        """Protocol that Command will be sent on."""
+
+        BLE = "BLE"
+        WIFI = "WIFI"
+
     def __init__(
         self,
-        parsers: ParserMapType,
-        meta: List[ResponseType],
+        meta: list[ResponseType],
+        parser: Optional[ParserType] = None,
         status: ErrorCode = ErrorCode.SUCCESS,
-        raw_packet: Optional[InputType] = None,
+        raw_packet: Optional[Union[bytearray, dict[str, Any]]] = None,
     ) -> None:
         """Constructor
 
         Args:
-            parsers (ParserMapType): The map of parsers to be used to build a GoProResp.
-            meta (List[ResponseType]): A list of all information known about the response.
+            meta (list[ResponseType]): A list of all information known about the response.
+            parser (Optional[ParserType]): Optional parser. If not passed, parser will be found from global
+                parsers
             status (ErrorCode): A status if known at time of instantiation. Defaults to ErrorCode.SUCCESS.
-            raw_packet (InputType, Optional): The unparsed input if known at time of instantiation. Defaults to None.
+            raw_packet (Optional[Union[bytearray, dict[str, Any]]]): The unparsed input if known at time of
+                instantiation. Defaults to None.
         """
         # A list describing all of the currently known information about the response.
         # This will be appended to as more information is discovered. The various properties of GoProResp will
         # use this list to parse out their relevant information.
-        self._meta: List[ResponseType] = meta
+        self._meta: list[ResponseType] = meta
         # Parsers to use to parse this response
-        self._parsers = parsers
+        self._parser = parser
 
         self.status: ErrorCode = status
         """Status of the response"""
 
         # Start with empty list as default value in case we need to append.
         # If we end up not needing a list, we will just overwrite the default
-        self.data: Dict[Any, Any] = defaultdict(list)
+        self.data: dict[Any, Any] = defaultdict(list)
         """Response data which is really JSON data stored as a dict"""
 
         self._raw_packet = raw_packet
@@ -157,88 +248,132 @@ class GoProResp:
         self._state: GoProResp._State = GoProResp._State.INITIALIZED
 
     @classmethod
-    def _from_read_response(cls, parsers: ParserMapType, uuid: BleUUID, data: bytearray) -> "GoProResp":
+    def _from_read_response(cls, uuid: BleUUID, data: bytearray) -> GoProResp:
         """Build a GoProResp from a read response.
 
         Args:
-            parsers (ParserMapType): parsers to use to parse received data
             uuid (BleUUID): BleUUID that read command was received from
             data (bytearray): received bytestream
 
         Returns:
             GoProResp: created instance
         """
-        resp = cls(parsers, meta=[uuid], status=ErrorCode.SUCCESS, raw_packet=data)
+        resp = cls(meta=[uuid], status=ErrorCode.SUCCESS, raw_packet=data)
         resp._parse()
         return resp
 
     @classmethod
-    def _from_http_response(cls, parsers: ParserMapType, response: requests.models.Response) -> "GoProResp":
+    def _from_http_response(
+        cls, parser: Optional[JsonParser], response: requests.models.Response
+    ) -> GoProResp:
         """Build a GoProResp from an HTTP response from the requests package.
 
         Args:
-            parsers (ParserMapType): parsers to use to parse received data
+            parser (Optional[JsonParser]): parsers to use to parse received data
             response (requests.models.Response): HTTP response
 
         Returns:
             GoProResp: created instance
         """
         resp = cls(
-            parsers,
-            meta=[response.request.path_url.strip("/")],
+            meta=[response.url],
+            parser=parser,
             status=ErrorCode.SUCCESS if response.ok else ErrorCode.ERROR,
-            raw_packet=response.json(),
+            raw_packet=response.json() if response.text else {},
         )
         resp._parse()
         return resp
 
     @classmethod
-    def _get_response_meta(cls, data: bytes, uuid: BleUUID) -> List[ResponseType]:
+    def _get_response_meta(cls, data: bytes, uuid: BleUUID) -> list[ResponseType]:
         """Get a response's meta information from raw bytes and the UUID it was received on
 
         Args:
             data (bytes): bytes received as BLE notification
             uuid (BleUUID): UUID response was received on
 
-        Raises:
-            ValueError: unable to determine meta
-
         Returns:
-            List[ResponseType]: List of meta information in order from least to most specific
+            list[ResponseType]: List of meta information in order from least to most specific
         """
-        meta: List[ResponseType] = [uuid]
+        meta: list[ResponseType] = [uuid]
 
-        if uuid is GoProUUIDs.CQ_SETTINGS_RESP:
-            meta.append(SettingId(data[0]))
-        elif uuid is GoProUUIDs.CQ_QUERY_RESP:
-            meta.append(QueryCmdId(data[0]))
-        elif uuid in [GoProUUIDs.CQ_COMMAND_RESP, GoProUUIDs.CN_NET_MGMT_RESP]:
-            # It's a protobuf command
-            if (identifier := data[0]) in FeatureId:
-                # Add response action ID mapped from command Action ID
-                meta.append(ActionId(data[1]))
-            # It's a TLV command
-            elif identifier in CmdId:
-                meta.append(CmdId(data[0]))
-            else:
-                raise ValueError(f"Unable to determine response identifier from {identifier}")
-        # Else case is a direct read
+        # If it's a protobuf command
+        identifier = data[0]
+        try:
+            FeatureId(identifier)
+            meta.append(ActionId(data[1]))
+        # Otherwise it's a TLV command
+        except ValueError:
+            if uuid is GoProUUIDs.CQ_SETTINGS_RESP:
+                meta.append(SettingId(identifier))
+            elif uuid is GoProUUIDs.CQ_QUERY_RESP:
+                meta.append(QueryCmdId(identifier))
+            elif uuid in [GoProUUIDs.CQ_COMMAND_RESP, GoProUUIDs.CN_NET_MGMT_RESP]:
+                meta.append(CmdId(identifier))
+            # Else case is direct so the UUID (which is already in meta) is the identifier
         return meta
 
     @classmethod
-    def get_id_from_request(cls, data: bytes, uuid: BleUUID) -> ResponseType:
-        """Get a response identifier from raw response bytes and the UUID the response was received on
+    def _add_feature_action_id_mapping(cls, feature_id: FeatureId, action_id: ActionId) -> None:
+        """Add a feature id-to-action id mapping entry
 
         Args:
-            data (bytes): bytes received as BLE notificatoin
-            uuid (BleUUID): UUID response was received on
+            feature_id (FeatureId): Feature ID of protobuf command
+            action_id (ActionId): Action ID of protobuf command
+        """
+        cls._feature_action_id_map[feature_id].append(action_id)
+
+    @classmethod
+    def _add_global_parser(cls, identifier: ResponseType, parser: BytesParser) -> None:
+        """Add a global parser that can be accessed by this class's class methods
+
+        Args:
+            identifier (ResponseType): identifier to add parser for
+            parser (BytesParser): parser to add
+        """
+        cls._global_parsers[identifier] = parser
+
+    @classmethod
+    def _get_setting_possibilities(cls, identifier: SettingId) -> Optional[type[GoProEnum]]:
+        """Given a setting ID, attempt to get enum container of its possible values.
+
+        For example, get_param_values_from_id(SettingId.Resolution) will return
+        :py:class:`open_gopro.api.params.Resolution`
+
+        Note! Not all setting ID's are currently parsed so None will be returned if the container does not exist
+
+        Note! This is a helper function since this same functionality can be accomplished with the parser
+        returned from :py:meth:`open_gopro.responses.GoProResp._get_global_parser`
+
+        Args:
+            identifier (SettingId): identifier to find container for
+
+        Raises:
+            ValueError: Attempted to get param values from non-param ID
 
         Returns:
-            ResponseType: identifier of response
+            type[GoProEnum]: container if found else None
         """
-        incremented_uuid = int(re.findall(inverse_uuid_regex, uuid.hex)[0]) + 1
-        response_uuid = GoProUUIDs[GOPRO_BASE_UUID.format(f"{incremented_uuid:04d}")]  # type: ignore
-        return cls._get_response_meta(data, response_uuid)[-1]
+        try:
+            return cls._global_parsers[identifier].container  # type: ignore
+        except KeyError:
+            return None
+        except AttributeError as e:
+            raise ValueError(f"Can only get possibilities for setting ID's, not {identifier}") from e
+
+    @classmethod
+    def _get_global_parser(cls, identifier: ResponseType) -> Optional[ParserType]:
+        """Get a globally defined parser for the given ID.
+
+        Currently, only BLE uses globally defined parsers
+
+        Args:
+            identifier (ResponseType): ID to get parser for
+
+        Returns:
+            Optional[Parser]: parser if found, else None
+        """
+        return cls._global_parsers.get(identifier)
 
     def __eq__(self, obj: object) -> bool:
         if isinstance(obj, GoProEnum):
@@ -257,12 +392,25 @@ class GoProResp:
         return iter(self.data)
 
     def __str__(self) -> str:
-        return pretty_print(
-            {"status": self.status.name, "id": "::".join([str(x) for x in self._meta]), **self.data}
-        )
+        return jsonify(self._as_dict())
+
+    def _as_dict(self) -> dict[str, Any]:
+        """Return the response as a dict
+
+        Returns:
+            dict[str, Any]: response as dict
+        """
+        work_dict = dict(id=self.identifier, protocol=self.protocol.name, status=self.status.name)
+        if self.cmd:
+            work_dict["command"] = self.cmd
+        if self.uuid:
+            work_dict["uuid"] = self.uuid
+        if self.endpoint:
+            work_dict["endpoint"] = self.endpoint
+        return {**work_dict, **self.data}
 
     def __repr__(self) -> str:
-        return f"GoProResp <{self.identifier}: {self._state}>"
+        return f"GoProResp <{str(self.identifier)}: {self._state}>"
 
     def items(self) -> ItemsView[Any, Any]:
         """Pass-through to access data dict's "items" method
@@ -287,6 +435,15 @@ class GoProResp:
             ItemsView[Any, Any]: all of data's values
         """
         return self.data.values()
+
+    @property
+    def protocol(self) -> GoProResp.Protocol:
+        """Get the protocol that the response was received on
+
+        Returns:
+            GoProResp.Protocol: protocol
+        """
+        return GoProResp.Protocol.BLE if self.uuid else GoProResp.Protocol.WIFI
 
     @property
     def is_received(self) -> bool:
@@ -453,8 +610,8 @@ class GoProResp:
 
         Raises:
             NotImplementedError: Parsing for this id is not yet supported
-            Exception: Unexpected state
             ResponseParseError: Error when parsing data
+            RuntimeError: unexpected state
         """
         # Is this a BLE response?
         if isinstance(self._raw_packet, bytearray):
@@ -468,29 +625,31 @@ class GoProResp:
                 buf.pop(0)
 
             try:
-                parse_type: Optional[Union[Type[StatusId], Type[SettingId], StatusId, SettingId]] = None
-                # Need to delineate QueryCmd responses between settngs and status
-                if isinstance(self.identifier, (SettingId, StatusId)):
-                    parse_type = self.identifier
-                elif isinstance(self.identifier, QueryCmdId):
-                    if self.identifier in [
-                        QueryCmdId.GET_STATUS_VAL,
-                        QueryCmdId.REG_STATUS_VAL_UPDATE,
-                        QueryCmdId.UNREG_STATUS_VAL_UPDATE,
-                        QueryCmdId.STATUS_VAL_PUSH,
-                    ]:
-                        parse_type = StatusId
-                    elif self.identifier is QueryCmdId.GET_SETTING_NAME:
-                        raise NotImplementedError
-                    else:
-                        parse_type = SettingId
+                query_type: Optional[Union[type[StatusId], type[SettingId], StatusId, SettingId]] = None
+                # Need to delineate QueryCmd responses between settings and status
+                if not self.is_protobuf:
+                    if isinstance(self.identifier, (SettingId, StatusId)):
+                        query_type = self.identifier
+                    elif isinstance(self.identifier, QueryCmdId):
+                        if self.identifier in [
+                            QueryCmdId.GET_STATUS_VAL,
+                            QueryCmdId.REG_STATUS_VAL_UPDATE,
+                            QueryCmdId.UNREG_STATUS_VAL_UPDATE,
+                            QueryCmdId.STATUS_VAL_PUSH,
+                        ]:
+                            query_type = StatusId
+                        elif self.identifier is QueryCmdId.GET_SETTING_NAME:
+                            raise NotImplementedError
+                        else:
+                            query_type = SettingId
 
-                if parse_type:
-                    # Parse all parameters
+                # Query (setting get value, status get value, etc.)
+                if query_type:
                     self.status = ErrorCode(buf[0])
                     buf = buf[1:]
+                    # Parse all parameters
                     while len(buf) != 0:
-                        param_id = parse_type(buf[0])  # type: ignore
+                        param_id = query_type(buf[0])  # type: ignore
                         param_len = buf[1]
                         buf = buf[2:]
                         # Special case where we register for a push notification for something that does not yet
@@ -503,23 +662,22 @@ class GoProResp:
 
                         # Add parsed value to response's data dict
                         try:
+                            if not (parser := self._get_global_parser(param_id)):
+                                # We don't have defined params for all ID's yet. Just store raw bytes
+                                logger.warning(f"No parser defined for {param_id}")
+                                self.data[param_id] = param_val
+                                continue
                             # These can be more than 1 value so use a list
                             if self.cmd in [
                                 QueryCmdId.GET_CAPABILITIES_VAL,
                                 QueryCmdId.REG_CAPABILITIES_UPDATE,
                                 QueryCmdId.SETTING_CAPABILITY_PUSH,
                             ]:
-                                # Parse using parser from map and append
-                                # Mypy can't follow that this parser is guarantted to be a ByteParser
-                                self.data[param_id].append(self._parsers[param_id].parse(param_val))  # type: ignore
+                                # Parse using parser from global map and append
+                                self.data[param_id].append(parser.parse(param_val))  # type: ignore
                             else:
                                 # Parse using parser from map and set
-                                # Mypy can't follow that this parser is guarantted to be a ByteParser
-                                self.data[param_id] = self._parsers[param_id].parse(param_val)  # type: ignore
-                        except KeyError:
-                            # We don't have defined params for all ID's yet. Just store raw bytes
-                            logger.warning(f"No parser defined for {param_id}")
-                            self.data[param_id] = param_val
+                                self.data[param_id] = parser.parse(param_val)  # type: ignore
                         except ValueError:
                             # This is the case where we receive a value that is not defined in our params.
                             # This shouldn't happen and means the documentation needs to be updated. However, it
@@ -527,21 +685,31 @@ class GoProResp:
                             logger.warning(f"{param_id} does not contain a value {param_val}")
                             self.data[param_id] = param_val
                 else:  # Commands,  Protobuf, and direct Reads
-                    # Parse payload
-                    self.data = self._parsers[self.identifier].parse(buf)  # type: ignore
-                    # Attempt to determine and / or extract status
+                    if is_cmd := isinstance(self.identifier, CmdId):
+                        # All (non-protobuf) commands have a status
+                        self.status = ErrorCode(buf[0])
+                        buf = buf[1:]
+                    # Use parser if explicitly passed otherwise get global parser
+                    if not (parser := self._get_global_parser(self.identifier) or self._parser) and not is_cmd:
+                        error_msg = f"No parser exists for {self.identifier}"
+                        logger.error(error_msg)
+                        raise ResponseParseError(str(self.identifier), self._raw_packet, msg=error_msg)
+                    # Parse payload if a parser was found.
+                    if parser:
+                        self.data = parser.parse(buf)  # type: ignore
+                    # Attempt to determine and / or extract status (we already got command status above)
                     if self.is_direct_read and len(self._raw_packet):
                         # Assume success on direct reads if there was any data
                         self.status = ErrorCode.SUCCESS
-                    elif "status" in self.data:  # Check if the response contains a status
-                        self.status = self.data["status"]
-                    elif "result" in self.data:  # Check for result field in protobuf's
+                    elif (
+                        self.is_protobuf and self.data and "result" in self.data
+                    ):  # Check for result field in protobuf's
                         self.status = (
                             ErrorCode.SUCCESS
                             if self.data["result"] == EnumResultGeneric.RESULT_SUCCESS
                             else ErrorCode.ERROR
                         )
-                    else:
+                    elif not is_cmd:
                         self.status = ErrorCode.UNKNOWN
             except KeyError as e:
                 self._state = GoProResp._State.ERROR
@@ -549,11 +717,12 @@ class GoProResp:
 
         # Is this an HTTP response?
         elif isinstance(self._raw_packet, dict):
-            json_data: Dict[str, Any] = self._raw_packet
             # Is there a parser for this? Most of them do not have one yet.
-            self.data = self._parsers[self.identifier](json_data, self._parsers) if self.identifier in self._parsers else json_data  # type: ignore
+            self.data = self._parser.parse(self._raw_packet) if self._parser else self._raw_packet  # type: ignore
+
+        # This should never happen
         else:
-            raise Exception(
+            raise RuntimeError(
                 f"Unexpected data type ({str(type(self._raw_packet))}) when attempting to parse response"
             )
 
@@ -561,93 +730,3 @@ class GoProResp:
         scrub(self.data, "_io")
         scrub(self.data, "status")
         self._state = GoProResp._State.PARSED
-
-
-general_header = BitStruct(
-    "continuation" / Const(0, Bit),
-    "header" / Const(Header.GENERAL.value, BitsInteger(2)),
-    "length" / BitsInteger(5),
-)
-
-extended_13_header = BitStruct(
-    "continuation" / Const(0, Bit),
-    "header" / Const(Header.EXT_13.value, BitsInteger(2)),
-    "length" / BitsInteger(13),
-)
-
-extended_16_header = BitStruct(
-    "continuation" / Const(0, Bit),
-    "header" / Const(Header.EXT_16.value, BitsInteger(2)),
-    "padding" / Padding(5),
-    "length" / BitsInteger(16),
-)
-
-continuation_header = BitStruct(
-    "continuation" / Const(1, Bit),
-    "padding" / Padding(7),
-)
-
-
-class GoProDataHandler:
-    """A class that can both send and receive GoPro data
-
-    This supports fragmentation of data if necessary if it is > MAX_BLE_PKT_LEN.
-    """
-
-    def __init__(self) -> None:
-        # Will be filled out by Command, Setting, Status class's when instantiated
-        self._response_parsers: ParserMapType = {}
-
-    @property
-    def _parser_map(self) -> ParserMapType:
-        """The superset of all resposnse parsers index by resposne ID
-
-        Returns:
-            ParserMapType: parser map
-        """
-        return self._response_parsers
-
-    def _add_parser(self, identifier: ResponseType, parser: Parser) -> None:
-        """Add a parser to the parser map
-
-        Args:
-            identifier (ResponseType): response identifier
-            parser (Parser): parser used to parse this response ID
-        """
-        self._response_parsers[identifier] = parser
-
-    @classmethod
-    def _fragment(cls, data: bytearray) -> Generator[bytearray, None, None]:
-        """Fragment data in to MAX_BLE_PKT_LEN length packets
-
-        Args:
-            data (bytearray): data to fragment
-
-        Raises:
-            ValueError: data is too long
-
-        Yields:
-            Generator[bytearray, None, None]: Generator of packets as bytearrays
-        """
-        header: Construct
-        if (data_len := len(data)) < (2**5 - 1):
-            header = general_header
-        elif data_len < (2**13 - 1):
-            header = extended_13_header
-        elif data_len < (2**16 - 1):
-            header = extended_16_header
-        else:
-            raise ValueError(f"Data length {data_len} is too long")
-
-        assert header
-        while data:
-            if header == continuation_header:
-                packet = bytearray(header.build({}))
-            else:
-                packet = bytearray(header.build(dict(length=data_len)))
-                header = continuation_header
-
-            bytes_remaining = MAX_BLE_PKT_LEN - len(packet)
-            current, data = (data[:bytes_remaining], data[bytes_remaining:])
-            packet.extend(current)
-            yield packet

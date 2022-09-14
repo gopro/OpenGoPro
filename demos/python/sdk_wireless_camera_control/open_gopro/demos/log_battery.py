@@ -11,15 +11,14 @@ import threading
 from pathlib import Path
 from datetime import datetime
 from dataclasses import dataclass
-from typing import Optional, Literal, List
+from typing import Optional, Literal
 
 from rich.console import Console
 
 from open_gopro import GoPro
 from open_gopro.constants import StatusId
-from open_gopro.util import setup_logging, set_logging_level, add_cli_args_and_parse
+from open_gopro.util import setup_logging, set_stream_logging_level, add_cli_args_and_parse
 
-logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
 
 BarsType = Literal[0, 1, 2, 3]
@@ -41,7 +40,7 @@ class Sample:
 
 
 SAMPLE_INDEX = 0
-SAMPLES: List[Sample] = []
+SAMPLES: list[Sample] = []
 
 
 def dump_results_as_csv(location: Path) -> None:
@@ -72,9 +71,8 @@ def process_battery_notifications(gopro: GoPro, initial_bars: BarsType, initial_
     last_percentage = initial_percentage
     last_bars = initial_bars
 
-    while True:
-        # Block until we receive an update
-        notification = gopro.get_notification()
+    # Block until we receive an update
+    while notification := gopro.get_notification():
         # Update data points if they have changed
         last_percentage = (
             notification.data[StatusId.INT_BATT_PER]
@@ -92,15 +90,13 @@ def process_battery_notifications(gopro: GoPro, initial_bars: BarsType, initial_
 
 
 def main(args: argparse.Namespace) -> None:
-    global logger
-    logger = setup_logging(logger, args.log)
-
+    logger = setup_logging(__name__, args.log)
     global SAMPLE_INDEX
 
     gopro: Optional[GoPro] = None
     try:
         with GoPro(args.identifier, enable_wifi=False) as gopro:
-            set_logging_level(logger, logging.ERROR)
+            set_stream_logging_level(logging.ERROR)
 
             if args.poll:
                 with console.status("[bold green]Polling the battery until it dies..."):

@@ -9,8 +9,18 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
-Unreleased
-----------
+0.11.0 (September-14-2022)
+--------------------------
+* Add Hero 11 Support
+* Add Presets Control Demo
+* Refactor all commands to be variadic
+* Add API GUI MVC framework
+* Protobuf command bug fixes
+* Improve API doc generation and docstring verification
+* Drop Python 3.8 support
+
+0.10.0 (July-14-2022)
+---------------------
 * Add sudo password argument to Wifi Controller and expose through CLI demos via stdin
 * Add more protobuf commands and missing protobuf ID parsing functionality
 * Add livestream demo GUI

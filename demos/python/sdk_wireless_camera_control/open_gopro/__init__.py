@@ -7,10 +7,10 @@
 
 import logging
 
-from open_gopro.util import addLoggingLevel
+from open_gopro.util import Logger
 
-addLoggingLevel("TRACE", logging.DEBUG - 5)
+Logger.addLoggingLevel("TRACE", logging.DEBUG - 5)
 
 from open_gopro.gopro import GoPro
-from open_gopro.api import Params
+from open_gopro.api import Params, Api
 from open_gopro.responses import GoProResp

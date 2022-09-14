@@ -3,7 +3,6 @@
 
 """Entrypoint for taking a picture demo."""
 
-import logging
 import argparse
 from pathlib import Path
 from typing import Optional
@@ -13,34 +12,32 @@ from rich.console import Console
 from open_gopro import GoPro, Params
 from open_gopro.util import setup_logging, add_cli_args_and_parse
 
-logger = logging.getLogger(__name__)
 console = Console()  # rich consoler printer
 
 
 def main(args: argparse.Namespace) -> None:
-    global logger
-    logger = setup_logging(logger, args.log)
+    logger = setup_logging(__name__, args.log)
 
-    # TODO show how to use this
     def exception_cb(exception: Exception) -> None:  # pylint: disable=unused-variable
         logger.error(f"IN MAIN ==> {exception}")
 
     gopro: Optional[GoPro] = None
     try:
-        with GoPro(args.identifier, wifi_interface=args.wifi_interface) as gopro:
+        with GoPro(args.identifier, wifi_interface=args.wifi_interface, exception_cb=exception_cb) as gopro:
             # Configure settings to prepare for photo
             if gopro.is_encoding:
-                gopro.ble_command.set_shutter(Params.Shutter.OFF)
+                gopro.ble_command.set_shutter(Params.Toggle.DISABLE)
             gopro.ble_setting.video_performance_mode.set(Params.PerformanceMode.MAX_PERFORMANCE)
             gopro.ble_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT)
+            gopro.ble_setting.camera_ux_mode.set(Params.CameraUxMode.PRO)
             gopro.ble_command.set_turbo_mode(False)
-            assert gopro.ble_command.load_preset(Params.Preset.PHOTO).is_ok
+            assert gopro.ble_command.load_preset_group(Params.PresetGroup.PHOTO).is_ok
 
             # Get the media list before
             media_set_before = set(x["n"] for x in gopro.wifi_command.get_media_list().flatten)
             # Take a photo
             console.print("Capturing a photo...")
-            assert gopro.ble_command.set_shutter(Params.Shutter.ON).is_ok
+            assert gopro.ble_command.set_shutter(Params.Toggle.ENABLE).is_ok
 
             # Get the media list after
             media_set_after = set(x["n"] for x in gopro.wifi_command.get_media_list().flatten)

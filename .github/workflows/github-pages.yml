@@ -55,10 +55,10 @@ jobs:
               with:
                   path: source
 
-            - name: Set up Python 3.9.10
+            - name: Set up Python 3.10.6
               uses: actions/setup-python@v2
               with:
-                  python-version: 3.9.10
+                  python-version: 3.10.6
 
             - name: Restore cached pip environment
               uses: actions/cache@v2

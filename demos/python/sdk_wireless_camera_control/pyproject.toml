@@ -1,9 +1,6 @@
-#=======================================================================================
-#============================= PACKAGE CONFIGURATION  ==================================
-#=======================================================================================
 [tool.poetry]
 name = "open_gopro"
-version = "0.10.0"
+version = "0.11.0"
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 readme = "README.md"
@@ -20,7 +17,6 @@ classifiers = [
     "Operating System :: MacOS :: MacOS X",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
 ]
@@ -28,69 +24,55 @@ classifiers = [
 [tool.poetry.scripts]
 gopro-photo = "open_gopro.demos.photo:entrypoint"
 gopro-video = "open_gopro.demos.video:entrypoint"
-gopro-preview-stream = "open_gopro.demos.preview_stream:main"
-gopro-live-stream = "open_gopro.demos.live_stream:main"
 gopro-log-battery = "open_gopro.demos.log_battery:entrypoint"
 gopro-wifi = "open_gopro.demos.connect_wifi:entrypoint"
+gopro-gui = "open_gopro.demos.gui_demo:entrypoint"
+gopro-presets = "open_gopro.demos.preset_control:entrypoint"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-#=======================================================================================
-#================================= DEPENDENCIES ========================================
-#=======================================================================================
 [tool.poetry.dependencies]
-python = ">=3.8,<3.11"
+python = ">=3.9,<3.11"
 bleak = "=0.14.2"
-construct = "^2.10"
-wrapt = "^1.14"
-requests = "^2.28"
+construct = "^2"
+wrapt = "^1"
+requests = "^2"
 protobuf = "^3"
-typing-extensions = "^4.3"
-pytz = "^2022.1"
-packaging = "^21.3"
-# TODO make the below optional
-opencv-python = "^4.6.0"
-tk = "^0.1.0"
-Pillow = "^9.1.1"
-rich = "^12.4"
+packaging = "^21"
+opencv-python = "^4"
+tk = "^0.1"
+Pillow = "^9"
+rich = "^12"
 
 [tool.poetry.dev-dependencies]
-pydocstyle = { extras = ["toml"], version = "^6.1.1" }
-pytest = "^7.1"
-pytest-cov = "^3.0"
-pytest-asyncio = "=0.17.2" # TODO 0.18.0 is breaking our tests
-pytest-html = "^3.1"
-coverage = { extras = ["toml"], version = "^6.4" }
-requests-mock = "^1.9"
+pydocstyle = { extras = ["toml"], version = "^6" }
+pytest = "^7"
+pytest-cov = "^3"
+pytest-asyncio = "^0.17"
+pytest-html = "^3"
+coverage = { extras = ["toml"], version = "^6" }
+requests-mock = "^1"
 black = "*"
-pylint = "^2.13"
+pylint = "^2."
 mypy = "*"
-types-requests = "^2.28"
-types-pytz = "^2022.1.1"
-mypy-protobuf = "^3.2.0"
+types-requests = "^2"
+types-attrs = "^19"
+mypy-protobuf = "^3"
 construct-typing = "^0.5"
-sphinx = "*"
-sphinxcontrib-napoleon = "^0.7"
-sphinx-rtd-theme = "^1.0"
+sphinx = "^5"
+sphinx-rtd-theme = "^1"
 coverage-badge = "=1.1.0"
-darglint = "^1.8"
+darglint = "^1"
 poethepoet = "^0.15"
-nox = "=2022.1.7" # needs to match github-actions version
-nox-poetry = "=0.9.0"
-protoletariat = "^0.9.4"
+protoletariat = "^0.9"
+nox = "=2022.8.7"
+nox-poetry = "=1.0.1"
 
-#=======================================================================================
-#================================== POE TASKS ==========================================
-#=======================================================================================
 [tool.poe.tasks.unit_tests]
 cmd = "pytest tests/unit --cov-fail-under=70"
 help = "Run unit tests"
-
-[tool.poe.tasks.e2e_tests]
-cmd = "pytest tests/e2e --cov-fail-under=80"
-help = "Run end-to-end tests"
 
 [tool.poe.tasks.types]
 cmd = "mypy open_gopro"
@@ -153,21 +135,18 @@ sequence = ["clean_artifacts", "clean_tests", "clean_docs", "clean_build"]
 help = "Clean everything"
 
 [tool.poe.tasks.all]
-sequence = ["format", "types", "lint", "docstrings", "unit_tests", "docs"]
+sequence = ["format", "types", "lint", "unit_tests", "docs"]
 help = "Format, check types, lint, check docstrings, and run unit tests"
 
-#=======================================================================================
-#============================== TOOL CONFIGURATIONS ====================================
-#=======================================================================================
 [tool.mypy]
 ignore_missing_imports = true
 warn_redundant_casts = true
-disallow_untyped_calls = true
+disallow_untyped_calls = false
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
 disallow_untyped_decorators = false
 warn_unused_ignores = true
-warn_unreachable = false # handled by linter
+warn_unreachable = false
 show_error_context = true
 pretty = true
 
@@ -202,26 +181,27 @@ omit = ["*/constants.py", "*/params.py", "open_gopro/demos*"]
 directory = ".reports/coverage"
 
 [tool.coverage.report]
-exclude_lines = [
-    "raise NotImplementedError",
-] # Don't complain if tests don't hit defensive assertion code:
+exclude_lines = ["raise NotImplementedError"]
 
 [tool.pylint.'MASTER']
+extension-pkg-whitelist = "cv2" # TODO this isn't working
 load-plugins = "pylint.extensions.docparams"
-accept-no-param-doc = "yes" # handled by darglint
-accept-no-return-doc = "yes" # handled by darglint
+accept-no-param-doc = "yes"
+accept-no-return-doc = "yes"
 default-docstring-type = "google"
 ignore = ["tests", "proto"]
 
 [tool.pylint.'MESSAGES CONTROL']
 disable = [
+    "unnecessary-lambda",
+    "unnecessary-lambda-assignment",
     "too-many-ancestors",
-    "no-name-in-module", # does not appear to work with stub files
+    "no-name-in-module",
     "too-many-nested-blocks",
     "unspecified-encoding",
     "consider-using-with",
-    "abstract-method", # handled by mypy
-    "useless-type-doc", # handled by mypy
+    "abstract-method",
+    "useless-type-doc",
     "cyclic-import",
     "logging-fstring-interpolation",
     "logging-format-interpolation",
@@ -235,14 +215,13 @@ disable = [
     "too-many-lines",
     "too-many-statements",
     "fixme",
-    "protected-access", # Maybe fix this one
+    "protected-access",
     "invalid-name",
-    "unsubscriptable-object", # remove when we deprecate Python 3.8 support
-
+    "unsubscriptable-object",
 ]
 
 [tool.pylint.'FORMAT']
-max-line-length = 160 # handled by black
+max-line-length = 160
 
 [tool.black]
 line-length = 111

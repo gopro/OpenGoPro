@@ -13,8 +13,8 @@ class GoProError(Exception):
 class ResponseParseError(GoProError):
     """Error when parsing received data."""
 
-    def __init__(self, identifier: str, data: bytearray) -> None:
-        super().__init__(f"Failed to parse {data.hex(':')} from {identifier}")
+    def __init__(self, identifier: str, data: bytearray, msg: str = "") -> None:
+        super().__init__(f"{msg}: Failed to parse {data.hex(':')} from {identifier}")
 
 
 class InvalidOpenGoProVersion(GoProError):

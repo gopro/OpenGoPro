@@ -38,7 +38,7 @@ Complete documentation can be found on [Open GoPro](https://gopro.github.io/Open
 -   Includes demo scripts installed as command-line applications to show BLE and WiFi functionality
     -   Take a photo
     -   Take a video
-    -   View the live / preview stream
+    -   GUI to send all commands and view the live / preview stream
     -   Log the battery
 
 ## Installation

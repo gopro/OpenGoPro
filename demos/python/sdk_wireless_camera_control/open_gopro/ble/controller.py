@@ -5,7 +5,7 @@
 
 import logging
 from abc import ABC, abstractmethod
-from typing import Callable, Generic, Pattern, TypeVar, Type, List
+from typing import Callable, Generic, Pattern, TypeVar
 
 from .services import GattDB, BleUUID, UUIDs
 
@@ -48,13 +48,13 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
         raise NotImplementedError
 
     @abstractmethod
-    def scan(self, token: Pattern, timeout: int = 5, service_uuids: List[BleUUID] = None) -> BleDevice:
+    def scan(self, token: Pattern, timeout: int = 5, service_uuids: list[BleUUID] = None) -> BleDevice:
         """Scan BLE device with a regex in it's device name.
 
         Args:
             token (Pattern): Regex to scan for
             timeout (int): Time to scan (in seconds) before considering scanning as failed. Defaults to 5.
-            service_uuids (List[BleUUID], Optional): The list of BleUUID's to filter on. Defaults to None.
+            service_uuids (list[BleUUID], Optional): The list of BleUUID's to filter on. Defaults to None.
 
         Returns:
             BleDevice: discovered device (shall not be multiple devices)
@@ -101,7 +101,7 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
         raise NotImplementedError
 
     @abstractmethod
-    def discover_chars(self, handle: BleHandle, uuids: Type[UUIDs] = None) -> GattDB:
+    def discover_chars(self, handle: BleHandle, uuids: type[UUIDs] = None) -> GattDB:
         """Discover all characteristics for a connected handle.
 
         By default, the BLE controller only knows Spec-Defined BleUUID's so any additional BleUUID's should
@@ -109,7 +109,7 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
 
         Args:
             handle (BleHandle): BLE handle to discover for
-            uuids (Type[UUIDs], Optional): Additional BleUUID information to use when building the
+            uuids (type[UUIDs], Optional): Additional BleUUID information to use when building the
                 Gatt Database. Defaults to None.
 
         Returns:
