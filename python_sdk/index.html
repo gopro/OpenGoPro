@@ -30,7 +30,7 @@
             <a href="#" class="icon icon-home"> Open GoPro Python SDK
           </a>
               <div class="version">
-                0.10.0
+                0.11.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -85,7 +85,6 @@
 </figure>
 <a class="reference external image-reference" href="https://lbesson.mit-license.org/"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml"><img alt="Build and Test" src="https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Testing?label=Build%20and%20Test" /></a>
-<a class="reference external image-reference" href="https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_deploy_docs.yml"><img alt="Build Docs" src="https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Docs%20Build%20and%20Deploy?label=Docs" /></a>
 <a class="reference external image-reference" href="https://pypi.org/project/open-gopro/"><img alt="PyPI" src="https://img.shields.io/pypi/v/open-gopro" /></a>
 <a class="reference external image-reference" href="https://github.com/psf/black"><img alt="Black" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
 <img alt="Coverage" src="_images/coverage.svg" /><section id="summary">
@@ -100,41 +99,35 @@ For more information on the API, see the relevant documentation:</p>
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This package requires Python &gt;= version 3.8 and &lt;= 3.10</p>
+<p>This package requires Python &gt;= version 3.9 and &lt;= 3.10</p>
 </div>
 </section>
 <section id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this heading"></a></h2>
-<ul>
+<ul class="simple">
 <li><p>Top-level GoPro class interface to use both BLE / WiFi</p></li>
 <li><p>Cross-platform (tested on Windows 10, and Ubuntu 20.04, and &gt;= MacOS Big Sur)</p>
-<blockquote>
-<div><ul class="simple">
+<ul>
 <li><p>BLE controller implemented using <a class="reference external" href="https://pypi.org/project/bleak/">bleak</a></p></li>
 <li><p>Wi-Fi controller provided in the Open GoPro package (loosely based on the <a class="reference external" href="https://pypi.org/project/wireless/">Wireless Library</a> )</p></li>
 </ul>
-</div></blockquote>
 </li>
 <li><p>Supports all wireless commands, settings, and statuses from the <a class="reference external" href="https://gopro.github.io/OpenGoPro/">Open GoPro API</a></p></li>
 <li><p>Supports all versions of the Open GoPro API</p></li>
 <li><p>Automatically handles connection maintenance:</p>
-<blockquote>
-<div><ul class="simple">
+<ul>
 <li><p>manage camera ready / encoding</p></li>
 <li><p>periodically sends keep alive signals</p></li>
 </ul>
-</div></blockquote>
 </li>
 <li><p>Includes detailed logging for each module</p></li>
 <li><p>Includes demo scripts installed as command-line applications to show BLE and WiFi functionality such as:</p>
-<blockquote>
-<div><ul class="simple">
+<ul>
 <li><p>Take a photo</p></li>
+<li><p>GUI to send all commands and view the live / preview stream</p></li>
 <li><p>Take a video</p></li>
-<li><p>View the live / preview stream</p></li>
 <li><p>Log the battery</p></li>
 </ul>
-</div></blockquote>
 </li>
 </ul>
 </section>
@@ -170,8 +163,9 @@ this document in order):</p>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#a-special-consideration-for-bluez">A Special Consideration for BlueZ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#photo-demo">Photo Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#video-demo">Video Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#stream-demos">Stream Demos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#api-gui-demo">API GUI Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#battery-demo">Battery Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#gui-stream-demos">GUI Stream Demos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#wifi-demo">WiFi Demo</a></li>
 </ul>
 </li>
@@ -254,7 +248,8 @@ this document in order):</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#unreleased">Unreleased</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#september-14-2022">0.11.0 (September-14-2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#july-14-2022">0.10.0 (July-14-2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#june-16-2022">0.9.2 (June-16-2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#may-27-2022">0.9.1 (May-27-2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#february-7-2022">0.9.0 (February-7-2022)</a></li>

@@ -31,7 +31,7 @@
             <a href="index.html" class="icon icon-home"> Open GoPro Python SDK
           </a>
               <div class="version">
-                0.10.0
+                0.11.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -48,8 +48,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#a-special-consideration-for-bluez">A Special Consideration for BlueZ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#photo-demo">Photo Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#video-demo">Video Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stream-demos">Stream Demos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-gui-demo">API GUI Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#battery-demo">Battery Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gui-stream-demos">GUI Stream Demos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#wifi-demo">WiFi Demo</a></li>
 </ul>
 </li>
@@ -172,6 +173,45 @@ download the photo to your local machine. To run and capture a 2 second video, d
 </pre></div>
 </div>
 </section>
+<section id="stream-demos">
+<h2>Stream Demos<a class="headerlink" href="#stream-demos" title="Permalink to this heading"></a></h2>
+<p>The livestream and preview stream demos have been merged into the below GUI</p>
+</section>
+<section id="api-gui-demo">
+<h2>API GUI Demo<a class="headerlink" href="#api-gui-demo" title="Permalink to this heading"></a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is a work in progress and some complex responses are not yet easily viewed.</p>
+</div>
+<p>This is a GUI which allows the user to connect a camera and send any command, view status / setting
+updates, view a video stream, and log sent / received messages. It can be started with:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-gui
+</pre></div>
+</div>
+<p>This will launch a camera chooser screen where the user can either manually enter a camera to connect to
+or automatically connect to the first found camera. Once connected, the GUI will appear. Usages is as follows:</p>
+<ul class="simple">
+<li><p>Choose a command from the Command Pallette on the left</p>
+<ul>
+<li><p>Note that besides supporting all of the commands from the Open GoPro API, there is also a “Compound” commands
+section which contains commands that combine API functionality. One of these, for example, is Livestream
+which will connect Wifi, configure and start livestreaming.</p></li>
+</ul>
+</li>
+<li><p>Once chosen, enter the desired parameters in the entry form at the top middle</p></li>
+<li><p>In the same entry form, click the button to send the command</p></li>
+<li><p>The sent command and received response will be logged in the log in the bottom middle as well as any
+asynchronously received messages.</p></li>
+<li><p>Any log messages with a down arrow can be expanded to view their details</p></li>
+<li><p>Any received statuses, settings, and setting capabilities will be updated in the pane at the top right.</p>
+<ul>
+<li><p>The most recently received updates will be highlighted in blue</p></li>
+</ul>
+</li>
+<li><p>A network stream can be started using the video pane in the bottom right. This will automatically get started
+after sending the Livestream command</p></li>
+</ul>
+</section>
 <section id="battery-demo">
 <h2>Battery Demo<a class="headerlink" href="#battery-demo" title="Permalink to this heading"></a></h2>
 <p>This demo will continuously read the battery level (either via polling or registering fro notifications as
@@ -197,26 +237,6 @@ the results to a .csv file. To run, do:</p>
 <span class="go">                        default camera SSID. If not used, first discovered GoPro will be</span>
 <span class="go">                        connected to</span>
 </pre></div>
-</div>
-</section>
-<section id="gui-stream-demos">
-<h2>GUI Stream Demos<a class="headerlink" href="#gui-stream-demos" title="Permalink to this heading"></a></h2>
-<p>There are two small GUI to demonstrate live streaming and preview streaming. They can be invoked, respspectively,
-as:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-live-stream
-</pre></div>
-</div>
-<p>and…</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-preview-stream
-</pre></div>
-</div>
-<p>These GUI’s will allow the user to enter stream parameters, connect to the first discovered camera, then start
-the relevant streaming and display the video using <a class="reference external" href="https://pypi.org/project/opencv-python/">OpenCV</a></p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>For the livestream demo, it is assumed that the user has a url of a running RTMP server that they want to
-live stream to. If not, there is a script to use Docker to start a local server at $INSTALL/tools/start_rtmp_server.sh.
-Of course this assumes that Docker is installed and on the path.</p>
 </div>
 </section>
 <section id="wifi-demo">

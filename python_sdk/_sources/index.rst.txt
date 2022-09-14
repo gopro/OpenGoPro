@@ -15,10 +15,6 @@ Open GoPro Python SDK
     :target: https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml
     :alt: Build and Test
 
-.. image:: https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Docs%20Build%20and%20Deploy?label=Docs
-    :target: https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_deploy_docs.yml
-    :alt: Build Docs
-
 .. image:: https://img.shields.io/pypi/v/open-gopro
     :target: https://pypi.org/project/open-gopro/
     :alt: PyPI
@@ -43,7 +39,7 @@ For more information on the API, see the relevant documentation:
 - `Wi-Fi API <https://gopro.github.io/OpenGoPro/http>`_
 
 .. warning::
-    This package requires Python >= version 3.8 and <= 3.10
+    This package requires Python >= version 3.9 and <= 3.10
 
 Features
 --------
@@ -51,21 +47,21 @@ Features
 - Top-level GoPro class interface to use both BLE / WiFi
 - Cross-platform (tested on Windows 10, and Ubuntu 20.04, and >= MacOS Big Sur)
 
-    - BLE controller implemented using `bleak <https://pypi.org/project/bleak/>`_
-    - Wi-Fi controller provided in the Open GoPro package (loosely based on the `Wireless Library <https://pypi.org/project/wireless/>`_ )
+  - BLE controller implemented using `bleak <https://pypi.org/project/bleak/>`_
+  - Wi-Fi controller provided in the Open GoPro package (loosely based on the `Wireless Library <https://pypi.org/project/wireless/>`_ )
 - Supports all wireless commands, settings, and statuses from the `Open GoPro API <https://gopro.github.io/OpenGoPro/>`_
 - Supports all versions of the Open GoPro API
 - Automatically handles connection maintenance:
 
-    - manage camera ready / encoding
-    - periodically sends keep alive signals
+  - manage camera ready / encoding
+  - periodically sends keep alive signals
 - Includes detailed logging for each module
 - Includes demo scripts installed as command-line applications to show BLE and WiFi functionality such as:
 
-    - Take a photo
-    - Take a video
-    - View the live / preview stream
-    - Log the battery
+  - Take a photo
+  - GUI to send all commands and view the live / preview stream
+  - Take a video
+  - Log the battery
 
 Getting Started
 ---------------

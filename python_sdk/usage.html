@@ -31,7 +31,7 @@
             <a href="index.html" class="icon icon-home"> Open GoPro Python SDK
           </a>
               <div class="version">
-                0.10.0
+                0.11.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -355,20 +355,23 @@ printing the current value in the example above.</p>
 <p class="admonition-title">Note</p>
 <p>It is probably desirable to have a separate thread to retrieve these updates as the demo examples do.</p>
 </div>
-<p>It is also possible to register / unregister for <strong>all</strong> settings and / or statuses via one API call using the
-following commands:</p>
+<p>It is also possible to register / unregister for <strong>all</strong> settings, statuses, and / or capabilities
+via one API call using the following commands:</p>
 <ul class="simple">
-<li><p>register for all  setting notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.register_for_all_settings" title="open_gopro.api.ble_commands.BleCommands.register_for_all_settings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.ble_commands.BleCommands.register_for_all_settings()</span></code></a></p></li>
+<li><p>register for all setting notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.register_for_all_settings" title="open_gopro.api.ble_commands.BleCommands.register_for_all_settings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.ble_commands.BleCommands.register_for_all_settings()</span></code></a></p></li>
 <li><p>register for all status notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.register_for_all_statuses" title="open_gopro.api.ble_commands.BleCommands.register_for_all_statuses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.ble_commands.BleCommands.register_for_all_statuses()</span></code></a></p></li>
-<li><p>unregister for all  setting notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings" title="open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings()</span></code></a></p></li>
+<li><p>register for all capability notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.register_for_all_capabilities" title="open_gopro.api.ble_commands.BleCommands.register_for_all_capabilities"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.ble_commands.BleCommands.register_for_all_capabilities()</span></code></a></p></li>
+<li><p>unregister for all setting notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings" title="open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings()</span></code></a></p></li>
 <li><p>unregister for all status notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses" title="open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses()</span></code></a></p></li>
+<li><p>unregister for all capability notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.unregister_for_all_capabilities" title="open_gopro.api.ble_commands.BleCommands.unregister_for_all_capabilities"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_gopro.api.ble_commands.BleCommands.unregister_for_all_capabilities()</span></code></a></p></li>
 </ul>
 </section>
 </section>
 <section id="handling-responses">
 <h2>Handling Responses<a class="headerlink" href="#handling-responses" title="Permalink to this heading"></a></h2>
 <p>Unless otherwise stated, all commands, settings, and status operations return a <cite>GoProResp</cite>
-(<a class="reference internal" href="api.html#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.responses.GoProResp</span></code></a>) which is a JSON serializable dict with some helper functions.</p>
+(<a class="reference internal" href="api.html#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.responses.GoProResp</span></code></a>) which is a container around a JSON serializable dict with some helper
+functions.</p>
 <section id="response-structure">
 <h3>Response Structure<a class="headerlink" href="#response-structure" title="Permalink to this heading"></a></h3>
 <p>A <cite>GoProResp</cite> has 3 relevant attributes for the end user:</p>
