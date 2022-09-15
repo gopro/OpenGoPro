@@ -151,7 +151,7 @@ Responses come in two parts: The standard HTTP return codes and JSON containing 
 </p>
 
 <p>
-The typical use case is that the camera accepts a valid command, returns HTTP/200 (OK) and empty JSON
+The typical use case is that the camera accepts a valid command, returns HTTP/200 (OK) and empty JSON 
 (i.e. { }) and begins asynchronously working on the command.
 If an error occurs, the camera will return a standard HTTP error code and JSON with helpful error/debug information.
 </p>
@@ -2904,16 +2904,6 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
-      <td>109</td>
-      <td>Creating preset</td>
-      <td>Is the camera in the process of creating a custom preset?</td>
-      <td>boolean</td>
-      <td>0: False<br />1: True<br /></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
       <td>110</td>
       <td>Media mod status</td>
       <td>Media Mode Status (bitmasked)</td>
@@ -3078,7 +3068,7 @@ Each Preset Group contains an ID, whether additional presets can be added, and a
 #### Presets
 <p>
 Each Preset contains information about its ID, associated core mode, title, icon, whether it's a user-defined preset,
-whether the preset has been modified from its factory-default state (for factory-default presets only) and an array of
+whether the preset has been modified from its factory-default state (for factory-default presets only) and an array of 
 Settings associated with the Preset.
 </p>
 

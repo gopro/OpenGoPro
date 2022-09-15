@@ -3310,16 +3310,6 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
-      <td>109</td>
-      <td>Creating preset</td>
-      <td>Is the camera in the process of creating a custom preset?</td>
-      <td>boolean</td>
-      <td>0: False<br />1: True<br /></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
       <td>110</td>
       <td>Media mod status</td>
       <td>Media Mode Status (bitmasked)</td>
