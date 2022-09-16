@@ -55,7 +55,7 @@ pytest-html = "^3"
 coverage = { extras = ["toml"], version = "^6" }
 requests-mock = "^1"
 black = "*"
-pylint = "^2."
+pylint = "^2"
 mypy = "*"
 types-requests = "^2"
 types-attrs = "^19"
