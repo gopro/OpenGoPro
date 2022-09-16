@@ -26,16 +26,22 @@ final class CentralManager: NSObject, ObservableObject {
     /// Starts a new BLE scan
     /// - Parameter withServices: the service UUIDs to scan for
     func start(withServices: [CBUUID]) {
-        if isReady {
+        guard !isReady else {
             peripherals.removeAll()
             manager.scanForPeripherals(withServices: withServices, options: nil)
-        } else {
-            onCentralStateChange = { [weak self] state in
-                if state == .poweredOn {
-                    DispatchQueue.main.async {
-                        self?.start(withServices: withServices)
-                    }
-                }
+            return
+        }
+        
+        actionCentralStateChange(withServices: withServices)
+    }
+    
+    private func actionCentralStateChange(withServices: [CBUUID]) {
+        onCentralStateChange = { [weak self] state in
+            guard let self = self, state == .poweredOn else {
+                return
+            }
+            DispatchQueue.main.async {
+                self.start(withServices: withServices)
             }
         }
     }
@@ -86,11 +92,7 @@ extension CentralManager : CBCentralManagerDelegate {
 
         peripheral.onConnect?(error)
 
-        DispatchQueue.main.async { [weak self] in
-            let index = self?.peripherals.firstIndex(of: peripheral)
-            self?.peripherals.remove(at: index!)
-        }
-
+        removePeripheralById(peripherals: peripherals, peripheral: peripheral)
     }
 
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral cbPeripheral: CBPeripheral, error: Error?) {
@@ -98,9 +100,14 @@ extension CentralManager : CBCentralManagerDelegate {
 
         peripheral.onDisconnect?(error)
 
+        removePeripheralById(peripherals: peripherals, peripheral: peripheral)
+    }
+    
+    private func removePeripheralById(peripherals: [Peripheral], peripheral: Peripheral) {
         DispatchQueue.main.async { [weak self] in
-            let index = self?.peripherals.firstIndex(of: peripheral)
-            self?.peripherals.remove(at: index!)
+            guard let self = self else { return }
+            let index = self.peripherals.firstIndex(of: peripheral)
+            self.peripherals.remove(at: index!)
         }
     }
 }

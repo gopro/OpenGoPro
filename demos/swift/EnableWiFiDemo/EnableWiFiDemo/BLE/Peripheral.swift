@@ -172,24 +172,28 @@ extension Peripheral {
         discoverService(UUID: serviceUUID) { [unowned self] result in
             switch result {
             case .success(let service):
-                if let characteristic = self.characteristic(serviceUUID: service.uuid, UUID: characteristicUUID) {
-                    completion?(.success(characteristic))
-                    return
-                }
-                self.discoveredCharacteristicCallbacks.append { error in
-                    guard let characteristic = self.characteristic(serviceUUID: service.uuid, UUID: characteristicUUID) else {
-                        completion?(.failure(error != nil ? error! : CameraError.invalidRequest))
-                        return
-                    }
-
-                    completion?(.success(characteristic))
-                }
-
-                self.cbPeripheral.discoverCharacteristics([characteristicUUID], for: service)
+                self.handleSuccessToDiscoverCharacteristic(characteristicUUID: characteristicUUID, with: service, completion: completion)
             case .failure(let error):
                 completion?(.failure(error))
             }
         }
+    }
+    
+    private func handleSuccessToDiscoverCharacteristic(characteristicUUID: CBUUID, with service: CBService, completion:((Result<CBCharacteristic, Error>) -> Void)?) {
+        if let characteristic = self.characteristic(serviceUUID: service.uuid, UUID: characteristicUUID) {
+            completion?(.success(characteristic))
+            return
+        }
+        self.discoveredCharacteristicCallbacks.append { error in
+            guard let characteristic = self.characteristic(serviceUUID: service.uuid, UUID: characteristicUUID) else {
+                completion?(.failure(error != nil ? error! : CameraError.invalidRequest))
+                return
+            }
+
+            completion?(.success(characteristic))
+        }
+
+        self.cbPeripheral.discoverCharacteristics([characteristicUUID], for: service)
     }
 
     private func characteristic(serviceUUID: CBUUID, UUID: CBUUID) -> CBCharacteristic? {
@@ -230,20 +234,23 @@ extension Peripheral: CBPeripheralDelegate {
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         queue.async { [weak self] in
-            if characteristic.isNotifying {
-                if let data = characteristic.value {
-                    let observer = self?.characteristicObservers[characteristic.uuid]
-                    observer?(data)
-                }
-            } else {
+            guard let self = self else { return }
+            
+            guard characteristic.isNotifying else {
                 if error != nil {
-                    self?.readCharacteristicCallbacks.first?(.failure(error!))
+                    self.readCharacteristicCallbacks.first?(.failure(error!))
                 } else {
                     if let data = characteristic.value {
-                        self?.readCharacteristicCallbacks.first?(.success(data))
+                        self.readCharacteristicCallbacks.first?(.success(data))
                     }
                 }
-                _ = self?.readCharacteristicCallbacks.removeFirst()
+                _ = self.readCharacteristicCallbacks.removeFirst()
+                return
+            }
+            
+            if let data = characteristic.value {
+                let observer = self.characteristicObservers[characteristic.uuid]
+                observer?(data)
             }
         }
     }
