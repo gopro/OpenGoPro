@@ -370,7 +370,7 @@ class GoPro(GoProInterface):
 
             # Establish Wifi connection if desired
             if self._enable_wifi_during_init:
-                self._open_wifi()
+                self._open_wifi(timeout, retries)
             else:
                 # Otherwise, turn off Wifi
                 logger.info("Turning off the camera's Wifi radio")
