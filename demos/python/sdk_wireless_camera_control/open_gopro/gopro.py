@@ -370,7 +370,7 @@ class GoPro(GoProInterface):
 
             # Establish Wifi connection if desired
             if self._enable_wifi_during_init:
-                self._open_wifi(timeout, retries)
+                self._open_wifi()
             else:
                 # Otherwise, turn off Wifi
                 logger.info("Turning off the camera's Wifi radio")
@@ -720,7 +720,7 @@ class GoPro(GoProInterface):
         return GoProResp._from_read_response(uuid, received_data)
 
     @ensure_initialized(Interface.BLE)
-    def _open_wifi(self, timeout: int = 15, retries: int = 10) -> None:
+    def _open_wifi(self, timeout: int = 10, retries: int = 5) -> None:
         """Connect to a GoPro device via Wifi.
 
         Args:
