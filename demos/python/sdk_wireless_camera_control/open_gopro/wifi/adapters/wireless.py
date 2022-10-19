@@ -427,12 +427,11 @@ class Nmcli0990Wireless(WifiController):
         """
         # First scan to ensure our network is there
         logger.info(f"Scanning for {ssid}...")
-        cmd(f"{self.sudo} nmcli device wifi rescan")
-
         start = time.time()
         discovered = False
         while not discovered and (time.time() - start) <= timeout:
             # Scan for network
+            cmd(f"{self.sudo} nmcli device wifi rescan")
             response = cmd(f"{self.sudo} nmcli device wifi list")
             for result in response.splitlines()[1:]:  # Skip title row
                 # Remove * in IN-USE column since it makes the SSID column non-determinant

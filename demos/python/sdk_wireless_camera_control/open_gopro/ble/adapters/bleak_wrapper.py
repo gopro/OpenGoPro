@@ -4,7 +4,6 @@
 """Manage a Bluetooth connection using bleak."""
 
 import sys
-import time
 import asyncio
 import logging
 import platform
@@ -16,7 +15,7 @@ from bleak import BleakScanner, BleakClient, BleakError
 from bleak.backends.device import BLEDevice as BleakDevice
 
 from open_gopro.exceptions import ConnectFailed
-from open_gopro.util import Singleton, cmd
+from open_gopro.util import Singleton
 from open_gopro.ble import (
     Service,
     Characteristic,
@@ -273,10 +272,20 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                 if logger.level == logging.DEBUG:
                     bluetoothctl.logfile = sys.stdout.buffer
                 bluetoothctl.expect("Agent registered")
-                bluetoothctl.sendline(f"pair {handle.address}")
-                bluetoothctl.expect("Accept pairing")
-                bluetoothctl.sendline("yes")
-                bluetoothctl.expect("Pairing successful")
+                # First see if we are already paired
+                bluetoothctl.sendline("paired-devices")
+                bluetoothctl.expect("paired-devices")
+                bluetoothctl.expect(r"#")
+                for device in bluetoothctl.before.decode("utf-8").splitlines():
+                    if "Device" in device and device.split()[1] == handle.address:
+                        break  # The device is already paired
+                else:
+                    # We're not paired so do it now
+                    bluetoothctl.sendline(f"pair {handle.address}")
+                    bluetoothctl.expect("Accept pairing")
+                    bluetoothctl.sendline("yes")
+                    bluetoothctl.expect("Pairing successful")
+
             elif OS == "Darwin":
                 # No pairing on Mac
                 pass
