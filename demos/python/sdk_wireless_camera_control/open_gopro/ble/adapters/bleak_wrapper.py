@@ -3,16 +3,20 @@
 
 """Manage a Bluetooth connection using bleak."""
 
+import sys
+import time
 import asyncio
 import logging
+import platform
 import threading
 from typing import Pattern, Any, Callable, Optional, Union
 
+import pexpect
 from bleak import BleakScanner, BleakClient, BleakError
 from bleak.backends.device import BLEDevice as BleakDevice
 
 from open_gopro.exceptions import ConnectFailed
-from open_gopro.util import Singleton
+from open_gopro.util import Singleton, cmd
 from open_gopro.ble import (
     Service,
     Characteristic,
@@ -254,7 +258,8 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
     def pair(self, handle: BleakClient) -> None:
         """Pair to a device after connection.
 
-        This is required for Windows and not allowed on Mac...
+        This is required for Windows and not allowed on Mac.
+        Linux requires a separate process to interact with bluetoothctl to accept pairing.
 
         Args:
             handle (BleakClient): Device to pair to
@@ -262,11 +267,22 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         async def _async_def_pair() -> None:
             logger.debug("Attempting to pair...")
-            try:
-                await handle.pair()
-            except NotImplementedError:
-                # This is expected on Mac
+            if OS := platform.system() == "Linux":
+                # Manually control bluetoothctl on Linux
+                bluetoothctl = pexpect.spawn("bluetoothctl")
+                if logger.level == logging.DEBUG:
+                    bluetoothctl.logfile = sys.stdout.buffer
+                bluetoothctl.expect("Agent registered")
+                bluetoothctl.sendline(f"pair {handle.address}")
+                bluetoothctl.expect("Accept pairing")
+                bluetoothctl.sendline("yes")
+                bluetoothctl.expect("Pairing successful")
+            elif OS == "Darwin":
+                # No pairing on Mac
                 pass
+            else:
+                await handle.pair()
+
             logger.debug("Pairing complete!")
 
         self._as_coroutine(_async_def_pair)

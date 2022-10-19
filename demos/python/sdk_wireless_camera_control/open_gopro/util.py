@@ -65,7 +65,7 @@ class Logger:
             "open_gopro.api.wifi_commands": logging.DEBUG,
             "open_gopro.api.ble_commands": logging.DEBUG,
             "open_gopro.communication_client": logging.DEBUG,
-            "open_gopro.ble.adapters.bleak_wrapper": logging.INFO,
+            "open_gopro.ble.adapters.bleak_wrapper": logging.DEBUG,
             "open_gopro.ble.client": logging.DEBUG,
             "open_gopro.wifi.adapters.wireless": logging.DEBUG,
             "open_gopro.responses": logging.DEBUG,
@@ -404,8 +404,6 @@ def cmd(command: str) -> str:
     else:
         logged_command = command
     util_logger.debug(f"Send cmd --> {logged_command}")
-    # Note: Ignoring unicode characters in SSIDs to prevent intermittent UnicodeDecodeErrors from occurring
-    # while trying to connect to SSID when *any* AP is nearby that has unicode characters in the name
     response = (
         subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)  # type: ignore
         .stdout.read()
