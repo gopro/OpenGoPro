@@ -720,12 +720,15 @@ class GoPro(GoProInterface):
         return GoProResp._from_read_response(uuid, received_data)
 
     @ensure_initialized(Interface.BLE)
-    def _open_wifi(self, timeout: int = 15, retries: int = 5) -> None:
+    def _open_wifi(self, timeout: int = 10, retries: int = 5) -> None:
         """Connect to a GoPro device via Wifi.
 
         Args:
             timeout (int): Time before considering establishment failed. Defaults to 15 seconds.
-            retries (int): How many tries to reconnect after failures. Defaults to 5.
+            retries (int): How many tries to reconnect after failures. Defaults to 10.
+
+        Raises:
+            ConnectFailed: Was not able to establish the Wifi Connection
         """
         logger.info("Discovering Wifi AP info and enabling via BLE")
         password = self.ble_command.get_wifi_password().flatten
@@ -739,6 +742,8 @@ class GoPro(GoProInterface):
                 logger.warning(f"Wifi connection failed. Retrying #{retry}")
                 # In case camera Wifi is in strange disable, reset it
                 assert self.ble_command.enable_wifi_ap(False).is_ok
+        else:
+            raise GpException.ConnectFailed("Wifi Connection failed", timeout, retries)
 
     def _close_wifi(self) -> None:
         """Terminate the Wifi connection."""

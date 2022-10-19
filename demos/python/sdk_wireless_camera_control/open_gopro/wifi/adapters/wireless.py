@@ -606,7 +606,7 @@ class NetworksetupWireless(WifiController):
         WifiController.__init__(self, interface)
 
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
-        """[summary].
+        """Connect to SSID.
 
         Args:
             ssid (str): network SSID
@@ -618,6 +618,27 @@ class NetworksetupWireless(WifiController):
         """
         # Escape single quotes
         ssid = ssid.replace(r"'", '''"'"''')
+
+        logger.info(f"Scanning for {ssid}...")
+        start = time.time()
+        discovered = False
+        while not discovered and (time.time() - start) <= timeout:
+            # Scan for network
+            # Surprisingly, yes this is the industry standard location for this and no, there's no shortcut for it
+            response = cmd(
+                r"/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --scan"
+            )
+            for result in response.splitlines()[1:]:  # Skip title row
+                if result.split()[0] == ssid:
+                    discovered = True
+                    break
+            if discovered:
+                break
+        else:
+            return False
+
+        # Connect now that we found the ssid
+        logger.info(f"Connecting to {ssid}...")
         response = cmd(f"networksetup -setairportnetwork '{self.interface}' '{ssid}' '{password}'")
 
         if "not find" in response.lower():
