@@ -9,6 +9,11 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
+0.11.1 (October-18-2022)
+------------------------
+* Improve Mac Wifi connection robustness
+* Fix BLE can ignoring timeout and retry args
+
 0.11.0 (September-14-2022)
 --------------------------
 * Add Hero 11 Support
