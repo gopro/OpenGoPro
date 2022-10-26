@@ -3,11 +3,14 @@
 
 """Manage a Bluetooth connection using bleak."""
 
+import sys
 import asyncio
 import logging
+import platform
 import threading
 from typing import Pattern, Any, Callable, Optional, Union
 
+import pexpect
 from bleak import BleakScanner, BleakClient, BleakError
 from bleak.backends.device import BLEDevice as BleakDevice
 
@@ -254,7 +257,8 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
     def pair(self, handle: BleakClient) -> None:
         """Pair to a device after connection.
 
-        This is required for Windows and not allowed on Mac...
+        This is required for Windows and not allowed on Mac.
+        Linux requires a separate process to interact with bluetoothctl to accept pairing.
 
         Args:
             handle (BleakClient): Device to pair to
@@ -262,11 +266,32 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         async def _async_def_pair() -> None:
             logger.debug("Attempting to pair...")
-            try:
-                await handle.pair()
-            except NotImplementedError:
-                # This is expected on Mac
+            if OS := platform.system() == "Linux":
+                # Manually control bluetoothctl on Linux
+                bluetoothctl = pexpect.spawn("bluetoothctl")
+                if logger.level == logging.DEBUG:
+                    bluetoothctl.logfile = sys.stdout.buffer
+                bluetoothctl.expect("Agent registered")
+                # First see if we are already paired
+                bluetoothctl.sendline("paired-devices")
+                bluetoothctl.expect("paired-devices")
+                bluetoothctl.expect(r"#")
+                for device in bluetoothctl.before.decode("utf-8").splitlines():
+                    if "Device" in device and device.split()[1] == handle.address:
+                        break  # The device is already paired
+                else:
+                    # We're not paired so do it now
+                    bluetoothctl.sendline(f"pair {handle.address}")
+                    bluetoothctl.expect("Accept pairing")
+                    bluetoothctl.sendline("yes")
+                    bluetoothctl.expect("Pairing successful")
+
+            elif OS == "Darwin":
+                # No pairing on Mac
                 pass
+            else:
+                await handle.pair()
+
             logger.debug("Pairing complete!")
 
         self._as_coroutine(_async_def_pair)

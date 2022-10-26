@@ -249,7 +249,7 @@ class NmcliWireless(WifiController):
         return False
 
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
-        """[summary].
+        """Connect to WiFi SSID.
 
         Args:
             ssid (str): network SSID
@@ -264,7 +264,29 @@ class NmcliWireless(WifiController):
         if current is not None:
             self._clean(current)
 
+        # First scan to ensure our network is there
+        logger.info(f"Scanning for {ssid}...")
+        cmd(f"{self.sudo} nmcli device wifi rescan")
+
+        start = time.time()
+        discovered = False
+        while not discovered and (time.time() - start) <= timeout:
+            # Scan for network
+            response = cmd(f"{self.sudo} nmcli device wifi list")
+            for result in response.splitlines()[1:]:  # Skip title row
+                # Remove * in IN-USE column since it makes the SSID column non-determinant
+                if result.strip(" *").split()[1] == ssid:
+                    discovered = True
+                    break
+            if discovered:
+                break
+            time.sleep(1)
+        else:
+            logger.warning("Wifi Scan timed out")
+            return False
+
         # attempt to connect
+        logger.info(f"Connecting to {ssid}...")
         response = cmd(
             f'{self.sudo} nmcli dev wifi connect "{ssid}" password "{password}" iface "{self.interface}"'
         )
@@ -386,13 +408,14 @@ class Nmcli0990Wireless(WifiController):
         for line in response.splitlines():
             # all error lines start with 'Error'
             if line.startswith("Error"):
+                logger.error("line")
                 return True
 
         # if we didn't find an error then we are in the clear
         return False
 
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
-        """[summary].
+        """Connect to Wifi SSID.
 
         Args:
             ssid (str): network SSID
@@ -400,11 +423,30 @@ class Nmcli0990Wireless(WifiController):
             timeout (float): Time before considering connection failed (in seconds). Defaults to 15.
 
         Returns:
-            bool: [description]
+            bool: True if connection suceeded, False otherwise
         """
-        # Scan for networks. Don't bother checking: we'll allow the error to be passed from the connect.
-        cmd(f"{self.sudo} nmcli dev wifi list --rescan yes")
+        # First scan to ensure our network is there
+        logger.info(f"Scanning for {ssid}...")
+        start = time.time()
+        discovered = False
+        while not discovered and (time.time() - start) <= timeout:
+            # Scan for network
+            cmd(f"{self.sudo} nmcli device wifi rescan")
+            response = cmd(f"{self.sudo} nmcli device wifi list")
+            for result in response.splitlines()[1:]:  # Skip title row
+                # Remove * in IN-USE column since it makes the SSID column non-determinant
+                if result.strip(" *").split()[1] == ssid:
+                    discovered = True
+                    break
+            if discovered:
+                break
+            time.sleep(1)
+        else:
+            logger.warning("Wifi Scan timed out")
+            return False
+
         # attempt to connect
+        logger.info(f"Connecting to {ssid}...")
         response = cmd(
             f'{self.sudo} nmcli dev wifi connect "{ssid}" password "{password}" ifname "{self.interface}"'
         )
@@ -635,6 +677,7 @@ class NetworksetupWireless(WifiController):
             if discovered:
                 break
         else:
+            logger.warning("Wifi Scan timed out")
             return False
 
         # Connect now that we found the ssid

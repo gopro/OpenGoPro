@@ -404,8 +404,6 @@ def cmd(command: str) -> str:
     else:
         logged_command = command
     util_logger.debug(f"Send cmd --> {logged_command}")
-    # Note: Ignoring unicode characters in SSIDs to prevent intermittent UnicodeDecodeErrors from occurring
-    # while trying to connect to SSID when *any* AP is nearby that has unicode characters in the name
     response = (
         subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)  # type: ignore
         .stdout.read()
