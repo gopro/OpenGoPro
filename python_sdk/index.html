@@ -16,6 +16,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -113,7 +114,6 @@ For more information on the API, see the relevant documentation:</p>
 </ul>
 </li>
 <li><p>Supports all wireless commands, settings, and statuses from the <a class="reference external" href="https://gopro.github.io/OpenGoPro/">Open GoPro API</a></p></li>
-<li><p>Supports all versions of the Open GoPro API</p></li>
 <li><p>Automatically handles connection maintenance:</p>
 <ul>
 <li><p>manage camera ready / encoding</p></li>
@@ -198,7 +198,27 @@ this document in order):</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Interfaces</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#gopro">GoPro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#gopro">GoPro</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro"><code class="docutils literal notranslate"><span class="pre">GoPro</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.ble_command"><code class="docutils literal notranslate"><span class="pre">GoPro.ble_command</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.ble_setting"><code class="docutils literal notranslate"><span class="pre">GoPro.ble_setting</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.ble_status"><code class="docutils literal notranslate"><span class="pre">GoPro.ble_status</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.close"><code class="docutils literal notranslate"><span class="pre">GoPro.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.get_notification"><code class="docutils literal notranslate"><span class="pre">GoPro.get_notification()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.identifier"><code class="docutils literal notranslate"><span class="pre">GoPro.identifier</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.is_ble_connected"><code class="docutils literal notranslate"><span class="pre">GoPro.is_ble_connected</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.is_busy"><code class="docutils literal notranslate"><span class="pre">GoPro.is_busy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.is_encoding"><code class="docutils literal notranslate"><span class="pre">GoPro.is_encoding</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.is_wifi_connected"><code class="docutils literal notranslate"><span class="pre">GoPro.is_wifi_connected</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.keep_alive"><code class="docutils literal notranslate"><span class="pre">GoPro.keep_alive()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.open"><code class="docutils literal notranslate"><span class="pre">GoPro.open()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.version"><code class="docutils literal notranslate"><span class="pre">GoPro.version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.wifi_command"><code class="docutils literal notranslate"><span class="pre">GoPro.wifi_command</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.gopro.GoPro.wifi_setting"><code class="docutils literal notranslate"><span class="pre">GoPro.wifi_setting</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#api">API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="api.html#base-types">Base Types</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="api.html#ble-setting">BLE Setting</a></li>
@@ -206,18 +226,460 @@ this document in order):</p>
 <li class="toctree-l4"><a class="reference internal" href="api.html#wifi-setting">WiFi Setting</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#ble-commands">BLE Commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#ble-settings">BLE Settings</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#ble-statuses">BLE Statuses</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#wifi-commands">WiFi Commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#wifi-settings">WiFi Settings</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#parameters">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#ble-commands">BLE Commands</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands"><code class="docutils literal notranslate"><span class="pre">BleCommands</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#responses">Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#constants">Constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-open_gopro.exceptions">Exceptions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#bluetooth-services">Bluetooth Services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#ble-settings">BLE Settings</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleSettings"><code class="docutils literal notranslate"><span class="pre">BleSettings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#ble-statuses">BLE Statuses</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleStatuses"><code class="docutils literal notranslate"><span class="pre">BleStatuses</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#wifi-commands">WiFi Commands</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.wifi_commands.WifiCommands"><code class="docutils literal notranslate"><span class="pre">WifiCommands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#wifi-settings">WiFi Settings</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.wifi_commands.WifiSettings"><code class="docutils literal notranslate"><span class="pre">WifiSettings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#parameters">Parameters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.AccMicStatus"><code class="docutils literal notranslate"><span class="pre">AccMicStatus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.AnalyticsState"><code class="docutils literal notranslate"><span class="pre">AnalyticsState</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.AntiFlicker"><code class="docutils literal notranslate"><span class="pre">AntiFlicker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.AutoOff"><code class="docutils literal notranslate"><span class="pre">AutoOff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.CameraControl"><code class="docutils literal notranslate"><span class="pre">CameraControl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.CameraControlStatus"><code class="docutils literal notranslate"><span class="pre">CameraControlStatus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.CameraUxMode"><code class="docutils literal notranslate"><span class="pre">CameraUxMode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.ExposureMode"><code class="docutils literal notranslate"><span class="pre">ExposureMode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.FPS"><code class="docutils literal notranslate"><span class="pre">FPS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.Flatmode"><code class="docutils literal notranslate"><span class="pre">Flatmode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.HorizonLeveling"><code class="docutils literal notranslate"><span class="pre">HorizonLeveling</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.HypersmoothMode"><code class="docutils literal notranslate"><span class="pre">HypersmoothMode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.LED"><code class="docutils literal notranslate"><span class="pre">LED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.LensMode"><code class="docutils literal notranslate"><span class="pre">LensMode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.LensType"><code class="docutils literal notranslate"><span class="pre">LensType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.LiveStreamStatus"><code class="docutils literal notranslate"><span class="pre">LiveStreamStatus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.MaxLensMode"><code class="docutils literal notranslate"><span class="pre">MaxLensMode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.MediaFormat"><code class="docutils literal notranslate"><span class="pre">MediaFormat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.MediaModMicStatus"><code class="docutils literal notranslate"><span class="pre">MediaModMicStatus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.MediaModStatus"><code class="docutils literal notranslate"><span class="pre">MediaModStatus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.MultishotFOV"><code class="docutils literal notranslate"><span class="pre">MultishotFOV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.OTAStatus"><code class="docutils literal notranslate"><span class="pre">OTAStatus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.Orientation"><code class="docutils literal notranslate"><span class="pre">Orientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.PairState"><code class="docutils literal notranslate"><span class="pre">PairState</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.PairType"><code class="docutils literal notranslate"><span class="pre">PairType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.PerformanceMode"><code class="docutils literal notranslate"><span class="pre">PerformanceMode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.PhotoEasyMode"><code class="docutils literal notranslate"><span class="pre">PhotoEasyMode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.PhotoFOV"><code class="docutils literal notranslate"><span class="pre">PhotoFOV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.PresetGroup"><code class="docutils literal notranslate"><span class="pre">PresetGroup</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.ProvisioningState"><code class="docutils literal notranslate"><span class="pre">ProvisioningState</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.RegisterLiveStream"><code class="docutils literal notranslate"><span class="pre">RegisterLiveStream</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.RegisterPreset"><code class="docutils literal notranslate"><span class="pre">RegisterPreset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.Resolution"><code class="docutils literal notranslate"><span class="pre">Resolution</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.SDStatus"><code class="docutils literal notranslate"><span class="pre">SDStatus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.ScanEntry"><code class="docutils literal notranslate"><span class="pre">ScanEntry</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.ScanState"><code class="docutils literal notranslate"><span class="pre">ScanState</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.Speed"><code class="docutils literal notranslate"><span class="pre">Speed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.StarTrailLength"><code class="docutils literal notranslate"><span class="pre">StarTrailLength</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.SystemVideoMode"><code class="docutils literal notranslate"><span class="pre">SystemVideoMode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.TimeWarpSpeed"><code class="docutils literal notranslate"><span class="pre">TimeWarpSpeed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.Toggle"><code class="docutils literal notranslate"><span class="pre">Toggle</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.VideoFOV"><code class="docutils literal notranslate"><span class="pre">VideoFOV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.WAPState"><code class="docutils literal notranslate"><span class="pre">WAPState</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.WifiBand"><code class="docutils literal notranslate"><span class="pre">WifiBand</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.params.WindowSize"><code class="docutils literal notranslate"><span class="pre">WindowSize</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#responses">Responses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp"><code class="docutils literal notranslate"><span class="pre">GoProResp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.Protocol"><code class="docutils literal notranslate"><span class="pre">GoProResp.Protocol</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.cmd"><code class="docutils literal notranslate"><span class="pre">GoProResp.cmd</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.data"><code class="docutils literal notranslate"><span class="pre">GoProResp.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.endpoint"><code class="docutils literal notranslate"><span class="pre">GoProResp.endpoint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.flatten"><code class="docutils literal notranslate"><span class="pre">GoProResp.flatten</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.identifier"><code class="docutils literal notranslate"><span class="pre">GoProResp.identifier</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.is_direct_read"><code class="docutils literal notranslate"><span class="pre">GoProResp.is_direct_read</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.is_ok"><code class="docutils literal notranslate"><span class="pre">GoProResp.is_ok</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.is_parsed"><code class="docutils literal notranslate"><span class="pre">GoProResp.is_parsed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.is_protobuf"><code class="docutils literal notranslate"><span class="pre">GoProResp.is_protobuf</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.is_received"><code class="docutils literal notranslate"><span class="pre">GoProResp.is_received</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.items"><code class="docutils literal notranslate"><span class="pre">GoProResp.items()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.keys"><code class="docutils literal notranslate"><span class="pre">GoProResp.keys()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.protocol"><code class="docutils literal notranslate"><span class="pre">GoProResp.protocol</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.status"><code class="docutils literal notranslate"><span class="pre">GoProResp.status</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.uuid"><code class="docutils literal notranslate"><span class="pre">GoProResp.uuid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.responses.GoProResp.values"><code class="docutils literal notranslate"><span class="pre">GoProResp.values()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#constants">Constants</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.ActionId"><code class="docutils literal notranslate"><span class="pre">ActionId</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.GET_AP_ENTRIES"><code class="docutils literal notranslate"><span class="pre">ActionId.GET_AP_ENTRIES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.GET_AP_ENTRIES_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.GET_AP_ENTRIES_RSP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.GET_LIVESTREAM_STATUS"><code class="docutils literal notranslate"><span class="pre">ActionId.GET_LIVESTREAM_STATUS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.GET_PRESET_STATUS"><code class="docutils literal notranslate"><span class="pre">ActionId.GET_PRESET_STATUS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.GET_PRESET_STATUS_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.GET_PRESET_STATUS_RSP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.INTERNAL_FF"><code class="docutils literal notranslate"><span class="pre">ActionId.INTERNAL_FF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.LIVESTREAM_STATUS_NOTIF"><code class="docutils literal notranslate"><span class="pre">ActionId.LIVESTREAM_STATUS_NOTIF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.LIVESTREAM_STATUS_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.LIVESTREAM_STATUS_RSP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.NOTIF_PROVIS_STATE"><code class="docutils literal notranslate"><span class="pre">ActionId.NOTIF_PROVIS_STATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.NOTIF_START_SCAN"><code class="docutils literal notranslate"><span class="pre">ActionId.NOTIF_START_SCAN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.PRESET_MODIFIED_NOTIFICATION"><code class="docutils literal notranslate"><span class="pre">ActionId.PRESET_MODIFIED_NOTIFICATION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.RELEASE_NETWORK"><code class="docutils literal notranslate"><span class="pre">ActionId.RELEASE_NETWORK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.RELEASE_NETWORK_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.RELEASE_NETWORK_RSP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_WIFI_CONNECT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_WIFI_CONNECT_RSP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.SCAN_WIFI_NETWORKS"><code class="docutils literal notranslate"><span class="pre">ActionId.SCAN_WIFI_NETWORKS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.SCAN_WIFI_NETWORKS_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.SCAN_WIFI_NETWORKS_RSP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.SET_CAMERA_CONTROL"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_CAMERA_CONTROL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.SET_CAMERA_CONTROL_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_CAMERA_CONTROL_RSP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.SET_LIVESTREAM_MODE"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_LIVESTREAM_MODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.SET_LIVESTREAM_MODE_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_LIVESTREAM_MODE_RSP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.SET_TURBO_MODE"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_TURBO_MODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ActionId.SET_TURBO_MODE_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_TURBO_MODE_RSP</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.CmdId"><code class="docutils literal notranslate"><span class="pre">CmdId</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.GET_CAMERA_CAPABILITIES"><code class="docutils literal notranslate"><span class="pre">CmdId.GET_CAMERA_CAPABILITIES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.GET_CAMERA_SETTINGS"><code class="docutils literal notranslate"><span class="pre">CmdId.GET_CAMERA_SETTINGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.GET_CAMERA_STATUSES"><code class="docutils literal notranslate"><span class="pre">CmdId.GET_CAMERA_STATUSES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.GET_DATE_TIME"><code class="docutils literal notranslate"><span class="pre">CmdId.GET_DATE_TIME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.GET_DATE_TIME_DST"><code class="docutils literal notranslate"><span class="pre">CmdId.GET_DATE_TIME_DST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.GET_HW_INFO"><code class="docutils literal notranslate"><span class="pre">CmdId.GET_HW_INFO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.GET_SETTINGS_JSON"><code class="docutils literal notranslate"><span class="pre">CmdId.GET_SETTINGS_JSON</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.GET_THIRD_PARTY_API_VERSION"><code class="docutils literal notranslate"><span class="pre">CmdId.GET_THIRD_PARTY_API_VERSION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.LOAD_PRESET"><code class="docutils literal notranslate"><span class="pre">CmdId.LOAD_PRESET</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.LOAD_PRESET_GROUP"><code class="docutils literal notranslate"><span class="pre">CmdId.LOAD_PRESET_GROUP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.POWER_DOWN"><code class="docutils literal notranslate"><span class="pre">CmdId.POWER_DOWN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.REGISTER_ALL_CAPABILITIES"><code class="docutils literal notranslate"><span class="pre">CmdId.REGISTER_ALL_CAPABILITIES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.REGISTER_ALL_SETTINGS"><code class="docutils literal notranslate"><span class="pre">CmdId.REGISTER_ALL_SETTINGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.REGISTER_ALL_STATUSES"><code class="docutils literal notranslate"><span class="pre">CmdId.REGISTER_ALL_STATUSES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.SET_DATE_TIME"><code class="docutils literal notranslate"><span class="pre">CmdId.SET_DATE_TIME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.SET_DATE_TIME_DST"><code class="docutils literal notranslate"><span class="pre">CmdId.SET_DATE_TIME_DST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.SET_PAIRING_COMPLETE"><code class="docutils literal notranslate"><span class="pre">CmdId.SET_PAIRING_COMPLETE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.SET_SHUTTER"><code class="docutils literal notranslate"><span class="pre">CmdId.SET_SHUTTER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.SET_THIRD_PARTY_CLIENT_INFO"><code class="docutils literal notranslate"><span class="pre">CmdId.SET_THIRD_PARTY_CLIENT_INFO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.SET_WIFI"><code class="docutils literal notranslate"><span class="pre">CmdId.SET_WIFI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.SLEEP"><code class="docutils literal notranslate"><span class="pre">CmdId.SLEEP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.TAG_HILIGHT"><code class="docutils literal notranslate"><span class="pre">CmdId.TAG_HILIGHT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.UNREGISTER_ALL_CAPABILITIES"><code class="docutils literal notranslate"><span class="pre">CmdId.UNREGISTER_ALL_CAPABILITIES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.UNREGISTER_ALL_SETTINGS"><code class="docutils literal notranslate"><span class="pre">CmdId.UNREGISTER_ALL_SETTINGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.CmdId.UNREGISTER_ALL_STATUSES"><code class="docutils literal notranslate"><span class="pre">CmdId.UNREGISTER_ALL_STATUSES</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.CmdType"><code class="docutils literal notranslate"><span class="pre">CmdType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.ErrorCode"><code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ErrorCode.ERROR"><code class="docutils literal notranslate"><span class="pre">ErrorCode.ERROR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ErrorCode.INVALID_PARAM"><code class="docutils literal notranslate"><span class="pre">ErrorCode.INVALID_PARAM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ErrorCode.SUCCESS"><code class="docutils literal notranslate"><span class="pre">ErrorCode.SUCCESS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ErrorCode.UNKNOWN"><code class="docutils literal notranslate"><span class="pre">ErrorCode.UNKNOWN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.FeatureId"><code class="docutils literal notranslate"><span class="pre">FeatureId</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.FeatureId.COMMAND"><code class="docutils literal notranslate"><span class="pre">FeatureId.COMMAND</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.FeatureId.NETWORK_MANAGEMENT"><code class="docutils literal notranslate"><span class="pre">FeatureId.NETWORK_MANAGEMENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.FeatureId.QUERY"><code class="docutils literal notranslate"><span class="pre">FeatureId.QUERY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.FeatureId.SETTING"><code class="docutils literal notranslate"><span class="pre">FeatureId.SETTING</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.GoProEnum"><code class="docutils literal notranslate"><span class="pre">GoProEnum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.GoProEnumMeta"><code class="docutils literal notranslate"><span class="pre">GoProEnumMeta</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.GoProFlagEnum"><code class="docutils literal notranslate"><span class="pre">GoProFlagEnum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.CM_NET_MGMT_COMM"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.CM_NET_MGMT_COMM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.CN_NET_MGMT_RESP"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.CN_NET_MGMT_RESP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.CQ_COMMAND"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.CQ_COMMAND</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.CQ_COMMAND_RESP"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.CQ_COMMAND_RESP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.CQ_QUERY"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.CQ_QUERY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.CQ_QUERY_RESP"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.CQ_QUERY_RESP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.CQ_SENSOR"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.CQ_SENSOR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.CQ_SENSOR_RESP"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.CQ_SENSOR_RESP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.CQ_SETTINGS"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.CQ_SETTINGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.CQ_SETTINGS_RESP"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.CQ_SETTINGS_RESP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.INTERNAL_81"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.INTERNAL_81</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.INTERNAL_82"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.INTERNAL_82</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.INTERNAL_83"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.INTERNAL_83</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.INTERNAL_84"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.INTERNAL_84</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.S_CAMERA_MANAGEMENT"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.S_CAMERA_MANAGEMENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.S_CONTROL_QUERY"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.S_CONTROL_QUERY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.S_INTERNAL"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.S_INTERNAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.S_WIFI_ACCESS_POINT"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.S_WIFI_ACCESS_POINT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.WAP_CSI_PASSWORD"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.WAP_CSI_PASSWORD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.WAP_PASSWORD"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.WAP_PASSWORD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.WAP_POWER"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.WAP_POWER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.WAP_SSID"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.WAP_SSID</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.GoProUUIDs.WAP_STATE"><code class="docutils literal notranslate"><span class="pre">GoProUUIDs.WAP_STATE</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.ProducerType"><code class="docutils literal notranslate"><span class="pre">ProducerType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.ProtobufDescriptor"><code class="docutils literal notranslate"><span class="pre">ProtobufDescriptor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ProtobufDescriptor.name"><code class="docutils literal notranslate"><span class="pre">ProtobufDescriptor.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ProtobufDescriptor.values_by_name"><code class="docutils literal notranslate"><span class="pre">ProtobufDescriptor.values_by_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.ProtobufDescriptor.values_by_number"><code class="docutils literal notranslate"><span class="pre">ProtobufDescriptor.values_by_number</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId"><code class="docutils literal notranslate"><span class="pre">QueryCmdId</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.GET_CAPABILITIES_NAME"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.GET_CAPABILITIES_NAME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.GET_CAPABILITIES_VAL"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.GET_CAPABILITIES_VAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.GET_SETTING_NAME"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.GET_SETTING_NAME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.GET_SETTING_VAL"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.GET_SETTING_VAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.GET_STATUS_VAL"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.GET_STATUS_VAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.INVALID_FOR_TESTING"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.INVALID_FOR_TESTING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.PROTOBUF_QUERY"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.PROTOBUF_QUERY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.REG_CAPABILITIES_UPDATE"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.REG_CAPABILITIES_UPDATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.REG_SETTING_VAL_UPDATE"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.REG_SETTING_VAL_UPDATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.REG_STATUS_VAL_UPDATE"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.REG_STATUS_VAL_UPDATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.SETTING_CAPABILITY_PUSH"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.SETTING_CAPABILITY_PUSH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.SETTING_VAL_PUSH"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.SETTING_VAL_PUSH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.STATUS_VAL_PUSH"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.STATUS_VAL_PUSH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.UNREG_CAPABILITIES_UPDATE"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.UNREG_CAPABILITIES_UPDATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.UNREG_SETTING_VAL_UPDATE"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.UNREG_SETTING_VAL_UPDATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.QueryCmdId.UNREG_STATUS_VAL_UPDATE"><code class="docutils literal notranslate"><span class="pre">QueryCmdId.UNREG_STATUS_VAL_UPDATE</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.ResponseType"><code class="docutils literal notranslate"><span class="pre">ResponseType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.SettingId"><code class="docutils literal notranslate"><span class="pre">SettingId</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.ANTI_FLICKER"><code class="docutils literal notranslate"><span class="pre">SettingId.ANTI_FLICKER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.AUTO_OFF"><code class="docutils literal notranslate"><span class="pre">SettingId.AUTO_OFF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.CAMERA_UX_MODE"><code class="docutils literal notranslate"><span class="pre">SettingId.CAMERA_UX_MODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.FPS"><code class="docutils literal notranslate"><span class="pre">SettingId.FPS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.HYPERSMOOTH"><code class="docutils literal notranslate"><span class="pre">SettingId.HYPERSMOOTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_102"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_102</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_103"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_103</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_104"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_104</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_105"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_105</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_106"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_106</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_111"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_111</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_112"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_112</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_114"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_114</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_115"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_115</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_116"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_116</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_117"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_117</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_118"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_118</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_124"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_124</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_125"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_125</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_126"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_126</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_129"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_129</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_13"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_13</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_130"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_130</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_131"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_131</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_132"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_132</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_133"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_133</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_139"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_139</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_142"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_142</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_144"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_144</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_145"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_145</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_146"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_146</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_147"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_147</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_148"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_148</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_149"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_149</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_153"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_153</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_154"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_154</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_155"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_155</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_156"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_156</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_157"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_157</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_158"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_158</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_159"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_159</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_160"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_160</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_161"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_161</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_163"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_163</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_164"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_164</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_165"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_165</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_166"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_166</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_167"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_167</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_168"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_168</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_169"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_169</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_174"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_174</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_19"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_19</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_24"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_24</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_30"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_30</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_31"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_31</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_32"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_32</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_37"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_37</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_41"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_41</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_42"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_42</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_43"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_43</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_44"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_44</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_45"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_45</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_47"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_47</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_48"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_48</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_5"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_5</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_54"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_54</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_6"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_6</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_60"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_60</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_61"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_61</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_62"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_62</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_64"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_64</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_65"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_65</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_66"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_66</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_67"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_67</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_68"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_68</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_69"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_69</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_75"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_75</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_76"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_76</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_79"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_79</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_83"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_83</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_84"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_84</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_85"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_85</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_86"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_86</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_87"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_87</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_88"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_88</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INTERNAL_96"><code class="docutils literal notranslate"><span class="pre">SettingId.INTERNAL_96</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.INVALID_FOR_TESTING"><code class="docutils literal notranslate"><span class="pre">SettingId.INVALID_FOR_TESTING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.LED"><code class="docutils literal notranslate"><span class="pre">SettingId.LED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.MAX_LENS_MOD"><code class="docutils literal notranslate"><span class="pre">SettingId.MAX_LENS_MOD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.MEDIA_FORMAT"><code class="docutils literal notranslate"><span class="pre">SettingId.MEDIA_FORMAT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.MULTI_SHOT_FOV"><code class="docutils literal notranslate"><span class="pre">SettingId.MULTI_SHOT_FOV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.PHOTO_EASY_MODE"><code class="docutils literal notranslate"><span class="pre">SettingId.PHOTO_EASY_MODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.PHOTO_FOV"><code class="docutils literal notranslate"><span class="pre">SettingId.PHOTO_FOV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.PHOTO_HORIZON_LEVELING"><code class="docutils literal notranslate"><span class="pre">SettingId.PHOTO_HORIZON_LEVELING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.PROTOBUF_SETTING"><code class="docutils literal notranslate"><span class="pre">SettingId.PROTOBUF_SETTING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.RESOLUTION"><code class="docutils literal notranslate"><span class="pre">SettingId.RESOLUTION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.STAR_TRAIL_LENGTH"><code class="docutils literal notranslate"><span class="pre">SettingId.STAR_TRAIL_LENGTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.SYSTEM_VIDEO_MODE"><code class="docutils literal notranslate"><span class="pre">SettingId.SYSTEM_VIDEO_MODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.VIDEO_EASY_MODE"><code class="docutils literal notranslate"><span class="pre">SettingId.VIDEO_EASY_MODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.VIDEO_FOV"><code class="docutils literal notranslate"><span class="pre">SettingId.VIDEO_FOV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.VIDEO_HORIZON_LEVELING"><code class="docutils literal notranslate"><span class="pre">SettingId.VIDEO_HORIZON_LEVELING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.VIDEO_PERFORMANCE_MODE"><code class="docutils literal notranslate"><span class="pre">SettingId.VIDEO_PERFORMANCE_MODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.SettingId.WIFI_BAND"><code class="docutils literal notranslate"><span class="pre">SettingId.WIFI_BAND</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.StatusId"><code class="docutils literal notranslate"><span class="pre">StatusId</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.ACC_MIC_STAT"><code class="docutils literal notranslate"><span class="pre">StatusId.ACC_MIC_STAT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.ACTIVE_PRESET"><code class="docutils literal notranslate"><span class="pre">StatusId.ACTIVE_PRESET</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.ANALYTICS_RDY"><code class="docutils literal notranslate"><span class="pre">StatusId.ANALYTICS_RDY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.ANALYTICS_SIZE"><code class="docutils literal notranslate"><span class="pre">StatusId.ANALYTICS_SIZE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.APP_COUNT"><code class="docutils literal notranslate"><span class="pre">StatusId.APP_COUNT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.AP_SSID"><code class="docutils literal notranslate"><span class="pre">StatusId.AP_SSID</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.AP_STATE"><code class="docutils literal notranslate"><span class="pre">StatusId.AP_STATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.BAND_5GHZ_AVAIL"><code class="docutils literal notranslate"><span class="pre">StatusId.BAND_5GHZ_AVAIL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.BATT_LEVEL"><code class="docutils literal notranslate"><span class="pre">StatusId.BATT_LEVEL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.BATT_OK_OTA"><code class="docutils literal notranslate"><span class="pre">StatusId.BATT_OK_OTA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.BATT_PRESENT"><code class="docutils literal notranslate"><span class="pre">StatusId.BATT_PRESENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.CAMERA_CONTROL"><code class="docutils literal notranslate"><span class="pre">StatusId.CAMERA_CONTROL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.CAMERA_LENS_TYPE"><code class="docutils literal notranslate"><span class="pre">StatusId.CAMERA_LENS_TYPE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.CAPTURE_DELAY"><code class="docutils literal notranslate"><span class="pre">StatusId.CAPTURE_DELAY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.CAPT_DELAY_ACTIVE"><code class="docutils literal notranslate"><span class="pre">StatusId.CAPT_DELAY_ACTIVE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.CONTROL_OVER_USB"><code class="docutils literal notranslate"><span class="pre">StatusId.CONTROL_OVER_USB</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.CREATING_PRESET"><code class="docutils literal notranslate"><span class="pre">StatusId.CREATING_PRESET</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.CURRENT_TIME_MS"><code class="docutils literal notranslate"><span class="pre">StatusId.CURRENT_TIME_MS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.DEPRECATED_40"><code class="docutils literal notranslate"><span class="pre">StatusId.DEPRECATED_40</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.DEPRECATED_87"><code class="docutils literal notranslate"><span class="pre">StatusId.DEPRECATED_87</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.DEPRECATED_92"><code class="docutils literal notranslate"><span class="pre">StatusId.DEPRECATED_92</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.DIGITAL_ZOOM"><code class="docutils literal notranslate"><span class="pre">StatusId.DIGITAL_ZOOM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.DIG_ZOOM_ACTIVE"><code class="docutils literal notranslate"><span class="pre">StatusId.DIG_ZOOM_ACTIVE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.DOWNLOAD_CANCEL_PEND"><code class="docutils literal notranslate"><span class="pre">StatusId.DOWNLOAD_CANCEL_PEND</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.ENCODING"><code class="docutils literal notranslate"><span class="pre">StatusId.ENCODING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.EXPOSURE_TYPE"><code class="docutils literal notranslate"><span class="pre">StatusId.EXPOSURE_TYPE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.EXPOSURE_X"><code class="docutils literal notranslate"><span class="pre">StatusId.EXPOSURE_X</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.EXPOSURE_Y"><code class="docutils literal notranslate"><span class="pre">StatusId.EXPOSURE_Y</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.EXT_BATT_LEVEL"><code class="docutils literal notranslate"><span class="pre">StatusId.EXT_BATT_LEVEL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.EXT_BATT_PRESENT"><code class="docutils literal notranslate"><span class="pre">StatusId.EXT_BATT_PRESENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.FIRST_TIME"><code class="docutils literal notranslate"><span class="pre">StatusId.FIRST_TIME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.FLATMODE_ID"><code class="docutils literal notranslate"><span class="pre">StatusId.FLATMODE_ID</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.GPS_STAT"><code class="docutils literal notranslate"><span class="pre">StatusId.GPS_STAT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.INTERNAL_14"><code class="docutils literal notranslate"><span class="pre">StatusId.INTERNAL_14</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.INTERNAL_46"><code class="docutils literal notranslate"><span class="pre">StatusId.INTERNAL_46</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.INTERNAL_47"><code class="docutils literal notranslate"><span class="pre">StatusId.INTERNAL_47</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.INTERNAL_48"><code class="docutils literal notranslate"><span class="pre">StatusId.INTERNAL_48</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.INTERNAL_90"><code class="docutils literal notranslate"><span class="pre">StatusId.INTERNAL_90</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.INT_BATT_PER"><code class="docutils literal notranslate"><span class="pre">StatusId.INT_BATT_PER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.IN_CONTEXT_MENU"><code class="docutils literal notranslate"><span class="pre">StatusId.IN_CONTEXT_MENU</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.LAST_HILIGHT"><code class="docutils literal notranslate"><span class="pre">StatusId.LAST_HILIGHT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.LCD_LOCK_ACTIVE"><code class="docutils literal notranslate"><span class="pre">StatusId.LCD_LOCK_ACTIVE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.LINUX_CORE_ACTIVE"><code class="docutils literal notranslate"><span class="pre">StatusId.LINUX_CORE_ACTIVE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.LIVE_BURST_REM"><code class="docutils literal notranslate"><span class="pre">StatusId.LIVE_BURST_REM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.LIVE_BURST_TOTAL"><code class="docutils literal notranslate"><span class="pre">StatusId.LIVE_BURST_TOTAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.LOCATE_ACTIVE"><code class="docutils literal notranslate"><span class="pre">StatusId.LOCATE_ACTIVE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.LOGS_READY"><code class="docutils literal notranslate"><span class="pre">StatusId.LOGS_READY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.MEDIA_MOD_MIC_STAT"><code class="docutils literal notranslate"><span class="pre">StatusId.MEDIA_MOD_MIC_STAT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.MEDIA_MOD_STAT"><code class="docutils literal notranslate"><span class="pre">StatusId.MEDIA_MOD_STAT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.MOBILE_VIDEO"><code class="docutils literal notranslate"><span class="pre">StatusId.MOBILE_VIDEO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.MODE_GROUP"><code class="docutils literal notranslate"><span class="pre">StatusId.MODE_GROUP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.MULTI_COUNT_DOWN"><code class="docutils literal notranslate"><span class="pre">StatusId.MULTI_COUNT_DOWN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.NEXT_POLL"><code class="docutils literal notranslate"><span class="pre">StatusId.NEXT_POLL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.NUM_GROUP_PHOTO"><code class="docutils literal notranslate"><span class="pre">StatusId.NUM_GROUP_PHOTO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.NUM_GROUP_VIDEO"><code class="docutils literal notranslate"><span class="pre">StatusId.NUM_GROUP_VIDEO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.NUM_HILIGHTS"><code class="docutils literal notranslate"><span class="pre">StatusId.NUM_HILIGHTS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.NUM_TOTAL_PHOTO"><code class="docutils literal notranslate"><span class="pre">StatusId.NUM_TOTAL_PHOTO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.NUM_TOTAL_VIDEO"><code class="docutils literal notranslate"><span class="pre">StatusId.NUM_TOTAL_VIDEO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.ORIENTATION"><code class="docutils literal notranslate"><span class="pre">StatusId.ORIENTATION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.OTA_STAT"><code class="docutils literal notranslate"><span class="pre">StatusId.OTA_STAT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.PAIR_STATE"><code class="docutils literal notranslate"><span class="pre">StatusId.PAIR_STATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.PAIR_STATE2"><code class="docutils literal notranslate"><span class="pre">StatusId.PAIR_STATE2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.PAIR_TIME"><code class="docutils literal notranslate"><span class="pre">StatusId.PAIR_TIME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.PAIR_TYPE"><code class="docutils literal notranslate"><span class="pre">StatusId.PAIR_TYPE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.PHOTOS_REM"><code class="docutils literal notranslate"><span class="pre">StatusId.PHOTOS_REM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.PHOTO_PRESETS"><code class="docutils literal notranslate"><span class="pre">StatusId.PHOTO_PRESETS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.PRESETS_GROUP"><code class="docutils literal notranslate"><span class="pre">StatusId.PRESETS_GROUP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.PRESET_MODIFIED"><code class="docutils literal notranslate"><span class="pre">StatusId.PRESET_MODIFIED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.PREVIEW_ENABLED"><code class="docutils literal notranslate"><span class="pre">StatusId.PREVIEW_ENABLED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.QUICK_CAPTURE"><code class="docutils literal notranslate"><span class="pre">StatusId.QUICK_CAPTURE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.REMOTE_CTRL_CONN"><code class="docutils literal notranslate"><span class="pre">StatusId.REMOTE_CTRL_CONN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.REMOTE_CTRL_VER"><code class="docutils literal notranslate"><span class="pre">StatusId.REMOTE_CTRL_VER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.SCHEDULED_CAPTURE"><code class="docutils literal notranslate"><span class="pre">StatusId.SCHEDULED_CAPTURE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.SCHEDULED_PRESET"><code class="docutils literal notranslate"><span class="pre">StatusId.SCHEDULED_PRESET</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.SD_RATING_CHECK_ERROR"><code class="docutils literal notranslate"><span class="pre">StatusId.SD_RATING_CHECK_ERROR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.SD_STATUS"><code class="docutils literal notranslate"><span class="pre">StatusId.SD_STATUS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.SD_WRITE_SPEED_ERROR"><code class="docutils literal notranslate"><span class="pre">StatusId.SD_WRITE_SPEED_ERROR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.SEC_SD_STAT"><code class="docutils literal notranslate"><span class="pre">StatusId.SEC_SD_STAT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.SPACE_REM"><code class="docutils literal notranslate"><span class="pre">StatusId.SPACE_REM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.STREAMING_SUPP"><code class="docutils literal notranslate"><span class="pre">StatusId.STREAMING_SUPP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.SYSTEM_BUSY"><code class="docutils literal notranslate"><span class="pre">StatusId.SYSTEM_BUSY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.SYSTEM_HOT"><code class="docutils literal notranslate"><span class="pre">StatusId.SYSTEM_HOT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.SYSTEM_READY"><code class="docutils literal notranslate"><span class="pre">StatusId.SYSTEM_READY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.TIMELAPSE_PRESETS"><code class="docutils literal notranslate"><span class="pre">StatusId.TIMELAPSE_PRESETS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.TIMELAPSE_REM"><code class="docutils literal notranslate"><span class="pre">StatusId.TIMELAPSE_REM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.TIMEWARP_SPEED_RAMP"><code class="docutils literal notranslate"><span class="pre">StatusId.TIMEWARP_SPEED_RAMP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.TOTAL_SD_SPACE_KB"><code class="docutils literal notranslate"><span class="pre">StatusId.TOTAL_SD_SPACE_KB</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.TURBO_MODE"><code class="docutils literal notranslate"><span class="pre">StatusId.TURBO_MODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.USB_CONNECTED"><code class="docutils literal notranslate"><span class="pre">StatusId.USB_CONNECTED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.VIDEO_HINDSIGHT"><code class="docutils literal notranslate"><span class="pre">StatusId.VIDEO_HINDSIGHT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.VIDEO_LOW_TEMP"><code class="docutils literal notranslate"><span class="pre">StatusId.VIDEO_LOW_TEMP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.VIDEO_PRESETS"><code class="docutils literal notranslate"><span class="pre">StatusId.VIDEO_PRESETS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.VIDEO_PROGRESS"><code class="docutils literal notranslate"><span class="pre">StatusId.VIDEO_PROGRESS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.VIDEO_REM"><code class="docutils literal notranslate"><span class="pre">StatusId.VIDEO_REM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.WAP_PROV_STAT"><code class="docutils literal notranslate"><span class="pre">StatusId.WAP_PROV_STAT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.WAP_SCAN_STATE"><code class="docutils literal notranslate"><span class="pre">StatusId.WAP_SCAN_STATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.WAP_SCAN_TIME"><code class="docutils literal notranslate"><span class="pre">StatusId.WAP_SCAN_TIME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.WIFI_BARS"><code class="docutils literal notranslate"><span class="pre">StatusId.WIFI_BARS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.WIRELESS_BAND"><code class="docutils literal notranslate"><span class="pre">StatusId.WIRELESS_BAND</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.WIRELESS_ENABLED"><code class="docutils literal notranslate"><span class="pre">StatusId.WIRELESS_ENABLED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.WLAN_SSID"><code class="docutils literal notranslate"><span class="pre">StatusId.WLAN_SSID</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.constants.StatusId.ZOOM_ENCODING"><code class="docutils literal notranslate"><span class="pre">StatusId.ZOOM_ENCODING</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.constants.enum_factory"><code class="docutils literal notranslate"><span class="pre">enum_factory()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-open_gopro.exceptions">Exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.exceptions.ConnectFailed"><code class="docutils literal notranslate"><span class="pre">ConnectFailed</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.exceptions.ConnectionTerminated"><code class="docutils literal notranslate"><span class="pre">ConnectionTerminated</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.exceptions.ExceptionHandler"><code class="docutils literal notranslate"><span class="pre">ExceptionHandler</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.exceptions.FailedToFindDevice"><code class="docutils literal notranslate"><span class="pre">FailedToFindDevice</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.exceptions.GoProError"><code class="docutils literal notranslate"><span class="pre">GoProError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.exceptions.GoProNotInitialized"><code class="docutils literal notranslate"><span class="pre">GoProNotInitialized</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.exceptions.InvalidConfiguration"><code class="docutils literal notranslate"><span class="pre">InvalidConfiguration</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.exceptions.InvalidOpenGoProVersion"><code class="docutils literal notranslate"><span class="pre">InvalidOpenGoProVersion</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.exceptions.ResponseParseError"><code class="docutils literal notranslate"><span class="pre">ResponseParseError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.exceptions.ResponseTimeout"><code class="docutils literal notranslate"><span class="pre">ResponseTimeout</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#bluetooth-services">Bluetooth Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.ble.services.BleUUID"><code class="docutils literal notranslate"><span class="pre">BleUUID</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.ble.services.BleUUID.Format"><code class="docutils literal notranslate"><span class="pre">BleUUID.Format</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.ble.services.BleUUID.format"><code class="docutils literal notranslate"><span class="pre">BleUUID.format</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
@@ -248,6 +710,7 @@ this document in order):</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#november-9-2022">0.11.2 (November-9-2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#october-18-2022">0.11.1 (October-18-2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#september-14-2022">0.11.0 (September-14-2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#july-14-2022">0.10.0 (July-14-2022)</a></li>

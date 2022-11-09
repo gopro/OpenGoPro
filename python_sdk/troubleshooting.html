@@ -16,6 +16,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -92,19 +93,17 @@
 <p>Furthermore, there is a help function in <cite>util.py</cite> that will enable logging with some default modules / levels.
 All of the demos use this and here is an example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">GoPro</span>
 <span class="kn">from</span> <span class="nn">open_gopro.util</span> <span class="kn">import</span> <span class="n">setup_logging</span>
 
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-
-<span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logging</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;my_log.log&quot;</span><span class="p">))</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logging</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;my_log.log&quot;</span><span class="p">))</span>
 
 <span class="k">with</span> <span class="n">GoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I&#39;m logged!&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>There are several other logging-related functions that extend and / or offer finer logging control.</p>
 <p>Here is a guide for the levels:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -145,7 +144,7 @@ CSV file. This can be done as such:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">GoPro</span>
 
 <span class="k">with</span> <span class="n">GoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="n">gopro</span><span class="o">.</span><span class="n">_ble</span><span class="o">.</span><span class="n">services_as_csv</span><span class="p">()</span>
+    <span class="n">gopro</span><span class="o">.</span><span class="n">_ble</span><span class="o">.</span><span class="n">gatt_db</span><span class="o">.</span><span class="n">dump_to_csv</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>

@@ -16,6 +16,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -229,7 +230,7 @@ or an Enum from the <a class="reference internal" href="api.html#parameters"><sp
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">GoPro</span><span class="p">,</span> <span class="n">Params</span>
 
 <span class="k">with</span> <span class="n">GoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="n">gopro</span><span class="o">.</span><span class="n">ble_command</span><span class="o">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">Shutter</span><span class="o">.</span><span class="n">ON</span><span class="p">)</span>
+    <span class="n">gopro</span><span class="o">.</span><span class="n">ble_command</span><span class="o">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">Toggle</span><span class="o">.</span><span class="n">ENABLE</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -243,9 +244,8 @@ the method will block until a <a class="reference internal" href="#handling-resp
 (i.e. <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands" title="open_gopro.api.ble_commands.BleCommands"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.api.ble_commands.BleCommands</span></code></a> or
 <a class="reference internal" href="api.html#open_gopro.api.wifi_commands.WifiCommands" title="open_gopro.api.wifi_commands.WifiCommands"><code class="xref py py-class docutils literal notranslate"><span class="pre">open_gopro.api.wifi_commands.WifiCommands</span></code></a>), thus they can be called directly:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">GoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="n">gopro</span><span class="o">.</span><span class="n">wifi_command</span><span class="o">.</span><span class="n">set_preset</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">Preset</span><span class="o">.</span><span class="n">ACTIVITY</span><span class="p">)</span>
-    <span class="n">gopro</span><span class="o">.</span><span class="n">ble_command</span><span class="o">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">Shutter</span><span class="o">.</span><span class="n">ON</span><span class="p">)</span>
-    <span class="n">gopro</span><span class="o">.</span><span class="n">wifi_command</span><span class="o">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">Shutter</span><span class="o">.</span><span class="n">OFF</span><span class="p">)</span>
+    <span class="n">gopro</span><span class="o">.</span><span class="n">ble_command</span><span class="o">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">Toggle</span><span class="o">.</span><span class="n">ENABLE</span><span class="p">)</span>
+    <span class="n">gopro</span><span class="o">.</span><span class="n">wifi_command</span><span class="o">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">Toggle</span><span class="o">.</span><span class="n">DISABLE</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
