@@ -1,42 +1,45 @@
 # docker-compose.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:06:11 PM
 
+# Note! The container_name is ignored for run (https://github.com/docker/compose/issues/2061) so we set it
+# via CLI arg
+
 version: '3.7'
 services:
     jekyll:
         image: ghcr.io/gopro/opengopro:main
+        container_name: jekyll
         build:
             context: .
         volumes:
             - ./docs:/site
         ports:
             - '4998:4998'
+        healthcheck:
+            test: curl --fail http://localhost:4998 || exit 1
+            interval: 2s
+            retries: 45
+            start_period: 20s
+            timeout: 100s
         environment:
-            - JEKYLL_ENV=docker # Set (to anything other develop) so that jekyll serve won't overwrite site.url
+            - JEKYLL_ENV=docker # Set (to anything other than develop) so that jekyll serve won't overwrite site.url
         # Set the default command to be run if no parameters are passed which will...
         # Build, then serve, the jekyll site. Serve it from 0.0.0.0:4998 to satisfy docker. Enable incremental
         # rebuilds on changes.
         # Use the default config file and then also an additional config file (chosen by JEKYLL_CONFIG
         # environment variable) to set the correct site.url.
-        command: bundle exec jekyll serve --host 0.0.0.0 --port 4998 --force_polling --incremental --config _config.yml,_config-\${JEKYLL_CONFIG}.yml
+        command: bundle exec jekyll serve --host 0.0.0.0 --port 4998 --force_polling --incremental --config _config.yml,_config-temp.yml
         networks:
-            open_gopro:
-                # Linkchecker can't use the docker container name to access via network so we hardcode an IP
-                ipv4_address: 172.16.238.10
+            - open_gopro
 
-    linkchecker:
-        image: ghcr.io/linkchecker/linkchecker:latest
-        # Only show errors (no verbose). Check all URL's. Ignore camera URL's and theme URL
-        # Use static IP defined in jekyll container.
-        command: --check-extern --ignore-url ".*10\.5\.5\.9.*" --timeout 5 -o text http://172.16.238.10:4998
+    plant_uml:
+        image: plantuml/plantuml-server
+        container_name: plant_uml
+        ports:
+            - '8080:8080'
         networks:
-            open_gopro:
+            - open_gopro
 
 networks:
     open_gopro:
-        ipam:
-            driver: default
-            config:
-                # A subnet must be defined in order for a container to use a static IP. There is nothing special
-                # about this subnet number.
-                - subnet: '172.16.238.0/24'
+        name: open_gopro

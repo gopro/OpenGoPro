@@ -56,6 +56,7 @@ import importlib.metadata as importlib_metadata
 
 version = importlib_metadata.version("open_gopro")
 
+# Why aren't these working? Was it because they are are not included from api.rst?
 # autodoc_type_aliases = {
 #     "ExceptionHandler": "open_gopro.exceptions.ExceptionHandler",
 #     "ResponseType": "constants.ResponseType",
@@ -67,6 +68,7 @@ nitpick_ignore = [
     ("py:class", "T_co"),
     ("py:class", "ExceptionHandler"),
     ("py:class", "datetime.datetime"),
+    ("py:class", "open_gopro.responses.Parser"),
 ]
 nitpick_ignore_regex = [
     (r"py:class", r".+Type"),
@@ -132,6 +134,8 @@ def on_autodoc_process_signature(app, what, name, *_) -> Optional[tuple[str, str
             debug_print(command)
             # Get the __call__ docstring of the attribute's class type
             docstring: str = type(command).__call__.__doc__
+            if not docstring:
+                raise RuntimeError(f"{command} missing docstring")
             debug_print(docstring)
             # Remove all prepended whitespace before section labels
             match_labels = re.compile(r"^[^\S\r\n]+(?=Args:|Returns:|Raises:)", flags=re.MULTILINE)
@@ -151,9 +155,8 @@ def on_autodoc_process_signature(app, what, name, *_) -> Optional[tuple[str, str
                     args += f"{param}: {param_type}, "
             args = args.strip(", ")
             # Build signature
-            # NOTE! we're using () if there are no args. This ends up looking like (()) in the signature. This
-            # is the best current solution since a blank space ir empty string result in no parentheses
-            ret = (f"({args or '()'})", d._get_return_type())
+            # TODO can we find a way to show empty parentheses if no args. Currently '' produces no parentheses
+            ret = (f"({args or ''})", d._get_return_type())
             debug_print(ret)
             return ret
     except Exception as e:

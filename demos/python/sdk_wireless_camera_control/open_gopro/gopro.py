@@ -30,7 +30,7 @@ from open_gopro.interface import GoProInterface, JsonParser
 
 logger = logging.getLogger(__name__)
 
-KEEP_ALIVE_INTERVAL: Final = 60
+KEEP_ALIVE_INTERVAL: Final = 28  # Covers worst case scenario (30 seconds for pismo)
 WRITE_TIMEOUT: Final = 5
 GET_TIMEOUT: Final = 5
 HTTP_GET_RETRIES: Final = 5
@@ -133,9 +133,8 @@ class GoPro(GoProInterface):
     >>> gopro.close()
 
     Args:
-        target (Pattern, Optional): A regex to search for the target GoPro's name. For example, the Last 4 digits
-            of camera name / serial number (i.e. 0456 for GoPro0456). Defaults to None (i.e. connect to first
-            discovered GoPro)
+        target (Pattern, Optional): A regex to search for the target GoPro's name. For example, "GoPro 0456").
+            Defaults to None (i.e. connect to first discovered GoPro)
         wifi_interface (str, Optional): Set to specify the wifi interface the local machine will use to connect
             to the GoPro. If None (or not set), first discovered interface will be used.
         sudo_password (str, Optional): User password for sudo. If not passed, you will be prompted if a password
@@ -393,17 +392,16 @@ class GoPro(GoProInterface):
 
     @ensure_initialized(Interface.BLE)
     def get_notification(self, timeout: Optional[float] = None) -> Optional[GoProResp]:
-        """Get a notification that we received from a registered listener.
+        """Get an asynchronous notification that we received from a registered listener.
 
         If timeout is None, this will block until a notification is received.
-        The updates are received via FIFO
+        The updates are received via FIFO.
 
         Args:
             timeout (float, Optional): Time to wait for a notification before returning. Defaults to None (wait forever)
 
         Returns:
-            GoProResp: Received notification if there is one in the queue
-            None otherwise
+            GoProResp: Received notification if there is one in the queue or None otherwise
         """
         try:
             return self._out_q.get(timeout=timeout)
@@ -535,6 +533,7 @@ class GoPro(GoProInterface):
             self._state_thread.start()
             self.ble_status.encoding_active.register_value_update()
             self.ble_status.system_ready.register_value_update()
+            self.keep_alive()
             self._keep_alive_thread.start()
         logger.info("BLE is ready!")
 
@@ -680,7 +679,7 @@ class GoPro(GoProInterface):
 
         # Wait to be notified that response was received
         try:
-            response = self._sync_resp_ready_q.get(timeout=WRITE_TIMEOUT)
+            response: GoProResp = self._sync_resp_ready_q.get(timeout=WRITE_TIMEOUT)
         except queue.Empty as e:
             logger.error(f"Response timeout of {WRITE_TIMEOUT} seconds!")
             raise GpException.ResponseTimeout(WRITE_TIMEOUT) from e
@@ -694,8 +693,8 @@ class GoPro(GoProInterface):
             if have_lock:
                 self._ready.release()
                 logger.trace("command released the lock")  # type: ignore
-            # If this was set shutter on, we need to wait to be notified that encoding has started
-            if response.cmd is CmdId.SET_SHUTTER and data[-1] == 1:
+            # If this was set shutter on success, we need to wait to be notified that encoding has started
+            if response.is_ok and response.cmd is CmdId.SET_SHUTTER and data[-1] == 1:
                 logger.trace("Waiting to receive encoding started.")  # type: ignore
                 self._encoding_started.wait()
 
@@ -777,7 +776,7 @@ class GoPro(GoProInterface):
         logger.debug(f"Sending:  {url}")
 
         response: Optional[GoProResp] = None
-        for retry in range(HTTP_GET_RETRIES):
+        for _ in range(HTTP_GET_RETRIES):
             try:
                 request = requests.get(url, timeout=GET_TIMEOUT)
                 request.raise_for_status()
@@ -791,9 +790,12 @@ class GoPro(GoProInterface):
                 break
             except requests.exceptions.ConnectionError as e:
                 logger.warning(repr(e))
+            except Exception as e:  # pylint: disable=broad-except
+                logger.critical(f"Unexpected error: {repr(e)}")
+            finally:
                 logger.warning("Retrying to send the command...")
-                if retry == HTTP_GET_RETRIES - 1:
-                    raise GpException.ResponseTimeout(HTTP_GET_RETRIES) from e
+        else:
+            raise GpException.ResponseTimeout(HTTP_GET_RETRIES)
 
         assert response is not None
         return response

@@ -541,7 +541,7 @@ class TextLog(Log):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.viewer = ScrolledText.ScrolledText(self, state="disabled", font="TkFixedFont")
+        self.viewer = ScrolledText.ScrolledText(self, state="disabled")
 
     def create_view(self) -> None:
         """Display the text log view"""

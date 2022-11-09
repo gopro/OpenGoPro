@@ -30,7 +30,6 @@ Complete documentation can be found on [Open GoPro](https://gopro.github.io/Open
     -   BLE implemented using [bleak](https://pypi.org/project/bleak/)
     -   Wi-Fi controller provided in the Open GoPro package (loosely based on the [Wireless Library](https://pypi.org/project/wireless/)
 -   Supports all commands, settings, and statuses from the [Open GoPro API](https://gopro.github.io/OpenGoPro/)
--   Supports all versions of the Open GoPro API
 -   Automatically handles connection maintenance:
     -   manage camera ready / encoding
     -   periodically sends keep alive signals

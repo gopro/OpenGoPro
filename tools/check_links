@@ -1,15 +1,32 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # parse_linkchecker_results/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:06:28 PM
 
+ALLOWABLE_ERROR_CODES=(200 403 500 501 502 503 504 505 506 507 508 509 510)
 
+set -e
+
+echo "🚦 Serving the test site"
+# This is the cleaner and more modern solution but Github Actions does not yet support --wait
+# docker-compose up -d --wait --force-recreate
+# TODO Remove the following once Github actions gets upgraded
+docker-compose up -d --force-recreate
+echo "⏳ Waiting for server to be ready..."
+until curl http://localhost:4998 >/dev/null 2>&1; do
+    sleep 1
+done
+echo "🔗 Checking links"
+docker run --rm --network=open_gopro ghcr.io/linkchecker/linkchecker:354ea93 \
+    --check-extern \
+    --ignore-url ".*10\.5\.5\.9.*" \
+    --timeout 5 \
+    -o text \
+    http://jekyll:4998 | tee link_results
+echo "🧺 Parsing link checker results to remove server side problems..."
 PARSE_STATE_URL=1
 PARSE_STATE_STATUS=2
-
-allowable_error_codes=(403 500 501 502 503 504 505 506 507 508 509 510)
-
+RESULTS=link_results
 total_our_errors=0
-
 state=$PARSE_STATE_URL
 while IFS= read -r line; do
     if [[ $state == $PARSE_STATE_URL ]]; then
@@ -23,7 +40,7 @@ while IFS= read -r line; do
             state=$PARSE_STATE_URL
 
             our_fault=true
-            for error_code in ${allowable_error_codes[@]}; do
+            for error_code in ${ALLOWABLE_ERROR_CODES[@]}; do
                 if [[ "$error" =~ .*${error_code}.* ]]; then
                     # This is not our error so we don't care about it
                     our_fault=false
@@ -39,9 +56,12 @@ while IFS= read -r line; do
     else
         echo "unexpected parse state" >&2
     fi
-done <"$1"
+done <"$RESULTS"
 
 echo "Found $total_our_errors errors that are our fault."
+
+rm $RESULTS
+docker kill jekyll >/dev/null 2>&1
 
 if [[ $total_our_errors == 0 ]]; then
     echo "😃 SUCCESS!!"

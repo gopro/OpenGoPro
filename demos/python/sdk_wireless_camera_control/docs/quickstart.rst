@@ -172,7 +172,7 @@ WiFi Demo
 The `wifi` demo will discover a GoPro camera, connect to it, enable the camera'a WiFi AP, and then connect
 to it via WiFi. This is useful if you want to send HTTP commands to it from some external source such as curl.
 
-Note that this demo will run, thus maintaining the WiFi connection, until exited via keyboard interrupt.
+Note that this demo will run, thus maintaining the WiFi connection, until exited by pressing enter.
 
 .. code-block:: console
 

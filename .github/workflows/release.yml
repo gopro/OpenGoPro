@@ -15,7 +15,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: checkout release branch
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
                   ref: release
                   path: release
@@ -24,7 +24,7 @@ jobs:
                   lfs: true
 
             - name: checkout Target branch
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
                   repository: gopro/OpenGoPro
                   ref: main

@@ -676,9 +676,14 @@ class NetworksetupWireless(WifiController):
                     break
             if discovered:
                 break
+            time.sleep(1)
         else:
             logger.warning("Wifi Scan timed out")
             return False
+
+        # If we're already connected, return
+        if self.current()[0] == ssid:
+            return True
 
         # Connect now that we found the ssid
         logger.info(f"Connecting to {ssid}...")

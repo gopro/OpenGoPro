@@ -12,7 +12,7 @@ import requests_mock
 
 from open_gopro import GoPro
 from open_gopro.constants import ActionId, CmdId, GoProUUIDs, QueryCmdId, SettingId, StatusId
-from open_gopro.responses import GoProResp, ParserMapType
+from open_gopro.responses import GoProResp
 from open_gopro.api.wifi_commands import WifiParsers
 
 
@@ -679,7 +679,7 @@ def test_http_response_with_extra_parsing():
     with requests_mock.Mocker() as m:
         m.get(url, json=test_json)
         response = requests.get(url)
-        r = GoProResp._from_http_response(WifiParsers.CameraStateParser, response)
+        r = GoProResp._from_http_response(WifiParsers.CameraStateParser(), response)
 
         assert r.is_parsed
         assert r.is_received

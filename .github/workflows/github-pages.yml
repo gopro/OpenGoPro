@@ -16,7 +16,7 @@ jobs:
             run_job: ${{ steps.check_files.outputs.run_job }}
         steps:
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
                   fetch-depth: 2
 
@@ -50,8 +50,8 @@ jobs:
                       path: ~/Library/Caches/pip
 
         steps:
-            - name: Checkout source branch
-              uses: actions/checkout@v2
+            - name: Checkout source branch (the PR branch)
+              uses: actions/checkout@v3
               with:
                   path: source
 
@@ -80,8 +80,8 @@ jobs:
               working-directory: ./source/demos/python/sdk_wireless_camera_control/
               run: nox -s docs
 
-            - name: Checkout target branch
-              uses: actions/checkout@v2
+            - name: Checkout target branch (the gh-pages branch)
+              uses: actions/checkout@v3
               with:
                   ref: gh-pages
                   path: target
@@ -104,34 +104,34 @@ jobs:
         if: always()
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout the repo
-              uses: actions/checkout@v2
-
-            - name: Restore Ruby gems cache
-              uses: actions/cache@v2
+            - name: Checkout source branch (the PR branch)
+              uses: actions/checkout@v3
               with:
-                  path: docs/vendor/bundle
-                  key: ${{ runner.os }}-gems-${{ hashFiles('**/docs/Gemfile') }}
-                  restore-keys: |
-                      ${{ runner.os }}-gems--
+                  path: source
 
-            - name: Prepare Demos
+            - name: Checkout target branch (the gh-pages branch)
+              uses: actions/checkout@v3
+              with:
+                  ref: gh-pages
+                  path: target
+
+            - name: Build Github Pages
               shell: bash
-              run: make prepare_demos
+              working-directory: ./source
+              run: |
+                if [[ ${{ github.repository }} == gopro/OpenGoPro ]]; then
+                  make build
+                else
+                  make build HOST_URL=${{ secrets.STAGING_GH_PAGES_SITE }} BASE_URL='\"\"'
+                fi
 
-            - name: Build and Deploy External Github Pages
-              if: ${{ github.repository == 'gopro/OpenGoPro' }}
-              uses: helaili/jekyll-action@2.2.0
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  keep_history: true
-                  target_branch: 'gh-pages'
-                  jekyll_build_options: '--baseurl /OpenGoPro'
+            - name: Deploy to Github Pages
+              run: |
+                  cp -r ./source/docs/_site/* ./target
+                  cd  ./target
+                  git add .
+                  git config user.name github-actions
+                  git config user.email github-actions@github.com
+                  git commit --allow-empty -m "Github Pages build from Action ${GITHUB_SHA}"
+                  git push
 
-            - name: Build and Deploy Internal Github Pages
-              if: ${{ github.repository != 'gopro/OpenGoPro' }}
-              uses: helaili/jekyll-action@2.2.0
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  keep_history: true
-                  target_branch: 'gh-pages'

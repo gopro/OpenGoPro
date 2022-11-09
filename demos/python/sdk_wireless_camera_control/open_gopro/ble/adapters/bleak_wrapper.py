@@ -8,13 +8,14 @@ import asyncio
 import logging
 import platform
 import threading
-from typing import Pattern, Any, Callable, Optional, Union
+from typing import Pattern, Any, Callable, Optional
 
 import pexpect
-from bleak import BleakScanner, BleakClient, BleakError
+from bleak import BleakScanner, BleakClient
 from bleak.backends.device import BLEDevice as BleakDevice
+from bleak.backends.characteristic import BleakGATTCharacteristic
+from bleak.backends.scanner import AdvertisementData
 
-from open_gopro.exceptions import ConnectFailed
 from open_gopro.util import Singleton
 from open_gopro.ble import (
     Service,
@@ -28,6 +29,7 @@ from open_gopro.ble import (
     UUIDs,
     CharProps,
 )
+from open_gopro.exceptions import ConnectFailed
 
 logger = logging.getLogger(__name__)
 
@@ -88,7 +90,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         self._ready.set()
         self._module_loop.run_forever()
 
-    def _as_coroutine(self, action: Callable, timeout: float = None) -> Any:
+    def _as_coroutine(self, action: Callable, timeout: Optional[float] = None) -> Any:
         """Run a function as a coroutine in the module thread.
 
         This will transfer execution of the given partial to the module thread of this instance
@@ -133,7 +135,6 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         async def _async_write() -> None:
             logger.debug(f"Writing to {uuid}: {uuid.hex}")
-            # TODO make with / without response configurable
             await handle.write_gatt_char(uuid2bleak_string(uuid), data, response=True)
 
         self._as_coroutine(_async_write)
@@ -153,26 +154,28 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         """
 
         async def _async_scan() -> BleakDevice:
+            stop_event = asyncio.Event()
             logger.info(f"Scanning for {token.pattern} bluetooth devices...")
             devices: dict[str, BleakDevice] = {}
             uuids = [] if service_uuids is None else [uuid2bleak_string(uuid) for uuid in service_uuids]
 
-            def _scan_callback(device: BleakDevice, _: Any) -> None:
+            def scan_callback(device: BleakDevice, adv_data: AdvertisementData) -> None:
                 """Only keep devices that have a device name token
 
                 For GoPro, this must be coming from the scan response
 
                 Args:
                     device (BleakDevice): discovered device
+                    adv_data (AdvertisementData): advertisement (and / or scan response) data
                 """
-                if (name := device.name) and name not in devices:
+                if (name := adv_data.local_name) and name not in devices:
                     devices[name] = device
                     logger.info(f"\tDiscovered: {device}")
+                    stop_event.set()
 
             # Now get list of connectable advertisements
-            await BleakScanner(service_uuids=uuids).discover(
-                timeout=timeout, detection_callback=_scan_callback, service_uuids=uuids
-            )
+            async with BleakScanner(timeout=timeout, detection_callback=scan_callback, service_uuids=uuids):
+                await stop_event.wait()
             # Now look for our matching device(s)
             if not (matched_devices := [device for name, device in devices.items() if token.match(name)]):
                 raise FailedToFindDevice
@@ -182,12 +185,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         return self._as_coroutine(_async_scan)
 
-    def connect(
-        self,
-        disconnect_cb: Callable,
-        device: BleakDevice,
-        timeout: int = 15,
-    ) -> BleakClient:
+    def connect(self, disconnect_cb: Callable, device: BleakDevice, timeout: int = 15) -> BleakClient:
         """Connect to a device.
 
         Args:
@@ -196,39 +194,75 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
             timeout (int): How long to try connecting before timing out and raising exception. Defaults to 15.
 
         Raises:
-            ConnectFailed: Connection failed to establish
+            ConnectFailed: Connection was not established
 
         Returns:
             BleakClient: Connected device
         """
 
         class ConnectSession:
-            """Transient connection manager to manage disconnects while connecting."""
+            """Catch connection failures and multiplex disconnect handler callback
 
-            def __init__(self) -> None:
-                self.disconnected = asyncio.Event()
-                self.disconnected.clear()
+            Args:
+                client_cb (Callable): client's disconnect callback
+            """
 
-            def disconnect_handler(self, _: Any) -> None:
+            def __init__(self, client_cb: Callable) -> None:
+                self._disconnected = asyncio.Event()
+                self._disconnected.clear()
+                self._client_cb = client_cb
+                self._should_use_client_cb = False
+
+            def disconnect_cb(self, *args: Any) -> None:
+                """Multiplex between client and during-connection disconnect handler callback
+
+                Args:
+                    *args (Any): passed through
+                """
+                # pylint: disable=expression-not-assigned
+                self._client_cb(args) if self._should_use_client_cb else self._connecting_cb(args)
+
+            @property
+            def did_fail(self) -> bool:
+                """Did the connection fail during establishment?
+
+                Returns:
+                    bool: True if it failed, False otherwise
+                """
+                return self._disconnected.is_set()
+
+            def _connecting_cb(self, _: Any) -> None:
                 """Disconnect handler which is only used while connection is being established.
 
                 Will be set to App's passed-in disconnect handler once connection is established
                 """
                 # From sniffer capture analysis, this is always due to the slave not receiving the master's
                 # connection request. This is (potentially) normal BLE behavior.
-                self.disconnected.set()
+                self._disconnected.set()
 
-        async def _async_connect() -> tuple[Optional[BleakClient], Optional[Union[Exception, BaseException]]]:
+            def use_client_cb(self) -> None:
+                """Use the client's requested connection handler callback when a disconnection is caught"""
+                self._should_use_client_cb = True
+
+            async def catch_connection_failure(self) -> None:
+                """Disconnection callback to be used during connection establishment"""
+                await self._disconnected.wait()
+
+        async def _async_connect() -> tuple[BleakClient, Optional[BaseException]]:
             logger.info(f"Establishing BLE connection to {device}...")
 
-            connect_session = ConnectSession()
-            bleak_client = BleakClient(
-                device, disconnected_callback=connect_session.disconnect_handler, use_cached=False
+            connect_session = ConnectSession(disconnect_cb)
+            client = BleakClient(
+                device, disconnected_callback=connect_session.disconnect_cb, use_cached=False, timeout=timeout
             )
             exception = None
             try:
-                task_connect = asyncio.create_task(bleak_client.connect(timeout=timeout), name="connect")
-                task_disconnected = asyncio.create_task(connect_session.disconnected.wait(), name="disconnect")
+                task_connect: asyncio.Task = asyncio.create_task(
+                    client.connect(timeout=timeout), name="connect"
+                )
+                task_disconnected: asyncio.Task = asyncio.create_task(
+                    connect_session.catch_connection_failure(), name="disconnect"
+                )
                 finished, unfinished = await asyncio.wait(
                     [task_connect, task_disconnected], return_when=asyncio.FIRST_COMPLETED
                 )
@@ -240,13 +274,14 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                         break
                 for task in unfinished:
                     task.cancel()
-                if connect_session.disconnected.is_set():
+                if connect_session.did_fail:
                     exception = Exception("Connection failed during establishment..")
-            except (BleakError, asyncio.TimeoutError) as e:
+                else:
+                    connect_session.use_client_cb()
+            except Exception as e:  # pylint: disable=broad-except
                 exception = e
 
-            bleak_client.set_disconnected_callback(disconnect_cb)
-            return bleak_client, exception
+            return client, exception
 
         client, exception = self._as_coroutine(_async_connect)
         if exception:
@@ -266,7 +301,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
 
         async def _async_def_pair() -> None:
             logger.debug("Attempting to pair...")
-            if OS := platform.system() == "Linux":
+            if (OS := platform.system()) == "Linux":
                 # Manually control bluetoothctl on Linux
                 bluetoothctl = pexpect.spawn("bluetoothctl")
                 if logger.level == logging.DEBUG:
@@ -306,18 +341,27 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
             handler (NotiHandlerType): Notification callback handler
         """
 
+        def bleak_notification_cb_adapter(characteristic: BleakGATTCharacteristic, data: bytearray) -> None:
+            """Adapt bleak notification callback signature to our interface signature
+
+            Args:
+                characteristic (BleakGATTCharacteristic): characteristic that notification was received on
+                data (bytearray): data received as part of notification
+            """
+            handler(characteristic.handle, data)
+
         async def _async_enable_notifications() -> None:
             logger.info("Enabling notifications...")
             for service in handle.services:
                 for char in service.characteristics:
                     if "notify" in char.properties:
                         logger.debug(f"Enabling notification on char {char.uuid}")
-                        await handle.start_notify(char, handler)
+                        await handle.start_notify(char, bleak_notification_cb_adapter)
             logger.info("Done enabling notifications")
 
         self._as_coroutine(_async_enable_notifications)
 
-    def discover_chars(self, handle: BleakClient, uuids: type[UUIDs] = None) -> GattDB:
+    def discover_chars(self, handle: BleakClient, uuids: Optional[type[UUIDs]] = None) -> GattDB:
         """Discover all characteristics for a connected handle.
 
         By default, the BLE controller only knows Spec-Defined BleUUID's so any additional BleUUID's should
