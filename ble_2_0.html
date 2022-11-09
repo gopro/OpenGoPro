@@ -336,6 +336,22 @@
         
       </li>
     
+      <li>
+        
+          <a href="/OpenGoPro/http_2_0"><span class="nav__sub-title">HTTP 2.0</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/protos"><span class="nav__sub-title">Protobuf</span></a>
+        
+
+        
+      </li>
+    
   </ul>
 </nav>
 
@@ -370,7 +386,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          42 minute read
+          44 minute read
         
       </span>
     
@@ -414,9 +430,12 @@
 <li><a href="#flowchart">Flowchart</a></li>
 </ul>
 </li>
-<li><a href="#keep-alive">Keep Alive</a></li>
+<li>
+<a href="#keep-alive">Keep Alive</a><ul><li><a href="#command">Command</a></li></ul>
+</li>
 <li>
 <a href="#limitations">Limitations</a><ul>
+<li><a href="#hero11-black-mini">HERO11 Black Mini</a></li>
 <li><a href="#hero11-black">HERO11 Black</a></li>
 <li><a href="#hero10-black">HERO10 Black</a></li>
 <li><a href="#hero9-black">HERO9 Black</a></li>
@@ -507,10 +526,11 @@
 <a href="#global-behaviors">Global Behaviors</a><ul><li><a href="#set-camera-control-status">Set Camera Control Status</a></li></ul>
 </li>
 <li>
-<a href="#station-mode">Station Mode</a><ul>
-<li><a href="#station-mode-sequence">Station Mode Sequence</a></li>
-<li><a href="#request-a-new-connection">Request a new Connection</a></li>
-<li><a href="#polling-for-state">Polling for State</a></li>
+<a href="#interface-with-access-points">Interface with Access Points</a><ul>
+<li><a href="#scanning-for-access-points">Scanning for Access Points</a></li>
+<li><a href="#connect-to-a-new-access-point">Connect to a New Access Point</a></li>
+<li><a href="#connect-to-a-provisioned-access-point">Connect to a Provisioned Access Point</a></li>
+<li><a href="#disconnect-from-an-access-point">Disconnect from an Access Point</a></li>
 </ul>
 </li>
 <li><a href="#turbo-transfer">Turbo Transfer</a></li>
@@ -557,10 +577,16 @@ Below is a table of cameras that support GoPro's public BLE API:
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>ID</td>
-      <td>Model</td>
+      <td>Model ID</td>
+      <td>Model Code</td>
       <td>Marketing Name</td>
       <td>Minimal Firmware Version</td>
+    </tr>
+    <tr>
+      <td>60</td>
+      <td>H22.03</td>
+      <td>HERO11 Black Mini</td>
+      <td><a href="https://gopro.com/en/us/update/hero11-black-mini">v01.10.00</a></td>
     </tr>
     <tr>
       <td>58</td>
@@ -903,30 +929,9 @@ If the camera is in sleep mode, connecting to it will cause the camera to wake a
 In order to communicate with a GoPro camera via BLE, a client must first be paired with the camera.
 The pairing procedure must be done once for each new client.
 If the camera is factory reset, all clients will need to pair again.
-To pair with the camera, use the UI to put it into pairing mode, connect via BLE and then initiate pairing.
+To pair with the camera, use the UI to put it into <a href="https://community.gopro.com/s/article/GoPro-Quik-How-To-Pair-Your-Camera?language=en_US">pairing mode</a>, connect via BLE and then initiate pairing.
 The camera will whitelist the client so subsequent connections do not require pairing.
 </p>
-
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Camera</td>
-      <td>To Enter Pairing Mode</td>
-    </tr>
-    <tr>
-      <td>HERO11 Black</td>
-      <td>Swipe down, swipe left, Preferences » Wireless connections » Connect device » GoPro Quik App</td>
-    </tr>
-    <tr>
-      <td>HERO10 Black</td>
-      <td>Swipe down, swipe left, Connections » Connect Device » GoPro Quik App</td>
-    </tr>
-    <tr>
-      <td>HERO9 Black</td>
-      <td>Swipe down, swipe left, Connections » Connect Device » GoPro App</td>
-    </tr>
-  </tbody>
-</table>
 
 <h3 id="steps">Steps</h3>
 <p>
@@ -1025,15 +1030,31 @@ Exit
 Below is a flowchart describing how to determine whether a respose is TLV or Protobuf and then parse it appropriately.
 </p>
 
-<p><img class="plantuml" src="http://www.plantuml.com/plantuml/svg/~h407374617274756d6c0a0a0a27204e6f74653a205468652077656972642077686974657370616365206973207573656420746f206d616b65207468652074657874206c6f6f6b20626574746572206f6e2074686520696d6167650a0a73746172740a0a3a5265636569766520726573706f6e736520523b0a3a45787472616374207061796c6f616420503b0a0a696620285c6e505b305d203d3d20466561747572652049442066726f6d20726f77204e206f662050726f746f62756620494473205461626c655c6e414e445c6e505b315d20696e20416374696f6e20494473206c6973742066726f6d20726f77204e206f662050726f746f62756620494473205461626c655c6e29207468656e2028796573290a202020203a5220697320612070726f746f627566206d6573736167653b0a656c736520286e6f290a202020203a52206973206120544c56206d6573736167653b0a656e6469660a0a7377697463682028526573706f6e73652052290a63617365202820544c56206d657373616765290a2020207377697463682028526573706f6e73652055554944290a2020206361736520282047502d303037325c6e2028436f6e74726f6c29290a2020202020203a52206973206120436f6d6d616e6420726573706f6e73653b0a20202063617365202820202047502d303037345c6e2020202853657474696e677329290a2020202020203a5220697320612053657474696e677320726573706f6e73653b0a2020206361736520282047502d303037365c6e2028517565727929290a2020202020203a52206973206120517565727920726573706f6e73653b0a202020656e647377697463680a2020203a5061727365206163636f7264696e676c793b0a6361736520282050726f746f627566206d657373616765290a2020203a46656174757265204944203d20505b305d5c6e416374696f6e204944203d20505b315d3b0a2020203a5573653a2050726f746f62756620436f6d6d616e6473205461626c653b0a2020203a5061727365207573696e6720617070726f7072696174652070726f746f627566206d6573736167653b0a656e647377697463680a0a3a4b6e6f776c65646765213b0a73746f700a0a0a0a0a40656e64756d6c"></p>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="786px" preserveaspectratio="none" style="width:886px;height:786px;background:#FFFFFF;" version="1.1" viewbox="0 0 886 786" width="886px" zoomandpan="magnify"><defs></defs><g><ellipse cx="443" cy="20" fill="#222222" rx="10" ry="10" style="stroke:#222222;stroke-width:1.0;"></ellipse><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="143" x="371.5" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="123" x="381.5" y="71.1387">Receive response R</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="129" x="378.5" y="103.9688"></rect><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="109" x="388.5" y="125.1074">Extract payload P</text><polygon fill="#F1F1F1" points="288.5,157.9375,597.5,157.9375,609.5,189.9492,597.5,221.9609,288.5,221.9609,276.5,189.9492,288.5,157.9375" style="stroke:#181818;stroke-width:0.5;"></polygon><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="4" x="288.5" y="168.1479"> </text><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="298" x="288.5" y="180.9526">P[0] == Feature ID from row N of Protobuf IDs Table</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="23" x="288.5" y="193.7573">AND</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="309" x="288.5" y="206.562">P[1] in Action IDs list from row N of Protobuf IDs Table</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="4" x="288.5" y="219.3667"> </text><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="20" x="256.5" y="187.355">yes</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="14" x="609.5" y="187.355">no</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="173" x="180" y="231.9609"></rect><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="153" x="190" y="253.0996">R is a protobuf message</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="140" x="549.5" y="231.9609"></rect><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="120" x="559.5" y="253.0996">R is a TLV message</text><polygon fill="#F1F1F1" points="443,271.9297,455,283.9297,443,295.9297,431,283.9297,443,271.9297" style="stroke:#181818;stroke-width:0.5;"></polygon><polygon fill="#F1F1F1" points="409.5,315.9297,476.5,315.9297,488.5,327.9297,476.5,339.9297,409.5,339.9297,397.5,327.9297,409.5,315.9297" style="stroke:#181818;stroke-width:0.5;"></polygon><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="67" x="409.5" y="331.7378">Response R</text><polygon fill="#F1F1F1" points="244,375.5391,331,375.5391,343,387.5391,331,399.5391,244,399.5391,232,387.5391,244,375.5391" style="stroke:#181818;stroke-width:0.5;"></polygon><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="87" x="244" y="391.3472">Response UUID</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="183" x="11" y="459.1401"></rect><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="163" x="21" y="480.2788">R is a Command response</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="173" x="214" y="459.1401"></rect><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="153" x="224" y="480.2788">R is a Settings response</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="157" x="407" y="459.1401"></rect><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="137" x="417" y="480.2788">R is a Query response</text><polygon fill="#F1F1F1" points="287.5,567.0776,287.5,567.0776,299.5,579.0776,287.5,591.0776,287.5,591.0776,275.5,579.0776,287.5,567.0776" style="stroke:#181818;stroke-width:0.5;"></polygon><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="131" x="222" y="611.0776"></rect><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="111" x="232" y="632.2163">Parse accordingly</text><rect fill="#F1F1F1" height="47.9375" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="129" x="665" y="375.5391"></rect><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="109" x="675" y="396.6777">Feature ID = P[0]</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="99" x="675" y="410.6465">Action ID = P[1]</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="217" x="621" y="456.8589"></rect><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="197" x="631" y="477.9976">Use: Protobuf Commands Table</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="291" x="584" y="513.1089"></rect><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="271" x="594" y="534.2476">Parse using appropriate protobuf message</text><polygon fill="#F1F1F1" points="443,655.0464,443,655.0464,455,667.0464,443,679.0464,443,679.0464,431,667.0464,443,655.0464" style="stroke:#181818;stroke-width:0.5;"></polygon><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="92" x="397" y="699.0464"></rect><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="72" x="407" y="720.1851">Knowledge!</text><ellipse cx="443" cy="764.0151" fill="none" rx="11" ry="11" style="stroke:#222222;stroke-width:1.0;"></ellipse><ellipse cx="443" cy="764.0151" fill="#222222" rx="6" ry="6" style="stroke:#111111;stroke-width:1.0;"></ellipse><line style="stroke:#181818;stroke-width:1.0;" x1="443" x2="443" y1="30" y2="50"></line><polygon fill="#181818" points="439,40,443,50,447,40,443,44" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="443" x2="443" y1="83.9688" y2="103.9688"></line><polygon fill="#181818" points="439,93.9688,443,103.9688,447,93.9688,443,97.9688" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="276.5" x2="266.5" y1="189.9492" y2="189.9492"></line><line style="stroke:#181818;stroke-width:1.0;" x1="266.5" x2="266.5" y1="189.9492" y2="231.9609"></line><polygon fill="#181818" points="262.5,221.9609,266.5,231.9609,270.5,221.9609,266.5,225.9609" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="609.5" x2="619.5" y1="189.9492" y2="189.9492"></line><line style="stroke:#181818;stroke-width:1.0;" x1="619.5" x2="619.5" y1="189.9492" y2="231.9609"></line><polygon fill="#181818" points="615.5,221.9609,619.5,231.9609,623.5,221.9609,619.5,225.9609" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="266.5" x2="266.5" y1="265.9297" y2="283.9297"></line><line style="stroke:#181818;stroke-width:1.0;" x1="266.5" x2="431" y1="283.9297" y2="283.9297"></line><polygon fill="#181818" points="421,279.9297,431,283.9297,421,287.9297,425,283.9297" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="619.5" x2="619.5" y1="265.9297" y2="283.9297"></line><line style="stroke:#181818;stroke-width:1.0;" x1="619.5" x2="455" y1="283.9297" y2="283.9297"></line><polygon fill="#181818" points="465,279.9297,455,283.9297,465,287.9297,461,283.9297" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="443" x2="443" y1="137.9375" y2="157.9375"></line><polygon fill="#181818" points="439,147.9375,443,157.9375,447,147.9375,443,151.9375" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="232" x2="102.5" y1="387.5391" y2="387.5391"></line><line style="stroke:#181818;stroke-width:1.0;" x1="102.5" x2="102.5" y1="387.5391" y2="459.1401"></line><polygon fill="#181818" points="98.5,449.1401,102.5,459.1401,106.5,449.1401,102.5,453.1401" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="48" x="106.5" y="421.5542">GP-0072</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="49" x="106.5" y="434.3589">(Control)</text><line style="stroke:#181818;stroke-width:1.0;" x1="343" x2="485.5" y1="387.5391" y2="387.5391"></line><line style="stroke:#181818;stroke-width:1.0;" x1="485.5" x2="485.5" y1="387.5391" y2="459.1401"></line><polygon fill="#181818" points="481.5,449.1401,485.5,459.1401,489.5,449.1401,485.5,453.1401" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="48" x="489.5" y="421.5542">GP-0076</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="42" x="489.5" y="434.3589">(Query)</text><line style="stroke:#181818;stroke-width:1.0;" x1="287.5" x2="287.5" y1="399.5391" y2="419.9453"></line><line style="stroke:#181818;stroke-width:1.0;" x1="287.5" x2="300.5" y1="419.9453" y2="419.9453"></line><line style="stroke:#181818;stroke-width:1.0;" x1="300.5" x2="300.5" y1="419.9453" y2="459.1401"></line><polygon fill="#181818" points="296.5,449.1401,300.5,459.1401,304.5,449.1401,300.5,453.1401" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="48" x="299.5" y="422.5542">GP-0074</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="55" x="299.5" y="435.3589">(Settings)</text><line style="stroke:#181818;stroke-width:1.0;" x1="102.5" x2="102.5" y1="493.1089" y2="579.0776"></line><line style="stroke:#181818;stroke-width:1.0;" x1="102.5" x2="275.5" y1="579.0776" y2="579.0776"></line><polygon fill="#181818" points="265.5,575.0776,275.5,579.0776,265.5,583.0776,269.5,579.0776" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="485.5" x2="485.5" y1="493.1089" y2="579.0776"></line><line style="stroke:#181818;stroke-width:1.0;" x1="485.5" x2="299.5" y1="579.0776" y2="579.0776"></line><polygon fill="#181818" points="309.5,575.0776,299.5,579.0776,309.5,583.0776,305.5,579.0776" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="300.5" x2="300.5" y1="493.1089" y2="535.3901"></line><line style="stroke:#181818;stroke-width:1.0;" x1="300.5" x2="287.5" y1="535.3901" y2="535.3901"></line><line style="stroke:#181818;stroke-width:1.0;" x1="287.5" x2="287.5" y1="535.3901" y2="567.0776"></line><polygon fill="#181818" points="283.5,557.0776,287.5,567.0776,291.5,557.0776,287.5,561.0776" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="287.5" x2="287.5" y1="591.0776" y2="611.0776"></line><polygon fill="#181818" points="283.5,601.0776,287.5,611.0776,291.5,601.0776,287.5,605.0776" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="729.5" x2="729.5" y1="423.4766" y2="456.8589"></line><polygon fill="#181818" points="725.5,446.8589,729.5,456.8589,733.5,446.8589,729.5,450.8589" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="729.5" x2="729.5" y1="490.8276" y2="513.1089"></line><polygon fill="#181818" points="725.5,503.1089,729.5,513.1089,733.5,503.1089,729.5,507.1089" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="397.5" x2="287.5" y1="327.9297" y2="327.9297"></line><line style="stroke:#181818;stroke-width:1.0;" x1="287.5" x2="287.5" y1="327.9297" y2="375.5391"></line><polygon fill="#181818" points="283.5,365.5391,287.5,375.5391,291.5,365.5391,287.5,369.5391" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="77" x="291.5" y="355.5425">TLV message</text><line style="stroke:#181818;stroke-width:1.0;" x1="488.5" x2="729.5" y1="327.9297" y2="327.9297"></line><line style="stroke:#181818;stroke-width:1.0;" x1="729.5" x2="729.5" y1="327.9297" y2="375.5391"></line><polygon fill="#181818" points="725.5,365.5391,729.5,375.5391,733.5,365.5391,729.5,369.5391" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="11" lengthadjust="spacing" textlength="105" x="733.5" y="355.5425">Protobuf message</text><line style="stroke:#181818;stroke-width:1.0;" x1="287.5" x2="287.5" y1="645.0464" y2="667.0464"></line><line style="stroke:#181818;stroke-width:1.0;" x1="287.5" x2="431" y1="667.0464" y2="667.0464"></line><polygon fill="#181818" points="421,663.0464,431,667.0464,421,671.0464,425,667.0464" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="729.5" x2="729.5" y1="547.0776" y2="667.0464"></line><line style="stroke:#181818;stroke-width:1.0;" x1="729.5" x2="455" y1="667.0464" y2="667.0464"></line><polygon fill="#181818" points="465,663.0464,455,667.0464,465,671.0464,461,667.0464" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="443" x2="443" y1="295.9297" y2="315.9297"></line><polygon fill="#181818" points="439,305.9297,443,315.9297,447,305.9297,443,309.9297" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="443" x2="443" y1="679.0464" y2="699.0464"></line><polygon fill="#181818" points="439,689.0464,443,699.0464,447,689.0464,443,693.0464" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="443" x2="443" y1="733.0151" y2="753.0151"></line><polygon fill="#181818" points="439,743.0151,443,753.0151,447,743.0151,443,747.0151" style="stroke:#181818;stroke-width:1.0;"></polygon></g></svg>
 
 <h2 id="keep-alive">Keep Alive</h2>
 <p>
-Unless changed by the user, GoPro cameras will automatically power off after some time (e.g. 5min, 15min, 30min).
-The Auto Power Down watchdog timer can be reset by sending periodic keep-alive messages to the camera, as below.
-It is recommended to send a keep-alive at least once every 120 seconds.
+In order to maximize battery life, GoPro cameras automatically go to sleep after some time.
+This logic is handled by a combination of an <b>Auto Power Down</b> setting which most (but not all) cameras support
+and a <b>Keep Alive</b> message that the user can regularly send to the camera.
+The camera will automatically go to sleep if both timers reach zero.
 </p>
 
+<p>
+The Auto Power Down timer is reset when the user taps the LCD screen, presses a button on the camera or 
+programmatically (un)sets the shutter, sets a setting, or loads a Preset.
+</p>
+
+<p>
+The Keep Alive timer is reset when the user sends a keep alive message.
+</p>
+
+<p>
+The best practice to prevent the camera from inadvertently going to sleep is to start sending Keep Alive messages
+every <b>3.0</b> seconds after a connection is established.
+</p>
+
+<h3 id="command">Command</h3>
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
@@ -1053,6 +1074,10 @@ It is recommended to send a keep-alive at least once every 120 seconds.
 
 <h2 id="limitations">Limitations</h2>
 
+<h3 id="hero11-black-mini">HERO11 Black Mini</h3>
+<ul>
+<li>The camera will reject requests to change settings while encoding; for example, if Hindsight feature is active, the user cannot change settings</li>
+</ul>
 <h3 id="hero11-black">HERO11 Black</h3>
 <ul>
 <li>The camera will reject requests to change settings while encoding; for example, if Hindsight feature is active, the user cannot change settings</li>
@@ -1244,6 +1269,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Description</td>
       <td>Request</td>
       <td>Response</td>
+      <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
       <td>HERO9 Black</td>
@@ -1257,6 +1283,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x01</td>
@@ -1264,6 +1291,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Shutter: on</td>
       <td>03:01:01:01</td>
       <td>02:01:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1277,6 +1305,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x0D</td>
@@ -1284,6 +1313,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Set date/time to 2022-01-31 03:04:05</td>
       <td>09:0D:07:07:E6:01:1F:03:04:05</td>
       <td>02:0D:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1297,6 +1327,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x0F</td>
@@ -1304,6 +1335,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Set local date/time to: 2022-01-31 03:04:05 (utc-02:00)  (dst: on)</td>
       <td>0C:0F:0A:07:E6:01:1F:03:04:05:FF:88:01</td>
       <td>02:0F:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1314,6 +1346,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Get local date/time</td>
       <td>01:10</td>
       <td>Complex</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1327,6 +1360,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x17</td>
@@ -1334,6 +1368,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>WiFi AP: off</td>
       <td>03:17:01:00</td>
       <td>02:17:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1347,6 +1382,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x18</td>
@@ -1354,6 +1390,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Hilight moment during encoding</td>
       <td>01:18</td>
       <td>02:18:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1367,6 +1404,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x3E</td>
@@ -1377,6 +1415,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x3E</td>
@@ -1384,6 +1423,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Photo</td>
       <td>04:3E:02:03:E9</td>
       <td>02:3E:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1394,6 +1434,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Timelapse</td>
       <td>04:3E:02:03:EA</td>
       <td>02:3E:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1407,6 +1448,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x50</td>
@@ -1417,6 +1459,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x51</td>
@@ -1424,6 +1467,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Get version</td>
       <td>01:51</td>
       <td>Complex</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1470,12 +1514,12 @@ Below are clarifications for complex camera responses
       <td>Length of model number</td>
     </tr>
     <tr>
-      <td>00:00:00:13</td>
-      <td>Model number</td>
+      <td>00:00:00:37</td>
+      <td>Model ID</td>
     </tr>
     <tr>
       <td>0B</td>
-      <td>Length of model name</td>
+      <td>Length of model id</td>
     </tr>
     <tr>
       <td>48:45:52:4F:58:20:42:6C:61:63</td>
@@ -1775,6 +1819,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Option</td>
       <td>Request</td>
       <td>Response</td>
+      <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
       <td>HERO9 Black</td>
@@ -1788,6 +1833,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -1795,6 +1841,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 2.7k (id: 4)</td>
       <td>03:02:01:04</td>
       <td>02:02:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1808,6 +1855,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -1815,6 +1863,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 1440 (id: 7)</td>
       <td>03:02:01:07</td>
       <td>02:02:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1828,6 +1877,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -1835,6 +1885,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 4k 4:3 (id: 18)</td>
       <td>03:02:01:12</td>
       <td>02:02:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1847,6 +1898,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>02:02:00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
@@ -1855,6 +1907,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 5k 4:3 (id: 25)</td>
       <td>03:02:01:19</td>
       <td>02:02:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1866,6 +1919,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:02:01:1A</td>
       <td>02:02:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1875,6 +1929,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 5.3k 4:3 (id: 27)</td>
       <td>03:02:01:1B</td>
       <td>02:02:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1886,6 +1941,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:02:01:1C</td>
       <td>02:02:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1895,6 +1951,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 5.3k (id: 100)</td>
       <td>03:02:01:64</td>
       <td>02:02:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1908,6 +1965,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1915,6 +1973,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 120 (id: 1)</td>
       <td>03:03:01:01</td>
       <td>02:03:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1928,6 +1987,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1935,6 +1995,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 60 (id: 5)</td>
       <td>03:03:01:05</td>
       <td>02:03:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1948,6 +2009,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1955,6 +2017,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 30 (id: 8)</td>
       <td>03:03:01:08</td>
       <td>02:03:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1968,6 +2031,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1975,6 +2039,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 24 (id: 10)</td>
       <td>03:03:01:0A</td>
       <td>02:03:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1988,6 +2053,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>59</td>
@@ -1995,6 +2061,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set auto power down (id: 59) to never (id: 0)</td>
       <td>03:3B:01:00</td>
       <td>01:3B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2005,6 +2072,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set auto power down (id: 59) to 5 min (id: 4)</td>
       <td>03:3B:01:04</td>
       <td>01:3B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2015,6 +2083,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set auto power down (id: 59) to 15 min (id: 6)</td>
       <td>03:3B:01:06</td>
       <td>01:3B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2025,6 +2094,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set auto power down (id: 59) to 30 min (id: 7)</td>
       <td>03:3B:01:07</td>
       <td>01:3B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2038,6 +2108,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
@@ -2045,6 +2116,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video digital lenses (id: 121) to narrow (id: 2)</td>
       <td>03:79:01:02</td>
       <td>02:79:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2058,6 +2130,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
@@ -2068,6 +2141,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
@@ -2075,6 +2149,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video digital lenses (id: 121) to max superview (id: 7)</td>
       <td>03:79:01:07</td>
       <td>02:79:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2088,6 +2163,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
@@ -2095,6 +2171,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video digital lenses (id: 121) to hyperview (id: 9)</td>
       <td>03:79:01:09</td>
       <td>02:79:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2106,6 +2183,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:79:01:0A</td>
       <td>02:79:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2116,6 +2194,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:7A:01:13</td>
       <td>02:7A:00</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
@@ -2125,6 +2204,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo digital lenses (id: 122) to max superview (id: 100)</td>
       <td>03:7A:01:64</td>
       <td>02:7A:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2135,6 +2215,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo digital lenses (id: 122) to wide (id: 101)</td>
       <td>03:7A:01:65</td>
       <td>02:7A:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2145,6 +2226,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo digital lenses (id: 122) to linear (id: 102)</td>
       <td>03:7A:01:66</td>
       <td>02:7A:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2156,6 +2238,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:7B:01:13</td>
       <td>02:7B:00</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
@@ -2165,6 +2248,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set time lapse digital lenses (id: 123) to max superview (id: 100)</td>
       <td>03:7B:01:64</td>
       <td>02:7B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2175,6 +2259,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set time lapse digital lenses (id: 123) to wide (id: 101)</td>
       <td>03:7B:01:65</td>
       <td>02:7B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2185,6 +2270,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set time lapse digital lenses (id: 123) to linear (id: 102)</td>
       <td>03:7B:01:66</td>
       <td>02:7B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2195,6 +2281,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set media format (id: 128) to time lapse video (id: 13)</td>
       <td>03:80:01:0D</td>
       <td>02:80:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2205,6 +2292,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set media format (id: 128) to time lapse photo (id: 20)</td>
       <td>03:80:01:14</td>
       <td>02:80:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2215,6 +2303,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set media format (id: 128) to night lapse photo (id: 21)</td>
       <td>03:80:01:15</td>
       <td>02:80:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2225,6 +2314,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set media format (id: 128) to night lapse video (id: 26)</td>
       <td>03:80:01:1A</td>
       <td>02:80:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2238,6 +2328,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>134</td>
@@ -2245,6 +2336,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set setup anti flicker (id: 134) to 50hz (id: 3)</td>
       <td>03:86:01:03</td>
       <td>02:86:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2258,6 +2350,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>135</td>
@@ -2265,6 +2358,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video hypersmooth (id: 135) to on (id: 1)</td>
       <td>03:87:01:01</td>
       <td>02:87:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2275,6 +2369,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video hypersmooth (id: 135) to high (id: 2)</td>
       <td>03:87:01:02</td>
       <td>02:87:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2288,6 +2383,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>135</td>
@@ -2295,6 +2391,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video hypersmooth (id: 135) to auto boost (id: 4)</td>
       <td>03:87:01:04</td>
       <td>02:87:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2306,6 +2403,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:87:01:64</td>
       <td>02:87:00</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2315,6 +2413,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video horizon levelling (id: 150) to off (id: 0)</td>
       <td>03:96:01:00</td>
       <td>02:96:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2325,6 +2424,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video horizon levelling (id: 150) to locked (id: 2)</td>
       <td>03:96:01:02</td>
       <td>02:96:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2335,6 +2435,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo horizon levelling (id: 151) to off (id: 0)</td>
       <td>03:97:01:00</td>
       <td>02:97:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2345,6 +2446,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo horizon levelling (id: 151) to locked (id: 2)</td>
       <td>03:97:01:02</td>
       <td>02:97:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2355,6 +2457,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set max lens (id: 162) to off (id: 0)</td>
       <td>03:A2:01:00</td>
       <td>02:A2:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.20.00</td>
       <td><span style="color:green">✔</span></td>
@@ -2365,6 +2468,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set max lens (id: 162) to on (id: 1)</td>
       <td>03:A2:01:01</td>
       <td>02:A2:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.20.00</td>
       <td><span style="color:green">✔</span></td>
@@ -2376,6 +2480,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:AD:01:00</td>
       <td>02:AD:00</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2385,6 +2490,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video performance mode (id: 173) to extended battery (id: 1)</td>
       <td>03:AD:01:01</td>
       <td>02:AD:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td>&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
@@ -2396,6 +2502,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:AD:01:02</td>
       <td>02:AD:00</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2405,6 +2512,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set controls (id: 175) to easy (id: 0)</td>
       <td>03:AF:01:00</td>
       <td>02:AF:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2416,6 +2524,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:AF:01:01</td>
       <td>02:AF:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2425,6 +2534,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 8x ultra slo-mo (id: 0)</td>
       <td>03:B0:01:00</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2435,6 +2545,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 4x super slo-mo (id: 1)</td>
       <td>03:B0:01:01</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2445,6 +2556,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 2x slo-mo (id: 2)</td>
       <td>03:B0:01:02</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2455,6 +2567,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 1x speed / low light (id: 3)</td>
       <td>03:B0:01:03</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2465,6 +2578,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt) (id: 4)</td>
       <td>03:B0:01:04</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2475,6 +2589,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt) (id: 5)</td>
       <td>03:B0:01:05</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2485,6 +2600,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 1x speed / low light (ext. batt) (id: 6)</td>
       <td>03:B0:01:06</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2495,6 +2611,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 8x ultra slo-mo (50 hz) (id: 7)</td>
       <td>03:B0:01:07</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2505,6 +2622,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 4x super slo-mo (50 hz) (id: 8)</td>
       <td>03:B0:01:08</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2515,6 +2633,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 2x slo-mo (50 hz) (id: 9)</td>
       <td>03:B0:01:09</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2525,6 +2644,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 1x speed / low light (50hz) (id: 10)</td>
       <td>03:B0:01:0A</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2535,6 +2655,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt, 50hz) (id: 11)</td>
       <td>03:B0:01:0B</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2545,6 +2666,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt, 50hz) (id: 12)</td>
       <td>03:B0:01:0C</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2555,6 +2677,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 1x speed / low light (ext. batt, 50hz) (id: 13)</td>
       <td>03:B0:01:0D</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2565,6 +2688,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set enable night photo (id: 177) to off (id: 0)</td>
       <td>03:B1:01:00</td>
       <td>02:B1:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2575,6 +2699,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set enable night photo (id: 177) to on (id: 1)</td>
       <td>03:B1:01:01</td>
       <td>02:B1:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2586,6 +2711,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:B2:01:00</td>
       <td>02:B2:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2595,6 +2721,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set wireless band (id: 178) to 5ghz (id: 1)</td>
       <td>03:B2:01:01</td>
       <td>02:B2:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2606,6 +2733,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:B3:01:01</td>
       <td>02:B3:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2615,6 +2743,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set trail length (id: 179) to long (id: 2)</td>
       <td>03:B3:01:02</td>
       <td>02:B3:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2626,6 +2755,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:B3:01:03</td>
       <td>02:B3:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2635,6 +2765,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video mode (id: 180) to highest quality (id: 0)</td>
       <td>03:B4:01:00</td>
       <td>02:B4:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2645,6 +2776,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video mode (id: 180) to extended battery (id: 1)</td>
       <td>03:B4:01:01</td>
       <td>02:B4:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2716,10 +2848,20 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="9">
+      <td rowspan="12">
 <a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a>
 </td>
-      <td>HERO11 Black</td>
+      <td>HERO11 Black Mini</td>
+      <td>v01.10.00</td>
+    </tr>
+    <tr>
+      <td rowspan="3">HERO11 Black</td>
+      <td>v01.20.00</td>
+    </tr>
+    <tr>
+      <td>v01.12.00</td>
+    </tr>
+    <tr>
       <td>v01.10.00</td>
     </tr>
     <tr>
@@ -3021,6 +3163,7 @@ Below is a table of supported status IDs.<br>
       <td>Description</td>
       <td>Type</td>
       <td>Values</td>
+      <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
       <td>HERO9 Black</td>
@@ -3035,6 +3178,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>2</td>
@@ -3046,6 +3190,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>3</td>
@@ -3054,6 +3199,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3064,6 +3210,7 @@ Below is a table of supported status IDs.<br>
       <td>External battery power level in percent</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3078,6 +3225,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>8</td>
@@ -3086,6 +3234,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3100,6 +3249,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>10</td>
@@ -3108,6 +3258,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3122,6 +3273,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>13</td>
@@ -3129,6 +3281,7 @@ Below is a table of supported status IDs.<br>
       <td>When encoding video, this is the duration (seconds) of the video so far; 0 otherwise</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3143,14 +3296,16 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>19</td>
       <td>State</td>
       <td>The pairing state of the camera</td>
       <td>integer</td>
-      <td>0: Success<br>1: In Progress<br>2: Failed<br>3: Stopped<br>
+      <td>0: Never Started<br>1: Started<br>2: Aborted<br>3: Cancelled<br>4: Completed<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3165,6 +3320,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>21</td>
@@ -3172,6 +3328,7 @@ Below is a table of supported status IDs.<br>
       <td>Time (milliseconds) since boot of last successful pairing complete action</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3186,6 +3343,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>23</td>
@@ -3193,6 +3351,7 @@ Below is a table of supported status IDs.<br>
       <td>The time, in milliseconds since boot that the WiFi Access Point scan completed</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3207,6 +3366,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>26</td>
@@ -3214,6 +3374,7 @@ Below is a table of supported status IDs.<br>
       <td>Wireless remote control version</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3228,6 +3389,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>28</td>
@@ -3235,6 +3397,7 @@ Below is a table of supported status IDs.<br>
       <td>Wireless Pairing State</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3248,6 +3411,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>30</td>
@@ -3258,6 +3422,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>31</td>
@@ -3265,6 +3430,7 @@ Below is a table of supported status IDs.<br>
       <td>The number of wireless devices connected to the camera</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3279,6 +3445,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>33</td>
@@ -3290,6 +3457,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>34</td>
@@ -3297,6 +3465,7 @@ Below is a table of supported status IDs.<br>
       <td>How many photos can be taken before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3310,6 +3479,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>36</td>
@@ -3317,6 +3487,7 @@ Below is a table of supported status IDs.<br>
       <td>How many group photos can be taken with current settings before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3330,6 +3501,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>38</td>
@@ -3340,6 +3512,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>39</td>
@@ -3347,6 +3520,7 @@ Below is a table of supported status IDs.<br>
       <td>Total number of videos on sdcard</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3361,6 +3535,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>42</td>
@@ -3369,6 +3544,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3383,6 +3559,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>49</td>
@@ -3393,6 +3570,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>54</td>
@@ -3400,6 +3578,7 @@ Below is a table of supported status IDs.<br>
       <td>Remaining space on the sdcard in Kilobytes</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3414,6 +3593,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>56</td>
@@ -3421,6 +3601,7 @@ Below is a table of supported status IDs.<br>
       <td>WiFi signal strength in bars</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3434,6 +3615,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>59</td>
@@ -3441,6 +3623,7 @@ Below is a table of supported status IDs.<br>
       <td>Time since boot (msec) of most recent hilight in encoding video (set to 0 when encoding stops)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3454,6 +3637,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>64</td>
@@ -3461,6 +3645,7 @@ Below is a table of supported status IDs.<br>
       <td>How many min of Timelapse video can be captured with current settings before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3472,6 +3657,7 @@ Below is a table of supported status IDs.<br>
       <td>integer</td>
       <td>0: Disabled<br>1: Auto<br>2: ISO Lock<br>3: Hemisphere<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3482,6 +3668,7 @@ Below is a table of supported status IDs.<br>
       <td>Liveview Exposure Select: y-coordinate (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3492,6 +3679,7 @@ Below is a table of supported status IDs.<br>
       <td>Liveview Exposure Select: y-coordinate (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3506,6 +3694,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>69</td>
@@ -3517,6 +3706,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>70</td>
@@ -3524,6 +3714,7 @@ Below is a table of supported status IDs.<br>
       <td>Internal battery level (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3538,6 +3729,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>75</td>
@@ -3545,6 +3737,7 @@ Below is a table of supported status IDs.<br>
       <td>Digital Zoom level (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3559,6 +3752,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>77</td>
@@ -3567,6 +3761,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3581,6 +3776,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>79</td>
@@ -3589,6 +3785,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3603,6 +3800,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>82</td>
@@ -3611,6 +3809,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3625,6 +3824,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>85</td>
@@ -3633,6 +3833,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3647,6 +3848,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>88</td>
@@ -3655,6 +3857,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3668,6 +3871,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>93</td>
@@ -3678,6 +3882,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>94</td>
@@ -3685,6 +3890,7 @@ Below is a table of supported status IDs.<br>
       <td>Current Photo Preset (ID)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3698,6 +3904,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>96</td>
@@ -3705,6 +3912,7 @@ Below is a table of supported status IDs.<br>
       <td>Current Preset Group (ID)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3718,6 +3926,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>98</td>
@@ -3728,6 +3937,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>99</td>
@@ -3735,6 +3945,7 @@ Below is a table of supported status IDs.<br>
       <td>How many Live Bursts can be captured before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3745,6 +3956,7 @@ Below is a table of supported status IDs.<br>
       <td>Total number of Live Bursts on sdcard</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3759,6 +3971,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>102</td>
@@ -3767,6 +3980,7 @@ Below is a table of supported status IDs.<br>
       <td>integer</td>
       <td>0: Media mod microphone removed<br>2: Media mod microphone only<br>3: Media mod microphone with external microphone<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3781,6 +3995,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>104</td>
@@ -3789,6 +4004,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3803,6 +4019,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>106</td>
@@ -3811,6 +4028,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3821,6 +4039,7 @@ Below is a table of supported status IDs.<br>
       <td>Scheduled Capture Preset ID</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3832,6 +4051,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3843,6 +4063,7 @@ Below is a table of supported status IDs.<br>
       <td>integer</td>
       <td>0: 000 = Selfie mod: 0, HDMI: 0, Media Mod Connected: False<br>1: 001 = Selfie mod: 0, HDMI: 0, Media Mod Connected: True<br>2: 010 = Selfie mod: 0, HDMI: 1, Media Mod Connected: False<br>3: 011 = Selfie mod: 0, HDMI: 1, Media Mod Connected: True<br>4: 100 = Selfie mod: 1, HDMI: 0, Media Mod Connected: False<br>5: 101 = Selfie mod: 1, HDMI: 0, Media Mod Connected: True<br>6: 110 = Selfie mod: 1, HDMI: 1, Media Mod Connected: False<br>7: 111 = Selfie mod: 1, HDMI: 1, Media Mod Connected: True<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3856,6 +4077,7 @@ Below is a table of supported status IDs.<br>
 </td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr>
@@ -3864,6 +4086,7 @@ Below is a table of supported status IDs.<br>
       <td>Number of sdcard write speed errors since device booted</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -3878,6 +4101,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>114</td>
@@ -3886,6 +4110,7 @@ Below is a table of supported status IDs.<br>
       <td>integer</td>
       <td>0: Camera Idle: No one is attempting to change camera settings<br>1: Camera Control: Camera is in a menu or changing settings. To intervene, app must request control<br>2: Camera External Control: An outside entity (app) has control and is in a menu or modifying settings<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -3899,6 +4124,7 @@ Below is a table of supported status IDs.<br>
 </td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr>
@@ -3909,6 +4135,7 @@ Below is a table of supported status IDs.<br>
       <td>0: Disabled<br>1: Enabled<br>
 </td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.30.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -3918,6 +4145,7 @@ Below is a table of supported status IDs.<br>
       <td>Total SD card capacity in kilobytes</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -3947,8 +4175,8 @@ Protobuf communications with the camera differ from TLV-style communications.
 Rather than having a Type, Length, and Value, GoPro protobuf messages utilize the following:
 </p>
 <ol>
-<li>Feature: Indicates command type (e.g. command, setting, query)</li>
-<li>Action: Specific camera action; value indicates whether message was sent or an (aync) notification was received</li>
+<li>Feature ID: Indicates command type (e.g. command, setting, query)</li>
+<li>Action ID: Specific camera action; value indicates whether message was sent or an (aync) notification was received</li>
 <li>Value: Serialized protobuf object</li>
 </ol>
 
@@ -4010,14 +4238,14 @@ For additional details, see <a href="#services-and-characteristics">Services and
     <tr>
       <td>Network Management</td>
       <td>0x02</td>
-      <td>0x05, 0x0C, 0x85</td>
+      <td>0x02, 0x03, 0x04, 0x05, 0x0B, 0x0C, 0x82, 0x83, 0x84, 0x85</td>
       <td>GP-0091</td>
       <td>GP-0092</td>
     </tr>
     <tr>
       <td>Command</td>
       <td>0xF1</td>
-      <td>0x69, 0x6B, 0x79, 0xE9, 0xEB, 0xF9</td>
+      <td>0x69, 0x6B, 0x78, 0x79, 0xE9, 0xEB, 0xF8, 0xF9</td>
       <td>GP-0072</td>
       <td>GP-0073</td>
     </tr>
@@ -4048,17 +4276,78 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td>Description</td>
       <td>Request</td>
       <td>Response</td>
+      <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
       <td>HERO9 Black</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td rowspan="2">0x02</td>
+      <td rowspan="7">0x02</td>
+      <td>0x02</td>
+      <td>0x82</td>
+      <td>Start scan</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">RequestStartScan</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseStartScanning</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>
+</td>
+      <td>0x0B</td>
+      <td>Async status update</td>
+      <td>
+</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">NotifStartScanning</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>0x03</td>
+      <td>0x83</td>
+      <td>Get ap entries</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">RequestGetApEntries</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseGetApEntries</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>0x04</td>
+      <td>0x84</td>
+      <td>Connect</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">RequestConnect</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseConnect</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>
+</td>
+      <td>0x0C</td>
+      <td>Async status update</td>
+      <td>
+</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseConnect</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x05</td>
       <td>0x85</td>
       <td>Connect new</td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">RequestConnectNew</a></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseConnectNew</a></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -4074,14 +4363,16 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
-      <td rowspan="3">0xF1</td>
+      <td rowspan="4">0xF1</td>
       <td>0x69</td>
       <td>0xE9</td>
       <td>Request set camera control status</td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/set_camera_control_status.proto">RequestSetCameraControlStatus</a></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">ResponseGeneric</a></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.20.00</td>
       <td><span style="color:red">❌</span></td>
@@ -4095,6 +4386,18 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x78</td>
+      <td>0xF8</td>
+      <td>Request release network</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">RequestReleaseNetwork</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseGeneric</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x79</td>
@@ -4102,6 +4405,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td>Request set live stream</td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">RequestSetLiveStreamMode</a></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">ResponseGeneric</a></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -4113,6 +4417,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td>Request get preset status</td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto">RequestGetPresetStatus</a></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">NotifyPresetStatus</a></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -4128,6 +4433,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x74</td>
@@ -4135,6 +4441,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td>Request get live stream status</td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">RequestGetLiveStreamStatus</a></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">NotifyLiveStreamStatus</a></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -4147,6 +4454,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td>
 </td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">NotifyLiveStreamStatus</a></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -4250,11 +4558,11 @@ connected app is discouraged.
 </p>
 
 <p>
-Best practice for synchronizing user/app control is to use the <i>Set Camera Control Status</i> command and
+Best practice for synchronizing user/app control is to use the <b>Set Camera Control Status</b> command and
 corresponding <i>Camera Control Status</i> (CCS) camera statuses in alignment with the finite state machine below:
 </p>
 
-<p><img class="plantuml" src="http://www.plantuml.com/plantuml/svg/~h407374617274756d6c0a0a0a2720446566696e65207374617465730a49444c453a20436f6e74726f6c205374617475733a2049646c650a43414d4552415f434f4e54524f4c3a20436f6e74726f6c205374617475733a2043616d65726120436f6e74726f6c0a45585445524e414c5f434f4e54524f4c3a20436f6e74726f6c205374617475733a2045787465726e616c20436f6e74726f6c0a0a2720446566696e65207472616e736974696f6e730a5b2a5d20202020202020202020202020202d3e20202020202049444c450a0a49444c45202020202020202020202020202d3e20202020202049444c453a204170702073657473204343533a2049646c650a49444c45202020202020202020202020202d75702d3e20202043414d4552415f434f4e54524f4c3a205573657220696e7465726163747320776974682063616d6572610a49444c45202020202020202020202020202d646f776e2d3e2045585445524e414c5f434f4e54524f4c3a204170702073657473204343533a2045787465726e616c20436f6e74726f6c0a0a43414d4552415f434f4e54524f4c2020202d3e20202020202043414d4552415f434f4e54524f4c3a205573657220696e7465726163747320776974682063616d6572610a43414d4552415f434f4e54524f4c2020202d646f776e2d3e2049444c453a20557365722072657475726e732063616d65726120746f2069646c652073637265656e5c6e4170702073657473204343533a2049646c650a0a45585445524e414c5f434f4e54524f4c202d3e2020202045585445524e414c5f434f4e54524f4c3a204170702073657473204343533a2045787465726e616c20436f6e74726f6c0a45585445524e414c5f434f4e54524f4c202d75702d3e2049444c453a204170702073657473204343533a2049646c655c6e5573657220696e7465726163747320776974682063616d6572610a45585445524e414c5f434f4e54524f4c202d75702d3e2043414d4552415f434f4e54524f4c3a205573657220696e7465726163747320776974682063616d6572610a0a0a0a0a40656e64756d6c"></p>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="347px" preserveaspectratio="none" style="width:672px;height:347px;background:#FFFFFF;" version="1.1" viewbox="0 0 672 347" width="672px" zoomandpan="magnify"><defs></defs><g><g id="IDLE"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="140" x="61" y="149"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="61" x2="201" y1="175.2969" y2="175.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="30" x="116" y="166.9951">IDLE</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="120" x="66" y="191.4355">Control Status: Idle</text></g><g id="CAMERA_CONTROL"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="215" x="136.5" y="7"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="136.5" x2="351.5" y1="33.2969" y2="33.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="134" x="177" y="24.9951">CAMERA_CONTROL</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="195" x="141.5" y="49.4355">Control Status: Camera Control</text></g><g id="EXTERNAL_CONTROL"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="218" x="161" y="291"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="161" x2="379" y1="317.2969" y2="317.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="147" x="196.5" y="308.9951">EXTERNAL_CONTROL</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="198" x="166" y="333.4355">Control Status: External Control</text></g><ellipse cx="16" cy="174" fill="#222222" rx="10" ry="10" style="stroke:none;stroke-width:1.0;"></ellipse><g id="link_*start_IDLE"><path d="M26.33,174 C36.08,174 45.83,174 55.58,174 " fill="none" id="*start-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="60.68,174,51.68,170,55.68,174,51.68,178,60.68,174" style="stroke:#181818;stroke-width:1.0;"></polygon></g><g id="link_IDLE_IDLE"><path d="M201.17,160.94 C220.87,161.51 236,165.87 236,174 C236,181.37 223.58,185.64 206.58,186.8 " fill="none" id="IDLE-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="201.17,187.06,210.3535,190.6187,206.1641,186.8174,209.9653,182.6281,201.17,187.06" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="117" x="242" y="178.5669">App sets CCS: Idle</text></g><g id="link_CAMERA_CONTROL_IDLE"><path d="M131.32,48.13 C85.79,56.77 40.73,69.44 27,87 C8.03,111.27 35.99,133.3 67.67,148.99 " fill="none" id="CAMERA_CONTROL-backto-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="136.3,47.21,126.7202,44.9237,131.3843,48.1245,128.1835,52.7887,136.3,47.21" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="172" x="28" y="107.5669">User interacts with camera</text></g><g id="link_CAMERA_CONTROL_IDLE"><path d="M236.82,57.08 C230.52,75.42 220,100.56 205,119 C196.85,129.02 186.42,138.12 175.98,145.87 " fill="none" id="CAMERA_CONTROL-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="171.83,148.88,181.4652,146.8396,175.8792,145.9468,176.7721,140.3609,171.83,148.88" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="223" x="224" y="100.0669">User returns camera to idle screen</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="117" x="277" y="115.1997">App sets CCS: Idle</text></g><g id="link_IDLE_EXTERNAL_CONTROL"><path d="M190.72,199.1 C205.22,207.02 219.76,216.95 231,229 C245.92,245 255.89,267.69 262.01,285.74 " fill="none" id="IDLE-to-EXTERNAL_CONTROL" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="263.63,290.7,264.6318,280.9022,262.0746,285.9481,257.0287,283.3909,263.63,290.7" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="197" x="251" y="249.5669">App sets CCS: External Control</text></g><g id="link_IDLE_EXTERNAL_CONTROL"><path d="M78.64,201.85 C53.68,218.22 32.5,239.99 49,261 C63.57,279.56 112.7,292.56 160.94,301.15 " fill="none" id="IDLE-backto-EXTERNAL_CONTROL" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="83,199.06,73.2605,200.5236,78.7835,201.7472,77.5599,207.2701,83,199.06" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="117" x="77.5" y="242.0669">App sets CCS: Idle</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="172" x="50" y="257.1997">User interacts with camera</text></g><g id="link_CAMERA_CONTROL_CAMERA_CONTROL"><path d="M351.51,19.5 C372,21 386.5,25.16 386.5,32 C386.5,38.25 374.39,42.27 356.65,44.05 " fill="none" id="CAMERA_CONTROL-to-CAMERA_CONTROL" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="351.51,44.5,360.8195,47.7145,356.4916,44.0718,360.1344,39.7439,351.51,44.5" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="172" x="392.5" y="36.5669">User interacts with camera</text></g><g id="link_EXTERNAL_CONTROL_EXTERNAL_CONTROL"><path d="M379.26,303.55 C399.64,305.08 414,309.23 414,316 C414,322.19 402,326.19 384.37,328 " fill="none" id="EXTERNAL_CONTROL-to-EXTERNAL_CONTROL" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="379.26,328.45,388.5794,331.6357,384.2403,328.0064,387.8696,323.6672,379.26,328.45" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="197" x="420" y="320.5669">App sets CCS: External Control</text></g><g id="link_CAMERA_CONTROL_EXTERNAL_CONTROL"><path d="M356.56,48.99 C400.17,57.68 442.81,70.15 456,87 C503.67,147.89 503.48,199.19 457,261 C446.51,274.94 414.07,286.42 379.08,295.16 " fill="none" id="CAMERA_CONTROL-backto-EXTERNAL_CONTROL" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="351.52,48,359.5893,53.6468,356.4278,48.9559,361.1187,45.7944,351.52,48" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="172" x="492" y="178.5669">User interacts with camera</text></g></g></svg>
 
 <table border="1">
   <tbody>
@@ -4299,89 +4607,40 @@ For details on which cameras are supported and how to set Camera Control Status,
 <a href="#protobuf-commands">Protobuf Commands</a>.
 </p>
 
-<h2 id="station-mode">Station Mode</h2>
+<h2 id="interface-with-access-points">Interface with Access Points</h2>
 <p>
-The camera supports being put into <a href="https://en.wikipedia.org/wiki/Station_(networking)">Station Mode (STA)</a>.
-This is necessary for features like Live Streaming, where the camera needs to connect to an access point.
+The camera supports connecting to access points in <a href="https://en.wikipedia.org/wiki/Station_(networking)">Station Mode (STA)</a>.
+This is necessary for features such as Live Streaming, where the camera needs an Internet connection.
+While in this mode, HTTP command and control of the camera is not available.
 </p>
 
-<h3 id="station-mode-sequence">Station Mode Sequence</h3>
+<h3 id="scanning-for-access-points">Scanning for Access Points</h3>
 <p>
-Put visually, the process of connecting the camera to an access point is as follows:
+In order to scan for Access Points, use the flow below.
+See <a href="#protobuf-commands">Protobuf Commands</a> for command details.
 </p>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="376px" preserveaspectratio="none" style="width:706px;height:376px;background:#FFFFFF;" version="1.1" viewbox="0 0 706 376" width="706px" zoomandpan="magnify"><defs></defs><g><rect fill="none" height="46.2656" style="stroke:#000000;stroke-width:1.5;" width="491" x="10" y="162.5625"></rect><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="47" x2="47" y1="81.2969" y2="296.0938"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="207" x2="207" y1="81.2969" y2="296.0938"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="292" x2="292" y1="81.2969" y2="296.0938"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="49" x="20" y="77.9951">Central</text><ellipse cx="47.5" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M47.5,21.5 L47.5,48.5 M34.5,29.5 L60.5,29.5 M47.5,48.5 L34.5,63.5 M47.5,48.5 L60.5,63.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="49" x="20" y="308.0889">Central</text><ellipse cx="47.5" cy="319.8906" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M47.5,327.8906 L47.5,354.8906 M34.5,335.8906 L60.5,335.8906 M47.5,354.8906 L34.5,369.8906 M47.5,354.8906 L60.5,369.8906 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="170" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="177" y="69.9951">GP-0091</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="170" y="295.0938"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="177" y="315.0889">GP-0091</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="255" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="262" y="69.9951">GP-0092</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="255" y="295.0938"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="262" y="315.0889">GP-0092</text><polygon fill="#181818" points="195.5,108.4297,205.5,112.4297,195.5,116.4297,199.5,112.4297" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="47.5" x2="201.5" y1="112.4297" y2="112.4297"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="116" x="54.5" y="107.3638">RequestStartScan</text><polygon fill="#181818" points="58.5,140.5625,48.5,144.5625,58.5,148.5625,54.5,144.5625" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="52.5" x2="291.5" y1="144.5625" y2="144.5625"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="153" x="64.5" y="139.4966">ResponseStartScanning</text><path d="M297,125.4297 L297,150.4297 L658,150.4297 L658,135.4297 L648,125.4297 L297,125.4297 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M648,125.4297 L648,135.4297 L658,135.4297 L648,125.4297 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="340" x="303" y="142.4966">scanning_state: EnumScanning.SCANNING_STARTED</text><path d="M10,162.5625 L87,162.5625 L87,169.6953 L77,179.6953 L10,179.6953 L10,162.5625 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"></path><rect fill="none" height="46.2656" style="stroke:#000000;stroke-width:1.5;" width="491" x="10" y="162.5625"></rect><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthadjust="spacing" textlength="32" x="25" y="175.6294">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthadjust="spacing" textlength="394" x="102" y="174.7729">[until scanning_state == EnumScanning.SCANNING_SUCCESS]</text><path d="M506,167.5625 L506,207.5625 L699,207.5625 L699,177.5625 L689,167.5625 L506,167.5625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M689,167.5625 L689,177.5625 L699,177.5625 L689,167.5625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="169" x="512" y="184.6294">Indicates scan is complete</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="172" x="512" y="199.7622">Save scan_id, total_entries</text><polygon fill="#181818" points="58.5,196.8281,48.5,200.8281,58.5,204.8281,54.5,200.8281" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="52.5" x2="291.5" y1="200.8281" y2="200.8281"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="121" x="64.5" y="195.7622">NotifStartScanning</text><polygon fill="#181818" points="195.5,235.9609,205.5,239.9609,195.5,243.9609,199.5,239.9609" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="47.5" x2="201.5" y1="239.9609" y2="239.9609"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="136" x="54.5" y="234.895">RequestGetApEntries</text><path d="M212,220.8281 L212,245.8281 L398,245.8281 L398,230.8281 L388,220.8281 L212,220.8281 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M388,220.8281 L388,230.8281 L398,230.8281 L388,220.8281 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="165" x="218" y="237.895">Use scan_id, total_entries</text><polygon fill="#181818" points="58.5,271.0938,48.5,275.0938,58.5,279.0938,54.5,275.0938" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="52.5" x2="291.5" y1="275.0938" y2="275.0938"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="146" x="64.5" y="270.0278">ResponseGetApEntries</text><path d="M297,255.9609 L297,280.9609 L647,280.9609 L647,265.9609 L637,255.9609 L297,255.9609 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M637,255.9609 L637,265.9609 L647,265.9609 L637,255.9609 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="329" x="303" y="273.0278">Each ScanEntry contains SSID, signal strength, freq</text></g></svg>
 
-<p><img class="plantuml" src="http://www.plantuml.com/plantuml/svg/~h407374617274756d6c0a0a0a6163746f722043656e7472616c0a7061727469636970616e74202247502d3030393122206173204750303039310a7061727469636970616e74202247502d3030393222206173204750303039320a0a43656e7472616c20202d3e2047503030393120203a2052657175657374436f6e6e6563744e65770a43656e7472616c203c2d2d2047503030393220203a20526573706f6e7365436f6e6e6563744e65770a6c6f6f7020756e74696c20535543434553535f4e45575f41500a2020202043656e7472616c203c2d2d2047503030393220203a204e6f74696650726f766973696f6e53746174650a656e64206c6f6f700a0a0a0a0a40656e64756d6c"></p>
-
-<h3 id="request-a-new-connection">Request a new Connection</h3>
+<h3 id="connect-to-a-new-access-point">Connect to a New Access Point</h3>
 <p>
-To connect the camera to an access point, send a <a href="#protobuf-commands">RequestConnectNew</a> command:
+To provision and connect the camera to a new Access Point, use <a href="#protobuf-commands">RequestConnectNew</a>.
 </p>
-
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Parameter</td>
-      <td>Type</td>
-      <td>Description</td>
-    </tr>
-    <tr>
-      <td>ssid</td>
-      <td>string</td>
-      <td>AP SSID</td>
-    </tr>
-    <tr>
-      <td>password</td>
-      <td>string</td>
-      <td>AP password</td>
-    </tr>
-    <tr>
-      <td>static_ip</td>
-      <td>bytes</td>
-      <td>Static IP address (optional)</td>
-    </tr>
-    <tr>
-      <td>gateway</td>
-      <td>bytes</td>
-      <td>Gateway IP address (optional)</td>
-    </tr>
-    <tr>
-      <td>subnet</td>
-      <td>bytes</td>
-      <td>Subnet mask (optional)</td>
-    </tr>
-    <tr>
-      <td>dns_primary</td>
-      <td>bytes</td>
-      <td>Primary DNS (optional)</td>
-    </tr>
-    <tr>
-      <td>dns_secondary</td>
-      <td>bytes</td>
-      <td>Secondary DNS (optional)</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="polling-for-state">Polling for State</h3>
 <p>
-After sending a new connection request, wait for a <a href="#protobuf-commands">NotifProvisioningState</a> notification from GP-0092
-that indicates a <i>PROVISIONING_SUCCESS_NEW_AP</i>. 
+Note: This should only be done once to provision the AP; subsequent connections should use <a href="#protobuf-commands">RequestConnect</a>. 
 </p>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="341px" preserveaspectratio="none" style="width:720px;height:341px;background:#FFFFFF;" version="1.1" viewbox="0 0 720 341" width="720px" zoomandpan="magnify"><defs></defs><g><rect fill="none" height="46.2656" style="stroke:#000000;stroke-width:1.5;" width="616" x="10" y="197.6953"></rect><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="47" x2="47" y1="81.2969" y2="260.9609"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="203" x2="203" y1="81.2969" y2="260.9609"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="288" x2="288" y1="81.2969" y2="260.9609"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="49" x="20" y="77.9951">Central</text><ellipse cx="47.5" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M47.5,21.5 L47.5,48.5 M34.5,29.5 L60.5,29.5 M47.5,48.5 L34.5,63.5 M47.5,48.5 L60.5,63.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="49" x="20" y="272.9561">Central</text><ellipse cx="47.5" cy="284.7578" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M47.5,292.7578 L47.5,319.7578 M34.5,300.7578 L60.5,300.7578 M47.5,319.7578 L34.5,334.7578 M47.5,319.7578 L60.5,334.7578 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="166" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="173" y="69.9951">GP-0091</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="166" y="259.9609"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="173" y="279.9561">GP-0091</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="251" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="258" y="69.9951">GP-0092</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="251" y="259.9609"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="258" y="279.9561">GP-0092</text><path d="M17,96.2969 L17,121.2969 L233,121.2969 L233,106.2969 L223,96.2969 L17,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M223,96.2969 L223,106.2969 L233,106.2969 L223,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="145" x="48" y="113.3638">Scan for Access Points</text><polygon fill="#181818" points="191.5,143.5625,201.5,147.5625,191.5,151.5625,195.5,147.5625" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="47.5" x2="197.5" y1="147.5625" y2="147.5625"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="132" x="54.5" y="142.4966">RequestConnectNew</text><polygon fill="#181818" points="58.5,175.6953,48.5,179.6953,58.5,183.6953,54.5,179.6953" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="52.5" x2="287.5" y1="179.6953" y2="179.6953"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="142" x="64.5" y="174.6294">ResponseConnectNew</text><path d="M293,160.5625 L293,185.5625 L713,185.5625 L713,170.5625 L703,160.5625 L293,160.5625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M703,160.5625 L703,170.5625 L713,170.5625 L703,160.5625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="399" x="299" y="177.6294">provisioning_state: EnumProvisioning.PROVISIONING_STARTED</text><path d="M10,197.6953 L87,197.6953 L87,204.8281 L77,214.8281 L10,214.8281 L10,197.6953 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"></path><rect fill="none" height="46.2656" style="stroke:#000000;stroke-width:1.5;" width="616" x="10" y="197.6953"></rect><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthadjust="spacing" textlength="32" x="25" y="210.7622">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthadjust="spacing" textlength="519" x="102" y="209.9058">[until provisioning_state == EnumProvisioning.PROVISIONING_SUCCESS_NEW_AP]</text><polygon fill="#181818" points="58.5,231.9609,48.5,235.9609,58.5,239.9609,54.5,235.9609" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="52.5" x2="287.5" y1="235.9609" y2="235.9609"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="122" x="64.5" y="230.895">NotifProvisionState</text></g></svg>
 
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Parameter</td>
-      <td>Type</td>
-      <td>Description</td>
-    </tr>
-    <tr>
-      <td>provisioning_state</td>
-      <td>EnumProvisioning</td>
-      <td>Basic provisioning/connection state</td>
-    </tr>
-  </tbody>
-</table>
+<h3 id="connect-to-a-provisioned-access-point">Connect to a Provisioned Access Point</h3>
+<p>
+To connect the camera to a provisioned Access Point, scan for Access Points and connect using <a href="#protobuf-commands">RequestConnect</a>:
+</p>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="341px" preserveaspectratio="none" style="width:693px;height:341px;background:#FFFFFF;" version="1.1" viewbox="0 0 693 341" width="693px" zoomandpan="magnify"><defs></defs><g><rect fill="none" height="46.2656" style="stroke:#000000;stroke-width:1.5;" width="616" x="10" y="197.6953"></rect><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="47" x2="47" y1="81.2969" y2="260.9609"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="176" x2="176" y1="81.2969" y2="260.9609"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="261" x2="261" y1="81.2969" y2="260.9609"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="49" x="20" y="77.9951">Central</text><ellipse cx="47.5" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M47.5,21.5 L47.5,48.5 M34.5,29.5 L60.5,29.5 M47.5,48.5 L34.5,63.5 M47.5,48.5 L60.5,63.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="49" x="20" y="272.9561">Central</text><ellipse cx="47.5" cy="284.7578" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M47.5,292.7578 L47.5,319.7578 M34.5,300.7578 L60.5,300.7578 M47.5,319.7578 L34.5,334.7578 M47.5,319.7578 L60.5,334.7578 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="139" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="146" y="69.9951">GP-0091</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="139" y="259.9609"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="146" y="279.9561">GP-0091</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="224" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="231" y="69.9951">GP-0092</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="224" y="259.9609"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="231" y="279.9561">GP-0092</text><path d="M17,96.2969 L17,121.2969 L206,121.2969 L206,106.2969 L196,96.2969 L17,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M196,96.2969 L196,106.2969 L206,106.2969 L196,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="145" x="34.5" y="113.3638">Scan for Access Points</text><polygon fill="#181818" points="164.5,143.5625,174.5,147.5625,164.5,151.5625,168.5,147.5625" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="47.5" x2="170.5" y1="147.5625" y2="147.5625"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="54.5" y="142.4966">RequestConnect</text><polygon fill="#181818" points="58.5,175.6953,48.5,179.6953,58.5,183.6953,54.5,179.6953" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="52.5" x2="260.5" y1="179.6953" y2="179.6953"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="115" x="64.5" y="174.6294">ResponseConnect</text><path d="M266,160.5625 L266,185.5625 L686,185.5625 L686,170.5625 L676,160.5625 L266,160.5625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M676,160.5625 L676,170.5625 L686,170.5625 L676,160.5625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="399" x="272" y="177.6294">provisioning_state: EnumProvisioning.PROVISIONING_STARTED</text><path d="M10,197.6953 L87,197.6953 L87,204.8281 L77,214.8281 L10,214.8281 L10,197.6953 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"></path><rect fill="none" height="46.2656" style="stroke:#000000;stroke-width:1.5;" width="616" x="10" y="197.6953"></rect><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthadjust="spacing" textlength="32" x="25" y="210.7622">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthadjust="spacing" textlength="519" x="102" y="209.9058">[until provisioning_state == EnumProvisioning.PROVISIONING_SUCCESS_NEW_AP]</text><polygon fill="#181818" points="58.5,231.9609,48.5,235.9609,58.5,239.9609,54.5,235.9609" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="52.5" x2="260.5" y1="235.9609" y2="235.9609"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="122" x="64.5" y="230.895">NotifProvisionState</text></g></svg>
+
+<h3 id="disconnect-from-an-access-point">Disconnect from an Access Point</h3>
+<p>
+To disconnect from a connected Access Point and return the camera to AP mode, use <a href="#protobuf-commands">RequestReleaseNetwork</a>.
+</p>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="331px" preserveaspectratio="none" style="width:455px;height:331px;background:#FFFFFF;" version="1.1" viewbox="0 0 455 331" width="455px" zoomandpan="magnify"><defs></defs><g><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="34" x2="34" y1="81.2969" y2="250.9609"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="212" x2="212" y1="81.2969" y2="250.9609"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="297" x2="297" y1="81.2969" y2="250.9609"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="49" x="7" y="77.9951">Central</text><ellipse cx="34.5" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M34.5,21.5 L34.5,48.5 M21.5,29.5 L47.5,29.5 M34.5,48.5 L21.5,63.5 M34.5,48.5 L47.5,63.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="49" x="7" y="262.9561">Central</text><ellipse cx="34.5" cy="274.7578" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M34.5,282.7578 L34.5,309.7578 M21.5,290.7578 L47.5,290.7578 M34.5,309.7578 L21.5,324.7578 M34.5,309.7578 L47.5,324.7578 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="175" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="182" y="69.9951">GP-0091</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="175" y="249.9609"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="182" y="269.9561">GP-0091</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="260" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="267" y="69.9951">GP-0092</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="260" y="249.9609"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="267" y="269.9561">GP-0092</text><path d="M5,96.2969 L5,121.2969 L328,121.2969 L328,106.2969 L318,96.2969 L5,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M318,96.2969 L318,106.2969 L328,106.2969 L318,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="145" x="89.5" y="113.3638">Scan for Access Points</text><path d="M5,131.4297 L5,171.4297 L328,171.4297 L328,141.4297 L318,131.4297 L5,131.4297 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M318,131.4297 L318,141.4297 L328,141.4297 L318,131.4297 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="275" x="24.5" y="148.4966">Connect to a New/Provisioned Access Point</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="133" x="24.5" y="163.6294">(Camera: STA Mode)</text><polygon fill="#181818" points="200.5,193.8281,210.5,197.8281,200.5,201.8281,204.5,197.8281" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="34.5" x2="206.5" y1="197.8281" y2="197.8281"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="154" x="41.5" y="192.7622">RequestReleaseNetwork</text><polygon fill="#181818" points="45.5,225.9609,35.5,229.9609,45.5,233.9609,41.5,229.9609" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="39.5" x2="296.5" y1="229.9609" y2="229.9609"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="111" x="51.5" y="224.895">ResponseGeneric</text><path d="M302,210.8281 L302,235.8281 L448,235.8281 L448,220.8281 L438,210.8281 L302,210.8281 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M438,210.8281 L438,220.8281 L448,220.8281 L438,210.8281 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="125" x="308" y="227.895">(Camera: AP Mode)</text></g></svg>
 
 <h2 id="turbo-transfer">Turbo Transfer</h2>
 <p>
@@ -4435,7 +4694,7 @@ Live streaming with camera is accomplished as follows:
 </ol>
 
 <h3 id="live-streaming-sequence">Live Streaming Sequence</h3>
-<p><img class="plantuml" src="http://www.plantuml.com/plantuml/svg/~h407374617274756d6c0a0a0a6163746f722043656e7472616c0a7061727469636970616e74202247502d3030393122206173204750303039310a7061727469636970616e74202247502d3030393222206173204750303039320a7061727469636970616e74202247502d3030373222206173204750303037320a7061727469636970616e74202247502d3030373322206173204750303037330a7061727469636970616e74202247502d3030373622206173204750303037360a7061727469636970616e74202247502d3030373722206173204750303037370a0a6e6f7465206f7665722043656e7472616c2c204750303039313a2053746174696f6e204d6f64653a20436f6e6e65637420746f2041500a43656e7472616c20202d3e2047503030393120203a2052657175657374436f6e6e6563744e65770a43656e7472616c203c2d2d2047503030393220203a20526573706f6e7365436f6e6e6563744e65770a6c6f6f7020756e74696c20535543434553535f4e45575f41500a2020202043656e7472616c203c2d2d2047503030393220203a204e6f74696650726f766973696f6e53746174650a656e64206c6f6f700a0a6e6f7465206f7665722043656e7472616c2c204750303039313a20536574204c6976652053747265616d204d6f64650a43656e7472616c20202d3e20475030303732203a20526571756573745365744c69766553747265616d4d6f64650a43656e7472616c203c2d2d20475030303733203a20526573706f6e736547656e657269630a0a6e6f7465206f7665722043656e7472616c2c204750303039313a20506f6c6c204c6976652053747265616d2053746174757320756e74696c2072656164790a6c6f6f7020756e74696c204c4956455f53545245414d5f53544154455f52454144590a43656e7472616c20202d3e20475030303736203a20526571756573744765744c69766553747265616d5374617475730a43656e7472616c203c2d2d20475030303737203a204e6f746966794c69766553747265616d5374617475730a656e64206c6f6f700a0a6e6f7465206f7665722043656e7472616c2c204750303039313a205374617274206c6976652073747265616d696e67210a43656e7472616c20202d3e20475030303732203a2053657420736875747465720a43656e7472616c203c2d2d20475030303733203a20726573706f6e73650a6e6f7465206f7665722043656e7472616c2c204750303039313a2053746f70206c6976652073747265616d696e670a43656e7472616c20202d3e20475030303732203a20556e73657420736875747465720a43656e7472616c203c2d2d20475030303733203a20726573706f6e73650a0a0a0a0a40656e64756d6c"></p>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="740px" preserveaspectratio="none" style="width:682px;height:740px;background:#FFFFFF;" version="1.1" viewbox="0 0 682 740" width="682px" zoomandpan="magnify"><defs></defs><g><rect fill="none" height="46.2656" style="stroke:#000000;stroke-width:1.5;" width="326" x="10" y="191.6953"></rect><rect fill="none" height="75.3984" style="stroke:#000000;stroke-width:1.5;" width="666" x="10" y="380.4922"></rect><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="47" x2="47" y1="81.2969" y2="659.6875"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="203" x2="203" y1="81.2969" y2="659.6875"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="288" x2="288" y1="81.2969" y2="659.6875"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="373" x2="373" y1="81.2969" y2="659.6875"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="458" x2="458" y1="81.2969" y2="659.6875"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="543" x2="543" y1="81.2969" y2="659.6875"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="628" x2="628" y1="81.2969" y2="659.6875"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="49" x="20" y="77.9951">Central</text><ellipse cx="47.5" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M47.5,21.5 L47.5,48.5 M34.5,29.5 L60.5,29.5 M47.5,48.5 L34.5,63.5 M47.5,48.5 L60.5,63.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="49" x="20" y="671.6826">Central</text><ellipse cx="47.5" cy="683.4844" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M47.5,691.4844 L47.5,718.4844 M34.5,699.4844 L60.5,699.4844 M47.5,718.4844 L34.5,733.4844 M47.5,718.4844 L60.5,733.4844 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="166" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="173" y="69.9951">GP-0091</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="166" y="658.6875"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="173" y="678.6826">GP-0091</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="251" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="258" y="69.9951">GP-0092</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="251" y="658.6875"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="258" y="678.6826">GP-0092</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="336" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="343" y="69.9951">GP-0072</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="336" y="658.6875"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="343" y="678.6826">GP-0072</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="421" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="428" y="69.9951">GP-0073</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="421" y="658.6875"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="428" y="678.6826">GP-0073</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="506" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="513" y="69.9951">GP-0076</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="506" y="658.6875"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="513" y="678.6826">GP-0076</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="591" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="598" y="69.9951">GP-0077</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="591" y="658.6875"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="598" y="678.6826">GP-0077</text><path d="M17,96.2969 L17,121.2969 L233,121.2969 L233,106.2969 L223,96.2969 L17,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M223,96.2969 L223,106.2969 L233,106.2969 L223,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="184" x="28.5" y="113.3638">Station Mode: Connect to AP</text><polygon fill="#181818" points="191.5,143.5625,201.5,147.5625,191.5,151.5625,195.5,147.5625" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="47.5" x2="197.5" y1="147.5625" y2="147.5625"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="132" x="54.5" y="142.4966">RequestConnectNew</text><polygon fill="#181818" points="58.5,172.6953,48.5,176.6953,58.5,180.6953,54.5,176.6953" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="52.5" x2="287.5" y1="176.6953" y2="176.6953"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="142" x="64.5" y="171.6294">ResponseConnectNew</text><path d="M10,191.6953 L87,191.6953 L87,198.8281 L77,208.8281 L10,208.8281 L10,191.6953 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"></path><rect fill="none" height="46.2656" style="stroke:#000000;stroke-width:1.5;" width="326" x="10" y="191.6953"></rect><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthadjust="spacing" textlength="32" x="25" y="204.7622">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthadjust="spacing" textlength="160" x="102" y="203.9058">[until SUCCESS_NEW_AP]</text><polygon fill="#181818" points="58.5,225.9609,48.5,229.9609,58.5,233.9609,54.5,229.9609" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="52.5" x2="287.5" y1="229.9609" y2="229.9609"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="122" x="64.5" y="224.895">NotifProvisionState</text><path d="M17,249.9609 L17,274.9609 L233,274.9609 L233,259.9609 L223,249.9609 L17,249.9609 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M223,249.9609 L223,259.9609 L233,259.9609 L223,249.9609 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="142" x="49.5" y="267.0278">Set Live Stream Mode</text><polygon fill="#181818" points="361.5,297.2266,371.5,301.2266,361.5,305.2266,365.5,301.2266" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="47.5" x2="367.5" y1="301.2266" y2="301.2266"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="182" x="54.5" y="296.1606">RequestSetLiveStreamMode</text><polygon fill="#181818" points="58.5,326.3594,48.5,330.3594,58.5,334.3594,54.5,330.3594" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="52.5" x2="457.5" y1="330.3594" y2="330.3594"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="111" x="64.5" y="325.2935">ResponseGeneric</text><path d="M5,343.3594 L5,368.3594 L246,368.3594 L246,353.3594 L236,343.3594 L5,343.3594 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M236,343.3594 L236,353.3594 L246,353.3594 L236,343.3594 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="220" x="11" y="360.4263">Poll Live Stream Status until ready</text><path d="M10,380.4922 L87,380.4922 L87,387.625 L77,397.625 L10,397.625 L10,380.4922 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"></path><rect fill="none" height="75.3984" style="stroke:#000000;stroke-width:1.5;" width="666" x="10" y="380.4922"></rect><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthadjust="spacing" textlength="32" x="25" y="393.5591">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthadjust="spacing" textlength="220" x="102" y="392.7026">[until LIVE_STREAM_STATE_READY]</text><polygon fill="#181818" points="531.5,414.7578,541.5,418.7578,531.5,422.7578,535.5,418.7578" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="47.5" x2="537.5" y1="418.7578" y2="418.7578"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="190" x="54.5" y="413.6919">RequestGetLiveStreamStatus</text><polygon fill="#181818" points="58.5,443.8906,48.5,447.8906,58.5,451.8906,54.5,447.8906" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="52.5" x2="627.5" y1="447.8906" y2="447.8906"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="152" x="64.5" y="442.8247">NotifyLiveStreamStatus</text><path d="M17,467.8906 L17,492.8906 L233,492.8906 L233,477.8906 L223,467.8906 L17,467.8906 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M223,467.8906 L223,477.8906 L233,477.8906 L223,467.8906 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="131" x="55" y="484.9575">Start live streaming!</text><polygon fill="#181818" points="361.5,515.1563,371.5,519.1563,361.5,523.1563,365.5,519.1563" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="47.5" x2="367.5" y1="519.1563" y2="519.1563"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="72" x="54.5" y="514.0903">Set shutter</text><polygon fill="#181818" points="58.5,544.2891,48.5,548.2891,58.5,552.2891,54.5,548.2891" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="52.5" x2="457.5" y1="548.2891" y2="548.2891"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="59" x="64.5" y="543.2231">response</text><path d="M17,561.2891 L17,586.2891 L233,586.2891 L233,571.2891 L223,561.2891 L17,561.2891 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M223,561.2891 L223,571.2891 L233,571.2891 L223,561.2891 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="124" x="58.5" y="578.356">Stop live streaming</text><polygon fill="#181818" points="361.5,608.5547,371.5,612.5547,361.5,616.5547,365.5,612.5547" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="47.5" x2="367.5" y1="612.5547" y2="612.5547"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="88" x="54.5" y="607.4888">Unset shutter</text><polygon fill="#181818" points="58.5,637.6875,48.5,641.6875,58.5,645.6875,54.5,641.6875" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="52.5" x2="457.5" y1="641.6875" y2="641.6875"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="59" x="64.5" y="636.6216">response</text></g></svg>
 
 <h3 id="set-live-stream-mode">Set Live Stream Mode</h3>
 <p>

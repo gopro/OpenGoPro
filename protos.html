@@ -1,0 +1,3133 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Protocol Documentation :  Open GoPro</title>
+<meta name="description" content="Open Source GoPro Interface">
+
+
+  <meta name="author" content="GoPro">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Protocol Documentation">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/protos">
+
+
+  <meta property="og:description" content="Open Source GoPro Interface">
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/protos">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "https://gopro.github.io/OpenGoPro/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+  
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/OpenGoPro/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/ble">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/http">HTTP Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/demos">Demos</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="https://gopro.github.io/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        <li class="current">Protocol Documentation</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">GoPro</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Be a <strong>hero</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox">
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <a href="/OpenGoPro/ble_2_0"><span class="nav__sub-title">BLE 2.0</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/http_2_0"><span class="nav__sub-title">HTTP 2.0</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/protos"><span class="nav__sub-title">Protobuf</span></a>
+        
+
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Protocol Documentation">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Protocol Documentation
+</h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#protobuf-files">Protobuf Files</a></li>
+<li>
+<a href="#live_streamingproto">live_streaming.proto</a><ul>
+<li><a href="#notifylivestreamstatus">NotifyLiveStreamStatus</a></li>
+<li><a href="#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
+<li><a href="#requestsetlivestreammode">RequestSetLiveStreamMode</a></li>
+<li><a href="#enumlens">EnumLens</a></li>
+<li><a href="#enumlivestreamerror">EnumLiveStreamError</a></li>
+<li><a href="#enumlivestreamstatus">EnumLiveStreamStatus</a></li>
+<li><a href="#enumregisterlivestreamstatus">EnumRegisterLiveStreamStatus</a></li>
+<li><a href="#enumwindowsize">EnumWindowSize</a></li>
+</ul>
+</li>
+<li>
+<a href="#network_managementproto">network_management.proto</a><ul>
+<li><a href="#notifprovisioningstate">NotifProvisioningState</a></li>
+<li><a href="#notifstartscanning">NotifStartScanning</a></li>
+<li><a href="#requestconnect">RequestConnect</a></li>
+<li><a href="#requestconnectnew">RequestConnectNew</a></li>
+<li><a href="#requestgetapentries">RequestGetApEntries</a></li>
+<li><a href="#requestreleasenetwork">RequestReleaseNetwork</a></li>
+<li><a href="#requeststartscan">RequestStartScan</a></li>
+<li><a href="#responseconnect">ResponseConnect</a></li>
+<li><a href="#responseconnectnew">ResponseConnectNew</a></li>
+<li><a href="#responsegetapentries">ResponseGetApEntries</a></li>
+<li><a href="#responsestartscanning">ResponseStartScanning</a></li>
+<li><a href="#scanentry">ScanEntry</a></li>
+<li><a href="#enumnetworkowner">EnumNetworkOwner</a></li>
+<li><a href="#enumprovisioning">EnumProvisioning</a></li>
+<li><a href="#enumscanentryflags">EnumScanEntryFlags</a></li>
+<li><a href="#enumscanning">EnumScanning</a></li>
+</ul>
+</li>
+<li>
+<a href="#preset_statusproto">preset_status.proto</a><ul>
+<li><a href="#notifypresetstatus">NotifyPresetStatus</a></li>
+<li><a href="#preset">Preset</a></li>
+<li><a href="#presetgroup">PresetGroup</a></li>
+<li><a href="#presetsetting">PresetSetting</a></li>
+<li><a href="#enumflatmode">EnumFlatMode</a></li>
+<li><a href="#enumpresetgroup">EnumPresetGroup</a></li>
+<li><a href="#enumpresetgroupicon">EnumPresetGroupIcon</a></li>
+<li><a href="#enumpreseticon">EnumPresetIcon</a></li>
+<li><a href="#enumpresettitle">EnumPresetTitle</a></li>
+</ul>
+</li>
+<li>
+<a href="#request_get_preset_statusproto">request_get_preset_status.proto</a><ul>
+<li><a href="#requestgetpresetstatus">RequestGetPresetStatus</a></li>
+<li><a href="#enumregisterpresetstatus">EnumRegisterPresetStatus</a></li>
+</ul>
+</li>
+<li>
+<a href="#response_genericproto">response_generic.proto</a><ul>
+<li><a href="#responsegeneric">ResponseGeneric</a></li>
+<li><a href="#enumresultgeneric">EnumResultGeneric</a></li>
+</ul>
+</li>
+<li>
+<a href="#set_camera_control_statusproto">set_camera_control_status.proto</a><ul>
+<li><a href="#requestsetcameracontrolstatus">RequestSetCameraControlStatus</a></li>
+<li><a href="#enumcameracontrolstatus">EnumCameraControlStatus</a></li>
+</ul>
+</li>
+<li>
+<a href="#turbo_transferproto">turbo_transfer.proto</a><ul><li><a href="#requestsetturboactive">RequestSetTurboActive</a></li></ul>
+</li>
+<li><a href="#scalar-value-types">Scalar Value Types</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>This page provides documentation for all of the protobuf message fields.</p>
+
+<h2 id="protobuf-files">Protobuf Files</h2>
+
+<ul>
+  <li>
+    <p><a href="#live_streaming-proto">live_streaming.proto</a></p>
+  </li>
+  <li>
+    <p><a href="#network_management-proto">network_management.proto</a></p>
+  </li>
+  <li>
+    <p><a href="#preset_status-proto">preset_status.proto</a></p>
+  </li>
+  <li>
+    <p><a href="#request_get_preset_status-proto">request_get_preset_status.proto</a></p>
+  </li>
+  <li>
+    <p><a href="#response_generic-proto">response_generic.proto</a></p>
+  </li>
+  <li>
+    <p><a href="#set_camera_control_status-proto">set_camera_control_status.proto</a></p>
+  </li>
+  <li>
+    <p><a href="#turbo_transfer-proto">turbo_transfer.proto</a></p>
+  </li>
+</ul>
+
+<p><a name="live_streaming-proto"></a></p>
+
+<h2 id="live_streamingproto">live_streaming.proto</h2>
+
+<p><a name="open_gopro-NotifyLiveStreamStatus"></a></p>
+
+<h3 id="notifylivestreamstatus">NotifyLiveStreamStatus</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>live_stream_status</td>
+      <td><a href="#open_gopro-EnumLiveStreamStatus">EnumLiveStreamStatus</a></td>
+      <td>optional</td>
+      <td>Live stream status</td>
+    </tr>
+    <tr>
+      <td>live_stream_error</td>
+      <td><a href="#open_gopro-EnumLiveStreamError">EnumLiveStreamError</a></td>
+      <td>optional</td>
+      <td>Live stream error</td>
+    </tr>
+    <tr>
+      <td>live_stream_encode</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Is live stream encoding?</td>
+    </tr>
+    <tr>
+      <td>live_stream_bitrate</td>
+      <td><a href="#int32">int32</a></td>
+      <td>optional</td>
+      <td>Live stream bitrate (Kbps)</td>
+    </tr>
+    <tr>
+      <td>live_stream_window_size_supported_array</td>
+      <td><a href="#open_gopro-EnumWindowSize">EnumWindowSize</a></td>
+      <td>repeated</td>
+      <td>Live stream resolution capabilities</td>
+    </tr>
+    <tr>
+      <td>live_stream_encode_supported</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Does the camera support encoding while live streaming?</td>
+    </tr>
+    <tr>
+      <td>live_stream_max_lens_unsupported</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Is the Max Lens feature NOT supported?</td>
+    </tr>
+    <tr>
+      <td>live_stream_minimum_stream_bitrate</td>
+      <td><a href="#int32">int32</a></td>
+      <td>optional</td>
+      <td>Camera-defined minimum bitrate (static) (Kbps)</td>
+    </tr>
+    <tr>
+      <td>live_stream_maximum_stream_bitrate</td>
+      <td><a href="#int32">int32</a></td>
+      <td>optional</td>
+      <td>Camera-defined maximum bitrate (static) (Kbps)</td>
+    </tr>
+    <tr>
+      <td>live_stream_lens_supported</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Does camera support setting lens for live streaming?</td>
+    </tr>
+    <tr>
+      <td>live_stream_lens_supported_array</td>
+      <td><a href="#open_gopro-EnumLens">EnumLens</a></td>
+      <td>repeated</td>
+      <td>Array of supported lenses for live streaming</td>
+    </tr>
+    <tr>
+      <td>deprecated</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Deprecated</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-RequestGetLiveStreamStatus"></a></p>
+
+<h3 id="requestgetlivestreamstatus">RequestGetLiveStreamStatus</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>register_live_stream_status</td>
+      <td><a href="#open_gopro-EnumRegisterLiveStreamStatus">EnumRegisterLiveStreamStatus</a></td>
+      <td>repeated</td>
+      <td>Array of live stream statuses to be notified about</td>
+    </tr>
+    <tr>
+      <td>unregister_live_stream_status</td>
+      <td><a href="#open_gopro-EnumRegisterLiveStreamStatus">EnumRegisterLiveStreamStatus</a></td>
+      <td>repeated</td>
+      <td>Array of live stream statuses to stop being notified about</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-RequestSetLiveStreamMode"></a></p>
+
+<h3 id="requestsetlivestreammode">RequestSetLiveStreamMode</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>url</td>
+      <td><a href="#string">string</a></td>
+      <td>optional</td>
+      <td>RTMP(S) URL used for live stream</td>
+    </tr>
+    <tr>
+      <td>encode</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Save media to sdcard while streaming?</td>
+    </tr>
+    <tr>
+      <td>window_size</td>
+      <td><a href="#open_gopro-EnumWindowSize">EnumWindowSize</a></td>
+      <td>optional</td>
+      <td>Live stream resolution</td>
+    </tr>
+    <tr>
+      <td>reserved1</td>
+      <td><a href="#string">string</a></td>
+      <td>optional</td>
+      <td>Reserved</td>
+    </tr>
+    <tr>
+      <td>reserved2</td>
+      <td><a href="#string">string</a></td>
+      <td>optional</td>
+      <td>Reserved</td>
+    </tr>
+    <tr>
+      <td>cert</td>
+      <td><a href="#bytes">bytes</a></td>
+      <td>optional</td>
+      <td>Certificate for servers that require it</td>
+    </tr>
+    <tr>
+      <td>minimum_bitrate</td>
+      <td><a href="#int32">int32</a></td>
+      <td>optional</td>
+      <td>Minimum desired bitrate (may or may not be honored)</td>
+    </tr>
+    <tr>
+      <td>maximum_bitrate</td>
+      <td><a href="#int32">int32</a></td>
+      <td>optional</td>
+      <td>Maximum desired bitrate (may or may not be honored)</td>
+    </tr>
+    <tr>
+      <td>starting_bitrate</td>
+      <td><a href="#int32">int32</a></td>
+      <td>optional</td>
+      <td>Starting bitrate</td>
+    </tr>
+    <tr>
+      <td>lens</td>
+      <td><a href="#open_gopro-EnumLens">EnumLens</a></td>
+      <td>optional</td>
+      <td>Lens to use for live stream (see</td>
+    </tr>
+    <tr>
+      <td>reserved3</td>
+      <td><a href="#int32">int32</a></td>
+      <td>optional</td>
+      <td>Reserved</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end messages --></p>
+
+<p><a name="open_gopro-EnumLens"></a></p>
+
+<h3 id="enumlens">EnumLens</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LENS_WIDE</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LENS_LINEAR</td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LENS_SUPERVIEW</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-EnumLiveStreamError"></a></p>
+
+<h3 id="enumlivestreamerror">EnumLiveStreamError</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LIVE_STREAM_ERROR_NONE</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_ERROR_NETWORK</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_ERROR_CREATESTREAM</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_ERROR_OUTOFMEMORY</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_ERROR_INPUTSTREAM</td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_ERROR_INTERNET</td>
+      <td>5</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_ERROR_OSNETWORK</td>
+      <td>6</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT</td>
+      <td>7</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_ERROR_SSL_HANDSHAKE</td>
+      <td>8</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_ERROR_CAMERA_BLOCKED</td>
+      <td>9</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_ERROR_UNKNOWN</td>
+      <td>10</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_ERROR_SD_CARD_FULL</td>
+      <td>40</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_ERROR_SD_CARD_REMOVED</td>
+      <td>41</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-EnumLiveStreamStatus"></a></p>
+
+<h3 id="enumlivestreamstatus">EnumLiveStreamStatus</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LIVE_STREAM_STATE_IDLE</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_STATE_CONFIG</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_STATE_READY</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_STATE_STREAMING</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_STATE_COMPLETE_STAY_ON</td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_STATE_FAILED_STAY_ON</td>
+      <td>5</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LIVE_STREAM_STATE_RECONNECTING</td>
+      <td>6</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-EnumRegisterLiveStreamStatus"></a></p>
+
+<h3 id="enumregisterlivestreamstatus">EnumRegisterLiveStreamStatus</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>REGISTER_LIVE_STREAM_STATUS_STATUS</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REGISTER_LIVE_STREAM_STATUS_ERROR</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REGISTER_LIVE_STREAM_STATUS_MODE</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REGISTER_LIVE_STREAM_STATUS_BITRATE</td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-EnumWindowSize"></a></p>
+
+<h3 id="enumwindowsize">EnumWindowSize</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>WINDOW_SIZE_480</td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>WINDOW_SIZE_720</td>
+      <td>7</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>WINDOW_SIZE_1080</td>
+      <td>12</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end enums --></p>
+
+<p><!-- end HasExtensions --></p>
+
+<p><!-- end services --></p>
+
+<p><a name="network_management-proto"></a></p>
+
+<h2 id="network_managementproto">network_management.proto</h2>
+
+<p><a name="open_gopro-NotifProvisioningState"></a></p>
+
+<h3 id="notifprovisioningstate">NotifProvisioningState</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>provisioning_state</td>
+      <td><a href="#open_gopro-EnumProvisioning">EnumProvisioning</a></td>
+      <td>required</td>
+      <td>Provisioning/connection state</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-NotifStartScanning"></a></p>
+
+<h3 id="notifstartscanning">NotifStartScanning</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>scanning_state</td>
+      <td><a href="#open_gopro-EnumScanning">EnumScanning</a></td>
+      <td>required</td>
+      <td>Scanning state</td>
+    </tr>
+    <tr>
+      <td>scan_id</td>
+      <td><a href="#int32">int32</a></td>
+      <td>optional</td>
+      <td>ID associated with scan results (included if scan was successful)</td>
+    </tr>
+    <tr>
+      <td>total_entries</td>
+      <td><a href="#int32">int32</a></td>
+      <td>optional</td>
+      <td>Number of APs found during scan (included if scan was successful)</td>
+    </tr>
+    <tr>
+      <td>total_configured_ssid</td>
+      <td><a href="#int32">int32</a></td>
+      <td>required</td>
+      <td>Total count of camera’s provisioned SSIDs</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-RequestConnect"></a></p>
+
+<h3 id="requestconnect">RequestConnect</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ssid</td>
+      <td><a href="#string">string</a></td>
+      <td>required</td>
+      <td>AP SSID</td>
+    </tr>
+    <tr>
+      <td>owner_purpose</td>
+      <td><a href="#open_gopro-EnumNetworkOwner">EnumNetworkOwner</a></td>
+      <td>optional</td>
+      <td>Deprecated</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-RequestConnectNew"></a></p>
+
+<h3 id="requestconnectnew">RequestConnectNew</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ssid</td>
+      <td><a href="#string">string</a></td>
+      <td>required</td>
+      <td>AP SSID</td>
+    </tr>
+    <tr>
+      <td>password</td>
+      <td><a href="#string">string</a></td>
+      <td>required</td>
+      <td>AP password</td>
+    </tr>
+    <tr>
+      <td>static_ip</td>
+      <td><a href="#bytes">bytes</a></td>
+      <td>optional</td>
+      <td>Static IP address</td>
+    </tr>
+    <tr>
+      <td>gateway</td>
+      <td><a href="#bytes">bytes</a></td>
+      <td>optional</td>
+      <td>Gateway IP address</td>
+    </tr>
+    <tr>
+      <td>subnet</td>
+      <td><a href="#bytes">bytes</a></td>
+      <td>optional</td>
+      <td>Subnet mask</td>
+    </tr>
+    <tr>
+      <td>dns_primary</td>
+      <td><a href="#bytes">bytes</a></td>
+      <td>optional</td>
+      <td>Primary DNS</td>
+    </tr>
+    <tr>
+      <td>dns_secondary</td>
+      <td><a href="#bytes">bytes</a></td>
+      <td>optional</td>
+      <td>Secondary DNS</td>
+    </tr>
+    <tr>
+      <td>set_to_least_preferred_ap</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Deprecated</td>
+    </tr>
+    <tr>
+      <td>owner_purpose</td>
+      <td><a href="#open_gopro-EnumNetworkOwner">EnumNetworkOwner</a></td>
+      <td>optional</td>
+      <td>Deprecated</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-RequestGetApEntries"></a></p>
+
+<h3 id="requestgetapentries">RequestGetApEntries</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>start_index</td>
+      <td><a href="#int32">int32</a></td>
+      <td>required</td>
+      <td>Used for paging. 0 &lt;= start_index &lt; NotifStartScanning.total_entries</td>
+    </tr>
+    <tr>
+      <td>max_entries</td>
+      <td><a href="#int32">int32</a></td>
+      <td>required</td>
+      <td>Used for paging. Value must be &lt; NotifStartScanning.total_entries</td>
+    </tr>
+    <tr>
+      <td>scan_id</td>
+      <td><a href="#int32">int32</a></td>
+      <td>required</td>
+      <td>ID corresponding to a set of scan results (i.e.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-RequestReleaseNetwork"></a></p>
+
+<h3 id="requestreleasenetwork">RequestReleaseNetwork</h3>
+
+<p><a name="open_gopro-RequestStartScan"></a></p>
+
+<h3 id="requeststartscan">RequestStartScan</h3>
+
+<p><a name="open_gopro-ResponseConnect"></a></p>
+
+<h3 id="responseconnect">ResponseConnect</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>result</td>
+      <td><a href="#open_gopro-EnumResultGeneric">EnumResultGeneric</a></td>
+      <td>required</td>
+      <td>Generic pass/fail/error info</td>
+    </tr>
+    <tr>
+      <td>provisioning_state</td>
+      <td><a href="#open_gopro-EnumProvisioning">EnumProvisioning</a></td>
+      <td>required</td>
+      <td>Provisioning/connection state</td>
+    </tr>
+    <tr>
+      <td>timeout_seconds</td>
+      <td><a href="#int32">int32</a></td>
+      <td>required</td>
+      <td>Network connection timeout (seconds)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-ResponseConnectNew"></a></p>
+
+<h3 id="responseconnectnew">ResponseConnectNew</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>result</td>
+      <td><a href="#open_gopro-EnumResultGeneric">EnumResultGeneric</a></td>
+      <td>required</td>
+      <td>Status of Connect New request</td>
+    </tr>
+    <tr>
+      <td>provisioning_state</td>
+      <td><a href="#open_gopro-EnumProvisioning">EnumProvisioning</a></td>
+      <td>required</td>
+      <td>Current provisioning state of the network</td>
+    </tr>
+    <tr>
+      <td>timeout_seconds</td>
+      <td><a href="#int32">int32</a></td>
+      <td>required</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-ResponseGetApEntries"></a></p>
+
+<h3 id="responsegetapentries">ResponseGetApEntries</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>result</td>
+      <td><a href="#open_gopro-EnumResultGeneric">EnumResultGeneric</a></td>
+      <td>required</td>
+      <td>Generic pass/fail/error info</td>
+    </tr>
+    <tr>
+      <td>scan_id</td>
+      <td><a href="#int32">int32</a></td>
+      <td>required</td>
+      <td>ID associated with this batch of results</td>
+    </tr>
+    <tr>
+      <td>entries</td>
+      <td><a href="#open_gopro-ScanEntry">ScanEntry</a></td>
+      <td>repeated</td>
+      <td>Array containing details about discovered APs</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-ResponseStartScanning"></a></p>
+
+<h3 id="responsestartscanning">ResponseStartScanning</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>result</td>
+      <td><a href="#open_gopro-EnumResultGeneric">EnumResultGeneric</a></td>
+      <td>required</td>
+      <td>Generic pass/fail/error info</td>
+    </tr>
+    <tr>
+      <td>scanning_state</td>
+      <td><a href="#open_gopro-EnumScanning">EnumScanning</a></td>
+      <td>required</td>
+      <td>Scanning state</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-ScanEntry"></a></p>
+
+<h3 id="scanentry">ScanEntry</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ssid</td>
+      <td><a href="#string">string</a></td>
+      <td>required</td>
+      <td>AP SSID</td>
+    </tr>
+    <tr>
+      <td>signal_strength_bars</td>
+      <td><a href="#int32">int32</a></td>
+      <td>required</td>
+      <td>Signal strength (3 bars: &gt;-70 dBm; 2 bars: &gt;-85 dBm; 1 bar: &lt;=-85</td>
+    </tr>
+    <tr>
+      <td>signal_frequency_mhz</td>
+      <td><a href="#int32">int32</a></td>
+      <td>required</td>
+      <td>Signal frequency (MHz)</td>
+    </tr>
+    <tr>
+      <td>scan_entry_flags</td>
+      <td><a href="#int32">int32</a></td>
+      <td>required</td>
+      <td>Bitmasked value from EnumScanEntryFlags</td>
+    </tr>
+    <tr>
+      <td>owner_purpose</td>
+      <td><a href="#open_gopro-EnumNetworkOwner">EnumNetworkOwner</a></td>
+      <td>optional</td>
+      <td>Deprecated</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end messages --></p>
+
+<p><a name="open_gopro-EnumNetworkOwner"></a></p>
+
+<h3 id="enumnetworkowner">EnumNetworkOwner</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DEPRECATED_1</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>DEPRECATED_2</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>DEPRECATED_3</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>DEPRECATED_4</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>DEPRECATED_5</td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>DEPRECATED_6</td>
+      <td>8</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>DEPRECATED_7</td>
+      <td>16</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-EnumProvisioning"></a></p>
+
+<h3 id="enumprovisioning">EnumProvisioning</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PROVISIONING_UNKNOWN</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PROVISIONING_NEVER_STARTED</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PROVISIONING_STARTED</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PROVISIONING_ABORTED_BY_SYSTEM</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PROVISIONING_CANCELLED_BY_USER</td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PROVISIONING_SUCCESS_NEW_AP</td>
+      <td>5</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PROVISIONING_SUCCESS_OLD_AP</td>
+      <td>6</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PROVISIONING_ERROR_FAILED_TO_ASSOCIATE</td>
+      <td>7</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PROVISIONING_ERROR_PASSWORD_AUTH</td>
+      <td>8</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PROVISIONING_ERROR_EULA_BLOCKING</td>
+      <td>9</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PROVISIONING_ERROR_NO_INTERNET</td>
+      <td>10</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PROVISIONING_ERROR_UNSUPPORTED_TYPE</td>
+      <td>11</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-EnumScanEntryFlags"></a></p>
+
+<h3 id="enumscanentryflags">EnumScanEntryFlags</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SCAN_FLAG_OPEN</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>SCAN_FLAG_AUTHENTICATED</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>SCAN_FLAG_CONFIGURED</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>SCAN_FLAG_BEST_SSID</td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>SCAN_FLAG_ASSOCIATED</td>
+      <td>8</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>SCAN_FLAG_UNSUPPORTED_TYPE</td>
+      <td>16</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>DEPRECATED</td>
+      <td>32</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-EnumScanning"></a></p>
+
+<h3 id="enumscanning">EnumScanning</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SCANNING_UNKNOWN</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>SCANNING_NEVER_STARTED</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>SCANNING_STARTED</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>SCANNING_ABORTED_BY_SYSTEM</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>SCANNING_CANCELLED_BY_USER</td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>SCANNING_SUCCESS</td>
+      <td>5</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end enums --></p>
+
+<p><!-- end HasExtensions --></p>
+
+<p><!-- end services --></p>
+
+<p><a name="preset_status-proto"></a></p>
+
+<h2 id="preset_statusproto">preset_status.proto</h2>
+
+<p><a name="open_gopro-NotifyPresetStatus"></a></p>
+
+<h3 id="notifypresetstatus">NotifyPresetStatus</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>preset_group_array</td>
+      <td><a href="#open_gopro-PresetGroup">PresetGroup</a></td>
+      <td>repeated</td>
+      <td>Array of Preset Groups</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-Preset"></a></p>
+
+<h3 id="preset">Preset</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td><a href="#int32">int32</a></td>
+      <td>optional</td>
+      <td>Preset ID</td>
+    </tr>
+    <tr>
+      <td>mode</td>
+      <td><a href="#open_gopro-EnumFlatMode">EnumFlatMode</a></td>
+      <td>optional</td>
+      <td>Preset flatmode ID</td>
+    </tr>
+    <tr>
+      <td>title_id</td>
+      <td><a href="#open_gopro-EnumPresetTitle">EnumPresetTitle</a></td>
+      <td>optional</td>
+      <td>Preset Title ID</td>
+    </tr>
+    <tr>
+      <td>title_number</td>
+      <td><a href="#int32">int32</a></td>
+      <td>optional</td>
+      <td>Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)</td>
+    </tr>
+    <tr>
+      <td>user_defined</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Is the Preset custom/user-defined?</td>
+    </tr>
+    <tr>
+      <td>icon</td>
+      <td><a href="#open_gopro-EnumPresetIcon">EnumPresetIcon</a></td>
+      <td>optional</td>
+      <td>Preset Icon ID</td>
+    </tr>
+    <tr>
+      <td>setting_array</td>
+      <td><a href="#open_gopro-PresetSetting">PresetSetting</a></td>
+      <td>repeated</td>
+      <td>Array of settings associated with this Preset</td>
+    </tr>
+    <tr>
+      <td>is_modified</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Has Preset been modified from factory</td>
+    </tr>
+    <tr>
+      <td>is_fixed</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Is this Preset mutable?</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-PresetGroup"></a></p>
+
+<h3 id="presetgroup">PresetGroup</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td><a href="#open_gopro-EnumPresetGroup">EnumPresetGroup</a></td>
+      <td>optional</td>
+      <td>Preset Group ID</td>
+    </tr>
+    <tr>
+      <td>preset_array</td>
+      <td><a href="#open_gopro-Preset">Preset</a></td>
+      <td>repeated</td>
+      <td>Array of Presets contained in this Preset Group</td>
+    </tr>
+    <tr>
+      <td>can_add_preset</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Is there room in the group to add additional Presets?</td>
+    </tr>
+    <tr>
+      <td>icon</td>
+      <td><a href="#open_gopro-EnumPresetGroupIcon">EnumPresetGroupIcon</a></td>
+      <td>optional</td>
+      <td>The icon to display for this preset group</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-PresetSetting"></a></p>
+
+<h3 id="presetsetting">PresetSetting</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td><a href="#int32">int32</a></td>
+      <td>optional</td>
+      <td>Setting ID</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td><a href="#int32">int32</a></td>
+      <td>optional</td>
+      <td>Setting value</td>
+    </tr>
+    <tr>
+      <td>is_caption</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Does this setting appear on the Preset “pill” in the camera UI?</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end messages --></p>
+
+<p><a name="open_gopro-EnumFlatMode"></a></p>
+
+<h3 id="enumflatmode">EnumFlatMode</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FLAT_MODE_UNKNOWN</td>
+      <td>-1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_PLAYBACK</td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_SETUP</td>
+      <td>5</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_VIDEO</td>
+      <td>12</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_TIME_LAPSE_VIDEO</td>
+      <td>13</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_LOOPING</td>
+      <td>15</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_PHOTO_SINGLE</td>
+      <td>16</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_PHOTO</td>
+      <td>17</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_PHOTO_NIGHT</td>
+      <td>18</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_PHOTO_BURST</td>
+      <td>19</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_TIME_LAPSE_PHOTO</td>
+      <td>20</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_NIGHT_LAPSE_PHOTO</td>
+      <td>21</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_BROADCAST_RECORD</td>
+      <td>22</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_BROADCAST_BROADCAST</td>
+      <td>23</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_TIME_WARP_VIDEO</td>
+      <td>24</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_LIVE_BURST</td>
+      <td>25</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_NIGHT_LAPSE_VIDEO</td>
+      <td>26</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_SLOMO</td>
+      <td>27</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_IDLE</td>
+      <td>28</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_VIDEO_STAR_TRAIL</td>
+      <td>29</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_VIDEO_LIGHT_PAINTING</td>
+      <td>30</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FLAT_MODE_VIDEO_LIGHT_TRAIL</td>
+      <td>31</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-EnumPresetGroup"></a></p>
+
+<h3 id="enumpresetgroup">EnumPresetGroup</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PRESET_GROUP_ID_VIDEO</td>
+      <td>1000</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_GROUP_ID_PHOTO</td>
+      <td>1001</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_GROUP_ID_TIMELAPSE</td>
+      <td>1002</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_GROUP_ID_VIDEO_DUAL_LENS</td>
+      <td>1003</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_GROUP_ID_PHOTO_DUAL_LENS</td>
+      <td>1004</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_GROUP_ID_TIMELAPSE_DUAL_LENS</td>
+      <td>1005</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_GROUP_ID_SPECIAL</td>
+      <td>1006</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-EnumPresetGroupIcon"></a></p>
+
+<h3 id="enumpresetgroupicon">EnumPresetGroupIcon</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PRESET_GROUP_VIDEO_ICON_ID</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_GROUP_PHOTO_ICON_ID</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_GROUP_TIMELAPSE_ICON_ID</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-EnumPresetIcon"></a></p>
+
+<h3 id="enumpreseticon">EnumPresetIcon</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PRESET_ICON_VIDEO</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_ACTIVITY</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_CINEMATIC</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_PHOTO</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_LIVE_BURST</td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_BURST</td>
+      <td>5</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_PHOTO_NIGHT</td>
+      <td>6</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_TIMEWARP</td>
+      <td>7</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_TIMELAPSE</td>
+      <td>8</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_NIGHTLAPSE</td>
+      <td>9</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_SNAIL</td>
+      <td>10</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_VIDEO_2</td>
+      <td>11</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_360_VIDEO</td>
+      <td>12</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_PHOTO_2</td>
+      <td>13</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_PANORAMA</td>
+      <td>14</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_BURST_2</td>
+      <td>15</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_TIMEWARP_2</td>
+      <td>16</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_TIMELAPSE_2</td>
+      <td>17</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_CUSTOM</td>
+      <td>18</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_AIR</td>
+      <td>19</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_BIKE</td>
+      <td>20</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_EPIC</td>
+      <td>21</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_INDOOR</td>
+      <td>22</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_MOTOR</td>
+      <td>23</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_MOUNTED</td>
+      <td>24</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_OUTDOOR</td>
+      <td>25</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_POV</td>
+      <td>26</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_SELFIE</td>
+      <td>27</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_SKATE</td>
+      <td>28</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_SNOW</td>
+      <td>29</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_TRAIL</td>
+      <td>30</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_TRAVEL</td>
+      <td>31</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_WATER</td>
+      <td>32</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_LOOPING</td>
+      <td>33</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_MAX_VIDEO</td>
+      <td>55</td>
+      <td>Reserved 34 - 50 for Custom presets</td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_MAX_PHOTO</td>
+      <td>56</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_MAX_TIMEWARP</td>
+      <td>57</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_BASIC</td>
+      <td>58</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_ULTRA_SLO_MO</td>
+      <td>59</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_STANDARD_ENDURANCE</td>
+      <td>60</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_ACTIVITY_ENDURANCE</td>
+      <td>61</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_CINEMATIC_ENDURANCE</td>
+      <td>62</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_SLOMO_ENDURANCE</td>
+      <td>63</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_STATIONARY_1</td>
+      <td>64</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_STATIONARY_2</td>
+      <td>65</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_STATIONARY_3</td>
+      <td>66</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_STATIONARY_4</td>
+      <td>67</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_STAR_TRAIL</td>
+      <td>76</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_LIGHT_PAINTING</td>
+      <td>77</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_LIGHT_TRAIL</td>
+      <td>78</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_FULL_FRAME</td>
+      <td>79</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_TIMELAPSE_PHOTO</td>
+      <td>1000</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_NIGHTLAPSE_PHOTO</td>
+      <td>1001</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_MAX</td>
+      <td>1002</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-EnumPresetTitle"></a></p>
+
+<h3 id="enumpresettitle">EnumPresetTitle</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PRESET_TITLE_ACTIVITY</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_STANDARD</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_CINEMATIC</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_PHOTO</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_LIVE_BURST</td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_BURST</td>
+      <td>5</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_NIGHT</td>
+      <td>6</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_TIME_WARP</td>
+      <td>7</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_TIME_LAPSE</td>
+      <td>8</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_NIGHT_LAPSE</td>
+      <td>9</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_VIDEO</td>
+      <td>10</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_SLOMO</td>
+      <td>11</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_360_VIDEO</td>
+      <td>12</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_PHOTO_2</td>
+      <td>13</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_PANORAMA</td>
+      <td>14</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_360_PHOTO</td>
+      <td>15</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_TIME_WARP_2</td>
+      <td>16</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_360_TIME_WARP</td>
+      <td>17</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_CUSTOM</td>
+      <td>18</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_AIR</td>
+      <td>19</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_BIKE</td>
+      <td>20</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_EPIC</td>
+      <td>21</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_INDOOR</td>
+      <td>22</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_MOTOR</td>
+      <td>23</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_MOUNTED</td>
+      <td>24</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_OUTDOOR</td>
+      <td>25</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_POV</td>
+      <td>26</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_SELFIE</td>
+      <td>27</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_SKATE</td>
+      <td>28</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_SNOW</td>
+      <td>29</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_TRAIL</td>
+      <td>30</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_TRAVEL</td>
+      <td>31</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_WATER</td>
+      <td>32</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_LOOPING</td>
+      <td>33</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_360_TIMELAPSE</td>
+      <td>51</td>
+      <td>Reserved 34 - 50 for custom presets.</td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_360_NIGHT_LAPSE</td>
+      <td>52</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_360_NIGHT_PHOTO</td>
+      <td>53</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_PANO_TIME_LAPSE</td>
+      <td>54</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_MAX_VIDEO</td>
+      <td>55</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_MAX_PHOTO</td>
+      <td>56</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_MAX_TIMEWARP</td>
+      <td>57</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_BASIC</td>
+      <td>58</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_ULTRA_SLO_MO</td>
+      <td>59</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_STANDARD_ENDURANCE</td>
+      <td>60</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_ACTIVITY_ENDURANCE</td>
+      <td>61</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_CINEMATIC_ENDURANCE</td>
+      <td>62</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_SLOMO_ENDURANCE</td>
+      <td>63</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_STATIONARY_1</td>
+      <td>64</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_STATIONARY_2</td>
+      <td>65</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_STATIONARY_3</td>
+      <td>66</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_STATIONARY_4</td>
+      <td>67</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_SIMPLE_VIDEO</td>
+      <td>68</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_SIMPLE_TIME_WARP</td>
+      <td>69</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_SIMPLE_SUPER_PHOTO</td>
+      <td>70</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_SIMPLE_NIGHT_PHOTO</td>
+      <td>71</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE</td>
+      <td>72</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_HIGHEST_QUALITY</td>
+      <td>73</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_EXTENDED_BATTERY</td>
+      <td>74</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_LONGEST_BATTERY</td>
+      <td>75</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_STAR_TRAIL</td>
+      <td>76</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_LIGHT_PAINTING</td>
+      <td>77</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_LIGHT_TRAIL</td>
+      <td>78</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_FULL_FRAME</td>
+      <td>79</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_MAX</td>
+      <td>80</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end enums --></p>
+
+<p><!-- end HasExtensions --></p>
+
+<p><!-- end services --></p>
+
+<p><a name="request_get_preset_status-proto"></a></p>
+
+<h2 id="request_get_preset_statusproto">request_get_preset_status.proto</h2>
+
+<p><a name="open_gopro-RequestGetPresetStatus"></a></p>
+
+<h3 id="requestgetpresetstatus">RequestGetPresetStatus</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>register_preset_status</td>
+      <td><a href="#open_gopro-EnumRegisterPresetStatus">EnumRegisterPresetStatus</a></td>
+      <td>repeated</td>
+      <td>Array of Preset statuses to be notified about</td>
+    </tr>
+    <tr>
+      <td>unregister_preset_status</td>
+      <td><a href="#open_gopro-EnumRegisterPresetStatus">EnumRegisterPresetStatus</a></td>
+      <td>repeated</td>
+      <td>Array of Preset statuses to stop being notified about</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end messages --></p>
+
+<p><a name="open_gopro-EnumRegisterPresetStatus"></a></p>
+
+<h3 id="enumregisterpresetstatus">EnumRegisterPresetStatus</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>REGISTER_PRESET_STATUS_PRESET</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end enums --></p>
+
+<p><!-- end HasExtensions --></p>
+
+<p><!-- end services --></p>
+
+<p><a name="response_generic-proto"></a></p>
+
+<h2 id="response_genericproto">response_generic.proto</h2>
+
+<p><a name="open_gopro-ResponseGeneric"></a></p>
+
+<h3 id="responsegeneric">ResponseGeneric</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>result</td>
+      <td><a href="#open_gopro-EnumResultGeneric">EnumResultGeneric</a></td>
+      <td>required</td>
+      <td>Generic pass/fail/error info</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end messages --></p>
+
+<p><a name="open_gopro-EnumResultGeneric"></a></p>
+
+<h3 id="enumresultgeneric">EnumResultGeneric</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>RESULT_UNKNOWN</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>RESULT_SUCCESS</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>RESULT_ILL_FORMED</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>RESULT_NOT_SUPPORTED</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>RESULT_ARGUMENT_OUT_OF_BOUNDS</td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>RESULT_ARGUMENT_INVALID</td>
+      <td>5</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end enums --></p>
+
+<p><!-- end HasExtensions --></p>
+
+<p><!-- end services --></p>
+
+<p><a name="set_camera_control_status-proto"></a></p>
+
+<h2 id="set_camera_control_statusproto">set_camera_control_status.proto</h2>
+
+<p><a name="open_gopro-RequestSetCameraControlStatus"></a></p>
+
+<h3 id="requestsetcameracontrolstatus">RequestSetCameraControlStatus</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>camera_control_status</td>
+      <td><a href="#open_gopro-EnumCameraControlStatus">EnumCameraControlStatus</a></td>
+      <td>required</td>
+      <td>Declare who is taking control of the camera</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end messages --></p>
+
+<p><a name="open_gopro-EnumCameraControlStatus"></a></p>
+
+<h3 id="enumcameracontrolstatus">EnumCameraControlStatus</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CAMERA_IDLE</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>CAMERA_CONTROL</td>
+      <td>1</td>
+      <td>Can only be set by camera, not by third-party</td>
+    </tr>
+    <tr>
+      <td>CAMERA_EXTERNAL_CONTROL</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end enums --></p>
+
+<p><!-- end HasExtensions --></p>
+
+<p><!-- end services --></p>
+
+<p><a name="turbo_transfer-proto"></a></p>
+
+<h2 id="turbo_transferproto">turbo_transfer.proto</h2>
+
+<p><a name="open_gopro-RequestSetTurboActive"></a></p>
+
+<h3 id="requestsetturboactive">RequestSetTurboActive</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>active</td>
+      <td><a href="#bool">bool</a></td>
+      <td>required</td>
+      <td>Enable or disable Turbo Transfer feature</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end messages --></p>
+
+<p><!-- end enums --></p>
+
+<p><!-- end HasExtensions --></p>
+
+<p><!-- end services --></p>
+
+<h2 id="scalar-value-types">Scalar Value Types</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>.proto Type</th>
+      <th>Notes</th>
+      <th>C++</th>
+      <th>Java</th>
+      <th>Python</th>
+      <th>Go</th>
+      <th>C#</th>
+      <th>PHP</th>
+      <th>Ruby</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+<a name="double"></a> double</td>
+      <td> </td>
+      <td>double</td>
+      <td>double</td>
+      <td>float</td>
+      <td>float64</td>
+      <td>double</td>
+      <td>float</td>
+      <td>Float</td>
+    </tr>
+    <tr>
+      <td>
+<a name="float"></a> float</td>
+      <td> </td>
+      <td>float</td>
+      <td>float</td>
+      <td>float</td>
+      <td>float32</td>
+      <td>float</td>
+      <td>float</td>
+      <td>Float</td>
+    </tr>
+    <tr>
+      <td>
+<a name="int32"></a> int32</td>
+      <td>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint32 instead.</td>
+      <td>int32</td>
+      <td>int</td>
+      <td>int</td>
+      <td>int32</td>
+      <td>int</td>
+      <td>integer</td>
+      <td>Bignum or Fixnum (as required)</td>
+    </tr>
+    <tr>
+      <td>
+<a name="int64"></a> int64</td>
+      <td>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint64 instead.</td>
+      <td>int64</td>
+      <td>long</td>
+      <td>int/long</td>
+      <td>int64</td>
+      <td>long</td>
+      <td>integer/string</td>
+      <td>Bignum</td>
+    </tr>
+    <tr>
+      <td>
+<a name="uint32"></a> uint32</td>
+      <td>Uses variable-length encoding.</td>
+      <td>uint32</td>
+      <td>int</td>
+      <td>int/long</td>
+      <td>uint32</td>
+      <td>uint</td>
+      <td>integer</td>
+      <td>Bignum or Fixnum (as required)</td>
+    </tr>
+    <tr>
+      <td>
+<a name="uint64"></a> uint64</td>
+      <td>Uses variable-length encoding.</td>
+      <td>uint64</td>
+      <td>long</td>
+      <td>int/long</td>
+      <td>uint64</td>
+      <td>ulong</td>
+      <td>integer/string</td>
+      <td>Bignum or Fixnum (as required)</td>
+    </tr>
+    <tr>
+      <td>
+<a name="sint32"></a> sint32</td>
+      <td>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int32s.</td>
+      <td>int32</td>
+      <td>int</td>
+      <td>int</td>
+      <td>int32</td>
+      <td>int</td>
+      <td>integer</td>
+      <td>Bignum or Fixnum (as required)</td>
+    </tr>
+    <tr>
+      <td>
+<a name="sint64"></a> sint64</td>
+      <td>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int64s.</td>
+      <td>int64</td>
+      <td>long</td>
+      <td>int/long</td>
+      <td>int64</td>
+      <td>long</td>
+      <td>integer/string</td>
+      <td>Bignum</td>
+    </tr>
+    <tr>
+      <td>
+<a name="fixed32"></a> fixed32</td>
+      <td>Always four bytes. More efficient than uint32 if values are often greater than 2^28.</td>
+      <td>uint32</td>
+      <td>int</td>
+      <td>int</td>
+      <td>uint32</td>
+      <td>uint</td>
+      <td>integer</td>
+      <td>Bignum or Fixnum (as required)</td>
+    </tr>
+    <tr>
+      <td>
+<a name="fixed64"></a> fixed64</td>
+      <td>Always eight bytes. More efficient than uint64 if values are often greater than 2^56.</td>
+      <td>uint64</td>
+      <td>long</td>
+      <td>int/long</td>
+      <td>uint64</td>
+      <td>ulong</td>
+      <td>integer/string</td>
+      <td>Bignum</td>
+    </tr>
+    <tr>
+      <td>
+<a name="sfixed32"></a> sfixed32</td>
+      <td>Always four bytes.</td>
+      <td>int32</td>
+      <td>int</td>
+      <td>int</td>
+      <td>int32</td>
+      <td>int</td>
+      <td>integer</td>
+      <td>Bignum or Fixnum (as required)</td>
+    </tr>
+    <tr>
+      <td>
+<a name="sfixed64"></a> sfixed64</td>
+      <td>Always eight bytes.</td>
+      <td>int64</td>
+      <td>long</td>
+      <td>int/long</td>
+      <td>int64</td>
+      <td>long</td>
+      <td>integer/string</td>
+      <td>Bignum</td>
+    </tr>
+    <tr>
+      <td>
+<a name="bool"></a> bool</td>
+      <td> </td>
+      <td>bool</td>
+      <td>boolean</td>
+      <td>boolean</td>
+      <td>bool</td>
+      <td>bool</td>
+      <td>boolean</td>
+      <td>TrueClass/FalseClass</td>
+    </tr>
+    <tr>
+      <td>
+<a name="string"></a> string</td>
+      <td>A string must always contain UTF-8 encoded or 7-bit ASCII text.</td>
+      <td>string</td>
+      <td>String</td>
+      <td>str/unicode</td>
+      <td>string</td>
+      <td>string</td>
+      <td>string</td>
+      <td>String (UTF-8)</td>
+    </tr>
+    <tr>
+      <td>
+<a name="bytes"></a> bytes</td>
+      <td>May contain any arbitrary sequence of bytes.</td>
+      <td>string</td>
+      <td>ByteString</td>
+      <td>str</td>
+      <td>[]byte</td>
+      <td>ByteString</td>
+      <td>string</td>
+      <td>String (ASCII-8BIT)</td>
+    </tr>
+  </tbody>
+</table>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+    <ul class="social-icons">
+           
+        <li>
+            <a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i>
+                Website</a>
+        </li>
+          
+        <li>
+            <a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i>
+                Twitter</a>
+        </li>
+          
+        <li>
+            <a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i>
+                Facebook</a>
+        </li>
+          
+        <li>
+            <a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i>
+                GitHub</a>
+        </li>
+          
+        <li>
+            <a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i>
+                Instagram</a>
+        </li>
+           
+    </ul>
+</div>
+
+<div class="page__footer-copyright">
+    © 2022 GoPro. Powered by
+    <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
+    <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
+    <p>
+        Can be used with GoPro® HERO9 and HERO10 cameras. You must include the following text on
+        every page where it can be seen by someone purchasing such an item: <em>"This product
+        and/or service is not affiliated with, endorsed by or in any way associated with
+        GoPro Inc. or its products and services. GoPro, HERO, and their respective logos
+        are trademarks or registered trademarks of GoPro, Inc."</em>
+    </p>
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/OpenGoPro/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/OpenGoPro/assets/js/lunr/lunr.min.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-store.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

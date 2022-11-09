@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Frequently Asked Questions :  Open GoPro</title>
+<!-- begin _includes/seo.html --><title>FAQ and Known Issues :  Open GoPro</title>
 <meta name="description" content="Open Source GoPro Interface">
 
 
@@ -20,7 +20,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
-<meta property="og:title" content="Frequently Asked Questions">
+<meta property="og:title" content="FAQ and Known Issues">
 <meta property="og:url" content="https://gopro.github.io/OpenGoPro/faq">
 
 
@@ -183,7 +183,7 @@
         <span class="sep">/</span>
       
       
-        <li class="current">Frequently Asked Questions</li>
+        <li class="current">FAQ and Known Issues</li>
       
     
   </ol>
@@ -318,7 +318,7 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Frequently Asked Questions">
+    <meta itemprop="headline" content="FAQ and Known Issues">
     
     
     
@@ -326,7 +326,7 @@
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Frequently Asked Questions
+          <h1 id="page-title" class="page__title" itemprop="headline">FAQ and Known Issues
 </h1>
           
 
@@ -341,15 +341,27 @@
               <header><h4 class="nav__title">
 <i class="fas fa-file-alt"></i> On this page</h4></header>
               <ul class="toc__menu">
+<li>
+<a href="#frequently-asked-questions-faq">Frequently Asked Questions (FAQ)</a><ul>
 <li><a href="#connectivity">Connectivity</a></li>
 <li><a href="#general">General</a></li>
 <li><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li>
+<a href="#known-issues">Known Issues</a><ul>
+<li><a href="#relevant-to-all-supported-cameras">Relevant to All Supported Cameras</a></li>
+<li><a href="#hero-11-v011000-specific">Hero 11 (v01.10.00) Specific</a></li>
+</ul>
+</li>
 </ul>
 
             </nav>
           </aside>
         
-        <p>If you have somehow stumbled here first, note that there are specifications, demos, and tutorials which expand upon
+        <h1 id="frequently-asked-questions-faq">Frequently Asked Questions (FAQ)</h1>
+
+<p>If you have somehow stumbled here first, note that there are specifications, demos, and tutorials which expand upon
 much of the information here. These can be found, among other places, from the <a href="/">home page</a>.</p>
 
 <h2 id="connectivity">Connectivity</h2>
@@ -428,10 +440,39 @@ you are already connected to it from a previous session. To be sure, power cycle
 </div>
 
 <div class="accordion-container">
-    <button class="accordion">Why am I failing to connect to the cameras Wifi Access Point?<i class="fa fa-chevron-down"></i></button>
+    <button class="accordion">Workaround for intermittent Wifi AP Connection failure<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>On &gt;= Hero 11, try disabling and then re-enabling the camera’s Wifi AP using the
 <a href="/OpenGoPro/ble_2_0#commands">AP Control BLE Command</a></p>
+</div>
+</div>
+
+<h1 id="known-issues">Known Issues</h1>
+
+<h2 id="relevant-to-all-supported-cameras">Relevant to All Supported Cameras</h2>
+
+<div class="accordion-container">
+    <button class="accordion">Intermittent failure to connect to the cameras Wifi Access Point<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>On rare occasions, connections to the camera’s Wifi AP will continuously fail until the camera is reset.
+It is possible to workaround this as described in <a href="#troubleshooting">Troubleshooting</a></p>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Spurious Protobuf Notifications sent once camera is connected in Station mode<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>Once the camera has been connected in station mode (STA), it will start sending protobuf notifications with
+action ID 0xFF. These should be ignored.</p>
+</div>
+</div>
+
+<h2 id="hero-11-v011000-specific">Hero 11 (v01.10.00) Specific</h2>
+
+<div class="accordion-container">
+    <button class="accordion">Wired Communication is broken after update mode<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>This is fixed by Resetting Connections and then re-pairing.</p>
 </div>
 </div>
 

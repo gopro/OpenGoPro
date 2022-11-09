@@ -330,7 +330,23 @@
     
       <li>
         
+          <a href="/OpenGoPro/ble_2_0"><span class="nav__sub-title">BLE 2.0</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
           <a href="/OpenGoPro/http_2_0"><span class="nav__sub-title">HTTP 2.0</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/protos"><span class="nav__sub-title">Protobuf</span></a>
         
 
         
@@ -370,7 +386,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          38 minute read
+          42 minute read
         
       </span>
     
@@ -413,6 +429,9 @@
 </li>
 <li><a href="#request-and-response-formats">Request and Response Formats</a></li>
 <li><a href="#sending-commands">Sending Commands</a></li>
+<li>
+<a href="#keep-alive">Keep Alive</a><ul><li><a href="#command">Command</a></li></ul>
+</li>
 </ul>
 </li>
 <li>
@@ -475,11 +494,9 @@
 <a href="#global-behaviors">Global Behaviors</a><ul><li><a href="#set-camera-control-status">Set Camera Control Status</a></li></ul>
 </li>
 <li>
-<a href="#limitations">Limitations</a><ul>
-<li><a href="#hero11-black">HERO11 Black</a></li>
-<li><a href="#hero10-black">HERO10 Black</a></li>
-<li><a href="#hero9-black">HERO9 Black</a></li>
-<li><a href="#general">General</a></li>
+<a href="#ota-update">OTA Update</a><ul>
+<li><a href="#ota-update-flow">OTA Update Flow</a></li>
+<li><a href="#ota-update-status-codes">OTA Update Status Codes</a></li>
 </ul>
 </li>
 <li>
@@ -489,9 +506,18 @@
 <li><a href="#status-codes">Status Codes</a></li>
 <li><a href="#error-codes">Error Codes</a></li>
 <li><a href="#resolutions">Resolutions</a></li>
-<li><a href="#webcam-digital-lenses-fov">Webcam Digital Lenses (FOV)</a></li>
+<li><a href="#digital-lenses--fov">Digital Lenses / FOV</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li>
+<a href="#limitations">Limitations</a><ul>
+<li><a href="#hero11-black-mini">HERO11 Black Mini</a></li>
+<li><a href="#hero11-black">HERO11 Black</a></li>
+<li><a href="#hero10-black">HERO10 Black</a></li>
+<li><a href="#hero9-black">HERO9 Black</a></li>
+<li><a href="#general">General</a></li>
 </ul>
 </li>
 </ul>
@@ -530,10 +556,16 @@ Below is a table of cameras that support GoPro's public HTTP API:
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>ID</td>
-      <td>Model</td>
+      <td>Model ID</td>
+      <td>Model Code</td>
       <td>Marketing Name</td>
       <td>Minimal Firmware Version</td>
+    </tr>
+    <tr>
+      <td>60</td>
+      <td>H22.03</td>
+      <td>HERO11 Black Mini</td>
+      <td><a href="https://gopro.com/en/us/update/hero11-black-mini">v01.10.00</a></td>
     </tr>
     <tr>
       <td>58</td>
@@ -708,6 +740,42 @@ System Busy and Encode Active flags to be unset before sending messages other th
 For details regarding camera state, see <a href="#status-codes">Status Codes</a>.
 </p>
 
+<h2 id="keep-alive">Keep Alive</h2>
+<p>
+In order to maximize battery life, GoPro cameras automatically go to sleep after some time.
+This logic is handled by a combination of an <b>Auto Power Down</b> setting which most (but not all) cameras support
+and a <b>Keep Alive</b> message that the user can regularly send to the camera.
+The camera will automatically go to sleep if both timers reach zero.
+</p>
+
+<p>
+The Auto Power Down timer is reset when the user taps the LCD screen, presses a button on the camera or 
+programmatically (un)sets the shutter, sets a setting, or loads a Preset.
+</p>
+
+<p>
+The Keep Alive timer is reset when the user sends a keep alive message.
+</p>
+
+<p>
+The best practice to prevent the camera from inadvertently going to sleep is to start sending Keep Alive messages
+every <b>3.0</b> seconds after a connection is established.
+</p>
+
+<h3 id="command">Command</h3>
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>HTTP/GET</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td>/gopro/camera/keep_alive</td>
+      <td>Send keep-alive</td>
+    </tr>
+  </tbody>
+</table>
+
 <h1 id="commands">Commands</h1>
 <p>Using the Open GoPro API, a client can perform various command, control, and query operations!</p>
 
@@ -726,6 +794,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Description</td>
       <td>HTTP Method</td>
       <td>Endpoint</td>
+      <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
       <td>HERO9 Black</td>
@@ -735,6 +804,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Set third party client</td>
       <td>GET</td>
       <td>/gopro/camera/analytics/set_client_info</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.30.00</td>
       <td>&gt;= v01.70.00</td>
@@ -747,6 +817,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Digital Zoom</td>
@@ -756,12 +827,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Get Date/Time</td>
       <td>Get date/time</td>
       <td>GET</td>
       <td>/gopro/camera/get_date_time</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.30.00</td>
       <td>&gt;= v01.70.00</td>
@@ -774,12 +847,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Media: GPMF</td>
       <td>Get GPMF data (JPG)</td>
       <td>GET</td>
       <td>/gopro/media/gpmf?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -792,12 +867,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Media: HiLight (Add)</td>
       <td>Add hilight to 100GOPRO/xxx.JPG</td>
       <td>GET</td>
       <td>/gopro/media/hilight/file?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.30.00</td>
       <td>&gt;= v01.70.00</td>
@@ -808,6 +885,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>GET</td>
       <td>/gopro/media/hilight/file?path=100GOPRO/XXX.MP4&amp;ms=2500</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.30.00</td>
       <td>&gt;= v01.70.00</td>
     </tr>
@@ -816,6 +894,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Remove hilight from 100GOPRO/xxx.JPG</td>
       <td>GET</td>
       <td>/gopro/media/hilight/remove?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.30.00</td>
       <td>&gt;= v01.70.00</td>
@@ -826,6 +905,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>GET</td>
       <td>/gopro/media/hilight/remove?path=100GOPRO/XXX.MP4&amp;ms=2500</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.30.00</td>
       <td>&gt;= v01.70.00</td>
     </tr>
@@ -834,6 +914,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Hilight moment during encoding</td>
       <td>GET</td>
       <td>/gopro/media/hilight/moment</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.30.00</td>
       <td><span style="color:red">❌</span></td>
@@ -846,12 +927,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Media: Info</td>
       <td>Get media info (MP4)</td>
       <td>GET</td>
       <td>/gopro/media/info?path=100GOPRO/XXX.MP4</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -864,12 +947,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Media: Screennail</td>
       <td>Get screennail for “100GOPRO/xxx.JPG”</td>
       <td>GET</td>
       <td>/gopro/media/screennail?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -882,12 +967,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Media: Telemetry</td>
       <td>Get telemetry track data (JPG)</td>
       <td>GET</td>
       <td>/gopro/media/telemetry?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -900,12 +987,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Media: Thumbnail</td>
       <td>Get thumbnail for “100GOPRO/xxx.JPG”</td>
       <td>GET</td>
       <td>/gopro/media/thumbnail?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -918,12 +1007,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Media: Turbo Transfer</td>
       <td>Turbo transfer: off</td>
       <td>GET</td>
       <td>/gopro/media/turbo_transfer?p=0</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -936,8 +1027,79 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
+      <td>OTA Update</td>
+      <td>Soft update: upload 12345 bytes starting at offset 67890</td>
+      <td>POST</td>
+      <td>/gp/gpSoftUpdate (plus data)</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>OTA Update</td>
+      <td>Soft update: mark upload complete</td>
+      <td>POST</td>
+      <td>/gp/gpSoftUpdate (plus data)</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>OTA Update</td>
+      <td>Ota update: show canceled/failed ui on the camera</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=canceled</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>OTA Update</td>
+      <td>Ota update: delete cached update files</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=delete</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>OTA Update</td>
+      <td>Ota update: get current update state</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=progress</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>OTA Update</td>
+      <td>Ota update: display update ui on camera</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=showui</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>OTA Update</td>
+      <td>Ota update: initiate firmware update</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=start</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>Open GoPro</td>
       <td>Get version</td>
       <td>GET</td>
@@ -945,8 +1107,9 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Get Status</td>
       <td>Get preset status</td>
       <td>GET</td>
@@ -954,8 +1117,9 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Example <a href="#presets">preset id</a>: 0x1234ABCD</td>
       <td>GET</td>
@@ -963,8 +1127,9 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Load Group</td>
       <td>Video</td>
       <td>GET</td>
@@ -972,80 +1137,89 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Load Group</td>
       <td>Photo</td>
       <td>GET</td>
       <td>/gopro/camera/presets/set_group?id=1001</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(222,235,255);">
-      <td>Presets: Load Group</td>
-      <td>Timelapse</td>
-      <td>GET</td>
-      <td>/gopro/camera/presets/set_group?id=1002</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
+      <td>Presets: Load Group</td>
+      <td>Timelapse</td>
+      <td>GET</td>
+      <td>/gopro/camera/presets/set_group?id=1002</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>Set Camera Control Status</td>
       <td>Set camera control status to idle</td>
       <td>GET</td>
       <td>/gopro/camera/control/set_ui_controller?p=0</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.20.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Set Camera Control Status</td>
       <td>Set camera control status to external_control</td>
       <td>GET</td>
       <td>/gopro/camera/control/set_ui_controller?p=2</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.20.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Set Date/Time</td>
       <td>Set date/time to 2022-01-31 03:04:05</td>
       <td>GET</td>
       <td>/gopro/camera/set_date_time?date=2022_1_31&amp;time=3_4_5</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.30.00</td>
       <td>&gt;= v01.70.00</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Set Local Date/Time</td>
       <td>Set local date/time to: 2022-01-31 03:04:05 (utc-02:00)  (dst: on)</td>
       <td>GET</td>
       <td>/gopro/camera/set_date_time?date=2022_1_31&amp;time=3_4_5&amp;tzone=-120&amp;dst=1</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Set shutter</td>
       <td>Shutter: on</td>
       <td>GET</td>
       <td>/gopro/camera/shutter/start</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Set shutter</td>
       <td>Shutter: off</td>
       <td>GET</td>
       <td>/gopro/camera/shutter/stop</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Stream: Start</td>
       <td>Start preview stream</td>
       <td>GET</td>
@@ -1053,8 +1227,9 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Stream: Stop</td>
       <td>Stop preview stream</td>
       <td>GET</td>
@@ -1062,84 +1237,94 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Exit</td>
       <td>Exit webcam mode</td>
       <td>GET</td>
       <td>/gopro/webcam/exit</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Preview</td>
       <td>Start preview stream</td>
       <td>GET</td>
       <td>/gopro/webcam/preview</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Start</td>
       <td>Start webcam</td>
       <td>GET</td>
       <td>/gopro/webcam/start</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.40.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Start</td>
       <td>Start webcam (res: resolution_1080, fov: wide)</td>
       <td>GET</td>
       <td>/gopro/webcam/start?res=12&amp;fov=0</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Status</td>
       <td>Get webcam status</td>
       <td>GET</td>
       <td>/gopro/webcam/status</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Webcam: Stop</td>
-      <td>Stop webcam</td>
-      <td>GET</td>
-      <td>/gopro/webcam/stop</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>Webcam: Version</td>
-      <td>Get webcam api version</td>
+      <td>Webcam: Stop</td>
+      <td>Stop webcam</td>
       <td>GET</td>
-      <td>/gopro/webcam/version</td>
+      <td>/gopro/webcam/stop</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
+      <td>Webcam: Version</td>
+      <td>Get webcam api version</td>
+      <td>GET</td>
+      <td>/gopro/webcam/version</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>Wired USB Control</td>
       <td>Disable wired usb control</td>
       <td>GET</td>
       <td>/gopro/camera/control/wired_usb?p=0</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.30.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Wired USB Control</td>
       <td>Enable wired usb control</td>
       <td>GET</td>
       <td>/gopro/camera/control/wired_usb?p=1</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.30.00</td>
       <td><span style="color:red">❌</span></td>
@@ -1171,6 +1356,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Option</td>
       <td>HTTP Method</td>
       <td>Endpoint</td>
+      <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
       <td>HERO9 Black</td>
@@ -1184,6 +1370,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -1191,6 +1378,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 2.7k (id: 4)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&amp;option=4</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1204,6 +1392,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -1211,6 +1400,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 1440 (id: 7)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&amp;option=7</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1224,6 +1414,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -1231,6 +1422,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 4k 4:3 (id: 18)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&amp;option=18</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1243,6 +1435,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=2&amp;option=24</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
@@ -1251,6 +1444,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 5k 4:3 (id: 25)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&amp;option=25</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1262,6 +1456,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&amp;option=26</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1271,6 +1466,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 5.3k 4:3 (id: 27)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&amp;option=27</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1282,6 +1478,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&amp;option=28</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1291,6 +1488,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 5.3k (id: 100)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&amp;option=100</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1304,6 +1502,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1311,6 +1510,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video fps (id: 3) to 120 (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=3&amp;option=1</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1324,6 +1524,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1331,6 +1532,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video fps (id: 3) to 60 (id: 5)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=3&amp;option=5</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1344,6 +1546,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1351,6 +1554,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video fps (id: 3) to 30 (id: 8)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=3&amp;option=8</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1364,6 +1568,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1371,6 +1576,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video fps (id: 3) to 24 (id: 10)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=3&amp;option=10</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1384,6 +1590,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>43</td>
@@ -1391,6 +1598,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set webcam digital lenses (id: 43) to wide (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=43&amp;option=0</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1404,6 +1612,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>43</td>
@@ -1411,6 +1620,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set webcam digital lenses (id: 43) to superview (id: 3)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=43&amp;option=3</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1424,6 +1634,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>59</td>
@@ -1431,6 +1642,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set auto power down (id: 59) to never (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=59&amp;option=0</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1441,6 +1653,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set auto power down (id: 59) to 5 min (id: 4)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=59&amp;option=4</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1451,6 +1664,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set auto power down (id: 59) to 15 min (id: 6)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=59&amp;option=6</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1461,6 +1675,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set auto power down (id: 59) to 30 min (id: 7)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=59&amp;option=7</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1474,6 +1689,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>121</td>
@@ -1481,6 +1697,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video digital lenses (id: 121) to narrow (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=121&amp;option=2</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1494,6 +1711,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>121</td>
@@ -1504,6 +1722,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>121</td>
@@ -1511,6 +1730,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video digital lenses (id: 121) to max superview (id: 7)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=121&amp;option=7</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1524,6 +1744,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>121</td>
@@ -1531,6 +1752,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video digital lenses (id: 121) to hyperview (id: 9)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=121&amp;option=9</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1542,6 +1764,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>GET</td>
       <td>/gopro/camera/setting?setting=121&amp;option=10</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1552,6 +1775,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>GET</td>
       <td>/gopro/camera/setting?setting=122&amp;option=19</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
@@ -1561,6 +1785,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set photo digital lenses (id: 122) to max superview (id: 100)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=122&amp;option=100</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1571,6 +1796,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set photo digital lenses (id: 122) to wide (id: 101)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=122&amp;option=101</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1581,6 +1807,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set photo digital lenses (id: 122) to linear (id: 102)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=122&amp;option=102</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1592,6 +1819,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>GET</td>
       <td>/gopro/camera/setting?setting=123&amp;option=19</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
@@ -1601,6 +1829,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set time lapse digital lenses (id: 123) to max superview (id: 100)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=123&amp;option=100</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1611,6 +1840,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set time lapse digital lenses (id: 123) to wide (id: 101)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=123&amp;option=101</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1621,6 +1851,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set time lapse digital lenses (id: 123) to linear (id: 102)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=123&amp;option=102</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1631,6 +1862,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set media format (id: 128) to time lapse video (id: 13)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=128&amp;option=13</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1641,6 +1873,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set media format (id: 128) to time lapse photo (id: 20)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=128&amp;option=20</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1651,6 +1884,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set media format (id: 128) to night lapse photo (id: 21)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=128&amp;option=21</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1661,6 +1895,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set media format (id: 128) to night lapse video (id: 26)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=128&amp;option=26</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1674,6 +1909,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>134</td>
@@ -1681,6 +1917,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set setup anti flicker (id: 134) to 50hz (id: 3)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=134&amp;option=3</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1694,6 +1931,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>135</td>
@@ -1701,6 +1939,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video hypersmooth (id: 135) to on (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=135&amp;option=1</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1711,6 +1950,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video hypersmooth (id: 135) to high (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=135&amp;option=2</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1724,6 +1964,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>135</td>
@@ -1731,6 +1972,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video hypersmooth (id: 135) to auto boost (id: 4)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=135&amp;option=4</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1742,6 +1984,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>GET</td>
       <td>/gopro/camera/setting?setting=135&amp;option=100</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1751,6 +1994,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video horizon levelling (id: 150) to off (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=150&amp;option=0</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1761,6 +2005,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video horizon levelling (id: 150) to locked (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=150&amp;option=2</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1771,6 +2016,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set photo horizon levelling (id: 151) to off (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=151&amp;option=0</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1781,6 +2027,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set photo horizon levelling (id: 151) to locked (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=151&amp;option=2</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1791,6 +2038,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set max lens (id: 162) to off (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=162&amp;option=0</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.20.00</td>
       <td><span style="color:green">✔</span></td>
@@ -1801,6 +2049,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set max lens (id: 162) to on (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=162&amp;option=1</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.20.00</td>
       <td><span style="color:green">✔</span></td>
@@ -1812,6 +2061,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>GET</td>
       <td>/gopro/camera/setting?setting=173&amp;option=0</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1821,6 +2071,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video performance mode (id: 173) to extended battery (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=173&amp;option=1</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td>&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
@@ -1832,6 +2083,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>GET</td>
       <td>/gopro/camera/setting?setting=173&amp;option=2</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1841,6 +2093,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set controls (id: 175) to easy (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=175&amp;option=0</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1852,6 +2105,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>GET</td>
       <td>/gopro/camera/setting?setting=175&amp;option=1</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1861,6 +2115,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 8x ultra slo-mo (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=0</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1871,6 +2126,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 4x super slo-mo (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=1</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1881,6 +2137,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 2x slo-mo (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=2</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1891,6 +2148,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 1x speed / low light (id: 3)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=3</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1901,6 +2159,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt) (id: 4)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=4</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1911,6 +2170,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt) (id: 5)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=5</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1921,6 +2181,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 1x speed / low light (ext. batt) (id: 6)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=6</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1931,6 +2192,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 8x ultra slo-mo (50 hz) (id: 7)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=7</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1941,6 +2203,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 4x super slo-mo (50 hz) (id: 8)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=8</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1951,6 +2214,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 2x slo-mo (50 hz) (id: 9)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=9</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1961,6 +2225,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 1x speed / low light (50hz) (id: 10)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=10</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1971,6 +2236,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt, 50hz) (id: 11)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=11</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1981,6 +2247,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt, 50hz) (id: 12)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=12</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1991,6 +2258,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set speed (id: 176) to 1x speed / low light (ext. batt, 50hz) (id: 13)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&amp;option=13</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2001,6 +2269,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set enable night photo (id: 177) to off (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=177&amp;option=0</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2011,6 +2280,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set enable night photo (id: 177) to on (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=177&amp;option=1</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2022,6 +2292,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>GET</td>
       <td>/gopro/camera/setting?setting=178&amp;option=0</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2031,6 +2302,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set wireless band (id: 178) to 5ghz (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=178&amp;option=1</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2042,6 +2314,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>GET</td>
       <td>/gopro/camera/setting?setting=179&amp;option=1</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2051,6 +2324,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set trail length (id: 179) to long (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=179&amp;option=2</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2062,6 +2336,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>GET</td>
       <td>/gopro/camera/setting?setting=179&amp;option=3</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2071,6 +2346,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video mode (id: 180) to highest quality (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=180&amp;option=0</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2081,6 +2357,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video mode (id: 180) to extended battery (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=180&amp;option=1</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2152,10 +2429,20 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="9">
+      <td rowspan="12">
 <a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a>
 </td>
-      <td>HERO11 Black</td>
+      <td>HERO11 Black Mini</td>
+      <td>v01.10.00</td>
+    </tr>
+    <tr>
+      <td rowspan="3">HERO11 Black</td>
+      <td>v01.20.00</td>
+    </tr>
+    <tr>
+      <td>v01.12.00</td>
+    </tr>
+    <tr>
       <td>v01.10.00</td>
     </tr>
     <tr>
@@ -2602,6 +2889,7 @@ Below is a table of supported status IDs.<br>
       <td>Description</td>
       <td>Type</td>
       <td>Values</td>
+      <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
       <td>HERO9 Black</td>
@@ -2616,6 +2904,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>2</td>
@@ -2627,6 +2916,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>3</td>
@@ -2635,6 +2925,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2645,6 +2936,7 @@ Below is a table of supported status IDs.<br>
       <td>External battery power level in percent</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2659,6 +2951,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>8</td>
@@ -2667,6 +2960,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2681,6 +2975,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>10</td>
@@ -2689,6 +2984,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2703,6 +2999,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>13</td>
@@ -2710,6 +3007,7 @@ Below is a table of supported status IDs.<br>
       <td>When encoding video, this is the duration (seconds) of the video so far; 0 otherwise</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2724,14 +3022,16 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>19</td>
       <td>State</td>
       <td>The pairing state of the camera</td>
       <td>integer</td>
-      <td>0: Success<br>1: In Progress<br>2: Failed<br>3: Stopped<br>
+      <td>0: Never Started<br>1: Started<br>2: Aborted<br>3: Cancelled<br>4: Completed<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2746,6 +3046,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>21</td>
@@ -2753,6 +3054,7 @@ Below is a table of supported status IDs.<br>
       <td>Time (milliseconds) since boot of last successful pairing complete action</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2767,6 +3069,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>23</td>
@@ -2774,6 +3077,7 @@ Below is a table of supported status IDs.<br>
       <td>The time, in milliseconds since boot that the WiFi Access Point scan completed</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2788,6 +3092,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>26</td>
@@ -2795,6 +3100,7 @@ Below is a table of supported status IDs.<br>
       <td>Wireless remote control version</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2809,6 +3115,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>28</td>
@@ -2816,6 +3123,7 @@ Below is a table of supported status IDs.<br>
       <td>Wireless Pairing State</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2829,6 +3137,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>30</td>
@@ -2839,6 +3148,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>31</td>
@@ -2846,6 +3156,7 @@ Below is a table of supported status IDs.<br>
       <td>The number of wireless devices connected to the camera</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2860,6 +3171,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>33</td>
@@ -2871,6 +3183,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>34</td>
@@ -2878,6 +3191,7 @@ Below is a table of supported status IDs.<br>
       <td>How many photos can be taken before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2891,6 +3205,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>36</td>
@@ -2898,6 +3213,7 @@ Below is a table of supported status IDs.<br>
       <td>How many group photos can be taken with current settings before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2911,6 +3227,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>38</td>
@@ -2921,6 +3238,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>39</td>
@@ -2928,6 +3246,7 @@ Below is a table of supported status IDs.<br>
       <td>Total number of videos on sdcard</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2942,6 +3261,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>42</td>
@@ -2950,6 +3270,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2964,6 +3285,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>49</td>
@@ -2974,6 +3296,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>54</td>
@@ -2981,6 +3304,7 @@ Below is a table of supported status IDs.<br>
       <td>Remaining space on the sdcard in Kilobytes</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2995,6 +3319,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>56</td>
@@ -3002,6 +3327,7 @@ Below is a table of supported status IDs.<br>
       <td>WiFi signal strength in bars</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3015,6 +3341,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>59</td>
@@ -3022,6 +3349,7 @@ Below is a table of supported status IDs.<br>
       <td>Time since boot (msec) of most recent hilight in encoding video (set to 0 when encoding stops)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3035,6 +3363,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>64</td>
@@ -3042,6 +3371,7 @@ Below is a table of supported status IDs.<br>
       <td>How many min of Timelapse video can be captured with current settings before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3053,6 +3383,7 @@ Below is a table of supported status IDs.<br>
       <td>integer</td>
       <td>0: Disabled<br>1: Auto<br>2: ISO Lock<br>3: Hemisphere<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3063,6 +3394,7 @@ Below is a table of supported status IDs.<br>
       <td>Liveview Exposure Select: y-coordinate (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3073,6 +3405,7 @@ Below is a table of supported status IDs.<br>
       <td>Liveview Exposure Select: y-coordinate (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3087,6 +3420,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>69</td>
@@ -3098,6 +3432,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>70</td>
@@ -3105,6 +3440,7 @@ Below is a table of supported status IDs.<br>
       <td>Internal battery level (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3119,6 +3455,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>75</td>
@@ -3126,6 +3463,7 @@ Below is a table of supported status IDs.<br>
       <td>Digital Zoom level (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3140,6 +3478,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>77</td>
@@ -3148,6 +3487,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3162,6 +3502,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>79</td>
@@ -3170,6 +3511,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3184,6 +3526,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>82</td>
@@ -3192,6 +3535,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3206,6 +3550,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>85</td>
@@ -3214,6 +3559,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3228,6 +3574,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>88</td>
@@ -3236,6 +3583,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3249,6 +3597,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>93</td>
@@ -3259,6 +3608,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>94</td>
@@ -3266,6 +3616,7 @@ Below is a table of supported status IDs.<br>
       <td>Current Photo Preset (ID)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3279,6 +3630,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>96</td>
@@ -3286,6 +3638,7 @@ Below is a table of supported status IDs.<br>
       <td>Current Preset Group (ID)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3299,6 +3652,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>98</td>
@@ -3309,6 +3663,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>99</td>
@@ -3316,6 +3671,7 @@ Below is a table of supported status IDs.<br>
       <td>How many Live Bursts can be captured before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3326,6 +3682,7 @@ Below is a table of supported status IDs.<br>
       <td>Total number of Live Bursts on sdcard</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3340,6 +3697,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>102</td>
@@ -3348,6 +3706,7 @@ Below is a table of supported status IDs.<br>
       <td>integer</td>
       <td>0: Media mod microphone removed<br>2: Media mod microphone only<br>3: Media mod microphone with external microphone<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3362,6 +3721,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>104</td>
@@ -3370,6 +3730,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3384,6 +3745,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>106</td>
@@ -3392,6 +3754,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3402,6 +3765,7 @@ Below is a table of supported status IDs.<br>
       <td>Scheduled Capture Preset ID</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3413,6 +3777,7 @@ Below is a table of supported status IDs.<br>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3424,6 +3789,7 @@ Below is a table of supported status IDs.<br>
       <td>integer</td>
       <td>0: 000 = Selfie mod: 0, HDMI: 0, Media Mod Connected: False<br>1: 001 = Selfie mod: 0, HDMI: 0, Media Mod Connected: True<br>2: 010 = Selfie mod: 0, HDMI: 1, Media Mod Connected: False<br>3: 011 = Selfie mod: 0, HDMI: 1, Media Mod Connected: True<br>4: 100 = Selfie mod: 1, HDMI: 0, Media Mod Connected: False<br>5: 101 = Selfie mod: 1, HDMI: 0, Media Mod Connected: True<br>6: 110 = Selfie mod: 1, HDMI: 1, Media Mod Connected: False<br>7: 111 = Selfie mod: 1, HDMI: 1, Media Mod Connected: True<br>
 </td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3437,6 +3803,7 @@ Below is a table of supported status IDs.<br>
 </td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr>
@@ -3445,6 +3812,7 @@ Below is a table of supported status IDs.<br>
       <td>Number of sdcard write speed errors since device booted</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -3459,6 +3827,7 @@ Below is a table of supported status IDs.<br>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>114</td>
@@ -3467,6 +3836,7 @@ Below is a table of supported status IDs.<br>
       <td>integer</td>
       <td>0: Camera Idle: No one is attempting to change camera settings<br>1: Camera Control: Camera is in a menu or changing settings. To intervene, app must request control<br>2: Camera External Control: An outside entity (app) has control and is in a menu or modifying settings<br>
 </td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -3480,6 +3850,7 @@ Below is a table of supported status IDs.<br>
 </td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr>
@@ -3490,6 +3861,7 @@ Below is a table of supported status IDs.<br>
       <td>0: Disabled<br>1: Enabled<br>
 </td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td>&gt;= v01.30.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -3499,6 +3871,7 @@ Below is a table of supported status IDs.<br>
       <td>Total SD card capacity in kilobytes</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -3601,11 +3974,11 @@ connected app is discouraged.
 </p>
 
 <p>
-Best practice for synchronizing user/app control is to use the <i>Set Camera Control Status</i> command and
+Best practice for synchronizing user/app control is to use the <b>Set Camera Control Status</b> command and
 corresponding <i>Camera Control Status</i> (CCS) camera statuses in alignment with the finite state machine below:
 </p>
 
-<p><img class="plantuml" src="http://www.plantuml.com/plantuml/svg/~h407374617274756d6c0a0a0a2720446566696e65207374617465730a49444c453a20436f6e74726f6c205374617475733a2049646c650a43414d4552415f434f4e54524f4c3a20436f6e74726f6c205374617475733a2043616d65726120436f6e74726f6c0a45585445524e414c5f434f4e54524f4c3a20436f6e74726f6c205374617475733a2045787465726e616c20436f6e74726f6c0a0a2720446566696e65207472616e736974696f6e730a5b2a5d20202020202020202020202020202d3e20202020202049444c450a0a49444c45202020202020202020202020202d3e20202020202049444c453a204170702073657473204343533a2049646c650a49444c45202020202020202020202020202d75702d3e20202043414d4552415f434f4e54524f4c3a205573657220696e7465726163747320776974682063616d6572610a49444c45202020202020202020202020202d646f776e2d3e2045585445524e414c5f434f4e54524f4c3a204170702073657473204343533a2045787465726e616c20436f6e74726f6c0a0a43414d4552415f434f4e54524f4c2020202d3e20202020202043414d4552415f434f4e54524f4c3a205573657220696e7465726163747320776974682063616d6572610a43414d4552415f434f4e54524f4c2020202d646f776e2d3e2049444c453a20557365722072657475726e732063616d65726120746f2069646c652073637265656e5c6e4170702073657473204343533a2049646c650a0a45585445524e414c5f434f4e54524f4c202d3e2020202045585445524e414c5f434f4e54524f4c3a204170702073657473204343533a2045787465726e616c20436f6e74726f6c0a45585445524e414c5f434f4e54524f4c202d75702d3e2049444c453a204170702073657473204343533a2049646c655c6e5573657220696e7465726163747320776974682063616d6572610a45585445524e414c5f434f4e54524f4c202d75702d3e2043414d4552415f434f4e54524f4c3a205573657220696e7465726163747320776974682063616d6572610a0a0a0a0a40656e64756d6c"></p>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="347px" preserveaspectratio="none" style="width:672px;height:347px;background:#FFFFFF;" version="1.1" viewbox="0 0 672 347" width="672px" zoomandpan="magnify"><defs></defs><g><g id="IDLE"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="140" x="61" y="149"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="61" x2="201" y1="175.2969" y2="175.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="30" x="116" y="166.9951">IDLE</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="120" x="66" y="191.4355">Control Status: Idle</text></g><g id="CAMERA_CONTROL"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="215" x="136.5" y="7"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="136.5" x2="351.5" y1="33.2969" y2="33.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="134" x="177" y="24.9951">CAMERA_CONTROL</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="195" x="141.5" y="49.4355">Control Status: Camera Control</text></g><g id="EXTERNAL_CONTROL"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="218" x="161" y="291"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="161" x2="379" y1="317.2969" y2="317.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="147" x="196.5" y="308.9951">EXTERNAL_CONTROL</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="198" x="166" y="333.4355">Control Status: External Control</text></g><ellipse cx="16" cy="174" fill="#222222" rx="10" ry="10" style="stroke:none;stroke-width:1.0;"></ellipse><g id="link_*start_IDLE"><path d="M26.33,174 C36.08,174 45.83,174 55.58,174 " fill="none" id="*start-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="60.68,174,51.68,170,55.68,174,51.68,178,60.68,174" style="stroke:#181818;stroke-width:1.0;"></polygon></g><g id="link_IDLE_IDLE"><path d="M201.17,160.94 C220.87,161.51 236,165.87 236,174 C236,181.37 223.58,185.64 206.58,186.8 " fill="none" id="IDLE-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="201.17,187.06,210.3535,190.6187,206.1641,186.8174,209.9653,182.6281,201.17,187.06" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="117" x="242" y="178.5669">App sets CCS: Idle</text></g><g id="link_CAMERA_CONTROL_IDLE"><path d="M131.32,48.13 C85.79,56.77 40.73,69.44 27,87 C8.03,111.27 35.99,133.3 67.67,148.99 " fill="none" id="CAMERA_CONTROL-backto-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="136.3,47.21,126.7202,44.9237,131.3843,48.1245,128.1835,52.7887,136.3,47.21" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="172" x="28" y="107.5669">User interacts with camera</text></g><g id="link_CAMERA_CONTROL_IDLE"><path d="M236.82,57.08 C230.52,75.42 220,100.56 205,119 C196.85,129.02 186.42,138.12 175.98,145.87 " fill="none" id="CAMERA_CONTROL-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="171.83,148.88,181.4652,146.8396,175.8792,145.9468,176.7721,140.3609,171.83,148.88" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="223" x="224" y="100.0669">User returns camera to idle screen</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="117" x="277" y="115.1997">App sets CCS: Idle</text></g><g id="link_IDLE_EXTERNAL_CONTROL"><path d="M190.72,199.1 C205.22,207.02 219.76,216.95 231,229 C245.92,245 255.89,267.69 262.01,285.74 " fill="none" id="IDLE-to-EXTERNAL_CONTROL" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="263.63,290.7,264.6318,280.9022,262.0746,285.9481,257.0287,283.3909,263.63,290.7" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="197" x="251" y="249.5669">App sets CCS: External Control</text></g><g id="link_IDLE_EXTERNAL_CONTROL"><path d="M78.64,201.85 C53.68,218.22 32.5,239.99 49,261 C63.57,279.56 112.7,292.56 160.94,301.15 " fill="none" id="IDLE-backto-EXTERNAL_CONTROL" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="83,199.06,73.2605,200.5236,78.7835,201.7472,77.5599,207.2701,83,199.06" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="117" x="77.5" y="242.0669">App sets CCS: Idle</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="172" x="50" y="257.1997">User interacts with camera</text></g><g id="link_CAMERA_CONTROL_CAMERA_CONTROL"><path d="M351.51,19.5 C372,21 386.5,25.16 386.5,32 C386.5,38.25 374.39,42.27 356.65,44.05 " fill="none" id="CAMERA_CONTROL-to-CAMERA_CONTROL" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="351.51,44.5,360.8195,47.7145,356.4916,44.0718,360.1344,39.7439,351.51,44.5" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="172" x="392.5" y="36.5669">User interacts with camera</text></g><g id="link_EXTERNAL_CONTROL_EXTERNAL_CONTROL"><path d="M379.26,303.55 C399.64,305.08 414,309.23 414,316 C414,322.19 402,326.19 384.37,328 " fill="none" id="EXTERNAL_CONTROL-to-EXTERNAL_CONTROL" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="379.26,328.45,388.5794,331.6357,384.2403,328.0064,387.8696,323.6672,379.26,328.45" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="197" x="420" y="320.5669">App sets CCS: External Control</text></g><g id="link_CAMERA_CONTROL_EXTERNAL_CONTROL"><path d="M356.56,48.99 C400.17,57.68 442.81,70.15 456,87 C503.67,147.89 503.48,199.19 457,261 C446.51,274.94 414.07,286.42 379.08,295.16 " fill="none" id="CAMERA_CONTROL-backto-EXTERNAL_CONTROL" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="351.52,48,359.5893,53.6468,356.4278,48.9559,361.1187,45.7944,351.52,48" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="172" x="492" y="178.5669">User interacts with camera</text></g></g></svg>
 
 <table border="1">
   <tbody>
@@ -3645,34 +4018,106 @@ Note:
 </ul>
 
 
-<h2 id="limitations">Limitations</h2>
+<h2 id="ota-update">OTA Update</h2>
 
-<h3 id="hero11-black">HERO11 Black</h3>
-<ul>
-<li>The camera will reject requests to change settings while encoding; for example, if Hindsight feature is active, the user cannot change settings</li>
-<li>HTTP command arguments must be given in the order outlined in <a href="#commands-quick-reference">Commands Quick Reference</a>
-</li>
-</ul>
-<h3 id="hero10-black">HERO10 Black</h3>
-<ul>
-<li>The camera will reject requests to change settings while encoding; for example, if Hindsight feature is active, the user cannot change settings</li>
-<li>HTTP command arguments must be given in the order outlined in <a href="#commands-quick-reference">Commands Quick Reference</a>
-</li>
-</ul>
-<h3 id="hero9-black">HERO9 Black</h3>
-<ul>
-<li>The HTTP server is not available while the camera is encoding, which means shutter controls are not supported over WiFi. This limitation can be overcome by using  <a href="https://learn.adafruit.com/introduction-to-bluetooth-low-energy">Bluetooth Low Energy</a> for command and control and HTTP/REST for querying media content such as media list, media info, preview stream, etc.</li>
-<li>USB command and control is not supported on HERO9 Black.</li>
-<li>HTTP command arguments must be given in the order outlined in <a href="#commands-quick-reference">Commands Quick Reference</a>
-</li>
-</ul>
+<p>
+The Over The Air (OTA) update feature allows the user to update the camera's firmware via HTTP connection.
+</p>
 
-<h3 id="general">General</h3>
+<p>
+Firmware update files can be obtained from GoPro's <a href="https://gopro.com/en/us/update">update page</a> or programmatically using the
+<a href="https://api.gopro.com/firmware/v2/catalog">firmware catalog</a>.
+</p>
 
-<ul>
-<li>Unless changed by the user, GoPro cameras will automatically power off after some time (e.g. 5min, 15min, 30min). The Auto Power Down watchdog timer can be reset by sending periodic keep-alive messages to the camera. It is recommended to send a keep-alive at least once every 120 seconds.</li>
-<li>In general, querying the value for a setting that is not associated with the current preset/core mode results in an undefined value. For example, the user should not try to query the current Photo Digital Lenses (FOV) value while in Standard preset (Video mode).</li>
-</ul>
+<h3 id="ota-update-flow">OTA Update Flow</h3>
+<p>
+The OTA update process involves uploading chunks (or all) of a file along with its corresponding SHA1 hash,
+marking the file complete and then telling the camera to begin the update process.
+For specific command examples, see <b>/gp/gpSoftUpdate</b> in 
+<a href="#commands-quick-reference">Commands Quick Reference</a>.
+</p>
+
+<p>
+Note: Near the end of the firmware update process, in order to complete, the camera will need to reboot 1-2 times.
+This will cause any existing HTTP connections to be lost.
+</p>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="1301px" preserveaspectratio="none" style="width:820px;height:1301px;background:#FFFFFF;" version="1.1" viewbox="0 0 820 1301" width="820px" zoomandpan="magnify"><defs></defs><g><rect fill="none" height="193.3281" style="stroke:#000000;stroke-width:1.5;" width="802.5" x="12" y="490.6875"></rect><rect fill="none" height="97.6641" style="stroke:#000000;stroke-width:1.5;" width="683.5" x="12" y="1035.2734"></rect><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="44" x2="44" y1="81.2969" y2="1220.2031"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="373" x2="373" y1="81.2969" y2="1220.2031"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="39" x="22" y="77.9951">Client</text><ellipse cx="44.5" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M44.5,21.5 L44.5,48.5 M31.5,29.5 L57.5,29.5 M44.5,48.5 L31.5,63.5 M44.5,48.5 L57.5,63.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="39" x="22" y="1232.1982">Client</text><ellipse cx="44.5" cy="1244" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M44.5,1252 L44.5,1279 M31.5,1260 L57.5,1260 M44.5,1279 L31.5,1294 M44.5,1279 L57.5,1294 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="340" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="53" x="347" y="69.9951">Camera</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="340" y="1219.2031"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="53" x="347" y="1239.1982">Camera</text><path d="M15,96.2969 L15,121.2969 L402,121.2969 L402,106.2969 L392,96.2969 L15,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M392,96.2969 L392,106.2969 L402,106.2969 L392,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="366" x="21" y="113.3638">Obtain UPDATE.zip from update page or firmware catalog</text><path d="M19,131.4297 L19,156.4297 L399,156.4297 L399,141.4297 L389,131.4297 L19,131.4297 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M389,131.4297 L389,141.4297 L399,141.4297 L389,131.4297 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="243" x="83" y="148.4966">Calculate SHA1_HASH for UPDATE.zip</text><polygon fill="#181818" points="361.5,181.6953,371.5,185.6953,361.5,189.6953,365.5,185.6953" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="185.6953" y2="185.6953"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="289" x="51.5" y="180.6294">HTTP/GET: /gp/gpSoftUpdate?request=delete</text><path d="M378,166.5625 L378,191.5625 L574,191.5625 L574,176.5625 L564,166.5625 L378,166.5625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M564,166.5625 L564,176.5625 L574,176.5625 L564,166.5625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="175" x="384" y="183.6294">Delete any old/cached data</text><polygon fill="#181818" points="55.5,262.2266,45.5,266.2266,55.5,270.2266,51.5,266.2266" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="266.2266" y2="266.2266"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="261.1606">HTTP/200 (OK)</text><path d="M378,201.6953 L378,316.6953 L543,316.6953 L543,211.6953 L533,201.6953 L378,201.6953 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M533,201.6953 L533,211.6953 L543,211.6953 L533,201.6953 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="44" x="384" y="218.7622">JSON {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="66" x="400" y="233.895">"status":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="400" y="249.0278">"message":"OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="59" x="400" y="264.1606">"sha1":"",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="128" x="400" y="279.2935">"bytes_complete":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="104" x="400" y="294.4263">"complete":false</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="309.5591">}</text><polygon fill="#181818" points="361.5,342.7578,371.5,346.7578,361.5,350.7578,365.5,346.7578" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="346.7578" y2="346.7578"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="292" x="51.5" y="341.6919">HTTP/GET: /gp/gpSoftUpdate?request=showui</text><path d="M378,327.625 L378,352.625 L617,352.625 L617,337.625 L607,327.625 L378,327.625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M607,327.625 L607,337.625 L617,337.625 L607,327.625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="218" x="384" y="344.6919">Display update OSD on camera UI</text><polygon fill="#181818" points="55.5,423.2891,45.5,427.2891,55.5,431.2891,51.5,427.2891" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="427.2891" y2="427.2891"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="422.2231">HTTP/200 (OK)</text><path d="M378,362.7578 L378,477.7578 L543,477.7578 L543,372.7578 L533,362.7578 L378,362.7578 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M533,362.7578 L533,372.7578 L543,372.7578 L533,362.7578 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="379.8247">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="66" x="400" y="394.9575">"status":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="400" y="410.0903">"message":"OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="59" x="400" y="425.2231">"sha1":"",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="128" x="400" y="440.356">"bytes_complete":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="104" x="400" y="455.4888">"complete":false</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="470.6216">}</text><path d="M12,490.6875 L89,490.6875 L89,497.8203 L79,507.8203 L12,507.8203 L12,490.6875 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"></path><rect fill="none" height="193.3281" style="stroke:#000000;stroke-width:1.5;" width="802.5" x="12" y="490.6875"></rect><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthadjust="spacing" textlength="32" x="27" y="503.7544">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthadjust="spacing" textlength="311" x="104" y="502.8979">[read CHUNK of UPDATE.zip, starting at OFFSET]</text><polygon fill="#181818" points="361.5,535.5195,371.5,539.5195,361.5,543.5195,365.5,539.5195" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="539.5195" y2="539.5195"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="191" x="51.5" y="534.4536">HTTP/POST: /gp/gpSoftUpdate</text><path d="M378,512.8203 L378,552.8203 L799,552.8203 L799,522.8203 L789,512.8203 L378,512.8203 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M789,512.8203 L789,522.8203 L799,522.8203 L789,512.8203 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="220" x="384" y="529.8872">Content-Type: multipart/form-data</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="400" x="384" y="545.02">data={"sha1": "SHA1_HASH", "offset": OFFSET, file: @CHUNK}</text><polygon fill="#181818" points="55.5,623.6172,45.5,627.6172,55.5,631.6172,51.5,627.6172" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="627.6172" y2="627.6172"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="622.5513">HTTP/200 (OK)</text><path d="M378,563.0859 L378,678.0859 L680,678.0859 L680,573.0859 L670,563.0859 L378,563.0859 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M670,563.0859 L670,573.0859 L680,573.0859 L670,563.0859 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="580.1528">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="70" x="400" y="595.2856">"status": 0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="109" x="400" y="610.4185">"message": "OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="144" x="400" y="625.5513">"sha1": "SHA1_HASH",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="265" x="400" y="640.6841">"bytes_complete": (total uploaded bytes),</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="108" x="400" y="655.8169">"complete": false</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="670.9497">}</text><polygon fill="#181818" points="361.5,718.7148,371.5,722.7148,361.5,726.7148,365.5,722.7148" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="722.7148" y2="722.7148"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="191" x="51.5" y="717.6489">HTTP/POST: /gp/gpSoftUpdate</text><path d="M378,696.0156 L378,736.0156 L707,736.0156 L707,706.0156 L697,696.0156 L378,696.0156 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M697,696.0156 L697,706.0156 L707,706.0156 L697,696.0156 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="220" x="384" y="713.0825">Content-Type: multipart/form-data</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="308" x="384" y="728.2153">data={"sha1": "SHA1_HASH", "complete": true}</text><polygon fill="#181818" points="55.5,806.8125,45.5,810.8125,55.5,814.8125,51.5,810.8125" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="810.8125" y2="810.8125"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="805.7466">HTTP/200 (OK)</text><path d="M378,746.2813 L378,861.2813 L664,861.2813 L664,756.2813 L654,746.2813 L378,746.2813 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M654,746.2813 L654,756.2813 L664,756.2813 L654,746.2813 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="763.3481">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="66" x="400" y="778.481">"status":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="400" y="793.6138">"message":"OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="140" x="400" y="808.7466">"sha1":"SHA1_HASH",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="249" x="400" y="823.8794">"bytes_complete":(size of UPDATE.zip),</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="100" x="400" y="839.0122">"complete":true</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="854.145">}</text><polygon fill="#181818" points="361.5,887.3438,371.5,891.3438,361.5,895.3438,365.5,891.3438" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="891.3438" y2="891.3438"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="279" x="51.5" y="886.2778">HTTP/GET: /gp/gpSoftUpdate?request=start</text><path d="M378,872.2109 L378,897.2109 L550,897.2109 L550,882.2109 L540,872.2109 L378,872.2109 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M540,872.2109 L540,882.2109 L550,882.2109 L540,872.2109 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="151" x="384" y="889.2778">Start updating firmware</text><polygon fill="#181818" points="55.5,967.875,45.5,971.875,55.5,975.875,51.5,971.875" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="971.875" y2="971.875"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="966.8091">HTTP/200 (OK)</text><path d="M378,907.3438 L378,1022.3438 L664,1022.3438 L664,917.3438 L654,907.3438 L378,907.3438 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M654,907.3438 L654,917.3438 L664,917.3438 L654,907.3438 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="924.4106">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="66" x="400" y="939.5435">"status":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="400" y="954.6763">"message":"OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="140" x="400" y="969.8091">"sha1":"SHA1_HASH",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="249" x="400" y="984.9419">"bytes_complete":(size of UPDATE.zip),</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="100" x="400" y="1000.0747">"complete":true</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="1015.2075">}</text><path d="M12,1035.2734 L89,1035.2734 L89,1042.4063 L79,1052.4063 L12,1052.4063 L12,1035.2734 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"></path><rect fill="none" height="97.6641" style="stroke:#000000;stroke-width:1.5;" width="683.5" x="12" y="1035.2734"></rect><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthadjust="spacing" textlength="32" x="27" y="1048.3403">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthadjust="spacing" textlength="213" x="104" y="1047.4839">[while camera updates firmware]</text><polygon fill="#181818" points="361.5,1095.2383,371.5,1099.2383,361.5,1103.2383,365.5,1099.2383" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="1099.2383" y2="1099.2383"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="305" x="51.5" y="1094.1724">HTTP/GET: /gp/gpSoftUpdate?request=progress</text><path d="M378,1057.4063 L378,1127.4063 L680,1127.4063 L680,1067.4063 L670,1057.4063 L378,1057.4063 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M670,1057.4063 L670,1067.4063 L680,1067.4063 L670,1057.4063 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="1074.4731">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="74" x="400" y="1089.606">"status":11,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="265" x="400" y="1104.7388">"message":"Firmware update in progress"</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="1119.8716">}</text><path d="M19,1144.9375 L19,1169.9375 L399,1169.9375 L399,1154.9375 L389,1144.9375 L19,1144.9375 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M389,1144.9375 L389,1154.9375 L399,1154.9375 L389,1144.9375 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="125" x="142" y="1162.0044">WiFi connection lost</text><path d="M5,1180.0703 L5,1205.0703 L414,1205.0703 L414,1190.0703 L404,1180.0703 L5,1180.0703 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M404,1180.0703 L404,1190.0703 L414,1190.0703 L404,1180.0703 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="388" x="11" y="1197.1372">Camera displays OSD "Update Complete", reboots 1-2 times</text></g></svg>
+
+<h3 id="ota-update-status-codes">OTA Update Status Codes</h3>
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>ID</td>
+      <td>Status</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>Ok</td>
+      <td>No errors occurred</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Unknown Request</td>
+      <td>Server did not recognize the request</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Bad Params</td>
+      <td>Parameter values not recognized</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>SHA1 Send Mismatch</td>
+      <td>SHA1 for chunk did not match SHA1 of previous chunk(s)</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>SHA1 Calculates Mismatch</td>
+      <td>Calculated SHA1 did not match user-specified SHA1</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>HTTP Boundary Error</td>
+      <td>HTTP Post malformed</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>HTTP Post Error</td>
+      <td>Unexpected HTTP/POST Content Type</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Server Busy</td>
+      <td>HTTP server is busy</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Offset Mismatch</td>
+      <td>Tried to upload chunk with offset that did not align with previous chunk</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Bad Post Data</td>
+      <td>Server failed to parse POST data</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>File Incomplete</td>
+      <td>Tried to start update before server finished validating .zip file</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>Update in Progress</td>
+      <td>Firmware update in progress</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>Insufficient Space</td>
+      <td>Insufficient space on the sdcard to hold (decompressed) update file</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="webcam">Webcam</h2>
 
@@ -3693,7 +4138,7 @@ For readers interested in using a GoPro camera as a webcam with preexisting tool
 </p>
 
 <h3 id="webcam-finite-state-machine">Webcam Finite State Machine</h3>
-<p><img class="plantuml" src="http://www.plantuml.com/plantuml/svg/~h407374617274756d6c0a0a0a2720446566696e65207374617465730a5052455245515549534954453a2057697265642055534220436f6e74726f6c2064697361626c65640a4f46463a2020202020202020202057656263616d2064697361626c65640a49444c453a20202020202020202057656263616d2072656164790a4850503a202020202020202020204869676820706f77657220707265766965770a4c50503a202020202020202020204c6f7720706f77657220707265766965770a0a2720416374696f6e733a0a27202020436f6e6e6563742063616d65726120746f2073797374656d20766961205553420a2720202053746172740a27202020507265766965770a2720202053746f700a27202020457869740a0a2720446566696e65207472616e736974696f6e730a5b2a5d202020202020202020202d2d3e205052455245515549534954450a0a505245524551554953495445202d2d3e204f46460a0a4f4646202020202020202020202d2d3e2049444c453a20436f6e6e656374205553420a0a49444c452020202020202020202d2d3e2049444c453a2053746f705c6e457869740a49444c452020202020202020202d2d3e204850503a202053746172740a49444c452020202020202020202d2d3e204c50503a2020507265766965770a0a485050202020202020202020202d2d3e204850503a202053746172740a485050202020202020202020202d2d3e204c50503a2020507265766965770a485050202020202020202020202d2d3e2049444c453a2053746f705c6e457869740a0a4c5050202020202020202020202d2d3e204c50503a2020507265766965770a4c5050202020202020202020202d2d3e204850503a202053746172740a4c5050202020202020202020202d2d3e2049444c453a2053746f705c6e457869740a0a0a0a0a40656e64756d6c"></p>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="650px" preserveaspectratio="none" style="width:407px;height:650px;background:#FFFFFF;" version="1.1" viewbox="0 0 407 650" width="407px" zoomandpan="magnify"><defs></defs><g><g id="PREREQUISITE"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="190" x="148.5" y="87"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="148.5" x2="338.5" y1="113.2969" y2="113.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="101" x="193" y="104.9951">PREREQUISITE</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="170" x="153.5" y="129.4355">Wired USB Control disabled</text></g><g id="OFF"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="130" x="178.5" y="198"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="178.5" x2="308.5" y1="224.2969" y2="224.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="27" x="230" y="215.9951">OFF</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="110" x="183.5" y="240.4355">Webcam disabled</text></g><g id="IDLE"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="112" x="187.5" y="325"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="187.5" x2="299.5" y1="351.2969" y2="351.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="30" x="228.5" y="342.9951">IDLE</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="92" x="192.5" y="367.4355">Webcam ready</text></g><g id="HPP"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="141" x="7" y="467"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="148" y1="493.2969" y2="493.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="28" x="63.5" y="484.9951">HPP</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="121" x="12" y="509.4355">High power preview</text></g><g id="LPP"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="136" x="169.5" y="594"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="169.5" x2="305.5" y1="620.2969" y2="620.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="25" x="225" y="611.9951">LPP</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="116" x="174.5" y="636.4355">Low power preview</text></g><ellipse cx="243.5" cy="16" fill="#222222" rx="10" ry="10" style="stroke:none;stroke-width:1.0;"></ellipse><g id="link_*start_PREREQUISITE"><path d="M243.5,26.01 C243.5,38.7 243.5,62.41 243.5,81.57 " fill="none" id="*start-to-PREREQUISITE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="243.5,86.84,247.5,77.84,243.5,81.84,239.5,77.84,243.5,86.84" style="stroke:#181818;stroke-width:1.0;"></polygon></g><g id="link_PREREQUISITE_OFF"><path d="M243.5,137.19 C243.5,153.56 243.5,175.28 243.5,192.64 " fill="none" id="PREREQUISITE-to-OFF" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="243.5,197.88,247.5,188.88,243.5,192.88,239.5,188.88,243.5,197.88" style="stroke:#181818;stroke-width:1.0;"></polygon></g><g id="link_OFF_IDLE"><path d="M243.5,248.1 C243.5,268.59 243.5,298.08 243.5,319.88 " fill="none" id="OFF-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="243.5,324.97,247.5,315.97,243.5,319.97,239.5,315.97,243.5,324.97" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="85" x="244.5" y="291.0669">Connect USB</text></g><g id="link_IDLE_IDLE"><path d="M299.93,338.38 C319.1,338.31 334.5,342.19 334.5,350 C334.5,357.08 321.85,360.92 305.21,361.54 " fill="none" id="IDLE-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="299.93,361.62,308.9972,365.4651,304.9293,361.5343,308.8601,357.4663,299.93,361.62" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="30" x="340.5" y="347.0669">Stop</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="23" x="344" y="362.1997">Exit</text></g><g id="link_IDLE_HPP"><path d="M187.35,370.27 C167.87,378.82 146.83,390.32 130.5,405 C112.82,420.89 99.01,444.05 89.92,462.34 " fill="none" id="IDLE-to-HPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="87.71,466.88,95.2402,460.532,89.8945,462.3825,88.0441,457.0368,87.71,466.88" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="32" x="131.5" y="425.5669">Start</text></g><g id="link_HPP_IDLE"><path d="M124.76,466.77 C139.44,458.27 155.23,448.05 168.5,437 C189.02,419.91 208.72,396.97 222.78,379.08 " fill="none" id="HPP-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="225.87,375.11,217.1836,379.7519,222.7973,379.0545,223.4948,384.6681,225.87,375.11" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="30" x="201.5" y="418.0669">Stop</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="23" x="205" y="433.1997">Exit</text></g><g id="link_IDLE_LPP"><path d="M242.96,375.17 C241.86,424.19 239.36,535.18 238.16,588.42 " fill="none" id="IDLE-to-LPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="238.05,593.7,242.2546,584.7938,238.1643,588.7013,234.2567,584.6109,238.05,593.7" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="242.5" y="496.5669">Preview</text></g><g id="link_LPP_IDLE"><path d="M257.79,593.69 C272.58,574.3 291.39,545.71 299.5,517 C313.31,468.12 285.27,412.37 264.1,379.52 " fill="none" id="LPP-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="261.3,375.23,262.8639,384.9539,264.0305,379.4186,269.5657,380.5851,261.3,375.23" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="30" x="304.5" y="489.0669">Stop</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="23" x="308" y="504.1997">Exit</text></g><g id="link_HPP_HPP"><path d="M148,480.43 C167.8,480.94 183,484.79 183,492 C183,498.53 170.52,502.31 153.44,503.34 " fill="none" id="HPP-to-HPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="148,503.57,157.1531,507.206,152.996,503.3696,156.8324,499.2125,148,503.57" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="32" x="189" y="496.5669">Start</text></g><g id="link_HPP_LPP"><path d="M86.18,517.31 C92.6,532.38 102.64,551.24 116.5,564 C130.27,576.68 147.5,586.75 164.61,594.59 " fill="none" id="HPP-to-LPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="169.43,596.75,162.8345,589.4357,164.8621,594.7167,159.5811,596.7443,169.43,596.75" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="117.5" y="560.0669">Preview</text></g><g id="link_LPP_HPP"><path d="M217.91,593.94 C205.3,579.34 188.03,560.9 170.5,547 C158.01,537.1 143.51,527.8 129.73,519.8 " fill="none" id="LPP-to-HPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="125.09,517.14,130.9027,525.0906,129.4259,519.6299,134.8866,518.1531,125.09,517.14" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="32" x="190.5" y="560.0669">Start</text></g><g id="link_LPP_LPP"><path d="M305.85,607.42 C325.41,607.87 340.5,611.73 340.5,619 C340.5,625.58 328.11,629.37 311.22,630.36 " fill="none" id="LPP-to-LPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="305.85,630.58,315.0027,634.2171,310.846,630.3802,314.6829,626.2235,305.85,630.58" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="346.5" y="623.5669">Preview</text></g></g></svg>
 
 <h3 id="webcam-commands">Webcam Commands</h3>
 <p>
@@ -3824,52 +4269,123 @@ Note: If resolution is not set, 1080p will be used by default
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Resolution</td>
       <td>ID</td>
+      <td>Resolution</td>
+      <td>HERO11 Black Mini</td>
+      <td>HERO11 Black</td>
+      <td>HERO10 Black</td>
+      <td>HERO9 Black</td>
     </tr>
     <tr>
-      <td>480</td>
       <td>4</td>
+      <td>480</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
-      <td>720</td>
       <td>7</td>
+      <td>720</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
-      <td>1080</td>
       <td>12</td>
+      <td>1080</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
   </tbody>
 </table>
 
-<h3 id="webcam-digital-lenses-fov">Webcam Digital Lenses (FOV)</h3>
+<h3 id="digital-lenses--fov">Digital Lenses / FOV</h3>
 <p>
 Note: If fov is not set, camera will default to the last-set fov or Wide if fov has never been set.
 </p>
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Webcam Digital Lens (FOV)</td>
       <td>ID</td>
+      <td>FOV</td>
+      <td>HERO11 Black Mini</td>
+      <td>HERO11 Black</td>
+      <td>HERO10 Black</td>
+      <td>HERO9 Black</td>
     </tr>
     <tr>
-      <td>WIDE</td>
       <td>0</td>
+      <td>WIDE</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
-      <td>NARROW</td>
       <td>2</td>
+      <td>NARROW</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
-      <td>SUPERVIEW</td>
       <td>3</td>
+      <td>SUPERVIEW</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
-      <td>LINEAR</td>
       <td>4</td>
+      <td>LINEAR</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
   </tbody>
 </table>
+
+<h1 id="limitations">Limitations</h1>
+
+<h2 id="hero11-black-mini">HERO11 Black Mini</h2>
+<ul>
+<li>The camera will reject requests to change settings while encoding; for example, if Hindsight feature is active, the user cannot change settings</li>
+<li>HTTP command arguments must be given in the order outlined in <a href="#commands-quick-reference">Commands Quick Reference</a>
+</li>
+</ul>
+<h2 id="hero11-black">HERO11 Black</h2>
+<ul>
+<li>The camera will reject requests to change settings while encoding; for example, if Hindsight feature is active, the user cannot change settings</li>
+<li>HTTP command arguments must be given in the order outlined in <a href="#commands-quick-reference">Commands Quick Reference</a>
+</li>
+</ul>
+<h2 id="hero10-black">HERO10 Black</h2>
+<ul>
+<li>The camera will reject requests to change settings while encoding; for example, if Hindsight feature is active, the user cannot change settings</li>
+<li>HTTP command arguments must be given in the order outlined in <a href="#commands-quick-reference">Commands Quick Reference</a>
+</li>
+</ul>
+<h2 id="hero9-black">HERO9 Black</h2>
+<ul>
+<li>The HTTP server is not available while the camera is encoding, which means shutter controls are not supported over WiFi. This limitation can be overcome by using  <a href="https://learn.adafruit.com/introduction-to-bluetooth-low-energy">Bluetooth Low Energy</a> for command and control and HTTP/REST for querying media content such as media list, media info, preview stream, etc.</li>
+<li>USB command and control is not supported on HERO9 Black.</li>
+<li>HTTP command arguments must be given in the order outlined in <a href="#commands-quick-reference">Commands Quick Reference</a>
+</li>
+</ul>
+
+<h2 id="general">General</h2>
+
+<ul>
+<li>Unless changed by the user, GoPro cameras will automatically power off after some time (e.g. 5min, 15min, 30min). The Auto Power Down watchdog timer can be reset by sending periodic keep-alive messages to the camera. It is recommended to send a keep-alive at least once every 120 seconds.</li>
+<li>In general, querying the value for a setting that is not associated with the current preset/core mode results in an undefined value. For example, the user should not try to query the current Photo Digital Lenses (FOV) value while in Standard preset (Video mode).</li>
+</ul>
 
         
       </section>

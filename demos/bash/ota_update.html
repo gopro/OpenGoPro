@@ -9,8 +9,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Swift Enable WiFi Demo :  Open GoPro</title>
-<meta name="description" content="Swift Enable WiFi Demo">
+<!-- begin _includes/seo.html --><title>Over the Air Firmware Update Demo :  Open GoPro</title>
+<meta name="description" content='Over the Air Firmware Update Demo     Over the Air Firmware Update Demo            Assumptions       Prerequisites       OTA Procedure       Usage       Testing           This directory contains a bash script to perform an over-the-air (OTA) firmware (FW) update to the camera.  Assumptions     The host PC is already connected via WiFi to the target camera   The target FW images are already provided from GoPro as a .zip file. These can be found on the Update Page or programmatically from the Firmware Catalog JSON information.   Prerequisites  Alternatively to satisfying these prerequisites, the script can be run with the Docker option (see usage)     The script uses open ssl to calculate the hash so openssl must be installed and available on the system path.   The script uses curl to send HTTP commands so curl must be installed and available on the system path.   OTA Procedure  The OTA procedure requires the following steps:     Calculate the SHA1 hash of the target .zip file.   Delete any partially stored data.   Show the update UI   Upload the target firmware to the camera   Notify the camera that the upload is complete   Instruct the camera to load the new firmware   Usage  Call the send_ota.sh script here with the -h option for a detailed usage:  Usage: ./send_ota.sh [-d] OTA_UPDATE_FILE  Given a target FW .zip file, calculate its SHA1 hash, then send it over-the-air to an already connected camera. Required positional arguments:     OTA_UPDATE_FILE  target .zip file to send over-the-air. If using docker, must be passed as relative path                      from the directory of this script Optional arguments:     -d               Use docker for openssl and curl commands.     -h               Print this Help.   Testing  There is a test script that will use a Python script (contained in a Docker container) to:     get the FW catalog JSON   get the UPDATE.zip from the link in the JSON   exercise the send_ota.sh script to send this firmware to the camera (outside of the container)   The test script is located ./test/test.sh and should be passed the camera that is connected, i.e.:  ./test.sh "HERO_11"      Note! The test script needs to be run from the test folder   You can also run with the --help parameter to get a list of cameras.'>
 
 
   <meta name="author" content="GoPro">
@@ -22,11 +22,11 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
-<meta property="og:title" content="Swift Enable WiFi Demo">
-<meta property="og:url" content="https://gopro.github.io/OpenGoPro/demos/swift/EnableWiFiDemo">
+<meta property="og:title" content="Over the Air Firmware Update Demo">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/demos/bash/ota_update">
 
 
-  <meta property="og:description" content="Swift Enable WiFi Demo">
+  <meta property="og:description" content='Over the Air Firmware Update Demo     Over the Air Firmware Update Demo            Assumptions       Prerequisites       OTA Procedure       Usage       Testing           This directory contains a bash script to perform an over-the-air (OTA) firmware (FW) update to the camera.  Assumptions     The host PC is already connected via WiFi to the target camera   The target FW images are already provided from GoPro as a .zip file. These can be found on the Update Page or programmatically from the Firmware Catalog JSON information.   Prerequisites  Alternatively to satisfying these prerequisites, the script can be run with the Docker option (see usage)     The script uses open ssl to calculate the hash so openssl must be installed and available on the system path.   The script uses curl to send HTTP commands so curl must be installed and available on the system path.   OTA Procedure  The OTA procedure requires the following steps:     Calculate the SHA1 hash of the target .zip file.   Delete any partially stored data.   Show the update UI   Upload the target firmware to the camera   Notify the camera that the upload is complete   Instruct the camera to load the new firmware   Usage  Call the send_ota.sh script here with the -h option for a detailed usage:  Usage: ./send_ota.sh [-d] OTA_UPDATE_FILE  Given a target FW .zip file, calculate its SHA1 hash, then send it over-the-air to an already connected camera. Required positional arguments:     OTA_UPDATE_FILE  target .zip file to send over-the-air. If using docker, must be passed as relative path                      from the directory of this script Optional arguments:     -d               Use docker for openssl and curl commands.     -h               Print this Help.   Testing  There is a test script that will use a Python script (contained in a Docker container) to:     get the FW catalog JSON   get the UPDATE.zip from the link in the JSON   exercise the send_ota.sh script to send this firmware to the camera (outside of the container)   The test script is located ./test/test.sh and should be passed the camera that is connected, i.e.:  ./test.sh "HERO_11"      Note! The test script needs to be run from the test folder   You can also run with the --help parameter to get a list of cameras.'>
 
 
 
@@ -41,7 +41,7 @@
 
 
 
-<link rel="canonical" href="https://gopro.github.io/OpenGoPro/demos/swift/EnableWiFiDemo">
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/demos/bash/ota_update">
 
 
 
@@ -199,7 +199,7 @@
       
         
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/OpenGoPro/swift" itemprop="item"><span itemprop="name">Swift</span></a>
+          <a href="/OpenGoPro/bash" itemprop="item"><span itemprop="name">Bash</span></a>
           <meta itemprop="position" content="3">
         </li>
         <span class="sep">/</span>
@@ -207,7 +207,7 @@
     
       
       
-        <li class="current">Swift Enable WiFi Demo</li>
+        <li class="current">Over the Air Firmware Update Demo</li>
       
     
   </ol>
@@ -342,15 +342,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Swift Enable WiFi Demo">
-    <meta itemprop="description" content="Swift Enable WiFi Demo">
+    <meta itemprop="headline" content="Over the Air Firmware Update Demo">
+    <meta itemprop="description" content='Over the Air Firmware Update Demo  Over the Air Firmware Update Demo          Assumptions      Prerequisites      OTA Procedure      Usage      Testing      This directory contains a bash script to perform an over-the-air (OTA) firmware (FW) update to the camera.Assumptions  The host PC is already connected via WiFi to the target camera  The target FW images are already provided from GoPro as a .zip file. These can be found on theUpdate Page or programmatically from theFirmware Catalog JSON information.PrerequisitesAlternatively to satisfying these prerequisites, the script can be run with the Docker option (see usage)  The script uses open ssl to calculate the hash so openssl must beinstalled and available on the system path.  The script uses curl to send HTTP commands so curl must be installed andavailable on the system path.OTA ProcedureThe OTA procedure requires the following steps:  Calculate the SHA1 hash of the target .zip file.  Delete any partially stored data.  Show the update UI  Upload the target firmware to the camera  Notify the camera that the upload is complete  Instruct the camera to load the new firmwareUsageCall the send_ota.sh script here with the -h option for a detailed usage:Usage: ./send_ota.sh [-d] OTA_UPDATE_FILEGiven a target FW .zip file, calculate its SHA1 hash, then send it over-the-air to an already connected camera.Required positional arguments:    OTA_UPDATE_FILE  target .zip file to send over-the-air. If using docker, must be passed as relative path                     from the directory of this scriptOptional arguments:    -d               Use docker for openssl and curl commands.    -h               Print this Help.TestingThere is a test script that will use a Python script (contained in a Docker container) to:  get the FW catalog JSON  get the UPDATE.zip from the link in the JSON  exercise the send_ota.sh script to send this firmware to the camera (outside of the container)The test script is located ./test/test.sh and should be passed the camera that is connected, i.e.:./test.sh "HERO_11"  Note! The test script needs to be run from the test folderYou can also run with the --help parameter to get a list of cameras.'>
     <meta itemprop="datePublished" content="2022-11-09T20:09:50+00:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Swift Enable WiFi Demo
+          <h1 id="page-title" class="page__title" itemprop="headline">Over the Air Firmware Update Demo
 </h1>
           
 
@@ -366,7 +366,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          less than 1 minute read
+          1 minute read
         
       </span>
     
@@ -383,57 +383,103 @@
               <header><h4 class="nav__title">
 <i class="fas fa-file-alt"></i> On this page</h4></header>
               <ul class="toc__menu">
-<li><a href="#requirements">Requirements</a></li>
-<li>
-<a href="#file-structure">File Structure</a><ul>
-<li><a href="#ble">BLE</a></li>
-<li><a href="#views">Views</a></li>
-</ul>
-</li>
+<li><a href="#assumptions">Assumptions</a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#ota-procedure">OTA Procedure</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#testing">Testing</a></li>
 </ul>
 
             </nav>
           </aside>
         
-        <button class="github-button" onclick="location.href='https://github.com/gopro/OpenGoPro/tree/main/demos/swift/EnableWiFiDemo'">
+        <button class="github-button" onclick="location.href='https://github.com/gopro/OpenGoPro/tree/main/demos/bash/ota_update'">
           <i class="fab fa-github"></i>
           View this Demo on Github
         </button>
-        <p>This demo demonstrates how to discover and connect to a GoPro camera via Bluetooth LE (BLE). Once a connection is
-established, the demo demonstrates how to enable Wi-Fi on the GoPro camera and join the camera’s Wi-Fi. The steps
-required to join camera’s Wi-Fi are:</p>
+        <ul>
+  <li>
+<a href="#over-the-air-firmware-update-demo">Over the Air Firmware Update Demo</a>
+    <ul>
+      <li><a href="#assumptions">Assumptions</a></li>
+      <li><a href="#prerequisites">Prerequisites</a></li>
+      <li><a href="#ota-procedure">OTA Procedure</a></li>
+      <li><a href="#usage">Usage</a></li>
+      <li><a href="#testing">Testing</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>This directory contains a bash script to perform an over-the-air (OTA) firmware (FW) update to the camera.</p>
+
+<h2 id="assumptions">Assumptions</h2>
+
+<ul>
+  <li>The host PC is already connected via WiFi to the target camera</li>
+  <li>The target FW images are already provided from GoPro as a .zip file. These can be found on the
+<a href="https://gopro.com/en/us/update">Update Page</a> or programmatically from the
+<a href="https://api.gopro.com/firmware/v2/catalog">Firmware Catalog</a> JSON information.</li>
+</ul>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>Alternatively to satisfying these prerequisites, the script can be run with the Docker option (see <a href="#usage">usage</a>)</p>
+
+<ul>
+  <li>The script uses <a href="https://www.openssl.org/">open ssl</a> to calculate the hash so <code class="language-plaintext highlighter-rouge">openssl</code> must be
+installed and available on the system path.</li>
+  <li>The script uses <a href="https://curl.se/">curl</a> to send HTTP commands so <code class="language-plaintext highlighter-rouge">curl</code> must be installed and
+available on the system path.</li>
+</ul>
+
+<h2 id="ota-procedure">OTA Procedure</h2>
+
+<p>The OTA procedure requires the following steps:</p>
 
 <ol>
-  <li>Enable Wi-Fi</li>
-  <li>Request camera’s Wi-Fi settings (SSID and password)</li>
-  <li>Use <a href="https://developer.apple.com/documentation/networkextension/nehotspotconfigurationmanager">iOS NetworkExtension</a> API to join camera’s WiFi</li>
+  <li>Calculate the SHA1 hash of the target .zip file.</li>
+  <li>Delete any partially stored data.</li>
+  <li>Show the update UI</li>
+  <li>Upload the target firmware to the camera</li>
+  <li>Notify the camera that the upload is complete</li>
+  <li>Instruct the camera to load the new firmware</li>
 </ol>
 
-<h1 id="requirements">Requirements</h1>
+<h2 id="usage">Usage</h2>
 
-<p>GoPro camera must be paired with the mobile device. If the camera is not paired, put the camera in pairing mode</p>
+<p>Call the <code class="language-plaintext highlighter-rouge">send_ota.sh</code> script here with the <code class="language-plaintext highlighter-rouge">-h</code> option for a detailed usage:</p>
 
-<h1 id="file-structure">File Structure</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: ./send_ota.sh [-d] OTA_UPDATE_FILE
 
-<h2 id="ble">BLE</h2>
+Given a target FW .zip file, calculate its SHA1 hash, then send it over-the-air to an already connected camera.
+Required positional arguments:
+    OTA_UPDATE_FILE  target .zip file to send over-the-air. If using docker, must be passed as relative path
+                     from the directory of this script
+Optional arguments:
+    -d               Use docker for openssl and curl commands.
+    -h               Print this Help.
+</code></pre></div></div>
+
+<h2 id="testing">Testing</h2>
+
+<p>There is a test script that will use a Python script (contained in a Docker container) to:</p>
 
 <ul>
-  <li>
-<em>CentralManager.swift</em> - A simple wrapper around CBCentralManager to handle CoreBluetooth Central related tasks</li>
-  <li>
-<em>Peripheral.swift</em> - A simple wrapper around CBPeripheral to handle CoreBluetooth Peripheral related tasks</li>
-  <li>
-<em>Peripheral+Camera.swift</em> - An extension of Peripheral class for sending commands to a GoPro camera</li>
+  <li>get the FW catalog JSON</li>
+  <li>get the UPDATE.zip from the link in the JSON</li>
+  <li>exercise the send_ota.sh script to send this firmware to the camera (outside of the container)</li>
 </ul>
 
-<h2 id="views">Views</h2>
+<p>The test script is located <code class="language-plaintext highlighter-rouge">./test/test.sh</code> and should be passed the camera that is connected, i.e.:</p>
 
-<ul>
-  <li>
-<em>CameraSelectionView.swift</em> - A SwiftUI list view for showing the nearby GoPro cameras</li>
-  <li>
-<em>CameraView.swift</em> - A simple view with a button for initiate the request to enable Wi-Fi on the connected GoPro camera</li>
-</ul>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./test.sh "HERO_11"
+</code></pre></div></div>
+
+<blockquote>
+  <p>Note! The test script needs to be run from the <code class="language-plaintext highlighter-rouge">test</code> folder</p>
+</blockquote>
+
+<p>You can also run with the <code class="language-plaintext highlighter-rouge">--help</code> parameter to get a list of cameras.</p>
 
         
       </section>
@@ -455,11 +501,11 @@ required to join camera’s Wi-Fi are:</p>
       
   <nav class="pagination">
     
-      <a href="/OpenGoPro/demos/python/sdk_wireless_camera_control" class="pagination--pager" title="Open GoPro Python SDK
-">Previous</a>
+      <a href="#" class="pagination--pager disabled">Previous</a>
     
     
-      <a href="#" class="pagination--pager disabled">Next</a>
+      <a href="/OpenGoPro/demos/c_c++/GoProC_C++Demo" class="pagination--pager" title="GoPro C/C++ Demos
+">Next</a>
     
   </nav>
 
