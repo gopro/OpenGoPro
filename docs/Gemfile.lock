@@ -169,7 +169,6 @@ GEM
 
 PLATFORMS
   x86_64-linux
-  x86_64-linux-musl
 
 DEPENDENCIES
   jekyll (~> 4.2)
@@ -194,7 +193,7 @@ DEPENDENCIES
   jekyll-titles-from-headings (~> 0.5.3)
   liquid-tag-parser (~> 1.9)
   minimal-mistakes-jekyll (~> 4.24)
-  nokogiri (>= 1.13.6)
+  nokogiri (>= 1.13.9)
 
 BUNDLED WITH
-   2.3.15
+   2.3.25
