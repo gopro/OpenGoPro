@@ -162,30 +162,37 @@ class NotifyLiveStreamStatus(google.protobuf.message.Message):
     LIVE_STREAM_LENS_SUPPORTED_ARRAY_FIELD_NUMBER: builtins.int
     DEPRECATED_FIELD_NUMBER: builtins.int
     live_stream_status: global___EnumLiveStreamStatus.ValueType
+    "Live stream status"
     live_stream_error: global___EnumLiveStreamError.ValueType
+    "Live stream error"
     live_stream_encode: builtins.bool
+    "Is live stream encoding?"
     live_stream_bitrate: builtins.int
-    "Kbps"
+    "Live stream bitrate (Kbps)"
 
     @property
     def live_stream_window_size_supported_array(
         self,
-    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[
-        global___EnumWindowSize.ValueType
-    ]: ...
+    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumWindowSize.ValueType]:
+        """Live stream resolution capabilities"""
     live_stream_encode_supported: builtins.bool
+    "Does the camera support encoding while live streaming?"
     live_stream_max_lens_unsupported: builtins.bool
+    "Is the Max Lens feature NOT supported?"
     live_stream_minimum_stream_bitrate: builtins.int
-    "camera-defined minimum bitrate (static) (Kbps)"
+    "Camera-defined minimum bitrate (static) (Kbps)"
     live_stream_maximum_stream_bitrate: builtins.int
-    "camera-defined maximum bitrate (static) (Kbps)"
+    "Camera-defined maximum bitrate (static) (Kbps)"
     live_stream_lens_supported: builtins.bool
+    "Does camera support setting lens for live streaming?"
 
     @property
     def live_stream_lens_supported_array(
         self,
-    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumLens.ValueType]: ...
+    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumLens.ValueType]:
+        """Array of supported lenses for live streaming"""
     deprecated: builtins.bool
+    "Deprecated"
 
     def __init__(
         self,
@@ -271,13 +278,15 @@ class RequestGetLiveStreamStatus(google.protobuf.message.Message):
         self,
     ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[
         global___EnumRegisterLiveStreamStatus.ValueType
-    ]: ...
+    ]:
+        """Array of live stream statuses to be notified about"""
     @property
     def unregister_live_stream_status(
         self,
     ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[
         global___EnumRegisterLiveStreamStatus.ValueType
-    ]: ...
+    ]:
+        """Array of live stream statuses to stop being notified about"""
     def __init__(
         self,
         *,
@@ -314,19 +323,27 @@ class RequestSetLiveStreamMode(google.protobuf.message.Message):
     LENS_FIELD_NUMBER: builtins.int
     RESERVED3_FIELD_NUMBER: builtins.int
     url: builtins.str
+    "RTMP(S) URL used for live stream"
     encode: builtins.bool
+    "Save media to sdcard while streaming?"
     window_size: global___EnumWindowSize.ValueType
+    "Live stream resolution"
     reserved1: builtins.str
+    "Reserved"
     reserved2: builtins.str
+    "Reserved"
     cert: builtins.bytes
+    "Certificate for servers that require it"
     minimum_bitrate: builtins.int
-    "min bitrate desired by app; may or may not be honored"
+    "Minimum desired bitrate (may or may not be honored)"
     maximum_bitrate: builtins.int
-    "max bitrate desired by app; may or may not be honored"
+    "Maximum desired bitrate (may or may not be honored)"
     starting_bitrate: builtins.int
+    "Starting bitrate"
     lens: global___EnumLens.ValueType
-    "relates to live_stream_lens_supported field in NotifyLiveStreamStatus"
+    "Lens to use for live stream (see"
     reserved3: builtins.int
+    "Reserved"
 
     def __init__(
         self,

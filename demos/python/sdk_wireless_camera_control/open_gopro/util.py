@@ -13,7 +13,7 @@ import argparse
 import subprocess
 from pathlib import Path
 import http.client as http_client
-from typing import Any, Optional, Union, Final
+from typing import Any, Optional, Union, Final, Callable
 
 from rich.logging import RichHandler
 from rich import traceback
@@ -70,7 +70,7 @@ class Logger:
             "open_gopro.wifi.adapters.wireless": logging.DEBUG,
             "open_gopro.responses": logging.DEBUG,
             "open_gopro.util": logging.DEBUG,
-            "bleak": logging.WARNING,
+            "bleak": logging.ERROR,
             "urllib3": logging.WARNING,
             "http.client": logging.WARNING,
         }
@@ -282,6 +282,28 @@ def add_logging_handler(handler: logging.Handler) -> None:
     Logger.get_instance().addLoggingHandler(handler)
 
 
+def map_keys(obj: Any, key: str, func: Callable[[Any], Any]) -> None:
+    """Map all matching keys (deeply searched) using the input function
+
+    Args:
+        obj (Any): object to modify in place
+        key (str): key to search for to modify
+        func (Callable[[Any], Any]): mapping function
+    """
+    if isinstance(obj, dict):
+        for k in obj.keys():
+            if k == key:
+                obj[k] = func(obj[k])
+            else:
+                map_keys(obj[k], key, func)
+    elif isinstance(obj, list):
+        for i in obj:
+            map_keys(i, key, func)
+    else:
+        # neither a dict nor a list, do nothing
+        pass
+
+
 def scrub(obj: Any, bad_value: str) -> None:
     """Recursively scrub a dict or list to remove a given value in place.
 
@@ -404,8 +426,6 @@ def cmd(command: str) -> str:
     else:
         logged_command = command
     util_logger.debug(f"Send cmd --> {logged_command}")
-    # Note: Ignoring unicode characters in SSIDs to prevent intermittent UnicodeDecodeErrors from occurring
-    # while trying to connect to SSID when *any* AP is nearby that has unicode characters in the name
     response = (
         subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)  # type: ignore
         .stdout.read()

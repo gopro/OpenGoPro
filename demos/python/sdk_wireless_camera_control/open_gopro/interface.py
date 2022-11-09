@@ -23,7 +23,7 @@ from open_gopro.ble import (
     BleUUID,
 )
 from open_gopro.wifi import WifiClient, WifiController
-from open_gopro.responses import GoProResp, Header, BytesParser, JsonParser
+from open_gopro.responses import GoProResp, Header, BytesParser, JsonParser, Parser
 from open_gopro.constants import GoProUUIDs, ProducerType, ResponseType, SettingId, StatusId, ActionId, CmdId
 
 if TYPE_CHECKING:
@@ -315,7 +315,7 @@ class BleCommand(ABC, Command[GoProBle, IdType, BytesParser]):
         self,
         communicator: GoProBle,
         uuid: BleUUID,
-        parser: Optional[BytesParser],
+        parser: Optional[Parser],
         identifier: IdType,
     ) -> None:
         super().__init__(communicator, identifier, parser)  # type: ignore
@@ -345,7 +345,7 @@ class WifiCommand(Command[GoProWifi, IdType, JsonParser]):
         identifier: IdType,
         components: Optional[list[str]] = None,
         arguments: Optional[list[str]] = None,
-        parser: Optional[type[JsonParser]] = None,
+        parser: Optional[JsonParser] = None,
     ) -> None:
         self._endpoint = endpoint
         self._components = components

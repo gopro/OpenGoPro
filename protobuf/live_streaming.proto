@@ -1,5 +1,5 @@
 /* live_streaming.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue Sep 13 00:39:25 UTC 2022 */
+/* This copyright was auto-generated on Mon Oct 10 21:30:02 UTC 2022 */
 
 /*
 Defines the structure of protobuf message for working with Live Streams
@@ -9,90 +9,82 @@ syntax="proto2";
 package open_gopro;
 
 
-enum EnumLens{
-    LENS_WIDE = 0;
-    LENS_LINEAR = 4;
+enum EnumLens {
+    LENS_WIDE      = 0;
+    LENS_LINEAR    = 4;
     LENS_SUPERVIEW = 3;
 }
 
-
-enum EnumLiveStreamError{
-        LIVE_STREAM_ERROR_NONE                    = 0;
-        LIVE_STREAM_ERROR_NETWORK                 = 1;
-        LIVE_STREAM_ERROR_CREATESTREAM            = 2;
-        LIVE_STREAM_ERROR_OUTOFMEMORY             = 3;
-        LIVE_STREAM_ERROR_INPUTSTREAM             = 4;
-        LIVE_STREAM_ERROR_INTERNET                = 5;
-        LIVE_STREAM_ERROR_OSNETWORK               = 6;
-        LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT  = 7;
-        LIVE_STREAM_ERROR_SSL_HANDSHAKE           = 8;
-        LIVE_STREAM_ERROR_CAMERA_BLOCKED          = 9;
-        LIVE_STREAM_ERROR_UNKNOWN                 = 10;
-        LIVE_STREAM_ERROR_SD_CARD_FULL            = 40;
-        LIVE_STREAM_ERROR_SD_CARD_REMOVED         = 41;
+enum EnumLiveStreamError {
+    LIVE_STREAM_ERROR_NONE                   = 0;
+    LIVE_STREAM_ERROR_NETWORK                = 1;
+    LIVE_STREAM_ERROR_CREATESTREAM           = 2;
+    LIVE_STREAM_ERROR_OUTOFMEMORY            = 3;
+    LIVE_STREAM_ERROR_INPUTSTREAM            = 4;
+    LIVE_STREAM_ERROR_INTERNET               = 5;
+    LIVE_STREAM_ERROR_OSNETWORK              = 6;
+    LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT = 7;
+    LIVE_STREAM_ERROR_SSL_HANDSHAKE          = 8;
+    LIVE_STREAM_ERROR_CAMERA_BLOCKED         = 9;
+    LIVE_STREAM_ERROR_UNKNOWN                = 10;
+    LIVE_STREAM_ERROR_SD_CARD_FULL           = 40;
+    LIVE_STREAM_ERROR_SD_CARD_REMOVED        = 41;
 }
 
-
-enum EnumLiveStreamStatus{
-        LIVE_STREAM_STATE_IDLE                    = 0;
-        LIVE_STREAM_STATE_CONFIG                  = 1;
-        LIVE_STREAM_STATE_READY                   = 2;
-        LIVE_STREAM_STATE_STREAMING               = 3;
-        LIVE_STREAM_STATE_COMPLETE_STAY_ON        = 4;
-        LIVE_STREAM_STATE_FAILED_STAY_ON          = 5;
-        LIVE_STREAM_STATE_RECONNECTING            = 6;
+enum EnumLiveStreamStatus {
+    LIVE_STREAM_STATE_IDLE             = 0;
+    LIVE_STREAM_STATE_CONFIG           = 1;
+    LIVE_STREAM_STATE_READY            = 2;
+    LIVE_STREAM_STATE_STREAMING        = 3;
+    LIVE_STREAM_STATE_COMPLETE_STAY_ON = 4;
+    LIVE_STREAM_STATE_FAILED_STAY_ON   = 5;
+    LIVE_STREAM_STATE_RECONNECTING     = 6;
 }
 
+enum EnumRegisterLiveStreamStatus {
+    REGISTER_LIVE_STREAM_STATUS_STATUS  = 1;
+    REGISTER_LIVE_STREAM_STATUS_ERROR   = 2;
+    REGISTER_LIVE_STREAM_STATUS_MODE    = 3;
+    REGISTER_LIVE_STREAM_STATUS_BITRATE = 4;
+}
 
-    enum EnumRegisterLiveStreamStatus {
-        REGISTER_LIVE_STREAM_STATUS_STATUS     = 1;
-        REGISTER_LIVE_STREAM_STATUS_ERROR      = 2;
-        REGISTER_LIVE_STREAM_STATUS_MODE       = 3;
-        REGISTER_LIVE_STREAM_STATUS_BITRATE    = 4;
-  }
-
-
-enum EnumWindowSize{
+enum EnumWindowSize {
     WINDOW_SIZE_480  = 4;
     WINDOW_SIZE_720  = 7;
     WINDOW_SIZE_1080 = 12;
 }
 
-
-message NotifyLiveStreamStatus{
-    optional EnumLiveStreamStatus live_stream_status  = 1;
-    optional EnumLiveStreamError  live_stream_error  = 2;
-    optional bool                      live_stream_encode = 3;
-    optional int32                     live_stream_bitrate = 4;  // Kbps
-    repeated EnumWindowSize live_stream_window_size_supported_array = 5;
-    optional bool live_stream_encode_supported = 6;
-    optional bool live_stream_max_lens_unsupported = 7;
-    optional int32 live_stream_minimum_stream_bitrate = 8;  // camera-defined minimum bitrate (static) (Kbps)
-    optional int32 live_stream_maximum_stream_bitrate = 9;  // camera-defined maximum bitrate (static) (Kbps)
-    optional bool live_stream_lens_supported = 10;
-    repeated EnumLens live_stream_lens_supported_array = 11;
-    optional bool deprecated = 12;
+message NotifyLiveStreamStatus {
+    optional EnumLiveStreamStatus live_stream_status                      = 1;  // Live stream status
+    optional EnumLiveStreamError  live_stream_error                       = 2;  // Live stream error
+    optional bool                 live_stream_encode                      = 3;  // Is live stream encoding?
+    optional int32                live_stream_bitrate                     = 4;  // Live stream bitrate (Kbps)
+    repeated EnumWindowSize       live_stream_window_size_supported_array = 5;  // Live stream resolution capabilities
+    optional bool                 live_stream_encode_supported            = 6;  // Does the camera support encoding while live streaming?
+    optional bool                 live_stream_max_lens_unsupported        = 7;  // Is the Max Lens feature NOT supported?
+    optional int32                live_stream_minimum_stream_bitrate      = 8;  // Camera-defined minimum bitrate (static) (Kbps)
+    optional int32                live_stream_maximum_stream_bitrate      = 9;  // Camera-defined maximum bitrate (static) (Kbps)
+    optional bool                 live_stream_lens_supported              = 10; // Does camera support setting lens for live streaming?
+    repeated EnumLens             live_stream_lens_supported_array        = 11; // Array of supported lenses for live streaming
+    optional bool                 deprecated                              = 12; // Deprecated
 }
 
-
-message RequestGetLiveStreamStatus{
-    repeated EnumRegisterLiveStreamStatus   register_live_stream_status = 1;
-    repeated EnumRegisterLiveStreamStatus unregister_live_stream_status = 2;
+message RequestGetLiveStreamStatus {
+    repeated EnumRegisterLiveStreamStatus register_live_stream_status   = 1; // Array of live stream statuses to be notified about
+    repeated EnumRegisterLiveStreamStatus unregister_live_stream_status = 2; // Array of live stream statuses to stop being notified about
 }
 
-
-message RequestSetLiveStreamMode
-{
-    optional string url                      =  1;
-    optional bool encode                     =  2;
-    optional EnumWindowSize window_size =  3;
-    optional string reserved1                =  4;
-    optional string reserved2                =  5;
-    optional bytes cert                      =  6;
-    optional int32 minimum_bitrate           =  7;  // min bitrate desired by app; may or may not be honored
-    optional int32 maximum_bitrate           =  8;  // max bitrate desired by app; may or may not be honored
-    optional int32 starting_bitrate          =  9;
-    optional EnumLens lens              = 10;  // relates to live_stream_lens_supported field in NotifyLiveStreamStatus
-    optional int32 reserved3                 = 11;
+message RequestSetLiveStreamMode {
+    optional string         url              = 1;  // RTMP(S) URL used for live stream
+    optional bool           encode           = 2;  // Save media to sdcard while streaming?
+    optional EnumWindowSize window_size      = 3;  // Live stream resolution
+    optional string         reserved1        = 4;  // Reserved
+    optional string         reserved2        = 5;  // Reserved
+    optional bytes          cert             = 6;  // Certificate for servers that require it
+    optional int32          minimum_bitrate  = 7;  // Minimum desired bitrate (may or may not be honored)
+    optional int32          maximum_bitrate  = 8;  // Maximum desired bitrate (may or may not be honored)
+    optional int32          starting_bitrate = 9;  // Starting bitrate
+    optional EnumLens       lens             = 10; // Lens to use for live stream (see
+    optional int32          reserved3        = 11; // Reserved
 }
 

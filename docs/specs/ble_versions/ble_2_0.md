@@ -37,10 +37,16 @@ Below is a table of cameras that support GoPro's public BLE API:
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>ID</td>
-      <td>Model</td>
+      <td>Model ID</td>
+      <td>Model Code</td>
       <td>Marketing Name</td>
       <td>Minimal Firmware Version</td>
+    </tr>
+    <tr>
+      <td>60</td>
+      <td>H22.03</td>
+      <td>HERO11 Black Mini</td>
+      <td><a href="https://gopro.com/en/us/update/hero11-black-mini">v01.10.00</a></td>
     </tr>
     <tr>
       <td>58</td>
@@ -375,30 +381,9 @@ If the camera is in sleep mode, connecting to it will cause the camera to wake a
 In order to communicate with a GoPro camera via BLE, a client must first be paired with the camera.
 The pairing procedure must be done once for each new client.
 If the camera is factory reset, all clients will need to pair again.
-To pair with the camera, use the UI to put it into pairing mode, connect via BLE and then initiate pairing.
+To pair with the camera, use the UI to put it into <a href="https://community.gopro.com/s/article/GoPro-Quik-How-To-Pair-Your-Camera?language=en_US">pairing mode</a>, connect via BLE and then initiate pairing.
 The camera will whitelist the client so subsequent connections do not require pairing.
 </p>
-
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Camera</td>
-      <td>To Enter Pairing Mode</td>
-    </tr>
-    <tr>
-      <td>HERO11 Black</td>
-      <td>Swipe down, swipe left, Preferences >> Wireless connections >> Connect device >> GoPro Quik App</td>
-    </tr>
-    <tr>
-      <td>HERO10 Black</td>
-      <td>Swipe down, swipe left, Connections >> Connect Device >> GoPro Quik App</td>
-    </tr>
-    <tr>
-      <td>HERO9 Black</td>
-      <td>Swipe down, swipe left, Connections >> Connect Device >> GoPro App</td>
-    </tr>
-  </tbody>
-</table>
 
 ### Steps
 <p>
@@ -546,11 +531,27 @@ stop
 
 ## Keep Alive
 <p>
-Unless changed by the user, GoPro cameras will automatically power off after some time (e.g. 5min, 15min, 30min).
-The Auto Power Down watchdog timer can be reset by sending periodic keep-alive messages to the camera, as below.
-It is recommended to send a keep-alive at least once every 120 seconds.
+In order to maximize battery life, GoPro cameras automatically go to sleep after some time.
+This logic is handled by a combination of an <b>Auto Power Down</b> setting which most (but not all) cameras support
+and a <b>Keep Alive</b> message that the user can regularly send to the camera.
+The camera will automatically go to sleep if both timers reach zero.
 </p>
 
+<p>
+The Auto Power Down timer is reset when the user taps the LCD screen, presses a button on the camera or 
+programmatically (un)sets the shutter, sets a setting, or loads a Preset.
+</p>
+
+<p>
+The Keep Alive timer is reset when the user sends a keep alive message.
+</p>
+
+<p>
+The best practice to prevent the camera from inadvertently going to sleep is to start sending Keep Alive messages
+every <b>3.0</b> seconds after a connection is established.
+</p>
+
+### Command
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
@@ -570,6 +571,10 @@ It is recommended to send a keep-alive at least once every 120 seconds.
 
 ## Limitations
 
+### HERO11 Black Mini
+<ul>
+<li>The camera will reject requests to change settings while encoding; for example, if Hindsight feature is active, the user cannot change settings</li>
+</ul>
 ### HERO11 Black
 <ul>
 <li>The camera will reject requests to change settings while encoding; for example, if Hindsight feature is active, the user cannot change settings</li>
@@ -763,6 +768,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Description</td>
       <td>Request</td>
       <td>Response</td>
+      <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
       <td>HERO9 Black</td>
@@ -776,6 +782,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x01</td>
@@ -783,6 +790,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Shutter: on</td>
       <td>03:01:01:01</td>
       <td>02:01:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -796,6 +804,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x0D</td>
@@ -803,6 +812,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Set date/time to 2022-01-31 03:04:05</td>
       <td>09:0D:07:07:E6:01:1F:03:04:05</td>
       <td>02:0D:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -816,6 +826,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x0F</td>
@@ -823,6 +834,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Set local date/time to: 2022-01-31 03:04:05 (utc-02:00)  (dst: on)</td>
       <td>0C:0F:0A:07:E6:01:1F:03:04:05:FF:88:01</td>
       <td>02:0F:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -833,6 +845,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Get local date/time</td>
       <td>01:10</td>
       <td>Complex</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -846,6 +859,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x17</td>
@@ -853,6 +867,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>WiFi AP: off</td>
       <td>03:17:01:00</td>
       <td>02:17:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -866,6 +881,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x18</td>
@@ -873,6 +889,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Hilight moment during encoding</td>
       <td>01:18</td>
       <td>02:18:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -886,6 +903,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x3E</td>
@@ -896,6 +914,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x3E</td>
@@ -903,6 +922,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Photo</td>
       <td>04:3E:02:03:E9</td>
       <td>02:3E:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -913,6 +933,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Timelapse</td>
       <td>04:3E:02:03:EA</td>
       <td>02:3E:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -926,6 +947,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>0x50</td>
@@ -936,6 +958,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x51</td>
@@ -943,6 +966,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Get version</td>
       <td>01:51</td>
       <td>Complex</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -993,12 +1017,12 @@ Below are clarifications for complex camera responses
       <td>Length of model number</td>
     </tr>
     <tr>
-      <td>00:00:00:13</td>
-      <td>Model number</td>
+      <td>00:00:00:37</td>
+      <td>Model ID</td>
     </tr>
     <tr>
       <td>0B</td>
-      <td>Length of model name</td>
+      <td>Length of model id</td>
     </tr>
     <tr>
       <td>48:45:52:4F:58:20:42:6C:61:63</td>
@@ -1299,6 +1323,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Option</td>
       <td>Request</td>
       <td>Response</td>
+      <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
       <td>HERO9 Black</td>
@@ -1312,6 +1337,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -1319,6 +1345,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 2.7k (id: 4)</td>
       <td>03:02:01:04</td>
       <td>02:02:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1332,6 +1359,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -1339,6 +1367,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 1440 (id: 7)</td>
       <td>03:02:01:07</td>
       <td>02:02:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1352,6 +1381,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>2</td>
@@ -1359,6 +1389,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 4k 4:3 (id: 18)</td>
       <td>03:02:01:12</td>
       <td>02:02:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1371,6 +1402,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>02:02:00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
@@ -1379,6 +1411,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 5k 4:3 (id: 25)</td>
       <td>03:02:01:19</td>
       <td>02:02:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1390,6 +1423,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:02:01:1A</td>
       <td>02:02:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1399,6 +1433,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 5.3k 4:3 (id: 27)</td>
       <td>03:02:01:1B</td>
       <td>02:02:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1410,6 +1445,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:02:01:1C</td>
       <td>02:02:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1419,6 +1455,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video resolution (id: 2) to 5.3k (id: 100)</td>
       <td>03:02:01:64</td>
       <td>02:02:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1432,6 +1469,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1439,6 +1477,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 120 (id: 1)</td>
       <td>03:03:01:01</td>
       <td>02:03:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1452,6 +1491,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1459,6 +1499,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 60 (id: 5)</td>
       <td>03:03:01:05</td>
       <td>02:03:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1472,6 +1513,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1479,6 +1521,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 30 (id: 8)</td>
       <td>03:03:01:08</td>
       <td>02:03:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1492,6 +1535,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1499,6 +1543,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video fps (id: 3) to 24 (id: 10)</td>
       <td>03:03:01:0A</td>
       <td>02:03:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1512,6 +1557,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>59</td>
@@ -1519,6 +1565,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set auto power down (id: 59) to never (id: 0)</td>
       <td>03:3B:01:00</td>
       <td>01:3B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1529,6 +1576,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set auto power down (id: 59) to 5 min (id: 4)</td>
       <td>03:3B:01:04</td>
       <td>01:3B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1539,6 +1587,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set auto power down (id: 59) to 15 min (id: 6)</td>
       <td>03:3B:01:06</td>
       <td>01:3B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1549,6 +1598,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set auto power down (id: 59) to 30 min (id: 7)</td>
       <td>03:3B:01:07</td>
       <td>01:3B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1562,6 +1612,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
@@ -1569,6 +1620,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video digital lenses (id: 121) to narrow (id: 2)</td>
       <td>03:79:01:02</td>
       <td>02:79:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1582,6 +1634,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
@@ -1592,6 +1645,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
@@ -1599,6 +1653,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video digital lenses (id: 121) to max superview (id: 7)</td>
       <td>03:79:01:07</td>
       <td>02:79:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1612,6 +1667,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
@@ -1619,6 +1675,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video digital lenses (id: 121) to hyperview (id: 9)</td>
       <td>03:79:01:09</td>
       <td>02:79:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1630,6 +1687,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:79:01:0A</td>
       <td>02:79:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1640,6 +1698,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:7A:01:13</td>
       <td>02:7A:00</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
@@ -1649,6 +1708,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo digital lenses (id: 122) to max superview (id: 100)</td>
       <td>03:7A:01:64</td>
       <td>02:7A:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1659,6 +1719,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo digital lenses (id: 122) to wide (id: 101)</td>
       <td>03:7A:01:65</td>
       <td>02:7A:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1669,6 +1730,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo digital lenses (id: 122) to linear (id: 102)</td>
       <td>03:7A:01:66</td>
       <td>02:7A:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1680,6 +1742,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:7B:01:13</td>
       <td>02:7B:00</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
@@ -1689,6 +1752,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set time lapse digital lenses (id: 123) to max superview (id: 100)</td>
       <td>03:7B:01:64</td>
       <td>02:7B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1699,6 +1763,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set time lapse digital lenses (id: 123) to wide (id: 101)</td>
       <td>03:7B:01:65</td>
       <td>02:7B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1709,6 +1774,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set time lapse digital lenses (id: 123) to linear (id: 102)</td>
       <td>03:7B:01:66</td>
       <td>02:7B:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1719,6 +1785,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set media format (id: 128) to time lapse video (id: 13)</td>
       <td>03:80:01:0D</td>
       <td>02:80:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1729,6 +1796,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set media format (id: 128) to time lapse photo (id: 20)</td>
       <td>03:80:01:14</td>
       <td>02:80:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1739,6 +1807,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set media format (id: 128) to night lapse photo (id: 21)</td>
       <td>03:80:01:15</td>
       <td>02:80:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1749,6 +1818,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set media format (id: 128) to night lapse video (id: 26)</td>
       <td>03:80:01:1A</td>
       <td>02:80:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1762,6 +1832,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>134</td>
@@ -1769,6 +1840,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set setup anti flicker (id: 134) to 50hz (id: 3)</td>
       <td>03:86:01:03</td>
       <td>02:86:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1782,6 +1854,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>135</td>
@@ -1789,6 +1862,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video hypersmooth (id: 135) to on (id: 1)</td>
       <td>03:87:01:01</td>
       <td>02:87:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1799,6 +1873,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video hypersmooth (id: 135) to high (id: 2)</td>
       <td>03:87:01:02</td>
       <td>02:87:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1812,6 +1887,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>135</td>
@@ -1819,6 +1895,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video hypersmooth (id: 135) to auto boost (id: 4)</td>
       <td>03:87:01:04</td>
       <td>02:87:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1830,6 +1907,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:87:01:64</td>
       <td>02:87:00</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1839,6 +1917,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video horizon levelling (id: 150) to off (id: 0)</td>
       <td>03:96:01:00</td>
       <td>02:96:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1849,6 +1928,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video horizon levelling (id: 150) to locked (id: 2)</td>
       <td>03:96:01:02</td>
       <td>02:96:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1859,6 +1939,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo horizon levelling (id: 151) to off (id: 0)</td>
       <td>03:97:01:00</td>
       <td>02:97:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1869,6 +1950,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set photo horizon levelling (id: 151) to locked (id: 2)</td>
       <td>03:97:01:02</td>
       <td>02:97:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1879,6 +1961,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set max lens (id: 162) to off (id: 0)</td>
       <td>03:A2:01:00</td>
       <td>02:A2:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.20.00</td>
       <td><span style="color:green">✔</span></td>
@@ -1889,6 +1972,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set max lens (id: 162) to on (id: 1)</td>
       <td>03:A2:01:01</td>
       <td>02:A2:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.20.00</td>
       <td><span style="color:green">✔</span></td>
@@ -1900,6 +1984,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:AD:01:00</td>
       <td>02:AD:00</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1909,6 +1994,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video performance mode (id: 173) to extended battery (id: 1)</td>
       <td>03:AD:01:01</td>
       <td>02:AD:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td>\&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
@@ -1920,6 +2006,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:AD:01:02</td>
       <td>02:AD:00</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1929,6 +2016,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set controls (id: 175) to easy (id: 0)</td>
       <td>03:AF:01:00</td>
       <td>02:AF:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1940,6 +2028,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:AF:01:01</td>
       <td>02:AF:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -1949,6 +2038,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 8x ultra slo-mo (id: 0)</td>
       <td>03:B0:01:00</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1959,6 +2049,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 4x super slo-mo (id: 1)</td>
       <td>03:B0:01:01</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1969,6 +2060,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 2x slo-mo (id: 2)</td>
       <td>03:B0:01:02</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1979,6 +2071,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 1x speed / low light (id: 3)</td>
       <td>03:B0:01:03</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1989,6 +2082,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt) (id: 4)</td>
       <td>03:B0:01:04</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1999,6 +2093,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt) (id: 5)</td>
       <td>03:B0:01:05</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2009,6 +2104,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 1x speed / low light (ext. batt) (id: 6)</td>
       <td>03:B0:01:06</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2019,6 +2115,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 8x ultra slo-mo (50 hz) (id: 7)</td>
       <td>03:B0:01:07</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2029,6 +2126,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 4x super slo-mo (50 hz) (id: 8)</td>
       <td>03:B0:01:08</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2039,6 +2137,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 2x slo-mo (50 hz) (id: 9)</td>
       <td>03:B0:01:09</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2049,6 +2148,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 1x speed / low light (50hz) (id: 10)</td>
       <td>03:B0:01:0A</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2059,6 +2159,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt, 50hz) (id: 11)</td>
       <td>03:B0:01:0B</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2069,6 +2170,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt, 50hz) (id: 12)</td>
       <td>03:B0:01:0C</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2079,6 +2181,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set speed (id: 176) to 1x speed / low light (ext. batt, 50hz) (id: 13)</td>
       <td>03:B0:01:0D</td>
       <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2089,6 +2192,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set enable night photo (id: 177) to off (id: 0)</td>
       <td>03:B1:01:00</td>
       <td>02:B1:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2099,6 +2203,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set enable night photo (id: 177) to on (id: 1)</td>
       <td>03:B1:01:01</td>
       <td>02:B1:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2110,6 +2215,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:B2:01:00</td>
       <td>02:B2:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2119,6 +2225,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set wireless band (id: 178) to 5ghz (id: 1)</td>
       <td>03:B2:01:01</td>
       <td>02:B2:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2130,6 +2237,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:B3:01:01</td>
       <td>02:B3:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2139,6 +2247,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set trail length (id: 179) to long (id: 2)</td>
       <td>03:B3:01:02</td>
       <td>02:B3:00</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2150,6 +2259,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>03:B3:01:03</td>
       <td>02:B3:00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2159,6 +2269,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video mode (id: 180) to highest quality (id: 0)</td>
       <td>03:B4:01:00</td>
       <td>02:B4:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2169,6 +2280,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video mode (id: 180) to extended battery (id: 1)</td>
       <td>03:B4:01:01</td>
       <td>02:B4:00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -2241,8 +2353,18 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="9"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
-      <td>HERO11 Black</td>
+      <td rowspan="12"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td>HERO11 Black Mini</td>
+      <td>v01.10.00</td>
+    </tr>
+    <tr>
+      <td rowspan="3">HERO11 Black</td>
+      <td>v01.20.00</td>
+    </tr>
+    <tr>
+      <td>v01.12.00</td>
+    </tr>
+    <tr>
       <td>v01.10.00</td>
     </tr>
     <tr>
@@ -2535,6 +2657,7 @@ Below is a table of supported status IDs.<br />
       <td>Description</td>
       <td>Type</td>
       <td>Values</td>
+      <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
       <td>HERO9 Black</td>
@@ -2548,6 +2671,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>2</td>
@@ -2558,6 +2682,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>3</td>
@@ -2565,6 +2690,7 @@ Below is a table of supported status IDs.<br />
       <td>Is an external battery connected?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2575,6 +2701,7 @@ Below is a table of supported status IDs.<br />
       <td>External battery power level in percent</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2588,6 +2715,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>8</td>
@@ -2595,6 +2723,7 @@ Below is a table of supported status IDs.<br />
       <td>Is the camera busy?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2608,6 +2737,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>10</td>
@@ -2615,6 +2745,7 @@ Below is a table of supported status IDs.<br />
       <td>Is the system encoding right now?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2628,6 +2759,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>13</td>
@@ -2635,6 +2767,7 @@ Below is a table of supported status IDs.<br />
       <td>When encoding video, this is the duration (seconds) of the video so far; 0 otherwise</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2648,13 +2781,15 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>19</td>
       <td>State</td>
       <td>The pairing state of the camera</td>
       <td>integer</td>
-      <td>0: Success<br />1: In Progress<br />2: Failed<br />3: Stopped<br /></td>
+      <td>0: Never Started<br />1: Started<br />2: Aborted<br />3: Cancelled<br />4: Completed<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2668,6 +2803,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>21</td>
@@ -2675,6 +2811,7 @@ Below is a table of supported status IDs.<br />
       <td>Time (milliseconds) since boot of last successful pairing complete action</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2688,6 +2825,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>23</td>
@@ -2695,6 +2833,7 @@ Below is a table of supported status IDs.<br />
       <td>The time, in milliseconds since boot that the WiFi Access Point scan completed</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2708,6 +2847,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>26</td>
@@ -2715,6 +2855,7 @@ Below is a table of supported status IDs.<br />
       <td>Wireless remote control version</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2728,6 +2869,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>28</td>
@@ -2735,6 +2877,7 @@ Below is a table of supported status IDs.<br />
       <td>Wireless Pairing State</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2748,6 +2891,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>30</td>
@@ -2755,6 +2899,7 @@ Below is a table of supported status IDs.<br />
       <td>Camera's WIFI SSID. On BLE connection, value is big-endian byte-encoded int</td>
       <td>string</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2768,6 +2913,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>32</td>
@@ -2775,6 +2921,7 @@ Below is a table of supported status IDs.<br />
       <td>Is Preview Stream enabled?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2788,6 +2935,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>34</td>
@@ -2795,6 +2943,7 @@ Below is a table of supported status IDs.<br />
       <td>How many photos can be taken before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2808,6 +2957,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>36</td>
@@ -2815,6 +2965,7 @@ Below is a table of supported status IDs.<br />
       <td>How many group photos can be taken with current settings before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2828,6 +2979,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>38</td>
@@ -2835,6 +2987,7 @@ Below is a table of supported status IDs.<br />
       <td>Total number of photos on sdcard</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2848,6 +3001,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>41</td>
@@ -2855,6 +3009,7 @@ Below is a table of supported status IDs.<br />
       <td>The current status of Over The Air (OTA) update</td>
       <td>integer</td>
       <td>0: Idle<br />1: Downloading<br />2: Verifying<br />3: Download Failed<br />4: Verify Failed<br />5: Ready<br />6: GoPro App: Downloading<br />7: GoPro App: Verifying<br />8: GoPro App: Download Failed<br />9: GoPro App: Verify Failed<br />10: GoPro App: Ready<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2868,6 +3023,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>45</td>
@@ -2875,6 +3031,7 @@ Below is a table of supported status IDs.<br />
       <td>Is locate camera feature active?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2888,6 +3045,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>54</td>
@@ -2895,6 +3053,7 @@ Below is a table of supported status IDs.<br />
       <td>Remaining space on the sdcard in Kilobytes</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2908,6 +3067,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>56</td>
@@ -2915,6 +3075,7 @@ Below is a table of supported status IDs.<br />
       <td>WiFi signal strength in bars</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2928,6 +3089,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>59</td>
@@ -2935,6 +3097,7 @@ Below is a table of supported status IDs.<br />
       <td>Time since boot (msec) of most recent hilight in encoding video (set to 0 when encoding stops)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2948,6 +3111,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>64</td>
@@ -2958,6 +3122,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>65</td>
@@ -2965,6 +3130,7 @@ Below is a table of supported status IDs.<br />
       <td>Liveview Exposure Select Mode</td>
       <td>integer</td>
       <td>0: Disabled<br />1: Auto<br />2: ISO Lock<br />3: Hemisphere<br /></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2975,6 +3141,7 @@ Below is a table of supported status IDs.<br />
       <td>Liveview Exposure Select: y-coordinate (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2985,6 +3152,7 @@ Below is a table of supported status IDs.<br />
       <td>Liveview Exposure Select: y-coordinate (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2998,6 +3166,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>69</td>
@@ -3005,6 +3174,7 @@ Below is a table of supported status IDs.<br />
       <td>Is the WiFi radio enabled?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3018,6 +3188,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>74</td>
@@ -3025,6 +3196,7 @@ Below is a table of supported status IDs.<br />
       <td>Microphone Accesstory status</td>
       <td>integer</td>
       <td>0: Microphone mod not connected<br />1: Microphone mod connected<br />2: Microphone mod connected and microphone plugged into Microphone mod<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3038,6 +3210,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>76</td>
@@ -3045,6 +3218,7 @@ Below is a table of supported status IDs.<br />
       <td>Wireless Band</td>
       <td>integer</td>
       <td>0: 2.4 GHz<br />1: 5 GHz<br />2: Max<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3058,6 +3232,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>78</td>
@@ -3068,6 +3243,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>79</td>
@@ -3075,6 +3251,7 @@ Below is a table of supported status IDs.<br />
       <td>Is the camera currently in First Time Use (FTU) UI flow?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3088,6 +3265,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>82</td>
@@ -3095,6 +3273,7 @@ Below is a table of supported status IDs.<br />
       <td>Is the system ready to accept commands?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3108,6 +3287,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>85</td>
@@ -3115,6 +3295,7 @@ Below is a table of supported status IDs.<br />
       <td>Is the camera getting too cold to continue recording?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3128,6 +3309,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>88</td>
@@ -3135,6 +3317,7 @@ Below is a table of supported status IDs.<br />
       <td>Is this camera capable of zooming while encoding (static value based on model, not settings)</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3148,6 +3331,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>93</td>
@@ -3158,6 +3342,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>94</td>
@@ -3165,6 +3350,7 @@ Below is a table of supported status IDs.<br />
       <td>Current Photo Preset (ID)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3178,6 +3364,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>96</td>
@@ -3185,6 +3372,7 @@ Below is a table of supported status IDs.<br />
       <td>Current Preset Group (ID)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3198,6 +3386,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>98</td>
@@ -3208,6 +3397,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>99</td>
@@ -3215,6 +3405,7 @@ Below is a table of supported status IDs.<br />
       <td>How many Live Bursts can be captured before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3225,6 +3416,7 @@ Below is a table of supported status IDs.<br />
       <td>Total number of Live Bursts on sdcard</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3238,6 +3430,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>102</td>
@@ -3245,6 +3438,7 @@ Below is a table of supported status IDs.<br />
       <td>Media mod State</td>
       <td>integer</td>
       <td>0: Media mod microphone removed<br />2: Media mod microphone only<br />3: Media mod microphone with external microphone<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3258,6 +3452,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>104</td>
@@ -3265,6 +3460,7 @@ Below is a table of supported status IDs.<br />
       <td>Is the system's Linux core active?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3278,6 +3474,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>106</td>
@@ -3285,6 +3482,7 @@ Below is a table of supported status IDs.<br />
       <td>Is Video Hindsight Capture Active?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3295,6 +3493,7 @@ Below is a table of supported status IDs.<br />
       <td>Scheduled Capture Preset ID</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3305,6 +3504,7 @@ Below is a table of supported status IDs.<br />
       <td>Is Scheduled Capture set?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3315,6 +3515,7 @@ Below is a table of supported status IDs.<br />
       <td>Media Mode Status (bitmasked)</td>
       <td>integer</td>
       <td>0: 000 = Selfie mod: 0, HDMI: 0, Media Mod Connected: False<br />1: 001 = Selfie mod: 0, HDMI: 0, Media Mod Connected: True<br />2: 010 = Selfie mod: 0, HDMI: 1, Media Mod Connected: False<br />3: 011 = Selfie mod: 0, HDMI: 1, Media Mod Connected: True<br />4: 100 = Selfie mod: 1, HDMI: 0, Media Mod Connected: False<br />5: 101 = Selfie mod: 1, HDMI: 0, Media Mod Connected: True<br />6: 110 = Selfie mod: 1, HDMI: 1, Media Mod Connected: False<br />7: 111 = Selfie mod: 1, HDMI: 1, Media Mod Connected: True<br /></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3327,6 +3528,7 @@ Below is a table of supported status IDs.<br />
       <td>0: False<br />1: True<br /></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr>
@@ -3335,6 +3537,7 @@ Below is a table of supported status IDs.<br />
       <td>Number of sdcard write speed errors since device booted</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -3348,6 +3551,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>114</td>
@@ -3355,6 +3559,7 @@ Below is a table of supported status IDs.<br />
       <td>Camera control status ID</td>
       <td>integer</td>
       <td>0: Camera Idle: No one is attempting to change camera settings<br />1: Camera Control: Camera is in a menu or changing settings. To intervene, app must request control<br />2: Camera External Control: An outside entity (app) has control and is in a menu or modifying settings<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -3367,6 +3572,7 @@ Below is a table of supported status IDs.<br />
       <td>0: False<br />1: True<br /></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr>
@@ -3375,6 +3581,7 @@ Below is a table of supported status IDs.<br />
       <td>Camera control over USB state</td>
       <td>integer</td>
       <td>0: Disabled<br />1: Enabled<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.30.00</td>
       <td><span style="color:red">❌</span></td>
@@ -3385,6 +3592,7 @@ Below is a table of supported status IDs.<br />
       <td>Total SD card capacity in kilobytes</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -3415,8 +3623,8 @@ Note: All Protobuf messages (i.e. payloads, which are serialized protobuf object
 Protobuf communications with the camera differ from TLV-style communications.
 Rather than having a Type, Length, and Value, GoPro protobuf messages utilize the following:
 <ol>
-<li>Feature: Indicates command type (e.g. command, setting, query)</li>
-<li>Action: Specific camera action; value indicates whether message was sent or an (aync) notification was received</li>
+<li>Feature ID: Indicates command type (e.g. command, setting, query)</li>
+<li>Action ID: Specific camera action; value indicates whether message was sent or an (aync) notification was received</li>
 <li>Value: Serialized protobuf object</li>
 </ol>
 </p>
@@ -3478,14 +3686,14 @@ For additional details, see <a href="#services-and-characteristics">Services and
     <tr>
       <td>Network Management</td>
       <td>0x02</td>
-      <td>0x05, 0x0C, 0x85</td>
+      <td>0x02, 0x03, 0x04, 0x05, 0x0B, 0x0C, 0x82, 0x83, 0x84, 0x85</td>
       <td>GP-0091</td>
       <td>GP-0092</td>
     </tr>
     <tr>
       <td>Command</td>
       <td>0xF1</td>
-      <td>0x69, 0x6B, 0x79, 0xE9, 0xEB, 0xF9</td>
+      <td>0x69, 0x6B, 0x78, 0x79, 0xE9, 0xEB, 0xF8, 0xF9</td>
       <td>GP-0072</td>
       <td>GP-0073</td>
     </tr>
@@ -3517,17 +3725,74 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td>Description</td>
       <td>Request</td>
       <td>Response</td>
+      <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
       <td>HERO9 Black</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td rowspan="2">0x02</td>
+      <td rowspan="7">0x02</td>
+      <td>0x02</td>
+      <td>0x82</td>
+      <td>Start scan</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">RequestStartScan</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseStartScanning</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td></td>
+      <td>0x0B</td>
+      <td>Async status update</td>
+      <td></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">NotifStartScanning</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>0x03</td>
+      <td>0x83</td>
+      <td>Get ap entries</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">RequestGetApEntries</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseGetApEntries</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>0x04</td>
+      <td>0x84</td>
+      <td>Connect</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">RequestConnect</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseConnect</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td></td>
+      <td>0x0C</td>
+      <td>Async status update</td>
+      <td></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseConnect</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x05</td>
       <td>0x85</td>
       <td>Connect new</td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">RequestConnectNew</a></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseConnectNew</a></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3541,14 +3806,16 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
-      <td rowspan="3">0xF1</td>
+      <td rowspan="4">0xF1</td>
       <td>0x69</td>
       <td>0xE9</td>
       <td>Request set camera control status</td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/set_camera_control_status.proto">RequestSetCameraControlStatus</a></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">ResponseGeneric</a></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.20.00</td>
       <td><span style="color:red">❌</span></td>
@@ -3562,6 +3829,18 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x78</td>
+      <td>0xF8</td>
+      <td>Request release network</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">RequestReleaseNetwork</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseGeneric</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>0x79</td>
@@ -3569,6 +3848,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td>Request set live stream</td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">RequestSetLiveStreamMode</a></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">ResponseGeneric</a></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3583,6 +3863,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td></td>
@@ -3590,6 +3871,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td>Async status update</td>
       <td></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">NotifyPresetStatus</a></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3603,6 +3885,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td></td>
@@ -3610,6 +3893,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td>Async status update</td>
       <td></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">NotifyLiveStreamStatus</a></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3715,7 +3999,7 @@ connected app is discouraged.
 </p>
 
 <p>
-Best practice for synchronizing user/app control is to use the <i>Set Camera Control Status</i> command and
+Best practice for synchronizing user/app control is to use the <b>Set Camera Control Status</b> command and
 corresponding <i>Camera Control Status</i> (CCS) camera statuses in alignment with the finite state machine below:
 </p>
 
@@ -3789,17 +4073,18 @@ For details on which cameras are supported and how to set Camera Control Status,
 </p>
 
 
-## Station Mode
+## Interface with Access Points
 <p>
-The camera supports being put into <a href="https://en.wikipedia.org/wiki/Station_(networking)">Station Mode (STA)</a>.
-This is necessary for features like Live Streaming, where the camera needs to connect to an access point.
+The camera supports connecting to access points in <a href="https://en.wikipedia.org/wiki/Station_(networking)">Station Mode (STA)</a>.
+This is necessary for features such as Live Streaming, where the camera needs an Internet connection.
+While in this mode, HTTP command and control of the camera is not available.
 </p>
 
-### Station Mode Sequence
+### Scanning for Access Points
 <p>
-Put visually, the process of connecting the camera to an access point is as follows:
+In order to scan for Access Points, use the flow below.
+See <a href="#protobuf-commands">Protobuf Commands</a> for command details.
 </p>
-
 ```plantuml!
 
 
@@ -3807,9 +4092,51 @@ actor Central
 participant "GP-0091" as GP0091
 participant "GP-0092" as GP0092
 
+Central  -> GP0091 : RequestStartScan
+Central <-- GP0092 : ResponseStartScanning
+note right
+scanning_state: EnumScanning.SCANNING_STARTED
+end note
+
+loop until scanning_state == EnumScanning.SCANNING_SUCCESS
+    Central <-- GP0092 : NotifStartScanning
+end loop
+note right
+Indicates scan is complete
+Save scan_id, total_entries
+end note
+
+Central  -> GP0091 : RequestGetApEntries
+note right
+Use scan_id, total_entries
+end note
+Central <-- GP0092 : ResponseGetApEntries
+note right: Each ScanEntry contains SSID, signal strength, freq
+
+
+
+```
+
+### Connect to a New Access Point
+<p>
+To provision and connect the camera to a new Access Point, use <a href="#protobuf-commands">RequestConnectNew</a>.
+</p>
+<p>
+Note: This should only be done once to provision the AP; subsequent connections should use <a href="#protobuf-commands">RequestConnect</a>. 
+</p>
+```plantuml!
+
+
+actor Central
+participant "GP-0091" as GP0091
+participant "GP-0092" as GP0092
+
+note over Central, GP0091: Scan for Access Points
 Central  -> GP0091  : RequestConnectNew
 Central <-- GP0092  : ResponseConnectNew
-loop until SUCCESS_NEW_AP
+note right: provisioning_state: EnumProvisioning.PROVISIONING_STARTED
+
+loop until provisioning_state == EnumProvisioning.PROVISIONING_SUCCESS_NEW_AP
     Central <-- GP0092  : NotifProvisionState
 end loop
 
@@ -3818,76 +4145,52 @@ end loop
 
 ```
 
-### Request a new Connection
+### Connect to a Provisioned Access Point
 <p>
-To connect the camera to an access point, send a <a href="#protobuf-commands">RequestConnectNew</a> command:
+To connect the camera to a provisioned Access Point, scan for Access Points and connect using <a href="#protobuf-commands">RequestConnect</a>:
 </p>
+```plantuml!
 
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Parameter</td>
-      <td>Type</td>
-      <td>Description</td>
-    </tr>
-    <tr>
-      <td>ssid</td>
-      <td>string</td>
-      <td>AP SSID</td>
-    </tr>
-    <tr>
-      <td>password</td>
-      <td>string</td>
-      <td>AP password</td>
-    </tr>
-    <tr>
-      <td>static_ip</td>
-      <td>bytes</td>
-      <td>Static IP address (optional)</td>
-    </tr>
-    <tr>
-      <td>gateway</td>
-      <td>bytes</td>
-      <td>Gateway IP address (optional)</td>
-    </tr>
-    <tr>
-      <td>subnet</td>
-      <td>bytes</td>
-      <td>Subnet mask (optional)</td>
-    </tr>
-    <tr>
-      <td>dns_primary</td>
-      <td>bytes</td>
-      <td>Primary DNS (optional)</td>
-    </tr>
-    <tr>
-      <td>dns_secondary</td>
-      <td>bytes</td>
-      <td>Secondary DNS (optional)</td>
-    </tr>
-  </tbody>
-</table>
 
-### Polling for State
+actor Central
+participant "GP-0091" as GP0091
+participant "GP-0092" as GP0092
+
+note over Central, GP0091: Scan for Access Points
+Central  -> GP0091  : RequestConnect
+Central <-- GP0092  : ResponseConnect
+note right: provisioning_state: EnumProvisioning.PROVISIONING_STARTED
+
+loop until provisioning_state == EnumProvisioning.PROVISIONING_SUCCESS_NEW_AP
+    Central <-- GP0092  : NotifProvisionState
+end loop
+
+
+
+
+```
+
+### Disconnect from an Access Point
 <p>
-After sending a new connection request, wait for a <a href="#protobuf-commands">NotifProvisioningState</a> notification from GP-0092
-that indicates a <i>PROVISIONING_SUCCESS_NEW_AP</i>. 
-</p> 
+To disconnect from a connected Access Point and return the camera to AP mode, use <a href="#protobuf-commands">RequestReleaseNetwork</a>.
+</p>
+```plantuml!
 
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>Parameter</td>
-      <td>Type</td>
-      <td>Description</td>
-    </tr>
-    <tr>
-      <td>provisioning_state</td>
-      <td>EnumProvisioning</td>
-      <td>Basic provisioning/connection state</td>
-    </tr>
-  </tbody>
-</table>
+
+actor Central
+participant "GP-0091" as GP0091
+participant "GP-0092" as GP0092
+
+note across: Scan for Access Points
+note across: Connect to a New/Provisioned Access Point\n(Camera: STA Mode)
+Central  -> GP0091  : RequestReleaseNetwork
+Central <-- GP0092  : ResponseGeneric
+note right: (Camera: AP Mode)
+
+
+
+
+```
 
 
 ## Turbo Transfer

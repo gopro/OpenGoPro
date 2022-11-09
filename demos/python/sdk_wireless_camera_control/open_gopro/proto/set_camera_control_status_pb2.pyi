@@ -43,6 +43,7 @@ class RequestSetCameraControlStatus(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CAMERA_CONTROL_STATUS_FIELD_NUMBER: builtins.int
     camera_control_status: global___EnumCameraControlStatus.ValueType
+    "Declare who is taking control of the camera"
 
     def __init__(
         self, *, camera_control_status: global___EnumCameraControlStatus.ValueType | None = ...

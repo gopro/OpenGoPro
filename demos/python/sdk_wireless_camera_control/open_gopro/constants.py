@@ -4,7 +4,7 @@
 """Constant numbers shared across the GoPro module. These do not change across Open GoPro Versions"""
 
 from __future__ import annotations
-from enum import IntEnum, Enum, EnumMeta
+from enum import IntEnum, Enum, IntFlag, EnumMeta
 from dataclasses import dataclass
 from typing import Protocol, Union, Iterator, TypeVar, Any, no_type_check, Final
 
@@ -88,6 +88,27 @@ class GoProEnumMeta(EnumMeta):
             Iterator[T]: enum iterator
         """
         return iter([x[1] for x in cls._member_map_.items() if x[0] not in GoProEnumMeta._iter_skip_names])  # type: ignore
+
+
+class GoProFlagEnum(IntFlag, metaclass=GoProEnumMeta):
+    """GoPro specific enum to be used for all settings, statuses, and parameters
+
+    The names NOT_APPLICABLE and DESCRIPTOR are special as they will not be returned as part of the enum iterator
+    """
+
+    def __eq__(self, other: object) -> bool:
+        if type(self)._is_proto:
+            if isinstance(other, int):
+                return self.value == other
+            if isinstance(other, str):
+                return self.name == other
+            if isinstance(other, Enum):
+                return self.value == other.value
+            raise TypeError(f"Unexpected case: proto enum can only be str or int, not {type(other)}")
+        return super().__eq__(other)
+
+    def __hash__(self) -> Any:
+        return hash(self.name or "" + str(self.value))
 
 
 class GoProEnum(IntEnum, metaclass=GoProEnumMeta):
@@ -219,13 +240,19 @@ class CmdId(GoProEnum):
 class ActionId(GoProEnum):
     """Action ID's that identify a protobuf command."""
 
+    SCAN_WIFI_NETWORKS = 0x02
+    GET_AP_ENTRIES = 0x03
     REQUEST_WIFI_CONNECT = 0x05
+    NOTIF_START_SCAN = 0x0B
     NOTIF_PROVIS_STATE = 0x0C
     SET_CAMERA_CONTROL = 0x69
     SET_TURBO_MODE = 0x6B
     GET_PRESET_STATUS = 0x72
     GET_LIVESTREAM_STATUS = 0x74
+    RELEASE_NETWORK = 0x78
     SET_LIVESTREAM_MODE = 0x79
+    SCAN_WIFI_NETWORKS_RSP = 0x82
+    GET_AP_ENTRIES_RSP = 0x83
     REQUEST_WIFI_CONNECT_RSP = 0x85
     SET_CAMERA_CONTROL_RSP = 0xE9
     SET_TURBO_MODE_RSP = 0xEB
@@ -233,6 +260,7 @@ class ActionId(GoProEnum):
     PRESET_MODIFIED_NOTIFICATION = 0xF3
     LIVESTREAM_STATUS_RSP = 0xF4
     LIVESTREAM_STATUS_NOTIF = 0xF5
+    RELEASE_NETWORK_RSP = 0xF8
     SET_LIVESTREAM_MODE_RSP = 0xF9
     INTERNAL_FF = 0xFF
 

@@ -3,7 +3,9 @@ permalink: /faq
 read_time: false
 ---
 
-# Frequently Asked Questions
+# FAQ and Known Issues
+
+# Frequently Asked Questions (FAQ)
 
 If you have somehow stumbled here first, note that there are specifications, demos, and tutorials which expand upon
 much of the information here. These can be found, among other places, from the [home page](/).
@@ -59,7 +61,27 @@ paired, then the camera should be advertising and ready to connect. If it is not
 you are already connected to it from a previous session. To be sure, power cycle both the camera and the peer device.
 {% endaccordion %}
 
-{% accordion Why am I failing to connect to the cameras Wifi Access Point? %}
+{% accordion Workaround for intermittent Wifi AP Connection failure %}
 On >= Hero 11, try disabling and then re-enabling the camera's Wifi AP using the
 [AP Control BLE Command]({% link specs/ble_versions/ble_2_0.md %}#commands)
+{% endaccordion %}
+
+# Known Issues
+
+## Relevant to All Supported Cameras
+
+{% accordion Intermittent failure to connect to the cameras Wifi Access Point %}
+On rare occasions, connections to the camera's Wifi AP will continuously fail until the camera is reset.
+It is possible to workaround this as described in [Troubleshooting](#troubleshooting)
+{% endaccordion %}
+
+{% accordion Spurious Protobuf Notifications sent once camera is connected in Station mode %}
+Once the camera has been connected in station mode (STA), it will start sending protobuf notifications with
+action ID 0xFF. These should be ignored.
+{% endaccordion %}
+
+## Hero 11 (v01.10.00) Specific
+
+{% accordion Wired Communication is broken after update mode %}
+This is fixed by Resetting Connections and then re-pairing.
 {% endaccordion %}

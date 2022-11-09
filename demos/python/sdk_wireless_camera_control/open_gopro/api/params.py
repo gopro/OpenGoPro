@@ -7,13 +7,30 @@
 
 from __future__ import annotations
 
-from open_gopro.constants import GoProEnum
+from open_gopro.constants import GoProEnum, GoProFlagEnum
 
 # Import required parameters from protobuf
 import open_gopro.proto.live_streaming_pb2
 import open_gopro.proto.network_management_pb2
 import open_gopro.proto.request_get_preset_status_pb2
 import open_gopro.proto.set_camera_control_status_pb2
+
+
+class ScanEntry(GoProFlagEnum):
+    AUTHENTICATED = open_gopro.proto.network_management_pb2.SCAN_FLAG_AUTHENTICATED
+    CONFIGURED = open_gopro.proto.network_management_pb2.SCAN_FLAG_CONFIGURED
+    BEST_SSID = open_gopro.proto.network_management_pb2.SCAN_FLAG_BEST_SSID
+    ASSOCIATED = open_gopro.proto.network_management_pb2.SCAN_FLAG_ASSOCIATED
+    UNSUPPORTED_TYPE = open_gopro.proto.network_management_pb2.SCAN_FLAG_UNSUPPORTED_TYPE
+
+
+class ScanState(GoProEnum):
+    UNKNOWN = open_gopro.proto.network_management_pb2.SCANNING_UNKNOWN
+    NEVER_STARTED = open_gopro.proto.network_management_pb2.SCANNING_NEVER_STARTED
+    STARTED = open_gopro.proto.network_management_pb2.SCANNING_STARTED
+    ABORTED_BY_SYSTEM = open_gopro.proto.network_management_pb2.SCANNING_ABORTED_BY_SYSTEM
+    CANCELLED_BY_USER = open_gopro.proto.network_management_pb2.SCANNING_CANCELLED_BY_USER
+    SUCCESS = open_gopro.proto.network_management_pb2.SCANNING_SUCCESS
 
 
 class LiveStreamStatus(GoProEnum):
@@ -172,10 +189,11 @@ class LED(GoProEnum):
 
 
 class PairState(GoProEnum):
-    SUCCESS = 0
+    NOT_STARTED = 0
     IN_PROGRESS = 1
     FAILED = 2
     STOPPED = 3
+    COMPLETED = 4
 
 
 class PairType(GoProEnum):
@@ -329,7 +347,9 @@ class PerformanceMode(GoProEnum):
 
 
 class MediaFormat(GoProEnum):
+    TODO_12 = 12
     TIME_LAPSE_VIDEO = 13
+    TODO_16 = 16
     TIME_LAPSE_PHOTO = 20
     NIGHT_LAPSE_PHOTO = 21
     NIGHT_LAPSE_VIDEO = 26

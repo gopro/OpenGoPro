@@ -20,7 +20,7 @@ jobs:
               id: extract_branch
 
             - name: Checkout PR branch
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
                   ref: ${{ steps.extract_branch.outputs.branch }}
                   ssh-key: ${{ secrets.PUSH_FROM_WORKFLOW_TO_RETRIGGER }}
@@ -44,7 +44,7 @@ jobs:
 
     test_github_pages:
         needs: copyright
-        timeout-minutes: 3
+        timeout-minutes: 5
         runs-on: ubuntu-latest
         steps:
             - name: Cancel Previous Runs
@@ -52,7 +52,7 @@ jobs:
               with:
                   access_token: ${{ github.token }}
 
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
             - name: Test Jekyll Build and Check Links
               run: make tests
 
@@ -61,7 +61,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout source branch
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
                   ref: release
                   ssh-key: ${{ secrets.PUSH_FROM_WORKFLOW_TO_RETRIGGER }}

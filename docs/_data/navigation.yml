@@ -31,10 +31,11 @@ python-tutorials:
     - title: '7: Camera Media List'
       url: /tutorials/python/camera-media-list
 
-ble-specs:
+specs:
     - title: 'BLE 2.0'
       url: /ble_2_0
-
-http-specs:
     - title: 'HTTP 2.0'
       url: /http_2_0
+    - title: 'Protobuf'
+      url: /protos
+

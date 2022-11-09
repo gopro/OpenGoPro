@@ -69,7 +69,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
         self.get_camera_state = GetCameraState(
             communicator,
             endpoint="gopro/camera/state",
-            parser=WifiParsers.CameraStateParser,
+            parser=WifiParsers.CameraStateParser(),
         )
 
         class KeepAlive(WifiGetJsonCommand):
@@ -119,7 +119,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
         self.get_media_list = GetMediaList(
             communicator,
             endpoint="gopro/media/list",
-            parser=WifiParsers.MediaListParser,
+            parser=WifiParsers.MediaListParser(),
         )
 
         class SetTurboMode(WifiGetJsonCommand):
@@ -585,22 +585,19 @@ class WifiParsers:
     class CameraStateParser(JsonParser):
         """Parse integer numbers into Enums"""
 
-        @classmethod
-        def parse(cls, json: dict[str, Any]) -> dict:  # noqa: D102
+        def parse(self, data: dict) -> dict:  # noqa: D102
             parsed: dict[Any, Any] = {}
             # Parse status and settings values into nice human readable things
             for (name, id_map) in [("status", StatusId), ("settings", SettingId)]:
-                for k, v in json[name].items():
+                for k, v in data[name].items():
                     identifier = id_map(int(k))
-                    if name == "settings" and (container := GoProResp._get_setting_possibilities(identifier)):  # type: ignore
-                        parsed[identifier] = container(v)
-                    else:
-                        parsed[identifier] = v
+                    parsed[identifier] = (
+                        container(v) if (container := GoProResp._get_query_container(identifier)) else v  # type: ignore
+                    )
             return parsed
 
     class MediaListParser(JsonParser):
         """Extract the list of files from the media list JSON"""
 
-        @classmethod
-        def parse(cls, json: dict[str, Any]) -> dict:  # noqa: D102
-            return {"files": json["media"][0]["fs"]}
+        def parse(self, data: dict) -> dict:  # noqa: D102
+            return {"files": data["media"][0]["fs"]}
