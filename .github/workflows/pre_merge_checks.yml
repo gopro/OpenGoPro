@@ -44,7 +44,6 @@ jobs:
 
     test_github_pages:
         needs: copyright
-        timeout-minutes: 5
         runs-on: ubuntu-latest
         steps:
             - name: Cancel Previous Runs
