@@ -17,4 +17,10 @@ from open_gopro.proto.network_management_pb2 import (
     RequestConnectNew,
     ResponseConnectNew,
     NotifProvisioningState,
+    RequestStartScan,
+    ResponseStartScanning,
+    RequestGetApEntries,
+    ResponseGetApEntries,
+    NotifStartScanning,
+    RequestReleaseNetwork,
 )

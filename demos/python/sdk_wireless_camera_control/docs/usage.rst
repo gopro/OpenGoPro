@@ -141,7 +141,7 @@ Here is a full example for clarity:
     from open_gopro import GoPro, Params
 
     with GoPro() as gopro:
-        gopro.ble_command.set_shutter(Params.Shutter.ON)
+        gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
 
 Synchronous Data Operations
 ---------------------------
@@ -159,9 +159,8 @@ Commands are callable instance attributes of a Commands class instance
 .. code-block:: python
 
     with GoPro() as gopro:
-        gopro.wifi_command.set_preset(Params.Preset.ACTIVITY)
-        gopro.ble_command.set_shutter(Params.Shutter.ON)
-        gopro.wifi_command.set_shutter(Params.Shutter.OFF)
+        gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
+        gopro.wifi_command.set_shutter(Params.Toggle.DISABLE)
 
 Statuses
 ^^^^^^^^

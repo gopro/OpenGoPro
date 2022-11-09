@@ -8,18 +8,18 @@ import enum
 import logging
 from pathlib import Path
 from abc import abstractmethod
-from dataclasses import dataclass
 from urllib.parse import urlencode
 from collections.abc import Iterable
-from typing import Any, ClassVar, TypeVar, Generic, Union, no_type_check, Optional, Final
+from dataclasses import dataclass, InitVar, field
+from typing import Any, TypeVar, Generic, Union, no_type_check, Optional, Final
 
 import google.protobuf.json_format
 from google.protobuf import descriptor
 from google.protobuf.message import Message as Protobuf
 from google.protobuf.json_format import MessageToDict as ProtobufToDict
-from construct import Adapter, GreedyBytes, Construct
+import construct
 
-from open_gopro.responses import BytesBuilder, BytesParser, GoProResp, JsonParser, BytesParserBuilder
+from open_gopro.responses import BytesBuilder, BytesParser, GoProResp, JsonParser, BytesParserBuilder, Parser
 from open_gopro.constants import (
     ActionId,
     FeatureId,
@@ -30,6 +30,7 @@ from open_gopro.constants import (
     StatusId,
     GoProUUIDs,
     enum_factory,
+    GoProEnum,
 )
 from open_gopro.interface import GoProBle, GoProWifi, BleCommand, WifiCommand
 from open_gopro.util import Logger, jsonify
@@ -43,60 +44,113 @@ ProtobufProducerType = tuple[Union[type[SettingId], type[StatusId]], QueryCmdId]
 ProtobufPrinter = google.protobuf.json_format._Printer  # type: ignore # noqa
 original_field_to_json = ProtobufPrinter._FieldToJsonObject
 
+QueryParserType = Union[construct.Construct, type[GoProEnum], BytesParserBuilder]
+AsyncParserType = Union[construct.Construct, BytesParser[dict], type[Protobuf]]
 
 ######################################################## BLE #################################################
 
 
-def build_enum_adapter(target: type[enum.Enum]) -> BytesParserBuilder:
-    """Build an enum to Construct parsing and building adapter
-
-    This adapter only works on byte data of length 1
+def enum_parser_factory(target: type[GoProEnum]) -> BytesParserBuilder:
+    """Build an Enum ParserBuilder
 
     Args:
-        target (type[enum.Enum]): Enum to use use for parsing / building
+        target (type[GoProEnum]): enum to use for parsing and building
 
     Returns:
-        BytesParserBuilder: dynamically created parser / builder class
+        BytesParserBuilder: instance of generated class
     """
 
-    class EnumByteAdapter(BytesParserBuilder[enum.Enum]):
+    class ParserBuilder(BytesParserBuilder[GoProEnum]):
         """Adapt enums to / from a one byte value"""
 
-        container: ClassVar[type[enum.Enum]] = target
+        container = target
 
-        def parse(self, data: bytes) -> enum.Enum:
+        def parse(self, data: bytes) -> GoProEnum:
             return self.container(data[0])
 
         def build(self, *args: Any, **kwargs: Any) -> bytes:
-            return bytes([args[0].value])
+            return bytes([int(args[0])])
 
-    return EnumByteAdapter()
+    return ParserBuilder()
 
 
-class DeprecatedAdapter(Adapter):
+def construct_adapter_factory(target: construct.Construct) -> BytesParserBuilder:
+    """Build a construct parser adapter from a construct
+
+    Args:
+        target (construct.Construct): construct to use for parsing and building
+
+    Returns:
+        BytesParserBuilder: instance of generated class
+    """
+
+    class ParserBuilder(BytesParserBuilder):
+        """Adapt the construct for our interface"""
+
+        container = target
+
+        def parse(self, data: bytes) -> Any:
+            return self.container.parse(data)
+
+        def build(self, *args: Any, **kwargs: Any) -> bytes:
+            return self.container.build(*args, **kwargs)
+
+    return ParserBuilder()
+
+
+def protobuf_parser_factory(proto: type[Protobuf]) -> BytesParser[dict]:
+    """Build a BytesParser from a protobuf definition
+
+    Args:
+        proto (type[Protobuf]): protobuf definition to build class from
+
+    Returns:
+        BytesParser[dict]: instance of generated class
+    """
+
+    class ProtobufByteParser(BytesParser[dict]):
+        """Parse bytes into a dict using the protobuf"""
+
+        protobuf = proto
+
+        def parse(self, data: bytes) -> dict:
+            response: Protobuf = self.protobuf().FromString(bytes(data))
+
+            # Monkey patch the field-to-json function to use our enum translation
+            ProtobufPrinter._FieldToJsonObject = (
+                lambda self, field, value: enum_factory(field.enum_type)(value)  # pylint: disable=not-callable
+                if field.cpp_type == descriptor.FieldDescriptor.CPPTYPE_ENUM
+                else original_field_to_json(self, field, value)
+            )
+            return ProtobufToDict(response, preserving_proto_field_name=True)
+
+    return ProtobufByteParser()
+
+
+class DeprecatedAdapter(BytesParserBuilder[str]):
     """Used to return "DEPRECATED" when a deprecated setting / status is attempted to be parsed / built"""
 
-    def _decode(self, *_: Any) -> str:
-        """Return "DEPRECATED" when parse() is called
+    def parse(self, data: bytes) -> str:
+        """Return string indicating this ID is deprecated
 
         Args:
-            _ (Any): Not used
+            data (bytes): ignored
 
         Returns:
             str: "DEPRECATED"
         """
         return "DEPRECATED"
 
-    def _encode(self, *_: Any) -> str:
-        """Return "DEPRECATED" when parse() is called
+    def build(self, obj: Any) -> bytes:
+        """Return empty bytes since this ID is deprecated
 
         Args:
-            _ (Any): Not used
+            obj (Any): ignored
 
         Returns:
-            str: "DEPRECATED"
+            bytes: empty
         """
-        return self._decode()
+        return bytes()
 
 
 class BleReadCommand(BleCommand[BleUUID]):
@@ -108,8 +162,18 @@ class BleReadCommand(BleCommand[BleUUID]):
         response_parser (BytesParser): the parser that will parse the received bytestream into a JSON dict
     """
 
-    def __init__(self, communicator: GoProBle, uuid: BleUUID, parser: BytesParser) -> None:
-        super().__init__(communicator, uuid=uuid, parser=parser, identifier=uuid)
+    def __init__(
+        self,
+        communicator: GoProBle,
+        uuid: BleUUID,
+        parser: Optional[Union[construct.Construct, BytesParser[dict]]],
+    ) -> None:
+        super().__init__(
+            communicator,
+            uuid=uuid,
+            parser=construct_adapter_factory(parser) if isinstance(parser, construct.Construct) else parser,
+            identifier=uuid,
+        )
 
     def __call__(self) -> GoProResp:  # noqa: D102
         logger.info(Logger.build_log_tx_str(jsonify(self._as_dict())))
@@ -150,11 +214,16 @@ class BleWriteCommand(BleCommand[CmdId]):
         uuid: BleUUID,
         cmd: CmdId,
         param_builder: Optional[BytesBuilder] = None,
-        parser: Optional[BytesParser] = None,
+        parser: Optional[Union[construct.Construct, BytesParser[dict]]] = None,
     ) -> None:
         self.param_builder = param_builder
         self.cmd = cmd
-        super().__init__(communicator, uuid=uuid, parser=parser, identifier=cmd)
+        super().__init__(
+            communicator,
+            uuid=uuid,
+            parser=construct_adapter_factory(parser) if isinstance(parser, construct.Construct) else parser,
+            identifier=cmd,
+        )
 
     @no_type_check
     def __call__(self, /, **kwargs: Any) -> GoProResp:  # noqa: D102
@@ -238,48 +307,6 @@ class RegisterUnregisterAll(BleWriteCommand):
         return response
 
 
-def protobuf_construct_adapter_factory(protobuf: type[Protobuf]) -> Construct:
-    """Build a protobuf to Construct parsing (only) adapter
-
-    Args:
-        protobuf (type[Protobuf]): protobuf to use as parser
-
-    Returns:
-        Construct: adapter to be used by Construct for parsing and building
-    """
-
-    class ProtobufConstructAdapter(Adapter):
-        """Adapt a protobuf to be used by Construct (for parsing only)"""
-
-        protobuf: type[Protobuf]
-
-        def _decode(self, obj: bytearray, *_: Any) -> dict[Any, Any]:
-            """Parse a byte stream into a JSON dict using a protobuf
-
-            Args:
-                obj (bytearray): byte stream to parse
-                _ (Any): Not used
-
-            Returns:
-                dict[Any, Any]: parsed JSON dict
-            """
-            response: Protobuf = self.protobuf().FromString(bytes(obj))
-
-            # Monkey patch the field-to-json function to use our enum translation
-            ProtobufPrinter._FieldToJsonObject = (
-                lambda self, field, value: enum_factory(field.enum_type)(value)  # pylint: disable=not-callable
-                if field.cpp_type == descriptor.FieldDescriptor.CPPTYPE_ENUM
-                else original_field_to_json(self, field, value)
-            )
-            return ProtobufToDict(response)
-
-        def _encode(self, *_: Any) -> Any:
-            raise NotImplementedError
-
-    setattr(ProtobufConstructAdapter, "protobuf", protobuf)
-    return ProtobufConstructAdapter(GreedyBytes)
-
-
 class BleProtoCommand(BleCommand[ActionId]):
     """A BLE command that is sent and received as using the Protobuf protocol
 
@@ -306,13 +333,12 @@ class BleProtoCommand(BleCommand[ActionId]):
         request_proto: type[Protobuf],
         response_proto: type[Protobuf],
         additional_matching_ids: Optional[set[Union[ActionId, CmdId]]] = None,
+        additional_parsers: Optional[list[JsonParser]] = None,
     ) -> None:
-        super().__init__(
-            communicator,
-            uuid=uuid,
-            parser=protobuf_construct_adapter_factory(response_proto),
-            identifier=action_id,
-        )
+        parser = protobuf_parser_factory(response_proto)
+        for p in additional_parsers or []:
+            parser += p  # type: ignore
+        super().__init__(communicator, uuid=uuid, parser=parser, identifier=action_id)
         self.feature_id = feature_id
         self.action_id = action_id
         self.response_action_id = response_action_id
@@ -384,12 +410,23 @@ class BleAsyncResponse:
     Args:
         feature_id (FeatureId): Feature ID that response corresponds to
         action_id (ActionId): Action ID that response corresponds to
-        parser (BytesParser): how to parse the response
+        parser_type (AsyncParserType): how to parse the response
     """
 
     feature_id: FeatureId
     action_id: ActionId
-    parser: BytesParser
+    parser_type: InitVar[AsyncParserType]
+    parser: Parser = field(init=False)
+
+    def __post_init__(self, parser_type: AsyncParserType) -> None:
+        if isinstance(parser_type, construct.Construct):
+            self.parser = construct_adapter_factory(parser_type)
+        elif isinstance(parser_type, BytesParser):
+            self.parser = parser_type
+        elif issubclass(parser_type, Protobuf):
+            self.parser = protobuf_parser_factory(parser_type)
+        else:
+            raise TypeError(f"Unexpected {parser_type=}")
 
     def __str__(self) -> str:
         return self.action_id.name.lower().replace("_", " ").removeprefix("actionid").title()
@@ -401,26 +438,33 @@ class BleSetting(BleCommand[SettingId], Generic[ValueType]):
     SETTER_UUID: Final[BleUUID] = GoProUUIDs.CQ_SETTINGS
     READER_UUID: Final[BleUUID] = GoProUUIDs.CQ_QUERY
 
-    def __init__(
-        self, communicator: GoProBle, identifier: SettingId, parser_builder: BytesParserBuilder
-    ) -> None:
+    def __init__(self, communicator: GoProBle, identifier: SettingId, parser_builder: QueryParserType) -> None:
         """Constructor
 
         Args:
             communicator (GoProBle): Adapter to read / write settings data
             identifier (SettingId): ID of setting
-            parser_builder (BytesParserBuilder): object to both parse and build setting
+            parser_builder (QueryParserType): object to both parse and build setting
+
+        Raises:
+            TypeError: Invalid parser_builder type
         """
+        if isinstance(parser_builder, construct.Construct):
+            parser = construct_adapter_factory(parser_builder)
+        elif isinstance(parser_builder, BytesParserBuilder):
+            parser = parser_builder
+        elif issubclass(parser_builder, GoProEnum):
+            parser = enum_parser_factory(parser_builder)
+        else:
+            raise TypeError(f"Unexpected {parser_builder=}")
         self._identifier = identifier
-        self._builder = parser_builder
-        BleCommand.__init__(
-            self, communicator, uuid=self.SETTER_UUID, parser=parser_builder, identifier=identifier
-        )
+        self._builder = parser
+        BleCommand.__init__(self, communicator, uuid=self.SETTER_UUID, parser=parser, identifier=identifier)
 
     def __str__(self) -> str:
         return str(self._identifier.name).lower().replace("_", " ").title()
 
-    def _as_dict(  # type: ignore # pylint: disable = arguments-differ
+    def _as_dict(  # pylint: disable = arguments-differ
         self, identifier: Union[QueryCmdId, SettingId, str], *_: Any, **kwargs: Any
     ) -> dict[str, Any]:
         """Return the attributes of the command as a dict
@@ -566,15 +610,26 @@ class BleStatus(BleCommand[StatusId]):
 
     UUID: Final[BleUUID] = GoProUUIDs.CQ_QUERY
 
-    def __init__(self, communicator: GoProBle, identifier: StatusId, parser: BytesParser) -> None:
+    def __init__(self, communicator: GoProBle, identifier: StatusId, parser: QueryParserType) -> None:
         """Constructor
 
         Args:
             communicator (GoProBle): Adapter to read status data
             identifier (StatusId): ID of status
-            parser (BytesParser): parser used to build response
+            parser (QueryParserType): construct to parse or enum to represent status value
+
+        Raises:
+            TypeError: Invalid parser type
         """
-        BleCommand.__init__(self, communicator, uuid=self.UUID, parser=parser, identifier=identifier)
+        if isinstance(parser, construct.Construct):
+            parser_builder = construct_adapter_factory(parser)
+        elif isinstance(parser, BytesParserBuilder):
+            parser_builder = parser
+        elif issubclass(parser, GoProEnum):
+            parser_builder = enum_parser_factory(parser)
+        else:
+            raise TypeError(f"Unexpected {parser=}")
+        BleCommand.__init__(self, communicator, uuid=self.UUID, parser=parser_builder, identifier=identifier)
         self._identifier = identifier
 
     def __str__(self) -> str:
@@ -597,7 +652,7 @@ class BleStatus(BleCommand[StatusId]):
         logger.info(Logger.build_log_rx_str(response))
         return response
 
-    def _as_dict(  # type: ignore # pylint: disable = arguments-differ
+    def _as_dict(  # pylint: disable = arguments-differ
         self,
         identifier: Union[QueryCmdId, SettingId, str],
         *_: Any,
@@ -668,7 +723,7 @@ class WifiGetJsonCommand(WifiCommand[str]):
         endpoint: str,
         components: Optional[list[str]] = None,
         arguments: Optional[list[str]] = None,
-        parser: Optional[type[JsonParser]] = None,
+        parser: Optional[JsonParser] = None,
         identifier: Optional[str] = None,
     ) -> None:
         if not identifier:
@@ -713,7 +768,7 @@ class WifiGetBinary(WifiCommand[str]):
         endpoint: str,
         components: Optional[list[str]] = None,
         arguments: Optional[list[str]] = None,
-        parser: Optional[type[JsonParser]] = None,
+        parser: Optional[JsonParser] = None,
         identifier: Optional[str] = None,
     ) -> None:
         if not identifier:

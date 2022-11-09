@@ -235,7 +235,7 @@ class GoProModel:
             if "enum" in str(arg_type).lower():
                 try:
                     format_field = command.param_builder.fmtstr  # type: ignore
-                    for construct_field in (construct.Int8ub, construct.Int32ub):
+                    for construct_field in (construct.Int8ub, construct.Int32ub, construct.Int16ub):
                         if construct_field.fmtstr == format_field:
                             validators.append(lambda x, cs=construct_field: cs.build(int(x)))
                             adapters.append(lambda x, adapt=arg_type: adapt[x])
@@ -368,84 +368,56 @@ class CompoundCommands(Commands):
                     max_bit (int): Desired maximum streaming bitrate (<= 8000)
                     start_bit (int): Initial streaming bitrate (honored if 800 <= value <= 8000)
 
-                Raises:
-                    RuntimeError: Failed to connect Wifi or start livestream
-
                 Returns:
                     GoProResp: status and url to start livestream
                 """
                 self._communicator.ble_command.set_shutter(Params.Toggle.DISABLE)
-
                 self._communicator.ble_command.register_livestream_status([Params.RegisterLiveStream.STATUS])
 
-                wifi_connected = False
-                for retry in range(1, 5):
-                    # Connect as STA
-                    response = self._communicator.ble_command.request_wifi_connect(ssid, password)
-                    assert response.is_ok
-                    timeout = response["timeoutSeconds"] + 2
-
-                    # Wait for connection
-                    start = time.time()
-                    while update := self._communicator.get_notification(timeout):
-                        if update == constants.ActionId.NOTIF_PROVIS_STATE:
-                            if (status := update["provisioningState"]) == Params.ProvisioningState.STARTED:
-                                continue
-                            if status == Params.ProvisioningState.SUCCESS_NEW_AP:
-                                wifi_connected = True
-                            else:  # This must be an error state
-                                logger.warning(f"Received connect error {str(status)}")
-                            break
-
-                        if time.time() - start > timeout:
-                            logger.warning("Received connect timeout")
-                            break
-
-                    if wifi_connected:
+                self._communicator.ble_command.scan_wifi_networks()
+                # Wait to receive scanning success
+                scan_id: Optional[int] = None
+                while update := self._communicator.get_notification():
+                    if (
+                        update == constants.ActionId.NOTIF_START_SCAN
+                        and update["scanning_state"] == Params.ScanState.SUCCESS
+                    ):
+                        scan_id = update["scan_id"]
                         break
-                    # We didn't receive a wifi update. Resend the connect
-                    logger.warning(f"Connection to Wifi AP failed Retrying #{retry}")
 
-                if not wifi_connected:
-                    raise RuntimeError("Failed to connect to Wifi network")
-
-                livestream_ready = False
-                for retry in range(1, 3):
-                    # Configure livestream
-                    start = time.time()
-                    response = self._communicator.ble_command.set_livestream_mode(
-                        url=url,
-                        window_size=window_size,
-                        cert=bytes([0]),
-                        minimum_bitrate=min_bit,
-                        maximum_bitrate=max_bit,
-                        starting_bitrate=start_bit,
-                        lens=lens_type,
-                    )
-
-                    # We assume the livestream status will always eventually come
-                    while update := self._communicator.get_notification():
-                        if update == constants.ActionId.LIVESTREAM_STATUS_NOTIF:
-                            if (status := update["liveStreamStatus"]) in [
-                                Params.LiveStreamStatus.CONFIG,
-                                Params.LiveStreamStatus.IDLE,
-                            ]:
-                                continue
-                            if status == Params.LiveStreamStatus.READY:
-                                livestream_ready = True
-                            else:  # This must be an error state
-                                logger.warning(f"Received livestream error {str(status)}")
-                            break
-
-                    if livestream_ready:
+                # Get scan results and see if we need to provision
+                assert scan_id
+                for entry in self._communicator.ble_command.get_ap_entries(scan_id)["entries"]:
+                    if entry["ssid"] == ssid:
+                        if not entry["scan_entry_flags"] & Params.ScanEntry.CONFIGURED:
+                            self._communicator.ble_command.request_wifi_connect(ssid, password)
+                            # Wait to receive provisioning done notification
+                            while update := self._communicator.get_notification():
+                                if (
+                                    update == constants.ActionId.NOTIF_PROVIS_STATE
+                                    and update["provisioning_state"] == Params.ProvisioningState.SUCCESS_NEW_AP
+                                ):
+                                    break
                         break
-                    logger.warning(f"Failed to start livestream. Retrying #{retry}")
-
-                if not livestream_ready:
-                    raise RuntimeError("Failed to start livestream")
 
                 # Start livestream
-                self._communicator.ble_command.set_shutter(Params.Toggle.ENABLE)
+                self._communicator.ble_command.set_livestream_mode(
+                    url=url,
+                    window_size=window_size,
+                    cert=bytes(),
+                    minimum_bitrate=min_bit,
+                    maximum_bitrate=max_bit,
+                    starting_bitrate=start_bit,
+                    lens=lens_type,
+                )
+                # Wait to receive livestream started status
+                while update := self._communicator.get_notification():
+                    if (
+                        update == constants.ActionId.LIVESTREAM_STATUS_NOTIF
+                        and update["live_stream_status"] == Params.LiveStreamStatus.READY
+                    ):
+                        break
+                assert self._communicator.ble_command.set_shutter(Params.Toggle.ENABLE).is_ok
 
                 response = GoProResp(meta=["Livestream"], raw_packet=dict(url=url))
                 response._parse()

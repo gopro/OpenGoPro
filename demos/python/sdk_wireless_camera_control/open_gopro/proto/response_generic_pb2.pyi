@@ -46,6 +46,7 @@ class ResponseGeneric(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     RESULT_FIELD_NUMBER: builtins.int
     result: global___EnumResultGeneric.ValueType
+    "Generic pass/fail/error info"
 
     def __init__(self, *, result: global___EnumResultGeneric.ValueType | None = ...) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["result", b"result"]) -> builtins.bool: ...

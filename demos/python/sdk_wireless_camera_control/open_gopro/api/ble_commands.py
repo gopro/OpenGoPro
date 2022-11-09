@@ -6,7 +6,7 @@
 from __future__ import annotations
 import logging
 import datetime
-from typing import Optional, Final
+from typing import Optional, Final, Callable
 
 from construct import (
     Int8ub,
@@ -25,12 +25,10 @@ from construct import (
 )
 
 from open_gopro import proto
-from open_gopro.responses import GoProResp, CustomBytesParser, BytesBuilder
+from open_gopro.responses import GoProResp, BytesParser, BytesBuilder, JsonParser
 from open_gopro.interface import GoProBle, Commands, BleCommand
 from open_gopro.api.builders import (
-    build_enum_adapter,
     DeprecatedAdapter,
-    protobuf_construct_adapter_factory,
     BleStatus,
     BleSetting,
     BleAsyncResponse,
@@ -40,6 +38,7 @@ from open_gopro.api.builders import (
     BleProtoCommand,
 )
 from open_gopro.constants import ActionId, FeatureId, CmdId, QueryCmdId, SettingId, StatusId, GoProUUIDs
+from open_gopro.util import map_keys
 from . import params as Params
 
 logger = logging.getLogger(__name__)
@@ -541,6 +540,50 @@ class BleCommands(Commands[BleCommand, CmdId]):
             additional_matching_ids={ActionId.PRESET_MODIFIED_NOTIFICATION},
         )
 
+        class ScanWifiNetworks(BleProtoCommand):
+            def __call__(self) -> GoProResp:
+                """Scan for Wifi networks
+
+                Returns:
+                    GoProResp: Command status of request
+                """
+                return super().__call__()
+
+        #: Sphinx docstring redirect
+        self.scan_wifi_networks = ScanWifiNetworks(
+            communicator,
+            uuid=GoProUUIDs.CM_NET_MGMT_COMM,
+            feature_id=FeatureId.NETWORK_MANAGEMENT,
+            action_id=ActionId.SCAN_WIFI_NETWORKS,
+            response_action_id=ActionId.SCAN_WIFI_NETWORKS_RSP,
+            request_proto=proto.RequestStartScan,
+            response_proto=proto.ResponseStartScanning,
+        )
+
+        class GetAPEntries(BleProtoCommand):
+            def __call__(self, scan_id: int) -> GoProResp:
+                """Get the results of a scan for wifi networks
+
+                Args:
+                    scan_id (int): TODO
+
+                Returns:
+                    GoProResp: result of scan with entries for WiFi networks
+                """
+                return super().__call__(scan_id=scan_id, start_index=0, max_entries=100)
+
+        #: Sphinx docstring redirect
+        self.get_ap_entries = GetAPEntries(
+            communicator,
+            uuid=GoProUUIDs.CM_NET_MGMT_COMM,
+            feature_id=FeatureId.NETWORK_MANAGEMENT,
+            action_id=ActionId.GET_AP_ENTRIES,
+            response_action_id=ActionId.GET_AP_ENTRIES_RSP,
+            request_proto=proto.RequestGetApEntries,
+            response_proto=proto.ResponseGetApEntries,
+            additional_parsers=[BleParserBuilders.MapKey("scan_entry_flags", lambda x: Params.ScanEntry(x))],
+        )
+
         class RequestWifiConnect(BleProtoCommand):
             def __call__(self, ssid: str, password: str) -> GoProResp:
                 """Request the camera to connect to a WiFi network.
@@ -621,10 +664,22 @@ class BleCommands(Commands[BleCommand, CmdId]):
                 register: Optional[list[Params.RegisterLiveStream]] = None,
                 unregister: Optional[list[Params.RegisterLiveStream]] = None,
             ) -> GoProResp:
+                """Register / unregister to receive asynchronous livestream statuses
+
+                Args:
+                    register (Optional[list[open_gopro.api.params.RegisterLiveStream]]): Statuses to register
+                        for. Defaults to None (don't register for any).
+                    unregister (Optional[list[open_gopro.api.params.RegisterLiveStream]]): Statues to
+                        unregister for. Defaults to None (don't unregister for any).
+
+                Returns:
+                    GoProResp: current livestream status
+                """
                 return super().__call__(
                     register_live_stream_status=register or [], unregister_live_stream_status=unregister or []
                 )
 
+        #: Sphinx docstring redirect
         self.register_livestream_status = LivestreamStatus(
             communicator,
             uuid=GoProUUIDs.CQ_QUERY,
@@ -634,6 +689,26 @@ class BleCommands(Commands[BleCommand, CmdId]):
             request_proto=proto.RequestGetLiveStreamStatus,
             response_proto=proto.NotifyLiveStreamStatus,
             additional_matching_ids={ActionId.LIVESTREAM_STATUS_NOTIF},
+        )
+
+        class ReleaseNetwork(BleProtoCommand):
+            def __call__(self) -> GoProResp:
+                """Disconnect the camera Wifi network in STA mode so that it returns to AP mode.
+
+                Returns:
+                    GoProResp: status of release request
+                """
+                return super().__call__()
+
+        #: Sphinx docstring redirect
+        self.release_network = ReleaseNetwork(
+            communicator,
+            uuid=GoProUUIDs.CQ_COMMAND,
+            feature_id=FeatureId.COMMAND,
+            action_id=ActionId.RELEASE_NETWORK,
+            response_action_id=ActionId.RELEASE_NETWORK_RSP,
+            request_proto=proto.RequestReleaseNetwork,
+            response_proto=proto.ResponseGeneric,
         )
 
         super().__init__(communicator)
@@ -652,119 +727,115 @@ class BleSettings(Commands[BleSetting, SettingId]):
 
     def __init__(self, communicator: GoProBle):
 
-        self.resolution = BleSetting[Params.Resolution](
-            communicator, SettingId.RESOLUTION, build_enum_adapter(Params.Resolution)
-        )
+        self.resolution = BleSetting[Params.Resolution](communicator, SettingId.RESOLUTION, Params.Resolution)
         """Resolution. Set with :py:class:`open_gopro.api.params.Resolution`"""
 
-        self.fps = BleSetting[Params.FPS](communicator, SettingId.FPS, build_enum_adapter(Params.FPS))
+        self.fps = BleSetting[Params.FPS](communicator, SettingId.FPS, Params.FPS)
         """Frames per second. Set with :py:class:`open_gopro.api.params.FPS`"""
 
-        self.auto_off = BleSetting[Params.AutoOff](
-            communicator, SettingId.AUTO_OFF, build_enum_adapter(Params.AutoOff)
-        )
+        self.auto_off = BleSetting[Params.AutoOff](communicator, SettingId.AUTO_OFF, Params.AutoOff)
         """Set the auto off time. Set with :py:class:`open_gopro.api.params.AutoOff`"""
 
         self.video_field_of_view = BleSetting[Params.VideoFOV](
-            communicator, SettingId.VIDEO_FOV, build_enum_adapter(Params.VideoFOV)
+            communicator, SettingId.VIDEO_FOV, Params.VideoFOV
         )
         """Video FOV. Set with :py:class:`open_gopro.api.params.VideoFOV`"""
 
         self.photo_field_of_view = BleSetting[Params.PhotoFOV](
-            communicator, SettingId.PHOTO_FOV, build_enum_adapter(Params.PhotoFOV)
+            communicator, SettingId.PHOTO_FOV, Params.PhotoFOV
         )
         """Photo FOV. Set with :py:class:`open_gopro.api.params.PhotoFOV`"""
 
         self.multi_shot_field_of_view = BleSetting[Params.MultishotFOV](
-            communicator, SettingId.MULTI_SHOT_FOV, build_enum_adapter(Params.MultishotFOV)
+            communicator, SettingId.MULTI_SHOT_FOV, Params.MultishotFOV
         )
         """Multi-shot FOV. Set with :py:class:`open_gopro.api.params.MultishotFOV`"""
 
-        self.led = BleSetting[Params.LED](communicator, SettingId.LED, build_enum_adapter(Params.LED))
+        self.led = BleSetting[Params.LED](communicator, SettingId.LED, Params.LED)
         """Set the LED options (or also send the BLE keep alive signal). Set with :py:class:`open_gopro.api.params.LED`"""
 
         self.max_lens_mode = BleSetting[Params.MaxLensMode](
-            communicator, SettingId.MAX_LENS_MOD, build_enum_adapter(Params.MaxLensMode)
+            communicator, SettingId.MAX_LENS_MOD, Params.MaxLensMode
         )
         """Enable / disable max lens mod. Set with :py:class:`open_gopro.api.params.MaxLensMode`"""
 
         self.hypersmooth = BleSetting[Params.HypersmoothMode](
-            communicator, SettingId.HYPERSMOOTH, build_enum_adapter(Params.HypersmoothMode)
+            communicator, SettingId.HYPERSMOOTH, Params.HypersmoothMode
         )
         """Set / disable hypersmooth. Set with :py:class:`open_gopro.api.params.HypersmoothMode`"""
 
         self.video_performance_mode = BleSetting[Params.PerformanceMode](
             communicator,
             SettingId.VIDEO_PERFORMANCE_MODE,
-            build_enum_adapter(Params.PerformanceMode),
+            Params.PerformanceMode,
         )
         """Video Performance Mode. Set with :py:class:`open_gopro.api.params.PerformanceMode`"""
 
         self.media_format = BleSetting[Params.MediaFormat](
-            communicator, SettingId.MEDIA_FORMAT, build_enum_adapter(Params.MediaFormat)
+            communicator, SettingId.MEDIA_FORMAT, Params.MediaFormat
         )
         """Set the media format. Set with :py:class:`open_gopro.api.params.MediaFormat`"""
 
         self.anti_flicker = BleSetting[Params.AntiFlicker](
             communicator,
             SettingId.ANTI_FLICKER,
-            build_enum_adapter(Params.AntiFlicker),
+            Params.AntiFlicker,
         )
         """Anti Flicker frequency. Set with :py:class:`open_gopro.api.params.AntiFlicker`"""
 
         self.camera_ux_mode = BleSetting[Params.CameraUxMode](
             communicator,
             SettingId.CAMERA_UX_MODE,
-            build_enum_adapter(Params.CameraUxMode),
+            Params.CameraUxMode,
         )
         """Camera controls configuration. Set with :py:class:`open_gopro.api.params.CameraUxMode`"""
 
         self.video_easy_mode = BleSetting[Params.Speed](
             communicator,
             SettingId.VIDEO_EASY_MODE,
-            build_enum_adapter(Params.Speed),
+            Params.Speed,
         )
         """Video easy mode speed. Set with :py:class:`open_gopro.api.params.Speed`"""
 
         self.photo_easy_mode = BleSetting[Params.PhotoEasyMode](
             communicator,
             SettingId.PHOTO_EASY_MODE,
-            build_enum_adapter(Params.PhotoEasyMode),
+            Params.PhotoEasyMode,
         )
         """Night Photo easy mode. Set with :py:class:`open_gopro.api.params.PhotoEasyMode`"""
 
         self.wifi_band = BleSetting[Params.WifiBand](
             communicator,
             SettingId.WIFI_BAND,
-            build_enum_adapter(Params.WifiBand),
+            Params.WifiBand,
         )
         """Current WiFi band being used. Set with :py:class:`open_gopro.api.params.WifiBand`"""
 
         self.star_trail_length = BleSetting[Params.StarTrailLength](
             communicator,
             SettingId.STAR_TRAIL_LENGTH,
-            build_enum_adapter(Params.StarTrailLength),
+            Params.StarTrailLength,
         )
         """Multi shot star trail length. Set with :py:class:`open_gopro.api.params.StarTrailLength`"""
 
         self.system_video_mode = BleSetting[Params.SystemVideoMode](
             communicator,
             SettingId.SYSTEM_VIDEO_MODE,
-            build_enum_adapter(Params.SystemVideoMode),
+            Params.SystemVideoMode,
         )
         """System video mode. Set with :py:class:`open_gopro.api.params.SystemVideoMode`"""
 
         self.video_horizon_leveling = BleSetting[Params.HorizonLeveling](
             communicator,
             SettingId.VIDEO_HORIZON_LEVELING,
-            build_enum_adapter(Params.HorizonLeveling),
+            Params.HorizonLeveling,
         )
         """Lock / unlock horizon leveling for video. Set with :py:class:`open_gopro.api.params.HorizonLeveling`"""
 
         self.photo_horizon_leveling = BleSetting[Params.HorizonLeveling](
             communicator,
             SettingId.PHOTO_HORIZON_LEVELING,
-            build_enum_adapter(Params.HorizonLeveling),
+            Params.HorizonLeveling,
         )
         """Lock / unlock horizon leveling for photo. Set with :py:class:`open_gopro.api.params.HorizonLeveling`"""
 
@@ -778,10 +849,9 @@ class BleAsyncResponses:
 
     responses = [
         BleAsyncResponse(
-            FeatureId.NETWORK_MANAGEMENT,
-            ActionId.NOTIF_PROVIS_STATE,
-            protobuf_construct_adapter_factory(proto.NotifProvisioningState),
+            FeatureId.NETWORK_MANAGEMENT, ActionId.NOTIF_PROVIS_STATE, proto.NotifProvisioningState
         ),
+        BleAsyncResponse(FeatureId.NETWORK_MANAGEMENT, ActionId.NOTIF_START_SCAN, proto.NotifStartScanning),
         BleAsyncResponse(FeatureId.QUERY, ActionId.INTERNAL_FF, generic_response),
     ]
 
@@ -837,30 +907,22 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         self.wireless_enabled: BleStatus = BleStatus(communicator, StatusId.WIRELESS_ENABLED, Flag)
         """Are Wireless Connections enabled?"""
 
-        self.pair_state: BleStatus = BleStatus(
-            communicator, StatusId.PAIR_STATE, build_enum_adapter(Params.PairState)
-        )
+        self.pair_state: BleStatus = BleStatus(communicator, StatusId.PAIR_STATE, Params.PairState)
         """What is the pair state?"""
 
-        self.pair_type: BleStatus = BleStatus(
-            communicator, StatusId.PAIR_TYPE, build_enum_adapter(Params.PairType)
-        )
+        self.pair_type: BleStatus = BleStatus(communicator, StatusId.PAIR_TYPE, Params.PairType)
         """The last type of pairing that the camera was engaged in."""
 
         self.pair_time: BleStatus = BleStatus(communicator, StatusId.PAIR_TIME, Int32ub)
         """	Time (milliseconds) since boot of last successful pairing complete action."""
 
-        self.wap_scan_state: BleStatus = BleStatus(
-            communicator, StatusId.WAP_SCAN_STATE, build_enum_adapter(Params.WAPState)
-        )
+        self.wap_scan_state: BleStatus = BleStatus(communicator, StatusId.WAP_SCAN_STATE, Params.WAPState)
         """State of current scan for Wifi Access Points. Appears to only change for CAH-related scans."""
 
         self.wap_scan_time: BleStatus = BleStatus(communicator, StatusId.WAP_SCAN_TIME, Int8ub)
         """The time, in milliseconds since boot that the Wifi Access Point scan completed."""
 
-        self.wap_prov_stat: BleStatus = BleStatus(
-            communicator, StatusId.WAP_PROV_STAT, build_enum_adapter(Params.WAPState)
-        )
+        self.wap_prov_stat: BleStatus = BleStatus(communicator, StatusId.WAP_PROV_STAT, Params.WAPState)
         """Wifi AP provisioning state."""
 
         self.remote_ctrl_ver: BleStatus = BleStatus(communicator, StatusId.REMOTE_CTRL_VER, Int8ub)
@@ -884,9 +946,7 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         self.preview_enabled: BleStatus = BleStatus(communicator, StatusId.PREVIEW_ENABLED, Flag)
         """Is preview stream enabled?"""
 
-        self.sd_status: BleStatus = BleStatus(
-            communicator, StatusId.SD_STATUS, build_enum_adapter(Params.SDStatus)
-        )
+        self.sd_status: BleStatus = BleStatus(communicator, StatusId.SD_STATUS, Params.SDStatus)
         """Primary Storage Status."""
 
         self.photos_rem: BleStatus = BleStatus(communicator, StatusId.PHOTOS_REM, Int32ub)
@@ -907,14 +967,10 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         self.num_total_video: BleStatus = BleStatus(communicator, StatusId.NUM_TOTAL_VIDEO, Int32ub)
         """Total number of videos on sdcard."""
 
-        self.deprecated_40: BleStatus = BleStatus(
-            communicator, StatusId.DEPRECATED_40, DeprecatedAdapter(GreedyString(encoding="utf-8"))
-        )
+        self.deprecated_40: BleStatus = BleStatus(communicator, StatusId.DEPRECATED_40, DeprecatedAdapter())
         """This status is deprecated."""
 
-        self.ota_stat: BleStatus = BleStatus(
-            communicator, StatusId.OTA_STAT, build_enum_adapter(Params.OTAStatus)
-        )
+        self.ota_stat: BleStatus = BleStatus(communicator, StatusId.OTA_STAT, Params.OTAStatus)
         """The current status of Over The Air (OTA) update."""
 
         self.download_cancel_pend: BleStatus = BleStatus(communicator, StatusId.DOWNLOAD_CANCEL_PEND, Flag)
@@ -950,9 +1006,7 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         self.next_poll: BleStatus = BleStatus(communicator, StatusId.NEXT_POLL, Int32ub)
         """The min time between camera status updates (msec). Do not poll for status more often than this."""
 
-        self.analytics_rdy: BleStatus = BleStatus(
-            communicator, StatusId.ANALYTICS_RDY, build_enum_adapter(Params.AnalyticsState)
-        )
+        self.analytics_rdy: BleStatus = BleStatus(communicator, StatusId.ANALYTICS_RDY, Params.AnalyticsState)
         """The current state of camera analytics."""
 
         self.analytics_size: BleStatus = BleStatus(communicator, StatusId.ANALYTICS_SIZE, Int32ub)
@@ -964,9 +1018,7 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         self.timelapse_rem: BleStatus = BleStatus(communicator, StatusId.TIMELAPSE_REM, Int32ub)
         """How many min of Timelapse video can be captured with current settings before sdcard is full?"""
 
-        self.exposure_type: BleStatus = BleStatus(
-            communicator, StatusId.EXPOSURE_TYPE, build_enum_adapter(Params.ExposureMode)
-        )
+        self.exposure_type: BleStatus = BleStatus(communicator, StatusId.EXPOSURE_TYPE, Params.ExposureMode)
         """Liveview Exposure Select Mode."""
 
         self.exposure_x: BleStatus = BleStatus(communicator, StatusId.EXPOSURE_X, Int8ub)
@@ -984,17 +1036,13 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         self.int_batt_per: BleStatus = BleStatus(communicator, StatusId.INT_BATT_PER, Int8ub)
         """Internal battery level (percent)."""
 
-        self.acc_mic_stat: BleStatus = BleStatus(
-            communicator, StatusId.ACC_MIC_STAT, build_enum_adapter(Params.ExposureMode)
-        )
+        self.acc_mic_stat: BleStatus = BleStatus(communicator, StatusId.ACC_MIC_STAT, Params.ExposureMode)
         """Microphone Accessory status."""
 
         self.digital_zoom: BleStatus = BleStatus(communicator, StatusId.DIGITAL_ZOOM, Int8ub)
         """	Digital Zoom level (percent)."""
 
-        self.wireless_band: BleStatus = BleStatus(
-            communicator, StatusId.WIRELESS_BAND, build_enum_adapter(Params.WifiBand)
-        )
+        self.wireless_band: BleStatus = BleStatus(communicator, StatusId.WIRELESS_BAND, Params.WifiBand)
         """Wireless Band."""
 
         self.dig_zoom_active: BleStatus = BleStatus(communicator, StatusId.DIG_ZOOM_ACTIVE, Flag)
@@ -1006,9 +1054,7 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         self.first_time: BleStatus = BleStatus(communicator, StatusId.FIRST_TIME, Flag)
         """Is the camera currently in First Time Use (FTU) UI flow?"""
 
-        self.sec_sd_stat: BleStatus = BleStatus(
-            communicator, StatusId.SEC_SD_STAT, build_enum_adapter(Params.SDStatus)
-        )
+        self.sec_sd_stat: BleStatus = BleStatus(communicator, StatusId.SEC_SD_STAT, Params.SDStatus)
         """Secondary Storage Status (exclusive to Superbank)."""
 
         self.band_5ghz_avail: BleStatus = BleStatus(communicator, StatusId.BAND_5GHZ_AVAIL, Flag)
@@ -1023,30 +1069,22 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         self.video_low_temp: BleStatus = BleStatus(communicator, StatusId.VIDEO_LOW_TEMP, Flag)
         """Is the camera getting too cold to continue recording?"""
 
-        self.orientation: BleStatus = BleStatus(
-            communicator, StatusId.ORIENTATION, build_enum_adapter(Params.Orientation)
-        )
+        self.orientation: BleStatus = BleStatus(communicator, StatusId.ORIENTATION, Params.Orientation)
         """The rotational orientation of the camera."""
 
-        self.thermal_mit_mode: BleStatus = BleStatus(
-            communicator, StatusId.DEPRECATED_92, DeprecatedAdapter(Flag)
-        )
+        self.thermal_mit_mode: BleStatus = BleStatus(communicator, StatusId.DEPRECATED_92, DeprecatedAdapter())
         """This status is deprecated."""
 
         self.zoom_encoding: BleStatus = BleStatus(communicator, StatusId.ZOOM_ENCODING, Flag)
         """Is this camera capable of zooming while encoding (static value based on model, not settings)?"""
 
-        self.flatmode_id: BleStatus = BleStatus(
-            communicator, StatusId.FLATMODE_ID, build_enum_adapter(Params.Flatmode)
-        )
+        self.flatmode_id: BleStatus = BleStatus(communicator, StatusId.FLATMODE_ID, Params.Flatmode)
         """Current flatmode ID."""
 
         self.logs_ready: BleStatus = BleStatus(communicator, StatusId.LOGS_READY, Flag)
         """	Are system logs ready to be downloaded?"""
 
-        self.deprecated_92: BleStatus = BleStatus(
-            communicator, StatusId.DEPRECATED_92, DeprecatedAdapter(Flag)
-        )
+        self.deprecated_92: BleStatus = BleStatus(communicator, StatusId.DEPRECATED_92, DeprecatedAdapter())
         """This status is deprecated."""
 
         self.video_presets: BleStatus = BleStatus(communicator, StatusId.VIDEO_PRESETS, Int32ub)
@@ -1077,14 +1115,12 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         """Is Capture Delay currently active (i.e. counting down)?"""
 
         self.media_mod_mic_stat: BleStatus = BleStatus(
-            communicator,
-            StatusId.MEDIA_MOD_MIC_STAT,
-            build_enum_adapter(Params.MediaModMicStatus),
+            communicator, StatusId.MEDIA_MOD_MIC_STAT, Params.MediaModMicStatus
         )
         """Media mod State."""
 
         self.timewarp_speed_ramp: BleStatus = BleStatus(
-            communicator, StatusId.TIMEWARP_SPEED_RAMP, build_enum_adapter(Params.TimeWarpSpeed)
+            communicator, StatusId.TIMEWARP_SPEED_RAMP, Params.TimeWarpSpeed
         )
         """Time Warp Speed."""
 
@@ -1092,7 +1128,7 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         """Is the system's Linux core active?"""
 
         self.camera_lens_type: BleStatus = BleStatus(
-            communicator, StatusId.CAMERA_LENS_TYPE, build_enum_adapter(Params.MaxLensMode)
+            communicator, StatusId.CAMERA_LENS_TYPE, Params.MaxLensMode
         )
         """Camera lens type (reflects changes to setting 162)."""
 
@@ -1109,7 +1145,7 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         """Is the camera in the process of creating a custom preset?"""
 
         self.media_mod_stat: BleStatus = BleStatus(
-            communicator, StatusId.MEDIA_MOD_STAT, build_enum_adapter(Params.MediaModStatus)
+            communicator, StatusId.MEDIA_MOD_STAT, Params.MediaModStatus
         )
         """Media Mode Status (bitmasked)."""
 
@@ -1123,9 +1159,7 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         """Number of sdcard write speed errors since device booted"""
 
         self.camera_control: BleStatus = BleStatus(
-            communicator,
-            StatusId.CAMERA_CONTROL,
-            build_enum_adapter(Params.CameraControlStatus),
+            communicator, StatusId.CAMERA_CONTROL, Params.CameraControlStatus
         )
         """Camera control status ID"""
 
@@ -1135,7 +1169,7 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         self.control_allowed_over_usb: BleStatus = BleStatus(communicator, StatusId.CONTROL_OVER_USB, Flag)
         """Is control allowed over USB?"""
 
-        self.total_sd_space_kb: BleStatus = BleStatus(communicator, StatusId.TOTAL_SD_SPACE_KB, Int8ub)
+        self.total_sd_space_kb: BleStatus = BleStatus(communicator, StatusId.TOTAL_SD_SPACE_KB, Int32ub)
         """Total space taken up on the SD card in kilobytes"""
 
         super().__init__(communicator)
@@ -1145,7 +1179,7 @@ class BleStatuses(Commands[BleStatus, StatusId]):
 class BleParserBuilders:
     """The collection of custom (i.e. not-construct) parsers and / or builders"""
 
-    class DateTime(CustomBytesParser, BytesBuilder):
+    class DateTime(BytesParser, BytesBuilder):
         """Handle local and non-local datetime parsing / building"""
 
         def build(
@@ -1185,3 +1219,23 @@ class BleParserBuilders:
                 if is_dst_tz
                 else dict(datetime=dt, tzone=Int16sb.parse(buf[7:9]), dst=bool(buf[9]))
             )
+
+    class MapKey(JsonParser):
+        """Map all matching keys using the input function"""
+
+        def __init__(self, key: str, func: Callable) -> None:
+            self.key = key
+            self.func = func
+            super().__init__()
+
+        def parse(self, data: dict) -> dict:
+            """Use the map key function to transform the dict
+
+            Args:
+                data (dict): input json
+
+            Returns:
+                dict: json with keys mapped
+            """
+            map_keys(data, self.key, self.func)
+            return data

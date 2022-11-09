@@ -3,8 +3,9 @@
 
 ORIGINAL_VERSION=$(strip $$(awk '/Current Version: /{print $$NF}' README.md))
 VERSION:=$(ORIGINAL_VERSION)
-BASE_URL:=''
-JEKYLL_CONFIG:=local
+# Default to public deployment. Anything else must be set at Make time
+HOST_URL:=https://gopro.github.io
+BASE_URL:=/OpenGoPro
 
 .PHONY: help
 help: ## Display this help which is generated from Make goal comments
@@ -14,37 +15,49 @@ help: ## Display this help which is generated from Make goal comments
 clean: ## Clean cached jekyll files
 	@echo "🧼 Cleaning jekyll artifacts..."
 	-@docker-compose down > /dev/null 2>&1
-	@rm -rf docs/_site docs/.jekyll-cache docs/.jekyll-metadata docs/tutorials/_demos
+	@rm -rf docs/_site docs/.jekyll-cache docs/.jekyll-metadata docs/tutorials/_demos docs/_conf-temp.yml
 
-.PHONY: prepare_demos
-prepare_demos: ## Copy demos into docs folder for Jekyll building and add front matter
+.PHONY: demos
+demos: ## Copy demos into docs folder for Jekyll building and add front matter
 	@echo "📚 Preparing demos..."
 	@tools/prepare_demos
 
+.PHONY: protos
+protos: ## Generate markdown documentation from protobuf files
+	@echo "📇 Building protobuf documentation..."
+	@MSYS_NO_PATHCONV=1 docker run --rm \
+		-v $$(pwd)/docs:/out \
+		-v $$(pwd)/protobuf:/protos \
+		pseudomuto/protoc-gen-doc --doc_opt=/out/_layouts/protobuf_markdown.tmpl,protos.md
+
+.PHONY: config
+config: # Create the jekyll config file specific to the site we are building
+	@echo "🛠️ Configuring Jekyll site ${HOST_URL}${BASE_URL}"
+	@echo "url: ${HOST_URL}" > ./docs/_config-temp.yml
+	@echo "baseurl: ${BASE_URL}" >> ./docs/_config-temp.yml
+
+.PHONY: prepare_jekyll
+prepare_jekyll: setup clean demos protos config
+
 .PHONY: build
-build: setup clean prepare_demos ## Build but do not serve the jekyll pages
+build: prepare_jekyll ## Build but do not serve the jekyll pages
 	@echo "🏗️ Building jekyll site..."
-	@JEKYLL_CONFIG=${JEKYLL_CONFIG} docker-compose run --rm jekyll bundle exec jekyll build --baseurl ${BASE_URL} --config _config.yml,_config-${JEKYLL_CONFIG}.yml
+	@docker-compose run --rm --service-ports --detach --name plant_uml plant_uml
+	@docker-compose run --rm jekyll bundle exec jekyll build --config _config.yml,_config-temp.yml
+	@docker kill plant_uml > /dev/null 2>&1
 
 .PHONY: serve
-serve: setup clean prepare_demos ## Serve the site locally at http://127.0.0.1:4998/
-	@echo "🚦 Serving the ${JEKYLL_CONFIG} site"
-	-@JEKYLL_CONFIG=${JEKYLL_CONFIG} docker-compose run --rm --service-ports jekyll
+serve: HOST_URL=http://localhost:4998/
+serve: BASE_URL=\"\"
+serve: prepare_jekyll ## Serve the site locally at http://localhost:4998/
+	@echo "🚦 Serving jekyll site..."
+	-@docker-compose up --force-recreate
 
 .PHONY: tests
-tests: JEKYLL_CONFIG=test
-tests: build ## Clean everything, build, then serve in order to check all links.
-	@echo; echo "🚦 Serving the test site"
-	@JEKYLL_CONFIG=${JEKYLL_CONFIG} docker-compose run --rm --service-ports --detach jekyll
-	@echo; echo "⏳ Waiting for server to be ready..."
-	@until curl http://127.0.0.1:4998 > /dev/null 2>&1; do \
-		:; \
-	done
-	@echo; echo "🔗 Checking links"
-	-@JEKYLL_CONFIG=${JEKYLL_CONFIG} docker-compose run -T --rm --service-ports linkchecker | tee link_results
-	@echo; echo "🧺 Parsing link checker results to remove server side problems..."; echo
-	@tools/parse_linkchecker_results link_results
-	@rm link_results
+tests: HOST_URL=http://jekyll:4998/
+tests: BASE_URL=\"\"
+tests: prepare_jekyll ## Clean everything, build, then run link checker.
+	@./tools/check_links
 
 .PHONY: version
 version: ## Update the Open GoPro version
@@ -56,19 +69,14 @@ version: ## Update the Open GoPro version
 	@make copyright
 
 .PHONY: copyright
-copyright: ## Check for missing copyrights everywhere and add them using the version from README.md
+copyright: ## Check for and add missing copyrights
 	@echo "©️ Verifying / adding copyrights..."
 	@./tools/copyright -i . $(ORIGINAL_VERSION)
 
 .PHONY: setup_docker
-setup_docker: ## Build the docker image
+setup_docker:
 	@echo "🐳 Setting up docker images..."
-	@JEKYLL_CONFIG=local docker-compose pull --quiet
+	@docker-compose pull
 
 .PHONY: setup
 setup: setup_docker ## Setup development environment
-
-.PHONY: publish
-publish: ## Publish the docker image (for internal use only)
-	@docker-compose build
-	@docker-compose push

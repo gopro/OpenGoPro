@@ -11,7 +11,7 @@ import uuid
 from pathlib import Path
 from enum import IntFlag, IntEnum
 from dataclasses import dataclass, asdict, InitVar
-from typing import Iterator, Generator, Mapping, Optional, no_type_check, Union, Final
+from typing import Iterator, Generator, Mapping, Optional, no_type_check, Union, Final, Any
 
 logger = logging.getLogger(__name__)
 
@@ -536,7 +536,8 @@ class UUIDs(metaclass=UUIDsMeta):
     Also functions as a dict to look up UUID's by str, int, or BleUUID
     """
 
-    def __new__(*_) -> UUIDs:  # noqa  # pylint: disable=no-method-argument
+    # pylint: disable=no-method-argument
+    def __new__(cls, *_: Any) -> UUIDs:  # noqa
         raise RuntimeError("This class shall not be instantiated")
 
     # GATT Identifiers

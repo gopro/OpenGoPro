@@ -24,16 +24,18 @@ class App(tk.Frame):
     TOOLBAR_HEIGHT = 25
     SPLASH_WIDTH = 1000
     SPLASH_HEIGHT = 500
+    FONT_SIZE = 12
 
     def __init__(self) -> None:
         self.loop = asyncio.get_event_loop()
         self.root = tk.Tk()
         self.style = ttk.Style(self.root)
         self.style.theme_use(THEME)
+        self.style.configure("Treeview", font=(None, App.FONT_SIZE), rowheight=int(App.FONT_SIZE * 3))
         tk.Frame.__init__(self, master=self.root, width=self.WIDTH, height=self.HEIGHT)
         self.root.title("Open GoPro")
         self.defaultFont = font.nametofont("TkDefaultFont")
-        self.defaultFont.configure(size=11)
+        self.defaultFont.configure(size=App.FONT_SIZE)
         self.views: list[views.View] = []
         self.create_models()
         self.create_controllers()

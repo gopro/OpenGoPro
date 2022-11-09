@@ -103,6 +103,27 @@ PRESET_GROUP_ID_TIMELAPSE_DUAL_LENS: EnumPresetGroup.ValueType
 PRESET_GROUP_ID_SPECIAL: EnumPresetGroup.ValueType
 global___EnumPresetGroup = EnumPresetGroup
 
+class _EnumPresetGroupIcon:
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: typing_extensions.TypeAlias = ValueType
+
+class _EnumPresetGroupIconEnumTypeWrapper(
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetGroupIcon.ValueType], builtins.type
+):
+    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    PRESET_GROUP_VIDEO_ICON_ID: _EnumPresetGroupIcon.ValueType
+    PRESET_GROUP_PHOTO_ICON_ID: _EnumPresetGroupIcon.ValueType
+    PRESET_GROUP_TIMELAPSE_ICON_ID: _EnumPresetGroupIcon.ValueType
+    PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID: _EnumPresetGroupIcon.ValueType
+
+class EnumPresetGroupIcon(_EnumPresetGroupIcon, metaclass=_EnumPresetGroupIconEnumTypeWrapper): ...
+
+PRESET_GROUP_VIDEO_ICON_ID: EnumPresetGroupIcon.ValueType
+PRESET_GROUP_PHOTO_ICON_ID: EnumPresetGroupIcon.ValueType
+PRESET_GROUP_TIMELAPSE_ICON_ID: EnumPresetGroupIcon.ValueType
+PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID: EnumPresetGroupIcon.ValueType
+global___EnumPresetGroupIcon = EnumPresetGroupIcon
+
 class _EnumPresetIcon:
     ValueType = typing.NewType("ValueType", builtins.int)
     V: typing_extensions.TypeAlias = ValueType
@@ -165,6 +186,7 @@ class _EnumPresetIconEnumTypeWrapper(
     PRESET_ICON_FULL_FRAME: _EnumPresetIcon.ValueType
     PRESET_ICON_TIMELAPSE_PHOTO: _EnumPresetIcon.ValueType
     PRESET_ICON_NIGHTLAPSE_PHOTO: _EnumPresetIcon.ValueType
+    PRESET_ICON_MAX: _EnumPresetIcon.ValueType
 
 class EnumPresetIcon(_EnumPresetIcon, metaclass=_EnumPresetIconEnumTypeWrapper): ...
 
@@ -222,6 +244,7 @@ PRESET_ICON_LIGHT_TRAIL: EnumPresetIcon.ValueType
 PRESET_ICON_FULL_FRAME: EnumPresetIcon.ValueType
 PRESET_ICON_TIMELAPSE_PHOTO: EnumPresetIcon.ValueType
 PRESET_ICON_NIGHTLAPSE_PHOTO: EnumPresetIcon.ValueType
+PRESET_ICON_MAX: EnumPresetIcon.ValueType
 global___EnumPresetIcon = EnumPresetIcon
 
 class _EnumPresetTitle:
@@ -289,10 +312,14 @@ class _EnumPresetTitleEnumTypeWrapper(
     PRESET_TITLE_SIMPLE_SUPER_PHOTO: _EnumPresetTitle.ValueType
     PRESET_TITLE_SIMPLE_NIGHT_PHOTO: _EnumPresetTitle.ValueType
     PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE: _EnumPresetTitle.ValueType
+    PRESET_TITLE_HIGHEST_QUALITY: _EnumPresetTitle.ValueType
+    PRESET_TITLE_EXTENDED_BATTERY: _EnumPresetTitle.ValueType
+    PRESET_TITLE_LONGEST_BATTERY: _EnumPresetTitle.ValueType
     PRESET_TITLE_STAR_TRAIL: _EnumPresetTitle.ValueType
     PRESET_TITLE_LIGHT_PAINTING: _EnumPresetTitle.ValueType
     PRESET_TITLE_LIGHT_TRAIL: _EnumPresetTitle.ValueType
     PRESET_TITLE_FULL_FRAME: _EnumPresetTitle.ValueType
+    PRESET_TITLE_MAX: _EnumPresetTitle.ValueType
 
 class EnumPresetTitle(_EnumPresetTitle, metaclass=_EnumPresetTitleEnumTypeWrapper): ...
 
@@ -353,10 +380,14 @@ PRESET_TITLE_SIMPLE_TIME_WARP: EnumPresetTitle.ValueType
 PRESET_TITLE_SIMPLE_SUPER_PHOTO: EnumPresetTitle.ValueType
 PRESET_TITLE_SIMPLE_NIGHT_PHOTO: EnumPresetTitle.ValueType
 PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE: EnumPresetTitle.ValueType
+PRESET_TITLE_HIGHEST_QUALITY: EnumPresetTitle.ValueType
+PRESET_TITLE_EXTENDED_BATTERY: EnumPresetTitle.ValueType
+PRESET_TITLE_LONGEST_BATTERY: EnumPresetTitle.ValueType
 PRESET_TITLE_STAR_TRAIL: EnumPresetTitle.ValueType
 PRESET_TITLE_LIGHT_PAINTING: EnumPresetTitle.ValueType
 PRESET_TITLE_LIGHT_TRAIL: EnumPresetTitle.ValueType
 PRESET_TITLE_FULL_FRAME: EnumPresetTitle.ValueType
+PRESET_TITLE_MAX: EnumPresetTitle.ValueType
 global___EnumPresetTitle = EnumPresetTitle
 
 class NotifyPresetStatus(google.protobuf.message.Message):
@@ -366,7 +397,8 @@ class NotifyPresetStatus(google.protobuf.message.Message):
     @property
     def preset_group_array(
         self,
-    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___PresetGroup]: ...
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___PresetGroup]:
+        """Array of Preset Groups"""
     def __init__(
         self, *, preset_group_array: collections.abc.Iterable[global___PresetGroup] | None = ...
     ) -> None: ...
@@ -388,18 +420,27 @@ class Preset(google.protobuf.message.Message):
     IS_MODIFIED_FIELD_NUMBER: builtins.int
     IS_FIXED_FIELD_NUMBER: builtins.int
     id: builtins.int
+    "Preset ID"
     mode: global___EnumFlatMode.ValueType
+    "Preset flatmode ID"
     title_id: global___EnumPresetTitle.ValueType
+    "Preset Title ID"
     title_number: builtins.int
+    "Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)"
     user_defined: builtins.bool
+    "Is the Preset custom/user-defined?"
     icon: global___EnumPresetIcon.ValueType
+    "Preset Icon ID"
 
     @property
     def setting_array(
         self,
-    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___PresetSetting]: ...
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___PresetSetting]:
+        """Array of settings associated with this Preset"""
     is_modified: builtins.bool
+    "Has Preset been modified from factory"
     is_fixed: builtins.bool
+    "Is this Preset mutable?"
 
     def __init__(
         self,
@@ -466,28 +507,38 @@ class PresetGroup(google.protobuf.message.Message):
     ID_FIELD_NUMBER: builtins.int
     PRESET_ARRAY_FIELD_NUMBER: builtins.int
     CAN_ADD_PRESET_FIELD_NUMBER: builtins.int
+    ICON_FIELD_NUMBER: builtins.int
     id: global___EnumPresetGroup.ValueType
+    "Preset Group ID"
 
     @property
     def preset_array(
         self,
-    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Preset]: ...
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Preset]:
+        """Array of Presets contained in this Preset Group"""
     can_add_preset: builtins.bool
+    "Is there room in the group to add additional Presets?"
+    icon: global___EnumPresetGroupIcon.ValueType
+    "The icon to display for this preset group"
 
     def __init__(
         self,
         *,
         id: global___EnumPresetGroup.ValueType | None = ...,
         preset_array: collections.abc.Iterable[global___Preset] | None = ...,
-        can_add_preset: builtins.bool | None = ...
+        can_add_preset: builtins.bool | None = ...,
+        icon: global___EnumPresetGroupIcon.ValueType | None = ...
     ) -> None: ...
     def HasField(
-        self, field_name: typing_extensions.Literal["can_add_preset", b"can_add_preset", "id", b"id"]
+        self,
+        field_name: typing_extensions.Literal[
+            "can_add_preset", b"can_add_preset", "icon", b"icon", "id", b"id"
+        ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
-            "can_add_preset", b"can_add_preset", "id", b"id", "preset_array", b"preset_array"
+            "can_add_preset", b"can_add_preset", "icon", b"icon", "id", b"id", "preset_array", b"preset_array"
         ],
     ) -> None: ...
 
@@ -499,8 +550,11 @@ class PresetSetting(google.protobuf.message.Message):
     VALUE_FIELD_NUMBER: builtins.int
     IS_CAPTION_FIELD_NUMBER: builtins.int
     id: builtins.int
+    "Setting ID"
     value: builtins.int
+    "Setting value"
     is_caption: builtins.bool
+    'Does this setting appear on the Preset "pill" in the camera UI?'
 
     def __init__(
         self,

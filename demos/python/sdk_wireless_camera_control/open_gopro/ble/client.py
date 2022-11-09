@@ -80,10 +80,9 @@ class BleClient(Generic[BleHandle, BleDevice]):
             try:
                 self._device = self._controller.scan(self._target, timeout, self._service_uuids)
                 return
-            except FailedToFindDevice as e:
+            except FailedToFindDevice:
                 logger.warning(f"Failed to find a device in {timeout} seconds. Retrying #{retry}")
-                if retry == retries - 1:
-                    raise FailedToFindDevice from e
+        raise FailedToFindDevice
 
     def open(self, timeout: int = 10, retries: int = 5) -> None:
         """Open the client resource so that it is ready to send and receive data.
@@ -97,7 +96,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
         """
         # If we need we need to find the device to connect
         if isinstance(self._target, Pattern):
-            self._find_device()
+            self._find_device(timeout, retries)
         # Otherwise we already have it
         else:
             self._device = self._target

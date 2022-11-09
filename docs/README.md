@@ -75,7 +75,7 @@ minimal mistakes theme, the various Ruby gem plugins, or custom plugins in this 
 
 The source for the guide is in [contribution.md](contribution.md).
 
-To view its output, serve the site, then go to [127.0.0.1:4998/contribution](127.0.0.1:4998/contribution)
+To view its output, serve the site, then go to [localhost:4998/contribution](localhost:4998/contribution)
 
 ## Testing
 

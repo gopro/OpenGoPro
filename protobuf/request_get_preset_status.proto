@@ -1,5 +1,5 @@
 /* request_get_preset_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue Sep 13 00:39:25 UTC 2022 */
+/* This copyright was auto-generated on Mon Oct 10 21:30:02 UTC 2022 */
 
 /*
 Defines the structure of protobuf message for obtaining preset status
@@ -10,13 +10,12 @@ package open_gopro;
 
 
 enum EnumRegisterPresetStatus {
-      REGISTER_PRESET_STATUS_PRESET              = 1;
-      REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY  = 2;
-  }
-
+    REGISTER_PRESET_STATUS_PRESET             = 1;
+    REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY = 2;
+}
 
 message RequestGetPresetStatus {
-    repeated EnumRegisterPresetStatus   register_preset_status = 1;
-    repeated EnumRegisterPresetStatus   unregister_preset_status = 2;
+    repeated EnumRegisterPresetStatus register_preset_status   = 1; // Array of Preset statuses to be notified about
+    repeated EnumRegisterPresetStatus unregister_preset_status = 2; // Array of Preset statuses to stop being notified about
 }
 

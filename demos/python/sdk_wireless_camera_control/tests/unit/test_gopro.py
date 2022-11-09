@@ -114,7 +114,7 @@ def test_keep_alive(gopro_client: GoPro):
 
 def test_get_param_values_by_id(gopro_client: GoPro):
     vector = list(Params.Resolution)[0]
-    assert GoProResp._get_setting_possibilities(SettingId.RESOLUTION)(vector.value) == vector
+    assert GoProResp._get_query_container(SettingId.RESOLUTION)(vector.value) == vector
 
 
 # def test_notification_handler(gopro_client: GoPro):

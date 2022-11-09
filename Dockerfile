@@ -6,7 +6,7 @@ FROM ruby:2.7-alpine
 WORKDIR /site
 
 RUN apk add --no-cache build-base
-RUN apk add --no-cache gcc bash git
+RUN apk add --no-cache bash curl
 
 # Install bundler
 RUN gem install bundler

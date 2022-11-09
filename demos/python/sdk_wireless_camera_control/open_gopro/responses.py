@@ -4,6 +4,7 @@
 """Any responses that are returned from GoPro commands."""
 
 from __future__ import annotations
+from abc import abstractmethod, ABC
 import enum
 import logging
 from collections import defaultdict
@@ -19,6 +20,8 @@ from typing import (
     ClassVar,
     Protocol,
     TypeVar,
+    Generic,
+    Callable,
 )
 
 import requests
@@ -49,38 +52,71 @@ GEN_LEN_MASK: Final = 0b00011111
 EXT_13_BYTE0_MASK: Final = 0b00011111
 
 T_co = TypeVar("T_co", covariant=True)
+T = TypeVar("T")
 
 
-class BytesParser(Protocol[T_co]):
-    """Base bytes parser protocol definition"""
+class Parser(ABC, Generic[T, T_co]):
+    """Base Parser Interface
 
-    def parse(self, data: bytes) -> T_co:
-        """Parse byte data into desired object
+    Supports addition to other Parser's
+    """
 
-        # noqa: DAR202
+    def __init__(self) -> None:
+        self._parsers: list[Callable] = [self.parse]
+
+    def _combined_parse(self, data: T) -> T_co:
+        """Parse data using all parsers serially
 
         Args:
-            data (bytes): data to parse
+            data (T): input data to parse
 
         Returns:
-            T_co: parsed object
+            T_co: parsed output
         """
+        response = self._parsers[0](data)
+        for parser in self._parsers[1:]:
+            response = parser(response)
+        return response
+
+    @abstractmethod
+    def parse(self, data: T) -> T_co:  # pylint: disable=method-hidden
+        """Initial (and potentially only) parser method
+
+        Args:
+            data (T): input data to parse
 
 
-class CustomBytesParser(BytesParser[dict]):
+
+        Returns:
+            T_co: parsed output
+        """
+        raise NotImplementedError
+
+    def __add__(self, other: Parser) -> Parser:
+        if not isinstance(other, Parser):
+            raise TypeError("Can only add Parser's")
+        self._parsers.append(other.parse)
+        self.parse = self._combined_parse  # type: ignore
+        return self
+
+    def __radd__(self, other: Parser) -> Parser:
+        return other.__add__(self)
+
+
+class BytesParser(Parser[bytes, T_co]):
     """Bytes parser protocol to be used by non-construct parsers"""
 
-    def parse(self, data: bytes) -> dict:
-        """Parse byte data into dict
-
-        # noqa: DAR202
+    @abstractmethod
+    def parse(self, data: bytes) -> T_co:
+        """Parse input bytes to output
 
         Args:
-            data (bytes): data to parse
+            data (bytes): data to parsed
 
         Returns:
-            dict: parsed dict
+            T_co: parsed output
         """
+        raise NotImplementedError
 
 
 class BytesBuilder(Protocol):
@@ -102,17 +138,17 @@ class BytesBuilder(Protocol):
 class BytesParserBuilder(BytesParser[T_co], BytesBuilder):
     """Class capable of both building / parsing bytes to / from object"""
 
+    @abstractmethod
     def parse(self, data: bytes) -> T_co:
-        """Parse byte data into dict
-
-        # noqa: DAR202
+        """Parse input bytes to output
 
         Args:
-            data (bytes): data to parse
+            data (bytes): data to parsed
 
         Returns:
-            T_co: parsed dict
+            T_co: parsed output
         """
+        raise NotImplementedError
 
     def build(self, obj: Any) -> bytes:
         """Build bytestream from object
@@ -127,25 +163,20 @@ class BytesParserBuilder(BytesParser[T_co], BytesBuilder):
         """
 
 
-class JsonParser(Protocol):
-    """Protocol definition for a JSON parser"""
+class JsonParser(Parser[dict, dict]):
+    """The JSON Parser interface"""
 
-    @classmethod
-    def parse(cls, json: dict[str, Any]) -> dict:
-        """Parse JSON into a proprietary dict
-
-        # noqa: DAR202
+    @abstractmethod
+    def parse(self, data: dict) -> dict:
+        """Parse input json to modified output json
 
         Args:
-            json (dict[str, Any]): input JSON
+            data (dict): data to parsed
 
         Returns:
-            dict: output parsed dict
+            dict: parsed output
         """
-
-
-ParserType = Union[BytesParser, JsonParser]
-ParserMapType = dict[ResponseType, ParserType]
+        raise NotImplementedError
 
 
 class Header(enum.Enum):
@@ -187,7 +218,7 @@ class GoProResp:
     >>> print(response.data)
     {
         "status": "SUCCESS",
-        "id": "GoProUUIDs.CQ_QUERY_RESP.QueryCmdId.GET_SETTING_VAL",
+        "id": "QueryCmdId.GET_SETTING_VAL",
         "SettingId.RESOLUTION": [
             "RES_1080"
         ]
@@ -195,7 +226,7 @@ class GoProResp:
     """
 
     _feature_action_id_map: ClassVar[dict[FeatureId, list[ActionId]]] = defaultdict(list)
-    _global_parsers: ClassVar[ParserMapType] = {}
+    _global_parsers: ClassVar[dict[ResponseType, Parser]] = {}
 
     class _State(enum.Enum):
         """Describes the state of the GoProResp."""
@@ -214,7 +245,7 @@ class GoProResp:
     def __init__(
         self,
         meta: list[ResponseType],
-        parser: Optional[ParserType] = None,
+        parser: Optional[Parser] = None,
         status: ErrorCode = ErrorCode.SUCCESS,
         raw_packet: Optional[Union[bytearray, dict[str, Any]]] = None,
     ) -> None:
@@ -222,7 +253,7 @@ class GoProResp:
 
         Args:
             meta (list[ResponseType]): A list of all information known about the response.
-            parser (Optional[ParserType]): Optional parser. If not passed, parser will be found from global
+            parser (Optional[Parser]): Optional parser. If not passed, parser will be found from global
                 parsers
             status (ErrorCode): A status if known at time of instantiation. Defaults to ErrorCode.SUCCESS.
             raw_packet (Optional[Union[bytearray, dict[str, Any]]]): The unparsed input if known at time of
@@ -324,45 +355,39 @@ class GoProResp:
         cls._feature_action_id_map[feature_id].append(action_id)
 
     @classmethod
-    def _add_global_parser(cls, identifier: ResponseType, parser: BytesParser) -> None:
+    def _add_global_parser(cls, identifier: ResponseType, parser: Parser) -> None:
         """Add a global parser that can be accessed by this class's class methods
 
         Args:
             identifier (ResponseType): identifier to add parser for
-            parser (BytesParser): parser to add
+            parser (Parser): parser to add
         """
         cls._global_parsers[identifier] = parser
 
     @classmethod
-    def _get_setting_possibilities(cls, identifier: SettingId) -> Optional[type[GoProEnum]]:
-        """Given a setting ID, attempt to get enum container of its possible values.
+    def _get_query_container(cls, identifier: Union[SettingId, StatusId]) -> Optional[Callable]:
+        """Attempt to get a callable that will translate an input value to the ID-appropriate value.
 
-        For example, get_param_values_from_id(SettingId.Resolution) will return
+        For example, _get_query_container(SettingId.RESOLUTION) will return
         :py:class:`open_gopro.api.params.Resolution`
 
-        Note! Not all setting ID's are currently parsed so None will be returned if the container does not exist
+        As another example, _get_query_container(StatusId.TURBO_MODE) will return bool()
 
-        Note! This is a helper function since this same functionality can be accomplished with the parser
-        returned from :py:meth:`open_gopro.responses.GoProResp._get_global_parser`
+        Note! Not all ID's are currently parsed so None will be returned if the container does not exist
 
         Args:
-            identifier (SettingId): identifier to find container for
-
-        Raises:
-            ValueError: Attempted to get param values from non-param ID
+            identifier (Union[SettingId, StatusId]): identifier to find container for
 
         Returns:
-            type[GoProEnum]: container if found else None
+            Callable: container if found else None
         """
         try:
-            return cls._global_parsers[identifier].container  # type: ignore
+            return lambda x, pb=cls._global_parsers[identifier]: pb.parse(pb.build(x))
         except KeyError:
             return None
-        except AttributeError as e:
-            raise ValueError(f"Can only get possibilities for setting ID's, not {identifier}") from e
 
     @classmethod
-    def _get_global_parser(cls, identifier: ResponseType) -> Optional[ParserType]:
+    def _get_global_parser(cls, identifier: ResponseType) -> Optional[Parser]:
         """Get a globally defined parser for the given ID.
 
         Currently, only BLE uses globally defined parsers
@@ -674,10 +699,10 @@ class GoProResp:
                                 QueryCmdId.SETTING_CAPABILITY_PUSH,
                             ]:
                                 # Parse using parser from global map and append
-                                self.data[param_id].append(parser.parse(param_val))  # type: ignore
+                                self.data[param_id].append(parser.parse(param_val))
                             else:
                                 # Parse using parser from map and set
-                                self.data[param_id] = parser.parse(param_val)  # type: ignore
+                                self.data[param_id] = parser.parse(param_val)
                         except ValueError:
                             # This is the case where we receive a value that is not defined in our params.
                             # This shouldn't happen and means the documentation needs to be updated. However, it
@@ -696,7 +721,7 @@ class GoProResp:
                         raise ResponseParseError(str(self.identifier), self._raw_packet, msg=error_msg)
                     # Parse payload if a parser was found.
                     if parser:
-                        self.data = parser.parse(buf)  # type: ignore
+                        self.data = parser.parse(buf)
                     # Attempt to determine and / or extract status (we already got command status above)
                     if self.is_direct_read and len(self._raw_packet):
                         # Assume success on direct reads if there was any data
@@ -718,7 +743,7 @@ class GoProResp:
         # Is this an HTTP response?
         elif isinstance(self._raw_packet, dict):
             # Is there a parser for this? Most of them do not have one yet.
-            self.data = self._parser.parse(self._raw_packet) if self._parser else self._raw_packet  # type: ignore
+            self.data = self._parser.parse(self._raw_packet) if self._parser else self._raw_packet
 
         # This should never happen
         else:

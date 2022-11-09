@@ -339,7 +339,7 @@ class FlattenPatch:
         return self.value
 
 
-good_response = GoProResp(meta=[], status=ErrorCode.SUCCESS)
+good_response = GoProResp(meta=["test_response"], status=ErrorCode.SUCCESS)
 
 _test_response_id = CmdId.SET_SHUTTER
 

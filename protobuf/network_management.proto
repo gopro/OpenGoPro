@@ -1,5 +1,5 @@
 /* network_management.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue Sep 13 00:39:25 UTC 2022 */
+/* This copyright was auto-generated on Mon Oct 10 21:30:02 UTC 2022 */
 
 /*
 Defines the structure of protobuf message for network management
@@ -9,55 +9,120 @@ syntax="proto2";
 package open_gopro;
 import "response_generic.proto";
 
-
-enum EnumDeprecated{
+enum EnumNetworkOwner {
     DEPRECATED_1 = 0x00;
     DEPRECATED_2 = 0x01;
     DEPRECATED_3 = 0x02;
-    DEPRECATED_2_OR_CLOUD = 0x03;
+    DEPRECATED_4 = 0x03;
     DEPRECATED_5 = 0x04;
     DEPRECATED_6 = 0x08;
     DEPRECATED_7 = 0x10;
 }
 
-
-enum EnumProvisioning{
-    PROVISIONING_UNKNOWN = 0;
-    PROVISIONING_NEVER_STARTED = 1;
-    PROVISIONING_STARTED = 2;
-    PROVISIONING_ABORTED_BY_SYSTEM = 3;
-    PROVISIONING_CANCELLED_BY_USER = 4;
-    PROVISIONING_SUCCESS_NEW_AP = 5;
-    PROVISIONING_SUCCESS_OLD_AP = 6;
+enum EnumProvisioning {
+    PROVISIONING_UNKNOWN                   = 0;
+    PROVISIONING_NEVER_STARTED             = 1;
+    PROVISIONING_STARTED                   = 2;
+    PROVISIONING_ABORTED_BY_SYSTEM         = 3;
+    PROVISIONING_CANCELLED_BY_USER         = 4;
+    PROVISIONING_SUCCESS_NEW_AP            = 5;
+    PROVISIONING_SUCCESS_OLD_AP            = 6;
     PROVISIONING_ERROR_FAILED_TO_ASSOCIATE = 7;
-    PROVISIONING_ERROR_PASSWORD_AUTH = 8;
-    PROVISIONING_ERROR_EULA_BLOCKING = 9;
-    PROVISIONING_ERROR_NO_INTERNET = 10;
-    PROVISIONING_ERROR_UNSUPPORTED_TYPE = 11;
+    PROVISIONING_ERROR_PASSWORD_AUTH       = 8;
+    PROVISIONING_ERROR_EULA_BLOCKING       = 9;
+    PROVISIONING_ERROR_NO_INTERNET         = 10;
+    PROVISIONING_ERROR_UNSUPPORTED_TYPE    = 11;
 }
 
-
-message NotifProvisioningState{
-    required EnumProvisioning provisioning_state = 1;
+enum EnumScanning {
+    SCANNING_UNKNOWN           = 0;
+    SCANNING_NEVER_STARTED     = 1;
+    SCANNING_STARTED           = 2;
+    SCANNING_ABORTED_BY_SYSTEM = 3;
+    SCANNING_CANCELLED_BY_USER = 4;
+    SCANNING_SUCCESS           = 5;
 }
 
-
-message RequestConnectNew{
-    required string ssid = 1;
-    required string password = 2;
-    optional bytes static_ip = 3;
-    optional bytes gateway = 4;
-    optional bytes subnet = 5;
-    optional bytes dns_primary = 6;
-    optional bytes dns_secondary = 7;
-    optional bool set_to_least_preferred_ap = 8;
-    optional EnumDeprecated deprecated = 9;
+enum EnumScanEntryFlags {
+    SCAN_FLAG_OPEN             = 0x00;
+    SCAN_FLAG_AUTHENTICATED    = 0x01;
+    SCAN_FLAG_CONFIGURED       = 0x02;
+    SCAN_FLAG_BEST_SSID        = 0x04;
+    SCAN_FLAG_ASSOCIATED       = 0x08;
+    SCAN_FLAG_UNSUPPORTED_TYPE = 0x10;
+    DEPRECATED                 = 0x20;
 }
 
+message NotifProvisioningState {
+    required EnumProvisioning provisioning_state = 1; // Provisioning/connection state
+}
 
-message ResponseConnectNew{
-    required EnumResultGeneric result = 1;
-    required EnumProvisioning provisioning_state = 2;
-    required int32 timeout_seconds = 3;
+message NotifStartScanning {
+    required EnumScanning scanning_state        = 1; // Scanning state
+    optional int32        scan_id               = 2; // ID associated with scan results (included if scan was successful)
+    optional int32        total_entries         = 3; // Number of APs found during scan (included if scan was successful)
+    required int32        total_configured_ssid = 4; // Total count of camera's provisioned SSIDs
+}
+
+message RequestConnect {
+    required string           ssid          = 1; // AP SSID
+    optional EnumNetworkOwner owner_purpose = 2; // Deprecated
+}
+
+message RequestConnectNew {
+    required string           ssid                      = 1; // AP SSID
+    required string           password                  = 2; // AP password
+    optional bytes            static_ip                 = 3; // Static IP address
+    optional bytes            gateway                   = 4; // Gateway IP address
+    optional bytes            subnet                    = 5; // Subnet mask
+    optional bytes            dns_primary               = 6; // Primary DNS
+    optional bytes            dns_secondary             = 7; // Secondary DNS
+    optional bool             set_to_least_preferred_ap = 8; // Deprecated
+    optional EnumNetworkOwner owner_purpose             = 9; // Deprecated
+}
+
+message RequestGetApEntries {
+    required int32 start_index = 1; // Used for paging. 0 <= start_index < NotifStartScanning.total_entries
+    required int32 max_entries = 2; // Used for paging. Value must be < NotifStartScanning.total_entries
+    required int32 scan_id     = 3; // ID corresponding to a set of scan results (i.e.
+}
+
+message RequestReleaseNetwork {
+
+}
+
+message RequestStartScan {
+
+}
+
+message ResponseConnect {
+    required EnumResultGeneric result             = 1; // Generic pass/fail/error info
+    required EnumProvisioning  provisioning_state = 2; // Provisioning/connection state
+    required int32             timeout_seconds    = 3; // Network connection timeout (seconds)
+}
+
+message ResponseConnectNew {
+    required EnumResultGeneric result             = 1; // Status of Connect New request
+    required EnumProvisioning  provisioning_state = 2; // Current provisioning state of the network
+    required int32             timeout_seconds    = 3;
+}
+
+message ScanEntry {
+    required string           ssid                 = 1; // AP SSID
+    required int32            signal_strength_bars = 2; // Signal strength (3 bars: >-70 dBm; 2 bars: >-85 dBm; 1 bar: <=-85
+    required int32            signal_frequency_mhz = 4; // Signal frequency (MHz)
+    required int32            scan_entry_flags     = 5; // Bitmasked value from EnumScanEntryFlags
+    optional EnumNetworkOwner owner_purpose        = 6; // Deprecated
+}
+
+message ResponseGetApEntries {
+    required EnumResultGeneric result  = 1; // Generic pass/fail/error info
+    required int32             scan_id = 2; // ID associated with this batch of results
+    repeated ScanEntry         entries = 3; // Array containing details about discovered APs
+}
+
+message ResponseStartScanning {
+    required EnumResultGeneric result         = 1; // Generic pass/fail/error info
+    required EnumScanning      scanning_state = 2; // Scanning state
 }
 
