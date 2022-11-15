@@ -3,6 +3,13 @@
 
 """Top level API module definition"""
 
+# pylint: disable = wrong-import-position
+
+import sys
+
+if sys.version_info.major != 3 or not 9 <= sys.version_info.minor < 11:
+    raise RuntimeError("Python >= 3.9 and < 3.11 must be used")
+
 from .api import Api
 from .ble_commands import BleCommands, BleSettings, BleStatuses
 from .wifi_commands import WifiCommands, WifiSettings
