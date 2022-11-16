@@ -170,14 +170,20 @@ class GoPro(GoProInterface):
         ble_adapter = kwargs.get("ble_adapter", BleakWrapperController)
         wifi_adapter = kwargs.get("wifi_adapter", Wireless)
 
-        # Initialize GoPro Communication Client
-        super().__init__(
-            ble_controller=ble_adapter(self._handle_exception),
-            wifi_controller=wifi_adapter(wifi_interface, password=sudo_password) if enable_wifi else None,
-            disconnected_cb=self._disconnect_handler,
-            notification_cb=self._notification_handler,
-            target=target,
-        )
+        try:
+            # Initialize GoPro Communication Client
+            super().__init__(
+                ble_controller=ble_adapter(self._handle_exception),
+                wifi_controller=wifi_adapter(wifi_interface, password=sudo_password) if enable_wifi else None,
+                disconnected_cb=self._disconnect_handler,
+                notification_cb=self._notification_handler,
+                target=target,
+            )
+        except GpException.InterfaceConfigFailure as e:
+            raise GpException.InterfaceConfigFailure(
+                str(e)
+                + "\nIf there is an available Wifi interface, try passing it manually with the 'wifi_interface' argument."
+            ) from e
 
         # We currently only support version 2.0
         self._api = Api(self)

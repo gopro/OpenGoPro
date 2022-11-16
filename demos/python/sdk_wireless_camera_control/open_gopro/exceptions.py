@@ -61,7 +61,7 @@ class ConnectFailed(GoProError):
 
 
 class ConnectionTerminated(GoProError):
-    """A connection that was previously established has termianted."""
+    """A connection that was previously established has terminated."""
 
     def __init__(self, message: str) -> None:
         super().__init__(f"Connection terminated: {message}")
@@ -72,6 +72,10 @@ class ResponseTimeout(GoProError):
 
     def __init__(self, timeout: float) -> None:
         super().__init__(f"Response timeout occurred of {timeout} seconds")
+
+
+class InterfaceConfigFailure(GoProError):
+    """An error has occurred while setting up the communication interface"""
 
 
 ExceptionHandler = Callable[[Exception], None]

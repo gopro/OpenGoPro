@@ -150,6 +150,7 @@ class BytesParserBuilder(BytesParser[T_co], BytesBuilder):
         """
         raise NotImplementedError
 
+    @abstractmethod
     def build(self, obj: Any) -> bytes:
         """Build bytestream from object
 
