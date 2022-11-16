@@ -8,6 +8,8 @@ from abc import ABC, abstractmethod
 from enum import IntEnum, auto
 from typing import Optional
 
+from open_gopro.exceptions import InterfaceConfigFailure
+
 logger = logging.getLogger(__name__)
 
 
@@ -94,23 +96,28 @@ class WifiController(ABC):
             interface (Optional[str]): interface (or None to auto-detect)
 
         Raises:
-            Exception: Requested interface does not exist
-            Exception: Not able to automatically detect any interfaces
+            InterfaceConfigFailure: Requested interface does not exist or not able to automatically detect
+                any interfaces
         """
         detected_interfaces = self.available_interfaces()
         if interface:
             if interface in detected_interfaces:
                 self._interface = interface
             else:
-                raise Exception(
+                raise InterfaceConfigFailure(
                     f"Requested WiFi interface [{interface}] not found among [{', '.join(detected_interfaces)}]"
                 )
         else:
             if detected_interfaces:
                 self._interface = detected_interfaces[0]
             else:
-                raise Exception(
-                    "Can't auto-assign Wifi interface: no interfaces found. Please configure manually."
+                raise InterfaceConfigFailure(
+                    """
+Can't auto-assign Wifi interface because no suitable interface was found.
+Is there an available Wifi interface on this computer? To verify this, try:
+    - MacOS: networksetup -listallhardwareports
+    - Linux: nmcli dev
+    - Windows: netsh wlan show interfaces"""
                 )
 
     @abstractmethod

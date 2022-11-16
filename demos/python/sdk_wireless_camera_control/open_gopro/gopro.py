@@ -143,6 +143,12 @@ class GoPro(GoProInterface):
         exception_cb (ExceptionHandler, Optional): callback to be notified when exception occurs in a thread
             besides main. This is useful if you anticipate unexpected BLE connection drops.
         kwargs (Dict): additional parameters for internal use / testing
+
+    Raises:
+        InterfaceConfigFailure: In order to communicate via Wifi, there must be an available
+            Wifi Interface. By default during initialization, the Wifi driver will attempt to automatically
+            discover such an interface. If it does not find any, it will raise this exception. Note that
+            the interface can also be specified manually with the 'wifi_interface' argument.
     """
 
     _base_url = "http://10.5.5.9:8080/"  #: Hard-coded Open GoPro base URL
@@ -170,14 +176,20 @@ class GoPro(GoProInterface):
         ble_adapter = kwargs.get("ble_adapter", BleakWrapperController)
         wifi_adapter = kwargs.get("wifi_adapter", Wireless)
 
-        # Initialize GoPro Communication Client
-        super().__init__(
-            ble_controller=ble_adapter(self._handle_exception),
-            wifi_controller=wifi_adapter(wifi_interface, password=sudo_password) if enable_wifi else None,
-            disconnected_cb=self._disconnect_handler,
-            notification_cb=self._notification_handler,
-            target=target,
-        )
+        try:
+            # Initialize GoPro Communication Client
+            super().__init__(
+                ble_controller=ble_adapter(self._handle_exception),
+                wifi_controller=wifi_adapter(wifi_interface, password=sudo_password) if enable_wifi else None,
+                disconnected_cb=self._disconnect_handler,
+                notification_cb=self._notification_handler,
+                target=target,
+            )
+        except GpException.InterfaceConfigFailure as e:
+            logger.error(
+                "Could not find a suitable Wifi Interface. If there is an available Wifi interface, try passing it manually with the 'wifi_interface' argument."
+            )
+            raise e
 
         # We currently only support version 2.0
         self._api = Api(self)

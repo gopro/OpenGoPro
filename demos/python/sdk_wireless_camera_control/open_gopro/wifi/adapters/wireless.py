@@ -112,7 +112,7 @@ class Wireless(WifiController):
         raise Exception("Unable to find compatible wireless driver.")
 
     @pass_through_to_driver
-    def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
+    def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:  # type: ignore
         """Connect to a network.
 
         # noqa: DAR202
@@ -127,7 +127,7 @@ class Wireless(WifiController):
         """
 
     @pass_through_to_driver
-    def disconnect(self) -> bool:
+    def disconnect(self) -> bool:  # type: ignore
         """Disconnect from a network.
 
         # noqa: DAR202
@@ -137,7 +137,7 @@ class Wireless(WifiController):
         """
 
     @pass_through_to_driver
-    def current(self) -> tuple[Optional[str], SsidState]:
+    def current(self) -> tuple[Optional[str], SsidState]:  # type: ignore
         """Return the SSID and state of the current network.
 
         # noqa: DAR202
@@ -148,7 +148,7 @@ class Wireless(WifiController):
         """
 
     @pass_through_to_driver
-    def available_interfaces(self) -> list[str]:
+    def available_interfaces(self) -> list[str]:  # type: ignore
         """Return a list of the available Wifi interfaces
 
         # noqa: DAR202
@@ -158,7 +158,7 @@ class Wireless(WifiController):
         """
 
     @pass_through_to_driver
-    def power(self, power: bool) -> bool:
+    def power(self, power: bool) -> bool:  # type: ignore
         """Enable / disable the wireless driver.
 
         # noqa: DAR202
@@ -167,7 +167,7 @@ class Wireless(WifiController):
             power (bool): Enable if True. Disable if False.
 
         Returns:
-            bool: True if successful, False otherrweise
+            bool: True if successful, False otherwise
         """
 
     @property
