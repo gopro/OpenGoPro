@@ -516,6 +516,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#open_gopro.exceptions.FailedToFindDevice"><code class="docutils literal notranslate"><span class="pre">FailedToFindDevice</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#open_gopro.exceptions.GoProError"><code class="docutils literal notranslate"><span class="pre">GoProError</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#open_gopro.exceptions.GoProNotInitialized"><code class="docutils literal notranslate"><span class="pre">GoProNotInitialized</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#open_gopro.exceptions.InterfaceConfigFailure"><code class="docutils literal notranslate"><span class="pre">InterfaceConfigFailure</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#open_gopro.exceptions.InvalidConfiguration"><code class="docutils literal notranslate"><span class="pre">InvalidConfiguration</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#open_gopro.exceptions.InvalidOpenGoProVersion"><code class="docutils literal notranslate"><span class="pre">InvalidOpenGoProVersion</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#open_gopro.exceptions.ResponseParseError"><code class="docutils literal notranslate"><span class="pre">ResponseParseError</span></code></a></li>
@@ -552,8 +553,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Interfaces</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Interfaces</li>
       <li class="wy-breadcrumbs-aside">
               <!-- User defined GitHub URL -->
               <a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control" class="fa fa-github"> Edit on GitHub</a>
@@ -639,6 +640,12 @@ is needed which should only happen on Nix systems.</p></li>
 besides main. This is useful if you anticipate unexpected BLE connection drops.</p></li>
 <li><p><strong>kwargs</strong> (<em>Dict</em>) – additional parameters for internal use / testing</p></li>
 </ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.exceptions.InterfaceConfigFailure" title="open_gopro.exceptions.InterfaceConfigFailure"><strong>InterfaceConfigFailure</strong></a> – In order to communicate via Wifi, there must be an available
+    Wifi Interface. By default during initialization, the Wifi driver will attempt to automatically
+    discover such an interface. If it does not find any, it will raise this exception. Note that
+    the interface can also be specified manually with the ‘wifi_interface’ argument.</p>
 </dd>
 </dl>
 <dl class="py property">
@@ -6286,7 +6293,7 @@ For example, first send the command and store the response:</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="open_gopro.exceptions.ConnectionTerminated">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConnectionTerminated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.exceptions.ConnectionTerminated" title="Permalink to this definition"></a></dt>
-<dd><p>A connection that was previously established has termianted.</p>
+<dd><p>A connection that was previously established has terminated.</p>
 </dd></dl>
 
 <dl class="py data">
@@ -6312,6 +6319,12 @@ For example, first send the command and store the response:</p>
 <dt class="sig sig-object py" id="open_gopro.exceptions.GoProNotInitialized">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GoProNotInitialized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.exceptions.GoProNotInitialized" title="Permalink to this definition"></a></dt>
 <dd><p>A command was attempted without waiting for the GoPro instance to initialize.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="open_gopro.exceptions.InterfaceConfigFailure">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InterfaceConfigFailure</span></span><a class="headerlink" href="#open_gopro.exceptions.InterfaceConfigFailure" title="Permalink to this definition"></a></dt>
+<dd><p>An error has occurred while setting up the communication interface</p>
 </dd></dl>
 
 <dl class="py exception">
