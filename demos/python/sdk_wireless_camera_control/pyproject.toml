@@ -72,7 +72,7 @@ nox = "=2022.8.7"
 nox-poetry = "=1.0.1"
 
 [tool.poe.tasks.unit_tests]
-cmd = "pytest tests/unit --cov-fail-under=70"
+cmd = "pytest tests/unit --cov-fail-under=60"
 help = "Run unit tests"
 
 [tool.poe.tasks.types]
