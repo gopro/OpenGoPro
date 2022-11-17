@@ -15,7 +15,7 @@ from typing import Optional, Literal
 
 from rich.console import Console
 
-from open_gopro import GoPro
+from open_gopro import WirelessGoPro
 from open_gopro.constants import StatusId
 from open_gopro.util import setup_logging, set_stream_logging_level, add_cli_args_and_parse
 
@@ -58,7 +58,9 @@ def dump_results_as_csv(location: Path) -> None:
             w.writerow([s.index, (s.time - initial_time).seconds, s.percentage, s.bars])
 
 
-def process_battery_notifications(gopro: GoPro, initial_bars: BarsType, initial_percentage: int) -> None:
+def process_battery_notifications(
+    gopro: WirelessGoPro, initial_bars: BarsType, initial_percentage: int
+) -> None:
     """Separate thread to continuously check for and store battery notifications.
 
     If the CLI parameter was set to poll, this isn't used.
@@ -93,9 +95,9 @@ def main(args: argparse.Namespace) -> None:
     logger = setup_logging(__name__, args.log)
     global SAMPLE_INDEX
 
-    gopro: Optional[GoPro] = None
+    gopro: Optional[WirelessGoPro] = None
     try:
-        with GoPro(args.identifier, enable_wifi=False) as gopro:
+        with WirelessGoPro(args.identifier, enable_wifi=False) as gopro:
             set_stream_logging_level(logging.ERROR)
 
             if args.poll:

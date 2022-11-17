@@ -9,7 +9,7 @@ import logging
 from pathlib import Path
 from abc import ABC, abstractmethod
 from collections.abc import Iterator, Iterable
-from typing import Generic, Optional, Union, Pattern, TYPE_CHECKING, Any, TypeVar, Generator
+from typing import Generic, Optional, Union, Pattern, Any, TypeVar, Generator
 
 from construct import BitStruct, BitsInteger, Padding, Const, Bit, Construct
 
@@ -25,9 +25,6 @@ from open_gopro.ble import (
 from open_gopro.wifi import WifiClient, WifiController
 from open_gopro.responses import GoProResp, Header, BytesParser, JsonParser, Parser
 from open_gopro.constants import GoProUUIDs, ProducerType, ResponseType, SettingId, StatusId, ActionId, CmdId
-
-if TYPE_CHECKING:
-    from open_gopro import Params
 
 logger = logging.getLogger(__name__)
 
@@ -101,17 +98,7 @@ class GoProDataHandler:
             yield packet
 
 
-class GoProWifi(ABC, GoProDataHandler):
-    """GoPro specific WiFi Client
-
-    Args:
-        controller (WifiController): instance of Wifi Controller to use for this client
-    """
-
-    def __init__(self, controller: WifiController):
-        GoProDataHandler.__init__(self)
-        self._wifi: WifiClient = WifiClient(controller)
-
+class GoProHttp(ABC, GoProDataHandler):
     @abstractmethod
     def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
         """Send an HTTP GET request to a string endpoint.
@@ -135,6 +122,22 @@ class GoProWifi(ABC, GoProDataHandler):
             file (Path): location where file should be downloaded to
         """
         raise NotImplementedError
+
+
+class GoProUsb(GoProHttp):
+    ...
+
+
+class GoProWifi(GoProHttp):
+    """GoPro specific WiFi Client
+
+    Args:
+        controller (WifiController): instance of Wifi Controller to use for this client
+    """
+
+    def __init__(self, controller: WifiController):
+        GoProDataHandler.__init__(self)
+        self._wifi: WifiClient = WifiClient(controller)
 
     @property
     def password(self) -> Optional[str]:
@@ -238,7 +241,7 @@ class GoProBle(ABC, GoProDataHandler, Generic[BleHandle, BleDevice]):
         raise NotImplementedError
 
 
-class GoProInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle]):
+class GoProWirelessInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle]):
     """The top-level interface to subclass for an Open GoPro controller"""
 
     def __init__(
@@ -264,7 +267,7 @@ class GoProInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle]):
             GoProWifi.__init__(self, wifi_controller)
 
 
-CommunicatorType = TypeVar("CommunicatorType", bound=Union[GoProBle, GoProWifi])
+CommunicatorType = TypeVar("CommunicatorType", bound=Union[GoProBle, GoProHttp])
 IdType = TypeVar("IdType", SettingId, StatusId, ActionId, CmdId, BleUUID, str)
 ParserType = TypeVar("ParserType", BytesParser, JsonParser)
 
@@ -281,7 +284,7 @@ class Command(Generic[CommunicatorType, IdType, ParserType]):
         """Constructor
 
         Args:
-            communicator (CommunicatorType): BLE or WiFi communicator
+            communicator (CommunicatorType): BLE, Wifi, or USB communicator
             identifier (IdType): id to access this command by
             parser (ParserType): optional parser and builder
         """
@@ -326,11 +329,11 @@ class BleCommand(ABC, Command[GoProBle, IdType, BytesParser]):
             GoProResp._add_global_parser(identifier, self._parser)
 
 
-class WifiCommand(Command[GoProWifi, IdType, JsonParser]):
-    """The base class for all WiFi Commands. Stores common information.
+class HttpCommand(Command[GoProHttp, IdType, JsonParser]):
+    """The base class for all HTTP Commands. Stores common information.
 
     Args:
-        communicator (GoProWifi): delegate owner to send commands and receive responses
+        communicator (GoProHttp): delegate owner to send commands and receive responses
         endpoint (str): base endpoint
         components (Optional[list[str]]): conditional endpoint components. Defaults to None.
         arguments (Optional[list[str]]): URL argument names. Defaults to None.
@@ -340,7 +343,7 @@ class WifiCommand(Command[GoProWifi, IdType, JsonParser]):
 
     def __init__(
         self,
-        communicator: GoProWifi,
+        communicator: GoProHttp,
         endpoint: str,
         identifier: IdType,
         components: Optional[list[str]] = None,
@@ -379,10 +382,10 @@ class Commands(Iterable, Generic[CommandType, IdType]):
     Allows command groups to be iterable and supports dict-like access
 
     Args:
-        communicator (Union[GoProBle, GoProWifi]): communicator that will send commands
+        communicator (Union[GoProBle, GoProHttp]): communicator that will send commands
     """
 
-    def __init__(self, communicator: Union[GoProBle, GoProWifi]) -> None:
+    def __init__(self, communicator: Union[GoProBle, GoProHttp]) -> None:
         self._communicator = communicator
         self._commands_list: list[CommandType] = []
         self._command_map: dict[IdType, CommandType] = {}

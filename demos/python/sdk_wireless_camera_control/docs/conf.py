@@ -10,21 +10,21 @@ from darglint.docstring.docstring import Docstring
 from darglint.docstring.sections import Sections
 from sphinx.ext.napoleon.docstring import GoogleDocstring
 
-from open_gopro import GoPro
+from open_gopro import WirelessGoPro
 from open_gopro.api.builders import (
-    WifiGetBinary,
-    WifiGetJsonCommand,
+    HttpGetBinary,
+    HttpGetJsonCommand,
     BleProtoCommand,
     BleWriteCommand,
     BleReadCommand,
-    WifiCommand,
+    HttpCommand,
     RegisterUnregisterAll,
     BleCommand,
 )
 
 DEBUG = False
 
-gopro = GoPro(enable_wifi=False)
+gopro = WirelessGoPro(enable_wifi=False)
 
 project = "Open GoPro Python SDK"
 copyright = f"{date.today().year}, GoPro Inc."

@@ -1,7 +1,7 @@
-# wifi_commands.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http:/gopro.com/OpenGoPro).
+# http_commands.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http:/gopro.com/OpenGoPro).
 # This copyright was auto-generated on Tue Sep  7 21:35:52 UTC 2021
 
-"""WiFi API for Open GoPro version 1.0"""
+"""HTTP API for Open GoPro version 2.0"""
 
 from __future__ import annotations
 import logging
@@ -9,35 +9,35 @@ import datetime
 from pathlib import Path
 from typing import Any, Optional
 
-from open_gopro.interface import GoProWifi, WifiCommand, Commands
+from open_gopro.interface import GoProHttp, HttpCommand, Commands
 from open_gopro.constants import SettingId, StatusId, CmdId
 from open_gopro.responses import GoProResp, JsonParser
-from open_gopro.api.builders import WifiGetJsonCommand, WifiGetBinary, WifiSetting
+from open_gopro.api.builders import HttpGetJsonCommand, HttpGetBinary, HttpSetting
 from . import params as Params
 
 logger = logging.getLogger(__name__)
 
 
-class WifiCommands(Commands[WifiCommand, CmdId]):
-    """All of the Wifi commands.
+class HttpCommands(Commands[HttpCommand, CmdId]):
+    """All of the HTTP commands.
 
-    To be used as a delegate for a GoProWifi to build commands
+    To be used as a delegate for a GoProHttp to build commands
 
     All of these return a GoProResp
     """
 
     # pylint: disable = missing-class-docstring, arguments-differ, useless-super-delegation
-    def __init__(self, communicator: GoProWifi):
+    def __init__(self, communicator: GoProHttp):
         """Constructor
 
         Args:
-            communicator (GoProWifi):  Adapter to read / write commands
+            communicator (GoProHttp):  Adapter to read / write commands
         """
         ######################################################################################################
-        #                          WIFI GET JSON COMMANDS
+        #                          HTTP GET JSON COMMANDS
         ######################################################################################################
 
-        class SetZoom(WifiGetJsonCommand):
+        class SetZoom(HttpGetJsonCommand):
             def __call__(self, percent: int) -> GoProResp:
                 """Set digital zoom in percent.
 
@@ -56,7 +56,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             arguments=["percent"],
         )
 
-        class GetCameraState(WifiGetJsonCommand):
+        class GetCameraState(HttpGetJsonCommand):
             def __call__(self) -> GoProResp:
                 """Get all camera statuses and settings
 
@@ -69,10 +69,10 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
         self.get_camera_state = GetCameraState(
             communicator,
             endpoint="gopro/camera/state",
-            parser=WifiParsers.CameraStateParser(),
+            parser=HttpParsers.CameraStateParser(),
         )
 
-        class KeepAlive(WifiGetJsonCommand):
+        class KeepAlive(HttpGetJsonCommand):
             def __call__(self) -> GoProResp:
                 """Send the keep alive signal to maintain the connection.
 
@@ -87,7 +87,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             endpoint="gopro/camera/keep_alive",
         )
 
-        class GetMediaInfo(WifiGetJsonCommand):
+        class GetMediaInfo(HttpGetJsonCommand):
             def __call__(self, file: str) -> GoProResp:
                 """Get media info for a file.
 
@@ -106,7 +106,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             arguments=["path"],
         )
 
-        class GetMediaList(WifiGetJsonCommand):
+        class GetMediaList(HttpGetJsonCommand):
             def __call__(self) -> GoProResp:
                 """Get a list of media on the camera.
 
@@ -119,10 +119,10 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
         self.get_media_list = GetMediaList(
             communicator,
             endpoint="gopro/media/list",
-            parser=WifiParsers.MediaListParser(),
+            parser=HttpParsers.MediaListParser(),
         )
 
-        class SetTurboMode(WifiGetJsonCommand):
+        class SetTurboMode(HttpGetJsonCommand):
             def __call__(self, mode: Params.Toggle) -> GoProResp:
                 """Enable or disable Turbo transfer mode.
 
@@ -141,7 +141,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             arguments=["p"],
         )
 
-        class GetOgpVersion(WifiGetJsonCommand):
+        class GetOgpVersion(HttpGetJsonCommand):
             def __call__(self) -> GoProResp:
                 """Get Open GoPro API version
 
@@ -156,7 +156,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             endpoint="gopro/version",
         )
 
-        class GetPresetStatus(WifiGetJsonCommand):
+        class GetPresetStatus(HttpGetJsonCommand):
             def __call__(self) -> GoProResp:
                 """Get status of current presets
 
@@ -171,11 +171,11 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             endpoint="gopro/camera/presets/get",
         )
 
-        class SetPreset(WifiGetJsonCommand):
+        class SetPreset(HttpGetJsonCommand):
             def __call__(self, preset: int) -> GoProResp:
                 """Set camera to a given preset
 
-                The preset ID can be found from :py:class:`open_gopro.api.wifi_commands.WifiCommands.get_preset_status`
+                The preset ID can be found from :py:class:`open_gopro.api.http_commands.HttpCommands.get_preset_status`
 
                 Args:
                     preset (int): preset to load
@@ -192,7 +192,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             arguments=["id"],
         )
 
-        class SetPresetGroup(WifiGetJsonCommand):
+        class SetPresetGroup(HttpGetJsonCommand):
             def __call__(self, group: Params.PresetGroup) -> GoProResp:
                 """Set the active preset group.
 
@@ -213,7 +213,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             arguments=["id"],
         )
 
-        class SetPreviewStream(WifiGetJsonCommand):
+        class SetPreviewStream(HttpGetJsonCommand):
             def __call__(self, mode: Params.Toggle) -> GoProResp:
                 """Start or stop the preview stream
 
@@ -233,7 +233,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             identifier="Preview Stream",
         )
 
-        class SetThirdPartyInfo(WifiGetJsonCommand):
+        class SetThirdPartyInfo(HttpGetJsonCommand):
             def __call__(self) -> GoProResp:
                 """Flag as third party app
 
@@ -248,7 +248,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             endpoint="gopro/camera/analytics/set_client_info",
         )
 
-        class SetShutter(WifiGetJsonCommand):
+        class SetShutter(HttpGetJsonCommand):
             def __call__(self, shutter: Params.Toggle) -> GoProResp:
                 """Set the shutter on or off
 
@@ -267,7 +267,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             components=["mode"],
         )
 
-        class SetCameraControl(WifiGetJsonCommand):
+        class SetCameraControl(HttpGetJsonCommand):
             def __call__(self, mode: Params.CameraControl) -> GoProResp:
                 """Configure global behaviors by setting camera control (to i.e. Idle, External)
 
@@ -286,7 +286,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             arguments=["p"],
         )
 
-        class SetDateTime(WifiGetJsonCommand):
+        class SetDateTime(HttpGetJsonCommand):
             def __call__(
                 self,
                 date_time: datetime.datetime,
@@ -317,7 +317,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             arguments=["date", "time", "tzone", "dst"],
         )
 
-        class GetDateTime(WifiGetJsonCommand):
+        class GetDateTime(HttpGetJsonCommand):
             def __call__(self) -> GoProResp:
                 """Get the date and time of the camera (Non timezone / DST aware)
 
@@ -332,7 +332,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             endpoint="gopro/camera/get_date_time",
         )
 
-        class GetWebcamStatus(WifiGetJsonCommand):
+        class GetWebcamStatus(HttpGetJsonCommand):
             def __call__(self) -> GoProResp:
                 """Get the status of the webcam endpoint
 
@@ -347,7 +347,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             endpoint="gopro/webcam/status",
         )
 
-        class GetWebcamVersion(WifiGetJsonCommand):
+        class GetWebcamVersion(HttpGetJsonCommand):
             def __call__(self) -> GoProResp:
                 """Get the version of the webcam implementation
 
@@ -362,7 +362,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             endpoint="gopro/webcam/version",
         )
 
-        class AddHilight(WifiGetJsonCommand):
+        class AddHilight(HttpGetJsonCommand):
             def __call__(self, file: str, offset: Optional[int] = None) -> GoProResp:
                 """Add a hilight to a media file (.mp4)
 
@@ -382,7 +382,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
             arguments=["path", "ms"],
         )
 
-        class RemoveHilight(WifiGetJsonCommand):
+        class RemoveHilight(HttpGetJsonCommand):
             def __call__(self, file: str, offset: Optional[int] = None) -> GoProResp:
                 """Remove a hilight from a media file (.mp4)
 
@@ -403,10 +403,10 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
         )
 
         ######################################################################################################
-        #                          WIFI GET BINARY COMMANDS
+        #                          HTTP GET BINARY COMMANDS
         ######################################################################################################
 
-        class GetGpmfData(WifiGetBinary):
+        class GetGpmfData(HttpGetBinary):
             def __call__(self, camera_file: str, local_file: Optional[Path] = None) -> Path:
                 """Get GPMF data for a file.
 
@@ -424,7 +424,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
         #: Sphinx docstring redirect
         self.get_gpmf_data = GetGpmfData(communicator, endpoint="gopro/media/gpmf?path=100GOPRO")
 
-        class GetScreennail(WifiGetBinary):
+        class GetScreennail(HttpGetBinary):
             def __call__(self, camera_file: str, local_file: Optional[Path] = None) -> Path:
                 """Get screennail for a file.
 
@@ -442,7 +442,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
         #: Sphinx docstring redirect
         self.get_screennail = GetScreennail(communicator, endpoint="gopro/media/screennail?path=100GOPRO")
 
-        class GetThumbnail(WifiGetBinary):
+        class GetThumbnail(HttpGetBinary):
             def __call__(self, camera_file: str, local_file: Optional[Path] = None) -> Path:
                 """Get thumbnail for a file.
 
@@ -460,7 +460,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
         #: Sphinx docstring redirect
         self.get_thumbnail = GetThumbnail(communicator, endpoint="gopro/media/thumbnail?path=100GOPRO")
 
-        class GetTelemetry(WifiGetBinary):
+        class GetTelemetry(HttpGetBinary):
             def __call__(self, camera_file: str, local_file: Optional[Path] = None) -> Path:
                 """Download the telemetry data for a camera file and store in a local file.
 
@@ -478,7 +478,7 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
         #: Sphinx docstring redirect
         self.get_telemetry = GetTelemetry(communicator, endpoint="gopro/media/telemetry?path=100GOPRO")
 
-        class DownloadFile(WifiGetBinary):
+        class DownloadFile(HttpGetBinary):
             def __call__(self, camera_file: str, local_file: Optional[Path] = None) -> Path:
                 """Download a video from the camera to a local file.
 
@@ -501,76 +501,76 @@ class WifiCommands(Commands[WifiCommand, CmdId]):
         super().__init__(communicator)
 
 
-class WifiSettings(Commands[WifiSetting, SettingId]):
+class HttpSettings(Commands[HttpSetting, SettingId]):
     # pylint: disable=missing-class-docstring, unused-argument
-    """The collection of all WiFi Settings
+    """The collection of all HTTP Settings
 
     Args:
-        communicator (GoProWifi): Adapter to read / write settings
+        communicator (GoProHttp): Adapter to read / write settings
     """
 
-    def __init__(self, communicator: GoProWifi):
-        self.resolution = WifiSetting[Params.Resolution](communicator, SettingId.RESOLUTION)
+    def __init__(self, communicator: GoProHttp):
+        self.resolution = HttpSetting[Params.Resolution](communicator, SettingId.RESOLUTION)
         """Resolution. Set with :py:class:`open_gopro.api.params.Resolution`"""
 
-        self.fps = WifiSetting[Params.FPS](communicator, SettingId.FPS)
+        self.fps = HttpSetting[Params.FPS](communicator, SettingId.FPS)
         """Frames per second. Set with :py:class:`open_gopro.api.params.FPS`"""
 
-        self.auto_off = WifiSetting[Params.AutoOff](communicator, SettingId.AUTO_OFF)
+        self.auto_off = HttpSetting[Params.AutoOff](communicator, SettingId.AUTO_OFF)
         """Set the auto off time. Set with :py:class:`open_gopro.api.params.AutoOff`"""
 
-        self.video_field_of_view = WifiSetting[Params.VideoFOV](communicator, SettingId.VIDEO_FOV)
+        self.video_field_of_view = HttpSetting[Params.VideoFOV](communicator, SettingId.VIDEO_FOV)
         """Video FOV. Set with :py:class:`open_gopro.api.params.VideoFOV`"""
 
-        self.photo_field_of_view = WifiSetting[Params.PhotoFOV](communicator, SettingId.PHOTO_FOV)
+        self.photo_field_of_view = HttpSetting[Params.PhotoFOV](communicator, SettingId.PHOTO_FOV)
         """Photo FOV. Set with :py:class:`open_gopro.api.params.PhotoFOV`"""
 
-        self.multi_shot_field_of_view = WifiSetting[Params.MultishotFOV](
+        self.multi_shot_field_of_view = HttpSetting[Params.MultishotFOV](
             communicator, SettingId.MULTI_SHOT_FOV
         )
         """Multi-shot FOV. Set with :py:class:`open_gopro.api.params.MultishotFOV`"""
 
-        self.max_lens_mode = WifiSetting[Params.MaxLensMode](communicator, SettingId.MAX_LENS_MOD)
+        self.max_lens_mode = HttpSetting[Params.MaxLensMode](communicator, SettingId.MAX_LENS_MOD)
         """Enable / disable max lens mod. Set with :py:class:`open_gopro.api.params.MaxLensMode`"""
 
-        self.hypersmooth = WifiSetting[Params.HypersmoothMode](communicator, SettingId.HYPERSMOOTH)
+        self.hypersmooth = HttpSetting[Params.HypersmoothMode](communicator, SettingId.HYPERSMOOTH)
         """Set / disable hypersmooth. Set with :py:class:`open_gopro.api.params.HypersmoothMode`"""
 
-        self.video_performance_mode = WifiSetting[Params.PerformanceMode](
+        self.video_performance_mode = HttpSetting[Params.PerformanceMode](
             communicator, SettingId.VIDEO_PERFORMANCE_MODE
         )
         """Video Performance Mode (extended battery, tripod, etc). Set with :py:class:`open_gopro.api.params.PerformanceMode`"""
 
-        self.media_format = WifiSetting[Params.MediaFormat](communicator, SettingId.MEDIA_FORMAT)
+        self.media_format = HttpSetting[Params.MediaFormat](communicator, SettingId.MEDIA_FORMAT)
         """Set the media format. Set with :py:class:`open_gopro.api.params.MediaFormat`"""
 
-        self.anti_flicker = WifiSetting[Params.AntiFlicker](communicator, SettingId.ANTI_FLICKER)
+        self.anti_flicker = HttpSetting[Params.AntiFlicker](communicator, SettingId.ANTI_FLICKER)
         """Anti Flicker frequency. Set with :py:class:`open_gopro.api.params.AntiFlicker`"""
 
-        self.camera_ux_mode = WifiSetting[Params.CameraUxMode](communicator, SettingId.CAMERA_UX_MODE)
+        self.camera_ux_mode = HttpSetting[Params.CameraUxMode](communicator, SettingId.CAMERA_UX_MODE)
         """Camera controls configuration. Set with :py:class:`open_gopro.api.params.CameraUxMode`"""
 
-        self.video_easy_mode = WifiSetting[Params.Speed](communicator, SettingId.VIDEO_EASY_MODE)
+        self.video_easy_mode = HttpSetting[Params.Speed](communicator, SettingId.VIDEO_EASY_MODE)
         """Video easy mode speed. Set with :py:class:`open_gopro.api.params.Speed`"""
 
-        self.photo_easy_mode = WifiSetting[Params.PhotoEasyMode](communicator, SettingId.PHOTO_EASY_MODE)
+        self.photo_easy_mode = HttpSetting[Params.PhotoEasyMode](communicator, SettingId.PHOTO_EASY_MODE)
         """Night Photo easy mode. Set with :py:class:`open_gopro.api.params.PhotoEasyMode`"""
 
-        self.wifi_band = WifiSetting[Params.WifiBand](communicator, SettingId.WIFI_BAND)
+        self.wifi_band = HttpSetting[Params.WifiBand](communicator, SettingId.WIFI_BAND)
         """Current WiFi band being used. Set with :py:class:`open_gopro.api.params.WifiBand`"""
 
-        self.star_trail_length = WifiSetting[Params.StarTrailLength](communicator, SettingId.STAR_TRAIL_LENGTH)
+        self.star_trail_length = HttpSetting[Params.StarTrailLength](communicator, SettingId.STAR_TRAIL_LENGTH)
         """Multi shot star trail length. Set with :py:class:`open_gopro.api.params.StarTrailLength`"""
 
-        self.system_video_mode = WifiSetting[Params.SystemVideoMode](communicator, SettingId.SYSTEM_VIDEO_MODE)
+        self.system_video_mode = HttpSetting[Params.SystemVideoMode](communicator, SettingId.SYSTEM_VIDEO_MODE)
         """System video mode. Set with :py:class:`open_gopro.api.params.SystemVideoMode`"""
 
-        self.video_horizon_leveling = WifiSetting[Params.HorizonLeveling](
+        self.video_horizon_leveling = HttpSetting[Params.HorizonLeveling](
             communicator, SettingId.VIDEO_HORIZON_LEVELING
         )
         """Lock / unlock horizon leveling for video. Set with :py:class:`open_gopro.api.params.HorizonLeveling`"""
 
-        self.photo_horizon_leveling = WifiSetting[Params.HorizonLeveling](
+        self.photo_horizon_leveling = HttpSetting[Params.HorizonLeveling](
             communicator, SettingId.PHOTO_HORIZON_LEVELING
         )
         """Lock / unlock horizon leveling for photo. Set with :py:class:`open_gopro.api.params.HorizonLeveling`"""
@@ -579,7 +579,7 @@ class WifiSettings(Commands[WifiSetting, SettingId]):
 
 
 # pylint: disable = missing-class-docstring
-class WifiParsers:
+class HttpParsers:
     """The collection of parsers used for additional JSON parsing"""
 
     class CameraStateParser(JsonParser):

@@ -20,9 +20,9 @@ from typing import Pattern, Any, Callable, Generator, Optional, no_type_check, U
 
 import construct
 
-from open_gopro import GoPro, constants
-from open_gopro.api import BleStatus, WifiSetting, BleSetting
-from open_gopro.interface import BleCommand, WifiCommand, Commands, Command
+from open_gopro import WirelessGoPro, constants
+from open_gopro.api import BleStatus, HttpSetting, BleSetting
+from open_gopro.interface import BleCommand, HttpCommand, Commands, Command
 import open_gopro.api.params
 import open_gopro.api.params as Params
 from open_gopro.responses import GoProResp, ResponseType
@@ -32,7 +32,7 @@ PREVIEW_STREAM_URL: Final = r"udp://127.0.0.1:8554"
 logger = logging.getLogger(__name__)
 
 
-class CompoundGoPro(GoPro):
+class CompoundGoPro(WirelessGoPro):
     """A GoPro that supports sending compound commands"""
 
     def __init__(self, target: Optional[Pattern] = None) -> None:
@@ -139,7 +139,7 @@ class GoProModel:
         Returns:
             bool: True if yes, False otherwise
         """
-        return type(command) in (WifiCommand, WifiSetting)
+        return type(command) in (HttpCommand, HttpSetting)
 
     @classmethod
     def is_setting(cls, command: Command) -> bool:
@@ -151,7 +151,7 @@ class GoProModel:
         Returns:
             bool: True if yes, False otherwise
         """
-        return type(command) in (BleSetting, WifiSetting)
+        return type(command) in (BleSetting, HttpSetting)
 
     @classmethod
     def is_status(cls, command: Command) -> bool:
@@ -176,7 +176,7 @@ class GoProModel:
             bool: True if yes, False otherwise
         """
         return (
-            isinstance(command, (BleCommand, WifiCommand, CompoundCommand))
+            isinstance(command, (BleCommand, HttpCommand, CompoundCommand))
             and not cls.is_status(command)
             and not cls.is_setting(command)
         )
@@ -337,7 +337,7 @@ class CompoundCommand(Command):
 class CompoundCommands(Commands):
     """The container for the compound commands"""
 
-    def __init__(self, communicator: GoPro) -> None:
+    def __init__(self, communicator: WirelessGoPro) -> None:
         """Constructor
 
         Args:

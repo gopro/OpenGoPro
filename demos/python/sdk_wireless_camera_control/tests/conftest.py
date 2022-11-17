@@ -15,7 +15,7 @@ import pytest
 from open_gopro.ble.services import CharProps
 
 from tests import versions
-from open_gopro import GoPro
+from open_gopro import WirelessGoPro
 from open_gopro.ble import (
     BleClient,
     BLEController,
@@ -35,11 +35,19 @@ from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
 from open_gopro.responses import GoProResp
 from open_gopro.constants import ErrorCode, ProducerType, CmdId, GoProUUIDs, ResponseType
 from open_gopro.interface import GoProBle, GoProWifi, GoProDataHandler, BleCommand
-from open_gopro.api import Api, BleCommands, BleSettings, BleStatuses, WifiCommands, WifiSettings, Params
+from open_gopro.api import (
+    WirelessApi,
+    BleCommands,
+    BleSettings,
+    BleStatuses,
+    HttpCommands,
+    HttpSettings,
+    Params,
+)
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
 from open_gopro.util import setup_logging, set_logging_level
 
-api_versions = {"2.0": Api}
+api_versions = {"2.0": WirelessApi}
 
 ##############################################################################################################
 #                                             Log Management
@@ -305,11 +313,11 @@ class WifiCommunicatorTest(GoProWifi):
         return url, file
 
     @property
-    def wifi_command(self) -> WifiCommands:
+    def wifi_command(self) -> HttpCommands:
         return self._api.wifi_command
 
     @property
-    def wifi_setting(self) -> WifiSettings:
+    def wifi_setting(self) -> HttpSettings:
         return self._api.wifi_setting
 
 
@@ -349,7 +357,7 @@ def _test_parse(self: GoProResp) -> None:
     self._meta = [_test_response_id]
 
 
-class GoProTest(GoPro):
+class GoProTest(WirelessGoPro):
     def __init__(self, test_version: str) -> None:
         super().__init__(
             target=re.compile("device"),
@@ -416,7 +424,7 @@ async def gopro_client(request):
     test_client.close()
 
 
-class GoProTestMaintainBle(GoPro):
+class GoProTestMaintainBle(WirelessGoPro):
     def __init__(self) -> None:
         super().__init__(
             target=re.compile("device"),

@@ -25,8 +25,17 @@ from open_gopro.wifi.adapters import Wireless
 from open_gopro.util import SnapshotQueue, Logger
 from open_gopro.responses import GoProResp, ResponseType
 from open_gopro.constants import CmdId, GoProUUIDs, StatusId, QueryCmdId, ProducerType
-from open_gopro.api import Api, BleCommands, BleSettings, BleStatuses, WifiCommands, WifiSettings, Params
-from open_gopro.interface import GoProInterface, JsonParser
+from open_gopro.api import (
+    WirelessApi,
+    WiredApi,
+    BleCommands,
+    BleSettings,
+    BleStatuses,
+    HttpCommands,
+    HttpSettings,
+    Params,
+)
+from open_gopro.interface import GoProWirelessInterface, JsonParser, GoProUsb
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +63,7 @@ def ensure_initialized(interface: Interface) -> Callable:
     """
 
     @wrapt.decorator
-    def wrapper(wrapped: Callable, instance: GoPro, args: Any, kwargs: Any) -> Any:
+    def wrapper(wrapped: Callable, instance: WirelessGoPro, args: Any, kwargs: Any) -> Any:
         if interface is Interface.BLE and not instance.is_ble_connected:
             raise GpException.GoProNotInitialized("BLE not connected")
         if interface is Interface.WIFI and not (
@@ -67,7 +76,7 @@ def ensure_initialized(interface: Interface) -> Callable:
 
 
 @wrapt.decorator
-def acquire_ready_lock(wrapped: Callable, instance: GoPro, args: Any, kwargs: Any) -> Any:
+def acquire_ready_lock(wrapped: Callable, instance: WirelessGoPro, args: Any, kwargs: Any) -> Any:
     """Call method after acquiring ready lock.
 
     Release lock when done
@@ -93,7 +102,103 @@ def acquire_ready_lock(wrapped: Callable, instance: GoPro, args: Any, kwargs: An
     return ret
 
 
-class GoPro(GoProInterface):
+# TODO discover via mDNS if serial number is not passed
+class WiredGoPro(GoProUsb):
+    _BASE_IP: Final[str] = "172.2{}.1{}{}.51"
+    _BASE_ENDPOINT: Final[str] = "http://{ip}:8080/gopro/"
+
+    def __init__(self, serial: str) -> None:
+        self.serial = serial
+        # We currently only support version 2.0
+        self._api = WiredApi(self)
+
+    def __enter__(self) -> WiredGoPro:
+        self.open()
+        return self
+
+    def __exit__(self, *_: Any) -> None:
+        self.close()
+
+    def __del__(self) -> None:
+        self.close()
+
+    def open(self) -> None:
+        ...
+
+    def close(self) -> None:
+        ...
+
+    @property
+    def version(self) -> float:
+        """The API version that the connected camera supports
+
+        Only 2.0 is currently supported
+
+        Returns:
+            float: supported version in decimal form
+        """
+        return float(self._api.version)
+
+    @property
+    def http_command(self) -> HttpCommands:
+        """Used to access the version-specific HTTP commands
+
+        Returns:
+            HttpCommands: the commands
+        """
+        return self._api.http_command
+
+    @property
+    def http_setting(self) -> HttpSettings:
+        """Used to access the version-specific HTTP settings
+
+        Returns:
+            HttpSettings: the settings
+        """
+        return self._api.http_setting
+
+    ##########################################################################################################
+    #                                 End Public API
+    ##########################################################################################################
+
+    @property
+    def _base_endpoint(self) -> str:
+        return WiredGoPro._BASE_ENDPOINT.format(id=WiredGoPro._BASE_IP.format(*self.serial[-3:]))
+
+    def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
+        url = self._base_endpoint + url
+        logger.debug(f"Sending:  {url}")
+
+        response: Optional[GoProResp] = None
+        for _ in range(HTTP_GET_RETRIES):
+            try:
+                request = requests.get(url, timeout=GET_TIMEOUT)
+                request.raise_for_status()
+                response = GoProResp._from_http_response(parser, request)
+                break
+            except requests.exceptions.HTTPError as e:
+                # The camera responded with an error. Break since we successfully sent the command and attempt
+                # to continue
+                logger.warning(e)
+                response = GoProResp._from_http_response(parser, e.response)
+                break
+            except requests.exceptions.ConnectionError as e:
+                logger.warning(repr(e))
+            except Exception as e:  # pylint: disable=broad-except
+                logger.critical(f"Unexpected error: {repr(e)}")
+            finally:
+                logger.warning("Retrying to send the command...")
+        else:
+            raise GpException.ResponseTimeout(HTTP_GET_RETRIES)
+
+        assert response is not None
+        return response
+
+    def _stream_to_file(self, url: str, file: Path) -> None:
+        raise NotImplementedError("TODO. Not sure if we need this for USB.")
+
+
+class WirelessGoPro(GoProWirelessInterface):
     """The top-level BLE and Wifi interface to a GoPro device.
 
     See `Open GoPro <https://gopro.github.io/OpenGoPro/python_sdk>`_ for complete documentation.
@@ -122,12 +227,12 @@ class GoPro(GoProInterface):
 
     It can be used via context manager:
 
-    >>> with GoPro() as gopro:
+    >>> with WirelessGoPro() as gopro:
     >>>     gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
 
     Or without:
 
-    >>> gopro = GoPro()
+    >>> gopro = WirelessGoPro()
     >>> gopro.open()
     >>> gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
     >>> gopro.close()
@@ -151,7 +256,7 @@ class GoPro(GoProInterface):
             the interface can also be specified manually with the 'wifi_interface' argument.
     """
 
-    _base_url = "http://10.5.5.9:8080/"  #: Hard-coded Open GoPro base URL
+    _BASE_URL: Final[str] = "http://10.5.5.9:8080/"  #: Hard-coded Open GoPro base URL
 
     class _InternalState(enum.IntFlag):
         """State used to manage whether the GoPro instance is ready or not."""
@@ -192,7 +297,7 @@ class GoPro(GoProInterface):
             raise e
 
         # We currently only support version 2.0
-        self._api = Api(self)
+        self._api = WirelessApi(self)
 
         # Current accumulating synchronous responses, indexed by GoProUUIDs. This assumes there can only be one active response per BleUUID
         self._active_resp: dict[BleUUID, GoProResp] = {}
@@ -223,10 +328,12 @@ class GoPro(GoProInterface):
             # Set up thread to block until camera is ready to receive commands
             self._ready = threading.Lock()
             self._state_condition = threading.Condition()
-            self._internal_state = GoPro._InternalState.ENCODING | GoPro._InternalState.SYSTEM_BUSY
+            self._internal_state = (
+                WirelessGoPro._InternalState.ENCODING | WirelessGoPro._InternalState.SYSTEM_BUSY
+            )
             self._state_thread = threading.Thread(target=self._maintain_state, name="state", daemon=True)
 
-    def __enter__(self) -> GoPro:
+    def __enter__(self) -> WirelessGoPro:
         self.open()
         return self
 
@@ -280,7 +387,7 @@ class GoPro(GoProInterface):
         """
         if not self._maintain_ble:
             raise GpException.InvalidConfiguration("Not maintaining BLE state so encoding is not applicable")
-        return bool(self._internal_state & GoPro._InternalState.ENCODING)
+        return bool(self._internal_state & WirelessGoPro._InternalState.ENCODING)
 
     @property
     def is_busy(self) -> bool:
@@ -294,7 +401,7 @@ class GoPro(GoProInterface):
         """
         if not self._maintain_ble:
             raise GpException.InvalidConfiguration("Not maintaining BLE state so busy is not applicable")
-        return bool(self._internal_state & GoPro._InternalState.SYSTEM_BUSY)
+        return bool(self._internal_state & WirelessGoPro._InternalState.SYSTEM_BUSY)
 
     @property
     def version(self) -> float:
@@ -335,20 +442,20 @@ class GoPro(GoProInterface):
         return self._api.ble_status
 
     @property
-    def wifi_command(self) -> WifiCommands:
+    def wifi_command(self) -> HttpCommands:
         """Used to access the version-specific Wifi commands
 
         Returns:
-            WifiCommands: the commands
+            HttpCommands: the commands
         """
         return self._api.wifi_command
 
     @property
-    def wifi_setting(self) -> WifiSettings:
+    def wifi_setting(self) -> HttpSettings:
         """Used to access the version-specific Wifi settings
 
         Returns:
-            WifiSettings: the settings
+            HttpSettings: the settings
         """
         return self._api.wifi_setting
 
@@ -569,9 +676,9 @@ class GoPro(GoProInterface):
             ):
                 with self._state_condition:
                     if response[StatusId.ENCODING] is True:
-                        self._internal_state |= GoPro._InternalState.ENCODING
+                        self._internal_state |= WirelessGoPro._InternalState.ENCODING
                     else:
-                        self._internal_state &= ~GoPro._InternalState.ENCODING
+                        self._internal_state &= ~WirelessGoPro._InternalState.ENCODING
                     self._state_condition.notify()
             if (
                 response.cmd
@@ -584,9 +691,9 @@ class GoPro(GoProInterface):
             ):
                 with self._state_condition:
                     if response[StatusId.SYSTEM_READY] is True:
-                        self._internal_state &= ~GoPro._InternalState.SYSTEM_BUSY
+                        self._internal_state &= ~WirelessGoPro._InternalState.SYSTEM_BUSY
                     else:
-                        self._internal_state |= GoPro._InternalState.SYSTEM_BUSY
+                        self._internal_state |= WirelessGoPro._InternalState.SYSTEM_BUSY
                     self._state_condition.notify()
 
     def _notification_handler(self, handle: int, data: bytearray) -> None:
@@ -784,7 +891,7 @@ class GoPro(GoProInterface):
         if not self.is_wifi_connected:
             raise GpException.GoProNotInitialized("WiFi is not connected.")
 
-        url = GoPro._base_url + url
+        url = WirelessGoPro._BASE_URL + url
         logger.debug(f"Sending:  {url}")
 
         response: Optional[GoProResp] = None
@@ -826,7 +933,7 @@ class GoPro(GoProInterface):
         """
         assert self.is_wifi_connected
 
-        url = GoPro._base_url + url
+        url = WirelessGoPro._BASE_URL + url
         logger.debug(f"Sending: {url}")
         with requests.get(url, stream=True, timeout=GET_TIMEOUT) as request:
             request.raise_for_status()

@@ -14,13 +14,13 @@ from rich.prompt import IntPrompt, Prompt
 from rich.table import Table
 from rich import box
 
-from open_gopro import GoPro, GoProResp
+from open_gopro import WirelessGoPro, GoProResp
 from open_gopro import Params as GoProParams
 from open_gopro.constants import GoProEnum, SettingId
 from open_gopro.util import set_stream_logging_level, setup_logging, add_cli_args_and_parse
 
 console = Console()  # rich consoler printer
-gopro: Optional[GoPro] = None
+gopro: Optional[WirelessGoPro] = None
 
 ######### BEGIN PRESET PARSER #########
 
@@ -518,7 +518,7 @@ def main(args: argparse.Namespace) -> None:
     presetCollectionCache: Optional[PresetCollection] = None
     cameraModel: CameraModel = CameraModel.HERO10
 
-    with GoPro(
+    with WirelessGoPro(
         args.identifier,
         wifi_interface=args.wifi_interface,
         sudo_password=args.password,

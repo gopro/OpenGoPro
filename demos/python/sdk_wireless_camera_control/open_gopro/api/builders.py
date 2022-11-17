@@ -32,7 +32,7 @@ from open_gopro.constants import (
     enum_factory,
     GoProEnum,
 )
-from open_gopro.interface import GoProBle, GoProWifi, BleCommand, WifiCommand
+from open_gopro.interface import GoProBle, GoProHttp, BleCommand, HttpCommand
 from open_gopro.util import Logger, jsonify
 
 logger = logging.getLogger(__name__)
@@ -714,12 +714,12 @@ class BleStatus(BleCommand[StatusId]):
 ######################################################## Wifi #################################################
 
 
-class WifiGetJsonCommand(WifiCommand[str]):
-    """A Wifi command that writes to a BleUUID (with parameters) and receives JSON as response"""
+class HttpGetJsonCommand(HttpCommand[str]):
+    """An HTTP command that writes to a BleUUID (with parameters) and receives JSON as response"""
 
     def __init__(
         self,
-        communicator: GoProWifi,
+        communicator: GoProHttp,
         endpoint: str,
         components: Optional[list[str]] = None,
         arguments: Optional[list[str]] = None,
@@ -759,12 +759,12 @@ class WifiGetJsonCommand(WifiCommand[str]):
         return response
 
 
-class WifiGetBinary(WifiCommand[str]):
-    """A Wifi command that writes to a BleUUID (with parameters) and receives a binary stream as response"""
+class HttpGetBinary(HttpCommand[str]):
+    """An HTTP command that writes to a BleUUID (with parameters) and receives a binary stream as response"""
 
     def __init__(
         self,
-        communicator: GoProWifi,
+        communicator: GoProHttp,
         endpoint: str,
         components: Optional[list[str]] = None,
         arguments: Optional[list[str]] = None,
@@ -799,16 +799,16 @@ class WifiGetBinary(WifiCommand[str]):
         return local_file
 
 
-class WifiSetting(WifiCommand[SettingId], Generic[ValueType]):
+class HttpSetting(HttpCommand[SettingId], Generic[ValueType]):
     """An individual camera setting that is interacted with via Wifi."""
 
-    def __init__(self, communicator: GoProWifi, identifier: SettingId) -> None:
+    def __init__(self, communicator: GoProHttp, identifier: SettingId) -> None:
         super().__init__(
             communicator,
             "gopro/camera/setting?setting={}&option={}",
             identifier=identifier,
         )
-        # Note! It is assumed that BLE and WiFi settings are symmetric so we only add to the communicator's
+        # Note! It is assumed that BLE and HTTP settings are symmetric so we only add to the communicator's
         # parser in the BLE Setting.
 
     def __str__(self) -> str:

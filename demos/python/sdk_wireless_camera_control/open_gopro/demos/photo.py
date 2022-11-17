@@ -9,7 +9,7 @@ from typing import Optional
 
 from rich.console import Console
 
-from open_gopro import GoPro, Params
+from open_gopro import WirelessGoPro, Params
 from open_gopro.util import setup_logging, add_cli_args_and_parse
 
 console = Console()  # rich consoler printer
@@ -21,9 +21,11 @@ def main(args: argparse.Namespace) -> None:
     def exception_cb(exception: Exception) -> None:  # pylint: disable=unused-variable
         logger.error(f"IN MAIN ==> {exception}")
 
-    gopro: Optional[GoPro] = None
+    gopro: Optional[WirelessGoPro] = None
     try:
-        with GoPro(args.identifier, wifi_interface=args.wifi_interface, exception_cb=exception_cb) as gopro:
+        with WirelessGoPro(
+            args.identifier, wifi_interface=args.wifi_interface, exception_cb=exception_cb
+        ) as gopro:
             # Configure settings to prepare for photo
             if gopro.is_encoding:
                 gopro.ble_command.set_shutter(Params.Toggle.DISABLE)
