@@ -62,7 +62,7 @@ class Logger:
         self.modules = {
             "open_gopro.gopro": logging.DEBUG,
             "open_gopro.api.builders": logging.DEBUG,
-            "open_gopro.api.wifi_commands": logging.DEBUG,
+            "open_gopro.api.http_commands": logging.DEBUG,
             "open_gopro.api.ble_commands": logging.DEBUG,
             "open_gopro.communication_client": logging.DEBUG,
             "open_gopro.ble.adapters.bleak_wrapper": logging.INFO,

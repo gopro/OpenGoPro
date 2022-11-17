@@ -105,7 +105,7 @@ def acquire_ready_lock(wrapped: Callable, instance: WirelessGoPro, args: Any, kw
 # TODO discover via mDNS if serial number is not passed
 class WiredGoPro(GoProUsb):
     _BASE_IP: Final[str] = "172.2{}.1{}{}.51"
-    _BASE_ENDPOINT: Final[str] = "http://{ip}:8080/gopro/"
+    _BASE_ENDPOINT: Final[str] = "http://{ip}:8080/"
 
     def __init__(self, serial: str) -> None:
         self.serial = serial
@@ -163,7 +163,7 @@ class WiredGoPro(GoProUsb):
 
     @property
     def _base_endpoint(self) -> str:
-        return WiredGoPro._BASE_ENDPOINT.format(id=WiredGoPro._BASE_IP.format(*self.serial[-3:]))
+        return WiredGoPro._BASE_ENDPOINT.format(ip=WiredGoPro._BASE_IP.format(*self.serial[-3:]))
 
     def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
         url = self._base_endpoint + url
@@ -175,7 +175,6 @@ class WiredGoPro(GoProUsb):
                 request = requests.get(url, timeout=GET_TIMEOUT)
                 request.raise_for_status()
                 response = GoProResp._from_http_response(parser, request)
-                break
             except requests.exceptions.HTTPError as e:
                 # The camera responded with an error. Break since we successfully sent the command and attempt
                 # to continue
@@ -186,8 +185,9 @@ class WiredGoPro(GoProUsb):
                 logger.warning(repr(e))
             except Exception as e:  # pylint: disable=broad-except
                 logger.critical(f"Unexpected error: {repr(e)}")
-            finally:
-                logger.warning("Retrying to send the command...")
+            else:
+                break
+            logger.warning("Retrying to send the command...")
         else:
             raise GpException.ResponseTimeout(HTTP_GET_RETRIES)
 

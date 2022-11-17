@@ -354,7 +354,7 @@ class HttpCommand(Command[GoProHttp, IdType, JsonParser]):
         self._components = components
         self._args = arguments
         super().__init__(communicator, identifier, parser)  # type: ignore
-        self._base_dict: dict[str, Any] = dict(id=self._identifier, protocol="WiFi", endpoint=self._endpoint)
+        self._base_dict: dict[str, Any] = dict(id=self._identifier, protocol="HTTP", endpoint=self._endpoint)
 
     def __str__(self) -> str:
         return str(self._identifier).title()
