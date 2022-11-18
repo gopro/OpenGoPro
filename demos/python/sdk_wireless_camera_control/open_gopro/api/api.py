@@ -5,9 +5,9 @@
 
 from typing import Final
 
-from open_gopro.interface import GoProWirelessInterface, GoProUsb
+from open_gopro.interface import GoProWirelessInterface, GoProUsb, GoProHttp
 from .ble_commands import BleCommands, BleSettings, BleStatuses, BleAsyncResponses
-from .http_commands import HttpCommands, HttpSettings
+from .http_commands import HttpCommands, UsbOnlyCommands, HttpSettings
 
 
 class WirelessApi:
@@ -30,6 +30,12 @@ class WirelessApi:
         self.wifi_setting = HttpSettings(communicator)
 
 
+class UsbCommands(UsbOnlyCommands, HttpCommands):
+    def __init__(self, communicator: GoProHttp):
+        UsbOnlyCommands.__init__(self, communicator)
+        HttpCommands.__init__(self, communicator)
+
+
 class WiredApi:
     """Implementation of Open GoPro API version 2.0 for Wired interface (USB)"""
 
@@ -41,6 +47,7 @@ class WiredApi:
         Args:
             communicator (GoProWiredInterface): used to communicate via BLE and Wifi
         """
+
         self._communicator = communicator
-        self.http_command = HttpCommands(communicator)
+        self.http_command = UsbCommands(communicator)
         self.http_setting = HttpSettings(communicator)

@@ -33,6 +33,7 @@ from open_gopro.api import (
     BleStatuses,
     HttpCommands,
     HttpSettings,
+    UsbCommands,
     Params,
 )
 from open_gopro.interface import GoProWirelessInterface, JsonParser, GoProUsb
@@ -140,20 +141,20 @@ class WiredGoPro(GoProUsb):
         return float(self._api.version)
 
     @property
-    def http_command(self) -> HttpCommands:
+    def usb_command(self) -> UsbCommands:
         """Used to access the version-specific HTTP commands
 
         Returns:
-            HttpCommands: the commands
+            UsbCommands: the commands
         """
         return self._api.http_command
 
     @property
-    def http_setting(self) -> HttpSettings:
+    def usb_setting(self) -> HttpSettings:
         """Used to access the version-specific HTTP settings
 
         Returns:
-            HttpSettings: the settings
+            UsbSettings: the settings
         """
         return self._api.http_setting
 

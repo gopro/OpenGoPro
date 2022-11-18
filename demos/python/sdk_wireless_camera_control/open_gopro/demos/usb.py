@@ -12,9 +12,11 @@ def main(args: argparse.Namespace) -> None:
     logger = setup_logging(__name__, args.log)
 
     with WiredGoPro(args.identifier) as gopro:
-        # Get media list
-        logger.critical("Testing a command")
-        gopro.http_command.get_webcam_version()
+        gopro.usb_command.get_camera_state()
+
+        # gopro.usb_command.wired_usb_control(Params.Toggle.DISABLE)
+        # print(f"Webcam is currently: {gopro.usb_command.webcam_status().flatten}")
+        # gopro.usb_command.webcam_preview()
 
     gopro.close()
     console.print("Exiting...")
