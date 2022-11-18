@@ -74,7 +74,7 @@ nitpick_ignore_regex = [
     (r"py:class", r".+Type"),
     (r"py:class", r".*Path"),
     (r"py:class", r".*GoProBle.*"),
-    (r"py:class", r".*GoProWifi.*"),
+    (r"py:class", r".*GoProHttp.*"),
     (r"py:class", r".*JsonParser"),
     (r"py:class", r".*BytesParserBuilder"),
     (r"py:class", r".*BytesParser"),
@@ -87,13 +87,13 @@ def debug_print(*args) -> None:
         print(*args)
 
 
-def get_command_from_name(name: str) -> Optional[Union[BleCommand, WifiCommand]]:
+def get_command_from_name(name: str) -> Optional[Union[BleCommand, HttpCommand]]:
     cls_attr_to_instance_prop = dict(
         BleStatuses="ble_status",
         BleSettings="ble_setting",
         BleCommands="ble_command",
-        WifiSettings="wifi_setting",
-        WifiCommands="wifi_command",
+        HttpSettings="http_setting",
+        HttpCommands="http_command",
     )
 
     debug_print("==============================", name)
@@ -114,7 +114,7 @@ def on_autodoc_process_docstring(app, what, name, obj, options, lines):
     """
     if isinstance(
         command := get_command_from_name(name),
-        (BleWriteCommand, BleProtoCommand, WifiGetJsonCommand, WifiGetBinary),
+        (BleWriteCommand, BleProtoCommand, HttpGetJsonCommand, HttpGetBinary),
     ) and (docstring := type(command).__call__.__doc__):
         lines[:] = GoogleDocstring(docstring, app.config, app, what, name, obj, options).lines()[:]
 
@@ -128,7 +128,7 @@ def on_autodoc_process_signature(app, what, name, *_) -> Optional[tuple[str, str
     """
     try:
         # Any command except for register / unregister all and direct reads
-        if isinstance(command := get_command_from_name(name), (BleCommand, WifiCommand)) and not isinstance(
+        if isinstance(command := get_command_from_name(name), (BleCommand, HttpCommand)) and not isinstance(
             command, (RegisterUnregisterAll, BleReadCommand)
         ):
             debug_print(command)

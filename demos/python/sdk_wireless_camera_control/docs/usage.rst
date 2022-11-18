@@ -93,7 +93,7 @@ using anything else.
 
 The version string can be accessed via the `version` property
 
-- :meth:`open_gopro.gopro.GoPro.version`
+- :meth:`open_gopro.gopro.WirelessGoPro.version`
 
 Camera Readiness
 ----------------
@@ -102,8 +102,8 @@ A command can not be sent to the camera if it is not ready where "ready" is defi
 busy. These two states are managed automatically by the `GoPro` instance such that a call to any command will
 block until the camera is ready. It is possible to check these from the application via:
 
-- :meth:`open_gopro.gopro.GoPro.is_encoding`
-- :meth:`open_gopro.gopro.GoPro.is_busy`
+- :meth:`open_gopro.gopro.WirelessGoPro.is_encoding`
+- :meth:`open_gopro.gopro.WirelessGoPro.is_busy`
 
 For example,
 
@@ -154,7 +154,7 @@ Commands
 
 Commands are callable instance attributes of a Commands class instance
 (i.e. :class:`open_gopro.api.ble_commands.BleCommands` or
-:class:`open_gopro.api.wifi_commands.WifiCommands`), thus they can be called directly:
+:class:`open_gopro.api.http_commands.HttpCommands`), thus they can be called directly:
 
 .. code-block:: python
 
@@ -183,14 +183,14 @@ It is also possible to read all statuses at once via:
 
 .. note::
     WiFi can not access individual statuses. Instead it can use the `get_camera_state`
-    (:meth:`open_gopro.api.wifi_commands.WifiCommands.get_camera_state`)
+    (:meth:`open_gopro.api.http_commands.HttpCommands.get_camera_state`)
     command to retrieve all of them (as well as all of the settings) at once
 
 Settings
 ^^^^^^^^
 
 Settings are instances of a BleSetting(:class:`open_gopro.api.builders.BleSetting`)
-or WifiSetting(:class:`open_gopro.api.builders.WifiSetting`). They can be interacted synchronously in several
+or HttpSetting(:class:`open_gopro.api.builders.HttpSetting`). They can be interacted synchronously in several
 ways.
 
 Their values can be read (via BLE) using the `get_value` method as such:
@@ -210,7 +210,7 @@ It is also possible to read all settings at once via:
 
 .. note::
     WiFi can not access individual settings. Instead it can use the `get_camera_state`
-    (:meth:`open_gopro.api.wifi_commands.WifiCommands.get_camera_state`)
+    (:meth:`open_gopro.api.http_commands.HttpCommands.get_camera_state`)
     command to retrieve all of them (as well as all of the statuses) at once.
 
 Depending on the camera's current state, settings will have differing capabilities. It is possible to query
@@ -247,7 +247,7 @@ Firstly, the desired settings / id must be registered for.
 
 Once registered, the camera will send a push notification when the relevant setting / status changes. These
 responses are added to an internal queue of the `GoPro` instance and can be retrieved via
-:meth:`open_gopro.gopro.GoPro.get_notification`.
+:meth:`open_gopro.gopro.WirelessGoPro.get_notification`.
 
 It is possible to stop receiving notifications by issuing the relevant unregister command, i.e.:
 

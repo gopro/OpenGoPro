@@ -341,7 +341,7 @@ class CompoundCommands(Commands):
         """Constructor
 
         Args:
-            communicator (GoPro): the communicator to send the commands
+            communicator (WirelessGoPro): the communicator to send the commands
         """
 
         class LiveStream(CompoundCommand):

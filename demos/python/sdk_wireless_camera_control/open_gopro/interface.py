@@ -99,6 +99,11 @@ class GoProDataHandler:
 
 
 class GoProHttp(ABC, GoProDataHandler):
+    """Base class interface for all HTTP commands"""
+
+    def __init__(self) -> None:
+        GoProDataHandler.__init__(self)
+
     @abstractmethod
     def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
         """Send an HTTP GET request to a string endpoint.
@@ -125,7 +130,10 @@ class GoProHttp(ABC, GoProDataHandler):
 
 
 class GoProUsb(GoProHttp):
-    ...
+    """GoPro specific USB Client Interface
+
+    Currently just a direct implementation of the GoProHttp interface
+    """
 
 
 class GoProWifi(GoProHttp):
@@ -136,7 +144,7 @@ class GoProWifi(GoProHttp):
     """
 
     def __init__(self, controller: WifiController):
-        GoProDataHandler.__init__(self)
+        GoProHttp.__init__(self)
         self._wifi: WifiClient = WifiClient(controller)
 
     @property

@@ -84,7 +84,7 @@ def acquire_ready_lock(wrapped: Callable, instance: WirelessGoPro, args: Any, kw
 
     Args:
         wrapped (Callable): method to call
-        instance (GoPro): instance that owns the method
+        instance (WirelessGoPro): instance that owns the method
         args (Any): positional arguments
         kwargs (Any): keyword arguments
 
@@ -105,28 +105,25 @@ def acquire_ready_lock(wrapped: Callable, instance: WirelessGoPro, args: Any, kw
 
 # TODO discover via mDNS if serial number is not passed
 class WiredGoPro(GoProUsb):
+    """The top-level USB interface to a Wired GoPro device.
+
+    Args:
+        serial (str): (at least) last 3 digits of GoPro Serial number
+    """
+
     _BASE_IP: Final[str] = "172.2{}.1{}{}.51"
     _BASE_ENDPOINT: Final[str] = "http://{ip}:8080/"
 
     def __init__(self, serial: str) -> None:
+        GoProUsb.__init__(self)
         self.serial = serial
         # We currently only support version 2.0
         self._api = WiredApi(self)
 
     def __enter__(self) -> WiredGoPro:
-        self.open()
         return self
 
     def __exit__(self, *_: Any) -> None:
-        self.close()
-
-    def __del__(self) -> None:
-        self.close()
-
-    def open(self) -> None:
-        ...
-
-    def close(self) -> None:
         ...
 
     @property
@@ -142,7 +139,7 @@ class WiredGoPro(GoProUsb):
 
     @property
     def usb_command(self) -> UsbCommands:
-        """Used to access the version-specific HTTP commands
+        """Used to access the version-specific USB commands
 
         Returns:
             UsbCommands: the commands
@@ -151,10 +148,10 @@ class WiredGoPro(GoProUsb):
 
     @property
     def usb_setting(self) -> HttpSettings:
-        """Used to access the version-specific HTTP settings
+        """Used to access the version-specific USB settings
 
         Returns:
-            UsbSettings: the settings
+            HttpSettings: the settings
         """
         return self._api.http_setting
 
@@ -164,9 +161,30 @@ class WiredGoPro(GoProUsb):
 
     @property
     def _base_endpoint(self) -> str:
+        """Build the base endpoint for USB commands
+
+        Returns:
+            str: base endpoint with URL from serial number
+        """
         return WiredGoPro._BASE_ENDPOINT.format(ip=WiredGoPro._BASE_IP.format(*self.serial[-3:]))
 
     def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
+        """Send an HTTP GET request to an Open GoPro endpoint.
+
+        There should hopefully not be a scenario where this needs to be called directly as it is generally
+        called from the instance's delegates (i.e. self.wifi_command and self.wifi_status)
+
+        Args:
+            url (str): endpoint URL
+            parser (Optional[JsonParser]): Optional parser to further parse received JSON dict. Defaults to
+                None.
+
+        Raises:
+            ResponseTimeout: Response was not received in GET_TIMEOUT seconds
+
+        Returns:
+            GoProResp: response
+        """
         url = self._base_endpoint + url
         logger.debug(f"Sending:  {url}")
 
@@ -196,11 +214,23 @@ class WiredGoPro(GoProUsb):
         return response
 
     def _stream_to_file(self, url: str, file: Path) -> None:
+        """Send an HTTP GET request to an Open GoPro endpoint to download a binary file.
+
+        There should hopefully not be a scenario where this needs to be called directly as it is generally
+        called from the instance's delegates (i.e. self.wifi_command and self.wifi_status)
+
+        Args:
+            url (str): endpoint URL
+            file (Path): location where file should be downloaded to
+
+        Raises:
+            NotImplementedError: TODO
+        """
         raise NotImplementedError("TODO. Not sure if we need this for USB.")
 
 
 class WirelessGoPro(GoProWirelessInterface):
-    """The top-level BLE and Wifi interface to a GoPro device.
+    """The top-level BLE and Wifi interface to a Wireless GoPro device.
 
     See `Open GoPro <https://gopro.github.io/OpenGoPro/python_sdk>`_ for complete documentation.
 

@@ -25,9 +25,12 @@ This can be imported as:
 
 .. code-block:: python
 
-   from open_gopro import GoPro
+   from open_gopro import WirelessGoPro
 
-.. autoclass:: open_gopro.gopro.GoPro
+.. autoclass:: open_gopro.gopro.WirelessGoPro
+   :members:
+
+.. autoclass:: open_gopro.gopro.WiredGoPro
    :members:
 
 API
@@ -37,7 +40,7 @@ These are both the base types that are used to implement the API (BLE Setting, B
 version-specific API's themselves.
 
 These should not be imported directly and instead should be accessed using the relevant properties (`ble_command`,
-`wifi_setting`, etc.) of a GoPro(:class:`open_gopro.gopro.GoPro`) instance.
+`wifi_setting`, etc.) of a GoPro(:class:`open_gopro.gopro.WirelessGoPro`) instance.
 
 Base Types
 ----------
@@ -57,10 +60,10 @@ BLE Status
 .. autoclass:: open_gopro.api.builders.BleStatus
    :members:
 
-WiFi Setting
+HTTP Setting
 ^^^^^^^^^^^^
 
-.. autoclass:: open_gopro.api.builders.WifiSetting
+.. autoclass:: open_gopro.api.builders.HttpSetting
    :members:
 
 BLE Commands
@@ -85,13 +88,25 @@ BLE Statuses
 WiFi Commands
 -------------
 
-.. autoclass:: open_gopro.api.wifi_commands.WifiCommands
+.. autoclass:: open_gopro.api.http_commands.HttpCommands
    :members:
 
 WiFi Settings
 -------------
 
-.. autoclass:: open_gopro.api.wifi_commands.WifiSettings
+.. autoclass:: open_gopro.api.http_commands.HttpSettings
+   :members:
+
+USB Only Commands
+-----------------
+
+.. autoclass:: open_gopro.api.http_commands.UsbOnlyCommands
+   :members:
+
+USB Commands
+------------
+
+.. autoclass:: open_gopro.api.UsbCommands
    :members:
 
 Parameters

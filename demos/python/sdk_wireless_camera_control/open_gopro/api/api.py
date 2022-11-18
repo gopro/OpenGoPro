@@ -31,6 +31,8 @@ class WirelessApi:
 
 
 class UsbCommands(UsbOnlyCommands, HttpCommands):
+    """The superset of all Http Commands available via USB"""
+
     def __init__(self, communicator: GoProHttp):
         UsbOnlyCommands.__init__(self, communicator)
         HttpCommands.__init__(self, communicator)
@@ -45,9 +47,8 @@ class WiredApi:
         """Constructor
 
         Args:
-            communicator (GoProWiredInterface): used to communicate via BLE and Wifi
+            communicator (GoProUsb): used to communicate via BLE and Wifi
         """
-
         self._communicator = communicator
         self.http_command = UsbCommands(communicator)
         self.http_setting = HttpSettings(communicator)

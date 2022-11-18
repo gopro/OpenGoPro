@@ -66,7 +66,7 @@ def process_battery_notifications(
     If the CLI parameter was set to poll, this isn't used.
 
     Args:
-        gopro (GoPro): instance to get updates from
+        gopro (WirelessGoPro): instance to get updates from
         initial_bars (BarsType): Initial bars level when notifications were enabled
         initial_percentage (int): Initial percentage when notifications were enabled
     """

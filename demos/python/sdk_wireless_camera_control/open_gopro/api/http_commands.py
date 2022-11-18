@@ -9,7 +9,7 @@ import datetime
 from pathlib import Path
 from typing import Any, Optional
 
-from open_gopro.interface import GoProHttp, GoProUsb, HttpCommand, Commands
+from open_gopro.interface import GoProHttp, HttpCommand, Commands
 from open_gopro.constants import SettingId, StatusId, CmdId
 from open_gopro.responses import GoProResp, JsonParser
 from open_gopro.api.builders import HttpGetJsonCommand, HttpGetBinary, HttpSetting
@@ -18,6 +18,7 @@ from . import params as Params
 logger = logging.getLogger(__name__)
 
 
+# TODO check this doc
 class HttpCommands(Commands[HttpCommand, CmdId]):
     """All of the HTTP commands.
 
@@ -502,6 +503,8 @@ class HttpCommands(Commands[HttpCommand, CmdId]):
 
 
 class UsbOnlyCommands(Commands[HttpCommand, CmdId]):
+    """The HTTP commands which can only be sent via USB"""
+
     # pylint: disable = missing-class-docstring, arguments-differ, useless-super-delegation
     def __init__(self, communicator: GoProHttp):
         """Constructor
@@ -538,8 +541,14 @@ class UsbOnlyCommands(Commands[HttpCommand, CmdId]):
         self.webcam_preview = WebcamPreview(communicator, endpoint="gopro/webcam/preview")
 
         class WebcamStart(HttpGetJsonCommand):
-            def __call__(self, resolution: Params.Resolution, fov: Params.PhotoFOV) -> GoProResp:
+            def __call__(
+                self, resolution: Optional[Params.Resolution] = None, fov: Optional[Params.PhotoFOV] = None
+            ) -> GoProResp:
                 """Start the webcam.
+
+                Args:
+                    resolution (Params.Resolution, optional): resolution to use. If not set, camera default will be used.
+                    fov (Params.PhotoFOV, optional): field of view to use. If not set, camera default will be used.
 
                 Returns:
                     GoProResp: command status
@@ -577,13 +586,20 @@ class UsbOnlyCommands(Commands[HttpCommand, CmdId]):
             def __call__(self, control: Params.Toggle) -> GoProResp:
                 """Enable / disable wired usb control
 
+                Args:
+                    control (params.Toggle): enable or disable
+
                 Returns:
                     GoProResp: command status
                 """
                 return super().__call__(p=control)
 
         #: Sphinx docstring redirect
-        self.wired_usb_control = UsbControl(communicator, endpoint="gopro/camera/control/wired_usb", arguments=["p"])
+        self.wired_usb_control = UsbControl(
+            communicator, endpoint="gopro/camera/control/wired_usb", arguments=["p"]
+        )
+
+        super().__init__(communicator)
 
 
 class HttpSettings(Commands[HttpSetting, SettingId]):

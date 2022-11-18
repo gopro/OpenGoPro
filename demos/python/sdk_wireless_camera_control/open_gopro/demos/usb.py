@@ -1,6 +1,8 @@
 # usb.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Fri Nov 18 00:18:13 UTC 2022
 
+"""Usb demo"""
+
 import argparse
 
 from rich.console import Console
@@ -12,16 +14,15 @@ console = Console()  # rich consoler printer
 
 
 def main(args: argparse.Namespace) -> None:
-    logger = setup_logging(__name__, args.log)
+    setup_logging(__name__, args.log)
 
     with WiredGoPro(args.identifier) as gopro:
         gopro.usb_command.get_camera_state()
 
-        # gopro.usb_command.wired_usb_control(Params.Toggle.DISABLE)
-        # print(f"Webcam is currently: {gopro.usb_command.webcam_status().flatten}")
-        # gopro.usb_command.webcam_preview()
+        gopro.usb_command.wired_usb_control(Params.Toggle.DISABLE)
+        print(f"Webcam is currently: {gopro.usb_command.webcam_status().flatten}")
+        gopro.usb_command.webcam_start()
 
-    gopro.close()
     console.print("Exiting...")
 
 
