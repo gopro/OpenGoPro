@@ -26,6 +26,7 @@ gopro-photo = "open_gopro.demos.photo:entrypoint"
 gopro-video = "open_gopro.demos.video:entrypoint"
 gopro-log-battery = "open_gopro.demos.log_battery:entrypoint"
 gopro-wifi = "open_gopro.demos.connect_wifi:entrypoint"
+gopro-webcam = "open_gopro.demos.webcam:entrypoint"
 gopro-gui = "open_gopro.demos.gui_demo:entrypoint"
 gopro-presets = "open_gopro.demos.preset_control:entrypoint"
 
@@ -223,6 +224,9 @@ disable = [
 
 [tool.pylint.'FORMAT']
 max-line-length = 160
+
+[tool.pylint.'TYPECHECK']
+ignored-modules="cv2"
 
 [tool.black]
 line-length = 111

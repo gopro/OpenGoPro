@@ -11,6 +11,9 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 
 Unreleased
 ----------
+* Add USB support
+
+    * Introduces breaking changes of top level interface (i.e. GoPro --> WirelessGoPro / WiredGoPro)
 * Add run-time python version verification
 * Improve error messaging and documentation around wifi interface issues
 
