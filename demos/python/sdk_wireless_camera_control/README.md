@@ -9,9 +9,8 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/gopro/OpenGoPro/blob/main/LICENSE)
 ![Coverage](https://raw.githubusercontent.com/gopro/OpenGoPro/main/demos/python/sdk_wireless_camera_control/docs/_static/coverage.svg)
 
-This is a Python package that provides an interface for the user to exercise the Open GoPro Bluetooth Low
-Energy (BLE) and Wi-Fi API's as well as install command line interfaces to take photos, videos, and view
-the preview stream.
+This is a Python package that provides an
+interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and Wi-Fi / USB HTTP API's as well as install command line interfaces to take photos, videos, and view video streams.
 
 -   Free software: MIT license
 -   Documentation: [View on Open GoPro](https://gopro.github.io/OpenGoPro/python_sdk/)
@@ -25,7 +24,7 @@ Complete documentation can be found on [Open GoPro](https://gopro.github.io/Open
 
 ## Features
 
--   Top-level GoPro class interface to use both BLE / WiFi
+-   Top-level GoPro class interface to use BLE, WiFi, and / or USB
 -   Cross-platform (tested on MacOS Big Sur, Windows 10, and Ubuntu 20.04)
     -   BLE implemented using [bleak](https://pypi.org/project/bleak/)
     -   Wi-Fi controller provided in the Open GoPro package (loosely based on the [Wireless Library](https://pypi.org/project/wireless/)
@@ -34,9 +33,10 @@ Complete documentation can be found on [Open GoPro](https://gopro.github.io/Open
     -   manage camera ready / encoding
     -   periodically sends keep alive signals
 -   Includes detailed logging for each module
--   Includes demo scripts installed as command-line applications to show BLE and WiFi functionality
+-   Includes demo scripts installed as command-line applications to show BLE, WiFi, and USB functionality such as:
     -   Take a photo
     -   Take a video
+    -   Configure and view a GoPro webcam stream
     -   GUI to send all commands and view the live / preview stream
     -   Log the battery
 

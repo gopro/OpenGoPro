@@ -43,8 +43,8 @@ def main(args: argparse.Namespace) -> None:
 
     with WiredGoPro(args.identifier) as gopro:
         # Start webcam
-        gopro.usb_command.wired_usb_control(Params.Toggle.DISABLE)
-        gopro.usb_command.webcam_start()
+        gopro.http_command.wired_usb_control(Params.Toggle.DISABLE)
+        gopro.http_command.webcam_start()
 
         # Start player
         logger.info("Starting Viewer")
@@ -54,8 +54,8 @@ def main(args: argparse.Namespace) -> None:
 
         # Wait for input to exit
         input("Press enter to exit.")
-        gopro.usb_command.webcam_stop()
-        gopro.usb_command.webcam_exit()
+        gopro.http_command.webcam_stop()
+        gopro.http_command.webcam_exit()
         # Process is a daemon so no need to stop it
 
     console.print("Exiting...")

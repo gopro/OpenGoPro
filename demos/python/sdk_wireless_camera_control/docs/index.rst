@@ -30,21 +30,22 @@ Summary
 -------
 
 Welcome to the Open GoPro Python package documentation. This is a Python package that provides an
-interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and Wi-Fi API's.
+interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and Wi-Fi / USB HTTP API's as
+well as install command line interfaces to take photos, videos, and view video streams.
 
 This package implements the API as defined in the `Open GoPro Specification <https://gopro.github.io/OpenGoPro/>`_ .
 For more information on the API, see the relevant documentation:
 
 - `BLE API <https://gopro.github.io/OpenGoPro/ble>`_
-- `Wi-Fi API <https://gopro.github.io/OpenGoPro/http>`_
+- `HTTP API <https://gopro.github.io/OpenGoPro/http>`_
 
 .. warning::
-    This package requires Python >= version 3.9 and <= 3.10
+    This package requires Python >= version 3.9 and < 3.11
 
 Features
 --------
 
-- Top-level GoPro class interface to use both BLE / WiFi
+- Top-level GoPro class interface to use BLE, WiFi, and / or USB
 - Cross-platform (tested on Windows 10, and Ubuntu 20.04, and >= MacOS Big Sur)
 
   - BLE controller implemented using `bleak <https://pypi.org/project/bleak/>`_
@@ -55,10 +56,11 @@ Features
   - manage camera ready / encoding
   - periodically sends keep alive signals
 - Includes detailed logging for each module
-- Includes demo scripts installed as command-line applications to show BLE and WiFi functionality such as:
+- Includes demo scripts installed as command-line applications to show BLE, WiFi, and USB functionality such as:
 
   - Take a photo
   - GUI to send all commands and view the live / preview stream
+  - Configure and view a GoPro webcam stream
   - Take a video
   - Log the battery
 
@@ -71,7 +73,7 @@ this document in order):
 #. :ref:`Install<Installation>` the package
 #. Try some of the :ref:`demos<QuickStart Guide>`
 #. Implement your own example, perhaps starting with a demo, with :ref:`usage<Usage>` information
-#. If you need more detailed implementation reference, see the Interface :ref:`documentation<Interfaces>`
+#. If you need more detailed implementation reference, see the Interface :ref:`documentation<API Reference>`
 
 Development
 -----------

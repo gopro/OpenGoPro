@@ -33,14 +33,13 @@ from open_gopro.api import (
     BleStatuses,
     HttpCommands,
     HttpSettings,
-    UsbCommands,
     Params,
 )
-from open_gopro.interface import GoProWirelessInterface, JsonParser, GoProUsb
+from open_gopro.interface import GoProBase, GoProWirelessInterface, GoProWiredInterface, JsonParser
 
 logger = logging.getLogger(__name__)
 
-KEEP_ALIVE_INTERVAL: Final = 28  # Covers worst case scenario (30 seconds for pismo)
+KEEP_ALIVE_INTERVAL: Final = 28
 WRITE_TIMEOUT: Final = 5
 GET_TIMEOUT: Final = 5
 HTTP_GET_RETRIES: Final = 5
@@ -104,7 +103,7 @@ def acquire_ready_lock(wrapped: Callable, instance: WirelessGoPro, args: Any, kw
 
 
 # TODO discover via mDNS if serial number is not passed
-class WiredGoPro(GoProUsb):
+class WiredGoPro(GoProBase, GoProWiredInterface):
     """The top-level USB interface to a Wired GoPro device.
 
     Args:
@@ -115,8 +114,8 @@ class WiredGoPro(GoProUsb):
     _BASE_ENDPOINT: Final[str] = "http://{ip}:8080/"
 
     def __init__(self, serial: str) -> None:
-        GoProUsb.__init__(self)
-        self.serial = serial
+        GoProWiredInterface.__init__(self)
+        self._serial = serial
         # We currently only support version 2.0
         self._api = WiredApi(self)
 
@@ -126,34 +125,65 @@ class WiredGoPro(GoProUsb):
     def __exit__(self, *_: Any) -> None:
         ...
 
-    @property
-    def version(self) -> float:
-        """The API version that the connected camera supports
+    def open(self, timeout: int = 10, retries: int = 5) -> None:
+        """Connect to the GoPro Client and prepare it for communication
 
-        Only 2.0 is currently supported
+        Args:
+            timeout (int): time before considering connection a failure. Defaults to 10.
+            retries (int): number of connection retries. Defaults to 5.
+        """
+
+    def close(self) -> None:
+        """Gracefully close the GoPro Client connection"""
+
+    @property
+    def identifier(self) -> str:
+        """Unique identifier for the connected GoPro Client
 
         Returns:
-            float: supported version in decimal form
+            str: identifier
         """
-        return float(self._api.version)
+        return self._serial
 
     @property
-    def usb_command(self) -> UsbCommands:
+    def version(self) -> str:
+        """The Open GoPro API version of the GoPro Client
+
+        Only Version 2.0 is currently supported.
+
+        Returns:
+            str: string version
+        """
+        return self._api.version
+
+    @property
+    def http_command(self) -> HttpCommands:
         """Used to access the version-specific USB commands
 
         Returns:
-            UsbCommands: the commands
+            HttpCommands: the commands
         """
         return self._api.http_command
 
     @property
-    def usb_setting(self) -> HttpSettings:
+    def http_setting(self) -> HttpSettings:
         """Used to access the version-specific USB settings
 
         Returns:
             HttpSettings: the settings
         """
         return self._api.http_setting
+
+    def get_notification(self, timeout: Optional[float] = None) -> Optional[GoProResp]:
+        """Get the next asynchronous notification from the GoPro Client in FIFO order
+
+        Args:
+            timeout (Optional[float]): Time to wait for notification. Defaults to None (wait forever).
+
+        Raises:
+            NotImplementedError: TODO is this needed for USB?
+        """
+        raise NotImplementedError
 
     ##########################################################################################################
     #                                 End Public API
@@ -166,7 +196,7 @@ class WiredGoPro(GoProUsb):
         Returns:
             str: base endpoint with URL from serial number
         """
-        return WiredGoPro._BASE_ENDPOINT.format(ip=WiredGoPro._BASE_IP.format(*self.serial[-3:]))
+        return WiredGoPro._BASE_ENDPOINT.format(ip=WiredGoPro._BASE_IP.format(*self._serial[-3:]))
 
     def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
         """Send an HTTP GET request to an Open GoPro endpoint.
@@ -229,7 +259,7 @@ class WiredGoPro(GoProUsb):
         raise NotImplementedError("TODO. Not sure if we need this for USB.")
 
 
-class WirelessGoPro(GoProWirelessInterface):
+class WirelessGoPro(GoProBase, GoProWirelessInterface):
     """The top-level BLE and Wifi interface to a Wireless GoPro device.
 
     See `Open GoPro <https://gopro.github.io/OpenGoPro/python_sdk>`_ for complete documentation.
@@ -314,7 +344,8 @@ class WirelessGoPro(GoProWirelessInterface):
 
         try:
             # Initialize GoPro Communication Client
-            super().__init__(
+            GoProWirelessInterface.__init__(
+                self,
                 ble_controller=ble_adapter(self._handle_exception),
                 wifi_controller=wifi_adapter(wifi_interface, password=sudo_password) if enable_wifi else None,
                 disconnected_cb=self._disconnect_handler,
@@ -375,7 +406,7 @@ class WirelessGoPro(GoProWirelessInterface):
         self.close()
 
     @property
-    def identifier(self) -> Optional[str]:
+    def identifier(self) -> str:
         """Get a unique identifier for this instance.
 
         The identifier is the last 4 digits of the camera. That is, the same string that is used to
@@ -383,9 +414,14 @@ class WirelessGoPro(GoProWirelessInterface):
 
         If no target has been provided and a camera is not yet found, this will be None
 
+        Raises:
+            GoProNotInitialized: Client is not initialized yet so no identifier is available
+
         Returns:
-            Optional[str]: last 4 digits if available, else None
+            str: last 4 digits if available, else None
         """
+        if self._ble.identifier is None:
+            raise GpException.GoProNotInitialized("Client does not yet have an identifier.")
         return self._ble.identifier
 
     @property
@@ -435,15 +471,15 @@ class WirelessGoPro(GoProWirelessInterface):
         return bool(self._internal_state & WirelessGoPro._InternalState.SYSTEM_BUSY)
 
     @property
-    def version(self) -> float:
+    def version(self) -> str:
         """The API version that the connected camera supports
 
         Only 2.0 is currently supported
 
         Returns:
-            float: supported version in decimal form
+            str: supported version
         """
-        return float(self._api.version)
+        return self._api.version
 
     @property
     def ble_command(self) -> BleCommands:
@@ -479,7 +515,7 @@ class WirelessGoPro(GoProWirelessInterface):
         Returns:
             HttpCommands: the commands
         """
-        return self._api.wifi_command
+        return self._api.http_command
 
     @property
     def wifi_setting(self) -> HttpSettings:
@@ -488,7 +524,7 @@ class WirelessGoPro(GoProWirelessInterface):
         Returns:
             HttpSettings: the settings
         """
-        return self._api.wifi_setting
+        return self._api.http_setting
 
     def open(self, timeout: int = 10, retries: int = 5) -> None:
         """Perform all initialization commands for ble and wifi

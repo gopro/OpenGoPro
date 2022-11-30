@@ -5,9 +5,9 @@
 
 from typing import Final
 
-from open_gopro.interface import GoProWirelessInterface, GoProUsb, GoProHttp
+from open_gopro.interface import GoProWirelessInterface, GoProHttp
 from .ble_commands import BleCommands, BleSettings, BleStatuses, BleAsyncResponses
-from .http_commands import HttpCommands, UsbOnlyCommands, HttpSettings
+from .http_commands import HttpCommands, HttpSettings
 
 
 class WirelessApi:
@@ -26,16 +26,8 @@ class WirelessApi:
         self.ble_setting = BleSettings(communicator)
         self.ble_status = BleStatuses(communicator)
         BleAsyncResponses.add_parsers()
-        self.wifi_command = HttpCommands(communicator)
-        self.wifi_setting = HttpSettings(communicator)
-
-
-class UsbCommands(UsbOnlyCommands, HttpCommands):
-    """The superset of all Http Commands available via USB"""
-
-    def __init__(self, communicator: GoProHttp):
-        UsbOnlyCommands.__init__(self, communicator)
-        HttpCommands.__init__(self, communicator)
+        self.http_command = HttpCommands(communicator)
+        self.http_setting = HttpSettings(communicator)
 
 
 class WiredApi:
@@ -43,12 +35,12 @@ class WiredApi:
 
     version: Final = "2.0"
 
-    def __init__(self, communicator: GoProUsb) -> None:
+    def __init__(self, communicator: GoProHttp) -> None:
         """Constructor
 
         Args:
-            communicator (GoProUsb): used to communicate via BLE and Wifi
+            communicator (GoProHttp): used to communicate via BLE and Wifi
         """
         self._communicator = communicator
-        self.http_command = UsbCommands(communicator)
+        self.http_command = HttpCommands(communicator)
         self.http_setting = HttpSettings(communicator)

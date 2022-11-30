@@ -71,11 +71,11 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         Args:
             exception_handler (Callable, Optional): Used to catch asyncio exceptions from other tasks. Defaults to None.
         """
+        BLEController.__init__(self, exception_handler)
         # Thread to run ble controller asyncio loop (to abstract asyncio from client as well as handle async notifications)
         self._module_loop: asyncio.AbstractEventLoop  # Will be set when module thread starts
         self._module_thread = threading.Thread(daemon=True, target=self._run, name="data")
         self._ready = threading.Event()
-        self._exception_handler = exception_handler
         self._module_thread.start()
         self._ready.wait()
 

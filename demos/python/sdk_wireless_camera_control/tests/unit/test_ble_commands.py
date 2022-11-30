@@ -112,8 +112,8 @@ def test_commands_iteration(ble_communicator: BleCommunicatorTest):
         ble_communicator._api.ble_command,
         ble_communicator._api.ble_setting,
         ble_communicator._api.ble_status,
-        ble_communicator._api.wifi_command,
-        ble_communicator._api.wifi_setting,
+        ble_communicator._api.http_command,
+        ble_communicator._api.http_setting,
     ]:
         count = 0
         for _ in commands:
@@ -127,8 +127,8 @@ def test_commands_subscriptable(ble_communicator: BleCommunicatorTest):
             ble_communicator._api.ble_command,
             ble_communicator._api.ble_setting,
             ble_communicator._api.ble_status,
-            # ble_communicator._api.wifi_command,
-            ble_communicator._api.wifi_setting,
+            # ble_communicator._api.http_command,
+            ble_communicator._api.http_setting,
         ],
         [
             CmdId,

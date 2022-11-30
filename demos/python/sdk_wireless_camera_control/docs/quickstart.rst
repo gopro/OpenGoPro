@@ -98,8 +98,33 @@ For more information, do:
     -p, --password        Set to read sudo password from stdin. If not set, you will be prompted
                             for password if needed
 
-Stream Demos
-------------
+Wired Webcam Demo
+-----------------
+
+The `webcam` demo will configure a GoPro (identified via serial number) as a webcam, start the webcam, and use
+`OpenCV <https://pypi.org/project/opencv-python/>`_  to start a viewer to display the stream.
+
+.. code-block:: console
+
+    $ gopro-webcam
+
+For more information, do:
+
+.. code-block:: console
+
+    usage: gopro-webcam [-h] [-l LOG] identifier
+
+    Setup and view a GoPro webcam.
+
+    positional arguments:
+    identifier         Last 3 digits of GoPro serial number, which is the last 3 digits of the default camera SSID.
+
+    options:
+    -h, --help         show this help message and exit
+    -l LOG, --log LOG  Location to store detailed log
+
+Wireless Stream Demos
+---------------------
 
 The livestream and preview stream demos have been merged into the below GUI
 
@@ -135,37 +160,6 @@ or automatically connect to the first found camera. Once connected, the GUI will
 - A network stream can be started using the video pane in the bottom right. This will automatically get started
   after sending the Livestream command
 
-Battery Demo
-------------
-
-This demo will continuously read the battery level (either via polling or registering fro notifications as
-configured per the command line argument) and write
-the results to a .csv file. To run, do:
-
-.. code-block:: console
-
-    $ gopro-log-battery
-
-For more information, do:
-
-.. code-block:: console
-
-    $ gopro-log-battery --help
-    usage: gopro-log-battery [-h] [-p POLL] [-l LOG] [-i IDENTIFIER]
-
-    Connect to the GoPro via BLE only and continuously read the battery (either by polling or
-    notifications).
-
-    optional arguments:
-    -h, --help            show this help message and exit
-    -p POLL, --poll POLL  Set to poll the battery at a given interval. If not set, battery level
-                            will be notified instead. Defaults to notifications.
-    -l LOG, --log LOG     Location to store detailed log
-    -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the
-                            default camera SSID. If not used, first discovered GoPro will be
-                            connected to
-
 WiFi Demo
 -----------
 
@@ -199,3 +193,34 @@ For more information, do:
                             used.
     -p, --password        Set to read sudo password from stdin. If not set, you will be prompted
                             for password if needed
+
+Battery Demo
+------------
+
+This demo will continuously read the battery level (either via polling or registering fro notifications as
+configured per the command line argument) and write
+the results to a .csv file. To run, do:
+
+.. code-block:: console
+
+    $ gopro-log-battery
+
+For more information, do:
+
+.. code-block:: console
+
+    $ gopro-log-battery --help
+    usage: gopro-log-battery [-h] [-p POLL] [-l LOG] [-i IDENTIFIER]
+
+    Connect to the GoPro via BLE only and continuously read the battery (either by polling or
+    notifications).
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    -p POLL, --poll POLL  Set to poll the battery at a given interval. If not set, battery level
+                            will be notified instead. Defaults to notifications.
+    -l LOG, --log LOG     Location to store detailed log
+    -i IDENTIFIER, --identifier IDENTIFIER
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                            default camera SSID. If not used, first discovered GoPro will be
+                            connected to

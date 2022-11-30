@@ -3,7 +3,7 @@
 
 """Top level API module definition"""
 
-from .api import WiredApi, WirelessApi, UsbCommands
+from .api import WiredApi, WirelessApi
 from .ble_commands import BleCommands, BleSettings, BleStatuses
 from .http_commands import HttpCommands, HttpSettings
 from .builders import (

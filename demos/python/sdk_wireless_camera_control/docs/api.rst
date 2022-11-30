@@ -1,7 +1,7 @@
 :github_url: https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control
 
-Interfaces
-**********
+API Reference
+*************
 
 This section is a reference for the Open GoPro Python Package API. The BLE / Wifi API's that
 this package implements can be found in the Open GoPro documentation linked from :ref:`package summary<Summary>`
@@ -21,7 +21,8 @@ For a higher-level summary / usage, see the :ref:`usage<Usage>` section
 GoPro
 =====
 
-This can be imported as:
+There are two flavors of the top-level GoPro class. These are "wired" and "wireless" and can be imported and used
+as shown below:
 
 .. code-block:: python
 
@@ -33,8 +34,8 @@ This can be imported as:
 .. autoclass:: open_gopro.gopro.WiredGoPro
    :members:
 
-API
-===
+Open GoPro API
+==============
 
 These are both the base types that are used to implement the API (BLE Setting, Ble Status, etc.) and the
 version-specific API's themselves.
@@ -85,28 +86,16 @@ BLE Statuses
    :members:
    :exclude-members: deprecated_40, deprecated_92
 
-WiFi Commands
+HTTP Commands
 -------------
 
 .. autoclass:: open_gopro.api.http_commands.HttpCommands
    :members:
 
-WiFi Settings
+HTTP Settings
 -------------
 
 .. autoclass:: open_gopro.api.http_commands.HttpSettings
-   :members:
-
-USB Only Commands
------------------
-
-.. autoclass:: open_gopro.api.http_commands.UsbOnlyCommands
-   :members:
-
-USB Commands
-------------
-
-.. autoclass:: open_gopro.api.UsbCommands
    :members:
 
 Parameters

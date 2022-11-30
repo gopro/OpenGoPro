@@ -4,14 +4,16 @@ Usage
 *****
 
 This section will describe some high level information of how to use the Open GoPro module. For more detailed
-information, see the :ref:`Interfaces<Interfaces>` section. For just running the demo, see the
+information, see the :ref:`Interfaces<API Reference>` section. For just running the demo, see the
 :ref:`QuickStart Guide<QuickStart Guide>` section.
 
 Overview
 ========
 
-The top level interface is the :ref:`GoPro <GoPro>` class. One `GoPro` instance corresponds to a (potentially not
-yet) connected GoPro camera resource.
+There are two top-level interfaces to the GoPro camera:
+
+One :class:`~open_gopro.gopro.WirelessGoPro` or :class:`~open_gopro.gopro.WiredGoPro` instance corresponds to a
+(potentially not yet) connected GoPro camera resource.
 
 Once a `GoPro` instance is :ref:`opened<Opening>`, it can be interacted with (via BLE and / or WiFi) by:
 
@@ -93,7 +95,7 @@ using anything else.
 
 The version string can be accessed via the `version` property
 
-- :meth:`open_gopro.gopro.WirelessGoPro.version`
+- :meth:`~open_gopro.gopro.WirelessGoPro.version`
 
 Camera Readiness
 ----------------
@@ -102,8 +104,8 @@ A command can not be sent to the camera if it is not ready where "ready" is defi
 busy. These two states are managed automatically by the `GoPro` instance such that a call to any command will
 block until the camera is ready. It is possible to check these from the application via:
 
-- :meth:`open_gopro.gopro.WirelessGoPro.is_encoding`
-- :meth:`open_gopro.gopro.WirelessGoPro.is_busy`
+- :meth:`~open_gopro.gopro.WirelessGoPro.is_encoding`
+- :meth:`~open_gopro.gopro.WirelessGoPro.is_busy`
 
 For example,
 
@@ -153,8 +155,8 @@ Commands
 ^^^^^^^^
 
 Commands are callable instance attributes of a Commands class instance
-(i.e. :class:`open_gopro.api.ble_commands.BleCommands` or
-:class:`open_gopro.api.http_commands.HttpCommands`), thus they can be called directly:
+(i.e. :class:`~open_gopro.api.ble_commands.BleCommands` or
+:class:`~open_gopro.api.http_commands.HttpCommands`), thus they can be called directly:
 
 .. code-block:: python
 
@@ -165,7 +167,7 @@ Commands are callable instance attributes of a Commands class instance
 Statuses
 ^^^^^^^^
 
-Statuses are instances of a BleStatus(:class:`open_gopro.api.builders.BleStatus`). They can be read
+Statuses are instances of a BleStatus(:class:`~open_gopro.api.builders.BleStatus`). They can be read
 synchronously using their `get_value` method as such:
 
 .. code-block:: python
@@ -183,14 +185,14 @@ It is also possible to read all statuses at once via:
 
 .. note::
     WiFi can not access individual statuses. Instead it can use the `get_camera_state`
-    (:meth:`open_gopro.api.http_commands.HttpCommands.get_camera_state`)
+    (:meth:`~open_gopro.api.http_commands.HttpCommands.get_camera_state`)
     command to retrieve all of them (as well as all of the settings) at once
 
 Settings
 ^^^^^^^^
 
-Settings are instances of a BleSetting(:class:`open_gopro.api.builders.BleSetting`)
-or HttpSetting(:class:`open_gopro.api.builders.HttpSetting`). They can be interacted synchronously in several
+Settings are instances of a BleSetting(:class:`~open_gopro.api.builders.BleSetting`)
+or HttpSetting(:class:`~open_gopro.api.builders.HttpSetting`). They can be interacted synchronously in several
 ways.
 
 Their values can be read (via BLE) using the `get_value` method as such:
@@ -210,7 +212,7 @@ It is also possible to read all settings at once via:
 
 .. note::
     WiFi can not access individual settings. Instead it can use the `get_camera_state`
-    (:meth:`open_gopro.api.http_commands.HttpCommands.get_camera_state`)
+    (:meth:`~open_gopro.api.http_commands.HttpCommands.get_camera_state`)
     command to retrieve all of them (as well as all of the statuses) at once.
 
 Depending on the camera's current state, settings will have differing capabilities. It is possible to query
@@ -239,21 +241,21 @@ This section describes how to register for and handle asynchronous push notifica
 
 It is possible to enable push notifications for any of the following:
 
-- setting values via :meth:`open_gopro.api.builders.BleSetting.register_value_update`
-- setting capabilities via :meth:`open_gopro.api.builders.BleSetting.register_capability_update`
-- status values via :meth:`open_gopro.api.builders.BleStatus.register_value_update`
+- setting values via :meth:`~open_gopro.api.builders.BleSetting.register_value_update`
+- setting capabilities via :meth:`~open_gopro.api.builders.BleSetting.register_capability_update`
+- status values via :meth:`~open_gopro.api.builders.BleStatus.register_value_update`
 
 Firstly, the desired settings / id must be registered for.
 
 Once registered, the camera will send a push notification when the relevant setting / status changes. These
 responses are added to an internal queue of the `GoPro` instance and can be retrieved via
-:meth:`open_gopro.gopro.WirelessGoPro.get_notification`.
+:meth:`~open_gopro.gopro.WirelessGoPro.get_notification`.
 
 It is possible to stop receiving notifications by issuing the relevant unregister command, i.e.:
 
-- setting values via :meth:`open_gopro.api.builders.BleSetting.unregister_value_update`
-- setting capabilities via :meth:`open_gopro.api.builders.BleSetting.unregister_capability_update`
-- status values via :meth:`open_gopro.api.builders.BleStatus.unregister_value_update`
+- setting values via :meth:`~open_gopro.api.builders.BleSetting.unregister_value_update`
+- setting capabilities via :meth:`~open_gopro.api.builders.BleSetting.unregister_capability_update`
+- status values via :meth:`~open_gopro.api.builders.BleStatus.unregister_value_update`
 
 Here is an example of registering for and receiving FOV updates:
 
@@ -282,18 +284,18 @@ Here is an example of registering for and receiving FOV updates:
 It is also possible to register / unregister for **all** settings, statuses, and / or capabilities
 via one API call using the following commands:
 
-- register for all setting notifications via :meth:`open_gopro.api.ble_commands.BleCommands.register_for_all_settings`
-- register for all status notifications via :meth:`open_gopro.api.ble_commands.BleCommands.register_for_all_statuses`
-- register for all capability notifications via :meth:`open_gopro.api.ble_commands.BleCommands.register_for_all_capabilities`
-- unregister for all setting notifications via :meth:`open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings`
-- unregister for all status notifications via :meth:`open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses`
-- unregister for all capability notifications via :meth:`open_gopro.api.ble_commands.BleCommands.unregister_for_all_capabilities`
+- register for all setting notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.register_for_all_settings`
+- register for all status notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.register_for_all_statuses`
+- register for all capability notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.register_for_all_capabilities`
+- unregister for all setting notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings`
+- unregister for all status notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses`
+- unregister for all capability notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.unregister_for_all_capabilities`
 
 Handling Responses
 ==================
 
 Unless otherwise stated, all commands, settings, and status operations return a `GoProResp`
-(:class:`open_gopro.responses.GoProResp`) which is a container around a JSON serializable dict with some helper
+(:class:`~open_gopro.responses.GoProResp`) which is a container around a JSON serializable dict with some helper
 functions.
 
 Response Structure
@@ -301,26 +303,26 @@ Response Structure
 
 A `GoProResp` has 3 relevant attributes for the end user:
 
-- | **identifier** (:meth:`open_gopro.responses.GoProResp.identifier`): identifier of the completed operation.
+- | :meth:`~open_gopro.responses.GoProResp.identifier`: identifier of the completed operation.
   | This will vary based on what type the response is and will also contain the most specific identification information.
 
     - UUID if a direct BLE characteristic read
     - CmdId if an Open GoPro BLE Operation
     - endpoint string if a Wifi HTTP operation
-- **status** (:meth:`open_gopro.responses.GoProResp.status`): the status returned from the camera
-- **data** (:meth:`open_gopro.responses.GoProResp.data`): JSON serializable dict containing the responded data
+- :meth:`~open_gopro.responses.GoProResp.status`: the status returned from the camera
+- :meth:`~open_gopro.responses.GoProResp.data`: JSON serializable dict containing the responded data
 
 Besides the `identifier` attribute which always contains the most specific identification information, there are properties
 to attempt to access other identification information. If the property is not valid for the given response,
 it will return `None`.
 
-- **command**: :meth:`open_gopro.responses.GoProResp.cmd`. Relevant for any BLE operation.
-- **uuid**: :meth:`open_gopro.responses.GoProResp.uuid`. Relevant for any BLE operation.
-- **endpoint**: :meth:`open_gopro.responses.GoProResp.endpoint`. Relevant for any Wifi operation.
+- :meth:`~open_gopro.responses.GoProResp.cmd`. Relevant for any BLE operation.
+- :meth:`~open_gopro.responses.GoProResp.uuid`. Relevant for any BLE operation.
+- :meth:`~open_gopro.responses.GoProResp.endpoint`. Relevant for any Wifi operation.
 
 There is also a property to check that the `status` is Success:
 
-- **is_ok**: :meth:`open_gopro.responses.GoProResp.is_ok`
+- :meth:`~open_gopro.responses.GoProResp.is_ok`
 
 The response object can be serialized to a JSON string with the default Python `str()` function. Note that
 the `identifier` and `status` attributes are appended to the JSON.
@@ -364,7 +366,7 @@ Now let's inspect the responses various attributes / properties:
 Data Access
 -----------
 
-The response data is stored in the `data` attribute (:meth:`open_gopro.responses.GoProResp.data`) but can also
+The response data is stored in the `data` attribute (:meth:`~open_gopro.responses.GoProResp.data`) but can also
 be accessed via dict access on the instance since `__getitem__` has been overridden. For example, the must
 succinct way to access the current resolution from the response is:
 
@@ -396,7 +398,7 @@ Value Flattening
 ----------------
 
 For short responses, it is rather unwieldy to access the JSON dict as described above. Therefore, you can attempt to use the
-`flatten` property (:meth:`open_gopro.responses.GoProResp.flatten`) to flatten the data:
+`flatten` property (:meth:`~open_gopro.responses.GoProResp.flatten`) to flatten the data:
 
 Continuing with our example above, where previously we accessed the responded resolution as:
 

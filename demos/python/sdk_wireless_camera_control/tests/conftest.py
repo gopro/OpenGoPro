@@ -34,7 +34,7 @@ from open_gopro.wifi import WifiClient, WifiController, SsidState
 from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
 from open_gopro.responses import GoProResp
 from open_gopro.constants import ErrorCode, ProducerType, CmdId, GoProUUIDs, ResponseType
-from open_gopro.interface import GoProBle, GoProWifi, GoProDataHandler, BleCommand
+from open_gopro.interface import GoProBle, GoProWifi, BleCommand
 from open_gopro.api import (
     WirelessApi,
     BleCommands,
@@ -313,12 +313,12 @@ class WifiCommunicatorTest(GoProWifi):
         return url, file
 
     @property
-    def wifi_command(self) -> HttpCommands:
-        return self._api.wifi_command
+    def http_command(self) -> HttpCommands:
+        return self._api.http_command
 
     @property
-    def wifi_setting(self) -> HttpSettings:
-        return self._api.wifi_setting
+    def http_setting(self) -> HttpSettings:
+        return self._api.http_setting
 
 
 @pytest.fixture(scope="module", params=versions)

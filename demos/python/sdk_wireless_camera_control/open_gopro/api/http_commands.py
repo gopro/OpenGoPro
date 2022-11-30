@@ -403,6 +403,89 @@ class HttpCommands(Commands[HttpCommand, CmdId]):
             arguments=["path", "ms"],
         )
 
+        class WebcamExit(HttpGetJsonCommand):
+            def __call__(self) -> GoProResp:
+                """Exit the webcam.
+
+                Returns:
+                    GoProResp: command status
+                """
+                return super().__call__()
+
+        #: Sphinx docstring redirect
+        self.webcam_exit = WebcamExit(communicator, endpoint="gopro/webcam/exit")
+
+        class WebcamPreview(HttpGetJsonCommand):
+            def __call__(self) -> GoProResp:
+                """Start the webcam preview.
+
+                Returns:
+                    GoProResp: command status
+                """
+                return super().__call__()
+
+        #: Sphinx docstring redirect
+        self.webcam_preview = WebcamPreview(communicator, endpoint="gopro/webcam/preview")
+
+        class WebcamStart(HttpGetJsonCommand):
+            def __call__(
+                self, resolution: Optional[Params.Resolution] = None, fov: Optional[Params.PhotoFOV] = None
+            ) -> GoProResp:
+                """Start the webcam.
+
+                Args:
+                    resolution (Params.Resolution, optional): resolution to use. If not set, camera default will be used.
+                    fov (Params.PhotoFOV, optional): field of view to use. If not set, camera default will be used.
+
+                Returns:
+                    GoProResp: command status
+                """
+                return super().__call__(res=resolution, fov=fov)
+
+        #: Sphinx docstring redirect
+        self.webcam_start = WebcamStart(communicator, endpoint="gopro/webcam/start", arguments=["res", "fov"])
+
+        class WebcamStop(HttpGetJsonCommand):
+            def __call__(self) -> GoProResp:
+                """Stop the webcam.
+
+                Returns:
+                    GoProResp: command status
+                """
+                return super().__call__()
+
+        #: Sphinx docstring redirect
+        self.webcam_stop = WebcamStop(communicator, endpoint="gopro/webcam/stop")
+
+        class WebcamStatus(HttpGetJsonCommand):
+            def __call__(self) -> GoProResp:
+                """Get the current status of the webcam
+
+                Returns:
+                    GoProResp: command status including the webcam status
+                """
+                return super().__call__()
+
+        #: Sphinx docstring redirect
+        self.webcam_status = WebcamStatus(communicator, endpoint="gopro/webcam/status")
+
+        class UsbControl(HttpGetJsonCommand):
+            def __call__(self, control: Params.Toggle) -> GoProResp:
+                """Enable / disable wired usb control
+
+                Args:
+                    control (params.Toggle): enable or disable
+
+                Returns:
+                    GoProResp: command status
+                """
+                return super().__call__(p=control)
+
+        #: Sphinx docstring redirect
+        self.wired_usb_control = UsbControl(
+            communicator, endpoint="gopro/camera/control/wired_usb", arguments=["p"]
+        )
+
         ######################################################################################################
         #                          HTTP GET BINARY COMMANDS
         ######################################################################################################
@@ -497,106 +580,6 @@ class HttpCommands(Commands[HttpCommand, CmdId]):
         #: Sphinx docstring redirect
         self.download_file = DownloadFile(
             communicator, endpoint="videos/DCIM/100GOPRO", identifier="Download File"
-        )
-
-        super().__init__(communicator)
-
-
-class UsbOnlyCommands(Commands[HttpCommand, CmdId]):
-    """The HTTP commands which can only be sent via USB"""
-
-    # pylint: disable = missing-class-docstring, arguments-differ, useless-super-delegation
-    def __init__(self, communicator: GoProHttp):
-        """Constructor
-
-        Args:
-            communicator (GoProHttp):  Adapter to read / write commands
-        """
-        ######################################################################################################
-        #                          HTTP GET JSON COMMANDS
-        ######################################################################################################
-
-        class WebcamExit(HttpGetJsonCommand):
-            def __call__(self) -> GoProResp:
-                """Exit the webcam.
-
-                Returns:
-                    GoProResp: command status
-                """
-                return super().__call__()
-
-        #: Sphinx docstring redirect
-        self.webcam_exit = WebcamExit(communicator, endpoint="gopro/webcam/exit")
-
-        class WebcamPreview(HttpGetJsonCommand):
-            def __call__(self) -> GoProResp:
-                """Start the webcam preview.
-
-                Returns:
-                    GoProResp: command status
-                """
-                return super().__call__()
-
-        #: Sphinx docstring redirect
-        self.webcam_preview = WebcamPreview(communicator, endpoint="gopro/webcam/preview")
-
-        class WebcamStart(HttpGetJsonCommand):
-            def __call__(
-                self, resolution: Optional[Params.Resolution] = None, fov: Optional[Params.PhotoFOV] = None
-            ) -> GoProResp:
-                """Start the webcam.
-
-                Args:
-                    resolution (Params.Resolution, optional): resolution to use. If not set, camera default will be used.
-                    fov (Params.PhotoFOV, optional): field of view to use. If not set, camera default will be used.
-
-                Returns:
-                    GoProResp: command status
-                """
-                return super().__call__(res=resolution, fov=fov)
-
-        #: Sphinx docstring redirect
-        self.webcam_start = WebcamStart(communicator, endpoint="gopro/webcam/start", arguments=["res", "fov"])
-
-        class WebcamStop(HttpGetJsonCommand):
-            def __call__(self) -> GoProResp:
-                """Stop the webcam.
-
-                Returns:
-                    GoProResp: command status
-                """
-                return super().__call__()
-
-        #: Sphinx docstring redirect
-        self.webcam_stop = WebcamStop(communicator, endpoint="gopro/webcam/stop")
-
-        class WebcamStatus(HttpGetJsonCommand):
-            def __call__(self) -> GoProResp:
-                """Get the current status of the webcam
-
-                Returns:
-                    GoProResp: command status including the webcam status
-                """
-                return super().__call__()
-
-        #: Sphinx docstring redirect
-        self.webcam_status = WebcamStatus(communicator, endpoint="gopro/webcam/status")
-
-        class UsbControl(HttpGetJsonCommand):
-            def __call__(self, control: Params.Toggle) -> GoProResp:
-                """Enable / disable wired usb control
-
-                Args:
-                    control (params.Toggle): enable or disable
-
-                Returns:
-                    GoProResp: command status
-                """
-                return super().__call__(p=control)
-
-        #: Sphinx docstring redirect
-        self.wired_usb_control = UsbControl(
-            communicator, endpoint="gopro/camera/control/wired_usb", arguments=["p"]
         )
 
         super().__init__(communicator)

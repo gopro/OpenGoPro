@@ -20,6 +20,9 @@ DisconnectHandlerType = Callable[[BleDevice], None]
 class BLEController(ABC, Generic[BleDevice, BleHandle]):
     """Interface definition for a BLE driver to be used by GoPro."""
 
+    def __init__(self, exception_handler: Optional[Callable] = None) -> None:
+        self._exception_handler = exception_handler
+
     @abstractmethod
     def read(self, handle: BleHandle, uuid: BleUUID) -> bytearray:
         """Read a bytestream response from a BleUUID.

@@ -28,81 +28,62 @@ from open_gopro.constants import GoProUUIDs, ProducerType, ResponseType, Setting
 
 logger = logging.getLogger(__name__)
 
-MAX_BLE_PKT_LEN = 20
 
+class GoProBase(ABC):
+    """The base class for communicating with all GoPro Clients"""
 
-class GoProDataHandler:
-    """A class that can both send and receive GoPro data
-
-    This supports fragmentation of data if necessary if it is > MAX_BLE_PKT_LEN.
-    """
-
-    general_header = BitStruct(
-        "continuation" / Const(0, Bit),
-        "header" / Const(Header.GENERAL.value, BitsInteger(2)),
-        "length" / BitsInteger(5),
-    )
-
-    extended_13_header = BitStruct(
-        "continuation" / Const(0, Bit),
-        "header" / Const(Header.EXT_13.value, BitsInteger(2)),
-        "length" / BitsInteger(13),
-    )
-
-    extended_16_header = BitStruct(
-        "continuation" / Const(0, Bit),
-        "header" / Const(Header.EXT_16.value, BitsInteger(2)),
-        "padding" / Padding(5),
-        "length" / BitsInteger(16),
-    )
-
-    continuation_header = BitStruct(
-        "continuation" / Const(1, Bit),
-        "padding" / Padding(7),
-    )
-
-    @classmethod
-    def _fragment(cls, data: bytearray) -> Generator[bytearray, None, None]:
-        """Fragment data in to MAX_BLE_PKT_LEN length packets
+    @abstractmethod
+    def open(self, timeout: int = 10, retries: int = 5) -> None:
+        """Connect to the GoPro Client and prepare it for communication
 
         Args:
-            data (bytearray): data to fragment
-
-        Raises:
-            ValueError: data is too long
-
-        Yields:
-            Generator[bytearray, None, None]: Generator of packets as bytearrays
+            timeout (int): time before considering connection a failure. Defaults to 10.
+            retries (int): number of connection retries. Defaults to 5.
         """
-        header: Construct
-        if (data_len := len(data)) < (2**5 - 1):
-            header = GoProDataHandler.general_header
-        elif data_len < (2**13 - 1):
-            header = GoProDataHandler.extended_13_header
-        elif data_len < (2**16 - 1):
-            header = GoProDataHandler.extended_16_header
-        else:
-            raise ValueError(f"Data length {data_len} is too long")
+        raise NotImplementedError
 
-        assert header
-        while data:
-            if header == GoProDataHandler.continuation_header:
-                packet = bytearray(header.build({}))
-            else:
-                packet = bytearray(header.build(dict(length=data_len)))
-                header = GoProDataHandler.continuation_header
+    @abstractmethod
+    def close(self) -> None:
+        """Gracefully close the GoPro Client connection"""
+        raise NotImplementedError
 
-            bytes_remaining = MAX_BLE_PKT_LEN - len(packet)
-            current, data = (data[:bytes_remaining], data[bytes_remaining:])
-            packet.extend(current)
-            yield packet
+    @property
+    @abstractmethod
+    def identifier(self) -> str:
+        """Unique identifier for the connected GoPro Client
+
+        Returns:
+            str: identifier
+        """
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def version(self) -> str:
+        """The Open GoPro API version of the GoPro Client
+
+        Only Version 2.0 is currently supported.
+
+        Returns:
+            str: string version
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_notification(self, timeout: Optional[float] = None) -> Optional[GoProResp]:
+        """Get the next asynchronous notification from the GoPro Client in FIFO order
+
+        Args:
+            timeout (Optional[float]): Time to wait for notification. Defaults to None (wait forever).
+
+        Returns:
+            Optional[GoProResp]: Notification if one was found
+        """
+        raise NotImplementedError
 
 
-class GoProHttp(ABC, GoProDataHandler):
+class GoProHttp(ABC):
     """Base class interface for all HTTP commands"""
-
-    def __init__(self) -> None:
-        GoProDataHandler.__init__(self)
 
     @abstractmethod
     def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
@@ -127,13 +108,6 @@ class GoProHttp(ABC, GoProDataHandler):
             file (Path): location where file should be downloaded to
         """
         raise NotImplementedError
-
-
-class GoProUsb(GoProHttp):
-    """GoPro specific USB Client Interface
-
-    Currently just a direct implementation of the GoProHttp interface
-    """
 
 
 class GoProWifi(GoProHttp):
@@ -166,7 +140,7 @@ class GoProWifi(GoProHttp):
         return self._wifi.ssid
 
 
-class GoProBle(ABC, GoProDataHandler, Generic[BleHandle, BleDevice]):
+class GoProBle(ABC, Generic[BleHandle, BleDevice]):
     """GoPro specific BLE Client
 
     Args:
@@ -183,7 +157,6 @@ class GoProBle(ABC, GoProDataHandler, Generic[BleHandle, BleDevice]):
         notification_cb: NotiHandlerType,
         target: Union[Pattern, BleDevice],
     ) -> None:
-        GoProDataHandler.__init__(self)
         self._ble: BleClient = BleClient(
             controller,
             disconnected_cb,
@@ -248,9 +221,77 @@ class GoProBle(ABC, GoProDataHandler, Generic[BleHandle, BleDevice]):
         """
         raise NotImplementedError
 
+    @classmethod
+    def _fragment(cls, data: bytearray) -> Generator[bytearray, None, None]:
+        """Fragment data in to MAX_BLE_PKT_LEN length packets
+
+        Args:
+            data (bytearray): data to fragment
+
+        Raises:
+            ValueError: data is too long
+
+        Yields:
+            Generator[bytearray, None, None]: Generator of packets as bytearrays
+        """
+        MAX_BLE_PKT_LEN = 20
+        general_header = BitStruct(
+            "continuation" / Const(0, Bit),
+            "header" / Const(Header.GENERAL.value, BitsInteger(2)),
+            "length" / BitsInteger(5),
+        )
+
+        extended_13_header = BitStruct(
+            "continuation" / Const(0, Bit),
+            "header" / Const(Header.EXT_13.value, BitsInteger(2)),
+            "length" / BitsInteger(13),
+        )
+
+        extended_16_header = BitStruct(
+            "continuation" / Const(0, Bit),
+            "header" / Const(Header.EXT_16.value, BitsInteger(2)),
+            "padding" / Padding(5),
+            "length" / BitsInteger(16),
+        )
+
+        continuation_header = BitStruct(
+            "continuation" / Const(1, Bit),
+            "padding" / Padding(7),
+        )
+
+        header: Construct
+        if (data_len := len(data)) < (2**5 - 1):
+            header = general_header
+        elif data_len < (2**13 - 1):
+            header = extended_13_header
+        elif data_len < (2**16 - 1):
+            header = extended_16_header
+        else:
+            raise ValueError(f"Data length {data_len} is too long")
+
+        assert header
+        while data:
+            if header == continuation_header:
+                packet = bytearray(header.build({}))
+            else:
+                packet = bytearray(header.build(dict(length=data_len)))
+                header = continuation_header
+
+            bytes_remaining = MAX_BLE_PKT_LEN - len(packet)
+            current, data = (data[:bytes_remaining], data[bytes_remaining:])
+            packet.extend(current)
+            yield packet
+
+
+class GoProWiredInterface(GoProHttp):
+    """The top-level interface for a Wired Open GoPro controller"""
+
 
 class GoProWirelessInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle]):
-    """The top-level interface to subclass for an Open GoPro controller"""
+    """The top-level interface for a Wireless Open GoPro controller
+
+    This always supports BLE and can optionally support Wifi
+    """
 
     def __init__(
         self,
