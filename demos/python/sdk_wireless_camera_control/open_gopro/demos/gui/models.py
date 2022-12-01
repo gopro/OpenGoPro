@@ -5,7 +5,7 @@
 
 # pylint: disable = reimported, unused-import
 # NOTE! The reason for the seemingly redundant, unnecessary import here is because we are using eval
-# to dynamically  build commands
+# to dynamically build messages
 
 from __future__ import annotations
 import re
@@ -22,7 +22,7 @@ import construct
 
 from open_gopro import WirelessGoPro, constants
 from open_gopro.api import BleStatus, HttpSetting, BleSetting
-from open_gopro.interface import BleCommand, HttpCommand, Commands, Command
+from open_gopro.interface import BleMessage, HttpMessage, Messages, Message
 import open_gopro.api.params
 import open_gopro.api.params as Params
 from open_gopro.responses import GoProResp, ResponseType
@@ -75,11 +75,11 @@ class GoProModel:
     # NOTE: the following properties must be evaluated dynamically since self.gopro is changing
 
     @property
-    def _command_types(self) -> list[Commands]:
-        """Get the top level containers of the command types supported by the GoPro model
+    def _message_types(self) -> list[Messages]:
+        """Get the top level containers of the message types supported by the GoPro model
 
         Returns:
-            list[Commands]: list of command type containers
+            list[Messages]: list of message type containers
         """
         return [
             self.gopro.ble_command,
@@ -91,114 +91,114 @@ class GoProModel:
         ]
 
     @property
-    def commands(self) -> list[Command]:
-        """Get all of the available BLE and Wifi Commands
+    def messages(self) -> list[Message]:
+        """Get all of the available BLE and Wifi Messages
 
         Returns:
-            list[Command]: list of available commands
+            list[Message]: list of available messages
         """
-        commands = []
-        for command_type in self._command_types:
-            c = list(command_type)
+        messages = []
+        for message_type in self._message_types:
+            c = list(message_type)
             c.sort(key=lambda x: str(x))
-            commands.extend(c)
-        return commands
+            messages.extend(c)
+        return messages
 
     @property
-    def command_dict(self) -> dict[str, list[str]]:
-        """Get flattened dictionary of commands indexed by their string name
+    def message_dict(self) -> dict[str, list[str]]:
+        """Get flattened dictionary of message indexed by their string name
 
         Returns:
             dict[str, list[str]]: flattened dict
         """
         d = {}
-        for commands in self._command_types:
-            d[type(commands).__name__] = [str(command) for command in commands]
-            d[type(commands).__name__].sort()
+        for messages in self._message_types:
+            d[type(messages).__name__] = [str(message) for message in messages]
+            d[type(messages).__name__].sort()
         return d
 
     @classmethod
-    def is_ble(cls, command: Command) -> bool:
-        """Is this command a BLE command?
+    def is_ble(cls, message: Message) -> bool:
+        """Is this message a BLE message?
 
         Args:
-            command (Command): command to analyze
+            message (Message): Message to analyze
 
         Returns:
             bool: True if yes, False otherwise
         """
-        return type(command) in (BleSetting, BleStatus, BleCommand)
+        return type(message) in (BleSetting, BleStatus, BleMessage)
 
     @classmethod
-    def is_wifi(cls, command: Command) -> bool:
-        """Is this command a Wifi Command?
+    def is_wifi(cls, message: Message) -> bool:
+        """Is this message a Wifi Message?
 
         Args:
-            command (Command): command to analyze
+            message (Message): Message to analyze
 
         Returns:
             bool: True if yes, False otherwise
         """
-        return type(command) in (HttpCommand, HttpSetting)
+        return type(message) in (HttpMessage, HttpSetting)
 
     @classmethod
-    def is_setting(cls, command: Command) -> bool:
-        """Is this command a setting?
+    def is_setting(cls, message: Message) -> bool:
+        """Is this message a setting?
 
         Args:
-            command (Command): command to analyze
+            message (Message): Message to analyze
 
         Returns:
             bool: True if yes, False otherwise
         """
-        return type(command) in (BleSetting, HttpSetting)
+        return type(message) in (BleSetting, HttpSetting)
 
     @classmethod
-    def is_status(cls, command: Command) -> bool:
-        """Is this command a status?
+    def is_status(cls, message: Message) -> bool:
+        """Is this message a status?
 
         Args:
-            command (Command): command to analyze
+            message (Message): Message to analyze
 
         Returns:
             bool: True if yes, False otherwise
         """
-        return isinstance(command, BleStatus)
+        return isinstance(message, BleStatus)
 
     @classmethod
-    def is_command(cls, command: Command) -> bool:
-        """Is this command a command (i.e. not setting or status)?
+    def is_command(cls, message: Message) -> bool:
+        """Is this message a command (i.e. not setting or status)?
 
         Args:
-            command (Command): command to analyze
+            message (Message): Message to analyze
 
         Returns:
             bool: True if yes, False otherwise
         """
         return (
-            isinstance(command, (BleCommand, HttpCommand, CompoundCommand))
-            and not cls.is_status(command)
-            and not cls.is_setting(command)
+            isinstance(message, (BleMessage, HttpMessage, CompoundCommand))
+            and not cls.is_status(message)
+            and not cls.is_setting(message)
         )
 
     @classmethod
     @no_type_check
-    def get_args_info(cls, command: Command) -> tuple[list[str], list[type]]:
-        """Get the argument names and types for a given command
+    def get_args_info(cls, message: Message) -> tuple[list[str], list[type]]:
+        """Get the argument names and types for a given message
 
         Args:
-            command (Command): command to analyze
+            message (Message): Message to analyze
 
         Returns:
             tuple[list[str], list[type]]: (list[argument names], list[argument types])
         """
         arg_types: list[type] = []
         arg_names: list[str] = []
-        method_info = inspect.getfullargspec(command if cls.is_command(command) else command.set)
+        method_info = inspect.getfullargspec(message if cls.is_command(message) else message.set)
         for arg in method_info.args[1:]:
             try:
                 # Assume this is a generic and try to get the generic type of its original class
-                arg_type = re.search(r"\[.*\]", str(command.__orig_class__))[0].strip("[]")
+                arg_type = re.search(r"\[.*\]", str(message.__orig_class__))[0].strip("[]")
             except AttributeError:
                 # This is not a generic so use the annotations from inspect
                 arg_type = method_info.annotations[arg]
@@ -210,13 +210,13 @@ class GoProModel:
             arg_names.append(arg)
         return arg_names, arg_types
 
-    def get_command_info(
-        self, command: Command
+    def get_message_info(
+        self, message: Message
     ) -> tuple[list[Callable], list[Callable], list[type], list[str]]:
-        """For a given command, get its adapters, validator, argument types, and argument names
+        """For a given message, get its adapters, validator, argument types, and argument names
 
         Args:
-            command (Command): command to analyze
+            message (Message): Message to analyze
 
         Raises:
             Exception: unhandled type of argument
@@ -227,14 +227,14 @@ class GoProModel:
         """
         adapters: list[Callable] = []
         validators: list[Callable] = []
-        names, arg_types = self.get_args_info(command)
+        names, arg_types = self.get_args_info(message)
 
         # Build adapters and validators
         # NOTE! These lambdas must define default variables since they are lost once the for loop scope exits
         for arg_type in arg_types:
             if "enum" in str(arg_type).lower():
                 try:
-                    format_field = command.param_builder.fmtstr  # type: ignore
+                    format_field = message.param_builder.fmtstr  # type: ignore
                     for construct_field in (construct.Int8ub, construct.Int32ub, construct.Int16ub):
                         if construct_field.fmtstr == format_field:
                             validators.append(lambda x, cs=construct_field: cs.build(int(x)))
@@ -314,8 +314,8 @@ class GoProModel:
                     yield identifier, value, get_update_type(update, identifier)
 
 
-class CompoundCommand(Command):
-    """Functionality that consists of multiple BLE and / or Wifi commands"""
+class CompoundCommand(Message):
+    """Functionality that consists of multiple BLE and / or Wifi Messages"""
 
     def __str__(self) -> str:
         return self._identifier
@@ -328,13 +328,13 @@ class CompoundCommand(Command):
             **kwargs (Any) : additional dict keys to append
 
         Returns:
-            dict[str, Any]: command as dict
+            dict[str, Any]: Message as dict
         """
         return dict(protocol="Complex", id=self._identifier) | kwargs
 
 
 # pylint: disable = missing-class-docstring
-class CompoundCommands(Commands):
+class CompoundCommands(Messages):
     """The container for the compound commands"""
 
     def __init__(self, communicator: WirelessGoPro) -> None:

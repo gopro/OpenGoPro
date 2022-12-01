@@ -26,7 +26,7 @@ from construct import (
 
 from open_gopro import proto
 from open_gopro.responses import GoProResp, BytesParser, BytesBuilder, JsonParser
-from open_gopro.interface import GoProBle, Commands, BleCommand
+from open_gopro.interface import GoProBle, Messages, BleMessage
 from open_gopro.api.builders import (
     DeprecatedAdapter,
     BleStatus,
@@ -44,7 +44,7 @@ from . import params as Params
 logger = logging.getLogger(__name__)
 
 
-class BleCommands(Commands[BleCommand, CmdId]):
+class BleCommands(Messages[BleMessage, CmdId]):
     """All of the BLE commands.
 
     To be used as a delegate for a GoProBle instance to build commands
@@ -714,11 +714,11 @@ class BleCommands(Commands[BleCommand, CmdId]):
         super().__init__(communicator)
 
 
-class BleSettings(Commands[BleSetting, SettingId]):
+class BleSettings(Messages[BleSetting, SettingId]):
     # pylint: disable=missing-class-docstring, unused-argument
     """The collection of all BLE Settings.
 
-    To be used by a GoProBle delegate to build setting commands.
+    To be used by a GoProBle delegate to build setting messages.
 
     Args:
         communicator (GoProBle): Adapter to read / write settings
@@ -843,7 +843,7 @@ class BleSettings(Commands[BleSetting, SettingId]):
 
 
 class BleAsyncResponses:
-    """These are responses whose ID's are not associated with any commands"""
+    """These are responses whose ID's are not associated with any messages"""
 
     generic_response: Final = Struct("unparsed" / GreedyBytes)
 
@@ -863,10 +863,10 @@ class BleAsyncResponses:
             GoProResp._add_feature_action_id_mapping(response.feature_id, response.action_id)
 
 
-class BleStatuses(Commands[BleStatus, StatusId]):
+class BleStatuses(Messages[BleStatus, StatusId]):
     """All of the BLE Statuses.
 
-    To be used by a GoProBle delegate to build status commands.
+    To be used by a GoProBle delegate to build status messages.
 
     Args:
         communicator (GoProBle): Adapter to read / write settings
@@ -1061,7 +1061,7 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         """Is 5GHz wireless band available?"""
 
         self.system_ready: BleStatus = BleStatus(communicator, StatusId.SYSTEM_READY, Flag)
-        """Is the system ready to accept commands?"""
+        """Is the system ready to accept messages?"""
 
         self.batt_ok_ota: BleStatus = BleStatus(communicator, StatusId.BATT_OK_OTA, Flag)
         """Is the internal battery charged sufficiently to start Over The Air (OTA) update?"""

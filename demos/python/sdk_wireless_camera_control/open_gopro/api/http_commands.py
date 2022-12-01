@@ -9,7 +9,7 @@ import datetime
 from pathlib import Path
 from typing import Any, Optional
 
-from open_gopro.interface import GoProHttp, HttpCommand, Commands
+from open_gopro.interface import GoProHttp, HttpMessage, Messages
 from open_gopro.constants import SettingId, StatusId, CmdId
 from open_gopro.responses import GoProResp, JsonParser
 from open_gopro.api.builders import HttpGetJsonCommand, HttpGetBinary, HttpSetting
@@ -18,8 +18,7 @@ from . import params as Params
 logger = logging.getLogger(__name__)
 
 
-# TODO check this doc
-class HttpCommands(Commands[HttpCommand, CmdId]):
+class HttpCommands(Messages[HttpMessage, CmdId]):
     """All of the HTTP commands.
 
     To be used as a delegate for a GoProHttp to build commands
@@ -587,7 +586,7 @@ class HttpCommands(Commands[HttpCommand, CmdId]):
         super().__init__(communicator)
 
 
-class HttpSettings(Commands[HttpSetting, SettingId]):
+class HttpSettings(Messages[HttpSetting, SettingId]):
     # pylint: disable=missing-class-docstring, unused-argument
     """The collection of all HTTP Settings
 

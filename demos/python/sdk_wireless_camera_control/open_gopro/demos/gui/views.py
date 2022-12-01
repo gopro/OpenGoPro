@@ -561,10 +561,10 @@ class TextLog(Log):
 
 
 class ParamForm(View, tk.Frame):
-    """A entry form to gather command arguments"""
+    """A entry form to gather message arguments"""
 
     FRAME_TITLE_ROW = 0
-    COMMAND_NAME_ROW = 1
+    MESSAGE_NAME_ROW = 1
     PARAM_START_ROW = 2
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -572,7 +572,7 @@ class ParamForm(View, tk.Frame):
         self.value_inputs: list[Union[tk.Variable, ttk.Entry]] = []
         self.arg_frames: list[tk.Frame] = []
         self.frame_label: ttk.Label
-        self.command_label: ttk.Label
+        self.message_label: ttk.Label
         self.value_label: ttk.Label
         self.value_menu: ttk.OptionMenu
         self.send_button: ttk.Button
@@ -609,14 +609,14 @@ class ParamForm(View, tk.Frame):
         self.value_inputs.clear()
         self.arg_frames.clear()
 
-    def create_command(self, command: str) -> None:
-        """Create a command label
+    def create_message(self, message: str) -> None:
+        """Create a message label
 
         Args:
-            command (str): name of command
+            message (str): name of message
         """
-        self.command_label = ttk.Label(self, text=command)
-        self.command_label.pack()
+        self.message_label = ttk.Label(self, text=message)
+        self.message_label.pack()
 
     def _create_with_args(self, param: str) -> None:
         """Create an entry that includes an argument
@@ -678,8 +678,8 @@ class ParamForm(View, tk.Frame):
         self.send_button.pack()
 
 
-class CommandPallette(View, tk.Frame):
-    """A hierarchal display of commands by functionality for the user to select"""
+class MessagePalette(View, tk.Frame):
+    """A hierarchal display of messages by functionality for the user to select"""
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         tk.Frame.__init__(self, *args, **kwargs)
@@ -687,13 +687,13 @@ class CommandPallette(View, tk.Frame):
         self.sbv = tk.Scrollbar(self, orient=tk.VERTICAL)
         self.tv.config(yscrollcommand=self.sbv.set)
         self.sbv.config(command=self.tv.yview)
-        self.frame_label = ttk.Label(self, text="Command Pallette")
+        self.frame_label = ttk.Label(self, text="Message Palette")
 
-    def create_view(self, commands: dict[str, list[str]]) -> None:
-        """Display the command pallette
+    def create_view(self, messages: dict[str, list[str]]) -> None:
+        """Display the message palette
 
         Args:
-            commands (dict[str, list[str]]): dictionary to be mapped to command pallette hierarchy
+            messages (dict[str, list[str]]): dictionary to be mapped to message palette hierarchy
         """
         self.frame_label.pack()
         self.sbv.pack(side=tk.RIGHT, fill=tk.Y)
@@ -702,10 +702,10 @@ class CommandPallette(View, tk.Frame):
         # Fill up tree view
         parent_index = MAX_TREEVIEW_ID
         child_index = 0
-        for parent, children in commands.items():
+        for parent, children in messages.items():
             self.tv.insert(parent="", index="end", iid=str(parent_index), text=parent)
-            for command in children:
-                self.tv.insert(parent=str(parent_index), index="end", iid=str(child_index), text=command)
+            for message in children:
+                self.tv.insert(parent=str(parent_index), index="end", iid=str(child_index), text=message)
                 child_index += 1
             self.tv.item(str(parent_index), open=True)
             parent_index += 1

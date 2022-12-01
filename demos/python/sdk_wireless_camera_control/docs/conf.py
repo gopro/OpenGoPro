@@ -17,10 +17,9 @@ from open_gopro.api.builders import (
     BleProtoCommand,
     BleWriteCommand,
     BleReadCommand,
-    HttpCommand,
     RegisterUnregisterAll,
-    BleCommand,
 )
+from open_gopro.interface import BleMessage, HttpMessage
 
 DEBUG = False
 
@@ -41,7 +40,7 @@ extensions = [
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.graphviz",
     "sphinx.ext.inheritance_diagram",
-    'sphinxemoji.sphinxemoji',
+    "sphinxemoji.sphinxemoji",
 ]
 html_theme = "sphinx_rtd_theme"
 html_context = {
@@ -105,7 +104,7 @@ def debug_print(*args) -> None:
         print(*args)
 
 
-def get_command_from_name(name: str) -> Optional[Union[BleCommand, HttpCommand]]:
+def get_command_from_name(name: str) -> Optional[Union[BleMessage, HttpMessage]]:
     cls_attr_to_instance_prop = dict(
         BleStatuses="ble_status",
         BleSettings="ble_setting",
@@ -146,7 +145,7 @@ def on_autodoc_process_signature(app, what, name, *_) -> Optional[tuple[str, str
     """
     try:
         # Any command except for register / unregister all and direct reads
-        if isinstance(command := get_command_from_name(name), (BleCommand, HttpCommand)) and not isinstance(
+        if isinstance(command := get_command_from_name(name), (BleMessage, HttpMessage)) and not isinstance(
             command, (RegisterUnregisterAll, BleReadCommand)
         ):
             debug_print(command)

@@ -119,7 +119,7 @@ def test_get_param_values_by_id(gopro_client: WirelessGoPro):
 
 
 # def test_notification_handler(gopro_client: WirelessGoPro):
-#     response = gopro_client._send_ble_command(
+#     response = gopro_client._send_ble_message(
 #         GoProUUIDs.CQ_COMMAND,
 #         bytearray([0x03, 0x01, 0x01, 0x01]),
 #         response_data=[bytearray([0x02, 0x01, 0x00])],

@@ -143,7 +143,7 @@ class GoProBle(ABC, Generic[BleHandle, BleDevice]):
         raise NotImplementedError
 
     @abstractmethod
-    def _send_ble_command(self, uuid: BleUUID, data: bytearray, response_id: ResponseType) -> GoProResp:
+    def _send_ble_message(self, uuid: BleUUID, data: bytearray, response_id: ResponseType) -> GoProResp:
         """Write a characteristic and block until its corresponding notification response is received.
 
         Args:
@@ -268,8 +268,8 @@ IdType = TypeVar("IdType", SettingId, StatusId, ActionId, CmdId, BleUUID, str)
 ParserType = TypeVar("ParserType", BytesParser, JsonParser)
 
 
-class Command(Generic[CommunicatorType, IdType, ParserType]):
-    """Base class for all commands that will be contained in a Commands class"""
+class Message(Generic[CommunicatorType, IdType, ParserType]):
+    """Base class for all messages that will be contained in a Messages class"""
 
     def __init__(
         self,
@@ -281,7 +281,7 @@ class Command(Generic[CommunicatorType, IdType, ParserType]):
 
         Args:
             communicator (CommunicatorType): BLE, Wifi, or USB communicator
-            identifier (IdType): id to access this command by
+            identifier (IdType): id to access this message by
             parser (ParserType): optional parser and builder
         """
         self._communicator = communicator
@@ -290,20 +290,20 @@ class Command(Generic[CommunicatorType, IdType, ParserType]):
 
     @abstractmethod
     def _as_dict(self, *_: Any, **kwargs: Any) -> dict[str, Any]:
-        """Return the attributes of the command as a dict
+        """Return the attributes of the message as a dict
 
         Args:
             *_ (Any): unused
             **kwargs (Any): additional entries for the dict
 
         Returns:
-            dict[str, Any]: command as dict
+            dict[str, Any]: message as dict
         """
         raise NotImplementedError
 
 
-class BleCommand(ABC, Command[GoProBle, IdType, BytesParser]):
-    """The base class for all BLE commands to store common info
+class BleMessage(ABC, Message[GoProBle, IdType, BytesParser]):
+    """The base class for all BLE messages to store common info
 
     Args:
         communicator (GoProBle): BLE client to read / write
@@ -325,16 +325,16 @@ class BleCommand(ABC, Command[GoProBle, IdType, BytesParser]):
             GoProResp._add_global_parser(identifier, self._parser)
 
 
-class HttpCommand(Command[GoProHttp, IdType, JsonParser]):
-    """The base class for all HTTP Commands. Stores common information.
+class HttpMessage(Message[GoProHttp, IdType, JsonParser]):
+    """The base class for all HTTP messages. Stores common information.
 
     Args:
-        communicator (GoProHttp): delegate owner to send commands and receive responses
+        communicator (GoProHttp): delegate owner to send messages and receive responses
         endpoint (str): base endpoint
         components (Optional[list[str]]): conditional endpoint components. Defaults to None.
         arguments (Optional[list[str]]): URL argument names. Defaults to None.
         parser (Optional[JsonParser]): additional parsing of JSON response. Defaults to None.
-        name (Optional[str]): explicitly set command identifier. Defaults to None (generated from endpoint).
+        name (Optional[str]): explicitly set message identifier. Defaults to None (generated from endpoint).
     """
 
     def __init__(
@@ -356,48 +356,48 @@ class HttpCommand(Command[GoProHttp, IdType, JsonParser]):
         return str(self._identifier).title()
 
     def _as_dict(self, *_: Any, **kwargs: Any) -> dict[str, Any]:
-        """Return the attributes of the command as a dict
+        """Return the attributes of the message as a dict
 
         Args:
             *_ (Any): unused
             **kwargs (Any): additional entries for the dict
 
         Returns:
-            dict[str, Any]: command as dict
+            dict[str, Any]: message as dict
         """
         # If any kwargs keys were to conflict with base dict, append underscore
         return self._base_dict | {f"{'_' if k in ['id', 'protocol'] else ''}{k}": v for k, v in kwargs.items()}
 
 
-CommandType = TypeVar("CommandType", bound=Command)
+MessageType = TypeVar("MessageType", bound=Message)
 
 
-class Commands(Iterable, Generic[CommandType, IdType]):
-    """Base class for command container
+class Messages(Iterable, Generic[MessageType, IdType]):
+    """Base class for message container
 
-    Allows command groups to be iterable and supports dict-like access
+    Allows message groups to be iterable and supports dict-like access
 
     Args:
-        communicator (Union[GoProBle, GoProHttp]): communicator that will send commands
+        communicator (Union[GoProBle, GoProHttp]): communicator that will send messages
     """
 
     def __init__(self, communicator: Union[GoProBle, GoProHttp]) -> None:
         self._communicator = communicator
-        self._commands_list: list[CommandType] = []
-        self._command_map: dict[IdType, CommandType] = {}
-        for attribute, command in self.__dict__.items():
+        self._messages_list: list[MessageType] = []
+        self._message_map: dict[IdType, MessageType] = {}
+        for attribute, message in self.__dict__.items():
             if attribute.startswith("_"):
                 continue
-            self._commands_list.append(command)
-            self._command_map[command._identifier] = command
+            self._messages_list.append(message)
+            self._message_map[message._identifier] = message
 
     def __iter__(self) -> Iterator:
-        return iter(self._commands_list)
+        return iter(self._messages_list)
 
-    def __getitem__(self, key: IdType) -> CommandType:
-        if self._command_map:
-            return self._command_map[key]
+    def __getitem__(self, key: IdType) -> MessageType:
+        if self._message_map:
+            return self._message_map[key]
         raise TypeError(f"{type(self)} object is not subscriptable")
 
     def __contains__(self, item: IdType) -> bool:
-        return item in self._command_map
+        return item in self._message_map

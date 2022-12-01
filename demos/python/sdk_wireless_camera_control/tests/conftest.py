@@ -3,7 +3,6 @@
 
 # pylint: disable=redefined-outer-name
 
-
 import re
 import asyncio
 import logging
@@ -34,7 +33,7 @@ from open_gopro.wifi import WifiClient, WifiController, SsidState
 from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
 from open_gopro.responses import GoProResp
 from open_gopro.constants import ErrorCode, ProducerType, CmdId, GoProUUIDs, ResponseType
-from open_gopro.interface import GoProBle, GoProWifi, BleCommand
+from open_gopro.interface import GoProBle, GoProWifi
 from open_gopro.api import (
     WirelessApi,
     BleCommands,
@@ -227,7 +226,7 @@ class BleCommunicatorTest(GoProBle):
     def get_notification(self, timeout: float) -> int:
         return 1
 
-    def _send_ble_command(self, uuid: BleUUID, data: bytearray, response_id: ResponseType) -> GoProResp:
+    def _send_ble_message(self, uuid: BleUUID, data: bytearray, response_id: ResponseType) -> GoProResp:
         response = good_response
         response._meta = [uuid]
         response._raw_packet = data
@@ -381,7 +380,7 @@ class GoProTest(WirelessGoPro):
         super()._open_ble(timeout=timeout, retries=retries)
         self._ble._gatt_table.handle2uuid = self._test_return_uuid
 
-    def _send_ble_command(
+    def _send_ble_message(
         self,
         uuid: BleUUID,
         data: bytearray,
@@ -397,7 +396,7 @@ class GoProTest(WirelessGoPro):
             global _test_response_id
             _test_response_id = response_id
             self._ble.write = self._test_write
-            return super()._send_ble_command(uuid, data, response_id)
+            return super()._send_ble_message(uuid, data, response_id)
 
     def _test_return_version(self) -> FlattenPatch:
         return FlattenPatch(Version(*[int(x) for x in self._test_version.split(".")]))

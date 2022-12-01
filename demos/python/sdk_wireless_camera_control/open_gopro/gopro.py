@@ -938,7 +938,7 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         self._ble_disconnect_event.set()
 
     @ensure_initialized(Interface.BLE)
-    def _send_ble_command(self, uuid: BleUUID, data: bytearray, response_id: ResponseType) -> GoProResp:
+    def _send_ble_message(self, uuid: BleUUID, data: bytearray, response_id: ResponseType) -> GoProResp:
         """Write a characteristic and block until its corresponding notification response is received.
 
         Args:
@@ -960,9 +960,9 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
             and self._is_ble_initialized
             and not (data[0] == CmdId.SET_SHUTTER.value and data[-1] == 0)
         ):
-            logger.trace("_send_ble_command acquiring lock")  # type: ignore
+            logger.trace("_send_ble_message acquiring lock")  # type: ignore
             self._ready.acquire()
-            logger.trace("_send_ble_command has lock")  # type: ignore
+            logger.trace("_send_ble_message has lock")  # type: ignore
             have_lock = True
 
         # Store information on the response we are expecting

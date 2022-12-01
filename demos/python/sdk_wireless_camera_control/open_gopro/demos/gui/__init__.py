@@ -6,7 +6,7 @@
 import platform
 from typing import Union
 
-from open_gopro.api.builders import BleCommand, HttpCommand
+from open_gopro.api.builders import BleMessage, HttpMessage
 from open_gopro.api import BleSettings, BleCommands, BleStatuses, HttpCommands, HttpSettings
 
 if (OS := platform.system().lower()) == "windows":
