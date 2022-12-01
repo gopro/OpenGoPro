@@ -434,8 +434,10 @@ class HttpCommands(Commands[HttpCommand, CmdId]):
                 """Start the webcam.
 
                 Args:
-                    resolution (Params.Resolution, optional): resolution to use. If not set, camera default will be used.
-                    fov (Params.PhotoFOV, optional): field of view to use. If not set, camera default will be used.
+                    resolution (Optional[open_gopro.api.params.Resolution]): resolution to use. If not set,
+                        camera default will be used.
+                    fov (Optional[open_gopro.api.params.PhotoFOV]): field of view to use. If not set, camera
+                        default will be used.
 
                 Returns:
                     GoProResp: command status

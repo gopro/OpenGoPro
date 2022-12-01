@@ -33,7 +33,7 @@ def main(args: argparse.Namespace) -> None:
         assert gopro.ble_command.load_preset_group(Params.PresetGroup.VIDEO).is_ok
 
         # Get the media list before
-        media_set_before = set(x["n"] for x in gopro.wifi_command.get_media_list().flatten)
+        media_set_before = set(x["n"] for x in gopro.http_command.get_media_list().flatten)
         # Take a video
         console.print("Capturing a video...")
         assert gopro.ble_command.set_shutter(Params.Toggle.ENABLE).is_ok
@@ -41,12 +41,12 @@ def main(args: argparse.Namespace) -> None:
         assert gopro.ble_command.set_shutter(Params.Toggle.DISABLE).is_ok
 
         # Get the media list after
-        media_set_after = set(x["n"] for x in gopro.wifi_command.get_media_list().flatten)
+        media_set_after = set(x["n"] for x in gopro.http_command.get_media_list().flatten)
         # The video (is most likely) the difference between the two sets
         video = media_set_after.difference(media_set_before).pop()
         # Download the video
         console.print("Downloading the video...")
-        gopro.wifi_command.download_file(camera_file=video, local_file=args.output)
+        gopro.http_command.download_file(camera_file=video, local_file=args.output)
         console.print(f"Success!! :smiley: File has been downloaded to {args.output}")
 
     if gopro:

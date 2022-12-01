@@ -12,6 +12,7 @@ import traceback
 import threading
 from queue import Queue
 from pathlib import Path
+from abc import ABC, abstractmethod
 from typing import Any, Final, Optional, Callable, Pattern
 
 import wrapt
@@ -35,7 +36,7 @@ from open_gopro.api import (
     HttpSettings,
     Params,
 )
-from open_gopro.interface import GoProBase, GoProWirelessInterface, GoProWiredInterface, JsonParser
+from open_gopro.interface import GoProWirelessInterface, GoProWiredInterface, JsonParser
 
 logger = logging.getLogger(__name__)
 
@@ -102,6 +103,97 @@ def acquire_ready_lock(wrapped: Callable, instance: WirelessGoPro, args: Any, kw
     return ret
 
 
+class GoProBase(ABC):
+    """The base class for communicating with all GoPro Clients"""
+
+    @abstractmethod
+    def open(self, timeout: int = 10, retries: int = 5) -> None:
+        """Connect to the GoPro Client and prepare it for communication
+
+        Args:
+            timeout (int): time before considering connection a failure. Defaults to 10.
+            retries (int): number of connection retries. Defaults to 5.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def close(self) -> None:
+        """Gracefully close the GoPro Client connection"""
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def identifier(self) -> str:
+        """Unique identifier for the connected GoPro Client
+
+        Returns:
+            str: identifier
+        """
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def version(self) -> str:
+        """The Open GoPro API version of the GoPro Client
+
+        Only Version 2.0 is currently supported.
+
+        Returns:
+            str: string version
+        """
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def http_command(self) -> HttpCommands:
+        """Used to access the Wifi commands
+
+        Returns:
+            HttpCommands: the commands
+        """
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def http_setting(self) -> HttpSettings:
+        """Used to access the Wifi settings
+
+        Returns:
+            HttpSettings: the settings
+        """
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def ble_command(self) -> BleCommands:
+        """Used to call the BLE commands
+
+        Returns:
+            BleCommands: the commands
+        """
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def ble_setting(self) -> BleSettings:
+        """Used to access the BLE settings
+
+        Returns:
+            BleSettings: the settings
+        """
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def ble_status(self) -> BleStatuses:
+        """Used to access the BLE statuses
+
+        Returns:
+            BleStatuses: the statuses
+        """
+        raise NotImplementedError
+
+
 # TODO discover via mDNS if serial number is not passed
 class WiredGoPro(GoProBase, GoProWiredInterface):
     """The top-level USB interface to a Wired GoPro device.
@@ -126,7 +218,7 @@ class WiredGoPro(GoProBase, GoProWiredInterface):
         ...
 
     def open(self, timeout: int = 10, retries: int = 5) -> None:
-        """Connect to the GoPro Client and prepare it for communication
+        """Connect to the Wired GoPro Client and prepare it for communication
 
         Args:
             timeout (int): time before considering connection a failure. Defaults to 10.
@@ -158,7 +250,7 @@ class WiredGoPro(GoProBase, GoProWiredInterface):
 
     @property
     def http_command(self) -> HttpCommands:
-        """Used to access the version-specific USB commands
+        """Used to access the USB commands
 
         Returns:
             HttpCommands: the commands
@@ -167,21 +259,37 @@ class WiredGoPro(GoProBase, GoProWiredInterface):
 
     @property
     def http_setting(self) -> HttpSettings:
-        """Used to access the version-specific USB settings
+        """Used to access the USB settings
 
         Returns:
             HttpSettings: the settings
         """
         return self._api.http_setting
 
-    def get_notification(self, timeout: Optional[float] = None) -> Optional[GoProResp]:
-        """Get the next asynchronous notification from the GoPro Client in FIFO order
-
-        Args:
-            timeout (Optional[float]): Time to wait for notification. Defaults to None (wait forever).
+    @property
+    def ble_command(self) -> BleCommands:
+        """Used to call the BLE commands
 
         Raises:
-            NotImplementedError: TODO is this needed for USB?
+            NotImplementedError: Not valid for WiredGoPro
+        """
+        raise NotImplementedError
+
+    @property
+    def ble_setting(self) -> BleSettings:
+        """Used to access the BLE settings
+
+        Raises:
+            NotImplementedError: Not valid for WiredGoPro
+        """
+        raise NotImplementedError
+
+    @property
+    def ble_status(self) -> BleStatuses:
+        """Used to access the BLE statuses
+
+        Raises:
+            NotImplementedError: Not valid for WiredGoPro
         """
         raise NotImplementedError
 
@@ -262,18 +370,18 @@ class WiredGoPro(GoProBase, GoProWiredInterface):
 class WirelessGoPro(GoProBase, GoProWirelessInterface):
     """The top-level BLE and Wifi interface to a Wireless GoPro device.
 
-    See `Open GoPro <https://gopro.github.io/OpenGoPro/python_sdk>`_ for complete documentation.
+    See the `Open GoPro SDK <https://gopro.github.io/OpenGoPro/python_sdk>`_ for complete documentation.
 
-    This will handle for BLE:
+    This will handle, for BLE:
 
-    - discovering device
-    - establishing connections
+    - discovering target GoPro device
+    - establishing the connection
     - discovering GATT characteristics
     - enabling notifications
     - discovering Open GoPro version
     - transferring data
 
-    This will handle for Wifi:
+    This will handle, for Wifi:
 
     - finding SSID and password
     - establishing Wifi connection
@@ -284,15 +392,17 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
     - ensuring camera is ready / not encoding before transferring data
     - sending keep alive signal periodically
 
-    If no target arg is passed in, the first discovered GoPro device will be connected to.
+    If no target arg is passed in, the first discovered BLE GoPro device will be connected to.
 
     It can be used via context manager:
 
+    >>> from open_gopro import WirelessGoPro
     >>> with WirelessGoPro() as gopro:
     >>>     gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
 
     Or without:
 
+    >>> from open_gopro import WirelessGoPro
     >>> gopro = WirelessGoPro()
     >>> gopro.open()
     >>> gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
@@ -483,7 +593,7 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
 
     @property
     def ble_command(self) -> BleCommands:
-        """Used to call the version-specific BLE commands
+        """Used to call the BLE commands
 
         Returns:
             BleCommands: the commands
@@ -492,7 +602,7 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
 
     @property
     def ble_setting(self) -> BleSettings:
-        """Used to access the version-specific BLE settings
+        """Used to access the BLE settings
 
         Returns:
             BleSettings: the settings
@@ -501,7 +611,7 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
 
     @property
     def ble_status(self) -> BleStatuses:
-        """Used to access the version-specific BLE statuses
+        """Used to access the BLE statuses
 
         Returns:
             BleStatuses: the statuses
@@ -509,8 +619,8 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         return self._api.ble_status
 
     @property
-    def wifi_command(self) -> HttpCommands:
-        """Used to access the version-specific Wifi commands
+    def http_command(self) -> HttpCommands:
+        """Used to access the Wifi commands
 
         Returns:
             HttpCommands: the commands
@@ -518,8 +628,8 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         return self._api.http_command
 
     @property
-    def wifi_setting(self) -> HttpSettings:
-        """Used to access the version-specific Wifi settings
+    def http_setting(self) -> HttpSettings:
+        """Used to access the Wifi settings
 
         Returns:
             HttpSettings: the settings

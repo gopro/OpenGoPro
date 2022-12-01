@@ -36,18 +36,18 @@ def main(args: argparse.Namespace) -> None:
             assert gopro.ble_command.load_preset_group(Params.PresetGroup.PHOTO).is_ok
 
             # Get the media list before
-            media_set_before = set(x["n"] for x in gopro.wifi_command.get_media_list().flatten)
+            media_set_before = set(x["n"] for x in gopro.http_command.get_media_list().flatten)
             # Take a photo
             console.print("Capturing a photo...")
             assert gopro.ble_command.set_shutter(Params.Toggle.ENABLE).is_ok
 
             # Get the media list after
-            media_set_after = set(x["n"] for x in gopro.wifi_command.get_media_list().flatten)
+            media_set_after = set(x["n"] for x in gopro.http_command.get_media_list().flatten)
             # The photo (is most likely) the difference between the two sets
             photo = media_set_after.difference(media_set_before).pop()
             # Download the photo
             console.print("Downloading the photo...")
-            gopro.wifi_command.download_file(camera_file=photo, local_file=args.output)
+            gopro.http_command.download_file(camera_file=photo, local_file=args.output)
             console.print(f"Success!! :smiley: File has been downloaded to {args.output}")
 
     except KeyboardInterrupt:

@@ -4,35 +4,43 @@ Usage
 *****
 
 This section will describe some high level information of how to use the Open GoPro module. For more detailed
-information, see the :ref:`Interfaces<API Reference>` section. For just running the demo, see the
+information, see the :ref:`Interfaces<API Reference>` section. For just running the demos, see the
 :ref:`QuickStart Guide<QuickStart Guide>` section.
 
 Overview
 ========
 
-There are two top-level interfaces to the GoPro camera:
+There are two top-level interfaces to communicate with a GoPro camera:
 
-One :class:`~open_gopro.gopro.WirelessGoPro` or :class:`~open_gopro.gopro.WiredGoPro` instance corresponds to a
-(potentially not yet) connected GoPro camera resource.
+    - :class:`~open_gopro.gopro.WiredGoPro` to communicate with the GoPro via USB HTTP
+    - :class:`~open_gopro.gopro.WirelessGoPro` to communicate with the GoPro via BLE and optionally WiFi HTTP
 
-Once a `GoPro` instance is :ref:`opened<Opening>`, it can be interacted with (via BLE and / or WiFi) by:
+An individual instance of one of the above classes corresponds to a (potentially not yet) connected GoPro
+camera resource. The general procedure to communicate with the GoPro is:
 
-- Performing synchronous :ref:`data operations<Synchronous Data Operations>` to send a command and receive a GoPro Response
-- Registering for :ref:`asynchronous push notifications<Asynchronous Push Notifications>` and getting these after they are enqueued
+1. Identify and :ref:`open<Opening>` the connection to the target GoPro
+2. :ref:`Send Commands<Sending Commands>` and :ref:`Receive Responses<Handling Responses>` via BLE / HTTP
+3. Gracefully :ref:`close<Closing>` the connection with the GoPro
 
-.. note:: There is a lot of logging throughout the Open GoPro package. See :ref:`troubleshooting <troubleshooting>` for more info.
+.. tip:: There is a lot of logging throughout the Open GoPro package. See
+    :ref:`troubleshooting <troubleshooting>` for more info.
 
 Opening
 =======
 
-Before communicating with a camera, the camera resource must be "opened". This can be done either with the
-context manager...
+Before communicating with a camera, the camera resource must be "opened". This can be done either with or without
+the context manager. See the below sections for opening information specific to Wired / Wireless.
+
+Wireless Opening
+----------------
+
+The Wireless GoPro client can be opened either with the context manager:
 
 .. code-block:: python
 
-    from open_gopro import GoPro
+    from open_gopro import WirelessGoPro
 
-    with GoPro() as gopro:
+    with WirelessGoPro() as gopro:
         print("Yay! I'm connected via BLE, Wifi, initialized, and ready to send / get data now!")
         # Send some commands now
 
@@ -40,9 +48,9 @@ context manager...
 
 .. code-block:: python
 
-    from open_gopro import GoPro
+    from open_gopro import WirelessGoPro
 
-    gopro = GoPro()
+    gopro = WirelessGoPro()
     gopro.open()
     print("Yay! I'm connected via BLE, Wifi, initialized, and ready to send / get data now!")
     # Send some commands now
@@ -56,10 +64,10 @@ In either case, the following will have occurred before the camera is ready to c
 #. discover characteristics
 #. initialize (register for internal status notifications)
 #. discover Open GoPro version
-#. connect via WiFi
+#. connect via WiFi (unless specified not to via argument)
 
-After the `GoPro` instance is successfully opened via either of the methods above, it's state can be checked via several
-properties. All of the following will return True:
+After the `WirelessGoPro` instance is successfully opened via either of the methods above, it's state can be
+checked via several properties. All of the following will return True:
 
 .. code-block:: python
 
@@ -67,42 +75,15 @@ properties. All of the following will return True:
     gopro.is_wifi_connected
     gopro.is_ble_initialized
 
-Arguments
----------
-
-The `GoPro` class takes the following optional arguments:
-
-- **target**: A regex to search for the target GoPro's name. For example, the Last 4 digis of camera name /
-  serial number (i.e. 0456 for GoPro0456). The name can be found from the camera via
-  Preferences-->About-->Camera Info-->Camera Name. If no target is passed, the first discovered
-  GoPro BLE device will be connected to.
-- **wifi_interface**: optionally specify the hardware WiFi interface (OS system adapter) to use. If None (or
-  not set), first discovered interface will be used.
-- **sudo_password**:  User password for sudo. If not passed, you will be prompted if a password is
-  needed (Only relevant for \*Nix systems).
-- **enable_wifi**: a boolean to optionally disable the camera's WiFi. This defaults to True (i.e. WiFi is enabled).
-  If set to False, the camera's WiFI AP will not be discovered / connected to and a command will be sent to the camera to
-  disable its WiFi.
-- **exception_cb**: optional callback to be notified when exception occurs in a thread besides main. This is
-  useful if you anticipate unexpected BLE connection drops
-
-API Version
------------
-
-As mentioned above, one of the steps during the opening sequence is to query the camera's Open GoPro API version.
-This SDK only supports Open GoPro API Version 2.0 so will raise an `InvalidOpenGoProVersion` if the connected camera is
-using anything else.
-
-The version string can be accessed via the `version` property
-
-- :meth:`~open_gopro.gopro.WirelessGoPro.version`
+.. note:: While a BLE connection is always needed, the WiFi connection is optional. To configure this (and other
+    instance arguments) see the API Reference for :class:`~open_gopro.gopro.WirelessGoPro`
 
 Camera Readiness
-----------------
+^^^^^^^^^^^^^^^^
 
 A command can not be sent to the camera if it is not ready where "ready" is defined as not encoding and not
-busy. These two states are managed automatically by the `GoPro` instance such that a call to any command will
-block until the camera is ready. It is possible to check these from the application via:
+busy. These two states are managed automatically by the `WirelessGoPro` instance such that a call to any
+command will block until the camera is ready. It is possible to check these from the application via:
 
 - :meth:`~open_gopro.gopro.WirelessGoPro.is_encoding`
 - :meth:`~open_gopro.gopro.WirelessGoPro.is_busy`
@@ -117,16 +98,71 @@ For example,
             pass
 
 To reiterate...it is not needed or recommended to worry about this as the internal state is managed automatically
-by the `GoPro` instance.
+by the `WirelessGoPro` instance.
+
+Wired Opening
+-------------
+
+TODO
+
+Common Opening
+--------------
+
+API Version
+^^^^^^^^^^^
+
+One of the steps during the opening sequence is to query the camera's Open GoPro API version. This SDK only
+supports Open GoPro API Version 2.0 so will raise an `InvalidOpenGoProVersion` if the connected camera is
+using anything else.
+
+The version string can be accessed via the :meth:`~open_gopro.gopro.GoProBase.version` property.
+
 
 Sending Commands
 ================
 
-Once the `GoPro` instance has been :ref:`opened<opening>`, it is now possible to send commands to the camera
-(provided that the camera is :ref:`ready<camera readiness>`). This is done either via:
+TODO refactor to use "message" instead of "command" as the base type
 
-- synchronous data operations
-- registering for asynchronous push notifications
+Once a `WirelessGoPro` or `WiredGoPro` instance has been :ref:`opened<opening>`, it is now possible to send
+commands to the camera (provided that the camera is :ref:`ready<camera readiness>`).  Commands are accessed
+by transport protocol where the superset of options are:
+
+.. list-table::
+   :widths: 50 50 50 50
+   :header-rows: 1
+
+   * - Command Group
+     - WiredGoPro
+     - WirelessGoPro (WiFi Enabled)
+     - WirelessGoPro (WiFi Disabled)
+   * - :meth:`~open_gopro.gopro.GoProBase.http_command`
+     - |:heavy_check_mark:|
+     - |:heavy_check_mark:|
+     - |:x:|
+   * - :meth:`~open_gopro.gopro.GoProBase.http_setting`
+     - |:heavy_check_mark:|
+     - |:heavy_check_mark:|
+     - |:x:|
+   * - :meth:`~open_gopro.gopro.GoProBase.ble_command`
+     - |:x:|
+     - |:heavy_check_mark:|
+     - |:heavy_check_mark:|
+   * - :meth:`~open_gopro.gopro.GoProBase.ble_setting`
+     - |:x:|
+     - |:heavy_check_mark:|
+     - |:heavy_check_mark:|
+   * - :meth:`~open_gopro.gopro.GoProBase.ble_status`
+     - |:x:|
+     - |:heavy_check_mark:|
+     - |:heavy_check_mark:|
+
+In the case where a given group of commands is not supported, a `NotImplementedError` will be returned when
+the relevant property is accessed.
+
+All messages are one of two types:
+
+- Performing synchronous :ref:`data operations<Synchronous Data Operations>` to send a command and receive a GoPro Response
+- Registering for :ref:`asynchronous push notifications<Asynchronous Push Notifications>` and getting these after they are enqueued
 
 Both of these patterns will be expanded upon below. But first, a note on selecting parameters for use with commands...
 
@@ -148,6 +184,9 @@ Here is a full example for clarity:
 Synchronous Data Operations
 ---------------------------
 
+.. note:: Unless explicitly specified in the :ref:`Asynchronous<Asynchronous Push Notifications>` section,
+    all messages are synchronous messages.
+
 This section refers to sending commands, getting settings / statuses, and setting settings. In all cases here,
 the method will block until a :ref:`response<handling responses>` is received.
 
@@ -162,7 +201,7 @@ Commands are callable instance attributes of a Commands class instance
 
     with GoPro() as gopro:
         gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
-        gopro.wifi_command.set_shutter(Params.Toggle.DISABLE)
+        gopro.http_command.set_shutter(Params.Toggle.DISABLE)
 
 Statuses
 ^^^^^^^^
@@ -232,7 +271,7 @@ Settings' values can be set (via either BLE or WiFI) using the `set` method as s
 
     with GoPro() as gopro:
         gopro.ble_setting.resolution.set(Params.Resolution.RES_4K)
-        gopro.wifi_setting.fps.set(Params.FPS.FPS_30)
+        gopro.http_setting.fps.set(Params.FPS.FPS_30)
 
 Asynchronous Push Notifications
 -------------------------------
@@ -248,7 +287,7 @@ It is possible to enable push notifications for any of the following:
 Firstly, the desired settings / id must be registered for.
 
 Once registered, the camera will send a push notification when the relevant setting / status changes. These
-responses are added to an internal queue of the `GoPro` instance and can be retrieved via
+responses are added to an internal queue of the `GoProBase` instance and can be retrieved via
 :meth:`~open_gopro.gopro.WirelessGoPro.get_notification`.
 
 It is possible to stop receiving notifications by issuing the relevant unregister command, i.e.:
@@ -433,7 +472,7 @@ for now, it will look ugly like this:
 .. code-block:: python
 
     # Get list of media
-    gopro.media_list = wifi_command.get_media_list().data["media"][0]["fs"]
+    gopro.media_list = http_command.get_media_list().data["media"][0]["fs"]
 
 Closing
 =======

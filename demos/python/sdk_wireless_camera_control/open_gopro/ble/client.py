@@ -39,9 +39,9 @@ class BleClient(Generic[BleHandle, BleDevice]):
             controller (BLEController): controller implementation to use for this client
             disconnected_cb (DisconnectHandlerType): disconnected callback
             notification_cb (NotiHandlerType): notification callback
-            target (tuple[Union[Pattern, BleDevice], Optional[list[BleUUID]]]): Tuple of (device, service_uuids)
-                where device is the BleDevice (or regex) to connect to and service_uuids is a list of
-                service uuid's to filter for
+            target (tuple[Union[Pattern, BleDevice], Optional[list[BleUUID]]]): Tuple
+                of (device, service_uuids) where device is the BLE device (or regex) to connect to and
+                service_uuids is a list of service uuid's to filter for
             uuids (type[UUIDs], Optional): Additional UUIDs that will be used when discovering characteristic.
                 Defaults to None in which case any unknown UUIDs will be set to "unknown".
 

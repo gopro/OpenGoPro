@@ -30,7 +30,6 @@ project = "Open GoPro Python SDK"
 copyright = f"{date.today().year}, GoPro Inc."
 author = "Tim Camise"
 
-templates_path = ["_templates"]
 source_suffix = ".rst"
 master_doc = "index"
 pygments_style = "sphinx"
@@ -40,12 +39,19 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx_rtd_theme",
     "sphinx.ext.autosectionlabel",
+    "sphinx.ext.graphviz",
+    "sphinx.ext.inheritance_diagram",
+    'sphinxemoji.sphinxemoji',
 ]
 html_theme = "sphinx_rtd_theme"
 html_context = {
     "display_github": True,
 }
 add_module_names = False
+inheritance_graph_attrs = dict(rankdir="BT")
+autodoc_default_options = {
+    "members": True,
+}
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -56,25 +62,37 @@ import importlib.metadata as importlib_metadata
 
 version = importlib_metadata.version("open_gopro")
 
-# Why aren't these working? Was it because they are are not included from api.rst?
+nitpicky = True
+
+# # TODO why isn't this working?
 # autodoc_type_aliases = {
-#     "ExceptionHandler": "open_gopro.exceptions.ExceptionHandler",
-#     "ResponseType": "constants.ResponseType",
+#     "IdType": "open_gopro.interface.IdType",
+#     "CommunicatorType": "open_gopro.interface.CommunicatorType",
+#     "ParserType": "open_gopro.interface.ParserType",
+#     "DisconnectHandlerType": "open_gopro.ble.controller.DisconnectHandlerType",
+#     "NotiHandlerType": "open_gopro.ble.controller.NotiHandlerType",
+#     "ValueType": "open_gopro.api.builders.ValueType",
+#     "BleDevice": "open_gopro.ble.controller.BleDevice",
+#     "BleHandle": "open_gopro.ble.controller.BleHandle",
+#     "CmdType": "open_gopro.constants.CmdType",
+#     "ResponseType": "open_gopro.constants.ResponseType",
 # }
 
-nitpicky = True
 nitpick_ignore = [
     ("py:class", "T"),
     ("py:class", "T_co"),
     ("py:class", "ExceptionHandler"),
     ("py:class", "datetime.datetime"),
     ("py:class", "open_gopro.responses.Parser"),
+    ("py:class", "InitVar"),
+    ("py:class", "abc.ABC"),
+    ("py:class", "collections.abc.Iterable"),
 ]
 nitpick_ignore_regex = [
     (r"py:class", r".+Type"),
     (r"py:class", r".*Path"),
-    (r"py:class", r".*GoProBle.*"),
-    (r"py:class", r".*GoProHttp.*"),
+    (r"py:class", r".*BleDevice"),
+    (r"py:class", r".*BleHandle"),
     (r"py:class", r".*JsonParser"),
     (r"py:class", r".*BytesParserBuilder"),
     (r"py:class", r".*BytesParser"),
@@ -164,6 +182,16 @@ def on_autodoc_process_signature(app, what, name, *_) -> Optional[tuple[str, str
         raise e
 
 
+# This is the expected signature of the handler for this event, cf doc
+def autodoc_skip_member_handler(app, what, name, *_):
+    for skip in ("internal", "deprecated"):
+        if skip in name.lower():
+            return name
+    # else:
+    #     return name
+
+
 def setup(app):
     app.connect("autodoc-process-docstring", on_autodoc_process_docstring)
     app.connect("autodoc-process-signature", on_autodoc_process_signature)
+    app.connect("autodoc-skip-member", autodoc_skip_member_handler)

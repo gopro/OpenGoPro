@@ -55,11 +55,16 @@ Get Started!
 
 Ready to contribute? Here's how to set up Open GoPro for local development.
 
-Requirements
-~~~~~~~~~~~~
+Minimal Requirements
+~~~~~~~~~~~~~~~~~~~~
 
 * Python (3.9 or higher)
 * `Poetry <https://python-poetry.org/docs/#installation>`_ : Needed to install dependencies / development tasks
+
+Additional Optional Requirements:
+
+* `protoc <https://grpc.io/docs/protoc-installation/>`_  to build protobuf python files from .proto's
+* `graphviz <https://graphviz.org/>`_  to build diagrams in sphinx
 
 Steps
 ~~~~~

@@ -327,7 +327,7 @@ class Toggle(GoProEnum):
 
 class HypersmoothMode(GoProEnum):
     OFF = 0
-    UNKNOWN = 1
+    ON = 1
     HIGH = 2
     BOOST = 3
     AUTO_BOOST = 4
@@ -347,9 +347,9 @@ class PerformanceMode(GoProEnum):
 
 
 class MediaFormat(GoProEnum):
-    TODO_12 = 12
+    UNKNOWN_12 = 12
     TIME_LAPSE_VIDEO = 13
-    TODO_16 = 16
+    UNKNOWN_16 = 16
     TIME_LAPSE_PHOTO = 20
     NIGHT_LAPSE_PHOTO = 21
     NIGHT_LAPSE_VIDEO = 26

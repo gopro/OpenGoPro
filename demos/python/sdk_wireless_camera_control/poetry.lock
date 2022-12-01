@@ -966,6 +966,17 @@ lint = ["docutils-stubs", "flake8", "mypy"]
 test = ["pytest"]
 
 [[package]]
+name = "sphinxemoji"
+version = "0.2.0"
+description = "An extension to use emoji codes in your Sphinx documentation"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+sphinx = ">=1.8"
+
+[[package]]
 name = "tk"
 version = "0.1.0"
 description = "TensorKit is a deep learning helper between Python and C++."
@@ -1093,7 +1104,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9,<3.11"
-content-hash = "fea37eb0a77d1391fdd67c05f44c6be7b0042714de5ed3fbe2496b6908df5b99"
+content-hash = "bfb8d447265e983fc8571fd9a9bd41b82fbbae1714181d3c0ffd99110fc45267"
 
 [metadata.files]
 alabaster = [
@@ -1733,6 +1744,9 @@ sphinxcontrib-qthelp = [
 sphinxcontrib-serializinghtml = [
     {file = "sphinxcontrib-serializinghtml-1.1.5.tar.gz", hash = "sha256:aa5f6de5dfdf809ef505c4895e51ef5c9eac17d0f287933eb49ec495280b6952"},
     {file = "sphinxcontrib_serializinghtml-1.1.5-py2.py3-none-any.whl", hash = "sha256:352a9a00ae864471d3a7ead8d7d79f5fc0b57e8b3f95e9867eb9eb28999b92fd"},
+]
+sphinxemoji = [
+    {file = "sphinxemoji-0.2.0.tar.gz", hash = "sha256:27861d1dd7c6570f5e63020dac9a687263f7481f6d5d6409eb31ecebcc804e4c"},
 ]
 tk = [
     {file = "tk-0.1.0-py3-none-any.whl", hash = "sha256:703a69ff0d5ba2bd2f7440582ad10160e4a6561595d33457dc6caa79b9bf4930"},

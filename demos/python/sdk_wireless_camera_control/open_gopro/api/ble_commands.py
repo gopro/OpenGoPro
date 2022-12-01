@@ -1072,7 +1072,7 @@ class BleStatuses(Commands[BleStatus, StatusId]):
         self.orientation: BleStatus = BleStatus(communicator, StatusId.ORIENTATION, Params.Orientation)
         """The rotational orientation of the camera."""
 
-        self.thermal_mit_mode: BleStatus = BleStatus(communicator, StatusId.DEPRECATED_92, DeprecatedAdapter())
+        self.deprecated_87: BleStatus = BleStatus(communicator, StatusId.DEPRECATED_87, DeprecatedAdapter())
         """This status is deprecated."""
 
         self.zoom_encoding: BleStatus = BleStatus(communicator, StatusId.ZOOM_ENCODING, Flag)

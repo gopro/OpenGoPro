@@ -76,10 +76,7 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
             timeout (int): How long to attempt connecting before giving up. Defaults to 15.
 
         Returns:
-            handle: handle that has been connected to
-
-        Returns:
-            BleHandle: Handle to identify newly connected device
+            BleHandle: handle that has been connected to
         """
         raise NotImplementedError
 

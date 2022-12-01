@@ -30,7 +30,7 @@ def main(args: argparse.Namespace) -> None:
         # Now we only want errors
         set_stream_logging_level(logging.ERROR)
 
-        gopro.wifi_command.set_keep_alive()
+        gopro.http_command.set_keep_alive()
 
         console.print("\n\n🎆🎇✨ Success!! Wifi AP is connected 📡\n")
         console.print("Send commands as per https://gopro.github.io/OpenGoPro/http")

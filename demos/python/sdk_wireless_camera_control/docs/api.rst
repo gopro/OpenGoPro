@@ -18,21 +18,32 @@ For a higher-level summary / usage, see the :ref:`usage<Usage>` section
    commands but is not an exhaustive source of information for what each command does. The Open GoPro specs
    should be used simultaneously with this document for development.
 
-GoPro
-=====
+GoPro Client
+============
 
-There are two flavors of the top-level GoPro class. These are "wired" and "wireless" and can be imported and used
-as shown below:
+There are the top-level GoPro client interfaces.
+
+Wireless
+--------
 
 .. code-block:: python
 
-   from open_gopro import WirelessGoPro
+    from open_gopro import WirelessGoPro
+
+.. inheritance-diagram:: open_gopro.gopro.WirelessGoPro
 
 .. autoclass:: open_gopro.gopro.WirelessGoPro
-   :members:
+
+Wired
+-----
+
+.. code-block:: python
+
+    from open_gopro import WiredGoPro
+
+.. inheritance-diagram:: open_gopro.gopro.WiredGoPro
 
 .. autoclass:: open_gopro.gopro.WiredGoPro
-   :members:
 
 Open GoPro API
 ==============
@@ -51,52 +62,53 @@ These are the base types that are used to implement version-specific API's.
 BLE Setting
 ^^^^^^^^^^^
 
+.. inheritance-diagram:: open_gopro.api.builders.BleSetting
+
 .. autoclass:: open_gopro.api.builders.BleSetting
-   :members:
    :exclude-members: get_name, get_capabilities_names
 
 BLE Status
 ^^^^^^^^^^
 
+.. inheritance-diagram:: open_gopro.api.builders.BleStatus
+
 .. autoclass:: open_gopro.api.builders.BleStatus
-   :members:
 
 HTTP Setting
 ^^^^^^^^^^^^
 
+.. inheritance-diagram:: open_gopro.api.builders.HttpSetting
+
 .. autoclass:: open_gopro.api.builders.HttpSetting
-   :members:
 
 BLE Commands
 ------------
 
+.. inheritance-diagram:: open_gopro.api.ble_commands.BleCommands
+
 .. autoclass:: open_gopro.api.ble_commands.BleCommands
-   :members:
 
 BLE Settings
 ------------
 
+.. inheritance-diagram:: open_gopro.api.ble_commands.BleSettings
+
 .. autoclass:: open_gopro.api.ble_commands.BleSettings
-   :members:
 
 BLE Statuses
 ------------
 
 .. autoclass:: open_gopro.api.ble_commands.BleStatuses
-   :members:
-   :exclude-members: deprecated_40, deprecated_92
 
 HTTP Commands
 -------------
 
 .. autoclass:: open_gopro.api.http_commands.HttpCommands
-   :members:
 
 HTTP Settings
 -------------
 
 .. autoclass:: open_gopro.api.http_commands.HttpSettings
-   :members:
 
 Parameters
 ----------
@@ -108,7 +120,6 @@ All of these parameters can be accessed via:
    from open_gopro import Params
 
 .. automodule:: open_gopro.api.params
-   :members:
    :undoc-members:
 
 
@@ -122,7 +133,6 @@ This can be imported via:
    from open_gopro import GoProResp
 
 .. autoclass:: open_gopro.responses.GoProResp
-   :members:
 
 
 Constants
@@ -136,18 +146,38 @@ These can be imported as:
 
 
 .. automodule:: open_gopro.constants
-   :members:
    :undoc-members:
+   :exclude-members: CmdType, GoProEnumMeta, GoProFlagEnum, ProducerType, ResponseType, enum_factory
 
 Exceptions
 ==========
 
 .. automodule:: open_gopro.exceptions
-   :members:
    :undoc-members:
 
-Bluetooth Services
-==================
+Common Interface
+================
 
-.. autoclass:: open_gopro.ble.services.BleUUID
-   :members:
+.. autoclass:: open_gopro.gopro.GoProBase
+
+.. automodule:: open_gopro.interface
+
+
+BLE Interface
+=============
+
+.. automodule:: open_gopro.ble.controller
+
+.. automodule:: open_gopro.ble.client
+
+BLEServices
+-----------
+
+.. automodule:: open_gopro.ble.services
+
+WiFi Interface
+==============
+
+.. automodule:: open_gopro.wifi.controller
+
+.. automodule:: open_gopro.wifi.client

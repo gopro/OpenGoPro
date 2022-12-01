@@ -73,6 +73,7 @@ def docs(session) -> None:
         "sphinx-rtd-theme",
         "sphinxcontrib-napoleon",
         "darglint",
+        "sphinxemoji",
     )
     session.run("sphinx-build", "docs", "docs/build")
     # Clean up for Jekyll consumption

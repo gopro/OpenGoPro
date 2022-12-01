@@ -29,59 +29,6 @@ from open_gopro.constants import GoProUUIDs, ProducerType, ResponseType, Setting
 logger = logging.getLogger(__name__)
 
 
-class GoProBase(ABC):
-    """The base class for communicating with all GoPro Clients"""
-
-    @abstractmethod
-    def open(self, timeout: int = 10, retries: int = 5) -> None:
-        """Connect to the GoPro Client and prepare it for communication
-
-        Args:
-            timeout (int): time before considering connection a failure. Defaults to 10.
-            retries (int): number of connection retries. Defaults to 5.
-        """
-        raise NotImplementedError
-
-    @abstractmethod
-    def close(self) -> None:
-        """Gracefully close the GoPro Client connection"""
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def identifier(self) -> str:
-        """Unique identifier for the connected GoPro Client
-
-        Returns:
-            str: identifier
-        """
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def version(self) -> str:
-        """The Open GoPro API version of the GoPro Client
-
-        Only Version 2.0 is currently supported.
-
-        Returns:
-            str: string version
-        """
-        raise NotImplementedError
-
-    @abstractmethod
-    def get_notification(self, timeout: Optional[float] = None) -> Optional[GoProResp]:
-        """Get the next asynchronous notification from the GoPro Client in FIFO order
-
-        Args:
-            timeout (Optional[float]): Time to wait for notification. Defaults to None (wait forever).
-
-        Returns:
-            Optional[GoProResp]: Notification if one was found
-        """
-        raise NotImplementedError
-
-
 class GoProHttp(ABC):
     """Base class interface for all HTTP commands"""
 

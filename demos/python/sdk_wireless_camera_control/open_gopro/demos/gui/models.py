@@ -85,8 +85,8 @@ class GoProModel:
             self.gopro.ble_command,
             self.gopro.ble_setting,
             self.gopro.ble_status,
-            self.gopro.wifi_command,
-            self.gopro.wifi_setting,
+            self.gopro.http_command,
+            self.gopro.http_setting,
             self.gopro.compound_command,
         ]
 

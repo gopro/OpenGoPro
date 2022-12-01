@@ -48,7 +48,7 @@ Pillow = "^9"
 rich = "^12"
 pexpect = "^4"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pydocstyle = { extras = ["toml"], version = "^6" }
 pytest = "^7"
 pytest-cov = "^3"
@@ -65,6 +65,7 @@ mypy-protobuf = "^3"
 construct-typing = "^0.5"
 sphinx = "^5"
 sphinx-rtd-theme = "^1"
+sphinxemoji = "^0"
 coverage-badge = "=1.1.0"
 darglint = "^1"
 poethepoet = "^0.15"
