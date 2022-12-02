@@ -211,6 +211,7 @@ disable = [
     "duplicate-code",
     "global-statement",
     "too-few-public-methods",
+    "too-many-public-methods",
     "too-many-arguments",
     "too-many-instance-attributes",
     "too-many-branches",
@@ -221,6 +222,7 @@ disable = [
     "protected-access",
     "invalid-name",
     "unsubscriptable-object",
+    "no-member", # This is bad. We need to make stub files since mypy and pylint do not follow decorators well
 ]
 
 [tool.pylint.'FORMAT']

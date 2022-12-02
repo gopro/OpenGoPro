@@ -21,8 +21,6 @@ from open_gopro.api.builders import (
 )
 from open_gopro.interface import BleMessage, HttpMessage
 
-DEBUG = False
-
 gopro = WirelessGoPro(enable_wifi=False)
 
 project = "Open GoPro Python SDK"
@@ -90,6 +88,7 @@ nitpick_ignore = [
 ]
 nitpick_ignore_regex = [
     (r"py:class", r".+Type"),
+    (r"py:obj", r".+Type"),
     (r"py:class", r".*Path"),
     (r"py:class", r".*BleDevice"),
     (r"py:class", r".*BleHandle"),
@@ -98,89 +97,6 @@ nitpick_ignore_regex = [
     (r"py:class", r".*BytesParser"),
     (r".*", r".*construct.*"),
 ]
-
-
-def debug_print(*args) -> None:
-    if DEBUG:
-        print(*args)
-
-
-def get_command_from_name(name: str) -> Optional[Union[BleMessage, HttpMessage]]:
-    cls_attr_to_instance_prop = dict(
-        BleStatuses="ble_status",
-        BleSettings="ble_setting",
-        BleCommands="ble_command",
-        HttpSettings="http_setting",
-        HttpCommands="http_command",
-    )
-
-    debug_print("==============================", name)
-    try:
-        if len(subcommand := name.split(".")) > 2:
-            attr, method = subcommand[-2:]
-            return eval(f"gopro.{cls_attr_to_instance_prop[attr]}.{method}")
-    except (AttributeError, KeyError) as e:
-        return None
-
-
-def on_autodoc_process_docstring(app, what, name, obj, options, lines):
-    """Redirect docstring from class method to instance attribute for commands
-
-    Note that, per autodoc, lines is modified in place
-
-    See https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#event-autodoc-process-signature
-    """
-    if isinstance(
-        command := get_command_from_name(name),
-        (BleWriteCommand, BleProtoCommand, HttpGetJsonCommand, HttpGetBinary),
-    ) and (docstring := type(command).__call__.__doc__):
-        lines[:] = GoogleDocstring(docstring, app.config, app, what, name, obj, options).lines()[:]
-
-
-def on_autodoc_process_signature(app, what, name, *_) -> Optional[tuple[str, str]]:
-    """Modify an object's function signature
-
-    Used to redirect command docstrings from a class's __call__ method to an instance attribute.
-
-    See https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#event-autodoc-process-signature
-    """
-    try:
-        # Any command except for register / unregister all and direct reads
-        if isinstance(command := get_command_from_name(name), (BleMessage, HttpMessage)) and not isinstance(
-            command, (RegisterUnregisterAll, BleReadCommand)
-        ):
-            debug_print(command)
-            # Get the __call__ docstring of the attribute's class type
-            docstring: str = type(command).__call__.__doc__
-            if not docstring:
-                raise RuntimeError(f"{command} missing docstring")
-            debug_print(docstring)
-            # Remove all prepended whitespace before section labels
-            match_labels = re.compile(r"^[^\S\r\n]+(?=Args:|Returns:|Raises:)", flags=re.MULTILINE)
-            docstring = re.sub(match_labels, "", docstring)
-            # Deindent everything else to one tab (needs to be whitespace)
-            match_indents = re.compile(r"^[^\S\r\n]+", flags=re.MULTILINE)
-            docstring = re.sub(match_indents, "    ", docstring)
-            # Remove trailing whitespace
-            docstring = docstring.strip(" ")
-            # Use darglint to parse docstring to gather params signature part
-            d = Docstring.from_google(docstring)
-            args = ""
-            if (params := d.get_items(Sections.ARGUMENTS_SECTION)) and (
-                param_types := d._get_argument_types()
-            ):
-                for param, param_type in zip(params, param_types):
-                    args += f"{param}: {param_type}, "
-            args = args.strip(", ")
-            # Build signature
-            # TODO can we find a way to show empty parentheses if no args. Currently '' produces no parentheses
-            ret = (f"({args or ''})", d._get_return_type())
-            debug_print(ret)
-            return ret
-    except Exception as e:
-        debug_print(repr(e))
-        raise e
-
 
 # This is the expected signature of the handler for this event, cf doc
 def autodoc_skip_member_handler(app, what, name, *_):
@@ -192,6 +108,4 @@ def autodoc_skip_member_handler(app, what, name, *_):
 
 
 def setup(app):
-    app.connect("autodoc-process-docstring", on_autodoc_process_docstring)
-    app.connect("autodoc-process-signature", on_autodoc_process_signature)
     app.connect("autodoc-skip-member", autodoc_skip_member_handler)

@@ -11,13 +11,13 @@ from tests.conftest import BleCommunicatorTest
 
 
 def test_write_command_correct_uuid_cmd_id(ble_communicator: GoProBle):
-    response = ble_communicator.ble_command.set_shutter(Params.Toggle.ENABLE)
+    response = ble_communicator.ble_command.set_shutter(shutter=Params.Toggle.ENABLE)
     assert response.uuid == GoProUUIDs.CQ_COMMAND
     assert response._raw_packet[0] == CmdId.SET_SHUTTER.value
 
 
 def test_write_command_correct_parameter_data(ble_communicator: GoProBle):
-    response = ble_communicator.ble_command.load_preset(5)
+    response = ble_communicator.ble_command.load_preset(preset=5)
     assert response.uuid == GoProUUIDs.CQ_COMMAND
     assert Int32ub.parse(response._raw_packet[-4:]) == 5
 
@@ -100,7 +100,7 @@ def test_status_unregister_value_update(ble_communicator: GoProBle):
 
 
 def test_proto_command_arg(ble_communicator: GoProBle):
-    response = ble_communicator.ble_command.set_turbo_mode(True)
+    response = ble_communicator.ble_command.set_turbo_mode(active=True)
     assert response.uuid == GoProUUIDs.CQ_COMMAND
     assert response._raw_packet == bytearray(b"\xf1k\x08\x01")
     out = proto.ResponseGeneric.FromString(response._raw_packet[2:])

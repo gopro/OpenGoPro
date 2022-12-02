@@ -43,7 +43,7 @@ def main(args: argparse.Namespace) -> None:
 
     with WiredGoPro(args.identifier) as gopro:
         # Start webcam
-        gopro.http_command.wired_usb_control(Params.Toggle.DISABLE)
+        gopro.http_command.wired_usb_control(control=Params.Toggle.DISABLE)
         gopro.http_command.webcam_start()
 
         # Start player

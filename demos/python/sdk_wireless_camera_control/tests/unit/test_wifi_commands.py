@@ -13,14 +13,14 @@ def test_get_with_no_params(wifi_communicator: GoProWifi):
 
 def test_get_with_params(wifi_communicator: GoProWifi):
     zoom = 99
-    response = wifi_communicator.http_command.set_digital_zoom(zoom)
+    response = wifi_communicator.http_command.set_digital_zoom(percent=zoom)
     assert response.url == f"gopro/camera/digital_zoom?percent={zoom}"
 
 
 def test_with_multiple_params(wifi_communicator: GoProWifi):
     media_file = "XXX.mp4"
     offset_ms = 2500
-    response = wifi_communicator.http_command.add_file_hilight(media_file, offset_ms)
+    response = wifi_communicator.http_command.add_file_hilight(file=media_file, offset=offset_ms)
     assert response.url == "gopro/media/hilight/file?path=100GOPRO/XXX.mp4&ms=2500"
 
 

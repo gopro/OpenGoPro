@@ -356,6 +356,14 @@ def pretty_print(obj: Any, stringify_all: bool = True) -> str:
     """
 
     def sanitize(e: Any) -> str:
+        """Get the value part and replace any underscored with spaces
+
+        Args:
+            e (Any): argument to sanitize
+
+        Returns:
+            str: sanitized string
+        """
         value_part = str(e).lower().split(".")[1]
         value_part = value_part.replace("_", " ").title()
         return value_part

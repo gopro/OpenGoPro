@@ -28,18 +28,18 @@ def main(args: argparse.Namespace) -> None:
         ) as gopro:
             # Configure settings to prepare for photo
             if gopro.is_encoding:
-                gopro.ble_command.set_shutter(Params.Toggle.DISABLE)
+                gopro.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
             gopro.ble_setting.video_performance_mode.set(Params.PerformanceMode.MAX_PERFORMANCE)
             gopro.ble_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT)
             gopro.ble_setting.camera_ux_mode.set(Params.CameraUxMode.PRO)
-            gopro.ble_command.set_turbo_mode(False)
-            assert gopro.ble_command.load_preset_group(Params.PresetGroup.PHOTO).is_ok
+            gopro.ble_command.set_turbo_mode(active=False)
+            assert gopro.ble_command.load_preset_group(group=Params.PresetGroup.PHOTO).is_ok
 
             # Get the media list before
             media_set_before = set(x["n"] for x in gopro.http_command.get_media_list().flatten)
             # Take a photo
             console.print("Capturing a photo...")
-            assert gopro.ble_command.set_shutter(Params.Toggle.ENABLE).is_ok
+            assert gopro.ble_command.set_shutter(shutter=Params.Toggle.ENABLE).is_ok
 
             # Get the media list after
             media_set_after = set(x["n"] for x in gopro.http_command.get_media_list().flatten)

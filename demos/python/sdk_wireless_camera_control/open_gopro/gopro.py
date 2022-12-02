@@ -64,7 +64,7 @@ def ensure_initialized(interface: Interface) -> Callable:
     """
 
     @wrapt.decorator
-    def wrapper(wrapped: Callable, instance: WirelessGoPro, args: Any, kwargs: Any) -> Any:
+    def wrapper(wrapped: Callable, instance: WirelessGoPro, args: Any, kwargs: Any) -> Callable:
         if interface is Interface.BLE and not instance.is_ble_connected:
             raise GpException.GoProNotInitialized("BLE not connected")
         if interface is Interface.WIFI and not (
@@ -669,7 +669,7 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
             else:
                 # Otherwise, turn off Wifi
                 logger.info("Turning off the camera's Wifi radio")
-                self.ble_command.enable_wifi_ap(False)
+                self.ble_command.enable_wifi_ap(enable=False)
         except Exception as e:
             logger.error(f"Error while opening: {e}")
             self.close()
@@ -1030,13 +1030,13 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         ssid = self.ble_command.get_wifi_ssid().flatten
         for retry in range(1, retries):
             try:
-                assert self.ble_command.enable_wifi_ap(True).is_ok
+                assert self.ble_command.enable_wifi_ap(enable=True).is_ok
                 self._wifi.open(ssid, password, timeout, 1)
                 break
             except GpException.ConnectFailed:
                 logger.warning(f"Wifi connection failed. Retrying #{retry}")
                 # In case camera Wifi is in strange disable, reset it
-                assert self.ble_command.enable_wifi_ap(False).is_ok
+                assert self.ble_command.enable_wifi_ap(enable=False).is_ok
         else:
             raise GpException.ConnectFailed("Wifi Connection failed", timeout, retries)
 

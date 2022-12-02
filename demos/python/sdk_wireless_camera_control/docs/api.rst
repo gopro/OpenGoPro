@@ -54,20 +54,25 @@ These are both the base types that are used to implement the API (BLE Setting, B
 version-specific API's themselves.
 
 These should not be imported directly and instead should be accessed using the relevant properties (`ble_command`,
-`wifi_setting`, etc.) of a GoPro(:class:`open_gopro.gopro.WirelessGoPro`) instance.
+`wifi_setting`, etc.) of a GoPro(:class:`open_gopro.gopro.GoProBase`) instance.
+
+.. autoclass:: open_gopro.api.ble_commands.BleCommands
+   :show-inheritance:
+
+.. autoclass:: open_gopro.api.ble_commands.BleSettings
+   :show-inheritance:
+
+.. autoclass:: open_gopro.api.ble_commands.BleStatuses
+   :show-inheritance:
+
+.. autoclass:: open_gopro.api.http_commands.HttpCommands
+   :show-inheritance:
+
+.. autoclass:: open_gopro.api.http_commands.HttpSettings
+   :show-inheritance:
 
 Base Types
 ----------
-
-These are the base types that are used to implement version-specific API's.
-
-.. autoclass:: open_gopro.interface.Message
-
-.. autoclass:: open_gopro.interface.HttpMessage
-
-.. autoclass:: open_gopro.interface.BleMessage
-
-.. autoclass:: open_gopro.interface.Messages
 
 BLE Setting
 ^^^^^^^^^^^
@@ -94,36 +99,29 @@ HTTP Setting
 
 .. autoclass:: open_gopro.api.builders.HttpSetting
 
-BLE Commands
-------------
+Message Bases
+^^^^^^^^^^^^^
 
-.. inheritance-diagram:: open_gopro.api.ble_commands.BleCommands
-   :parts: 1
+These are the base types that are used to implement version-specific API's. These are published for reference
+but the end user should never need to use these directly.
 
-.. autoclass:: open_gopro.api.ble_commands.BleCommands
+.. autoclass:: open_gopro.interface.Message
+   :show-inheritance:
 
-BLE Settings
-------------
+.. autoclass:: open_gopro.interface.HttpMessage
+   :show-inheritance:
 
-.. inheritance-diagram:: open_gopro.api.ble_commands.BleSettings
-   :parts: 1
+.. autoclass:: open_gopro.interface.BleMessage
+   :show-inheritance:
 
-.. autoclass:: open_gopro.api.ble_commands.BleSettings
+.. autoclass:: open_gopro.interface.Messages
+   :show-inheritance:
 
-BLE Statuses
-------------
+.. autoclass:: open_gopro.interface.Commands
+   :show-inheritance:
 
-.. autoclass:: open_gopro.api.ble_commands.BleStatuses
-
-HTTP Commands
--------------
-
-.. autoclass:: open_gopro.api.http_commands.HttpCommands
-
-HTTP Settings
--------------
-
-.. autoclass:: open_gopro.api.http_commands.HttpSettings
+.. autoclass:: open_gopro.interface.SettingsStatuses
+   :show-inheritance:
 
 Parameters
 ----------

@@ -22,7 +22,7 @@ import construct
 
 from open_gopro import WirelessGoPro, constants
 from open_gopro.api import BleStatus, HttpSetting, BleSetting
-from open_gopro.interface import BleMessage, HttpMessage, Messages, Message
+from open_gopro.interface import BleMessage, HttpMessage, Messages, Message, SettingsStatuses
 import open_gopro.api.params
 import open_gopro.api.params as Params
 from open_gopro.responses import GoProResp, ResponseType
@@ -317,6 +317,10 @@ class GoProModel:
 class CompoundCommand(Message):
     """Functionality that consists of multiple BLE and / or Wifi Messages"""
 
+    def __init__(self, communicator: WirelessGoPro, identifier: Any, parser: Any = None) -> None:
+        self._communicator = communicator
+        super().__init__(identifier, parser)
+
     def __str__(self) -> str:
         return self._identifier
 
@@ -333,8 +337,8 @@ class CompoundCommand(Message):
         return dict(protocol="Complex", id=self._identifier) | kwargs
 
 
-# pylint: disable = missing-class-docstring
-class CompoundCommands(Messages):
+# pylint: disable = missing-class-docstring, arguments-differ
+class CompoundCommands(SettingsStatuses[CompoundCommand, str]):
     """The container for the compound commands"""
 
     def __init__(self, communicator: WirelessGoPro) -> None:
@@ -345,7 +349,7 @@ class CompoundCommands(Messages):
         """
 
         class LiveStream(CompoundCommand):
-            def __call__(
+            def __call__(  # type: ignore
                 self,
                 ssid: str,
                 password: str,
