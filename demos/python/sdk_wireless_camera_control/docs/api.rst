@@ -31,6 +31,7 @@ Wireless
     from open_gopro import WirelessGoPro
 
 .. inheritance-diagram:: open_gopro.gopro.WirelessGoPro
+   :parts: 1
 
 .. autoclass:: open_gopro.gopro.WirelessGoPro
 
@@ -42,6 +43,7 @@ Wired
     from open_gopro import WiredGoPro
 
 .. inheritance-diagram:: open_gopro.gopro.WiredGoPro
+   :parts: 1
 
 .. autoclass:: open_gopro.gopro.WiredGoPro
 
@@ -59,10 +61,19 @@ Base Types
 
 These are the base types that are used to implement version-specific API's.
 
+.. autoclass:: open_gopro.interface.Message
+
+.. autoclass:: open_gopro.interface.HttpMessage
+
+.. autoclass:: open_gopro.interface.BleMessage
+
+.. autoclass:: open_gopro.interface.Messages
+
 BLE Setting
 ^^^^^^^^^^^
 
 .. inheritance-diagram:: open_gopro.api.builders.BleSetting
+   :parts: 1
 
 .. autoclass:: open_gopro.api.builders.BleSetting
    :exclude-members: get_name, get_capabilities_names
@@ -71,6 +82,7 @@ BLE Status
 ^^^^^^^^^^
 
 .. inheritance-diagram:: open_gopro.api.builders.BleStatus
+   :parts: 1
 
 .. autoclass:: open_gopro.api.builders.BleStatus
 
@@ -78,6 +90,7 @@ HTTP Setting
 ^^^^^^^^^^^^
 
 .. inheritance-diagram:: open_gopro.api.builders.HttpSetting
+   :parts: 1
 
 .. autoclass:: open_gopro.api.builders.HttpSetting
 
@@ -85,6 +98,7 @@ BLE Commands
 ------------
 
 .. inheritance-diagram:: open_gopro.api.ble_commands.BleCommands
+   :parts: 1
 
 .. autoclass:: open_gopro.api.ble_commands.BleCommands
 
@@ -92,6 +106,7 @@ BLE Settings
 ------------
 
 .. inheritance-diagram:: open_gopro.api.ble_commands.BleSettings
+   :parts: 1
 
 .. autoclass:: open_gopro.api.ble_commands.BleSettings
 
@@ -160,7 +175,15 @@ Common Interface
 
 .. autoclass:: open_gopro.gopro.GoProBase
 
-.. automodule:: open_gopro.interface
+.. autoclass:: open_gopro.interface.GoProBle
+
+.. autoclass:: open_gopro.interface.GoProHttp
+
+.. autoclass:: open_gopro.interface.GoProWifi
+
+.. autoclass:: open_gopro.interface.GoProWiredInterface
+
+.. autoclass:: open_gopro.interface.GoProWirelessInterface
 
 
 BLE Interface

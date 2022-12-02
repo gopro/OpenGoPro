@@ -19,7 +19,7 @@ An individual instance of one of the above classes corresponds to a (potentially
 camera resource. The general procedure to communicate with the GoPro is:
 
 1. Identify and :ref:`open<Opening>` the connection to the target GoPro
-2. :ref:`Send Commands<Sending Commands>` and :ref:`Receive Responses<Handling Responses>` via BLE / HTTP
+2. :ref:`Send Messages<Sending Messages>` and :ref:`Receive Responses<Handling Responses>` via BLE / HTTP
 3. Gracefully :ref:`close<Closing>` the connection with the GoPro
 
 .. tip:: There is a lot of logging throughout the Open GoPro package. See
@@ -42,7 +42,7 @@ The Wireless GoPro client can be opened either with the context manager:
 
     with WirelessGoPro() as gopro:
         print("Yay! I'm connected via BLE, Wifi, initialized, and ready to send / get data now!")
-        # Send some commands now
+        # Send some messages now
 
 \...or without the context manager:
 
@@ -53,7 +53,7 @@ The Wireless GoPro client can be opened either with the context manager:
     gopro = WirelessGoPro()
     gopro.open()
     print("Yay! I'm connected via BLE, Wifi, initialized, and ready to send / get data now!")
-    # Send some commands now
+    # Send some messages now
 
 In either case, the following will have occurred before the camera is ready to communicate:
 
@@ -81,9 +81,9 @@ checked via several properties. All of the following will return True:
 Camera Readiness
 ^^^^^^^^^^^^^^^^
 
-A command can not be sent to the camera if it is not ready where "ready" is defined as not encoding and not
+A message can not be sent to the camera if it is not ready where "ready" is defined as not encoding and not
 busy. These two states are managed automatically by the `WirelessGoPro` instance such that a call to any
-command will block until the camera is ready. It is possible to check these from the application via:
+message will block until the camera is ready. It is possible to check these from the application via:
 
 - :meth:`~open_gopro.gopro.WirelessGoPro.is_encoding`
 - :meth:`~open_gopro.gopro.WirelessGoPro.is_busy`
@@ -118,20 +118,18 @@ using anything else.
 The version string can be accessed via the :meth:`~open_gopro.gopro.GoProBase.version` property.
 
 
-Sending Commands
+Sending Messages
 ================
 
-TODO refactor to use "message" instead of "command" as the base type
-
 Once a `WirelessGoPro` or `WiredGoPro` instance has been :ref:`opened<opening>`, it is now possible to send
-commands to the camera (provided that the camera is :ref:`ready<camera readiness>`).  Commands are accessed
-by transport protocol where the superset of options are:
+messages to the camera (provided that the camera is :ref:`ready<camera readiness>`).  Messages are accessed
+by transport protocol where the superset of message groups are:
 
 .. list-table::
    :widths: 50 50 50 50
    :header-rows: 1
 
-   * - Command Group
+   * - Message Group
      - WiredGoPro
      - WirelessGoPro (WiFi Enabled)
      - WirelessGoPro (WiFi Disabled)
@@ -156,20 +154,20 @@ by transport protocol where the superset of options are:
      - |:heavy_check_mark:|
      - |:heavy_check_mark:|
 
-In the case where a given group of commands is not supported, a `NotImplementedError` will be returned when
+In the case where a given group of messages is not supported, a `NotImplementedError` will be returned when
 the relevant property is accessed.
 
 All messages are one of two types:
 
-- Performing synchronous :ref:`data operations<Synchronous Data Operations>` to send a command and receive a GoPro Response
+- Performing synchronous :ref:`data operations<Synchronous Data Operations>` to send a message and receive a GoPro Response
 - Registering for :ref:`asynchronous push notifications<Asynchronous Push Notifications>` and getting these after they are enqueued
 
-Both of these patterns will be expanded upon below. But first, a note on selecting parameters for use with commands...
+Both of these patterns will be expanded upon below. But first, a note on selecting parameters for use with messages...
 
 Selecting Parameters
 --------------------
 
-Whenever a parameter is required for a command, it will be type-hinted in the method definition as either a basic Python type
+Whenever a parameter is required for a message, it will be type-hinted in the method definition as either a standard Python type
 or an Enum from the :ref:`Params<parameters>` module.
 
 Here is a full example for clarity:
@@ -193,7 +191,7 @@ the method will block until a :ref:`response<handling responses>` is received.
 Commands
 ^^^^^^^^
 
-Commands are callable instance attributes of a Commands class instance
+Commands are callable instance attributes of a Messages class instance
 (i.e. :class:`~open_gopro.api.ble_commands.BleCommands` or
 :class:`~open_gopro.api.http_commands.HttpCommands`), thus they can be called directly:
 

@@ -47,7 +47,8 @@ html_context = {
     "display_github": True,
 }
 add_module_names = False
-inheritance_graph_attrs = dict(rankdir="BT")
+inheritance_graph_attrs = dict(rankdir="BT", center="true")
+inheritance_node_attrs = dict(color="dodgerblue1", style="filled")
 autodoc_default_options = {
     "members": True,
 }
