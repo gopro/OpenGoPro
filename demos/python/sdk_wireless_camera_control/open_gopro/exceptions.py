@@ -31,11 +31,11 @@ class InvalidConfiguration(GoProError):
         super().__init__(f"Invalid configuration: {message}")
 
 
-class GoProNotInitialized(GoProError):
-    """A command was attempted without waiting for the GoPro instance to initialize."""
+class GoProNotOpened(GoProError):
+    """A command was attempted without waiting for the GoPro instance to open."""
 
     def __init__(self, message: str) -> None:
-        super().__init__(f"GoPro is not correctly initialized: {message}")
+        super().__init__(f"GoPro is not correctly open: {message}")
 
 
 class FailedToFindDevice(GoProError):

@@ -15,7 +15,7 @@ import requests
 import requests_mock
 
 from open_gopro.gopro import WirelessGoPro, Params, GoProResp
-from open_gopro.exceptions import InvalidConfiguration, ResponseTimeout, GoProNotInitialized
+from open_gopro.exceptions import InvalidConfiguration, ResponseTimeout, GoProNotOpened
 from open_gopro.constants import StatusId, SettingId
 
 
@@ -41,9 +41,9 @@ def test_ble_threads_start(gopro_client_maintain_ble: WirelessGoPro):
 
 def test_gopro_is_instanciated(gopro_client: WirelessGoPro):
     assert gopro_client.version == "2.0"
-    with pytest.raises(GoProNotInitialized):
+    with pytest.raises(GoProNotOpened):
         assert gopro_client.identifier is None
-    assert gopro_client._is_ble_initialized
+    assert gopro_client.is_open
     with pytest.raises(InvalidConfiguration):
         assert gopro_client.is_busy
     with pytest.raises(InvalidConfiguration):

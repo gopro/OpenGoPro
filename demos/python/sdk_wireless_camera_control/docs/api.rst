@@ -21,7 +21,7 @@ For a higher-level summary / usage, see the :ref:`usage<Usage>` section
 GoPro Client
 ============
 
-There are the top-level GoPro client interfaces.
+There are two top-level GoPro client interfaces - Wireless and Wired:
 
 Wireless
 --------

@@ -123,7 +123,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
 
     @Commands.build(BleWriteCommand(GoProUUIDs.CQ_COMMAND, CmdId.SET_SHUTTER, Int8ub))
     def set_shutter(self, *, shutter: Params.Toggle) -> GoProResp:
-        """Set the Shutter
+        """Set the Shutter to start / stop encoding
 
         Args:
             shutter (open_gopro.api.params.Toggle): on or off

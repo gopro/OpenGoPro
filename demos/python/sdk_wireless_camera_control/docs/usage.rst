@@ -5,7 +5,7 @@ Usage
 
 This section will describe some high level information of how to use the Open GoPro module. For more detailed
 information, see the :ref:`Interfaces<API Reference>` section. For just running the demos, see the
-:ref:`QuickStart Guide<QuickStart Guide>` section.
+:ref:`QuickStart<QuickStart Guide>` section.
 
 Overview
 ========
@@ -41,7 +41,7 @@ The Wireless GoPro client can be opened either with the context manager:
     from open_gopro import WirelessGoPro
 
     with WirelessGoPro() as gopro:
-        print("Yay! I'm connected via BLE, Wifi, initialized, and ready to send / get data now!")
+        print("Yay! I'm connected via BLE, Wifi, opened, and ready to send / get data now!")
         # Send some messages now
 
 \...or without the context manager:
@@ -52,7 +52,7 @@ The Wireless GoPro client can be opened either with the context manager:
 
     gopro = WirelessGoPro()
     gopro.open()
-    print("Yay! I'm connected via BLE, Wifi, initialized, and ready to send / get data now!")
+    print("Yay! I'm connected via BLE, Wifi, opened, and ready to send / get data now!")
     # Send some messages now
 
 In either case, the following will have occurred before the camera is ready to communicate:
@@ -69,11 +69,9 @@ In either case, the following will have occurred before the camera is ready to c
 After the `WirelessGoPro` instance is successfully opened via either of the methods above, it's state can be
 checked via several properties. All of the following will return True:
 
-.. code-block:: python
-
-    gopro.is_ble_connected
-    gopro.is_wifi_connected
-    gopro.is_ble_initialized
+-  :meth:`~open_gopro.gopro.WirelessGoPro.is_ble_connected`
+-  :meth:`~open_gopro.gopro.WirelessGoPro.is_wifi_connected`
+-  :meth:`~open_gopro.gopro.WirelessGoPro.is_open`
 
 .. note:: While a BLE connection is always needed, the WiFi connection is optional. To configure this (and other
     instance arguments) see the API Reference for :class:`~open_gopro.gopro.WirelessGoPro`
@@ -103,7 +101,29 @@ by the `WirelessGoPro` instance.
 Wired Opening
 -------------
 
-TODO
+The Wired GoPro client can be opened either with the context manager:
+
+.. code-block:: python
+
+    from open_gopro import WiredGoPro
+
+    with WiredGoPro() as gopro:
+        print("Yay! I'm connected via USB, opened, and ready to send / get data now!")
+        # Send some messages now
+
+\...or without the context manager:
+
+.. code-block:: python
+
+    from open_gopro import WiredGoPro
+
+    gopro = WiredGoPro()
+    gopro.open()
+    print("Yay! I'm connected via USB, opened, and ready to send / get data now!")
+    # Send some messages now
+
+After the `WirelessGoPro` instance is successfully opened via either of the methods above, it's state can be
+checked via :meth:`~open_gopro.gopro.GoProBase.is_open`.
 
 Common Opening
 --------------
@@ -157,7 +177,7 @@ by transport protocol where the superset of message groups are:
 In the case where a given group of messages is not supported, a `NotImplementedError` will be returned when
 the relevant property is accessed.
 
-All messages are one of two types:
+All messages are communicated via one of two strategies:
 
 - Performing synchronous :ref:`data operations<Synchronous Data Operations>` to send a message and receive a GoPro Response
 - Registering for :ref:`asynchronous push notifications<Asynchronous Push Notifications>` and getting these after they are enqueued
@@ -178,6 +198,10 @@ Here is a full example for clarity:
 
     with GoPro() as gopro:
         gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
+
+.. tip:: The message signature can also be found from the API Reference. For example, here is the documentation
+    of the above message: :meth:`~open_gopro.api.ble_commands.BleCommands.set_shutter`
+
 
 Synchronous Data Operations
 ---------------------------
@@ -221,7 +245,7 @@ It is also possible to read all statuses at once via:
         gopro.ble_command.get_camera_statuses()
 
 .. note::
-    WiFi can not access individual statuses. Instead it can use the `get_camera_state`
+    HTTP can not access individual statuses. Instead it can use the `get_camera_state`
     (:meth:`~open_gopro.api.http_commands.HttpCommands.get_camera_state`)
     command to retrieve all of them (as well as all of the settings) at once
 
@@ -232,7 +256,7 @@ Settings are instances of a BleSetting(:class:`~open_gopro.api.builders.BleSetti
 or HttpSetting(:class:`~open_gopro.api.builders.HttpSetting`). They can be interacted synchronously in several
 ways.
 
-Their values can be read (via BLE) using the `get_value` method as such:
+Their values can be read (via BLE only) using the `get_value` method as such:
 
 .. code-block:: python
 
@@ -248,20 +272,17 @@ It is also possible to read all settings at once via:
         gopro.ble_command.get_camera_settings()
 
 .. note::
-    WiFi can not access individual settings. Instead it can use the `get_camera_state`
+    HTTP can not access individual settings. Instead it can use the `get_camera_state`
     (:meth:`~open_gopro.api.http_commands.HttpCommands.get_camera_state`)
     command to retrieve all of them (as well as all of the statuses) at once.
 
 Depending on the camera's current state, settings will have differing capabilities. It is possible to query
-the current capabilities for a given setting (via BLE) using the `get_capabilities_values` method as such:
+the current capabilities for a given setting (via BLE only) using the `get_capabilities_values` method as such:
 
 .. code-block:: python
 
     with GoPro() as gopro:
         gopro.ble_setting.resolution.get_capabilities_values()
-
-.. note::
-    This functionality is only possible via BLE.
 
 Settings' values can be set (via either BLE or WiFI) using the `set` method as such:
 
@@ -298,10 +319,10 @@ Here is an example of registering for and receiving FOV updates:
 
 .. code-block:: python
 
-    from open_gopro import GoPro
+    from open_gopro import WirelessGoPro
     from open_gopro.constants import SettingId
 
-    with GoPro() as gopro:
+    with WirelessGoPro() as gopro:
         current_fov = gopro.ble_setting.video_field_of_view.register_value_update().flatten
         print(f"Current FOV is {current_fov}")
         # Get updates until we get a FOV update
@@ -316,7 +337,7 @@ Here is an example of registering for and receiving FOV updates:
 .. note:: The `register_XXX_update` methods will return the current value / capabilities. That is why we are
     printing the current value in the example above.
 
-.. note:: It is probably desirable to have a separate thread to retrieve these updates as the demo examples do.
+.. tip:: It is probably desirable to have a separate thread to retrieve these updates as the demo examples do.
 
 It is also possible to register / unregister for **all** settings, statuses, and / or capabilities
 via one API call using the following commands:
@@ -480,7 +501,7 @@ manager was used, it will automatically be closed when exiting, i.e.:
 
 .. code-block:: python
 
-    with GoPro() as gopro:
+    with WirelessGoPro() as gopro:
         # Do some things.
         pass
         # Then when finished...
@@ -490,9 +511,9 @@ Otherwise, you will need to manually call the `close` method, i.e.:
 
 .. code-block:: python
 
-    gopro = GoPro()
+    gopro = WirelessGoPro()
     gopro.open()
-    print("Yay! I'm connected via BLE, Wifi, initialized, and ready to send / get data now!")
+    print("Yay! I'm connected via BLE, Wifi, opened, and ready to send / get data now!")
     # When we're done...
     gopro.close()
     # The camera resource is closed now!!

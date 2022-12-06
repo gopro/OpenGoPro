@@ -19,14 +19,6 @@ All of the CLI demos have command-line help via the `--help` parameter. All demo
 as write a more detailed log to a file (this file can be set with the `--log` parameter). The detailed log
 is very helpful for diagnosing BLE / WiFi inconsistencies.
 
-A Special Consideration for BlueZ
----------------------------------
-
-The Bleak BLE controller does not currently support autonomous pairing for the BlueZ backend. So if you are using
-BlueZ (i.e. Ubuntu, RaspberryPi, etc.), you need to first pair the camera from the command line as shown in the
-`BlueZ tutorial <https://gopro.github.io/OpenGoPro/tutorials/bash/bluez>`_. There is work to add this feature
-and progress can be tracked on the `Github Issue <https://github.com/gopro/OpenGoPro/issues/29>`_
-
 Photo Demo
 ----------
 
