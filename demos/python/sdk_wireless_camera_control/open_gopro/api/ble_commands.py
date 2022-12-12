@@ -421,11 +421,11 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         request_proto=proto.RequestSetCameraControlStatus,
         response_proto=proto.ResponseGeneric,
     )
-    def set_camera_control(self, *, camera_control: Params.CameraControlStatus) -> GoProResp:
+    def set_camera_control(self, *, camera_control_status: Params.CameraControlStatus) -> GoProResp:
         """Tell the camera that the app (i.e. External Control) wishes to claim control of the camera.
 
         Args:
-            camera_control (bool): True to enable, False to disable.
+            camera_control_status (Params.CameraControlStatus): Desired camera control.
 
         Returns:
             GoProResp: command status of request

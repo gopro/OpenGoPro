@@ -18,7 +18,7 @@ import datetime
 import typing
 from typing import Pattern, Any, Callable, Generator, Optional, no_type_check, Union, Final
 
-from wrapt.decorators import AdapterWrapper
+from wrapt.decorators import BoundFunctionWrapper
 import construct
 
 from open_gopro import WirelessGoPro, constants
@@ -93,7 +93,7 @@ class GoProModel:
         ]
 
     @property
-    def messages(self) -> list[Message]:
+    def messages(self) -> list[tuple[str, Message]]:
         """Get all of the available BLE and Wifi Messages
 
         Returns:
@@ -101,8 +101,8 @@ class GoProModel:
         """
         messages = []
         for message_type in self._message_types:
-            c = list(message_type.values())
-            c.sort(key=lambda x: str(x))
+            c = list(message_type.items())
+            c.sort(key=lambda x: str(x[0]))
             messages.extend(c)
         return messages
 
@@ -177,7 +177,19 @@ class GoProModel:
         Returns:
             bool: True if yes, False otherwise
         """
-        return isinstance(message, AdapterWrapper)
+        return isinstance(message, (BoundFunctionWrapper, CompoundCommand))
+
+    @classmethod
+    def is_compound_command(cls, message: Message) -> bool:
+        """Is this message a compound command (i.e. a series of commands only used in the GUI)?
+
+        Args:
+            message (Message): Message to analyze
+
+        Returns:
+            bool: True if yes, False otherwise
+        """
+        return isinstance(message, CompoundCommand)
 
     @classmethod
     @no_type_check
@@ -192,12 +204,14 @@ class GoProModel:
         """
         arg_types: list[type] = []
         arg_names: list[str] = []
-        method_info = inspect.getfullargspec(message if cls.is_command(message) else message.set)
-        for arg in method_info.args[1:]:
-            if arg.startswith("__"):
+        method_info = inspect.getfullargspec(
+            message if (is_command := cls.is_command(message)) else message.set
+        )
+        for arg in method_info.kwonlyargs if is_command else method_info.args[1:]:
+            if arg.startswith("_"):
                 continue
             try:
-                # Assume this is a generic and try to get the generic type of its original class
+                # Assume this is a generic and try to get the standard type of its original class
                 arg_type = re.search(r"\[.*\]", str(message.__orig_class__))[0].strip("[]")
             except AttributeError:
                 # This is not a generic so use the annotations from inspect
@@ -296,7 +310,7 @@ class GoProModel:
                     return GoProModel.Update.STATUS
                 # Must be protobuf
                 return GoProModel.Update.PROTOBUF
-            if container.protocol is GoProResp.Protocol.WIFI:
+            if container.protocol is GoProResp.Protocol.HTTP:
                 if isinstance(identifier, constants.StatusId):
                     return GoProModel.Update.STATUS
                 if isinstance(identifier, constants.SettingId):
@@ -351,6 +365,7 @@ class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]
         class LiveStream(CompoundCommand):
             def __call__(  # type: ignore
                 self,
+                *,
                 ssid: str,
                 password: str,
                 url: str,

@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 import re
+import inspect
 import logging
 from pathlib import Path
 from abc import ABC, abstractmethod
@@ -390,11 +391,15 @@ class Messages(ABC, dict, Generic[MessageType, IdType, CommunicatorType]):
             communicator (CommunicatorType): communicator that will send messages
         """
         self._communicator = communicator
-        # Append any automatically discovered instance attributes
-        message_map: dict[IdType, MessageType] = {}
+        # Append any automatically discovered instance attributes (i.e. for settings and statuses)
+        message_map: dict[Union[IdType, str], MessageType] = {}
         for message in self.__dict__.values():
             if isinstance(message, Message):
                 message_map[message._identifier] = message  # type: ignore
+        # Append any automatically discovered methods (i.e. for commands)
+        for name, method in inspect.getmembers(self, predicate=inspect.ismethod):
+            if not name.startswith("_"):
+                message_map[name.replace("_", " ").title()] = method
         dict.__init__(self, message_map)
 
 

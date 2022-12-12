@@ -10,6 +10,7 @@ import datetime
 import asyncio
 import logging
 from pathlib import Path
+from functools import partial
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 import tkinter as tk
@@ -23,7 +24,7 @@ import wrapt
 from open_gopro.demos.gui import models, views
 from open_gopro.util import setup_logging, pretty_print, add_logging_handler
 
-ResponseHandlerType = Callable[[models.Message, models.GoProResp], None]
+ResponseHandlerType = Callable[[str, models.GoProResp], None]
 
 
 def create_widget(
@@ -49,14 +50,14 @@ def create_widget(
 class MissingArgument(Exception):
     """Exception raised when a message is attempted to be sent without all of its arguments"""
 
-    def __init__(self, argument: str) -> None:
+    def __init__(self, argument: Optional[str]) -> None:
         super().__init__(f"Missing required argument for {argument}")
 
 
 class BadArgumentValue(Exception):
     """Exception raised when an argument fails a validator check"""
 
-    def __init__(self, argument: str) -> None:
+    def __init__(self, argument: Optional[str]) -> None:
         super().__init__(f"Bad value for argument {argument}")
 
 
@@ -115,17 +116,18 @@ class Controller(ABC):
         """
         raise NotImplementedError
 
-    def as_async(self, action: Callable, *args: Any) -> Any:
+    def as_async(self, action: Callable, *args: Any, **kwargs: Any) -> Any:
         """Create an asynchronous coroutine from a synchronous function / method
 
         Args:
             action (Callable): function / method
-            args (list[any]): arguments to action
+            *args (Any): positional arguments to action
+            **kwargs (Any): keyword arguments to action
 
         Returns:
             Any: asynchronous coroutine. Should be awaited in an async method.
         """
-        return self.loop.run_in_executor(None, action, *args)
+        return self.loop.run_in_executor(None, partial(action, *args, **kwargs))
 
 
 class SplashScreen(Controller):
@@ -369,17 +371,20 @@ class Video(Controller):
         self.status_bar.update_status(StatusBar.Stream.READY)
         self.get_frame()
 
-    def handle_auto_start(self, message: models.Message, response: models.GoProResp) -> None:
+    def handle_auto_start(self, identifier: str, response: models.GoProResp) -> None:
         """Auto start live or preview stream
 
         Args:
             message (models.Message): message that was sent
             response (models.GoProResp): response that was received
         """
+        if not response.is_ok:
+            return
+
         video_source: Optional[str] = None
-        if (identifier := str(message._identifier).lower()) == "livestream" and response.is_ok:
+        if str(identifier).lower() == "livestream":
             video_source = response["url"]
-        elif identifier == "preview stream" and response.is_ok and "start" in (response.endpoint or ""):
+        elif str(identifier).lower == "preview stream" and "start" in (response.endpoint or ""):
             video_source = models.PREVIEW_STREAM_URL
 
         if video_source:
@@ -495,20 +500,25 @@ class MessagePalette(Controller):
     """
 
     @dataclass
+    class MessageMeta:
+        identifier: str
+        message: Callable
+
+    @dataclass
     class Argument:
         """Get, store, and process a message argument
 
         Args:
-            name (str): name of argument
             getter (Callable): used to get the string value of the argument from a GUI element
             adapter (Callable): used to adapter the argument string value
             validator (Callable): used to validate the adapted value
+            name (Optional[str]): name of argument
         """
 
-        name: str
         getter: Callable[[], Any]
         adapter: Callable[[Any], Any]
         validator: Callable[[Any], None]
+        name: Optional[str] = None
 
         def process(self, validate: bool = True) -> Any:
             """Get, adapt, and optionally validate an argument
@@ -538,7 +548,7 @@ class MessagePalette(Controller):
     def __init__(self, loop: asyncio.AbstractEventLoop, model: models.GoProModel) -> None:
         Controller.__init__(self, loop)
         self.model = model
-        self.active_message: Any = None
+        self.active_message: Optional[MessagePalette.MessageMeta] = None
         self.active_arguments: list[MessagePalette.Argument] = []
         self.param_form: views.ParamForm
         self.message_palette: views.MessagePalette
@@ -620,7 +630,7 @@ class MessagePalette(Controller):
             else:
                 raise Exception("Unexpected argument type")
 
-            self.active_arguments.append(MessagePalette.Argument(arg_name, getter, adapter, validator))
+            self.active_arguments.append(MessagePalette.Argument(getter, adapter, validator, arg_name))
 
     def on_message_selection(self, event: Any) -> None:
         """Called when a message is selected to create param entries
@@ -637,19 +647,19 @@ class MessagePalette(Controller):
         self.param_form.reset_view()
         self.active_message = None
         self.active_arguments.clear()
-        message = self.model.messages[item_id]
-        self.param_form.create_message(str(message))
+        identifier, message = self.model.messages[item_id]
+        self.param_form.create_message(identifier)
 
         if self.model.is_command(message):
-            self.build_param_entries(message)
-            self.active_arguments.append(
-                MessagePalette.Argument(
-                    name="__communicator__",
-                    getter=lambda: self.model.gopro,
-                    adapter=lambda x: x,
-                    validator=lambda x: x.is_open,
+            if not self.model.is_compound_command(message):
+                self.active_arguments.append(
+                    MessagePalette.Argument(
+                        getter=lambda: self.model.gopro,
+                        adapter=lambda x: x,
+                        validator=lambda x: x.is_open,
+                    )
                 )
-            )
+            self.build_param_entries(message)
             self.param_form.create_button("Send message", self.message_sender_factory(use_args=True))
         else:  # Setting or Status
             if self.model.is_ble(message):
@@ -677,7 +687,7 @@ class MessagePalette(Controller):
                 self.param_form.create_button("Set Value", self.message_sender_factory("set", use_args=True))
                 self.build_param_entries(message)
 
-        self.active_message = message
+        self.active_message = MessagePalette.MessageMeta(identifier, message)
 
     def message_sender_factory(self, attribute: Optional[str] = None, use_args: bool = False) -> Callable:
         """Build a method to be called when a message is requested to be sent
@@ -693,16 +703,29 @@ class MessagePalette(Controller):
 
         @background
         async def on_message_send(self: MessagePalette) -> Optional[models.GoProResp]:
-            method = self.active_message if attribute is None else getattr(self.active_message, attribute)
-            values = [argument.process() for argument in self.active_arguments] if use_args else []
+            method = (
+                self.active_message.message
+                if attribute is None
+                else getattr(self.active_message.message, attribute)
+            )
+            args = []
+            kwargs = {}
+            if use_args:
+                for arg in self.active_arguments:
+                    value = arg.process()
+                    if name := arg.name:
+                        kwargs[name] = value
+                    else:
+                        args.append(value)
+
             try:
-                response = await self.as_async(method, *values)
+                response = await self.as_async(method, *args, **kwargs)
             except Exception as e:  # pylint: disable=broad-except
                 views.popup_message("Error", str(e))
                 return None
 
             for handler in self.response_handlers:
-                handler(self.active_message, response)
+                handler(self.active_message.identifier, response)
             return response
 
         return on_message_send.__get__(self, None)
@@ -778,7 +801,7 @@ class StatusTab(Controller):
         """Display any updates that were received asynchronously (i.e. not message responses)"""
         self._display_updates()
 
-    def display_response_updates(self, _: models.Message, response: Optional[models.GoProResp]) -> None:
+    def display_response_updates(self, _: str, response: Optional[models.GoProResp]) -> None:
         """Display updates from the message response
 
         Args:

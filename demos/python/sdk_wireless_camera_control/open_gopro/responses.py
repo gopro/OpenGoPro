@@ -241,7 +241,7 @@ class GoProResp:
         """Protocol that Command will be sent on."""
 
         BLE = "BLE"
-        WIFI = "WIFI"
+        HTTP = "HTTP"
 
     def __init__(
         self,
@@ -469,7 +469,7 @@ class GoProResp:
         Returns:
             GoProResp.Protocol: protocol
         """
-        return GoProResp.Protocol.BLE if self.uuid else GoProResp.Protocol.WIFI
+        return GoProResp.Protocol.BLE if self.uuid else GoProResp.Protocol.HTTP
 
     @property
     def is_received(self) -> bool:

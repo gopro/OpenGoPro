@@ -141,6 +141,7 @@ class FPS(GoProEnum):
 
 class AutoOff(GoProEnum):
     NEVER = 0
+    TODO_1 = 1
     MIN_5 = 4
     MIN_15 = 6
     MIN_30 = 7

@@ -27,6 +27,34 @@ GetterType = Callable[[], Any]
 T = TypeVar("T")
 
 
+def sanitize_identifier(identifier: str) -> str:
+    """Make the 'id' value human readable so that it looks the same for BLE and Wifi
+
+    Args:
+        identifier (str): identifier to sanitize
+
+    Returns:
+        str: sanitized response
+    """
+    identifier = (
+        identifier.replace("_", " ")
+        .lower()
+        .removeprefix("cmdid.")
+        .removeprefix("querycmdid.")
+        .removeprefix("actionid.")
+        .removeprefix("gopro/")
+        .replace("/", " ")
+        .title()
+    )
+
+    try:
+        identifier = identifier.split("?")[0]
+    except IndexError:
+        pass
+
+    return identifier
+
+
 class DefaultTextEntry(ttk.Entry, Generic[T]):
     """A Tkinter Entry with default text that disappears when clicked
 
@@ -353,39 +381,19 @@ class TreeViewLog(Log):
             except Exception as e:
                 raise ValueError(f"Can not build log message from {self.message}") from e
             self.data["target"] = self.data.pop("uuid", None) or self.data.pop("endpoint", None)
-            self.sanitize_identifier()
+            self.data["id"] = sanitize_identifier(self.data["id"])
+            # Special case to handle wifi set setting response
+            if self.data["id"].lower() == "camera setting":
+                parsed_url = urlparse(self.data["target"])
+                setting_id = int(parse_qs(parsed_url.query)["setting"][0])
+                self.data["id"] = models.constants.SettingId(setting_id)
+            self.data.pop("command", None)
 
         def sanitize_message(self) -> None:
             """Clean up the directional headers from the logger message string"""
             self.message = (
                 self.message.replace(self.ASYNC_TOKEN, "").strip("<>").strip("-").strip("<>").replace("\t", "")
             )
-
-        def sanitize_identifier(self) -> None:
-            """Make the 'id' value human readable so that it looks the same for BLE and Wifi"""
-            self.data["id"] = (
-                self.data["id"]
-                .replace("_", " ")
-                .lower()
-                .removeprefix("cmdid.")
-                .removeprefix("querycmdid.")
-                .removeprefix("actionid.")
-                .removeprefix("gopro/")
-                .replace("/", " ")
-                .title()
-            )
-
-            try:
-                self.data["id"] = self.data["id"].split("?")[0]
-            except IndexError:
-                pass
-            self.data.pop("command", None)
-
-            # Special case to handle wifi set setting response
-            if self.data["id"].lower() == "camera setting":
-                parsed_url = urlparse(self.data["target"])
-                setting_id = int(parse_qs(parsed_url.query)["setting"][0])
-                self.data["id"] = models.constants.SettingId(setting_id)
 
         @property
         def is_ok(self) -> bool:
@@ -403,7 +411,7 @@ class TreeViewLog(Log):
             """From the Log Message, generate entries suitable for the Log View to consume
 
             Generates:
-                1. top level description of message (formatted be self.fmt)
+                1. top level description of message (formatted by self.fmt)
                 2-N: individual elements of message as tuple(id, value)
 
             Yields:
@@ -705,7 +713,14 @@ class MessagePalette(View, tk.Frame):
         for parent, children in messages.items():
             self.tv.insert(parent="", index="end", iid=str(parent_index), text=parent)
             for message in children:
-                self.tv.insert(parent=str(parent_index), index="end", iid=str(child_index), text=message)
+                if "." in (identifier := sanitize_identifier(message)):
+                    identifier = " ".join(identifier.split(".")[1:])
+                self.tv.insert(
+                    parent=str(parent_index),
+                    index="end",
+                    iid=str(child_index),
+                    text=identifier,
+                )
                 child_index += 1
             self.tv.item(str(parent_index), open=True)
             parent_index += 1
