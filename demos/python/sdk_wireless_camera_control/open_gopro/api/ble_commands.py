@@ -28,16 +28,17 @@ from construct import (
 
 from open_gopro import proto
 from open_gopro.responses import GoProResp, BytesParser, BytesBuilder, JsonParser
-from open_gopro.interface import GoProBle, Commands, SettingsStatuses, BleMessage
+from open_gopro.interface import GoProBle, BleMessage, BleMessages
 from open_gopro.api.builders import (
     DeprecatedAdapter,
     BleStatus,
     BleSetting,
     BleAsyncResponse,
-    BleWriteCommand,
     RegisterUnregisterAll,
-    BleReadCommand,
-    BleProtoCommand,
+    ble_register_command,
+    ble_write_command,
+    ble_read_command,
+    ble_proto_command,
 )
 from open_gopro.constants import ActionId, FeatureId, CmdId, QueryCmdId, SettingId, StatusId, GoProUUIDs
 from open_gopro.util import map_keys
@@ -63,7 +64,7 @@ class BleParserBuilders:
                 is_dst (Optional[bool], optional): is daylight savings time?. Defaults to None.
 
             Returns:
-                bytes: _description_
+                bytes: bytestream built from datetime
             """
             byte_data = [*Int16ub.build(dt.year), dt.month, dt.day, dt.hour, dt.minute, dt.second]
             if tzone and is_dst:
@@ -111,7 +112,7 @@ class BleParserBuilders:
             return data
 
 
-class BleCommands(Commands[BleMessage, CmdId]):
+class BleCommands(BleMessages[BleMessage, CmdId]):
     """All of the BLE commands.
 
     To be used as a delegate for a GoProBle instance to build commands
@@ -121,7 +122,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
     #                          BLE WRITE COMMANDS
     ######################################################################################################
 
-    @Commands.build(BleWriteCommand(GoProUUIDs.CQ_COMMAND, CmdId.SET_SHUTTER, Int8ub))
+    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SET_SHUTTER, Int8ub)
     def set_shutter(self, *, shutter: Params.Toggle) -> GoProResp:
         """Set the Shutter to start / stop encoding
 
@@ -132,7 +133,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: status of command
         """
 
-    @Commands.build(BleWriteCommand(GoProUUIDs.CQ_COMMAND, CmdId.TAG_HILIGHT))
+    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.TAG_HILIGHT)
     def tag_hilight(self) -> GoProResp:
         """Tag a highlight during encoding
 
@@ -140,7 +141,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: response as JSON
         """
 
-    @Commands.build(BleWriteCommand(GoProUUIDs.CQ_COMMAND, CmdId.POWER_DOWN))
+    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.POWER_DOWN)
     def power_down(self) -> GoProResp:
         """Power Down the camera
 
@@ -148,7 +149,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: response as JSON
         """
 
-    @Commands.build(BleWriteCommand(GoProUUIDs.CQ_COMMAND, CmdId.SLEEP))
+    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SLEEP)
     def sleep(self) -> GoProResp:
         """Put the camera in standby
 
@@ -156,27 +157,25 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: response as JSON
         """
 
-    @Commands.build(
-        BleWriteCommand(
-            GoProUUIDs.CQ_COMMAND,
-            CmdId.GET_HW_INFO,
-            parser=Struct(
-                Padding(1),
-                "model_number" / Int32ub,
-                "model_name_len" / Int8ub,
-                "model_name" / PaddedString(this.model_name_len, "utf-8"),
-                Padding(1),
-                "board_type" / Hex(Int32ub),
-                "firmware_version_len" / Int8ub,
-                "firmware_version" / PaddedString(this.firmware_version_len, "utf-8"),
-                "serial_number_len" / Int8ub,
-                "serial_number" / PaddedString(this.serial_number_len, "utf-8"),
-                "ap_ssid_len" / Int8ub,
-                "ap_ssid" / PaddedString(this.ap_ssid_len, "utf-8"),
-                "ap_mac_len" / Int8ub,
-                "ap_mac" / PaddedString(this.ap_mac_len, "utf-8"),
-            ),
-        )
+    @ble_write_command(
+        GoProUUIDs.CQ_COMMAND,
+        CmdId.GET_HW_INFO,
+        parser=Struct(
+            Padding(1),
+            "model_number" / Int32ub,
+            "model_name_len" / Int8ub,
+            "model_name" / PaddedString(this.model_name_len, "utf-8"),
+            Padding(1),
+            "board_type" / Hex(Int32ub),
+            "firmware_version_len" / Int8ub,
+            "firmware_version" / PaddedString(this.firmware_version_len, "utf-8"),
+            "serial_number_len" / Int8ub,
+            "serial_number" / PaddedString(this.serial_number_len, "utf-8"),
+            "ap_ssid_len" / Int8ub,
+            "ap_ssid" / PaddedString(this.ap_ssid_len, "utf-8"),
+            "ap_mac_len" / Int8ub,
+            "ap_mac" / PaddedString(this.ap_mac_len, "utf-8"),
+        ),
     )
     def get_hardware_info(self) -> GoProResp:
         """Get the model number, board, type, firmware version, serial number, and AP info
@@ -185,7 +184,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: response as JSON
         """
 
-    @Commands.build(BleWriteCommand(GoProUUIDs.CQ_COMMAND, CmdId.SET_WIFI, Int8ub))
+    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SET_WIFI, Int8ub)
     def enable_wifi_ap(self, *, enable: bool) -> GoProResp:
         """Enable / disable the Wi-Fi Access Point.
 
@@ -196,7 +195,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: response as JSON
         """
 
-    @Commands.build(BleWriteCommand(GoProUUIDs.CQ_COMMAND, CmdId.LOAD_PRESET_GROUP, Int16ub))
+    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.LOAD_PRESET_GROUP, Int16ub)
     def load_preset_group(self, *, group: Params.PresetGroup) -> GoProResp:
         """Load a Preset Group.
 
@@ -209,7 +208,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: response as JSON
         """
 
-    @Commands.build(BleWriteCommand(GoProUUIDs.CQ_COMMAND, CmdId.LOAD_PRESET, Int32ub))
+    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.LOAD_PRESET, Int32ub)
     def load_preset(self, *, preset: int) -> GoProResp:
         """Load a Preset
 
@@ -222,7 +221,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: command status
         """
 
-    @Commands.build(BleWriteCommand(GoProUUIDs.CQ_COMMAND, CmdId.SET_THIRD_PARTY_CLIENT_INFO))
+    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SET_THIRD_PARTY_CLIENT_INFO)
     def set_third_party_client_info(self) -> GoProResp:
         """Flag as third party app
 
@@ -230,12 +229,10 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: command status
         """
 
-    @Commands.build(
-        BleWriteCommand(
-            GoProUUIDs.CQ_COMMAND,
-            CmdId.GET_THIRD_PARTY_API_VERSION,
-            parser=Struct(Padding(1), "major" / Int8ub, Padding(1), "minor" / Int8ub),
-        )
+    @ble_write_command(
+        GoProUUIDs.CQ_COMMAND,
+        CmdId.GET_THIRD_PARTY_API_VERSION,
+        parser=Struct(Padding(1), "major" / Int8ub, Padding(1), "minor" / Int8ub),
     )
     def get_open_gopro_api_version(self) -> GoProResp:
         """Get Open GoPro API Version
@@ -244,7 +241,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: response as JSON
         """
 
-    @Commands.build(BleWriteCommand(GoProUUIDs.CQ_QUERY, CmdId.GET_CAMERA_STATUSES))
+    @ble_write_command(GoProUUIDs.CQ_QUERY, CmdId.GET_CAMERA_STATUSES)
     def get_camera_statuses(self) -> GoProResp:
         """Get all of the camera's statuses
 
@@ -252,7 +249,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: response as JSON
         """
 
-    @Commands.build(BleWriteCommand(GoProUUIDs.CQ_QUERY, CmdId.GET_CAMERA_SETTINGS))
+    @ble_write_command(GoProUUIDs.CQ_QUERY, CmdId.GET_CAMERA_SETTINGS)
     def get_camera_settings(self) -> GoProResp:
         """Get all of the camera's settings
 
@@ -260,7 +257,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: response as JSON
         """
 
-    @Commands.build(BleWriteCommand(GoProUUIDs.CQ_QUERY, CmdId.GET_CAMERA_CAPABILITIES))
+    @ble_write_command(GoProUUIDs.CQ_QUERY, CmdId.GET_CAMERA_CAPABILITIES)
     def get_camera_capabilities(self) -> GoProResp:
         """Get the current capabilities of each camera setting
 
@@ -268,9 +265,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: response as JSON
         """
 
-    @Commands.build(
-        BleWriteCommand(GoProUUIDs.CQ_COMMAND, CmdId.SET_DATE_TIME, param_builder=BleParserBuilders.DateTime())
-    )
+    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SET_DATE_TIME, param_builder=BleParserBuilders.DateTime())
     def set_date_time(self, *, date_time: datetime.datetime) -> GoProResp:
         """Set the camera's date and time (non timezone / DST version)
 
@@ -281,9 +276,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: command status
         """
 
-    @Commands.build(
-        BleWriteCommand(GoProUUIDs.CQ_COMMAND, CmdId.GET_DATE_TIME, parser=BleParserBuilders.DateTime())
-    )
+    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.GET_DATE_TIME, parser=BleParserBuilders.DateTime())
     def get_date_time(self) -> GoProResp:
         """Get the camera's date and time (non timezone / DST version)
 
@@ -291,10 +284,8 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: response as JSON
         """
 
-    @Commands.build(
-        BleWriteCommand(
-            GoProUUIDs.CQ_COMMAND, CmdId.SET_DATE_TIME_DST, param_builder=BleParserBuilders.DateTime()
-        )
+    @ble_write_command(
+        GoProUUIDs.CQ_COMMAND, CmdId.SET_DATE_TIME_DST, param_builder=BleParserBuilders.DateTime()
     )
     def set_date_time_tz_dst(self, *, date_time: datetime.datetime, tz_offset: int, is_dst: bool) -> GoProResp:
         """Set the camera's date and time with timezone and DST
@@ -308,9 +299,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: command status
         """
 
-    @Commands.build(
-        BleWriteCommand(GoProUUIDs.CQ_COMMAND, CmdId.GET_DATE_TIME_DST, parser=BleParserBuilders.DateTime())
-    )
+    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.GET_DATE_TIME_DST, parser=BleParserBuilders.DateTime())
     def get_date_time_tz_dst(self) -> GoProResp:
         """Get the camera's date and time with timezone / DST
 
@@ -322,7 +311,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
     #                          BLE DIRECT CHARACTERISTIC READ COMMANDS
     ######################################################################################################
 
-    @Commands.build(BleReadCommand(GoProUUIDs.WAP_SSID, Struct("ssid" / GreedyString("utf-8"))))
+    @ble_read_command(GoProUUIDs.WAP_SSID, Struct("ssid" / GreedyString("utf-8")))
     def get_wifi_ssid(self) -> GoProResp:
         """Get the Wifi SSID.
 
@@ -330,7 +319,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: command status and SSID
         """
 
-    @Commands.build(BleReadCommand(GoProUUIDs.WAP_PASSWORD, Struct("password" / GreedyString("utf-8"))))
+    @ble_read_command(GoProUUIDs.WAP_PASSWORD, Struct("password" / GreedyString("utf-8")))
     def get_wifi_password(self) -> GoProResp:
         """Get the Wifi password.
 
@@ -342,13 +331,11 @@ class BleCommands(Commands[BleMessage, CmdId]):
     #                          REGISTER / UNREGISTER ALL COMMANDS
     ######################################################################################################
 
-    @Commands.build(
-        RegisterUnregisterAll(
-            GoProUUIDs.CQ_QUERY,
-            CmdId.REGISTER_ALL_STATUSES,
-            producer=(StatusId, QueryCmdId.STATUS_VAL_PUSH),
-            action=RegisterUnregisterAll.Action.REGISTER,
-        )
+    @ble_register_command(
+        GoProUUIDs.CQ_QUERY,
+        CmdId.REGISTER_ALL_STATUSES,
+        producer=(StatusId, QueryCmdId.STATUS_VAL_PUSH),
+        action=RegisterUnregisterAll.Action.REGISTER,
     )
     def register_for_all_statuses(self) -> GoProResp:
         """Register push notifications for all statuses
@@ -357,13 +344,11 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: command status and current value of all statuses
         """
 
-    @Commands.build(
-        RegisterUnregisterAll(
-            GoProUUIDs.CQ_QUERY,
-            CmdId.UNREGISTER_ALL_STATUSES,
-            producer=(StatusId, QueryCmdId.STATUS_VAL_PUSH),
-            action=RegisterUnregisterAll.Action.UNREGISTER,
-        )
+    @ble_register_command(
+        GoProUUIDs.CQ_QUERY,
+        CmdId.UNREGISTER_ALL_STATUSES,
+        producer=(StatusId, QueryCmdId.STATUS_VAL_PUSH),
+        action=RegisterUnregisterAll.Action.UNREGISTER,
     )
     def unregister_for_all_statuses(self) -> GoProResp:
         """Unregister push notifications for all statuses
@@ -372,13 +357,11 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: command status
         """
 
-    @Commands.build(
-        RegisterUnregisterAll(
-            GoProUUIDs.CQ_QUERY,
-            CmdId.REGISTER_ALL_SETTINGS,
-            producer=(SettingId, QueryCmdId.SETTING_VAL_PUSH),
-            action=RegisterUnregisterAll.Action.REGISTER,
-        )
+    @ble_register_command(
+        GoProUUIDs.CQ_QUERY,
+        CmdId.REGISTER_ALL_SETTINGS,
+        producer=(SettingId, QueryCmdId.SETTING_VAL_PUSH),
+        action=RegisterUnregisterAll.Action.REGISTER,
     )
     def register_for_all_settings(self) -> GoProResp:
         """Register push notifications for all settings
@@ -387,13 +370,11 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: command status and current value of all settings
         """
 
-    @Commands.build(
-        RegisterUnregisterAll(
-            GoProUUIDs.CQ_QUERY,
-            CmdId.UNREGISTER_ALL_SETTINGS,
-            producer=(SettingId, QueryCmdId.SETTING_VAL_PUSH),
-            action=RegisterUnregisterAll.Action.UNREGISTER,
-        )
+    @ble_register_command(
+        GoProUUIDs.CQ_QUERY,
+        CmdId.UNREGISTER_ALL_SETTINGS,
+        producer=(SettingId, QueryCmdId.SETTING_VAL_PUSH),
+        action=RegisterUnregisterAll.Action.UNREGISTER,
     )
     def unregister_for_all_settings(self) -> GoProResp:
         """Unregister push notifications for all settings
@@ -402,13 +383,11 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: command status
         """
 
-    @Commands.build(
-        RegisterUnregisterAll(
-            GoProUUIDs.CQ_QUERY,
-            CmdId.REGISTER_ALL_CAPABILITIES,
-            producer=(SettingId, QueryCmdId.SETTING_CAPABILITY_PUSH),
-            action=RegisterUnregisterAll.Action.REGISTER,
-        )
+    @ble_register_command(
+        GoProUUIDs.CQ_QUERY,
+        CmdId.REGISTER_ALL_CAPABILITIES,
+        producer=(SettingId, QueryCmdId.SETTING_CAPABILITY_PUSH),
+        action=RegisterUnregisterAll.Action.REGISTER,
     )
     def register_for_all_capabilities(self) -> GoProResp:
         """Register push notifications for all capabilities
@@ -417,13 +396,11 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: command status and current value of all capabilities
         """
 
-    @Commands.build(
-        RegisterUnregisterAll(
-            GoProUUIDs.CQ_QUERY,
-            CmdId.UNREGISTER_ALL_CAPABILITIES,
-            producer=(SettingId, QueryCmdId.SETTING_CAPABILITY_PUSH),
-            action=RegisterUnregisterAll.Action.UNREGISTER,
-        )
+    @ble_register_command(
+        GoProUUIDs.CQ_QUERY,
+        CmdId.UNREGISTER_ALL_CAPABILITIES,
+        producer=(SettingId, QueryCmdId.SETTING_CAPABILITY_PUSH),
+        action=RegisterUnregisterAll.Action.UNREGISTER,
     )
     def unregister_for_all_capabilities(self) -> GoProResp:
         """Unregister push notifications for all capabilities
@@ -436,15 +413,13 @@ class BleCommands(Commands[BleMessage, CmdId]):
     #                          PROTOBUF COMMANDS
     ######################################################################################################
 
-    @Commands.build(
-        BleProtoCommand(
-            uuid=GoProUUIDs.CQ_COMMAND,
-            feature_id=FeatureId.COMMAND,
-            action_id=ActionId.SET_CAMERA_CONTROL,
-            response_action_id=ActionId.SET_CAMERA_CONTROL_RSP,
-            request_proto=proto.RequestSetCameraControlStatus,
-            response_proto=proto.ResponseGeneric,
-        )
+    @ble_proto_command(
+        uuid=GoProUUIDs.CQ_COMMAND,
+        feature_id=FeatureId.COMMAND,
+        action_id=ActionId.SET_CAMERA_CONTROL,
+        response_action_id=ActionId.SET_CAMERA_CONTROL_RSP,
+        request_proto=proto.RequestSetCameraControlStatus,
+        response_proto=proto.ResponseGeneric,
     )
     def set_camera_control(self, *, camera_control: Params.CameraControlStatus) -> GoProResp:
         """Tell the camera that the app (i.e. External Control) wishes to claim control of the camera.
@@ -456,15 +431,13 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: command status of request
         """
 
-    @Commands.build(
-        BleProtoCommand(
-            uuid=GoProUUIDs.CQ_COMMAND,
-            feature_id=FeatureId.COMMAND,
-            action_id=ActionId.SET_TURBO_MODE,
-            response_action_id=ActionId.SET_TURBO_MODE_RSP,
-            request_proto=proto.RequestSetTurboActive,
-            response_proto=proto.ResponseGeneric,
-        )
+    @ble_proto_command(
+        uuid=GoProUUIDs.CQ_COMMAND,
+        feature_id=FeatureId.COMMAND,
+        action_id=ActionId.SET_TURBO_MODE,
+        response_action_id=ActionId.SET_TURBO_MODE_RSP,
+        request_proto=proto.RequestSetTurboActive,
+        response_proto=proto.ResponseGeneric,
     )
     def set_turbo_mode(self, *, active: bool) -> GoProResp:
         """Enable / disable turbo mode.
@@ -476,16 +449,14 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: command status of request
         """
 
-    @Commands.build(
-        BleProtoCommand(
-            uuid=GoProUUIDs.CQ_QUERY,
-            feature_id=FeatureId.QUERY,
-            action_id=ActionId.GET_PRESET_STATUS,
-            response_action_id=ActionId.GET_PRESET_STATUS_RSP,
-            request_proto=proto.RequestGetPresetStatus,
-            response_proto=proto.NotifyPresetStatus,
-            additional_matching_ids={ActionId.PRESET_MODIFIED_NOTIFICATION},
-        )
+    @ble_proto_command(
+        uuid=GoProUUIDs.CQ_QUERY,
+        feature_id=FeatureId.QUERY,
+        action_id=ActionId.GET_PRESET_STATUS,
+        response_action_id=ActionId.GET_PRESET_STATUS_RSP,
+        request_proto=proto.RequestGetPresetStatus,
+        response_proto=proto.NotifyPresetStatus,
+        additional_matching_ids={ActionId.PRESET_MODIFIED_NOTIFICATION},
     )
     def get_preset_status(
         self,
@@ -509,15 +480,13 @@ class BleCommands(Commands[BleMessage, CmdId]):
         """
         return dict(register_preset_status=register or [], unregister_preset_status=unregister or [])  # type: ignore
 
-    @Commands.build(
-        BleProtoCommand(
-            uuid=GoProUUIDs.CM_NET_MGMT_COMM,
-            feature_id=FeatureId.NETWORK_MANAGEMENT,
-            action_id=ActionId.SCAN_WIFI_NETWORKS,
-            response_action_id=ActionId.SCAN_WIFI_NETWORKS_RSP,
-            request_proto=proto.RequestStartScan,
-            response_proto=proto.ResponseStartScanning,
-        )
+    @ble_proto_command(
+        uuid=GoProUUIDs.CM_NET_MGMT_COMM,
+        feature_id=FeatureId.NETWORK_MANAGEMENT,
+        action_id=ActionId.SCAN_WIFI_NETWORKS,
+        response_action_id=ActionId.SCAN_WIFI_NETWORKS_RSP,
+        request_proto=proto.RequestStartScan,
+        response_proto=proto.ResponseStartScanning,
     )
     def scan_wifi_networks(self) -> GoProResp:
         """Scan for Wifi networks
@@ -526,16 +495,14 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: Command status of request
         """
 
-    @Commands.build(
-        BleProtoCommand(
-            uuid=GoProUUIDs.CM_NET_MGMT_COMM,
-            feature_id=FeatureId.NETWORK_MANAGEMENT,
-            action_id=ActionId.GET_AP_ENTRIES,
-            response_action_id=ActionId.GET_AP_ENTRIES_RSP,
-            request_proto=proto.RequestGetApEntries,
-            response_proto=proto.ResponseGetApEntries,
-            additional_parsers=[BleParserBuilders.MapKey("scan_entry_flags", lambda x: Params.ScanEntry(x))],
-        )
+    @ble_proto_command(
+        uuid=GoProUUIDs.CM_NET_MGMT_COMM,
+        feature_id=FeatureId.NETWORK_MANAGEMENT,
+        action_id=ActionId.GET_AP_ENTRIES,
+        response_action_id=ActionId.GET_AP_ENTRIES_RSP,
+        request_proto=proto.RequestGetApEntries,
+        response_proto=proto.ResponseGetApEntries,
+        additional_parsers=[BleParserBuilders.MapKey("scan_entry_flags", lambda x: Params.ScanEntry(x))],
     )
     def get_ap_entries(self, *, scan_id: int, start_index: int = 0, max_entries: int = 100) -> GoProResp:
         """Get the results of a scan for wifi networks
@@ -549,16 +516,14 @@ class BleCommands(Commands[BleMessage, CmdId]):
             GoProResp: result of scan with entries for WiFi networks
         """
 
-    @Commands.build(
-        BleProtoCommand(
-            uuid=GoProUUIDs.CM_NET_MGMT_COMM,
-            feature_id=FeatureId.NETWORK_MANAGEMENT,
-            action_id=ActionId.REQUEST_WIFI_CONNECT,
-            response_action_id=ActionId.REQUEST_WIFI_CONNECT_RSP,
-            request_proto=proto.RequestConnectNew,
-            response_proto=proto.ResponseConnectNew,
-            additional_matching_ids={ActionId.REQUEST_WIFI_CONNECT_RSP},
-        )
+    @ble_proto_command(
+        uuid=GoProUUIDs.CM_NET_MGMT_COMM,
+        feature_id=FeatureId.NETWORK_MANAGEMENT,
+        action_id=ActionId.REQUEST_WIFI_CONNECT,
+        response_action_id=ActionId.REQUEST_WIFI_CONNECT_RSP,
+        request_proto=proto.RequestConnectNew,
+        response_proto=proto.ResponseConnectNew,
+        additional_matching_ids={ActionId.REQUEST_WIFI_CONNECT_RSP},
     )
     def request_wifi_connect(self, *, ssid: str, password: str) -> GoProResp:
         """Request the camera to connect to a WiFi network.
@@ -574,15 +539,13 @@ class BleCommands(Commands[BleMessage, CmdId]):
         """
 
     # TODO allow encode = False
-    @Commands.build(
-        BleProtoCommand(
-            uuid=GoProUUIDs.CQ_COMMAND,
-            feature_id=FeatureId.COMMAND,
-            action_id=ActionId.SET_LIVESTREAM_MODE,
-            response_action_id=ActionId.SET_LIVESTREAM_MODE_RSP,
-            request_proto=proto.RequestSetLiveStreamMode,
-            response_proto=proto.ResponseGeneric,
-        )
+    @ble_proto_command(
+        uuid=GoProUUIDs.CQ_COMMAND,
+        feature_id=FeatureId.COMMAND,
+        action_id=ActionId.SET_LIVESTREAM_MODE,
+        response_action_id=ActionId.SET_LIVESTREAM_MODE_RSP,
+        request_proto=proto.RequestSetLiveStreamMode,
+        response_proto=proto.ResponseGeneric,
     )
     def set_livestream_mode(
         self,
@@ -620,16 +583,14 @@ class BleCommands(Commands[BleMessage, CmdId]):
             lens=lens,
         )
 
-    @Commands.build(
-        BleProtoCommand(
-            uuid=GoProUUIDs.CQ_QUERY,
-            feature_id=FeatureId.QUERY,
-            action_id=ActionId.GET_LIVESTREAM_STATUS,
-            response_action_id=ActionId.LIVESTREAM_STATUS_RSP,
-            request_proto=proto.RequestGetLiveStreamStatus,
-            response_proto=proto.NotifyLiveStreamStatus,
-            additional_matching_ids={ActionId.LIVESTREAM_STATUS_NOTIF},
-        )
+    @ble_proto_command(
+        uuid=GoProUUIDs.CQ_QUERY,
+        feature_id=FeatureId.QUERY,
+        action_id=ActionId.GET_LIVESTREAM_STATUS,
+        response_action_id=ActionId.LIVESTREAM_STATUS_RSP,
+        request_proto=proto.RequestGetLiveStreamStatus,
+        response_proto=proto.NotifyLiveStreamStatus,
+        additional_matching_ids={ActionId.LIVESTREAM_STATUS_NOTIF},
     )
     def register_livestream_status(
         self,
@@ -650,15 +611,13 @@ class BleCommands(Commands[BleMessage, CmdId]):
         """
         return dict(register=register or [], unregister=unregister or [])  # type: ignore
 
-    @Commands.build(
-        BleProtoCommand(
-            uuid=GoProUUIDs.CQ_COMMAND,
-            feature_id=FeatureId.COMMAND,
-            action_id=ActionId.RELEASE_NETWORK,
-            response_action_id=ActionId.RELEASE_NETWORK_RSP,
-            request_proto=proto.RequestReleaseNetwork,
-            response_proto=proto.ResponseGeneric,
-        )
+    @ble_proto_command(
+        uuid=GoProUUIDs.CQ_COMMAND,
+        feature_id=FeatureId.COMMAND,
+        action_id=ActionId.RELEASE_NETWORK,
+        response_action_id=ActionId.RELEASE_NETWORK_RSP,
+        request_proto=proto.RequestReleaseNetwork,
+        response_proto=proto.ResponseGeneric,
     )
     def release_network(self) -> GoProResp:
         """Disconnect the camera Wifi network in STA mode so that it returns to AP mode.
@@ -668,7 +627,7 @@ class BleCommands(Commands[BleMessage, CmdId]):
         """
 
 
-class BleSettings(SettingsStatuses[BleSetting, SettingId]):
+class BleSettings(BleMessages[BleSetting, SettingId]):
     # pylint: disable=missing-class-docstring, unused-argument
     """The collection of all BLE Settings.
 
@@ -821,7 +780,7 @@ class BleAsyncResponses:
             GoProResp._add_feature_action_id_mapping(response.feature_id, response.action_id)
 
 
-class BleStatuses(SettingsStatuses[BleStatus, StatusId]):
+class BleStatuses(BleMessages[BleStatus, StatusId]):
     """All of the BLE Statuses.
 
     To be used by a GoProBle delegate to build status messages.

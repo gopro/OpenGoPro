@@ -109,10 +109,10 @@ def test_proto_command_arg(ble_communicator: GoProBle):
 
 def test_commands_iteration(ble_communicator: BleCommunicatorTest):
     for commands in [
-        ble_communicator._api.ble_command,
+        # ble_communicator._api.ble_command,
         ble_communicator._api.ble_setting,
         ble_communicator._api.ble_status,
-        ble_communicator._api.http_command,
+        # ble_communicator._api.http_command,
         ble_communicator._api.http_setting,
     ]:
         count = 0
@@ -124,14 +124,14 @@ def test_commands_iteration(ble_communicator: BleCommunicatorTest):
 def test_commands_subscriptable(ble_communicator: BleCommunicatorTest):
     for commands, identifier in zip(
         [
-            ble_communicator._api.ble_command,
+            # ble_communicator._api.ble_command,
             ble_communicator._api.ble_setting,
             ble_communicator._api.ble_status,
             # ble_communicator._api.http_command,
             ble_communicator._api.http_setting,
         ],
         [
-            CmdId,
+            # CmdId,
             SettingId,
             StatusId,
             # CmdId,

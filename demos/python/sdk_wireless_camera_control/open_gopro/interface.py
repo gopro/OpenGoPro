@@ -8,10 +8,8 @@ import re
 import logging
 from pathlib import Path
 from abc import ABC, abstractmethod
-from collections.abc import Iterator, Iterable
-from typing import Generic, Optional, Union, Pattern, Any, TypeVar, Generator, Callable
+from typing import Generic, Optional, Union, Pattern, Any, TypeVar, Generator
 
-import wrapt
 from construct import BitStruct, BitsInteger, Padding, Const, Bit, Construct
 
 from open_gopro.ble import (
@@ -24,7 +22,7 @@ from open_gopro.ble import (
     BleUUID,
 )
 from open_gopro.wifi import WifiClient, WifiController
-from open_gopro.responses import GoProResp, Header, BytesParser, JsonParser, Parser
+from open_gopro.responses import GoProResp, Header, BytesParser, JsonParser
 from open_gopro.constants import GoProUUIDs, ProducerType, ResponseType, SettingId, StatusId, ActionId, CmdId
 
 logger = logging.getLogger(__name__)
@@ -162,10 +160,10 @@ class GoProBle(ABC, Generic[BleHandle, BleDevice]):
         """Read a characteristic and block until its corresponding notification response is received.
 
         Args:
-            uuid (BleUUID): _description_
+            uuid (BleUUID): characteristic ro read
 
         Returns:
-            GoProResp: _description_
+            GoProResp: data read from characteristic
         """
         raise NotImplementedError
 
@@ -321,8 +319,8 @@ class BleMessage(Message[GoProBle, IdType, BytesParser]):
         uuid (BleUUID): BleUUID to read / write to
     """
 
-    def __init__(self, uuid: BleUUID, parser: Optional[Parser], identifier: IdType) -> None:
-        super().__init__(identifier, parser)  # type: ignore
+    def __init__(self, uuid: BleUUID, parser: Optional[BytesParser], identifier: IdType) -> None:
+        Message.__init__(self, identifier, parser)
         self._uuid = uuid
         self._base_dict = dict(protocol="BLE", uuid=self._uuid)
 
@@ -331,15 +329,7 @@ class BleMessage(Message[GoProBle, IdType, BytesParser]):
 
 
 class HttpMessage(Message[GoProHttp, IdType, JsonParser]):
-    """The base class for all HTTP messages. Stores common information.
-
-    Args:
-        endpoint (str): base endpoint
-        components (Optional[list[str]]): conditional endpoint components. Defaults to None.
-        arguments (Optional[list[str]]): URL argument names. Defaults to None.
-        parser (Optional[JsonParser]): additional parsing of JSON response. Defaults to None.
-        name (Optional[str]): explicitly set message identifier. Defaults to None (generated from endpoint).
-    """
+    """The base class for all HTTP messages. Stores common information."""
 
     def __init__(
         self,
@@ -349,10 +339,19 @@ class HttpMessage(Message[GoProHttp, IdType, JsonParser]):
         arguments: Optional[list[str]] = None,
         parser: Optional[JsonParser] = None,
     ) -> None:
+        """Constructor
+
+        Args:
+            endpoint (str): base endpoint
+            components (Optional[list[str]]): conditional endpoint components. Defaults to None.
+            arguments (Optional[list[str]]): URL argument names. Defaults to None.
+            parser (Optional[JsonParser]): additional parsing of JSON response. Defaults to None.
+            identifier (IdType): explicitly set message identifier. Defaults to None (generated from endpoint).
+        """
         self._endpoint = endpoint
         self._components = components
         self._args = arguments
-        super().__init__(identifier, parser)  # type: ignore
+        Message.__init__(self, identifier, parser)
         self._base_dict: dict[str, Any] = dict(id=self._identifier, protocol="HTTP", endpoint=self._endpoint)
 
     def __str__(self) -> str:
@@ -375,109 +374,39 @@ class HttpMessage(Message[GoProHttp, IdType, JsonParser]):
 MessageType = TypeVar("MessageType", bound=Message)
 
 
-class Messages(ABC, Iterable, Generic[MessageType, IdType]):
-    """Base class for message container
+class Messages(ABC, dict, Generic[MessageType, IdType, CommunicatorType]):
+    """Base class for setting and status containers
 
-    Allows message groups to be iterable and supports dict-like access
+    Allows message groups to be iterable and supports dict-like access.
 
-    Args:
-        communicator (Union[GoProBle, GoProHttp]): communicator that will send messages
+    Instance attributes that are an instance (or subclass) of Message are automatically accumulated during
+    instantiation
     """
 
-    def __init__(self, communicator: Union[GoProBle, GoProHttp]) -> None:
+    def __init__(self, communicator: CommunicatorType) -> None:
+        """Constructor
+
+        Args:
+            communicator (CommunicatorType): communicator that will send messages
+        """
         self._communicator = communicator
-        self._message_map: dict[IdType, MessageType] = {
-            message._identifier: message for message in self._messages
-        }
-
-    @property
-    @abstractmethod
-    def _messages(self) -> list[MessageType]:
-        """The list of messages contained in this class
-
-        Returns:
-            list[MessageType]: list of messages
-        """
-        raise NotImplementedError
-
-    def __iter__(self) -> Iterator:
-        return iter(self._messages)
-
-    def __getitem__(self, key: IdType) -> MessageType:
-        if self._message_map:
-            return self._message_map[key]
-        raise TypeError(f"{type(self)} object is not subscriptable")
-
-    def __contains__(self, item: IdType) -> bool:
-        return item in self._message_map
+        # Append any automatically discovered instance attributes
+        message_map: dict[IdType, MessageType] = {}
+        for message in self.__dict__.values():
+            if isinstance(message, Message):
+                message_map[message._identifier] = message  # type: ignore
+        dict.__init__(self, message_map)
 
 
-class Commands(Messages, Generic[MessageType, IdType]):
-    """A container of Commands. Commands should be added as methods using the build decorator."""
+class BleMessages(Messages[MessageType, IdType, GoProBle]):
+    """A container of BLE Messages.
 
-    _init_messages: list[MessageType] = []
-
-    def __init__(self, communicator: Union[GoProBle, GoProHttp]) -> None:
-        """Constructor
-
-        Args:
-            communicator (Union[GoProBle, GoProHttp]): Communicator to send commands
-        """
-        self._message_list = Commands._init_messages  # type: ignore
-        super().__init__(communicator)
-
-    @property
-    def _messages(self) -> list[MessageType]:
-        """The list of commands contained in this class
-
-        Returns:
-            list[MessageType]: list of commands
-        """
-        return self._message_list
-
-    # TODO this is not thread-safe. Need map of message lists indexed by thread ID.
-    @staticmethod
-    def build(command: MessageType) -> Callable:
-        """A decorator to add a command method to this container
-
-        Note that the command class instance is what is stored; not the method
-
-        Args:
-            command (MessageType): method to add to this container
-
-        Returns:
-            Callable: decorated method to access command instance.
-        """
-        Commands._init_messages.append(command)  # type: ignore
-
-        @wrapt.decorator
-        def wrapper(wrapped: Callable, instance: Messages, _: Any, kwargs: Any) -> GoProResp:
-            return command(instance._communicator, **(wrapped(**kwargs) or kwargs))
-
-        return wrapper
+    Identical to Messages and it just used for typing
+    """
 
 
-class SettingsStatuses(Messages, Generic[MessageType, IdType]):
-    """The container of settings or statuses."""
+class HttpMessages(Messages[MessageType, IdType, GoProHttp]):
+    """A container of HTTP Messages.
 
-    def __init__(self, communicator: Union[GoProBle, GoProHttp]) -> None:
-        """Constructor
-
-        Args:
-            communicator (Union[GoProBle, GoProHttp]): The communicator to send the setting / status
-        """
-        self._messages_list: list[MessageType] = []
-        for attribute, message in self.__dict__.items():
-            if attribute.startswith("_"):
-                continue
-            self._messages_list.append(message)
-        super().__init__(communicator)
-
-    @property
-    def _messages(self) -> list[MessageType]:
-        """The list of messages contained in this class
-
-        Returns:
-            list[MessageType]: list of messages
-        """
-        return self._messages_list
+    Identical to Messages and it just used for typing
+    """

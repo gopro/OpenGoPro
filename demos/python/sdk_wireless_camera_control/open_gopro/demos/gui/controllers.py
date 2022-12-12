@@ -567,7 +567,7 @@ class MessagePalette(Controller):
         """Bind a view (message palette or param form)
 
         Args:
-            view (Union[views.MessagePalette, views.ParamForm]): _description_
+            view (Union[views.MessagePalette, views.ParamForm]): view to bind
 
         Raises:
             TypeError: Invalid view
@@ -642,6 +642,14 @@ class MessagePalette(Controller):
 
         if self.model.is_command(message):
             self.build_param_entries(message)
+            self.active_arguments.append(
+                MessagePalette.Argument(
+                    name="__communicator__",
+                    getter=lambda: self.model.gopro,
+                    adapter=lambda x: x,
+                    validator=lambda x: x.is_open,
+                )
+            )
             self.param_form.create_button("Send message", self.message_sender_factory(use_args=True))
         else:  # Setting or Status
             if self.model.is_ble(message):

@@ -103,8 +103,6 @@ def autodoc_skip_member_handler(app, what, name, *_):
     for skip in ("internal", "deprecated"):
         if skip in name.lower():
             return name
-    # else:
-    #     return name
 
 
 def setup(app):

@@ -34,7 +34,7 @@ class DefaultTextEntry(ttk.Entry, Generic[T]):
         default (T): default value to show in entry
 
     Raises:
-        ValueError: _description_
+        ValueError: invalid entry type
     """
 
     def __init__(self, default: T, *args: Any, **kwargs: Any) -> None:
@@ -791,7 +791,7 @@ class StatusTab(View, tk.Frame):
             capability (Optional[str], optional): capability of update. Defaults to None.
 
         Raises:
-            ValueError: _description_
+            ValueError: Either value or capability must be non-None
         """
         # Empty string is a valid input so explicitly check if is None
         if value is None and capability is None:

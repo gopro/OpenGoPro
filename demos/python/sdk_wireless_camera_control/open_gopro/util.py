@@ -231,7 +231,7 @@ def setup_logging(
             modules.
 
     Raises:
-        TypeError: _description_
+        TypeError: Base logger is not of correct type
 
     Returns:
         logging.Logger: updated logger that the application can use for logging

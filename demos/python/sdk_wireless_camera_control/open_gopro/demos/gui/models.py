@@ -18,11 +18,12 @@ import datetime
 import typing
 from typing import Pattern, Any, Callable, Generator, Optional, no_type_check, Union, Final
 
+from wrapt.decorators import AdapterWrapper
 import construct
 
 from open_gopro import WirelessGoPro, constants
 from open_gopro.api import BleStatus, HttpSetting, BleSetting
-from open_gopro.interface import BleMessage, HttpMessage, Messages, Message, SettingsStatuses
+from open_gopro.interface import BleMessage, HttpMessage, Message, Messages, GoProBle, GoProHttp
 import open_gopro.api.params
 import open_gopro.api.params as Params
 from open_gopro.responses import GoProResp, ResponseType
@@ -73,13 +74,14 @@ class GoProModel:
         self.gopro.open()
 
     # NOTE: the following properties must be evaluated dynamically since self.gopro is changing
+    # TODO hash and evaluate lazily
 
     @property
     def _message_types(self) -> list[Messages]:
         """Get the top level containers of the message types supported by the GoPro model
 
         Returns:
-            list[Messages]: list of message type containers
+            list[Union[Commands, SettingsStatuses]]: list of message type containers
         """
         return [
             self.gopro.ble_command,
@@ -99,7 +101,7 @@ class GoProModel:
         """
         messages = []
         for message_type in self._message_types:
-            c = list(message_type)
+            c = list(message_type.values())
             c.sort(key=lambda x: str(x))
             messages.extend(c)
         return messages
@@ -175,11 +177,7 @@ class GoProModel:
         Returns:
             bool: True if yes, False otherwise
         """
-        return (
-            isinstance(message, (BleMessage, HttpMessage, CompoundCommand))
-            and not cls.is_status(message)
-            and not cls.is_setting(message)
-        )
+        return isinstance(message, AdapterWrapper)
 
     @classmethod
     @no_type_check
@@ -196,6 +194,8 @@ class GoProModel:
         arg_names: list[str] = []
         method_info = inspect.getfullargspec(message if cls.is_command(message) else message.set)
         for arg in method_info.args[1:]:
+            if arg.startswith("__"):
+                continue
             try:
                 # Assume this is a generic and try to get the generic type of its original class
                 arg_type = re.search(r"\[.*\]", str(message.__orig_class__))[0].strip("[]")
@@ -338,7 +338,7 @@ class CompoundCommand(Message):
 
 
 # pylint: disable = missing-class-docstring, arguments-differ
-class CompoundCommands(SettingsStatuses[CompoundCommand, str]):
+class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]]):
     """The container for the compound commands"""
 
     def __init__(self, communicator: WirelessGoPro) -> None:
@@ -375,8 +375,10 @@ class CompoundCommands(SettingsStatuses[CompoundCommand, str]):
                 Returns:
                     GoProResp: status and url to start livestream
                 """
-                self._communicator.ble_command.set_shutter(Params.Toggle.DISABLE)
-                self._communicator.ble_command.register_livestream_status([Params.RegisterLiveStream.STATUS])
+                self._communicator.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
+                self._communicator.ble_command.register_livestream_status(
+                    register=[Params.RegisterLiveStream.STATUS]
+                )
 
                 self._communicator.ble_command.scan_wifi_networks()
                 # Wait to receive scanning success
@@ -391,10 +393,10 @@ class CompoundCommands(SettingsStatuses[CompoundCommand, str]):
 
                 # Get scan results and see if we need to provision
                 assert scan_id
-                for entry in self._communicator.ble_command.get_ap_entries(scan_id)["entries"]:
+                for entry in self._communicator.ble_command.get_ap_entries(scan_id=scan_id)["entries"]:
                     if entry["ssid"] == ssid:
                         if not entry["scan_entry_flags"] & Params.ScanEntry.CONFIGURED:
-                            self._communicator.ble_command.request_wifi_connect(ssid, password)
+                            self._communicator.ble_command.request_wifi_connect(ssid=ssid, password=password)
                             # Wait to receive provisioning done notification
                             while update := self._communicator.get_notification():
                                 if (
@@ -421,7 +423,7 @@ class CompoundCommands(SettingsStatuses[CompoundCommand, str]):
                         and update["live_stream_status"] == Params.LiveStreamStatus.READY
                     ):
                         break
-                assert self._communicator.ble_command.set_shutter(Params.Toggle.ENABLE).is_ok
+                assert self._communicator.ble_command.set_shutter(shutter=Params.Toggle.ENABLE).is_ok
 
                 response = GoProResp(meta=["Livestream"], raw_packet=dict(url=url))
                 response._parse()

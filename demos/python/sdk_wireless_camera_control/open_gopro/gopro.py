@@ -246,11 +246,9 @@ class WiredGoPro(GoProBase, GoProWiredInterface):
         """
         # TODO use timeout / retries for automatic IP discovery via mDNS
         # Find and configure API version
-        version = self.http_command.get_open_gopro_api_version().flatten
-        version_str = f"{version.major}.{version.minor}"
-        if version_str != "2.0":
+        if (version := self.http_command.get_open_gopro_api_version().flatten) != "2.0":
             raise GpException.InvalidOpenGoProVersion(version)
-        logger.info(f"Using Open GoPro API version {version_str}")
+        logger.info(f"Using Open GoPro API version {version}")
         self._open = True
 
     def close(self) -> None:

@@ -117,10 +117,10 @@ but the end user should never need to use these directly.
 .. autoclass:: open_gopro.interface.Messages
    :show-inheritance:
 
-.. autoclass:: open_gopro.interface.Commands
+.. autoclass:: open_gopro.interface.BleMessages
    :show-inheritance:
 
-.. autoclass:: open_gopro.interface.SettingsStatuses
+.. autoclass:: open_gopro.interface.HttpMessages
    :show-inheritance:
 
 Parameters
