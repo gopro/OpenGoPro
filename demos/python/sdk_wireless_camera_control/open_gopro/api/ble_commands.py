@@ -425,7 +425,7 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         """Tell the camera that the app (i.e. External Control) wishes to claim control of the camera.
 
         Args:
-            camera_control_status (Params.CameraControlStatus): Desired camera control.
+            camera_control_status (open_gopro.api.params.CameraControlStatus): Desired camera control.
 
         Returns:
             GoProResp: command status of request
@@ -515,6 +515,7 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         Returns:
             GoProResp: result of scan with entries for WiFi networks
         """
+        return dict(scan_id=scan_id, start_index=start_index, max_entries=max_entries)  # type: ignore
 
     @ble_proto_command(
         uuid=GoProUUIDs.CM_NET_MGMT_COMM,
@@ -609,7 +610,7 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         Returns:
             GoProResp: current livestream status
         """
-        return dict(register=register or [], unregister=unregister or [])  # type: ignore
+        return dict(register_live_stream_status=register or [], unregister_live_stream_status=unregister or [])  # type: ignore
 
     @ble_proto_command(
         uuid=GoProUUIDs.CQ_COMMAND,

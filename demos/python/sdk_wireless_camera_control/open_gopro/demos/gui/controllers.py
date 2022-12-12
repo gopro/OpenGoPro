@@ -375,7 +375,7 @@ class Video(Controller):
         """Auto start live or preview stream
 
         Args:
-            message (models.Message): message that was sent
+            identifier (str): message that was sent
             response (models.GoProResp): response that was received
         """
         if not response.is_ok:
@@ -384,7 +384,7 @@ class Video(Controller):
         video_source: Optional[str] = None
         if str(identifier).lower() == "livestream":
             video_source = response["url"]
-        elif str(identifier).lower == "preview stream" and "start" in (response.endpoint or ""):
+        elif str(identifier).lower() == "preview stream" and "start" in (response.endpoint or ""):
             video_source = models.PREVIEW_STREAM_URL
 
         if video_source:
@@ -501,6 +501,8 @@ class MessagePalette(Controller):
 
     @dataclass
     class MessageMeta:
+        """Couple the message and its identifier"""
+
         identifier: str
         message: Callable
 
@@ -703,6 +705,7 @@ class MessagePalette(Controller):
 
         @background
         async def on_message_send(self: MessagePalette) -> Optional[models.GoProResp]:
+            assert self.active_message
             method = (
                 self.active_message.message
                 if attribute is None

@@ -1,6 +1,8 @@
 # test_ble_commands.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:05:54 PM
 
+import inspect
+import logging
 from construct import Int32ub
 
 from open_gopro.interface import GoProBle
@@ -144,9 +146,9 @@ def test_commands_subscriptable(ble_communicator: BleCommunicatorTest):
             assert True
             continue
 
-def test_ensure_no_positional_args(ble_communicator: BleCommunicatorTest):
-    for command in ble_communicator.ble_command:
-        print(command)
 
-def test_validate_protobuf_commands(ble_communicator: BleCommunicatorTest):
-    ...
+def test_ensure_no_positional_args(ble_communicator: BleCommunicatorTest):
+    for command in ble_communicator.ble_command.values():
+        if inspect.getfullargspec(command).args != ["self"]:
+            logging.error("All arguments to commands must be keyword-only")
+            assert True
