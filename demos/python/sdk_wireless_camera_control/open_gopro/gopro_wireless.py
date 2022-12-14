@@ -5,21 +5,17 @@
 
 from __future__ import annotations
 import time
-import enum
 import queue
 import logging
-import traceback
 import threading
 from queue import Queue
 from pathlib import Path
-from abc import ABC, abstractmethod
-from typing import Any, Final, Optional, Callable, Pattern, TypeVar
+from typing import Any, Final, Optional, Pattern
 
-import wrapt
 import requests
 
 import open_gopro.exceptions as GpException
-from open_gopro.exceptions import ExceptionHandler
+from open_gopro.gopro_base import GoProBase
 from open_gopro.ble import BleUUID
 from open_gopro.ble.adapters import BleakWrapperController
 from open_gopro.wifi.adapters import Wireless
@@ -28,7 +24,6 @@ from open_gopro.responses import GoProResp, ResponseType
 from open_gopro.constants import CmdId, GoProUUIDs, StatusId, QueryCmdId, ProducerType
 from open_gopro.api import (
     WirelessApi,
-    WiredApi,
     BleCommands,
     BleSettings,
     BleStatuses,
@@ -36,7 +31,7 @@ from open_gopro.api import (
     HttpSettings,
     Params,
 )
-from open_gopro.interface import GoProWirelessInterface, GoProWiredInterface, JsonParser
+from open_gopro.interface import GoProWirelessInterface, JsonParser
 
 logger = logging.getLogger(__name__)
 
@@ -45,367 +40,8 @@ WRITE_TIMEOUT: Final = 5
 GET_TIMEOUT: Final = 5
 HTTP_GET_RETRIES: Final = 5
 
-# TODO Replace this with Self once mypy implements it
-GoPro = TypeVar("GoPro", bound="GoProBase")
 
-
-class Interface(enum.Enum):
-    """Enum to identify wireless interface"""
-
-    WIFI = enum.auto()
-    BLE = enum.auto()
-
-
-def ensure_opened(interface: Interface) -> Callable:
-    """Raise exception if relevant interface is not currently opened
-
-    Args:
-        interface (Interface): wireless interface to verify
-
-    Returns:
-        Callable: Direct pass-through of callable after verification
-    """
-
-    @wrapt.decorator
-    def wrapper(wrapped: Callable, instance: WirelessGoPro, args: Any, kwargs: Any) -> Callable:
-        if interface is Interface.BLE and not instance.is_ble_connected:
-            raise GpException.GoProNotOpened("BLE not connected")
-        if interface is Interface.WIFI and not (
-            hasattr(instance, "is_wifi_connected") and instance.is_wifi_connected
-        ):
-            raise GpException.GoProNotOpened("Wifi not connected")
-        return wrapped(*args, **kwargs)
-
-    return wrapper
-
-
-@wrapt.decorator
-def acquire_ready_lock(wrapped: Callable, instance: WirelessGoPro, args: Any, kwargs: Any) -> Any:
-    """Call method after acquiring ready lock.
-
-    Release lock when done
-
-    Args:
-        wrapped (Callable): method to call
-        instance (WirelessGoPro): instance that owns the method
-        args (Any): positional arguments
-        kwargs (Any): keyword arguments
-
-    Returns:
-        Any: result of method
-    """
-    if instance._maintain_ble:
-        logger.trace(f"{wrapped.__name__} acquiring lock")  # type: ignore
-        with instance._ready:
-            logger.trace(f"{wrapped.__name__} has the lock")  # type: ignore
-            ret = wrapped(*args, **kwargs)
-    else:
-        ret = wrapped(*args, **kwargs)
-    if instance._maintain_ble:
-        logger.trace(f"{wrapped.__name__} released the lock")  # type: ignore
-    return ret
-
-
-class GoProBase(ABC):
-    """The base class for communicating with all GoPro Clients"""
-
-    def __enter__(self: GoPro) -> GoPro:
-        self.open()
-        return self
-
-    def __exit__(self, *_: Any) -> None:
-        self.close()
-
-    def __del__(self) -> None:
-        self.close()
-
-    @abstractmethod
-    def open(self, timeout: int = 10, retries: int = 5) -> None:
-        """Connect to the GoPro Client and prepare it for communication
-
-        Args:
-            timeout (int): time before considering connection a failure. Defaults to 10.
-            retries (int): number of connection retries. Defaults to 5.
-        """
-        raise NotImplementedError
-
-    @abstractmethod
-    def close(self) -> None:
-        """Gracefully close the GoPro Client connection"""
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def identifier(self) -> str:
-        """Unique identifier for the connected GoPro Client
-
-        Returns:
-            str: identifier
-        """
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def version(self) -> str:
-        """The Open GoPro API version of the GoPro Client
-
-        Only Version 2.0 is currently supported.
-
-        Returns:
-            str: string version
-        """
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def http_command(self) -> HttpCommands:
-        """Used to access the Wifi commands
-
-        Returns:
-            HttpCommands: the commands
-        """
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def http_setting(self) -> HttpSettings:
-        """Used to access the Wifi settings
-
-        Returns:
-            HttpSettings: the settings
-        """
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def ble_command(self) -> BleCommands:
-        """Used to call the BLE commands
-
-        Returns:
-            BleCommands: the commands
-        """
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def ble_setting(self) -> BleSettings:
-        """Used to access the BLE settings
-
-        Returns:
-            BleSettings: the settings
-        """
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def ble_status(self) -> BleStatuses:
-        """Used to access the BLE statuses
-
-        Returns:
-            BleStatuses: the statuses
-        """
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def is_open(self) -> bool:
-        """Is this client ready for communication?
-
-        Returns:
-            bool: True if yes, False if no
-        """
-        raise NotImplementedError
-
-
-class WiredGoPro(GoProBase, GoProWiredInterface):
-    """The top-level USB interface to a Wired GoPro device.
-
-    Args:
-        serial (str): (at least) last 3 digits of GoPro Serial number
-    """
-
-    _BASE_IP: Final[str] = "172.2{}.1{}{}.51"
-    _BASE_ENDPOINT: Final[str] = "http://{ip}:8080/"
-
-    def __init__(self, serial: str) -> None:
-        GoProWiredInterface.__init__(self)
-        self._serial = serial
-        # We currently only support version 2.0
-        self._api = WiredApi(self)
-        self._open = False
-
-    def open(self, timeout: int = 10, retries: int = 5) -> None:
-        """Connect to the Wired GoPro Client and prepare it for communication
-
-        Args:
-            timeout (int): time before considering connection a failure. Defaults to 10.
-            retries (int): number of connection retries. Defaults to 5.
-
-        Raises:
-            InvalidOpenGoProVersion: the GoPro camera does not support the correct Open GoPro API version
-        """
-        # Find and configure API version
-        if (version := self.http_command.get_open_gopro_api_version().flatten) != "2.0":
-            raise GpException.InvalidOpenGoProVersion(version)
-        logger.info(f"Using Open GoPro API version {version}")
-        self._open = True
-
-    def close(self) -> None:
-        """Gracefully close the GoPro Client connection"""
-
-    @property
-    def identifier(self) -> str:
-        """Unique identifier for the connected GoPro Client
-
-        Returns:
-            str: identifier
-        """
-        return self._serial
-
-    @property
-    def version(self) -> str:
-        """The Open GoPro API version of the GoPro Client
-
-        Only Version 2.0 is currently supported.
-
-        Returns:
-            str: string version
-        """
-        return self._api.version
-
-    @property
-    def http_command(self) -> HttpCommands:
-        """Used to access the USB commands
-
-        Returns:
-            HttpCommands: the commands
-        """
-        return self._api.http_command
-
-    @property
-    def http_setting(self) -> HttpSettings:
-        """Used to access the USB settings
-
-        Returns:
-            HttpSettings: the settings
-        """
-        return self._api.http_setting
-
-    @property
-    def ble_command(self) -> BleCommands:
-        """Used to call the BLE commands
-
-        Raises:
-            NotImplementedError: Not valid for WiredGoPro
-        """
-        raise NotImplementedError
-
-    @property
-    def ble_setting(self) -> BleSettings:
-        """Used to access the BLE settings
-
-        Raises:
-            NotImplementedError: Not valid for WiredGoPro
-        """
-        raise NotImplementedError
-
-    @property
-    def ble_status(self) -> BleStatuses:
-        """Used to access the BLE statuses
-
-        Raises:
-            NotImplementedError: Not valid for WiredGoPro
-        """
-        raise NotImplementedError
-
-    @property
-    def is_open(self) -> bool:
-        """Is this client ready for communication?
-
-        Returns:
-            bool: True if yes, False if no
-        """
-        return self._open
-
-    ##########################################################################################################
-    #                                 End Public API
-    ##########################################################################################################
-
-    @property
-    def _base_endpoint(self) -> str:
-        """Build the base endpoint for USB commands
-
-        Returns:
-            str: base endpoint with URL from serial number
-        """
-        return WiredGoPro._BASE_ENDPOINT.format(ip=WiredGoPro._BASE_IP.format(*self._serial[-3:]))
-
-    def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
-        """Send an HTTP GET request to an Open GoPro endpoint.
-
-        There should hopefully not be a scenario where this needs to be called directly as it is generally
-        called from the instance's delegates (i.e. self.wifi_command and self.wifi_status)
-
-        Args:
-            url (str): endpoint URL
-            parser (Optional[JsonParser]): Optional parser to further parse received JSON dict. Defaults to
-                None.
-
-        Raises:
-            ResponseTimeout: Response was not received in GET_TIMEOUT seconds
-
-        Returns:
-            GoProResp: response
-        """
-        url = self._base_endpoint + url
-        logger.debug(f"Sending:  {url}")
-
-        response: Optional[GoProResp] = None
-        for _ in range(HTTP_GET_RETRIES):
-            try:
-                request = requests.get(url, timeout=GET_TIMEOUT)
-                request.raise_for_status()
-                response = GoProResp._from_http_response(parser, request)
-            except requests.exceptions.HTTPError as e:
-                # The camera responded with an error. Break since we successfully sent the command and attempt
-                # to continue
-                logger.warning(e)
-                response = GoProResp._from_http_response(parser, e.response)
-                break
-            except requests.exceptions.ConnectionError as e:
-                logger.warning(repr(e))
-            except Exception as e:  # pylint: disable=broad-except
-                logger.critical(f"Unexpected error: {repr(e)}")
-            else:
-                break
-            logger.warning("Retrying to send the command...")
-        else:
-            raise GpException.ResponseTimeout(HTTP_GET_RETRIES)
-
-        assert response is not None
-        return response
-
-    def _stream_to_file(self, url: str, file: Path) -> None:
-        """Send an HTTP GET request to an Open GoPro endpoint to download a binary file.
-
-        There should hopefully not be a scenario where this needs to be called directly as it is generally
-        called from the instance's delegates (i.e. self.wifi_command and self.wifi_status)
-
-        Args:
-            url (str): endpoint URL
-            file (Path): location where file should be downloaded to
-        """
-        url = self._base_endpoint + url
-        logger.debug(f"Sending: {url}")
-        with requests.get(url, stream=True, timeout=GET_TIMEOUT) as request:
-            request.raise_for_status()
-            with open(file, "wb") as f:
-                logger.debug(f"receiving stream to {file}...")
-                for chunk in request.iter_content(chunk_size=8192):
-                    f.write(chunk)
-
-
-class WirelessGoPro(GoProBase, GoProWirelessInterface):
+class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     """The top-level BLE and Wifi interface to a Wireless GoPro device.
 
     See the `Open GoPro SDK <https://gopro.github.io/OpenGoPro/python_sdk>`_ for complete documentation.
@@ -454,8 +90,6 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         sudo_password (str, Optional): User password for sudo. If not passed, you will be prompted if a password
             is needed which should only happen on Nix systems.
         enable_wifi (bool): Optionally do not enable Wifi if set to False. Defaults to True.
-        exception_cb (ExceptionHandler, Optional): callback to be notified when exception occurs in a thread
-            besides main. This is useful if you anticipate unexpected BLE connection drops.
         kwargs (Dict): additional parameters for internal use / testing
 
     Raises:
@@ -465,30 +99,21 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
             the interface can also be specified manually with the 'wifi_interface' argument.
     """
 
-    _BASE_URL: Final[str] = "http://10.5.5.9:8080/"  #: Hard-coded Open GoPro base URL
-
-    class _InternalState(enum.IntFlag):
-        """State used to manage whether the GoPro instance is ready or not."""
-
-        READY = 0
-        ENCODING = 1 << 0
-        SYSTEM_BUSY = 1 << 1
-
     def __init__(
         self,
         target: Optional[Pattern] = None,
         wifi_interface: Optional[str] = None,
         sudo_password: Optional[str] = None,
         enable_wifi: bool = True,
-        exception_cb: Optional[ExceptionHandler] = None,
         **kwargs: Any,
     ) -> None:
+        GoProBase.__init__(self, **kwargs)
         # Store initialization information
         self._enable_wifi_during_init = enable_wifi
-        self._exception_cb = exception_cb
-        self._maintain_ble = kwargs.get("maintain_ble", True)
         ble_adapter = kwargs.get("ble_adapter", BleakWrapperController)
         wifi_adapter = kwargs.get("wifi_adapter", Wireless)
+        # Set up API delegate
+        self._wireless_api = WirelessApi(self)
 
         try:
             # Initialize GoPro Communication Client
@@ -506,9 +131,6 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
             )
             raise e
 
-        # We currently only support version 2.0
-        self._api = WirelessApi(self)
-
         # Current accumulating synchronous responses, indexed by GoProUUIDs. This assumes there can only be one active response per BleUUID
         self._active_resp: dict[BleUUID, GoProResp] = {}
         # Responses that we are waiting for.
@@ -520,28 +142,12 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         self._out_q: Queue[GoProResp] = Queue()
         self._listeners: dict[ProducerType, bool] = {}
 
-        # Set up events
+        # Set up BLE threading
         self._ble_disconnect_event = threading.Event()
         self._ble_disconnect_event.set()
-        self._encoding_started = threading.Event()
-        self._encoding_started.clear()
-
-        # Set up threads
-        self._threads_waiting = 0
-        # If we are to perform BLE housekeeping
-        if self._maintain_ble:
-            self._threads_waiting += 2
-            # Set up thread to send keep alive
-            self._keep_alive_thread = threading.Thread(
-                target=self._periodic_keep_alive, name="keep_alive", daemon=True
-            )
-            # Set up thread to block until camera is ready to receive commands
-            self._ready = threading.Lock()
-            self._state_condition = threading.Condition()
-            self._internal_state = (
-                WirelessGoPro._InternalState.ENCODING | WirelessGoPro._InternalState.SYSTEM_BUSY
-            )
-            self._state_thread = threading.Thread(target=self._maintain_state, name="state", daemon=True)
+        self._keep_alive_thread = threading.Thread(
+            target=self._periodic_keep_alive, daemon=True, name="keep alive"
+        )
 
     @property
     def identifier(self) -> str:
@@ -572,52 +178,13 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         return self._ble.is_connected
 
     @property
-    def is_wifi_connected(self) -> bool:
+    def is_http_connected(self) -> bool:
         """Are we connected via Wifi to the GoPro device?
 
         Returns:
             bool: True if yes, False if no
         """
         return self._wifi.is_connected
-
-    @property
-    def is_encoding(self) -> bool:
-        """Is the camera currently encoding?
-
-        Raises:
-            InvalidConfiguration: if maintain_state is False, there is no way to know the GoPro's state
-
-        Returns:
-            bool: True if yes, False if no
-        """
-        if not self._maintain_ble:
-            raise GpException.InvalidConfiguration("Not maintaining BLE state so encoding is not applicable")
-        return bool(self._internal_state & WirelessGoPro._InternalState.ENCODING)
-
-    @property
-    def is_busy(self) -> bool:
-        """Is the camera currently performing a task that prevents it from accepting commands?
-
-        Raises:
-            InvalidConfiguration: if maintain_state is False, there is no way to know the GoPro's state
-
-        Returns:
-            bool: True if yes, False if no
-        """
-        if not self._maintain_ble:
-            raise GpException.InvalidConfiguration("Not maintaining BLE state so busy is not applicable")
-        return bool(self._internal_state & WirelessGoPro._InternalState.SYSTEM_BUSY)
-
-    @property
-    def version(self) -> str:
-        """The API version that the connected camera supports
-
-        Only 2.0 is currently supported
-
-        Returns:
-            str: supported version
-        """
-        return self._api.version
 
     @property
     def ble_command(self) -> BleCommands:
@@ -687,7 +254,7 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
             # Find and configure API version
             version = self.ble_command.get_open_gopro_api_version().flatten
             version_str = f"{version.major}.{version.minor}"
-            if version_str != "2.0":
+            if version_str != self.version:
                 raise GpException.InvalidOpenGoProVersion(version)
             logger.info(f"Using Open GoPro API version {version_str}")
 
@@ -714,7 +281,7 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         self._close_wifi()
         self._close_ble()
 
-    @ensure_opened(Interface.BLE)
+    @GoProBase.ensure_opened((GoProBase._Interface.BLE,))
     def get_notification(self, timeout: Optional[float] = None) -> Optional[GoProResp]:
         """Get an asynchronous notification that we received from a registered listener.
 
@@ -732,7 +299,7 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         except queue.Empty:
             return None
 
-    @ensure_opened(Interface.BLE)
+    @GoProBase.ensure_opened((GoProBase._Interface.BLE,))
     def keep_alive(self) -> bool:
         """Send a heartbeat to prevent the BLE connection from dropping.
 
@@ -750,79 +317,24 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         Returns:
             bool: True if yes, False if no
         """
-        return self._threads_waiting == 0
+        ...  # TODO
 
     ##########################################################################################################
     #                                 End Public API
     ##########################################################################################################
 
-    def _handle_exception(self, source: Any, context: dict[str, Any]) -> None:
-        """Gather exceptions from module threads and send through callback if registered.
-
-        Note that this function signature matches asyncio's exception callback requirement.
-
-        Args:
-            source (Any): Where did the exception come from?
-            context (Dict): Access exception via context["exception"]
-        """
-        # context["message"] will always be there; but context["exception"] may not
-        if exception := context.get("exception", False):
-            logger.error(f"Received exception {exception} from {source}")
-            logger.error(traceback.format_exc())
-            if self._exception_cb:
-                self._exception_cb(exception)
-        else:
-            logger.error(f"Caught unknown message: {context['message']} from {source}")
-
-    def _maintain_state(self) -> None:
-        """Thread to keep track of ready / encoding and acquire / release ready lock."""
-        try:
-            self._ready.acquire()
-            have_lock = True
-            while self.is_ble_connected:
-
-                with self._state_condition:
-                    self._state_condition.wait()
-
-                    if have_lock and not (self.is_busy or self.is_encoding):
-                        # If this is the first time, mark that we might now be opened
-                        if not self.is_open:
-                            self._threads_waiting -= 1
-                        self._ready.release()
-                        have_lock = False
-                        logger.trace("Control released lock")  # type: ignore
-                    elif not have_lock and (self.is_busy or self.is_encoding):
-                        logger.trace("Control acquiring lock")  # type: ignore
-                        self._ready.acquire()
-                        logger.trace("Control has lock")  # type: ignore
-                        have_lock = True
-                        if self.is_encoding:
-                            logger.trace("Control setting encoded started")  # type: ignore
-                            self._encoding_started.set()
-
-            self._threads_waiting += 1
-            logger.debug("Maintain state thread exiting...")
-        except Exception as e:  # pylint: disable=broad-except
-            self._handle_exception(threading.current_thread().name, {"exception": e})
-
+    @GoProBase.catch_thread_exception
     def _periodic_keep_alive(self) -> None:
         """Thread to periodically send the keep alive message via BLE."""
-        try:
-            while self.is_ble_connected:
-                if not self.is_open:
-                    self._threads_waiting -= 1
-                try:
-                    if self.keep_alive():
-                        time.sleep(KEEP_ALIVE_INTERVAL)
-                except Exception:  # pylint: disable=broad-except
-                    # If the connection disconnects while we were trying to send, there can be any number
-                    # of exceptions. This is expected and this thread will exit on the next while check.
-                    pass
-
-            self._threads_waiting += 1
-            logger.debug("periodic keep alive thread exiting...")
-        except Exception as e:  # pylint: disable=broad-except
-            self._handle_exception(threading.current_thread().name, {"exception": e})
+        while self.is_ble_connected:
+            try:
+                if self.keep_alive():
+                    time.sleep(KEEP_ALIVE_INTERVAL)
+            except Exception:  # pylint: disable=broad-except
+                # If the connection disconnects while we were trying to send, there can be any number
+                # of exceptions. This is expected and this thread will exit on the next while check.
+                pass
+        logger.debug("periodic keep alive thread exiting...")
 
     def _register_listener(self, producer: ProducerType) -> None:
         """Register a producer to store notifications from.
@@ -852,9 +364,8 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         """
         # Establish connection, pair, etc.
         self._ble.open(timeout, retries)
-        # Configure threads if desired
-        if self._maintain_ble:
-            self._state_thread.start()
+        # Start keep alive and state maintenance
+        if self._should_maintain_state:
             self.ble_status.encoding_active.register_value_update()
             self.ble_status.system_ready.register_value_update()
             self.keep_alive()
@@ -869,7 +380,7 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         Args:
             response (GoProResp): received response to parse for state changes
         """
-        if self._maintain_ble:
+        if self._should_maintain_state:
             if (
                 response.cmd
                 in [
@@ -965,7 +476,7 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
             raise GpException.ConnectionTerminated("BLE connection terminated unexpectedly.")
         self._ble_disconnect_event.set()
 
-    @ensure_opened(Interface.BLE)
+    @GoProBase.ensure_opened((GoProBase._Interface.BLE,))
     def _send_ble_message(self, uuid: BleUUID, data: bytearray, response_id: ResponseType) -> GoProResp:
         """Write a characteristic and block until its corresponding notification response is received.
 
@@ -983,7 +494,11 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         assert self._ble
         # Acquire ready lock unless we are initializing or this is a Set Shutter Off command
         have_lock = False
-        if self._maintain_ble and self.is_open and not (data[0] == CmdId.SET_SHUTTER.value and data[-1] == 0):
+        if (
+            self._should_maintain_state  # TODO move this to base and implement fastpass
+            and self.is_open
+            and not (data[0] == CmdId.SET_SHUTTER.value and data[-1] == 0)
+        ):
             logger.trace("_send_ble_message acquiring lock")  # type: ignore
             self._ready.acquire()
             logger.trace("_send_ble_message has lock")  # type: ignore
@@ -1008,7 +523,7 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         if not response.is_ok:
             logger.warning(f"Received non-success status: {response.status}")
 
-        if self._maintain_ble:
+        if self._should_maintain_state:
             # Release the lock if we acquired it
             if have_lock:
                 self._ready.release()
@@ -1020,8 +535,8 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
 
         return response
 
-    @ensure_opened(Interface.BLE)
-    @acquire_ready_lock
+    @GoProBase.ensure_opened((GoProBase._Interface.BLE,))
+    @GoProBase.acquire_ready_lock
     def _read_characteristic(self, uuid: BleUUID) -> GoProResp:
         """Read a characteristic's data by GoProUUIDs.
 
@@ -1038,7 +553,7 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         logger.debug(f"Reading from {uuid.name}")
         return GoProResp._from_read_response(uuid, received_data)
 
-    @ensure_opened(Interface.BLE)
+    @GoProBase.ensure_opened((GoProBase._Interface.BLE,))
     def _open_wifi(self, timeout: int = 10, retries: int = 5) -> None:
         """Connect to a GoPro device via Wifi.
 
@@ -1069,8 +584,8 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         if hasattr(self, "_wifi"):  # Corner case where instantiation fails before superclass is initialized
             self._wifi.close()
 
-    @ensure_opened(Interface.WIFI)
-    @acquire_ready_lock
+    @GoProBase.ensure_opened((GoProBase._Interface.HTTP,))
+    @GoProBase.acquire_ready_lock
     def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
         """Send an HTTP GET request to an Open GoPro endpoint.
 
@@ -1089,10 +604,10 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         Returns:
             GoProResp: response
         """
-        if not self.is_wifi_connected:
+        if not self.is_http_connected:
             raise GpException.GoProNotOpened("WiFi is not connected.")
 
-        url = WirelessGoPro._BASE_URL + url
+        url = self._base_url + url
         logger.debug(f"Sending:  {url}")
 
         response: Optional[GoProResp] = None
@@ -1120,8 +635,8 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
         assert response is not None
         return response
 
-    @ensure_opened(Interface.WIFI)
-    @acquire_ready_lock
+    @GoProBase.ensure_opened((GoProBase._Interface.HTTP,))
+    @GoProBase.acquire_ready_lock
     def _stream_to_file(self, url: str, file: Path) -> None:
         """Send an HTTP GET request to an Open GoPro endpoint to download a binary file.
 
@@ -1132,9 +647,9 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
             url (str): endpoint URL
             file (Path): location where file should be downloaded to
         """
-        assert self.is_wifi_connected
+        assert self.is_http_connected
 
-        url = WirelessGoPro._BASE_URL + url
+        url = self._base_url + url
         logger.debug(f"Sending: {url}")
         with requests.get(url, stream=True, timeout=GET_TIMEOUT) as request:
             request.raise_for_status()
@@ -1142,3 +657,11 @@ class WirelessGoPro(GoProBase, GoProWirelessInterface):
                 logger.debug(f"receiving stream to {file}...")
                 for chunk in request.iter_content(chunk_size=8192):
                     f.write(chunk)
+
+    @property
+    def _base_url(self) -> str:
+        return "http://10.5.5.9:8080/"
+
+    @property
+    def _api(self) -> WirelessApi:
+        return self._wireless_api

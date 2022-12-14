@@ -8,18 +8,16 @@ from pathlib import Path
 
 from rich.console import Console
 
-from open_gopro import WirelessGoPro, WiredGoPro, Params, constants
+from open_gopro import WirelessGoPro, Params, constants
 from open_gopro.util import setup_logging, add_cli_args_and_parse
 
 console = Console()  # rich consoler printer
 
 
 def main(args: argparse.Namespace) -> None:
-    logger = setup_logging(__name__, args.log)
+    setup_logging(__name__, args.log)
 
-    with WiredGoPro(args.identifier) if args.wired else WirelessGoPro(
-        args.identifier, wifi_interface=args.wifi_interface
-    ) as gopro:
+    with WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface) as gopro:
         if args.wired:
             gopro.http_command.wired_usb_control(control=Params.Toggle.ENABLE)
         # Configure settings to prepare for photo
@@ -33,14 +31,7 @@ def main(args: argparse.Namespace) -> None:
         media_set_before = set(x["n"] for x in gopro.http_command.get_media_list().flatten)
         # Take a photo
         console.print("Capturing a photo...")
-        assert gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE).is_ok
-
-        # Wait for encoding to start
-        while not gopro.http_command.get_camera_state()[constants.StatusId.ENCODING]:
-            continue
-        # Wait for encoding to stop
-        while gopro.http_command.get_camera_state()[constants.StatusId.ENCODING]:
-            continue
+        assert gopro.ble_command.set_shutter(shutter=Params.Toggle.ENABLE).is_ok
 
         # Get the media list after
         media_set_after = set(x["n"] for x in gopro.http_command.get_media_list().flatten)

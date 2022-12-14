@@ -14,7 +14,7 @@ import pytest
 import requests
 import requests_mock
 
-from open_gopro.gopro import WirelessGoPro, Params, GoProResp
+from open_gopro.gopro_wireless import WirelessGoPro, Params, GoProResp
 from open_gopro.exceptions import InvalidConfiguration, ResponseTimeout, GoProNotOpened
 from open_gopro.constants import StatusId, SettingId
 
@@ -53,7 +53,7 @@ def test_gopro_is_instanciated(gopro_client: WirelessGoPro):
 def test_gopro_open(gopro_client: WirelessGoPro):
     gopro_client.open()
     assert gopro_client.is_ble_connected
-    assert gopro_client.is_wifi_connected
+    assert gopro_client.is_http_connected
     assert gopro_client.identifier == "scanned_device"
 
 
