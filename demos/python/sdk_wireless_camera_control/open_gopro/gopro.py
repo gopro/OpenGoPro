@@ -244,7 +244,6 @@ class WiredGoPro(GoProBase, GoProWiredInterface):
         Raises:
             InvalidOpenGoProVersion: the GoPro camera does not support the correct Open GoPro API version
         """
-        # TODO use timeout / retries for automatic IP discovery via mDNS
         # Find and configure API version
         if (version := self.http_command.get_open_gopro_api_version().flatten) != "2.0":
             raise GpException.InvalidOpenGoProVersion(version)

@@ -26,7 +26,15 @@ class HttpParsers:
     class CameraStateParser(JsonParser):
         """Parse integer numbers into Enums"""
 
-        def parse(self, data: dict) -> dict:  # noqa: D102
+        def parse(self, data: dict) -> dict:
+            """Parse dict of integer values into human readable (i.e. enum'ed) setting / status map
+
+            Args:
+                data (dict): input dict to parse
+
+            Returns:
+                dict: output human readable dict
+            """
             parsed: dict[Any, Any] = {}
             # Parse status and settings values into nice human readable things
             for (name, id_map) in [("status", StatusId), ("settings", SettingId)]:
@@ -40,8 +48,16 @@ class HttpParsers:
     class MediaListParser(JsonParser):
         """Extract the list of files from the media list JSON"""
 
-        def parse(self, data: dict) -> dict:  # noqa: D102
-            return {"files": data["media"][0]["fs"]}
+        def parse(self, data: dict) -> dict:
+            """Get the list of files from the media list
+
+            Args:
+                data (dict): media list response
+
+            Returns:
+                dict: list of files
+            """
+            return {"files": data["media"][0]["fs"] if data["media"] else []}
 
 
 class HttpCommands(HttpMessages[HttpMessage, CmdId]):

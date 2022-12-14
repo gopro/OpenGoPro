@@ -438,6 +438,7 @@ class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]
                         and update["live_stream_status"] == Params.LiveStreamStatus.READY
                     ):
                         break
+                time.sleep(2)
                 assert self._communicator.ble_command.set_shutter(shutter=Params.Toggle.ENABLE).is_ok
 
                 response = GoProResp(meta=["Livestream"], raw_packet=dict(url=url))

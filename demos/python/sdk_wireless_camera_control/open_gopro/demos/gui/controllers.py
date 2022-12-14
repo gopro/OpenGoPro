@@ -378,13 +378,14 @@ class Video(Controller):
             identifier (str): message that was sent
             response (models.GoProResp): response that was received
         """
-        if not response.is_ok:
+        # Get binary's (which are of type Path) are not handled. TODO updating typing for this
+        if not isinstance(response, models.GoProResp) or not response.is_ok:
             return
 
         video_source: Optional[str] = None
         if str(identifier).lower() == "livestream":
             video_source = response["url"]
-        elif str(identifier).lower() == "preview stream" and "start" in (response.endpoint or ""):
+        elif str(identifier).lower() == "set preview stream" and "start" in (response.endpoint or ""):
             video_source = models.PREVIEW_STREAM_URL
 
         if video_source:

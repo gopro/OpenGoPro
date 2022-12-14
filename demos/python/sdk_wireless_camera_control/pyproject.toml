@@ -29,6 +29,7 @@ gopro-wifi = "open_gopro.demos.connect_wifi:entrypoint"
 gopro-webcam = "open_gopro.demos.webcam:entrypoint"
 gopro-gui = "open_gopro.demos.gui_demo:entrypoint"
 gopro-presets = "open_gopro.demos.preset_control:entrypoint"
+gopro-livestream = "open_gopro.demos.livestream:entrypoint"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

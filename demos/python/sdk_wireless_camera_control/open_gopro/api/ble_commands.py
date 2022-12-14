@@ -508,9 +508,9 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         """Get the results of a scan for wifi networks
 
         Args:
-            scan_id (int): TODO
-            start_index (int): TODO. Defaults to 0.
-            max_entries (int): TODO. Defaults to 100.
+            scan_id (int): ID corresponding to a set of scan results
+            start_index (int): Used for paging. 0 <= start_index < NotifStartScanning.total_entries. Defaults to 0.
+            max_entries (int): Used for paging. Value must be < NotifStartScanning.total_entries. Defaults to 100.
 
         Returns:
             GoProResp: result of scan with entries for WiFi networks
@@ -539,7 +539,6 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
             GoProResp: Command status of request
         """
 
-    # TODO allow encode = False
     @ble_proto_command(
         uuid=GoProUUIDs.CQ_COMMAND,
         feature_id=FeatureId.COMMAND,

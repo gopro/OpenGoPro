@@ -62,7 +62,6 @@ version = importlib_metadata.version("open_gopro")
 
 nitpicky = True
 
-# # TODO why isn't this working?
 # autodoc_type_aliases = {
 #     "IdType": "open_gopro.interface.IdType",
 #     "CommunicatorType": "open_gopro.interface.CommunicatorType",
