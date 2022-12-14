@@ -7,33 +7,12 @@ import time
 import argparse
 from typing import Optional
 
-import cv2
 from rich.console import Console
 
 from open_gopro import WirelessGoPro, Params, constants
-from open_gopro.util import setup_logging, add_cli_args_and_parse
+from open_gopro.util import setup_logging, add_cli_args_and_parse, display_video_blocking
 
 console = Console()  # rich consoler printer
-
-
-def display_video(source: str) -> None:
-    """Display a video with CV2
-
-    Args:
-        source (str): video source to display
-    """
-    vid = cv2.VideoCapture(source)
-    console.print("Press 'q' to exit.")
-
-    while True:
-        ret, frame = vid.read()
-        if ret and frame is not None:
-            cv2.imshow("frame", frame)
-            if cv2.waitKey(1) & 0xFF == ord("q"):
-                break
-
-    vid.release()
-    cv2.destroyAllWindows()
 
 
 def main(args: argparse.Namespace) -> None:
@@ -93,7 +72,7 @@ def main(args: argparse.Namespace) -> None:
         assert gopro.ble_command.set_shutter(shutter=Params.Toggle.ENABLE).is_ok
 
         console.print("Displaying the video...")
-        display_video(args.url)
+        display_video_blocking(args.url)
 
         assert gopro.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
         gopro.ble_command.release_network()

@@ -6,36 +6,15 @@
 import argparse
 from typing import Final
 from pathlib import Path
-import multiprocessing as mp
-from multiprocessing.synchronize import Event
 
 from rich.console import Console
-import cv2 as cv
 
 from open_gopro import WiredGoPro, Params
-from open_gopro.util import setup_logging
+from open_gopro.util import setup_logging, display_video_blocking
 
 console = Console()  # rich consoler printer
 
-started_event = mp.Event()
-
 STREAM_URL: Final[str] = r"udp://0.0.0.0:8554"
-
-
-def view_webcam(event: Event) -> None:
-    """Multiprocessing target to view webcam
-
-    Args:
-        event (Event): Event to set once stream is ready for viewing
-    """
-    vid = cv.VideoCapture(STREAM_URL + "?overrun_nonfatal=1&fifo_size=50000000", cv.CAP_FFMPEG)
-    event.set()
-
-    while True:
-        ret, frame = vid.read()
-        if ret:
-            cv.imshow("frame", frame)
-        cv.waitKey(1)  # Show for 1 millisecond
 
 
 def main(args: argparse.Namespace) -> None:
@@ -47,16 +26,9 @@ def main(args: argparse.Namespace) -> None:
         gopro.http_command.webcam_start()
 
         # Start player
-        logger.info("Starting Viewer")
-        mp.Process(target=view_webcam, daemon=True, args=(started_event,)).start()
-        started_event.wait()
-        logger.info("Player started.")
-
-        # Wait for input to exit
-        input("Press enter to exit.")
+        display_video_blocking(STREAM_URL)  # blocks until user exists viewer
         gopro.http_command.webcam_stop()
         gopro.http_command.webcam_exit()
-        # Process is a daemon so no need to stop it
 
     console.print("Exiting...")
 

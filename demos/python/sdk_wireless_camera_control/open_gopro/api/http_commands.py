@@ -146,7 +146,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         """
 
     @http_get_json_command(endpoint="gopro/camera/presets/load", arguments=["id"])
-    def set_preset(self, *, preset: int) -> GoProResp:
+    def load_preset(self, *, preset: int) -> GoProResp:
         """Set camera to a given preset
 
         The preset ID can be found from :py:class:`open_gopro.api.http_commands.HttpCommands.get_preset_status`
@@ -160,7 +160,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         return dict(id=preset)  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/presets/set_group", arguments=["id"])
-    def set_preset_group(self, *, group: Params.PresetGroup) -> GoProResp:
+    def load_preset_group(self, *, group: Params.PresetGroup) -> GoProResp:
         """Set the active preset group.
 
         The most recently used Preset in this group will be set.
@@ -194,7 +194,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         """
 
     @http_get_json_command(endpoint="gopro/camera/shutter", components=["mode"])
-    def set_shutter_on(self, *, shutter: Params.Toggle) -> GoProResp:
+    def set_shutter(self, *, shutter: Params.Toggle) -> GoProResp:
         """Set the shutter on or off
 
         Args:

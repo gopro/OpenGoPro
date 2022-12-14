@@ -394,11 +394,15 @@ class WiredGoPro(GoProBase, GoProWiredInterface):
         Args:
             url (str): endpoint URL
             file (Path): location where file should be downloaded to
-
-        Raises:
-            NotImplementedError: TODO
         """
-        raise NotImplementedError("TODO. Not sure if we need this for USB.")
+        url = self._base_endpoint + url
+        logger.debug(f"Sending: {url}")
+        with requests.get(url, stream=True, timeout=GET_TIMEOUT) as request:
+            request.raise_for_status()
+            with open(file, "wb") as f:
+                logger.debug(f"receiving stream to {file}...")
+                for chunk in request.iter_content(chunk_size=8192):
+                    f.write(chunk)
 
 
 class WirelessGoPro(GoProBase, GoProWirelessInterface):
