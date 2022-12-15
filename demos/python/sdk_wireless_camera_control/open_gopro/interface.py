@@ -5,11 +5,12 @@
 
 from __future__ import annotations
 import re
+import enum
 import inspect
 import logging
 from pathlib import Path
 from abc import ABC, abstractmethod
-from typing import Generic, Optional, Union, Pattern, Any, TypeVar, Generator
+from typing import Generic, Optional, Union, Pattern, Any, TypeVar, Generator, Callable, Protocol
 
 from construct import BitStruct, BitsInteger, Padding, Const, Bit, Construct
 
@@ -33,7 +34,7 @@ class GoProHttp(ABC):
     """Base class interface for all HTTP commands"""
 
     @abstractmethod
-    def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
+    def _get(self, url: str, parser: Optional[JsonParser] = None, **kwargs) -> GoProResp:
         """Send an HTTP GET request to a string endpoint.
 
         Args:
@@ -47,7 +48,7 @@ class GoProHttp(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def _stream_to_file(self, url: str, file: Path) -> None:
+    def _stream_to_file(self, url: str, file: Path) -> GoProResp:
         """Send an HTTP GET request to an Open GoPro endpoint to download a binary file.
 
         Args:
@@ -143,7 +144,9 @@ class GoProBle(ABC, Generic[BleHandle, BleDevice]):
         raise NotImplementedError
 
     @abstractmethod
-    def _send_ble_message(self, uuid: BleUUID, data: bytearray, response_id: ResponseType) -> GoProResp:
+    def _send_ble_message(
+        self, uuid: BleUUID, data: bytearray, response_id: ResponseType, **kwargs
+    ) -> GoProResp:
         """Write a characteristic and block until its corresponding notification response is received.
 
         Args:
@@ -268,6 +271,16 @@ IdType = TypeVar("IdType", SettingId, StatusId, ActionId, CmdId, BleUUID, str)
 ParserType = TypeVar("ParserType", BytesParser, JsonParser)
 
 
+class RuleSignature(Protocol):
+    def __call__(self, **kwargs) -> bool:
+        ...
+
+
+class MessageRules(enum.Enum):
+    FASTPASS = enum.auto()
+    WAIT_FOR_ENCODING_START = enum.auto()
+
+
 class Message(Generic[CommunicatorType, IdType, ParserType], ABC):
     """Base class for all messages that will be contained in a Messages class"""
 
@@ -275,6 +288,7 @@ class Message(Generic[CommunicatorType, IdType, ParserType], ABC):
         self,
         identifier: IdType,
         parser: Optional[ParserType] = None,
+        rules: Optional[dict[MessageRules, RuleSignature]] = None,
     ) -> None:
         """Constructor
 
@@ -284,6 +298,14 @@ class Message(Generic[CommunicatorType, IdType, ParserType], ABC):
         """
         self._identifier: IdType = identifier
         self._parser: Optional[ParserType] = parser
+        self._rules = rules or {}
+
+    def _evaluate_rules(self, **kwargs) -> list[MessageRules]:
+        enforced_rules = []
+        for rule, evaluator in self._rules.items():
+            if evaluator(**kwargs):
+                enforced_rules.append(rule)
+        return enforced_rules
 
     @abstractmethod
     def __call__(self, __communicator__: CommunicatorType, **kwargs: Any) -> Any:
@@ -320,8 +342,14 @@ class BleMessage(Message[GoProBle, IdType, BytesParser]):
         uuid (BleUUID): BleUUID to read / write to
     """
 
-    def __init__(self, uuid: BleUUID, parser: Optional[BytesParser], identifier: IdType) -> None:
-        Message.__init__(self, identifier, parser)
+    def __init__(
+        self,
+        uuid: BleUUID,
+        parser: Optional[BytesParser],
+        identifier: IdType,
+        rules: Optional[dict[MessageRules, RuleSignature]] = None,
+    ) -> None:
+        Message.__init__(self, identifier, parser, rules)
         self._uuid = uuid
         self._base_dict = dict(protocol="BLE", uuid=self._uuid)
 
@@ -339,6 +367,7 @@ class HttpMessage(Message[GoProHttp, IdType, JsonParser]):
         components: Optional[list[str]] = None,
         arguments: Optional[list[str]] = None,
         parser: Optional[JsonParser] = None,
+        **kwargs,
     ) -> None:
         """Constructor
 
@@ -352,7 +381,7 @@ class HttpMessage(Message[GoProHttp, IdType, JsonParser]):
         self._endpoint = endpoint
         self._components = components
         self._args = arguments
-        Message.__init__(self, identifier, parser)
+        Message.__init__(self, identifier, parser, **kwargs)
         self._base_dict: dict[str, Any] = dict(id=self._identifier, protocol="HTTP", endpoint=self._endpoint)
 
     def __str__(self) -> str:

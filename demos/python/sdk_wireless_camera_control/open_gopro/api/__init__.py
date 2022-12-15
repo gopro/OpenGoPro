@@ -19,3 +19,7 @@ from .builders import (
     HttpGetJsonCommand,
 )
 from . import params as Params
+
+# TODO is this needed
+
+WirelessApi(None)  # type: ignore

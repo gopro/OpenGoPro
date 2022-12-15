@@ -11,7 +11,7 @@ import datetime
 from pathlib import Path
 from typing import Any, Optional
 
-from open_gopro.interface import GoProHttp, HttpMessage, HttpMessages
+from open_gopro.interface import GoProHttp, HttpMessage, HttpMessages, MessageRules
 from open_gopro.constants import SettingId, StatusId, CmdId
 from open_gopro.responses import GoProResp, JsonParser
 from open_gopro.api.builders import HttpSetting, http_get_binary_command, http_get_json_command
@@ -81,7 +81,11 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
             GoProResp: command status
         """
 
-    @http_get_json_command(endpoint="gopro/camera/state", parser=HttpParsers.CameraStateParser())
+    @http_get_json_command(
+        endpoint="gopro/camera/state",
+        parser=HttpParsers.CameraStateParser(),
+        rules={MessageRules.FASTPASS: lambda **kwargs: True},
+    )
     def get_camera_state(self) -> GoProResp:
         """Get all camera statuses and settings
 
@@ -193,7 +197,14 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
             GoProResp: command status
         """
 
-    @http_get_json_command(endpoint="gopro/camera/shutter", components=["mode"])
+    @http_get_json_command(
+        endpoint="gopro/camera/shutter",
+        components=["mode"],
+        rules={
+            MessageRules.FASTPASS: lambda **kwargs: kwargs["shutter"] == Params.Toggle.DISABLE,
+            MessageRules.WAIT_FOR_ENCODING_START: lambda **kwargs: kwargs["shutter"] == Params.Toggle.ENABLE,
+        },
+    )
     def set_shutter(self, *, shutter: Params.Toggle) -> GoProResp:
         """Set the shutter on or off
 

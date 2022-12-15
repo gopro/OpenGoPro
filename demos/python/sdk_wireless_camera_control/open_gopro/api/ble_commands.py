@@ -28,7 +28,7 @@ from construct import (
 
 from open_gopro import proto
 from open_gopro.responses import GoProResp, BytesParser, BytesBuilder, JsonParser
-from open_gopro.interface import GoProBle, BleMessage, BleMessages
+from open_gopro.interface import GoProBle, BleMessage, BleMessages, MessageRules
 from open_gopro.api.builders import (
     DeprecatedAdapter,
     BleStatus,
@@ -122,7 +122,15 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
     #                          BLE WRITE COMMANDS
     ######################################################################################################
 
-    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SET_SHUTTER, Int8ub)
+    @ble_write_command(
+        GoProUUIDs.CQ_COMMAND,
+        CmdId.SET_SHUTTER,
+        Int8ub,
+        rules={
+            MessageRules.FASTPASS: lambda **kwargs: kwargs["shutter"] == Params.Toggle.DISABLE,
+            MessageRules.WAIT_FOR_ENCODING_START: lambda **kwargs: kwargs["shutter"] == Params.Toggle.ENABLE,
+        },
+    )
     def set_shutter(self, *, shutter: Params.Toggle) -> GoProResp:
         """Set the Shutter to start / stop encoding
 
@@ -439,11 +447,11 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         request_proto=proto.RequestSetTurboActive,
         response_proto=proto.ResponseGeneric,
     )
-    def set_turbo_mode(self, *, active: bool) -> GoProResp:
+    def set_turbo_mode(self, *, mode: Params.Toggle) -> GoProResp:
         """Enable / disable turbo mode.
 
         Args:
-            active (bool): True to enable, False to disable.
+            mode (open_gopro.api.params.Toggle): True to enable, False to disable.
 
         Returns:
             GoProResp: command status of request

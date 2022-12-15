@@ -317,6 +317,17 @@ class GoProResp:
         return resp
 
     @classmethod
+    def _from_stream_response(cls, response: requests.models.Response) -> GoProResp:
+        resp = cls(
+            meta=[response.url],
+            parser=None,
+            status=ErrorCode.SUCCESS if response.ok else ErrorCode.ERROR,
+            raw_packet={},
+        )
+        resp._parse()
+        return resp
+
+    @classmethod
     def _get_response_meta(cls, data: bytes, uuid: BleUUID) -> list[ResponseType]:
         """Get a response's meta information from raw bytes and the UUID it was received on
 

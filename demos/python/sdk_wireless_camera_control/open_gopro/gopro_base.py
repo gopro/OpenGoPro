@@ -8,11 +8,14 @@ import enum
 import logging
 import traceback
 import threading
+from pathlib import Path
 from abc import ABC, abstractmethod
-from typing import Any, Final, Callable, TypeVar, Generic
+from typing import Any, Final, Callable, TypeVar, Generic, Optional
 
 import wrapt
+import requests
 
+from open_gopro.interface import MessageRules, JsonParser
 import open_gopro.exceptions as GpException
 from open_gopro.api import (
     BleCommands,
@@ -23,6 +26,7 @@ from open_gopro.api import (
     WiredApi,
     WirelessApi,
 )
+from open_gopro.responses import GoProResp
 
 logger = logging.getLogger(__name__)
 
@@ -32,8 +36,8 @@ HTTP_GET_RETRIES: Final = 5
 
 # TODO Replace this with Self once mypy implements it
 GoPro = TypeVar("GoPro", bound="GoProBase")
-
 ApiType = TypeVar("ApiType", WiredApi, WirelessApi)
+MessageMethodType = Callable[[Any, bool], GoProResp]
 
 
 @wrapt.decorator
@@ -44,50 +48,43 @@ def catch_thread_exception(wrapped: Callable, instance: GoProBase, args: Any, kw
         instance._handle_exception(threading.current_thread().name, {"exception": e})
 
 
+def ensure_opened(interface: tuple[GoProBase._Interface]) -> Callable:
+    """Raise exception if relevant interface is not currently opened
+
+    Args:
+        interface (Interface): wireless interface to verify
+
+    Returns:
+        Callable: Direct pass-through of callable after verification
+    """
+
+    @wrapt.decorator
+    def wrapper(wrapped: Callable, instance: GoProBase, args: Any, kwargs: Any) -> Callable:
+        if GoProBase._Interface.BLE in interface and not instance.is_ble_connected:
+            raise GpException.GoProNotOpened("BLE not connected")
+        if GoProBase._Interface.HTTP in interface and not instance.is_http_connected:
+            raise GpException.GoProNotOpened("HTTP interface not connected")
+        return wrapped(*args, **kwargs)
+
+    return wrapper
+
+
+class _Interface(enum.Enum):
+    """Enum to identify wireless interface"""
+
+    HTTP = enum.auto()
+    BLE = enum.auto()
+
+
 class GoProBase(ABC, Generic[ApiType]):
     """The base class for communicating with all GoPro Clients"""
 
     def __init__(self, **kwargs) -> None:
         self._should_maintain_state = kwargs.get("maintain_state", True)
         self._exception_cb = kwargs.get("exception_cb", None)
+        self._internal_state = GoProBase._InternalState.ENCODING | GoProBase._InternalState.SYSTEM_BUSY
 
-        # Busy / encoding management
-        self._ready = threading.Lock()
-        self._state_condition = threading.Condition()
-        self._encoding_started = threading.Event()
-        self._encoding_started.clear()
-
-        # If we are to perform BLE housekeeping
-        if self._should_maintain_state:
-            # Set up thread to block until camera is ready to receive commands
-            self._internal_state = GoProBase._InternalState.ENCODING | GoProBase._InternalState.SYSTEM_BUSY
-            self._state_thread = threading.Thread(target=self._maintain_state, name="state", daemon=True)
-            self._state_thread.start()
-
-    @catch_thread_exception
-    def _maintain_state(self) -> None:
-        """Thread to keep track of ready / encoding and acquire / release ready lock."""
-        logger.trace("Initial acquiring of lock")  # type: ignore
-        self._ready.acquire()
-        have_lock = True
-        while True:
-            with self._state_condition:
-                self._state_condition.wait()
-                if have_lock and not (self.is_busy or self.is_encoding):
-                    self._ready.release()
-                    have_lock = False
-                    logger.trace("Control released lock")  # type: ignore
-                elif not have_lock and (self.is_busy or self.is_encoding):
-                    logger.trace("Control acquiring lock")  # type: ignore
-                    self._ready.acquire()
-                    logger.trace("Control has lock")  # type: ignore
-                    have_lock = True
-                    if self.is_encoding:
-                        logger.trace("Control setting encoded started")  # type: ignore
-                        self._encoding_started.set()
-
-        # TODO how to stop this?
-        logger.debug("Maintain state thread exiting...")
+    _Interface: Final = _Interface
 
     def _handle_exception(self, source: Any, context: dict[str, Any]) -> None:
         """Gather exceptions from module threads and send through callback if registered.
@@ -106,12 +103,6 @@ class GoProBase(ABC, Generic[ApiType]):
                 self._exception_cb(exception)
         else:
             logger.error(f"Caught unknown message: {context['message']} from {source}")
-
-    class _Interface(enum.Enum):
-        """Enum to identify wireless interface"""
-
-        HTTP = enum.auto()
-        BLE = enum.auto()
 
     class _InternalState(enum.IntFlag):
         """State used to manage whether the GoPro instance is ready or not."""
@@ -279,54 +270,83 @@ class GoProBase(ABC, Generic[ApiType]):
     def is_http_connected(self) -> bool:
         raise NotImplementedError
 
+    # TODO hide these
     @staticmethod
     def ensure_opened(interface: tuple[GoProBase._Interface]) -> Callable:
-        """Raise exception if relevant interface is not currently opened
-
-        Args:
-            interface (Interface): wireless interface to verify
-
-        Returns:
-            Callable: Direct pass-through of callable after verification
-        """
-
-        @wrapt.decorator
-        def wrapper(wrapped: Callable, instance: GoProBase, args: Any, kwargs: Any) -> Callable:
-            if GoProBase._Interface.BLE in interface and not instance.is_ble_connected:
-                raise GpException.GoProNotOpened("BLE not connected")
-            if GoProBase._Interface.HTTP in interface and not instance.is_http_connected:
-                raise GpException.GoProNotOpened("Wifi not connected")
-            return wrapped(*args, **kwargs)
-
-        return wrapper
+        return ensure_opened(interface)
 
     @staticmethod
-    @wrapt.decorator
-    def acquire_ready_lock(wrapped: Callable, instance: GoProBase, args: Any, kwargs: Any) -> Any:
-        """Call method after acquiring ready lock.
-
-        Release lock when done
-
-        Args:
-            wrapped (Callable): method to call
-            instance (GoProBase): instance that owns the method
-            args (Any): positional arguments
-            kwargs (Any): keyword arguments
-
-        Returns:
-            Any: result of method
-        """
-        if instance._should_maintain_state:
-            logger.trace(f"{wrapped.__name__} acquiring lock")  # type: ignore
-            with instance._ready:
-                logger.trace(f"{wrapped.__name__} has the lock")  # type: ignore
-                ret = wrapped(*args, **kwargs)
-        else:
-            ret = wrapped(*args, **kwargs)
-        if instance._should_maintain_state:
-            logger.trace(f"{wrapped.__name__} released the lock")  # type: ignore
-        return ret
-
-    @staticmethod
-    def catch_thread_exception(*args, **kwargs) -> Any:
+    def catch_thread_exception(*args, **kwargs) -> Callable:
         return catch_thread_exception(*args, **kwargs)
+
+    @ensure_opened((_Interface.HTTP,))
+    def _get(self, url: str, parser: Optional[JsonParser] = None, **kwargs) -> GoProResp:
+        """Send an HTTP GET request to an Open GoPro endpoint.
+
+        There should hopefully not be a scenario where this needs to be called directly as it is generally
+        called from the instance's delegates (i.e. self.wifi_command and self.wifi_status)
+
+        Args:
+            url (str): endpoint URL
+            parser (Optional[JsonParser]): Optional parser to further parse received JSON dict. Defaults to
+                None.
+
+        Raises:
+            GoProNotOpened: WiFi is not currently connected
+            ResponseTimeout: Response was not received in GET_TIMEOUT seconds
+
+        Returns:
+            GoProResp: response
+        """
+        url = self._base_url + url
+        logger.debug(f"Sending:  {url}")
+
+        response: Optional[GoProResp] = None
+        for _ in range(HTTP_GET_RETRIES):
+            try:
+                request = requests.get(url, timeout=GET_TIMEOUT)
+                request.raise_for_status()
+                response = GoProResp._from_http_response(parser, request)
+                break
+            except requests.exceptions.HTTPError as e:
+                # The camera responded with an error. Break since we successfully sent the command and attempt
+                # to continue
+                logger.warning(e)
+                response = GoProResp._from_http_response(parser, e.response)
+                break
+            except requests.exceptions.ConnectionError as e:
+                logger.warning(repr(e))
+            except Exception as e:  # pylint: disable=broad-except
+                logger.critical(f"Unexpected error: {repr(e)}")
+            else:
+                pass
+            logger.warning("Retrying to send the command...")
+        else:
+            raise GpException.ResponseTimeout(HTTP_GET_RETRIES)
+
+        assert response is not None
+        return response
+
+    @ensure_opened((_Interface.HTTP,))
+    def _stream_to_file(self, url: str, file: Path) -> GoProResp:
+        """Send an HTTP GET request to an Open GoPro endpoint to download a binary file.
+
+        There should hopefully not be a scenario where this needs to be called directly as it is generally
+        called from the instance's delegates (i.e. self.wifi_command and self.wifi_status)
+
+        Args:
+            url (str): endpoint URL
+            file (Path): location where file should be downloaded to
+        """
+        assert self.is_http_connected
+
+        url = self._base_url + url
+        logger.debug(f"Sending: {url}")
+        with requests.get(url, stream=True, timeout=GET_TIMEOUT) as request:
+            request.raise_for_status()
+            with open(file, "wb") as f:
+                logger.debug(f"receiving stream to {file}...")
+                for chunk in request.iter_content(chunk_size=8192):
+                    f.write(chunk)
+
+        return GoProResp._from_stream_response(request)

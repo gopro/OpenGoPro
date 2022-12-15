@@ -32,7 +32,16 @@ from open_gopro.constants import (
     enum_factory,
     GoProEnum,
 )
-from open_gopro.interface import GoProBle, GoProHttp, BleMessage, HttpMessage, BleMessages, HttpMessages
+from open_gopro.interface import (
+    GoProBle,
+    GoProHttp,
+    BleMessage,
+    HttpMessage,
+    BleMessages,
+    HttpMessages,
+    MessageRules,
+    RuleSignature,
+)
 from open_gopro.util import Logger, jsonify
 
 logger = logging.getLogger(__name__)
@@ -202,6 +211,7 @@ class BleWriteCommand(BleMessage[CmdId]):
         cmd: CmdId,
         param_builder: Optional[BytesBuilder] = None,
         parser: Optional[Union[construct.Construct, BytesParser[dict]]] = None,
+        rules: Optional[dict[MessageRules, RuleSignature]] = None,
     ) -> None:
         """Constructor
 
@@ -214,9 +224,10 @@ class BleWriteCommand(BleMessage[CmdId]):
         self.param_builder = param_builder
         self.cmd = cmd
         super().__init__(
-            uuid=uuid,
-            parser=construct_adapter_factory(parser) if isinstance(parser, construct.Construct) else parser,
-            identifier=cmd,
+            uuid,
+            construct_adapter_factory(parser) if isinstance(parser, construct.Construct) else parser,
+            cmd,
+            rules,
         )
 
     def __call__(self, __communicator__: GoProBle, **kwargs: Any) -> GoProResp:
@@ -241,7 +252,9 @@ class BleWriteCommand(BleMessage[CmdId]):
         if params:
             data.append(len(params))
             data.extend(params)
-        response = __communicator__._send_ble_message(self._uuid, data, self._identifier)
+        response = __communicator__._send_ble_message(
+            self._uuid, data, self._identifier, rules=self._evaluate_rules(**kwargs)
+        )
         logger.info(Logger.build_log_rx_str(response))
         return response
 
@@ -412,6 +425,7 @@ def ble_write_command(
     cmd: CmdId,
     param_builder: Optional[BytesBuilder] = None,
     parser: Optional[Union[construct.Construct, BytesParser[dict]]] = None,
+    rules: Optional[dict[MessageRules, RuleSignature]] = None,
 ) -> Callable:
     """Factory to build a BleWriteCommand and wrapper to execute it
 
@@ -424,7 +438,7 @@ def ble_write_command(
     Returns:
         Callable: Generated method to perform command
     """
-    message = BleWriteCommand(uuid, cmd, param_builder, parser)
+    message = BleWriteCommand(uuid, cmd, param_builder, parser, rules=rules)
 
     @wrapt.decorator
     def wrapper(wrapped: Callable, instance: BleMessages, _: Any, kwargs: Any) -> GoProResp:
@@ -877,6 +891,7 @@ class HttpCommand(HttpMessage[str]):
         arguments: Optional[list[str]] = None,
         parser: Optional[JsonParser] = None,
         identifier: Optional[str] = None,
+        **kwargs,
     ) -> None:
         """Constructor
 
@@ -895,13 +910,13 @@ class HttpCommand(HttpMessage[str]):
             except IndexError:
                 pass
 
-        super().__init__(endpoint, identifier, components, arguments, parser)
+        super().__init__(endpoint, identifier, components, arguments, parser, **kwargs)
 
 
 class HttpGetJsonCommand(HttpCommand):
     """An HTTP command that performs a GET operation and receives JSON as response"""
 
-    def __call__(self, __communicator__: GoProHttp, **kwargs: Any) -> GoProResp:
+    def __call__(self, __communicator__: GoProHttp, rules: list[MessageRules], **kwargs: Any) -> GoProResp:
         """Execute the command by sending it via HTTP
 
         Args:
@@ -927,7 +942,7 @@ class HttpGetJsonCommand(HttpCommand):
             )
         # Send to camera
         logger.info(Logger.build_log_tx_str(jsonify(self._as_dict(**kwargs, endpoint=url))))
-        response = __communicator__._get(url, self._parser)
+        response = __communicator__._get(url, self._parser, rules=rules)
         response._meta.append(self._identifier)
         logger.info(Logger.build_log_rx_str(response))
         return response
@@ -939,7 +954,7 @@ class HttpGetBinary(HttpCommand):
 
     def __call__(  # type: ignore
         self, __communicator__: GoProHttp, *, camera_file: str, local_file: Optional[Path] = None
-    ) -> Path:
+    ) -> GoProResp:
         """Execute the command by getting the binary data from the communicator
 
         Args:
@@ -949,7 +964,7 @@ class HttpGetBinary(HttpCommand):
                 (camera-file will be used).
 
         Returns:
-            Path: location on local device that file was written to
+            GoProResp: location on local device that file was written to
         """
         # The method that will actually send the command and receive the stream
         local_file = local_file or Path(".") / camera_file
@@ -960,13 +975,13 @@ class HttpGetBinary(HttpCommand):
             )
         )
         # Send to camera
-        __communicator__._stream_to_file(url, local_file)
+        response = __communicator__._stream_to_file(url, local_file)
         logger.info(
             Logger.build_log_rx_str(
                 jsonify(self._as_dict(status="SUCCESS", endpoint=url, local_file=local_file))
             )
         )
-        return local_file
+        return response
 
 
 def http_get_json_command(
@@ -975,6 +990,7 @@ def http_get_json_command(
     arguments: Optional[list[str]] = None,
     parser: Optional[JsonParser] = None,
     identifier: Optional[str] = None,
+    rules: Optional[dict[MessageRules, RuleSignature]] = None,
 ) -> Callable:
     """Factory to build an HttpGetJson command and wrapper to execute it
 
@@ -988,11 +1004,13 @@ def http_get_json_command(
     Returns:
         Callable: Generated method to perform command
     """
-    message = HttpGetJsonCommand(endpoint, components, arguments, parser, identifier)
+    message = HttpGetJsonCommand(endpoint, components, arguments, parser, identifier, rules=rules)
 
     @wrapt.decorator
     def wrapper(wrapped: Callable, instance: HttpMessages, _: Any, kwargs: Any) -> GoProResp:
-        return message(instance._communicator, **(wrapped(**kwargs) or kwargs))
+        return message(
+            instance._communicator, message._evaluate_rules(**kwargs), **(wrapped(**kwargs) or kwargs)
+        )
 
     return wrapper
 
@@ -1019,7 +1037,7 @@ def http_get_binary_command(
     message = HttpGetBinary(endpoint, components, arguments, parser, identifier)
 
     @wrapt.decorator
-    def wrapper(wrapped: Callable, instance: HttpMessages, _: Any, kwargs: Any) -> Path:
+    def wrapper(wrapped: Callable, instance: HttpMessages, _: Any, kwargs: Any) -> GoProResp:
         return message(instance._communicator, **(wrapped(**kwargs) or kwargs))
 
     return wrapper
