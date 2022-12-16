@@ -22,13 +22,13 @@ def main(args: argparse.Namespace) -> None:
 
     with WiredGoPro(args.identifier) as gopro:
         # Start webcam
-        gopro.http_command.wired_usb_control(control=Params.Toggle.DISABLE)
-        gopro.http_command.webcam_start()
+        assert gopro.http_command.wired_usb_control(control=Params.Toggle.DISABLE).is_ok
+        assert gopro.http_command.webcam_start().is_ok
 
         # Start player
         display_video_blocking(STREAM_URL)  # blocks until user exists viewer
-        gopro.http_command.webcam_stop()
-        gopro.http_command.webcam_exit()
+        assert gopro.http_command.webcam_stop().is_ok
+        assert gopro.http_command.webcam_exit().is_ok
 
     console.print("Exiting...")
 

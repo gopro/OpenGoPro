@@ -307,6 +307,7 @@ class MediaModStatus(GoProEnum):
 
 
 class Flatmode(GoProEnum):
+    NOT_APPLICABLE = 0
     VIDEO = 12
     LOOPING = 15
     SINGLE_PHOTO = 16

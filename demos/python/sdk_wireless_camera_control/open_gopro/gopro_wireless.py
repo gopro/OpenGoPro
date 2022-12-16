@@ -476,7 +476,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Start keep alive and state maintenance
         if self._should_maintain_state:
             self.ble_status.encoding_active.register_value_update()
-            self.ble_status.system_ready.register_value_update()
+            self.ble_status.system_busy.register_value_update()
             self.keep_alive()
             self._keep_alive_thread.start()
         logger.info("BLE is ready!")
@@ -498,8 +498,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         ]:
             if StatusId.ENCODING in response.data:
                 self._set_state_encoding(response[StatusId.ENCODING])
-            if StatusId.SYSTEM_READY in response.data:
-                self._set_state_busy(not response[StatusId.SYSTEM_READY])
+            if StatusId.SYSTEM_BUSY in response.data:
+                self._set_state_busy(response[StatusId.SYSTEM_BUSY])
 
     def _notification_handler(self, handle: int, data: bytearray) -> None:
         """Receive notifications from the BLE controller.

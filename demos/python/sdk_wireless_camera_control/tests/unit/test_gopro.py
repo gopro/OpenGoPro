@@ -36,7 +36,7 @@ def test_ble_threads_start(gopro_client_maintain_ble: WirelessGoPro):
         time.sleep(0.1)
     not_encoding = bytearray([0x05, 0x13, 0x00, StatusId.ENCODING.value, 0x01, 0x00])
     gopro_client_maintain_ble._notification_handler(0xFF, not_encoding)
-    not_busy = bytearray([0x05, 0x13, 0x00, StatusId.SYSTEM_READY.value, 0x01, 0x01])
+    not_busy = bytearray([0x05, 0x13, 0x00, StatusId.SYSTEM_BUSY.value, 0x01, 0x00])
     gopro_client_maintain_ble._notification_handler(0xFF, not_busy)
     assert not gopro_client_maintain_ble.is_busy
     assert not gopro_client_maintain_ble.is_encoding

@@ -292,8 +292,8 @@ class StatusBar(Controller):
         """
         if identifier == models.constants.StatusId.ENCODING:
             self.update_status(StatusBar.Encoding.ON if value else StatusBar.Encoding.OFF)
-        elif identifier == models.constants.StatusId.SYSTEM_READY:
-            self.update_status(StatusBar.Ready.READY if value else StatusBar.Ready.BUSY)
+        elif identifier == models.constants.StatusId.SYSTEM_BUSY:
+            self.update_status(StatusBar.Ready.BUSY if value else StatusBar.Ready.READY)
 
 
 class Video(Controller):

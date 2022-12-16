@@ -48,7 +48,7 @@ def enforce_message_rules(
     if instance._should_maintain_state and instance.is_open and not MessageRules.FASTPASS in rules:
         # Wait for not encoding and not busy
         logger.trace("Waiting for camera to be ready to receive messages.")  # type: ignore
-        instance._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_READY: True})
+        instance._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_BUSY: False})
         logger.trace("Camera is ready to receive messages")  # type: ignore
         response = wrapped(*args, **kwargs)
     else:  # Either we're not maintaining state, we're not opened yet, or this is a fastpass message
@@ -139,7 +139,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         logger.info(f"Using Open GoPro API version {version}")
 
         # Wait for initial ready state
-        self._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_READY: True})
+        self._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_BUSY: False})
 
         self._open = True
 
@@ -313,6 +313,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         while state := self.http_command.get_camera_state():
             for key, value in check.items():
                 if state[key] != value:
+                    logger.trace(f"{key.name} is not {value}") # type: ignore
                     time.sleep(poll_period)
                     break  # Get new state and try again
             else:

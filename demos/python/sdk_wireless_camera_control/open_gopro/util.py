@@ -62,8 +62,8 @@ class Logger:
     ) -> None:
         self.modules = {
             "open_gopro.gopro_base": logging.DEBUG,  # TRACE for raw HTTP responses
-            "open_gopro.gopro_wired": logging.DEBUG,  # TRACE for concurrency debugging
-            "open_gopro.gopro_wireless": logging.DEBUG,  # TRACE for concurrency debugging
+            "open_gopro.gopro_wired": logging.TRACE,  # TRACE for concurrency debugging
+            "open_gopro.gopro_wireless": logging.TRACE,  # TRACE for concurrency debugging
             "open_gopro.api.builders": logging.DEBUG,
             "open_gopro.api.http_commands": logging.DEBUG,
             "open_gopro.api.ble_commands": logging.DEBUG,
