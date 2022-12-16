@@ -23,7 +23,7 @@ def main(args: argparse.Namespace) -> None:
     try:
         with (
             WiredGoPro(args.identifier)  # type: ignore
-            if not args.wired
+            if args.wired
             else WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface)
         ) as gopro:
             assert gopro

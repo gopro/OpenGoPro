@@ -105,27 +105,6 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
     def close(self) -> None:
         """Gracefully close the GoPro Client connection"""
 
-    def _wait_for_state(self, check: dict[Union[StatusId, SettingId], Any], poll_period: int = 1) -> None:
-        """Poll the current state until a variable amount of states are all equal to desired values
-
-        Args:
-            check (dict[Union[StatusId, SettingId], Any]): dict{setting / status: value} of settings / statuses
-                and values to wait for
-            poll_period (int): How frequently (in seconds) to poll the current state. Defaults to 1.
-
-        """
-        while state := self.http_command.get_camera_state():
-            for key, value in check.items():
-                if state[key] != value:
-                    time.sleep(poll_period)
-                    break  # Get new state and try again
-            else:
-                return  # Everything matches. Exit
-
-    @property
-    def _api(self) -> WiredApi:
-        return self._wired_api
-
     @property
     def identifier(self) -> str:
         """Unique identifier for the connected GoPro Client
@@ -221,6 +200,27 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
     ##########################################################################################################
     #                                 End Public API
     ##########################################################################################################
+
+    def _wait_for_state(self, check: dict[Union[StatusId, SettingId], Any], poll_period: int = 1) -> None:
+        """Poll the current state until a variable amount of states are all equal to desired values
+
+        Args:
+            check (dict[Union[StatusId, SettingId], Any]): dict{setting / status: value} of settings / statuses
+                and values to wait for
+            poll_period (int): How frequently (in seconds) to poll the current state. Defaults to 1.
+
+        """
+        while state := self.http_command.get_camera_state():
+            for key, value in check.items():
+                if state[key] != value:
+                    time.sleep(poll_period)
+                    break  # Get new state and try again
+            else:
+                return  # Everything matches. Exit
+
+    @property
+    def _api(self) -> WiredApi:
+        return self._wired_api
 
     @property
     def _base_url(self) -> str:

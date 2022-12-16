@@ -202,32 +202,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._state_thread = threading.Thread(target=self._maintain_state, name="state", daemon=True)
             self._state_thread.start()
 
-    def _set_state_encoding(self, encoding: bool) -> None:
-        """Set whether or not the GoPro is currently encoding
-
-        Args:
-            encoding (bool): True if encoding
-        """
-        with self._state_condition:
-            if encoding is True:
-                self._internal_state |= GoProBase._InternalState.ENCODING
-            else:
-                self._internal_state &= ~GoProBase._InternalState.ENCODING
-            self._state_condition.notify()
-
-    def _set_state_busy(self, busy: bool) -> None:
-        """Set whether or not the GoPro is currently busy
-
-        Args:
-            busy (bool): True if busy
-        """
-        with self._state_condition:
-            if busy is False:
-                self._internal_state &= ~GoProBase._InternalState.SYSTEM_BUSY
-            else:
-                self._internal_state |= GoProBase._InternalState.SYSTEM_BUSY
-            self._state_condition.notify()
-
     @property
     def identifier(self) -> str:
         """Get a unique identifier for this instance.
@@ -429,6 +403,32 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         # TODO how to stop this?
         logger.debug("Maintain state thread exiting...")
+
+    def _set_state_encoding(self, encoding: bool) -> None:
+        """Set whether or not the GoPro is currently encoding
+
+        Args:
+            encoding (bool): True if encoding
+        """
+        with self._state_condition:
+            if encoding is True:
+                self._internal_state |= GoProBase._InternalState.ENCODING
+            else:
+                self._internal_state &= ~GoProBase._InternalState.ENCODING
+            self._state_condition.notify()
+
+    def _set_state_busy(self, busy: bool) -> None:
+        """Set whether or not the GoPro is currently busy
+
+        Args:
+            busy (bool): True if busy
+        """
+        with self._state_condition:
+            if busy is False:
+                self._internal_state &= ~GoProBase._InternalState.SYSTEM_BUSY
+            else:
+                self._internal_state |= GoProBase._InternalState.SYSTEM_BUSY
+            self._state_condition.notify()
 
     @GoProBase._catch_thread_exception
     def _periodic_keep_alive(self) -> None:

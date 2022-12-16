@@ -4,6 +4,7 @@
 """Implements top level interface to GoPro module."""
 
 from __future__ import annotations
+import json
 import enum
 import logging
 import traceback
@@ -34,7 +35,6 @@ WRITE_TIMEOUT: Final = 5
 GET_TIMEOUT: Final = 5
 HTTP_GET_RETRIES: Final = 5
 
-# TODO Replace this with Self once mypy implements it
 GoPro = TypeVar("GoPro", bound="GoProBase")
 ApiType = TypeVar("ApiType", WiredApi, WirelessApi)
 MessageMethodType = Callable[[Any, bool], GoProResp]
@@ -98,31 +98,6 @@ class GoProBase(ABC, Generic[ApiType]):
         self._exception_cb = kwargs.get("exception_cb", None)
         self._internal_state = GoProBase._InternalState.ENCODING | GoProBase._InternalState.SYSTEM_BUSY
 
-    def _handle_exception(self, source: Any, context: dict[str, Any]) -> None:
-        """Gather exceptions from module threads and send through callback if registered.
-
-        Note that this function signature matches asyncio's exception callback requirement.
-
-        Args:
-            source (Any): Where did the exception come from?
-            context (Dict): Access exception via context["exception"]
-        """
-        # context["message"] will always be there; but context["exception"] may not
-        if exception := context.get("exception", False):
-            logger.error(f"Received exception {exception} from {source}")
-            logger.error(traceback.format_exc())
-            if self._exception_cb:
-                self._exception_cb(exception)
-        else:
-            logger.error(f"Caught unknown message: {context['message']} from {source}")
-
-    class _InternalState(enum.IntFlag):
-        """State used to manage whether the GoPro instance is ready or not."""
-
-        READY = 0
-        ENCODING = 1 << 0
-        SYSTEM_BUSY = 1 << 1
-
     def __enter__(self: GoPro) -> GoPro:
         self.open()
         return self
@@ -178,16 +153,6 @@ class GoProBase(ABC, Generic[ApiType]):
 
     @property
     @abstractmethod
-    def _api(self) -> ApiType:
-        """Unique identifier for the connected GoPro Client
-
-        Returns:
-            str: identifier
-        """
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
     def identifier(self) -> str:
         """Unique identifier for the connected GoPro Client
 
@@ -206,16 +171,6 @@ class GoProBase(ABC, Generic[ApiType]):
             str: supported version
         """
         return self._api.version
-
-    @property
-    @abstractmethod
-    def _base_url(self) -> str:
-        """Build the base endpoint for USB commands
-
-        Returns:
-            str: base endpoint with URL from serial number
-        """
-        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -297,6 +252,55 @@ class GoProBase(ABC, Generic[ApiType]):
         """
         raise NotImplementedError
 
+    ##########################################################################################################
+    #                                 End Public API
+    ##########################################################################################################
+
+    def _handle_exception(self, source: Any, context: dict[str, Any]) -> None:
+        """Gather exceptions from module threads and send through callback if registered.
+
+        Note that this function signature matches asyncio's exception callback requirement.
+
+        Args:
+            source (Any): Where did the exception come from?
+            context (Dict): Access exception via context["exception"]
+        """
+        # context["message"] will always be there; but context["exception"] may not
+        if exception := context.get("exception", False):
+            logger.error(f"Received exception {exception} from {source}")
+            logger.error(traceback.format_exc())
+            if self._exception_cb:
+                self._exception_cb(exception)
+        else:
+            logger.error(f"Caught unknown message: {context['message']} from {source}")
+
+    class _InternalState(enum.IntFlag):
+        """State used to manage whether the GoPro instance is ready or not."""
+
+        READY = 0
+        ENCODING = 1 << 0
+        SYSTEM_BUSY = 1 << 1
+
+    @property
+    @abstractmethod
+    def _base_url(self) -> str:
+        """Build the base endpoint for USB commands
+
+        Returns:
+            str: base endpoint with URL from serial number
+        """
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _api(self) -> ApiType:
+        """Unique identifier for the connected GoPro Client
+
+        Returns:
+            str: identifier
+        """
+        raise NotImplementedError
+
     @staticmethod
     def _ensure_opened(interface: tuple[GoProMessageInterface]) -> Callable:
         """Raise exception if relevant interface is not currently opened
@@ -348,6 +352,7 @@ class GoProBase(ABC, Generic[ApiType]):
             try:
                 request = requests.get(url, timeout=GET_TIMEOUT)
                 request.raise_for_status()
+                logger.trace(f"received raw json: {json.dumps(request.json() if request.text else {}, indent=4)}")  # type: ignore
                 response = GoProResp._from_http_response(parser, request)
                 break
             except requests.exceptions.HTTPError as e:

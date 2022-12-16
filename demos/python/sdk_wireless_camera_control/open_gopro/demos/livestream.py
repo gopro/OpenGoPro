@@ -60,7 +60,7 @@ def main(args: argparse.Namespace) -> None:
             lens=args.fov,
         )
         # Wait to receive livestream started status
-        console.print("Waiting for livestream to be ready...")
+        console.print("Waiting for livestream to be ready...\n")
         while update := gopro.get_notification():
             if (
                 update == constants.ActionId.LIVESTREAM_STATUS_NOTIF

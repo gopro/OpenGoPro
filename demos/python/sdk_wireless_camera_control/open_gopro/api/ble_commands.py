@@ -845,8 +845,8 @@ class BleStatuses(BleMessages[BleStatus, StatusId]):
         self.wap_scan_state: BleStatus = BleStatus(communicator, StatusId.WAP_SCAN_STATE, Params.WAPState)
         """State of current scan for Wifi Access Points. Appears to only change for CAH-related scans."""
 
-        self.wap_scan_time: BleStatus = BleStatus(communicator, StatusId.WAP_SCAN_TIME, Int8ub)
-        """The time, in milliseconds since boot that the Wifi Access Point scan completed."""
+        # self.wap_scan_time: BleStatus = BleStatus(communicator, StatusId.WAP_SCAN_TIME, Int8ub)
+        # """The time, in milliseconds since boot that the Wifi Access Point scan completed."""
 
         self.wap_prov_stat: BleStatus = BleStatus(communicator, StatusId.WAP_PROV_STAT, Params.WAPState)
         """Wifi AP provisioning state."""
