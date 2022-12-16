@@ -283,6 +283,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
                     if re.match(r"172.2\d.1\d\d.51", ipv4_address):
                         self.urls.put_nowait(ipv4_address)
 
+        logger.info("Querying mDNS to find a GoPro...")
         zeroconf = Zeroconf(unicast=True)
         listener = ZeroconfListener()
         browser = ServiceBrowser(zeroconf, WiredGoPro._MDNS_SERVICE_NAME, listener=listener)
@@ -296,6 +297,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         browser.cancel()
         zeroconf.close()
         if gopro_ip:
+            logger.info(f"Found GoPro @ {gopro_ip}")
             return "".join([gopro_ip[5], *gopro_ip[8:10]])
         if exc:
             raise GpException.FailedToFindDevice() from exc
