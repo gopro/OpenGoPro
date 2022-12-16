@@ -7,7 +7,7 @@ QuickStart Guide
 .. warning:: This section assumes you have successfully :ref:`installed<Installation>` the package.
 
 
-Open GoPro installs with several command line demos to demonstrate BLE and Wi-Fi. The source code for these example
+Open GoPro installs with several command line demos to demonstrate BLE and Wi-Fi. The source code for these examples
 can be found on `Github <https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control/open_gopro/demos>`_
 or locally in `$INSTALL/open_gopro/demos` where $INSTALL can be found with:
 
@@ -23,7 +23,8 @@ Photo Demo
 ----------
 
 The `photo` demo will discover a GoPro camera, connect to it, take a photo, and then download the
-photo to your local machine. To run, do:
+photo to your local machine. It defaults to connecting to a wireless camera but can connect to a wired camera
+by setting the `wired` option. To run, do:
 
 .. code-block:: console
 
@@ -34,30 +35,28 @@ For more information, do:
 .. code-block:: console
 
     $ gopro-photo --help
-    usage: gopro-photo [-h] [-o OUTPUT] [-l LOG] [-i IDENTIFIER] [-w WIFI_INTERFACE] [-p]
+    usage: gopro-photo [-h] [--output OUTPUT] [--wired] [--log LOG] [--identifier IDENTIFIER] [--wifi_interface WIFI_INTERFACE] [--password]
 
     Connect to a GoPro camera, take a photo, then download it.
 
-    optional arguments:
+    options:
     -h, --help            show this help message and exit
-    -o OUTPUT, --output OUTPUT
-                            Where to write the photo to. If not set, write to 'photo.jpg'
-    -l LOG, --log LOG     Location to store detailed log
-    -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the
-                            default camera SSID. If not used, first discovered GoPro will be
-                            connected to
-    -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE
-                            System Wifi Interface. If not set, first discovered interface will be
-                            used.
-    -p, --password        Set to read sudo password from stdin. If not set, you will be prompted
-                            for password if needed
+    --output OUTPUT       Where to write the photo to. If not set, write to 'photo.jpg'
+    --wired               Set to use wired (USB) instead of wireless (BLE / WIFI) interface
+    --log LOG             Location to store detailed log
+    --identifier IDENTIFIER
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first
+                            discovered GoPro will be connected to
+    --wifi_interface WIFI_INTERFACE
+                            System Wifi Interface. If not set, first discovered interface will be used.
+    --password            Set to read sudo password from stdin. If not set, you will be prompted for password if needed
 
 Video Demo
 ----------
 
 The video demo will discover a GoPro camera, connect to it, take a video for a given amount of time, and then
-download the photo to your local machine. To run and capture a 2 second video, do:
+download the photo to your local machine.  It defaults to connecting to a wireless camera but can connect to a
+wired camera by setting the `wired` option.To run and capture a 2 second video, do:
 
 .. code-block:: console
 
@@ -68,27 +67,26 @@ For more information, do:
 .. code-block:: console
 
     $ gopro-video --help
-    usage: gopro-video [-h] [-o OUTPUT] [-l LOG] [-i IDENTIFIER] [-w WIFI_INTERFACE] [-p] record_time
+    usage: gopro-video [-h] [-o OUTPUT] [--wired] [--log LOG] [--identifier IDENTIFIER] [--wifi_interface WIFI_INTERFACE] [--password]
+                    record_time
 
     Connect to a GoPro camera, take a video, then download it.
 
     positional arguments:
     record_time           How long to record for
 
-    optional arguments:
+    options:
     -h, --help            show this help message and exit
     -o OUTPUT, --output OUTPUT
                             Where to write the video to. If not set, write to 'video.mp4'
-    -l LOG, --log LOG     Location to store detailed log
-    -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the
-                            default camera SSID. If not used, first discovered GoPro will be
-                            connected to
-    -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE
-                            System Wifi Interface. If not set, first discovered interface will be
-                            used.
-    -p, --password        Set to read sudo password from stdin. If not set, you will be prompted
-                            for password if needed
+    --wired               Set to use wired (USB) instead of wireless (BLE / WIFI) interface
+    --log LOG             Location to store detailed log
+    --identifier IDENTIFIER
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first
+                            discovered GoPro will be connected to
+    --wifi_interface WIFI_INTERFACE
+                            System Wifi Interface. If not set, first discovered interface will be used.
+    --password            Set to read sudo password from stdin. If not set, you will be prompted for password if needed
 
 Wired Webcam Demo
 -----------------
@@ -104,21 +102,57 @@ For more information, do:
 
 .. code-block:: console
 
-    usage: gopro-webcam [-h] [-l LOG] identifier
+    $ gopro-webcam --help
+    usage: gopro-webcam [-h] [-i IDENTIFIER] [-l LOG]
 
     Setup and view a GoPro webcam.
 
+    options:
+    -h, --help            show this help message and exit
+    -i IDENTIFIER, --identifier IDENTIFIER
+                            Last 3 digits of GoPro serial number, which is the last 3 digits of the default camera SSID. If not specified, first
+                            GoPro discovered via mDNS will be used
+    -l LOG, --log LOG     Location to store detailed log
+
+Livestream Demo
+---------------
+
+The `livestream` demo will connect via BLE to the camera, connect the camera to a Wifi AP, configure / start
+livestream, then use `OpenCV <https://pypi.org/project/opencv-python/>`_  to start a viewer to display the stream.
+
+.. code-block:: console
+
+    $ gopro-webcam
+
+For more information, do:
+
+.. code-block:: console
+
+    $ gopro-livestream --help
+    usage: gopro-livestream [-h] [--min_bit MIN_BIT] [--max_bit MAX_BIT] [--start_bit START_BIT] [--resolution {4,7,12}] [--fov {0,4,3}]
+                            [--log LOG] [--identifier IDENTIFIER]
+                            ssid password url
+
+    Connect to the GoPro via BLE only, configure then start a Livestream, then display it with CV2.
+
     positional arguments:
-    identifier         Last 3 digits of GoPro serial number, which is the last 3 digits of the default camera SSID.
+    ssid                  WiFi SSID to connect to.
+    password              Password of WiFi SSID.
+    url                   RTMP server URL to stream to.
 
     options:
-    -h, --help         show this help message and exit
-    -l LOG, --log LOG  Location to store detailed log
-
-Wireless Stream Demos
----------------------
-
-The livestream and preview stream demos have been merged into the below GUI
+    -h, --help            show this help message and exit
+    --min_bit MIN_BIT     Minimum bitrate.
+    --max_bit MAX_BIT     Maximum bitrate.
+    --start_bit START_BIT
+                            Starting bitrate.
+    --resolution {4,7,12}
+                            Resolution.
+    --fov {0,4,3}         Field of View.
+    --log LOG             Location to store detailed log
+    --identifier IDENTIFIER
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first
+                            discovered GoPro will be connected to
 
 API GUI Demo
 -------------

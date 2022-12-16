@@ -66,37 +66,8 @@ In either case, the following will have occurred before the camera is ready to c
 #. discover Open GoPro version
 #. connect via WiFi (unless specified not to via argument)
 
-After the `WirelessGoPro` instance is successfully opened via either of the methods above, it's state can be
-checked via several properties. All of the following will return True:
-
--  :meth:`~open_gopro.gopro_base.GoProBase.is_ble_connected`
--  :meth:`~open_gopro.gopro_base.GoProBase.is_http_connected`
--  :meth:`~open_gopro.gopro_base.GoProBase.is_open`
-
 .. note:: While a BLE connection is always needed, the WiFi connection is optional. To configure this (and other
     instance arguments) see the API Reference for :class:`~open_gopro.gopro_wireless.WirelessGoPro`
-
-Camera Readiness
-^^^^^^^^^^^^^^^^
-
-A message can not be sent to the camera if it is not ready where "ready" is defined as not encoding and not
-busy. These two states are managed automatically by the `WirelessGoPro` instance such that a call to any
-message will block until the camera is ready. It is possible to check these from the application via:
-
-- :meth:`~open_gopro.gopro_base.GoProBase.is_encoding`
-- :meth:`~open_gopro.gopro_base.GoProBase.is_busy`
-
-For example,
-
-.. code-block:: python
-
-    with GoPro() as gopro:
-        # A naive check for it to be ready
-        while gopro.is_encoding or gopro.is_ready:
-            pass
-
-To reiterate...it is not needed or recommended to worry about this as the internal state is managed automatically
-by the `WirelessGoPro` instance.
 
 Wired Opening
 -------------
@@ -122,11 +93,18 @@ The Wired GoPro client can be opened either with the context manager:
     print("Yay! I'm connected via USB, opened, and ready to send / get data now!")
     # Send some messages now
 
-After the `WirelessGoPro` instance is successfully opened via either of the methods above, it's state can be
-checked via :meth:`~open_gopro.gopro_base.GoProBase.is_open`.
+If an identifier is not passed to the `WiredGoPro`, the mDNS server will be queried during opening to search
+for a connected GoPro.
 
 Common Opening
 --------------
+
+The GoPro's state can be checked via several properties. All of the following will return True after a
+successful opening:
+
+-  :meth:`~open_gopro.gopro_base.GoProBase.is_ble_connected`
+-  :meth:`~open_gopro.gopro_base.GoProBase.is_http_connected`
+-  :meth:`~open_gopro.gopro_base.GoProBase.is_open`
 
 API Version
 ^^^^^^^^^^^
@@ -137,6 +115,27 @@ using anything else.
 
 The version string can be accessed via the :meth:`~open_gopro.gopro_base.GoProBase.version` property.
 
+Camera Readiness
+^^^^^^^^^^^^^^^^
+
+A message can not be sent to the camera if it is not ready where "ready" is defined as not encoding and not
+busy. These two states are managed automatically by the `WirelessGoPro` instance such that a call to any
+message will block until the camera is ready. It is possible to check these from the application via:
+
+- :meth:`~open_gopro.gopro_base.GoProBase.is_encoding`
+- :meth:`~open_gopro.gopro_base.GoProBase.is_busy`
+
+For example,
+
+.. code-block:: python
+
+    with GoPro() as gopro:
+        # A naive check for it to be ready
+        while gopro.is_encoding or gopro.is_ready:
+            pass
+
+To reiterate...it is not needed or recommended to worry about this as the internal state is managed automatically
+by the `WirelessGoPro` instance.
 
 Sending Messages
 ================
@@ -245,9 +244,9 @@ It is also possible to read all statuses at once via:
         gopro.ble_command.get_camera_statuses()
 
 .. note::
-    HTTP can not access individual statuses. Instead it can use the `get_camera_state`
-    (:meth:`~open_gopro.api.http_commands.HttpCommands.get_camera_state`)
-    command to retrieve all of them (as well as all of the settings) at once
+    HTTP can not access individual statuses. Instead it can use
+    :meth:`~open_gopro.api.http_commands.HttpCommands.get_camera_state`
+    to retrieve all of them (as well as all of the settings) at once
 
 Settings
 ^^^^^^^^
@@ -272,9 +271,9 @@ It is also possible to read all settings at once via:
         gopro.ble_command.get_camera_settings()
 
 .. note::
-    HTTP can not access individual settings. Instead it can use the `get_camera_state`
-    (:meth:`~open_gopro.api.http_commands.HttpCommands.get_camera_state`)
-    command to retrieve all of them (as well as all of the statuses) at once.
+    HTTP can not access individual settings. Instead it can use
+    :meth:`~open_gopro.api.http_commands.HttpCommands.get_camera_state`
+    to retrieve all of them (as well as all of the statuses) at once.
 
 Depending on the camera's current state, settings will have differing capabilities. It is possible to query
 the current capabilities for a given setting (via BLE only) using the `get_capabilities_values` method as such:

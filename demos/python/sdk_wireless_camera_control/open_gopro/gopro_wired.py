@@ -66,20 +66,41 @@ def enforce_message_rules(
 
 
 class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
-    """The top-level USB interface to a Wired GoPro device."""
+    """The top-level USB interface to a Wired GoPro device.
+
+    See the `Open GoPro SDK <https://gopro.github.io/OpenGoPro/python_sdk>`_ for complete documentation.
+
+    If a serial number is not passed when instantiating, the mDNS server will be queried to find a connected
+    GoPro.
+
+    This class also handles:
+        - ensuring camera is ready / not encoding before transferring data
+
+    It can be used via context manager:
+
+    >>> from open_gopro import WiredGoPro
+    >>> with WiredGoPro() as gopro:
+    >>>     gopro.http_command.set_shutter(Params.Toggle.ENABLE)
+
+    Or without:
+
+    >>> from open_gopro import WiredGoPro
+    >>> gopro = WiredGoPro()
+    >>> gopro.open()
+    >>> gopro.http_command.set_shutter(Params.Toggle.ENABLE)
+    >>> gopro.close()
+
+    Args:
+        serial (Optional[str]): (at least) last 3 digits of GoPro Serial number. If not set, first GoPro
+            discovered from mDNS will be used.
+        kwargs (Any): additional keyword arguments to pass to base class
+    """
 
     _BASE_IP: Final[str] = "172.2{}.1{}{}.51"
     _BASE_ENDPOINT: Final[str] = "http://{ip}:8080/"
     _MDNS_SERVICE_NAME: Final[str] = "_gopro-web._tcp.local."
 
     def __init__(self, serial: Optional[str], **kwargs: Any) -> None:
-        """Constructor
-
-        Args:
-            serial (Optional[str]): (at least) last 3 digits of GoPro Serial number. If not set, first GoPro
-                discovered from mDNS will be used.
-            kwargs (Any): additional keyword arguments to pass to base class
-        """
         GoProBase.__init__(self, **kwargs)
         GoProWiredInterface.__init__(self)
         self._serial = serial

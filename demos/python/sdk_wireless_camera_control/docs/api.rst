@@ -34,6 +34,7 @@ Wireless
    :parts: 1
 
 .. autoclass:: open_gopro.gopro_wireless.WirelessGoPro
+   :inherited-members:
 
 Wired
 -----
@@ -46,6 +47,7 @@ Wired
    :parts: 1
 
 .. autoclass:: open_gopro.gopro_wired.WiredGoPro
+   :inherited-members:
 
 Open GoPro API
 ==============

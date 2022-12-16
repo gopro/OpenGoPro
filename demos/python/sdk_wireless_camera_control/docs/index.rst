@@ -62,6 +62,8 @@ Features
   - GUI to send all commands and view the live / preview stream
   - Configure and view a GoPro webcam stream
   - Take a video
+  - Start a livestream
+  - View the GoPro as a webcam
   - Log the battery
 
 Getting Started

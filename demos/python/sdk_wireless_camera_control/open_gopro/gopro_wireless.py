@@ -122,6 +122,24 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     >>> gopro.open()
     >>> gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
     >>> gopro.close()
+
+    Args:
+        target (Pattern, Optional): A regex to search for the target GoPro's name. For example, "GoPro 0456").
+            Defaults to None (i.e. connect to first discovered GoPro)
+        wifi_interface (str, Optional): Set to specify the wifi interface the local machine will use to connect
+            to the GoPro. If None (or not set), first discovered interface will be used.
+        sudo_password (str, Optional): User password for sudo. If not passed, you will be prompted if a password
+            is needed which should only happen on Nix systems.
+        enable_wifi (bool): Optionally do not enable Wifi if set to False. Defaults to True.
+        kwargs (Dict): additional parameters for internal use / testing
+
+    # noqa: DAR401
+
+    Raises:
+        InterfaceConfigFailure: In order to communicate via Wifi, there must be an available # noqa: DAR402
+            Wifi Interface. By default during initialization, the Wifi driver will attempt to automatically
+            discover such an interface. If it does not find any, it will raise this exception. Note that
+            the interface can also be specified manually with the 'wifi_interface' argument.
     """
 
     def __init__(
@@ -132,26 +150,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         enable_wifi: bool = True,
         **kwargs: Any,
     ) -> None:
-        """Constructor
-
-        Args:
-            target (Pattern, Optional): A regex to search for the target GoPro's name. For example, "GoPro 0456").
-                Defaults to None (i.e. connect to first discovered GoPro)
-            wifi_interface (str, Optional): Set to specify the wifi interface the local machine will use to connect
-                to the GoPro. If None (or not set), first discovered interface will be used.
-            sudo_password (str, Optional): User password for sudo. If not passed, you will be prompted if a password
-                is needed which should only happen on Nix systems.
-            enable_wifi (bool): Optionally do not enable Wifi if set to False. Defaults to True.
-            kwargs (Dict): additional parameters for internal use / testing
-
-        # noqa: DAR401
-
-        Raises:
-            InterfaceConfigFailure: In order to communicate via Wifi, there must be an available # noqa: DAR402
-                Wifi Interface. By default during initialization, the Wifi driver will attempt to automatically
-                discover such an interface. If it does not find any, it will raise this exception. Note that
-                the interface can also be specified manually with the 'wifi_interface' argument.
-        """
         GoProBase.__init__(self, **kwargs)
         # Store initialization information
         self._should_enable_wifi = enable_wifi
