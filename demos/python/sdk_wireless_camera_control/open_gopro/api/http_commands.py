@@ -332,7 +332,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         """
         return dict(res=resolution, fov=fov)  # type: ignore
 
-    @http_get_json_command(endpoint="gopro/webcam/stop")
+    @http_get_json_command(endpoint="gopro/webcam/stop", rules={MessageRules.FASTPASS: lambda **kwargs: True})
     def webcam_stop(self) -> GoProResp:
         """Stop the webcam.
 

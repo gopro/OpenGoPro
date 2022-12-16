@@ -940,8 +940,8 @@ class HttpGetJsonCommand(HttpCommand):
         for component in self._components or []:
             url += "/" + kwargs.pop(component)
         # Append parameters
-        if self._args:
-            url += "?" + urlencode(
+        if self._args and (
+            arg_part := urlencode(
                 {
                     k: kwargs[k].value if isinstance(kwargs[k], enum.Enum) else kwargs[k]
                     for k in self._args
@@ -949,6 +949,9 @@ class HttpGetJsonCommand(HttpCommand):
                 },
                 safe="/",
             )
+        ):
+            url += "?" + arg_part
+
         # Send to camera
         logger.info(Logger.build_log_tx_str(jsonify(self._as_dict(**kwargs, endpoint=url))))
         response = __communicator__._get(url, self._parser, rules=rules)

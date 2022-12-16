@@ -26,7 +26,7 @@ def main(args: argparse.Namespace) -> None:
         assert gopro.http_command.webcam_start().is_ok
 
         # Start player
-        display_video_blocking(STREAM_URL)  # blocks until user exists viewer
+        display_video_blocking(STREAM_URL, printer=console.print)  # blocks until user exists viewer
         assert gopro.http_command.webcam_stop().is_ok
         assert gopro.http_command.webcam_exit().is_ok
 
