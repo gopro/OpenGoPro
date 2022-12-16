@@ -10,7 +10,7 @@ import inspect
 import logging
 from pathlib import Path
 from abc import ABC, abstractmethod
-from typing import Generic, Optional, Union, Pattern, Any, TypeVar, Generator, Callable, Protocol
+from typing import Generic, Optional, Union, Pattern, Any, TypeVar, Generator, Protocol
 
 from construct import BitStruct, BitsInteger, Padding, Const, Bit, Construct
 
@@ -34,13 +34,15 @@ class GoProHttp(ABC):
     """Base class interface for all HTTP commands"""
 
     @abstractmethod
-    def _get(self, url: str, parser: Optional[JsonParser] = None, **kwargs) -> GoProResp:
+    def _get(self, url: str, parser: Optional[JsonParser] = None, **kwargs: Any) -> GoProResp:
         """Send an HTTP GET request to a string endpoint.
 
         Args:
             url (str): endpoint not including GoPro base path
             parser (Optional[JsonParser]): Optional parser to further parse received JSON dict. Defaults to
                 None.
+            **kwargs (Any):
+                - rules (list[MessageRules]): rules to be enforced for this message
 
         Returns:
             GoProResp: GoPro response
@@ -145,7 +147,7 @@ class GoProBle(ABC, Generic[BleHandle, BleDevice]):
 
     @abstractmethod
     def _send_ble_message(
-        self, uuid: BleUUID, data: bytearray, response_id: ResponseType, **kwargs
+        self, uuid: BleUUID, data: bytearray, response_id: ResponseType, **kwargs: Any
     ) -> GoProResp:
         """Write a characteristic and block until its corresponding notification response is received.
 
@@ -153,6 +155,8 @@ class GoProBle(ABC, Generic[BleHandle, BleDevice]):
             uuid (BleUUID): characteristic to write to
             data (bytearray): bytes to write
             response_id (ResponseType): identifier to claim parsed response in notification handler
+            **kwargs (Any):
+                - rules (list[MessageRules]): rules to be enforced for this message
 
         Returns:
             GoProResp: received response
@@ -272,13 +276,24 @@ ParserType = TypeVar("ParserType", BytesParser, JsonParser)
 
 
 class RuleSignature(Protocol):
-    def __call__(self, **kwargs) -> bool:
-        ...
+    """Protocol definition for a rule evaluation function"""
+
+    def __call__(self, **kwargs: Any) -> bool:
+        """Function signature to evaluate a message rule
+
+        Args:
+            **kwargs (Any): arguments to user-facing message method
+
+        Returns:
+            bool: Whether or not message rule is currently enforced
+        """
 
 
 class MessageRules(enum.Enum):
-    FASTPASS = enum.auto()
-    WAIT_FOR_ENCODING_START = enum.auto()
+    """Rules to be applied when message is executed"""
+
+    FASTPASS = enum.auto()  #: Message can be sent when the camera is busy and / or encoding
+    WAIT_FOR_ENCODING_START = enum.auto()  #: Message must not complete until encoding has started
 
 
 class Message(Generic[CommunicatorType, IdType, ParserType], ABC):
@@ -295,12 +310,22 @@ class Message(Generic[CommunicatorType, IdType, ParserType], ABC):
         Args:
             identifier (IdType): id to access this message by
             parser (ParserType): optional parser and builder
+            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
+                message. Defaults to None.
         """
         self._identifier: IdType = identifier
         self._parser: Optional[ParserType] = parser
         self._rules = rules or {}
 
-    def _evaluate_rules(self, **kwargs) -> list[MessageRules]:
+    def _evaluate_rules(self, **kwargs: Any) -> list[MessageRules]:
+        """Given the arguments for the current message execution, which rules should be enforced?
+
+        Args:
+            **kwargs (Any): user-facing arguments to the current message execution
+
+        Returns:
+            list[MessageRules]: list of rules to be enforced
+        """
         enforced_rules = []
         for rule, evaluator in self._rules.items():
             if evaluator(**kwargs):
@@ -367,21 +392,23 @@ class HttpMessage(Message[GoProHttp, IdType, JsonParser]):
         components: Optional[list[str]] = None,
         arguments: Optional[list[str]] = None,
         parser: Optional[JsonParser] = None,
-        **kwargs,
+        rules: Optional[dict[MessageRules, RuleSignature]] = None,
     ) -> None:
         """Constructor
 
         Args:
             endpoint (str): base endpoint
+            identifier (IdType): explicitly set message identifier. Defaults to None (generated from endpoint).
             components (Optional[list[str]]): conditional endpoint components. Defaults to None.
             arguments (Optional[list[str]]): URL argument names. Defaults to None.
             parser (Optional[JsonParser]): additional parsing of JSON response. Defaults to None.
-            identifier (IdType): explicitly set message identifier. Defaults to None (generated from endpoint).
+            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
+                message. Defaults to None.
         """
         self._endpoint = endpoint
         self._components = components
         self._args = arguments
-        Message.__init__(self, identifier, parser, **kwargs)
+        Message.__init__(self, identifier, parser, rules=rules)
         self._base_dict: dict[str, Any] = dict(id=self._identifier, protocol="HTTP", endpoint=self._endpoint)
 
     def __str__(self) -> str:

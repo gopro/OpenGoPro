@@ -18,7 +18,7 @@ STREAM_URL: Final[str] = r"udp://0.0.0.0:8554"
 
 
 def main(args: argparse.Namespace) -> None:
-    logger = setup_logging(__name__, args.log)
+    setup_logging(__name__, args.log)
 
     with WiredGoPro(args.identifier) as gopro:
         # Start webcam

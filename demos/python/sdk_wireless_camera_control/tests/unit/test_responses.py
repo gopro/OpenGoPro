@@ -675,7 +675,7 @@ test_json = {
 
 def test_http_response_with_extra_parsing():
     url = "gopro/camera/state"
-    url = WirelessGoPro._BASE_URL + url
+    url = "http://10.5.5.9:8080/" + url
     with requests_mock.Mocker() as m:
         m.get(url, json=test_json)
         response = requests.get(url)

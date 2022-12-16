@@ -220,6 +220,8 @@ class BleWriteCommand(BleMessage[CmdId]):
             cmd (CmdId): Command ID that is being sent
             param_builder (BytesBuilder, optional): is responsible for building the bytestream to send from the input params
             parser (BytesParser. optional): the parser that will parse the received bytestream into a JSON dict
+            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
+                message. Defaults to None.
         """
         self.param_builder = param_builder
         self.cmd = cmd
@@ -434,6 +436,7 @@ def ble_write_command(
         cmd (CmdId): Command ID that is being sent
         param_builder (BytesBuilder, optional): is responsible for building the bytestream to send from the input params
         parser (BytesParser. optional): the parser that will parse the received bytestream into a JSON dict
+        rules (dict[MessageRules, RuleSignature], optional): Rules to be applied to message execution
 
     Returns:
         Callable: Generated method to perform command
@@ -891,7 +894,7 @@ class HttpCommand(HttpMessage[str]):
         arguments: Optional[list[str]] = None,
         parser: Optional[JsonParser] = None,
         identifier: Optional[str] = None,
-        **kwargs,
+        rules: Optional[dict[MessageRules, RuleSignature]] = None,
     ) -> None:
         """Constructor
 
@@ -901,6 +904,8 @@ class HttpCommand(HttpMessage[str]):
             arguments (Optional[list[str]]): URL argument names. Defaults to None.
             parser (Optional[JsonParser]): additional parsing of JSON response. Defaults to None.
             identifier (Optional[IdType]): explicitly set message identifier. Defaults to None (generated from endpoint).
+            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
+                message. Defaults to None.
         """
         if not identifier:
             # Build human-readable name from endpoint
@@ -910,18 +915,22 @@ class HttpCommand(HttpMessage[str]):
             except IndexError:
                 pass
 
-        super().__init__(endpoint, identifier, components, arguments, parser, **kwargs)
+        super().__init__(endpoint, identifier, components, arguments, parser, rules)
 
 
 class HttpGetJsonCommand(HttpCommand):
     """An HTTP command that performs a GET operation and receives JSON as response"""
 
-    def __call__(self, __communicator__: GoProHttp, rules: list[MessageRules], **kwargs: Any) -> GoProResp:
+    def __call__(
+        self, __communicator__: GoProHttp, rules: Optional[list[MessageRules]] = None, **kwargs: Any
+    ) -> GoProResp:
         """Execute the command by sending it via HTTP
 
         Args:
             __communicator__ (GoProHttp): HTTP communicator
-            **kwargs (Any): not used
+            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
+                message. Defaults to None.
+            **kwargs (Any): arguments to message
 
         Returns:
             GoProResp: Response received via HTTP
@@ -1000,6 +1009,7 @@ def http_get_json_command(
         arguments (Optional[list[str]]): URL argument names. Defaults to None.
         parser (Optional[JsonParser]): additional parsing of JSON response. Defaults to None.
         identifier (Optional[str]): explicitly set message identifier. Defaults to None (generated from endpoint).
+        rules (dict[MessageRules, RuleSignature], optional): Rules to be applied to message execution
 
     Returns:
         Callable: Generated method to perform command

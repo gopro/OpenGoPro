@@ -9,7 +9,7 @@ from pathlib import Path
 
 from rich.console import Console
 
-from open_gopro import WirelessGoPro, WiredGoPro, Params, constants
+from open_gopro import WirelessGoPro, WiredGoPro, Params
 from open_gopro.util import setup_logging, add_cli_args_and_parse
 
 console = Console()  # rich consoler printer
@@ -20,9 +20,12 @@ def main(args: argparse.Namespace) -> None:
 
     gopro: Optional[Union[WiredGoPro, WirelessGoPro]] = None
     try:
-        with WiredGoPro(args.identifier) if args.wired else WirelessGoPro(
-            args.identifier, wifi_interface=args.wifi_interface
+        with (
+            WiredGoPro(args.identifier)  # type: ignore
+            if args.wired
+            else WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface)
         ) as gopro:
+            assert gopro
             # Configure settings to prepare for photo
             gopro.http_setting.video_performance_mode.set(Params.PerformanceMode.MAX_PERFORMANCE)
             gopro.http_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT)
@@ -44,7 +47,7 @@ def main(args: argparse.Namespace) -> None:
             console.print("Downloading the photo...")
             gopro.http_command.download_file(camera_file=photo, local_file=args.output)
             console.print(f"Success!! :smiley: File has been downloaded to {args.output}")
-    except Exception as e:
+    except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))
 
     if gopro:

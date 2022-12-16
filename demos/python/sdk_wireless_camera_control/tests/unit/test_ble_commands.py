@@ -102,7 +102,7 @@ def test_status_unregister_value_update(ble_communicator: GoProBle):
 
 
 def test_proto_command_arg(ble_communicator: GoProBle):
-    response = ble_communicator.ble_command.set_turbo_mode(active=True)
+    response = ble_communicator.ble_command.set_turbo_mode(mode=Params.Toggle.ENABLE)
     assert response.uuid == GoProUUIDs.CQ_COMMAND
     assert response._raw_packet == bytearray(b"\xf1k\x08\x01")
     out = proto.ResponseGeneric.FromString(response._raw_packet[2:])

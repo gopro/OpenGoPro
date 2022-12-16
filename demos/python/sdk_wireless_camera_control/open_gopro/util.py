@@ -61,9 +61,9 @@ class Logger:
         modules: Optional[dict[str, int]] = None,
     ) -> None:
         self.modules = {
-            "open_gopro.gopro_base": logging.TRACE,
-            "open_gopro.gopro_wired": logging.TRACE,
-            "open_gopro.gopro_wireless": logging.TRACE,
+            "open_gopro.gopro_base": logging.DEBUG,  # TRACE for concurrency debugging
+            "open_gopro.gopro_wired": logging.DEBUG,  # TRACE for concurrency debugging
+            "open_gopro.gopro_wireless": logging.DEBUG,  # TRACE for concurrency debugging
             "open_gopro.api.builders": logging.DEBUG,
             "open_gopro.api.http_commands": logging.DEBUG,
             "open_gopro.api.ble_commands": logging.DEBUG,
@@ -520,7 +520,6 @@ def display_video_blocking(source: str, printer: Optional[Callable] = print) -> 
         source (str): video source to display
         printer (Optional[Callable], optional): used to display output message. Defaults to print.
     """
-
     if printer:
         printer("Starting viewer...")
     vid = cv2.VideoCapture(source + "?overrun_nonfatal=1&fifo_size=50000000", cv2.CAP_FFMPEG)

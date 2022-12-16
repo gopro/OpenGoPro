@@ -27,7 +27,7 @@ def test_with_multiple_params(wifi_communicator: GoProWifi):
 
 def test_get_binary(wifi_communicator: GoProWifi):
     file = wifi_communicator.http_command.download_file(camera_file="test_file", local_file=Path("local_file"))
-    assert file.name == "local_file"
+    assert str(file[1]) == "local_file"
 
 
 def test_ensure_no_positional_args(wifi_communicator: GoProWifi):

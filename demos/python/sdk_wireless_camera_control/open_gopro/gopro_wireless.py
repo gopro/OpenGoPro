@@ -8,18 +8,19 @@ import time
 import queue
 import logging
 import threading
+from pathlib import Path
 from queue import Queue
 from typing import Any, Final, Optional, Pattern
 
 import wrapt
 
 import open_gopro.exceptions as GpException
-from open_gopro.gopro_base import GoProBase, MessageMethodType
+from open_gopro.gopro_base import GoProBase, MessageMethodType, GoProMessageInterface
 from open_gopro.ble import BleUUID
 from open_gopro.ble.adapters import BleakWrapperController
 from open_gopro.wifi.adapters import Wireless
 from open_gopro.util import SnapshotQueue, Logger
-from open_gopro.responses import GoProResp, ResponseType
+from open_gopro.responses import GoProResp, ResponseType, JsonParser
 from open_gopro.constants import GoProUUIDs, StatusId, QueryCmdId, ProducerType
 from open_gopro.api import (
     WirelessApi,
@@ -41,22 +42,21 @@ HTTP_GET_RETRIES: Final = 5
 
 
 @wrapt.decorator
-def acquire_ready_lock(wrapped: MessageMethodType, instance: WirelessGoPro, args: Any, kwargs: Any) -> Any:
-    """Call method after acquiring ready lock.
-
-    Release lock when done
+def enforce_message_rules(
+    wrapped: MessageMethodType, instance: WirelessGoPro, args: Any, kwargs: Any
+) -> GoProResp:
+    """Wrap the input message method, applying any message rules (MessageRules)
 
     Args:
-        wrapped (MessageMethodType): method to call
-        instance (GoProBase): instance that owns the method
+        wrapped (MessageMethodType): Method that will be wrapped
+        instance (WirelessGoPro): owner of method
         args (Any): positional arguments
         kwargs (Any): keyword arguments
 
     Returns:
-        Any: result of method
+        GoProResp: forward response of message method
     """
-
-    rules: list[MessageRules] = kwargs.get("rules", [])
+    rules: list[MessageRules] = kwargs.pop("rules", [])
 
     # Acquire ready lock unless we are initializing or this is a Set Shutter Off command
     have_lock = False
@@ -193,16 +193,21 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         # If we are to perform BLE housekeeping
         if self._should_maintain_state:
+            self._ready: threading.Lock = threading.Lock()
             # Busy / encoding management
-            self._ready = threading.Lock()
-            self._state_condition = threading.Condition()
-            self._encoding_started = threading.Event()
+            self._state_condition: threading.Condition = threading.Condition()
+            self._encoding_started: threading.Event = threading.Event()
             self._encoding_started.clear()
             self._internal_state = GoProBase._InternalState.ENCODING | GoProBase._InternalState.SYSTEM_BUSY
             self._state_thread = threading.Thread(target=self._maintain_state, name="state", daemon=True)
             self._state_thread.start()
 
     def _set_state_encoding(self, encoding: bool) -> None:
+        """Set whether or not the GoPro is currently encoding
+
+        Args:
+            encoding (bool): True if encoding
+        """
         with self._state_condition:
             if encoding is True:
                 self._internal_state |= GoProBase._InternalState.ENCODING
@@ -211,6 +216,11 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._state_condition.notify()
 
     def _set_state_busy(self, busy: bool) -> None:
+        """Set whether or not the GoPro is currently busy
+
+        Args:
+            busy (bool): True if busy
+        """
         with self._state_condition:
             if busy is False:
                 self._internal_state &= ~GoProBase._InternalState.SYSTEM_BUSY
@@ -248,7 +258,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
     @property
     def is_http_connected(self) -> bool:
-        """Are we connected via Wifi to the GoPro device?
+        """Are we connected via HTTP to the GoPro device?
 
         Returns:
             bool: True if yes, False if no
@@ -353,7 +363,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self._close_ble()
         self._open = False
 
-    @GoProBase.ensure_opened((GoProBase._Interface.BLE,))
+    @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     def get_notification(self, timeout: Optional[float] = None) -> Optional[GoProResp]:
         """Get an asynchronous notification that we received from a registered listener.
 
@@ -371,7 +381,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         except queue.Empty:
             return None
 
-    @GoProBase.ensure_opened((GoProBase._Interface.BLE,))
+    @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     def keep_alive(self) -> bool:
         """Send a heartbeat to prevent the BLE connection from dropping.
 
@@ -395,7 +405,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     #                                 End Public API
     ##########################################################################################################
 
-    @GoProBase.catch_thread_exception
+    @GoProBase._catch_thread_exception
     def _maintain_state(self) -> None:
         """Thread to keep track of ready / encoding and acquire / release ready lock."""
         logger.trace("Initial acquiring of lock")  # type: ignore
@@ -420,7 +430,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # TODO how to stop this?
         logger.debug("Maintain state thread exiting...")
 
-    @GoProBase.catch_thread_exception
+    @GoProBase._catch_thread_exception
     def _periodic_keep_alive(self) -> None:
         """Thread to periodically send the keep alive message via BLE."""
         while self.is_ble_connected:
@@ -553,10 +563,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             raise GpException.ConnectionTerminated("BLE connection terminated unexpectedly.")
         self._ble_disconnect_event.set()
 
-    @GoProBase.ensure_opened((GoProBase._Interface.BLE,))
-    @acquire_ready_lock
+    @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
+    @enforce_message_rules
     def _send_ble_message(
-        self, uuid: BleUUID, data: bytearray, response_id: ResponseType, **kwargs
+        self, uuid: BleUUID, data: bytearray, response_id: ResponseType, **_: Any
     ) -> GoProResp:
         """Write a characteristic and block until its corresponding notification response is received.
 
@@ -564,6 +574,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             uuid (BleUUID): characteristic to write to
             data (bytearray): bytes to write
             response_id (ResponseType): identifier to claim parsed response in notification handler
+            **_ (Any): not used
 
         Raises:
             ResponseTimeout: did not receive a response before timing out
@@ -592,8 +603,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         return response
 
-    @GoProBase.ensure_opened((GoProBase._Interface.BLE,))
-    @acquire_ready_lock
+    @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
+    @enforce_message_rules
     def _read_characteristic(self, uuid: BleUUID) -> GoProResp:
         """Read a characteristic's data by GoProUUIDs.
 
@@ -610,7 +621,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         logger.debug(f"Reading from {uuid.name}")
         return GoProResp._from_read_response(uuid, received_data)
 
-    @GoProBase.ensure_opened((GoProBase._Interface.BLE,))
+    @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     def _open_wifi(self, timeout: int = 10, retries: int = 5) -> None:
         """Connect to a GoPro device via Wifi.
 
@@ -642,11 +653,11 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         if hasattr(self, "_wifi"):  # Corner case where instantiation fails before superclass is initialized
             self._wifi.close()
 
-    @acquire_ready_lock
-    def _get(self, url: str, parser: Optional[JsonParser] = None, **kwargs) -> GoProResp:
+    @enforce_message_rules
+    def _get(self, url: str, parser: Optional[JsonParser] = None, **kwargs: Any) -> GoProResp:
         return super()._get(url, parser, **kwargs)
 
-    @acquire_ready_lock
+    @enforce_message_rules
     def _stream_to_file(self, url: str, file: Path) -> GoProResp:
         return super()._stream_to_file(url, file)
 

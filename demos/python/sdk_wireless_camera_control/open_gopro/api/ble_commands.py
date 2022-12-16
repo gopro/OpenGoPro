@@ -456,6 +456,7 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         Returns:
             GoProResp: command status of request
         """
+        return dict(active=mode)  # type: ignore
 
     @ble_proto_command(
         uuid=GoProUUIDs.CQ_QUERY,

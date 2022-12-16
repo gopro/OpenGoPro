@@ -226,7 +226,9 @@ class BleCommunicatorTest(GoProBle):
     def get_notification(self, timeout: float) -> int:
         return 1
 
-    def _send_ble_message(self, uuid: BleUUID, data: bytearray, response_id: ResponseType) -> GoProResp:
+    def _send_ble_message(
+        self, uuid: BleUUID, data: bytearray, response_id: ResponseType, **kwargs
+    ) -> GoProResp:
         response = good_response
         response._meta = [uuid]
         response._raw_packet = data
@@ -305,7 +307,7 @@ class WifiCommunicatorTest(GoProWifi):
         super().__init__(WifiControllerTest())
         self._api = api_versions[test_version](self)
 
-    def _get(self, url: str, _=None):
+    def _get(self, url: str, _=None, **kwargs):
         return DummyWifiResponse(url)
 
     def _stream_to_file(self, url: str, file: Path):
@@ -363,7 +365,7 @@ class GoProTest(WirelessGoPro):
             ble_adapter=BleControllerTest,
             wifi_adapter=WifiControllerTest,
             enable_wifi=True,
-            maintain_ble=False,
+            maintain_state=False,
         )
         self._test_version = test_version
         self._api.ble_command.get_open_gopro_api_version = self._test_return_version
@@ -387,6 +389,7 @@ class GoProTest(WirelessGoPro):
         response_id: ResponseType,
         response_data: list[bytearray] = None,
         response_uuid: BleUUID = None,
+        **kwargs
     ) -> GoProResp:
         if response_uuid is None:
             return good_response
@@ -412,6 +415,14 @@ class GoProTest(WirelessGoPro):
         for packet in self._test_response_data:
             self._notification_handler(0, packet)
 
+    @property
+    def is_ble_connected(self) -> bool:
+        return True
+
+    @property
+    def is_http_connected(self) -> bool:
+        return True
+
 
 @pytest.fixture(scope="module", params=versions)
 async def gopro_client(request):
@@ -420,7 +431,6 @@ async def gopro_client(request):
     test_client = GoProTest(request.param)
     yield test_client
     GoProResp._parse = original_parse
-    test_client.close()
 
 
 class GoProTestMaintainBle(WirelessGoPro):

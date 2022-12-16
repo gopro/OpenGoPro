@@ -17,37 +17,43 @@ console = Console()  # rich consoler printer
 
 
 def main(args: argparse.Namespace) -> None:
-    setup_logging(__name__, args.log)
+    logger = setup_logging(__name__, args.log)
     gopro: Optional[Union[WirelessGoPro, WiredGoPro]] = None
 
-    with WiredGoPro(args.identifier) if args.wired else WirelessGoPro(
-        args.identifier, wifi_interface=args.wifi_interface
-    ) as gopro:
-        # Configure settings to prepare for video
-        if gopro.is_encoding:
-            gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE)
-        gopro.http_setting.video_performance_mode.set(Params.PerformanceMode.MAX_PERFORMANCE)
-        gopro.http_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT)
-        gopro.http_setting.camera_ux_mode.set(Params.CameraUxMode.PRO)
-        gopro.http_command.set_turbo_mode(mode=Params.Toggle.DISABLE)
-        assert gopro.http_command.load_preset_group(group=Params.PresetGroup.VIDEO).is_ok
+    try:
+        with (
+            WiredGoPro(args.identifier)  # type: ignore
+            if not args.wired
+            else WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface)
+        ) as gopro:
+            assert gopro
+            # Configure settings to prepare for video
+            if gopro.is_encoding:
+                gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE)
+            gopro.http_setting.video_performance_mode.set(Params.PerformanceMode.MAX_PERFORMANCE)
+            gopro.http_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT)
+            gopro.http_setting.camera_ux_mode.set(Params.CameraUxMode.PRO)
+            gopro.http_command.set_turbo_mode(mode=Params.Toggle.DISABLE)
+            assert gopro.http_command.load_preset_group(group=Params.PresetGroup.VIDEO).is_ok
 
-        # Get the media list before
-        media_set_before = set(x["n"] for x in gopro.http_command.get_media_list().flatten)
-        # Take a video
-        console.print("Capturing a video...")
-        assert gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE).is_ok
-        time.sleep(args.record_time)
-        assert gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE).is_ok
+            # Get the media list before
+            media_set_before = set(x["n"] for x in gopro.http_command.get_media_list().flatten)
+            # Take a video
+            console.print("Capturing a video...")
+            assert gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE).is_ok
+            time.sleep(args.record_time)
+            assert gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE).is_ok
 
-        # Get the media list after
-        media_set_after = set(x["n"] for x in gopro.http_command.get_media_list().flatten)
-        # The video (is most likely) the difference between the two sets
-        video = media_set_after.difference(media_set_before).pop()
-        # Download the video
-        console.print("Downloading the video...")
-        gopro.http_command.download_file(camera_file=video, local_file=args.output)
-        console.print(f"Success!! :smiley: File has been downloaded to {args.output}")
+            # Get the media list after
+            media_set_after = set(x["n"] for x in gopro.http_command.get_media_list().flatten)
+            # The video (is most likely) the difference between the two sets
+            video = media_set_after.difference(media_set_before).pop()
+            # Download the video
+            console.print("Downloading the video...")
+            gopro.http_command.download_file(camera_file=video, local_file=args.output)
+            console.print(f"Success!! :smiley: File has been downloaded to {args.output}")
+    except Exception as e:  # pylint: disable = broad-except
+        logger.error(repr(e))
 
     if gopro:
         gopro.close()

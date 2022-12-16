@@ -30,10 +30,10 @@ Wireless
 
     from open_gopro import WirelessGoPro
 
-.. inheritance-diagram:: open_gopro.gopro.WirelessGoPro
+.. inheritance-diagram:: open_gopro.gopro_wireless.WirelessGoPro
    :parts: 1
 
-.. autoclass:: open_gopro.gopro.WirelessGoPro
+.. autoclass:: open_gopro.gopro_wireless.WirelessGoPro
 
 Wired
 -----
@@ -42,10 +42,10 @@ Wired
 
     from open_gopro import WiredGoPro
 
-.. inheritance-diagram:: open_gopro.gopro.WiredGoPro
+.. inheritance-diagram:: open_gopro.gopro_wired.WiredGoPro
    :parts: 1
 
-.. autoclass:: open_gopro.gopro.WiredGoPro
+.. autoclass:: open_gopro.gopro_wired.WiredGoPro
 
 Open GoPro API
 ==============
@@ -54,7 +54,7 @@ These are both the base types that are used to implement the API (BLE Setting, B
 version-specific API's themselves.
 
 These should not be imported directly and instead should be accessed using the relevant properties (`ble_command`,
-`wifi_setting`, etc.) of a GoPro(:class:`open_gopro.gopro.GoProBase`) instance.
+`wifi_setting`, etc.) of a GoPro(:class:`open_gopro.gopro_base.GoProBase`) instance.
 
 .. autoclass:: open_gopro.api.ble_commands.BleCommands
    :show-inheritance:
@@ -123,6 +123,10 @@ but the end user should never need to use these directly.
 .. autoclass:: open_gopro.interface.HttpMessages
    :show-inheritance:
 
+.. autoclass:: open_gopro.interface.MessageRules
+
+.. autoclass:: open_gopro.interface.RuleSignature
+
 Parameters
 ----------
 
@@ -171,7 +175,7 @@ Exceptions
 Common Interface
 ================
 
-.. autoclass:: open_gopro.gopro.GoProBase
+.. autoclass:: open_gopro.gopro_base.GoProBase
 
 .. autoclass:: open_gopro.interface.GoProBle
 

@@ -15,7 +15,7 @@ from typing import Any, Final, Callable, TypeVar, Generic, Optional
 import wrapt
 import requests
 
-from open_gopro.interface import MessageRules, JsonParser
+from open_gopro.interface import JsonParser
 import open_gopro.exceptions as GpException
 from open_gopro.api import (
     BleCommands,
@@ -40,15 +40,36 @@ ApiType = TypeVar("ApiType", WiredApi, WirelessApi)
 MessageMethodType = Callable[[Any, bool], GoProResp]
 
 
+class GoProMessageInterface(enum.Enum):
+    """Enum to identify wireless interface"""
+
+    HTTP = enum.auto()
+    BLE = enum.auto()
+
+
 @wrapt.decorator
-def catch_thread_exception(wrapped: Callable, instance: GoProBase, args: Any, kwargs: Any) -> Any:
+def catch_thread_exception(
+    wrapped: Callable, instance: GoProBase, args: Any, kwargs: Any
+) -> Optional[Callable]:
+    """Catch any exceptions from this method and pass them to the exception handler identifier by thread name
+
+    Args:
+        wrapped (Callable): method that this is wrapping
+        instance (GoProBase): instance owner of method
+        args (Any): positional args
+        kwargs (Any): keyword args
+
+    Returns:
+        Optional[Callable]: forwarded return of wrapped method or None if exception occurs
+    """
     try:
-        wrapped(*args, **kwargs)
+        return wrapped(*args, **kwargs)
     except Exception as e:  # pylint: disable=broad-except
         instance._handle_exception(threading.current_thread().name, {"exception": e})
+        return None
 
 
-def ensure_opened(interface: tuple[GoProBase._Interface]) -> Callable:
+def ensure_opened(interface: tuple[GoProMessageInterface]) -> Callable:
     """Raise exception if relevant interface is not currently opened
 
     Args:
@@ -60,31 +81,22 @@ def ensure_opened(interface: tuple[GoProBase._Interface]) -> Callable:
 
     @wrapt.decorator
     def wrapper(wrapped: Callable, instance: GoProBase, args: Any, kwargs: Any) -> Callable:
-        if GoProBase._Interface.BLE in interface and not instance.is_ble_connected:
+        if GoProMessageInterface.BLE in interface and not instance.is_ble_connected:
             raise GpException.GoProNotOpened("BLE not connected")
-        if GoProBase._Interface.HTTP in interface and not instance.is_http_connected:
+        if GoProMessageInterface.HTTP in interface and not instance.is_http_connected:
             raise GpException.GoProNotOpened("HTTP interface not connected")
         return wrapped(*args, **kwargs)
 
     return wrapper
 
 
-class _Interface(enum.Enum):
-    """Enum to identify wireless interface"""
-
-    HTTP = enum.auto()
-    BLE = enum.auto()
-
-
 class GoProBase(ABC, Generic[ApiType]):
     """The base class for communicating with all GoPro Clients"""
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs: Any) -> None:
         self._should_maintain_state = kwargs.get("maintain_state", True)
         self._exception_cb = kwargs.get("exception_cb", None)
         self._internal_state = GoProBase._InternalState.ENCODING | GoProBase._InternalState.SYSTEM_BUSY
-
-    _Interface: Final = _Interface
 
     def _handle_exception(self, source: Any, context: dict[str, Any]) -> None:
         """Gather exceptions from module threads and send through callback if registered.
@@ -198,6 +210,11 @@ class GoProBase(ABC, Generic[ApiType]):
     @property
     @abstractmethod
     def _base_url(self) -> str:
+        """Build the base endpoint for USB commands
+
+        Returns:
+            str: base endpoint with URL from serial number
+        """
         raise NotImplementedError
 
     @property
@@ -263,24 +280,50 @@ class GoProBase(ABC, Generic[ApiType]):
     @property
     @abstractmethod
     def is_ble_connected(self) -> bool:
+        """Are we connected via BLE to the GoPro device?
+
+        Returns:
+            bool: True if yes, False if no
+        """
         raise NotImplementedError
 
     @property
     @abstractmethod
     def is_http_connected(self) -> bool:
+        """Are we connected via HTTP to the GoPro device?
+
+        Returns:
+            bool: True if yes, False if no
+        """
         raise NotImplementedError
 
-    # TODO hide these
     @staticmethod
-    def ensure_opened(interface: tuple[GoProBase._Interface]) -> Callable:
+    def _ensure_opened(interface: tuple[GoProMessageInterface]) -> Callable:
+        """Raise exception if relevant interface is not currently opened
+
+        Args:
+            interface (Interface): wireless interface to verify
+
+        Returns:
+            Callable: Direct pass-through of callable after verification
+        """
         return ensure_opened(interface)
 
     @staticmethod
-    def catch_thread_exception(*args, **kwargs) -> Callable:
+    def _catch_thread_exception(*args: Any, **kwargs: Any) -> Optional[Callable]:
+        """Catch any exceptions from this method and pass them to the exception handler identifier by thread name
+
+        Args:
+            args (Any): positional args
+            kwargs (Any): keyword args
+
+        Returns:
+            Optional[Callable]: forwarded return of wrapped method or None if exception occurs
+        """
         return catch_thread_exception(*args, **kwargs)
 
-    @ensure_opened((_Interface.HTTP,))
-    def _get(self, url: str, parser: Optional[JsonParser] = None, **kwargs) -> GoProResp:
+    @ensure_opened((GoProMessageInterface.HTTP,))
+    def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
         """Send an HTTP GET request to an Open GoPro endpoint.
 
         There should hopefully not be a scenario where this needs to be called directly as it is generally
@@ -292,7 +335,6 @@ class GoProBase(ABC, Generic[ApiType]):
                 None.
 
         Raises:
-            GoProNotOpened: WiFi is not currently connected
             ResponseTimeout: Response was not received in GET_TIMEOUT seconds
 
         Returns:
@@ -327,7 +369,7 @@ class GoProBase(ABC, Generic[ApiType]):
         assert response is not None
         return response
 
-    @ensure_opened((_Interface.HTTP,))
+    @ensure_opened((GoProMessageInterface.HTTP,))
     def _stream_to_file(self, url: str, file: Path) -> GoProResp:
         """Send an HTTP GET request to an Open GoPro endpoint to download a binary file.
 
@@ -337,6 +379,9 @@ class GoProBase(ABC, Generic[ApiType]):
         Args:
             url (str): endpoint URL
             file (Path): location where file should be downloaded to
+
+        Returns:
+            GoProResp: location of file that was written
         """
         assert self.is_http_connected
 

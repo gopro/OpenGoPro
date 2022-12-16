@@ -12,8 +12,8 @@ Overview
 
 There are two top-level interfaces to communicate with a GoPro camera:
 
-    - :class:`~open_gopro.gopro.WiredGoPro` to communicate with the GoPro via USB HTTP
-    - :class:`~open_gopro.gopro.WirelessGoPro` to communicate with the GoPro via BLE and optionally WiFi HTTP
+    - :class:`~open_gopro.gopro_wired.WiredGoPro` to communicate with the GoPro via USB HTTP
+    - :class:`~open_gopro.gopro_wireless.WirelessGoPro` to communicate with the GoPro via BLE and optionally WiFi HTTP
 
 An individual instance of one of the above classes corresponds to a (potentially not yet) connected GoPro
 camera resource. The general procedure to communicate with the GoPro is:
@@ -69,12 +69,12 @@ In either case, the following will have occurred before the camera is ready to c
 After the `WirelessGoPro` instance is successfully opened via either of the methods above, it's state can be
 checked via several properties. All of the following will return True:
 
--  :meth:`~open_gopro.gopro.WirelessGoPro.is_ble_connected`
--  :meth:`~open_gopro.gopro.WirelessGoPro.is_wifi_connected`
--  :meth:`~open_gopro.gopro.WirelessGoPro.is_open`
+-  :meth:`~open_gopro.gopro_base.GoProBase.is_ble_connected`
+-  :meth:`~open_gopro.gopro_base.GoProBase.is_http_connected`
+-  :meth:`~open_gopro.gopro_base.GoProBase.is_open`
 
 .. note:: While a BLE connection is always needed, the WiFi connection is optional. To configure this (and other
-    instance arguments) see the API Reference for :class:`~open_gopro.gopro.WirelessGoPro`
+    instance arguments) see the API Reference for :class:`~open_gopro.gopro_wireless.WirelessGoPro`
 
 Camera Readiness
 ^^^^^^^^^^^^^^^^
@@ -83,8 +83,8 @@ A message can not be sent to the camera if it is not ready where "ready" is defi
 busy. These two states are managed automatically by the `WirelessGoPro` instance such that a call to any
 message will block until the camera is ready. It is possible to check these from the application via:
 
-- :meth:`~open_gopro.gopro.WirelessGoPro.is_encoding`
-- :meth:`~open_gopro.gopro.WirelessGoPro.is_busy`
+- :meth:`~open_gopro.gopro_base.GoProBase.is_encoding`
+- :meth:`~open_gopro.gopro_base.GoProBase.is_busy`
 
 For example,
 
@@ -123,7 +123,7 @@ The Wired GoPro client can be opened either with the context manager:
     # Send some messages now
 
 After the `WirelessGoPro` instance is successfully opened via either of the methods above, it's state can be
-checked via :meth:`~open_gopro.gopro.GoProBase.is_open`.
+checked via :meth:`~open_gopro.gopro_base.GoProBase.is_open`.
 
 Common Opening
 --------------
@@ -135,7 +135,7 @@ One of the steps during the opening sequence is to query the camera's Open GoPro
 supports Open GoPro API Version 2.0 so will raise an `InvalidOpenGoProVersion` if the connected camera is
 using anything else.
 
-The version string can be accessed via the :meth:`~open_gopro.gopro.GoProBase.version` property.
+The version string can be accessed via the :meth:`~open_gopro.gopro_base.GoProBase.version` property.
 
 
 Sending Messages
@@ -153,23 +153,23 @@ by transport protocol where the superset of message groups are:
      - WiredGoPro
      - WirelessGoPro (WiFi Enabled)
      - WirelessGoPro (WiFi Disabled)
-   * - :meth:`~open_gopro.gopro.GoProBase.http_command`
+   * - :meth:`~open_gopro.gopro_base.GoProBase.http_command`
      - |:heavy_check_mark:|
      - |:heavy_check_mark:|
      - |:x:|
-   * - :meth:`~open_gopro.gopro.GoProBase.http_setting`
+   * - :meth:`~open_gopro.gopro_base.GoProBase.http_setting`
      - |:heavy_check_mark:|
      - |:heavy_check_mark:|
      - |:x:|
-   * - :meth:`~open_gopro.gopro.GoProBase.ble_command`
+   * - :meth:`~open_gopro.gopro_base.GoProBase.ble_command`
      - |:x:|
      - |:heavy_check_mark:|
      - |:heavy_check_mark:|
-   * - :meth:`~open_gopro.gopro.GoProBase.ble_setting`
+   * - :meth:`~open_gopro.gopro_base.GoProBase.ble_setting`
      - |:x:|
      - |:heavy_check_mark:|
      - |:heavy_check_mark:|
-   * - :meth:`~open_gopro.gopro.GoProBase.ble_status`
+   * - :meth:`~open_gopro.gopro_base.GoProBase.ble_status`
      - |:x:|
      - |:heavy_check_mark:|
      - |:heavy_check_mark:|
@@ -307,7 +307,7 @@ Firstly, the desired settings / id must be registered for.
 
 Once registered, the camera will send a push notification when the relevant setting / status changes. These
 responses are added to an internal queue of the `GoProBase` instance and can be retrieved via
-:meth:`~open_gopro.gopro.WirelessGoPro.get_notification`.
+:meth:`~open_gopro.gopro_wireless.WirelessGoPro.get_notification`.
 
 It is possible to stop receiving notifications by issuing the relevant unregister command, i.e.:
 

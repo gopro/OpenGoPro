@@ -25,8 +25,21 @@ HTTP_GET_RETRIES: Final = 5
 
 
 @wrapt.decorator
-def acquire_ready_lock(wrapped: MessageMethodType, instance: WiredGoPro, args: Any, kwargs: Any) -> Any:
-    rules: list[MessageRules] = kwargs.get("rules", [])
+def enforce_message_rules(
+    wrapped: MessageMethodType, instance: WiredGoPro, args: Any, kwargs: Any
+) -> GoProResp:
+    """Wrap the input message method, applying any message rules (MessageRules)
+
+    Args:
+        wrapped (MessageMethodType): Method that will be wrapped
+        instance (WiredGoPro): owner of method
+        args (Any): positional arguments
+        kwargs (Any): keyword arguments
+
+    Returns:
+        GoProResp: forward response of message method
+    """
+    rules: list[MessageRules] = kwargs.pop("rules", [])
 
     # Acquire ready lock unless we are initializing or this is a Set Shutter Off command
     if instance._should_maintain_state and instance.is_open and not MessageRules.FASTPASS in rules:
@@ -59,7 +72,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
     _BASE_IP: Final[str] = "172.2{}.1{}{}.51"
     _BASE_ENDPOINT: Final[str] = "http://{ip}:8080/"
 
-    def __init__(self, serial: str, **kwargs) -> None:
+    def __init__(self, serial: str, **kwargs: Any) -> None:
         GoProBase.__init__(self, **kwargs)
         GoProWiredInterface.__init__(self)
         self._serial = serial
@@ -93,6 +106,14 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         """Gracefully close the GoPro Client connection"""
 
     def _wait_for_state(self, check: dict[Union[StatusId, SettingId], Any], poll_period: int = 1) -> None:
+        """Poll the current state until a variable amount of states are all equal to desired values
+
+        Args:
+            check (dict[Union[StatusId, SettingId], Any]): dict{setting / status: value} of settings / statuses
+                and values to wait for
+            poll_period (int): How frequently (in seconds) to poll the current state. Defaults to 1.
+
+        """
         while state := self.http_command.get_camera_state():
             for key, value in check.items():
                 if state[key] != value:
@@ -210,10 +231,10 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         """
         return WiredGoPro._BASE_ENDPOINT.format(ip=WiredGoPro._BASE_IP.format(*self._serial[-3:]))
 
-    @acquire_ready_lock
-    def _get(self, url: str, parser: Optional[JsonParser] = None, **kwargs) -> GoProResp:
+    @enforce_message_rules
+    def _get(self, url: str, parser: Optional[JsonParser] = None, **kwargs: Any) -> GoProResp:
         return super()._get(url, parser, **kwargs)
 
-    @acquire_ready_lock
+    @enforce_message_rules
     def _stream_to_file(self, url: str, file: Path) -> GoProResp:
         return super()._stream_to_file(url, file)
