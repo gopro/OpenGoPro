@@ -48,6 +48,7 @@ tk = "^0.1"
 Pillow = "^9"
 rich = "^12"
 pexpect = "^4"
+zeroconf = "^0.39.4"
 
 [tool.poetry.group.dev.dependencies]
 pydocstyle = { extras = ["toml"], version = "^6" }

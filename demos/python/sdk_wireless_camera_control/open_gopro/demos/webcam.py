@@ -36,9 +36,11 @@ def main(args: argparse.Namespace) -> None:
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Setup and view a GoPro webcam.")
     parser.add_argument(
-        "identifier",
+        "-i",
+        "--identifier",
         type=str,
-        help="Last 3 digits of GoPro serial number, which is the last 3 digits of the default camera SSID.",
+        help="Last 3 digits of GoPro serial number, which is the last 3 digits of the default camera SSID. If \
+            not specified, first GoPro discovered via mDNS will be used",
     )
     parser.add_argument(
         "-l",
