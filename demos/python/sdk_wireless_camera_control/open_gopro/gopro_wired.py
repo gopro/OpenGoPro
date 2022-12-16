@@ -283,7 +283,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
                     if re.match(r"172.2\d.1\d\d.51", ipv4_address):
                         self.urls.put_nowait(ipv4_address)
 
-        zeroconf = Zeroconf()
+        zeroconf = Zeroconf(unicast=True)
         listener = ZeroconfListener()
         browser = ServiceBrowser(zeroconf, WiredGoPro._MDNS_SERVICE_NAME, listener=listener)
         # Wait for URL discovery
@@ -313,7 +313,6 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         while state := self.http_command.get_camera_state():
             for key, value in check.items():
                 if state[key] != value:
-                    logger.trace(f"{key.name} is not {value}") # type: ignore
                     time.sleep(poll_period)
                     break  # Get new state and try again
             else:
