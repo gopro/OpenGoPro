@@ -241,7 +241,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         Returns:
             bool: True if yes, False if no
         """
-        return True  # TODO is this what we want?
+        return True  # TODO find a better way to do this
 
     ##########################################################################################################
     #                                 End Public API

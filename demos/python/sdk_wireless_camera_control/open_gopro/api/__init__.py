@@ -20,6 +20,6 @@ from .builders import (
 )
 from . import params as Params
 
-# TODO is this needed
+# TODO find a better way to set up parsers, etc besides instantiating
 
 WirelessApi(None)  # type: ignore
