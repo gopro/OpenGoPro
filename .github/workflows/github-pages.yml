@@ -57,7 +57,7 @@ jobs:
 
             - name: Install Dot to build Sphinx Diagrams
               shell: bash
-              run: apt-get install -y graphviz
+              run: sudo apt-get update && sudo apt install -y graphviz
 
             - name: Set up Python 3.10.6
               uses: actions/setup-python@v2
@@ -123,11 +123,11 @@ jobs:
               shell: bash
               working-directory: ./source
               run: |
-                if [[ ${{ github.repository }} == gopro/OpenGoPro ]]; then
-                  make build
-                else
-                  make build HOST_URL=${{ secrets.STAGING_GH_PAGES_SITE }} BASE_URL='\"\"'
-                fi
+                  if [[ ${{ github.repository }} == gopro/OpenGoPro ]]; then
+                    make build
+                  else
+                    make build HOST_URL=${{ secrets.STAGING_GH_PAGES_SITE }} BASE_URL='\"\"'
+                  fi
 
             - name: Deploy to Github Pages
               run: |
@@ -138,4 +138,3 @@ jobs:
                   git config user.email github-actions@github.com
                   git commit --allow-empty -m "Github Pages build from Action ${GITHUB_SHA}"
                   git push
-
