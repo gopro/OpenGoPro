@@ -1,0 +1,8 @@
+<map id="inheritancece88257e1f" name="inheritancece88257e1f">
+<area shape="rect" id="node1" title="Helper class that provides a standard way to create an ABC using" alt="" coords="121,225,193,251"/>
+<area shape="rect" id="node3" href="#open_gopro.gopro_base.GoProBase" target="_top" title="The base class for communicating with all GoPro Clients" alt="" coords="5,152,99,177"/>
+<area shape="rect" id="node4" href="#open_gopro.interface.GoProHttp" target="_top" title="Base class interface for all HTTP commands" alt="" coords="123,152,213,177"/>
+<area shape="rect" id="node2" title="Abstract base class for generic types." alt="" coords="16,225,88,251"/>
+<area shape="rect" id="node6" href="#open_gopro.gopro_wired.WiredGoPro" target="_top" title="The top&#45;level USB interface to a Wired GoPro device." alt="" coords="60,5,159,31"/>
+<area shape="rect" id="node5" href="#open_gopro.interface.GoProWiredInterface" target="_top" title="The top&#45;level interface for a Wired Open GoPro controller" alt="" coords="89,79,247,104"/>
+</map>

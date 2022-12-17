@@ -7,6 +7,7 @@
   <title>Contributing &mdash; Open GoPro Python SDK  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -32,7 +33,7 @@
             <a href="index.html" class="icon icon-home"> Open GoPro Python SDK
           </a>
               <div class="version">
-                0.11.2
+                0.12.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -47,7 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#types-of-contributions">Types of Contributions</a><ul>
@@ -59,7 +60,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#get-started">Get Started!</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#minimal-requirements">Minimal Requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#steps">Steps</a></li>
 </ul>
 </li>
@@ -141,11 +142,16 @@ articles, and such.</p>
 <section id="get-started">
 <h2>Get Started!<a class="headerlink" href="#get-started" title="Permalink to this heading"></a></h2>
 <p>Ready to contribute? Here’s how to set up Open GoPro for local development.</p>
-<section id="requirements">
-<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h3>
+<section id="minimal-requirements">
+<h3>Minimal Requirements<a class="headerlink" href="#minimal-requirements" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Python (3.9 or higher)</p></li>
 <li><p><a class="reference external" href="https://python-poetry.org/docs/#installation">Poetry</a> : Needed to install dependencies / development tasks</p></li>
+</ul>
+<p>Additional Optional Requirements:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://grpc.io/docs/protoc-installation/">protoc</a>  to build protobuf python files from .proto’s</p></li>
+<li><p><a class="reference external" href="https://graphviz.org/">graphviz</a>  to build diagrams in sphinx</p></li>
 </ul>
 </section>
 <section id="steps">

@@ -1,0 +1,10 @@
+<map id="inheritance61a0866e97" name="inheritance61a0866e97">
+<area shape="rect" id="node1" title="Helper class that provides a standard way to create an ABC using" alt="" coords="122,299,194,324"/>
+<area shape="rect" id="node3" href="#open_gopro.gopro_base.GoProBase" target="_top" title="The base class for communicating with all GoPro Clients" alt="" coords="274,152,367,177"/>
+<area shape="rect" id="node4" href="#open_gopro.interface.GoProBle" target="_top" title="GoPro specific BLE Client" alt="" coords="117,152,199,177"/>
+<area shape="rect" id="node5" href="#open_gopro.interface.GoProHttp" target="_top" title="Base class interface for all HTTP commands" alt="" coords="17,225,107,251"/>
+<area shape="rect" id="node2" title="Abstract base class for generic types." alt="" coords="201,225,273,251"/>
+<area shape="rect" id="node7" href="#open_gopro.interface.GoProWirelessInterface" target="_top" title="The top&#45;level interface for a Wireless Open GoPro controller" alt="" coords="89,79,264,104"/>
+<area shape="rect" id="node8" href="#open_gopro.gopro_wireless.WirelessGoPro" target="_top" title="The top&#45;level BLE and Wifi interface to a Wireless GoPro device." alt="" coords="181,5,298,31"/>
+<area shape="rect" id="node6" href="#open_gopro.interface.GoProWifi" target="_top" title="GoPro specific WiFi Client" alt="" coords="5,152,92,177"/>
+</map>
