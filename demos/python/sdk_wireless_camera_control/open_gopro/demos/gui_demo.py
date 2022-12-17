@@ -59,17 +59,17 @@ class App(tk.Frame):
 
     def create_controllers(self) -> None:
         """Create all controllers"""
-        self.command_pallette_controller = controllers.CommandPallette(self.loop, self.gopro_model)
+        self.message_palette_controller = controllers.MessagePalette(self.loop, self.gopro_model)
         self.main_log_controller = controllers.Log(self.loop, logging.INFO)
         self.statusbar_controller = controllers.StatusBar(self.loop)
         self.video_controller = controllers.Video(self.loop)
         self.video_controller.bind_status_bar(self.statusbar_controller)
         self.menubar_controller = controllers.Menubar(self.loop, self.quit)
         self.statustab_controller = controllers.StatusTab(self.loop, self.gopro_model)
-        self.command_pallette_controller.register_response_handler(
+        self.message_palette_controller.register_response_handler(
             self.statustab_controller.display_response_updates
         )
-        self.command_pallette_controller.register_response_handler(self.video_controller.handle_auto_start)
+        self.message_palette_controller.register_response_handler(self.video_controller.handle_auto_start)
         self.statustab_controller.bind_statusbar(self.statusbar_controller)
         for controller in self.controllers:
             controller.logger = self.main_log_controller.logger
@@ -103,15 +103,15 @@ class App(tk.Frame):
         )
         self.panes.pack(fill=tk.BOTH, expand=True)
 
-        # Left pane (command pallette)
-        self.command_pallette = controllers.create_widget(
+        # Left pane (Message palette)
+        self.message_palette = controllers.create_widget(
             master=self.panes,
-            view=views.CommandPallette,
-            controller=self.command_pallette_controller,
+            view=views.MessagePalette,
+            controller=self.message_palette_controller,
             width=int(self.WIDTH * 0.4),
             relief=tk.SUNKEN,
         )
-        self.panes.add(self.command_pallette, stretch="always")
+        self.panes.add(self.message_palette, stretch="always")
 
         # Middle pane (param form / log)
         self.middle_pane = tk.PanedWindow(
@@ -126,7 +126,7 @@ class App(tk.Frame):
         self.param_form = controllers.create_widget(
             master=self.middle_pane,
             view=views.ParamForm,
-            controller=self.command_pallette_controller,
+            controller=self.message_palette_controller,
             height=int(self.HEIGHT * 0.2),
             bd=self.SASH_WIDTH,
             relief=tk.SUNKEN,

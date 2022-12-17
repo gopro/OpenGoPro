@@ -5,11 +5,12 @@
 
 from __future__ import annotations
 import re
+import enum
+import inspect
 import logging
 from pathlib import Path
 from abc import ABC, abstractmethod
-from collections.abc import Iterator, Iterable
-from typing import Generic, Optional, Union, Pattern, TYPE_CHECKING, Any, TypeVar, Generator
+from typing import Generic, Optional, Union, Pattern, Any, TypeVar, Generator, Protocol
 
 from construct import BitStruct, BitsInteger, Padding, Const, Bit, Construct
 
@@ -23,103 +24,25 @@ from open_gopro.ble import (
     BleUUID,
 )
 from open_gopro.wifi import WifiClient, WifiController
-from open_gopro.responses import GoProResp, Header, BytesParser, JsonParser, Parser
+from open_gopro.responses import GoProResp, Header, BytesParser, JsonParser
 from open_gopro.constants import GoProUUIDs, ProducerType, ResponseType, SettingId, StatusId, ActionId, CmdId
-
-if TYPE_CHECKING:
-    from open_gopro import Params
 
 logger = logging.getLogger(__name__)
 
-MAX_BLE_PKT_LEN = 20
 
-
-class GoProDataHandler:
-    """A class that can both send and receive GoPro data
-
-    This supports fragmentation of data if necessary if it is > MAX_BLE_PKT_LEN.
-    """
-
-    general_header = BitStruct(
-        "continuation" / Const(0, Bit),
-        "header" / Const(Header.GENERAL.value, BitsInteger(2)),
-        "length" / BitsInteger(5),
-    )
-
-    extended_13_header = BitStruct(
-        "continuation" / Const(0, Bit),
-        "header" / Const(Header.EXT_13.value, BitsInteger(2)),
-        "length" / BitsInteger(13),
-    )
-
-    extended_16_header = BitStruct(
-        "continuation" / Const(0, Bit),
-        "header" / Const(Header.EXT_16.value, BitsInteger(2)),
-        "padding" / Padding(5),
-        "length" / BitsInteger(16),
-    )
-
-    continuation_header = BitStruct(
-        "continuation" / Const(1, Bit),
-        "padding" / Padding(7),
-    )
-
-    @classmethod
-    def _fragment(cls, data: bytearray) -> Generator[bytearray, None, None]:
-        """Fragment data in to MAX_BLE_PKT_LEN length packets
-
-        Args:
-            data (bytearray): data to fragment
-
-        Raises:
-            ValueError: data is too long
-
-        Yields:
-            Generator[bytearray, None, None]: Generator of packets as bytearrays
-        """
-        header: Construct
-        if (data_len := len(data)) < (2**5 - 1):
-            header = GoProDataHandler.general_header
-        elif data_len < (2**13 - 1):
-            header = GoProDataHandler.extended_13_header
-        elif data_len < (2**16 - 1):
-            header = GoProDataHandler.extended_16_header
-        else:
-            raise ValueError(f"Data length {data_len} is too long")
-
-        assert header
-        while data:
-            if header == GoProDataHandler.continuation_header:
-                packet = bytearray(header.build({}))
-            else:
-                packet = bytearray(header.build(dict(length=data_len)))
-                header = GoProDataHandler.continuation_header
-
-            bytes_remaining = MAX_BLE_PKT_LEN - len(packet)
-            current, data = (data[:bytes_remaining], data[bytes_remaining:])
-            packet.extend(current)
-            yield packet
-
-
-class GoProWifi(ABC, GoProDataHandler):
-    """GoPro specific WiFi Client
-
-    Args:
-        controller (WifiController): instance of Wifi Controller to use for this client
-    """
-
-    def __init__(self, controller: WifiController):
-        GoProDataHandler.__init__(self)
-        self._wifi: WifiClient = WifiClient(controller)
+class GoProHttp(ABC):
+    """Base class interface for all HTTP commands"""
 
     @abstractmethod
-    def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
+    def _get(self, url: str, parser: Optional[JsonParser] = None, **kwargs: Any) -> GoProResp:
         """Send an HTTP GET request to a string endpoint.
 
         Args:
             url (str): endpoint not including GoPro base path
             parser (Optional[JsonParser]): Optional parser to further parse received JSON dict. Defaults to
                 None.
+            **kwargs (Any):
+                - rules (list[MessageRules]): rules to be enforced for this message
 
         Returns:
             GoProResp: GoPro response
@@ -127,7 +50,7 @@ class GoProWifi(ABC, GoProDataHandler):
         raise NotImplementedError
 
     @abstractmethod
-    def _stream_to_file(self, url: str, file: Path) -> None:
+    def _stream_to_file(self, url: str, file: Path) -> GoProResp:
         """Send an HTTP GET request to an Open GoPro endpoint to download a binary file.
 
         Args:
@@ -135,6 +58,18 @@ class GoProWifi(ABC, GoProDataHandler):
             file (Path): location where file should be downloaded to
         """
         raise NotImplementedError
+
+
+class GoProWifi(GoProHttp):
+    """GoPro specific WiFi Client
+
+    Args:
+        controller (WifiController): instance of Wifi Controller to use for this client
+    """
+
+    def __init__(self, controller: WifiController):
+        GoProHttp.__init__(self)
+        self._wifi: WifiClient = WifiClient(controller)
 
     @property
     def password(self) -> Optional[str]:
@@ -155,7 +90,7 @@ class GoProWifi(ABC, GoProDataHandler):
         return self._wifi.ssid
 
 
-class GoProBle(ABC, GoProDataHandler, Generic[BleHandle, BleDevice]):
+class GoProBle(ABC, Generic[BleHandle, BleDevice]):
     """GoPro specific BLE Client
 
     Args:
@@ -172,7 +107,6 @@ class GoProBle(ABC, GoProDataHandler, Generic[BleHandle, BleDevice]):
         notification_cb: NotiHandlerType,
         target: Union[Pattern, BleDevice],
     ) -> None:
-        GoProDataHandler.__init__(self)
         self._ble: BleClient = BleClient(
             controller,
             disconnected_cb,
@@ -212,13 +146,17 @@ class GoProBle(ABC, GoProDataHandler, Generic[BleHandle, BleDevice]):
         raise NotImplementedError
 
     @abstractmethod
-    def _send_ble_command(self, uuid: BleUUID, data: bytearray, response_id: ResponseType) -> GoProResp:
+    def _send_ble_message(
+        self, uuid: BleUUID, data: bytearray, response_id: ResponseType, **kwargs: Any
+    ) -> GoProResp:
         """Write a characteristic and block until its corresponding notification response is received.
 
         Args:
             uuid (BleUUID): characteristic to write to
             data (bytearray): bytes to write
             response_id (ResponseType): identifier to claim parsed response in notification handler
+            **kwargs (Any):
+                - rules (list[MessageRules]): rules to be enforced for this message
 
         Returns:
             GoProResp: received response
@@ -230,16 +168,84 @@ class GoProBle(ABC, GoProDataHandler, Generic[BleHandle, BleDevice]):
         """Read a characteristic and block until its corresponding notification response is received.
 
         Args:
-            uuid (BleUUID): _description_
+            uuid (BleUUID): characteristic ro read
 
         Returns:
-            GoProResp: _description_
+            GoProResp: data read from characteristic
         """
         raise NotImplementedError
 
+    @classmethod
+    def _fragment(cls, data: bytearray) -> Generator[bytearray, None, None]:
+        """Fragment data in to MAX_BLE_PKT_LEN length packets
 
-class GoProInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle]):
-    """The top-level interface to subclass for an Open GoPro controller"""
+        Args:
+            data (bytearray): data to fragment
+
+        Raises:
+            ValueError: data is too long
+
+        Yields:
+            Generator[bytearray, None, None]: Generator of packets as bytearrays
+        """
+        MAX_BLE_PKT_LEN = 20
+        general_header = BitStruct(
+            "continuation" / Const(0, Bit),
+            "header" / Const(Header.GENERAL.value, BitsInteger(2)),
+            "length" / BitsInteger(5),
+        )
+
+        extended_13_header = BitStruct(
+            "continuation" / Const(0, Bit),
+            "header" / Const(Header.EXT_13.value, BitsInteger(2)),
+            "length" / BitsInteger(13),
+        )
+
+        extended_16_header = BitStruct(
+            "continuation" / Const(0, Bit),
+            "header" / Const(Header.EXT_16.value, BitsInteger(2)),
+            "padding" / Padding(5),
+            "length" / BitsInteger(16),
+        )
+
+        continuation_header = BitStruct(
+            "continuation" / Const(1, Bit),
+            "padding" / Padding(7),
+        )
+
+        header: Construct
+        if (data_len := len(data)) < (2**5 - 1):
+            header = general_header
+        elif data_len < (2**13 - 1):
+            header = extended_13_header
+        elif data_len < (2**16 - 1):
+            header = extended_16_header
+        else:
+            raise ValueError(f"Data length {data_len} is too long")
+
+        assert header
+        while data:
+            if header == continuation_header:
+                packet = bytearray(header.build({}))
+            else:
+                packet = bytearray(header.build(dict(length=data_len)))
+                header = continuation_header
+
+            bytes_remaining = MAX_BLE_PKT_LEN - len(packet)
+            current, data = (data[:bytes_remaining], data[bytes_remaining:])
+            packet.extend(current)
+            yield packet
+
+
+class GoProWiredInterface(GoProHttp):
+    """The top-level interface for a Wired Open GoPro controller"""
+
+
+class GoProWirelessInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle]):
+    """The top-level interface for a Wireless Open GoPro controller
+
+    This always supports BLE and can optionally support Wifi
+    """
 
     def __init__(
         self,
@@ -264,47 +270,97 @@ class GoProInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle]):
             GoProWifi.__init__(self, wifi_controller)
 
 
-CommunicatorType = TypeVar("CommunicatorType", bound=Union[GoProBle, GoProWifi])
+CommunicatorType = TypeVar("CommunicatorType", bound=Union[GoProBle, GoProHttp])
 IdType = TypeVar("IdType", SettingId, StatusId, ActionId, CmdId, BleUUID, str)
 ParserType = TypeVar("ParserType", BytesParser, JsonParser)
 
 
-class Command(Generic[CommunicatorType, IdType, ParserType]):
-    """Base class for all commands that will be contained in a Commands class"""
+class RuleSignature(Protocol):
+    """Protocol definition for a rule evaluation function"""
+
+    def __call__(self, **kwargs: Any) -> bool:
+        """Function signature to evaluate a message rule
+
+        Args:
+            **kwargs (Any): arguments to user-facing message method
+
+        Returns:
+            bool: Whether or not message rule is currently enforced
+        """
+
+
+class MessageRules(enum.Enum):
+    """Rules to be applied when message is executed"""
+
+    FASTPASS = enum.auto()  #: Message can be sent when the camera is busy and / or encoding
+    WAIT_FOR_ENCODING_START = enum.auto()  #: Message must not complete until encoding has started
+
+
+class Message(Generic[CommunicatorType, IdType, ParserType], ABC):
+    """Base class for all messages that will be contained in a Messages class"""
 
     def __init__(
         self,
-        communicator: CommunicatorType,
         identifier: IdType,
         parser: Optional[ParserType] = None,
+        rules: Optional[dict[MessageRules, RuleSignature]] = None,
     ) -> None:
         """Constructor
 
         Args:
-            communicator (CommunicatorType): BLE or WiFi communicator
-            identifier (IdType): id to access this command by
+            identifier (IdType): id to access this message by
             parser (ParserType): optional parser and builder
+            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
+                message. Defaults to None.
         """
-        self._communicator = communicator
         self._identifier: IdType = identifier
         self._parser: Optional[ParserType] = parser
+        self._rules = rules or {}
+
+    def _evaluate_rules(self, **kwargs: Any) -> list[MessageRules]:
+        """Given the arguments for the current message execution, which rules should be enforced?
+
+        Args:
+            **kwargs (Any): user-facing arguments to the current message execution
+
+        Returns:
+            list[MessageRules]: list of rules to be enforced
+        """
+        enforced_rules = []
+        for rule, evaluator in self._rules.items():
+            if evaluator(**kwargs):
+                enforced_rules.append(rule)
+        return enforced_rules
+
+    @abstractmethod
+    def __call__(self, __communicator__: CommunicatorType, **kwargs: Any) -> Any:
+        """Execute the message by sending it to the target device
+
+        Args:
+            __communicator__ (CommunicatorType): communicator to send the message
+            **kwargs (Any): not used
+
+        Returns:
+            Any: Value received from the device
+        """
+        raise NotImplementedError
 
     @abstractmethod
     def _as_dict(self, *_: Any, **kwargs: Any) -> dict[str, Any]:
-        """Return the attributes of the command as a dict
+        """Return the attributes of the message as a dict
 
         Args:
             *_ (Any): unused
             **kwargs (Any): additional entries for the dict
 
         Returns:
-            dict[str, Any]: command as dict
+            dict[str, Any]: message as dict
         """
         raise NotImplementedError
 
 
-class BleCommand(ABC, Command[GoProBle, IdType, BytesParser]):
-    """The base class for all BLE commands to store common info
+class BleMessage(Message[GoProBle, IdType, BytesParser]):
+    """The base class for all BLE messages to store common info
 
     Args:
         communicator (GoProBle): BLE client to read / write
@@ -313,12 +369,12 @@ class BleCommand(ABC, Command[GoProBle, IdType, BytesParser]):
 
     def __init__(
         self,
-        communicator: GoProBle,
         uuid: BleUUID,
-        parser: Optional[Parser],
+        parser: Optional[BytesParser],
         identifier: IdType,
+        rules: Optional[dict[MessageRules, RuleSignature]] = None,
     ) -> None:
-        super().__init__(communicator, identifier, parser)  # type: ignore
+        Message.__init__(self, identifier, parser, rules)
         self._uuid = uuid
         self._base_dict = dict(protocol="BLE", uuid=self._uuid)
 
@@ -326,79 +382,92 @@ class BleCommand(ABC, Command[GoProBle, IdType, BytesParser]):
             GoProResp._add_global_parser(identifier, self._parser)
 
 
-class WifiCommand(Command[GoProWifi, IdType, JsonParser]):
-    """The base class for all WiFi Commands. Stores common information.
-
-    Args:
-        communicator (GoProWifi): delegate owner to send commands and receive responses
-        endpoint (str): base endpoint
-        components (Optional[list[str]]): conditional endpoint components. Defaults to None.
-        arguments (Optional[list[str]]): URL argument names. Defaults to None.
-        parser (Optional[JsonParser]): additional parsing of JSON response. Defaults to None.
-        name (Optional[str]): explicitly set command identifier. Defaults to None (generated from endpoint).
-    """
+class HttpMessage(Message[GoProHttp, IdType, JsonParser]):
+    """The base class for all HTTP messages. Stores common information."""
 
     def __init__(
         self,
-        communicator: GoProWifi,
         endpoint: str,
         identifier: IdType,
         components: Optional[list[str]] = None,
         arguments: Optional[list[str]] = None,
         parser: Optional[JsonParser] = None,
+        rules: Optional[dict[MessageRules, RuleSignature]] = None,
     ) -> None:
+        """Constructor
+
+        Args:
+            endpoint (str): base endpoint
+            identifier (IdType): explicitly set message identifier. Defaults to None (generated from endpoint).
+            components (Optional[list[str]]): conditional endpoint components. Defaults to None.
+            arguments (Optional[list[str]]): URL argument names. Defaults to None.
+            parser (Optional[JsonParser]): additional parsing of JSON response. Defaults to None.
+            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
+                message. Defaults to None.
+        """
         self._endpoint = endpoint
         self._components = components
         self._args = arguments
-        super().__init__(communicator, identifier, parser)  # type: ignore
-        self._base_dict: dict[str, Any] = dict(id=self._identifier, protocol="WiFi", endpoint=self._endpoint)
+        Message.__init__(self, identifier, parser, rules=rules)
+        self._base_dict: dict[str, Any] = dict(id=self._identifier, protocol="HTTP", endpoint=self._endpoint)
 
     def __str__(self) -> str:
         return str(self._identifier).title()
 
     def _as_dict(self, *_: Any, **kwargs: Any) -> dict[str, Any]:
-        """Return the attributes of the command as a dict
+        """Return the attributes of the message as a dict
 
         Args:
             *_ (Any): unused
             **kwargs (Any): additional entries for the dict
 
         Returns:
-            dict[str, Any]: command as dict
+            dict[str, Any]: message as dict
         """
         # If any kwargs keys were to conflict with base dict, append underscore
         return self._base_dict | {f"{'_' if k in ['id', 'protocol'] else ''}{k}": v for k, v in kwargs.items()}
 
 
-CommandType = TypeVar("CommandType", bound=Command)
+MessageType = TypeVar("MessageType", bound=Message)
 
 
-class Commands(Iterable, Generic[CommandType, IdType]):
-    """Base class for command container
+class Messages(ABC, dict, Generic[MessageType, IdType, CommunicatorType]):
+    """Base class for setting and status containers
 
-    Allows command groups to be iterable and supports dict-like access
+    Allows message groups to be iterable and supports dict-like access.
 
-    Args:
-        communicator (Union[GoProBle, GoProWifi]): communicator that will send commands
+    Instance attributes that are an instance (or subclass) of Message are automatically accumulated during
+    instantiation
     """
 
-    def __init__(self, communicator: Union[GoProBle, GoProWifi]) -> None:
+    def __init__(self, communicator: CommunicatorType) -> None:
+        """Constructor
+
+        Args:
+            communicator (CommunicatorType): communicator that will send messages
+        """
         self._communicator = communicator
-        self._commands_list: list[CommandType] = []
-        self._command_map: dict[IdType, CommandType] = {}
-        for attribute, command in self.__dict__.items():
-            if attribute.startswith("_"):
-                continue
-            self._commands_list.append(command)
-            self._command_map[command._identifier] = command
+        # Append any automatically discovered instance attributes (i.e. for settings and statuses)
+        message_map: dict[Union[IdType, str], MessageType] = {}
+        for message in self.__dict__.values():
+            if isinstance(message, Message):
+                message_map[message._identifier] = message  # type: ignore
+        # Append any automatically discovered methods (i.e. for commands)
+        for name, method in inspect.getmembers(self, predicate=inspect.ismethod):
+            if not name.startswith("_"):
+                message_map[name.replace("_", " ").title()] = method
+        dict.__init__(self, message_map)
 
-    def __iter__(self) -> Iterator:
-        return iter(self._commands_list)
 
-    def __getitem__(self, key: IdType) -> CommandType:
-        if self._command_map:
-            return self._command_map[key]
-        raise TypeError(f"{type(self)} object is not subscriptable")
+class BleMessages(Messages[MessageType, IdType, GoProBle]):
+    """A container of BLE Messages.
 
-    def __contains__(self, item: IdType) -> bool:
-        return item in self._command_map
+    Identical to Messages and it just used for typing
+    """
+
+
+class HttpMessages(Messages[MessageType, IdType, GoProHttp]):
+    """A container of HTTP Messages.
+
+    Identical to Messages and it just used for typing
+    """

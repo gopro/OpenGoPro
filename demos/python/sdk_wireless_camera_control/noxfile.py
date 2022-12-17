@@ -8,7 +8,11 @@ from nox_poetry import session
 
 nox.options.sessions = "format", "lint", "tests", "docstrings", "docs"
 
-SUPPORTED_VERSIONS = ["3.9", "3.10"]
+SUPPORTED_VERSIONS = [
+    "3.9",
+    "3.10",
+    # "3.11",
+]
 
 
 @session(python=SUPPORTED_VERSIONS[-1])
@@ -69,6 +73,7 @@ def docs(session) -> None:
         "sphinx-rtd-theme",
         "sphinxcontrib-napoleon",
         "darglint",
+        "sphinxemoji",
     )
     session.run("sphinx-build", "docs", "docs/build")
     # Clean up for Jekyll consumption

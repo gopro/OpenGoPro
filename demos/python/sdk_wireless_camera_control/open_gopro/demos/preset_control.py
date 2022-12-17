@@ -14,13 +14,13 @@ from rich.prompt import IntPrompt, Prompt
 from rich.table import Table
 from rich import box
 
-from open_gopro import GoPro, GoProResp
+from open_gopro import WirelessGoPro, GoProResp
 from open_gopro import Params as GoProParams
 from open_gopro.constants import GoProEnum, SettingId
 from open_gopro.util import set_stream_logging_level, setup_logging, add_cli_args_and_parse
 
 console = Console()  # rich consoler printer
-gopro: Optional[GoPro] = None
+gopro: Optional[WirelessGoPro] = None
 
 ######### BEGIN PRESET PARSER #########
 
@@ -399,9 +399,9 @@ def presetDemo(cameraModel: CameraModel) -> None:
             console.print("[gray]System Video Mode:[/gray] [purple]Highest Quality")
             applySettingChange(SettingId.MAX_LENS_MOD, GoProParams.MaxLensMode.DEFAULT)
             applySettingChange(SettingId.CAMERA_UX_MODE, GoProParams.CameraUxMode.EASY)
-            gopro.ble_command.load_preset_group(GoProParams.PresetGroup.PHOTO)
+            gopro.ble_command.load_preset_group(group=GoProParams.PresetGroup.PHOTO)
             applySettingChange(SettingId.PHOTO_EASY_MODE, GoProParams.PhotoEasyMode.OFF)
-            gopro.ble_command.load_preset_group(GoProParams.PresetGroup.VIDEO)
+            gopro.ble_command.load_preset_group(group=GoProParams.PresetGroup.VIDEO)
             applySettingChange(SettingId.SYSTEM_VIDEO_MODE, GoProParams.SystemVideoMode.HIGHEST_QUALITY)
             printCurrentPresetStatus()
             Prompt.ask(prompt="[yellow]Press enter to continue to the next preset collection")
@@ -412,7 +412,7 @@ def presetDemo(cameraModel: CameraModel) -> None:
             console.print("[gray]UX Mode:[/gray] [purple]Easy")
             console.print("[gray]Easy Night Photo:[/gray] [purple]On")
             console.print("[gray]System Video Mode:[/gray] [purple]Highest Quality")
-            gopro.ble_command.load_preset_group(GoProParams.PresetGroup.PHOTO)
+            gopro.ble_command.load_preset_group(group=GoProParams.PresetGroup.PHOTO)
             applySettingChange(SettingId.PHOTO_EASY_MODE, GoProParams.PhotoEasyMode.NIGHT_PHOTO)
             printCurrentPresetStatus()
             Prompt.ask(prompt="[yellow]Press enter to continue to the next preset collection")
@@ -424,7 +424,7 @@ def presetDemo(cameraModel: CameraModel) -> None:
             console.print("[gray]Easy Night Photo:[/gray] [purple]Off")
             console.print("[gray]System Video Mode:[/gray] [purple]Extended Battery")
             applySettingChange(SettingId.PHOTO_EASY_MODE, GoProParams.PhotoEasyMode.OFF)
-            gopro.ble_command.load_preset_group(GoProParams.PresetGroup.VIDEO)
+            gopro.ble_command.load_preset_group(group=GoProParams.PresetGroup.VIDEO)
             applySettingChange(SettingId.SYSTEM_VIDEO_MODE, GoProParams.SystemVideoMode.EXTENDED_BATTERY)
             printCurrentPresetStatus()
             Prompt.ask(prompt="[yellow]Press enter to continue to the next preset collection")
@@ -436,7 +436,7 @@ def presetDemo(cameraModel: CameraModel) -> None:
             console.print("[gray]Easy Night Photo:[/gray] [purple]On")
 
             console.print("[gray]System Video Mode:[/gray] [purple]Extended Battery")
-            gopro.ble_command.load_preset_group(GoProParams.PresetGroup.PHOTO)
+            gopro.ble_command.load_preset_group(group=GoProParams.PresetGroup.PHOTO)
             applySettingChange(SettingId.PHOTO_EASY_MODE, GoProParams.PhotoEasyMode.NIGHT_PHOTO)
             printCurrentPresetStatus()
             Prompt.ask(prompt="[yellow]Press enter to continue to the next preset collection")
@@ -447,7 +447,7 @@ def presetDemo(cameraModel: CameraModel) -> None:
             console.print("[gray]UX Mode:[/gray] [purple]Pro")
             console.print("[gray]System Video Mode:[/gray] [purple]Highest Quality")
             applySettingChange(SettingId.CAMERA_UX_MODE, GoProParams.CameraUxMode.PRO)
-            gopro.ble_command.load_preset_group(GoProParams.PresetGroup.VIDEO)
+            gopro.ble_command.load_preset_group(group=GoProParams.PresetGroup.VIDEO)
             applySettingChange(SettingId.SYSTEM_VIDEO_MODE, GoProParams.SystemVideoMode.EXTENDED_BATTERY)
             printCurrentPresetStatus()
             Prompt.ask(prompt="[yellow]Press enter to continue to the next preset collection")
@@ -458,7 +458,7 @@ def presetDemo(cameraModel: CameraModel) -> None:
             console.print("[gray]UX Mode:[/gray] [purple]Pro")
             console.print("[gray]System Video Mode:[/gray] [purple]Extended Battery")
             applySettingChange(SettingId.CAMERA_UX_MODE, GoProParams.CameraUxMode.PRO)
-            gopro.ble_command.load_preset_group(GoProParams.PresetGroup.VIDEO)
+            gopro.ble_command.load_preset_group(group=GoProParams.PresetGroup.VIDEO)
             applySettingChange(SettingId.SYSTEM_VIDEO_MODE, GoProParams.SystemVideoMode.EXTENDED_BATTERY)
             printCurrentPresetStatus()
             Prompt.ask(prompt="[yellow]Press enter to end demo")
@@ -518,7 +518,7 @@ def main(args: argparse.Namespace) -> None:
     presetCollectionCache: Optional[PresetCollection] = None
     cameraModel: CameraModel = CameraModel.HERO10
 
-    with GoPro(
+    with WirelessGoPro(
         args.identifier,
         wifi_interface=args.wifi_interface,
         sudo_password=args.password,
@@ -554,9 +554,7 @@ def main(args: argparse.Namespace) -> None:
             if collectionCacheInvalidated:
                 console.print("[yellow]Refreshing preset status cache")
                 presetCollectionCache = PresetCollection(
-                    gopro.ble_command.get_preset_status(
-                        register_preset_status=[GoProParams.RegisterPreset.PRESET]
-                    ).data
+                    gopro.ble_command.get_preset_status(register=[GoProParams.RegisterPreset.PRESET]).data
                 )
                 collectionCacheInvalidated = False
 
@@ -847,7 +845,7 @@ def main(args: argparse.Namespace) -> None:
                             console.print(f"[purple]Loading preset {str(focusedPreset.id)}")
                         else:
                             console.print(f"[purple]Loading preset {str(focusedPreset.title_id)}")
-                        gopro.ble_command.load_preset(focusedPreset.id)
+                        gopro.ble_command.load_preset(preset=focusedPreset.id)
                         activeCacheInvalidated = True
                     elif isinstance(focusedPreset.setting_array, list):
                         if focusedPreset.setting_array[option - option_offset].id not in gopro.ble_setting:

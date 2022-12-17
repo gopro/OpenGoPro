@@ -7,12 +7,12 @@ from __future__ import annotations
 import enum
 import logging
 from pathlib import Path
-from abc import abstractmethod
 from urllib.parse import urlencode
 from collections.abc import Iterable
 from dataclasses import dataclass, InitVar, field
-from typing import Any, TypeVar, Generic, Union, no_type_check, Optional, Final
+from typing import Any, TypeVar, Generic, Union, Optional, Final, Callable
 
+import wrapt
 import google.protobuf.json_format
 from google.protobuf import descriptor
 from google.protobuf.message import Message as Protobuf
@@ -32,7 +32,16 @@ from open_gopro.constants import (
     enum_factory,
     GoProEnum,
 )
-from open_gopro.interface import GoProBle, GoProWifi, BleCommand, WifiCommand
+from open_gopro.interface import (
+    GoProBle,
+    GoProHttp,
+    BleMessage,
+    HttpMessage,
+    BleMessages,
+    HttpMessages,
+    MessageRules,
+    RuleSignature,
+)
 from open_gopro.util import Logger, jsonify
 
 logger = logging.getLogger(__name__)
@@ -46,6 +55,7 @@ original_field_to_json = ProtobufPrinter._FieldToJsonObject
 
 QueryParserType = Union[construct.Construct, type[GoProEnum], BytesParserBuilder]
 AsyncParserType = Union[construct.Construct, BytesParser[dict], type[Protobuf]]
+
 
 ######################################################## BLE #################################################
 
@@ -153,31 +163,26 @@ class DeprecatedAdapter(BytesParserBuilder[str]):
         return bytes()
 
 
-class BleReadCommand(BleCommand[BleUUID]):
-    """A BLE command that reads data from a BleUUID
+class BleReadCommand(BleMessage[BleUUID]):
+    """A BLE command that reads data from a BleUUID"""
 
-    Args:
-        communicator (GoProBle): BLE client to read
-        uuid (BleUUID): BleUUID to read from
-        response_parser (BytesParser): the parser that will parse the received bytestream into a JSON dict
-    """
+    def __init__(self, uuid: BleUUID, parser: Optional[Union[construct.Construct, BytesParser[dict]]]) -> None:
+        """Constructor
 
-    def __init__(
-        self,
-        communicator: GoProBle,
-        uuid: BleUUID,
-        parser: Optional[Union[construct.Construct, BytesParser[dict]]],
-    ) -> None:
+        Args:
+            uuid (BleUUID):  BleUUID to read from
+            parser (Optional[Union[construct.Construct, BytesParser[dict]]]): the parser that will parse the
+                received bytestream into a JSON dict
+        """
         super().__init__(
-            communicator,
             uuid=uuid,
             parser=construct_adapter_factory(parser) if isinstance(parser, construct.Construct) else parser,
             identifier=uuid,
         )
 
-    def __call__(self) -> GoProResp:  # noqa: D102
+    def __call__(self, __communicator__: GoProBle, **kwargs: Any) -> GoProResp:  # noqa: D102
         logger.info(Logger.build_log_tx_str(jsonify(self._as_dict())))
-        response = self._communicator._read_characteristic(self._uuid)
+        response = __communicator__._read_characteristic(self._uuid)
         logger.info(Logger.build_log_rx_str(response))
         return response
 
@@ -197,36 +202,46 @@ class BleReadCommand(BleCommand[BleUUID]):
         return dict(id="Read " + self._uuid.name, **self._base_dict) | kwargs
 
 
-class BleWriteCommand(BleCommand[CmdId]):
-    """A BLE command that writes to a BleUUID and does not accept any parameters
-
-    Args:
-        communicator (GoProBle): BLE client to write
-        uuid (BleUUID): BleUUID to write to
-        cmd (CmdId): Command ID that is being sent
-        param_builder (BytesBuilder, optional): is responsible for building the bytestream to send from the input params
-        parser (BytesParser. optional): the parser that will parse the received bytestream into a JSON dict
-    """
+class BleWriteCommand(BleMessage[CmdId]):
+    """A BLE command that writes to a BleUUID and does not accept any parameters"""
 
     def __init__(
         self,
-        communicator: GoProBle,
         uuid: BleUUID,
         cmd: CmdId,
         param_builder: Optional[BytesBuilder] = None,
         parser: Optional[Union[construct.Construct, BytesParser[dict]]] = None,
+        rules: Optional[dict[MessageRules, RuleSignature]] = None,
     ) -> None:
+        """Constructor
+
+        Args:
+            uuid (BleUUID): BleUUID to write to
+            cmd (CmdId): Command ID that is being sent
+            param_builder (BytesBuilder, optional): is responsible for building the bytestream to send from the input params
+            parser (BytesParser. optional): the parser that will parse the received bytestream into a JSON dict
+            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
+                message. Defaults to None.
+        """
         self.param_builder = param_builder
         self.cmd = cmd
         super().__init__(
-            communicator,
-            uuid=uuid,
-            parser=construct_adapter_factory(parser) if isinstance(parser, construct.Construct) else parser,
-            identifier=cmd,
+            uuid,
+            construct_adapter_factory(parser) if isinstance(parser, construct.Construct) else parser,
+            cmd,
+            rules,
         )
 
-    @no_type_check
-    def __call__(self, /, **kwargs: Any) -> GoProResp:  # noqa: D102
+    def __call__(self, __communicator__: GoProBle, **kwargs: Any) -> GoProResp:
+        """Execute the command by sending it via BLE
+
+        Args:
+            __communicator__ (GoProBle): BLE communicator to send the message
+            **kwargs (Any): arguments to BLE write command
+
+        Returns:
+            GoProResp: Response received via BLE
+        """
         logger.info(Logger.build_log_tx_str(jsonify(self._as_dict(**kwargs))))
 
         data = bytearray([self.cmd.value])
@@ -239,7 +254,9 @@ class BleWriteCommand(BleCommand[CmdId]):
         if params:
             data.append(len(params))
             data.extend(params)
-        response = self._communicator._send_ble_command(self._uuid, data, self._identifier)
+        response = __communicator__._send_ble_message(
+            self._uuid, data, self._identifier, rules=self._evaluate_rules(**kwargs)
+        )
         logger.info(Logger.build_log_rx_str(response))
         return response
 
@@ -265,11 +282,6 @@ class RegisterUnregisterAll(BleWriteCommand):
     This will loop over all of the elements (i.e. settings / statuses found from the element_set entry of the
     producer tuple parameter) and individually register / unregister (depending on the action parameter) each
     element in the set
-
-    Args:
-        producer: (ProtobufProducerType): Tuple of (element_set, query command) where element_set is the GoProEnum
-            that this command relates to, i.e. SettingId for settings, StatusId for Statuses
-        action: (Action): whether to register or unregister
     """
 
     class Action(enum.Enum):
@@ -280,52 +292,47 @@ class RegisterUnregisterAll(BleWriteCommand):
 
     def __init__(
         self,
-        communicator: GoProBle,
         uuid: BleUUID,
         cmd: CmdId,
         producer: ProtobufProducerType,
         action: Action,
         parser: Optional[BytesParser] = None,
     ) -> None:
+        """Constructor
+
+        Args:
+            uuid (BleUUID): UUID to write to
+            cmd (CmdId): Command ID that is being sent
+            producer (ProtobufProducerType): Tuple of (element_set, query command) where element_set is the GoProEnum
+                that this command relates to, i.e. SettingId for settings, StatusId for Statuses
+            action (Action): whether to register or unregister
+            parser (Optional[BytesParser], optional): Optional response parser. Defaults to None.
+        """
         self.action = action
         self.producer = producer
-        super().__init__(communicator, uuid=uuid, cmd=cmd, parser=parser)
+        super().__init__(uuid=uuid, cmd=cmd, parser=parser)
 
-    def __call__(self, **kwargs: Any) -> GoProResp:  # noqa: D102
+    def __call__(self, __communicator__: GoProBle, **kwargs: Any) -> GoProResp:  # noqa: D102
         element_set = self.producer[0]
         responded_command = self.producer[1]
-        response = super().__call__()
+        response = super().__call__(__communicator__)
         if response.is_ok:
             for element in element_set:
                 (
-                    self._communicator._register_listener
+                    __communicator__._register_listener
                     if self.action is RegisterUnregisterAll.Action.REGISTER
-                    else self._communicator._unregister_listener
+                    else __communicator__._unregister_listener
                 )(
                     (responded_command, element)  # type: ignore
                 )
         return response
 
 
-class BleProtoCommand(BleCommand[ActionId]):
-    """A BLE command that is sent and received as using the Protobuf protocol
-
-    Args:
-        communicator (GoProBle): BLE client to write
-        uuid (BleUUID): BleUUID to write to
-        feature_id (CmdId): Command ID that is being sent
-        action_id (FeatureId): protobuf specific action ID that is being sent
-        response_action_id (ActionId):  the action ID that will be in the response
-        request_proto (type[Protobuf]): protobuf used to build command bytestream
-        response_proto (type[Protobuf]): protobuf used to parse received bytestream
-        additional_matching_ids: (Optional[set[ActionId]]): Other action ID's to share
-            this parser. This is used, for example, if a notification shares the same ID as the
-            synchronous response. Defaults to None.
-    """
+class BleProtoCommand(BleMessage[ActionId]):
+    """A BLE command that is sent and received as using the Protobuf protocol"""
 
     def __init__(
         self,
-        communicator: GoProBle,
         uuid: BleUUID,
         feature_id: FeatureId,
         action_id: ActionId,
@@ -335,10 +342,25 @@ class BleProtoCommand(BleCommand[ActionId]):
         additional_matching_ids: Optional[set[Union[ActionId, CmdId]]] = None,
         additional_parsers: Optional[list[JsonParser]] = None,
     ) -> None:
+        """Constructor
+
+        Args:
+            uuid (BleUUID): BleUUID to write to
+            feature_id (FeatureId): Feature ID that is being executed
+            action_id (ActionId): protobuf specific action ID that is being executed
+            response_action_id (ActionId): the action ID that will be in the response to this command
+            request_proto (type[Protobuf]): the action ID that will be in the response
+            response_proto (type[Protobuf]): protobuf used to parse received bytestream
+            additional_matching_ids (Optional[set[Union[ActionId, CmdId]]], optional): Other action ID's to share
+                this parser. This is used, for example, if a notification shares the same ID as the
+                synchronous response. Defaults to None.. Defaults to None.
+            additional_parsers (Optional[list[JsonParser]], optional): Any additional JSON parsers to apply
+                after normal protobuf response parsing. Defaults to None.
+        """
         parser = protobuf_parser_factory(response_proto)
         for p in additional_parsers or []:
             parser += p  # type: ignore
-        super().__init__(communicator, uuid=uuid, parser=parser, identifier=action_id)
+        super().__init__(uuid=uuid, parser=parser, identifier=action_id)
         self.feature_id = feature_id
         self.action_id = action_id
         self.response_action_id = response_action_id
@@ -375,15 +397,12 @@ class BleProtoCommand(BleCommand[ActionId]):
         # Prepend headers and serialize
         return bytearray([self.feature_id.value, self.action_id.value, *proto.SerializeToString()])
 
-    @abstractmethod
-    @no_type_check
-    # pylint: disable=missing-return-doc
-    def __call__(self, /, **kwargs: Any) -> GoProResp:  # noqa: D102
+    def __call__(self, __communicator__: GoProBle, **kwargs: Any) -> GoProResp:  # noqa: D102
         # The method that will actually build and send the protobuf command
         logger.info(Logger.build_log_tx_str(jsonify(self._as_dict(**kwargs))))
         data = self.build_data(**kwargs)
         # Allow exception to pass through if protobuf not completely initialized
-        response = self._communicator._send_ble_command(self._uuid, data, self.response_action_id)
+        response = __communicator__._send_ble_message(self._uuid, data, self.response_action_id)
         logger.info(Logger.build_log_rx_str(response))
         return response
 
@@ -403,9 +422,134 @@ class BleProtoCommand(BleCommand[ActionId]):
         return dict(id=self.action_id, feature_id=self.feature_id, **self._base_dict) | kwargs
 
 
+def ble_write_command(
+    uuid: BleUUID,
+    cmd: CmdId,
+    param_builder: Optional[BytesBuilder] = None,
+    parser: Optional[Union[construct.Construct, BytesParser[dict]]] = None,
+    rules: Optional[dict[MessageRules, RuleSignature]] = None,
+) -> Callable:
+    """Factory to build a BleWriteCommand and wrapper to execute it
+
+    Args:
+        uuid (BleUUID): BleUUID to write to
+        cmd (CmdId): Command ID that is being sent
+        param_builder (BytesBuilder, optional): is responsible for building the bytestream to send from the input params
+        parser (BytesParser. optional): the parser that will parse the received bytestream into a JSON dict
+        rules (dict[MessageRules, RuleSignature], optional): Rules to be applied to message execution
+
+    Returns:
+        Callable: Generated method to perform command
+    """
+    message = BleWriteCommand(uuid, cmd, param_builder, parser, rules=rules)
+
+    @wrapt.decorator
+    def wrapper(wrapped: Callable, instance: BleMessages, _: Any, kwargs: Any) -> GoProResp:
+        return message(instance._communicator, **(wrapped(**kwargs) or kwargs))
+
+    return wrapper
+
+
+def ble_read_command(
+    uuid: BleUUID, parser: Optional[Union[construct.Construct, BytesParser[dict]]]
+) -> Callable:
+    """Factory to build a BleReadCommand and wrapper to execute it
+
+    Args:
+        uuid (BleUUID):  BleUUID to read from
+        parser (Optional[Union[construct.Construct, BytesParser[dict]]]): the parser that will parse the
+            received bytestream into a JSON dict
+
+    Returns:
+        Callable: Generated method to perform command
+    """
+    message = BleReadCommand(uuid, parser)
+
+    @wrapt.decorator
+    def wrapper(wrapped: Callable, instance: BleMessages, _: Any, kwargs: Any) -> GoProResp:
+        return message(instance._communicator, **(wrapped(**kwargs) or kwargs))
+
+    return wrapper
+
+
+def ble_register_command(
+    uuid: BleUUID,
+    cmd: CmdId,
+    producer: ProtobufProducerType,
+    action: RegisterUnregisterAll.Action,
+    parser: Optional[BytesParser] = None,
+) -> Callable:
+    """Factory to build a RegisterUnregisterAll command and wrapper to execute it
+
+    Args:
+        uuid (BleUUID): UUID to write to
+        cmd (CmdId): Command ID that is being sent
+        producer (ProtobufProducerType): Tuple of (element_set, query command) where element_set is the GoProEnum
+            that this command relates to, i.e. SettingId for settings, StatusId for Statuses
+        action (Action): whether to register or unregister
+        parser (Optional[BytesParser], optional): Optional response parser. Defaults to None.
+
+    Returns:
+        Callable: Generated method to perform command
+    """
+    message = RegisterUnregisterAll(uuid, cmd, producer, action, parser)
+
+    @wrapt.decorator
+    def wrapper(wrapped: Callable, instance: BleMessages, _: Any, kwargs: Any) -> GoProResp:
+        return message(instance._communicator, **(wrapped(**kwargs) or kwargs))
+
+    return wrapper
+
+
+def ble_proto_command(
+    uuid: BleUUID,
+    feature_id: FeatureId,
+    action_id: ActionId,
+    response_action_id: ActionId,
+    request_proto: type[Protobuf],
+    response_proto: type[Protobuf],
+    additional_matching_ids: Optional[set[Union[ActionId, CmdId]]] = None,
+    additional_parsers: Optional[list[JsonParser]] = None,
+) -> Callable:
+    """Factory to build a BLE Protobuf command and wrapper to execute it
+
+    Args:
+        uuid (BleUUID): BleUUID to write to
+        feature_id (FeatureId): Feature ID that is being executed
+        action_id (ActionId): protobuf specific action ID that is being executed
+        response_action_id (ActionId): the action ID that will be in the response to this command
+        request_proto (type[Protobuf]): the action ID that will be in the response
+        response_proto (type[Protobuf]): protobuf used to parse received bytestream
+        additional_matching_ids (Optional[set[Union[ActionId, CmdId]]], optional): Other action ID's to share
+            this parser. This is used, for example, if a notification shares the same ID as the
+            synchronous response. Defaults to None.. Defaults to None.
+        additional_parsers (Optional[list[JsonParser]], optional): Any additional JSON parsers to apply
+            after normal protobuf response parsing. Defaults to None.
+
+    Returns:
+        Callable: Generated method to perform command
+    """
+    message = BleProtoCommand(
+        uuid,
+        feature_id,
+        action_id,
+        response_action_id,
+        request_proto,
+        response_proto,
+        additional_matching_ids,
+        additional_parsers,
+    )
+
+    @wrapt.decorator
+    def wrapper(wrapped: Callable, instance: BleMessages, _: Any, kwargs: Any) -> GoProResp:
+        return message(instance._communicator, **(wrapped(**kwargs) or kwargs))
+
+    return wrapper
+
+
 @dataclass
 class BleAsyncResponse:
-    """A BLE protobuf response that is not associated with any command.
+    """A BLE protobuf response that is not associated with any message.
 
     Args:
         feature_id (FeatureId): Feature ID that response corresponds to
@@ -432,7 +576,7 @@ class BleAsyncResponse:
         return self.action_id.name.lower().replace("_", " ").removeprefix("actionid").title()
 
 
-class BleSetting(BleCommand[SettingId], Generic[ValueType]):
+class BleSetting(BleMessage[SettingId], Generic[ValueType]):
     """An individual camera setting that is interacted with via BLE."""
 
     SETTER_UUID: Final[BleUUID] = GoProUUIDs.CQ_SETTINGS
@@ -442,7 +586,7 @@ class BleSetting(BleCommand[SettingId], Generic[ValueType]):
         """Constructor
 
         Args:
-            communicator (GoProBle): Adapter to read / write settings data
+            communicator (GoProBle): BLE communicator to interact with setting
             identifier (SettingId): ID of setting
             parser_builder (QueryParserType): object to both parse and build setting
 
@@ -459,18 +603,31 @@ class BleSetting(BleCommand[SettingId], Generic[ValueType]):
             raise TypeError(f"Unexpected {parser_builder=}")
         self._identifier = identifier
         self._builder = parser
-        BleCommand.__init__(self, communicator, uuid=self.SETTER_UUID, parser=parser, identifier=identifier)
+        self._communicator = communicator
+        BleMessage.__init__(self, uuid=self.SETTER_UUID, parser=parser, identifier=identifier)
 
     def __str__(self) -> str:
-        return str(self._identifier.name).lower().replace("_", " ").title()
+        return str(self._identifier).lower().replace("_", " ").title()
+
+    def __call__(self, __communicator__: GoProBle, **kwargs: Any) -> Any:
+        """Not applicable for a BLE setting
+
+        Args:
+            __communicator__ (GoProBle): BLE communicator
+            **kwargs (Any): not used
+
+        Raises:
+            NotImplementedError: Not applicable
+        """
+        raise NotImplementedError
 
     def _as_dict(  # pylint: disable = arguments-differ
         self, identifier: Union[QueryCmdId, SettingId, str], *_: Any, **kwargs: Any
     ) -> dict[str, Any]:
-        """Return the attributes of the command as a dict
+        """Return the attributes of the message as a dict
 
         Args:
-            identifier (Union[QueryCmdId, SettingId, str]): identifier of the command for this send
+            identifier (Union[QueryCmdId, SettingId, str]): identifier of the message for this send
             *_ (Any): unused
             **kwargs (Any): additional entries for the dict
 
@@ -492,14 +649,14 @@ class BleSetting(BleCommand[SettingId], Generic[ValueType]):
             Logger.build_log_tx_str(jsonify(self._as_dict(f"Set {str(self._identifier)}", value=value)))
         )
         # Special case. Can't use _send_query
-        data = bytearray([self._identifier.value])
+        data = bytearray([int(self._identifier)])
         try:
             param = self._builder.build(value)
             data.extend([len(param), *param])
         except IndexError:
             pass
 
-        response = self._communicator._send_ble_command(self.SETTER_UUID, data, self._identifier)
+        response = self._communicator._send_ble_message(self.SETTER_UUID, data, self._identifier)
         logger.info(Logger.build_log_rx_str(response))
         return response
 
@@ -514,9 +671,9 @@ class BleSetting(BleCommand[SettingId], Generic[ValueType]):
         """
         data = self._build_cmd(response_id)
         logger.info(
-            Logger.build_log_tx_str(jsonify(self._as_dict(f"{str(response_id)}.{self._identifier.name}")))
+            Logger.build_log_tx_str(jsonify(self._as_dict(f"{str(response_id)}.{str(self._identifier)}")))
         )
-        response = self._communicator._send_ble_command(self.READER_UUID, data, response_id)
+        response = self._communicator._send_ble_message(self.READER_UUID, data, response_id)
         logger.info(Logger.build_log_rx_str(response))
         return response
 
@@ -601,11 +758,11 @@ class BleSetting(BleCommand[SettingId], Generic[ValueType]):
         Returns:
             bytearray: data to send over-the-air
         """
-        ret = bytearray([cmd.value, self._identifier.value])
+        ret = bytearray([cmd.value, int(self._identifier)])
         return ret
 
 
-class BleStatus(BleCommand[StatusId]):
+class BleStatus(BleMessage[StatusId]):
     """An individual camera status that is interacted with via BLE."""
 
     UUID: Final[BleUUID] = GoProUUIDs.CQ_QUERY
@@ -629,11 +786,24 @@ class BleStatus(BleCommand[StatusId]):
             parser_builder = enum_parser_factory(parser)
         else:
             raise TypeError(f"Unexpected {parser=}")
-        BleCommand.__init__(self, communicator, uuid=self.UUID, parser=parser_builder, identifier=identifier)
+        self._communicator = communicator
+        BleMessage.__init__(self, uuid=self.UUID, parser=parser_builder, identifier=identifier)
         self._identifier = identifier
 
+    def __call__(self, __communicator__: GoProBle, **kwargs: Any) -> Any:
+        """Not applicable for a BLE status
+
+        Args:
+            __communicator__ (GoProBle): BLE communicator
+            **kwargs (Any): not used
+
+        Raises:
+            NotImplementedError: Not applicable
+        """
+        raise NotImplementedError
+
     def __str__(self) -> str:
-        return str(self._identifier.name.lower().replace("_", " ")).title()
+        return str(self._identifier).lower().replace("_", " ").title()
 
     def _send_query(self, response_id: QueryCmdId) -> GoProResp:
         """Build the byte data and query setting information
@@ -646,9 +816,9 @@ class BleStatus(BleCommand[StatusId]):
         """
         data = self._build_cmd(response_id)
         logger.info(
-            Logger.build_log_tx_str(jsonify(self._as_dict(f"{response_id.name}.{self._identifier.name}")))
+            Logger.build_log_tx_str(jsonify(self._as_dict(f"{response_id.name}.{str(self._identifier)}")))
         )
-        response = self._communicator._send_ble_command(self.UUID, data, response_id)
+        response = self._communicator._send_ble_message(self.UUID, data, response_id)
         logger.info(Logger.build_log_rx_str(response))
         return response
 
@@ -707,25 +877,36 @@ class BleStatus(BleCommand[StatusId]):
         Returns:
             bytearray: data to send over-the-air
         """
-        ret = bytearray([cmd.value, self._identifier.value])
+        ret = bytearray([cmd.value, int(self._identifier)])
         return ret
 
 
-######################################################## Wifi #################################################
+######################################################## HTTP #################################################
 
 
-class WifiGetJsonCommand(WifiCommand[str]):
-    """A Wifi command that writes to a BleUUID (with parameters) and receives JSON as response"""
+class HttpCommand(HttpMessage[str]):
+    """The base class for HTTP Commands"""
 
     def __init__(
         self,
-        communicator: GoProWifi,
         endpoint: str,
         components: Optional[list[str]] = None,
         arguments: Optional[list[str]] = None,
         parser: Optional[JsonParser] = None,
         identifier: Optional[str] = None,
+        rules: Optional[dict[MessageRules, RuleSignature]] = None,
     ) -> None:
+        """Constructor
+
+        Args:
+            endpoint (str): base endpoint
+            components (Optional[list[str]]): conditional endpoint components. Defaults to None.
+            arguments (Optional[list[str]]): URL argument names. Defaults to None.
+            parser (Optional[JsonParser]): additional parsing of JSON response. Defaults to None.
+            identifier (Optional[IdType]): explicitly set message identifier. Defaults to None (generated from endpoint).
+            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
+                message. Defaults to None.
+        """
         if not identifier:
             # Build human-readable name from endpoint
             identifier = endpoint.lower().removeprefix("gopro/").replace("/", " ").replace("_", " ").title()
@@ -733,17 +914,34 @@ class WifiGetJsonCommand(WifiCommand[str]):
                 identifier = identifier.split("?")[0].strip("{}")
             except IndexError:
                 pass
-        super().__init__(communicator, endpoint, identifier, components, arguments, parser)
 
-    @no_type_check
-    def __call__(self, **kwargs: Any) -> GoProResp:  # noqa: D102
+        super().__init__(endpoint, identifier, components, arguments, parser, rules)
+
+
+class HttpGetJsonCommand(HttpCommand):
+    """An HTTP command that performs a GET operation and receives JSON as response"""
+
+    def __call__(
+        self, __communicator__: GoProHttp, rules: Optional[list[MessageRules]] = None, **kwargs: Any
+    ) -> GoProResp:
+        """Execute the command by sending it via HTTP
+
+        Args:
+            __communicator__ (GoProHttp): HTTP communicator
+            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
+                message. Defaults to None.
+            **kwargs (Any): arguments to message
+
+        Returns:
+            GoProResp: Response received via HTTP
+        """
         # Append components
         url = self._endpoint
         for component in self._components or []:
             url += "/" + kwargs.pop(component)
         # Append parameters
-        if self._args:
-            url += "?" + urlencode(
+        if self._args and (
+            arg_part := urlencode(
                 {
                     k: kwargs[k].value if isinstance(kwargs[k], enum.Enum) else kwargs[k]
                     for k in self._args
@@ -751,36 +949,35 @@ class WifiGetJsonCommand(WifiCommand[str]):
                 },
                 safe="/",
             )
+        ):
+            url += "?" + arg_part
+
         # Send to camera
         logger.info(Logger.build_log_tx_str(jsonify(self._as_dict(**kwargs, endpoint=url))))
-        response = self._communicator._get(url, self._parser)
+        response = __communicator__._get(url, self._parser, rules=rules)
         response._meta.append(self._identifier)
         logger.info(Logger.build_log_rx_str(response))
         return response
 
 
-class WifiGetBinary(WifiCommand[str]):
-    """A Wifi command that writes to a BleUUID (with parameters) and receives a binary stream as response"""
+# pylint: disable = missing-class-docstring, arguments-differ
+class HttpGetBinary(HttpCommand):
+    """An HTTP command that performs a GET operation and receives a binary stream as response"""
 
-    def __init__(
-        self,
-        communicator: GoProWifi,
-        endpoint: str,
-        components: Optional[list[str]] = None,
-        arguments: Optional[list[str]] = None,
-        parser: Optional[JsonParser] = None,
-        identifier: Optional[str] = None,
-    ) -> None:
-        if not identifier:
-            # Build human-readable name from endpoint
-            identifier = endpoint.lower().removeprefix("gopro/").replace("/", " ").replace("_", " ").title()
-            try:
-                identifier = identifier.split("?")[0].strip("{}")
-            except IndexError:
-                pass
-        super().__init__(communicator, endpoint, identifier, components, arguments, parser)
+    def __call__(  # type: ignore
+        self, __communicator__: GoProHttp, *, camera_file: str, local_file: Optional[Path] = None
+    ) -> GoProResp:
+        """Execute the command by getting the binary data from the communicator
 
-    def __call__(self, /, camera_file: str, local_file: Optional[Path] = None) -> Path:  # noqa: D102
+        Args:
+            __communicator__ (GoProHttp): HTTP communicator to query
+            camera_file (str): file on camera to access
+            local_file (Optional[Path], optional): file on local device to write to. Defaults to None
+                (camera-file will be used).
+
+        Returns:
+            GoProResp: location on local device that file was written to
+        """
         # The method that will actually send the command and receive the stream
         local_file = local_file or Path(".") / camera_file
         url = self._endpoint + "/" + camera_file
@@ -790,29 +987,101 @@ class WifiGetBinary(WifiCommand[str]):
             )
         )
         # Send to camera
-        self._communicator._stream_to_file(url, local_file)
+        response = __communicator__._stream_to_file(url, local_file)
         logger.info(
             Logger.build_log_rx_str(
                 jsonify(self._as_dict(status="SUCCESS", endpoint=url, local_file=local_file))
             )
         )
-        return local_file
+        return response
 
 
-class WifiSetting(WifiCommand[SettingId], Generic[ValueType]):
+def http_get_json_command(
+    endpoint: str,
+    components: Optional[list[str]] = None,
+    arguments: Optional[list[str]] = None,
+    parser: Optional[JsonParser] = None,
+    identifier: Optional[str] = None,
+    rules: Optional[dict[MessageRules, RuleSignature]] = None,
+) -> Callable:
+    """Factory to build an HttpGetJson command and wrapper to execute it
+
+    Args:
+        endpoint (str): base endpoint
+        components (Optional[list[str]]): conditional endpoint components. Defaults to None.
+        arguments (Optional[list[str]]): URL argument names. Defaults to None.
+        parser (Optional[JsonParser]): additional parsing of JSON response. Defaults to None.
+        identifier (Optional[str]): explicitly set message identifier. Defaults to None (generated from endpoint).
+        rules (dict[MessageRules, RuleSignature], optional): Rules to be applied to message execution
+
+    Returns:
+        Callable: Generated method to perform command
+    """
+    message = HttpGetJsonCommand(endpoint, components, arguments, parser, identifier, rules=rules)
+
+    @wrapt.decorator
+    def wrapper(wrapped: Callable, instance: HttpMessages, _: Any, kwargs: Any) -> GoProResp:
+        return message(
+            instance._communicator, message._evaluate_rules(**kwargs), **(wrapped(**kwargs) or kwargs)
+        )
+
+    return wrapper
+
+
+def http_get_binary_command(
+    endpoint: str,
+    components: Optional[list[str]] = None,
+    arguments: Optional[list[str]] = None,
+    parser: Optional[JsonParser] = None,
+    identifier: Optional[str] = None,
+) -> Callable:
+    """Factory to build am HttpGetBinary command and wrapper to execute it
+
+    Args:
+        endpoint (str): base endpoint
+        components (Optional[list[str]]): conditional endpoint components. Defaults to None.
+        arguments (Optional[list[str]]): URL argument names. Defaults to None.
+        parser (Optional[JsonParser]): additional parsing of JSON response. Defaults to None.
+        identifier (Optional[IdType]): explicitly set message identifier. Defaults to None (generated from endpoint).
+
+    Returns:
+        Callable: Generated method to perform command
+    """
+    message = HttpGetBinary(endpoint, components, arguments, parser, identifier)
+
+    @wrapt.decorator
+    def wrapper(wrapped: Callable, instance: HttpMessages, _: Any, kwargs: Any) -> GoProResp:
+        return message(instance._communicator, **(wrapped(**kwargs) or kwargs))
+
+    return wrapper
+
+
+class HttpSetting(HttpMessage[SettingId], Generic[ValueType]):
     """An individual camera setting that is interacted with via Wifi."""
 
-    def __init__(self, communicator: GoProWifi, identifier: SettingId) -> None:
+    def __init__(self, communicator: GoProHttp, identifier: SettingId) -> None:
         super().__init__(
-            communicator,
             "gopro/camera/setting?setting={}&option={}",
             identifier=identifier,
         )
-        # Note! It is assumed that BLE and WiFi settings are symmetric so we only add to the communicator's
+        self._communicator = communicator
+        # Note! It is assumed that BLE and HTTP settings are symmetric so we only add to the communicator's
         # parser in the BLE Setting.
 
+    def __call__(self, __communicator__: GoProHttp, **kwargs: Any) -> Any:
+        """Not applicable for settings
+
+        Args:
+            __communicator__ (GoProHttp): HTTP communicator
+            **kwargs (Any): not used
+
+        Raises:
+            NotImplementedError: not applicable
+        """
+        raise NotImplementedError
+
     def __str__(self) -> str:
-        return str(self._identifier.name.lower().replace("_", " ")).title()
+        return str(self._identifier).lower().replace("_", " ").title()
 
     def set(self, value: ValueType) -> GoProResp:
         """Set the value of the setting.
@@ -823,7 +1092,7 @@ class WifiSetting(WifiCommand[SettingId], Generic[ValueType]):
         Returns:
             GoProResp: Status of set
         """
-        url = self._endpoint.format(self._identifier.value, value)
+        url = self._endpoint.format(int(self._identifier), value)
         logger.info(Logger.build_log_tx_str(jsonify(self._as_dict(value=value, endpoint=url))))
         value = value.value if isinstance(value, enum.Enum) else value
         # Send to camera

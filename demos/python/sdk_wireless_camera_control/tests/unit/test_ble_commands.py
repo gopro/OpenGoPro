@@ -1,6 +1,8 @@
 # test_ble_commands.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:05:54 PM
 
+import inspect
+import logging
 from construct import Int32ub
 
 from open_gopro.interface import GoProBle
@@ -11,13 +13,13 @@ from tests.conftest import BleCommunicatorTest
 
 
 def test_write_command_correct_uuid_cmd_id(ble_communicator: GoProBle):
-    response = ble_communicator.ble_command.set_shutter(Params.Toggle.ENABLE)
+    response = ble_communicator.ble_command.set_shutter(shutter=Params.Toggle.ENABLE)
     assert response.uuid == GoProUUIDs.CQ_COMMAND
     assert response._raw_packet[0] == CmdId.SET_SHUTTER.value
 
 
 def test_write_command_correct_parameter_data(ble_communicator: GoProBle):
-    response = ble_communicator.ble_command.load_preset(5)
+    response = ble_communicator.ble_command.load_preset(preset=5)
     assert response.uuid == GoProUUIDs.CQ_COMMAND
     assert Int32ub.parse(response._raw_packet[-4:]) == 5
 
@@ -100,7 +102,7 @@ def test_status_unregister_value_update(ble_communicator: GoProBle):
 
 
 def test_proto_command_arg(ble_communicator: GoProBle):
-    response = ble_communicator.ble_command.set_turbo_mode(True)
+    response = ble_communicator.ble_command.set_turbo_mode(mode=Params.Toggle.ENABLE)
     assert response.uuid == GoProUUIDs.CQ_COMMAND
     assert response._raw_packet == bytearray(b"\xf1k\x08\x01")
     out = proto.ResponseGeneric.FromString(response._raw_packet[2:])
@@ -112,8 +114,8 @@ def test_commands_iteration(ble_communicator: BleCommunicatorTest):
         ble_communicator._api.ble_command,
         ble_communicator._api.ble_setting,
         ble_communicator._api.ble_status,
-        ble_communicator._api.wifi_command,
-        ble_communicator._api.wifi_setting,
+        ble_communicator._api.http_command,
+        ble_communicator._api.http_setting,
     ]:
         count = 0
         for _ in commands:
@@ -124,14 +126,14 @@ def test_commands_iteration(ble_communicator: BleCommunicatorTest):
 def test_commands_subscriptable(ble_communicator: BleCommunicatorTest):
     for commands, identifier in zip(
         [
-            ble_communicator._api.ble_command,
+            # ble_communicator._api.ble_command,
             ble_communicator._api.ble_setting,
             ble_communicator._api.ble_status,
-            # ble_communicator._api.wifi_command,
-            ble_communicator._api.wifi_setting,
+            # ble_communicator._api.http_command,
+            ble_communicator._api.http_setting,
         ],
         [
-            CmdId,
+            # CmdId,
             SettingId,
             StatusId,
             # CmdId,
@@ -143,3 +145,10 @@ def test_commands_subscriptable(ble_communicator: BleCommunicatorTest):
         except TypeError:
             assert True
             continue
+
+
+def test_ensure_no_positional_args(ble_communicator: BleCommunicatorTest):
+    for command in ble_communicator.ble_command.values():
+        if inspect.getfullargspec(command).args != ["self"]:
+            logging.error("All arguments to commands must be keyword-only")
+            assert True

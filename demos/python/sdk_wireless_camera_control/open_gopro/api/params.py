@@ -141,6 +141,7 @@ class FPS(GoProEnum):
 
 class AutoOff(GoProEnum):
     NEVER = 0
+    TODO_1 = 1
     MIN_5 = 4
     MIN_15 = 6
     MIN_30 = 7
@@ -306,6 +307,7 @@ class MediaModStatus(GoProEnum):
 
 
 class Flatmode(GoProEnum):
+    NOT_APPLICABLE = 0
     VIDEO = 12
     LOOPING = 15
     SINGLE_PHOTO = 16
@@ -314,6 +316,7 @@ class Flatmode(GoProEnum):
     TIME_LAPSE_VIDEO = 13
     TIME_LAPSE_PHOTO = 20
     NIGHT_LAPSE_PHOTO = 21
+    WEBCAM = 23
     TIME_WARP_VIDEO = 24
     LIVE_BURST = 25
     NIGHT_LAPSE_VIDEO = 26
@@ -327,7 +330,7 @@ class Toggle(GoProEnum):
 
 class HypersmoothMode(GoProEnum):
     OFF = 0
-    UNKNOWN = 1
+    ON = 1
     HIGH = 2
     BOOST = 3
     AUTO_BOOST = 4
@@ -347,9 +350,9 @@ class PerformanceMode(GoProEnum):
 
 
 class MediaFormat(GoProEnum):
-    TODO_12 = 12
+    UNKNOWN_12 = 12
     TIME_LAPSE_VIDEO = 13
-    TODO_16 = 16
+    UNKNOWN_16 = 16
     TIME_LAPSE_PHOTO = 20
     NIGHT_LAPSE_PHOTO = 21
     NIGHT_LAPSE_VIDEO = 26
@@ -385,6 +388,7 @@ class Speed(GoProEnum):
     SUPER_SLO_MO_4X_EXT_BATT_50_HZ = 11
     SLO_MO_2X_EXT_BATT_50_HZ = 12
     LOW_LIGHT_1X_EXT_BATT_50_HZ = 13
+    TODO_24 = 24
 
 
 class PhotoEasyMode(GoProEnum):

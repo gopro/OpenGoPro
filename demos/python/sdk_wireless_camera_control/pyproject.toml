@@ -26,8 +26,10 @@ gopro-photo = "open_gopro.demos.photo:entrypoint"
 gopro-video = "open_gopro.demos.video:entrypoint"
 gopro-log-battery = "open_gopro.demos.log_battery:entrypoint"
 gopro-wifi = "open_gopro.demos.connect_wifi:entrypoint"
+gopro-webcam = "open_gopro.demos.webcam:entrypoint"
 gopro-gui = "open_gopro.demos.gui_demo:entrypoint"
 gopro-presets = "open_gopro.demos.preset_control:entrypoint"
+gopro-livestream = "open_gopro.demos.livestream:entrypoint"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -46,8 +48,9 @@ tk = "^0.1"
 Pillow = "^9"
 rich = "^12"
 pexpect = "^4"
+zeroconf = "^0.39.4"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pydocstyle = { extras = ["toml"], version = "^6" }
 pytest = "^7"
 pytest-cov = "^3"
@@ -64,6 +67,7 @@ mypy-protobuf = "^3"
 construct-typing = "^0.5"
 sphinx = "^5"
 sphinx-rtd-theme = "^1"
+sphinxemoji = "^0"
 coverage-badge = "=1.1.0"
 darglint = "^1"
 poethepoet = "^0.15"
@@ -209,6 +213,7 @@ disable = [
     "duplicate-code",
     "global-statement",
     "too-few-public-methods",
+    "too-many-public-methods",
     "too-many-arguments",
     "too-many-instance-attributes",
     "too-many-branches",
@@ -219,10 +224,14 @@ disable = [
     "protected-access",
     "invalid-name",
     "unsubscriptable-object",
+    "no-member", # This is bad. We need to make stub files since mypy and pylint do not follow decorators well
 ]
 
 [tool.pylint.'FORMAT']
 max-line-length = 160
+
+[tool.pylint.'TYPECHECK']
+ignored-modules="cv2"
 
 [tool.black]
 line-length = 111

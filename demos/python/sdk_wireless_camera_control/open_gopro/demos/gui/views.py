@@ -27,6 +27,34 @@ GetterType = Callable[[], Any]
 T = TypeVar("T")
 
 
+def sanitize_identifier(identifier: str) -> str:
+    """Make the 'id' value human readable so that it looks the same for BLE and Wifi
+
+    Args:
+        identifier (str): identifier to sanitize
+
+    Returns:
+        str: sanitized response
+    """
+    identifier = (
+        identifier.replace("_", " ")
+        .lower()
+        .removeprefix("cmdid.")
+        .removeprefix("querycmdid.")
+        .removeprefix("actionid.")
+        .removeprefix("gopro/")
+        .replace("/", " ")
+        .title()
+    )
+
+    try:
+        identifier = identifier.split("?")[0]
+    except IndexError:
+        pass
+
+    return identifier
+
+
 class DefaultTextEntry(ttk.Entry, Generic[T]):
     """A Tkinter Entry with default text that disappears when clicked
 
@@ -34,7 +62,7 @@ class DefaultTextEntry(ttk.Entry, Generic[T]):
         default (T): default value to show in entry
 
     Raises:
-        ValueError: _description_
+        ValueError: invalid entry type
     """
 
     def __init__(self, default: T, *args: Any, **kwargs: Any) -> None:
@@ -353,39 +381,19 @@ class TreeViewLog(Log):
             except Exception as e:
                 raise ValueError(f"Can not build log message from {self.message}") from e
             self.data["target"] = self.data.pop("uuid", None) or self.data.pop("endpoint", None)
-            self.sanitize_identifier()
+            self.data["id"] = sanitize_identifier(self.data["id"])
+            # Special case to handle wifi set setting response
+            if self.data["id"].lower() == "camera setting":
+                parsed_url = urlparse(self.data["target"])
+                setting_id = int(parse_qs(parsed_url.query)["setting"][0])
+                self.data["id"] = models.constants.SettingId(setting_id)
+            self.data.pop("command", None)
 
         def sanitize_message(self) -> None:
             """Clean up the directional headers from the logger message string"""
             self.message = (
                 self.message.replace(self.ASYNC_TOKEN, "").strip("<>").strip("-").strip("<>").replace("\t", "")
             )
-
-        def sanitize_identifier(self) -> None:
-            """Make the 'id' value human readable so that it looks the same for BLE and Wifi"""
-            self.data["id"] = (
-                self.data["id"]
-                .replace("_", " ")
-                .lower()
-                .removeprefix("cmdid.")
-                .removeprefix("querycmdid.")
-                .removeprefix("actionid.")
-                .removeprefix("gopro/")
-                .replace("/", " ")
-                .title()
-            )
-
-            try:
-                self.data["id"] = self.data["id"].split("?")[0]
-            except IndexError:
-                pass
-            self.data.pop("command", None)
-
-            # Special case to handle wifi set setting response
-            if self.data["id"].lower() == "camera setting":
-                parsed_url = urlparse(self.data["target"])
-                setting_id = int(parse_qs(parsed_url.query)["setting"][0])
-                self.data["id"] = models.constants.SettingId(setting_id)
 
         @property
         def is_ok(self) -> bool:
@@ -403,7 +411,7 @@ class TreeViewLog(Log):
             """From the Log Message, generate entries suitable for the Log View to consume
 
             Generates:
-                1. top level description of message (formatted be self.fmt)
+                1. top level description of message (formatted by self.fmt)
                 2-N: individual elements of message as tuple(id, value)
 
             Yields:
@@ -561,10 +569,10 @@ class TextLog(Log):
 
 
 class ParamForm(View, tk.Frame):
-    """A entry form to gather command arguments"""
+    """A entry form to gather message arguments"""
 
     FRAME_TITLE_ROW = 0
-    COMMAND_NAME_ROW = 1
+    MESSAGE_NAME_ROW = 1
     PARAM_START_ROW = 2
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -572,7 +580,7 @@ class ParamForm(View, tk.Frame):
         self.value_inputs: list[Union[tk.Variable, ttk.Entry]] = []
         self.arg_frames: list[tk.Frame] = []
         self.frame_label: ttk.Label
-        self.command_label: ttk.Label
+        self.message_label: ttk.Label
         self.value_label: ttk.Label
         self.value_menu: ttk.OptionMenu
         self.send_button: ttk.Button
@@ -609,14 +617,14 @@ class ParamForm(View, tk.Frame):
         self.value_inputs.clear()
         self.arg_frames.clear()
 
-    def create_command(self, command: str) -> None:
-        """Create a command label
+    def create_message(self, message: str) -> None:
+        """Create a message label
 
         Args:
-            command (str): name of command
+            message (str): name of message
         """
-        self.command_label = ttk.Label(self, text=command)
-        self.command_label.pack()
+        self.message_label = ttk.Label(self, text=message)
+        self.message_label.pack()
 
     def _create_with_args(self, param: str) -> None:
         """Create an entry that includes an argument
@@ -678,8 +686,8 @@ class ParamForm(View, tk.Frame):
         self.send_button.pack()
 
 
-class CommandPallette(View, tk.Frame):
-    """A hierarchal display of commands by functionality for the user to select"""
+class MessagePalette(View, tk.Frame):
+    """A hierarchal display of messages by functionality for the user to select"""
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         tk.Frame.__init__(self, *args, **kwargs)
@@ -687,13 +695,13 @@ class CommandPallette(View, tk.Frame):
         self.sbv = tk.Scrollbar(self, orient=tk.VERTICAL)
         self.tv.config(yscrollcommand=self.sbv.set)
         self.sbv.config(command=self.tv.yview)
-        self.frame_label = ttk.Label(self, text="Command Pallette")
+        self.frame_label = ttk.Label(self, text="Message Palette")
 
-    def create_view(self, commands: dict[str, list[str]]) -> None:
-        """Display the command pallette
+    def create_view(self, messages: dict[str, list[str]]) -> None:
+        """Display the message palette
 
         Args:
-            commands (dict[str, list[str]]): dictionary to be mapped to command pallette hierarchy
+            messages (dict[str, list[str]]): dictionary to be mapped to message palette hierarchy
         """
         self.frame_label.pack()
         self.sbv.pack(side=tk.RIGHT, fill=tk.Y)
@@ -702,10 +710,17 @@ class CommandPallette(View, tk.Frame):
         # Fill up tree view
         parent_index = MAX_TREEVIEW_ID
         child_index = 0
-        for parent, children in commands.items():
+        for parent, children in messages.items():
             self.tv.insert(parent="", index="end", iid=str(parent_index), text=parent)
-            for command in children:
-                self.tv.insert(parent=str(parent_index), index="end", iid=str(child_index), text=command)
+            for message in children:
+                if "." in (identifier := sanitize_identifier(message)):
+                    identifier = " ".join(identifier.split(".")[1:])
+                self.tv.insert(
+                    parent=str(parent_index),
+                    index="end",
+                    iid=str(child_index),
+                    text=identifier,
+                )
                 child_index += 1
             self.tv.item(str(parent_index), open=True)
             parent_index += 1
@@ -791,7 +806,7 @@ class StatusTab(View, tk.Frame):
             capability (Optional[str], optional): capability of update. Defaults to None.
 
         Raises:
-            ValueError: _description_
+            ValueError: Either value or capability must be non-None
         """
         # Empty string is a valid input so explicitly check if is None
         if value is None and capability is None:

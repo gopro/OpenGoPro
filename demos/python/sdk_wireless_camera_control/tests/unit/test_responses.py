@@ -10,10 +10,10 @@ import requests
 import pytest
 import requests_mock
 
-from open_gopro import GoPro
+from open_gopro import WirelessGoPro
 from open_gopro.constants import ActionId, CmdId, GoProUUIDs, QueryCmdId, SettingId, StatusId
 from open_gopro.responses import GoProResp
-from open_gopro.api.wifi_commands import WifiParsers
+from open_gopro.api.http_commands import HttpParsers
 
 
 test_push_receive_no_parameter = bytearray([0x08, 0xA2, 0x00, 0x02, 0x00, 0x03, 0x00, 0x79, 0x00])
@@ -675,11 +675,11 @@ test_json = {
 
 def test_http_response_with_extra_parsing():
     url = "gopro/camera/state"
-    url = GoPro._base_url + url
+    url = "http://10.5.5.9:8080/" + url
     with requests_mock.Mocker() as m:
         m.get(url, json=test_json)
         response = requests.get(url)
-        r = GoProResp._from_http_response(WifiParsers.CameraStateParser(), response)
+        r = GoProResp._from_http_response(HttpParsers.CameraStateParser(), response)
 
         assert r.is_parsed
         assert r.is_received

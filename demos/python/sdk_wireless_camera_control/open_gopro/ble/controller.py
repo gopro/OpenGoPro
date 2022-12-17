@@ -20,6 +20,9 @@ DisconnectHandlerType = Callable[[BleDevice], None]
 class BLEController(ABC, Generic[BleDevice, BleHandle]):
     """Interface definition for a BLE driver to be used by GoPro."""
 
+    def __init__(self, exception_handler: Optional[Callable] = None) -> None:
+        self._exception_handler = exception_handler
+
     @abstractmethod
     def read(self, handle: BleHandle, uuid: BleUUID) -> bytearray:
         """Read a bytestream response from a BleUUID.
@@ -73,10 +76,7 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
             timeout (int): How long to attempt connecting before giving up. Defaults to 15.
 
         Returns:
-            handle: handle that has been connected to
-
-        Returns:
-            BleHandle: Handle to identify newly connected device
+            BleHandle: handle that has been connected to
         """
         raise NotImplementedError
 

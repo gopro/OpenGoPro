@@ -15,6 +15,7 @@ from pathlib import Path
 import http.client as http_client
 from typing import Any, Optional, Union, Final, Callable
 
+import cv2
 from rich.logging import RichHandler
 from rich import traceback
 
@@ -60,16 +61,18 @@ class Logger:
         modules: Optional[dict[str, int]] = None,
     ) -> None:
         self.modules = {
-            "open_gopro.gopro": logging.DEBUG,
+            "open_gopro.gopro_base": logging.DEBUG,  # TRACE for raw HTTP responses
+            "open_gopro.gopro_wired": logging.DEBUG,  # TRACE for concurrency debugging
+            "open_gopro.gopro_wireless": logging.DEBUG,  # TRACE for concurrency debugging
             "open_gopro.api.builders": logging.DEBUG,
-            "open_gopro.api.wifi_commands": logging.DEBUG,
+            "open_gopro.api.http_commands": logging.DEBUG,
             "open_gopro.api.ble_commands": logging.DEBUG,
             "open_gopro.communication_client": logging.DEBUG,
             "open_gopro.ble.adapters.bleak_wrapper": logging.INFO,
             "open_gopro.ble.client": logging.DEBUG,
             "open_gopro.wifi.adapters.wireless": logging.DEBUG,
             "open_gopro.responses": logging.DEBUG,
-            "open_gopro.util": logging.DEBUG,
+            "open_gopro.util": logging.INFO,
             "bleak": logging.ERROR,
             "urllib3": logging.WARNING,
             "http.client": logging.WARNING,
@@ -231,7 +234,7 @@ def setup_logging(
             modules.
 
     Raises:
-        TypeError: _description_
+        TypeError: Base logger is not of correct type
 
     Returns:
         logging.Logger: updated logger that the application can use for logging
@@ -356,6 +359,14 @@ def pretty_print(obj: Any, stringify_all: bool = True) -> str:
     """
 
     def sanitize(e: Any) -> str:
+        """Get the value part and replace any underscored with spaces
+
+        Args:
+            e (Any): argument to sanitize
+
+        Returns:
+            str: sanitized string
+        """
         value_part = str(e).lower().split(".")[1]
         value_part = value_part.replace("_", " ").title()
         return value_part
@@ -471,17 +482,10 @@ def add_cli_args_and_parse(
         argparse.ArgumentParser: modified argument parser
     """
     # Common args
-    parser.add_argument(
-        "-l",
-        "--log",
-        type=Path,
-        help="Location to store detailed log",
-        default="gopro_demo.log",
-    )
+    parser.add_argument("--log", type=Path, help="Location to store detailed log", default="gopro_demo.log")
 
     if bluetooth:
         parser.add_argument(
-            "-i",
             "--identifier",
             type=str,
             help="Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. \
@@ -491,14 +495,12 @@ def add_cli_args_and_parse(
 
     if wifi:
         parser.add_argument(
-            "-w",
             "--wifi_interface",
             type=str,
             help="System Wifi Interface. If not set, first discovered interface will be used.",
             default=None,
         )
         parser.add_argument(
-            "-p",
             "--password",
             action="store_true",
             help="Set to read sudo password from stdin. If not set, you will be prompted for password if needed",
@@ -509,3 +511,28 @@ def add_cli_args_and_parse(
         args.password = sys.stdin.readline() if args.password else None
 
     return args
+
+
+def display_video_blocking(source: str, printer: Optional[Callable] = print) -> None:
+    """Open a video source to display it, and block until the user stops it by sending 'q'
+
+    Args:
+        source (str): video source to display
+        printer (Optional[Callable], optional): used to display output message. Defaults to print.
+    """
+    if printer:
+        printer("Starting viewer...")
+    vid = cv2.VideoCapture(source + "?overrun_nonfatal=1&fifo_size=50000000", cv2.CAP_FFMPEG)
+    if printer:
+        printer("Viewer started")
+        printer("Press 'q' to quit")
+
+    while True:
+        ret, frame = vid.read()
+        if ret and frame is not None:
+            cv2.imshow("frame", frame)
+            if cv2.waitKey(1) & 0xFF == ord("q"):
+                break
+
+    vid.release()
+    cv2.destroyAllWindows()

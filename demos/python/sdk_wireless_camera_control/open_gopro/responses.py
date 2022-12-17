@@ -241,7 +241,7 @@ class GoProResp:
         """Protocol that Command will be sent on."""
 
         BLE = "BLE"
-        WIFI = "WIFI"
+        HTTP = "HTTP"
 
     def __init__(
         self,
@@ -288,7 +288,7 @@ class GoProResp:
             data (bytearray): received bytestream
 
         Returns:
-            GoProResp: created instance
+            GoProResp: created response instance
         """
         resp = cls(meta=[uuid], status=ErrorCode.SUCCESS, raw_packet=data)
         resp._parse()
@@ -305,13 +305,32 @@ class GoProResp:
             response (requests.models.Response): HTTP response
 
         Returns:
-            GoProResp: created instance
+            GoProResp: created response instance
         """
         resp = cls(
             meta=[response.url],
             parser=parser,
             status=ErrorCode.SUCCESS if response.ok else ErrorCode.ERROR,
             raw_packet=response.json() if response.text else {},
+        )
+        resp._parse()
+        return resp
+
+    @classmethod
+    def _from_stream_response(cls, response: requests.models.Response) -> GoProResp:
+        """Build a GoProResp from an HTTP response that read binary data
+
+        Args:
+            response (requests.models.Response): HTTP response (that has already been consumed)
+
+        Returns:
+            GoProResp: created response instance
+        """
+        resp = cls(
+            meta=[response.url],
+            parser=None,
+            status=ErrorCode.SUCCESS if response.ok else ErrorCode.ERROR,
+            raw_packet={},
         )
         resp._parse()
         return resp
@@ -469,7 +488,7 @@ class GoProResp:
         Returns:
             GoProResp.Protocol: protocol
         """
-        return GoProResp.Protocol.BLE if self.uuid else GoProResp.Protocol.WIFI
+        return GoProResp.Protocol.BLE if self.uuid else GoProResp.Protocol.HTTP
 
     @property
     def is_received(self) -> bool:

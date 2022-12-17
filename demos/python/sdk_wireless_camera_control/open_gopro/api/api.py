@@ -5,26 +5,42 @@
 
 from typing import Final
 
-from open_gopro.interface import GoProInterface
+from open_gopro.interface import GoProWirelessInterface, GoProHttp
 from .ble_commands import BleCommands, BleSettings, BleStatuses, BleAsyncResponses
-from .wifi_commands import WifiCommands, WifiSettings
+from .http_commands import HttpCommands, HttpSettings
 
 
-class Api:
-    """Implementation of Open GoPro API version 2.0"""
+class WirelessApi:
+    """Implementation of Open GoPro API version 2.0 for Wireless interface (Wifi and BLE)"""
 
     version: Final = "2.0"
 
-    def __init__(self, communicator: GoProInterface) -> None:
+    def __init__(self, communicator: GoProWirelessInterface) -> None:
         """Constructor
 
         Args:
-            communicator (GoProInterface): used to communicate via BLE and Wifi
+            communicator (GoProWirelessInterface): used to communicate via BLE and Wifi
         """
         self._communicator = communicator
         self.ble_command = BleCommands(communicator)
         self.ble_setting = BleSettings(communicator)
         self.ble_status = BleStatuses(communicator)
         BleAsyncResponses.add_parsers()
-        self.wifi_command = WifiCommands(communicator)
-        self.wifi_setting = WifiSettings(communicator)
+        self.http_command = HttpCommands(communicator)
+        self.http_setting = HttpSettings(communicator)
+
+
+class WiredApi:
+    """Implementation of Open GoPro API version 2.0 for Wired interface (USB)"""
+
+    version: Final = "2.0"
+
+    def __init__(self, communicator: GoProHttp) -> None:
+        """Constructor
+
+        Args:
+            communicator (GoProHttp): used to communicate via BLE and Wifi
+        """
+        self._communicator = communicator
+        self.http_command = HttpCommands(communicator)
+        self.http_setting = HttpSettings(communicator)

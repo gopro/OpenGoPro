@@ -55,6 +55,10 @@ jobs:
               with:
                   path: source
 
+            - name: Install Dot to build Sphinx Diagrams
+              shell: bash
+              run: apt-get install -y graphviz
+
             - name: Set up Python 3.10.6
               uses: actions/setup-python@v2
               with:

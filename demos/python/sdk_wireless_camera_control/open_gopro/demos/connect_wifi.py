@@ -9,7 +9,7 @@ from typing import Optional
 
 from rich.console import Console
 
-from open_gopro import GoPro
+from open_gopro import WirelessGoPro
 from open_gopro.util import setup_logging, set_stream_logging_level, add_cli_args_and_parse
 
 console = Console()  # rich consoler printer
@@ -22,13 +22,15 @@ def parse_arguments() -> argparse.Namespace:
 
 def main(args: argparse.Namespace) -> None:
     setup_logging(__name__, args.log)
-    gopro: Optional[GoPro] = None
+    gopro: Optional[WirelessGoPro] = None
 
-    with GoPro(args.identifier, wifi_interface=args.wifi_interface, sudo_password=args.password) as gopro:
+    with WirelessGoPro(
+        args.identifier, wifi_interface=args.wifi_interface, sudo_password=args.password
+    ) as gopro:
         # Now we only want errors
         set_stream_logging_level(logging.ERROR)
 
-        gopro.wifi_command.set_keep_alive()
+        gopro.http_command.set_keep_alive()
 
         console.print("\n\n🎆🎇✨ Success!! Wifi AP is connected 📡\n")
         console.print("Send commands as per https://gopro.github.io/OpenGoPro/http")

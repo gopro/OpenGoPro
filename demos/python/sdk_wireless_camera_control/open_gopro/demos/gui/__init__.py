@@ -6,8 +6,8 @@
 import platform
 from typing import Union
 
-from open_gopro.api.builders import BleCommand, WifiCommand
-from open_gopro.api import BleSettings, BleCommands, BleStatuses, WifiCommands, WifiSettings
+from open_gopro.api.builders import BleMessage, HttpMessage
+from open_gopro.api import BleSettings, BleCommands, BleStatuses, HttpCommands, HttpSettings
 
 if (OS := platform.system().lower()) == "windows":
     THEME = "vista"

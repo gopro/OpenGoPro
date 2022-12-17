@@ -10,6 +10,7 @@ import datetime
 import asyncio
 import logging
 from pathlib import Path
+from functools import partial
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 import tkinter as tk
@@ -23,7 +24,7 @@ import wrapt
 from open_gopro.demos.gui import models, views
 from open_gopro.util import setup_logging, pretty_print, add_logging_handler
 
-ResponseHandlerType = Callable[[models.Command, models.GoProResp], None]
+ResponseHandlerType = Callable[[str, models.GoProResp], None]
 
 
 def create_widget(
@@ -47,16 +48,16 @@ def create_widget(
 
 
 class MissingArgument(Exception):
-    """Exception raised when a command is attempted to be sent without all of its arguments"""
+    """Exception raised when a message is attempted to be sent without all of its arguments"""
 
-    def __init__(self, argument: str) -> None:
+    def __init__(self, argument: Optional[str]) -> None:
         super().__init__(f"Missing required argument for {argument}")
 
 
 class BadArgumentValue(Exception):
     """Exception raised when an argument fails a validator check"""
 
-    def __init__(self, argument: str) -> None:
+    def __init__(self, argument: Optional[str]) -> None:
         super().__init__(f"Bad value for argument {argument}")
 
 
@@ -115,17 +116,18 @@ class Controller(ABC):
         """
         raise NotImplementedError
 
-    def as_async(self, action: Callable, *args: Any) -> Any:
+    def as_async(self, action: Callable, *args: Any, **kwargs: Any) -> Any:
         """Create an asynchronous coroutine from a synchronous function / method
 
         Args:
             action (Callable): function / method
-            args (list[any]): arguments to action
+            *args (Any): positional arguments to action
+            **kwargs (Any): keyword arguments to action
 
         Returns:
             Any: asynchronous coroutine. Should be awaited in an async method.
         """
-        return self.loop.run_in_executor(None, action, *args)
+        return self.loop.run_in_executor(None, partial(action, *args, **kwargs))
 
 
 class SplashScreen(Controller):
@@ -290,8 +292,8 @@ class StatusBar(Controller):
         """
         if identifier == models.constants.StatusId.ENCODING:
             self.update_status(StatusBar.Encoding.ON if value else StatusBar.Encoding.OFF)
-        elif identifier == models.constants.StatusId.SYSTEM_READY:
-            self.update_status(StatusBar.Ready.READY if value else StatusBar.Ready.BUSY)
+        elif identifier == models.constants.StatusId.SYSTEM_BUSY:
+            self.update_status(StatusBar.Ready.BUSY if value else StatusBar.Ready.READY)
 
 
 class Video(Controller):
@@ -369,17 +371,21 @@ class Video(Controller):
         self.status_bar.update_status(StatusBar.Stream.READY)
         self.get_frame()
 
-    def handle_auto_start(self, command: models.Command, response: models.GoProResp) -> None:
+    def handle_auto_start(self, identifier: str, response: models.GoProResp) -> None:
         """Auto start live or preview stream
 
         Args:
-            command (models.Command): command that was sent
+            identifier (str): message that was sent
             response (models.GoProResp): response that was received
         """
+        # Get binary's (which are of type Path) are not handled. TODO updating typing for this
+        if not isinstance(response, models.GoProResp) or not response.is_ok:
+            return
+
         video_source: Optional[str] = None
-        if (identifier := str(command._identifier).lower()) == "livestream" and response.is_ok:
+        if str(identifier).lower() == "livestream":
             video_source = response["url"]
-        elif identifier == "preview stream" and response.is_ok and "start" in (response.endpoint or ""):
+        elif str(identifier).lower() == "set preview stream" and "start" in (response.endpoint or ""):
             video_source = models.PREVIEW_STREAM_URL
 
         if video_source:
@@ -484,31 +490,38 @@ class Log(Controller, logging.Handler):
             view.create_log_entry(record)
 
 
-class CommandPallette(Controller):
-    """Pallet to hierarchically display commands and allow user to select.
+class MessagePalette(Controller):
+    """Pallet to hierarchically display messages and allow user to select.
 
-    This control is used to control a command pallette and param form
+    This control is used to control a message palette and param form
 
     Args:
         loop (asyncio.AbstractEventLoop): already running asyncio loop to use for controllers
-        model (models.GoProModel): model to get commands from
+        model (models.GoProModel): model to get messages from
     """
 
     @dataclass
+    class MessageMeta:
+        """Couple the message and its identifier"""
+
+        identifier: str
+        message: Callable
+
+    @dataclass
     class Argument:
-        """Get, store, and process a command argument
+        """Get, store, and process a message argument
 
         Args:
-            name (str): name of argument
             getter (Callable): used to get the string value of the argument from a GUI element
             adapter (Callable): used to adapter the argument string value
             validator (Callable): used to validate the adapted value
+            name (Optional[str]): name of argument
         """
 
-        name: str
         getter: Callable[[], Any]
         adapter: Callable[[Any], Any]
         validator: Callable[[Any], None]
+        name: Optional[str] = None
 
         def process(self, validate: bool = True) -> Any:
             """Get, adapt, and optionally validate an argument
@@ -538,21 +551,21 @@ class CommandPallette(Controller):
     def __init__(self, loop: asyncio.AbstractEventLoop, model: models.GoProModel) -> None:
         Controller.__init__(self, loop)
         self.model = model
-        self.active_command: Any = None
-        self.active_arguments: list[CommandPallette.Argument] = []
+        self.active_message: Optional[MessagePalette.MessageMeta] = None
+        self.active_arguments: list[MessagePalette.Argument] = []
         self.param_form: views.ParamForm
-        self.command_pallette: views.CommandPallette
+        self.message_palette: views.MessagePalette
         self.response_handlers: list[ResponseHandlerType] = []
 
-    def _bind_command_pallette(self, view: views.CommandPallette) -> None:
-        """Bind command pallet view
+    def _bind_message_palette(self, view: views.MessagePalette) -> None:
+        """Bind message pallet view
 
         Args:
-            view (views.CommandPallette): view to bind
+            view (views.MessagePalette): view to bind
         """
-        self.command_pallette = view
-        self.command_pallette.create_view(self.model.command_dict)
-        self.command_pallette.tv.bind("<Button-1>", self.on_command_selection)
+        self.message_palette = view
+        self.message_palette.create_view(self.model.message_dict)
+        self.message_palette.tv.bind("<Button-1>", self.on_message_selection)
 
     def _bind_param_form(self, view: views.ParamForm) -> None:
         """Bind param form view
@@ -563,40 +576,40 @@ class CommandPallette(Controller):
         self.param_form = view
         self.param_form.create_view()
 
-    def bind(self, view: Union[views.CommandPallette, views.ParamForm]) -> None:
-        """Bind a view (command pallette or param form)
+    def bind(self, view: Union[views.MessagePalette, views.ParamForm]) -> None:
+        """Bind a view (message palette or param form)
 
         Args:
-            view (Union[views.CommandPallette, views.ParamForm]): _description_
+            view (Union[views.MessagePalette, views.ParamForm]): view to bind
 
         Raises:
             TypeError: Invalid view
         """
-        if isinstance(view, views.CommandPallette):
-            self._bind_command_pallette(view)
+        if isinstance(view, views.MessagePalette):
+            self._bind_message_palette(view)
         elif isinstance(view, views.ParamForm):
             self._bind_param_form(view)
         else:
-            raise TypeError("Only CommandPallette and ParamForms can be bound to CommandPallette Controller")
+            raise TypeError("Only MessagePalette and ParamForms can be bound to MessagePalette Controller")
 
     def register_response_handler(self, handler: ResponseHandlerType) -> None:
-        """Register response handler for command responses
+        """Register response handler for message responses
 
         Args:
             handler (ResponseHandlerType): response handler controller
         """
         self.response_handlers.append(handler)
 
-    def build_param_entries(self, command: models.Command) -> None:
-        """Display all params for a given command in the param form
+    def build_param_entries(self, message: models.Message) -> None:
+        """Display all params for a given message in the param form
 
         Args:
-            command (CommandType): command to build params for
+            message (MessageType): message to build params for
 
         Raises:
             Exception: found a parameter with a currently unhandled argument type
         """
-        for adapter, validator, arg_type, arg_name in zip(*self.model.get_command_info(command)):
+        for adapter, validator, arg_type, arg_name in zip(*self.model.get_message_info(message)):
             getter: Callable
             if arg_type is None:
                 continue
@@ -620,84 +633,106 @@ class CommandPallette(Controller):
             else:
                 raise Exception("Unexpected argument type")
 
-            self.active_arguments.append(CommandPallette.Argument(arg_name, getter, adapter, validator))
+            self.active_arguments.append(MessagePalette.Argument(getter, adapter, validator, arg_name))
 
-    def on_command_selection(self, event: Any) -> None:
-        """Called when a command is selected to create param entries
+    def on_message_selection(self, event: Any) -> None:
+        """Called when a message is selected to create param entries
 
         Args:
-            event (Any): GUI event that prompted command selection
+            event (Any): GUI event that prompted message selection
         """
         try:
-            item_id = int(self.command_pallette.tv.identify("item", event.x, event.y))
+            item_id = int(self.message_palette.tv.identify("item", event.x, event.y))
             if item_id >= views.MAX_TREEVIEW_ID:
                 return
-        except ValueError:  # User clicked outside of command area
+        except ValueError:  # User clicked outside of message area
             return
         self.param_form.reset_view()
-        self.active_command = None
+        self.active_message = None
         self.active_arguments.clear()
-        command = self.model.commands[item_id]
-        self.param_form.create_command(str(command))
+        identifier, message = self.model.messages[item_id]
+        self.param_form.create_message(identifier)
 
-        if self.model.is_command(command):
-            self.build_param_entries(command)
-            self.param_form.create_button("Send Command", self.command_sender_factory(use_args=True))
+        if self.model.is_command(message):
+            if not self.model.is_compound_command(message):
+                self.active_arguments.append(
+                    MessagePalette.Argument(
+                        getter=lambda: self.model.gopro,
+                        adapter=lambda x: x,
+                        validator=lambda x: x.is_open,
+                    )
+                )
+            self.build_param_entries(message)
+            self.param_form.create_button("Send message", self.message_sender_factory(use_args=True))
         else:  # Setting or Status
-            if self.model.is_ble(command):
-                self.param_form.create_button("Get Value", self.command_sender_factory("get_value"))
+            if self.model.is_ble(message):
+                self.param_form.create_button("Get Value", self.message_sender_factory("get_value"))
                 self.param_form.create_button(
-                    "Register for Value Updates", self.command_sender_factory("register_value_update")
+                    "Register for Value Updates", self.message_sender_factory("register_value_update")
                 )
                 self.param_form.create_button(
-                    "Unregister for Value Updates", self.command_sender_factory("unregister_value_update")
+                    "Unregister for Value Updates", self.message_sender_factory("unregister_value_update")
                 )
-                if self.model.is_setting(command):
+                if self.model.is_setting(message):
                     self.param_form.create_button(
-                        "Get Capabilities", self.command_sender_factory("get_capabilities_values")
+                        "Get Capabilities", self.message_sender_factory("get_capabilities_values")
                     )
                     self.param_form.create_button(
                         "Register for Capability Updates",
-                        self.command_sender_factory("register_capability_update"),
+                        self.message_sender_factory("register_capability_update"),
                     )
 
                     self.param_form.create_button(
                         "Unregister for Capability Updates",
-                        self.command_sender_factory("unregister_capability_update"),
+                        self.message_sender_factory("unregister_capability_update"),
                     )
-            if not self.model.is_status(command):
-                self.param_form.create_button("Set Value", self.command_sender_factory("set", use_args=True))
-                self.build_param_entries(command)
+            if not self.model.is_status(message):
+                self.param_form.create_button("Set Value", self.message_sender_factory("set", use_args=True))
+                self.build_param_entries(message)
 
-        self.active_command = command
+        self.active_message = MessagePalette.MessageMeta(identifier, message)
 
-    def command_sender_factory(self, attribute: Optional[str] = None, use_args: bool = False) -> Callable:
-        """Build a method to be called when a command is requested to be sent
+    def message_sender_factory(self, attribute: Optional[str] = None, use_args: bool = False) -> Callable:
+        """Build a method to be called when a message is requested to be sent
 
         Args:
-            attribute (Optional[str], optional): Method of active command to use. Defaults to None (use active
-                command directly).
-            use_args (bool): Should the active args be passed to the command?. Defaults to False.
+            attribute (Optional[str], optional): Method of active message to use. Defaults to None (use active
+                message directly).
+            use_args (bool): Should the active args be passed to the message?. Defaults to False.
 
         Returns:
             Callable: method to use
         """
 
         @background
-        async def on_command_send(self: CommandPallette) -> Optional[models.GoProResp]:
-            method = self.active_command if attribute is None else getattr(self.active_command, attribute)
-            values = [argument.process() for argument in self.active_arguments] if use_args else []
+        async def on_message_send(self: MessagePalette) -> Optional[models.GoProResp]:
+            assert self.active_message
+            method = (
+                self.active_message.message
+                if attribute is None
+                else getattr(self.active_message.message, attribute)
+            )
+            args = []
+            kwargs = {}
+            if use_args:
+                for arg in self.active_arguments:
+                    value = arg.process()
+                    if name := arg.name:
+                        kwargs[name] = value
+                    else:
+                        args.append(value)
+
             try:
-                response = await self.as_async(method, *values)
+                response = await self.as_async(method, *args, **kwargs)
             except Exception as e:  # pylint: disable=broad-except
                 views.popup_message("Error", str(e))
                 return None
 
             for handler in self.response_handlers:
-                handler(self.active_command, response)
+                handler(self.active_message.identifier, response)
             return response
 
-        return on_command_send.__get__(self, None)
+        return on_message_send.__get__(self, None)
 
 
 class StatusTab(Controller):
@@ -767,11 +802,11 @@ class StatusTab(Controller):
                 self.statusbar.handle_updates(identifier, value)
 
     def display_async_updates(self) -> None:
-        """Display any updates that were received asynchronously (i.e. not command responses)"""
+        """Display any updates that were received asynchronously (i.e. not message responses)"""
         self._display_updates()
 
-    def display_response_updates(self, _: models.Command, response: Optional[models.GoProResp]) -> None:
-        """Display updates from the command response
+    def display_response_updates(self, _: str, response: Optional[models.GoProResp]) -> None:
+        """Display updates from the message response
 
         Args:
             response (Optional[models.GoProResp]): response to get updates from
