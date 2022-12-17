@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-11-16T01:50:57+00:00">
+  <meta property="article:published_time" content="2022-12-17T00:15:56+00:00">
 
 
 
@@ -420,7 +420,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Python Tutorial 4: BLE Queries">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to use bleak to implementthe Open GoPro Interface to query the camera’s setting and status information viaBLE.">
-    <meta itemprop="datePublished" content="2022-11-16T01:50:57+00:00">
+    <meta itemprop="datePublished" content="2022-12-17T00:15:56+00:00">
     
 
     <div class="page__inner-wrap">
@@ -802,10 +802,10 @@ tutorial</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_258303dc-ea4c-4a2c-8881-dc4414a9dc17" class="quiz">
+<div id="quiz_0498a197-57b1-4a56-ae49-d47c87f02485" class="quiz">
     <div>
-        <div id="question_258303dc-ea4c-4a2c-8881-dc4414a9dc17" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
-        <div id="answers_258303dc-ea4c-4a2c-8881-dc4414a9dc17">
+        <div id="question_0498a197-57b1-4a56-ae49-d47c87f02485" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
+        <div id="answers_0498a197-57b1-4a56-ae49-d47c87f02485">
         
             <input type="radio" name="question" value="A"><label>A: Concatenate a ‘Get Setting Value’ command and a ‘Get Status’ command with the relevant ID’s</label>
             <br>
@@ -818,10 +818,10 @@ tutorial</p>
         
         </div>
     </div>
-    <button onclick="showResults('258303dc-ea4c-4a2c-8881-dc4414a9dc17', 'C')">Submit Answer</button>
-    <div id="results_258303dc-ea4c-4a2c-8881-dc4414a9dc17" style="display: none">
-        <span id="correct_258303dc-ea4c-4a2c-8881-dc4414a9dc17" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_258303dc-ea4c-4a2c-8881-dc4414a9dc17" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('0498a197-57b1-4a56-ae49-d47c87f02485', 'C')">Submit Answer</button>
+    <div id="results_0498a197-57b1-4a56-ae49-d47c87f02485" style="display: none">
+        <span id="correct_0498a197-57b1-4a56-ae49-d47c87f02485" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_0498a197-57b1-4a56-ae49-d47c87f02485" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         It is not possible to concatenate commands. This would result in an unknown sequence of bytes
         from the camera’s perspective. So it is not possible to get a setting value and a status value in one
         command. The Get Setting command (with resolution ID) and Get Status command(with encoding ID) must be
@@ -970,11 +970,11 @@ polled above</span>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_0173d124-4fec-435b-b544-e79e5c81e8fc" class="quiz">
+<div id="quiz_08c58b5c-1827-4d28-bf0d-28c5233c903f" class="quiz">
     <div>
-        <div id="question_0173d124-4fec-435b-b544-e79e5c81e8fc" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
+        <div id="question_08c58b5c-1827-4d28-bf0d-28c5233c903f" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
     receive push notifications for it.</div>
-        <div id="answers_0173d124-4fec-435b-b544-e79e5c81e8fc">
+        <div id="answers_08c58b5c-1827-4d28-bf0d-28c5233c903f">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -984,20 +984,20 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('0173d124-4fec-435b-b544-e79e5c81e8fc', 'A')">Submit Answer</button>
-    <div id="results_0173d124-4fec-435b-b544-e79e5c81e8fc" style="display: none">
-        <span id="correct_0173d124-4fec-435b-b544-e79e5c81e8fc" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_0173d124-4fec-435b-b544-e79e5c81e8fc" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('08c58b5c-1827-4d28-bf0d-28c5233c903f', 'A')">Submit Answer</button>
+    <div id="results_08c58b5c-1827-4d28-bf0d-28c5233c903f" style="display: none">
+        <span id="correct_08c58b5c-1827-4d28-bf0d-28c5233c903f" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_08c58b5c-1827-4d28-bf0d-28c5233c903f" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         While there is probably not a good reason to do so, there is nothing preventing polling
         in this manner.
     </div>
 </div>
 
-<div id="quiz_aa83283a-30c8-4f74-8316-739dfbe04742" class="quiz">
+<div id="quiz_eb6730f2-94e4-4566-8316-55ed5606da94" class="quiz">
     <div>
-        <div id="question_aa83283a-30c8-4f74-8316-739dfbe04742" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
+        <div id="question_eb6730f2-94e4-4566-8316-55ed5606da94" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
     about one setting ID.</div>
-        <div id="answers_aa83283a-30c8-4f74-8316-739dfbe04742">
+        <div id="answers_eb6730f2-94e4-4566-8316-55ed5606da94">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1007,10 +1007,10 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('aa83283a-30c8-4f74-8316-739dfbe04742', 'B')">Submit Answer</button>
-    <div id="results_aa83283a-30c8-4f74-8316-739dfbe04742" style="display: none">
-        <span id="correct_aa83283a-30c8-4f74-8316-739dfbe04742" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_aa83283a-30c8-4f74-8316-739dfbe04742" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('eb6730f2-94e4-4566-8316-55ed5606da94', 'B')">Submit Answer</button>
+    <div id="results_eb6730f2-94e4-4566-8316-55ed5606da94" style="display: none">
+        <span id="correct_eb6730f2-94e4-4566-8316-55ed5606da94" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_eb6730f2-94e4-4566-8316-55ed5606da94" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is possible for push notifications to contain multiple setting ID’s if both setting ID’s have
     push notifications registered and both settings change at the same time.
     </div>
@@ -1045,7 +1045,7 @@ proceed to the next tutorial.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-11-16T01:50:57+00:00">November 16, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-12-17T00:15:56+00:00">December 17, 2022</time></p>
 
 
       </footer>
