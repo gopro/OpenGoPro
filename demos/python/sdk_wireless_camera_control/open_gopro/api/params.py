@@ -388,6 +388,7 @@ class Speed(GoProEnum):
     SUPER_SLO_MO_4X_EXT_BATT_50_HZ = 11
     SLO_MO_2X_EXT_BATT_50_HZ = 12
     LOW_LIGHT_1X_EXT_BATT_50_HZ = 13
+    TODO_24 = 24
 
 
 class PhotoEasyMode(GoProEnum):
