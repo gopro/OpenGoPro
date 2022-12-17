@@ -5,10 +5,8 @@
 
 -   [ ] Refactor commands / parsers so that setting / status parsers (i.e. enums) can be accessed from class, not instance
     -  This is already done for commands but needs to be for others
--   [ ] Use timeout / retries for automatic USB IP discovery via mDNS
 -   [ ] Better handle kwargs that match base dict args in command as_dict methods
 -   [ ] Investigate worthiness of move to asyncio
--   [ ] Add fastpass property to commands to control lock acquiring / release
 -   [ ] More test coverage
 -   [ ] Clean up artifacts after testing
 -   [ ] Make scalable for multiple simultaneous cameras
