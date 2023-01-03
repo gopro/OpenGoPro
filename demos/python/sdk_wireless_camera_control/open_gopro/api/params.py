@@ -127,6 +127,13 @@ class Resolution(GoProEnum):
     RES_5_3_K = 100
 
 
+class WebcamResolution(GoProEnum):
+    NOT_APPLICABLE = 0
+    RES_480 = 4
+    RES_720 = 7
+    RES_1080 = 12
+
+
 class FPS(GoProEnum):
     FPS_240 = 0
     FPS_120 = 1

@@ -317,14 +317,14 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
 
     @http_get_json_command(endpoint="gopro/webcam/start", arguments=["res", "fov"])
     def webcam_start(
-        self, *, resolution: Optional[Params.Resolution] = None, fov: Optional[Params.PhotoFOV] = None
+        self, *, resolution: Optional[Params.WebcamResolution] = None, fov: Optional[Params.VideoFOV] = None
     ) -> GoProResp:
         """Start the webcam.
 
         Args:
-            resolution (Optional[open_gopro.api.params.Resolution]): resolution to use. If not set,
+            resolution (Optional[open_gopro.api.params.WebcamResolution]): resolution to use. If not set,
                 camera default will be used.
-            fov (Optional[open_gopro.api.params.PhotoFOV]): field of view to use. If not set, camera
+            fov (Optional[open_gopro.api.params.VideoFOV]): field of view to use. If not set, camera
                 default will be used.
 
         Returns:
