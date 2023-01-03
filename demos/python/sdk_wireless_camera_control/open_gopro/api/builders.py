@@ -78,7 +78,7 @@ def enum_parser_factory(target: type[GoProEnum]) -> BytesParserBuilder:
         def parse(self, data: bytes) -> GoProEnum:
             return self.container(data[0])
 
-        def build(self, *args: Any, **kwargs: Any) -> bytes:
+        def build(self, *args: Any, **_: Any) -> bytes:
             return bytes([int(args[0])])
 
     return ParserBuilder()
