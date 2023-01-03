@@ -323,6 +323,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.Toggle"><code class="docutils literal notranslate"><span class="pre">Toggle</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.VideoFOV"><code class="docutils literal notranslate"><span class="pre">VideoFOV</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.WAPState"><code class="docutils literal notranslate"><span class="pre">WAPState</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.WebcamFOV"><code class="docutils literal notranslate"><span class="pre">WebcamFOV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.WebcamResolution"><code class="docutils literal notranslate"><span class="pre">WebcamResolution</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.WifiBand"><code class="docutils literal notranslate"><span class="pre">WifiBand</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.WindowSize"><code class="docutils literal notranslate"><span class="pre">WindowSize</span></code></a></li>
 </ul>
@@ -3086,14 +3088,14 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.http_commands.HttpCommands.webcam_start">
-<span class="sig-name descname"><span class="pre">webcam_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.api.params.Resolution" title="open_gopro.api.params.Resolution"><span class="pre">Resolution</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fov</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.api.params.PhotoFOV" title="open_gopro.api.params.PhotoFOV"><span class="pre">PhotoFOV</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><span class="pre">GoProResp</span></a></span></span><a class="headerlink" href="#open_gopro.api.http_commands.HttpCommands.webcam_start" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">webcam_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.api.params.WebcamResolution" title="open_gopro.api.params.WebcamResolution"><span class="pre">WebcamResolution</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fov</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.api.params.WebcamFOV" title="open_gopro.api.params.WebcamFOV"><span class="pre">WebcamFOV</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><span class="pre">GoProResp</span></a></span></span><a class="headerlink" href="#open_gopro.api.http_commands.HttpCommands.webcam_start" title="Permalink to this definition"></a></dt>
 <dd><p>Start the webcam.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>resolution</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#open_gopro.api.params.Resolution" title="open_gopro.api.params.Resolution"><em>open_gopro.api.params.Resolution</em></a><em>]</em>) – resolution to use. If not set,
+<li><p><strong>resolution</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#open_gopro.api.params.WebcamResolution" title="open_gopro.api.params.WebcamResolution"><em>open_gopro.api.params.WebcamResolution</em></a><em>]</em>) – resolution to use. If not set,
 camera default will be used.</p></li>
-<li><p><strong>fov</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#open_gopro.api.params.PhotoFOV" title="open_gopro.api.params.PhotoFOV"><em>open_gopro.api.params.PhotoFOV</em></a><em>]</em>) – field of view to use. If not set, camera
+<li><p><strong>fov</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#open_gopro.api.params.WebcamFOV" title="open_gopro.api.params.WebcamFOV"><em>open_gopro.api.params.WebcamFOV</em></a><em>]</em>) – field of view to use. If not set, camera
 default will be used.</p></li>
 </ul>
 </dd>
@@ -4961,6 +4963,56 @@ instantiation</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.params.WAPState.STARTED">
 <span class="sig-name descname"><span class="pre">STARTED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#open_gopro.api.params.WAPState.STARTED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="open_gopro.api.params.WebcamFOV">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WebcamFOV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.params.WebcamFOV" title="Permalink to this definition"></a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.WebcamFOV.LINEAR">
+<span class="sig-name descname"><span class="pre">LINEAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#open_gopro.api.params.WebcamFOV.LINEAR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.WebcamFOV.NARROW">
+<span class="sig-name descname"><span class="pre">NARROW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#open_gopro.api.params.WebcamFOV.NARROW" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.WebcamFOV.SUPERVIEW">
+<span class="sig-name descname"><span class="pre">SUPERVIEW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#open_gopro.api.params.WebcamFOV.SUPERVIEW" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.WebcamFOV.WIDE">
+<span class="sig-name descname"><span class="pre">WIDE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.params.WebcamFOV.WIDE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="open_gopro.api.params.WebcamResolution">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WebcamResolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.params.WebcamResolution" title="Permalink to this definition"></a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.WebcamResolution.NOT_APPLICABLE">
+<span class="sig-name descname"><span class="pre">NOT_APPLICABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.params.WebcamResolution.NOT_APPLICABLE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.WebcamResolution.RES_1080">
+<span class="sig-name descname"><span class="pre">RES_1080</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></em><a class="headerlink" href="#open_gopro.api.params.WebcamResolution.RES_1080" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.WebcamResolution.RES_480">
+<span class="sig-name descname"><span class="pre">RES_480</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#open_gopro.api.params.WebcamResolution.RES_480" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.WebcamResolution.RES_720">
+<span class="sig-name descname"><span class="pre">RES_720</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="headerlink" href="#open_gopro.api.params.WebcamResolution.RES_720" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
