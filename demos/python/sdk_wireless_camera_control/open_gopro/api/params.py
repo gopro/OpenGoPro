@@ -127,6 +127,13 @@ class Resolution(GoProEnum):
     RES_5_3_K = 100
 
 
+class WebcamResolution(GoProEnum):
+    NOT_APPLICABLE = 0
+    RES_480 = 4
+    RES_720 = 7
+    RES_1080 = 12
+
+
 class FPS(GoProEnum):
     FPS_240 = 0
     FPS_120 = 1
@@ -161,6 +168,13 @@ class VideoFOV(GoProEnum):
     LINEAR_HORIZON_LEVELING = 8
     HYPERVIEW = 9
     LINEAR_HORIZON_LOCK = 10
+
+
+class WebcamFOV(GoProEnum):
+    WIDE = 0
+    NARROW = 2
+    SUPERVIEW = 3
+    LINEAR = 4
 
 
 class PhotoFOV(GoProEnum):
