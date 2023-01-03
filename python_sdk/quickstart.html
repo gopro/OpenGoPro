@@ -99,7 +99,7 @@
 <p>Open GoPro installs with several command line demos to demonstrate BLE and Wi-Fi. The source code for these examples
 can be found on <a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control/open_gopro/demos">Github</a>
 or locally in <cite>$INSTALL/open_gopro/demos</cite> where $INSTALL can be found with:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip show open-gopro
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>show<span class="w"> </span>open-gopro
 </pre></div>
 </div>
 <p>All of the CLI demos have command-line help via the <cite>–help</cite> parameter. All demos will log to the console as well
@@ -114,7 +114,7 @@ by setting the <cite>wired</cite> option. To run, do:</p>
 </pre></div>
 </div>
 <p>For more information, do:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-photo --help
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-photo<span class="w"> </span>--help
 <span class="go">usage: gopro-photo [-h] [--output OUTPUT] [--wired] [--log LOG] [--identifier IDENTIFIER] [--wifi_interface WIFI_INTERFACE] [--password]</span>
 
 <span class="go">Connect to a GoPro camera, take a photo, then download it.</span>
@@ -138,11 +138,11 @@ by setting the <cite>wired</cite> option. To run, do:</p>
 <p>The video demo will discover a GoPro camera, connect to it, take a video for a given amount of time, and then
 download the photo to your local machine.  It defaults to connecting to a wireless camera but can connect to a
 wired camera by setting the <cite>wired</cite> option.To run and capture a 2 second video, do:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-video <span class="m">2</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-video<span class="w"> </span><span class="m">2</span>
 </pre></div>
 </div>
 <p>For more information, do:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-video --help
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-video<span class="w"> </span>--help
 <span class="go">usage: gopro-video [-h] [-o OUTPUT] [--wired] [--log LOG] [--identifier IDENTIFIER] [--wifi_interface WIFI_INTERFACE] [--password]</span>
 <span class="go">                record_time</span>
 
@@ -174,7 +174,7 @@ wired camera by setting the <cite>wired</cite> option.To run and capture a 2 sec
 </pre></div>
 </div>
 <p>For more information, do:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-webcam --help
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-webcam<span class="w"> </span>--help
 <span class="go">usage: gopro-webcam [-h] [-i IDENTIFIER] [-l LOG]</span>
 
 <span class="go">Setup and view a GoPro webcam.</span>
@@ -196,7 +196,7 @@ livestream, then use <a class="reference external" href="https://pypi.org/projec
 </pre></div>
 </div>
 <p>For more information, do:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-livestream --help
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-livestream<span class="w"> </span>--help
 <span class="go">usage: gopro-livestream [-h] [--min_bit MIN_BIT] [--max_bit MAX_BIT] [--start_bit START_BIT] [--resolution {4,7,12}] [--fov {0,4,3}]</span>
 <span class="go">                        [--log LOG] [--identifier IDENTIFIER]</span>
 <span class="go">                        ssid password url</span>
@@ -268,7 +268,7 @@ to it via WiFi. This is useful if you want to send HTTP commands to it from some
 </pre></div>
 </div>
 <p>For more information, do:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-wif --help
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-wif<span class="w"> </span>--help
 <span class="go">usage: gopro-wifi [-h] [-l LOG] [-i IDENTIFIER] [-w WIFI_INTERFACE] [-p]</span>
 
 <span class="go">Connect to a GoPro camera&#39;s Wifi Access Point.</span>
@@ -297,7 +297,7 @@ the results to a .csv file. To run, do:</p>
 </pre></div>
 </div>
 <p>For more information, do:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-log-battery --help
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-log-battery<span class="w"> </span>--help
 <span class="go">usage: gopro-log-battery [-h] [-p POLL] [-l LOG] [-i IDENTIFIER]</span>
 
 <span class="go">Connect to the GoPro via BLE only and continuously read the battery (either by polling or</span>
