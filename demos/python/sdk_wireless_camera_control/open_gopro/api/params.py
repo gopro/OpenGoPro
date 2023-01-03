@@ -170,6 +170,13 @@ class VideoFOV(GoProEnum):
     LINEAR_HORIZON_LOCK = 10
 
 
+class WebcamFOV(GoProEnum):
+    WIDE = 0
+    NARROW = 2
+    SUPERVIEW = 3
+    LINEAR = 4
+
+
 class PhotoFOV(GoProEnum):
     NOT_APPLICABLE = 0
     HYPERVIEW = 9
