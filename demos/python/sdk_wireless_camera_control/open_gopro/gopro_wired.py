@@ -122,7 +122,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
             FailedToFindDevice: could not auto-discover GoPro via mDNS # noqa: DAR402
         """
         if not self._serial:
-            for retry in range(retries):
+            for retry in range(retries + 1):
                 try:
                     self._serial = WiredGoPro._find_serial_via_mdns(timeout)
                     if self._serial:
@@ -130,7 +130,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
                 except GpException.FailedToFindDevice as e:
                     if retry == retries:
                         raise e
-                    logger.warning(f"Failed to discover GoPro. Retrying #{retry}")
+                    logger.warning(f"Failed to discover GoPro. Retrying #{retry + 1}")
 
         self.http_command.wired_usb_control(control=Params.Toggle.ENABLE)
         # Find and configure API version
