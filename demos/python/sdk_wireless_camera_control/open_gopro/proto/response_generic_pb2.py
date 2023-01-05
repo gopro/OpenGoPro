@@ -1,5 +1,5 @@
 # response_generic_pb2.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Mon Oct 31 21:42:39 UTC 2022
+# This copyright was auto-generated on Wed Jan  4 18:18:44 UTC 2023
 
 """Generated protocol buffer code."""
 from google.protobuf.internal import builder as _builder

@@ -806,11 +806,12 @@ class BleStatuses(BleMessages[BleStatus, StatusId]):
         self.batt_level: BleStatus = BleStatus(communicator, StatusId.BATT_LEVEL, Int8ub)
         """Rough approximation of internal battery level in bars."""
 
-        self.ext_batt_present: BleStatus = BleStatus(communicator, StatusId.EXT_BATT_PRESENT, Flag)
-        """Is an external battery connected?"""
+        # TODO can we just not define deprecated statuses?
+        self.deprecated_3: BleStatus = BleStatus(communicator, StatusId.DEPRECATED_3, DeprecatedAdapter())
+        """This status is deprecated."""
 
-        self.ext_batt_level: BleStatus = BleStatus(communicator, StatusId.EXT_BATT_LEVEL, Int8ub)
-        """External battery power level in percent."""
+        self.deprecated_4: BleStatus = BleStatus(communicator, StatusId.DEPRECATED_4, DeprecatedAdapter())
+        """This status is deprecated."""
 
         self.system_hot: BleStatus = BleStatus(communicator, StatusId.SYSTEM_HOT, Flag)
         """Is the system currently overheating?"""
@@ -845,6 +846,7 @@ class BleStatuses(BleMessages[BleStatus, StatusId]):
         self.wap_scan_state: BleStatus = BleStatus(communicator, StatusId.WAP_SCAN_STATE, Params.WAPState)
         """State of current scan for Wifi Access Points. Appears to only change for CAH-related scans."""
 
+        # TODO this is returning different sized data in BLE vs WiFi
         # self.wap_scan_time: BleStatus = BleStatus(communicator, StatusId.WAP_SCAN_TIME, Int8ub)
         # """The time, in milliseconds since boot that the Wifi Access Point scan completed."""
 

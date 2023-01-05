@@ -115,6 +115,10 @@ class _EnumPresetGroupIconEnumTypeWrapper(
     PRESET_GROUP_PHOTO_ICON_ID: _EnumPresetGroupIcon.ValueType
     PRESET_GROUP_TIMELAPSE_ICON_ID: _EnumPresetGroupIcon.ValueType
     PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID: _EnumPresetGroupIcon.ValueType
+    PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID: _EnumPresetGroupIcon.ValueType
+    PRESET_GROUP_MAX_VIDEO_ICON_ID: _EnumPresetGroupIcon.ValueType
+    PRESET_GROUP_MAX_PHOTO_ICON_ID: _EnumPresetGroupIcon.ValueType
+    PRESET_GROUP_MAX_TIMELAPSE_ICON_ID: _EnumPresetGroupIcon.ValueType
 
 class EnumPresetGroupIcon(_EnumPresetGroupIcon, metaclass=_EnumPresetGroupIconEnumTypeWrapper): ...
 
@@ -122,6 +126,10 @@ PRESET_GROUP_VIDEO_ICON_ID: EnumPresetGroupIcon.ValueType
 PRESET_GROUP_PHOTO_ICON_ID: EnumPresetGroupIcon.ValueType
 PRESET_GROUP_TIMELAPSE_ICON_ID: EnumPresetGroupIcon.ValueType
 PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID: EnumPresetGroupIcon.ValueType
+PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID: EnumPresetGroupIcon.ValueType
+PRESET_GROUP_MAX_VIDEO_ICON_ID: EnumPresetGroupIcon.ValueType
+PRESET_GROUP_MAX_PHOTO_ICON_ID: EnumPresetGroupIcon.ValueType
+PRESET_GROUP_MAX_TIMELAPSE_ICON_ID: EnumPresetGroupIcon.ValueType
 global___EnumPresetGroupIcon = EnumPresetGroupIcon
 
 class _EnumPresetIcon:

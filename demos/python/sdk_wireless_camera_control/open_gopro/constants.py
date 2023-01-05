@@ -409,8 +409,8 @@ class StatusId(GoProEnum):
 
     BATT_PRESENT = 1
     BATT_LEVEL = 2
-    EXT_BATT_PRESENT = 3
-    EXT_BATT_LEVEL = 4
+    DEPRECATED_3 = 3
+    DEPRECATED_4 = 4
     SYSTEM_HOT = 6
     SYSTEM_BUSY = 8
     QUICK_CAPTURE = 9

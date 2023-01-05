@@ -148,7 +148,7 @@ class FPS(GoProEnum):
 
 class AutoOff(GoProEnum):
     NEVER = 0
-    TODO_1 = 1
+    MIN_1 = 1
     MIN_5 = 4
     MIN_15 = 6
     MIN_30 = 7
@@ -384,6 +384,7 @@ class CameraUxMode(GoProEnum):
 
 class HorizonLeveling(GoProEnum):
     OFF = 0
+    ON = 1
     LOCKED = 2
 
 
@@ -402,7 +403,20 @@ class Speed(GoProEnum):
     SUPER_SLO_MO_4X_EXT_BATT_50_HZ = 11
     SLO_MO_2X_EXT_BATT_50_HZ = 12
     LOW_LIGHT_1X_EXT_BATT_50_HZ = 13
-    TODO_24 = 24
+    ULTRA_SLO_MO_8X_EXT_BATT = 14
+    ULTRA_SLO_MO_8X_EXT_BATT_50_HZ = 15
+    ULTRA_SLO_MO_8X_LONG_BATT = 16
+    SUPER_SLO_MO_4X_LONG_BATT = 17
+    SLO_MO_2X_LONG_BATT = 18
+    LOW_LIGHT_1X_LONG_BATT = 19
+    ULTRA_SLO_MO_8X_LONG_BATT_50_HZ = 20
+    SUPER_SLO_MO_4X_LONG_BATT_50_HZ = 21
+    SLO_MO_2X_LONG_BATT_50_HZ = 22
+    LOW_LIGHT_1X_LONG_BATT_50_HZ = 23
+    SLO_MO_2X_4K = 24
+    SUPER_SLO_MO_4X_2_7_K = 25
+    SLO_MO_2X_4K_50_HZ = 26
+    SUPER_SLO_MO_4X_2_7_K_50_HZ = 27
 
 
 class PhotoEasyMode(GoProEnum):
@@ -422,3 +436,5 @@ class StarTrailLength(GoProEnum):
 class SystemVideoMode(GoProEnum):
     HIGHEST_QUALITY = 0
     EXTENDED_BATTERY = 1
+    EXTENDED_BATTERY_GREEN_ICON = 101
+    LONGEST_BATTERY_GREEN_ICON = 102

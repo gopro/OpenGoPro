@@ -1,5 +1,5 @@
 /* preset_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Mon Oct 31 20:32:00 UTC 2022 */
+/* This copyright was auto-generated on Tue Jan  3 22:02:42 UTC 2023 */
 
 /*
 Defines the structure of protobuf message received from camera containing preset status
@@ -45,10 +45,14 @@ enum EnumPresetGroup {
 }
 
 enum EnumPresetGroupIcon {
-    PRESET_GROUP_VIDEO_ICON_ID          = 0;
-    PRESET_GROUP_PHOTO_ICON_ID          = 1;
-    PRESET_GROUP_TIMELAPSE_ICON_ID      = 2;
-    PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID = 3;
+    PRESET_GROUP_VIDEO_ICON_ID           = 0;
+    PRESET_GROUP_PHOTO_ICON_ID           = 1;
+    PRESET_GROUP_TIMELAPSE_ICON_ID       = 2;
+    PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID  = 3;
+    PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID = 4;
+    PRESET_GROUP_MAX_VIDEO_ICON_ID       = 5;
+    PRESET_GROUP_MAX_PHOTO_ICON_ID       = 6;
+    PRESET_GROUP_MAX_TIMELAPSE_ICON_ID   = 7;
 }
 
 enum EnumPresetIcon {
