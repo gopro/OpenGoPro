@@ -146,8 +146,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleStatuses.exposure_type"><code class="docutils literal notranslate"><span class="pre">BleStatuses.exposure_type</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleStatuses.exposure_x"><code class="docutils literal notranslate"><span class="pre">BleStatuses.exposure_x</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleStatuses.exposure_y"><code class="docutils literal notranslate"><span class="pre">BleStatuses.exposure_y</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleStatuses.ext_batt_level"><code class="docutils literal notranslate"><span class="pre">BleStatuses.ext_batt_level</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleStatuses.ext_batt_present"><code class="docutils literal notranslate"><span class="pre">BleStatuses.ext_batt_present</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleStatuses.first_time"><code class="docutils literal notranslate"><span class="pre">BleStatuses.first_time</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleStatuses.flatmode_id"><code class="docutils literal notranslate"><span class="pre">BleStatuses.flatmode_id</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleStatuses.gps_stat"><code class="docutils literal notranslate"><span class="pre">BleStatuses.gps_stat</span></code></a></li>
@@ -520,8 +518,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.StatusId.EXPOSURE_TYPE"><code class="docutils literal notranslate"><span class="pre">StatusId.EXPOSURE_TYPE</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.StatusId.EXPOSURE_X"><code class="docutils literal notranslate"><span class="pre">StatusId.EXPOSURE_X</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.StatusId.EXPOSURE_Y"><code class="docutils literal notranslate"><span class="pre">StatusId.EXPOSURE_Y</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.StatusId.EXT_BATT_LEVEL"><code class="docutils literal notranslate"><span class="pre">StatusId.EXT_BATT_LEVEL</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.StatusId.EXT_BATT_PRESENT"><code class="docutils literal notranslate"><span class="pre">StatusId.EXT_BATT_PRESENT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.StatusId.FIRST_TIME"><code class="docutils literal notranslate"><span class="pre">StatusId.FIRST_TIME</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.StatusId.FLATMODE_ID"><code class="docutils literal notranslate"><span class="pre">StatusId.FLATMODE_ID</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.StatusId.GPS_STAT"><code class="docutils literal notranslate"><span class="pre">StatusId.GPS_STAT</span></code></a></li>
@@ -2213,18 +2209,6 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleStatuses.ext_batt_level">
-<span class="sig-name descname"><span class="pre">ext_batt_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.BleStatus" title="open_gopro.api.builders.BleStatus"><span class="pre">BleStatus</span></a></em><a class="headerlink" href="#open_gopro.api.ble_commands.BleStatuses.ext_batt_level" title="Permalink to this definition"></a></dt>
-<dd><p>External battery power level in percent.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleStatuses.ext_batt_present">
-<span class="sig-name descname"><span class="pre">ext_batt_present</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.BleStatus" title="open_gopro.api.builders.BleStatus"><span class="pre">BleStatus</span></a></em><a class="headerlink" href="#open_gopro.api.ble_commands.BleStatuses.ext_batt_present" title="Permalink to this definition"></a></dt>
-<dd><p>Is an external battery connected?</p>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleStatuses.first_time">
 <span class="sig-name descname"><span class="pre">first_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.BleStatus" title="open_gopro.api.builders.BleStatus"><span class="pre">BleStatus</span></a></em><a class="headerlink" href="#open_gopro.api.ble_commands.BleStatuses.first_time" title="Permalink to this definition"></a></dt>
 <dd><p>Is the camera currently in First Time Use (FTU) UI flow?</p>
@@ -3636,6 +3620,11 @@ instantiation</p>
 <dt class="sig sig-object py" id="open_gopro.api.params.AutoOff">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AutoOff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.params.AutoOff" title="Permalink to this definition"></a></dt>
 <dd><dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.AutoOff.MIN_1">
+<span class="sig-name descname"><span class="pre">MIN_1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#open_gopro.api.params.AutoOff.MIN_1" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.params.AutoOff.MIN_15">
 <span class="sig-name descname"><span class="pre">MIN_15</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#open_gopro.api.params.AutoOff.MIN_15" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -3653,11 +3642,6 @@ instantiation</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.params.AutoOff.NEVER">
 <span class="sig-name descname"><span class="pre">NEVER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.params.AutoOff.NEVER" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="open_gopro.api.params.AutoOff.TODO_1">
-<span class="sig-name descname"><span class="pre">TODO_1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#open_gopro.api.params.AutoOff.TODO_1" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -3878,6 +3862,11 @@ instantiation</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.params.HorizonLeveling.OFF">
 <span class="sig-name descname"><span class="pre">OFF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.params.HorizonLeveling.OFF" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.HorizonLeveling.ON">
+<span class="sig-name descname"><span class="pre">ON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#open_gopro.api.params.HorizonLeveling.ON" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -4711,8 +4700,28 @@ instantiation</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.LOW_LIGHT_1X_LONG_BATT">
+<span class="sig-name descname"><span class="pre">LOW_LIGHT_1X_LONG_BATT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">19</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.LOW_LIGHT_1X_LONG_BATT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.LOW_LIGHT_1X_LONG_BATT_50_HZ">
+<span class="sig-name descname"><span class="pre">LOW_LIGHT_1X_LONG_BATT_50_HZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">23</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.LOW_LIGHT_1X_LONG_BATT_50_HZ" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.params.Speed.SLO_MO_2X">
 <span class="sig-name descname"><span class="pre">SLO_MO_2X</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.SLO_MO_2X" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.SLO_MO_2X_4K">
+<span class="sig-name descname"><span class="pre">SLO_MO_2X_4K</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">24</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.SLO_MO_2X_4K" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.SLO_MO_2X_4K_50_HZ">
+<span class="sig-name descname"><span class="pre">SLO_MO_2X_4K_50_HZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">26</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.SLO_MO_2X_4K_50_HZ" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4731,8 +4740,28 @@ instantiation</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.SLO_MO_2X_LONG_BATT">
+<span class="sig-name descname"><span class="pre">SLO_MO_2X_LONG_BATT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">18</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.SLO_MO_2X_LONG_BATT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.SLO_MO_2X_LONG_BATT_50_HZ">
+<span class="sig-name descname"><span class="pre">SLO_MO_2X_LONG_BATT_50_HZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">22</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.SLO_MO_2X_LONG_BATT_50_HZ" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.params.Speed.SUPER_SLO_MO_4X">
 <span class="sig-name descname"><span class="pre">SUPER_SLO_MO_4X</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.SUPER_SLO_MO_4X" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.SUPER_SLO_MO_4X_2_7_K">
+<span class="sig-name descname"><span class="pre">SUPER_SLO_MO_4X_2_7_K</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">25</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.SUPER_SLO_MO_4X_2_7_K" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.SUPER_SLO_MO_4X_2_7_K_50_HZ">
+<span class="sig-name descname"><span class="pre">SUPER_SLO_MO_4X_2_7_K_50_HZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">27</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.SUPER_SLO_MO_4X_2_7_K_50_HZ" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4751,8 +4780,13 @@ instantiation</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="open_gopro.api.params.Speed.TODO_24">
-<span class="sig-name descname"><span class="pre">TODO_24</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">24</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.TODO_24" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.SUPER_SLO_MO_4X_LONG_BATT">
+<span class="sig-name descname"><span class="pre">SUPER_SLO_MO_4X_LONG_BATT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">17</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.SUPER_SLO_MO_4X_LONG_BATT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.SUPER_SLO_MO_4X_LONG_BATT_50_HZ">
+<span class="sig-name descname"><span class="pre">SUPER_SLO_MO_4X_LONG_BATT_50_HZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">21</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.SUPER_SLO_MO_4X_LONG_BATT_50_HZ" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4763,6 +4797,26 @@ instantiation</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.params.Speed.ULTRA_SLO_MO_8X_50_HZ">
 <span class="sig-name descname"><span class="pre">ULTRA_SLO_MO_8X_50_HZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.ULTRA_SLO_MO_8X_50_HZ" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.ULTRA_SLO_MO_8X_EXT_BATT">
+<span class="sig-name descname"><span class="pre">ULTRA_SLO_MO_8X_EXT_BATT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">14</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.ULTRA_SLO_MO_8X_EXT_BATT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.ULTRA_SLO_MO_8X_EXT_BATT_50_HZ">
+<span class="sig-name descname"><span class="pre">ULTRA_SLO_MO_8X_EXT_BATT_50_HZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.ULTRA_SLO_MO_8X_EXT_BATT_50_HZ" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.ULTRA_SLO_MO_8X_LONG_BATT">
+<span class="sig-name descname"><span class="pre">ULTRA_SLO_MO_8X_LONG_BATT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.ULTRA_SLO_MO_8X_LONG_BATT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.Speed.ULTRA_SLO_MO_8X_LONG_BATT_50_HZ">
+<span class="sig-name descname"><span class="pre">ULTRA_SLO_MO_8X_LONG_BATT_50_HZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#open_gopro.api.params.Speed.ULTRA_SLO_MO_8X_LONG_BATT_50_HZ" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -4801,8 +4855,18 @@ instantiation</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.SystemVideoMode.EXTENDED_BATTERY_GREEN_ICON">
+<span class="sig-name descname"><span class="pre">EXTENDED_BATTERY_GREEN_ICON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">101</span></em><a class="headerlink" href="#open_gopro.api.params.SystemVideoMode.EXTENDED_BATTERY_GREEN_ICON" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.params.SystemVideoMode.HIGHEST_QUALITY">
 <span class="sig-name descname"><span class="pre">HIGHEST_QUALITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.params.SystemVideoMode.HIGHEST_QUALITY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.SystemVideoMode.LONGEST_BATTERY_GREEN_ICON">
+<span class="sig-name descname"><span class="pre">LONGEST_BATTERY_GREEN_ICON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">102</span></em><a class="headerlink" href="#open_gopro.api.params.SystemVideoMode.LONGEST_BATTERY_GREEN_ICON" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -6116,16 +6180,6 @@ For example, first send the command and store the response:</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.StatusId.EXPOSURE_Y">
 <span class="sig-name descname"><span class="pre">EXPOSURE_Y</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">67</span></em><a class="headerlink" href="#open_gopro.constants.StatusId.EXPOSURE_Y" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="open_gopro.constants.StatusId.EXT_BATT_LEVEL">
-<span class="sig-name descname"><span class="pre">EXT_BATT_LEVEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#open_gopro.constants.StatusId.EXT_BATT_LEVEL" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="open_gopro.constants.StatusId.EXT_BATT_PRESENT">
-<span class="sig-name descname"><span class="pre">EXT_BATT_PRESENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#open_gopro.constants.StatusId.EXT_BATT_PRESENT" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
