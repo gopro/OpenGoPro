@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2023-01-03T19:23:37+00:00">
+  <meta property="article:published_time" content="2023-01-05T19:14:58+00:00">
 
 
 
@@ -344,7 +344,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Over the Air Firmware Update Demo">
     <meta itemprop="description" content='Over the Air Firmware Update Demo  Over the Air Firmware Update Demo          Assumptions      Prerequisites      OTA Procedure      Usage      Testing      This directory contains a bash script to perform an over-the-air (OTA) firmware (FW) update to the camera.Assumptions  The host PC is already connected via WiFi to the target camera  The target FW images are already provided from GoPro as a .zip file. These can be found on theUpdate Page or programmatically from theFirmware Catalog JSON information.PrerequisitesAlternatively to satisfying these prerequisites, the script can be run with the Docker option (see usage)  The script uses open ssl to calculate the hash so openssl must beinstalled and available on the system path.  The script uses curl to send HTTP commands so curl must be installed andavailable on the system path.OTA ProcedureThe OTA procedure requires the following steps:  Calculate the SHA1 hash of the target .zip file.  Delete any partially stored data.  Show the update UI  Upload the target firmware to the camera  Notify the camera that the upload is complete  Instruct the camera to load the new firmwareUsageCall the send_ota.sh script here with the -h option for a detailed usage:Usage: ./send_ota.sh [-d] OTA_UPDATE_FILEGiven a target FW .zip file, calculate its SHA1 hash, then send it over-the-air to an already connected camera.Required positional arguments:    OTA_UPDATE_FILE  target .zip file to send over-the-air. If using docker, must be passed as relative path                     from the directory of this scriptOptional arguments:    -d               Use docker for openssl and curl commands.    -h               Print this Help.TestingThere is a test script that will use a Python script (contained in a Docker container) to:  get the FW catalog JSON  get the UPDATE.zip from the link in the JSON  exercise the send_ota.sh script to send this firmware to the camera (outside of the container)The test script is located ./test/test.sh and should be passed the camera that is connected, i.e.:./test.sh "HERO_11"  Note! The test script needs to be run from the test folderYou can also run with the --help parameter to get a list of cameras.'>
-    <meta itemprop="datePublished" content="2023-01-03T19:23:37+00:00">
+    <meta itemprop="datePublished" content="2023-01-05T19:14:58+00:00">
     
 
     <div class="page__inner-wrap">
@@ -491,7 +491,7 @@ Optional arguments:
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-01-03T19:23:37+00:00">January 3, 2023</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-01-05T19:14:58+00:00">January 5, 2023</time></p>
 
 
       </footer>

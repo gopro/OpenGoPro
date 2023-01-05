@@ -9,8 +9,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>CSharp Webcam Demo :  Open GoPro</title>
-<meta name="description" content="CSharp Webcam Demo">
+<!-- begin _includes/seo.html --><title>Multi Webcam :  Open GoPro</title>
+<meta name="description" content="Multi Webcam">
 
 
   <meta name="author" content="GoPro">
@@ -22,11 +22,11 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
-<meta property="og:title" content="CSharp Webcam Demo">
-<meta property="og:url" content="https://gopro.github.io/OpenGoPro/demos/csharp/webcam">
+<meta property="og:title" content="Multi Webcam">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/demos/python/multi_webcam">
 
 
-  <meta property="og:description" content="CSharp Webcam Demo">
+  <meta property="og:description" content="Multi Webcam">
 
 
 
@@ -41,7 +41,7 @@
 
 
 
-<link rel="canonical" href="https://gopro.github.io/OpenGoPro/demos/csharp/webcam">
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/demos/python/multi_webcam">
 
 
 
@@ -199,7 +199,7 @@
       
         
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/OpenGoPro/csharp" itemprop="item"><span itemprop="name">Csharp</span></a>
+          <a href="/OpenGoPro/python" itemprop="item"><span itemprop="name">Python</span></a>
           <meta itemprop="position" content="3">
         </li>
         <span class="sep">/</span>
@@ -207,7 +207,7 @@
     
       
       
-        <li class="current">CSharp Webcam Demo</li>
+        <li class="current">Multi Webcam</li>
       
     
   </ol>
@@ -342,15 +342,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="CSharp Webcam Demo">
-    <meta itemprop="description" content="CSharp Webcam Demo">
+    <meta itemprop="headline" content="Multi Webcam">
+    <meta itemprop="description" content="Multi Webcam">
     <meta itemprop="datePublished" content="2023-01-05T19:14:58+00:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">CSharp Webcam Demo
+          <h1 id="page-title" class="page__title" itemprop="headline">Multi Webcam
 </h1>
           
 
@@ -366,7 +366,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          less than 1 minute read
+          2 minute read
         
       </span>
     
@@ -383,52 +383,166 @@
               <header><h4 class="nav__title">
 <i class="fas fa-file-alt"></i> On this page</h4></header>
               <ul class="toc__menu">
-<li><a href="#requirements">Requirements</a></li>
-<li><a href="#prerequisites">Prerequisites</a></li>
-<li><a href="#usage">Usage</a></li>
+<li><a href="#assumptions">Assumptions</a></li>
+<li><a href="#installation">Installation</a></li>
+<li>
+<a href="#quick-start">Quick Start</a><ul>
+<li>
+<a href="#start-webcam">Start Webcam</a><ul><li><a href="#example">Example</a></li></ul>
+</li>
+<li><a href="#single-webcam">Single Webcam</a></li>
+</ul>
+</li>
+<li><a href="#multiple-webcams">Multiple Webcams</a></li>
+<li><a href="#module-usage">Module Usage</a></li>
 </ul>
 
             </nav>
           </aside>
         
-        <button class="github-button" onclick="location.href='https://github.com/gopro/OpenGoPro/tree/main/demos/csharp/webcam'">
+        <button class="github-button" onclick="location.href='https://github.com/gopro/OpenGoPro/tree/main/demos/python/multi_webcam'">
           <i class="fab fa-github"></i>
           View this Demo on Github
         </button>
-        <p>This demo implements a simple GUI to interact with a GoPro camera that supports <a href="https://gopro.github.io/OpenGoPro/http_2_0">Open GoPro 2.0</a>.</p>
-
-<h1 id="requirements">Requirements</h1>
-
-<p>This demo will only run on Windows.</p>
-
-<p>Visual Studio is required to run the solution. Visit <a href="https://visualstudio.microsoft.com/downloads/">VisualStudio</a> to download.</p>
-
-<p>The target .NET framework is v4.7.2</p>
-
-<p>GoPro camera must be paired before any other operations will succeed. Put the camera in
-<a href="https://gopro.github.io/OpenGoPro/tutorials/python/connect-ble#advertise">pairing mode</a> before attempting
-pairing with the app.</p>
-
-<h1 id="prerequisites">Prerequisites</h1>
-
-<p>The correct GoPro Webcam drivers must be installed. To verify this, ensure that you can first use your desired
-GoPro as a webcam following the steps <a href="https://community.gopro.com/s/article/GoPro-Webcam?language=en_US">here</a>.</p>
-
-<h1 id="usage">Usage</h1>
-
-<ol>
-  <li>Connect the GoPro to your computer using the USB cable</li>
-  <li>Open the solution (GoProWebCamViewer.sln) in Visual Studio, build and run io to show the Webcam GUI</li>
+        <ul>
   <li>
-    <p>Select <code class="language-plaintext highlighter-rouge">Start Player</code> to start the VLC backend. Note that the log and status bar have updated. This will be
-true for all functionality.</p>
-
-    <p><img src="/assets/images/demos/webcam_start_player.png" alt="Start Player" width="600"></p>
+<a href="#multi-webcam">Multi Webcam</a>
+    <ul>
+      <li><a href="#assumptions">Assumptions</a></li>
+      <li><a href="#installation">Installation</a></li>
+      <li>
+<a href="#quick-start">Quick Start</a>
+        <ul>
+          <li>
+<a href="#start-webcam">Start Webcam</a>
+            <ul>
+              <li><a href="#example">Example</a></li>
+            </ul>
+          </li>
+          <li><a href="#single-webcam">Single Webcam</a></li>
+        </ul>
+      </li>
+      <li><a href="#multiple-webcams">Multiple Webcams</a></li>
+      <li><a href="#module-usage">Module Usage</a></li>
+    </ul>
   </li>
-  <li>Select <code class="language-plaintext highlighter-rouge">Show Preview</code> to start a low quality preview stream</li>
-  <li>While in preview, feel free to update the FOV or change the zoom</li>
-  <li>Once you are ready, select <code class="language-plaintext highlighter-rouge">Start Webcam</code> to start full resolution streaming</li>
-</ol>
+</ul>
+
+<p>This is a small Python module to demonstrate GoPro Webcam usage, including how to use multiple webcams
+simultaneously from the same PC.</p>
+
+<h2 id="assumptions">Assumptions</h2>
+
+<p>It is assumed that the GoPro’s are using firmware versions that support the port parameter to the Start Webcam
+endpoint. See the Open GoPro Commands <a href="https://gopro.github.io/OpenGoPro/http_2_0#command">Quick Reference</a>
+for more information.</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>This module requires Python &gt;= 3.9 and &lt; 3.11.</p>
+
+<p>It should be installed locally, either with pip via:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install .
+</code></pre></div></div>
+
+<p>or <a href="https://python-poetry.org/">poetry</a> via:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>poetry install --only main
+</code></pre></div></div>
+
+<h2 id="quick-start">Quick Start</h2>
+
+<p>Once installed, the following CLI programs are available:</p>
+
+<blockquote>
+  <p>Each CLI has useful help available by calling it with the <code class="language-plaintext highlighter-rouge">--help</code> argument</p>
+</blockquote>
+
+<h3 id="start-webcam">Start Webcam</h3>
+
+<p>Configure and start a single webcam. Its stream can then be viewed using, for example <a href="https://www.videolan.org/vlc/">VLC</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: start-webcam [-h] [-p PORT] [-r RESOLUTION] [-f FOV] serial
+
+Enable and start the webcam.
+
+positional arguments:
+  serial                Last 3 digits of camera serial number.
+
+options:
+  -h, --help            show this help message and exit
+  -p PORT, --port PORT  Port to use. If not set, port will not be specified to camera.
+  -r RESOLUTION, --resolution RESOLUTION
+                        Resolution to use. If set, fov must also be set.
+  -f FOV, --fov FOV     FOV to use. If set, resolution must also be set
+</code></pre></div></div>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>start-webcam 992 -p 9000
+</code></pre></div></div>
+
+<p>The stream can than be viewed at <code class="language-plaintext highlighter-rouge">udp://@0.0.0.0:9001</code></p>
+
+<h3 id="single-webcam">Single Webcam</h3>
+
+<p>Configure and start a single webcam. Then display its stream. This is different than the previous program
+in that it also handles displaying the stream (using <a href="https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html">OpenCV</a>).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: single-webcam [-h] [-p PORT] [-r RESOLUTION] [-f FOV] serial
+
+Enable and start the webcam and a player to view it.
+
+positional arguments:
+  serial                Last 3 digits of camera serial number.
+
+options:
+  -h, --help            show this help message and exit
+  -p PORT, --port PORT  Port to use. If not set, port will not be specified to camera.
+  -r RESOLUTION, --resolution RESOLUTION
+                        Resolution to use. If set, fov must also be set.
+  -f FOV, --fov FOV     FOV to use. If set, resolution must also be set
+</code></pre></div></div>
+
+<h2 id="multiple-webcams">Multiple Webcams</h2>
+
+<p>Using a <code class="language-plaintext highlighter-rouge">.json</code> configuraton file, configure, start, and view multiple webcams.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: multi-webcam [-h] config
+
+Configure, enable and start webcams with players to view them.
+
+positional arguments:
+  config      Location of config json file.
+
+options:
+  -h, --help  show this help message and exit
+</code></pre></div></div>
+
+<p>where an example config file could look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "992": {
+        "port": 9000,
+        "resolution": 12,
+        "fov": 0
+    },
+    "149": {
+        "resolution": 12,
+        "fov": 0
+    }
+}
+
+</code></pre></div></div>
+<p>If port is not set, an available port will be discovered automatically starting at 8554.
+If resolution or fov are not set, they will be set to defaults by the GoPro.</p>
+
+<p>Cameras</p>
+
+<h2 id="module-usage">Module Usage</h2>
+
+<p>For detailed module usage, see the docstrings in ./multi_webcam/webcam.py.</p>
 
         
       </section>
@@ -450,11 +564,11 @@ true for all functionality.</p>
       
   <nav class="pagination">
     
-      <a href="/OpenGoPro/demos/csharp/GoProCSharpSample" class="pagination--pager" title="GoProCSharpSample
+      <a href="/OpenGoPro/demos/ionic/file_transfer" class="pagination--pager" title="Go Pro demo Ionic + Capacitor 3
 ">Previous</a>
     
     
-      <a href="/OpenGoPro/demos/ionic/file_transfer" class="pagination--pager" title="Go Pro demo Ionic + Capacitor 3
+      <a href="/OpenGoPro/demos/python/sdk_wireless_camera_control" class="pagination--pager" title="Open GoPro Python SDK
 ">Next</a>
     
   </nav>

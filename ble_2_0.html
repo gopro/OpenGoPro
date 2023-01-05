@@ -386,7 +386,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          44 minute read
+          46 minute read
         
       </span>
     
@@ -1310,8 +1310,8 @@ Below is a table of commands that can be sent to the camera and how to send them
     <tr style="background-color: rgb(222,235,255);">
       <td>0x0D</td>
       <td>Set Date/Time</td>
-      <td>Set date/time to 2022-01-31 03:04:05</td>
-      <td>09:0D:07:07:E6:01:1F:03:04:05</td>
+      <td>Set date/time to 2023-01-31 03:04:05</td>
+      <td>09:0D:07:07:E7:01:1F:03:04:05</td>
       <td>02:0D:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1332,8 +1332,8 @@ Below is a table of commands that can be sent to the camera and how to send them
     <tr style="background-color: rgb(222,235,255);">
       <td>0x0F</td>
       <td>Set Local Date/Time</td>
-      <td>Set local date/time to: 2022-01-31 03:04:05 (utc-02:00)  (dst: on)</td>
-      <td>0C:0F:0A:07:E6:01:1F:03:04:05:FF:88:01</td>
+      <td>Set local date/time to: 2023-01-31 03:04:05 (utc-02:00)  (dst: on)</td>
+      <td>0C:0F:0A:07:E7:01:1F:03:04:05:FF:88:01</td>
       <td>02:0F:00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2069,6 +2069,17 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>59</td>
       <td>Auto Power Down</td>
+      <td>Set auto power down (id: 59) to 1 min (id: 1)</td>
+      <td>03:3B:01:01</td>
+      <td>01:3B:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>59</td>
+      <td>Auto Power Down</td>
       <td>Set auto power down (id: 59) to 5 min (id: 4)</td>
       <td>03:3B:01:04</td>
       <td>01:3B:00</td>
@@ -2149,7 +2160,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video digital lenses (id: 121) to max superview (id: 7)</td>
       <td>03:79:01:07</td>
       <td>02:79:00</td>
-      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.00.00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2413,8 +2424,19 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set video horizon levelling (id: 150) to off (id: 0)</td>
       <td>03:96:01:00</td>
       <td>02:96:00</td>
-      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.00.00</td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>150</td>
+      <td>Horizon Leveling</td>
+      <td>Set video horizon levelling (id: 150) to on (id: 1)</td>
+      <td>03:96:01:01</td>
+      <td>02:96:00</td>
+      <td>&gt;= v02.00.00</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2564,7 +2586,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
-      <td>Set speed (id: 176) to 1x speed / low light (id: 3)</td>
+      <td>Set speed (id: 176) to 1x (low light) (id: 3)</td>
       <td>03:B0:01:03</td>
       <td>02:B0:00</td>
       <td><span style="color:red">❌</span></td>
@@ -2597,7 +2619,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
-      <td>Set speed (id: 176) to 1x speed / low light (ext. batt) (id: 6)</td>
+      <td>Set speed (id: 176) to 1x (ext. batt, low light) (id: 6)</td>
       <td>03:B0:01:06</td>
       <td>02:B0:00</td>
       <td><span style="color:red">❌</span></td>
@@ -2608,7 +2630,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
-      <td>Set speed (id: 176) to 8x ultra slo-mo (50 hz) (id: 7)</td>
+      <td>Set speed (id: 176) to 8x ultra slo-mo (50hz) (id: 7)</td>
       <td>03:B0:01:07</td>
       <td>02:B0:00</td>
       <td><span style="color:red">❌</span></td>
@@ -2619,7 +2641,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
-      <td>Set speed (id: 176) to 4x super slo-mo (50 hz) (id: 8)</td>
+      <td>Set speed (id: 176) to 4x super slo-mo (50hz) (id: 8)</td>
       <td>03:B0:01:08</td>
       <td>02:B0:00</td>
       <td><span style="color:red">❌</span></td>
@@ -2630,7 +2652,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
-      <td>Set speed (id: 176) to 2x slo-mo (50 hz) (id: 9)</td>
+      <td>Set speed (id: 176) to 2x slo-mo (50hz) (id: 9)</td>
       <td>03:B0:01:09</td>
       <td>02:B0:00</td>
       <td><span style="color:red">❌</span></td>
@@ -2641,7 +2663,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
-      <td>Set speed (id: 176) to 1x speed / low light (50hz) (id: 10)</td>
+      <td>Set speed (id: 176) to 1x (low light, 50hz) (id: 10)</td>
       <td>03:B0:01:0A</td>
       <td>02:B0:00</td>
       <td><span style="color:red">❌</span></td>
@@ -2674,11 +2696,165 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
     <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
-      <td>Set speed (id: 176) to 1x speed / low light (ext. batt, 50hz) (id: 13)</td>
+      <td>Set speed (id: 176) to 1x (ext. batt, low light, 50hz) (id: 13)</td>
       <td>03:B0:01:0D</td>
       <td>02:B0:00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 8x ultra slo-mo (ext. batt) (id: 14)</td>
+      <td>03:B0:01:0E</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 8x ultra slo-mo (ext. batt, 50hz) (id: 15)</td>
+      <td>03:B0:01:0F</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 8x ultra slo-mo (long. batt) (id: 16)</td>
+      <td>03:B0:01:10</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 4x super slo-mo (long. batt) (id: 17)</td>
+      <td>03:B0:01:11</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 2x slo-mo (long. batt) (id: 18)</td>
+      <td>03:B0:01:12</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x (long. batt, low light) (id: 19)</td>
+      <td>03:B0:01:13</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 8x ultra slo-mo (long. batt, 50hz) (id: 20)</td>
+      <td>03:B0:01:14</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 4x super slo-mo (long. batt, 50hz) (id: 21)</td>
+      <td>03:B0:01:15</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 2x slo-mo (long. batt, 50hz) (id: 22)</td>
+      <td>03:B0:01:16</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x (long. batt, low light, 50hz) (id: 23)</td>
+      <td>03:B0:01:17</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 2x slo-mo (4k) (id: 24)</td>
+      <td>03:B0:01:18</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 4x super slo-mo (2.7k) (id: 25)</td>
+      <td>03:B0:01:19</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 2x slo-mo (4k, 50hz) (id: 26)</td>
+      <td>03:B0:01:1A</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 4x super slo-mo (2.7k, 50hz) (id: 27)</td>
+      <td>03:B0:01:1B</td>
+      <td>02:B0:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2781,6 +2957,28 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>180</td>
+      <td>Video Mode</td>
+      <td>Set video mode (id: 180) to extended battery (green icon) (id: 101)</td>
+      <td>03:B4:01:65</td>
+      <td>02:B4:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>180</td>
+      <td>Video Mode</td>
+      <td>Set video mode (id: 180) to longest battery (green icon) (id: 102)</td>
+      <td>03:B4:01:66</td>
+      <td>02:B4:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td>&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
   </tbody>
 </table>
 
@@ -2848,14 +3046,20 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="12">
+      <td rowspan="14">
 <a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a>
 </td>
-      <td>HERO11 Black Mini</td>
+      <td rowspan="2">HERO11 Black Mini</td>
+      <td>v02.00.00</td>
+    </tr>
+    <tr>
       <td>v01.10.00</td>
     </tr>
     <tr>
-      <td rowspan="3">HERO11 Black</td>
+      <td rowspan="4">HERO11 Black</td>
+      <td>v02.01.00</td>
+    </tr>
+    <tr>
       <td>v01.20.00</td>
     </tr>
     <tr>
@@ -3188,29 +3392,6 @@ Below is a table of supported status IDs.<br>
       <td>0: Zero<br>1: One<br>2: Two<br>3: Three<br>
 </td>
       <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>External battery present</td>
-      <td>Is an external battery connected?</td>
-      <td>boolean</td>
-      <td>0: False<br>1: True<br>
-</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>External battery level</td>
-      <td>External battery power level in percent</td>
-      <td>percent</td>
-      <td>0-100</td>
-      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
