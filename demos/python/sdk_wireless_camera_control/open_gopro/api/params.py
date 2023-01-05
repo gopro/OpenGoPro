@@ -364,9 +364,7 @@ class PerformanceMode(GoProEnum):
 
 
 class MediaFormat(GoProEnum):
-    UNKNOWN_12 = 12
     TIME_LAPSE_VIDEO = 13
-    UNKNOWN_16 = 16
     TIME_LAPSE_PHOTO = 20
     NIGHT_LAPSE_PHOTO = 21
     NIGHT_LAPSE_VIDEO = 26

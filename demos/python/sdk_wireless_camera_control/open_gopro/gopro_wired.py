@@ -283,6 +283,20 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
                     if re.match(r"172.2\d.1\d\d.51", ipv4_address):
                         self.urls.put_nowait(ipv4_address)
 
+            def update_service(self, *_: Any) -> None:
+                """Not used
+
+                Args:
+                    *_ (Any): not used
+                """
+
+            def remove_service(self, *_: Any) -> None:
+                """Not used
+
+                Args:
+                    *_ (Any): not used
+                """
+
         logger.info("Querying mDNS to find a GoPro...")
         zeroconf = Zeroconf(unicast=True)
         listener = ZeroconfListener()
