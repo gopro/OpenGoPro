@@ -369,6 +369,7 @@ class MediaFormat(GoProEnum):
     UNKNOWN_16 = 16
     TIME_LAPSE_PHOTO = 20
     NIGHT_LAPSE_PHOTO = 21
+    UNKNOWN_23 = 23
     NIGHT_LAPSE_VIDEO = 26
 
 
