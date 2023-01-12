@@ -40,9 +40,16 @@ class HttpParsers:
             for (name, id_map) in [("status", StatusId), ("settings", SettingId)]:
                 for k, v in data[name].items():
                     identifier = id_map(int(k))
-                    parsed[identifier] = (
-                        container(v) if (container := GoProResp._get_query_container(identifier)) else v  # type: ignore
-                    )
+                    try:
+                        parsed[identifier] = (
+                            container(v) if (container := GoProResp._get_query_container(identifier)) else v  # type: ignore
+                        )
+                    except ValueError:
+                        # This is the case where we receive a value that is not defined in our params.
+                        # This shouldn't happen and is either a firmware bug or means the documentation needs to
+                        # be updated. However, it isn't functionally critical.
+                        logger.warning(f"{identifier.name} does not contain a value {v}")
+                        parsed[identifier] = v
             return parsed
 
     class MediaListParser(JsonParser):
