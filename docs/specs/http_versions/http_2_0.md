@@ -2123,7 +2123,7 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="14"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="16"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
       <td rowspan="2">HERO11 Black Mini</td>
       <td>v02.00.00</td>
     </tr>
@@ -2144,7 +2144,10 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>v01.10.00</td>
     </tr>
     <tr>
-      <td rowspan="7">HERO10 Black</td>
+      <td rowspan="8">HERO10 Black</td>
+      <td>v01.50.00</td>
+    </tr>
+    <tr>
       <td>v01.46.00</td>
     </tr>
     <tr>
@@ -2166,7 +2169,10 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>v01.10.00</td>
     </tr>
     <tr>
-      <td>HERO9 Black</td>
+      <td rowspan="2">HERO9 Black</td>
+      <td>v01.72.00</td>
+    </tr>
+    <tr>
       <td>v01.70.00</td>
     </tr>
   </tbody>
@@ -2297,16 +2303,16 @@ The outer structure of the media list and the inner structure of individual medi
       <td>Group ID (if grouped media item)</td>
     </tr>
     <tr>
+      <td>glrv</td>
+      <td>Low resolution video file size</td>
+    </tr>
+    <tr>
       <td>id</td>
       <td>Media list session identifier</td>
     </tr>
     <tr>
       <td>l</td>
       <td>ID of last member of a group (for grouped media items)</td>
-    </tr>
-    <tr>
-      <td>ls</td>
-      <td>Low resolution video file size</td>
     </tr>
     <tr>
       <td>m</td>
