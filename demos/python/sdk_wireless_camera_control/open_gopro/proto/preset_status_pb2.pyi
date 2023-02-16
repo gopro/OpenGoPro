@@ -327,6 +327,8 @@ class _EnumPresetTitleEnumTypeWrapper(
     PRESET_TITLE_LIGHT_PAINTING: _EnumPresetTitle.ValueType
     PRESET_TITLE_LIGHT_TRAIL: _EnumPresetTitle.ValueType
     PRESET_TITLE_FULL_FRAME: _EnumPresetTitle.ValueType
+    PRESET_TITLE_MAX_LENS_VIDEO: _EnumPresetTitle.ValueType
+    PRESET_TITLE_MAX_LENS_TIMEWARP: _EnumPresetTitle.ValueType
     PRESET_TITLE_MAX: _EnumPresetTitle.ValueType
 
 class EnumPresetTitle(_EnumPresetTitle, metaclass=_EnumPresetTitleEnumTypeWrapper): ...
@@ -395,6 +397,8 @@ PRESET_TITLE_STAR_TRAIL: EnumPresetTitle.ValueType
 PRESET_TITLE_LIGHT_PAINTING: EnumPresetTitle.ValueType
 PRESET_TITLE_LIGHT_TRAIL: EnumPresetTitle.ValueType
 PRESET_TITLE_FULL_FRAME: EnumPresetTitle.ValueType
+PRESET_TITLE_MAX_LENS_VIDEO: EnumPresetTitle.ValueType
+PRESET_TITLE_MAX_LENS_TIMEWARP: EnumPresetTitle.ValueType
 PRESET_TITLE_MAX: EnumPresetTitle.ValueType
 global___EnumPresetTitle = EnumPresetTitle
 

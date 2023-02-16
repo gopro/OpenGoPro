@@ -1565,7 +1565,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set auto power down (id: 59) to never (id: 0)</td>
       <td>03:3B:01:00</td>
       <td>01:3B:00</td>
-      <td><span style="color:red">❌</span></td>
+      <td>\&gt;= v02.10.00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1576,7 +1576,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set auto power down (id: 59) to 1 min (id: 1)</td>
       <td>03:3B:01:01</td>
       <td>01:3B:00</td>
-      <td><span style="color:red">❌</span></td>
+      <td>\&gt;= v02.10.00</td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1587,7 +1587,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>Set auto power down (id: 59) to 5 min (id: 4)</td>
       <td>03:3B:01:04</td>
       <td>01:3B:00</td>
-      <td><span style="color:red">❌</span></td>
+      <td>\&gt;= v02.10.00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1613,6 +1613,28 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>59</td>
+      <td>Auto Power Down</td>
+      <td>Set auto power down (id: 59) to 8 seconds (id: 11)</td>
+      <td>03:3B:01:0B</td>
+      <td>01:3B:00</td>
+      <td>\&gt;= v02.10.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>59</td>
+      <td>Auto Power Down</td>
+      <td>Set auto power down (id: 59) to 30 seconds (id: 12)</td>
+      <td>03:3B:01:0C</td>
+      <td>01:3B:00</td>
+      <td>\&gt;= v02.10.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
@@ -2551,8 +2573,11 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="16"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
-      <td rowspan="2">HERO11 Black Mini</td>
+      <td rowspan="17"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="3">HERO11 Black Mini</td>
+      <td>v02.10.00</td>
+    </tr>
+    <tr>
       <td>v02.00.00</td>
     </tr>
     <tr>

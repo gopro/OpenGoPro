@@ -112,7 +112,7 @@ cmd = "coverage-badge -f -o docs/_static/coverage.svg"
 help = "update coverage badge"
 
 [tool.poe.tasks.protobuf]
-cmd = "sh ./tools/build_protos.sh"
+cmd = "bash ./tools/build_protos.sh"
 help = "generate protobuf source from .proto (assumes protoc >= 3.20.1 available)"
 
 [tool.poe.tasks.clean_artifacts]
