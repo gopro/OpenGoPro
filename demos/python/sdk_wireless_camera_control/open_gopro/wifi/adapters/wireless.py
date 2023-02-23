@@ -76,8 +76,8 @@ class Wireless(WifiController):
         """Try to find and instantiate a Wifi driver that can be used.
 
         Raises:
-            Exception: We weren't able to find a suitable driver
-            Exception: We weren't able to auto-detect an interface after detecting driver
+            RuntimeError: We weren't able to find a suitable driver
+            RuntimeError: We weren't able to auto-detect an interface after detecting driver
 
         Returns:
             WifiController: [description]
@@ -95,7 +95,7 @@ class Wireless(WifiController):
             self._password = getpass("Need to run as sudo. Enter password: ")
         # Validate password
         if "VALID PASSWORD" not in cmd(f'echo "{self._password}" | sudo -S echo "VALID PASSWORD"'):
-            raise Exception("Invalid password")
+            raise RuntimeError("Invalid password")
 
         # try nmcli (Ubuntu 14.04)
         if which("nmcli"):
@@ -109,7 +109,7 @@ class Wireless(WifiController):
         if which("wpa_supplicant"):
             return WpasupplicantWireless(password=self._password)
 
-        raise Exception("Unable to find compatible wireless driver.")
+        raise RuntimeError("Unable to find compatible wireless driver.")
 
     @pass_through_to_driver
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:  # type: ignore
@@ -830,7 +830,7 @@ class NetshWireless(WifiController):
             timeout (float): Time before considering connection failed (in seconds). Defaults to 15.
 
         Raises:
-            Exception: Can not add profile or request to connect to SSID fails
+            RuntimeError: Can not add profile or request to connect to SSID fails
 
         Returns:
             bool: True if connected, False otherwise
@@ -852,13 +852,13 @@ class NetshWireless(WifiController):
         os.close(fd)
         response = cmd(f"netsh wlan add profile filename={filename}")
         if "is added on interface" not in response:
-            raise Exception(response)
+            raise RuntimeError(response)
         os.remove(filename)
 
         # Try to connect
         response = cmd(f'netsh wlan connect ssid="{ssid}" name="{ssid}" interface="{self.interface}"')
         if "was completed successfully" not in response:
-            raise Exception(response)
+            raise RuntimeError(response)
         # Wait for connection to establish
         DELAY = 1
         while (current := self.current()) != (ssid, SsidState.CONNECTED):

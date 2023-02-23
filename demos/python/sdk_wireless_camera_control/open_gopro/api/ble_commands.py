@@ -86,9 +86,9 @@ class BleParserBuilders:
 
             dt = datetime.datetime(year, *[int(x) for x in buf[2:7]])  # type: ignore
             return (
-                dict(datetime=dt)
+                {"datetime": dt}
                 if is_dst_tz
-                else dict(datetime=dt, tzone=Int16sb.parse(buf[7:9]), dst=bool(buf[9]))
+                else {"datetime": dt, "tzone": Int16sb.parse(buf[7:9]), "dst": bool(buf[9])}
             )
 
     class MapKey(JsonParser):
@@ -456,7 +456,7 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         Returns:
             GoProResp: command status of request
         """
-        return dict(active=mode)  # type: ignore
+        return {"active": mode}  # type: ignore
 
     @ble_proto_command(
         uuid=GoProUUIDs.CQ_QUERY,
@@ -487,7 +487,10 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         Returns:
             GoProResp: JSON data describing all currently available presets
         """
-        return dict(register_preset_status=register or [], unregister_preset_status=unregister or [])  # type: ignore
+        return {  # type: ignore
+            "register_preset_status": register or [],
+            "unregister_preset_status": unregister or [],
+        }
 
     @ble_proto_command(
         uuid=GoProUUIDs.CM_NET_MGMT_COMM,
@@ -524,7 +527,7 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         Returns:
             GoProResp: result of scan with entries for WiFi networks
         """
-        return dict(scan_id=scan_id, start_index=start_index, max_entries=max_entries)  # type: ignore
+        return {"scan_id": scan_id, "start_index": start_index, "max_entries": max_entries}  # type: ignore
 
     @ble_proto_command(
         uuid=GoProUUIDs.CM_NET_MGMT_COMM,
@@ -581,16 +584,16 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         Returns:
             GoProResp: command status of request
         """
-        return dict(  # type: ignore
-            url=url,
-            encode=True,
-            window_size=window_size,
-            cert=cert,
-            minimum_bitrate=minimum_bitrate,
-            maximum_bitrate=maximum_bitrate,
-            starting_bitrate=starting_bitrate,
-            lens=lens,
-        )
+        return {  # type: ignore
+            "url": url,
+            "encode": True,
+            "window_size": window_size,
+            "cert": cert,
+            "minimum_bitrate": minimum_bitrate,
+            "maximum_bitrate": maximum_bitrate,
+            "starting_bitrate": starting_bitrate,
+            "lens": lens,
+        }
 
     @ble_proto_command(
         uuid=GoProUUIDs.CQ_QUERY,
@@ -618,7 +621,7 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         Returns:
             GoProResp: current livestream status
         """
-        return dict(register_live_stream_status=register or [], unregister_live_stream_status=unregister or [])  # type: ignore
+        return {"register_live_stream_status": register or [], "unregister_live_stream_status": unregister or []}  # type: ignore
 
     @ble_proto_command(
         uuid=GoProUUIDs.CQ_COMMAND,

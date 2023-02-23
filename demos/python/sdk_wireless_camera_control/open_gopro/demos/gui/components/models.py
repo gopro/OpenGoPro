@@ -233,7 +233,7 @@ class GoProModel:
             message (Message): Message to analyze
 
         Raises:
-            Exception: unhandled type of argument
+            ValueError: unhandled type of argument
 
         Returns:
             tuple[list[Callable], list[Callable], list[type], list[str]]:
@@ -255,7 +255,7 @@ class GoProModel:
                             adapters.append(lambda x, adapt=arg_type: adapt[x])
                             break
                     else:
-                        raise Exception("unrecognized format field" + str(format_field))
+                        raise ValueError("unrecognized format field" + str(format_field))
                 except AttributeError:
                     validators.append(lambda x, adapt=arg_type: adapt(x))
                     adapters.append(lambda x, adapt=arg_type: adapt[x])
@@ -348,7 +348,7 @@ class CompoundCommand(Message):
         Returns:
             dict[str, Any]: Message as dict
         """
-        return dict(protocol="Complex", id=self._identifier) | kwargs
+        return {"protocol": "Complex", "id": self._identifier} | kwargs
 
 
 # pylint: disable = missing-class-docstring, arguments-differ
@@ -441,7 +441,7 @@ class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]
                 time.sleep(2)
                 assert self._communicator.ble_command.set_shutter(shutter=Params.Toggle.ENABLE).is_ok
 
-                response = GoProResp(meta=["Livestream"], raw_packet=dict(url=url))
+                response = GoProResp(meta=["Livestream"], raw_packet={"url": url})
                 response._parse()
                 return response
 

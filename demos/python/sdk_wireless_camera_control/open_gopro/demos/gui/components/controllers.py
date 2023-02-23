@@ -607,7 +607,7 @@ class MessagePalette(Controller):
             message (MessageType): message to build params for
 
         Raises:
-            Exception: found a parameter with a currently unhandled argument type
+            ValueError: found a parameter with a currently unhandled argument type
         """
         for adapter, validator, arg_type, arg_name in zip(*self.model.get_message_info(message)):
             getter: Callable
@@ -631,7 +631,7 @@ class MessagePalette(Controller):
                 validator = lambda x: isinstance(x, datetime.datetime)
                 adapter = lambda x: datetime.datetime(*x)
             else:
-                raise Exception("Unexpected argument type")
+                raise ValueError("Unexpected argument type")
 
             self.active_arguments.append(MessagePalette.Argument(getter, adapter, validator, arg_name))
 

@@ -118,7 +118,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: Media info as JSON
         """
-        return dict(path=f"100GOPRO/{file}")  # type: ignore
+        return {"path": f"100GOPRO/{file}"}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/media/list", parser=HttpParsers.MediaListParser())
     def get_media_list(self) -> GoProResp:
@@ -138,7 +138,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: Status
         """
-        return dict(p=mode)  # type: ignore
+        return {"p": mode}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/version")
     def get_open_gopro_api_version(self) -> GoProResp:
@@ -168,7 +168,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: command status
         """
-        return dict(id=preset)  # type: ignore
+        return {"id": preset}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/presets/set_group", arguments=["id"])
     def load_preset_group(self, *, group: Params.PresetGroup) -> GoProResp:
@@ -182,7 +182,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: command status
         """
-        return dict(id=group)  # type: ignore
+        return {"id": group}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/stream", components=["mode"], identifier="Preview Stream")
     def set_preview_stream(self, *, mode: Params.Toggle) -> GoProResp:
@@ -194,7 +194,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: command status
         """
-        return dict(mode="start" if mode is Params.Toggle.ENABLE else "stop")  # type: ignore
+        return {"mode": "start" if mode is Params.Toggle.ENABLE else "stop"}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/analytics/set_client_info")
     def set_third_party_client_info(self) -> GoProResp:
@@ -221,7 +221,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: command status
         """
-        return dict(mode="start" if shutter is Params.Toggle.ENABLE else "stop")  # type: ignore
+        return {"mode": "start" if shutter is Params.Toggle.ENABLE else "stop"}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/control/set_ui_controller", arguments=["p"])
     def set_camera_control(self, *, mode: Params.CameraControl) -> GoProResp:
@@ -233,7 +233,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: command status
         """
-        return dict(p=mode)  # type: ignore
+        return {"p": mode}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/set_date_time", arguments=["date", "time", "tzone", "dst"])
     def set_date_time(
@@ -249,12 +249,12 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: command status
         """
-        return dict(  # type: ignore
-            date=f"{date_time.year}_{date_time.month}_{date_time.day}",
-            time=f"{date_time.hour}_{date_time.minute}_{date_time.second}",
-            tzone=tz_offset,
-            dst=int(is_dst),
-        )
+        return {  # type: ignore
+            "date": f"{date_time.year}_{date_time.month}_{date_time.day}",
+            "time": f"{date_time.hour}_{date_time.minute}_{date_time.second}",
+            "tzone": tz_offset,
+            "dst": int(is_dst),
+        }
 
     @http_get_json_command(endpoint="gopro/camera/get_date_time")
     def get_date_time(self) -> GoProResp:
@@ -291,7 +291,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: command status
         """
-        return dict(path=f"100GOPRO/{file}", ms=offset or None)  # type: ignore
+        return {"path": f"100GOPRO/{file}", "ms": offset or None}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/media/hilight/remove", arguments=["path", "ms"])
     def remove_file_hilight(self, *, file: str, offset: Optional[int] = None) -> GoProResp:
@@ -304,7 +304,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: command status
         """
-        return dict(path=f"100GOPRO/{file}", ms=offset)  # type: ignore
+        return {"path": f"100GOPRO/{file}", "ms": offset}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/webcam/exit")
     def webcam_exit(self) -> GoProResp:
@@ -337,7 +337,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: command status
         """
-        return dict(res=resolution, fov=fov)  # type: ignore
+        return {"res": resolution, "fov": fov}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/webcam/stop", rules={MessageRules.FASTPASS: lambda **kwargs: True})
     def webcam_stop(self) -> GoProResp:
@@ -365,7 +365,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: command status
         """
-        return dict(p=control)  # type: ignore
+        return {"p": control}  # type: ignore
 
     ######################################################################################################
     #                          HTTP GET BINARY COMMANDS
