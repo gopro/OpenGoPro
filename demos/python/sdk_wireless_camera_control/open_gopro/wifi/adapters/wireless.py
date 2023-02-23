@@ -26,7 +26,7 @@ from open_gopro.wifi import SsidState, WifiController
 logger = logging.getLogger(__name__)
 
 
-def ensure_us_english():
+def ensure_us_english() -> None:
     """Validate the system language is US English for CLI response parsing
 
     From https://stackoverflow.com/questions/3425294/how-to-detect-the-os-default-language-in-python
@@ -70,10 +70,6 @@ class Wireless(WifiController):
     discover a suitable interface
     """
 
-    def __new__(cls: type[Wireless], *args, **kwargs) -> Wireless:
-        ensure_us_english()
-        return super(Wireless, cls).__new__(cls)
-
     def __init__(self, interface: Optional[str] = None, password: Optional[str] = None) -> None:
         """Constructor
 
@@ -84,8 +80,10 @@ class Wireless(WifiController):
         #noqa: DAR402
 
         Raises:
-            Exception: We weren't able to find a suitable driver or auto-detect an interface after detecting driver
+            RuntimeError: The system is using any language other then en_US
+            RuntimeError: We weren't able to find a suitable driver or auto-detect an interface after detecting driver
         """
+        ensure_us_english()
         WifiController.__init__(self, interface, password)
 
         # detect and init appropriate driver
