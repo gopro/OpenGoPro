@@ -7,7 +7,10 @@ from __future__ import annotations
 import os
 import re
 import time
+import ctypes
+import locale
 import logging
+import platform
 import tempfile
 from enum import Enum, auto
 from getpass import getpass
@@ -21,6 +24,26 @@ from open_gopro.util import cmd
 from open_gopro.wifi import SsidState, WifiController
 
 logger = logging.getLogger(__name__)
+
+
+def ensure_us_english():
+    """Validate the system language is US English for CLI response parsing
+
+    From https://stackoverflow.com/questions/3425294/how-to-detect-the-os-default-language-in-python
+
+    Raises:
+        RuntimeError: The system is using any language other then en_US
+    """
+    if platform.system().lower() == "windows":
+        windll = ctypes.windll.kernel32
+        language = locale.windows_locale[windll.GetUserDefaultUILanguage()]
+    else:
+        language = os.environ["LANG"]
+
+    if language != "en_US":
+        raise RuntimeError(
+            f"The Wifi driver parses CLI responses and only supports en_US where your language is {language}"
+        )
 
 
 @wrapt.decorator
@@ -46,6 +69,10 @@ class Wireless(WifiController):
     If interface is not specified (i.e. it is None), we will attempt to automatically
     discover a suitable interface
     """
+
+    def __new__(cls: type[Wireless], *args, **kwargs) -> Wireless:
+        ensure_us_english()
+        return super(Wireless, cls).__new__(cls)
 
     def __init__(self, interface: Optional[str] = None, password: Optional[str] = None) -> None:
         """Constructor
