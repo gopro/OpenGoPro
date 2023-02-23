@@ -58,7 +58,7 @@ Ready to contribute? Here's how to set up Open GoPro for local development.
 Minimal Requirements
 ~~~~~~~~~~~~~~~~~~~~
 
-* Python (3.9 or higher)
+* Python (>= 3.9, < 3.11)
 * `Poetry <https://python-poetry.org/docs/#installation>`_ : Needed to install dependencies / development tasks
 
 Additional Optional Requirements:
@@ -92,7 +92,7 @@ Steps
 
     .. code-block:: console
 
-        $ poetry install
+        $ poetry install --extras gui
 
 #. Make your changes locally. When you're done making changes, check that your changes are:
 

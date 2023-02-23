@@ -10,7 +10,8 @@ from pathlib import Path
 from rich.console import Console
 
 from open_gopro import WiredGoPro, Params
-from open_gopro.util import setup_logging, display_video_blocking
+from open_gopro.demos.gui.components.util import display_video_blocking
+from open_gopro.util import setup_logging
 
 console = Console()  # rich consoler printer
 

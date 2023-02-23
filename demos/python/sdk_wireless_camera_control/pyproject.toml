@@ -43,12 +43,15 @@ wrapt = "^1"
 requests = "^2"
 protobuf = "^3"
 packaging = "^21"
-opencv-python = "^4"
-tk = "^0.1"
-Pillow = "^9"
 rich = "^12"
 pexpect = "^4"
 zeroconf = "^0.39.4"
+opencv-python = { version = "^4", optional = true }
+tk = { version= "^0.1", optional = true }
+Pillow = {version= "^9", optional = true}
+
+[tool.poetry.extras]
+gui = ["opencv-python", "tk", "pillow"]
 
 [tool.poetry.group.dev.dependencies]
 pydocstyle = { extras = ["toml"], version = "^6" }
@@ -225,13 +228,14 @@ disable = [
     "invalid-name",
     "unsubscriptable-object",
     "no-member", # This is bad. We need to make stub files since mypy and pylint do not follow decorators well
+
 ]
 
 [tool.pylint.'FORMAT']
 max-line-length = 160
 
 [tool.pylint.'TYPECHECK']
-ignored-modules="cv2"
+ignored-modules = "cv2"
 
 [tool.black]
 line-length = 111

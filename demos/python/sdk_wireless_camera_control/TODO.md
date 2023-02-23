@@ -15,6 +15,7 @@
 ## Documentation
 
 -   [ ] Figure out autodoc type alias in `conf.py`
+-   [ ] Make graphviz requirement optional for local builds
 
 ## GUI
 

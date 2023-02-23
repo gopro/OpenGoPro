@@ -6,14 +6,19 @@ QuickStart Guide
 
 .. warning:: This section assumes you have successfully :ref:`installed<Installation>` the package.
 
-
-Open GoPro installs with several command line demos to demonstrate BLE and Wi-Fi. The source code for these examples
+Open GoPro installs with severaldemos to demonstrate BLE and Wi-Fi. The source code for these examples
 can be found on `Github <https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control/open_gopro/demos>`_
 or locally in `$INSTALL/open_gopro/demos` where $INSTALL can be found with:
 
 .. code-block:: console
 
     $ pip show open-gopro
+
+Note that the GUI demos will only be available if OpenGoPro was installed with the additional GUI option.
+See the  :ref:`installation<Installation>` steps for more informatoin.
+
+Command Line Interface (CLI) Demos
+==================================
 
 All of the CLI demos have command-line help via the `--help` parameter. All demos will log to the console as well
 as write a more detailed log to a file (this file can be set with the `--log` parameter). The detailed log
@@ -87,6 +92,75 @@ For more information, do:
     --wifi_interface WIFI_INTERFACE
                             System Wifi Interface. If not set, first discovered interface will be used.
     --password            Set to read sudo password from stdin. If not set, you will be prompted for password if needed
+
+WiFi Demo
+-----------
+
+The `wifi` demo will discover a GoPro camera, connect to it, enable the camera'a WiFi AP, and then connect
+to it via WiFi. This is useful if you want to send HTTP commands to it from some external source such as curl.
+
+Note that this demo will run, thus maintaining the WiFi connection, until exited by pressing enter.
+
+.. code-block:: console
+
+    $ gopro-wifi
+
+For more information, do:
+
+.. code-block:: console
+
+    $ gopro-wif --help
+    usage: gopro-wifi [-h] [-l LOG] [-i IDENTIFIER] [-w WIFI_INTERFACE] [-p]
+
+    Connect to a GoPro camera's Wifi Access Point.
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    -l LOG, --log LOG     Location to store detailed log
+    -i IDENTIFIER, --identifier IDENTIFIER
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                            default camera SSID. If not used, first discovered GoPro will be
+                            connected to
+    -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE
+                            System Wifi Interface. If not set, first discovered interface will be
+                            used.
+    -p, --password        Set to read sudo password from stdin. If not set, you will be prompted
+                            for password if needed
+
+Battery Demo
+------------
+
+This demo will continuously read the battery level (either via polling or registering fro notifications as
+configured per the command line argument) and write
+the results to a .csv file. To run, do:
+
+.. code-block:: console
+
+    $ gopro-log-battery
+
+For more information, do:
+
+.. code-block:: console
+
+    $ gopro-log-battery --help
+    usage: gopro-log-battery [-h] [-p POLL] [-l LOG] [-i IDENTIFIER]
+
+    Connect to the GoPro via BLE only and continuously read the battery (either by polling or
+    notifications).
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    -p POLL, --poll POLL  Set to poll the battery at a given interval. If not set, battery level
+                            will be notified instead. Defaults to notifications.
+    -l LOG, --log LOG     Location to store detailed log
+    -i IDENTIFIER, --identifier IDENTIFIER
+                            Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                            default camera SSID. If not used, first discovered GoPro will be
+                            connected to
+
+
+Graphical User Interface (GUI) Demos
+====================================
 
 Wired Webcam Demo
 -----------------
@@ -185,68 +259,3 @@ or automatically connect to the first found camera. Once connected, the GUI will
   - The most recently received updates will be highlighted in blue
 - A network stream can be started using the video pane in the bottom right. This will automatically get started
   after sending the Livestream command
-
-WiFi Demo
------------
-
-The `wifi` demo will discover a GoPro camera, connect to it, enable the camera'a WiFi AP, and then connect
-to it via WiFi. This is useful if you want to send HTTP commands to it from some external source such as curl.
-
-Note that this demo will run, thus maintaining the WiFi connection, until exited by pressing enter.
-
-.. code-block:: console
-
-    $ gopro-wifi
-
-For more information, do:
-
-.. code-block:: console
-
-    $ gopro-wif --help
-    usage: gopro-wifi [-h] [-l LOG] [-i IDENTIFIER] [-w WIFI_INTERFACE] [-p]
-
-    Connect to a GoPro camera's Wifi Access Point.
-
-    optional arguments:
-    -h, --help            show this help message and exit
-    -l LOG, --log LOG     Location to store detailed log
-    -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the
-                            default camera SSID. If not used, first discovered GoPro will be
-                            connected to
-    -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE
-                            System Wifi Interface. If not set, first discovered interface will be
-                            used.
-    -p, --password        Set to read sudo password from stdin. If not set, you will be prompted
-                            for password if needed
-
-Battery Demo
-------------
-
-This demo will continuously read the battery level (either via polling or registering fro notifications as
-configured per the command line argument) and write
-the results to a .csv file. To run, do:
-
-.. code-block:: console
-
-    $ gopro-log-battery
-
-For more information, do:
-
-.. code-block:: console
-
-    $ gopro-log-battery --help
-    usage: gopro-log-battery [-h] [-p POLL] [-l LOG] [-i IDENTIFIER]
-
-    Connect to the GoPro via BLE only and continuously read the battery (either by polling or
-    notifications).
-
-    optional arguments:
-    -h, --help            show this help message and exit
-    -p POLL, --poll POLL  Set to poll the battery at a given interval. If not set, battery level
-                            will be notified instead. Defaults to notifications.
-    -l LOG, --log LOG     Location to store detailed log
-    -i IDENTIFIER, --identifier IDENTIFIER
-                            Last 4 digits of GoPro serial number, which is the last 4 digits of the
-                            default camera SSID. If not used, first discovered GoPro will be
-                            connected to

@@ -21,7 +21,7 @@ import PIL.Image
 import PIL.ImageTk
 import wrapt
 
-from open_gopro.demos.gui import models, views
+from open_gopro.demos.gui.components import models, views
 from open_gopro.util import setup_logging, pretty_print, add_logging_handler
 
 ResponseHandlerType = Callable[[str, models.GoProResp], None]

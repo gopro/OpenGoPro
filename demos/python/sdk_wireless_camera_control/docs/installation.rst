@@ -7,12 +7,6 @@ Installation
 Stable release
 --------------
 
-To install Open GoPro, run this command in your terminal:
-
-.. code-block:: console
-
-    $ pip install open-gopro
-
 This is the preferred method to install Open GoPro, as it will always install the most recent stable release
 from `PyPi <https://pypi.org/project/open-gopro/>`_ .
 
@@ -21,6 +15,25 @@ you through the process.
 
 .. _pip: https://pip.pypa.io
 .. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
+
+Minimal Install
+^^^^^^^^^^^^^^^
+
+To minimally install Open GoPro (to use the library and CLI demos), run this command in your terminal:
+
+.. code-block:: console
+
+    $ pip install open-gopro
+
+Additional GUI Install
+^^^^^^^^^^^^^^^^^^^^^^
+
+To additionally install the extra dependencies to run the GUI demos:
+
+.. code-block:: console
+
+    $ pip install open-gopro[gui]
+
 
 From sources
 ------------
@@ -57,7 +70,7 @@ Then install the package
 .. _zip: https://github.com/gopro/OpenGoPro/archive/refs/heads/main.zip
 
 For Developers
-**************
+^^^^^^^^^^^^^^
 
 The above installation will not install Open GoPro in editable mode. If you want to modify the package so that
 you can change it, for i.e. development, see :ref:`Contribution<Steps>`.

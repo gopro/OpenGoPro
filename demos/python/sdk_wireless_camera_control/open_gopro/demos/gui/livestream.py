@@ -10,7 +10,8 @@ from typing import Optional
 from rich.console import Console
 
 from open_gopro import WirelessGoPro, Params, constants
-from open_gopro.util import setup_logging, add_cli_args_and_parse, display_video_blocking
+from open_gopro.demos.gui.components.util import display_video_blocking
+from open_gopro.util import setup_logging, add_cli_args_and_parse
 
 console = Console()  # rich consoler printer
 
