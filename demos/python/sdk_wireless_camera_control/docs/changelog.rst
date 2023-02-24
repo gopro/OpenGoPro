@@ -9,7 +9,15 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
-0.12.0 (December-16-2021)
+0.13.0 (February-24-2023)
+-------------------------
+
+* Allow for GUI dependencies to be optional (with "gui" extras)
+* Add English language verification for Wifi Driver
+* Documentation fixes missed from 0.12.0
+* Update dependencies (including bleak to 0.19.5)
+
+0.12.0 (December-16-2023)
 -------------------------
 * Add USB support
 
