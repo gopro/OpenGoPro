@@ -12,6 +12,6 @@ try:
 
 except ModuleNotFoundError:
     print(
-        "Required GUI dependencies not found. See the installation steps; https://gopro.github.io/OpenGoPro/python_sdk/installation.html"
+        "Required GUI dependencies not found. See the installation steps: https://gopro.github.io/OpenGoPro/python_sdk/installation.html"
     )
     sys.exit(1)

@@ -60,9 +60,9 @@ class Logger:
         modules: Optional[dict[str, int]] = None,
     ) -> None:
         self.modules = {
-            "open_gopro.gopro_base": logging.DEBUG,  # TRACE for raw HTTP responses
-            "open_gopro.gopro_wired": logging.DEBUG,  # TRACE for concurrency debugging
-            "open_gopro.gopro_wireless": logging.DEBUG,  # TRACE for concurrency debugging
+            "open_gopro.gopro_base": logging.TRACE,  # TRACE for raw HTTP responses
+            "open_gopro.gopro_wired": logging.TRACE,  # TRACE for concurrency debugging
+            "open_gopro.gopro_wireless": logging.TRACE,  # TRACE for concurrency debugging
             "open_gopro.api.builders": logging.DEBUG,
             "open_gopro.api.http_commands": logging.DEBUG,
             "open_gopro.api.ble_commands": logging.DEBUG,
@@ -71,7 +71,7 @@ class Logger:
             "open_gopro.ble.client": logging.DEBUG,
             "open_gopro.wifi.adapters.wireless": logging.DEBUG,
             "open_gopro.responses": logging.DEBUG,
-            "open_gopro.util": logging.INFO,
+            "open_gopro.util": logging.DEBUG,
             "bleak": logging.ERROR,
             "urllib3": logging.WARNING,
             "http.client": logging.WARNING,
