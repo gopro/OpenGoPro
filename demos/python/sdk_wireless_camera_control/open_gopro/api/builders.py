@@ -199,7 +199,7 @@ class BleReadCommand(BleMessage[BleUUID]):
         Returns:
             dict[str, Any]: command as dict
         """
-        return dict(id="Read " + self._uuid.name, **self._base_dict) | kwargs
+        return {"id": "Read " + self._uuid.name, **self._base_dict} | kwargs  # type: ignore
 
 
 class BleWriteCommand(BleMessage[CmdId]):
@@ -273,7 +273,7 @@ class BleWriteCommand(BleMessage[CmdId]):
         Returns:
             dict[str, Any]: command as dict
         """
-        return dict(id=self.cmd, **self._base_dict) | kwargs
+        return {"id": self.cmd, **self._base_dict} | kwargs  # type: ignore
 
 
 class RegisterUnregisterAll(BleWriteCommand):
@@ -419,7 +419,7 @@ class BleProtoCommand(BleMessage[ActionId]):
         Returns:
             dict[str, Any]: command as dict
         """
-        return dict(id=self.action_id, feature_id=self.feature_id, **self._base_dict) | kwargs
+        return {"id": self.action_id, "feature_id": self.feature_id, **self._base_dict} | kwargs  # type: ignore
 
 
 def ble_write_command(
@@ -634,7 +634,7 @@ class BleSetting(BleMessage[SettingId], Generic[ValueType]):
         Returns:
             dict[str, Any]: setting as dict
         """
-        return dict(id=identifier, **self._base_dict) | kwargs
+        return {"id": identifier, **self._base_dict} | kwargs  # type: ignore
 
     def set(self, value: ValueType) -> GoProResp:
         """Set the value of the setting.
@@ -838,7 +838,7 @@ class BleStatus(BleMessage[StatusId]):
         Returns:
             dict[str, Any]: command as dict
         """
-        return dict(id=identifier, **self._base_dict) | kwargs
+        return {"id": identifier, **self._base_dict} | kwargs  # type: ignore
 
     def get_value(self) -> GoProResp:
         """Get the current value of a status.

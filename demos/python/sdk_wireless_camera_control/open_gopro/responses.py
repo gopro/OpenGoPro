@@ -445,7 +445,7 @@ class GoProResp:
         Returns:
             dict[str, Any]: response as dict
         """
-        work_dict = dict(id=self.identifier, protocol=self.protocol.name, status=self.status.name)
+        work_dict = {"id": self.identifier, "protocol": self.protocol.name, "status": self.status.name}
         if self.cmd:
             work_dict["command"] = self.cmd
         if self.uuid:

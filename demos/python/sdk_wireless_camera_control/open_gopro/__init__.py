@@ -7,6 +7,7 @@
 
 import sys
 
+# Validate python version
 if sys.version_info.major != 3 or not 9 <= sys.version_info.minor < 11:
     raise RuntimeError("Python >= 3.9 and < 3.11 must be used")
 

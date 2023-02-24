@@ -144,11 +144,11 @@ Is there an available Wifi interface on this computer? To verify this, try:
         """Return the sudo encapsulated password
 
         Raises:
-            Exception: No password has been supplied
+            RuntimeError: No password has been supplied
 
         Returns:
             str: echo "**********" | sudo -S
         """
         if not self._password:
-            raise Exception("Can't use sudo with empty password.")
+            raise RuntimeError("Can't use sudo with empty password.")
         return f'echo "{self._password}" | sudo -S'

@@ -228,7 +228,7 @@ class GoProBle(ABC, Generic[BleHandle, BleDevice]):
             if header == continuation_header:
                 packet = bytearray(header.build({}))
             else:
-                packet = bytearray(header.build(dict(length=data_len)))
+                packet = bytearray(header.build({"length": data_len}))
                 header = continuation_header
 
             bytes_remaining = MAX_BLE_PKT_LEN - len(packet)
@@ -376,7 +376,7 @@ class BleMessage(Message[GoProBle, IdType, BytesParser]):
     ) -> None:
         Message.__init__(self, identifier, parser, rules)
         self._uuid = uuid
-        self._base_dict = dict(protocol="BLE", uuid=self._uuid)
+        self._base_dict = {"protocol": "BLE", "uuid": self._uuid}
 
         if self._parser:
             GoProResp._add_global_parser(identifier, self._parser)
@@ -409,7 +409,11 @@ class HttpMessage(Message[GoProHttp, IdType, JsonParser]):
         self._components = components
         self._args = arguments
         Message.__init__(self, identifier, parser, rules=rules)
-        self._base_dict: dict[str, Any] = dict(id=self._identifier, protocol="HTTP", endpoint=self._endpoint)
+        self._base_dict: dict[str, Any] = {
+            "id": self._identifier,
+            "protocol": "HTTP",
+            "endpoint": self._endpoint,
+        }
 
     def __str__(self) -> str:
         return str(self._identifier).title()

@@ -4,6 +4,7 @@
 """Implements top level interface to GoPro module."""
 
 from __future__ import annotations
+import time
 import json
 import enum
 import logging
@@ -362,7 +363,10 @@ class GoProBase(ABC, Generic[ApiType]):
                 response = GoProResp._from_http_response(parser, e.response)
                 break
             except requests.exceptions.ConnectionError as e:
+                # This appears to only occur after initial connection after pairing
                 logger.warning(repr(e))
+                # Back off before retrying
+                time.sleep(2)
             except Exception as e:  # pylint: disable=broad-except
                 logger.critical(f"Unexpected error: {repr(e)}")
             else:

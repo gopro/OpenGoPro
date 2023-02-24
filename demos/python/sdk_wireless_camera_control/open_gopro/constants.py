@@ -61,11 +61,11 @@ class GoProEnumMeta(EnumMeta):
     _iter_skip_names = ("NOT_APPLICABLE", "DESCRIPTOR")
 
     @no_type_check
-    def __new__(cls, name, bases, classdict, **kwargs) -> GoProEnumMeta:  # noqa
+    def __new__(mcs, name, bases, classdict, **kwargs) -> GoProEnumMeta:  # noqa
         is_proto = "__is_proto__" in classdict
         classdict["_ignore_"] = "__is_proto__"
         classdict["__doc__"] = ""  # Don't use useless "An enumeration" docstring
-        e = super().__new__(cls, name, bases, classdict, **kwargs)
+        e = super().__new__(mcs, name, bases, classdict, **kwargs)
         setattr(e, "_is_proto", is_proto)
         return e
 

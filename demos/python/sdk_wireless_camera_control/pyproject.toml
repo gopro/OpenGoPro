@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "open_gopro"
-version = "0.12.0"
+version = "0.13.0"
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 readme = "README.md"
@@ -26,10 +26,10 @@ gopro-photo = "open_gopro.demos.photo:entrypoint"
 gopro-video = "open_gopro.demos.video:entrypoint"
 gopro-log-battery = "open_gopro.demos.log_battery:entrypoint"
 gopro-wifi = "open_gopro.demos.connect_wifi:entrypoint"
-gopro-webcam = "open_gopro.demos.webcam:entrypoint"
-gopro-gui = "open_gopro.demos.gui_demo:entrypoint"
 gopro-presets = "open_gopro.demos.preset_control:entrypoint"
-gopro-livestream = "open_gopro.demos.livestream:entrypoint"
+gopro-webcam = "open_gopro.demos.gui.webcam:entrypoint"
+gopro-gui = "open_gopro.demos.gui.gui_demo:entrypoint"
+gopro-livestream = "open_gopro.demos.gui.livestream:entrypoint"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -37,18 +37,21 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.11"
-bleak = "=0.19.0"
+bleak = "=0.19.5"
 construct = "^2"
 wrapt = "^1"
 requests = "^2"
 protobuf = "^3"
 packaging = "^21"
-opencv-python = "^4"
-tk = "^0.1"
-Pillow = "^9"
 rich = "^12"
 pexpect = "^4"
 zeroconf = "^0.39.4"
+opencv-python = { version = "^4", optional = true }
+tk = { version= "^0.1", optional = true }
+Pillow = {version= "^9", optional = true}
+
+[tool.poetry.extras]
+gui = ["opencv-python", "tk", "pillow"]
 
 [tool.poetry.group.dev.dependencies]
 pydocstyle = { extras = ["toml"], version = "^6" }
@@ -225,13 +228,14 @@ disable = [
     "invalid-name",
     "unsubscriptable-object",
     "no-member", # This is bad. We need to make stub files since mypy and pylint do not follow decorators well
+
 ]
 
 [tool.pylint.'FORMAT']
 max-line-length = 160
 
 [tool.pylint.'TYPECHECK']
-ignored-modules="cv2"
+ignored-modules = "cv2"
 
 [tool.black]
 line-length = 111

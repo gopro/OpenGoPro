@@ -5,7 +5,7 @@ from __future__ import annotations
 from enum import Enum, auto
 from typing import Literal
 from abc import abstractmethod, ABC
-from dataclasses import dataclass
+from dataclasses import InitVar, dataclass
 
 import pytest
 
@@ -179,12 +179,14 @@ There is no wireless interface on the system.
 class MockOs:
     os: str
     name: str = ""
+    lang: InitVar[str] = "en_US"
 
-    def __post_init__(self):
+    def __post_init__(self, lang):
         if self.os == "windows":
             self.name = "nt"
         else:
             raise NotImplementedError
+        self.environ = {"LANG": lang}
 
     def write(self, *args, **kwargs):
         pass

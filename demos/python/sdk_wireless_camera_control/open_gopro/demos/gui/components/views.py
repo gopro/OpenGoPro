@@ -19,7 +19,7 @@ from typing import Any, Union, Sequence, Callable, Optional, Generator, Generic,
 from PIL import Image, ImageTk, ImageDraw
 
 from open_gopro.util import pretty_print
-from open_gopro.demos.gui import models, THEME
+from open_gopro.demos.gui.components import models, THEME
 
 MAX_TREEVIEW_ID = 1000000
 

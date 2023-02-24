@@ -11,7 +11,7 @@ Open GoPro Python SDK
     :target: https://lbesson.mit-license.org/
     :alt: MIT License
 
-.. image:: https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Testing?label=Build%20and%20Test
+.. image:: https://img.shields.io/github/actions/workflow/status/gopro/OpenGoPro/python_sdk_test.yml
     :target: https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml
     :alt: Build and Test
 

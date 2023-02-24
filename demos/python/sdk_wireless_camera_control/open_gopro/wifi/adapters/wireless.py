@@ -7,7 +7,10 @@ from __future__ import annotations
 import os
 import re
 import time
+import ctypes
+import locale
 import logging
+import platform
 import tempfile
 from enum import Enum, auto
 from getpass import getpass
@@ -21,6 +24,26 @@ from open_gopro.util import cmd
 from open_gopro.wifi import SsidState, WifiController
 
 logger = logging.getLogger(__name__)
+
+
+def ensure_us_english() -> None:
+    """Validate the system language is US English for CLI response parsing
+
+    From https://stackoverflow.com/questions/3425294/how-to-detect-the-os-default-language-in-python
+
+    Raises:
+        RuntimeError: The system is using any language other then en_US
+    """
+    if platform.system().lower() == "windows":
+        windll = getattr(ctypes, "windll").kernel32
+        language = locale.windows_locale[windll.GetUserDefaultUILanguage()]
+    else:
+        language = os.environ["LANG"]
+
+    if not language.startswith("en_US"):
+        raise RuntimeError(
+            f"The Wifi driver parses CLI responses and only supports en_US where your language is {language}"
+        )
 
 
 @wrapt.decorator
@@ -57,8 +80,10 @@ class Wireless(WifiController):
         #noqa: DAR402
 
         Raises:
-            Exception: We weren't able to find a suitable driver or auto-detect an interface after detecting driver
+            RuntimeError: The system is using any language other then en_US
+            RuntimeError: We weren't able to find a suitable driver or auto-detect an interface after detecting driver
         """
+        ensure_us_english()
         WifiController.__init__(self, interface, password)
 
         # detect and init appropriate driver
@@ -76,8 +101,8 @@ class Wireless(WifiController):
         """Try to find and instantiate a Wifi driver that can be used.
 
         Raises:
-            Exception: We weren't able to find a suitable driver
-            Exception: We weren't able to auto-detect an interface after detecting driver
+            RuntimeError: We weren't able to find a suitable driver
+            RuntimeError: We weren't able to auto-detect an interface after detecting driver
 
         Returns:
             WifiController: [description]
@@ -95,7 +120,7 @@ class Wireless(WifiController):
             self._password = getpass("Need to run as sudo. Enter password: ")
         # Validate password
         if "VALID PASSWORD" not in cmd(f'echo "{self._password}" | sudo -S echo "VALID PASSWORD"'):
-            raise Exception("Invalid password")
+            raise RuntimeError("Invalid password")
 
         # try nmcli (Ubuntu 14.04)
         if which("nmcli"):
@@ -109,7 +134,7 @@ class Wireless(WifiController):
         if which("wpa_supplicant"):
             return WpasupplicantWireless(password=self._password)
 
-        raise Exception("Unable to find compatible wireless driver.")
+        raise RuntimeError("Unable to find compatible wireless driver.")
 
     @pass_through_to_driver
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:  # type: ignore
@@ -830,7 +855,7 @@ class NetshWireless(WifiController):
             timeout (float): Time before considering connection failed (in seconds). Defaults to 15.
 
         Raises:
-            Exception: Can not add profile or request to connect to SSID fails
+            RuntimeError: Can not add profile or request to connect to SSID fails
 
         Returns:
             bool: True if connected, False otherwise
@@ -852,13 +877,13 @@ class NetshWireless(WifiController):
         os.close(fd)
         response = cmd(f"netsh wlan add profile filename={filename}")
         if "is added on interface" not in response:
-            raise Exception(response)
+            raise RuntimeError(response)
         os.remove(filename)
 
         # Try to connect
         response = cmd(f'netsh wlan connect ssid="{ssid}" name="{ssid}" interface="{self.interface}"')
         if "was completed successfully" not in response:
-            raise Exception(response)
+            raise RuntimeError(response)
         # Wait for connection to establish
         DELAY = 1
         while (current := self.current()) != (ssid, SsidState.CONNECTED):

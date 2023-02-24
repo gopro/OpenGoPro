@@ -18,12 +18,12 @@ All of the demos use this and here is an example:
 
     from pathlib import Path
 
-    from open_gopro import GoPro
+    from open_gopro import WirelessGoPro
     from open_gopro.util import setup_logging
 
     logger = setup_logging(__name__, Path("my_log.log"))
 
-    with GoPro() as gopro:
+    with WirelessGoPro() as gopro:
         logger.info("I'm logged!")
 
 There are several other logging-related functions that extend and / or offer finer logging control.
@@ -50,7 +50,7 @@ CSV file. This can be done as such:
 
 .. code-block:: python
 
-    from open_gopro import GoPro
+    from open_gopro import WirelessGoPro
 
-    with GoPro() as gopro:
+    with WirelessGoPro() as gopro:
         gopro._ble.gatt_db.dump_to_csv()

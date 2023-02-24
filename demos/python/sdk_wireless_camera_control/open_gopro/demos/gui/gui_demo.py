@@ -9,7 +9,7 @@ import logging
 import tkinter as tk
 from tkinter import ttk, font
 
-from open_gopro.demos.gui import views, controllers, models, THEME
+from open_gopro.demos.gui.components import views, controllers, models, THEME
 
 logger = logging.getLogger(__name__)
 

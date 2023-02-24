@@ -25,7 +25,7 @@ def format(session) -> None:
 @session(python=SUPPORTED_VERSIONS)
 def lint(session) -> None:
     """Lint using pylint and check types with mypy."""
-    session.install(".")
+    session.install(".[gui]")
     session.install(
         "pylint",
         "mypy",

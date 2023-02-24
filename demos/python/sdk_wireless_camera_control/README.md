@@ -2,8 +2,7 @@
 
 <img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"/>
 
-[![Build and Test](https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Testing?label=Build%20and%20Test)](https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml)
-[![Build Docs](https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Docs%20Build%20and%20Deploy?label=Docs)](https://github.com/gopro/OpenGoPro/actions/workflows/github-pages.yml)
+[![Build and Test](https://img.shields.io/github/actions/workflow/status/gopro/OpenGoPro/python_sdk_test.yml)](https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PyPI](https://img.shields.io/pypi/v/open-gopro)](https://pypi.org/project/open-gopro/)
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/gopro/OpenGoPro/blob/main/LICENSE)
@@ -42,10 +41,18 @@ Complete documentation can be found on [Open GoPro](https://gopro.github.io/Open
 
 ## Installation
 
-> Note! This package requires Python >= 3.8 and <=3.10
+> Note! This package requires Python >= 3.8 and < 3.11
+
+The minimal install to use the Open GoPro library and the CLI demos is:
 
 ```console
-    $ pip install open-gopro
+$ pip install open-gopro
+```
+
+To also install the extra dependencies to run the GUI demos, do:
+
+```console
+$ pip install open-gopro[gui]
 ```
 
 ## Usage
@@ -55,9 +62,9 @@ video, and download all files:
 
 ```python
 import time
-from open_gopro import GoPro, Params
+from open_gopro import WirelessGoPro, Params
 
-with GoPro() as gopro:
+with WirelessGoPro() as gopro:
     gopro.ble_command.load_preset(Params.Preset.CINEMATIC)
     gopro.ble_setting.resolution.set(Params.Resolution.RES_4K)
     gopro.ble_setting.fps.set(Params.FPS.FPS_30)
@@ -78,7 +85,11 @@ And much more!
 > Note! These demos can be found on [Github](https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control/open_gopro/demos)
 
 Demos can be found in the installed package in the "demos" folder. They are installed as a CLI entrypoint
-and can be run via:
+and can be run as shown below.
+
+## Command Line Interface (CLI) Demos
+
+All of these demos are CLI only and can thus be run with the minimal (non-GUI) install.
 
 Capture a photo and download it to your computer:
 
@@ -90,18 +101,6 @@ Capture a video and download it to your computer:
 
 ```bash
 $ gopro-video
-```
-
-Start the preview stream and view it:
-
-```bash
-$ gopro-preview-stream
-```
-
-Start the live stream and view it:
-
-```bash
-$ gopro-live-stream
 ```
 
 Connect to the GoPro and log battery consumption in to a .csv:
@@ -135,4 +134,21 @@ optional arguments:
                         Where to write the photo to. If not set, write to 'photo.jpg'
   -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE
                         System Wifi Interface. If not set, first discovered interface will be used.
+```
+
+
+## GUI Demos
+
+These demos require the additional GUI installation.
+
+Start the preview stream and view it:
+
+```bash
+$ gopro-preview-stream
+```
+
+Start the live stream and view it:
+
+```bash
+$ gopro-live-stream
 ```

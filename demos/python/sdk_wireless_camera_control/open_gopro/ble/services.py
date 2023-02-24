@@ -492,8 +492,8 @@ class UUIDsMeta(type):
     """
 
     @no_type_check
-    def __new__(cls, name, bases, dct) -> UUIDsMeta:  # noqa
-        x = super().__new__(cls, name, bases, dct)
+    def __new__(mcs, name, bases, dct) -> UUIDsMeta:  # noqa
+        x = super().__new__(mcs, name, bases, dct)
         x._int2uuid = {}
         for db in [*[base.__dict__ for base in bases], dct]:
             for _, ble_uuid in [(k, v) for k, v in db.items() if not k.startswith("_")]:

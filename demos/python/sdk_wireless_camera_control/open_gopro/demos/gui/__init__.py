@@ -1,17 +1,17 @@
 # __init__.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Wed Aug 17 20:05:18 UTC 2022
+# This copyright was auto-generated on Thu Feb 23 22:43:52 UTC 2023
 
-"""Common GUI functionality"""
+"""Common GUI demos. Ensure that additional GUI options were installed before continuing"""
 
-import platform
-from typing import Union
+import sys
 
-from open_gopro.api.builders import BleMessage, HttpMessage
-from open_gopro.api import BleSettings, BleCommands, BleStatuses, HttpCommands, HttpSettings
+try:
+    import tkinter
+    import PIL
+    import cv2
 
-if (OS := platform.system().lower()) == "windows":
-    THEME = "vista"
-elif OS == "darwin":
-    THEME = "aqua"
-else:
-    THEME = "default"
+except ModuleNotFoundError:
+    print(
+        "Required GUI dependencies not found. See the installation steps: https://gopro.github.io/OpenGoPro/python_sdk/installation.html"
+    )
+    sys.exit(1)
