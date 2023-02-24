@@ -35,7 +35,7 @@ def ensure_us_english() -> None:
         RuntimeError: The system is using any language other then en_US
     """
     if platform.system().lower() == "windows":
-        windll = ctypes.windll.kernel32
+        windll = getattr(ctypes, "windll").kernel32
         language = locale.windows_locale[windll.GetUserDefaultUILanguage()]
     else:
         language = os.environ["LANG"]
