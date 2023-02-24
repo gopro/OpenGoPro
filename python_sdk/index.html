@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Open GoPro Python SDK &mdash; Open GoPro Python SDK  documentation</title>
@@ -29,14 +29,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="#" class="icon icon-home"> Open GoPro Python SDK
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Open GoPro Python SDK
           </a>
               <div class="version">
-                0.12.0
+                0.13.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -68,7 +72,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a></li>
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Open GoPro Python SDK</li>
       <li class="wy-breadcrumbs-aside">
               <!-- User defined GitHub URL -->
@@ -86,7 +90,7 @@
 <a class="reference internal image-reference" href="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png"><img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png" style="width: 50%;" /></a>
 </figure>
 <a class="reference external image-reference" href="https://lbesson.mit-license.org/"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
-<a class="reference external image-reference" href="https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml"><img alt="Build and Test" src="https://img.shields.io/github/workflow/status/gopro/OpenGoPro/Python%20SDK%20Testing?label=Build%20and%20Test" /></a>
+<a class="reference external image-reference" href="https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml"><img alt="Build and Test" src="https://img.shields.io/github/actions/workflow/status/gopro/OpenGoPro/python_sdk_test.yml" /></a>
 <a class="reference external image-reference" href="https://pypi.org/project/open-gopro/"><img alt="PyPI" src="https://img.shields.io/pypi/v/open-gopro" /></a>
 <a class="reference external image-reference" href="https://github.com/psf/black"><img alt="Black" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
 <img alt="Coverage" src="_images/coverage.svg" /><section id="summary">
@@ -157,7 +161,11 @@ this document in order):</p>
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#minimal-install">Minimal Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#additional-gui-install">Additional GUI Install</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="installation.html#for-developers">For Developers</a></li>
 </ul>
@@ -165,13 +173,19 @@ this document in order):</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#photo-demo">Photo Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#video-demo">Video Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#wired-webcam-demo">Wired Webcam Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#livestream-demo">Livestream Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#api-gui-demo">API GUI Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#wifi-demo">WiFi Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#battery-demo">Battery Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#command-line-interface-cli-demos">Command Line Interface (CLI) Demos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#photo-demo">Photo Demo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#video-demo">Video Demo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#wifi-demo">WiFi Demo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#battery-demo">Battery Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#graphical-user-interface-gui-demos">Graphical User Interface (GUI) Demos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#wired-webcam-demo">Wired Webcam Demo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#livestream-demo">Livestream Demo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#api-gui-demo">API GUI Demo</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
@@ -882,7 +896,8 @@ this document in order):</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#december-16-2021">0.12.0 (December-16-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#february-24-2023">0.13.0 (February-24-2023)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#december-16-2023">0.12.0 (December-16-2023)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#november-9-2022">0.11.2 (November-9-2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#october-18-2022">0.11.1 (October-18-2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#september-14-2022">0.11.0 (September-14-2022)</a></li>
@@ -892,7 +907,7 @@ this document in order):</p>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#february-7-2022">0.9.0 (February-7-2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#february-3-2022">0.8.0 (February-3-2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#january-3-2022">0.7.2 (January-3-2022)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">0.7.1 (December-16-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#december-16-2021">0.7.1 (December-16-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#october-27-2021">0.7.0 (October-27-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#october-7-2021">0.6.3 (October-7-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#september-28-2021">0.6.2 (September-28-2021)</a></li>
@@ -901,19 +916,19 @@ this document in order):</p>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#august-10-2021">0.5.8 (August-10-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#june-7-2021">0.5.7 (June-7-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#may-26-2021">0.5.6 (May-26-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">0.5.5 (May-26-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">0.5.5 (May-26-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#may-6-2021">0.5.4 (May-6-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#april-15-2021">0.5.3 (April-15-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#april-2-2021">0.5.2 (April-2-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#april-1-2021">0.5.1 (April-1-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#march-30-2021">0.5.0 (March-30-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#march-29-2021">0.4.6 (March-29-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">0.4.5 (March-29-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">0.4.5 (March-29-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#march-27-2021">0.4.4 (March-27-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#march-26-2021">0.4.3 (March-26-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#march-25-2021">0.4.2 (March-25-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">0.4.1 (March-25-2021)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id5">0.4.0 (March-25-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">0.4.1 (March-25-2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">0.4.0 (March-25-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#march-22-2021">0.3.3 (March-22-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#march-15-2021">0.3.2 (March-15-2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#march-12-2021">0.3.1 (March-12-2021)</a></li>

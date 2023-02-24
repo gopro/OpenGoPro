@@ -193,9 +193,9 @@ Here is a full example for clarity:
 
 .. code-block:: python
 
-    from open_gopro import GoPro, Params
+    from open_gopro import WirelessGoPro, Params
 
-    with GoPro() as gopro:
+    with WirelessGoPro() as gopro:
         gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
 
 .. tip:: The message signature can also be found from the API Reference. For example, here is the documentation
@@ -388,8 +388,8 @@ For example, first let's connect, send a command, and then store the response:
 
 .. code-block:: console
 
-    >>> from open_gopro import GoPro
-    >>> gopro = GoPro()
+    >>> from open_gopro import WirelessGoPro
+    >>> gopro = WirelessGoPro()
     >>> gopro.open()
     >>> response = gopro.ble_setting.resolution.get_value()
 

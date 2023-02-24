@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contributing &mdash; Open GoPro Python SDK  documentation</title>
@@ -30,14 +30,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Open GoPro Python SDK
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Open GoPro Python SDK
           </a>
               <div class="version">
-                0.12.0
+                0.13.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -85,7 +89,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Contributing</li>
       <li class="wy-breadcrumbs-aside">
               <!-- User defined GitHub URL -->
@@ -145,7 +149,7 @@ articles, and such.</p>
 <section id="minimal-requirements">
 <h3>Minimal Requirements<a class="headerlink" href="#minimal-requirements" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p>Python (3.9 or higher)</p></li>
+<li><p>Python (&gt;= 3.9, &lt; 3.11)</p></li>
 <li><p><a class="reference external" href="https://python-poetry.org/docs/#installation">Poetry</a> : Needed to install dependencies / development tasks</p></li>
 </ul>
 <p>Additional Optional Requirements:</p>
@@ -181,7 +185,7 @@ articles, and such.</p>
 </li>
 <li><p>Install your local copy into a virtual environment.</p>
 <blockquote>
-<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>poetry<span class="w"> </span>install
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>poetry<span class="w"> </span>install<span class="w"> </span>--extras<span class="w"> </span>gui
 </pre></div>
 </div>
 </div></blockquote>

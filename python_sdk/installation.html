@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Installation &mdash; Open GoPro Python SDK  documentation</title>
@@ -30,14 +30,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Open GoPro Python SDK
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Open GoPro Python SDK
           </a>
               <div class="version">
-                0.12.0
+                0.13.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -46,7 +50,11 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stable-release">Stable release</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#minimal-install">Minimal Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-gui-install">Additional GUI Install</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#from-sources">From sources</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#for-developers">For Developers</a></li>
 </ul>
@@ -76,7 +84,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Installation</li>
       <li class="wy-breadcrumbs-aside">
               <!-- User defined GitHub URL -->
@@ -92,14 +100,24 @@
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
 <section id="stable-release">
 <h2>Stable release<a class="headerlink" href="#stable-release" title="Permalink to this heading"></a></h2>
-<p>To install Open GoPro, run this command in your terminal:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>open-gopro
-</pre></div>
-</div>
 <p>This is the preferred method to install Open GoPro, as it will always install the most recent stable release
 from <a class="reference external" href="https://pypi.org/project/open-gopro/">PyPi</a> .</p>
 <p>If you don’t have <a class="reference external" href="https://pip.pypa.io">pip</a> installed, this <a class="reference external" href="http://docs.python-guide.org/en/latest/starting/installation/">Python installation guide</a> can guide
 you through the process.</p>
+<section id="minimal-install">
+<h3>Minimal Install<a class="headerlink" href="#minimal-install" title="Permalink to this heading"></a></h3>
+<p>To minimally install Open GoPro (to use the library and CLI demos), run this command in your terminal:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>open-gopro
+</pre></div>
+</div>
+</section>
+<section id="additional-gui-install">
+<h3>Additional GUI Install<a class="headerlink" href="#additional-gui-install" title="Permalink to this heading"></a></h3>
+<p>To additionally install the extra dependencies to run the GUI demos:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>open-gopro<span class="o">[</span>gui<span class="o">]</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="from-sources">
 <h2>From sources<a class="headerlink" href="#from-sources" title="Permalink to this heading"></a></h2>

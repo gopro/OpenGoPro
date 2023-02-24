@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QuickStart Guide &mdash; Open GoPro Python SDK  documentation</title>
@@ -30,14 +30,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Open GoPro Python SDK
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Open GoPro Python SDK
           </a>
               <div class="version">
-                0.12.0
+                0.13.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -47,13 +51,19 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">QuickStart Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#photo-demo">Photo Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#video-demo">Video Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#wired-webcam-demo">Wired Webcam Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#livestream-demo">Livestream Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#api-gui-demo">API GUI Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#wifi-demo">WiFi Demo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#battery-demo">Battery Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#command-line-interface-cli-demos">Command Line Interface (CLI) Demos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#photo-demo">Photo Demo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#video-demo">Video Demo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wifi-demo">WiFi Demo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#battery-demo">Battery Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#graphical-user-interface-gui-demos">Graphical User Interface (GUI) Demos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#wired-webcam-demo">Wired Webcam Demo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#livestream-demo">Livestream Demo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api-gui-demo">API GUI Demo</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
@@ -78,7 +88,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">QuickStart Guide</li>
       <li class="wy-breadcrumbs-aside">
               <!-- User defined GitHub URL -->
@@ -96,17 +106,21 @@
 <p class="admonition-title">Warning</p>
 <p>This section assumes you have successfully <a class="reference internal" href="installation.html#installation"><span class="std std-ref">installed</span></a> the package.</p>
 </div>
-<p>Open GoPro installs with several command line demos to demonstrate BLE and Wi-Fi. The source code for these examples
+<p>Open GoPro installs with severaldemos to demonstrate BLE and Wi-Fi. The source code for these examples
 can be found on <a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control/open_gopro/demos">Github</a>
 or locally in <cite>$INSTALL/open_gopro/demos</cite> where $INSTALL can be found with:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>show<span class="w"> </span>open-gopro
 </pre></div>
 </div>
+<p>Note that the GUI demos will only be available if OpenGoPro was installed with the additional GUI option.
+See the  <a class="reference internal" href="installation.html#installation"><span class="std std-ref">installation</span></a> steps for more informatoin.</p>
+<section id="command-line-interface-cli-demos">
+<h2>Command Line Interface (CLI) Demos<a class="headerlink" href="#command-line-interface-cli-demos" title="Permalink to this heading"></a></h2>
 <p>All of the CLI demos have command-line help via the <cite>–help</cite> parameter. All demos will log to the console as well
 as write a more detailed log to a file (this file can be set with the <cite>–log</cite> parameter). The detailed log
 is very helpful for diagnosing BLE / WiFi inconsistencies.</p>
 <section id="photo-demo">
-<h2>Photo Demo<a class="headerlink" href="#photo-demo" title="Permalink to this heading"></a></h2>
+<h3>Photo Demo<a class="headerlink" href="#photo-demo" title="Permalink to this heading"></a></h3>
 <p>The <cite>photo</cite> demo will discover a GoPro camera, connect to it, take a photo, and then download the
 photo to your local machine. It defaults to connecting to a wireless camera but can connect to a wired camera
 by setting the <cite>wired</cite> option. To run, do:</p>
@@ -134,7 +148,7 @@ by setting the <cite>wired</cite> option. To run, do:</p>
 </div>
 </section>
 <section id="video-demo">
-<h2>Video Demo<a class="headerlink" href="#video-demo" title="Permalink to this heading"></a></h2>
+<h3>Video Demo<a class="headerlink" href="#video-demo" title="Permalink to this heading"></a></h3>
 <p>The video demo will discover a GoPro camera, connect to it, take a video for a given amount of time, and then
 download the photo to your local machine.  It defaults to connecting to a wireless camera but can connect to a
 wired camera by setting the <cite>wired</cite> option.To run and capture a 2 second video, do:</p>
@@ -166,8 +180,67 @@ wired camera by setting the <cite>wired</cite> option.To run and capture a 2 sec
 </pre></div>
 </div>
 </section>
+<section id="wifi-demo">
+<h3>WiFi Demo<a class="headerlink" href="#wifi-demo" title="Permalink to this heading"></a></h3>
+<p>The <cite>wifi</cite> demo will discover a GoPro camera, connect to it, enable the camera’a WiFi AP, and then connect
+to it via WiFi. This is useful if you want to send HTTP commands to it from some external source such as curl.</p>
+<p>Note that this demo will run, thus maintaining the WiFi connection, until exited by pressing enter.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-wifi
+</pre></div>
+</div>
+<p>For more information, do:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-wif<span class="w"> </span>--help
+<span class="go">usage: gopro-wifi [-h] [-l LOG] [-i IDENTIFIER] [-w WIFI_INTERFACE] [-p]</span>
+
+<span class="go">Connect to a GoPro camera&#39;s Wifi Access Point.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">-h, --help            show this help message and exit</span>
+<span class="go">-l LOG, --log LOG     Location to store detailed log</span>
+<span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
+<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the</span>
+<span class="go">                        default camera SSID. If not used, first discovered GoPro will be</span>
+<span class="go">                        connected to</span>
+<span class="go">-w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE</span>
+<span class="go">                        System Wifi Interface. If not set, first discovered interface will be</span>
+<span class="go">                        used.</span>
+<span class="go">-p, --password        Set to read sudo password from stdin. If not set, you will be prompted</span>
+<span class="go">                        for password if needed</span>
+</pre></div>
+</div>
+</section>
+<section id="battery-demo">
+<h3>Battery Demo<a class="headerlink" href="#battery-demo" title="Permalink to this heading"></a></h3>
+<p>This demo will continuously read the battery level (either via polling or registering fro notifications as
+configured per the command line argument) and write
+the results to a .csv file. To run, do:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-log-battery
+</pre></div>
+</div>
+<p>For more information, do:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-log-battery<span class="w"> </span>--help
+<span class="go">usage: gopro-log-battery [-h] [-p POLL] [-l LOG] [-i IDENTIFIER]</span>
+
+<span class="go">Connect to the GoPro via BLE only and continuously read the battery (either by polling or</span>
+<span class="go">notifications).</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">-h, --help            show this help message and exit</span>
+<span class="go">-p POLL, --poll POLL  Set to poll the battery at a given interval. If not set, battery level</span>
+<span class="go">                        will be notified instead. Defaults to notifications.</span>
+<span class="go">-l LOG, --log LOG     Location to store detailed log</span>
+<span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
+<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the</span>
+<span class="go">                        default camera SSID. If not used, first discovered GoPro will be</span>
+<span class="go">                        connected to</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="graphical-user-interface-gui-demos">
+<h2>Graphical User Interface (GUI) Demos<a class="headerlink" href="#graphical-user-interface-gui-demos" title="Permalink to this heading"></a></h2>
 <section id="wired-webcam-demo">
-<h2>Wired Webcam Demo<a class="headerlink" href="#wired-webcam-demo" title="Permalink to this heading"></a></h2>
+<h3>Wired Webcam Demo<a class="headerlink" href="#wired-webcam-demo" title="Permalink to this heading"></a></h3>
 <p>The <cite>webcam</cite> demo will configure a GoPro (identified via serial number) as a webcam, start the webcam, and use
 <a class="reference external" href="https://pypi.org/project/opencv-python/">OpenCV</a>  to start a viewer to display the stream.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-webcam
@@ -189,7 +262,7 @@ wired camera by setting the <cite>wired</cite> option.To run and capture a 2 sec
 </div>
 </section>
 <section id="livestream-demo">
-<h2>Livestream Demo<a class="headerlink" href="#livestream-demo" title="Permalink to this heading"></a></h2>
+<h3>Livestream Demo<a class="headerlink" href="#livestream-demo" title="Permalink to this heading"></a></h3>
 <p>The <cite>livestream</cite> demo will connect via BLE to the camera, connect the camera to a Wifi AP, configure / start
 livestream, then use <a class="reference external" href="https://pypi.org/project/opencv-python/">OpenCV</a>  to start a viewer to display the stream.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-webcam
@@ -225,7 +298,7 @@ livestream, then use <a class="reference external" href="https://pypi.org/projec
 </div>
 </section>
 <section id="api-gui-demo">
-<h2>API GUI Demo<a class="headerlink" href="#api-gui-demo" title="Permalink to this heading"></a></h2>
+<h3>API GUI Demo<a class="headerlink" href="#api-gui-demo" title="Permalink to this heading"></a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This is a work in progress and some complex responses are not yet easily viewed.</p>
@@ -259,61 +332,6 @@ asynchronously received messages.</p></li>
 after sending the Livestream command</p></li>
 </ul>
 </section>
-<section id="wifi-demo">
-<h2>WiFi Demo<a class="headerlink" href="#wifi-demo" title="Permalink to this heading"></a></h2>
-<p>The <cite>wifi</cite> demo will discover a GoPro camera, connect to it, enable the camera’a WiFi AP, and then connect
-to it via WiFi. This is useful if you want to send HTTP commands to it from some external source such as curl.</p>
-<p>Note that this demo will run, thus maintaining the WiFi connection, until exited by pressing enter.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-wifi
-</pre></div>
-</div>
-<p>For more information, do:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-wif<span class="w"> </span>--help
-<span class="go">usage: gopro-wifi [-h] [-l LOG] [-i IDENTIFIER] [-w WIFI_INTERFACE] [-p]</span>
-
-<span class="go">Connect to a GoPro camera&#39;s Wifi Access Point.</span>
-
-<span class="go">optional arguments:</span>
-<span class="go">-h, --help            show this help message and exit</span>
-<span class="go">-l LOG, --log LOG     Location to store detailed log</span>
-<span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
-<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the</span>
-<span class="go">                        default camera SSID. If not used, first discovered GoPro will be</span>
-<span class="go">                        connected to</span>
-<span class="go">-w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE</span>
-<span class="go">                        System Wifi Interface. If not set, first discovered interface will be</span>
-<span class="go">                        used.</span>
-<span class="go">-p, --password        Set to read sudo password from stdin. If not set, you will be prompted</span>
-<span class="go">                        for password if needed</span>
-</pre></div>
-</div>
-</section>
-<section id="battery-demo">
-<h2>Battery Demo<a class="headerlink" href="#battery-demo" title="Permalink to this heading"></a></h2>
-<p>This demo will continuously read the battery level (either via polling or registering fro notifications as
-configured per the command line argument) and write
-the results to a .csv file. To run, do:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-log-battery
-</pre></div>
-</div>
-<p>For more information, do:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-log-battery<span class="w"> </span>--help
-<span class="go">usage: gopro-log-battery [-h] [-p POLL] [-l LOG] [-i IDENTIFIER]</span>
-
-<span class="go">Connect to the GoPro via BLE only and continuously read the battery (either by polling or</span>
-<span class="go">notifications).</span>
-
-<span class="go">optional arguments:</span>
-<span class="go">-h, --help            show this help message and exit</span>
-<span class="go">-p POLL, --poll POLL  Set to poll the battery at a given interval. If not set, battery level</span>
-<span class="go">                        will be notified instead. Defaults to notifications.</span>
-<span class="go">-l LOG, --log LOG     Location to store detailed log</span>
-<span class="go">-i IDENTIFIER, --identifier IDENTIFIER</span>
-<span class="go">                        Last 4 digits of GoPro serial number, which is the last 4 digits of the</span>
-<span class="go">                        default camera SSID. If not used, first discovered GoPro will be</span>
-<span class="go">                        connected to</span>
-</pre></div>
-</div>
 </section>
 </section>
 

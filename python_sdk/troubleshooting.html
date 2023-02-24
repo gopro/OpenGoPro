@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Troubleshooting &mdash; Open GoPro Python SDK  documentation</title>
@@ -30,14 +30,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Open GoPro Python SDK
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Open GoPro Python SDK
           </a>
               <div class="version">
-                0.12.0
+                0.13.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -73,7 +77,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Troubleshooting</li>
       <li class="wy-breadcrumbs-aside">
               <!-- User defined GitHub URL -->
@@ -95,22 +99,18 @@
 All of the demos use this and here is an example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">GoPro</span>
+<span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">WirelessGoPro</span>
 <span class="kn">from</span> <span class="nn">open_gopro.util</span> <span class="kn">import</span> <span class="n">setup_logging</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logging</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;my_log.log&quot;</span><span class="p">))</span>
 
-<span class="k">with</span> <span class="n">GoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I&#39;m logged!&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>There are several other logging-related functions that extend and / or offer finer logging control.</p>
 <p>Here is a guide for the levels:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 82%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Logging Level</p></th>
 <th class="head"><p>Module use</p></th>
@@ -142,9 +142,9 @@ All of the demos use this and here is an example:</p>
 <h2>Bluetooth Characteristics<a class="headerlink" href="#bluetooth-characteristics" title="Permalink to this heading"></a></h2>
 <p>There is a utility in the GoPro class to dump the discovered BLE characteristics to a
 CSV file. This can be done as such:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">GoPro</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">WirelessGoPro</span>
 
-<span class="k">with</span> <span class="n">GoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
     <span class="n">gopro</span><span class="o">.</span><span class="n">_ble</span><span class="o">.</span><span class="n">gatt_db</span><span class="o">.</span><span class="n">dump_to_csv</span><span class="p">()</span>
 </pre></div>
 </div>
