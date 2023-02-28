@@ -4,31 +4,62 @@
 """Common GUI utilities"""
 
 from __future__ import annotations
-from typing import Optional, Callable
+import queue
+import threading
+from typing import Callable, Any
 
 import cv2
 
 
-def display_video_blocking(source: str, printer: Optional[Callable] = print) -> None:
+def display_video_blocking(source: str, printer: Callable = print) -> None:
     """Open a video source to display it, and block until the user stops it by sending 'q'
 
     Args:
         source (str): video source to display
-        printer (Optional[Callable], optional): used to display output message. Defaults to print.
+        printer (Callable): used to display output message. Defaults to print.
     """
-    if printer:
-        printer("Starting viewer...")
-    vid = cv2.VideoCapture(source + "?overrun_nonfatal=1&fifo_size=50000000", cv2.CAP_FFMPEG)
-    if printer:
-        printer("Viewer started")
-        printer("Press 'q' to quit")
+    BufferlessVideoCapture(source, printer)
 
-    while True:
-        ret, frame = vid.read()
-        if ret and frame is not None:
+
+class BufferlessVideoCapture(threading.Thread):
+    """Buffer-less video capture to only display the most recent frame
+
+    Open a video source to display it, and block until the user stops it by sending 'q'
+    """
+
+    def __init__(self, source: str, printer: Callable = print) -> None:
+        """Constructor
+
+        Args:
+            source (str): video source to display
+            printer (Callable): used to display output message. Defaults to print.
+        """
+        self.printer = printer
+        printer("Starting viewer...")
+        self.cap = cv2.VideoCapture(source + "?overrun_nonfatal=1&fifo_size=50000000", cv2.CAP_FFMPEG)
+        self.q: queue.Queue[Any] = queue.Queue()
+        super().__init__(daemon=True)
+        self.start()
+        printer("Viewer started")
+        printer("Press 'q' in viewer to quit")
+        while True:
+            frame = self.q.get()
             cv2.imshow("frame", frame)
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
+        self.cap.release()
+        cv2.destroyAllWindows()
 
-    vid.release()
-    cv2.destroyAllWindows()
+    def run(self) -> None:
+        """Read frames as soon as they are available, keeping only most recent one"""
+        while True:
+            ret, frame = self.cap.read()
+            if not ret:
+                break
+            if not self.q.empty():
+                try:
+                    self.q.get_nowait()  # discard previous (unprocessed) frame
+                except queue.Empty:
+                    pass
+
+            self.q.put(frame)

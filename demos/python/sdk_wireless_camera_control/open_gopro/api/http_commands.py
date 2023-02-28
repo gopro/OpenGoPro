@@ -451,79 +451,97 @@ class HttpSettings(HttpMessages[HttpSetting, SettingId]):
     """
 
     def __init__(self, communicator: GoProHttp):
-        self.resolution: HttpSetting = HttpSetting[Params.Resolution](communicator, SettingId.RESOLUTION)
-        """Resolution. Set with :py:class:`open_gopro.api.params.Resolution`"""
+        self.resolution: HttpSetting[Params.Resolution] = HttpSetting[Params.Resolution](
+            communicator, SettingId.RESOLUTION
+        )
+        """Resolution."""
 
-        self.fps: HttpSetting = HttpSetting[Params.FPS](communicator, SettingId.FPS)
-        """Frames per second. Set with :py:class:`open_gopro.api.params.FPS`"""
+        self.fps: HttpSetting[Params.FPS] = HttpSetting[Params.FPS](communicator, SettingId.FPS)
+        """Frames per second."""
 
-        self.auto_off: HttpSetting = HttpSetting[Params.AutoOff](communicator, SettingId.AUTO_OFF)
-        """Set the auto off time. Set with :py:class:`open_gopro.api.params.AutoOff`"""
+        self.auto_off: HttpSetting[Params.AutoOff] = HttpSetting[Params.AutoOff](
+            communicator, SettingId.AUTO_OFF
+        )
+        """Set the auto off time."""
 
-        self.video_field_of_view: HttpSetting = HttpSetting[Params.VideoFOV](communicator, SettingId.VIDEO_FOV)
-        """Video FOV. Set with :py:class:`open_gopro.api.params.VideoFOV`"""
+        self.video_field_of_view: HttpSetting[Params.VideoFOV] = HttpSetting[Params.VideoFOV](
+            communicator, SettingId.VIDEO_FOV
+        )
+        """Video FOV."""
 
-        self.photo_field_of_view: HttpSetting = HttpSetting[Params.PhotoFOV](communicator, SettingId.PHOTO_FOV)
-        """Photo FOV. Set with :py:class:`open_gopro.api.params.PhotoFOV`"""
+        self.photo_field_of_view: HttpSetting[Params.PhotoFOV] = HttpSetting[Params.PhotoFOV](
+            communicator, SettingId.PHOTO_FOV
+        )
+        """Photo FOV."""
 
-        self.multi_shot_field_of_view: HttpSetting = HttpSetting[Params.MultishotFOV](
+        self.multi_shot_field_of_view: HttpSetting[Params.MultishotFOV] = HttpSetting[Params.MultishotFOV](
             communicator, SettingId.MULTI_SHOT_FOV
         )
-        """Multi-shot FOV. Set with :py:class:`open_gopro.api.params.MultishotFOV`"""
+        """Multi-shot FOV."""
 
-        self.max_lens_mode: HttpSetting = HttpSetting[Params.MaxLensMode](communicator, SettingId.MAX_LENS_MOD)
-        """Enable / disable max lens mod. Set with :py:class:`open_gopro.api.params.MaxLensMode`"""
+        self.max_lens_mode: HttpSetting[Params.MaxLensMode] = HttpSetting[Params.MaxLensMode](
+            communicator, SettingId.MAX_LENS_MOD
+        )
+        """Enable / disable max lens mod."""
 
-        self.hypersmooth: HttpSetting = HttpSetting[Params.HypersmoothMode](
+        self.hypersmooth: HttpSetting[Params.HypersmoothMode] = HttpSetting[Params.HypersmoothMode](
             communicator, SettingId.HYPERSMOOTH
         )
-        """Set / disable hypersmooth. Set with :py:class:`open_gopro.api.params.HypersmoothMode`"""
+        """Set / disable hypersmooth."""
 
-        self.video_performance_mode: HttpSetting = HttpSetting[Params.PerformanceMode](
+        self.video_performance_mode: HttpSetting[Params.PerformanceMode] = HttpSetting[Params.PerformanceMode](
             communicator, SettingId.VIDEO_PERFORMANCE_MODE
         )
-        """Video Performance Mode (extended battery, tripod, etc). Set with :py:class:`open_gopro.api.params.PerformanceMode`"""
+        """Video Performance Mode (extended battery, tripod, etc)."""
 
-        self.media_format: HttpSetting = HttpSetting[Params.MediaFormat](communicator, SettingId.MEDIA_FORMAT)
-        """Set the media format. Set with :py:class:`open_gopro.api.params.MediaFormat`"""
+        self.media_format: HttpSetting[Params.MediaFormat] = HttpSetting[Params.MediaFormat](
+            communicator, SettingId.MEDIA_FORMAT
+        )
+        """Set the media format."""
 
-        self.anti_flicker: HttpSetting = HttpSetting[Params.AntiFlicker](communicator, SettingId.ANTI_FLICKER)
-        """Anti Flicker frequency. Set with :py:class:`open_gopro.api.params.AntiFlicker`"""
+        self.anti_flicker: HttpSetting[Params.AntiFlicker] = HttpSetting[Params.AntiFlicker](
+            communicator, SettingId.ANTI_FLICKER
+        )
+        """Anti Flicker frequency."""
 
-        self.camera_ux_mode: HttpSetting = HttpSetting[Params.CameraUxMode](
+        self.camera_ux_mode: HttpSetting[Params.CameraUxMode] = HttpSetting[Params.CameraUxMode](
             communicator, SettingId.CAMERA_UX_MODE
         )
-        """Camera controls configuration. Set with :py:class:`open_gopro.api.params.CameraUxMode`"""
+        """Camera controls configuration."""
 
-        self.video_easy_mode: HttpSetting = HttpSetting[Params.Speed](communicator, SettingId.VIDEO_EASY_MODE)
-        """Video easy mode speed. Set with :py:class:`open_gopro.api.params.Speed`"""
+        self.video_easy_mode: HttpSetting[Params.Speed] = HttpSetting[Params.Speed](
+            communicator, SettingId.VIDEO_EASY_MODE
+        )
+        """Video easy mode speed."""
 
-        self.photo_easy_mode: HttpSetting = HttpSetting[Params.PhotoEasyMode](
+        self.photo_easy_mode: HttpSetting[Params.PhotoEasyMode] = HttpSetting[Params.PhotoEasyMode](
             communicator, SettingId.PHOTO_EASY_MODE
         )
-        """Night Photo easy mode. Set with :py:class:`open_gopro.api.params.PhotoEasyMode`"""
+        """Night Photo easy mode."""
 
-        self.wifi_band: HttpSetting = HttpSetting[Params.WifiBand](communicator, SettingId.WIFI_BAND)
-        """Current WiFi band being used. Set with :py:class:`open_gopro.api.params.WifiBand`"""
+        self.wifi_band: HttpSetting[Params.WifiBand] = HttpSetting[Params.WifiBand](
+            communicator, SettingId.WIFI_BAND
+        )
+        """Current WiFi band being used."""
 
-        self.star_trail_length: HttpSetting = HttpSetting[Params.StarTrailLength](
+        self.star_trail_length: HttpSetting[Params.StarTrailLength] = HttpSetting[Params.StarTrailLength](
             communicator, SettingId.STAR_TRAIL_LENGTH
         )
-        """Multi shot star trail length. Set with :py:class:`open_gopro.api.params.StarTrailLength`"""
+        """Multi shot star trail length."""
 
-        self.system_video_mode: HttpSetting = HttpSetting[Params.SystemVideoMode](
+        self.system_video_mode: HttpSetting[Params.SystemVideoMode] = HttpSetting[Params.SystemVideoMode](
             communicator, SettingId.SYSTEM_VIDEO_MODE
         )
-        """System video mode. Set with :py:class:`open_gopro.api.params.SystemVideoMode`"""
+        """System video mode."""
 
-        self.video_horizon_leveling: HttpSetting = HttpSetting[Params.HorizonLeveling](
+        self.video_horizon_leveling: HttpSetting[Params.HorizonLeveling] = HttpSetting[Params.HorizonLeveling](
             communicator, SettingId.VIDEO_HORIZON_LEVELING
         )
-        """Lock / unlock horizon leveling for video. Set with :py:class:`open_gopro.api.params.HorizonLeveling`"""
+        """Lock / unlock horizon leveling for video."""
 
-        self.photo_horizon_leveling: HttpSetting = HttpSetting[Params.HorizonLeveling](
+        self.photo_horizon_leveling: HttpSetting[Params.HorizonLeveling] = HttpSetting[Params.HorizonLeveling](
             communicator, SettingId.PHOTO_HORIZON_LEVELING
         )
-        """Lock / unlock horizon leveling for photo. Set with :py:class:`open_gopro.api.params.HorizonLeveling`"""
+        """Lock / unlock horizon leveling for photo."""
 
         super().__init__(communicator)

@@ -652,121 +652,121 @@ class BleSettings(BleMessages[BleSetting, SettingId]):
 
     def __init__(self, communicator: GoProBle):
 
-        self.resolution: BleSetting = BleSetting[Params.Resolution](
+        self.resolution: BleSetting[Params.Resolution] = BleSetting[Params.Resolution](
             communicator, SettingId.RESOLUTION, Params.Resolution
         )
-        """Resolution. Set with :py:class:`open_gopro.api.params.Resolution`"""
+        """Resolution."""
 
-        self.fps: BleSetting = BleSetting[Params.FPS](communicator, SettingId.FPS, Params.FPS)
-        """Frames per second. Set with :py:class:`open_gopro.api.params.FPS`"""
+        self.fps: BleSetting[Params.FPS] = BleSetting[Params.FPS](communicator, SettingId.FPS, Params.FPS)
+        """Frames per second."""
 
-        self.auto_off: BleSetting = BleSetting[Params.AutoOff](
+        self.auto_off: BleSetting[Params.AutoOff] = BleSetting[Params.AutoOff](
             communicator, SettingId.AUTO_OFF, Params.AutoOff
         )
-        """Set the auto off time. Set with :py:class:`open_gopro.api.params.AutoOff`"""
+        """Set the auto off time."""
 
-        self.video_field_of_view: BleSetting = BleSetting[Params.VideoFOV](
+        self.video_field_of_view: BleSetting[Params.VideoFOV] = BleSetting[Params.VideoFOV](
             communicator, SettingId.VIDEO_FOV, Params.VideoFOV
         )
-        """Video FOV. Set with :py:class:`open_gopro.api.params.VideoFOV`"""
+        """Video FOV."""
 
-        self.photo_field_of_view: BleSetting = BleSetting[Params.PhotoFOV](
+        self.photo_field_of_view: BleSetting[Params.PhotoFOV] = BleSetting[Params.PhotoFOV](
             communicator, SettingId.PHOTO_FOV, Params.PhotoFOV
         )
-        """Photo FOV. Set with :py:class:`open_gopro.api.params.PhotoFOV`"""
+        """Photo FOV."""
 
-        self.multi_shot_field_of_view: BleSetting = BleSetting[Params.MultishotFOV](
+        self.multi_shot_field_of_view: BleSetting[Params.MultishotFOV] = BleSetting[Params.MultishotFOV](
             communicator, SettingId.MULTI_SHOT_FOV, Params.MultishotFOV
         )
-        """Multi-shot FOV. Set with :py:class:`open_gopro.api.params.MultishotFOV`"""
+        """Multi-shot FOV."""
 
-        self.led: BleSetting = BleSetting[Params.LED](communicator, SettingId.LED, Params.LED)
-        """Set the LED options (or also send the BLE keep alive signal). Set with :py:class:`open_gopro.api.params.LED`"""
+        self.led: BleSetting[Params.LED] = BleSetting[Params.LED](communicator, SettingId.LED, Params.LED)
+        """Set the LED options (or also send the BLE keep alive signal)."""
 
-        self.max_lens_mode: BleSetting = BleSetting[Params.MaxLensMode](
+        self.max_lens_mode: BleSetting[Params.MaxLensMode] = BleSetting[Params.MaxLensMode](
             communicator, SettingId.MAX_LENS_MOD, Params.MaxLensMode
         )
-        """Enable / disable max lens mod. Set with :py:class:`open_gopro.api.params.MaxLensMode`"""
+        """Enable / disable max lens mod."""
 
-        self.hypersmooth: BleSetting = BleSetting[Params.HypersmoothMode](
+        self.hypersmooth: BleSetting[Params.HypersmoothMode] = BleSetting[Params.HypersmoothMode](
             communicator, SettingId.HYPERSMOOTH, Params.HypersmoothMode
         )
-        """Set / disable hypersmooth. Set with :py:class:`open_gopro.api.params.HypersmoothMode`"""
+        """Set / disable hypersmooth."""
 
-        self.video_performance_mode: BleSetting = BleSetting[Params.PerformanceMode](
+        self.video_performance_mode: BleSetting[Params.PerformanceMode] = BleSetting[Params.PerformanceMode](
             communicator,
             SettingId.VIDEO_PERFORMANCE_MODE,
             Params.PerformanceMode,
         )
-        """Video Performance Mode. Set with :py:class:`open_gopro.api.params.PerformanceMode`"""
+        """Video Performance Mode."""
 
-        self.media_format: BleSetting = BleSetting[Params.MediaFormat](
+        self.media_format: BleSetting[Params.MediaFormat] = BleSetting[Params.MediaFormat](
             communicator, SettingId.MEDIA_FORMAT, Params.MediaFormat
         )
-        """Set the media format. Set with :py:class:`open_gopro.api.params.MediaFormat`"""
+        """Set the media format."""
 
-        self.anti_flicker: BleSetting = BleSetting[Params.AntiFlicker](
+        self.anti_flicker: BleSetting[Params.AntiFlicker] = BleSetting[Params.AntiFlicker](
             communicator,
             SettingId.ANTI_FLICKER,
             Params.AntiFlicker,
         )
-        """Anti Flicker frequency. Set with :py:class:`open_gopro.api.params.AntiFlicker`"""
+        """Anti Flicker frequency."""
 
-        self.camera_ux_mode: BleSetting = BleSetting[Params.CameraUxMode](
+        self.camera_ux_mode: BleSetting[Params.CameraUxMode] = BleSetting[Params.CameraUxMode](
             communicator,
             SettingId.CAMERA_UX_MODE,
             Params.CameraUxMode,
         )
-        """Camera controls configuration. Set with :py:class:`open_gopro.api.params.CameraUxMode`"""
+        """Camera controls configuration."""
 
-        self.video_easy_mode: BleSetting = BleSetting[Params.Speed](
+        self.video_easy_mode: BleSetting[Params.Speed] = BleSetting[Params.Speed](
             communicator,
             SettingId.VIDEO_EASY_MODE,
             Params.Speed,
         )
-        """Video easy mode speed. Set with :py:class:`open_gopro.api.params.Speed`"""
+        """Video easy mode speed."""
 
-        self.photo_easy_mode: BleSetting = BleSetting[Params.PhotoEasyMode](
+        self.photo_easy_mode: BleSetting[Params.PhotoEasyMode] = BleSetting[Params.PhotoEasyMode](
             communicator,
             SettingId.PHOTO_EASY_MODE,
             Params.PhotoEasyMode,
         )
-        """Night Photo easy mode. Set with :py:class:`open_gopro.api.params.PhotoEasyMode`"""
+        """Night Photo easy mode."""
 
-        self.wifi_band: BleSetting = BleSetting[Params.WifiBand](
+        self.wifi_band: BleSetting[Params.WifiBand] = BleSetting[Params.WifiBand](
             communicator,
             SettingId.WIFI_BAND,
             Params.WifiBand,
         )
-        """Current WiFi band being used. Set with :py:class:`open_gopro.api.params.WifiBand`"""
+        """Current WiFi band being used."""
 
-        self.star_trail_length: BleSetting = BleSetting[Params.StarTrailLength](
+        self.star_trail_length: BleSetting[Params.StarTrailLength] = BleSetting[Params.StarTrailLength](
             communicator,
             SettingId.STAR_TRAIL_LENGTH,
             Params.StarTrailLength,
         )
-        """Multi shot star trail length. Set with :py:class:`open_gopro.api.params.StarTrailLength`"""
+        """Multi shot star trail length."""
 
-        self.system_video_mode: BleSetting = BleSetting[Params.SystemVideoMode](
+        self.system_video_mode: BleSetting[Params.SystemVideoMode] = BleSetting[Params.SystemVideoMode](
             communicator,
             SettingId.SYSTEM_VIDEO_MODE,
             Params.SystemVideoMode,
         )
-        """System video mode. Set with :py:class:`open_gopro.api.params.SystemVideoMode`"""
+        """System video mode."""
 
-        self.video_horizon_leveling: BleSetting = BleSetting[Params.HorizonLeveling](
+        self.video_horizon_leveling: BleSetting[Params.HorizonLeveling] = BleSetting[Params.HorizonLeveling](
             communicator,
             SettingId.VIDEO_HORIZON_LEVELING,
             Params.HorizonLeveling,
         )
-        """Lock / unlock horizon leveling for video. Set with :py:class:`open_gopro.api.params.HorizonLeveling`"""
+        """Lock / unlock horizon leveling for video."""
 
-        self.photo_horizon_leveling: BleSetting = BleSetting[Params.HorizonLeveling](
+        self.photo_horizon_leveling: BleSetting[Params.HorizonLeveling] = BleSetting[Params.HorizonLeveling](
             communicator,
             SettingId.PHOTO_HORIZON_LEVELING,
             Params.HorizonLeveling,
         )
-        """Lock / unlock horizon leveling for photo. Set with :py:class:`open_gopro.api.params.HorizonLeveling`"""
+        """Lock / unlock horizon leveling for photo."""
 
         super().__init__(communicator)
 
