@@ -541,7 +541,6 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
     def request_wifi_connect(self, *, ssid: str) -> GoProResp:
         """Request the camera to connect to a WiFi network that is already provisioned.
 
-        TODO is this correct?
         Updates will be sent as :py:attr:`open_gopro.constants.ActionId.NOTIF_PROVIS_STATE`
 
         Args:
