@@ -387,6 +387,9 @@ class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]
                     max_bit (int): Desired maximum streaming bitrate (<= 8000)
                     start_bit (int): Initial streaming bitrate (honored if 800 <= value <= 8000)
 
+                Raises:
+                    RuntimeError: could not find desired ssid
+
                 Returns:
                     GoProResp: status and url to start livestream
                 """
@@ -410,16 +413,25 @@ class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]
                 assert scan_id
                 for entry in self._communicator.ble_command.get_ap_entries(scan_id=scan_id)["entries"]:
                     if entry["ssid"] == ssid:
-                        if not entry["scan_entry_flags"] & Params.ScanEntry.CONFIGURED:
-                            self._communicator.ble_command.request_wifi_connect(ssid=ssid, password=password)
-                            # Wait to receive provisioning done notification
-                            while update := self._communicator.get_notification():
-                                if (
-                                    update == constants.ActionId.NOTIF_PROVIS_STATE
-                                    and update["provisioning_state"] == Params.ProvisioningState.SUCCESS_NEW_AP
-                                ):
-                                    break
+                        # Are we already provisioned?
+                        if entry["scan_entry_flags"] & Params.ScanEntry.CONFIGURED:
+                            logger.info("Connecting to already provisioned network...")
+                            self._communicator.ble_command.request_wifi_connect(ssid=ssid)
+                        else:
+                            logger.info("Provisioning new network...")
+                            self._communicator.ble_command.request_wifi_connect_new(
+                                ssid=ssid, password=password
+                            )
+                        # Wait to receive provisioning done notification (it is "New" AP in both cases)
+                        while update := self._communicator.get_notification():
+                            if (
+                                update == constants.ActionId.NOTIF_PROVIS_STATE
+                                and update["provisioning_state"] == Params.ProvisioningState.SUCCESS_NEW_AP
+                            ):
+                                break
                         break
+                else:
+                    raise RuntimeError(f"Could not find network {ssid}")
 
                 # Start livestream
                 self._communicator.ble_command.set_livestream_mode(
