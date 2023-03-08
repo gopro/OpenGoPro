@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2023-03-08T23:36:58+00:00">
+  <meta property="article:published_time" content="2023-03-08T23:47:18+00:00">
 
 
 
@@ -339,7 +339,7 @@
 <nav class="nav__list">
   
   <input id="ac-toc" name="accordion-toc" type="checkbox">
-  <label for="ac-toc">Toggle Menu</label>
+  <label for="ac-toc">Toggle menu</label>
   <ul class="nav__items">
     
       <li>
@@ -410,7 +410,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 7: Camera Media List">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to send Open GoProHTTP commands to the GoPro, specifically to get the media listand perform operations on it (downloading pictures, videos, etc.)">
-    <meta itemprop="datePublished" content="2023-03-08T23:36:58+00:00">
+    <meta itemprop="datePublished" content="2023-03-08T23:47:18+00:00">
     
 
     <div class="page__inner-wrap">
@@ -491,7 +491,7 @@ configured correctly.</p>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="50e41c79-dc96-4798-9393-37ba1dccbb2f">
+    <ul class="tab tab-linked" data-tab="556c39cf-a866-4fe2-8e24-c33d258df07a">
         
             <li class="active">
                 <a href="">python </a>
@@ -502,7 +502,7 @@ configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="50e41c79-dc96-4798-9393-37ba1dccbb2f">
+        <ul class="tab-content" id="556c39cf-a866-4fe2-8e24-c33d258df07a">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 2
@@ -616,7 +616,7 @@ corresponding information about each media file.</p>
 an exception.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="94df6346-9c66-4749-a3d8-a28e4cb95166">
+    <ul class="tab tab-linked" data-tab="9990bd7d-4472-45a1-be58-3a5a43309ae4">
         
             <li class="active">
                 <a href="">python </a>
@@ -627,19 +627,19 @@ an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="94df6346-9c66-4749-a3d8-a28e4cb95166">
+        <ul class="tab-content" id="9990bd7d-4472-45a1-be58-3a5a43309ae4">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="s">"/gopro/media/list"</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">response</span><span class="p">.</span><span class="nf">raise_for_status</span><span class="p">()</span>
 </code></pre></div></div>
 </li>
         
             <li class="tab-content-container">
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">response</span> <span class="o">=</span> <span class="n">wifi</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="s">"gopro/media/list"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">response</span> <span class="o">=</span> <span class="n">wifi</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="s">"gopro/media/list"</span><span class="p">)</span>
 </code></pre></div></div>
 </li>
         
@@ -649,7 +649,7 @@ an exception.</p>
 <p>Lastly, we print the response’s JSON data:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="dd57c432-b047-43c2-b3e5-57829b18515c">
+    <ul class="tab tab-linked" data-tab="c21051af-a8e9-454a-90bf-d5769f66a03d">
         
             <li class="active">
                 <a href="">python </a>
@@ -660,10 +660,10 @@ an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="dd57c432-b047-43c2-b3e5-57829b18515c">
+        <ul class="tab-content" id="c21051af-a8e9-454a-90bf-d5769f66a03d">
         
             <li class="active tab-content-container">
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>The response will log as such (abbreviated for brevity):</p>
@@ -756,7 +756,7 @@ We won’t be rehashing that here but will provide examples below of using the m
 <p>One common functionality is to get the list of media file names, which can be done as such:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="b9e9be63-0ffd-499a-8e41-d7a9ff40a5ee">
+    <ul class="tab tab-linked" data-tab="0c0a33b9-f393-4ef3-8159-951c24474dd1">
         
             <li class="active">
                 <a href="">python </a>
@@ -767,10 +767,10 @@ We won’t be rehashing that here but will provide examples below of using the m
             </li>
         
         </ul>
-        <ul class="tab-content" id="b9e9be63-0ffd-499a-8e41-d7a9ff40a5ee">
+        <ul class="tab-content" id="0c0a33b9-f393-4ef3-8159-951c24474dd1">
         
             <li class="active tab-content-container">
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">[</span><span class="s">"media"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">"fs"</span><span class="p">]])</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">[</span><span class="s">"media"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">"fs"</span><span class="p">]])</span>
 </code></pre></div></div>
 
 <p>That is, access the list at the <strong>fs</strong> tag at the first element of the <strong>media</strong> tag, then
@@ -820,7 +820,7 @@ Then we search through the list of file names in the media list looking for a ph
 ends in <strong>.jpg</strong>). Once we find a photo, we proceed:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="05c80300-ca74-4aef-aaa5-4a8a5e0d4039">
+    <ul class="tab tab-linked" data-tab="6790d17b-dad5-4436-9af2-d6f35e20f9be">
         
             <li class="active">
                 <a href="">python </a>
@@ -831,15 +831,15 @@ ends in <strong>.jpg</strong>). Once we find a photo, we proceed:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="05c80300-ca74-4aef-aaa5-4a8a5e0d4039">
+        <ul class="tab-content" id="6790d17b-dad5-4436-9af2-d6f35e20f9be">
         
             <li class="active tab-content-container">
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">media_list</span> <span class="o">=</span> <span class="n">get_media_list</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">media_list</span> <span class="o">=</span> <span class="nf">get_media_list</span><span class="p">()</span>
 
 <span class="n">photo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
 <span class="k">for</span> <span class="n">media_file</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">[</span><span class="s">"media"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">"fs"</span><span class="p">]]:</span>
-    <span class="k">if</span> <span class="n">media_file</span><span class="p">.</span><span class="n">lower</span><span class="p">().</span><span class="n">endswith</span><span class="p">(</span><span class="s">".jpg"</span><span class="p">):</span>
-        <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"found a photo: </span><span class="si">{</span><span class="n">media_file</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">media_file</span><span class="p">.</span><span class="nf">lower</span><span class="p">().</span><span class="nf">endswith</span><span class="p">(</span><span class="s">".jpg"</span><span class="p">):</span>
+        <span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"found a photo: </span><span class="si">{</span><span class="n">media_file</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
         <span class="n">photo</span> <span class="o">=</span> <span class="n">media_file</span>
         <span class="k">break</span>
 </code></pre></div></div>
@@ -864,7 +864,7 @@ an exception.</p>
 </div>
 
 <div>
-    <ul class="tab tab-linked" data-tab="9515fbb3-7e6d-4325-8293-9b23322daf77">
+    <ul class="tab tab-linked" data-tab="46160946-8590-40b1-8bb7-87c6bde2ca77">
         
             <li class="active">
                 <a href="">python </a>
@@ -875,23 +875,23 @@ an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="9515fbb3-7e6d-4325-8293-9b23322daf77">
+        <ul class="tab-content" id="46160946-8590-40b1-8bb7-87c6bde2ca77">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"videos/DCIM/100GOPRO/</span><span class="si">{</span><span class="n">photo</span><span class="si">}</span><span class="s">"</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">request</span><span class="p">:</span>
-    <span class="n">request</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">request</span><span class="p">:</span>
+    <span class="n">request</span><span class="p">.</span><span class="nf">raise_for_status</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p>Lastly, we iterate through the binary content in 8 kB chunks, writing to a local file:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">file</span> <span class="o">=</span> <span class="n">photo</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">".jpg"</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"receiving binary stream to </span><span class="si">{</span><span class="nb">file</span><span class="si">}</span><span class="s">..."</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">request</span><span class="p">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">):</span>
-        <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">file</span> <span class="o">=</span> <span class="n">photo</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">".jpg"</span>
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"receiving binary stream to </span><span class="si">{</span><span class="nb">file</span><span class="si">}</span><span class="s">..."</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">request</span><span class="p">.</span><span class="nf">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">):</span>
+        <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
 </code></pre></div></div>
 
 </li>
@@ -912,7 +912,7 @@ an exception.</p>
 <p>This will log as such:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="8895dd28-5c5e-4c3d-bf53-26535ba6f2fb">
+    <ul class="tab tab-linked" data-tab="4d5cd8c0-c2c6-491d-9338-03b1554d9f58">
         
             <li class="active">
                 <a href="">python </a>
@@ -923,7 +923,7 @@ an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="8895dd28-5c5e-4c3d-bf53-26535ba6f2fb">
+        <ul class="tab-content" id="4d5cd8c0-c2c6-491d-9338-03b1554d9f58">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:found a photo: GOPR0987.JPG
@@ -964,7 +964,7 @@ Then we search through the list of file names in the media list looking for a ph
 ends in <strong>.jpg</strong>). Once we find a photo, we proceed:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="7e5cb5bb-9322-48e6-8afb-3f0b0ba6e244">
+    <ul class="tab tab-linked" data-tab="c8a6865c-7583-416b-a904-d82689a5f51e">
         
             <li class="active">
                 <a href="">python </a>
@@ -975,15 +975,15 @@ ends in <strong>.jpg</strong>). Once we find a photo, we proceed:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="7e5cb5bb-9322-48e6-8afb-3f0b0ba6e244">
+        <ul class="tab-content" id="c8a6865c-7583-416b-a904-d82689a5f51e">
         
             <li class="active tab-content-container">
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">media_list</span> <span class="o">=</span> <span class="n">get_media_list</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">media_list</span> <span class="o">=</span> <span class="nf">get_media_list</span><span class="p">()</span>
 
 <span class="n">photo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
 <span class="k">for</span> <span class="n">media_file</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">[</span><span class="s">"media"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">"fs"</span><span class="p">]]:</span>
-    <span class="k">if</span> <span class="n">media_file</span><span class="p">.</span><span class="n">lower</span><span class="p">().</span><span class="n">endswith</span><span class="p">(</span><span class="s">".jpg"</span><span class="p">):</span>
-        <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"found a photo: </span><span class="si">{</span><span class="n">media_file</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">media_file</span><span class="p">.</span><span class="nf">lower</span><span class="p">().</span><span class="nf">endswith</span><span class="p">(</span><span class="s">".jpg"</span><span class="p">):</span>
+        <span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"found a photo: </span><span class="si">{</span><span class="n">media_file</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
         <span class="n">photo</span> <span class="o">=</span> <span class="n">media_file</span>
         <span class="k">break</span>
 </code></pre></div></div>
@@ -1001,7 +1001,7 @@ ends in <strong>.jpg</strong>). Once we find a photo, we proceed:</p>
 an exception.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="18d57e6b-8416-487a-b3fe-89b03e4d83ae">
+    <ul class="tab tab-linked" data-tab="19d1767f-e997-417f-8182-ce6c789f9c01">
         
             <li class="active">
                 <a href="">python </a>
@@ -1012,23 +1012,23 @@ an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="18d57e6b-8416-487a-b3fe-89b03e4d83ae">
+        <ul class="tab-content" id="19d1767f-e997-417f-8182-ce6c789f9c01">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="s">"/gopro/media/thumbnail?path=100GOPRO/</span><span class="si">{</span><span class="n">photo</span><span class="si">}</span><span class="s">"</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">request</span><span class="p">:</span>
-    <span class="n">request</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">request</span><span class="p">:</span>
+    <span class="n">request</span><span class="p">.</span><span class="nf">raise_for_status</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p>Lastly, we iterate through the binary content in 8 kB chunks, writing to a local file:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">file</span> <span class="o">=</span> <span class="n">photo</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">".jpg"</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"receiving binary stream to </span><span class="si">{</span><span class="nb">file</span><span class="si">}</span><span class="s">..."</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">request</span><span class="p">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">):</span>
-        <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">file</span> <span class="o">=</span> <span class="n">photo</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">".jpg"</span>
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"receiving binary stream to </span><span class="si">{</span><span class="nb">file</span><span class="si">}</span><span class="s">..."</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">request</span><span class="p">.</span><span class="nf">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">):</span>
+        <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
 </code></pre></div></div>
 </li>
         
@@ -1042,7 +1042,7 @@ an exception.</p>
 <p>This will log as such:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="ba5dd94f-f687-43ee-a558-4ff50d589544">
+    <ul class="tab tab-linked" data-tab="538b1d9e-ece7-46c0-83a9-d235466e0761">
         
             <li class="active">
                 <a href="">python </a>
@@ -1053,7 +1053,7 @@ an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="ba5dd94f-f687-43ee-a558-4ff50d589544">
+        <ul class="tab-content" id="538b1d9e-ece7-46c0-83a9-d235466e0761">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:found a photo: GOPR0987.JPG
@@ -1097,7 +1097,7 @@ inspiration check out some of the <a href="/OpenGoPro/demos">demos</a>.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-03-08T23:36:58+00:00">March 8, 2023</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-03-08T23:47:18+00:00">March 8, 2023</time></p>
 
 
       </footer>
@@ -1148,6 +1148,8 @@ inspiration check out some of the <a href="/OpenGoPro/demos">demos</a>.</p>
 <!-- end custom footer snippets -->
         <div class="page__footer-follow">
     <ul class="social-icons">
+        
+        <li><strong>Follow:</strong></li>
            
         <li>
             <a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i>

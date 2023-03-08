@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2023-03-08T23:36:58+00:00">
+  <meta property="article:published_time" content="2023-03-08T23:47:18+00:00">
 
 
 
@@ -339,7 +339,7 @@
 <nav class="nav__list">
   
   <input id="ac-toc" name="accordion-toc" type="checkbox">
-  <label for="ac-toc">Toggle Menu</label>
+  <label for="ac-toc">Toggle menu</label>
   <ul class="nav__items">
     
       <li>
@@ -410,7 +410,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 5: Connect WiFi">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to implementthe Open GoPro Interface to enable the GoPro’s WiFi Access Point (AP) so that itcan be connected to. It will also provide an example of connecting to the WiFi AP.">
-    <meta itemprop="datePublished" content="2023-03-08T23:36:58+00:00">
+    <meta itemprop="datePublished" content="2023-03-08T23:47:18+00:00">
     
 
     <div class="page__inner-wrap">
@@ -494,7 +494,7 @@ are present and configured correctly.</p>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="860cbab0-e7c3-44d4-956f-ba48a694b4d6">
+    <ul class="tab tab-linked" data-tab="3a6e38ab-b664-44da-a0b9-f8e27b8c0e7c">
         
             <li class="active">
                 <a href="">python </a>
@@ -505,7 +505,7 @@ are present and configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="860cbab0-e7c3-44d4-956f-ba48a694b4d6">
+        <ul class="tab-content" id="3a6e38ab-b664-44da-a0b9-f8e27b8c0e7c">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 2
@@ -609,7 +609,7 @@ WiFi Access Point service.</p>
 <p>First, let’s send the read request to get the SSID (and decode it into a string).</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="cb8b1f20-d53f-47fd-8330-7ea2547b39d5">
+    <ul class="tab tab-linked" data-tab="7b824ccc-cef7-4312-9ac8-696c1fbf8bc7">
         
             <li class="active">
                 <a href="">python </a>
@@ -620,18 +620,18 @@ WiFi Access Point service.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="cb8b1f20-d53f-47fd-8330-7ea2547b39d5">
+        <ul class="tab-content" id="7b824ccc-cef7-4312-9ac8-696c1fbf8bc7">
         
             <li class="active tab-content-container">
 <p>Let’s define the attribute to read from:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">WIFI_AP_SSID_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0002"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">WIFI_AP_SSID_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0002"</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Then send the BLE read request:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssid</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">read_gatt_char</span><span class="p">(</span><span class="n">WIFI_AP_SSID_UUID</span><span class="p">)</span>
-<span class="n">ssid</span> <span class="o">=</span> <span class="n">ssid</span><span class="p">.</span><span class="n">decode</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssid</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">read_gatt_char</span><span class="p">(</span><span class="n">WIFI_AP_SSID_UUID</span><span class="p">)</span>
+<span class="n">ssid</span> <span class="o">=</span> <span class="n">ssid</span><span class="p">.</span><span class="nf">decode</span><span class="p">()</span>
 </code></pre></div></div>
 
 <div class="callout tip">
@@ -671,7 +671,7 @@ WiFi Access Point service.</p>
 <p>First, let’s send the read request to get the password (and decode it into a string).</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="366368b6-8bd6-4ecf-9594-e9184028455c">
+    <ul class="tab tab-linked" data-tab="80b39ff1-1e72-4267-bb19-53b74cc90dbd">
         
             <li class="active">
                 <a href="">python </a>
@@ -682,12 +682,12 @@ WiFi Access Point service.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="366368b6-8bd6-4ecf-9594-e9184028455c">
+        <ul class="tab-content" id="80b39ff1-1e72-4267-bb19-53b74cc90dbd">
         
             <li class="active tab-content-container">
 <p>Let’s define the attribute to read from:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">WIFI_AP_PASSWORD_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0003"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">WIFI_AP_PASSWORD_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0003"</span><span class="p">)</span>
 </code></pre></div></div>
 <p>Then send the BLE read request:</p>
 
@@ -749,7 +749,7 @@ Password is z3y-DCX-Phj
 <p>Now, let’s write the bytes to the “Command Request UUID” to enable the WiFi AP!</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="800690ad-c1e6-42fb-8b94-df3c7f11d7fe">
+    <ul class="tab tab-linked" data-tab="452f6736-fb2f-4ea0-aad6-dda8183a2abc">
         
             <li class="active">
                 <a href="">python </a>
@@ -760,12 +760,12 @@ Password is z3y-DCX-Phj
             </li>
         
         </ul>
-        <ul class="tab-content" id="800690ad-c1e6-42fb-8b94-df3c7f11d7fe">
+        <ul class="tab-content" id="452f6736-fb2f-4ea0-aad6-dda8183a2abc">
         
             <li class="active tab-content-container">
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">COMMAND_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x17</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">]))</span>
-<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">write_gatt_char</span><span class="p">(</span><span class="n">COMMAND_REQ_UUID</span><span class="p">,</span> <span class="nf">bytearray</span><span class="p">([</span><span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x17</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="nf">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
 </span></code></pre></div></div>
 
 <div class="callout success">
@@ -790,7 +790,7 @@ Command Response characteristic since we enabled it’s notifications in
 be seen in the demo log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="a4ee8dbb-29e5-42fe-8575-2c64a3af3750">
+    <ul class="tab tab-linked" data-tab="34b26490-c58c-4200-aed4-a9243950a3a0">
         
             <li class="active">
                 <a href="">python </a>
@@ -801,7 +801,7 @@ be seen in the demo log:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="a4ee8dbb-29e5-42fe-8575-2c64a3af3750">
+        <ul class="tab-content" id="34b26490-c58c-4200-aed4-a9243950a3a0">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Enabling the WiFi AP
@@ -829,7 +829,7 @@ Command sent successfully
 <h2 id="establish-connection-to-wifi-ap">Establish Connection to WiFi AP</h2>
 
 <div>
-    <ul class="tab tab-linked" data-tab="ae830020-6e25-41ac-8d80-884103800d2a">
+    <ul class="tab tab-linked" data-tab="b73f3cf1-737a-432e-a349-6c4e42eb7e15">
         
             <li class="active">
                 <a href="">python </a>
@@ -840,7 +840,7 @@ Command sent successfully
             </li>
         
         </ul>
-        <ul class="tab-content" id="ae830020-6e25-41ac-8d80-884103800d2a">
+        <ul class="tab-content" id="b73f3cf1-737a-432e-a349-6c4e42eb7e15">
         
             <li class="active tab-content-container">
 <p>If you have been following through the <code class="language-plaintext highlighter-rouge">ble_enable_wifi.py</code> script, you will notice that it ends here such that
@@ -874,10 +874,10 @@ connected.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_811928af-4b07-4996-a511-423755844f93" class="quiz">
+<div id="quiz_9c2a9f8a-92c1-4299-8889-ac73e3dae808" class="quiz">
     <div>
-        <div id="question_811928af-4b07-4996-a511-423755844f93" class="quiz__question">How is the WiFi password response received?</div>
-        <div id="answers_811928af-4b07-4996-a511-423755844f93">
+        <div id="question_9c2a9f8a-92c1-4299-8889-ac73e3dae808" class="quiz__question">How is the WiFi password response received?</div>
+        <div id="answers_9c2a9f8a-92c1-4299-8889-ac73e3dae808">
         
             <input type="radio" name="question" value="A"><label>A: As a read response from the WiFi AP Password characteristic</label>
             <br>
@@ -890,10 +890,10 @@ connected.</p>
         
         </div>
     </div>
-    <button onclick="showResults('811928af-4b07-4996-a511-423755844f93', 'A')">Submit Answer</button>
-    <div id="results_811928af-4b07-4996-a511-423755844f93" style="display: none">
-        <span id="correct_811928af-4b07-4996-a511-423755844f93" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_811928af-4b07-4996-a511-423755844f93" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('9c2a9f8a-92c1-4299-8889-ac73e3dae808', 'A')">Submit Answer</button>
+    <div id="results_9c2a9f8a-92c1-4299-8889-ac73e3dae808" style="display: none">
+        <span id="correct_9c2a9f8a-92c1-4299-8889-ac73e3dae808" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_9c2a9f8a-92c1-4299-8889-ac73e3dae808" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         This (and WiFi AP SSID) is an exception to the rule. Usually responses
     are received as notifications to a response characteristic. However, in this case, it is
     received as a direct read response (since we are reading from the characteristic and not
@@ -901,10 +901,10 @@ connected.</p>
     </div>
 </div>
 
-<div id="quiz_a58a1c31-8474-4436-9f46-fe9012b84dc9" class="quiz">
+<div id="quiz_1779cac0-dc13-4fb6-acfb-b8e1d478e3e7" class="quiz">
     <div>
-        <div id="question_a58a1c31-8474-4436-9f46-fe9012b84dc9" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
-        <div id="answers_a58a1c31-8474-4436-9f46-fe9012b84dc9">
+        <div id="question_1779cac0-dc13-4fb6-acfb-b8e1d478e3e7" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
+        <div id="answers_1779cac0-dc13-4fb6-acfb-b8e1d478e3e7">
         
             <input type="radio" name="question" value="A"><label>A: It only needs to be enabled once and it will then always remain on</label>
             <br>
@@ -920,10 +920,10 @@ connected.</p>
         
         </div>
     </div>
-    <button onclick="showResults('a58a1c31-8474-4436-9f46-fe9012b84dc9', 'D')">Submit Answer</button>
-    <div id="results_a58a1c31-8474-4436-9f46-fe9012b84dc9" style="display: none">
-        <span id="correct_a58a1c31-8474-4436-9f46-fe9012b84dc9" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_a58a1c31-8474-4436-9f46-fe9012b84dc9" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('1779cac0-dc13-4fb6-acfb-b8e1d478e3e7', 'D')">Submit Answer</button>
+    <div id="results_1779cac0-dc13-4fb6-acfb-b8e1d478e3e7" style="display: none">
+        <span id="correct_1779cac0-dc13-4fb6-acfb-b8e1d478e3e7" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_1779cac0-dc13-4fb6-acfb-b8e1d478e3e7" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         While the WiFi AP will remain on for some time, it can and will eventually turn off so
     it is always recommended to first connect via BLE and ensure that it is enabled. The password
     and SSID will almost never change. However, they will change if the connections are reset via
@@ -955,7 +955,7 @@ connected.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-03-08T23:36:58+00:00">March 8, 2023</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-03-08T23:47:18+00:00">March 8, 2023</time></p>
 
 
       </footer>
@@ -1007,6 +1007,8 @@ connected.</p>
 <!-- end custom footer snippets -->
         <div class="page__footer-follow">
     <ul class="social-icons">
+        
+        <li><strong>Follow:</strong></li>
            
         <li>
             <a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i>
