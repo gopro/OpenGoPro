@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Tutorial 2: Send BLE Commands :  Open GoPro</title>
+<meta name="description" content="This document will provide a walk-through tutorial to use the Open GoPro BLE Interface to send commands and receive responses.">
+
+
+  <meta name="author" content="GoPro">
+  
+  <meta property="article:author" content="GoPro">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Tutorial 2: Send BLE Commands">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/tutorials/send-ble-commands">
+
+
+  <meta property="og:description" content="This document will provide a walk-through tutorial to use the Open GoPro BLE Interface to send commands and receive responses.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-03-08T23:36:58+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/tutorials/send-ble-commands">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "https://gopro.github.io/OpenGoPro/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+  
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/OpenGoPro/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/ble">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/http">HTTP Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/demos">Demos</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="https://gopro.github.io/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/OpenGoPro/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
+          <meta itemprop="position" content="2">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Tutorial 2: Send BLE Commands</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">GoPro</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Be a <strong>hero</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox">
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/connect-ble"><span class="nav__sub-title">1: Connect BLE</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/send-ble-commands"><span class="nav__sub-title">2: Send BLE Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/parse-ble-responses"><span class="nav__sub-title">3: Parse BLE TLV Responses</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/ble-queries"><span class="nav__sub-title">4: BLE Queries</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/connect-wifi"><span class="nav__sub-title">5: Connect WiFi</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/send-wifi-commands"><span class="nav__sub-title">6: Send WiFi Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/camera-media-list"><span class="nav__sub-title">7: Camera Media List</span></a>
+        
+
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Tutorial 2: Send BLE Commands">
+    <meta itemprop="description" content="This document will provide a walk-through tutorial to use theOpen GoPro BLE Interface to send commands and receive responses.">
+    <meta itemprop="datePublished" content="2023-03-08T23:36:58+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Tutorial 2: Send BLE Commands
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          13 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#just-show-me-the-demos">Just Show me the Demo(s)!!</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#command-overview">Command Overview</a></li>
+<li>
+<a href="#sending-commands">Sending Commands</a><ul>
+<li><a href="#set-shutter">Set Shutter</a></li>
+<li><a href="#load-preset-group">Load Preset Group</a></li>
+<li><a href="#set-the-video-resolution">Set the Video Resolution</a></li>
+<li><a href="#set-the-frames-per-second-fps">Set the Frames Per Second (FPS)</a></li>
+</ul>
+</li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#good-job">Good Job!</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>This document will provide a walk-through tutorial to use the
+<a href="/OpenGoPro/ble_2_0">Open GoPro BLE Interface</a> to send commands and receive responses.</p>
+
+<p>“Commands” in this sense are specifically procedures that are initiated by either:</p>
+
+<ul>
+  <li>Writing to the Command Request UUID and receiving responses via the Command Response UUID. They are
+listed <a href="/OpenGoPro/ble_2_0#commands">here</a>.</li>
+  <li>Writing to the Setting UUID and receiving responses via the Setting Response UUID. They are listed
+<a href="/OpenGoPro/ble_2_0#settings">here</a>.</li>
+</ul>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>It is suggested that you have first completed the
+<a href="/OpenGoPro/tutorials/connect-ble#requirements">connect tutorial</a> before going through
+this tutorial.</span>
+</div>
+
+<p>This tutorial only considers sending these commands as one-off commands. That is, it does not consider state
+management / synchronization when sending multiple commands. This will be discussed in a future lab.</p>
+
+<h1 id="requirements">Requirements</h1>
+
+<p>It is assumed that the hardware and software requirements from the
+<a href="/OpenGoPro/tutorials/connect-ble">connect tutorial</a> are present and configured correctly.</p>
+
+<h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
+
+<div>
+    <ul class="tab tab-linked" data-tab="82117e8d-208f-4045-a72f-c1850165e960">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="82117e8d-208f-4045-a72f-c1850165e960">
+        
+            <li class="active tab-content-container">
+<p>Each of the scripts for this tutorial can be found in the Tutorial 2
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_2_send_ble_commands/">directory</a>.</p>
+
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.8.x must be used as specified in the requirements</span>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Set Shutter<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test sending the Set Shutter command to your camera through BLE using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_set_shutter.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_set_shutter.py <span class="nt">--help</span>
+<span class="go">usage: ble_command_set_shutter.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, set the shutter on, wait 2 seconds, then set the shutter off.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+</span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Load Preset Group<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test sending the Load Preset Group command to your camera through BLE using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_load_group.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_load_group.py <span class="nt">--help</span>
+<span class="go">usage: ble_command_load_group.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then change the Preset Group to Video.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+</span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Set the Video Resolution<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test sending the Set Video Resolution command to your camera through BLE using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_set_resolution.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_set_resolution.py <span class="nt">--help</span>
+<span class="go">usage: ble_command_set_resolution.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then change the resolution to 1080.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+</span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Set the Frames Per Second (FPS)<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test sending the Set FPS command to your camera through BLE using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_set_fps.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_set_fps.py <span class="nt">--help</span>
+<span class="go">usage: ble_command_set_fps.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, then attempt to change the fps to 240.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+</span></code></pre></div></div>
+</div>
+</div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>The Kotlin file for this tutorial can be found on
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/kotlin/tutorial/app/src/main/java/com/example/open_gopro_tutorial/tutorials/Tutorial2SendBleCommands.kt">Github</a>.</p>
+
+<p>To perform the tutorial, run the Android Studio project, select “Tutorial 2” from the dropdown and click on “Perform.”
+This requires that a GoPro is already connected via BLE, i.e. that Tutorial 1 was already run. You can
+check the BLE status at the top of the app.</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/OpenGoPro/assets/images/tutorials/kotlin/tutorial_1.png" alt="kotlin_tutorial_2" style="
+            width: 40%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Perform Tutorial 2
+
+        </figcaption></figure>
+
+<p>This will start the tutorial and log to the screen as it executes. When the tutorial is complete, click
+“Exit Tutorial” to return to the Tutorial selection screen.</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<h1 id="setup">Setup</h1>
+
+<p>We must first connect as was discussed in the <a href="/OpenGoPro/tutorials/connect-ble">connect tutorial</a>. In
+this case, however, we are defining a meaningful (albeit naive) notification handler that will:</p>
+
+<ol>
+  <li>print byte data and handle that the notification was received on</li>
+  <li>check if the response is what we expected</li>
+  <li>set an event to notify the writer that the response was received</li>
+</ol>
+
+<p>This is a very simple handler; response parsing will be expanded upon in the
+<a href="/OpenGoPro/tutorials/parse-ble-responses">next tutorial</a>.</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="4a2f18a5-33c1-4539-b090-d2b3f97410eb">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="4a2f18a5-33c1-4539-b090-d2b3f97410eb">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">'Received response at </span><span class="si">{</span><span class="n">handle</span><span class="o">=</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">hexlify</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">":"</span><span class="p">)</span><span class="err">!</span><span class="n">r</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+    <span class="c1"># If this is the correct handle and the status is success, the command was a success
+</span>    <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">response_uuid</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x00</span><span class="p">:</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Command sent successfully"</span><span class="p">)</span>
+    <span class="c1"># Anything else is unexpected. This shouldn't happen
+</span>    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="s">"Unexpected response"</span><span class="p">)</span>
+
+    <span class="c1"># Notify the writer
+</span>    <span class="n">event</span><span class="p">.</span><span class="nb">set</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>The event used above is a simple synchronization event that is only alerting the writer that a notification was
+received. For now, we’re just checking that the handle matches what is expected and
+that the status (third byte) is success (0x00).</p>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="kd">val</span> <span class="py">receivedData</span><span class="p">:</span> <span class="nc">Channel</span><span class="p">&lt;</span><span class="nc">UByteArray</span><span class="p">&gt;</span> <span class="p">=</span> <span class="nc">Channel</span><span class="p">()</span>
+
+<span class="k">private</span> <span class="k">fun</span> <span class="nf">naiveNotificationHandler</span><span class="p">(</span><span class="n">characteristic</span><span class="p">:</span> <span class="nc">UUID</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nc">UByteArray</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">characteristic</span> <span class="p">==</span> <span class="nc">GoProUUID</span><span class="p">.</span><span class="nc">CQ_COMMAND_RSP</span><span class="p">.</span><span class="n">uuid</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nc">CoroutineScope</span><span class="p">(</span><span class="nc">Dispatchers</span><span class="p">.</span><span class="nc">IO</span><span class="p">).</span><span class="nf">launch</span> <span class="p">{</span> <span class="n">receivedData</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">private</span> <span class="kd">val</span> <span class="py">bleListeners</span> <span class="k">by</span> <span class="nf">lazy</span> <span class="p">{</span>
+    <span class="nc">BleEventListener</span><span class="p">().</span><span class="nf">apply</span> <span class="p">{</span>
+        <span class="n">onNotification</span> <span class="p">=</span> <span class="o">::</span><span class="n">naiveNotificationHandler</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The handler is simply verifying that the response was received on the correct UIUD and then notifying the
+received data.</p>
+
+<p>We are registering this notification handler with the BLE API before sending any data requests as such:</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ble</span><span class="p">.</span><span class="nf">registerListener</span><span class="p">(</span><span class="n">goproAddress</span><span class="p">,</span> <span class="n">bleListeners</span><span class="p">)</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<p>There is much more to the synchronization and data parsing than this but this will be
+discussed in future tutorials.</p>
+
+<h1 id="command-overview">Command Overview</h1>
+
+<p>Both Command Requests and Setting Requests follow the same procedure:</p>
+
+<ol>
+  <li>Write to relevant request UUID</li>
+  <li>Receive confirmation from GoPro (via notification from relevant response UUID) that request was received.</li>
+  <li>GoPro reacts to command</li>
+</ol>
+
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>The notification response only indicates that the request was received and whether it was accepted or rejected.
+The relevant behavior of the GoPro must be observed to verify when the command’s effects have been applied.</span>
+</div>
+
+<p>Here is the procedure from power-on to finish:</p>
+
+<svg class="mermaid" aria-roledescription="sequence" viewbox="-50 -10 753.5 388" style="max-width: 753.5px;" xmlns="http://www.w3.org/2000/svg" width="100%" id="mermaid-svg"><style>#mermaid-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-svg .error-icon{fill:#552222;}#mermaid-svg .error-text{fill:#552222;stroke:#552222;}#mermaid-svg .edge-thickness-normal{stroke-width:2px;}#mermaid-svg .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg .marker{fill:#333333;stroke:#333333;}#mermaid-svg .marker.cross{stroke:#333333;}#mermaid-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg .actor{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg text.actor&gt;tspan{fill:black;stroke:none;}#mermaid-svg .actor-line{stroke:grey;}#mermaid-svg .messageLine0{stroke-width:1.5;stroke-dasharray:none;stroke:#333;}#mermaid-svg .messageLine1{stroke-width:1.5;stroke-dasharray:2,2;stroke:#333;}#mermaid-svg #arrowhead path{fill:#333;stroke:#333;}#mermaid-svg .sequenceNumber{fill:white;}#mermaid-svg #sequencenumber{fill:#333;}#mermaid-svg #crosshead path{fill:#333;stroke:#333;}#mermaid-svg .messageText{fill:#333;stroke:none;}#mermaid-svg .labelBox{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg .labelText,#mermaid-svg .labelText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .loopText,#mermaid-svg .loopText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .loopLine{stroke-width:2px;stroke-dasharray:2,2;stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);}#mermaid-svg .note{stroke:#aaaa33;fill:#fff5ad;}#mermaid-svg .noteText,#mermaid-svg .noteText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .activation0{fill:#f4f4f4;stroke:#666;}#mermaid-svg .activation1{fill:#f4f4f4;stroke:#666;}#mermaid-svg .activation2{fill:#f4f4f4;stroke:#666;}#mermaid-svg .actorPopupMenu{position:absolute;}#mermaid-svg .actorPopupMenuPanel{position:absolute;fill:#ECECFF;box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);filter:drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));}#mermaid-svg .actor-man line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg .actor-man circle,#mermaid-svg line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;stroke-width:2px;}#mermaid-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
+<g></g><defs><symbol height="24" width="24" id="computer"><path d="M2 2v13h20v-13h-20zm18 11h-16v-9h16v9zm-10.228 6l.466-1h3.524l.467 1h-4.457zm14.228 3h-24l2-6h2.104l-1.33 4h18.45l-1.297-4h2.073l2 6zm-5-10h-14v-7h14v7z" transform="scale(.5)"></path></symbol></defs><defs><symbol clip-rule="evenodd" fill-rule="evenodd" id="database"><path d="M12.258.001l.256.004.255.005.253.008.251.01.249.012.247.015.246.016.242.019.241.02.239.023.236.024.233.027.231.028.229.031.225.032.223.034.22.036.217.038.214.04.211.041.208.043.205.045.201.046.198.048.194.05.191.051.187.053.183.054.18.056.175.057.172.059.168.06.163.061.16.063.155.064.15.066.074.033.073.033.071.034.07.034.069.035.068.035.067.035.066.035.064.036.064.036.062.036.06.036.06.037.058.037.058.037.055.038.055.038.053.038.052.038.051.039.05.039.048.039.047.039.045.04.044.04.043.04.041.04.04.041.039.041.037.041.036.041.034.041.033.042.032.042.03.042.029.042.027.042.026.043.024.043.023.043.021.043.02.043.018.044.017.043.015.044.013.044.012.044.011.045.009.044.007.045.006.045.004.045.002.045.001.045v17l-.001.045-.002.045-.004.045-.006.045-.007.045-.009.044-.011.045-.012.044-.013.044-.015.044-.017.043-.018.044-.02.043-.021.043-.023.043-.024.043-.026.043-.027.042-.029.042-.03.042-.032.042-.033.042-.034.041-.036.041-.037.041-.039.041-.04.041-.041.04-.043.04-.044.04-.045.04-.047.039-.048.039-.05.039-.051.039-.052.038-.053.038-.055.038-.055.038-.058.037-.058.037-.06.037-.06.036-.062.036-.064.036-.064.036-.066.035-.067.035-.068.035-.069.035-.07.034-.071.034-.073.033-.074.033-.15.066-.155.064-.16.063-.163.061-.168.06-.172.059-.175.057-.18.056-.183.054-.187.053-.191.051-.194.05-.198.048-.201.046-.205.045-.208.043-.211.041-.214.04-.217.038-.22.036-.223.034-.225.032-.229.031-.231.028-.233.027-.236.024-.239.023-.241.02-.242.019-.246.016-.247.015-.249.012-.251.01-.253.008-.255.005-.256.004-.258.001-.258-.001-.256-.004-.255-.005-.253-.008-.251-.01-.249-.012-.247-.015-.245-.016-.243-.019-.241-.02-.238-.023-.236-.024-.234-.027-.231-.028-.228-.031-.226-.032-.223-.034-.22-.036-.217-.038-.214-.04-.211-.041-.208-.043-.204-.045-.201-.046-.198-.048-.195-.05-.19-.051-.187-.053-.184-.054-.179-.056-.176-.057-.172-.059-.167-.06-.164-.061-.159-.063-.155-.064-.151-.066-.074-.033-.072-.033-.072-.034-.07-.034-.069-.035-.068-.035-.067-.035-.066-.035-.064-.036-.063-.036-.062-.036-.061-.036-.06-.037-.058-.037-.057-.037-.056-.038-.055-.038-.053-.038-.052-.038-.051-.039-.049-.039-.049-.039-.046-.039-.046-.04-.044-.04-.043-.04-.041-.04-.04-.041-.039-.041-.037-.041-.036-.041-.034-.041-.033-.042-.032-.042-.03-.042-.029-.042-.027-.042-.026-.043-.024-.043-.023-.043-.021-.043-.02-.043-.018-.044-.017-.043-.015-.044-.013-.044-.012-.044-.011-.045-.009-.044-.007-.045-.006-.045-.004-.045-.002-.045-.001-.045v-17l.001-.045.002-.045.004-.045.006-.045.007-.045.009-.044.011-.045.012-.044.013-.044.015-.044.017-.043.018-.044.02-.043.021-.043.023-.043.024-.043.026-.043.027-.042.029-.042.03-.042.032-.042.033-.042.034-.041.036-.041.037-.041.039-.041.04-.041.041-.04.043-.04.044-.04.046-.04.046-.039.049-.039.049-.039.051-.039.052-.038.053-.038.055-.038.056-.038.057-.037.058-.037.06-.037.061-.036.062-.036.063-.036.064-.036.066-.035.067-.035.068-.035.069-.035.07-.034.072-.034.072-.033.074-.033.151-.066.155-.064.159-.063.164-.061.167-.06.172-.059.176-.057.179-.056.184-.054.187-.053.19-.051.195-.05.198-.048.201-.046.204-.045.208-.043.211-.041.214-.04.217-.038.22-.036.223-.034.226-.032.228-.031.231-.028.234-.027.236-.024.238-.023.241-.02.243-.019.245-.016.247-.015.249-.012.251-.01.253-.008.255-.005.256-.004.258-.001.258.001zm-9.258 20.499v.01l.001.021.003.021.004.022.005.021.006.022.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.023.018.024.019.024.021.024.022.025.023.024.024.025.052.049.056.05.061.051.066.051.07.051.075.051.079.052.084.052.088.052.092.052.097.052.102.051.105.052.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.048.144.049.147.047.152.047.155.047.16.045.163.045.167.043.171.043.176.041.178.041.183.039.187.039.19.037.194.035.197.035.202.033.204.031.209.03.212.029.216.027.219.025.222.024.226.021.23.02.233.018.236.016.24.015.243.012.246.01.249.008.253.005.256.004.259.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.021.224-.024.22-.026.216-.027.212-.028.21-.031.205-.031.202-.034.198-.034.194-.036.191-.037.187-.039.183-.04.179-.04.175-.042.172-.043.168-.044.163-.045.16-.046.155-.046.152-.047.148-.048.143-.049.139-.049.136-.05.131-.05.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.053.083-.051.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.05.023-.024.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.023.01-.022.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.127l-.077.055-.08.053-.083.054-.085.053-.087.052-.09.052-.093.051-.095.05-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.045-.118.044-.12.043-.122.042-.124.042-.126.041-.128.04-.13.04-.132.038-.134.038-.135.037-.138.037-.139.035-.142.035-.143.034-.144.033-.147.032-.148.031-.15.03-.151.03-.153.029-.154.027-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.01-.179.008-.179.008-.181.006-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.006-.179-.008-.179-.008-.178-.01-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.027-.153-.029-.151-.03-.15-.03-.148-.031-.146-.032-.145-.033-.143-.034-.141-.035-.14-.035-.137-.037-.136-.037-.134-.038-.132-.038-.13-.04-.128-.04-.126-.041-.124-.042-.122-.042-.12-.044-.117-.043-.116-.045-.113-.045-.112-.046-.109-.047-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.05-.093-.052-.09-.051-.087-.052-.085-.053-.083-.054-.08-.054-.077-.054v4.127zm0-5.654v.011l.001.021.003.021.004.021.005.022.006.022.007.022.009.022.01.022.011.023.012.023.013.023.015.024.016.023.017.024.018.024.019.024.021.024.022.024.023.025.024.024.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.052.11.051.114.051.119.052.123.05.127.051.131.05.135.049.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.044.171.042.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.022.23.02.233.018.236.016.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.012.241-.015.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.048.139-.05.136-.049.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.051.051-.049.023-.025.023-.024.021-.025.02-.024.019-.024.018-.024.017-.024.015-.023.014-.023.013-.024.012-.022.01-.023.01-.023.008-.022.006-.022.006-.022.004-.021.004-.022.001-.021.001-.021v-4.139l-.077.054-.08.054-.083.054-.085.052-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.044-.118.044-.12.044-.122.042-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.035-.143.033-.144.033-.147.033-.148.031-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.009-.179.009-.179.007-.181.007-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.007-.179-.007-.179-.009-.178-.009-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.031-.146-.033-.145-.033-.143-.033-.141-.035-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.04-.126-.041-.124-.042-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.051-.093-.051-.09-.051-.087-.053-.085-.052-.083-.054-.08-.054-.077-.054v4.139zm0-5.666v.011l.001.02.003.022.004.021.005.022.006.021.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.024.018.023.019.024.021.025.022.024.023.024.024.025.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.051.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.043.171.043.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.021.23.02.233.018.236.017.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.013.241-.014.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.049.139-.049.136-.049.131-.051.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.049.023-.025.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.022.01-.023.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.153l-.077.054-.08.054-.083.053-.085.053-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.048-.105.048-.106.048-.109.046-.111.046-.114.046-.115.044-.118.044-.12.043-.122.043-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.034-.143.034-.144.033-.147.032-.148.032-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.024-.161.024-.162.023-.163.023-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.01-.178.01-.179.009-.179.007-.181.006-.182.006-.182.004-.184.003-.184.001-.185.001-.185-.001-.184-.001-.184-.003-.182-.004-.182-.006-.181-.006-.179-.007-.179-.009-.178-.01-.176-.01-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.023-.162-.023-.161-.024-.159-.024-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.032-.146-.032-.145-.033-.143-.034-.141-.034-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.041-.126-.041-.124-.041-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.048-.105-.048-.102-.048-.1-.05-.097-.049-.095-.051-.093-.051-.09-.052-.087-.052-.085-.053-.083-.053-.08-.054-.077-.054v4.153zm8.74-8.179l-.257.004-.254.005-.25.008-.247.011-.244.012-.241.014-.237.016-.233.018-.231.021-.226.022-.224.023-.22.026-.216.027-.212.028-.21.031-.205.032-.202.033-.198.034-.194.036-.191.038-.187.038-.183.04-.179.041-.175.042-.172.043-.168.043-.163.045-.16.046-.155.046-.152.048-.148.048-.143.048-.139.049-.136.05-.131.05-.126.051-.123.051-.118.051-.114.052-.11.052-.106.052-.101.052-.096.052-.092.052-.088.052-.083.052-.079.052-.074.051-.07.052-.065.051-.06.05-.056.05-.051.05-.023.025-.023.024-.021.024-.02.025-.019.024-.018.024-.017.023-.015.024-.014.023-.013.023-.012.023-.01.023-.01.022-.008.022-.006.023-.006.021-.004.022-.004.021-.001.021-.001.021.001.021.001.021.004.021.004.022.006.021.006.023.008.022.01.022.01.023.012.023.013.023.014.023.015.024.017.023.018.024.019.024.02.025.021.024.023.024.023.025.051.05.056.05.06.05.065.051.07.052.074.051.079.052.083.052.088.052.092.052.096.052.101.052.106.052.11.052.114.052.118.051.123.051.126.051.131.05.136.05.139.049.143.048.148.048.152.048.155.046.16.046.163.045.168.043.172.043.175.042.179.041.183.04.187.038.191.038.194.036.198.034.202.033.205.032.21.031.212.028.216.027.22.026.224.023.226.022.231.021.233.018.237.016.241.014.244.012.247.011.25.008.254.005.257.004.26.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.022.224-.023.22-.026.216-.027.212-.028.21-.031.205-.032.202-.033.198-.034.194-.036.191-.038.187-.038.183-.04.179-.041.175-.042.172-.043.168-.043.163-.045.16-.046.155-.046.152-.048.148-.048.143-.048.139-.049.136-.05.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.05.051-.05.023-.025.023-.024.021-.024.02-.025.019-.024.018-.024.017-.023.015-.024.014-.023.013-.023.012-.023.01-.023.01-.022.008-.022.006-.023.006-.021.004-.022.004-.021.001-.021.001-.021-.001-.021-.001-.021-.004-.021-.004-.022-.006-.021-.006-.023-.008-.022-.01-.022-.01-.023-.012-.023-.013-.023-.014-.023-.015-.024-.017-.023-.018-.024-.019-.024-.02-.025-.021-.024-.023-.024-.023-.025-.051-.05-.056-.05-.06-.05-.065-.051-.07-.052-.074-.051-.079-.052-.083-.052-.088-.052-.092-.052-.096-.052-.101-.052-.106-.052-.11-.052-.114-.052-.118-.051-.123-.051-.126-.051-.131-.05-.136-.05-.139-.049-.143-.048-.148-.048-.152-.048-.155-.046-.16-.046-.163-.045-.168-.043-.172-.043-.175-.042-.179-.041-.183-.04-.187-.038-.191-.038-.194-.036-.198-.034-.202-.033-.205-.032-.21-.031-.212-.028-.216-.027-.22-.026-.224-.023-.226-.022-.231-.021-.233-.018-.237-.016-.241-.014-.244-.012-.247-.011-.25-.008-.254-.005-.257-.004-.26-.001-.26.001z" transform="scale(.5)"></path></symbol></defs><defs><symbol height="24" width="24" id="clock"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z" transform="scale(.5)"></path></symbol></defs><g><line stroke="#999" stroke-width="0.5px" class="200" y2="322" x2="88.5" y1="5" x1="88.5" id="actor0"></line><g id="root-0"><rect class="actor" ry="3" rx="3" height="65" width="177" stroke="#666" fill="#eaeaea" y="0" x="0"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="32.5" x="88.5"><tspan dy="0" x="88.5">Open GoPro user device</tspan></text></g></g><g><line stroke="#999" stroke-width="0.5px" class="200" y2="322" x2="528.5" y1="5" x1="528.5" id="actor1"></line><g id="root-1"><rect class="actor" ry="3" rx="3" height="65" width="150" stroke="#666" fill="#eaeaea" y="0" x="453.5"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="32.5" x="528.5"><tspan dy="0" x="528.5">GoPro</tspan></text></g></g><defs><marker orient="auto" markerheight="12" markerwidth="12" markerunits="userSpaceOnUse" refy="5" refx="9" id="arrowhead"><path d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs><defs><marker refy="5" refx="4" orient="auto" markerheight="8" markerwidth="15" id="crosshead"><path style="stroke-dasharray: 0, 0;" d="M 1,2 L 6,7 M 6,2 L 1,7" stroke-width="1pt" stroke="#000000" fill="none"></path></marker></defs><defs><marker orient="auto" markerheight="28" markerwidth="20" refy="7" refx="18" id="filled-head"><path d="M 18,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerheight="40" markerwidth="60" refy="15" refx="15" id="sequencenumber"><circle r="6" cy="15" cx="15"></circle></marker></defs><g><rect class="note" ry="0" rx="0" height="39" width="490" stroke="#666" fill="#EDF2AE" y="75" x="63.5"></rect><text style="font-size: 16px; font-weight: 400;" dy="1em" class="noteText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="80" x="309"><tspan x="309">devices are connected as in Tutorial 1</tspan></text></g><g><rect class="activation0" ry="0" rx="0" height="122" width="10" stroke="#666" fill="#EDF2AE" y="160" x="523.5"></rect></g><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="129" x="309">Command Request (Write to Request UUID)</text><line style="fill: none;" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="160" x2="528.5" y1="160" x1="88.5"></line><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="175" x="306">Command Response (via notification to Response UUID)</text><line style="fill: none;" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="206" x2="88.5" y1="206" x1="523.5"></line><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="221" x="534">Apply effects of command when able</text><path style="fill: none;" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" d="M 533.5,252 C 593.5,242 593.5,282 533.5,272"></path><g><rect class="actor" ry="3" rx="3" height="65" width="177" stroke="#666" fill="#eaeaea" y="302" x="0"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="334.5" x="88.5"><tspan dy="0" x="88.5">Open GoPro user device</tspan></text></g><g><rect class="actor" ry="3" rx="3" height="65" width="150" stroke="#666" fill="#eaeaea" y="302" x="453.5"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="334.5" x="528.5"><tspan dy="0" x="528.5">GoPro</tspan></text></g><style>@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css");</style></svg>
+
+<h1 id="sending-commands">Sending Commands</h1>
+
+<p>Now that we are are connected, paired, and have enabled notifications (registered to our defined callback), we
+can send some commands.</p>
+
+<p>First, we need to define the attributes to write to / receive responses from, which are:</p>
+
+<ul>
+  <li>For commands
+    <ul>
+      <li>“Command Request” characteristic (UUID <code class="language-plaintext highlighter-rouge">b5f90072-aa8d-11e3-9046-0002a5d5c51b</code>)</li>
+      <li>“Command Response” characteristic (UUID <code class="language-plaintext highlighter-rouge">b5f90073-aa8d-11e3-9046-0002a5d5c51b</code>)</li>
+    </ul>
+  </li>
+  <li>For settings
+    <ul>
+      <li>“Settings” characteristic (UUID <code class="language-plaintext highlighter-rouge">b5f90074-aa8d-11e3-9046-0002a5d5c51b</code>)</li>
+      <li>“Settings Response” (UUID <code class="language-plaintext highlighter-rouge">b5f90075-aa8d-11e3-9046-0002a5d5c51b</code>)</li>
+    </ul>
+  </li>
+</ul>
+
+<div>
+    <ul class="tab tab-linked" data-tab="0aa8ce4a-8399-45d4-b52a-a0e1952bd862">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="0aa8ce4a-8399-45d4-b52a-a0e1952bd862">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">COMMAND_REQ_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0072"</span><span class="p">)</span>
+<span class="n">COMMAND_RSP_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0073"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SETTINGS_REQ_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0074"</span><span class="p">)</span>
+<span class="n">SETTINGS_RSP_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0075"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>We’re using the GOPRO_BASE_UUID string imported from the module’s <code class="language-plaintext highlighter-rouge">__init__.py </code> to build these.</span>
+</div>
+</li>
+        
+            <li class="tab-content-container">
+<p>These are defined in the <code class="language-plaintext highlighter-rouge">GoProUUID</code> class:</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="kd">val</span> <span class="py">GOPRO_UUID</span> <span class="p">=</span> <span class="s">"0000FEA6-0000-1000-8000-00805f9b34fb"</span>
+<span class="k">const</span> <span class="kd">val</span> <span class="py">GOPRO_BASE_UUID</span> <span class="p">=</span> <span class="s">"b5f9%s-aa8d-11e3-9046-0002a5d5c51b"</span>
+
+<span class="k">enum</span> <span class="kd">class</span> <span class="nc">GoProUUID</span><span class="p">(</span><span class="kd">val</span> <span class="py">uuid</span><span class="p">:</span> <span class="nc">UUID</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nc">WIFI_AP_PASSWORD</span><span class="p">(</span><span class="nc">UUID</span><span class="p">.</span><span class="nf">fromString</span><span class="p">(</span><span class="nc">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0003"</span><span class="p">))),</span>
+    <span class="nc">WIFI_AP_SSID</span><span class="p">(</span><span class="nc">UUID</span><span class="p">.</span><span class="nf">fromString</span><span class="p">(</span><span class="nc">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0002"</span><span class="p">))),</span>
+    <span class="nc">CQ_COMMAND</span><span class="p">(</span><span class="nc">UUID</span><span class="p">.</span><span class="nf">fromString</span><span class="p">(</span><span class="nc">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0072"</span><span class="p">))),</span>
+    <span class="nc">CQ_COMMAND_RSP</span><span class="p">(</span><span class="nc">UUID</span><span class="p">.</span><span class="nf">fromString</span><span class="p">(</span><span class="nc">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0073"</span><span class="p">))),</span>
+    <span class="nc">CQ_SETTING</span><span class="p">(</span><span class="nc">UUID</span><span class="p">.</span><span class="nf">fromString</span><span class="p">(</span><span class="nc">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0074"</span><span class="p">))),</span>
+    <span class="nc">CQ_SETTING_RSP</span><span class="p">(</span><span class="nc">UUID</span><span class="p">.</span><span class="nf">fromString</span><span class="p">(</span><span class="nc">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0075"</span><span class="p">))),</span>
+    <span class="nc">CQ_QUERY</span><span class="p">(</span><span class="nc">UUID</span><span class="p">.</span><span class="nf">fromString</span><span class="p">(</span><span class="nc">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0076"</span><span class="p">))),</span>
+    <span class="nc">CQ_QUERY_RSP</span><span class="p">(</span><span class="nc">UUID</span><span class="p">.</span><span class="nf">fromString</span><span class="p">(</span><span class="nc">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0077"</span><span class="p">)));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+</li>
+        
+    </ul>
+</div>
+
+<h2 id="set-shutter">Set Shutter</h2>
+
+<p>The first command we will be sending is <a href="/OpenGoPro/ble_2_0#commands-quick-reference">Set Shutter</a>,
+which at byte level is:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th style="text-align: center">Bytes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Set Shutter Off</td>
+      <td style="text-align: center">0x03 0x01 0x01 0x00</td>
+    </tr>
+    <tr>
+      <td>Set Shutter On</td>
+      <td style="text-align: center">0x03 0x01 0x01 0x01</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Now, let’s write the bytes to the “Command Request” UUID to turn the shutter on and start encoding!</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="620e04fa-1448-454b-9b55-d8ea4cebf731">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="620e04fa-1448-454b-9b55-d8ea4cebf731">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">COMMAND_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span> <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.</span>
+</div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">setShutterOnCmd</span> <span class="p">=</span> <span class="nf">ubyteArrayOf</span><span class="p">(</span><span class="mh">0x03U</span><span class="p">,</span> <span class="mh">0x01U</span><span class="p">,</span> <span class="mh">0x01U</span><span class="p">,</span> <span class="mh">0x01U</span><span class="p">)</span>
+<span class="n">ble</span><span class="p">.</span><span class="nf">writeCharacteristic</span><span class="p">(</span><span class="n">goproAddress</span><span class="p">,</span> <span class="nc">GoProUUID</span><span class="p">.</span><span class="nc">CQ_COMMAND</span><span class="p">.</span><span class="n">uuid</span><span class="p">,</span> <span class="n">setShutterOnCmd</span><span class="p">)</span>
+<span class="c1">// Wait to receive the notification response, then check its status</span>
+<span class="nf">checkStatus</span><span class="p">(</span><span class="n">receivedData</span><span class="p">.</span><span class="nf">receive</span><span class="p">())</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<p>You should hear the camera beep and it will either take a picture or start recording
+depending on what mode it is in.</p>
+
+<p>Also note that we have received the “Command Status” notification response from the
+Command Response characteristic since we enabled its notifications in
+<a href="/OpenGoPro/tutorials/connect-ble#enable-notifications">Enable Notifications</a>.
+This can be seen in the demo log:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="76dce17d-47cb-4e84-9b25-f29f35dfd4f7">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="76dce17d-47cb-4e84-9b25-f29f35dfd4f7">
+        
+            <li class="active tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Setting the shutter on
+INFO:root:Received response at handle=52: b'02:01:00'
+INFO:root:Shutter command sent successfully
+</span></code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt;</span><span class="w"> </span>03:01:01:01
+<span class="go">Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b
+Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:01:00
+Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:01:00
+Command sent successfully
+</span></code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<p>As expected, the response was received on the correct handle and the status was “success”.</p>
+
+<p>If you are recording a video, continue reading to set the shutter off.</p>
+
+<p>We can now set the shutter off:</p>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>We’re waiting 2 seconds in case you are in video mode so that we can capture a 2 second video.</span>
+</div>
+
+<div>
+    <ul class="tab tab-linked" data-tab="b0fb5c30-d3bb-4f84-8838-f9e269707712">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="b0fb5c30-d3bb-4f84-8838-f9e269707712">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">COMMAND_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span> <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<p>This will log in the console as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">INFO</span><span class="p">:</span><span class="n">root</span><span class="p">:</span><span class="n">Setting</span> <span class="n">the</span> <span class="n">shutter</span> <span class="n">off</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">root</span><span class="p">:</span><span class="n">Received</span> <span class="n">response</span> <span class="n">at</span> <span class="n">handle</span><span class="o">=</span><span class="mi">52</span><span class="p">:</span> <span class="sa">b</span><span class="s">'02:01:00'</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">root</span><span class="p">:</span><span class="n">Shutter</span> <span class="n">command</span> <span class="n">sent</span> <span class="n">successfully</span>
+</code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+<span class="kd">val</span> <span class="py">setShutterOffCmd</span> <span class="p">=</span> <span class="nf">ubyteArrayOf</span><span class="p">(</span><span class="mh">0x03U</span><span class="p">,</span> <span class="mh">0x01U</span><span class="p">,</span> <span class="mh">0x01U</span><span class="p">,</span> <span class="mh">0x00U</span><span class="p">)</span>
+<span class="c1">// Wait to receive the notification response, then check its status</span>
+<span class="nf">checkStatus</span><span class="p">(</span><span class="n">receivedData</span><span class="p">.</span><span class="nf">receive</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>This will log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Setting the shutter off
+</span><span class="gp">Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt;</span><span class="w"> </span>03:01:01:00
+<span class="go">Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b
+Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:01:00
+Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:01:00
+Command sent successfully
+</span></code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<h2 id="load-preset-group">Load Preset Group</h2>
+
+<p>The next command we will be sending is
+<a href="/OpenGoPro/ble_2_0#commands-quick-reference">Load Preset Group</a>, which is used
+to toggle between the 3 groups of presets (video, photo, and timelapse). At byte level, the commands are:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th style="text-align: center">Bytes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Load Video Preset Group</td>
+      <td style="text-align: center">0x04 0x3E 0x02 0x03 0xE8</td>
+    </tr>
+    <tr>
+      <td>Load Photo Preset Group</td>
+      <td style="text-align: center">0x04 0x3E 0x02 0x03 0xE9</td>
+    </tr>
+    <tr>
+      <td>Load Timelapse Preset Group</td>
+      <td style="text-align: center">0x04 0x3E 0x02 0x03 0xEA</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>It is possible that the preset GroupID values will vary in future cameras. The only absolutely correct way to know
+the preset ID is to read them from the “Get Preset Status” protobuf command. A future lab will discuss protobuf
+commands.</span>
+</div>
+
+<p>Now, let’s write the bytes to the “Command Request” UUID to change the preset group to Video!</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="9b876419-9c2d-4faa-9277-704575344c5d">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="9b876419-9c2d-4faa-9277-704575344c5d">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">COMMAND_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x04</span><span class="p">,</span> <span class="mh">0x3E</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">,</span> <span class="mh">0xE8</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.</span>
+</div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">loadPreset</span> <span class="p">=</span> <span class="nf">ubyteArrayOf</span><span class="p">(</span><span class="mh">0x04U</span><span class="p">,</span> <span class="mh">0x3EU</span><span class="p">,</span> <span class="mh">0x02U</span><span class="p">,</span> <span class="mh">0x03U</span><span class="p">,</span> <span class="mh">0xE8U</span><span class="p">)</span>
+<span class="n">ble</span><span class="p">.</span><span class="nf">writeCharacteristic</span><span class="p">(</span><span class="n">goproAddress</span><span class="p">,</span> <span class="nc">GoProUUID</span><span class="p">.</span><span class="nc">CQ_COMMAND</span><span class="p">.</span><span class="n">uuid</span><span class="p">,</span> <span class="n">loadPreset</span><span class="p">)</span>
+<span class="c1">// Wait to receive the notification response, then check its status</span>
+<span class="nf">checkStatus</span><span class="p">(</span><span class="n">receivedData</span><span class="p">.</span><span class="nf">receive</span><span class="p">())</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<p>You should hear the camera beep and move to the Video Preset Group. You can tell this by the logo at the top
+middle of the screen:</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/OpenGoPro/assets/images/tutorials/preset_group.png" alt="Preset Group" style="
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Load Preset Group
+
+        </figcaption></figure>
+
+<p>Also note that we have received the “Command Status” notification response from the
+Command Response characteristic since we enabled its notifications in
+<a href="/OpenGoPro/tutorials/connect-ble#enable-notifications">Enable Notifications</a>. This can
+be seen in the demo log:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="a733a597-80e5-42ef-a942-e0c6d8512e76">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="a733a597-80e5-42ef-a942-e0c6d8512e76">
+        
+            <li class="active tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Loading the video preset group...
+INFO:root:Received response at handle=52: b'02:3e:00'
+INFO:root:Command sent successfully
+</span></code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Loading Video Preset Group
+</span><span class="gp">Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt;</span><span class="w"> </span>04:3E:02:03:E8
+<span class="go">Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b
+Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:3E:00
+Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:3E:00
+Command status received
+Command sent successfully
+</span></code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<p>As expected, the response was received on the correct handle and the status was “success”.</p>
+
+<h2 id="set-the-video-resolution">Set the Video Resolution</h2>
+
+<p>The next command we will be sending is
+<a href="/OpenGoPro/ble_2_0#commands-quick-reference">Set Video Resolution</a>. This is
+used to change the value of the Video Resolution setting. It is important to note that this only affects
+<strong>video</strong> resolution (not photo). Therefore, the Video Preset Group must be active in order for it to succeed.
+This can be done either manually through the camera UI or by sending <a href="#load-preset-group">Load Preset Group</a>.</p>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>This resolution only affects the current video preset. Each video preset can have its own independent values
+for video resolution.</span>
+</div>
+
+<p>Here are some of the byte level commands for various video resolutions.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th style="text-align: center">Bytes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Set Video Resolution to 1080</td>
+      <td style="text-align: center">0x03 0x02 0x01 0x09</td>
+    </tr>
+    <tr>
+      <td>Set Video Resolution to 2.7K</td>
+      <td style="text-align: center">0x03 0x02 0x01 0x04</td>
+    </tr>
+    <tr>
+      <td>Set Video Resolution to 5K</td>
+      <td style="text-align: center">0x03 0x02 0x01 0x18</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Now, let’s write the bytes to the “Setting Request” UUID to change the video resolution to 1080!</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="462e66de-b51e-4842-a90c-7e46fadc874f">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="462e66de-b51e-4842-a90c-7e46fadc874f">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">SETTINGS_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x09</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.</span>
+</div>
+
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">setResolution</span> <span class="p">=</span> <span class="nf">ubyteArrayOf</span><span class="p">(</span><span class="mh">0x03U</span><span class="p">,</span> <span class="mh">0x02U</span><span class="p">,</span> <span class="mh">0x01U</span><span class="p">,</span> <span class="mh">0x09U</span><span class="p">)</span>
+<span class="n">ble</span><span class="p">.</span><span class="nf">writeCharacteristic</span><span class="p">(</span><span class="n">goproAddress</span><span class="p">,</span> <span class="nc">GoProUUID</span><span class="p">.</span><span class="nc">CQ_COMMAND</span><span class="p">.</span><span class="n">uuid</span><span class="p">,</span> <span class="n">setResolution</span><span class="p">)</span>
+<span class="c1">// Wait to receive the notification response, then check its status</span>
+<span class="nf">checkStatus</span><span class="p">(</span><span class="n">receivedData</span><span class="p">.</span><span class="nf">receive</span><span class="p">())</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<p>You should see the video resolution change to 1080 in the pill in the bottom-middle of the
+screen:</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/OpenGoPro/assets/images/tutorials/video_resolution.png" alt="Video Resolution" style="
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Set Video Resolution
+
+        </figcaption></figure>
+
+<p>Also note that we have received the “Command Status” notification response from the
+Command Response characteristic since we enabled its notifications in
+<a href="/OpenGoPro/tutorials/connect-ble#enable-notifications">Enable Notifications</a>.. This can
+be seen in the demo log:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="a291f922-164f-4b0e-b33b-97c595a10eaf">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="a291f922-164f-4b0e-b33b-97c595a10eaf">
+        
+            <li class="active tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Loading the video preset group...
+INFO:root:Received response at handle=52: b'02:3e:00'
+INFO:root:Command sent successfully
+</span></code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Setting resolution to 1080
+</span><span class="gp">Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt;</span><span class="w"> </span>03:02:01:09
+<span class="go">Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b
+Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:02:00
+Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:02:00
+Command status received
+Command sent successfully
+</span></code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<p>As expected, the response was received on the correct handle and the status was “success”. If the Preset
+Group was not Video, the status will not be success.</p>
+
+<h2 id="set-the-frames-per-second-fps">Set the Frames Per Second (FPS)</h2>
+
+<p>The next command we will be sending is
+<a href="/OpenGoPro/ble_2_0#commands-quick-reference">Set FPS</a>. This is
+used to change the value of the FPS setting. It is important to note that this setting is dependent on the
+video resolution. That is, certain FPS values are not valid with certain resolutions. In general, higher
+resolutions only allow lower FPS values. Also, the current anti-flicker value may further limit possible FPS
+values. Check the <a href="/OpenGoPro/ble_2_0#camera-capabilities">camera capabilities </a> to see which FPS
+values are valid for given use cases.</p>
+
+<p>Therefore, for this step of the tutorial, it is assumed that the resolution has
+been set to 1080 as in <a href="#set-the-video-resolution">Set the Video Resolution</a>.</p>
+
+<p>Here are some of the byte level commands for various FPS values.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th style="text-align: center">Bytes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Set FPS to 24</td>
+      <td style="text-align: center">0x03 0x03 0x01 0x0A</td>
+    </tr>
+    <tr>
+      <td>Set FPS to 60</td>
+      <td style="text-align: center">0x03 0x03 0x01 0x05</td>
+    </tr>
+    <tr>
+      <td>Set FPS to 240</td>
+      <td style="text-align: center">0x03 0x03 0x01 0x00</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Note that the possible FPS values can vary based on the Open GoPro version that the camera supports.
+Therefore, it is necessary to
+<a href="/OpenGoPro/tutorials/parse-ble-responses#complex-command-response">check the version</a>.</p>
+
+<p>Now, let’s write the bytes to the “Setting Request” UUID to change the FPS to 240!</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="e3162db8-09c6-4ad2-b0a0-6fc17d1ac438">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="e3162db8-09c6-4ad2-b0a0-6fc17d1ac438">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">SETTINGS_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>We make sure to clear the synchronization event before writing, then pend on the event until it is set in
+the notification callback.</span>
+</div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">setFps</span> <span class="p">=</span> <span class="nf">ubyteArrayOf</span><span class="p">(</span><span class="mh">0x03U</span><span class="p">,</span> <span class="mh">0x03U</span><span class="p">,</span> <span class="mh">0x01U</span><span class="p">,</span> <span class="mh">0x00U</span><span class="p">)</span>
+<span class="n">ble</span><span class="p">.</span><span class="nf">writeCharacteristic</span><span class="p">(</span><span class="n">goproAddress</span><span class="p">,</span> <span class="nc">GoProUUID</span><span class="p">.</span><span class="nc">CQ_COMMAND</span><span class="p">.</span><span class="n">uuid</span><span class="p">,</span> <span class="n">setFps</span><span class="p">)</span>
+<span class="c1">// Wait to receive the notification response, then check its status</span>
+<span class="nf">checkStatus</span><span class="p">(</span><span class="n">receivedData</span><span class="p">.</span><span class="nf">receive</span><span class="p">())</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<p>You should see the FPS change to 240 in the pill in the bottom-middle of the
+screen:</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/OpenGoPro/assets/images/tutorials/fps.png" alt="FPS" style="
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Set FPS
+
+        </figcaption></figure>
+
+<p>Also note that we have received the “Command Status” notification response from the
+Command Response characteristic since we enabled its notifications in
+<a href="/OpenGoPro/tutorials/connect-ble#enable-notifications">Enable Notifications</a>.. This can
+be seen in the demo log:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="4b3f3838-92ec-4e13-a81c-192dddbf2826">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="4b3f3838-92ec-4e13-a81c-192dddbf2826">
+        
+            <li class="active tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Setting the fps to 240
+INFO:root:Received response at handle=57: b'02:03:00'
+INFO:root:Command sent successfully
+</span></code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Setting the FPS to 240
+</span><span class="gp">Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt;</span><span class="w"> </span>03:03:01:00
+<span class="go">Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b
+Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:03:00
+Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:03:00
+Command status received
+Command sent successfully
+</span></code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<p>As expected, the response was received on the correct handle and the status was “success”. If the video resolution
+was higher, for example 5K, this would fail.</p>
+
+<p><strong>Quiz time! 📚 ✏️</strong></p>
+
+<div id="quiz_b4891f55-8162-4bf8-8217-9eea8a448183" class="quiz">
+    <div>
+        <div id="question_b4891f55-8162-4bf8-8217-9eea8a448183" class="quiz__question">Which of the following is not a real preset group?</div>
+        <div id="answers_b4891f55-8162-4bf8-8217-9eea8a448183">
+        
+            <input type="radio" name="question" value="A"><label>A: Timelapse</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: Photo</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: Burst</label>
+            <br>
+        
+            <input type="radio" name="question" value="D"><label>D: Video</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('b4891f55-8162-4bf8-8217-9eea8a448183', 'C')">Submit Answer</button>
+    <div id="results_b4891f55-8162-4bf8-8217-9eea8a448183" style="display: none">
+        <span id="correct_b4891f55-8162-4bf8-8217-9eea8a448183" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_b4891f55-8162-4bf8-8217-9eea8a448183" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+        There are 3 preset groups (Timelapse, Photo, and Video). These can be
+    set via the Load Preset Group command.
+    </div>
+</div>
+
+<div id="quiz_0b4f5967-6c5d-49cc-af20-02aaeccec687" class="quiz">
+    <div>
+        <div id="question_0b4f5967-6c5d-49cc-af20-02aaeccec687" class="quiz__question">True or False: Every combination of resolution and FPS value is valid.</div>
+        <div id="answers_0b4f5967-6c5d-49cc-af20-02aaeccec687">
+        
+            <input type="radio" name="question" value="A"><label>A: True</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: False</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('0b4f5967-6c5d-49cc-af20-02aaeccec687', 'B')">Submit Answer</button>
+    <div id="results_0b4f5967-6c5d-49cc-af20-02aaeccec687" style="display: none">
+        <span id="correct_0b4f5967-6c5d-49cc-af20-02aaeccec687" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_0b4f5967-6c5d-49cc-af20-02aaeccec687" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+        Each resolution can support all or only some FPS values. You can find out which resolutions support which fps values by consulting the <a href="https://gopro.github.io/OpenGoPro/ble_2_0#camera-capabilities">capabilities section of the spec</a>.
+    </div>
+</div>
+
+<div id="quiz_dda0fea6-38eb-4cc9-9fb6-9566f288e269" class="quiz">
+    <div>
+        <div id="question_dda0fea6-38eb-4cc9-9fb6-9566f288e269" class="quiz__question">True or False: Every camera supports the same combination of resolution and FPS values.</div>
+        <div id="answers_dda0fea6-38eb-4cc9-9fb6-9566f288e269">
+        
+            <input type="radio" name="question" value="A"><label>A: True</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: False</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('dda0fea6-38eb-4cc9-9fb6-9566f288e269', 'B')">Submit Answer</button>
+    <div id="results_dda0fea6-38eb-4cc9-9fb6-9566f288e269" style="display: none">
+        <span id="correct_dda0fea6-38eb-4cc9-9fb6-9566f288e269" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_dda0fea6-38eb-4cc9-9fb6-9566f288e269" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+        The only way to know what values are supported is to first check the Open GoPro version.
+    See the relevant version of the BLE or WiFi spec to see what is supported.
+    </div>
+</div>
+
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>See the first tutorial’s
+<a href="/OpenGoPro/tutorials/connect-ble#troubleshooting">troubleshooting section</a>.</p>
+
+<h1 id="good-job">Good Job!</h1>
+
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>Congratulations 🤙</span>
+</div>
+
+<p>You can now send any of the other BLE commands detailed in the Open GoPro documentation in
+a similar manner.</p>
+
+<p>To see how to parse more complicate responses, proceed to the next tutorial.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-03-08T23:36:58+00:00">March 8, 2023</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/OpenGoPro/tutorials/connect-ble" class="pagination--pager" title="Tutorial 1: Connect BLE
+">Previous</a>
+    
+    
+      <a href="/OpenGoPro/tutorials/parse-ble-responses" class="pagination--pager" title="Tutorial 3: Parse BLE TLV Responses
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+    <ul class="social-icons">
+           
+        <li>
+            <a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i>
+                Website</a>
+        </li>
+          
+        <li>
+            <a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i>
+                Twitter</a>
+        </li>
+          
+        <li>
+            <a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i>
+                Facebook</a>
+        </li>
+          
+        <li>
+            <a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i>
+                GitHub</a>
+        </li>
+          
+        <li>
+            <a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i>
+                Instagram</a>
+        </li>
+           
+    </ul>
+</div>
+
+<div class="page__footer-copyright">
+    © 2023 GoPro. Powered by
+    <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
+    <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
+    <p>
+        Can be used with GoPro® HERO9 and HERO10 cameras. You must include the following text on
+        every page where it can be seen by someone purchasing such an item: <em>"This product
+        and/or service is not affiliated with, endorsed by or in any way associated with
+        GoPro Inc. or its products and services. GoPro, HERO, and their respective logos
+        are trademarks or registered trademarks of GoPro, Inc."</em>
+    </p>
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/OpenGoPro/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/OpenGoPro/assets/js/lunr/lunr.min.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-store.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

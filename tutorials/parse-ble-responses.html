@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Tutorial 3: Parse BLE TLV Responses :  Open GoPro</title>
+<meta name="description" content="This document will provide a walk-through tutorial to implement the Open GoPro Interface to parse BLE Type-Length-Value (TLV) Responses.">
+
+
+  <meta name="author" content="GoPro">
+  
+  <meta property="article:author" content="GoPro">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Tutorial 3: Parse BLE TLV Responses">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/tutorials/parse-ble-responses">
+
+
+  <meta property="og:description" content="This document will provide a walk-through tutorial to implement the Open GoPro Interface to parse BLE Type-Length-Value (TLV) Responses.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-03-08T23:36:58+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/tutorials/parse-ble-responses">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "https://gopro.github.io/OpenGoPro/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+  
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/OpenGoPro/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/ble">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/http">HTTP Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/demos">Demos</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="https://gopro.github.io/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/OpenGoPro/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
+          <meta itemprop="position" content="2">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Tutorial 3: Parse BLE TLV Responses</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">GoPro</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Be a <strong>hero</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox">
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/connect-ble"><span class="nav__sub-title">1: Connect BLE</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/send-ble-commands"><span class="nav__sub-title">2: Send BLE Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/parse-ble-responses"><span class="nav__sub-title">3: Parse BLE TLV Responses</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/ble-queries"><span class="nav__sub-title">4: BLE Queries</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/connect-wifi"><span class="nav__sub-title">5: Connect WiFi</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/send-wifi-commands"><span class="nav__sub-title">6: Send WiFi Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/camera-media-list"><span class="nav__sub-title">7: Camera Media List</span></a>
+        
+
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Tutorial 3: Parse BLE TLV Responses">
+    <meta itemprop="description" content="This document will provide a walk-through tutorial to implementthe Open GoPro Interface to parse BLEType-Length-Value (TLV) Responses.">
+    <meta itemprop="datePublished" content="2023-03-08T23:36:58+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Tutorial 3: Parse BLE TLV Responses
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          17 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#just-show-me-the-demos">Just Show me the Demo(s)!!</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#response-overview">Response Overview</a></li>
+<li>
+<a href="#parsing-a-one-packet-tlv-response">Parsing a One Packet TLV Response</a><ul>
+<li><a href="#command--setting-responses-with-response-length-0">Command / Setting Responses with Response Length 0</a></li>
+<li><a href="#complex-command-response">Complex Command Response</a></li>
+</ul>
+</li>
+<li>
+<a href="#parsing-multiple-packet-tlv-responses">Parsing Multiple Packet TLV Responses</a><ul>
+<li><a href="#accumulating-the-response">Accumulating the Response</a></li>
+<li><a href="#parsing-a-query-response">Parsing a Query Response</a></li>
+</ul>
+</li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#good-job">Good Job!</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>This document will provide a walk-through tutorial to implement
+the <a href="/OpenGoPro/ble_2_0">Open GoPro Interface</a> to parse BLE
+<a href="https://en.wikipedia.org/wiki/Type-length-value">Type-Length-Value</a> (TLV) Responses.</p>
+
+<p>Besides TLV, some BLE commands instead return protobuf responses. These are not considered here and will be
+discussed in a future tutorial.</p>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>It is suggested that you have first completed the
+<a href="/OpenGoPro/tutorials/connect-ble#requirements">connect</a>
+and <a href="/OpenGoPro/tutorials/send-ble-commands">sending commands</a> tutorials before going
+through this tutorial.</span>
+</div>
+
+<p>This tutorial will give an overview of types of responses, then give examples of parsing each type
+before finally providing a <strong>Response</strong> class that will be used in future tutorials.</p>
+
+<h1 id="requirements">Requirements</h1>
+
+<p>It is assumed that the hardware and software requirements from the
+<a href="/OpenGoPro/tutorials/connect-ble">connect tutorial</a>
+are present and configured correctly.</p>
+
+<h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
+
+<div>
+    <ul class="tab tab-linked" data-tab="655dd598-977a-421c-8bd4-4ad04a05e3c0">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="655dd598-977a-421c-8bd4-4ad04a05e3c0">
+        
+            <li class="active tab-content-container">
+<p>Each of the scripts for this tutorial can be found in the Tutorial 2
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_3_parse_ble_tlv_responses/">directory</a>.</p>
+
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.8.x must be used as specified in the requirements</span>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Parsing a One Packet TLV Response<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test parsing a one packet TLV response with your camera through BLE using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_get_version.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_get_version.py <span class="nt">--help</span>
+<span class="go">usage: ble_command_get_version.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera via BLE, then get the Open GoPro version.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+</span></code></pre></div></div>
+</div>
+</div>
+
+<div class="accordion-container">
+    <button class="accordion">Parsing Multiple Packet TLV Responses<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test parsing multiple packet TVL responses with your camera through BLE using the following script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_get_state.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python ble_command_get_state.py <span class="nt">--help</span>
+<span class="go">usage: ble_command_get_state.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera via BLE, then get its statuses and settings.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
+                        default camera SSID. If not used, first discovered GoPro will be connected to
+</span></code></pre></div></div>
+</div>
+</div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>The Kotlin file for this tutorial can be found on
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/kotlin/tutorial/app/src/main/java/com/example/open_gopro_tutorial/tutorials/Tutorial3ParseBleTlvResponses.kt">Github</a>.</p>
+
+<p>To perform the tutorial, run the Android Studio project, select “Tutorial 3” from the dropdown and click on “Perform.”
+This requires that a GoPro is already connected via BLE, i.e. that Tutorial 1 was already run. You can
+check the BLE status at the top of the app.</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/OpenGoPro/assets/images/tutorials/kotlin/tutorial_3.png" alt="kotlin_tutorial_3" style="
+            width: 40%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Perform Tutorial 3
+
+        </figcaption></figure>
+
+<p>This will start the tutorial and log to the screen as it executes. When the tutorial is complete, click
+“Exit Tutorial” to return to the Tutorial selection screen.</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<h1 id="setup">Setup</h1>
+
+<p>We must first connect as was discussed in the
+<a href="/OpenGoPro/tutorials/connect-ble">connect tutorial</a>. When enabling notifications,
+one of the notification handlers described in the following sections will be used.</p>
+
+<h1 id="response-overview">Response Overview</h1>
+
+<p>In the preceding tutorials, we have been using a very simple response handling procedure where the notification
+handler simply checks that the UUID is the expected UUID and that the status byte of the response is 0 (Success).
+This has been fine since we were only sending specific commands where this works and we know that the sequence
+always appears as such (connection sequence left out for brevity):</p>
+
+<svg class="mermaid" aria-roledescription="sequence" viewbox="-50 -10 601.5 310" style="max-width: 601.5px;" xmlns="http://www.w3.org/2000/svg" width="100%" id="mermaid-svg"><style>#mermaid-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-svg .error-icon{fill:#552222;}#mermaid-svg .error-text{fill:#552222;stroke:#552222;}#mermaid-svg .edge-thickness-normal{stroke-width:2px;}#mermaid-svg .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg .marker{fill:#333333;stroke:#333333;}#mermaid-svg .marker.cross{stroke:#333333;}#mermaid-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg .actor{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg text.actor&gt;tspan{fill:black;stroke:none;}#mermaid-svg .actor-line{stroke:grey;}#mermaid-svg .messageLine0{stroke-width:1.5;stroke-dasharray:none;stroke:#333;}#mermaid-svg .messageLine1{stroke-width:1.5;stroke-dasharray:2,2;stroke:#333;}#mermaid-svg #arrowhead path{fill:#333;stroke:#333;}#mermaid-svg .sequenceNumber{fill:white;}#mermaid-svg #sequencenumber{fill:#333;}#mermaid-svg #crosshead path{fill:#333;stroke:#333;}#mermaid-svg .messageText{fill:#333;stroke:none;}#mermaid-svg .labelBox{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg .labelText,#mermaid-svg .labelText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .loopText,#mermaid-svg .loopText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .loopLine{stroke-width:2px;stroke-dasharray:2,2;stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);}#mermaid-svg .note{stroke:#aaaa33;fill:#fff5ad;}#mermaid-svg .noteText,#mermaid-svg .noteText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .activation0{fill:#f4f4f4;stroke:#666;}#mermaid-svg .activation1{fill:#f4f4f4;stroke:#666;}#mermaid-svg .activation2{fill:#f4f4f4;stroke:#666;}#mermaid-svg .actorPopupMenu{position:absolute;}#mermaid-svg .actorPopupMenuPanel{position:absolute;fill:#ECECFF;box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);filter:drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));}#mermaid-svg .actor-man line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg .actor-man circle,#mermaid-svg line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;stroke-width:2px;}#mermaid-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
+<g></g><defs><symbol height="24" width="24" id="computer"><path d="M2 2v13h20v-13h-20zm18 11h-16v-9h16v9zm-10.228 6l.466-1h3.524l.467 1h-4.457zm14.228 3h-24l2-6h2.104l-1.33 4h18.45l-1.297-4h2.073l2 6zm-5-10h-14v-7h14v7z" transform="scale(.5)"></path></symbol></defs><defs><symbol clip-rule="evenodd" fill-rule="evenodd" id="database"><path d="M12.258.001l.256.004.255.005.253.008.251.01.249.012.247.015.246.016.242.019.241.02.239.023.236.024.233.027.231.028.229.031.225.032.223.034.22.036.217.038.214.04.211.041.208.043.205.045.201.046.198.048.194.05.191.051.187.053.183.054.18.056.175.057.172.059.168.06.163.061.16.063.155.064.15.066.074.033.073.033.071.034.07.034.069.035.068.035.067.035.066.035.064.036.064.036.062.036.06.036.06.037.058.037.058.037.055.038.055.038.053.038.052.038.051.039.05.039.048.039.047.039.045.04.044.04.043.04.041.04.04.041.039.041.037.041.036.041.034.041.033.042.032.042.03.042.029.042.027.042.026.043.024.043.023.043.021.043.02.043.018.044.017.043.015.044.013.044.012.044.011.045.009.044.007.045.006.045.004.045.002.045.001.045v17l-.001.045-.002.045-.004.045-.006.045-.007.045-.009.044-.011.045-.012.044-.013.044-.015.044-.017.043-.018.044-.02.043-.021.043-.023.043-.024.043-.026.043-.027.042-.029.042-.03.042-.032.042-.033.042-.034.041-.036.041-.037.041-.039.041-.04.041-.041.04-.043.04-.044.04-.045.04-.047.039-.048.039-.05.039-.051.039-.052.038-.053.038-.055.038-.055.038-.058.037-.058.037-.06.037-.06.036-.062.036-.064.036-.064.036-.066.035-.067.035-.068.035-.069.035-.07.034-.071.034-.073.033-.074.033-.15.066-.155.064-.16.063-.163.061-.168.06-.172.059-.175.057-.18.056-.183.054-.187.053-.191.051-.194.05-.198.048-.201.046-.205.045-.208.043-.211.041-.214.04-.217.038-.22.036-.223.034-.225.032-.229.031-.231.028-.233.027-.236.024-.239.023-.241.02-.242.019-.246.016-.247.015-.249.012-.251.01-.253.008-.255.005-.256.004-.258.001-.258-.001-.256-.004-.255-.005-.253-.008-.251-.01-.249-.012-.247-.015-.245-.016-.243-.019-.241-.02-.238-.023-.236-.024-.234-.027-.231-.028-.228-.031-.226-.032-.223-.034-.22-.036-.217-.038-.214-.04-.211-.041-.208-.043-.204-.045-.201-.046-.198-.048-.195-.05-.19-.051-.187-.053-.184-.054-.179-.056-.176-.057-.172-.059-.167-.06-.164-.061-.159-.063-.155-.064-.151-.066-.074-.033-.072-.033-.072-.034-.07-.034-.069-.035-.068-.035-.067-.035-.066-.035-.064-.036-.063-.036-.062-.036-.061-.036-.06-.037-.058-.037-.057-.037-.056-.038-.055-.038-.053-.038-.052-.038-.051-.039-.049-.039-.049-.039-.046-.039-.046-.04-.044-.04-.043-.04-.041-.04-.04-.041-.039-.041-.037-.041-.036-.041-.034-.041-.033-.042-.032-.042-.03-.042-.029-.042-.027-.042-.026-.043-.024-.043-.023-.043-.021-.043-.02-.043-.018-.044-.017-.043-.015-.044-.013-.044-.012-.044-.011-.045-.009-.044-.007-.045-.006-.045-.004-.045-.002-.045-.001-.045v-17l.001-.045.002-.045.004-.045.006-.045.007-.045.009-.044.011-.045.012-.044.013-.044.015-.044.017-.043.018-.044.02-.043.021-.043.023-.043.024-.043.026-.043.027-.042.029-.042.03-.042.032-.042.033-.042.034-.041.036-.041.037-.041.039-.041.04-.041.041-.04.043-.04.044-.04.046-.04.046-.039.049-.039.049-.039.051-.039.052-.038.053-.038.055-.038.056-.038.057-.037.058-.037.06-.037.061-.036.062-.036.063-.036.064-.036.066-.035.067-.035.068-.035.069-.035.07-.034.072-.034.072-.033.074-.033.151-.066.155-.064.159-.063.164-.061.167-.06.172-.059.176-.057.179-.056.184-.054.187-.053.19-.051.195-.05.198-.048.201-.046.204-.045.208-.043.211-.041.214-.04.217-.038.22-.036.223-.034.226-.032.228-.031.231-.028.234-.027.236-.024.238-.023.241-.02.243-.019.245-.016.247-.015.249-.012.251-.01.253-.008.255-.005.256-.004.258-.001.258.001zm-9.258 20.499v.01l.001.021.003.021.004.022.005.021.006.022.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.023.018.024.019.024.021.024.022.025.023.024.024.025.052.049.056.05.061.051.066.051.07.051.075.051.079.052.084.052.088.052.092.052.097.052.102.051.105.052.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.048.144.049.147.047.152.047.155.047.16.045.163.045.167.043.171.043.176.041.178.041.183.039.187.039.19.037.194.035.197.035.202.033.204.031.209.03.212.029.216.027.219.025.222.024.226.021.23.02.233.018.236.016.24.015.243.012.246.01.249.008.253.005.256.004.259.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.021.224-.024.22-.026.216-.027.212-.028.21-.031.205-.031.202-.034.198-.034.194-.036.191-.037.187-.039.183-.04.179-.04.175-.042.172-.043.168-.044.163-.045.16-.046.155-.046.152-.047.148-.048.143-.049.139-.049.136-.05.131-.05.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.053.083-.051.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.05.023-.024.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.023.01-.022.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.127l-.077.055-.08.053-.083.054-.085.053-.087.052-.09.052-.093.051-.095.05-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.045-.118.044-.12.043-.122.042-.124.042-.126.041-.128.04-.13.04-.132.038-.134.038-.135.037-.138.037-.139.035-.142.035-.143.034-.144.033-.147.032-.148.031-.15.03-.151.03-.153.029-.154.027-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.01-.179.008-.179.008-.181.006-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.006-.179-.008-.179-.008-.178-.01-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.027-.153-.029-.151-.03-.15-.03-.148-.031-.146-.032-.145-.033-.143-.034-.141-.035-.14-.035-.137-.037-.136-.037-.134-.038-.132-.038-.13-.04-.128-.04-.126-.041-.124-.042-.122-.042-.12-.044-.117-.043-.116-.045-.113-.045-.112-.046-.109-.047-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.05-.093-.052-.09-.051-.087-.052-.085-.053-.083-.054-.08-.054-.077-.054v4.127zm0-5.654v.011l.001.021.003.021.004.021.005.022.006.022.007.022.009.022.01.022.011.023.012.023.013.023.015.024.016.023.017.024.018.024.019.024.021.024.022.024.023.025.024.024.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.052.11.051.114.051.119.052.123.05.127.051.131.05.135.049.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.044.171.042.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.022.23.02.233.018.236.016.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.012.241-.015.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.048.139-.05.136-.049.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.051.051-.049.023-.025.023-.024.021-.025.02-.024.019-.024.018-.024.017-.024.015-.023.014-.023.013-.024.012-.022.01-.023.01-.023.008-.022.006-.022.006-.022.004-.021.004-.022.001-.021.001-.021v-4.139l-.077.054-.08.054-.083.054-.085.052-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.044-.118.044-.12.044-.122.042-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.035-.143.033-.144.033-.147.033-.148.031-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.009-.179.009-.179.007-.181.007-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.007-.179-.007-.179-.009-.178-.009-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.031-.146-.033-.145-.033-.143-.033-.141-.035-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.04-.126-.041-.124-.042-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.051-.093-.051-.09-.051-.087-.053-.085-.052-.083-.054-.08-.054-.077-.054v4.139zm0-5.666v.011l.001.02.003.022.004.021.005.022.006.021.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.024.018.023.019.024.021.025.022.024.023.024.024.025.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.051.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.043.171.043.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.021.23.02.233.018.236.017.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.013.241-.014.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.049.139-.049.136-.049.131-.051.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.049.023-.025.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.022.01-.023.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.153l-.077.054-.08.054-.083.053-.085.053-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.048-.105.048-.106.048-.109.046-.111.046-.114.046-.115.044-.118.044-.12.043-.122.043-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.034-.143.034-.144.033-.147.032-.148.032-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.024-.161.024-.162.023-.163.023-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.01-.178.01-.179.009-.179.007-.181.006-.182.006-.182.004-.184.003-.184.001-.185.001-.185-.001-.184-.001-.184-.003-.182-.004-.182-.006-.181-.006-.179-.007-.179-.009-.178-.01-.176-.01-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.023-.162-.023-.161-.024-.159-.024-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.032-.146-.032-.145-.033-.143-.034-.141-.034-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.041-.126-.041-.124-.041-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.048-.105-.048-.102-.048-.1-.05-.097-.049-.095-.051-.093-.051-.09-.052-.087-.052-.085-.053-.083-.053-.08-.054-.077-.054v4.153zm8.74-8.179l-.257.004-.254.005-.25.008-.247.011-.244.012-.241.014-.237.016-.233.018-.231.021-.226.022-.224.023-.22.026-.216.027-.212.028-.21.031-.205.032-.202.033-.198.034-.194.036-.191.038-.187.038-.183.04-.179.041-.175.042-.172.043-.168.043-.163.045-.16.046-.155.046-.152.048-.148.048-.143.048-.139.049-.136.05-.131.05-.126.051-.123.051-.118.051-.114.052-.11.052-.106.052-.101.052-.096.052-.092.052-.088.052-.083.052-.079.052-.074.051-.07.052-.065.051-.06.05-.056.05-.051.05-.023.025-.023.024-.021.024-.02.025-.019.024-.018.024-.017.023-.015.024-.014.023-.013.023-.012.023-.01.023-.01.022-.008.022-.006.023-.006.021-.004.022-.004.021-.001.021-.001.021.001.021.001.021.004.021.004.022.006.021.006.023.008.022.01.022.01.023.012.023.013.023.014.023.015.024.017.023.018.024.019.024.02.025.021.024.023.024.023.025.051.05.056.05.06.05.065.051.07.052.074.051.079.052.083.052.088.052.092.052.096.052.101.052.106.052.11.052.114.052.118.051.123.051.126.051.131.05.136.05.139.049.143.048.148.048.152.048.155.046.16.046.163.045.168.043.172.043.175.042.179.041.183.04.187.038.191.038.194.036.198.034.202.033.205.032.21.031.212.028.216.027.22.026.224.023.226.022.231.021.233.018.237.016.241.014.244.012.247.011.25.008.254.005.257.004.26.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.022.224-.023.22-.026.216-.027.212-.028.21-.031.205-.032.202-.033.198-.034.194-.036.191-.038.187-.038.183-.04.179-.041.175-.042.172-.043.168-.043.163-.045.16-.046.155-.046.152-.048.148-.048.143-.048.139-.049.136-.05.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.05.051-.05.023-.025.023-.024.021-.024.02-.025.019-.024.018-.024.017-.023.015-.024.014-.023.013-.023.012-.023.01-.023.01-.022.008-.022.006-.023.006-.021.004-.022.004-.021.001-.021.001-.021-.001-.021-.001-.021-.004-.021-.004-.022-.006-.021-.006-.023-.008-.022-.01-.022-.01-.023-.012-.023-.013-.023-.014-.023-.015-.024-.017-.023-.018-.024-.019-.024-.02-.025-.021-.024-.023-.024-.023-.025-.051-.05-.056-.05-.06-.05-.065-.051-.07-.052-.074-.051-.079-.052-.083-.052-.088-.052-.092-.052-.096-.052-.101-.052-.106-.052-.11-.052-.114-.052-.118-.051-.123-.051-.126-.051-.131-.05-.136-.05-.139-.049-.143-.048-.148-.048-.152-.048-.155-.046-.16-.046-.163-.045-.168-.043-.172-.043-.175-.042-.179-.041-.183-.04-.187-.038-.191-.038-.194-.036-.198-.034-.202-.033-.205-.032-.21-.031-.212-.028-.216-.027-.22-.026-.224-.023-.226-.022-.231-.021-.233-.018-.237-.016-.241-.014-.244-.012-.247-.011-.25-.008-.254-.005-.257-.004-.26-.001-.26.001z" transform="scale(.5)"></path></symbol></defs><defs><symbol height="24" width="24" id="clock"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z" transform="scale(.5)"></path></symbol></defs><g><line stroke="#999" stroke-width="0.5px" class="200" y2="244" x2="88.5" y1="5" x1="88.5" id="actor0"></line><g id="root-0"><rect class="actor" ry="3" rx="3" height="65" width="177" stroke="#666" fill="#eaeaea" y="0" x="0"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="32.5" x="88.5"><tspan dy="0" x="88.5">Open GoPro user device</tspan></text></g></g><g><line stroke="#999" stroke-width="0.5px" class="200" y2="244" x2="426.5" y1="5" x1="426.5" id="actor1"></line><g id="root-1"><rect class="actor" ry="3" rx="3" height="65" width="150" stroke="#666" fill="#eaeaea" y="0" x="351.5"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="32.5" x="426.5"><tspan dy="0" x="426.5">GoPro</tspan></text></g></g><defs><marker orient="auto" markerheight="12" markerwidth="12" markerunits="userSpaceOnUse" refy="5" refx="9" id="arrowhead"><path d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs><defs><marker refy="5" refx="4" orient="auto" markerheight="8" markerwidth="15" id="crosshead"><path style="stroke-dasharray: 0, 0;" d="M 1,2 L 6,7 M 6,2 L 1,7" stroke-width="1pt" stroke="#000000" fill="none"></path></marker></defs><defs><marker orient="auto" markerheight="28" markerwidth="20" refy="7" refx="18" id="filled-head"><path d="M 18,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerheight="40" markerwidth="60" refy="15" refx="15" id="sequencenumber"><circle r="6" cy="15" cx="15"></circle></marker></defs><g><rect class="note" ry="0" rx="0" height="39" width="388" stroke="#666" fill="#EDF2AE" y="75" x="63.5"></rect><text style="font-size: 16px; font-weight: 400;" dy="1em" class="noteText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="80" x="258"><tspan x="258">devices are connected as in Tutorial 1</tspan></text></g><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="129" x="258">Write to characteristic</text><line style="fill: none;" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="158" x2="426.5" y1="158" x1="88.5"></line><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="173" x="258">Notification Response (MSB == 0 (start))</text><line style="fill: none;" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="204" x2="88.5" y1="204" x1="426.5"></line><g><rect class="actor" ry="3" rx="3" height="65" width="177" stroke="#666" fill="#eaeaea" y="224" x="0"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="256.5" x="88.5"><tspan dy="0" x="88.5">Open GoPro user device</tspan></text></g><g><rect class="actor" ry="3" rx="3" height="65" width="150" stroke="#666" fill="#eaeaea" y="224" x="351.5"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="256.5" x="426.5"><tspan dy="0" x="426.5">GoPro</tspan></text></g><style>@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css");</style></svg>
+
+<p>In actuality, responses can be more complicated. As described in the
+<a href="/OpenGoPro/ble_2_0#packet-headers">Open GoPro Interface</a>, responses can be
+be comprised of multiple packets where each packet is &lt;= 20 bytes such as:</p>
+
+<svg class="mermaid" aria-roledescription="sequence" viewbox="-50 -10 654.5 448" style="max-width: 654.5px;" xmlns="http://www.w3.org/2000/svg" width="100%" id="mermaid-svg"><style>#mermaid-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-svg .error-icon{fill:#552222;}#mermaid-svg .error-text{fill:#552222;stroke:#552222;}#mermaid-svg .edge-thickness-normal{stroke-width:2px;}#mermaid-svg .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg .marker{fill:#333333;stroke:#333333;}#mermaid-svg .marker.cross{stroke:#333333;}#mermaid-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg .actor{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg text.actor&gt;tspan{fill:black;stroke:none;}#mermaid-svg .actor-line{stroke:grey;}#mermaid-svg .messageLine0{stroke-width:1.5;stroke-dasharray:none;stroke:#333;}#mermaid-svg .messageLine1{stroke-width:1.5;stroke-dasharray:2,2;stroke:#333;}#mermaid-svg #arrowhead path{fill:#333;stroke:#333;}#mermaid-svg .sequenceNumber{fill:white;}#mermaid-svg #sequencenumber{fill:#333;}#mermaid-svg #crosshead path{fill:#333;stroke:#333;}#mermaid-svg .messageText{fill:#333;stroke:none;}#mermaid-svg .labelBox{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg .labelText,#mermaid-svg .labelText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .loopText,#mermaid-svg .loopText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .loopLine{stroke-width:2px;stroke-dasharray:2,2;stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);}#mermaid-svg .note{stroke:#aaaa33;fill:#fff5ad;}#mermaid-svg .noteText,#mermaid-svg .noteText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .activation0{fill:#f4f4f4;stroke:#666;}#mermaid-svg .activation1{fill:#f4f4f4;stroke:#666;}#mermaid-svg .activation2{fill:#f4f4f4;stroke:#666;}#mermaid-svg .actorPopupMenu{position:absolute;}#mermaid-svg .actorPopupMenuPanel{position:absolute;fill:#ECECFF;box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);filter:drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));}#mermaid-svg .actor-man line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg .actor-man circle,#mermaid-svg line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;stroke-width:2px;}#mermaid-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
+<g></g><defs><symbol height="24" width="24" id="computer"><path d="M2 2v13h20v-13h-20zm18 11h-16v-9h16v9zm-10.228 6l.466-1h3.524l.467 1h-4.457zm14.228 3h-24l2-6h2.104l-1.33 4h18.45l-1.297-4h2.073l2 6zm-5-10h-14v-7h14v7z" transform="scale(.5)"></path></symbol></defs><defs><symbol clip-rule="evenodd" fill-rule="evenodd" id="database"><path d="M12.258.001l.256.004.255.005.253.008.251.01.249.012.247.015.246.016.242.019.241.02.239.023.236.024.233.027.231.028.229.031.225.032.223.034.22.036.217.038.214.04.211.041.208.043.205.045.201.046.198.048.194.05.191.051.187.053.183.054.18.056.175.057.172.059.168.06.163.061.16.063.155.064.15.066.074.033.073.033.071.034.07.034.069.035.068.035.067.035.066.035.064.036.064.036.062.036.06.036.06.037.058.037.058.037.055.038.055.038.053.038.052.038.051.039.05.039.048.039.047.039.045.04.044.04.043.04.041.04.04.041.039.041.037.041.036.041.034.041.033.042.032.042.03.042.029.042.027.042.026.043.024.043.023.043.021.043.02.043.018.044.017.043.015.044.013.044.012.044.011.045.009.044.007.045.006.045.004.045.002.045.001.045v17l-.001.045-.002.045-.004.045-.006.045-.007.045-.009.044-.011.045-.012.044-.013.044-.015.044-.017.043-.018.044-.02.043-.021.043-.023.043-.024.043-.026.043-.027.042-.029.042-.03.042-.032.042-.033.042-.034.041-.036.041-.037.041-.039.041-.04.041-.041.04-.043.04-.044.04-.045.04-.047.039-.048.039-.05.039-.051.039-.052.038-.053.038-.055.038-.055.038-.058.037-.058.037-.06.037-.06.036-.062.036-.064.036-.064.036-.066.035-.067.035-.068.035-.069.035-.07.034-.071.034-.073.033-.074.033-.15.066-.155.064-.16.063-.163.061-.168.06-.172.059-.175.057-.18.056-.183.054-.187.053-.191.051-.194.05-.198.048-.201.046-.205.045-.208.043-.211.041-.214.04-.217.038-.22.036-.223.034-.225.032-.229.031-.231.028-.233.027-.236.024-.239.023-.241.02-.242.019-.246.016-.247.015-.249.012-.251.01-.253.008-.255.005-.256.004-.258.001-.258-.001-.256-.004-.255-.005-.253-.008-.251-.01-.249-.012-.247-.015-.245-.016-.243-.019-.241-.02-.238-.023-.236-.024-.234-.027-.231-.028-.228-.031-.226-.032-.223-.034-.22-.036-.217-.038-.214-.04-.211-.041-.208-.043-.204-.045-.201-.046-.198-.048-.195-.05-.19-.051-.187-.053-.184-.054-.179-.056-.176-.057-.172-.059-.167-.06-.164-.061-.159-.063-.155-.064-.151-.066-.074-.033-.072-.033-.072-.034-.07-.034-.069-.035-.068-.035-.067-.035-.066-.035-.064-.036-.063-.036-.062-.036-.061-.036-.06-.037-.058-.037-.057-.037-.056-.038-.055-.038-.053-.038-.052-.038-.051-.039-.049-.039-.049-.039-.046-.039-.046-.04-.044-.04-.043-.04-.041-.04-.04-.041-.039-.041-.037-.041-.036-.041-.034-.041-.033-.042-.032-.042-.03-.042-.029-.042-.027-.042-.026-.043-.024-.043-.023-.043-.021-.043-.02-.043-.018-.044-.017-.043-.015-.044-.013-.044-.012-.044-.011-.045-.009-.044-.007-.045-.006-.045-.004-.045-.002-.045-.001-.045v-17l.001-.045.002-.045.004-.045.006-.045.007-.045.009-.044.011-.045.012-.044.013-.044.015-.044.017-.043.018-.044.02-.043.021-.043.023-.043.024-.043.026-.043.027-.042.029-.042.03-.042.032-.042.033-.042.034-.041.036-.041.037-.041.039-.041.04-.041.041-.04.043-.04.044-.04.046-.04.046-.039.049-.039.049-.039.051-.039.052-.038.053-.038.055-.038.056-.038.057-.037.058-.037.06-.037.061-.036.062-.036.063-.036.064-.036.066-.035.067-.035.068-.035.069-.035.07-.034.072-.034.072-.033.074-.033.151-.066.155-.064.159-.063.164-.061.167-.06.172-.059.176-.057.179-.056.184-.054.187-.053.19-.051.195-.05.198-.048.201-.046.204-.045.208-.043.211-.041.214-.04.217-.038.22-.036.223-.034.226-.032.228-.031.231-.028.234-.027.236-.024.238-.023.241-.02.243-.019.245-.016.247-.015.249-.012.251-.01.253-.008.255-.005.256-.004.258-.001.258.001zm-9.258 20.499v.01l.001.021.003.021.004.022.005.021.006.022.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.023.018.024.019.024.021.024.022.025.023.024.024.025.052.049.056.05.061.051.066.051.07.051.075.051.079.052.084.052.088.052.092.052.097.052.102.051.105.052.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.048.144.049.147.047.152.047.155.047.16.045.163.045.167.043.171.043.176.041.178.041.183.039.187.039.19.037.194.035.197.035.202.033.204.031.209.03.212.029.216.027.219.025.222.024.226.021.23.02.233.018.236.016.24.015.243.012.246.01.249.008.253.005.256.004.259.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.021.224-.024.22-.026.216-.027.212-.028.21-.031.205-.031.202-.034.198-.034.194-.036.191-.037.187-.039.183-.04.179-.04.175-.042.172-.043.168-.044.163-.045.16-.046.155-.046.152-.047.148-.048.143-.049.139-.049.136-.05.131-.05.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.053.083-.051.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.05.023-.024.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.023.01-.022.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.127l-.077.055-.08.053-.083.054-.085.053-.087.052-.09.052-.093.051-.095.05-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.045-.118.044-.12.043-.122.042-.124.042-.126.041-.128.04-.13.04-.132.038-.134.038-.135.037-.138.037-.139.035-.142.035-.143.034-.144.033-.147.032-.148.031-.15.03-.151.03-.153.029-.154.027-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.01-.179.008-.179.008-.181.006-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.006-.179-.008-.179-.008-.178-.01-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.027-.153-.029-.151-.03-.15-.03-.148-.031-.146-.032-.145-.033-.143-.034-.141-.035-.14-.035-.137-.037-.136-.037-.134-.038-.132-.038-.13-.04-.128-.04-.126-.041-.124-.042-.122-.042-.12-.044-.117-.043-.116-.045-.113-.045-.112-.046-.109-.047-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.05-.093-.052-.09-.051-.087-.052-.085-.053-.083-.054-.08-.054-.077-.054v4.127zm0-5.654v.011l.001.021.003.021.004.021.005.022.006.022.007.022.009.022.01.022.011.023.012.023.013.023.015.024.016.023.017.024.018.024.019.024.021.024.022.024.023.025.024.024.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.052.11.051.114.051.119.052.123.05.127.051.131.05.135.049.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.044.171.042.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.022.23.02.233.018.236.016.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.012.241-.015.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.048.139-.05.136-.049.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.051.051-.049.023-.025.023-.024.021-.025.02-.024.019-.024.018-.024.017-.024.015-.023.014-.023.013-.024.012-.022.01-.023.01-.023.008-.022.006-.022.006-.022.004-.021.004-.022.001-.021.001-.021v-4.139l-.077.054-.08.054-.083.054-.085.052-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.044-.118.044-.12.044-.122.042-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.035-.143.033-.144.033-.147.033-.148.031-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.009-.179.009-.179.007-.181.007-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.007-.179-.007-.179-.009-.178-.009-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.031-.146-.033-.145-.033-.143-.033-.141-.035-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.04-.126-.041-.124-.042-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.051-.093-.051-.09-.051-.087-.053-.085-.052-.083-.054-.08-.054-.077-.054v4.139zm0-5.666v.011l.001.02.003.022.004.021.005.022.006.021.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.024.018.023.019.024.021.025.022.024.023.024.024.025.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.051.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.043.171.043.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.021.23.02.233.018.236.017.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.013.241-.014.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.049.139-.049.136-.049.131-.051.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.049.023-.025.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.022.01-.023.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.153l-.077.054-.08.054-.083.053-.085.053-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.048-.105.048-.106.048-.109.046-.111.046-.114.046-.115.044-.118.044-.12.043-.122.043-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.034-.143.034-.144.033-.147.032-.148.032-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.024-.161.024-.162.023-.163.023-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.01-.178.01-.179.009-.179.007-.181.006-.182.006-.182.004-.184.003-.184.001-.185.001-.185-.001-.184-.001-.184-.003-.182-.004-.182-.006-.181-.006-.179-.007-.179-.009-.178-.01-.176-.01-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.023-.162-.023-.161-.024-.159-.024-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.032-.146-.032-.145-.033-.143-.034-.141-.034-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.041-.126-.041-.124-.041-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.048-.105-.048-.102-.048-.1-.05-.097-.049-.095-.051-.093-.051-.09-.052-.087-.052-.085-.053-.083-.053-.08-.054-.077-.054v4.153zm8.74-8.179l-.257.004-.254.005-.25.008-.247.011-.244.012-.241.014-.237.016-.233.018-.231.021-.226.022-.224.023-.22.026-.216.027-.212.028-.21.031-.205.032-.202.033-.198.034-.194.036-.191.038-.187.038-.183.04-.179.041-.175.042-.172.043-.168.043-.163.045-.16.046-.155.046-.152.048-.148.048-.143.048-.139.049-.136.05-.131.05-.126.051-.123.051-.118.051-.114.052-.11.052-.106.052-.101.052-.096.052-.092.052-.088.052-.083.052-.079.052-.074.051-.07.052-.065.051-.06.05-.056.05-.051.05-.023.025-.023.024-.021.024-.02.025-.019.024-.018.024-.017.023-.015.024-.014.023-.013.023-.012.023-.01.023-.01.022-.008.022-.006.023-.006.021-.004.022-.004.021-.001.021-.001.021.001.021.001.021.004.021.004.022.006.021.006.023.008.022.01.022.01.023.012.023.013.023.014.023.015.024.017.023.018.024.019.024.02.025.021.024.023.024.023.025.051.05.056.05.06.05.065.051.07.052.074.051.079.052.083.052.088.052.092.052.096.052.101.052.106.052.11.052.114.052.118.051.123.051.126.051.131.05.136.05.139.049.143.048.148.048.152.048.155.046.16.046.163.045.168.043.172.043.175.042.179.041.183.04.187.038.191.038.194.036.198.034.202.033.205.032.21.031.212.028.216.027.22.026.224.023.226.022.231.021.233.018.237.016.241.014.244.012.247.011.25.008.254.005.257.004.26.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.022.224-.023.22-.026.216-.027.212-.028.21-.031.205-.032.202-.033.198-.034.194-.036.191-.038.187-.038.183-.04.179-.041.175-.042.172-.043.168-.043.163-.045.16-.046.155-.046.152-.048.148-.048.143-.048.139-.049.136-.05.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.05.051-.05.023-.025.023-.024.021-.024.02-.025.019-.024.018-.024.017-.023.015-.024.014-.023.013-.023.012-.023.01-.023.01-.022.008-.022.006-.023.006-.021.004-.022.004-.021.001-.021.001-.021-.001-.021-.001-.021-.004-.021-.004-.022-.006-.021-.006-.023-.008-.022-.01-.022-.01-.023-.012-.023-.013-.023-.014-.023-.015-.024-.017-.023-.018-.024-.019-.024-.02-.025-.021-.024-.023-.024-.023-.025-.051-.05-.056-.05-.06-.05-.065-.051-.07-.052-.074-.051-.079-.052-.083-.052-.088-.052-.092-.052-.096-.052-.101-.052-.106-.052-.11-.052-.114-.052-.118-.051-.123-.051-.126-.051-.131-.05-.136-.05-.139-.049-.143-.048-.148-.048-.152-.048-.155-.046-.16-.046-.163-.045-.168-.043-.172-.043-.175-.042-.179-.041-.183-.04-.187-.038-.191-.038-.194-.036-.198-.034-.202-.033-.205-.032-.21-.031-.212-.028-.216-.027-.22-.026-.224-.023-.226-.022-.231-.021-.233-.018-.237-.016-.241-.014-.244-.012-.247-.011-.25-.008-.254-.005-.257-.004-.26-.001-.26.001z" transform="scale(.5)"></path></symbol></defs><defs><symbol height="24" width="24" id="clock"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z" transform="scale(.5)"></path></symbol></defs><g><line stroke="#999" stroke-width="0.5px" class="200" y2="382" x2="88.5" y1="5" x1="88.5" id="actor0"></line><g id="root-0"><rect class="actor" ry="3" rx="3" height="65" width="177" stroke="#666" fill="#eaeaea" y="0" x="0"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="32.5" x="88.5"><tspan dy="0" x="88.5">Open GoPro user device</tspan></text></g></g><g><line stroke="#999" stroke-width="0.5px" class="200" y2="382" x2="479.5" y1="5" x1="479.5" id="actor1"></line><g id="root-1"><rect class="actor" ry="3" rx="3" height="65" width="150" stroke="#666" fill="#eaeaea" y="0" x="404.5"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="32.5" x="479.5"><tspan dy="0" x="479.5">GoPro</tspan></text></g></g><defs><marker orient="auto" markerheight="12" markerwidth="12" markerunits="userSpaceOnUse" refy="5" refx="9" id="arrowhead"><path d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs><defs><marker refy="5" refx="4" orient="auto" markerheight="8" markerwidth="15" id="crosshead"><path style="stroke-dasharray: 0, 0;" d="M 1,2 L 6,7 M 6,2 L 1,7" stroke-width="1pt" stroke="#000000" fill="none"></path></marker></defs><defs><marker orient="auto" markerheight="28" markerwidth="20" refy="7" refx="18" id="filled-head"><path d="M 18,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerheight="40" markerwidth="60" refy="15" refx="15" id="sequencenumber"><circle r="6" cy="15" cx="15"></circle></marker></defs><g><rect class="note" ry="0" rx="0" height="39" width="441" stroke="#666" fill="#EDF2AE" y="75" x="63.5"></rect><text style="font-size: 16px; font-weight: 400;" dy="1em" class="noteText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="80" x="284"><tspan x="284">devices are connected as in Tutorial 1</tspan></text></g><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="129" x="284">Write to characteristic</text><line style="fill: none;" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="158" x2="479.5" y1="158" x1="88.5"></line><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="173" x="284">Notification Response (MSB == 0 (start))</text><line style="fill: none;" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="204" x2="88.5" y1="204" x1="479.5"></line><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="219" x="284">Notification Response (MSB == 1 (continuation))</text><line style="fill: none;" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="250" x2="88.5" y1="250" x1="479.5"></line><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="265" x="284">Notification Response (MSB == 1 (continuation))</text><line style="fill: none;" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="296" x2="88.5" y1="296" x1="479.5"></line><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="311" x="284">Notification Response (MSB == 1 (continuation))</text><line style="fill: none;" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="342" x2="88.5" y1="342" x1="479.5"></line><g><rect class="actor" ry="3" rx="3" height="65" width="177" stroke="#666" fill="#eaeaea" y="362" x="0"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="394.5" x="88.5"><tspan dy="0" x="88.5">Open GoPro user device</tspan></text></g><g><rect class="actor" ry="3" rx="3" height="65" width="150" stroke="#666" fill="#eaeaea" y="362" x="404.5"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="394.5" x="479.5"><tspan dy="0" x="479.5">GoPro</tspan></text></g><style>@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css");</style></svg>
+
+<p>This requires the implementation of accumulating and parsing algorithms which will be described in
+[Parsing Multiple Packet TLV Responses].</p>
+
+<h1 id="parsing-a-one-packet-tlv-response">Parsing a One Packet TLV Response</h1>
+
+<p>This section will describe how to parse one packet (&lt;= 20 byte) responses. A one-packet response
+is formatted as such:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Header (length)</th>
+      <th>Command / Setting ID</th>
+      <th>Status</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1 byte</td>
+      <td>1 byte</td>
+      <td>1 bytes</td>
+      <td>Length - 2 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="command--setting-responses-with-response-length-0">Command / Setting Responses with Response Length 0</h2>
+
+<p>These are the only responses that we have seen thus far through the first 2 tutorials. They
+return a status but have a 0 length additional response. For example, consider
+<a href="/OpenGoPro/tutorials/send-ble-commands#set-shutter">Set Shutter</a>. It returned a response
+of:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02:01:00
+</code></pre></div></div>
+
+<p>This equates to:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Header (length)</th>
+      <th>Command / Setting / Status ID</th>
+      <th>Status</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1 byte</td>
+      <td>1 byte</td>
+      <td>1 bytes</td>
+      <td>Length - 2 bytes</td>
+    </tr>
+    <tr>
+      <td>0x02</td>
+      <td>0x01 == Set Shutter</td>
+      <td>0x00 == Success</td>
+      <td>(2 -2 = 0 bytes)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We can see how this response includes the status but no additional response data. This type of
+response will be used for most Commands and Setting Responses as seen in the
+<a href="/OpenGoPro/tutorials/send-ble-commands">previous tutorial</a>.</p>
+
+<h2 id="complex-command-response">Complex Command Response</h2>
+
+<p>There are some commands that do return additional response data. These are called “complex responses.”
+From the <a href="/OpenGoPro/ble_2_0#commands-quick-reference">commands reference</a>, we can see that these are:</p>
+
+<ul>
+  <li>Get Open GoPro Version (ID == 0x51)</li>
+  <li>Get Hardware Info (ID == 0x3C)</li>
+</ul>
+
+<p>In this tutorial, we will walk through creating a simple parser to parse the Open GoPro Get Version Command.</p>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>It is important to always query the version after connecting in order to know which API is supported.
+See the relevant version of the BLE and / or WiFi spec for more details about each version.</span>
+</div>
+
+<p>First, we send the command to the Command Request <a href="/OpenGoPro/ble_2_0#services-and-characteristics">UUID</a>:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="92deae3c-86d6-41fa-89b9-305a2a7889c7">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="92deae3c-86d6-41fa-89b9-305a2a7889c7">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">COMMAND_REQ_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0072"</span><span class="p">)</span>
+<span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">COMMAND_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x51</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+
+<p>We then receive a response at the expected handle. This is logged as:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Getting the Open GoPro version...
+INFO:root:Received response at handle=52: b'06:51:00:01:02:01:00'
+</span></code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">val</span> <span class="py">getVersion</span> <span class="p">=</span> <span class="nf">ubyteArrayOf</span><span class="p">(</span><span class="mh">0x01U</span><span class="p">,</span> <span class="mh">0x51U</span><span class="p">)</span>
+    <span class="n">ble</span><span class="p">.</span><span class="nf">writeCharacteristic</span><span class="p">(</span><span class="n">goproAddress</span><span class="p">,</span> <span class="nc">GoProUUID</span><span class="p">.</span><span class="nc">CQ_COMMAND</span><span class="p">.</span><span class="n">uuid</span><span class="p">,</span> <span class="n">getVersion</span><span class="p">)</span>
+    <span class="kd">val</span> <span class="py">version</span> <span class="p">=</span> <span class="n">receivedResponse</span><span class="p">.</span><span class="nf">receive</span><span class="p">()</span> <span class="k">as</span> <span class="nc">Response</span><span class="p">.</span><span class="nc">Complex</span> <span class="c1">// Wait to receive response</span>
+</code></pre></div></div>
+
+<p>This is loged as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Getting the Open GoPro version
+</span><span class="gp">Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt;</span><span class="w"> </span>01:51
+<span class="go">Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b
+Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 06:51:00:01:02:01:00
+Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 06:51:00:01:02:01:00
+</span></code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<p>This response equates to:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Header (length)</th>
+      <th>Command / Setting / Status ID</th>
+      <th>Status</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1 byte</td>
+      <td>1 byte</td>
+      <td>1 bytes</td>
+      <td>Length - 2 bytes</td>
+    </tr>
+    <tr>
+      <td>0x06</td>
+      <td>0x51 == Get Version</td>
+      <td>0x00 == Success</td>
+      <td>0x01 0x02 0x01 0x00</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We can see that this “complex response” contains 4 additional bytes that need to be parsed. Using the information
+from the <a href="/OpenGoPro/ble_2_0#complex-command-responses">interface description</a>,
+we know to parse this as:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Byte</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x01</td>
+      <td>Length of Major Version Number</td>
+    </tr>
+    <tr>
+      <td>0x02</td>
+      <td>Major Version Number</td>
+    </tr>
+    <tr>
+      <td>0x01</td>
+      <td>Length of Minor Version Number</td>
+    </tr>
+    <tr>
+      <td>0x00</td>
+      <td>Minor Version Number</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We implement this in the notification handler as follows. First, we parse the length, command ID, and status
+from the first 3 bytes of the response. Then we parse the remaining four bytes of the response as individual
+values formatted as such:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Length</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1 byte</td>
+      <td>Length bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<div>
+    <ul class="tab tab-linked" data-tab="37cd80aa-b970-434e-8c0f-5589d43b2ef2">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="37cd80aa-b970-434e-8c0f-5589d43b2ef2">
+        
+            <li class="active tab-content-container">
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>The snippets of code included in this section are taken from the <code class="language-plaintext highlighter-rouge">notification handler</code></span>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Parse first 3 bytes
+</span><span class="nb">len</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">command_id</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Parse remaining four bytes
+</span><span class="n">index</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">while</span> <span class="n">index</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">:</span>
+    <span class="n">param_len</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">params</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">index</span> <span class="p">:</span> <span class="n">index</span> <span class="o">+</span> <span class="n">param_len</span><span class="p">])</span>
+    <span class="n">index</span> <span class="o">+=</span> <span class="n">param_len</span>
+</code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>The snippets of code included in this section are taken from the <code class="language-plaintext highlighter-rouge">Response.Complex</code> <code class="language-plaintext highlighter-rouge">parse</code> method. For the
+contrived code in this tutorial, we have separate <code class="language-plaintext highlighter-rouge">Response</code> sealed classes to handle each use case.</span>
+</div>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Parse header bytes</span>
+<span class="n">id</span> <span class="p">=</span> <span class="n">packet</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">toInt</span><span class="p">()</span>
+<span class="n">status</span> <span class="p">=</span> <span class="n">packet</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">toInt</span><span class="p">()</span>
+<span class="kd">var</span> <span class="py">buf</span> <span class="p">=</span> <span class="n">packet</span><span class="p">.</span><span class="nf">drop</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Parse remaining packet</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="nf">isNotEmpty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// Get each parameter's ID and length</span>
+    <span class="kd">val</span> <span class="py">paramLen</span> <span class="p">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">toInt</span><span class="p">()</span>
+    <span class="n">buf</span> <span class="p">=</span> <span class="n">buf</span><span class="p">.</span><span class="nf">drop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1">// Get the parameter's value</span>
+    <span class="kd">val</span> <span class="py">paramVal</span> <span class="p">=</span> <span class="n">buf</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="n">paramLen</span><span class="p">)</span>
+    <span class="c1">// Store in data list</span>
+    <span class="n">data</span> <span class="p">+=</span> <span class="n">paramVal</span><span class="p">.</span><span class="nf">toUByteArray</span><span class="p">()</span>
+    <span class="c1">// Advance the buffer for continued parsing</span>
+    <span class="n">buf</span> <span class="p">=</span> <span class="n">buf</span><span class="p">.</span><span class="nf">drop</span><span class="p">(</span><span class="n">paramLen</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<p>From the complex response definition, we know these parameters are one byte each and equate to the major and
+the minor version so let’s print them (and all of the other response information) as such:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="f1f69c7f-e702-4567-8a88-7ee31a93e65b">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="f1f69c7f-e702-4567-8a88-7ee31a93e65b">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">major</span><span class="p">,</span> <span class="n">minor</span> <span class="o">=</span> <span class="n">params</span>
+<span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"Received a response to </span><span class="si">{</span><span class="n">command_id</span><span class="o">=</span><span class="si">}</span><span class="s"> with </span><span class="si">{</span><span class="n">status</span><span class="o">=</span><span class="si">}</span><span class="s">: version=</span><span class="si">{</span><span class="n">major</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s">.</span><span class="si">{</span><span class="n">minor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>which shows on the log as:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Received a response to command_id=81 with status=0: version=2.0
+</span></code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">version</span> <span class="p">=</span> <span class="n">receivedResponse</span><span class="p">.</span><span class="nf">receive</span><span class="p">()</span> <span class="k">as</span> <span class="nc">Response</span><span class="p">.</span><span class="nc">Complex</span> <span class="c1">// Wait to receive response</span>
+<span class="kd">val</span> <span class="py">major</span> <span class="p">=</span> <span class="n">version</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">first</span><span class="p">().</span><span class="nf">toInt</span><span class="p">()</span>
+<span class="kd">val</span> <span class="py">minor</span> <span class="p">=</span> <span class="n">version</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">first</span><span class="p">().</span><span class="nf">toInt</span><span class="p">()</span>
+<span class="nc">Timber</span><span class="p">.</span><span class="nf">i</span><span class="p">(</span><span class="s">"Got the Open GoPro version successfully: $major.$minor"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>which shows on the log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Got the Open GoPro version successfully: 2.0
+</span></code></pre></div></div>
+
+</li>
+        
+    </ul>
+</div>
+
+<p><strong>Quiz time! 📚 ✏️</strong></p>
+
+<div id="quiz_6a1c2151-327e-4a11-90a2-3fdd1ca1ad85" class="quiz">
+    <div>
+        <div id="question_6a1c2151-327e-4a11-90a2-3fdd1ca1ad85" class="quiz__question">What is the maximum size of an individual notification response packet?</div>
+        <div id="answers_6a1c2151-327e-4a11-90a2-3fdd1ca1ad85">
+        
+            <input type="radio" name="question" value="A"><label>A: 20 bytes</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: 256 bytes</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: There is no maximum size</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('6a1c2151-327e-4a11-90a2-3fdd1ca1ad85', 'A')">Submit Answer</button>
+    <div id="results_6a1c2151-327e-4a11-90a2-3fdd1ca1ad85" style="display: none">
+        <span id="correct_6a1c2151-327e-4a11-90a2-3fdd1ca1ad85" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_6a1c2151-327e-4a11-90a2-3fdd1ca1ad85" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+        Responses can be composed of multiple packets where each packet is at
+    maximum 20 bytes.
+    </div>
+</div>
+
+<div id="quiz_40413bca-465a-48f0-92d6-3da98b7f4a36" class="quiz">
+    <div>
+        <div id="question_40413bca-465a-48f0-92d6-3da98b7f4a36" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
+        <div id="answers_40413bca-465a-48f0-92d6-3da98b7f4a36">
+        
+            <input type="radio" name="question" value="A"><label>A: 20 bytes</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: 256 bytes</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: There is no maximum size</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('40413bca-465a-48f0-92d6-3da98b7f4a36', 'C')">Submit Answer</button>
+    <div id="results_40413bca-465a-48f0-92d6-3da98b7f4a36" style="display: none">
+        <span id="correct_40413bca-465a-48f0-92d6-3da98b7f4a36" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_40413bca-465a-48f0-92d6-3da98b7f4a36" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+        There is no limit on the amount of packets that can comprise a response.
+    </div>
+</div>
+
+<div id="quiz_a65ce58d-d73a-4d69-88b5-9ee3f00d589d" class="quiz">
+    <div>
+        <div id="question_a65ce58d-d73a-4d69-88b5-9ee3f00d589d" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
+        <div id="answers_a65ce58d-d73a-4d69-88b5-9ee3f00d589d">
+        
+            <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: Always multiple packets.</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: Always 1 packet except for complex responses.</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('a65ce58d-d73a-4d69-88b5-9ee3f00d589d', 'C')">Submit Answer</button>
+    <div id="results_a65ce58d-d73a-4d69-88b5-9ee3f00d589d" style="display: none">
+        <span id="correct_a65ce58d-d73a-4d69-88b5-9ee3f00d589d" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_a65ce58d-d73a-4d69-88b5-9ee3f00d589d" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+        Command responses are almost always 1 packet (just returning the status).
+    The exception are complex responses which can be multiple packets (in the case of Get Hardware
+    Info)
+    </div>
+</div>
+
+<div id="quiz_f4a62a04-72ea-486c-8506-29883ccdee50" class="quiz">
+    <div>
+        <div id="question_f4a62a04-72ea-486c-8506-29883ccdee50" class="quiz__question">How many packets are setting responses comprised of?</div>
+        <div id="answers_f4a62a04-72ea-486c-8506-29883ccdee50">
+        
+            <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: Always multiple packets.</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: Always 1 packet except for complex responses.</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('f4a62a04-72ea-486c-8506-29883ccdee50', 'A')">Submit Answer</button>
+    <div id="results_f4a62a04-72ea-486c-8506-29883ccdee50" style="display: none">
+        <span id="correct_f4a62a04-72ea-486c-8506-29883ccdee50" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_f4a62a04-72ea-486c-8506-29883ccdee50" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+        Settings Responses only ever contain the command status. Furthermore, there
+    is no concept of complex responses for setting commands.
+    </div>
+</div>
+
+<h1 id="parsing-multiple-packet-tlv-responses">Parsing Multiple Packet TLV Responses</h1>
+
+<p>This section will describe parsing TLV responses that contain more than one packet. It will first describe how
+to accumulate such responses and then provide a parsing example. The example script that will be walked through
+for this section is <code class="language-plaintext highlighter-rouge">ble_command_get_state.py</code>. We will be creating a small <em>Response</em> class that will be
+re-used for future tutorials.</p>
+
+<h2 id="accumulating-the-response">Accumulating the Response</h2>
+
+<p>The first step is to accumulate the multiple packets into one response. Whereas for all tutorials until now, we
+have just used the header bytes of the response as the length, we now must completely parse the header as it is
+defined:</p>
+
+<table border="1">
+  <tbody>
+    <tr>
+        <td colspan="8">Byte 1</td>
+        <td colspan="8">Byte 2 (optional)</td>
+        <td colspan="8">Byte 3 (optional)</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>6</td>
+        <td>5</td>
+        <td>4</td>
+        <td>3</td>
+        <td>2</td>
+        <td>1</td>
+        <td>0</td>
+        <td>7</td>
+        <td>6</td>
+        <td>5</td>
+        <td>4</td>
+        <td>3</td>
+        <td>2</td>
+        <td>1</td>
+        <td>0</td>
+        <td>7</td>
+        <td>6</td>
+        <td>5</td>
+        <td>4</td>
+        <td>3</td>
+        <td>2</td>
+        <td>1</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>0: Start</td>
+        <td colspan="2">00: General</td>
+        <td colspan="5">Message Length: 5 bits</td>
+        <td colspan="16">
+</td>
+    </tr>
+    <tr>
+        <td>0: Start</td>
+        <td colspan="2">01: Extended (13-bit)</td>
+        <td colspan="13">Message Length: 13 bits</td>
+        <td colspan="8">
+</td>
+    </tr>
+    <tr>
+        <td>0: Start</td>
+        <td colspan="2">10: Extended (16-bit)</td>
+        <td colspan="5">
+</td>
+        <td colspan="16">Message Length: 16 bits</td>
+    </tr>
+    <tr>
+        <td>0: Start</td>
+        <td colspan="2">11: Reserved</td>
+        <td colspan="21">
+</td>
+    </tr>
+    <tr>
+        <td>1: Continuation</td>
+        <td colspan="24">
+</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The basic algorithm here (which is implemented in the <em>Message.accumulate</em> method) is as follows:</p>
+
+<hr>
+
+<div class="md_column">
+<div>
+    <p>Continuation bit set?</p>
+
+    <div>
+    <ul class="tab tab-linked" data-tab="b3ad644b-e79a-476a-9fa3-c71828102c35">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="b3ad644b-e79a-476a-9fa3-c71828102c35">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">CONT_MASK</span><span class="p">:</span>
+    <span class="n">buf</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="p">...</span>
+</code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="nf">first</span><span class="p">().</span><span class="nf">and</span><span class="p">(</span><span class="nc">Mask</span><span class="p">.</span><span class="nc">Continuation</span><span class="p">.</span><span class="n">value</span><span class="p">)</span> <span class="p">==</span> <span class="nc">Mask</span><span class="p">.</span><span class="nc">Continuation</span><span class="p">.</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">buf</span> <span class="p">=</span> <span class="n">buf</span><span class="p">.</span><span class="nf">drop</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">toUByteArray</span><span class="p">()</span> <span class="c1">// Pop the header byte</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// This is a new packet</span>
+    <span class="o">..</span><span class="p">.</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+    <p>No, continuation bit was not set. So create new response, then get its length.</p>
+
+    <div>
+    <ul class="tab tab-linked" data-tab="e93e4725-86fd-457d-b5d8-9a89aed9f7c9">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="e93e4725-86fd-457d-b5d8-9a89aed9f7c9">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># This is a new packet so start with an empty byte array
+</span><span class="bp">self</span><span class="p">.</span><span class="nb">bytes</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+<span class="n">hdr</span> <span class="o">=</span> <span class="n">Header</span><span class="p">((</span><span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">HDR_MASK</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">hdr</span> <span class="ow">is</span> <span class="n">Header</span><span class="p">.</span><span class="n">GENERAL</span><span class="p">:</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">bytes_remaining</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">GEN_LEN_MASK</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="k">elif</span> <span class="n">hdr</span> <span class="ow">is</span> <span class="n">Header</span><span class="p">.</span><span class="n">EXT_13</span><span class="p">:</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">bytes_remaining</span> <span class="o">=</span> <span class="p">((</span><span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">EXT_13_BYTE0_MASK</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+<span class="k">elif</span> <span class="n">hdr</span> <span class="ow">is</span> <span class="n">Header</span><span class="p">.</span><span class="n">EXT_16</span><span class="p">:</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">bytes_remaining</span> <span class="o">=</span> <span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">buf</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+</code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// This is a new packet so start with empty array</span>
+<span class="n">packet</span> <span class="p">=</span> <span class="nf">ubyteArrayOf</span><span class="p">()</span>
+<span class="k">when</span> <span class="p">(</span><span class="nc">Header</span><span class="p">.</span><span class="nf">fromValue</span><span class="p">((</span><span class="n">buf</span><span class="p">.</span><span class="nf">first</span><span class="p">()</span> <span class="n">and</span> <span class="nc">Mask</span><span class="p">.</span><span class="nc">Header</span><span class="p">.</span><span class="n">value</span><span class="p">).</span><span class="nf">toInt</span><span class="p">()</span> <span class="n">shr</span> <span class="mi">5</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nc">Header</span><span class="p">.</span><span class="nc">GENERAL</span> <span class="p">-&gt;</span> <span class="p">{</span>
+        <span class="n">bytesRemaining</span> <span class="p">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">and</span><span class="p">(</span><span class="nc">Mask</span><span class="p">.</span><span class="nc">GenLength</span><span class="p">.</span><span class="n">value</span><span class="p">).</span><span class="nf">toInt</span><span class="p">()</span>
+        <span class="n">buf</span> <span class="p">=</span> <span class="n">buf</span><span class="p">.</span><span class="nf">drop</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">toUByteArray</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="nc">Header</span><span class="p">.</span><span class="nc">EXT_13</span> <span class="p">-&gt;</span> <span class="p">{</span>
+        <span class="n">bytesRemaining</span> <span class="p">=</span> <span class="p">((</span><span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">and</span><span class="p">(</span><span class="nc">Mask</span><span class="p">.</span><span class="nc">Ext13Byte0</span><span class="p">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">toLong</span><span class="p">()</span> <span class="n">shl</span> <span class="mi">8</span><span class="p">)</span> <span class="n">or</span> <span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">toLong</span><span class="p">()).</span><span class="nf">toInt</span><span class="p">()</span>
+        <span class="n">buf</span> <span class="p">=</span> <span class="n">buf</span><span class="p">.</span><span class="nf">drop</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="nf">toUByteArray</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="nc">Header</span><span class="p">.</span><span class="nc">EXT_16</span> <span class="p">-&gt;</span> <span class="p">{</span>
+        <span class="n">bytesRemaining</span> <span class="p">=</span> <span class="p">((</span><span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">toLong</span><span class="p">()</span> <span class="n">shl</span> <span class="mi">8</span><span class="p">)</span> <span class="n">or</span> <span class="n">buf</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nf">toLong</span><span class="p">()).</span><span class="nf">toInt</span><span class="p">()</span>
+        <span class="n">buf</span> <span class="p">=</span> <span class="n">buf</span><span class="p">.</span><span class="nf">drop</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="nf">toUByteArray</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="nc">Header</span><span class="p">.</span><span class="nc">RESERVED</span> <span class="p">-&gt;</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="nc">Exception</span><span class="p">(</span><span class="s">"Unexpected RESERVED header"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+    <p>Append current packet to response and decrement bytes remaining.</p>
+
+    <div>
+    <ul class="tab tab-linked" data-tab="15dcbb15-2729-41e6-b3cc-b5a1623293d0">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="15dcbb15-2729-41e6-b3cc-b5a1623293d0">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Append payload to buffer and update remaining / complete
+</span><span class="bp">self</span><span class="p">.</span><span class="nb">bytes</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">bytes_remaining</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+</code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Accumulate the payload now that headers are handled and dropped</span>
+<span class="n">packet</span> <span class="p">+=</span> <span class="n">buf</span>
+<span class="n">bytesRemaining</span> <span class="p">-=</span> <span class="n">buf</span><span class="p">.</span><span class="n">size</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+    <p>In the notification handler, we are then parsing if there are no bytes remaining.</p>
+
+    <div>
+    <ul class="tab tab-linked" data-tab="5564e890-0969-4855-a056-441b31e37a11">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="5564e890-0969-4855-a056-441b31e37a11">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">is_received</span><span class="p">:</span>
+        <span class="n">response</span><span class="p">.</span><span class="n">parse</span><span class="p">()</span>
+</code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rsp</span><span class="p">.</span><span class="nf">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">rsp</span><span class="p">.</span><span class="n">isReceived</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">rsp</span><span class="p">.</span><span class="nf">parse</span><span class="p">()</span>
+    <span class="o">..</span><span class="p">.</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+  </div>
+
+<div style="60%">
+    <p><br><br><br></p>
+    <svg class="mermaid" aria-roledescription="flowchart-v2" viewbox="-8 -8 421.76171875 964.09375" style="max-width: 421.76171875px;" xmlns="http://www.w3.org/2000/svg" width="100%" id="mermaid-svg"><style>#mermaid-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-svg .error-icon{fill:#552222;}#mermaid-svg .error-text{fill:#552222;stroke:#552222;}#mermaid-svg .edge-thickness-normal{stroke-width:2px;}#mermaid-svg .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg .marker{fill:#333333;stroke:#333333;}#mermaid-svg .marker.cross{stroke:#333333;}#mermaid-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaid-svg .cluster-label text{fill:#333;}#mermaid-svg .cluster-label span{color:#333;}#mermaid-svg .label text,#mermaid-svg span{fill:#333;color:#333;}#mermaid-svg .node rect,#mermaid-svg .node circle,#mermaid-svg .node ellipse,#mermaid-svg .node polygon,#mermaid-svg .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-svg .node .label{text-align:center;}#mermaid-svg .node.clickable{cursor:pointer;}#mermaid-svg .arrowheadPath{fill:#333333;}#mermaid-svg .edgePath .path{stroke:#333333;stroke-width:2.0px;}#mermaid-svg .flowchart-link{stroke:#333333;fill:none;}#mermaid-svg .edgeLabel{background-color:#e8e8e8;text-align:center;}#mermaid-svg .edgeLabel rect{opacity:0.5;background-color:#e8e8e8;fill:#e8e8e8;}#mermaid-svg .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-svg .cluster text{fill:#333;}#mermaid-svg .cluster span{color:#333;}#mermaid-svg div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-svg .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mermaid-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
+<g><marker orient="auto" markerheight="12" markerwidth="12" markerunits="userSpaceOnUse" refy="5" refx="10" viewbox="0 0 10 10" class="marker flowchart" id="flowchart-pointEnd"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker><marker orient="auto" markerheight="12" markerwidth="12" markerunits="userSpaceOnUse" refy="5" refx="0" viewbox="0 0 10 10" class="marker flowchart" id="flowchart-pointStart"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 5 L 10 10 L 10 0 z"></path></marker><marker orient="auto" markerheight="11" markerwidth="11" markerunits="userSpaceOnUse" refy="5" refx="11" viewbox="0 0 10 10" class="marker flowchart" id="flowchart-circleEnd"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerheight="11" markerwidth="11" markerunits="userSpaceOnUse" refy="5" refx="-1" viewbox="0 0 10 10" class="marker flowchart" id="flowchart-circleStart"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerheight="11" markerwidth="11" markerunits="userSpaceOnUse" refy="5.2" refx="12" viewbox="0 0 11 11" class="marker cross flowchart" id="flowchart-crossEnd"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><marker orient="auto" markerheight="11" markerwidth="11" markerunits="userSpaceOnUse" refy="5.2" refx="-1" viewbox="0 0 11 11" class="marker cross flowchart" id="flowchart-crossStart"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-A LE-C" id="L-A-C-0" d="M258.55003720238096,34L249.12698412698413,38.166666666666664C239.70393105158732,42.333333333333336,220.85782490079364,50.666666666666664,211.51810515873015,59.083333333333336C202.17838541666666,67.5,202.34505208333334,76,202.42838541666666,80.25L202.51171875,84.5"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-C LE-D" id="L-C-D-0" d="M165.72449425710778,245.52527550710778L158.60504729758983,257.3231462559232C151.48560033807186,269.1210170047385,137.24670641903592,292.71675850236926,130.12725945951797,310.26462925118466C123.0078125,327.8125,123.0078125,339.3125,123.0078125,345.0625L123.0078125,350.8125"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-D LE-I" id="L-D-I-0" d="M123.0078125,384.8125L123.0078125,390.5625C123.0078125,396.3125,123.0078125,407.8125,123.0078125,419.3125C123.0078125,430.8125,123.0078125,442.3125,123.0078125,448.0625L123.0078125,453.8125"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-I LE-E" id="L-I-E-0" d="M123.0078125,487.8125L123.0078125,491.9791666666667C123.0078125,496.1458333333333,123.0078125,504.4791666666667,130.84550161210316,512.8125C138.68319072420636,521.1458333333334,154.35856894841268,529.4791666666666,162.19625806051587,533.6458333333334L170.03394717261904,537.8125"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-C LE-E" id="L-C-E-0" d="M239.29894324289222,245.52527550710778L246.2517235357435,257.3231462559232C253.20450382859482,269.1210170047385,267.11006441429737,292.71675850236926,274.0628447071487,313.097962584518C281.015625,333.4791666666667,281.015625,350.6458333333333,281.015625,367.8125C281.015625,384.9791666666667,281.015625,402.1458333333333,281.015625,419.3125C281.015625,436.4791666666667,281.015625,453.6458333333333,281.015625,469.2291666666667C281.015625,484.8125,281.015625,498.8125,273.1779358878968,509.9791666666667C265.3402467757937,521.1458333333334,249.66486855158732,529.4791666666666,241.82717943948413,533.6458333333334L233.98949032738096,537.8125"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-E LE-F" id="L-E-F-0" d="M202.01171875,571.8125L202.01171875,577.5625C202.01171875,583.3125,202.01171875,594.8125,210.94483976575148,613.3767748175818C219.877960781503,631.9410496351637,237.74420281300593,657.5695992703273,246.6773238287574,670.3838740879092L255.6104448445089,683.198148905491"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-F LE-G" id="L-F-G-0" d="M297.49609375,845.59375L297.4127604166667,851.2604166666666C297.3294270833333,856.9270833333334,297.1627604166667,868.2604166666666,297.0794270833333,879.6770833333334C296.99609375,891.09375,296.99609375,902.59375,296.99609375,908.34375L296.99609375,914.09375"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-F LE-A" id="L-F-A-0" d="M340.5007151997335,684.3171214497336L349.81114287477794,671.3163512081113C359.12157054982237,658.315580966489,377.7424258999112,632.3140404832445,387.0528535749556,610.7299369082889C396.36328125,589.1458333333334,396.36328125,571.9791666666666,396.36328125,556.3958333333334C396.36328125,540.8125,396.36328125,526.8125,396.36328125,512.8125C396.36328125,498.8125,396.36328125,484.8125,396.36328125,469.2291666666667C396.36328125,453.6458333333333,396.36328125,436.4791666666667,396.36328125,419.3125C396.36328125,402.1458333333333,396.36328125,384.9791666666667,396.36328125,367.8125C396.36328125,350.6458333333333,396.36328125,333.4791666666667,396.36328125,302.6614583333333C396.36328125,271.84375,396.36328125,227.375,396.36328125,184.48958333333334C396.36328125,141.60416666666666,396.36328125,100.30208333333333,386.50542534722223,75.484375C376.6475694444444,50.666666666666664,356.93185763888886,42.333333333333336,347.0740017361111,38.166666666666664L337.2161458333333,34"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g transform="translate(123.0078125, 316.3125)" class="edgeLabel"><g transform="translate(-9.3984375, -9.5)" class="label"><foreignobject height="19" width="18.796875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">No</span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g transform="translate(281.015625, 419.3125)" class="edgeLabel"><g transform="translate(-11.328125, -9.5)" class="label"><foreignobject height="19" width="22.65625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Yes</span></div></foreignobject></g></g><g transform="translate(202.01171875, 606.3125)" class="edgeLabel"><g transform="translate(-98.8828125, -9.5)" class="label"><foreignobject height="19" width="197.765625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Decrement bytes remaining</span></div></foreignobject></g></g><g transform="translate(296.99609375, 879.59375)" class="edgeLabel"><g transform="translate(-11.328125, -9.5)" class="label"><foreignobject height="19" width="22.65625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Yes</span></div></foreignobject></g></g><g transform="translate(396.36328125, 419.3125)" class="edgeLabel"><g transform="translate(-9.3984375, -9.5)" class="label"><foreignobject height="19" width="18.796875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">No</span></div></foreignobject></g></g></g><g class="nodes"><g transform="translate(296.99609375, 17)" id="flowchart-A-32" class="node default default"><rect height="34" width="170.953125" y="-17" x="-85.4765625" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-77.9765625, -9.5)" style="" class="label"><foreignobject height="19" width="155.953125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Read Available Packet</span></div></foreignobject></g></g><g transform="translate(202.01171875, 182.90625)" id="flowchart-C-33" class="node default default"><polygon style="" transform="translate(-98.90625,98.90625)" class="label-container" points="98.90625,0 197.8125,-98.90625 98.90625,-197.8125 0,-98.90625"></polygon><g transform="translate(-74.40625, -9.5)" style="" class="label"><foreignobject height="19" width="148.8125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Continuation bit set?</span></div></foreignobject></g></g><g transform="translate(123.0078125, 367.8125)" id="flowchart-D-35" class="node default default"><rect height="34" width="214.859375" y="-17" x="-107.4296875" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-99.9296875, -9.5)" style="" class="label"><foreignobject height="19" width="199.859375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Create new empty response</span></div></foreignobject></g></g><g transform="translate(123.0078125, 470.8125)" id="flowchart-I-37" class="node default default"><rect height="34" width="246.015625" y="-17" x="-123.0078125" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-115.5078125, -9.5)" style="" class="label"><foreignobject height="19" width="231.015625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Get bytes remaining, i.e. length</span></div></foreignobject></g></g><g transform="translate(202.01171875, 554.8125)" id="flowchart-E-39" class="node default default"><rect height="34" width="309.9375" y="-17" x="-154.96875" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-147.46875, -9.5)" style="" class="label"><foreignobject height="19" width="294.9375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Append packet to accumulating response</span></div></foreignobject></g></g><g transform="translate(296.99609375, 742.953125)" id="flowchart-F-43" class="node default default"><polygon style="" transform="translate(-102.140625,102.140625)" class="label-container" points="102.140625,0 204.28125,-102.140625 102.140625,-204.28125 0,-102.140625"></polygon><g transform="translate(-77.640625, -9.5)" style="" class="label"><foreignobject height="19" width="155.28125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Bytes remaining == 0?</span></div></foreignobject></g></g><g transform="translate(296.99609375, 931.09375)" id="flowchart-G-45" class="node default default"><rect height="34" width="174.359375" y="-17" x="-87.1796875" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-79.6796875, -9.5)" style="" class="label"><foreignobject height="19" width="159.359375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Parse Received Packet</span></div></foreignobject></g></g></g></g></g><style>@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css");</style></svg>
+  </div>
+</div>
+
+<hr>
+
+<p>We can see this in action when we send the <em>Get All Setting Values</em> Query.</p>
+
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>Queries aren’t introduced until the next tutorial so for now, just pay attention to the response.</span>
+</div>
+
+<p>We send the command as such:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="b52cb435-8f37-4a0d-87f7-c724c5fd332c">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="b52cb435-8f37-4a0d-87f7-c724c5fd332c">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">QUERY_REQ_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"0076"</span><span class="p">)</span>
+<span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">write_gatt_char</span><span class="p">(</span><span class="n">QUERY_REQ_UUID</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x12</span><span class="p">]))</span>
+<span class="k">await</span> <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># Wait to receive the notification response
+</span></code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">getCameraSettings</span> <span class="p">=</span> <span class="nf">ubyteArrayOf</span><span class="p">(</span><span class="mh">0x01U</span><span class="p">,</span> <span class="mh">0x12U</span><span class="p">)</span>
+<span class="n">ble</span><span class="p">.</span><span class="nf">writeCharacteristic</span><span class="p">(</span><span class="n">goproAddress</span><span class="p">,</span> <span class="nc">GoProUUID</span><span class="p">.</span><span class="nc">CQ_QUERY</span><span class="p">.</span><span class="n">uuid</span><span class="p">,</span> <span class="n">getCameraSettings</span><span class="p">)</span>
+<span class="kd">val</span> <span class="py">settings</span> <span class="p">=</span> <span class="n">receivedResponse</span><span class="p">.</span><span class="nf">receive</span><span class="p">()</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<p>Then, in the notification handler, we continuously receive and accumulate packets until we have
+received the entire response, at which point we notify the writer that the response is ready:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="de057146-4c2a-4f8f-adb1-cfc4cd387068">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="de057146-4c2a-4f8f-adb1-cfc4cd387068">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">response</span><span class="p">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">is_received</span><span class="p">:</span>
+            <span class="n">response</span><span class="p">.</span><span class="n">parse</span><span class="p">()</span>
+
+            <span class="c1"># Notify writer that procedure is complete
+</span>            <span class="n">event</span><span class="p">.</span><span class="nb">set</span><span class="p">()</span>
+</code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="k">fun</span> <span class="nf">tlvResponseNotificationHandler</span><span class="p">(</span><span class="n">characteristic</span><span class="p">:</span> <span class="nc">UUID</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nc">UByteArray</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">..</span><span class="p">.</span>
+    <span class="n">rsp</span><span class="p">.</span><span class="nf">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rsp</span><span class="p">.</span><span class="n">isReceived</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">rsp</span><span class="p">.</span><span class="nf">parse</span><span class="p">()</span>
+
+        <span class="c1">// Notify the command sender the the procedure is complete</span>
+        <span class="n">response</span> <span class="p">=</span> <span class="k">null</span> <span class="c1">// Clear for next command</span>
+        <span class="nc">CoroutineScope</span><span class="p">(</span><span class="nc">Dispatchers</span><span class="p">.</span><span class="nc">IO</span><span class="p">).</span><span class="nf">launch</span> <span class="p">{</span> <span class="n">receivedResponse</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="n">rsp</span><span class="p">)</span> <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>We also first parse the response but that will be described in the next section.</span>
+</div>
+
+<p>We can see the individual packets being accumulated in the log:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="5fef23f8-8249-4c9e-a5d7-c8954087ae3b">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="5fef23f8-8249-4c9e-a5d7-c8954087ae3b">
+        
+            <li class="active tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Getting the camera's settings...
+INFO:root:Received response at handle=62: b'21:25:12:00:02:01:09:03:01:01:05:0
+INFO:root:self.bytes_remaining=275
+INFO:root:Received response at handle=62: b'80:01:00:18:01:00:1e:04:00:00:00:0
+INFO:root:self.bytes_remaining=256
+INFO:root:Received response at handle=62: b'81:0a:25:01:00:29:01:09:2a:01:05:2
+INFO:root:self.bytes_remaining=237
+INFO:root:Received response at handle=62: b'82:2f:01:04:30:01:03:36:01:00:3b:0
+INFO:root:self.bytes_remaining=218
+INFO:root:Received response at handle=62: b'83:04:00:00:00:00:3e:04:00:00:00:0
+INFO:root:self.bytes_remaining=199
+INFO:root:Received response at handle=62: b'84:00:42:04:00:00:00:00:43:04:00:0
+INFO:root:self.bytes_remaining=180
+INFO:root:Received response at handle=62: b'85:4f:01:00:53:01:00:54:01:00:55:0
+INFO:root:self.bytes_remaining=161
+INFO:root:Received response at handle=62: b'86:01:28:5b:01:02:60:01:00:66:01:0
+INFO:root:self.bytes_remaining=142
+INFO:root:Received response at handle=62: b'87:00:6a:01:00:6f:01:0a:70:01:ff:7
+INFO:root:self.bytes_remaining=123
+INFO:root:Received response at handle=62: b'88:75:01:00:76:01:04:79:01:00:7a:0
+INFO:root:self.bytes_remaining=104
+INFO:root:Received response at handle=62: b'89:01:00:7e:01:00:80:01:0c:81:01:0
+INFO:root:self.bytes_remaining=85
+INFO:root:Received response at handle=62: b'8a:0c:85:01:09:86:01:00:87:01:01:8
+INFO:root:self.bytes_remaining=66
+INFO:root:Received response at handle=62: b'8b:92:01:00:93:01:00:94:01:02:95:0
+INFO:root:self.bytes_remaining=47
+INFO:root:Received response at handle=62: b'8c:01:00:9c:01:00:9d:01:00:9e:01:0
+INFO:root:self.bytes_remaining=28
+INFO:root:Received response at handle=62: b'8d:00:a2:01:00:a3:01:01:a4:01:00:a
+INFO:root:self.bytes_remaining=9
+INFO:root:Received response at handle=62: b'8e:a8:04:00:00:00:00:a9:01:01'
+INFO:root:self.bytes_remaining=0
+INFO:root:Successfully received the response
+</span></code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">Writing characteristic b5f90076-aa8d-11e3-9046-0002a5d5c51b ==&gt;</span><span class="w"> </span>01:12
+<span class="go">Wrote characteristic b5f90076-aa8d-11e3-9046-0002a5d5c51b
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 21:2B:12:00:02:01:04:03:01:05:05:01:00:06:01:01:0D:01:01:13
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 21:2B:12:00:02:01:04:03:01:05:05:01:00:06:01:01:0D:01:01:13
+Received packet of length 18. 281 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 80:01:00:18:01:00:1E:04:00:00:00:6E:1F:01:00:20:04:00:00:00
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 80:01:00:18:01:00:1E:04:00:00:00:6E:1F:01:00:20:04:00:00:00
+Received packet of length 19. 262 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 81:0A:25:01:00:29:01:09:2A:01:08:2B:01:00:2C:01:09:2D:01:08
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 81:0A:25:01:00:29:01:09:2A:01:08:2B:01:00:2C:01:09:2D:01:08
+Received packet of length 19. 243 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 82:2F:01:07:36:01:01:3B:01:04:3C:04:00:00:00:00:3D:04:00:00
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 82:2F:01:07:36:01:01:3B:01:04:3C:04:00:00:00:00:3D:04:00:00
+Received packet of length 19. 224 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 83:00:00:3E:04:00:12:4F:80:40:01:04:41:04:00:00:00:00:42:04
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 83:00:00:3E:04:00:12:4F:80:40:01:04:41:04:00:00:00:00:42:04
+Received packet of length 19. 205 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 84:00:00:00:00:43:04:00:12:4F:80:4B:01:00:4C:01:00:53:01:01
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 84:00:00:00:00:43:04:00:12:4F:80:4B:01:00:4C:01:00:53:01:01
+Received packet of length 19. 186 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 85:54:01:00:55:01:00:56:01:00:57:01:00:58:01:32:5B:01:03:66
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 85:54:01:00:55:01:00:56:01:00:57:01:00:58:01:32:5B:01:03:66
+Received packet of length 19. 167 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 86:01:08:67:01:03:69:01:00:6F:01:0A:70:01:64:72:01:01:73:01
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 86:01:08:67:01:03:69:01:00:6F:01:0A:70:01:64:72:01:01:73:01
+Received packet of length 19. 148 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 87:00:74:01:02:75:01:01:76:01:04:79:01:03:7A:01:65:7B:01:65
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 87:00:74:01:02:75:01:01:76:01:04:79:01:03:7A:01:65:7B:01:65
+Received packet of length 19. 129 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 88:7C:01:64:7D:01:00:7E:01:00:80:01:0D:81:01:02:82:01:69:83
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 88:7C:01:64:7D:01:00:7E:01:00:80:01:0D:81:01:02:82:01:69:83
+Received packet of length 19. 110 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 89:01:03:84:01:0C:86:01:02:87:01:01:8B:01:03:90:01:0C:91:01
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 89:01:03:84:01:0C:86:01:02:87:01:01:8B:01:03:90:01:0C:91:01
+Received packet of length 19. 91 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 8A:00:92:01:00:93:01:00:94:01:01:95:01:02:96:01:00:97:01:00
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 8A:00:92:01:00:93:01:00:94:01:01:95:01:02:96:01:00:97:01:00
+Received packet of length 19. 72 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 8B:99:01:64:9A:01:02:9B:01:64:9C:01:64:9D:01:64:9E:01:01:9F
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 8B:99:01:64:9A:01:02:9B:01:64:9C:01:64:9D:01:64:9E:01:01:9F
+Received packet of length 19. 53 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 8C:01:01:A0:01:00:A1:01:64:A2:01:00:A3:01:01:A4:01:64:A7:01
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 8C:01:01:A0:01:00:A1:01:64:A2:01:00:A3:01:01:A4:01:64:A7:01
+Received packet of length 19. 34 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 8D:04:A8:04:00:00:00:00:A9:01:01:AE:01:00:AF:01:01:B0:01:03
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 8D:04:A8:04:00:00:00:00:A9:01:01:AE:01:00:AF:01:01:B0:01:03
+Received packet of length 19. 15 bytes remaining
+Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 8E:B1:01:00:B2:01:01:B3:01:03:B4:01:00:B5:01:00
+Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 8E:B1:01:00:B2:01:01:B3:01:03:B4:01:00:B5:01:00
+Received packet of length 15. 0 bytes remaining
+Received the expected successful response
+Got the camera's settings successfully
+</span></code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+<p>At this point the response has been accumulated. See the next section for how to parse it.</p>
+
+<p><strong>Quiz time! 📚 ✏️</strong></p>
+
+<div id="quiz_fb557c0d-fa00-4227-be55-fd87c469f51d" class="quiz">
+    <div>
+        <div id="question_fb557c0d-fa00-4227-be55-fd87c469f51d" class="quiz__question">How can we know that a response has been completely received?</div>
+        <div id="answers_fb557c0d-fa00-4227-be55-fd87c469f51d">
+        
+            <input type="radio" name="question" value="A"><label>A: The stop bit will be set in the header</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: The response has accumulated length bytes</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: By checking for the end of frame (EOF) sentinel character</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('fb557c0d-fa00-4227-be55-fd87c469f51d', 'B')">Submit Answer</button>
+    <div id="results_fb557c0d-fa00-4227-be55-fd87c469f51d" style="display: none">
+        <span id="correct_fb557c0d-fa00-4227-be55-fd87c469f51d" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_fb557c0d-fa00-4227-be55-fd87c469f51d" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+        The length of the entire response is parsed from the first packet. We
+        then accumulate packets, keeping track of the received length, until all of the bytes
+        have been received. A and C are just made up 😜.
+    </div>
+</div>
+
+<h2 id="parsing-a-query-response">Parsing a Query Response</h2>
+
+<p>This section is going to describe responses to to BLE status / setting queries. We don’t actually
+introduce such queries until <a href="/OpenGoPro/tutorials/ble-queries">the next tutorial</a> so
+for now, only the parsing of the response is important.</p>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>While multi-packet responses are almost always Query Responses, they can also be from Command Complex
+responses. In a real-world implementation, it is therefore necessary to check the received UUID to see
+how to parse.</span>
+</div>
+
+<p>Query Responses contain one or more TLV groups in their Response data. To recap, the generic response format is:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Header (length)</th>
+      <th>Query ID</th>
+      <th>Status</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1-2 bytes</td>
+      <td>1 byte</td>
+      <td>1 bytes</td>
+      <td>Length - 2 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This means that query responses will contain an array of additional TLV groups in the “Response” field as such:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID1</th>
+      <th>Length1</th>
+      <th>Value1</th>
+      <th>ID2</th>
+      <th>Length2</th>
+      <th>Value 2</th>
+      <th>…</th>
+      <th>IDN</th>
+      <th>LengthN</th>
+      <th>ValueN</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1 byte</td>
+      <td>1 byte</td>
+      <td>Length1 bytes</td>
+      <td>1 byte</td>
+      <td>1 byte</td>
+      <td>Length2 bytes</td>
+      <td>…</td>
+      <td>1 byte</td>
+      <td>1 byte</td>
+      <td>LengthN bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Depending on the amount of query results in the response, this response can be one or multiple packets.
+Therefore, we need to account for the possibility that it may always be more than 1 packet.</p>
+
+<p>We can see an example of such parsing in the response parse method as shown below:</p>
+
+<hr>
+
+<div class="md_column">
+<div>
+
+    <p>We have already parsed the length when we were accumulating the packet. So the next step is to parse the Query
+ID and Status:</p>
+
+    <div>
+    <ul class="tab tab-linked" data-tab="6626bab9-0771-4b81-80b4-573346b7a238">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="6626bab9-0771-4b81-80b4-573346b7a238">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="bp">self</span><span class="p">.</span><span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="nb">bytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="nb">bytes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">id</span> <span class="p">=</span> <span class="n">packet</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">toInt</span><span class="p">()</span>
+<span class="n">status</span> <span class="p">=</span> <span class="n">packet</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">toInt</span><span class="p">()</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+    <p>We then continuously parse <strong>Type (ID) - Length - Value</strong> groups until we have consumed the response. We are
+storing each value in a hash map indexed by ID for later access.</p>
+
+    <div>
+    <ul class="tab tab-linked" data-tab="e3f1f73d-3c4b-4878-8e18-f00e42912b91">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="e3f1f73d-3c4b-4878-8e18-f00e42912b91">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">buf</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="nb">bytes</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+<span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="c1"># Get ID and Length
+</span>    <span class="n">param_id</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">param_len</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+    <span class="c1"># Get the value
+</span>    <span class="n">value</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[:</span><span class="n">param_len</span><span class="p">]</span>
+
+    <span class="c1"># Store in dict for later access
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">param_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="c1"># Advance the buffer
+</span>    <span class="n">buf</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="n">param_len</span><span class="p">:]</span>
+</code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="nf">isNotEmpty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// Get each parameter's ID and length</span>
+    <span class="kd">val</span> <span class="py">paramId</span> <span class="p">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="kd">val</span> <span class="py">paramLen</span> <span class="p">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">toInt</span><span class="p">()</span>
+    <span class="n">buf</span> <span class="p">=</span> <span class="n">buf</span><span class="p">.</span><span class="nf">drop</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="c1">// Get the parameter's value</span>
+    <span class="kd">val</span> <span class="py">paramVal</span> <span class="p">=</span> <span class="n">buf</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="n">paramLen</span><span class="p">)</span>
+    <span class="c1">// Store in data dict for access later</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">paramId</span><span class="p">]</span> <span class="p">=</span> <span class="n">paramVal</span><span class="p">.</span><span class="nf">toUByteArray</span><span class="p">()</span>
+    <span class="c1">// Advance the buffer for continued parsing</span>
+    <span class="n">buf</span> <span class="p">=</span> <span class="n">buf</span><span class="p">.</span><span class="nf">drop</span><span class="p">(</span><span class="n">paramLen</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</li>
+        
+    </ul>
+</div>
+
+  </div>
+<div style="flex:60%">
+
+    <p><br><br><br></p>
+
+    <svg class="mermaid" aria-roledescription="flowchart-v2" viewbox="-8 -8 275.0546875 581.65625" style="max-width: 275.0546875px;" xmlns="http://www.w3.org/2000/svg" width="100%" id="mermaid-svg"><style>#mermaid-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-svg .error-icon{fill:#552222;}#mermaid-svg .error-text{fill:#552222;stroke:#552222;}#mermaid-svg .edge-thickness-normal{stroke-width:2px;}#mermaid-svg .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg .marker{fill:#333333;stroke:#333333;}#mermaid-svg .marker.cross{stroke:#333333;}#mermaid-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaid-svg .cluster-label text{fill:#333;}#mermaid-svg .cluster-label span{color:#333;}#mermaid-svg .label text,#mermaid-svg span{fill:#333;color:#333;}#mermaid-svg .node rect,#mermaid-svg .node circle,#mermaid-svg .node ellipse,#mermaid-svg .node polygon,#mermaid-svg .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-svg .node .label{text-align:center;}#mermaid-svg .node.clickable{cursor:pointer;}#mermaid-svg .arrowheadPath{fill:#333333;}#mermaid-svg .edgePath .path{stroke:#333333;stroke-width:2.0px;}#mermaid-svg .flowchart-link{stroke:#333333;fill:none;}#mermaid-svg .edgeLabel{background-color:#e8e8e8;text-align:center;}#mermaid-svg .edgeLabel rect{opacity:0.5;background-color:#e8e8e8;fill:#e8e8e8;}#mermaid-svg .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-svg .cluster text{fill:#333;}#mermaid-svg .cluster span{color:#333;}#mermaid-svg div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-svg .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mermaid-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
+<g><marker orient="auto" markerheight="12" markerwidth="12" markerunits="userSpaceOnUse" refy="5" refx="10" viewbox="0 0 10 10" class="marker flowchart" id="flowchart-pointEnd"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker><marker orient="auto" markerheight="12" markerwidth="12" markerunits="userSpaceOnUse" refy="5" refx="0" viewbox="0 0 10 10" class="marker flowchart" id="flowchart-pointStart"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 5 L 10 10 L 10 0 z"></path></marker><marker orient="auto" markerheight="11" markerwidth="11" markerunits="userSpaceOnUse" refy="5" refx="11" viewbox="0 0 10 10" class="marker flowchart" id="flowchart-circleEnd"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerheight="11" markerwidth="11" markerunits="userSpaceOnUse" refy="5" refx="-1" viewbox="0 0 10 10" class="marker flowchart" id="flowchart-circleStart"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerheight="11" markerwidth="11" markerunits="userSpaceOnUse" refy="5.2" refx="12" viewbox="0 0 11 11" class="marker cross flowchart" id="flowchart-crossEnd"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><marker orient="auto" markerheight="11" markerwidth="11" markerunits="userSpaceOnUse" refy="5.2" refx="-1" viewbox="0 0 11 11" class="marker cross flowchart" id="flowchart-crossStart"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-A LE-B" id="L-A-B-0" d="M195.7265625,34L195.7265625,38.166666666666664C195.7265625,42.333333333333336,195.7265625,50.666666666666664,195.7265625,59C195.7265625,67.33333333333333,195.7265625,75.66666666666667,195.7265625,79.83333333333333L195.7265625,84"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-B LE-C" id="L-B-C-0" d="M195.7265625,118L195.7265625,122.16666666666667C195.7265625,126.33333333333333,195.7265625,134.66666666666666,195.80989583333334,143.08333333333334C195.89322916666666,151.5,196.05989583333334,160,196.14322916666666,164.25L196.2265625,168.5"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-C LE-D" id="L-C-D-0" d="M160.48470276299312,259.4143902629931L145.23334605249428,271.03803355249426C129.98198934199542,282.6616768419954,99.47927592099772,305.9089634209977,84.22791921049885,323.28260671049884C68.9765625,340.65625,68.9765625,352.15625,68.9765625,357.90625L68.9765625,363.65625"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-D LE-E" id="L-D-E-0" d="M68.9765625,397.65625L68.9765625,401.8229166666667C68.9765625,405.9895833333333,68.9765625,414.3229166666667,68.9765625,422.65625C68.9765625,430.9895833333333,68.9765625,439.3229166666667,68.9765625,443.4895833333333L68.9765625,447.65625"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-E LE-F" id="L-E-F-0" d="M68.9765625,481.65625L68.9765625,485.8229166666667C68.9765625,489.9895833333333,68.9765625,498.3229166666667,78.23918030753968,506.65625C87.50179811507935,514.9895833333334,106.02703373015873,523.3229166666666,115.28965153769842,527.4895833333334L124.5522693452381,531.65625"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-F LE-C" id="L-F-C-0" d="M200.1352306547619,531.65625L209.3978484623016,527.4895833333334C218.6604662698413,523.3229166666666,237.18570188492063,514.9895833333334,246.44831969246033,503.8229166666667C255.7109375,492.65625,255.7109375,478.65625,255.7109375,464.65625C255.7109375,450.65625,255.7109375,436.65625,255.7109375,422.65625C255.7109375,408.65625,255.7109375,394.65625,255.7109375,379.0729166666667C255.7109375,363.4895833333333,255.7109375,346.3229166666667,249.80870126856436,328.0610903981023C243.9064650371287,309.79926412953796,232.10199257425742,290.4422782590759,226.19975634282176,280.7637853238449L220.29752011138615,271.0852923886139"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-C LE-G" id="L-C-G-0" d="M196.2265625,295.15625L196.14322916666666,300.8229166666667C196.05989583333334,306.4895833333333,195.89322916666666,317.8229166666667,195.80989583333334,329.2395833333333C195.7265625,340.65625,195.7265625,352.15625,195.7265625,357.90625L195.7265625,363.65625"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g transform="translate(68.9765625, 329.15625)" class="edgeLabel"><g transform="translate(-11.546875, -9.5)" class="label"><foreignobject height="19" width="23.09375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">yes</span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g transform="translate(195.7265625, 329.15625)" class="edgeLabel"><g transform="translate(-8.6640625, -9.5)" class="label"><foreignobject height="19" width="17.328125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">no</span></div></foreignobject></g></g></g><g class="nodes"><g transform="translate(195.7265625, 17)" id="flowchart-A-28" class="node default default"><rect height="34" width="119.296875" y="-17" x="-59.6484375" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-52.1484375, -9.5)" style="" class="label"><foreignobject height="19" width="104.296875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Parse Query ID</span></div></foreignobject></g></g><g transform="translate(195.7265625, 101)" id="flowchart-B-29" class="node default default"><rect height="34" width="101.828125" y="-17" x="-50.9140625" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-43.4140625, -9.5)" style="" class="label"><foreignobject height="19" width="86.828125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Parse Status</span></div></foreignobject></g></g><g transform="translate(195.7265625, 231.328125)" id="flowchart-C-31" class="node default default"><polygon style="" transform="translate(-63.328125,63.328125)" class="label-container" points="63.328125,0 126.65625,-63.328125 63.328125,-126.65625 0,-63.328125"></polygon><g transform="translate(-38.828125, -9.5)" style="" class="label"><foreignobject height="19" width="77.65625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">More data?</span></div></foreignobject></g></g><g transform="translate(68.9765625, 380.65625)" id="flowchart-D-33" class="node default default"><rect height="34" width="103.53125" y="-17" x="-51.765625" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-44.265625, -9.5)" style="" class="label"><foreignobject height="19" width="88.53125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Get Value ID</span></div></foreignobject></g></g><g transform="translate(68.9765625, 464.65625)" id="flowchart-E-35" class="node default default"><rect height="34" width="137.953125" y="-17" x="-68.9765625" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-61.4765625, -9.5)" style="" class="label"><foreignobject height="19" width="122.953125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Get Value Length</span></div></foreignobject></g></g><g transform="translate(162.34375, 548.65625)" id="flowchart-F-37" class="node default default"><rect height="34" width="84.453125" y="-17" x="-42.2265625" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-34.7265625, -9.5)" style="" class="label"><foreignobject height="19" width="69.453125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Get Value</span></div></foreignobject></g></g><g transform="translate(195.7265625, 380.65625)" id="flowchart-G-41" class="node default default"><rect height="34" width="49.96875" y="-17" x="-24.984375" ry="5" rx="5" style="" class="basic label-container"></rect><g transform="translate(-17.484375, -9.5)" style="" class="label"><foreignobject height="19" width="34.96875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">done</span></div></foreignobject></g></g></g></g></g><style>@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css");</style></svg>
+
+  </div>
+</div>
+
+<hr>
+
+<p>In the tutorial demo, we then log this entire dict after parsing is complete as such (abbreviated for brevity):</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="aaf4a12f-45b1-4ab2-932c-e914224d0169">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="aaf4a12f-45b1-4ab2-932c-e914224d0169">
+        
+            <li class="active tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Received settings
+: {
+    "2": "09",
+    "3": "01",
+    "5": "00",
+    "6": "01",
+    "13": "01",
+    "19": "00",
+    "30": "00:00:00:00",
+    "31": "00",
+    "32": "00:00:00:0a",
+    "41": "09",
+    "42": "05",
+    "43": "00",
+</span><span class="c">    ...
+</span><span class="go">    "160": "00",
+    "161": "00",
+    "162": "00",
+    "163": "01",
+    "164": "00",
+    "165": "00",
+    "166": "00",
+    "167": "04",
+    "168": "00:00:00:00",
+    "169": "01"
+}
+</span></code></pre></div></div>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">{
+    "2": "09",
+    "3": "01",
+    "5": "00",
+    "6": "01",
+    "13": "01",
+    "19": "00",
+    "24": "00",
+    "30": "00:00:00:6E",
+    "31": "00",
+    "32": "00:00:00:0A",
+    "37": "00",
+    "41": "09",
+    "42": "08",
+    "43": "00",
+    "44": "09",
+    "45": "08",
+    "47": "07",
+</span><span class="c">       ...
+</span><span class="go">    "115": "00",
+    "116": "02",
+    "117": "01",
+    "151": "00",
+    "153": "64",
+    "154": "02",
+    "155": "64",
+    "156": "64",
+    "157": "64",
+    "158": "01",
+    "159": "01",
+    "160": "00",
+    "161": "64",
+    "162": "00",
+    "163": "01",
+    "164": "64",
+    "167": "04",
+    "168": "00:00:00:00",
+    "169": "01",
+    "174": "00",
+    "175": "01",
+    "176": "03",
+    "177": "00",
+    "178": "01",
+    "179": "03",
+    "180": "00",
+    "181": "00"
+}
+</span></code></pre></div></div>
+
+</li>
+        
+    </ul>
+</div>
+
+<p>We can see what each of these values mean by looking at the
+<a href="/OpenGoPro/ble_2_0#settings-quick-reference">Open GoPro Interface</a>.</p>
+
+<p>For example:</p>
+
+<ul>
+  <li>ID 2 == 9 equates to Resolution == 1080</li>
+  <li>ID 3 == 1 equates to FPS == 120</li>
+</ul>
+
+<div id="quiz_b00eae36-84e0-48f8-b6be-d249cec2e56b" class="quiz">
+    <div>
+        <div id="question_b00eae36-84e0-48f8-b6be-d249cec2e56b" class="quiz__question">How many packets are query responses?</div>
+        <div id="answers_b00eae36-84e0-48f8-b6be-d249cec2e56b">
+        
+            <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: Always multiple packets</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: Always 1 packet except for complex responses</label>
+            <br>
+        
+            <input type="radio" name="question" value="D"><label>D: Can be 1 or multiple packets</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('b00eae36-84e0-48f8-b6be-d249cec2e56b', 'D')">Submit Answer</button>
+    <div id="results_b00eae36-84e0-48f8-b6be-d249cec2e56b" style="display: none">
+        <span id="correct_b00eae36-84e0-48f8-b6be-d249cec2e56b" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_b00eae36-84e0-48f8-b6be-d249cec2e56b" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+        Query responses can be one packet (if for example querying a specific
+setting) or multiple packets (when querying many or all settings as in the example here).
+See the next tutorial for more information on queries.
+    </div>
+</div>
+
+<div id="quiz_6b85fbad-383c-45b8-9d33-92629be5565f" class="quiz">
+    <div>
+        <div id="question_6b85fbad-383c-45b8-9d33-92629be5565f" class="quiz__question">Which field is not common to all responses?</div>
+        <div id="answers_6b85fbad-383c-45b8-9d33-92629be5565f">
+        
+            <input type="radio" name="question" value="A"><label>A: length</label>
+            <br>
+        
+            <input type="radio" name="question" value="B"><label>B: status</label>
+            <br>
+        
+            <input type="radio" name="question" value="C"><label>C: ID</label>
+            <br>
+        
+            <input type="radio" name="question" value="D"><label>D: None of the Above</label>
+            <br>
+        
+        </div>
+    </div>
+    <button onclick="showResults('6b85fbad-383c-45b8-9d33-92629be5565f', 'D')">Submit Answer</button>
+    <div id="results_6b85fbad-383c-45b8-9d33-92629be5565f" style="display: none">
+        <span id="correct_6b85fbad-383c-45b8-9d33-92629be5565f" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_6b85fbad-383c-45b8-9d33-92629be5565f" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+        Query responses can be one packet (if for example querying a specific
+setting) or multiple packets (when querying many or all settings as in the example here).
+See the next tutorial for more information on queries.
+    </div>
+</div>
+
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>See the first tutorial’s
+<a href="/OpenGoPro/tutorials/connect-ble#troubleshooting">troubleshooting section</a>.</p>
+
+<h1 id="good-job">Good Job!</h1>
+
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>Congratulations 🤙</span>
+</div>
+
+<p>You can now parse any TLV response that is received from the GoPro, at least if it is received uninterrupted.
+There is additional logic required for a complete solution such as checking the UUID the response is received
+on and storing a dict of response per UUID. At the current time, this endeavor is left for the reader. For a
+complete example of this, see the <a href="https://gopro.github.io/OpenGoPro/python_sdk/">Open GoPro Python SDK</a>.</p>
+
+<p>To learn more about queries, go to the next tutorial.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-03-08T23:36:58+00:00">March 8, 2023</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/OpenGoPro/tutorials/send-ble-commands" class="pagination--pager" title="Tutorial 2: Send BLE Commands
+">Previous</a>
+    
+    
+      <a href="/OpenGoPro/tutorials/ble-queries" class="pagination--pager" title="Tutorial 4: BLE Queries
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+    <ul class="social-icons">
+           
+        <li>
+            <a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i>
+                Website</a>
+        </li>
+          
+        <li>
+            <a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i>
+                Twitter</a>
+        </li>
+          
+        <li>
+            <a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i>
+                Facebook</a>
+        </li>
+          
+        <li>
+            <a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i>
+                GitHub</a>
+        </li>
+          
+        <li>
+            <a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i>
+                Instagram</a>
+        </li>
+           
+    </ul>
+</div>
+
+<div class="page__footer-copyright">
+    © 2023 GoPro. Powered by
+    <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
+    <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
+    <p>
+        Can be used with GoPro® HERO9 and HERO10 cameras. You must include the following text on
+        every page where it can be seen by someone purchasing such an item: <em>"This product
+        and/or service is not affiliated with, endorsed by or in any way associated with
+        GoPro Inc. or its products and services. GoPro, HERO, and their respective logos
+        are trademarks or registered trademarks of GoPro, Inc."</em>
+    </p>
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/OpenGoPro/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/OpenGoPro/assets/js/lunr/lunr.min.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-store.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

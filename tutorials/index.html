@@ -336,76 +336,56 @@
 
       <section class="page__content" itemprop="text">
         
-          <aside class="sidebar__right ">
+          <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title">
 <i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu">
-<li><a href="#python">Python</a></li>
-<li><a href="#bash">Bash</a></li>
-<li><a href="#more-to-come">More to come!</a></li>
-</ul>
+              
 
             </nav>
           </aside>
         
-        <p>Several walk-through tutorials in different languages / frameworks exist for getting started with Open GoPro.</p>
-
-<h1 id="python">Python</h1>
-
-<p>This set of tutorials is a series of sample python scripts and accompanying .html walk-throughs
-to implement basic functionality to interact with a GoPro device using Python.</p>
+        <p>This set of tutorials is a series of sample scripts / files and accompanying .html walk-throughs
+to implement basic functionality to interact with a GoPro device using the following languages:</p>
+<ul>
+  <li>Python</li>
+  <li>Kotlin</li>
+  <li>More to come!</li>
+</ul>
 
 <p>The tutorials only support Open GoPro Version 2.0 and must be run on a
 <a href="/OpenGoPro/ble_2_0#supported-cameras">supported camera</a>.
-They will provide a walk-through to use Python to exercise the
-Open GoPro Interface using <a href="https://bleak.readthedocs.io/en/latest/">bleak</a>
-for Bluetooth Low Energy (BLE) and <a href="https://pypi.org/project/requests/">requests</a> for HTTP.</p>
+They will walk-throughs and sample coe to use the relevant language / framework to exercise the
+Open GoPro Interface using Bluetooth Low Energy (BLE) and HTTP over WiFi.</p>
 
-<p>These tutorials are meant as an introduction to the Open GoPro specification. There is complete documentation
-available for <a href="/OpenGoPro/ble_2_0">BLE</a> and <a href="/OpenGoPro/http_2_0">HTTP</a>
-which will be the main source of reference after completing the tutorials.</p>
+<p>These tutorials are meant as an introduction to the Open GoPro specification. They are not a substitute
+for the complete <a href="/OpenGoPro/ble_2_0">BLE</a> and <a href="/OpenGoPro/http_2_0">HTTP</a>
+spec’s which will be your main source of reference after completing the tutorials.</p>
 
 <ul>
   <li>
-    <p><a href="/OpenGoPro/tutorials/python/connect-ble">Python Tutorial 1: Connect BLE</a></p>
+    <p><a href="/OpenGoPro/tutorials/connect-ble">Tutorial 1: Connect BLE</a></p>
   </li>
   <li>
-    <p><a href="/OpenGoPro/tutorials/python/send-ble-commands">Python Tutorial 2: Send BLE Commands</a></p>
+    <p><a href="/OpenGoPro/tutorials/send-ble-commands">Tutorial 2: Send BLE Commands</a></p>
   </li>
   <li>
-    <p><a href="/OpenGoPro/tutorials/python/parse-ble-responses">Python Tutorial 3: Parse BLE TLV Responses</a></p>
+    <p><a href="/OpenGoPro/tutorials/parse-ble-responses">Tutorial 3: Parse BLE TLV Responses</a></p>
   </li>
   <li>
-    <p><a href="/OpenGoPro/tutorials/python/ble-queries">Python Tutorial 4: BLE Queries</a></p>
+    <p><a href="/OpenGoPro/tutorials/ble-queries">Tutorial 4: BLE Queries</a></p>
   </li>
   <li>
-    <p><a href="/OpenGoPro/tutorials/python/connect-wifi">Python Tutorial 5: Connect WiFi</a></p>
+    <p><a href="/OpenGoPro/tutorials/connect-wifi">Tutorial 5: Connect WiFi</a></p>
   </li>
   <li>
-    <p><a href="/OpenGoPro/tutorials/python/send-wifi-commands">Python Tutorial 6: Send WiFi Commands</a></p>
+    <p><a href="/OpenGoPro/tutorials/send-wifi-commands">Tutorial 6: Send WiFi Commands</a></p>
   </li>
   <li>
-    <p><a href="/OpenGoPro/tutorials/python/camera-media-list">Python Tutorial 7: Camera Media List</a></p>
+    <p><a href="/OpenGoPro/tutorials/camera-media-list">Tutorial 7: Camera Media List</a></p>
   </li>
 </ul>
 
-<div class="callout note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>These are stripped down Python tutorials that are only meant to show the basics.
-For a complete Python SDK that uses <a href="https://bleak.readthedocs.io/en/latest/">bleak</a> as the backend as well as a
-cross-platform WiFi backend to easily write Python apps that control the GoPro, see the
-<a href="https://gopro.github.io/OpenGoPro/python_sdk/">Open GoPro Python SDK</a></span>
-</div>
-
-<h1 id="bash">Bash</h1>
-
-<p>BlueZ tutorial for Ubuntu using the command line:</p>
-
-<ul>
-  <li><a href="/OpenGoPro/tutorials/bash/bluez">BlueZ Bash Tutorial</a></li>
-</ul>
-
-<h1 id="more-to-come">More to come!</h1>
 
         
       </section>
