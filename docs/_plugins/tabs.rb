@@ -20,6 +20,30 @@ module Jekyll
                 super
 
                 uuid = SecureRandom.uuid
+                linked = false
+                currentDirectory = File.dirname(__FILE__)
+                templateFile = File.read(currentDirectory + '/tabs_template.erb')
+                template = ERB.new(templateFile)
+
+                template.result(binding)
+            end
+        end
+
+        class LinkedTabsBlock < Liquid::Block
+            def initialize(block_name, markup, tokens)
+                super
+                if markup == ''
+                    raise SyntaxError.new("Block #{block_name} requires 1 attribute")
+                end
+                @name = markup.strip
+            end
+
+            def render(context)
+                environment = context.environments.first
+                super
+
+                uuid = SecureRandom.uuid
+                linked = true
                 currentDirectory = File.dirname(__FILE__)
                 templateFile = File.read(currentDirectory + '/tabs_template.erb')
                 template = ERB.new(templateFile)
@@ -53,3 +77,4 @@ end
 
 Liquid::Template.register_tag('tab', Jekyll::Tabs::TabBlock)
 Liquid::Template.register_tag('tabs', Jekyll::Tabs::TabsBlock)
+Liquid::Template.register_tag('linkedTabs', Jekyll::Tabs::LinkedTabsBlock)

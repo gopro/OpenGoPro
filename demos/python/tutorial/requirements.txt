@@ -1,4 +1,0 @@
--e .
-bleak==0.15.1
-requests>=2.25
-rich>=12.4.4

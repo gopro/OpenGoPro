@@ -12,6 +12,7 @@ services:
         build:
             context: .
         volumes:
+            - ./demos:/home/demos
             - ./docs:/site
         ports:
             - '4998:4998'
@@ -24,11 +25,11 @@ services:
         environment:
             - JEKYLL_ENV=docker # Set (to anything other than develop) so that jekyll serve won't overwrite site.url
         # Set the default command to be run if no parameters are passed which will...
-        # Build, then serve, the jekyll site. Serve it from 0.0.0.0:4998 to satisfy docker. Enable incremental
-        # rebuilds on changes.
+        # Build, then serve, the jekyll site. Serve it from 0.0.0.0:4998 to satisfy docker.
         # Use the default config file and then also an additional config file (chosen by JEKYLL_CONFIG
         # environment variable) to set the correct site.url.
-        command: bundle exec jekyll serve --host 0.0.0.0 --port 4998 --force_polling --incremental --config _config.yml,_config-temp.yml
+        # TODO try --livereload
+        command: bundle exec jekyll serve --host 0.0.0.0 --port 4998 --watch --profile --incremental --force_polling --config _config.yml,_config-temp.yml
         networks:
             - open_gopro
 

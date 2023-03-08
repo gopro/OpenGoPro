@@ -47,11 +47,11 @@ Specific sections can also be linked. For example, to link to [this section]({% 
 There is an exception to this when linking to a file in the `tutorials`. These are handled differently
 since `tutorials` is the base directory for all collections. Therefore, the `tutorials` directory should be
 omitted from the path. For example, to link to
-[the first python tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %}):
+[the first python tutorial]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %}):
 
 {% raw %}
 ```
-[the first python tutorial]({% link _python-tutorials/tutorial_1_connect_ble.md %})
+[the first python tutorial]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %})
 ```
 {% endraw %}
 

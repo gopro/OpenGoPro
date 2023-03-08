@@ -1,5 +1,5 @@
 docs/build
-reports/
+.reports/
 
 # Test artifacts
 /*.jpg

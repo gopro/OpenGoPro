@@ -13,7 +13,7 @@ from bleak import BleakClient
 from tutorial_modules import GOPRO_BASE_UUID, connect_ble, logger
 
 
-async def enable_wifi(identifier: str = None) -> Tuple[str, str, BleakClient]:
+async def enable_wifi(identifier: Optional[str] = None) -> Tuple[str, str, BleakClient]:
     """Connect to a GoPro via BLE, find its WiFi AP SSID and password, and enable its WiFI AP
 
     If identifier is None, the first discovered GoPro will be connected to.
@@ -107,7 +107,7 @@ if __name__ == "__main__":
 
     try:
         asyncio.run(main(args.identifier, args.timeout))
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         logger.error(e)
         sys.exit(-1)
     else:

@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "prepare-demos"
+version = "0.1.0"
+description = "Validate Demo JSON and Prepare for Jekyll Consumption"
+authors = ["Tim Camise <tcamise@gopro.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+jsonschema = "^4.17.3"
+
+[tool.poetry.scripts]
+prepare-demos = "src.main:entrypoint"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

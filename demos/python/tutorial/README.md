@@ -16,7 +16,7 @@ pip install -r requirements-dev.txt
 
 ## Tutorial Documentation
 
-Each tutorial shall be documented via [Jekyll](../../../docs/tutorials/_python-tutorials). See the top-level
+Each tutorial shall be documented via [Jekyll](../../../docs/tutorials/tutorials). See the top-level
 Docs [README](../../../docs/README.md) for more information.
 
 ## Tutorial Examples
@@ -34,7 +34,7 @@ make lint
 
 ## Testing
 
-Each script shall be tested via pytest by adding a case to the `tests/test_tutorials.py` file.
+Each script shall be tested via pytest by adding a case to the `tests/testtutorials.py` file.
 
 Tests can be run via:
 

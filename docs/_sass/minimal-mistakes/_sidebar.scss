@@ -90,12 +90,19 @@
       position: sticky;
       top: $masthead-height;
       float: right;
+
+      .toc {
+        .toc__menu {
+          overflow-y: auto;
+          max-height: calc(100vh - 7em);
+        }
+      }
     }
   }
 
   @include breakpoint($x-large) {
-    width: $right-sidebar-width;
-    margin-right: -1 * $right-sidebar-width;
+    width: $right-sidebar-width-wide;
+    margin-right: -1 * $right-sidebar-width-wide;
   }
 }
 

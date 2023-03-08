@@ -20,6 +20,56 @@ const getChildPosition = function (element) {
     throw new Error('No parent found');
 };
 
+const isLinked = function (link) {
+    liTab = link.parentNode;
+    ulTab = liTab.parentNode;
+    return ulTab.classList.contains('tab-linked');
+};
+
+/**
+ * Given the hyperlink of the selected tab, update the tab and and tab content
+ *
+ * @param {*} link
+ * @returns
+ */
+const updateTabFromLink = function (link) {
+    liTab = link.parentNode;
+
+    if (liTab.className.includes('active')) {
+        return;
+    }
+
+    ulTab = liTab.parentNode;
+    position = getChildPosition(liTab);
+
+    updateTabContainer(ulTab, position);
+
+    return position;
+};
+
+/**
+ * Given tab container and postiion of target active element, make target tab and tab content active
+ *
+ * @param {*} ulTab
+ * @param {*} position
+ */
+const updateTabContainer = function (ulTab, position) {
+    // Remove active classes from tab headers
+    removeActiveClasses(ulTab);
+    tabContentId = ulTab.getAttribute('data-tab');
+    // Get tab content (both active and inactive)
+    tabContentElement = document.getElementById(tabContentId);
+    removeActiveClasses(tabContentElement);
+
+    // Make the target position tab content active
+    tabContentElement
+        .querySelectorAll('.tab-content-container')
+        [position].classList.add('active');
+    // Get the target tab
+    liTab = ulTab.querySelectorAll('li')[position];
+    liTab.classList.add('active');
+};
+
 window.addEventListener('load', function () {
     const tabLinks = document.querySelectorAll('ul.tab li a');
 
@@ -29,22 +79,14 @@ window.addEventListener('load', function () {
             function (event) {
                 event.preventDefault();
 
-                liTab = link.parentNode;
-                ulTab = liTab.parentNode;
-                position = getChildPosition(liTab);
-                if (liTab.className.includes('active')) {
-                    return;
+                activePosition = updateTabFromLink(link);
+
+                // If this is a linked tab, update other linked tabs
+                if (isLinked(link)) {
+                    document.querySelectorAll('.tab-linked').forEach(function (ulTab) {
+                        updateTabContainer(ulTab, activePosition);
+                    });
                 }
-
-                removeActiveClasses(ulTab);
-                tabContentId = ulTab.getAttribute('data-tab');
-                tabContentElement = document.getElementById(tabContentId);
-                removeActiveClasses(tabContentElement);
-
-                tabContentElement
-                    .querySelectorAll('li')
-                    [position].classList.add('active');
-                liTab.classList.add('active');
             },
             false
         );

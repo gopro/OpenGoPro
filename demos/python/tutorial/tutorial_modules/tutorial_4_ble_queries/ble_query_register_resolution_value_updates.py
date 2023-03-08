@@ -15,6 +15,7 @@ from tutorial_modules import GOPRO_BASE_UUID, connect_ble, Response
 
 from tutorial_modules import logger
 
+
 # Note that this may change based on the Open GoPro version!
 class Resolution(enum.Enum):
     RES_4K = 1

@@ -11,7 +11,7 @@ Visual Studio is required to run the solution. Visit [VisualStudio](https://visu
 The target .NET framework is v4.7.2
 
 GoPro camera must be paired before any other operations will succeed. Put the camera in
-[pairing mode](https://gopro.github.io/OpenGoPro/tutorials/python/connect-ble#advertise) before attempting
+[pairing mode](https://gopro.github.io/OpenGoPro/tutorials/connect-ble#advertise) before attempting
 pairing with the app.
 
 # Prerequisites

@@ -14,6 +14,12 @@ from tutorial_modules import logger
 
 
 def exception_handler(loop: asyncio.AbstractEventLoop, context: Dict[str, Any]) -> None:
+    """Catch exceptions from non-main thread
+
+    Args:
+        loop (asyncio.AbstractEventLoop): loop to catch exceptions in
+        context (Dict[str, Any]): exception context
+    """
     msg = context.get("exception", context["message"])
     logger.error(f"Caught exception {str(loop)}: {msg}")
     logger.critical("This is unexpected and unrecoverable.")
@@ -50,6 +56,7 @@ async def connect_ble(
 
             # Scan for devices
             logger.info("Scanning for bluetooth devices...")
+
             # Scan callback to also catch nonconnectable scan responses
             # pylint: disable=cell-var-from-loop
             def _scan_callback(device: BleakDevice, _: Any) -> None:
@@ -99,11 +106,11 @@ async def connect_ble(
             logger.info("Done enabling notifications")
 
             return client
-        except Exception as e:
-            logger.error(f"Connection establishment failed: {e}")
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            logger.error(f"Connection establishment failed: {exc}")
             logger.warning(f"Retrying #{retry}")
 
-    raise Exception(f"Couldn't establish BLE connection after {RETRIES} retries")
+    raise RuntimeError(f"Couldn't establish BLE connection after {RETRIES} retries")
 
 
 async def main(identifier: Optional[str]) -> None:
@@ -128,7 +135,7 @@ if __name__ == "__main__":
 
     try:
         asyncio.run(main(args.identifier))
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         logger.error(e)
         sys.exit(-1)
     else:

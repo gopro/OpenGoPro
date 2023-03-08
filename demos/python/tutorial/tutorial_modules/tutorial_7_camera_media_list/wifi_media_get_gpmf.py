@@ -22,14 +22,14 @@ def main() -> None:
             photo = media_file
             break
     else:
-        raise Exception("Couldn't find a photo on the GoPro")
+        raise RuntimeError("Couldn't find a photo on the GoPro")
 
     assert photo is not None
     # Build the url to get the GPMF data for the photo
     logger.info(f"Getting the GPMF for {photo}")
     url = GOPRO_BASE_URL + f"/gopro/media/gpmf?path=100GOPRO/{photo}"
     logger.info(f"Sending: {url}")
-    with requests.get(url, stream=True) as request:
+    with requests.get(url, stream=True, timeout=10) as request:
         request.raise_for_status()
         file = photo.split(".")[0] + ".gpmf"
         with open(file, "wb") as f:
@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
     try:
         main()
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         logger.error(e)
         sys.exit(-1)
     else:

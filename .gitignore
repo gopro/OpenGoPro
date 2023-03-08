@@ -3,13 +3,19 @@
 /test.html
 /link_results
 .vscode
-venv
+**/venv
+**/.venv
+**/__pycache__/
+**/dist/
 xcuserdata/
 .git
 **/temp
 /*.jpg
 /*.gpmf
 /docs/_config-temp.yml
+# This is built and stored in the Docker image
+/docs/Gemfile.lock
+
 
 # Generated documentation
 /docs/protos.md

@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "OpenGoProDemos",
+    "properties": {
+        "demos": {
+            "type": "object",
+            "patternProperties": {
+                "[A-Za-z:0-9]": {
+                    "type": "array",
+                    "items": {
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "supported_platforms": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "enum": ["windows", "linux", "mac", "android", "ios"]
+                                }
+                            },
+                            "location": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["name", "description", "supported_platforms", "location"]
+                    }
+                }
+            }
+        }
+    },
+    "required": ["demos"]
+}
