@@ -19,21 +19,6 @@
   }
 }
 
-.main__splash #main {
-  @include clearfix;
-  margin-left: auto;
-  margin-right: auto;
-  -webkit-animation: $intro-transition;
-  animation: $intro-transition;
-  max-width: 80%;
-  -webkit-animation-delay: 0.15s;
-  animation-delay: 0.15s;
-
-  @include breakpoint($medium) {
-    max-width: $splash-width;
-  }
-}
-
 body {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -48,6 +33,21 @@ body {
 .initial-content,
 .search-content {
   flex: 1 0 auto;
+}
+
+.main__splash #main {
+  @include clearfix;
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-animation: $intro-transition;
+  animation: $intro-transition;
+  max-width: 80%;
+  -webkit-animation-delay: 0.15s;
+  animation-delay: 0.15s;
+
+  @include breakpoint($medium) {
+    max-width: $splash-width;
+  }
 }
 
 .page {
@@ -86,6 +86,11 @@ body {
 .page__title {
   margin-top: 0;
   line-height: 1;
+
+  a {
+    color: $text-color;
+    text-decoration: none;
+  }
 
   & + .page__meta {
     margin-top: -0.5em;
@@ -149,6 +154,20 @@ body {
     }
   }
 
+  :not(pre) > code {
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+    font-size: 0.8em;
+    background: $code-background-color;
+    border-radius: $border-radius;
+
+    &::before,
+    &::after {
+      letter-spacing: -0.2em;
+      content: "\00a0"; /* non-breaking space*/
+    }
+  }
+
   dt {
     margin-top: 1em;
     font-family: $sans-serif;
@@ -193,7 +212,7 @@ body {
     animation: $intro-transition;
     -webkit-animation-delay: 0.25s;
     animation-delay: 0.25s;
-    max-width: $splash-width;
+        max-width: $splash-width;
 
     @include breakpoint($small) {
       max-width: 100%;
@@ -204,7 +223,7 @@ body {
     }
 
     .wrapper {
-       max-width: 80%;
+      max-width: 80%;
       padding-left: 1em;
       padding-right: 1em;
       @include breakpoint($medium) {

@@ -9,6 +9,7 @@ locale: 'en-US'
 timezone: America/Los_Angeles
 theme: 'minimal-mistakes-jekyll'
 minimal_mistakes_skin: 'air'
+minify_html: false
 
 ### Metadata
 title: 'Open GoPro'
@@ -28,7 +29,6 @@ head_scripts:
     - /assets/js/tabs.js
     - /assets/js/quiz.js
     - /assets/js/accordion.js
-    # - https://code.jquery.com/jquery-3.2.1.min.js
 
 ### Navigation
 breadcrumbs: true
@@ -106,27 +106,20 @@ include:
     - .htaccess
     - _pages
 exclude:
-    - '*.sublime-project'
-    - '*.sublime-workspace'
     - .vscode
-    - vendor
     - .asset-cache
+    - .jekyll-cache
     - .bundle
     - .jekyll-assets-cache
     - .sass-cache
     - CHANGELOG
     - Gemfile
-    - LICENSE
-    - log
-    - node_modules
-    - package.json
-    - package-lock.json
     - python_sdk/
-    - _demos/python/tutorial
     - README.md
 keep_files:
     - .git
     - python_sdk
+    - assets
 
 ### Sass/SCSS
 sass:
@@ -158,20 +151,13 @@ compress_html:
     ignore:
         envs: development
 
-# Collections
-collections_dir: tutorials
+# Jekyll will map the name of these to top-level directories with underscore appended
 collections:
-    python-tutorials:
+    tutorials:
         output: true
-        collections_dir: python-tutorials
-        sort_by: lesson
-    bash-tutorials:
-        output: true
-        collections_dir: bash-tutorials
         sort_by: lesson
     demos:
         output: true
-        collection_dir: demos
 
 # Defaults
 defaults:
@@ -182,7 +168,7 @@ defaults:
           author_profile: true
           read_time: true
           toc: true
-          toc_sticky: false
+          toc_sticky: true
     - scope:
           path: ''
           type: demos

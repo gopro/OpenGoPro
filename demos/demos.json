@@ -1,0 +1,71 @@
+{
+    "$schema": "./schema.json",
+    "demos": {
+        "bash": [
+            {
+                "name": "OTA Update",
+                "description": "A bash script to perform an over-the-air (OTA) firmware update",
+                "supported_platforms": ["windows", "mac", "linux"],
+                "location": "demos/bash/ota_update"
+            }
+        ],
+        "c_cpp": [
+            {
+                "name": "GoProC_C++Demo",
+                "description": "Two C / C++ demos to send media commands and start/stop the preview",
+                "supported_platforms": ["windows", "mac", "linux"],
+                "location": "demos/c_c++/GoProC_C++Demo"
+            },
+            {
+                "name": "Stream Demo",
+                "description": "Low latency webcam/preview stream",
+                "supported_platforms": ["windows"],
+                "location": "demos/c_c++/GoProStreamDemo"
+            }
+        ],
+        "csharp": [
+            {
+                "name": "CSharp Sample",
+                "description": "A C# demo for discovering, pairing, connecting and controlling a camera",
+                "supported_platforms": ["windows"],
+                "location": "demos/csharp/GoProCSharpSample"
+            },
+            {
+                "name": "Webcam,",
+                "description": "A C# demo to demonstrate webcam functionality ",
+                "supported_platforms": ["windows"],
+                "location": "demos/csharp/webcam"
+            }
+        ],
+        "ionic": [
+            {
+                "name": "File Transfer",
+                "description": "Ionic demo for transferring files from GoPro to Mobile over Wi-Fi here are demos for iOS & Android",
+                "supported_platforms": ["android"],
+                "location": "demos/ionic/file_transfer"
+            }
+        ],
+        "python": [
+            {
+                "name": "SDK",
+                "description": "A Python package to easily exercise the Open GoPro API's + CLI's for taking pictures, videos, etc",
+                "supported_platforms": ["windows", "mac", "linux"],
+                "location": "demos/python/sdk_wireless_camera_control"
+            },
+            {
+                "name": "Multi Webcam",
+                "description": "A python demo for configuring and viewing multiple webcams from one computing device",
+                "supported_platforms": ["windows", "mac", "linux"],
+                "location": "demos/python/multi_webcam"
+            }
+        ],
+        "swift": [
+            {
+                "name": "Enable WiFi",
+                "description": "A swift demo for discovering, connecting and enabling Wi-Fi on a GoPro camera",
+                "supported_platforms": ["ios"],
+                "location": "demos/swift/EnableWiFiDemo"
+            }
+        ]
+    }
+}

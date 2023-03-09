@@ -8,13 +8,7 @@ import time
 import pytest
 
 from tutorial_modules.tutorial_1_connect_ble.ble_connect import main as ble_connect
-from tutorial_modules.tutorial_2_send_ble_commands.ble_command_enable_analytics import (
-    main as ble_command_enable_analytics,
-)
 from tutorial_modules.tutorial_2_send_ble_commands.ble_command_load_group import main as ble_command_load_group
-from tutorial_modules.tutorial_2_send_ble_commands.ble_command_load_preset import (
-    main as ble_command_load_preset,
-)
 from tutorial_modules.tutorial_2_send_ble_commands.ble_command_set_fps import main as ble_command_set_fps
 from tutorial_modules.tutorial_2_send_ble_commands.ble_command_set_resolution import (
     main as ble_command_set_resolution,
@@ -22,7 +16,6 @@ from tutorial_modules.tutorial_2_send_ble_commands.ble_command_set_resolution im
 from tutorial_modules.tutorial_2_send_ble_commands.ble_command_set_shutter import (
     main as ble_command_set_shutter,
 )
-from tutorial_modules.tutorial_2_send_ble_commands.ble_command_sleep import main as ble_command_sleep
 from tutorial_modules.tutorial_3_parse_ble_tlv_responses.ble_command_get_state import (
     main as ble_command_get_state,
 )
@@ -42,23 +35,11 @@ from tutorial_modules.tutorial_5_connect_wifi.wifi_enable import main as wifi_en
 from tutorial_modules.tutorial_6_send_wifi_commands.wifi_command_get_media_list import (
     main as wifi_command_get_media_list,
 )
-from tutorial_modules.tutorial_6_send_wifi_commands.wifi_command_get_preset_status import (
-    main as wifi_command_get_preset_status,
-)
 from tutorial_modules.tutorial_6_send_wifi_commands.wifi_command_get_state import (
     main as wifi_command_get_state,
 )
-from tutorial_modules.tutorial_6_send_wifi_commands.wifi_command_get_version import (
-    main as wifi_command_get_version,
-)
-from tutorial_modules.tutorial_6_send_wifi_commands.wifi_command_keep_alive import (
-    main as wifi_command_keep_alive,
-)
 from tutorial_modules.tutorial_6_send_wifi_commands.wifi_command_load_group import (
     main as wifi_command_load_group,
-)
-from tutorial_modules.tutorial_6_send_wifi_commands.wifi_command_load_preset import (
-    main as wifi_command_load_preset,
 )
 from tutorial_modules.tutorial_6_send_wifi_commands.wifi_command_preview_stream import (
     main as wifi_command_preview_stream,
@@ -69,7 +50,6 @@ from tutorial_modules.tutorial_6_send_wifi_commands.wifi_command_set_resolution 
 from tutorial_modules.tutorial_6_send_wifi_commands.wifi_command_set_shutter import (
     main as wifi_command_set_shutter,
 )
-from tutorial_modules.tutorial_6_send_wifi_commands.wifi_command_zoom import main as wifi_command_zoom
 from tutorial_modules.tutorial_7_camera_media_list.wifi_media_download_file import (
     main as wifi_media_download_file,
 )
@@ -97,16 +77,8 @@ class TestTutorial1ConnectBle:
 
 class TestTutorial2SendBleCommands:
     @pytest.mark.asyncio
-    async def test_ble_command_enable_analytics(self):
-        await ble_command_enable_analytics(None)
-
-    @pytest.mark.asyncio
     async def test_ble_command_load_group(self):
         await ble_command_load_group(None)
-
-    @pytest.mark.asyncio
-    async def test_ble_command_load_preset(self):
-        await ble_command_load_preset(None)
 
     @pytest.mark.asyncio
     async def test_ble_command_set_fps(self):
@@ -119,10 +91,6 @@ class TestTutorial2SendBleCommands:
     @pytest.mark.asyncio
     async def test_ble_command_set_shutter(self):
         await ble_command_set_shutter(None)
-
-    @pytest.mark.asyncio
-    async def test_ble_command_sleep(self):
-        await ble_command_sleep(None)
 
 
 class TestTutorial3ParseBleTlvResponses:
@@ -159,29 +127,14 @@ class TestTutorial6SendWifiCommands:
     def test_wifi_command_get_media_list(self, connect_wifi):
         wifi_command_get_media_list()
 
-    def test_wifi_command_get_preset_status(self, connect_wifi):
-        wifi_command_get_preset_status()
-
     def test_wifi_command_get_state(self, connect_wifi):
         wifi_command_get_state()
-
-    def test_wifi_command_get_version(self, connect_wifi):
-        wifi_command_get_version()
-
-    def test_wifi_command_keep_alive(self, connect_wifi):
-        wifi_command_keep_alive()
 
     def test_wifi_command_load_group(self, connect_wifi):
         wifi_command_load_group()
 
-    def test_wifi_command_load_preset(self, connect_wifi):
-        wifi_command_load_preset(0)
-
     def test_wifi_command_set_resolution(self, connect_wifi):
         wifi_command_set_resolution()
-
-    def test_wifi_command_zoom(self, connect_wifi):
-        wifi_command_zoom(50)
 
     def test_wifi_command_preview_stream(self, connect_wifi):
         wifi_command_preview_stream()

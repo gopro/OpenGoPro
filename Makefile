@@ -17,11 +17,6 @@ clean: ## Clean cached jekyll files
 	-@docker-compose down > /dev/null 2>&1
 	@rm -rf docs/_site docs/.jekyll-cache docs/.jekyll-metadata docs/tutorials/_demos docs/_conf-temp.yml
 
-.PHONY: demos
-demos: ## Copy demos into docs folder for Jekyll building and add front matter
-	@echo "📚 Preparing demos..."
-	@tools/prepare_demos
-
 .PHONY: protos
 protos: ## Generate markdown documentation from protobuf files
 	@echo "📇 Building protobuf documentation..."

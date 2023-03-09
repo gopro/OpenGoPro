@@ -5,4 +5,4 @@
 
 # Add exclusions for anything that should be un-ignored
 !docs/Gemfile
-!docs/Gemfile.lock
+!tools/

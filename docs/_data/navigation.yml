@@ -15,21 +15,21 @@ main:
     - title: 'FAQ'
       url: /faq
 
-python-tutorials:
+tutorials:
     - title: '1: Connect BLE'
-      url: /tutorials/python/connect-ble
+      url: /tutorials/connect-ble
     - title: '2: Send BLE Commands'
-      url: /tutorials/python/send-ble-commands
+      url: /tutorials/send-ble-commands
     - title: '3: Parse BLE TLV Responses'
-      url: /tutorials/python/parse-ble-responses
+      url: /tutorials/parse-ble-responses
     - title: '4: BLE Queries'
-      url: /tutorials/python/ble-queries
+      url: /tutorials/ble-queries
     - title: '5: Connect WiFi'
-      url: /tutorials/python/connect-wifi
+      url: /tutorials/connect-wifi
     - title: '6: Send WiFi Commands'
-      url: /tutorials/python/send-wifi-commands
+      url: /tutorials/send-wifi-commands
     - title: '7: Camera Media List'
-      url: /tutorials/python/camera-media-list
+      url: /tutorials/camera-media-list
 
 specs:
     - title: 'BLE 2.0'
