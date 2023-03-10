@@ -452,6 +452,14 @@ you are already connected to it from a previous session. To be sure, power cycle
 <h2 id="relevant-to-all-supported-cameras">Relevant to All Supported Cameras</h2>
 
 <div class="accordion-container">
+    <button class="accordion">Webcam does not enter idle mode once plugged in<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>The webcam state will be wrongly reported as idle after a new USB connection.
+The best workaround for this is to call <code class="language-plaintext highlighter-rouge">Webcam Start</code> followed by <code class="language-plaintext highlighter-rouge">Webcam Stop</code> after connecting USB in order to attain the true idle state.</p>
+</div>
+</div>
+
+<div class="accordion-container">
     <button class="accordion">Intermittent failure to connect to the cameras Wifi Access Point<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>On rare occasions, connections to the camera’s Wifi AP will continuously fail until the camera is reset.

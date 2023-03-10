@@ -386,7 +386,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          44 minute read
+          45 minute read
         
       </span>
     
@@ -505,8 +505,12 @@
 <li><a href="#webcam-commands">Webcam Commands</a></li>
 <li><a href="#status-codes">Status Codes</a></li>
 <li><a href="#error-codes">Error Codes</a></li>
+<li>
+<a href="#webcam-settings">Webcam Settings</a><ul>
 <li><a href="#resolutions">Resolutions</a></li>
 <li><a href="#digital-lenses--fov">Digital Lenses / FOV</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -4355,8 +4359,7 @@ start a network stream on udp://@0.0.0.0:8554.
 </p>
 
 <p>
-For readers interested in using a GoPro camera as a webcam with preexisting tools, please see
-<a href="https://community.gopro.com/s/article/GoPro-Webcam?language=en_US">How to use GoPro as a Webcam</a>.
+For readers interested in using a GoPro camera as a webcam with preexisting tools, please see <a href="https://community.gopro.com/s/article/GoPro-Webcam?language=en_US">How to use GoPro as a Webcam</a>.
 </p>
 
 <h3 id="webcam-finite-state-machine">Webcam Finite State Machine</h3>
@@ -4484,7 +4487,19 @@ For details about how to send this and webcam commands, see <a href="#commands-q
   </tbody>
 </table>
 
-<h3 id="resolutions">Resolutions</h3>
+<h3 id="webcam-settings">Webcam Settings</h3>
+
+<p>
+Aside from basic settings such as Resolution and FOV, the camera may support other settings such as Hypersmooth.
+In order to change these settings independently, the webcam must be in <b>IDLE</b> state.
+</p>
+
+<p>
+Note: There is a <a href="https://gopro.github.io/OpenGoPro/faq#known-issues">known issue</a> on some cameras in which the webcam state will be wrongly reported as IDLE after a new USB connection.
+The best workaround for this is to call <b>Webcam: Start</b> followed by the <b>Webcam: Stop</b> after connecting USB in order to attain the true IDLE state.
+</p>
+
+<h4 id="resolutions">Resolutions</h4>
 <p>
 Note: If resolution is not set, 1080p will be used by default
 </p>
@@ -4525,7 +4540,7 @@ Note: If resolution is not set, 1080p will be used by default
   </tbody>
 </table>
 
-<h3 id="digital-lenses--fov">Digital Lenses / FOV</h3>
+<h4 id="digital-lenses--fov">Digital Lenses / FOV</h4>
 <p>
 Note: If fov is not set, camera will default to the last-set fov or Wide if fov has never been set.
 </p>
