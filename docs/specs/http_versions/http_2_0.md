@@ -3933,8 +3933,7 @@ start a network stream on udp://@0.0.0.0:8554.
 </p>
 
 <p>
-For readers interested in using a GoPro camera as a webcam with preexisting tools, please see
-<a href="https://community.gopro.com/s/article/GoPro-Webcam?language=en_US">How to use GoPro as a Webcam</a>.
+For readers interested in using a GoPro camera as a webcam with preexisting tools, please see <a href="https://community.gopro.com/s/article/GoPro-Webcam?language=en_US">How to use GoPro as a Webcam</a>.
 </p>
 
 ### Webcam Finite State Machine
@@ -4101,7 +4100,19 @@ For details about how to send this and webcam commands, see <a href="#commands-q
   </tbody>
 </table>
 
-### Resolutions
+### Webcam Settings
+
+<p>
+Aside from basic settings such as Resolution and FOV, the camera may support other settings such as Hypersmooth.
+In order to change these settings independently, the webcam must be in <b>IDLE</b> state.
+</p>
+
+<p>
+Note: There is a <a href="https://gopro.github.io/OpenGoPro/faq#known-issues">known issue</a> on some cameras in which the webcam state will be wrongly reported as IDLE after a new USB connection.
+The best workaround for this is to call <b>Webcam: Start</b> followed by the <b>Webcam: Stop</b> after connecting USB in order to attain the true IDLE state.
+</p>
+
+#### Resolutions
 <p>
 Note: If resolution is not set, 1080p will be used by default
 </p>
@@ -4142,7 +4153,7 @@ Note: If resolution is not set, 1080p will be used by default
   </tbody>
 </table>
 
-### Digital Lenses / FOV
+#### Digital Lenses / FOV
 <p>
 Note: If fov is not set, camera will default to the last-set fov or Wide if fov has never been set.
 </p>

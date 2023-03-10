@@ -70,6 +70,11 @@ On >= Hero 11, try disabling and then re-enabling the camera's Wifi AP using the
 
 ## Relevant to All Supported Cameras
 
+{% accordion Webcam does not enter idle mode once plugged in %}
+The webcam state will be wrongly reported as idle after a new USB connection.
+The best workaround for this is to call `Webcam Start` followed by `Webcam Stop` after connecting USB in order to attain the true idle state.
+{% endaccordion %}
+
 {% accordion Intermittent failure to connect to the cameras Wifi Access Point %}
 On rare occasions, connections to the camera's Wifi AP will continuously fail until the camera is reset.
 It is possible to workaround this as described in [Troubleshooting](#troubleshooting)
