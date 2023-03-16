@@ -2145,7 +2145,7 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="17"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="18"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
       <td rowspan="3">HERO11 Black Mini</td>
       <td>v02.10.00</td>
     </tr>
@@ -2156,7 +2156,10 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>v01.10.00</td>
     </tr>
     <tr>
-      <td rowspan="4">HERO11 Black</td>
+      <td rowspan="5">HERO11 Black</td>
+      <td>v02.10.00</td>
+    </tr>
+    <tr>
       <td>v02.01.00</td>
     </tr>
     <tr>
