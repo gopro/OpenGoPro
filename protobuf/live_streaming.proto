@@ -1,8 +1,8 @@
 /* live_streaming.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Mon Oct 10 21:30:02 UTC 2022 */
+/* This copyright was auto-generated on Fri Mar 31 17:21:02 UTC 2023 */
 
 /*
-Defines the structure of protobuf message for working with Live Streams
+Defines the structure of protobuf messages for working with Live Streams
 */
 
 syntax="proto2";
