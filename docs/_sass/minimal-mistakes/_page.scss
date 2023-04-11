@@ -36,18 +36,7 @@ body {
 }
 
 .main__splash #main {
-  @include clearfix;
-  margin-left: auto;
-  margin-right: auto;
-  -webkit-animation: $intro-transition;
-  animation: $intro-transition;
   max-width: 80%;
-  -webkit-animation-delay: 0.15s;
-  animation-delay: 0.15s;
-
-  @include breakpoint($medium) {
-    max-width: $splash-width;
-  }
 }
 
 .page {
