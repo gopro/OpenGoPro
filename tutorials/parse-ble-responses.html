@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2023-03-31T18:16:07+00:00">
+  <meta property="article:published_time" content="2023-04-11T15:55:21+00:00">
 
 
 
@@ -410,7 +410,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 3: Parse BLE TLV Responses">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to implementthe Open GoPro Interface to parse BLEType-Length-Value (TLV) Responses.">
-    <meta itemprop="datePublished" content="2023-03-31T18:16:07+00:00">
+    <meta itemprop="datePublished" content="2023-04-11T15:55:21+00:00">
     
 
     <div class="page__inner-wrap">
@@ -498,7 +498,7 @@ are present and configured correctly.</p>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="f0d04e22-fa3f-4713-86a1-fa2678496b75">
+    <ul class="tab tab-linked" data-tab="18fc21bb-bee6-424e-8f43-cf0870266390">
         
             <li class="active">
                 <a href="">python </a>
@@ -509,7 +509,7 @@ are present and configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="f0d04e22-fa3f-4713-86a1-fa2678496b75">
+        <ul class="tab-content" id="18fc21bb-bee6-424e-8f43-cf0870266390">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 2
@@ -709,7 +709,7 @@ See the relevant version of the BLE and / or WiFi spec for more details about ea
 <p>First, we send the command to the Command Request <a href="/OpenGoPro/ble_2_0#services-and-characteristics">UUID</a>:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="479e038b-dcf8-4985-aef9-7dc43b1f3360">
+    <ul class="tab tab-linked" data-tab="332ffa24-6257-41f9-b33f-322d7cc0fff4">
         
             <li class="active">
                 <a href="">python </a>
@@ -720,7 +720,7 @@ See the relevant version of the BLE and / or WiFi spec for more details about ea
             </li>
         
         </ul>
-        <ul class="tab-content" id="479e038b-dcf8-4985-aef9-7dc43b1f3360">
+        <ul class="tab-content" id="332ffa24-6257-41f9-b33f-322d7cc0fff4">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">COMMAND_REQ_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0072"</span><span class="p">)</span>
@@ -833,7 +833,7 @@ values formatted as such:</p>
 </table>
 
 <div>
-    <ul class="tab tab-linked" data-tab="4c47bd72-8fac-400b-900d-13fac1726dcb">
+    <ul class="tab tab-linked" data-tab="16acc7fe-a13e-404f-9a3f-b32f9f8a952b">
         
             <li class="active">
                 <a href="">python </a>
@@ -844,7 +844,7 @@ values formatted as such:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="4c47bd72-8fac-400b-900d-13fac1726dcb">
+        <ul class="tab-content" id="16acc7fe-a13e-404f-9a3f-b32f9f8a952b">
         
             <li class="active tab-content-container">
 <div class="callout note">
@@ -902,7 +902,7 @@ contrived code in this tutorial, we have separate <code class="language-plaintex
 the minor version so let’s print them (and all of the other response information) as such:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="ba9358df-9f59-4855-b23c-76be1483d70a">
+    <ul class="tab tab-linked" data-tab="acf9f882-d1b7-4c46-9b51-be64148b923b">
         
             <li class="active">
                 <a href="">python </a>
@@ -913,7 +913,7 @@ the minor version so let’s print them (and all of the other response informati
             </li>
         
         </ul>
-        <ul class="tab-content" id="ba9358df-9f59-4855-b23c-76be1483d70a">
+        <ul class="tab-content" id="acf9f882-d1b7-4c46-9b51-be64148b923b">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">major</span><span class="p">,</span> <span class="n">minor</span> <span class="o">=</span> <span class="n">params</span>
@@ -945,10 +945,10 @@ the minor version so let’s print them (and all of the other response informati
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_55de7c62-00fd-4ccd-a388-3dc4fde7e585" class="quiz">
+<div id="quiz_1e4ab6c7-438e-405d-bba8-49bac2f3a666" class="quiz">
     <div>
-        <div id="question_55de7c62-00fd-4ccd-a388-3dc4fde7e585" class="quiz__question">What is the maximum size of an individual notification response packet?</div>
-        <div id="answers_55de7c62-00fd-4ccd-a388-3dc4fde7e585">
+        <div id="question_1e4ab6c7-438e-405d-bba8-49bac2f3a666" class="quiz__question">What is the maximum size of an individual notification response packet?</div>
+        <div id="answers_1e4ab6c7-438e-405d-bba8-49bac2f3a666">
         
             <input type="radio" name="question" value="A"><label>A: 20 bytes</label>
             <br>
@@ -961,19 +961,19 @@ the minor version so let’s print them (and all of the other response informati
         
         </div>
     </div>
-    <button onclick="showResults('55de7c62-00fd-4ccd-a388-3dc4fde7e585', 'A')">Submit Answer</button>
-    <div id="results_55de7c62-00fd-4ccd-a388-3dc4fde7e585" style="display: none">
-        <span id="correct_55de7c62-00fd-4ccd-a388-3dc4fde7e585" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_55de7c62-00fd-4ccd-a388-3dc4fde7e585" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('1e4ab6c7-438e-405d-bba8-49bac2f3a666', 'A')">Submit Answer</button>
+    <div id="results_1e4ab6c7-438e-405d-bba8-49bac2f3a666" style="display: none">
+        <span id="correct_1e4ab6c7-438e-405d-bba8-49bac2f3a666" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_1e4ab6c7-438e-405d-bba8-49bac2f3a666" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         Responses can be composed of multiple packets where each packet is at
     maximum 20 bytes.
     </div>
 </div>
 
-<div id="quiz_45ccf167-d46d-4e78-a0b5-2f192ae917a4" class="quiz">
+<div id="quiz_8d1d3ca1-c116-4d75-8e03-a4e52aa217e0" class="quiz">
     <div>
-        <div id="question_45ccf167-d46d-4e78-a0b5-2f192ae917a4" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
-        <div id="answers_45ccf167-d46d-4e78-a0b5-2f192ae917a4">
+        <div id="question_8d1d3ca1-c116-4d75-8e03-a4e52aa217e0" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
+        <div id="answers_8d1d3ca1-c116-4d75-8e03-a4e52aa217e0">
         
             <input type="radio" name="question" value="A"><label>A: 20 bytes</label>
             <br>
@@ -986,18 +986,18 @@ the minor version so let’s print them (and all of the other response informati
         
         </div>
     </div>
-    <button onclick="showResults('45ccf167-d46d-4e78-a0b5-2f192ae917a4', 'C')">Submit Answer</button>
-    <div id="results_45ccf167-d46d-4e78-a0b5-2f192ae917a4" style="display: none">
-        <span id="correct_45ccf167-d46d-4e78-a0b5-2f192ae917a4" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_45ccf167-d46d-4e78-a0b5-2f192ae917a4" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('8d1d3ca1-c116-4d75-8e03-a4e52aa217e0', 'C')">Submit Answer</button>
+    <div id="results_8d1d3ca1-c116-4d75-8e03-a4e52aa217e0" style="display: none">
+        <span id="correct_8d1d3ca1-c116-4d75-8e03-a4e52aa217e0" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_8d1d3ca1-c116-4d75-8e03-a4e52aa217e0" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There is no limit on the amount of packets that can comprise a response.
     </div>
 </div>
 
-<div id="quiz_15e975f2-9649-4d43-a3d9-7ed48f939145" class="quiz">
+<div id="quiz_bbbf4ea1-4f9f-4a50-8ddc-a65ebc38a2ed" class="quiz">
     <div>
-        <div id="question_15e975f2-9649-4d43-a3d9-7ed48f939145" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
-        <div id="answers_15e975f2-9649-4d43-a3d9-7ed48f939145">
+        <div id="question_bbbf4ea1-4f9f-4a50-8ddc-a65ebc38a2ed" class="quiz__question">What is the maximum amount of packets that one response can be composed of?</div>
+        <div id="answers_bbbf4ea1-4f9f-4a50-8ddc-a65ebc38a2ed">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -1010,20 +1010,20 @@ the minor version so let’s print them (and all of the other response informati
         
         </div>
     </div>
-    <button onclick="showResults('15e975f2-9649-4d43-a3d9-7ed48f939145', 'C')">Submit Answer</button>
-    <div id="results_15e975f2-9649-4d43-a3d9-7ed48f939145" style="display: none">
-        <span id="correct_15e975f2-9649-4d43-a3d9-7ed48f939145" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_15e975f2-9649-4d43-a3d9-7ed48f939145" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('bbbf4ea1-4f9f-4a50-8ddc-a65ebc38a2ed', 'C')">Submit Answer</button>
+    <div id="results_bbbf4ea1-4f9f-4a50-8ddc-a65ebc38a2ed" style="display: none">
+        <span id="correct_bbbf4ea1-4f9f-4a50-8ddc-a65ebc38a2ed" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_bbbf4ea1-4f9f-4a50-8ddc-a65ebc38a2ed" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Command responses are almost always 1 packet (just returning the status).
     The exception are complex responses which can be multiple packets (in the case of Get Hardware
     Info)
     </div>
 </div>
 
-<div id="quiz_3711a8eb-56b2-4b48-bb64-7460165a8a20" class="quiz">
+<div id="quiz_93787e8f-3170-455c-9189-2ba88411cebd" class="quiz">
     <div>
-        <div id="question_3711a8eb-56b2-4b48-bb64-7460165a8a20" class="quiz__question">How many packets are setting responses comprised of?</div>
-        <div id="answers_3711a8eb-56b2-4b48-bb64-7460165a8a20">
+        <div id="question_93787e8f-3170-455c-9189-2ba88411cebd" class="quiz__question">How many packets are setting responses comprised of?</div>
+        <div id="answers_93787e8f-3170-455c-9189-2ba88411cebd">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -1036,10 +1036,10 @@ the minor version so let’s print them (and all of the other response informati
         
         </div>
     </div>
-    <button onclick="showResults('3711a8eb-56b2-4b48-bb64-7460165a8a20', 'A')">Submit Answer</button>
-    <div id="results_3711a8eb-56b2-4b48-bb64-7460165a8a20" style="display: none">
-        <span id="correct_3711a8eb-56b2-4b48-bb64-7460165a8a20" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_3711a8eb-56b2-4b48-bb64-7460165a8a20" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('93787e8f-3170-455c-9189-2ba88411cebd', 'A')">Submit Answer</button>
+    <div id="results_93787e8f-3170-455c-9189-2ba88411cebd" style="display: none">
+        <span id="correct_93787e8f-3170-455c-9189-2ba88411cebd" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_93787e8f-3170-455c-9189-2ba88411cebd" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         Settings Responses only ever contain the command status. Furthermore, there
     is no concept of complex responses for setting commands.
     </div>
@@ -1135,7 +1135,7 @@ defined:</p>
     <p>Continuation bit set?</p>
 
     <div>
-    <ul class="tab tab-linked" data-tab="313e9c73-d5e7-47ce-909b-7190ce670c78">
+    <ul class="tab tab-linked" data-tab="8720f84f-5d4d-4e6a-a971-c462412a00f1">
         
             <li class="active">
                 <a href="">python </a>
@@ -1146,7 +1146,7 @@ defined:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="313e9c73-d5e7-47ce-909b-7190ce670c78">
+        <ul class="tab-content" id="8720f84f-5d4d-4e6a-a971-c462412a00f1">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">CONT_MASK</span><span class="p">:</span>
@@ -1170,7 +1170,7 @@ defined:</p>
     <p>No, continuation bit was not set. So create new response, then get its length.</p>
 
     <div>
-    <ul class="tab tab-linked" data-tab="8a0ca200-bf2e-4cd9-8afd-092a08996c2b">
+    <ul class="tab tab-linked" data-tab="993dd7c6-7423-47e5-a23f-f8b61856cbba">
         
             <li class="active">
                 <a href="">python </a>
@@ -1181,7 +1181,7 @@ defined:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="8a0ca200-bf2e-4cd9-8afd-092a08996c2b">
+        <ul class="tab-content" id="993dd7c6-7423-47e5-a23f-f8b61856cbba">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># This is a new packet so start with an empty byte array
@@ -1229,7 +1229,7 @@ defined:</p>
     <p>Append current packet to response and decrement bytes remaining.</p>
 
     <div>
-    <ul class="tab tab-linked" data-tab="5189a66a-f83f-4fac-a87d-8aeafed89bc7">
+    <ul class="tab tab-linked" data-tab="468f6725-bff4-49c7-a495-3360c41e308b">
         
             <li class="active">
                 <a href="">python </a>
@@ -1240,7 +1240,7 @@ defined:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="5189a66a-f83f-4fac-a87d-8aeafed89bc7">
+        <ul class="tab-content" id="468f6725-bff4-49c7-a495-3360c41e308b">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Append payload to buffer and update remaining / complete
@@ -1262,7 +1262,7 @@ defined:</p>
     <p>In the notification handler, we are then parsing if there are no bytes remaining.</p>
 
     <div>
-    <ul class="tab tab-linked" data-tab="db1f6eea-c989-400b-9257-0212d6d2c8fe">
+    <ul class="tab tab-linked" data-tab="cc762f9b-d26f-4c1c-9f32-0a54ca00c42f">
         
             <li class="active">
                 <a href="">python </a>
@@ -1273,7 +1273,7 @@ defined:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="db1f6eea-c989-400b-9257-0212d6d2c8fe">
+        <ul class="tab-content" id="cc762f9b-d26f-4c1c-9f32-0a54ca00c42f">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">is_received</span><span class="p">:</span>
@@ -1312,7 +1312,7 @@ defined:</p>
 <p>We send the command as such:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="6372a33a-832c-416f-98dc-95151b5ff4f9">
+    <ul class="tab tab-linked" data-tab="55696ad2-1628-453a-b5d7-98a5277aea1c">
         
             <li class="active">
                 <a href="">python </a>
@@ -1323,7 +1323,7 @@ defined:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="6372a33a-832c-416f-98dc-95151b5ff4f9">
+        <ul class="tab-content" id="55696ad2-1628-453a-b5d7-98a5277aea1c">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">QUERY_REQ_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0076"</span><span class="p">)</span>
@@ -1347,7 +1347,7 @@ defined:</p>
 received the entire response, at which point we notify the writer that the response is ready:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="4b3c91b7-30e7-45e0-a5dd-956d393727a8">
+    <ul class="tab tab-linked" data-tab="c974de47-986f-409c-aea2-63026bf25286">
         
             <li class="active">
                 <a href="">python </a>
@@ -1358,7 +1358,7 @@ received the entire response, at which point we notify the writer that the respo
             </li>
         
         </ul>
-        <ul class="tab-content" id="4b3c91b7-30e7-45e0-a5dd-956d393727a8">
+        <ul class="tab-content" id="c974de47-986f-409c-aea2-63026bf25286">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
@@ -1396,7 +1396,7 @@ received the entire response, at which point we notify the writer that the respo
 <p>We can see the individual packets being accumulated in the log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="fdc876f0-aba6-41c8-b471-cf0d96bdd314">
+    <ul class="tab tab-linked" data-tab="bdb6bb2c-b2df-49c4-a153-3c6ca9e87fff">
         
             <li class="active">
                 <a href="">python </a>
@@ -1407,7 +1407,7 @@ received the entire response, at which point we notify the writer that the respo
             </li>
         
         </ul>
-        <ul class="tab-content" id="fdc876f0-aba6-41c8-b471-cf0d96bdd314">
+        <ul class="tab-content" id="bdb6bb2c-b2df-49c4-a153-3c6ca9e87fff">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Getting the camera's settings...
@@ -1510,10 +1510,10 @@ Got the camera's settings successfully
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_e22616ee-cd3b-4ad7-8a61-5488d4dd2f5d" class="quiz">
+<div id="quiz_46611166-102e-4923-9521-b38959587c7f" class="quiz">
     <div>
-        <div id="question_e22616ee-cd3b-4ad7-8a61-5488d4dd2f5d" class="quiz__question">How can we know that a response has been completely received?</div>
-        <div id="answers_e22616ee-cd3b-4ad7-8a61-5488d4dd2f5d">
+        <div id="question_46611166-102e-4923-9521-b38959587c7f" class="quiz__question">How can we know that a response has been completely received?</div>
+        <div id="answers_46611166-102e-4923-9521-b38959587c7f">
         
             <input type="radio" name="question" value="A"><label>A: The stop bit will be set in the header</label>
             <br>
@@ -1526,10 +1526,10 @@ Got the camera's settings successfully
         
         </div>
     </div>
-    <button onclick="showResults('e22616ee-cd3b-4ad7-8a61-5488d4dd2f5d', 'B')">Submit Answer</button>
-    <div id="results_e22616ee-cd3b-4ad7-8a61-5488d4dd2f5d" style="display: none">
-        <span id="correct_e22616ee-cd3b-4ad7-8a61-5488d4dd2f5d" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_e22616ee-cd3b-4ad7-8a61-5488d4dd2f5d" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('46611166-102e-4923-9521-b38959587c7f', 'B')">Submit Answer</button>
+    <div id="results_46611166-102e-4923-9521-b38959587c7f" style="display: none">
+        <span id="correct_46611166-102e-4923-9521-b38959587c7f" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_46611166-102e-4923-9521-b38959587c7f" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         The length of the entire response is parsed from the first packet. We
         then accumulate packets, keeping track of the received length, until all of the bytes
         have been received. A and C are just made up 😜.
@@ -1616,7 +1616,7 @@ Therefore, we need to account for the possibility that it may always be more tha
 ID and Status:</p>
 
     <div>
-    <ul class="tab tab-linked" data-tab="806f4009-edb1-479c-b16f-a3d09b2749bd">
+    <ul class="tab tab-linked" data-tab="6d7c3159-7e3d-4a20-a18a-5acff3501c39">
         
             <li class="active">
                 <a href="">python </a>
@@ -1627,7 +1627,7 @@ ID and Status:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="806f4009-edb1-479c-b16f-a3d09b2749bd">
+        <ul class="tab-content" id="6d7c3159-7e3d-4a20-a18a-5acff3501c39">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">self</span><span class="p">.</span><span class="nb">id</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nb">bytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1648,7 +1648,7 @@ ID and Status:</p>
 storing each value in a hash map indexed by ID for later access.</p>
 
     <div>
-    <ul class="tab tab-linked" data-tab="b51c6f7c-175b-496a-a355-a64d8916019c">
+    <ul class="tab tab-linked" data-tab="3e9132b3-c1f4-483f-b245-24746d8e9aad">
         
             <li class="active">
                 <a href="">python </a>
@@ -1659,7 +1659,7 @@ storing each value in a hash map indexed by ID for later access.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="b51c6f7c-175b-496a-a355-a64d8916019c">
+        <ul class="tab-content" id="3e9132b3-c1f4-483f-b245-24746d8e9aad">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">buf</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nb">bytes</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
@@ -1714,7 +1714,7 @@ storing each value in a hash map indexed by ID for later access.</p>
 <p>In the tutorial demo, we then log this entire dict after parsing is complete as such (abbreviated for brevity):</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="20abd182-d558-4395-bbf7-925d73ad99a6">
+    <ul class="tab tab-linked" data-tab="7dcdbd16-6513-4ad7-9203-496a085f5426">
         
             <li class="active">
                 <a href="">python </a>
@@ -1725,7 +1725,7 @@ storing each value in a hash map indexed by ID for later access.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="20abd182-d558-4395-bbf7-925d73ad99a6">
+        <ul class="tab-content" id="7dcdbd16-6513-4ad7-9203-496a085f5426">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Received settings
@@ -1822,10 +1822,10 @@ storing each value in a hash map indexed by ID for later access.</p>
   <li>ID 3 == 1 equates to FPS == 120</li>
 </ul>
 
-<div id="quiz_90cce18a-b35a-495c-a036-2a892800051b" class="quiz">
+<div id="quiz_372809d9-44e7-4e9b-8c4f-a131d883bfc6" class="quiz">
     <div>
-        <div id="question_90cce18a-b35a-495c-a036-2a892800051b" class="quiz__question">How many packets are query responses?</div>
-        <div id="answers_90cce18a-b35a-495c-a036-2a892800051b">
+        <div id="question_372809d9-44e7-4e9b-8c4f-a131d883bfc6" class="quiz__question">How many packets are query responses?</div>
+        <div id="answers_372809d9-44e7-4e9b-8c4f-a131d883bfc6">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -1841,20 +1841,20 @@ storing each value in a hash map indexed by ID for later access.</p>
         
         </div>
     </div>
-    <button onclick="showResults('90cce18a-b35a-495c-a036-2a892800051b', 'D')">Submit Answer</button>
-    <div id="results_90cce18a-b35a-495c-a036-2a892800051b" style="display: none">
-        <span id="correct_90cce18a-b35a-495c-a036-2a892800051b" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_90cce18a-b35a-495c-a036-2a892800051b" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('372809d9-44e7-4e9b-8c4f-a131d883bfc6', 'D')">Submit Answer</button>
+    <div id="results_372809d9-44e7-4e9b-8c4f-a131d883bfc6" style="display: none">
+        <span id="correct_372809d9-44e7-4e9b-8c4f-a131d883bfc6" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_372809d9-44e7-4e9b-8c4f-a131d883bfc6" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         Query responses can be one packet (if for example querying a specific
 setting) or multiple packets (when querying many or all settings as in the example here).
 See the next tutorial for more information on queries.
     </div>
 </div>
 
-<div id="quiz_e92c0046-77db-440f-9398-87f9cb653eb2" class="quiz">
+<div id="quiz_475c63f7-5ce8-4995-a3cc-e09c6ae7d394" class="quiz">
     <div>
-        <div id="question_e92c0046-77db-440f-9398-87f9cb653eb2" class="quiz__question">Which field is not common to all responses?</div>
-        <div id="answers_e92c0046-77db-440f-9398-87f9cb653eb2">
+        <div id="question_475c63f7-5ce8-4995-a3cc-e09c6ae7d394" class="quiz__question">Which field is not common to all responses?</div>
+        <div id="answers_475c63f7-5ce8-4995-a3cc-e09c6ae7d394">
         
             <input type="radio" name="question" value="A"><label>A: length</label>
             <br>
@@ -1870,10 +1870,10 @@ See the next tutorial for more information on queries.
         
         </div>
     </div>
-    <button onclick="showResults('e92c0046-77db-440f-9398-87f9cb653eb2', 'D')">Submit Answer</button>
-    <div id="results_e92c0046-77db-440f-9398-87f9cb653eb2" style="display: none">
-        <span id="correct_e92c0046-77db-440f-9398-87f9cb653eb2" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_e92c0046-77db-440f-9398-87f9cb653eb2" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('475c63f7-5ce8-4995-a3cc-e09c6ae7d394', 'D')">Submit Answer</button>
+    <div id="results_475c63f7-5ce8-4995-a3cc-e09c6ae7d394" style="display: none">
+        <span id="correct_475c63f7-5ce8-4995-a3cc-e09c6ae7d394" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_475c63f7-5ce8-4995-a3cc-e09c6ae7d394" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         Query responses can be one packet (if for example querying a specific
 setting) or multiple packets (when querying many or all settings as in the example here).
 See the next tutorial for more information on queries.
@@ -1908,7 +1908,7 @@ complete example of this, see the <a href="https://gopro.github.io/OpenGoPro/pyt
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-03-31T18:16:07+00:00">March 31, 2023</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-04-11T15:55:21+00:00">April 11, 2023</time></p>
 
 
       </footer>
