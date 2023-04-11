@@ -534,12 +534,33 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         feature_id=FeatureId.NETWORK_MANAGEMENT,
         action_id=ActionId.REQUEST_WIFI_CONNECT,
         response_action_id=ActionId.REQUEST_WIFI_CONNECT_RSP,
-        request_proto=proto.RequestConnectNew,
-        response_proto=proto.ResponseConnectNew,
+        request_proto=proto.RequestConnect,
+        response_proto=proto.ResponseConnect,
         additional_matching_ids={ActionId.REQUEST_WIFI_CONNECT_RSP},
     )
-    def request_wifi_connect(self, *, ssid: str, password: str) -> GoProResp:
-        """Request the camera to connect to a WiFi network.
+    def request_wifi_connect(self, *, ssid: str) -> GoProResp:
+        """Request the camera to connect to a WiFi network that is already provisioned.
+
+        Updates will be sent as :py:attr:`open_gopro.constants.ActionId.NOTIF_PROVIS_STATE`
+
+        Args:
+            ssid (str): SSID to connect to
+
+        Returns:
+            GoProResp: Command status of request
+        """
+
+    @ble_proto_command(
+        uuid=GoProUUIDs.CM_NET_MGMT_COMM,
+        feature_id=FeatureId.NETWORK_MANAGEMENT,
+        action_id=ActionId.REQUEST_WIFI_CONNECT_NEW,
+        response_action_id=ActionId.REQUEST_WIFI_CONNECT_NEW_RSP,
+        request_proto=proto.RequestConnectNew,
+        response_proto=proto.ResponseConnectNew,
+        additional_matching_ids={ActionId.REQUEST_WIFI_CONNECT_NEW_RSP},
+    )
+    def request_wifi_connect_new(self, *, ssid: str, password: str) -> GoProResp:
+        """Request the camera to connect to a WiFi network that is not already provisioned.
 
         Updates will be sent as :py:attr:`open_gopro.constants.ActionId.NOTIF_PROVIS_STATE`
 

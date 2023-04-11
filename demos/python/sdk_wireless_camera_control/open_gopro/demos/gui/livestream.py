@@ -38,16 +38,23 @@ def main(args: argparse.Namespace) -> None:
         assert scan_id
         for entry in gopro.ble_command.get_ap_entries(scan_id=scan_id)["entries"]:
             if entry["ssid"] == args.ssid:
-                if not entry["scan_entry_flags"] & Params.ScanEntry.CONFIGURED:
-                    gopro.ble_command.request_wifi_connect(ssid=args.ssid, password=args.password)
-                    # Wait to receive provisioning done notification
-                    while update := gopro.get_notification():
-                        if (
-                            update == constants.ActionId.NOTIF_PROVIS_STATE
-                            and update["provisioning_state"] == Params.ProvisioningState.SUCCESS_NEW_AP
-                        ):
-                            break
+                # Are we already provisioned?
+                if entry["scan_entry_flags"] & Params.ScanEntry.CONFIGURED:
+                    console.print("Connecting to already provisioned network...")
+                    gopro.ble_command.request_wifi_connect(ssid=args.ssid)
+                else:
+                    console.print("Provisioning new network...")
+                    gopro.ble_command.request_wifi_connect_new(ssid=args.ssid, password=args.password)
+                # Wait to receive provisioning done notification (it is "New" AP in both cases)
+                while update := gopro.get_notification():
+                    if (
+                        update == constants.ActionId.NOTIF_PROVIS_STATE
+                        and update["provisioning_state"] == Params.ProvisioningState.SUCCESS_NEW_AP
+                    ):
+                        break
                 break
+        else:
+            raise RuntimeError(f"Could not find network {args.ssid}")
 
         # Start livestream
         console.print("Configuring livestream...")

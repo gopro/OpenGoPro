@@ -16,6 +16,8 @@ from open_gopro.proto.live_streaming_pb2 import (
 from open_gopro.proto.network_management_pb2 import (
     RequestConnectNew,
     ResponseConnectNew,
+    RequestConnect,
+    ResponseConnect,
     NotifProvisioningState,
     RequestStartScan,
     ResponseStartScanning,
