@@ -1,8 +1,8 @@
 /* network_management.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Mon Oct 10 21:30:02 UTC 2022 */
+/* This copyright was auto-generated on Fri Mar 31 17:21:02 UTC 2023 */
 
 /*
-Defines the structure of protobuf message for network management
+Defines the structure of protobuf messages for network management
 */
 
 syntax="proto2";
@@ -46,7 +46,7 @@ enum EnumScanning {
 enum EnumScanEntryFlags {
     SCAN_FLAG_OPEN             = 0x00;
     SCAN_FLAG_AUTHENTICATED    = 0x01;
-    SCAN_FLAG_CONFIGURED       = 0x02;
+    SCAN_FLAG_CONFIGURED       = 0x02; // This network has been previous provisioned
     SCAN_FLAG_BEST_SSID        = 0x04;
     SCAN_FLAG_ASSOCIATED       = 0x08;
     SCAN_FLAG_UNSUPPORTED_TYPE = 0x10;

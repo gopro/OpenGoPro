@@ -2573,8 +2573,11 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="17"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
-      <td rowspan="3">HERO11 Black Mini</td>
+      <td rowspan="19"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="4">HERO11 Black Mini</td>
+      <td>v02.20.00</td>
+    </tr>
+    <tr>
       <td>v02.10.00</td>
     </tr>
     <tr>
@@ -2584,7 +2587,10 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>v01.10.00</td>
     </tr>
     <tr>
-      <td rowspan="4">HERO11 Black</td>
+      <td rowspan="5">HERO11 Black</td>
+      <td>v02.10.00</td>
+    </tr>
+    <tr>
       <td>v02.01.00</td>
     </tr>
     <tr>
@@ -4290,7 +4296,7 @@ For details on which cameras are supported and how to set Camera Control Status,
 <p>
 The camera supports connecting to access points in <a href="https://en.wikipedia.org/wiki/Station_(networking)">Station Mode (STA)</a>.
 This is necessary for features such as Live Streaming, where the camera needs an Internet connection.
-While in this mode, HTTP command and control of the camera is not available.
+While in this mode, HTTP command and control of the camera is not available on some cameras.
 </p>
 
 ### Scanning for Access Points
@@ -4329,6 +4335,21 @@ note right: Each ScanEntry contains SSID, signal strength, freq
 
 
 ```
+
+### Scan Results
+<p>
+The <a href="#protobuf-commands">ResponseGetApEntries</a> message contains information about each discovered device.
+This information includes the success of the scan, the scan id used in the original request, and a ScanEntry message, whose definition is nested inside ResponseGetApEntries.
+</p>
+
+<p>
+A ScanEntry includes information about a discovered device including its SSID, relative signal strength, signal frequency,
+and a bitmasked scan_entry_flags value whose individual bits are defined by <a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">EnumScanEntryFlags</a>.
+</p>
+
+<p>
+Note: When scan_entry_flags contains <b>SCAN_FLAG_CONFIGURED</b>, it is an indication that this network has already been provisioned.
+</p>
 
 ### Connect to a New Access Point
 <p>
@@ -4450,10 +4471,12 @@ Live streaming with camera is accomplished as follows:
 </p>
 
 <ol>
-<li>Put the camera into <b>Station Mode</b> and connect it to an access point</li>
+<li>Put the camera into <b>Station Mode</b> and connect it to an access point (see <a href="#interface-with-access-points">Interface With Access Points</a>)</li>
 <li>Set the <b>Live Stream Mode</b></li>
 <li>Poll for <b>Live Stream Status</b> until the camera indicates it is ready</li>
-<li>Set the shutter to begin live streaming!</li>
+<li>Set any desired settings (e.g. Hypersmooth)</li>
+<li>Set the shutter to begin live streaming</li>
+<li>Unset the shutter to stop live streaming</li>
 </ol>
 
 ### Live Streaming Sequence
@@ -4465,24 +4488,25 @@ participant "GP-0091" as GP0091
 participant "GP-0092" as GP0092
 participant "GP-0072" as GP0072
 participant "GP-0073" as GP0073
+participant "GP-0074" as GP0074
+participant "GP-0075" as GP0075
 participant "GP-0076" as GP0076
 participant "GP-0077" as GP0077
-
-note over Central, GP0091: Station Mode: Connect to AP
-Central  -> GP0091  : RequestConnectNew
-Central <-- GP0092  : ResponseConnectNew
-loop until SUCCESS_NEW_AP
-    Central <-- GP0092  : NotifProvisionState
-end loop
 
 note over Central, GP0091: Set Live Stream Mode
 Central  -> GP0072 : RequestSetLiveStreamMode
 Central <-- GP0073 : ResponseGeneric
 
-note over Central, GP0091: Poll Live Stream Status until ready
+note over Central, GP0092: Poll Live Stream Status until ready
 loop until LIVE_STREAM_STATE_READY
 Central  -> GP0076 : RequestGetLiveStreamStatus
 Central <-- GP0077 : NotifyLiveStreamStatus
+end loop
+
+note over Central, GP0091 : Set desired settings
+loop until Desired camera state attained
+Central  -> GP0074 : Set setting
+Central <-- GP0075 : Response
 end loop
 
 note over Central, GP0091: Start live streaming!
