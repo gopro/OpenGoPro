@@ -87,6 +87,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.register_livestream_status"><code class="docutils literal notranslate"><span class="pre">BleCommands.register_livestream_status()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.release_network"><code class="docutils literal notranslate"><span class="pre">BleCommands.release_network()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.request_wifi_connect"><code class="docutils literal notranslate"><span class="pre">BleCommands.request_wifi_connect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.request_wifi_connect_new"><code class="docutils literal notranslate"><span class="pre">BleCommands.request_wifi_connect_new()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.scan_wifi_networks"><code class="docutils literal notranslate"><span class="pre">BleCommands.scan_wifi_networks()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.set_camera_control"><code class="docutils literal notranslate"><span class="pre">BleCommands.set_camera_control()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.set_date_time"><code class="docutils literal notranslate"><span class="pre">BleCommands.set_date_time()</span></code></a></li>
@@ -371,6 +372,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RELEASE_NETWORK"><code class="docutils literal notranslate"><span class="pre">ActionId.RELEASE_NETWORK</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RELEASE_NETWORK_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.RELEASE_NETWORK_RSP</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_WIFI_CONNECT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_NEW"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_WIFI_CONNECT_NEW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_NEW_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_WIFI_CONNECT_NEW_RSP</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_WIFI_CONNECT_RSP</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.SCAN_WIFI_NETWORKS"><code class="docutils literal notranslate"><span class="pre">ActionId.SCAN_WIFI_NETWORKS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.SCAN_WIFI_NETWORKS_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.SCAN_WIFI_NETWORKS_RSP</span></code></a></li>
@@ -1685,8 +1688,26 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.request_wifi_connect">
-<span class="sig-name descname"><span class="pre">request_wifi_connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><span class="pre">GoProResp</span></a></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.request_wifi_connect" title="Permalink to this definition"></a></dt>
-<dd><p>Request the camera to connect to a WiFi network.</p>
+<span class="sig-name descname"><span class="pre">request_wifi_connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><span class="pre">GoProResp</span></a></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.request_wifi_connect" title="Permalink to this definition"></a></dt>
+<dd><p>Request the camera to connect to a WiFi network that is already provisioned.</p>
+<p>Updates will be sent as <a class="reference internal" href="#open_gopro.constants.ActionId.NOTIF_PROVIS_STATE" title="open_gopro.constants.ActionId.NOTIF_PROVIS_STATE"><code class="xref py py-attr docutils literal notranslate"><span class="pre">open_gopro.constants.ActionId.NOTIF_PROVIS_STATE</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ssid</strong> (<em>str</em>) – SSID to connect to</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Command status of request</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.request_wifi_connect_new">
+<span class="sig-name descname"><span class="pre">request_wifi_connect_new</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.responses.GoProResp" title="open_gopro.responses.GoProResp"><span class="pre">GoProResp</span></a></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.request_wifi_connect_new" title="Permalink to this definition"></a></dt>
+<dd><p>Request the camera to connect to a WiFi network that is not already provisioned.</p>
 <p>Updates will be sent as <a class="reference internal" href="#open_gopro.constants.ActionId.NOTIF_PROVIS_STATE" title="open_gopro.constants.ActionId.NOTIF_PROVIS_STATE"><code class="xref py py-attr docutils literal notranslate"><span class="pre">open_gopro.constants.ActionId.NOTIF_PROVIS_STATE</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -5466,12 +5487,22 @@ For example, first send the command and store the response:</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT">
-<span class="sig-name descname"><span class="pre">REQUEST_WIFI_CONNECT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">REQUEST_WIFI_CONNECT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_NEW">
+<span class="sig-name descname"><span class="pre">REQUEST_WIFI_CONNECT_NEW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_NEW" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_NEW_RSP">
+<span class="sig-name descname"><span class="pre">REQUEST_WIFI_CONNECT_NEW_RSP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">133</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_NEW_RSP" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_RSP">
-<span class="sig-name descname"><span class="pre">REQUEST_WIFI_CONNECT_RSP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">133</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_RSP" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">REQUEST_WIFI_CONNECT_RSP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">132</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_RSP" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
