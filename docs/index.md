@@ -62,7 +62,7 @@ sufficient for the camera to run indefinitely without the internal battery. Howe
 doesn't allow for programmatic power on and off. Camera needs to be switched on manually or via BLE, and
 after the camera goes to sleep, it must be “woken up” again with a button press or via BLE. For monitoring
 and other use cases where the camera must be operated and switched on and off only via USB cable, there is a
-workaround with the Labs firmware - more detail in our FAQ. TODO read this
+workaround with the Labs firmware - more detail in the [FAQ]({% link faq.md %}).
 
 ## Features
 
@@ -110,15 +110,59 @@ directly from the cameras, either via USB or wireless connection.
 | Stream      | Optional hypersmooth stabilization            |      | ✔️  | ✔️                     |
 
 Each of the streaming types has different resolutions, bit rates, imaging pipelines, and different levels of
-configurability. Refer to the FAQ section for details. TODO add links.
+configurability. Refer to the [FAQ]({% link faq.md %}).
 
 ### Manipulate and Transfer Media Files
 
 When the camera records video, time lapse, or photo, the media is saved on the SD card with filenames according
-to the GoPro [File Naming Convention](https://community.gopro.com/s/article/GoPro-Camera-File-Naming-Convention). 
+to the GoPro [File Naming Convention](https://community.gopro.com/s/article/GoPro-Camera-File-Naming-Convention).
 
-The cameras always record two versions of each video file: Full resolution based on your selected settings (MP4), and low resolution video proxy (LRV file) that can be used for editing or other operations where file size matters. “LRV” file ending can be simply renamed to “MP4” and used for playback or further editing. Both versions live in the same folder on the SD card. In addition, cameras generate a thumbnail image for each media file (THM). The THM ending can be changed to JPEG if required. 
+The cameras always record two versions of each video file
 
+-   Full resolution based on the selected settings (`.mp4`)
+-   Low resolution video proxy (`.lrv`) that can be used for editing or other operations where file size matters.
 
+The `lrv` file type can be renamed to `mp4` and used for playback or further editing. Both versions
+exist in the same folder on the SD card. In addition, the cameras generate a thumbnail image (`.thm`) for each media
+file. The `thm` file type can be changed to `jpeg` if required.
 
-You can access, delete, or copy all three file types to the desired connected location via API commands.
+All three file types can be accessed, deleted, or copied via API commands.
+
+### Extract Metadata
+
+GoPro cameras write metadata in each file, using a proprietary [GPMF](https://github.com/gopro/gpmf-parser)
+format. The metadata contains information including:
+
+-   gyroscope
+-   accelerometer
+-   GPS
+-   imaging-specific metadata
+-   several computed metrics such as scene classification.
+
+The metadata file cannot be edited or read while the camera is recording but can be accessed after the file
+has been written either entirely or selectively for a specific metric such as GPS.
+
+## Multiple Simultaneous Connections
+
+Controlling multiple cameras from one client is supported via BLE, Wifi, and USB with varying functionality
+depending on the protocol used. Refer to the table below.
+
+| Protocol | Available Functionality                           | Notes                                                            |
+| -------- | ------------------------------------------------- | ---------------------------------------------------------------- |
+| BLE      | Command and control of several cameras            | Each camera can connect only to one BLE-enabled device at a time |
+| WiFI     | Command and control and live-streaming (RTMP)     | RTMP stream must be initiated via BLE                            |
+| USB      | Command and control and streaming via Webcam mode | Available only from HERO11 onward                                |
+
+## GoPro Cloud / Editing Engine
+
+The GoPro ecosystem includes a multitude of ways to edit, store, and replay content
+which are currently available for end-users as a part of paid subscription programs. Even when integrated
+into your ecosystem, GoPro cameras can take advantage of cloud backup and editing tools provided by GoPro
+including:
+
+-   auto-upload to the cloud
+-   automatic editing
+-   native live streaming
+
+The GoPro cloud interface has been tailored to the needs of individual consumers. If you are interested in
+commercial usage, reach out to our business development team. TODO how?
