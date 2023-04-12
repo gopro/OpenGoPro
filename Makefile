@@ -71,7 +71,8 @@ copyright: ## Check for and add missing copyrights
 .PHONY: setup_docker
 setup_docker:
 	@echo "🐳 Setting up docker images..."
-	@docker-compose pull
+	# @docker-compose pull
+	@docker-compose build
 
 .PHONY: setup
 setup: setup_docker ## Setup development environment
