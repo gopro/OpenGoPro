@@ -165,7 +165,6 @@
 
     <div class="initial-content">
       
-  
 
 
 
@@ -203,187 +202,366 @@
 </div>
 
 
-
 <div id="main" role="main">
-  <article class="splash" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Open GoPro">
-    <meta itemprop="description" content="An open source interface specification to communicate with a GoPro camera with accompanying demos and tutorials.">
-    
-    
+    <article class="page__hero" itemscope itemtype="https://schema.org/CreativeWork">
+        <div class="page__inner-wrap">
+            
 
-    <section class="page__content" itemprop="text">
-      
+            <section class="page__content" itemprop="text">
+                
+                <aside class="sidebar__right sticky">
+                    <nav class="toc">
+                        <header>
+                            <h4 class="nav__title">
+                                <i class="fas fa-file-alt"></i>
+                                On this page
+                            </h4>
+                        </header>
+                        <ul class="toc__menu">
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#compatibility">Compatibility</a></li>
+<li>
+<a href="#interfaces">Interfaces</a><ul>
+<li><a href="#bluetooth-low-energy-ble">Bluetooth Low Energy (BLE)</a></li>
+<li><a href="#wifi">WiFi</a></li>
+<li><a href="#usb">USB</a></li>
+</ul>
+</li>
+<li><a href="#control-camera-and-record-remotely">Control Camera and Record Remotely</a></li>
+<li><a href="#stream-video">Stream Video</a></li>
+<li><a href="#manipulate-and-transfer-media-files">Manipulate and Transfer Media Files</a></li>
+<li><a href="#extract-metadata">Extract Metadata</a></li>
+<li><a href="#use-multiple-cameras-simultaneously">Use Multiple Cameras Simultaneously</a></li>
+<li><a href="#use-gopro-cloud-and-editing-engine">Use GoPro Cloud and Editing Engine</a></li>
+</ul>
 
-    
-        <meta charset="utf-8">
-    
-    
-        <div class="badges">
-            <figure class="badge">
-                <a href="https://github.com/gopro/OpenGoPro/tags">
-                    <img src="https://img.shields.io/github/v/tag/gopro/OpenGoPro?label=version" alt="Version (latest tag)">
-                </a>
-            </figure>
-            <figure class="badge">
-                <a href="https://github.com/gopro/OpenGoPro/blob/main/LICENSE">
-                    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License">
-                </a>
-            </figure>
-        </div>
+                    </nav>
+                </aside>
+                 <h1 id="getting-started">Getting Started</h1>
 
+<p>Open GoPro is an API for interacting with GoPro cameras that is developed and managed directly by GoPro.
+It provides developers and companies with an easy-to-use programming interface and helps integrate the cameras
+into their ecosystems. The API works with off-the-shelf cameras with standard firmware, is free-to-use under
+MIT license, and publicly available online on GitHub.</p>
+
+<div class="grid">
+    <div class="unit one-third">
+        <h3>Docs</h3>
+        <p>Detailed Bluetooth Low Energy (BLE) and HTTP Interface Specifications.</p>
+        <i class="fab fa-bluetooth" style="color: blue"></i>
+        <a href="/OpenGoPro/ble_2_0">BLE Specs →</a>
+        <br>
+        <i class="fas fa-wifi"></i>
+        <a href="/OpenGoPro/http_2_0">HTTP Spec →</a>
+    </div>
+
+    <div class="unit one-third">
+        <h3>Tutorials</h3>
         <p>
-            The Open GoPro API is the primary way for users to programmatically interact
-            with a GoPro camera. It is supported on the following cameras / firmware
-            versions:
+            Walk-through tutorials in different languages / frameworks for getting
+            started.
         </p>
-        <div style="display: flex; flex-direction: column; align-items: center">
-            <table style="margin: none; width: fit-content">
-                <thead>
-                    <tr>
-                        <th style="min-width: 150px">Camera</th>
-                        <th style="min-width: 50px">Minimal Firmware Version</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Hero 9 Black</td>
-                        <td>v01.70.00</td>
-                    </tr>
-                    <tr>
-                        <td>Hero 10 Black</td>
-                        <td>v01.10.00</td>
-                    </tr>
-                    <tr>
-                        <td>Hero 11 Black</td>
-                        <td>v01.10.00</td>
-                    </tr>
-                    <tr>
-                        <td>Hero 11 Black Mini</td>
-                        <td>v01.10.00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        ✏️ <a href="/OpenGoPro/tutorials/">Tutorials →</a>
+    </div>
+
+    <div class="unit one-third">
+        <h3>Demos</h3>
         <p>
-            Open GoPro documents interfaces to HTTP (wired and wireless) and Bluetooth Low
-            Energy that allow users to perform command, control, and query actions
-            including:
+            Complete runnable examples in different languages to use as base for your
+            project.
         </p>
-        <div style="display: flex; flex-direction: column; align-items: center">
-            <table style="margin: none; width: fit-content">
-                <thead>
-                    <tr>
-                        <th style="min-width: 150px">Feature</th>
-                        <th style="min-width: 50px">BLE</th>
-                        <th style="min-width: 50px">WiFi</th>
-                        <th style="min-width: 50px">USB</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Camera Connect / Wake</td>
-                        <td>✔️</td>
-                        <td>
-</td>
-                        <td>
-</td>
-                    </tr>
-                    <tr>
-                        <td>Retrieve Camera State</td>
-                        <td>✔️</td>
-                        <td>✔️</td>
-                        <td>✔️</td>
-                    </tr>
-                    <tr>
-                        <td>Press Shutter</td>
-                        <td>✔️</td>
-                        <td>✔️*</td>
-                        <td>✔️*</td>
-                    </tr>
-                    <tr>
-                        <td>Change Settings / Modes</td>
-                        <td>✔️</td>
-                        <td>✔️</td>
-                        <td>✔️</td>
-                    </tr>
-                    <tr>
-                        <td>Live Preview</td>
-                        <td>
-</td>
-                        <td>✔️</td>
-                        <td>✔️</td>
-                    </tr>
-                    <tr>
-                        <td>Webcam / UDP Streaming (up to 1080P)</td>
-                        <td>
-</td>
-                        <td>
-</td>
-                        <td>✔️</td>
-                    </tr>
-                    <tr>
-                        <td>Media Management</td>
-                        <td>
-</td>
-                        <td>✔️</td>
-                        <td>✔️</td>
-                    </tr>
-                    <tr>
-                        <td>Metadata File Extraction</td>
-                        <td>
-</td>
-                        <td>✔️</td>
-                        <td>✔️</td>
-                    </tr>
-                    <tr>
-                        <td>External Power via same I/O</td>
-                        <td>
-</td>
-                        <td>
-</td>
-                        <td>✔️</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p style="font-size: 0.7em">* = From Hero 10 onwards</p>
-        </div>
+        ⚙️ <a href="/OpenGoPro/demos">Demos →</a>
+    </div>
+</div>
 
-        <div class="grid">
-            <div class="unit one-third">
-                <h1>Docs</h1>
-                <p>
-                    Detailed Bluetooth Low Energy (BLE) and HTTP Interface Specifications.
-                </p>
-                <i class="fab fa-bluetooth" style="color: blue"></i>
-                <a href="/OpenGoPro/ble_2_0">BLE Specs →</a>
-                <br>
-                <i class="fas fa-wifi"></i>
-                <a href="/OpenGoPro/http_2_0">HTTP Spec →</a>
-            </div>
+<h1 id="compatibility">Compatibility</h1>
 
-            <div class="unit one-third">
-                <h1>Tutorials</h1>
-                <p>
-                    Walk-through tutorials in different languages / frameworks for getting
-                    started.
-                </p>
-                ✏️ <a href="/OpenGoPro/tutorials/">Tutorials →</a>
-            </div>
+<p>Open GoPro API is supported on all camera models since Hero 9 with the following firmware version requirements:</p>
 
-            <div class="unit one-third">
-                <h1>Demos</h1>
-                <p>
-                    Complete runnable examples in different languages to use as base for
-                    your project.
-                </p>
-                ⚙️ <a href="/OpenGoPro/demos">Demos →</a>
-            </div>
-        </div>
+<table>
+  <thead>
+    <tr>
+      <th>Camera</th>
+      <th style="text-align: center">Minimum FW Version</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Hero 9 Black</td>
+      <td style="text-align: center">v01.70.00</td>
+    </tr>
+    <tr>
+      <td>Hero 10 Black</td>
+      <td style="text-align: center">v01.10.00</td>
+    </tr>
+    <tr>
+      <td>Hero 11 Black</td>
+      <td style="text-align: center">v01.10.00</td>
+    </tr>
+    <tr>
+      <td>Hero 11 Black Mini</td>
+      <td style="text-align: center">v01.10.00</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>While we strive to provide the same API functionality and logic for all newly launched cameras, minor changes
+are sometimes necessary. These are typically a consequence of HW component upgrades or improving or optimizing
+FW architecture. Therefore support for some functions and commands might be model-specific. This is
+described in the compatibility tables in the documentation.</p>
+
+<h1 id="interfaces">Interfaces</h1>
+
+<p>Users can interact with the camera over BLE, WiFi, or wired USB. Both Wifi and USB are operated through HTTP
+server with identical commands. It is important to note that due to hard constraints of power and the hardware
+design, some commands in Wi-Fi are not available in BLE, and vice-versa.</p>
+
+<h2 id="bluetooth-low-energy-ble">Bluetooth Low Energy (BLE)</h2>
+
+<p>BLE is the fastest way to control the cameras and allow command and control functionality. BLE advertising is used
+for initial camera pairing. BLE is a requirement for any type of Wireless control since camera WiFi must be
+enabled upon each connection via BLE.</p>
+
+<h2 id="wifi">WiFi</h2>
+
+<p>WiFi needs to be switched on by a BLE command. Besides command &amp; control, Wi-Fi also allows for video streaming
+and media manipulation. With the exception of live-streaming, the camera always acts as an Wi-Fi access point
+that other devices need to connect to. For more information, see the
+<a href="/OpenGoPro/http_2_0">Wifi Specification</a></p>
+
+<h2 id="usb">USB</h2>
+
+<p>The USB connection can provide both data transfer and power to the camera. The power provided by the USB is
+sufficient for the camera to run indefinitely without the internal battery. However, the wired connection
+doesn’t allow for programmatic power on and off. Camera needs to be switched on manually or via BLE, and
+after the camera goes to sleep, it must be “woken up” again with a button press or via BLE. For monitoring
+and other use cases where the camera must be operated and switched on and off only via USB cable, there is a
+workaround with the Labs firmware - more detail in the <a href="/OpenGoPro/faq">FAQ</a>.</p>
+
+<h1 id="control-camera-and-record-remotely">Control Camera and Record Remotely</h1>
+
+<p>Here is a summary of currently supported per-interface features:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>BLE</th>
+      <th>WiFi</th>
+      <th>USB</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Retrieve Camera State</td>
+      <td>✔️</td>
+      <td>✔️</td>
+      <td>✔️</td>
+    </tr>
+    <tr>
+      <td>Change Settings / Mode</td>
+      <td>✔️</td>
+      <td>✔️</td>
+      <td>✔️</td>
+    </tr>
+    <tr>
+      <td>Encode (Press shutter)</td>
+      <td>✔️</td>
+      <td>✔️</td>
+      <td>✔️</td>
+    </tr>
+    <tr>
+      <td>Stream Video</td>
+      <td> </td>
+      <td>✔️</td>
+      <td>✔️</td>
+    </tr>
+    <tr>
+      <td>Media Management</td>
+      <td> </td>
+      <td>✔️</td>
+      <td>✔️</td>
+    </tr>
+    <tr>
+      <td>Metadata Extraction</td>
+      <td> </td>
+      <td>✔️</td>
+      <td>✔️</td>
+    </tr>
+    <tr>
+      <td>Camera Connect / Wake</td>
+      <td>✔️</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>BLE, WiFi, and USB can be used to change settings and modes, start and stop capture, query remaining battery
+life, SD card capacity, or camera status (such as “is it recording?”).  Most command-and-control functionality is
+disabled while the camera is recording video or is otherwise busy.</p>
+
+<p>There are 3 main recording modes for the cameras: photo, video, and timelapse.
+Within each mode, one can choose different frame rates, resolutions and FOV options. Note that not all cameras
+have all 3 recording modes, not all settings combinations are available for all camera models. The specification
+section links to json and xls files that show all available setting combinations per camera model.</p>
+
+<h1 id="stream-video">Stream Video</h1>
+
+<p>Besides recording, the cameras can also stream video feed. The API provides 3 different ways to stream videos
+directly from the cameras, either via USB or wireless connection.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Stream Type</th>
+      <th>Description</th>
+      <th style="text-align: center">WiFi</th>
+      <th style="text-align: center">USB</th>
+      <th style="text-align: center">Record while Streaming</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Preview
+<br>
+Stream
+<br>
+ </td>
+      <td>Moderate video quality, primarily for framing
+<br>
+Low latency stabilization
+<br>
+Low power consumption</td>
+      <td style="text-align: center"> 
+<br>
+✔️
+<br>
+ </td>
+      <td style="text-align: center"> 
+<br>
+✔️
+<br>
+ </td>
+      <td style="text-align: center">
+<br><br>
+ </td>
+    </tr>
     
+    
+    <tr>
+      <td style="text-align: center">Webcam
+<br>
+Mode</td>
+      <td>Cinematic video quality
+<br>
+Optional low latency stabilization</td>
+      <td style="text-align: center"> 
+<br>
+✔️</td>
+      <td style="text-align: center"> 
+<br>
+✔️</td>
+      <td style="text-align: center">
+<br>
+ </td>
+    </tr>
+    
+    <tr>
+      <td style="text-align: center">Live
+<br>
+Stream</td>
+      <td>Cinematic video quality
+<br>
+Optional hypersmooth stabilization</td>
+      <td style="text-align: center"> 
+<br>
+ </td>
+      <td style="text-align: center"> 
+<br>
+✔️</td>
+      <td style="text-align: center">
+<br>
+✔️</td>
+    </tr>
+    
+  </tbody>
+</table>
 
+<p>Each of the streaming types has different resolutions, bit rates, imaging pipelines, and different levels of
+configurability. Refer to the <a href="/OpenGoPro/faq">FAQ</a>.</p>
 
-    </section>
-  </article>
+<h1 id="manipulate-and-transfer-media-files">Manipulate and Transfer Media Files</h1>
+
+<p>When the camera records video, time lapse, or photo, the media is saved on the SD card with filenames according
+to the GoPro <a href="https://community.gopro.com/s/article/GoPro-Camera-File-Naming-Convention">File Naming Convention</a>.</p>
+
+<p>The cameras always record two versions of each video file</p>
+
+<ul>
+  <li>Full resolution based on the selected settings (<code class="language-plaintext highlighter-rouge">.mp4</code>)</li>
+  <li>Low resolution video proxy (<code class="language-plaintext highlighter-rouge">.lrv</code>) that can be used for editing or other operations where file size matters.</li>
+</ul>
+
+<p>The <code class="language-plaintext highlighter-rouge">lrv</code> file type can be renamed to <code class="language-plaintext highlighter-rouge">mp4</code> and used for playback or further editing. Both versions
+exist in the same folder on the SD card. In addition, the cameras generate a thumbnail image (<code class="language-plaintext highlighter-rouge">.thm</code>) for each media
+file. The <code class="language-plaintext highlighter-rouge">thm</code> file type can be changed to <code class="language-plaintext highlighter-rouge">jpeg</code> if required.</p>
+
+<p>All three file types can be accessed, deleted, or copied via API commands.</p>
+
+<h1 id="extract-metadata">Extract Metadata</h1>
+
+<p>GoPro cameras write metadata in each file, using a proprietary <a href="https://github.com/gopro/gpmf-parser">GPMF</a>
+format. The metadata contains information including gyroscope, accelerometer, GPS, imaging-specific metadata, and several computed metrics such as scene classification.</p>
+
+<p>The metadata file cannot be edited or read while the camera is recording but can be accessed after the file
+has been written either entirely or selectively for a specific metric such as GPS.</p>
+
+<h1 id="use-multiple-cameras-simultaneously">Use Multiple Cameras Simultaneously</h1>
+
+<p>Controlling multiple cameras from one client is supported via BLE, Wifi, and USB with varying functionality
+depending on the protocol used. Refer to the table below.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Protocol</th>
+      <th>Available Functionality</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>BLE</td>
+      <td>Command and control of several cameras</td>
+      <td>Each camera can connect only to one BLE-enabled device at a time</td>
+    </tr>
+    <tr>
+      <td>WiFI</td>
+      <td>Command and control and live-streaming (RTMP)</td>
+      <td>RTMP stream must be initiated via BLE</td>
+    </tr>
+    <tr>
+      <td>USB</td>
+      <td>Command and control and streaming via Webcam mode</td>
+      <td>Available only from HERO11 onward</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="use-gopro-cloud-and-editing-engine">Use GoPro Cloud and Editing Engine</h1>
+
+<p>The GoPro ecosystem includes a multitude of ways to edit, store, and replay content
+which are currently available for end-users as a part of paid subscription programs. Even when integrated
+into your ecosystem, GoPro cameras can take advantage of cloud backup and editing tools provided by GoPro
+including auto-upload to the cloud, automatic editing, and native live streaming.</p>
+
+<p>The GoPro cloud interface has been tailored to the needs of individual consumers. If you are interested in
+commercial usage, reach out to our business development team.</p>
+
+            </section>
+        </div>
+    </article>
 </div>
 
     </div>
