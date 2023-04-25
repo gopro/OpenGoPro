@@ -10,7 +10,7 @@ $doc-font-size: 16 !default;
 
 /* paragraph indention */
 $paragraph-indent: false !default; // true, false (default)
-$indent-var: 1.3em !default;
+$indent-var: 0.3em !default;
 
 /* system typefaces */
 $serif: Georgia, Times, serif !default;
@@ -46,7 +46,7 @@ $type-size-8: 0.625em !default; // ~10px
 /* headline scale */
 $h-size-1: 1.563em !default; // ~25.008px
 $h-size-2: 1.25em !default; // ~20px
-$h-size-3: 1.125em !default; // ~18px
+$h-size-3: 1.07em !default; // ~18px
 $h-size-4: 1.0625em !default; // ~17px
 $h-size-5: 1.03125em !default; // ~16.5px
 $h-size-6: 1em !default; // ~16px
@@ -60,6 +60,8 @@ $dark-gray: mix(#000, $gray, 50%) !default;
 $darker-gray: mix(#000, $gray, 60%) !default;
 $light-gray: mix(#fff, $gray, 50%) !default;
 $lighter-gray: mix(#fff, $gray, 90%) !default;
+$dark-blue: #355681 !default;
+$light-blue: #0092ca !default;
 
 $background-color: #fff !default;
 $code-background-color: #fafafa !default;
@@ -148,14 +150,18 @@ $small: 600px !default;
 $medium: 768px !default;
 $medium-wide: 900px !default;
 $large: 1224px !default;
-$x-large: 1780px !default;
+$x-large: 1900px !default;
 $max-width: $x-large !default;
 
 /*
    Grid
    ========================================================================== */
 
-$right-sidebar-width-narrow: 200px !default;
+$left-sidebar-width-narrow: 200px !default;
+$left-sidebar-width: 250px !default;
+$left-sidebar-width-wide: 350px !default;
+
+$right-sidebar-width-narrow: 300px !default;
 $right-sidebar-width: 300px !default;
 $right-sidebar-width-wide: 350px !default;
 
@@ -172,5 +178,4 @@ $navicon-height: 0.25rem !default;
 $global-transition: all 0.2s ease-in-out !default;
 $intro-transition: intro 0.3s both !default;
 $masthead-height: 4em;
-$masthead-color: #2d2d2d;
 $splash-width: 40em;

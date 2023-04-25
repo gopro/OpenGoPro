@@ -16,7 +16,7 @@ until curl http://localhost:4998 >/dev/null 2>&1; do
     sleep 1
 done
 echo "🔗 Checking links"
-docker run --rm --network=open_gopro ghcr.io/linkchecker/linkchecker:354ea93 \
+docker run --rm --network=open_gopro ghcr.io/linkchecker/linkchecker:2ddae7f \
     --check-extern \
     --ignore-url ".*10\.5\.5\.9.*" \
     --timeout 5 \

@@ -24,8 +24,8 @@ class Demo:
     FRONT_MATTER_TEMPLATE: ClassVar[
         str
     ] = """---
-github: https://github.com/gopro/OpenGoPro/tree/main/demos/{dir}
-permalink: /demos/{dir}
+github: https://github.com/gopro/OpenGoPro/tree/main/{dir}
+permalink: /{dir}
 snippet: {snippet}
 ---
 
@@ -59,6 +59,8 @@ def get_demo_meta(meta: dict[str, Any], location: Path) -> Demo:
     else:
         raise RuntimeError(f"No meta in demos.json found for {location}")
 
+def normalize(demo: str) -> str:
+    return demo.replace(r"../../../docs/assets", r"/assets")
 
 def main(args: argparse.Namespace):
     args.output.mkdir(exist_ok=True)
@@ -92,7 +94,7 @@ def main(args: argparse.Namespace):
         # Append front matter and write to site folder
         with open(readme) as read_fp, open(target, "a") as write_fp:
             write_fp.write(demo.create_front_matter())
-            write_fp.write(read_fp.read())
+            write_fp.write(normalize(read_fp.read()))
 
         demos.append(demo)
 
@@ -100,9 +102,6 @@ def main(args: argparse.Namespace):
     demos_readme: str
     with open(args.input / "README.md") as fp:
         demos_readme = fp.read()
-
-
-
 
 
 def parse_arguments() -> argparse.Namespace:

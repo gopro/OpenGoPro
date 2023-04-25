@@ -7,6 +7,7 @@ redirect_from:
     - /csharp
     - /c_c++
     - /ionic
+    - /bash
 ---
 
 # Demos

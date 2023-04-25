@@ -2,7 +2,6 @@
 /* This copyright was auto-generated on Wed, Sep  1, 2021  5:06:11 PM */
 
 /* Tabs */
-
 .tab {
     display: flex;
     flex-wrap: wrap;
@@ -107,6 +106,8 @@
     overflow: hidden;
     margin: 1em;
     font-style: italic;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
 }
 
 .callout.tip {
@@ -126,17 +127,6 @@
 .callout.warning {
     background-color: #fbbeb8;
     border-left: solid 8px #df5142;
-}
-
-/* Header text color */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: #03529f;
 }
 
 /* Center diagrams */
