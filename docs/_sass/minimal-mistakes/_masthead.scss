@@ -6,7 +6,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: $masthead-color;
+  background-color: $dark-gray;
   height: $masthead-height;
   border-bottom: 1px solid $border-color;
   -webkit-animation: $intro-transition;
@@ -64,7 +64,7 @@
   margin-right: 0;
   width: 100%;
   clear: both;
-  background: $masthead-color;
+  background: $dark-gray;
 
   .site-nav {
     margin-left: 0;

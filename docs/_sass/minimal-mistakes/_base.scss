@@ -21,41 +21,63 @@ body {
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0.5em 0 0.5em;
-  line-height: 1.2;
-  font-family: $header-font-family;
-  font-weight: bold;
-}
-
 h1 {
-  margin-top: 0;
-  font-size: $h-size-1;
+  margin: 0.5em 0 0.5em 0;
+  font-weight: normal;
+  position: relative;
+  text-shadow: 0 -1px rgba(0, 0, 0, 0.6);
+  font-size: $h-size-2;
+  line-height: 40px;
+  background: $light-blue;
+  border: 1px solid #fff;
+  padding: 5px 15px;
+  color: white;
+  border-radius: 0 10px 0 10px;
+  box-shadow: inset 0 0 5px rgba(53, 86, 129, 0.5);
 }
 
 h2 {
-  font-size: $h-size-2;
+  margin: 1em 0 0.5em 0;
+  font-weight: 600;
+  position: relative;
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.4);
+  font-size: $h-size-3;
+  line-height: 40px;
+  color: $light-blue;
+  text-transform: uppercase;
+  border-bottom: 2px solid rgba(53, 86, 129, 0.3);
 }
 
 h3 {
+  margin: 1em 0 0.5em 0;
+  font-weight: 600;
+  position: relative;
+  // text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
   font-size: $h-size-3;
+  line-height: 30px;
+  color: $dark-blue;
+  border-left: 6px solid $light-blue;
+  padding-left: 0.3em;
 }
 
 h4 {
+  margin: 1em 0 0.5em 0;
+  font-weight: 600;
+  position: relative;
   font-size: $h-size-4;
+  line-height: 20px;
+  color: #788699;
 }
 
 h5 {
-  font-size: $h-size-5;
+  font-size: $h-size-4;
+  color: $light-blue;
 }
 
 h6 {
   font-size: $h-size-6;
+  color: $light-blue;
 }
 
 small,

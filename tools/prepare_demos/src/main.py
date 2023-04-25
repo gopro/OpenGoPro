@@ -25,7 +25,7 @@ class Demo:
         str
     ] = """---
 github: https://github.com/gopro/OpenGoPro/tree/main/{dir}
-permalink: /demos/{dir}
+permalink: /{dir}
 snippet: {snippet}
 ---
 

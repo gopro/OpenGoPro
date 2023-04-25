@@ -3,274 +3,295 @@
    ========================================================================== */
 
 #main {
-  @include clearfix;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1em;
-  padding-right: 1em;
-  -webkit-animation: $intro-transition;
-  animation: $intro-transition;
-  max-width: 100%;
-  -webkit-animation-delay: 0.15s;
-  animation-delay: 0.15s;
+    @include clearfix;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1em;
+    padding-right: 0em;
+    -webkit-animation: $intro-transition;
+    animation: $intro-transition;
+    max-width: 100%;
+    -webkit-animation-delay: 0.15s;
+    animation-delay: 0.15s;
 
-  @include breakpoint($x-large) {
-    max-width: $max-width;
-  }
+    @include breakpoint($x-large) {
+        max-width: $max-width;
+    }
 }
 
 body {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  min-height: 100vh;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-          flex-direction: column;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    min-height: 100vh;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
 }
 
 .initial-content,
 .search-content {
-  flex: 1 0 auto;
+    flex: 1 0 auto;
 }
 
 .main__splash #main {
-  max-width: 80%;
+    max-width: 80%;
 }
 
 .page {
-  @include breakpoint($large) {
-    float: right;
-    width: calc(100% - #{$right-sidebar-width-narrow});
-    padding-right: $right-sidebar-width-narrow;
-  }
-
-  @include breakpoint($x-large) {
-    width: calc(100% - #{$right-sidebar-width});
-    padding-right: $right-sidebar-width;
-  }
-
-  .page__inner-wrap {
-    float: left;
-    margin-top: 1em;
-    margin-left: 0;
-    margin-right: 0;
-    width: 100%;
-    clear: both;
-
-    .page__content,
-    .page__meta,
-    .page__share {
-      position: relative;
-      float: left;
-      margin-left: 0;
-      margin-right: 0;
-      width: 100%;
-      clear: both;
+    @include breakpoint($large) {
+        float: right;
+        width: calc(100% - #{$left-sidebar-width-narrow});
+        padding-right: $right-sidebar-width-narrow;
     }
-  }
+
+    @include breakpoint($x-large) {
+        width: calc(100% - #{$left-sidebar-width});
+        padding-right: $right-sidebar-width;
+    }
+
+    .page__inner-wrap {
+        float: left;
+        margin-top: 0;
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+        clear: both;
+
+        .page__content,
+        .page__meta,
+        .page__share {
+            position: relative;
+            float: left;
+            margin-left: 0;
+            margin-right: 0;
+            width: 100%;
+            clear: both;
+        }
+    }
 }
 
 .page__title {
-  margin-top: 0;
-  line-height: 1;
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: $dark-blue;
+    padding: 0;
+    font-size: 2em;
 
-  a {
-    color: $text-color;
-    text-decoration: none;
-  }
+    margin-top: 0;
+    line-height: 1;
 
-  & + .page__meta {
-    margin-top: -0.5em;
-  }
+    a {
+        color: $text-color;
+        text-decoration: none;
+    }
+
+    & + .page__meta {
+        margin-top: -0.5em;
+    }
 }
 
 .page__lead {
-  font-family: $global-font-family;
-  font-size: $type-size-4;
+    font-family: $global-font-family;
+    font-size: $type-size-4;
 }
 
 .page__content {
-  h2 {
-    padding-bottom: 0.5em;
-    border-bottom: 1px solid $border-color;
-  }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        .header-link {
+            position: relative;
+            left: 0.5em;
+            opacity: 0;
+            font-size: 0.8em;
+            -webkit-transition: opacity 0.2s ease-in-out 0.1s;
+            -moz-transition: opacity 0.2s ease-in-out 0.1s;
+            -o-transition: opacity 0.2s ease-in-out 0.1s;
+            transition: opacity 0.2s ease-in-out 0.1s;
+        }
 
-	h1, h2, h3, h4, h5, h6 {
-		.header-link {
-			position: relative;
-			left: 0.5em;
-			opacity: 0;
-			font-size: 0.8em;
-			-webkit-transition: opacity 0.2s ease-in-out 0.1s;
-			-moz-transition: opacity 0.2s ease-in-out 0.1s;
-			-o-transition: opacity 0.2s ease-in-out 0.1s;
-			transition: opacity 0.2s ease-in-out 0.1s;
-		}
-
-		&:hover .header-link {
-			opacity: 1;
-		}
-	}
-
-  p,
-  li,
-  dl {
-    font-size: 1em;
-  }
-
-  /* paragraph indents */
-  p {
-    margin: 0 0 $indent-var;
-
-    /* sibling indentation*/
-    @if $paragraph-indent == true {
-      & + p {
-        text-indent: $indent-var;
-        margin-top: -($indent-var);
-      }
+        &:hover .header-link {
+            opacity: 1;
+        }
     }
-  }
 
-  a:not(.btn) {
-    &:hover {
-      text-decoration: underline;
-
-      img {
-        box-shadow: 0 0 10px rgba(#000, 0.25);
-      }
+    p,
+    li,
+    dl {
+        font-size: 1em;
     }
-  }
 
-  :not(pre) > code {
-    padding-top: 0.1rem;
-    padding-bottom: 0.1rem;
-    font-size: 0.8em;
-    background: $code-background-color;
-    border-radius: $border-radius;
+    /* paragraph indents */
+    p {
+        margin: 0 0 $indent-var;
 
-    &::before,
-    &::after {
-      letter-spacing: -0.2em;
-      content: "\00a0"; /* non-breaking space*/
+        /* sibling indentation*/
+        @if $paragraph-indent == true {
+            & + p {
+                text-indent: $indent-var;
+                margin-top: -($indent-var);
+            }
+        }
     }
-  }
 
-  dt {
-    margin-top: 1em;
-    font-family: $sans-serif;
-    font-weight: bold;
-  }
+    a:not(.btn) {
+        &:hover {
+            text-decoration: underline;
 
-  dd {
-    margin-left: 1em;
-    font-family: $sans-serif;
-    font-size: $type-size-6;
-  }
+            img {
+                box-shadow: 0 0 10px rgba(#000, 0.25);
+            }
+        }
+    }
 
-  .small {
-    font-size: $type-size-6;
-  }
+    :not(pre) > code {
+        padding-top: 0.1rem;
+        padding-bottom: 0.1rem;
+        font-size: 0.8em;
+        background: $code-background-color;
+        border-radius: $border-radius;
 
-  /* blockquote citations */
-  blockquote + .small {
-    margin-top: -1.5em;
-    padding-left: 1.25rem;
-  }
+        &::before,
+        &::after {
+            letter-spacing: -0.2em;
+            content: '\00a0'; /* non-breaking space*/
+        }
+    }
+
+    dt {
+        margin-top: 1em;
+        font-family: $sans-serif;
+        font-weight: bold;
+    }
+
+    dd {
+        margin-left: 1em;
+        font-family: $sans-serif;
+        font-size: $type-size-6;
+    }
+
+    .small {
+        font-size: $type-size-6;
+    }
+
+    /* blockquote citations */
+    blockquote + .small {
+        margin-top: -1.5em;
+        padding-left: 1.25rem;
+    }
 }
 
 .page__hero {
-  position: relative;
-  margin-bottom: 2em;
-  @include clearfix;
-  -webkit-animation: $intro-transition;
-  animation: $intro-transition;
-  -webkit-animation-delay: 0.25s;
-  animation-delay: 0.25s;
+    @include breakpoint($large) {
+        float: right;
+        width: 100%;
+        padding-right: $right-sidebar-width-narrow;
+    }
 
-  &--overlay {
+    @include breakpoint($x-large) {
+        max-width: 85%;
+        padding-right: $right-sidebar-width;
+    }
+
     position: relative;
-    margin-bottom: 1.2em;
-    padding: 1em 0;
+    margin-bottom: 2em;
     @include clearfix;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
     -webkit-animation: $intro-transition;
     animation: $intro-transition;
     -webkit-animation-delay: 0.25s;
     animation-delay: 0.25s;
+
+    &--overlay {
+        position: relative;
+        margin-bottom: 0em;
+        padding: 1em 0;
+        @include clearfix;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        -webkit-animation: $intro-transition;
+        animation: $intro-transition;
+        -webkit-animation-delay: 0.25s;
+        animation-delay: 0.25s;
         max-width: $splash-width;
 
-    @include breakpoint($small) {
-      max-width: 100%;
-    }
+        @include breakpoint($small) {
+            max-width: 100%;
+        }
 
-    a {
-      color: #fff;
-    }
+        a {
+            color: #fff;
+        }
 
-    .wrapper {
-      max-width: 80%;
-      padding-left: 1em;
-      padding-right: 1em;
-      @include breakpoint($medium) {
-        max-width: $splash-width;
-      }
-    }
+        .wrapper {
+            max-width: 80%;
+            padding-left: 1em;
+            padding-right: 1em;
+            @include breakpoint($medium) {
+                max-width: $splash-width;
+            }
+        }
 
-    .page__title,
-    .page__meta,
-    .page__lead,
-    .btn {
-      color: #fff;
-      text-shadow: 1px 1px 4px rgba(#000, 0.5);
-    }
+        .page__title,
+        .page__meta,
+        .page__lead,
+        .btn {
+            color: #fff;
+            text-shadow: 1px 1px 4px rgba(#000, 0.5);
+        }
 
-    .page__lead {
-      max-width: $medium;
-    }
+        .page__lead {
+            max-width: $medium;
+        }
 
-    .page__title {
-      font-size: $type-size-2;
+        .page__title {
+            font-size: $type-size-2;
+            font-weight: bold;
+            background: none;
+            border: none;
 
-      @include breakpoint($small) {
-        font-size: $type-size-1;
-      }
+            @include breakpoint($small) {
+                font-size: $type-size-1;
+            }
+        }
     }
-  }
 }
 
 .page__hero-image {
-  width: 100%;
-  height: auto;
-  -ms-interpolation-mode: bicubic;
+    width: 100%;
+    height: auto;
+    -ms-interpolation-mode: bicubic;
 }
 
 .page__hero-caption {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin: 0 auto;
-  padding: 2px 5px;
-  color: #fff;
-  font-family: $caption-font-family;
-  font-size: $type-size-7;
-  background: #000;
-  text-align: right;
-  z-index: 5;
-  opacity: 0.5;
-  border-radius: $border-radius 0 0 0;
-
-  @include breakpoint($large) {
-    padding: 5px 10px;
-  }
-
-  a {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 2px 5px;
     color: #fff;
-    text-decoration: none;
-  }
+    font-family: $caption-font-family;
+    font-size: $type-size-7;
+    background: #000;
+    text-align: right;
+    z-index: 5;
+    opacity: 0.5;
+    border-radius: $border-radius 0 0 0;
+
+    @include breakpoint($large) {
+        padding: 5px 10px;
+    }
+
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
 }
 
 /*
@@ -278,28 +299,28 @@ body {
    ========================================================================== */
 
 .page__share {
-  margin-top: 2em;
-  padding-top: 1em;
-  border-top: 1px solid $border-color;
+    margin-top: 2em;
+    padding-top: 1em;
+    border-top: 1px solid $border-color;
 
-  @include breakpoint(max-width $small) {
-    .btn span {
-      border: 0;
-      clip: rect(0 0 0 0);
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      padding: 0;
-      position: absolute;
-      width: 1px;
+    @include breakpoint(max-width $small) {
+        .btn span {
+            border: 0;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
     }
-  }
 }
 
 .page__share-title {
-  margin-bottom: 10px;
-  font-size: $type-size-6;
-  text-transform: uppercase;
+    margin-bottom: 10px;
+    font-size: $type-size-6;
+    text-transform: uppercase;
 }
 
 /*
@@ -307,30 +328,30 @@ body {
    ========================================================================== */
 
 .page__meta {
-  margin-top: 2em;
-  color: $muted-text-color;
-  font-family: $sans-serif;
-  font-size: $type-size-6;
+    margin-top: 2em;
+    color: $muted-text-color;
+    font-family: $sans-serif;
+    font-size: $type-size-6;
 
-  p {
-    margin: 0;
-  }
+    p {
+        margin: 0;
+    }
 
-  a {
-    color: inherit;
-  }
+    a {
+        color: inherit;
+    }
 }
 
 .page__meta-title {
-  margin-bottom: 10px;
-  font-size: $type-size-6;
-  text-transform: uppercase;
+    margin-bottom: 10px;
+    font-size: $type-size-6;
+    text-transform: uppercase;
 }
 
 .page__meta-sep::before {
-  content: "\2022";
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+    content: '\2022';
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 
 /*
@@ -338,96 +359,96 @@ body {
    ========================================================================== */
 
 .page__taxonomy {
-  .sep {
-    display: none;
-  }
+    .sep {
+        display: none;
+    }
 
-  strong {
-    margin-right: 10px;
-  }
+    strong {
+        margin-right: 10px;
+    }
 }
 
 .page__taxonomy-item {
-  display: inline-block;
-  margin-right: 5px;
-  margin-bottom: 8px;
-  padding: 5px 10px;
-  text-decoration: none;
-  border: 1px solid mix(#000, $border-color, 25%);
-  border-radius: $border-radius;
-
-  &:hover {
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 8px;
+    padding: 5px 10px;
     text-decoration: none;
-    color: $link-color-hover;
-  }
+    border: 1px solid mix(#000, $border-color, 25%);
+    border-radius: $border-radius;
+
+    &:hover {
+        text-decoration: none;
+        color: $link-color-hover;
+    }
 }
 
 .taxonomy__section {
-  margin-bottom: 2em;
-  padding-bottom: 1em;
+    margin-bottom: 2em;
+    padding-bottom: 1em;
 
-  &:not(:last-child) {
-    border-bottom: solid 1px $border-color;
-  }
+    &:not(:last-child) {
+        border-bottom: solid 1px $border-color;
+    }
 
-  .archive__item-title {
-    margin-top: 0;
-  }
+    .archive__item-title {
+        margin-top: 0;
+    }
 
-  .archive__subtitle {
-    clear: both;
-    border: 0;
-  }
+    .archive__subtitle {
+        clear: both;
+        border: 0;
+    }
 
-  + .taxonomy__section {
-    margin-top: 2em;
-  }
+    + .taxonomy__section {
+        margin-top: 2em;
+    }
 }
 
 .taxonomy__title {
-  margin-bottom: 0.5em;
-  color: $muted-text-color;
+    margin-bottom: 0.5em;
+    color: $muted-text-color;
 }
 
 .taxonomy__count {
-  color: $muted-text-color;
+    color: $muted-text-color;
 }
 
 .taxonomy__index {
-  display: grid;
-  grid-column-gap: 2em;
-  grid-template-columns: repeat(2, 1fr);
-  margin: 1.414em 0;
-  padding: 0;
-  font-size: 0.75em;
-  list-style: none;
+    display: grid;
+    grid-column-gap: 2em;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 1.414em 0;
+    padding: 0;
+    font-size: 0.75em;
+    list-style: none;
 
-  @include breakpoint($large) {
-    grid-template-columns: repeat(3, 1fr);
-  }
+    @include breakpoint($large) {
+        grid-template-columns: repeat(3, 1fr);
+    }
 
-  a {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    padding: 0.25em 0;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    color: inherit;
-    text-decoration: none;
-    border-bottom: 1px solid $border-color;
-  }
+    a {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        padding: 0.25em 0;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid $border-color;
+    }
 }
 
 .back-to-top {
-  display: block;
-  clear: both;
-  color: $muted-text-color;
-  font-size: 0.6em;
-  text-transform: uppercase;
-  text-align: right;
-  text-decoration: none;
+    display: block;
+    clear: both;
+    color: $muted-text-color;
+    font-size: 0.6em;
+    text-transform: uppercase;
+    text-align: right;
+    text-decoration: none;
 }
 
 /*
@@ -435,97 +456,97 @@ body {
    ========================================================================== */
 
 .page__comments {
-  float: left;
-  margin-left: 0;
-  margin-right: 0;
-  width: 100%;
-  clear: both;
+    float: left;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    clear: both;
 }
 
 .page__comments-title {
-  margin-top: 2rem;
-  margin-bottom: 10px;
-  padding-top: 2rem;
-  font-size: $type-size-6;
-  border-top: 1px solid $border-color;
-  text-transform: uppercase;
+    margin-top: 2rem;
+    margin-bottom: 10px;
+    padding-top: 2rem;
+    font-size: $type-size-6;
+    border-top: 1px solid $border-color;
+    text-transform: uppercase;
 }
 
 .page__comments-form {
-  -webkit-transition: $global-transition;
-  transition: $global-transition;
+    -webkit-transition: $global-transition;
+    transition: $global-transition;
 
-  &.disabled {
-    input,
-    button,
-    textarea,
-    label {
-      pointer-events: none;
-      cursor: not-allowed;
-      filter: alpha(opacity=65);
-      box-shadow: none;
-      opacity: 0.65;
+    &.disabled {
+        input,
+        button,
+        textarea,
+        label {
+            pointer-events: none;
+            cursor: not-allowed;
+            filter: alpha(opacity=65);
+            box-shadow: none;
+            opacity: 0.65;
+        }
     }
-  }
 }
 
 .comment {
-  @include clearfix();
-  margin: 1em 0;
+    @include clearfix();
+    margin: 1em 0;
 
-  &:not(:last-child) {
-    border-bottom: 1px solid $border-color;
-  }
+    &:not(:last-child) {
+        border-bottom: 1px solid $border-color;
+    }
 }
 
 .comment__avatar-wrapper {
-  float: left;
-  width: 60px;
-  height: 60px;
+    float: left;
+    width: 60px;
+    height: 60px;
 
-  @include breakpoint($large) {
-    width: 100px;
-    height: 100px;
-  }
+    @include breakpoint($large) {
+        width: 100px;
+        height: 100px;
+    }
 }
 
 .comment__avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 
-  @include breakpoint($large) {
-    width: 80px;
-    height: 80px;
-    padding: 5px;
-    border: 1px solid $border-color;
-  }
+    @include breakpoint($large) {
+        width: 80px;
+        height: 80px;
+        padding: 5px;
+        border: 1px solid $border-color;
+    }
 }
 
 .comment__content-wrapper {
-  float: right;
-  width: calc(100% - 60px);
+    float: right;
+    width: calc(100% - 60px);
 
-  @include breakpoint($large) {
-    width: calc(100% - 100px);
-  }
+    @include breakpoint($large) {
+        width: calc(100% - 100px);
+    }
 }
 
 .comment__author {
-  margin: 0;
+    margin: 0;
 
-  a {
-    text-decoration: none;
-  }
+    a {
+        text-decoration: none;
+    }
 }
 
 .comment__date {
-  @extend .page__meta;
-  margin: 0;
+    @extend .page__meta;
+    margin: 0;
 
-  a {
-    text-decoration: none;
-  }
+    a {
+        text-decoration: none;
+    }
 }
 
 /*
@@ -533,31 +554,31 @@ body {
    ========================================================================== */
 
 .page__related {
-  @include clearfix();
-  float: left;
-  margin-top: 2em;
-  padding-top: 1em;
-  border-top: 1px solid $border-color;
+    @include clearfix();
+    float: left;
+    margin-top: 2em;
+    padding-top: 1em;
+    border-top: 1px solid $border-color;
 
-  @include breakpoint($large) {
-    float: right;
-    width: calc(100% - #{$right-sidebar-width-narrow});
-  }
+    @include breakpoint($large) {
+        float: right;
+        width: calc(100% - #{$right-sidebar-width-narrow});
+    }
 
-  @include breakpoint($x-large) {
-    width: calc(100% - #{$right-sidebar-width});
-  }
+    @include breakpoint($x-large) {
+        width: calc(100% - #{$right-sidebar-width});
+    }
 
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
 }
 
 .page__related-title {
-  margin-bottom: 10px;
-  font-size: $type-size-6;
-  text-transform: uppercase;
+    margin-bottom: 10px;
+    font-size: $type-size-6;
+    text-transform: uppercase;
 }
 
 /*
@@ -565,23 +586,23 @@ body {
    ========================================================================== */
 
 .wide {
-  .page {
-    @include breakpoint($large) {
-      padding-right: 0;
+    .page {
+        @include breakpoint($large) {
+            padding-right: 0;
+        }
+
+        @include breakpoint($x-large) {
+            padding-right: 0;
+        }
     }
 
-    @include breakpoint($x-large) {
-      padding-right: 0;
-    }
-  }
+    .page__related {
+        @include breakpoint($large) {
+            padding-right: 0;
+        }
 
-  .page__related {
-    @include breakpoint($large) {
-      padding-right: 0;
+        @include breakpoint($x-large) {
+            padding-right: 0;
+        }
     }
-
-    @include breakpoint($x-large) {
-      padding-right: 0;
-    }
-  }
 }
