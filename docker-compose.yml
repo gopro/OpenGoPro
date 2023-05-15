@@ -34,7 +34,7 @@ services:
             - open_gopro
 
     plant_uml:
-        image: plantuml/plantuml-server
+        image: plantuml/plantuml-server:jetty-v1.2023.6
         container_name: plant_uml
         ports:
             - '8080:8080'
