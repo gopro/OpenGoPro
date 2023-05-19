@@ -22,6 +22,7 @@ services:
             # Set (to anything other than develop) so that jekyll build won't overwrite site.url
             # https://github.com/jekyll/jekyll/issues/5743
             - JEKYLL_ENV=production
+        # TODO Default parameter shell expansion was somehow not working in github actions so we use .env file
         command: '${COMMAND}' # Set via .env file
         networks:
             - open_gopro
@@ -41,6 +42,7 @@ services:
 
     demos:
         container_name: demos
+        image: ghcr.io/gopro/opengopro/gpdemodoc:main
         build:
             context: .admin/prepare_demos
         volumes:
