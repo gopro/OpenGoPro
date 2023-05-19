@@ -1,8 +1,0 @@
-# We're mounting a volume when running the container so only add things here needed for building
-
-# Ignore everything
-**
-
-# Add exclusions for anything that should be un-ignored
-!docs/Gemfile
-!tools/

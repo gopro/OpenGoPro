@@ -104,7 +104,7 @@ directly from the cameras, either via USB or wireless connection.
 | : Webcam :  | Cinematic video quality                       |      |     |           \            |
 | Mode        | Optional low latency stabilization            |  ✔️  | ✔️  |                        |
 | : Live :    | Cinematic video quality                       |      |     |           \            |
-| Stream      | Optional hypersmooth stabilization            |      | ✔️  |           ✔️           |
+| Stream      | Optional hypersmooth stabilization            |  ✔️  |     |           ✔️           |
 
 Each of the streaming types has different resolutions, bit rates, imaging pipelines, and different levels of
 configurability. Refer to the [FAQ]({% link faq.md %}).

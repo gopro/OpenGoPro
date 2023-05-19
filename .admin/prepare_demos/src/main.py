@@ -114,16 +114,14 @@ def parse_arguments() -> argparse.Namespace:
 """
     )
     parser.add_argument(
-        "--input",
+        "input",
         type=Path,
-        help="Demo directory to search for README files. Defaults to /home/demos in Jekyll Docker container",
-        default=Path("/") / "home" / "demos",
+        help="Demo directory to search for README files.",
     )
     parser.add_argument(
-        "--output",
+        "output",
         type=Path,
-        help="Where to write modified README's for Jekyll consumption. Defaults to /site/_demos in Jekyll Docker container",
-        default=Path("/") / "site" / "_demos",
+        help="Where to write modified README's for Jekyll consumption.",
     )
 
     return parser.parse_args()

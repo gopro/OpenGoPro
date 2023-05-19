@@ -17,12 +17,13 @@ title_separator: ': '
 subtitle:
 name: 'GoPro'
 description: 'Open Source GoPro Interface'
-url: 'TO BE SET FROM MAKEFILE'
-baseurl: 'TO BE SET FROM MAKEFILE'
 repository: https://github.com/gopro/OpenGoPro
 teaser: /assets/images/logos/logo.png
 logo: /assets/images/logos/logo.png
 masthead_title: 'Open GoPro'
+# TO BE SET FROM DOCKER ENTRYPOINT
+# url:
+# baseurl:
 
 ### Header
 head_scripts:
@@ -225,7 +226,7 @@ jekyll-spaceship:
         syntax:
             code: 'plantuml!'
             custom: ['@startuml', '@enduml']
-        src: http://plant_uml:8080/svg/
+        src: http://plant_uml:8080/svg/ # TODO make this run-time configurable
     mermaid-processor:
         mode: pre-fetch # fetch image at build-time
         css:

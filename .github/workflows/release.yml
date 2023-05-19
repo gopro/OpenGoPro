@@ -61,8 +61,6 @@ jobs:
                   if [[ $num_modified == 0 ]]; then
                     echo "Nothing to push"
                   else
-                    #git lfs fetch --all $env:GITHUB_ACTION_REPOSITORY
-                    #git lfs push --all
                     git commit -a -F ../message
                     git push
                   fi
