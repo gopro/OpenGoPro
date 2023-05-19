@@ -17,7 +17,7 @@ help: ## Display this help which is generated from Make goal comments
 # Docker images are currently not public. So we build if pull fails for the local use case.
 .PHONY: setup
 setup:
-	-@docker-compose pull && docker-compose build
+	-@docker-compose pull || docker-compose build
 
 .PHONY: clean
 clean: ## Clean cached jekyll files
