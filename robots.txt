@@ -1,1 +1,1 @@
-Sitemap: http://jekyll:4998//sitemap.xml
+Sitemap: https://gopro.github.io/OpenGoPro/sitemap.xml

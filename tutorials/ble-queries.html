@@ -23,7 +23,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
 <meta property="og:title" content="Tutorial 4: BLE Queries">
-<meta property="og:url" content="http://jekyll:4998//tutorials/ble-queries">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/tutorials/ble-queries">
 
 
   <meta property="og:description" content="This document will provide a walk-through tutorial to implement the Open GoPro Interface to query the camera’s setting and status information via BLE.">
@@ -34,14 +34,14 @@
 
 
 
-  <meta property="article:published_time" content="2023-05-19T20:39:31+00:00">
+  <meta property="article:published_time" content="2023-05-19T21:30:42+00:00">
 
 
 
 
 
 
-<link rel="canonical" href="http://jekyll:4998//tutorials/ble-queries">
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/tutorials/ble-queries">
 
 
 
@@ -52,7 +52,7 @@
     
       "@type": "Person",
       "name": "GoPro",
-      "url": "http://jekyll:4998//"
+      "url": "https://gopro.github.io/OpenGoPro/"
     
   }
 </script>
@@ -76,26 +76,26 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
 
 
   
-    <script src="/assets/js/tabs.js"></script>
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
   
-    <script src="/assets/js/quiz.js"></script>
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
   
-    <script src="/assets/js/accordion.js"></script>
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
   
 
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/logos/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logos/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logos/favicon-16x16.png">
-<link rel="manifest" href="/assets/images/logos/site.webmanifest">
-<link rel="mask-icon" href="/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
-<link rel="shortcut icon" href="/assets/images/logos/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
 <meta name="msapplication-TileColor" content="#2d89ef">
 <meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
@@ -122,30 +122,30 @@
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
         
-          <a class="site-logo" href="/"><img src="/assets/images/logos/logo.png" alt="Open GoPro"></a>
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
         
-        <a class="site-title" href="/">
+        <a class="site-title" href="/OpenGoPro/">
           Open GoPro
           
         </a>
         <ul class="visible-links">
 <li class="masthead__menu-item">
-              <a href="/">Home</a>
+              <a href="/OpenGoPro/">Home</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/ble">BLE Spec</a>
+              <a href="/OpenGoPro/ble">BLE Spec</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/http">HTTP Spec</a>
+              <a href="/OpenGoPro/http">HTTP Spec</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/tutorials">Tutorials</a>
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/demos">Demos</a>
+              <a href="/OpenGoPro/demos">Demos</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/faq">FAQ</a>
+              <a href="/OpenGoPro/faq">FAQ</a>
             </li>
 </ul>
         
@@ -181,7 +181,7 @@
     
       
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="http://jekyll:4998//" itemprop="item"><span itemprop="name">Home</span></a>
+          <a href="https://gopro.github.io/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
           <meta itemprop="position" content="1">
         </li>
         <span class="sep">/</span>
@@ -189,7 +189,7 @@
       
         
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
+          <a href="/OpenGoPro/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
           <meta itemprop="position" content="2">
         </li>
         <span class="sep">/</span>
@@ -217,7 +217,7 @@
   
     <div class="author__avatar">
       
-        <img src="/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
       
     </div>
   
@@ -344,7 +344,7 @@
     
       <li>
         
-          <a href="/tutorials/connect-ble"><span class="nav__sub-title">1: Connect BLE</span></a>
+          <a href="/OpenGoPro/tutorials/connect-ble"><span class="nav__sub-title">1: Connect BLE</span></a>
         
 
         
@@ -352,7 +352,7 @@
     
       <li>
         
-          <a href="/tutorials/send-ble-commands"><span class="nav__sub-title">2: Send BLE Commands</span></a>
+          <a href="/OpenGoPro/tutorials/send-ble-commands"><span class="nav__sub-title">2: Send BLE Commands</span></a>
         
 
         
@@ -360,7 +360,7 @@
     
       <li>
         
-          <a href="/tutorials/parse-ble-responses"><span class="nav__sub-title">3: Parse BLE TLV Responses</span></a>
+          <a href="/OpenGoPro/tutorials/parse-ble-responses"><span class="nav__sub-title">3: Parse BLE TLV Responses</span></a>
         
 
         
@@ -368,7 +368,7 @@
     
       <li>
         
-          <a href="/tutorials/ble-queries"><span class="nav__sub-title">4: BLE Queries</span></a>
+          <a href="/OpenGoPro/tutorials/ble-queries"><span class="nav__sub-title">4: BLE Queries</span></a>
         
 
         
@@ -376,7 +376,7 @@
     
       <li>
         
-          <a href="/tutorials/connect-wifi"><span class="nav__sub-title">5: Connect WiFi</span></a>
+          <a href="/OpenGoPro/tutorials/connect-wifi"><span class="nav__sub-title">5: Connect WiFi</span></a>
         
 
         
@@ -384,7 +384,7 @@
     
       <li>
         
-          <a href="/tutorials/send-wifi-commands"><span class="nav__sub-title">6: Send WiFi Commands</span></a>
+          <a href="/OpenGoPro/tutorials/send-wifi-commands"><span class="nav__sub-title">6: Send WiFi Commands</span></a>
         
 
         
@@ -392,7 +392,7 @@
     
       <li>
         
-          <a href="/tutorials/camera-media-list"><span class="nav__sub-title">7: Camera Media List</span></a>
+          <a href="/OpenGoPro/tutorials/camera-media-list"><span class="nav__sub-title">7: Camera Media List</span></a>
         
 
         
@@ -410,7 +410,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 4: BLE Queries">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to implement theOpen GoPro Interface to query the camera’s setting and statusinformation via BLE.">
-    <meta itemprop="datePublished" content="2023-05-19T20:39:31+00:00">
+    <meta itemprop="datePublished" content="2023-05-19T21:30:42+00:00">
     
 
     <div class="page__inner-wrap">
@@ -468,7 +468,7 @@
           </aside>
         
         <p>This document will provide a walk-through tutorial to implement the
-<a href="/ble_2_0">Open GoPro Interface</a> to query the camera’s setting and status
+<a href="/OpenGoPro/ble_2_0">Open GoPro Interface</a> to query the camera’s setting and status
 information via BLE.</p>
 
 <p>“Queries” in this sense are specifically procedures that:</p>
@@ -482,9 +482,9 @@ information via BLE.</p>
 
 <div class="callout tip">
 <i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>It is suggested that you have first completed the
-<a href="/tutorials/connect-ble#requirements">connect</a>,
-<a href="/tutorials/send-ble-commands">sending commands</a>, and
-<a href="/tutorials/parse-ble-responses">parsing responses</a> tutorials before going
+<a href="/OpenGoPro/tutorials/connect-ble#requirements">connect</a>,
+<a href="/OpenGoPro/tutorials/send-ble-commands">sending commands</a>, and
+<a href="/OpenGoPro/tutorials/parse-ble-responses">parsing responses</a> tutorials before going
 through this tutorial.</span>
 </div>
 
@@ -494,13 +494,13 @@ management / synchronization when sending multiple commands. This will be discus
 <h1 id="requirements">Requirements</h1>
 
 <p>It is assumed that the hardware and software requirements from the
-<a href="/tutorials/connect-ble">connect tutorial</a>
+<a href="/OpenGoPro/tutorials/connect-ble">connect tutorial</a>
 are present and configured correctly.</p>
 
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="82da0bab-a6f1-491a-bf76-835879a1dfac">
+    <ul class="tab tab-linked" data-tab="fe9384b4-9912-49d9-9986-c5c2322a810f">
         
             <li class="active">
                 <a href="">python </a>
@@ -511,7 +511,7 @@ are present and configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="82da0bab-a6f1-491a-bf76-835879a1dfac">
+        <ul class="tab-content" id="fe9384b4-9912-49d9-9986-c5c2322a810f">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 2
@@ -605,7 +605,7 @@ check the BLE status at the top of the app.</p>
         text-align: center;
         margin: 10px auto;
     ">
-    <img src="/assets/images/tutorials/kotlin/tutorial_4.png" alt="kotlin_tutorial_4" style="
+    <img src="/OpenGoPro/assets/images/tutorials/kotlin/tutorial_4.png" alt="kotlin_tutorial_4" style="
             width: 40%;
             display: block;
             margin-left: auto;
@@ -626,15 +626,15 @@ check the BLE status at the top of the app.</p>
 <h1 id="setup">Setup</h1>
 
 <p>We must first connect as was discussed in the
-<a href="/tutorials/connect-ble">connect tutorial</a>.</p>
+<a href="/OpenGoPro/tutorials/connect-ble">connect tutorial</a>.</p>
 
 <p>We will also be using the <strong>Response</strong> class that was defined in the
-<a href="/tutorials/parse-ble-responses">parsing responses</a> tutorial to accumulate
+<a href="/OpenGoPro/tutorials/parse-ble-responses">parsing responses</a> tutorial to accumulate
 and parse notification responses to the Query Response
-<a href="/ble_2_0#services-and-characteristics">characteristic</a>.
+<a href="/OpenGoPro/ble_2_0#services-and-characteristics">characteristic</a>.
 Throughout this tutorial, the query information that we will be reading is the Resolution Setting (ID 0x02).</p>
 <div>
-    <ul class="tab tab-linked" data-tab="3566b199-35ae-4be5-a9f8-4dd02574905c">
+    <ul class="tab tab-linked" data-tab="eb2d6336-30bb-413b-8b10-8f474be2fc8e">
         
             <li class="active">
                 <a href="">python </a>
@@ -645,7 +645,7 @@ Throughout this tutorial, the query information that we will be reading is the R
             </li>
         
         </ul>
-        <ul class="tab-content" id="3566b199-35ae-4be5-a9f8-4dd02574905c">
+        <ul class="tab-content" id="eb2d6336-30bb-413b-8b10-8f474be2fc8e">
         
             <li class="active tab-content-container">
 <p>Therefore, we have slightly changed the notification handler to update a global resolution variable as it
@@ -717,14 +717,14 @@ queries the resolution:</p>
 section:</p>
 
 <ul>
-  <li><a href="/tutorials/ble-queries#polling-query-information">Polling Query Information</a></li>
-  <li><a href="/tutorials/ble-queries#registering-for-query-push-notifications">Registering for query push notifications</a></li>
+  <li><a href="/OpenGoPro/tutorials/ble-queries#polling-query-information">Polling Query Information</a></li>
+  <li><a href="/OpenGoPro/tutorials/ble-queries#registering-for-query-push-notifications">Registering for query push notifications</a></li>
 </ul>
 
 <h1 id="polling-query-information">Polling Query Information</h1>
 
 <p>It is possible to poll one or more setting / status values using the following
-<a href="/ble_2_0#query-commands">commands</a>:</p>
+<a href="/OpenGoPro/ble_2_0#query-commands">commands</a>:</p>
 
 <table>
   <thead>
@@ -764,7 +764,7 @@ There will be specific examples below.</p>
 Note that setting values will be combined into one notification until it reaches the maximum notification
 size (20 bytes). At this point, a new response will be sent. Therefore, it is necessary to accumulate and then
 parse these responses as was described in
-<a href="/tutorials/parse-ble-responses#query-responses">parsing query responses</a></p>
+<a href="/OpenGoPro/tutorials/parse-ble-responses#query-responses">parsing query responses</a></p>
 
 <h2 id="individual-query-poll">Individual Query Poll</h2>
 
@@ -773,7 +773,7 @@ parse these responses as was described in
 <p>First we send the query command:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="3977ba4e-20bf-4e04-9e87-c1d68424b0a2">
+    <ul class="tab tab-linked" data-tab="20323735-0950-4f95-bdd4-a94d701b3839">
         
             <li class="active">
                 <a href="">python </a>
@@ -784,7 +784,7 @@ parse these responses as was described in
             </li>
         
         </ul>
-        <ul class="tab-content" id="3977ba4e-20bf-4e04-9e87-c1d68424b0a2">
+        <ul class="tab-content" id="20323735-0950-4f95-bdd4-a94d701b3839">
         
             <li class="active tab-content-container">
 <p>The sample code can be found in in <code class="language-plaintext highlighter-rouge">ble_query_poll_resolution_value.py</code>.
@@ -814,7 +814,7 @@ Let’s first define the UUID’s to write to and receive from:</p>
 <p>When the response is received in / from the notification handler, we update the global resolution variable:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="88bc1cf4-c13d-4471-aef6-b540eaa8d88f">
+    <ul class="tab tab-linked" data-tab="dceddde2-77df-4f42-a58c-3cada404e270">
         
             <li class="active">
                 <a href="">python </a>
@@ -825,7 +825,7 @@ Let’s first define the UUID’s to write to and receive from:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="88bc1cf4-c13d-4471-aef6-b540eaa8d88f">
+        <ul class="tab-content" id="dceddde2-77df-4f42-a58c-3cada404e270">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
@@ -878,7 +878,7 @@ Camera resolution is RES_2_7K
 has changed:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="81deb885-f508-476c-8c49-1c7168a1b001">
+    <ul class="tab tab-linked" data-tab="69fd6475-1009-4dee-aa3c-ec5fa318ff04">
         
             <li class="active">
                 <a href="">python </a>
@@ -889,7 +889,7 @@ has changed:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="81deb885-f508-476c-8c49-1c7168a1b001">
+        <ul class="tab-content" id="69fd6475-1009-4dee-aa3c-ec5fa318ff04">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Changing the resolution to Resolution.RES_2_7K...
@@ -945,7 +945,7 @@ below. It is very similar to the previous example except for the following:</p>
 <p>The query command now includes 3 settings: Resolution, FPS, and FOV.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="1cf53dda-ea6a-4da3-9fa8-045f29231ad0">
+    <ul class="tab tab-linked" data-tab="40f46615-e294-46ef-9e19-da260ca856bf">
         
             <li class="active">
                 <a href="">python </a>
@@ -956,7 +956,7 @@ below. It is very similar to the previous example except for the following:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="1cf53dda-ea6a-4da3-9fa8-045f29231ad0">
+        <ul class="tab-content" id="40f46615-e294-46ef-9e19-da260ca856bf">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RESOLUTION_ID</span> <span class="o">=</span> <span class="mi">2</span>
@@ -981,7 +981,7 @@ below. It is very similar to the previous example except for the following:</p>
 <p>We are also parsing the response to get all 3 values:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="1fdd0e26-18cd-49f4-9ffc-12740d269bec">
+    <ul class="tab tab-linked" data-tab="b06dca83-ab28-4f58-b08e-51dac0a11771">
         
             <li class="active">
                 <a href="">python </a>
@@ -992,7 +992,7 @@ below. It is very similar to the previous example except for the following:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="1fdd0e26-18cd-49f4-9ffc-12740d269bec">
+        <ul class="tab-content" id="b06dca83-ab28-4f58-b08e-51dac0a11771">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
@@ -1024,7 +1024,7 @@ sometimes settings / statuses are bytes, words, strings, etc.</span>
 <p>They are then printed to the log which will look like the following:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="8d0e87f5-e7b0-4a98-9778-28836f6e2054">
+    <ul class="tab tab-linked" data-tab="c9d2a16d-0a29-49bf-bfc4-1fc7c063c61d">
         
             <li class="active">
                 <a href="">python </a>
@@ -1035,7 +1035,7 @@ sometimes settings / statuses are bytes, words, strings, etc.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="8d0e87f5-e7b0-4a98-9778-28836f6e2054">
+        <ul class="tab-content" id="c9d2a16d-0a29-49bf-bfc4-1fc7c063c61d">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Received response at handle=62: b'0b:12:00:02:01:07:03:01:01:79:01:00'
@@ -1080,15 +1080,15 @@ INFO:root:FPS is currently FPS.FPS_120
 </table>
 
 <p>An example of this can be seen in the
-<a href="/tutorials/parse-ble-responses#query-responses">parsing query responses</a>
+<a href="/OpenGoPro/tutorials/parse-ble-responses#query-responses">parsing query responses</a>
 tutorial</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_37678b7a-d523-421a-805b-307cfe9c6fdd" class="quiz">
+<div id="quiz_7111c182-08d6-4ab0-8b1b-63282a9fdc47" class="quiz">
     <div>
-        <div id="question_37678b7a-d523-421a-805b-307cfe9c6fdd" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
-        <div id="answers_37678b7a-d523-421a-805b-307cfe9c6fdd">
+        <div id="question_7111c182-08d6-4ab0-8b1b-63282a9fdc47" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
+        <div id="answers_7111c182-08d6-4ab0-8b1b-63282a9fdc47">
         
             <input type="radio" name="question" value="A"><label>A: Concatenate a ‘Get Setting Value’ command and a ‘Get Status’ command with the relevant ID’s</label>
             <br>
@@ -1101,10 +1101,10 @@ tutorial</p>
         
         </div>
     </div>
-    <button onclick="showResults('37678b7a-d523-421a-805b-307cfe9c6fdd', 'C')">Submit Answer</button>
-    <div id="results_37678b7a-d523-421a-805b-307cfe9c6fdd" style="display: none">
-        <span id="correct_37678b7a-d523-421a-805b-307cfe9c6fdd" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_37678b7a-d523-421a-805b-307cfe9c6fdd" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('7111c182-08d6-4ab0-8b1b-63282a9fdc47', 'C')">Submit Answer</button>
+    <div id="results_7111c182-08d6-4ab0-8b1b-63282a9fdc47" style="display: none">
+        <span id="correct_7111c182-08d6-4ab0-8b1b-63282a9fdc47" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_7111c182-08d6-4ab0-8b1b-63282a9fdc47" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         It is not possible to concatenate commands. This would result in an unknown sequence of bytes
         from the camera’s perspective. So it is not possible to get a setting value and a status value in one
         command. The Get Setting command (with resolution ID) and Get Status command(with encoding ID) must be
@@ -1117,7 +1117,7 @@ tutorial</p>
 <p>Rather than polling the query information, it is also possible to use an interrupt scheme to register for
 push notifications when the relevant query information changes.</p>
 
-<p>The relevant <a href="/ble_2_0#query-commands">commands</a> are:</p>
+<p>The relevant <a href="/OpenGoPro/ble_2_0#query-commands">commands</a> are:</p>
 
 <table>
   <thead>
@@ -1191,7 +1191,7 @@ be sent whenever the query changes until the client unregisters for push notific
 <p>First, let’s register for updates when the resolution setting changes:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="9ba68286-be85-41b1-989e-2f997ff0bc5e">
+    <ul class="tab tab-linked" data-tab="a3046bae-797f-426f-84a7-6452551fe736">
         
             <li class="active">
                 <a href="">python </a>
@@ -1202,7 +1202,7 @@ be sent whenever the query changes until the client unregisters for push notific
             </li>
         
         </ul>
-        <ul class="tab-content" id="9ba68286-be85-41b1-989e-2f997ff0bc5e">
+        <ul class="tab-content" id="a3046bae-797f-426f-84a7-6452551fe736">
         
             <li class="active tab-content-container">
 <p>First, let’s define the UUID’s we will be using:</p>
@@ -1237,7 +1237,7 @@ example with the exception that the Query ID is now 0x52 (Register Updates for S
 the raw byte data as well as by inspecting the response’s <code class="language-plaintext highlighter-rouge">id</code> property.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="ae8a1248-91c1-48ab-a96f-3587d80fffd5">
+    <ul class="tab tab-linked" data-tab="1c05b1af-90f4-49f0-9d15-42b7442e881b">
         
             <li class="active">
                 <a href="">python </a>
@@ -1248,7 +1248,7 @@ the raw byte data as well as by inspecting the response’s <code class="languag
             </li>
         
         </ul>
-        <ul class="tab-content" id="ae8a1248-91c1-48ab-a96f-3587d80fffd5">
+        <ul class="tab-content" id="1c05b1af-90f4-49f0-9d15-42b7442e881b">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
@@ -1305,7 +1305,7 @@ INFO:root:Resolution is currently Resolution.RES_2_7K
 the resolution changes. We verify this in the demo by then changing the resolution.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="1f57186b-6b5f-4687-b60f-38b61f182120">
+    <ul class="tab tab-linked" data-tab="7cd89240-16ce-4ad3-9c90-8a4a9f354cc1">
         
             <li class="active">
                 <a href="">python </a>
@@ -1316,7 +1316,7 @@ the resolution changes. We verify this in the demo by then changing the resoluti
             </li>
         
         </ul>
-        <ul class="tab-content" id="1f57186b-6b5f-4687-b60f-38b61f182120">
+        <ul class="tab-content" id="7cd89240-16ce-4ad3-9c90-8a4a9f354cc1">
         
             <li class="active tab-content-container">
 <p>This will show in the log as such:</p>
@@ -1368,11 +1368,11 @@ polled above</span>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_6721ba02-b0db-49ac-94c8-a59271c96e2d" class="quiz">
+<div id="quiz_e2c73d67-8b39-47e1-b378-3315fd0f09cf" class="quiz">
     <div>
-        <div id="question_6721ba02-b0db-49ac-94c8-a59271c96e2d" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
+        <div id="question_e2c73d67-8b39-47e1-b378-3315fd0f09cf" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
     receive push notifications for it.</div>
-        <div id="answers_6721ba02-b0db-49ac-94c8-a59271c96e2d">
+        <div id="answers_e2c73d67-8b39-47e1-b378-3315fd0f09cf">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1382,20 +1382,20 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('6721ba02-b0db-49ac-94c8-a59271c96e2d', 'A')">Submit Answer</button>
-    <div id="results_6721ba02-b0db-49ac-94c8-a59271c96e2d" style="display: none">
-        <span id="correct_6721ba02-b0db-49ac-94c8-a59271c96e2d" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_6721ba02-b0db-49ac-94c8-a59271c96e2d" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('e2c73d67-8b39-47e1-b378-3315fd0f09cf', 'A')">Submit Answer</button>
+    <div id="results_e2c73d67-8b39-47e1-b378-3315fd0f09cf" style="display: none">
+        <span id="correct_e2c73d67-8b39-47e1-b378-3315fd0f09cf" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_e2c73d67-8b39-47e1-b378-3315fd0f09cf" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         While there is probably not a good reason to do so, there is nothing preventing polling
         in this manner.
     </div>
 </div>
 
-<div id="quiz_60100124-ecd5-4393-ada0-aa672097c5bd" class="quiz">
+<div id="quiz_f1375b95-5cf7-46e0-8871-d2f839cfea49" class="quiz">
     <div>
-        <div id="question_60100124-ecd5-4393-ada0-aa672097c5bd" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
+        <div id="question_f1375b95-5cf7-46e0-8871-d2f839cfea49" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
     about one setting ID.</div>
-        <div id="answers_60100124-ecd5-4393-ada0-aa672097c5bd">
+        <div id="answers_f1375b95-5cf7-46e0-8871-d2f839cfea49">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1405,10 +1405,10 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('60100124-ecd5-4393-ada0-aa672097c5bd', 'B')">Submit Answer</button>
-    <div id="results_60100124-ecd5-4393-ada0-aa672097c5bd" style="display: none">
-        <span id="correct_60100124-ecd5-4393-ada0-aa672097c5bd" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_60100124-ecd5-4393-ada0-aa672097c5bd" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('f1375b95-5cf7-46e0-8871-d2f839cfea49', 'B')">Submit Answer</button>
+    <div id="results_f1375b95-5cf7-46e0-8871-d2f839cfea49" style="display: none">
+        <span id="correct_f1375b95-5cf7-46e0-8871-d2f839cfea49" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_f1375b95-5cf7-46e0-8871-d2f839cfea49" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is possible for push notifications to contain multiple setting ID’s if both setting ID’s have
     push notifications registered and both settings change at the same time.
     </div>
@@ -1417,7 +1417,7 @@ polled above</span>
 <h1 id="troubleshooting">Troubleshooting</h1>
 
 <p>See the first tutorial’s
-<a href="/tutorials/connect-ble#troubleshooting">troubleshooting section</a>.</p>
+<a href="/OpenGoPro/tutorials/connect-ble#troubleshooting">troubleshooting section</a>.</p>
 
 <h1 id="good-job">Good Job!</h1>
 
@@ -1443,7 +1443,7 @@ proceed to the next tutorial.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-05-19T20:39:31+00:00">May 19, 2023</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-05-19T21:30:42+00:00">May 19, 2023</time></p>
 
 
       </footer>
@@ -1453,11 +1453,11 @@ proceed to the next tutorial.</p>
       
   <nav class="pagination">
     
-      <a href="/tutorials/parse-ble-responses" class="pagination--pager" title="Tutorial 3: Parse BLE TLV Responses
+      <a href="/OpenGoPro/tutorials/parse-ble-responses" class="pagination--pager" title="Tutorial 3: Parse BLE TLV Responses
 ">Previous</a>
     
     
-      <a href="/tutorials/connect-wifi" class="pagination--pager" title="Tutorial 5: Connect WiFi
+      <a href="/OpenGoPro/tutorials/connect-wifi" class="pagination--pager" title="Tutorial 5: Connect WiFi
 ">Next</a>
     
   </nav>
@@ -1543,14 +1543,14 @@ proceed to the next tutorial.</p>
     </div>
 
     
-  <script src="/assets/js/main.min.js"></script>
+  <script src="/OpenGoPro/assets/js/main.min.js"></script>
 
 
 
 
-<script src="/assets/js/lunr/lunr.min.js"></script>
-<script src="/assets/js/lunr/lunr-store.js"></script>
-<script src="/assets/js/lunr/lunr-en.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr.min.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-store.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-en.js"></script>
 
 
 
