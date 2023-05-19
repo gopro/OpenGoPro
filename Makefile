@@ -17,8 +17,7 @@ help: ## Display this help which is generated from Make goal comments
 
 .PHONY: setup
 setup:
-	@docker-compose pull jekyll
-	@docker-compose build
+	@docker-compose build --pull
 
 .PHONY: clean
 clean: ## Clean cached jekyll files
