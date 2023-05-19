@@ -36,14 +36,14 @@ serve: ## Serve site locally
 build: setup
 build: ## Build site for deployment
 	@echo COMMAND=\"-u ${BUILD_HOST_URL} -b ${BUILD_BASE_URL} build\" > .env
-	@docker-compose up --timeout 300 --abort-on-container-exit
+	@docker-compose up --abort-on-container-exit
 	@rm -rf .env
 
 .PHONY: tests
 tests: setup
 tests: ## Serve, then run link checker. Times out after 5 minutes.
 	@echo COMMAND="-u http://jekyll:4998/ -b \"\" -p 4998 serve" > .env
-	@docker-compose --profile test up --timeout 300 --abort-on-container-exit
+	@docker-compose --profile test up --abort-on-container-exit
 	@rm -rf .env
 
 .PHONY: version
