@@ -13,11 +13,11 @@ jobs:
         strategy:
             matrix:
                 include:
-                    - dockerfile: ./.admin/jekyll/Dockerfile
+                    - context: ./.admin/jekyll
                       image: ghcr.io/${{ github.repository }}/gpJekyll
-                    - dockerfile: ./.admin/linkchecker/Dockerfile
+                    - context: ./.admin/linkchecker
                       image: ghcr.io/${{ github.repository }}/gpLinkChecker
-                    - dockerfile: ./.admin/proto_doc_gen/Dockerfile
+                    - context: ./.admin/proto_doc_gen
                       image: ghcr.io/${{ github.repository }}/gpProtoDoc
         permissions:
             contents: read
@@ -43,8 +43,7 @@ jobs:
             - name: Build and push ${{ matrix.image }}
               uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
               with:
-                  context: .
-                  file: ${{ matrix.dockerfile }}
+                  context: ${{ matrix.context }}
                   push: true
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
