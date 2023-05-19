@@ -28,11 +28,13 @@ clean: ## Clean cached jekyll files
 .PHONY: serve
 serve: setup
 serve: ## Serve site locally
+	@echo "Serving Jekyll Site"
 	@command="-u http://localhost:4998/ -b \"\" -p 4998 serve" docker-compose --profile serve up
 
 .PHONY: build
 build: setup
 build: ## Build site for deployment
+	@echo "Building Jekyll Site"
 	@command="-u ${BUILD_HOST_URL} -b ${BUILD_BASE_URL} build" docker-compose up --timeout 600 --abort-on-container-exit
 
 .PHONY: tests

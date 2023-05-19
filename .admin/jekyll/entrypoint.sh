@@ -76,11 +76,11 @@ function config() {
 
 if [[ $command == "serve" ]]; then
     config
-    echo "🏗️  Serving jekyll site..."
+    echo "🚦  Serving jekyll site..."
     bundle exec jekyll serve --host 0.0.0.0 --port ${port} --watch --incremental --force_polling --config _config.yml,/_config-temp.yml
 elif [[ $command == "build" ]]; then
     config
-    echo "🚦  Serving jekyll site..."
+    echo "🏗️  Building jekyll site..."
     bundle exec jekyll build --config _config.yml,/_config-temp.yml
 elif [[ $command == "bash" ]]; then # Special hidden command for devlopment
     echo "Entering bash in container..."
