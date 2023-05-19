@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# entrypoint.sh/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Fri May 19 19:39:24 UTC 2023
+
 
 function build_demos() {
     pushd /demos >/dev/null
