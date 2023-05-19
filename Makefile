@@ -17,6 +17,7 @@ help: ## Display this help which is generated from Make goal comments
 
 .PHONY: setup
 setup:
+	@docker-compose pull jekyll
 	@docker-compose build
 
 .PHONY: clean
@@ -26,14 +27,17 @@ clean: ## Clean cached jekyll files
 	@rm -rf docs/_site docs/.jekyll-cache docs/.jekyll-metadata docs/_demos docs/protos.md
 
 .PHONY: serve
+serve: setup
 serve: ## Serve site locally
 	@command="-u http://localhost:4998/ -b \"\" -p 4998 serve" docker-compose --profile serve up
 
 .PHONY: build
+build: setup
 build: ## Build site for deployment
 	@command="-u ${BUILD_HOST_URL} -b ${BUILD_BASE_URL} build" docker-compose up
 
 .PHONY: tests
+tests: setup
 tests: ## Serve, then run link checker. Times out after 5 minutes.
 	@command="-u http://jekyll:4998/ -b \"\" -p 4998 serve" docker-compose --profile test up --timeout 300 --abort-on-container-exit
 
