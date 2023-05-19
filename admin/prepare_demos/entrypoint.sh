@@ -2,7 +2,7 @@
 
 function build_demos() {
     pushd /demos >/dev/null
-    prepare-demos "/demos" "/site/demos"
+    prepare-demos "/demos" "/site/_demos"
     popd >/dev/null
 }
 
