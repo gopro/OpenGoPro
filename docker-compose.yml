@@ -7,7 +7,7 @@ services:
         image: ghcr.io/gopro/opengopro:main
         container_name: jekyll
         build:
-            context: admin/jekyll
+            context: .admin/jekyll
         volumes:
             - ./docs:/site
         # Not currently used but will be once Github Actions supports --wait docker-compose up param
@@ -36,7 +36,7 @@ services:
     protos:
         container_name: protos
         build:
-            context: admin/proto_doc_gen
+            context: .admin/proto_doc_gen
         volumes:
             - ./protobuf:/protos
             - ./docs:/site
@@ -44,7 +44,7 @@ services:
     demos:
         container_name: demos
         build:
-            context: admin/prepare_demos
+            context: .admin/prepare_demos
         volumes:
             - ./demos:/demos
             - ./docs:/site
@@ -61,7 +61,7 @@ services:
     linkchecker:
         container_name: linkchecker
         build:
-            context: admin/linkchecker
+            context: .admin/linkchecker
         profiles:
             - test
         networks:

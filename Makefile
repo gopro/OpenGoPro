@@ -44,4 +44,4 @@ version: ## Update the Open GoPro version
 .PHONY: copyright
 copyright: ## Check for and add missing copyrights
 	@echo "©️ Verifying / adding copyrights..."
-	@./admin/copyright -i . $(ORIGINAL_VERSION)
+	@.admin/copyright -i . $(ORIGINAL_VERSION)
