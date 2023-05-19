@@ -42,6 +42,7 @@ build: ## Build site for deployment
 .PHONY: tests
 tests: setup
 tests: ## Serve, then run link checker. Times out after 5 minutes.
+	-@docker-compose pull linkchecker || docker-compose build linkchecker
 	@echo COMMAND="-u http://jekyll:4998/ -b \"\" -p 4998 serve" > .env
 	@docker-compose --profile test up --abort-on-container-exit
 	@rm -rf .env
