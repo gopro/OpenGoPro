@@ -6,12 +6,11 @@ name: Publish the Docker Image
 on:
     workflow_dispatch:
 
-env:
-    REGISTRY: ghcr.io
-    IMAGE_NAME: ${{ github.repository }}
-
 jobs:
     build-and-push-image:
+        env:
+            REGISTRY: ghcr.io
+            IMAGE_NAME: ${{ github.repository }}
         name: Build and Push Image
         runs-on: ubuntu-latest
         strategy:
