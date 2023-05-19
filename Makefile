@@ -10,11 +10,11 @@ VERSION:=$(ORIGINAL_VERSION)
 BUILD_HOST_URL:="https://gopro.github.io"
 BUILD_BASE_URL:="/OpenGoPro"
 
-
 .PHONY: help
 help: ## Display this help which is generated from Make goal comments
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+# TODO Default parameter shell expansion was somehow not working in github actions so we use .env file
 .PHONY: setup
 setup:
 	@docker-compose pull
@@ -28,19 +28,23 @@ clean: ## Clean cached jekyll files
 .PHONY: serve
 serve: setup
 serve: ## Serve site locally
-	@echo "Serving Jekyll Site"
-	@command="-u http://localhost:4998/ -b \"\" -p 4998 serve" docker-compose up
+	@echo COMMAND="-u http://localhost:4998/ -b \"\" -p 4998 serve" > .env
+	@docker-compose up
+	@rm -rf .env
 
 .PHONY: build
 build: setup
 build: ## Build site for deployment
-	@echo "Building Jekyll Site"
-	@command="-u ${BUILD_HOST_URL} -b ${BUILD_BASE_URL} build" docker-compose up --timeout 600 --abort-on-container-exit
+	@echo COMMAND=\"-u ${BUILD_HOST_URL} -b ${BUILD_BASE_URL} build\" > .env
+	@docker-compose up --abort-on-container-exit
+	@rm -rf .env
 
 .PHONY: tests
 tests: setup
 tests: ## Serve, then run link checker. Times out after 5 minutes.
-	@command="-u http://jekyll:4998/ -b \"\" -p 4998 serve" docker-compose --profile test up --timeout 300 --abort-on-container-exit
+	@echo COMMAND="-u http://jekyll:4998/ -b \"\" -p 4998 serve" > .env
+	@docker-compose --profile test up --abort-on-container-exit
+	@rm -rf .env
 
 .PHONY: version
 version: ## Update the Open GoPro version
