@@ -4,7 +4,12 @@
 ORIGINAL_VERSION=$(strip $$(awk '/Current Version: /{print $$NF}' README.md))
 VERSION:=$(ORIGINAL_VERSION)
 
+# See the following for explanation abou the site / base URL dance when building / serving / testing site
 # https://mademistakes.com/mastering-jekyll/site-url-baseurl/#jekyll-development-and-siteurl
+# Default URL's for building public site. Will be overwritten when building staging site
+BUILD_HOST_URL:="https://gopro.github.io"
+BUILD_BASE_URL:="/OpenGoPro"
+
 
 .PHONY: help
 help: ## Display this help which is generated from Make goal comments
@@ -26,11 +31,11 @@ serve: ## Serve site locally
 
 .PHONY: build
 build: ## Build site for deployment
-	@command="-u https://gopro.github.io -b /OpenGoPro build" docker-compose up
+	@command="-u ${BUILD_HOST_URL} -b ${BUILD_BASE_URL} build" docker-compose up
 
 .PHONY: tests
 tests: ## Serve, then run link checker. Times out after 5 minutes.
-	@command="-u http://jekyll:4998/ -b \"\" -p 4998 serve" docker-compose --profile test up --timeout 300
+	@command="-u http://jekyll:4998/ -b \"\" -p 4998 serve" docker-compose --profile test up --timeout 300 --abort-on-container-exit
 
 .PHONY: version
 version: ## Update the Open GoPro version

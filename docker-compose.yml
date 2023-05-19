@@ -10,7 +10,6 @@ services:
             context: .admin/jekyll
         volumes:
             - ./docs:/site
-        # Not currently used but will be once Github Actions supports --wait docker-compose up param
         healthcheck:
             test: curl --fail http://localhost:4998 || exit 1
             interval: 2s

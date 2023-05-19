@@ -126,7 +126,7 @@ jobs:
                   if [[ ${{ github.repository }} == gopro/OpenGoPro ]]; then
                     make build
                   else
-                    make build HOST_URL=${{ secrets.STAGING_GH_PAGES_SITE }} BASE_URL='\"\"'
+                    make build BUILD_HOST_URL=${{ secrets.STAGING_GH_PAGES_SITE }} BUILD_BASE_URL='\"\"'
                   fi
 
             - name: Deploy to Github Pages
