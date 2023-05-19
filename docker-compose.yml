@@ -19,12 +19,12 @@ services:
         ports:
             - '4998:4998'
         environment:
-            # Default to serve if not set (also silences warning during image build)
-            - COMMAND="${command:-serve}"
-            # Set (to anything other than develop) so that jekyll serve won't overwrite site.url
+            # Default to build if not set (also silences warning during image build)
+            - COMMAND="${command:-build}"
+            # Set (to anything other than develop) so that jekyll build won't overwrite site.url
             # https://github.com/jekyll/jekyll/issues/5743
             - JEKYLL_ENV=production
-        command: '${COMMAND:-serve}'
+        command: '${COMMAND:-build}'
         networks:
             - open_gopro
         depends_on:

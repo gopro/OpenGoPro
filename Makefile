@@ -29,7 +29,7 @@ clean: ## Clean cached jekyll files
 serve: setup
 serve: ## Serve site locally
 	@echo "Serving Jekyll Site"
-	@command="-u http://localhost:4998/ -b \"\" -p 4998 serve" docker-compose --profile serve up
+	@command="-u http://localhost:4998/ -b \"\" -p 4998 serve" docker-compose up
 
 .PHONY: build
 build: setup
