@@ -119,6 +119,13 @@ jobs:
                   ref: gh-pages
                   path: target
 
+            - name: Log in to the Container registry
+              uses: docker/login-action@v1.10.0
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
             - name: Build Github Pages
               shell: bash
               working-directory: ./source
