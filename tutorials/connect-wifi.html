@@ -23,7 +23,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
 <meta property="og:title" content="Tutorial 5: Connect WiFi">
-<meta property="og:url" content="https://gopro.github.io/OpenGoPro/tutorials/connect-wifi">
+<meta property="og:url" content="http://jekyll:4998//tutorials/connect-wifi">
 
 
   <meta property="og:description" content="This document will provide a walk-through tutorial to implement the Open GoPro Interface to enable the GoPro’s WiFi Access Point (AP) so that it can be connected to. It will also provide an example of connecting to the WiFi AP.">
@@ -34,14 +34,14 @@
 
 
 
-  <meta property="article:published_time" content="2023-04-25T20:17:55+00:00">
+  <meta property="article:published_time" content="2023-05-19T20:39:31+00:00">
 
 
 
 
 
 
-<link rel="canonical" href="https://gopro.github.io/OpenGoPro/tutorials/connect-wifi">
+<link rel="canonical" href="http://jekyll:4998//tutorials/connect-wifi">
 
 
 
@@ -52,7 +52,7 @@
     
       "@type": "Person",
       "name": "GoPro",
-      "url": "https://gopro.github.io/OpenGoPro/"
+      "url": "http://jekyll:4998//"
     
   }
 </script>
@@ -76,26 +76,26 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/main.css">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
 
 
   
-    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+    <script src="/assets/js/tabs.js"></script>
   
-    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+    <script src="/assets/js/quiz.js"></script>
   
-    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+    <script src="/assets/js/accordion.js"></script>
   
 
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
-<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
-<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
-<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/images/logos/favicon.ico">
 <meta name="msapplication-TileColor" content="#2d89ef">
 <meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
@@ -122,30 +122,30 @@
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
         
-          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+          <a class="site-logo" href="/"><img src="/assets/images/logos/logo.png" alt="Open GoPro"></a>
         
-        <a class="site-title" href="/OpenGoPro/">
+        <a class="site-title" href="/">
           Open GoPro
           
         </a>
         <ul class="visible-links">
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/">Home</a>
+              <a href="/">Home</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/ble">BLE Spec</a>
+              <a href="/ble">BLE Spec</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/http">HTTP Spec</a>
+              <a href="/http">HTTP Spec</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/tutorials">Tutorials</a>
+              <a href="/tutorials">Tutorials</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/demos">Demos</a>
+              <a href="/demos">Demos</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/faq">FAQ</a>
+              <a href="/faq">FAQ</a>
             </li>
 </ul>
         
@@ -181,7 +181,7 @@
     
       
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="https://gopro.github.io/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+          <a href="http://jekyll:4998//" itemprop="item"><span itemprop="name">Home</span></a>
           <meta itemprop="position" content="1">
         </li>
         <span class="sep">/</span>
@@ -189,7 +189,7 @@
       
         
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/OpenGoPro/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
+          <a href="/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
           <meta itemprop="position" content="2">
         </li>
         <span class="sep">/</span>
@@ -217,7 +217,7 @@
   
     <div class="author__avatar">
       
-        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+        <img src="/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
       
     </div>
   
@@ -344,7 +344,7 @@
     
       <li>
         
-          <a href="/OpenGoPro/tutorials/connect-ble"><span class="nav__sub-title">1: Connect BLE</span></a>
+          <a href="/tutorials/connect-ble"><span class="nav__sub-title">1: Connect BLE</span></a>
         
 
         
@@ -352,7 +352,7 @@
     
       <li>
         
-          <a href="/OpenGoPro/tutorials/send-ble-commands"><span class="nav__sub-title">2: Send BLE Commands</span></a>
+          <a href="/tutorials/send-ble-commands"><span class="nav__sub-title">2: Send BLE Commands</span></a>
         
 
         
@@ -360,7 +360,7 @@
     
       <li>
         
-          <a href="/OpenGoPro/tutorials/parse-ble-responses"><span class="nav__sub-title">3: Parse BLE TLV Responses</span></a>
+          <a href="/tutorials/parse-ble-responses"><span class="nav__sub-title">3: Parse BLE TLV Responses</span></a>
         
 
         
@@ -368,7 +368,7 @@
     
       <li>
         
-          <a href="/OpenGoPro/tutorials/ble-queries"><span class="nav__sub-title">4: BLE Queries</span></a>
+          <a href="/tutorials/ble-queries"><span class="nav__sub-title">4: BLE Queries</span></a>
         
 
         
@@ -376,7 +376,7 @@
     
       <li>
         
-          <a href="/OpenGoPro/tutorials/connect-wifi"><span class="nav__sub-title">5: Connect WiFi</span></a>
+          <a href="/tutorials/connect-wifi"><span class="nav__sub-title">5: Connect WiFi</span></a>
         
 
         
@@ -384,7 +384,7 @@
     
       <li>
         
-          <a href="/OpenGoPro/tutorials/send-wifi-commands"><span class="nav__sub-title">6: Send WiFi Commands</span></a>
+          <a href="/tutorials/send-wifi-commands"><span class="nav__sub-title">6: Send WiFi Commands</span></a>
         
 
         
@@ -392,7 +392,7 @@
     
       <li>
         
-          <a href="/OpenGoPro/tutorials/camera-media-list"><span class="nav__sub-title">7: Camera Media List</span></a>
+          <a href="/tutorials/camera-media-list"><span class="nav__sub-title">7: Camera Media List</span></a>
         
 
         
@@ -410,7 +410,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 5: Connect WiFi">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to implementthe Open GoPro Interface to enable the GoPro’s WiFi Access Point (AP) so that itcan be connected to. It will also provide an example of connecting to the WiFi AP.">
-    <meta itemprop="datePublished" content="2023-04-25T20:17:55+00:00">
+    <meta itemprop="datePublished" content="2023-05-19T20:39:31+00:00">
     
 
     <div class="page__inner-wrap">
@@ -472,20 +472,20 @@
           </aside>
         
         <p>This document will provide a walk-through tutorial to implement
-the <a href="/OpenGoPro/http_2_0">Open GoPro Interface</a> to enable the GoPro’s WiFi Access Point (AP) so that it
+the <a href="/http_2_0">Open GoPro Interface</a> to enable the GoPro’s WiFi Access Point (AP) so that it
 can be connected to. It will also provide an example of connecting to the WiFi AP.</p>
 
 <div class="callout tip">
 <i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>It is recommended that you have first completed the
-<a href="/OpenGoPro/tutorials/connect-ble">connecting</a>,
-<a href="/OpenGoPro/tutorials/send-ble-commands">sending commands</a>, and
-<a href="/OpenGoPro/tutorials/parse-ble-responses">parsing responses</a> tutorials before proceeding.</span>
+<a href="/tutorials/connect-ble">connecting</a>,
+<a href="/tutorials/send-ble-commands">sending commands</a>, and
+<a href="/tutorials/parse-ble-responses">parsing responses</a> tutorials before proceeding.</span>
 </div>
 
 <h1 id="requirements">Requirements</h1>
 
 <p>It is assumed that the hardware and software requirements from the
-<a href="/OpenGoPro/tutorials/connect-ble#requirements">connect tutorial</a>
+<a href="/tutorials/connect-ble#requirements">connect tutorial</a>
 are present and configured correctly.</p>
 
 <p>The scripts that will be used for this tutorial can be found in the
@@ -494,7 +494,7 @@ are present and configured correctly.</p>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="eaad0112-64af-4306-bf48-6c0dd630f0fb">
+    <ul class="tab tab-linked" data-tab="5f41afe8-25c3-4bde-b34e-b68d5bd48ac6">
         
             <li class="active">
                 <a href="">python </a>
@@ -505,7 +505,7 @@ are present and configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="eaad0112-64af-4306-bf48-6c0dd630f0fb">
+        <ul class="tab-content" id="5f41afe8-25c3-4bde-b34e-b68d5bd48ac6">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 2
@@ -556,7 +556,7 @@ check the BLE status at the top of the app.</p>
         text-align: center;
         margin: 10px auto;
     ">
-    <img src="/OpenGoPro/assets/images/tutorials/kotlin/tutorial_5.png" alt="kotlin_tutorial_5" style="
+    <img src="/assets/images/tutorials/kotlin/tutorial_5.png" alt="kotlin_tutorial_5" style="
             width: 40%;
             display: block;
             margin-left: auto;
@@ -577,9 +577,9 @@ check the BLE status at the top of the app.</p>
 <h1 id="setup">Setup</h1>
 
 <p>We must first connect to BLE as was discussed in the
-<a href="/OpenGoPro/tutorials/connect-ble">connect tutorial</a>. We are also
+<a href="/tutorials/connect-ble">connect tutorial</a>. We are also
 using the same notification handler as was used in the
-<a href="/OpenGoPro/tutorials/send-ble-commands#setup">sending commands tutorial</a></p>
+<a href="/tutorials/send-ble-commands#setup">sending commands tutorial</a></p>
 
 <h1 id="connecting-to-wifi-ap">Connecting to WiFi AP</h1>
 
@@ -603,13 +603,13 @@ Response pattern, the WiFi Information is retrieved via direct Read Requests to 
 <h3 id="get-wifi-ssid">Get WiFi SSID</h3>
 
 <p>The WiFi SSID can be found by reading from the WiFi AP SSID
-<a href="/OpenGoPro/ble_2_0#services-and-characteristics">characteristic</a> of the
+<a href="/ble_2_0#services-and-characteristics">characteristic</a> of the
 WiFi Access Point service.</p>
 
 <p>First, let’s send the read request to get the SSID (and decode it into a string).</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="86121456-5caf-44cf-b8b5-8a82bb932d7d">
+    <ul class="tab tab-linked" data-tab="2b1c27f6-c327-4d4b-9102-bf95a0e71c2c">
         
             <li class="active">
                 <a href="">python </a>
@@ -620,12 +620,12 @@ WiFi Access Point service.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="86121456-5caf-44cf-b8b5-8a82bb932d7d">
+        <ul class="tab-content" id="2b1c27f6-c327-4d4b-9102-bf95a0e71c2c">
         
             <li class="active tab-content-container">
 <p>Let’s define the attribute to read from:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">WIFI_AP_SSID_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0002"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">WIFI_AP_SSID_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="sh">"</span><span class="s">0002</span><span class="sh">"</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Then send the BLE read request:</p>
@@ -665,13 +665,13 @@ SSID is debughero11
 <h3 id="get-wifi-password">Get WiFi Password</h3>
 
 <p>The WiFi password can be found by reading from the WiFi AP password
-<a href="/OpenGoPro/ble_2_0#services-and-characteristics">characteristic</a> of the
+<a href="/ble_2_0#services-and-characteristics">characteristic</a> of the
 WiFi Access Point service.</p>
 
 <p>First, let’s send the read request to get the password (and decode it into a string).</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="8ee13884-c198-446d-9015-be696c2a8018">
+    <ul class="tab tab-linked" data-tab="9a7b2d7d-5ce0-405a-940a-b75abd5b0ac8">
         
             <li class="active">
                 <a href="">python </a>
@@ -682,12 +682,12 @@ WiFi Access Point service.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="8ee13884-c198-446d-9015-be696c2a8018">
+        <ul class="tab-content" id="9a7b2d7d-5ce0-405a-940a-b75abd5b0ac8">
         
             <li class="active tab-content-container">
 <p>Let’s define the attribute to read from:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">WIFI_AP_PASSWORD_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"0003"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">WIFI_AP_PASSWORD_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="sh">"</span><span class="s">0003</span><span class="sh">"</span><span class="p">)</span>
 </code></pre></div></div>
 <p>Then send the BLE read request:</p>
 
@@ -722,7 +722,7 @@ Password is z3y-DCX-Phj
 <h2 id="enable-wifi-ap">Enable WiFi AP</h2>
 
 <p>Before we can connect to the WiFi AP, we have to make sure it is enabled. This is accomplished by using the
-“AP Control” <a href="/OpenGoPro/ble_2_0#commands-quick-reference">command</a>:</p>
+“AP Control” <a href="/ble_2_0#commands-quick-reference">command</a>:</p>
 
 <table>
   <thead>
@@ -744,12 +744,12 @@ Password is z3y-DCX-Phj
 </table>
 
 <p>This is done in the same manner that we did in the
-<a href="/OpenGoPro/tutorials/send-ble-commands">sending commands tutorial</a>.</p>
+<a href="/tutorials/send-ble-commands">sending commands tutorial</a>.</p>
 
 <p>Now, let’s write the bytes to the “Command Request UUID” to enable the WiFi AP!</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="58c0d0b2-0d02-4856-9bff-fc7c33220d8a">
+    <ul class="tab tab-linked" data-tab="cd5bb1b9-b9cf-44d2-9315-e265c2417316">
         
             <li class="active">
                 <a href="">python </a>
@@ -760,7 +760,7 @@ Password is z3y-DCX-Phj
             </li>
         
         </ul>
-        <ul class="tab-content" id="58c0d0b2-0d02-4856-9bff-fc7c33220d8a">
+        <ul class="tab-content" id="cd5bb1b9-b9cf-44d2-9315-e265c2417316">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
@@ -786,11 +786,11 @@ the notification callback.</span>
 
 <p>Note that we have received the “Command Status” notification response from the
 Command Response characteristic since we enabled it’s notifications in
-<a href="/OpenGoPro/tutorials/connect-ble#enable-notifications">Enable Notifications</a>. This can
+<a href="/tutorials/connect-ble#enable-notifications">Enable Notifications</a>. This can
 be seen in the demo log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="9144f2d3-69d5-422a-805c-6f785c67722e">
+    <ul class="tab tab-linked" data-tab="4c2cd68e-4275-4680-86d6-57de0ee81d88">
         
             <li class="active">
                 <a href="">python </a>
@@ -801,7 +801,7 @@ be seen in the demo log:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="9144f2d3-69d5-422a-805c-6f785c67722e">
+        <ul class="tab-content" id="4c2cd68e-4275-4680-86d6-57de0ee81d88">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Enabling the WiFi AP
@@ -829,7 +829,7 @@ Command sent successfully
 <h2 id="establish-connection-to-wifi-ap">Establish Connection to WiFi AP</h2>
 
 <div>
-    <ul class="tab tab-linked" data-tab="4bdfe79c-9a06-46f5-b3d6-6413f34a8489">
+    <ul class="tab tab-linked" data-tab="4ef37fbf-c0ad-44f0-8a47-772eba5784bf">
         
             <li class="active">
                 <a href="">python </a>
@@ -840,7 +840,7 @@ Command sent successfully
             </li>
         
         </ul>
-        <ul class="tab-content" id="4bdfe79c-9a06-46f5-b3d6-6413f34a8489">
+        <ul class="tab-content" id="4ef37fbf-c0ad-44f0-8a47-772eba5784bf">
         
             <li class="active tab-content-container">
 <p>If you have been following through the <code class="language-plaintext highlighter-rouge">ble_enable_wifi.py</code> script, you will notice that it ends here such that
@@ -874,10 +874,10 @@ connected.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_d94d87ee-e7ea-43de-9d9a-9490aa6addec" class="quiz">
+<div id="quiz_f3fcebff-0883-4e17-b1de-53cd1a9f7bb3" class="quiz">
     <div>
-        <div id="question_d94d87ee-e7ea-43de-9d9a-9490aa6addec" class="quiz__question">How is the WiFi password response received?</div>
-        <div id="answers_d94d87ee-e7ea-43de-9d9a-9490aa6addec">
+        <div id="question_f3fcebff-0883-4e17-b1de-53cd1a9f7bb3" class="quiz__question">How is the WiFi password response received?</div>
+        <div id="answers_f3fcebff-0883-4e17-b1de-53cd1a9f7bb3">
         
             <input type="radio" name="question" value="A"><label>A: As a read response from the WiFi AP Password characteristic</label>
             <br>
@@ -890,10 +890,10 @@ connected.</p>
         
         </div>
     </div>
-    <button onclick="showResults('d94d87ee-e7ea-43de-9d9a-9490aa6addec', 'A')">Submit Answer</button>
-    <div id="results_d94d87ee-e7ea-43de-9d9a-9490aa6addec" style="display: none">
-        <span id="correct_d94d87ee-e7ea-43de-9d9a-9490aa6addec" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_d94d87ee-e7ea-43de-9d9a-9490aa6addec" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('f3fcebff-0883-4e17-b1de-53cd1a9f7bb3', 'A')">Submit Answer</button>
+    <div id="results_f3fcebff-0883-4e17-b1de-53cd1a9f7bb3" style="display: none">
+        <span id="correct_f3fcebff-0883-4e17-b1de-53cd1a9f7bb3" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_f3fcebff-0883-4e17-b1de-53cd1a9f7bb3" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         This (and WiFi AP SSID) is an exception to the rule. Usually responses
     are received as notifications to a response characteristic. However, in this case, it is
     received as a direct read response (since we are reading from the characteristic and not
@@ -901,10 +901,10 @@ connected.</p>
     </div>
 </div>
 
-<div id="quiz_ef617cbc-c4c2-4b0c-a954-9496c2e5dd76" class="quiz">
+<div id="quiz_b2535000-dde3-4189-94f5-14217f6e14e2" class="quiz">
     <div>
-        <div id="question_ef617cbc-c4c2-4b0c-a954-9496c2e5dd76" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
-        <div id="answers_ef617cbc-c4c2-4b0c-a954-9496c2e5dd76">
+        <div id="question_b2535000-dde3-4189-94f5-14217f6e14e2" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
+        <div id="answers_b2535000-dde3-4189-94f5-14217f6e14e2">
         
             <input type="radio" name="question" value="A"><label>A: It only needs to be enabled once and it will then always remain on</label>
             <br>
@@ -920,10 +920,10 @@ connected.</p>
         
         </div>
     </div>
-    <button onclick="showResults('ef617cbc-c4c2-4b0c-a954-9496c2e5dd76', 'D')">Submit Answer</button>
-    <div id="results_ef617cbc-c4c2-4b0c-a954-9496c2e5dd76" style="display: none">
-        <span id="correct_ef617cbc-c4c2-4b0c-a954-9496c2e5dd76" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_ef617cbc-c4c2-4b0c-a954-9496c2e5dd76" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('b2535000-dde3-4189-94f5-14217f6e14e2', 'D')">Submit Answer</button>
+    <div id="results_b2535000-dde3-4189-94f5-14217f6e14e2" style="display: none">
+        <span id="correct_b2535000-dde3-4189-94f5-14217f6e14e2" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_b2535000-dde3-4189-94f5-14217f6e14e2" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         While the WiFi AP will remain on for some time, it can and will eventually turn off so
     it is always recommended to first connect via BLE and ensure that it is enabled. The password
     and SSID will almost never change. However, they will change if the connections are reset via
@@ -934,7 +934,7 @@ connected.</p>
 <h1 id="troubleshooting">Troubleshooting</h1>
 
 <p>See the first tutorial’s
-<a href="/OpenGoPro/tutorials/connect-ble#troubleshooting">troubleshooting section</a>.</p>
+<a href="/tutorials/connect-ble#troubleshooting">troubleshooting section</a>.</p>
 
 <h1 id="good-job">Good Job!</h1>
 
@@ -943,7 +943,7 @@ connected.</p>
 </div>
 
 <p>You are now connected to the GoPro’s Wifi AP and can send any of the HTTP commands defined in the
-<a href="/OpenGoPro/http_2_0">Open GoPro Interface</a>. Proceed to the next tutorial.</p>
+<a href="/http_2_0">Open GoPro Interface</a>. Proceed to the next tutorial.</p>
 
         
       </section>
@@ -955,7 +955,7 @@ connected.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-04-25T20:17:55+00:00">April 25, 2023</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-05-19T20:39:31+00:00">May 19, 2023</time></p>
 
 
       </footer>
@@ -965,11 +965,11 @@ connected.</p>
       
   <nav class="pagination">
     
-      <a href="/OpenGoPro/tutorials/ble-queries" class="pagination--pager" title="Tutorial 4: BLE Queries
+      <a href="/tutorials/ble-queries" class="pagination--pager" title="Tutorial 4: BLE Queries
 ">Previous</a>
     
     
-      <a href="/OpenGoPro/tutorials/send-wifi-commands" class="pagination--pager" title="Tutorial 6: Send WiFi Commands
+      <a href="/tutorials/send-wifi-commands" class="pagination--pager" title="Tutorial 6: Send WiFi Commands
 ">Next</a>
     
   </nav>
@@ -1055,14 +1055,14 @@ connected.</p>
     </div>
 
     
-  <script src="/OpenGoPro/assets/js/main.min.js"></script>
+  <script src="/assets/js/main.min.js"></script>
 
 
 
 
-<script src="/OpenGoPro/assets/js/lunr/lunr.min.js"></script>
-<script src="/OpenGoPro/assets/js/lunr/lunr-store.js"></script>
-<script src="/OpenGoPro/assets/js/lunr/lunr-en.js"></script>
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
 
 
 

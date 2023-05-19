@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Open GoPro Python SDK :  Open GoPro</title>
-<meta name="description" content="Open GoPro Python SDK          This is a Python package that provides an interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and Wi-Fi / USB HTTP API’s as well as install command line interfaces to take photos, videos, and view video streams.     Free software: MIT license   Documentation: View on Open GoPro   View on Github   Documentation     Note! This README is only an overview of the package.   Complete documentation can be found on Open GoPro  Features     Top-level GoPro class interface to use BLE, WiFi, and / or USB   Cross-platform (tested on MacOS Big Sur, Windows 10, and Ubuntu 20.04)            BLE implemented using bleak       Wi-Fi controller provided in the Open GoPro package (loosely based on the Wireless Library           Supports all commands, settings, and statuses from the Open GoPro API   Automatically handles connection maintenance:            manage camera ready / encoding       periodically sends keep alive signals           Includes detailed logging for each module   Includes demo scripts installed as command-line applications to show BLE, WiFi, and USB functionality such as:            Take a photo       Take a video       Configure and view a GoPro webcam stream       GUI to send all commands and view the live / preview stream       Log the battery           Installation     Note! This package requires Python &gt;= 3.8 and &lt; 3.11   The minimal install to use the Open GoPro library and the CLI demos is:  $ pip install open-gopro   To also install the extra dependencies to run the GUI demos, do:  $ pip install open-gopro[gui]   Usage  To automatically connect to GoPro device via BLE and WiFI, set the preset, set video parameters, take a video, and download all files:  import time from open_gopro import WirelessGoPro, Params  with WirelessGoPro() as gopro:     gopro.ble_command.load_preset(Params.Preset.CINEMATIC)     gopro.ble_setting.resolution.set(Params.Resolution.RES_4K)     gopro.ble_setting.fps.set(Params.FPS.FPS_30)     gopro.ble_command.set_shutter(Params.Shutter.ON)     time.sleep(2) # Record for 2 seconds     gopro.ble_command.set_shutter(Params.Shutter.OFF)      # Download all of the files from the camera     media_list = [x[&quot;n&quot;] for x in gopro.wifi_command.get_media_list().flatten     for file in media_list:         gopro.wifi_command.download_file(camera_file=file)   And much more!  Demos     Note! These demos can be found on Github   Demos can be found in the installed package in the “demos” folder. They are installed as a CLI entrypoint and can be run as shown below.  Command Line Interface (CLI) Demos  All of these demos are CLI only and can thus be run with the minimal (non-GUI) install.  Capture a photo and download it to your computer:  $ gopro-photo   Capture a video and download it to your computer:  $ gopro-video   Connect to the GoPro and log battery consumption in to a .csv:  $ gopro-log-battery   Connect to the GoPro’s Wi-Fi AP and maintain the connection:  $ gopro-wifi   For more information on each, try running with help as such:  $ gopro-photo --help  usage: gopro-photo [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT] [-w WIFI_INTERFACE]  Connect to a GoPro camera, take a photo, then download it.  optional arguments:   -h, --help            show this help message and exit   -i IDENTIFIER, --identifier IDENTIFIER                         Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first                         discovered GoPro will be connected to   -l LOG, --log LOG     Location to store detailed log   -o OUTPUT, --output OUTPUT                         Where to write the photo to. If not set, write to 'photo.jpg'   -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE                         System Wifi Interface. If not set, first discovered interface will be used.   GUI Demos  These demos require the additional GUI installation.  Start the preview stream and view it:  $ gopro-preview-stream   Start the live stream and view it:  $ gopro-live-stream">
+<meta name="description" content="Open GoPro Python SDK">
 
 
   <meta name="author" content="GoPro">
@@ -23,25 +23,25 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
 <meta property="og:title" content="Open GoPro Python SDK">
-<meta property="og:url" content="https://gopro.github.io/OpenGoPro/demos/python/sdk_wireless_camera_control">
+<meta property="og:url" content="http://jekyll:4998//demos/python/sdk_wireless_camera_control">
 
 
-  <meta property="og:description" content="Open GoPro Python SDK          This is a Python package that provides an interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and Wi-Fi / USB HTTP API’s as well as install command line interfaces to take photos, videos, and view video streams.     Free software: MIT license   Documentation: View on Open GoPro   View on Github   Documentation     Note! This README is only an overview of the package.   Complete documentation can be found on Open GoPro  Features     Top-level GoPro class interface to use BLE, WiFi, and / or USB   Cross-platform (tested on MacOS Big Sur, Windows 10, and Ubuntu 20.04)            BLE implemented using bleak       Wi-Fi controller provided in the Open GoPro package (loosely based on the Wireless Library           Supports all commands, settings, and statuses from the Open GoPro API   Automatically handles connection maintenance:            manage camera ready / encoding       periodically sends keep alive signals           Includes detailed logging for each module   Includes demo scripts installed as command-line applications to show BLE, WiFi, and USB functionality such as:            Take a photo       Take a video       Configure and view a GoPro webcam stream       GUI to send all commands and view the live / preview stream       Log the battery           Installation     Note! This package requires Python &gt;= 3.8 and &lt; 3.11   The minimal install to use the Open GoPro library and the CLI demos is:  $ pip install open-gopro   To also install the extra dependencies to run the GUI demos, do:  $ pip install open-gopro[gui]   Usage  To automatically connect to GoPro device via BLE and WiFI, set the preset, set video parameters, take a video, and download all files:  import time from open_gopro import WirelessGoPro, Params  with WirelessGoPro() as gopro:     gopro.ble_command.load_preset(Params.Preset.CINEMATIC)     gopro.ble_setting.resolution.set(Params.Resolution.RES_4K)     gopro.ble_setting.fps.set(Params.FPS.FPS_30)     gopro.ble_command.set_shutter(Params.Shutter.ON)     time.sleep(2) # Record for 2 seconds     gopro.ble_command.set_shutter(Params.Shutter.OFF)      # Download all of the files from the camera     media_list = [x[&quot;n&quot;] for x in gopro.wifi_command.get_media_list().flatten     for file in media_list:         gopro.wifi_command.download_file(camera_file=file)   And much more!  Demos     Note! These demos can be found on Github   Demos can be found in the installed package in the “demos” folder. They are installed as a CLI entrypoint and can be run as shown below.  Command Line Interface (CLI) Demos  All of these demos are CLI only and can thus be run with the minimal (non-GUI) install.  Capture a photo and download it to your computer:  $ gopro-photo   Capture a video and download it to your computer:  $ gopro-video   Connect to the GoPro and log battery consumption in to a .csv:  $ gopro-log-battery   Connect to the GoPro’s Wi-Fi AP and maintain the connection:  $ gopro-wifi   For more information on each, try running with help as such:  $ gopro-photo --help  usage: gopro-photo [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT] [-w WIFI_INTERFACE]  Connect to a GoPro camera, take a photo, then download it.  optional arguments:   -h, --help            show this help message and exit   -i IDENTIFIER, --identifier IDENTIFIER                         Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first                         discovered GoPro will be connected to   -l LOG, --log LOG     Location to store detailed log   -o OUTPUT, --output OUTPUT                         Where to write the photo to. If not set, write to 'photo.jpg'   -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE                         System Wifi Interface. If not set, first discovered interface will be used.   GUI Demos  These demos require the additional GUI installation.  Start the preview stream and view it:  $ gopro-preview-stream   Start the live stream and view it:  $ gopro-live-stream">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2023-02-28T19:31:12+00:00">
+  <meta property="og:description" content="Open GoPro Python SDK">
 
 
 
 
 
 
-<link rel="canonical" href="https://gopro.github.io/OpenGoPro/demos/python/sdk_wireless_camera_control">
+
+  <meta property="article:published_time" content="2023-05-19T20:39:31+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://jekyll:4998//demos/python/sdk_wireless_camera_control">
 
 
 
@@ -52,7 +52,7 @@
     
       "@type": "Person",
       "name": "GoPro",
-      "url": "https://gopro.github.io/OpenGoPro/"
+      "url": "http://jekyll:4998//"
     
   }
 </script>
@@ -76,26 +76,26 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/main.css">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
 
 
   
-    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+    <script src="/assets/js/tabs.js"></script>
   
-    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+    <script src="/assets/js/quiz.js"></script>
   
-    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+    <script src="/assets/js/accordion.js"></script>
   
 
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
-<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
-<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
-<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/images/logos/favicon.ico">
 <meta name="msapplication-TileColor" content="#2d89ef">
 <meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
@@ -122,30 +122,30 @@
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
         
-          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+          <a class="site-logo" href="/"><img src="/assets/images/logos/logo.png" alt="Open GoPro"></a>
         
-        <a class="site-title" href="/OpenGoPro/">
+        <a class="site-title" href="/">
           Open GoPro
           
         </a>
         <ul class="visible-links">
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/">Home</a>
+              <a href="/">Home</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/ble">BLE Spec</a>
+              <a href="/ble">BLE Spec</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/http">HTTP Spec</a>
+              <a href="/http">HTTP Spec</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/tutorials">Tutorials</a>
+              <a href="/tutorials">Tutorials</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/demos">Demos</a>
+              <a href="/demos">Demos</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/faq">FAQ</a>
+              <a href="/faq">FAQ</a>
             </li>
 </ul>
         
@@ -181,7 +181,7 @@
     
       
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="https://gopro.github.io/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+          <a href="http://jekyll:4998//" itemprop="item"><span itemprop="name">Home</span></a>
           <meta itemprop="position" content="1">
         </li>
         <span class="sep">/</span>
@@ -189,7 +189,7 @@
       
         
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/OpenGoPro/demos" itemprop="item"><span itemprop="name">Demos</span></a>
+          <a href="/demos" itemprop="item"><span itemprop="name">Demos</span></a>
           <meta itemprop="position" content="2">
         </li>
         <span class="sep">/</span>
@@ -199,7 +199,7 @@
       
         
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/OpenGoPro/python" itemprop="item"><span itemprop="name">Python</span></a>
+          <a href="/python" itemprop="item"><span itemprop="name">Python</span></a>
           <meta itemprop="position" content="3">
         </li>
         <span class="sep">/</span>
@@ -227,7 +227,7 @@
   
     <div class="author__avatar">
       
-        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+        <img src="/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
       
     </div>
   
@@ -343,8 +343,8 @@
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Open GoPro Python SDK">
-    <meta itemprop="description" content="Open GoPro Python SDKThis is a Python package that provides aninterface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and Wi-Fi / USB HTTP API’s as well as install command line interfaces to take photos, videos, and view video streams.  Free software: MIT license  Documentation: View on Open GoPro  View on GithubDocumentation  Note! This README is only an overview of the package.Complete documentation can be found on Open GoProFeatures  Top-level GoPro class interface to use BLE, WiFi, and / or USB  Cross-platform (tested on MacOS Big Sur, Windows 10, and Ubuntu 20.04)          BLE implemented using bleak      Wi-Fi controller provided in the Open GoPro package (loosely based on the Wireless Library        Supports all commands, settings, and statuses from the Open GoPro API  Automatically handles connection maintenance:          manage camera ready / encoding      periodically sends keep alive signals        Includes detailed logging for each module  Includes demo scripts installed as command-line applications to show BLE, WiFi, and USB functionality such as:          Take a photo      Take a video      Configure and view a GoPro webcam stream      GUI to send all commands and view the live / preview stream      Log the battery      Installation  Note! This package requires Python &gt;= 3.8 and &lt; 3.11The minimal install to use the Open GoPro library and the CLI demos is:$ pip install open-goproTo also install the extra dependencies to run the GUI demos, do:$ pip install open-gopro[gui]UsageTo automatically connect to GoPro device via BLE and WiFI, set the preset, set video parameters, take avideo, and download all files:import timefrom open_gopro import WirelessGoPro, Paramswith WirelessGoPro() as gopro:    gopro.ble_command.load_preset(Params.Preset.CINEMATIC)    gopro.ble_setting.resolution.set(Params.Resolution.RES_4K)    gopro.ble_setting.fps.set(Params.FPS.FPS_30)    gopro.ble_command.set_shutter(Params.Shutter.ON)    time.sleep(2) # Record for 2 seconds    gopro.ble_command.set_shutter(Params.Shutter.OFF)    # Download all of the files from the camera    media_list = [x[&quot;n&quot;] for x in gopro.wifi_command.get_media_list().flatten    for file in media_list:        gopro.wifi_command.download_file(camera_file=file)And much more!Demos  Note! These demos can be found on GithubDemos can be found in the installed package in the “demos” folder. They are installed as a CLI entrypointand can be run as shown below.Command Line Interface (CLI) DemosAll of these demos are CLI only and can thus be run with the minimal (non-GUI) install.Capture a photo and download it to your computer:$ gopro-photoCapture a video and download it to your computer:$ gopro-videoConnect to the GoPro and log battery consumption in to a .csv:$ gopro-log-batteryConnect to the GoPro’s Wi-Fi AP and maintain the connection:$ gopro-wifiFor more information on each, try running with help as such:$ gopro-photo --helpusage: gopro-photo [-h] [-i IDENTIFIER] [-l LOG] [-o OUTPUT] [-w WIFI_INTERFACE]Connect to a GoPro camera, take a photo, then download it.optional arguments:  -h, --help            show this help message and exit  -i IDENTIFIER, --identifier IDENTIFIER                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first                        discovered GoPro will be connected to  -l LOG, --log LOG     Location to store detailed log  -o OUTPUT, --output OUTPUT                        Where to write the photo to. If not set, write to 'photo.jpg'  -w WIFI_INTERFACE, --wifi_interface WIFI_INTERFACE                        System Wifi Interface. If not set, first discovered interface will be used.GUI DemosThese demos require the additional GUI installation.Start the preview stream and view it:$ gopro-preview-streamStart the live stream and view it:$ gopro-live-stream">
-    <meta itemprop="datePublished" content="2023-02-28T19:31:12+00:00">
+    <meta itemprop="description" content="Open GoPro Python SDK">
+    <meta itemprop="datePublished" content="2023-05-19T20:39:31+00:00">
     
 
     <div class="page__inner-wrap">
@@ -378,7 +378,7 @@
 
       <section class="page__content" itemprop="text">
         
-          <aside class="sidebar__right ">
+          <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title">
 <i class="fas fa-file-alt"></i> On this page</h4></header>
@@ -479,21 +479,21 @@ interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and
 <p>To automatically connect to GoPro device via BLE and WiFI, set the preset, set video parameters, take a
 video, and download all files:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">WirelessGoPro</span><span class="p">,</span> <span class="n">Params</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">time</span>
+<span class="kn">from</span> <span class="n">open_gopro</span> <span class="kn">import</span> <span class="n">WirelessGoPro</span><span class="p">,</span> <span class="n">Params</span>
 
-<span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="n">load_preset</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Preset</span><span class="p">.</span><span class="n">CINEMATIC</span><span class="p">)</span>
-    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">resolution</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Resolution</span><span class="p">.</span><span class="n">RES_4K</span><span class="p">)</span>
-    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">fps</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">FPS</span><span class="p">.</span><span class="n">FPS_30</span><span class="p">)</span>
-    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Shutter</span><span class="p">.</span><span class="n">ON</span><span class="p">)</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Record for 2 seconds
-</span>    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Shutter</span><span class="p">.</span><span class="n">OFF</span><span class="p">)</span>
+<span class="k">with</span> <span class="nc">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
+    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="nf">load_preset</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Preset</span><span class="p">.</span><span class="n">CINEMATIC</span><span class="p">)</span>
+    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">resolution</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Resolution</span><span class="p">.</span><span class="n">RES_4K</span><span class="p">)</span>
+    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">fps</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">FPS</span><span class="p">.</span><span class="n">FPS_30</span><span class="p">)</span>
+    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="nf">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Shutter</span><span class="p">.</span><span class="n">ON</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Record for 2 seconds
+</span>    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="nf">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Shutter</span><span class="p">.</span><span class="n">OFF</span><span class="p">)</span>
 
     <span class="c1"># Download all of the files from the camera
-</span>    <span class="n">media_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">gopro</span><span class="p">.</span><span class="n">wifi_command</span><span class="p">.</span><span class="n">get_media_list</span><span class="p">().</span><span class="n">flatten</span>
+</span>    <span class="n">media_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="sh">"</span><span class="s">n</span><span class="sh">"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">gopro</span><span class="p">.</span><span class="n">wifi_command</span><span class="p">.</span><span class="nf">get_media_list</span><span class="p">().</span><span class="n">flatten</span>
     <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">:</span>
-        <span class="n">gopro</span><span class="p">.</span><span class="n">wifi_command</span><span class="p">.</span><span class="n">download_file</span><span class="p">(</span><span class="n">camera_file</span><span class="o">=</span><span class="nb">file</span><span class="p">)</span>
+        <span class="n">gopro</span><span class="p">.</span><span class="n">wifi_command</span><span class="p">.</span><span class="nf">download_file</span><span class="p">(</span><span class="n">camera_file</span><span class="o">=</span><span class="nb">file</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>And much more!</p>
@@ -575,7 +575,7 @@ optional arguments:
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-02-28T19:31:12+00:00">February 28, 2023</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-05-19T20:39:31+00:00">May 19, 2023</time></p>
 
 
       </footer>
@@ -585,22 +585,17 @@ optional arguments:
       
   <nav class="pagination">
     
-      <a href="/OpenGoPro/demos/python/multi_webcam" class="pagination--pager" title="Multi Webcam
+      <a href="/demos/python/multi_webcam" class="pagination--pager" title="Multi Webcam
 ">Previous</a>
     
     
-      <a href="/OpenGoPro/demos/swift/EnableWiFiDemo" class="pagination--pager" title="Swift Enable WiFi Demo
+      <a href="/demos/swift/EnableWiFiDemo" class="pagination--pager" title="Swift Enable WiFi Demo
 ">Next</a>
     
   </nav>
 
     </div>
-
-    
   </article>
-
-  
-  
 </div>
     </div>
 
@@ -626,6 +621,8 @@ optional arguments:
 <!-- end custom footer snippets -->
         <div class="page__footer-follow">
     <ul class="social-icons">
+        
+        <li><strong>Follow:</strong></li>
            
         <li>
             <a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i>
@@ -672,14 +669,14 @@ optional arguments:
     </div>
 
     
-  <script src="/OpenGoPro/assets/js/main.min.js"></script>
+  <script src="/assets/js/main.min.js"></script>
 
 
 
 
-<script src="/OpenGoPro/assets/js/lunr/lunr.min.js"></script>
-<script src="/OpenGoPro/assets/js/lunr/lunr-store.js"></script>
-<script src="/OpenGoPro/assets/js/lunr/lunr-en.js"></script>
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
 
 
 
