@@ -14,10 +14,11 @@ BUILD_BASE_URL:="/OpenGoPro"
 help: ## Display this help which is generated from Make goal comments
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-# TODO Default parameter shell expansion was somehow not working in github actions so we use .env file
+# Docker images are currently not public. So we build if pull fails for the local use case.
 .PHONY: setup
 setup:
-	@docker-compose pull
+	-@docker-compose pull
+	@docker-compose build
 
 .PHONY: clean
 clean: ## Clean cached jekyll files

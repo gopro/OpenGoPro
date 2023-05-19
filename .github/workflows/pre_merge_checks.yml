@@ -52,6 +52,13 @@ jobs:
               with:
                   access_token: ${{ github.token }}
 
+            - name: Log in to the Container registry
+              uses: docker/login-action@v1.10.0
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
             - uses: actions/checkout@v3
             - name: Test Jekyll Build and Check Links
               run: make tests

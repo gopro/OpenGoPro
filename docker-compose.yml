@@ -4,7 +4,7 @@
 version: '3.7'
 services:
     jekyll:
-        image: ghcr.io/gopro/opengopro:main
+        image: ghcr.io/gopro/opengopro/gpjekyll:main
         container_name: jekyll
         build:
             context: .admin/jekyll
@@ -22,6 +22,7 @@ services:
             # Set (to anything other than develop) so that jekyll build won't overwrite site.url
             # https://github.com/jekyll/jekyll/issues/5743
             - JEKYLL_ENV=production
+        # TODO Default parameter shell expansion was somehow not working in github actions so we use .env file
         command: '${COMMAND}' # Set via .env file
         networks:
             - open_gopro
@@ -31,6 +32,7 @@ services:
             - plant_uml
 
     protos:
+        image: ghcr.io/gopro/opengopro/gpprotodoc:main
         container_name: protos
         build:
             context: .admin/proto_doc_gen
@@ -40,6 +42,7 @@ services:
 
     demos:
         container_name: demos
+        image: ghcr.io/gopro/opengopro/gpdemodoc:main
         build:
             context: .admin/prepare_demos
         volumes:
@@ -51,12 +54,13 @@ services:
         # Note! v1.2023.7 seems to be broken
         image: plantuml/plantuml-server:jetty-v1.2023.6
         ports:
-            # 8081 is where it be accessed externally from Docker. This is not actually needed for building / serving.
+            # 8081 is where it can be accessed externally from Docker. This is not actually needed for building / serving.
             - '8081:8080'
         networks:
             - open_gopro
 
     linkchecker:
+        image: ghcr.io/gopro/opengopro/gplinkchecker:main
         container_name: linkchecker
         build:
             context: .admin/linkchecker
