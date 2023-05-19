@@ -35,7 +35,7 @@ serve: ## Serve site locally
 build: setup
 build: ## Build site for deployment
 	@echo "Building Jekyll Site"
-	@command="-u ${BUILD_HOST_URL} -b ${BUILD_BASE_URL} build" docker-compose up --timeout 600 --abort-on-container-exit
+	@command="-u ${BUILD_HOST_URL} -b ${BUILD_BASE_URL} build" docker-compose up --timeout 300 --abort-on-container-exit
 
 .PHONY: tests
 tests: setup
