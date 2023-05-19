@@ -1,20 +1,24 @@
 # publish_docker_image.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Mon Sep 27 19:00:18 UTC 2021
 
-
 name: Publish the Docker Image
 
 on:
     workflow_dispatch:
 
-env:
-    REGISTRY: ghcr.io
-    IMAGE_NAME: ${{ github.repository }}
-
 jobs:
     build-and-push-image:
         name: Build and Push Image
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                include:
+                    - context: ./.admin/jekyll
+                      image: ghcr.io/${{ github.repository }}/gpJekyll
+                    - context: ./.admin/linkchecker
+                      image: ghcr.io/${{ github.repository }}/gpLinkChecker
+                    - context: ./.admin/proto_doc_gen
+                      image: ghcr.io/${{ github.repository }}/gpProtoDoc
         permissions:
             contents: read
             packages: write
@@ -26,7 +30,7 @@ jobs:
             - name: Log in to the Container registry
               uses: docker/login-action@v1.10.0
               with:
-                  registry: ${{ env.REGISTRY }}
+                  registry: ghcr.io
                   username: ${{ github.actor }}
                   password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -34,12 +38,12 @@ jobs:
               id: meta
               uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
               with:
-                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+                  images: ${{ matrix.image }}
 
-            - name: Build and push Docker image
+            - name: Build and push ${{ matrix.image }}
               uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
               with:
-                  context: .admin/jekyll
+                  context: ${{ matrix.context }}
                   push: true
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
