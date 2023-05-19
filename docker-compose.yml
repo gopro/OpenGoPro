@@ -1,45 +1,73 @@
 # docker-compose.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:06:11 PM
 
-# Note! The container_name is ignored for run (https://github.com/docker/compose/issues/2061) so we set it
-# via CLI arg
-
 version: '3.7'
 services:
     jekyll:
         image: ghcr.io/gopro/opengopro:main
         container_name: jekyll
         build:
-            context: .
+            context: admin/jekyll
         volumes:
-            - ./demos:/home/demos
             - ./docs:/site
-        ports:
-            - '4998:4998'
+        # Not currently used but will be once Github Actions supports --wait docker-compose up param
         healthcheck:
             test: curl --fail http://localhost:4998 || exit 1
             interval: 2s
             retries: 45
             start_period: 20s
             timeout: 100s
+        ports:
+            - '4998:4998'
         environment:
-            - JEKYLL_ENV=docker # Set (to anything other than develop) so that jekyll serve won't overwrite site.url
-        # Set the default command to be run if no parameters are passed which will...
-        # Build, then serve, the jekyll site. Serve it from 0.0.0.0:4998 to satisfy docker.
-        # Use the default config file and then also an additional config file (chosen by JEKYLL_CONFIG
-        # environment variable) to set the correct site.url.
-        # TODO try --livereload
-        command: bundle exec jekyll serve --host 0.0.0.0 --port 4998 --watch --profile --incremental --force_polling --config _config.yml,_config-temp.yml
+            # Default to serve if not set (also silences warning during image build)
+            - COMMAND="${command:-serve}"
+            # Set (to anything other than develop) so that jekyll serve won't overwrite site.url
+            # https://github.com/jekyll/jekyll/issues/5743
+            - JEKYLL_ENV=production
+        command: '${COMMAND:-serve}'
+        networks:
+            - open_gopro
+        depends_on:
+            - protos
+            - demos
+            - plant_uml
+
+    protos:
+        container_name: protos
+        build:
+            context: admin/proto_doc_gen
+        volumes:
+            - ./protobuf:/protos
+            - ./docs:/site
+
+    demos:
+        container_name: demos
+        build:
+            context: admin/prepare_demos
+        volumes:
+            - ./demos:/demos
+            - ./docs:/site
+
+    plant_uml:
+        container_name: plant_uml
+        image: plantuml/plantuml-server
+        ports:
+            # 8081 is where it be accessed externally from Docker. This is not actually needed for building / serving.
+            - '8081:8080'
         networks:
             - open_gopro
 
-    plant_uml:
-        image: plantuml/plantuml-server:jetty-v1.2023.6
-        container_name: plant_uml
-        ports:
-            - '8080:8080'
+    linkchecker:
+        container_name: linkchecker
+        build:
+            context: admin/linkchecker
+        profiles:
+            - test
         networks:
             - open_gopro
+        depends_on:
+            - jekyll
 
 networks:
     open_gopro:

@@ -3,56 +3,34 @@
 
 ORIGINAL_VERSION=$(strip $$(awk '/Current Version: /{print $$NF}' README.md))
 VERSION:=$(ORIGINAL_VERSION)
-# Default to public deployment. Anything else must be set at Make time
-HOST_URL:=https://gopro.github.io
-BASE_URL:=/OpenGoPro
+
+# https://mademistakes.com/mastering-jekyll/site-url-baseurl/#jekyll-development-and-siteurl
 
 .PHONY: help
 help: ## Display this help which is generated from Make goal comments
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+.PHONY: setup
+setup:
+	@docker-compose build
+
 .PHONY: clean
 clean: ## Clean cached jekyll files
 	@echo "🧼 Cleaning jekyll artifacts..."
 	-@docker-compose down > /dev/null 2>&1
-	@rm -rf docs/_site docs/.jekyll-cache docs/.jekyll-metadata docs/tutorials/_demos docs/_conf-temp.yml
-
-.PHONY: protos
-protos: ## Generate markdown documentation from protobuf files
-	@echo "📇 Building protobuf documentation..."
-	@MSYS_NO_PATHCONV=1 docker run --rm \
-		-v $$(pwd)/docs:/out \
-		-v $$(pwd)/protobuf:/protos \
-		pseudomuto/protoc-gen-doc --doc_opt=/out/_layouts/protobuf_markdown.tmpl,protos.md
-
-.PHONY: config
-config: # Create the jekyll config file specific to the site we are building
-	@echo "🛠️ Configuring Jekyll site ${HOST_URL}${BASE_URL}"
-	@echo "url: ${HOST_URL}" > ./docs/_config-temp.yml
-	@echo "baseurl: ${BASE_URL}" >> ./docs/_config-temp.yml
-
-.PHONY: prepare_jekyll
-prepare_jekyll: setup clean demos protos config
-
-.PHONY: build
-build: prepare_jekyll ## Build but do not serve the jekyll pages
-	@echo "🏗️ Building jekyll site..."
-	@docker-compose run --rm --service-ports --detach --name plant_uml plant_uml
-	@docker-compose run --rm jekyll bundle exec jekyll build --config _config.yml,_config-temp.yml
-	@docker kill plant_uml > /dev/null 2>&1
+	@rm -rf docs/_site docs/.jekyll-cache docs/.jekyll-metadata docs/_demos docs/protos.md
 
 .PHONY: serve
-serve: HOST_URL=http://localhost:4998/
-serve: BASE_URL=\"\"
-serve: prepare_jekyll ## Serve the site locally at http://localhost:4998/
-	@echo "🚦 Serving jekyll site..."
-	-@docker-compose up --force-recreate
+serve: ## Serve site locally
+	@command="-u http://localhost:4998/ -b \"\" -p 4998 serve" docker-compose --profile serve up
+
+.PHONY: build
+build: ## Build site for deployment
+	@command="-u https://gopro.github.io -b /OpenGoPro build" docker-compose up
 
 .PHONY: tests
-tests: HOST_URL=http://jekyll:4998/
-tests: BASE_URL=\"\"
-tests: prepare_jekyll ## Clean everything, build, then run link checker.
-	@./tools/check_links
+tests: ## Serve, then run link checker. Times out after 5 minutes.
+	@command="-u http://jekyll:4998/ -b \"\" -p 4998 serve" docker-compose --profile test up --timeout 300
 
 .PHONY: version
 version: ## Update the Open GoPro version
@@ -66,12 +44,4 @@ version: ## Update the Open GoPro version
 .PHONY: copyright
 copyright: ## Check for and add missing copyrights
 	@echo "©️ Verifying / adding copyrights..."
-	@./tools/copyright -i . $(ORIGINAL_VERSION)
-
-.PHONY: setup_docker
-setup_docker:
-	@echo "🐳 Setting up docker images..."
-	@docker-compose pull
-
-.PHONY: setup
-setup: setup_docker ## Setup development environment
+	@./admin/copyright -i . $(ORIGINAL_VERSION)
