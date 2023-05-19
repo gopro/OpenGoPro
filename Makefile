@@ -33,7 +33,7 @@ serve: ## Serve site locally
 .PHONY: build
 build: setup
 build: ## Build site for deployment
-	@command="-u ${BUILD_HOST_URL} -b ${BUILD_BASE_URL} build" docker-compose up
+	@command="-u ${BUILD_HOST_URL} -b ${BUILD_BASE_URL} build" docker-compose up --abort-on-container-exit
 
 .PHONY: tests
 tests: setup

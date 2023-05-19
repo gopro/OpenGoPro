@@ -50,7 +50,8 @@ services:
 
     plant_uml:
         container_name: plant_uml
-        image: plantuml/plantuml-server
+        # Note! v1.2023.7 seems to be broken
+        image: plantuml/plantuml-server:jetty-v1.2023.6
         ports:
             # 8081 is where it be accessed externally from Docker. This is not actually needed for building / serving.
             - '8081:8080'

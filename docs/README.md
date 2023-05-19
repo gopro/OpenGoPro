@@ -1,5 +1,7 @@
 # Open GoPro Documentation
 
+TODO this is out of date :(
+
 This directory houses the documentation as well as the framework required to build the Jekyll site.
 
 It is based on the [minimal mistakes theme](https://mmistakes.github.io/minimal-mistakes/).
