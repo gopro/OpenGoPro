@@ -8,20 +8,17 @@ on:
 
 jobs:
     build-and-push-image:
-        env:
-            REGISTRY: ghcr.io
-            IMAGE_NAME: ${{ github.repository }}
         name: Build and Push Image
         runs-on: ubuntu-latest
         strategy:
             matrix:
                 include:
                     - dockerfile: ./.admin/jekyll/Dockerfile
-                      image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/gpJekyll
+                      image: ghcr.io/${{ github.repository }}/gpJekyll
                     - dockerfile: ./.admin/linkchecker/Dockerfile
-                      image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/gpLinkChecker
+                      image: ghcr.io/${{ github.repository }}/gpLinkChecker
                     - dockerfile: ./.admin/proto_doc_gen/Dockerfile
-                      image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/gpProtoDoc
+                      image: ghcr.io/${{ github.repository }}/gpProtoDoc
         permissions:
             contents: read
             packages: write
@@ -33,7 +30,7 @@ jobs:
             - name: Log in to the Container registry
               uses: docker/login-action@v1.10.0
               with:
-                  registry: ${{ env.REGISTRY }}
+                  registry: ghcr.io
                   username: ${{ github.actor }}
                   password: ${{ secrets.GITHUB_TOKEN }}
 
