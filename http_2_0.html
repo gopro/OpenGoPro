@@ -600,7 +600,7 @@ Below is a table of cameras that support GoPro's public HTTP API:
 Connection to the camera via WiFi requires that the camera's WiFi Access Point be enabled.
 This can be done by connecting to the camera via
 <a href="https://gopro.github.io/OpenGoPro/ble">Bluetooth Low Energy (BLE)</a>
-and sending the AP Control command: WIFI AP ON.
+and sending a command to enable AP Mode.
 </p>
 
 <h3 id="usb">USB</h3>
@@ -619,13 +619,13 @@ Connecting via USB requires the following steps:
 <h3 id="wifi-1">WiFi</h3>
 
 <p>
-Once the WiFi Access Point has been turned on, authentication with the camera simply requries connecting with the
+Once the WiFi Access Point has been turned on, authentication with the camera simply requires connecting with the
 correct SSID and password. This information can be obtained in two ways:
 
 </p>
 <ul>
 <li>Put the camera into <a href="https://community.gopro.com/s/article/GoPro-Quik-How-To-Pair-Your-Camera?language=en_US">pairing mode</a> and tap the info button in the top-right corner of the screen.</li>
-<li>Read the SSID/password directly via Bluetooth Low Energy. See <i>Services and Characteristics</i> seciton in <a href="https://gopro.github.io/OpenGoPro/ble">BLE Specification</a> for details.</li>
+<li>Read the SSID/password directly via Bluetooth Low Energy. See <i>Services and Characteristics</i> section in <a href="https://gopro.github.io/OpenGoPro/ble">BLE Specification</a> for details.</li>
 </ul>
 
 
@@ -786,6 +786,7 @@ every <b>3.0</b> seconds after a connection is established.
 <h2 id="commands-quick-reference">Commands Quick Reference</h2>
 <p>
 Below is a table of commands that can be sent to the camera and how to send them.<br>
+* Indicates that item is experimental<br>
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br>
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br>
 &gt;= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
@@ -1053,56 +1054,6 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>OTA Update</td>
-      <td>Ota update: show canceled/failed ui on the camera</td>
-      <td>GET</td>
-      <td>/gp/gpSoftUpdate?request=canceled</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>OTA Update</td>
-      <td>Ota update: delete cached update files</td>
-      <td>GET</td>
-      <td>/gp/gpSoftUpdate?request=delete</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>OTA Update</td>
-      <td>Ota update: get current update state</td>
-      <td>GET</td>
-      <td>/gp/gpSoftUpdate?request=progress</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>OTA Update</td>
-      <td>Ota update: display update ui on camera</td>
-      <td>GET</td>
-      <td>/gp/gpSoftUpdate?request=showui</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>OTA Update</td>
-      <td>Ota update: initiate firmware update</td>
-      <td>GET</td>
-      <td>/gp/gpSoftUpdate?request=start</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Open GoPro</td>
       <td>Get version</td>
@@ -1195,7 +1146,7 @@ Below is a table of commands that can be sent to the camera and how to send them
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Set Local Date/Time</td>
-      <td>Set local date/time to: 2023-01-31 03:04:05 (utc-02:00)  (dst: on)</td>
+      <td>Set local date/time to: 2023-01-31 03:04:05 (utc-02:00) (dst: on)</td>
       <td>GET</td>
       <td>/gopro/camera/set_date_time?date=2023_1_31&amp;time=3_4_5&amp;tzone=-120&amp;dst=1</td>
       <td><span style="color:green">✔</span></td>
@@ -1224,6 +1175,56 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>Soft Update</td>
+      <td>Soft update: show canceled/failed ui on the camera</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=canceled</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Soft Update</td>
+      <td>Soft update: delete cached update files</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=delete</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Soft Update</td>
+      <td>Soft update: get current update state</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=progress</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Soft Update</td>
+      <td>Soft update: display update ui on camera</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=showui</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Soft Update</td>
+      <td>Soft update: initiate firmware update</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=start</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>Stream: Start</td>
       <td>Start preview stream</td>
       <td>GET</td>
@@ -1233,7 +1234,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Stream: Stop</td>
       <td>Stop preview stream</td>
       <td>GET</td>
@@ -1243,7 +1244,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Exit</td>
       <td>Exit webcam mode</td>
       <td>GET</td>
@@ -1253,7 +1254,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Preview</td>
       <td>Start preview stream</td>
       <td>GET</td>
@@ -1263,7 +1264,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Start</td>
       <td>Start webcam</td>
       <td>GET</td>
@@ -1273,7 +1274,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>&gt;= v01.40.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Start</td>
       <td>Start webcam</td>
       <td>GET</td>
@@ -1283,7 +1284,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Start</td>
       <td>Start webcam (res: resolution_1080, fov: wide)</td>
       <td>GET</td>
@@ -1293,7 +1294,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Status</td>
       <td>Get webcam status</td>
       <td>GET</td>
@@ -1303,7 +1304,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Stop</td>
       <td>Stop webcam</td>
       <td>GET</td>
@@ -1313,7 +1314,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Version</td>
       <td>Get webcam api version</td>
       <td>GET</td>
@@ -1323,7 +1324,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Wired USB Control</td>
       <td>Disable wired usb control</td>
       <td>GET</td>
@@ -1333,7 +1334,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>&gt;= v01.30.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Wired USB Control</td>
       <td>Enable wired usb control</td>
       <td>GET</td>
@@ -1357,6 +1358,7 @@ While most option values are enumerated values, some are complex bitmasked value
 <h2 id="settings-quick-reference">Settings Quick Reference</h2>
 <p>
 Below is a table of setting options detailing how to set every option supported by Open GoPro cameras.<br>
+* Indicates that item is experimental<br>
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br>
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br>
 &gt;= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
@@ -2113,6 +2115,39 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
+      <td>167</td>
+      <td>Hindsight*</td>
+      <td>Set hindsight (id: 167) to 15 seconds (id: 2)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=167&amp;option=2</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>167</td>
+      <td>Hindsight*</td>
+      <td>Set hindsight (id: 167) to 30 seconds (id: 3)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=167&amp;option=3</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>167</td>
+      <td>Hindsight*</td>
+      <td>Set hindsight (id: 167) to off (id: 4)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=167&amp;option=4</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to maximum video performance (id: 0)</td>
@@ -2123,7 +2158,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to extended battery (id: 1)</td>
@@ -2134,7 +2169,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to tripod / stationary video (id: 2)</td>
@@ -2145,7 +2180,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>175</td>
       <td>Controls</td>
       <td>Set controls (id: 175) to easy (id: 0)</td>
@@ -2156,7 +2191,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>175</td>
       <td>Controls</td>
       <td>Set controls (id: 175) to pro (id: 1)</td>
@@ -2167,7 +2202,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (id: 0)</td>
@@ -2178,7 +2213,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (id: 1)</td>
@@ -2189,7 +2224,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (id: 2)</td>
@@ -2200,7 +2235,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (low light) (id: 3)</td>
@@ -2211,7 +2246,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt) (id: 4)</td>
@@ -2222,7 +2257,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt) (id: 5)</td>
@@ -2233,7 +2268,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (ext. batt, low light) (id: 6)</td>
@@ -2244,7 +2279,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (50hz) (id: 7)</td>
@@ -2255,7 +2290,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (50hz) (id: 8)</td>
@@ -2266,7 +2301,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (50hz) (id: 9)</td>
@@ -2277,7 +2312,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (low light, 50hz) (id: 10)</td>
@@ -2288,7 +2323,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt, 50hz) (id: 11)</td>
@@ -2299,7 +2334,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt, 50hz) (id: 12)</td>
@@ -2310,7 +2345,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (ext. batt, low light, 50hz) (id: 13)</td>
@@ -2321,7 +2356,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (ext. batt) (id: 14)</td>
@@ -2332,7 +2367,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (ext. batt, 50hz) (id: 15)</td>
@@ -2343,7 +2378,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (long. batt) (id: 16)</td>
@@ -2354,7 +2389,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (long. batt) (id: 17)</td>
@@ -2365,7 +2400,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (long. batt) (id: 18)</td>
@@ -2376,7 +2411,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (long. batt, low light) (id: 19)</td>
@@ -2387,7 +2422,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (long. batt, 50hz) (id: 20)</td>
@@ -2398,7 +2433,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (long. batt, 50hz) (id: 21)</td>
@@ -2409,7 +2444,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (long. batt, 50hz) (id: 22)</td>
@@ -2420,7 +2455,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (long. batt, low light, 50hz) (id: 23)</td>
@@ -2431,7 +2466,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (4k) (id: 24)</td>
@@ -2442,7 +2477,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (2.7k) (id: 25)</td>
@@ -2453,7 +2488,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (4k, 50hz) (id: 26)</td>
@@ -2464,7 +2499,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (2.7k, 50hz) (id: 27)</td>
@@ -2475,7 +2510,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>177</td>
       <td>Enable Night Photo</td>
       <td>Set enable night photo (id: 177) to off (id: 0)</td>
@@ -2486,7 +2521,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>177</td>
       <td>Enable Night Photo</td>
       <td>Set enable night photo (id: 177) to on (id: 1)</td>
@@ -2497,7 +2532,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>178</td>
       <td>Wireless Band</td>
       <td>Set wireless band (id: 178) to 2.4ghz (id: 0)</td>
@@ -2508,7 +2543,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>178</td>
       <td>Wireless Band</td>
       <td>Set wireless band (id: 178) to 5ghz (id: 1)</td>
@@ -2519,7 +2554,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>179</td>
       <td>Trail Length</td>
       <td>Set trail length (id: 179) to short (id: 1)</td>
@@ -2530,7 +2565,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>179</td>
       <td>Trail Length</td>
       <td>Set trail length (id: 179) to long (id: 2)</td>
@@ -2541,7 +2576,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>179</td>
       <td>Trail Length</td>
       <td>Set trail length (id: 179) to max (id: 3)</td>
@@ -2552,7 +2587,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to highest quality (id: 0)</td>
@@ -2563,7 +2598,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to extended battery (id: 1)</td>
@@ -2574,7 +2609,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to extended battery (green icon) (id: 101)</td>
@@ -2585,7 +2620,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to longest battery (green icon) (id: 102)</td>
@@ -2663,10 +2698,13 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="19">
+      <td rowspan="20">
 <a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a>
 </td>
-      <td rowspan="4">HERO11 Black Mini</td>
+      <td rowspan="5">HERO11 Black Mini</td>
+      <td>v02.30.00</td>
+    </tr>
+    <tr>
       <td>v02.20.00</td>
     </tr>
     <tr>
@@ -3082,10 +3120,8 @@ For details on which cameras are supported and how to enable and disable Turbo T
 
 <h2 id="downloading-preview-stream">Downloading Preview Stream</h2>
 <p>
-When the preview stream is started, the camera starts up a UDP client and begins writing MPEG Transport Stream
-data to the connected client on port 8554.
-In order to stream and save this data, the user can implement a UDP server that binds to the same port and appends
-datagrams to a file when they are received.
+When the preview stream is started, the camera starts up a UDP client and begins writing MPEG Transport Stream data to the client on port 8554.
+In order to stream this data, the client must implement a UDP connection that binds to the same port and decode the data.
 </p>
 
 <h1 id="camera-state">Camera State</h1>
@@ -3131,6 +3167,7 @@ For settings, keys are setting IDs, and values are option values
 <h2 id="status-ids">Status IDs</h2>
 <p>
 Below is a table of supported status IDs.<br>
+* Indicates that item is experimental<br>
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br>
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br>
 &gt;= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
@@ -3657,7 +3694,7 @@ Below is a table of supported status IDs.<br>
     <tr>
       <td>69</td>
       <td>Ap state</td>
-      <td>Is the WiFi radio enabled?</td>
+      <td>Is the camera in AP Mode?</td>
       <td>boolean</td>
       <td>0: False<br>1: True<br>
 </td>
@@ -4100,7 +4137,7 @@ Below is a table of supported status IDs.<br>
     <tr>
       <td>117</td>
       <td>Total sd space kb</td>
-      <td>Total SD card capacity in kilobytes</td>
+      <td>Total SD card capacity in Kilobytes</td>
       <td>integer</td>
       <td>*</td>
       <td><span style="color:green">✔</span></td>
@@ -4273,7 +4310,7 @@ For specific command examples, see <b>/gp/gpSoftUpdate</b> in
 Note: Near the end of the firmware update process, in order to complete, the camera will need to reboot 1-2 times.
 This will cause any existing HTTP connections to be lost.
 </p>
-<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="1301px" preserveaspectratio="none" style="width:820px;height:1301px;background:#FFFFFF;" version="1.1" viewbox="0 0 820 1301" width="820px" zoomandpan="magnify"><defs></defs><g><rect fill="none" height="193.3281" style="stroke:#000000;stroke-width:1.5;" width="802.5" x="12" y="490.6875"></rect><rect fill="none" height="97.6641" style="stroke:#000000;stroke-width:1.5;" width="683.5" x="12" y="1035.2734"></rect><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="44" x2="44" y1="81.2969" y2="1220.2031"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="373" x2="373" y1="81.2969" y2="1220.2031"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="39" x="22" y="77.9951">Client</text><ellipse cx="44.5" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M44.5,21.5 L44.5,48.5 M31.5,29.5 L57.5,29.5 M44.5,48.5 L31.5,63.5 M44.5,48.5 L57.5,63.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="39" x="22" y="1232.1982">Client</text><ellipse cx="44.5" cy="1244" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M44.5,1252 L44.5,1279 M31.5,1260 L57.5,1260 M44.5,1279 L31.5,1294 M44.5,1279 L57.5,1294 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="340" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="53" x="347" y="69.9951">Camera</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="340" y="1219.2031"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="53" x="347" y="1239.1982">Camera</text><path d="M15,96.2969 L15,121.2969 L402,121.2969 L402,106.2969 L392,96.2969 L15,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M392,96.2969 L392,106.2969 L402,106.2969 L392,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="366" x="21" y="113.3638">Obtain UPDATE.zip from update page or firmware catalog</text><path d="M19,131.4297 L19,156.4297 L399,156.4297 L399,141.4297 L389,131.4297 L19,131.4297 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M389,131.4297 L389,141.4297 L399,141.4297 L389,131.4297 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="243" x="83" y="148.4966">Calculate SHA1_HASH for UPDATE.zip</text><polygon fill="#181818" points="361.5,181.6953,371.5,185.6953,361.5,189.6953,365.5,185.6953" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="185.6953" y2="185.6953"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="289" x="51.5" y="180.6294">HTTP/GET: /gp/gpSoftUpdate?request=delete</text><path d="M378,166.5625 L378,191.5625 L574,191.5625 L574,176.5625 L564,166.5625 L378,166.5625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M564,166.5625 L564,176.5625 L574,176.5625 L564,166.5625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="175" x="384" y="183.6294">Delete any old/cached data</text><polygon fill="#181818" points="55.5,262.2266,45.5,266.2266,55.5,270.2266,51.5,266.2266" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="266.2266" y2="266.2266"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="261.1606">HTTP/200 (OK)</text><path d="M378,201.6953 L378,316.6953 L543,316.6953 L543,211.6953 L533,201.6953 L378,201.6953 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M533,201.6953 L533,211.6953 L543,211.6953 L533,201.6953 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="44" x="384" y="218.7622">JSON {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="66" x="400" y="233.895">"status":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="400" y="249.0278">"message":"OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="59" x="400" y="264.1606">"sha1":"",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="128" x="400" y="279.2935">"bytes_complete":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="104" x="400" y="294.4263">"complete":false</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="309.5591">}</text><polygon fill="#181818" points="361.5,342.7578,371.5,346.7578,361.5,350.7578,365.5,346.7578" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="346.7578" y2="346.7578"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="292" x="51.5" y="341.6919">HTTP/GET: /gp/gpSoftUpdate?request=showui</text><path d="M378,327.625 L378,352.625 L617,352.625 L617,337.625 L607,327.625 L378,327.625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M607,327.625 L607,337.625 L617,337.625 L607,327.625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="218" x="384" y="344.6919">Display update OSD on camera UI</text><polygon fill="#181818" points="55.5,423.2891,45.5,427.2891,55.5,431.2891,51.5,427.2891" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="427.2891" y2="427.2891"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="422.2231">HTTP/200 (OK)</text><path d="M378,362.7578 L378,477.7578 L543,477.7578 L543,372.7578 L533,362.7578 L378,362.7578 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M533,362.7578 L533,372.7578 L543,372.7578 L533,362.7578 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="379.8247">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="66" x="400" y="394.9575">"status":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="400" y="410.0903">"message":"OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="59" x="400" y="425.2231">"sha1":"",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="128" x="400" y="440.356">"bytes_complete":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="104" x="400" y="455.4888">"complete":false</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="470.6216">}</text><path d="M12,490.6875 L89,490.6875 L89,497.8203 L79,507.8203 L12,507.8203 L12,490.6875 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"></path><rect fill="none" height="193.3281" style="stroke:#000000;stroke-width:1.5;" width="802.5" x="12" y="490.6875"></rect><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthadjust="spacing" textlength="32" x="27" y="503.7544">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthadjust="spacing" textlength="311" x="104" y="502.8979">[read CHUNK of UPDATE.zip, starting at OFFSET]</text><polygon fill="#181818" points="361.5,535.5195,371.5,539.5195,361.5,543.5195,365.5,539.5195" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="539.5195" y2="539.5195"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="191" x="51.5" y="534.4536">HTTP/POST: /gp/gpSoftUpdate</text><path d="M378,512.8203 L378,552.8203 L799,552.8203 L799,522.8203 L789,512.8203 L378,512.8203 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M789,512.8203 L789,522.8203 L799,522.8203 L789,512.8203 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="220" x="384" y="529.8872">Content-Type: multipart/form-data</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="400" x="384" y="545.02">data={"sha1": "SHA1_HASH", "offset": OFFSET, file: @CHUNK}</text><polygon fill="#181818" points="55.5,623.6172,45.5,627.6172,55.5,631.6172,51.5,627.6172" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="627.6172" y2="627.6172"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="622.5513">HTTP/200 (OK)</text><path d="M378,563.0859 L378,678.0859 L680,678.0859 L680,573.0859 L670,563.0859 L378,563.0859 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M670,563.0859 L670,573.0859 L680,573.0859 L670,563.0859 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="580.1528">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="70" x="400" y="595.2856">"status": 0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="109" x="400" y="610.4185">"message": "OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="144" x="400" y="625.5513">"sha1": "SHA1_HASH",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="265" x="400" y="640.6841">"bytes_complete": (total uploaded bytes),</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="108" x="400" y="655.8169">"complete": false</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="670.9497">}</text><polygon fill="#181818" points="361.5,718.7148,371.5,722.7148,361.5,726.7148,365.5,722.7148" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="722.7148" y2="722.7148"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="191" x="51.5" y="717.6489">HTTP/POST: /gp/gpSoftUpdate</text><path d="M378,696.0156 L378,736.0156 L707,736.0156 L707,706.0156 L697,696.0156 L378,696.0156 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M697,696.0156 L697,706.0156 L707,706.0156 L697,696.0156 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="220" x="384" y="713.0825">Content-Type: multipart/form-data</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="308" x="384" y="728.2153">data={"sha1": "SHA1_HASH", "complete": true}</text><polygon fill="#181818" points="55.5,806.8125,45.5,810.8125,55.5,814.8125,51.5,810.8125" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="810.8125" y2="810.8125"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="805.7466">HTTP/200 (OK)</text><path d="M378,746.2813 L378,861.2813 L664,861.2813 L664,756.2813 L654,746.2813 L378,746.2813 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M654,746.2813 L654,756.2813 L664,756.2813 L654,746.2813 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="763.3481">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="66" x="400" y="778.481">"status":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="400" y="793.6138">"message":"OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="140" x="400" y="808.7466">"sha1":"SHA1_HASH",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="249" x="400" y="823.8794">"bytes_complete":(size of UPDATE.zip),</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="100" x="400" y="839.0122">"complete":true</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="854.145">}</text><polygon fill="#181818" points="361.5,887.3438,371.5,891.3438,361.5,895.3438,365.5,891.3438" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="891.3438" y2="891.3438"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="279" x="51.5" y="886.2778">HTTP/GET: /gp/gpSoftUpdate?request=start</text><path d="M378,872.2109 L378,897.2109 L550,897.2109 L550,882.2109 L540,872.2109 L378,872.2109 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M540,872.2109 L540,882.2109 L550,882.2109 L540,872.2109 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="151" x="384" y="889.2778">Start updating firmware</text><polygon fill="#181818" points="55.5,967.875,45.5,971.875,55.5,975.875,51.5,971.875" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="971.875" y2="971.875"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="966.8091">HTTP/200 (OK)</text><path d="M378,907.3438 L378,1022.3438 L664,1022.3438 L664,917.3438 L654,907.3438 L378,907.3438 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M654,907.3438 L654,917.3438 L664,917.3438 L654,907.3438 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="924.4106">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="66" x="400" y="939.5435">"status":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="400" y="954.6763">"message":"OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="140" x="400" y="969.8091">"sha1":"SHA1_HASH",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="249" x="400" y="984.9419">"bytes_complete":(size of UPDATE.zip),</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="100" x="400" y="1000.0747">"complete":true</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="1015.2075">}</text><path d="M12,1035.2734 L89,1035.2734 L89,1042.4063 L79,1052.4063 L12,1052.4063 L12,1035.2734 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"></path><rect fill="none" height="97.6641" style="stroke:#000000;stroke-width:1.5;" width="683.5" x="12" y="1035.2734"></rect><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthadjust="spacing" textlength="32" x="27" y="1048.3403">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthadjust="spacing" textlength="213" x="104" y="1047.4839">[while camera updates firmware]</text><polygon fill="#181818" points="361.5,1095.2383,371.5,1099.2383,361.5,1103.2383,365.5,1099.2383" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="1099.2383" y2="1099.2383"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="305" x="51.5" y="1094.1724">HTTP/GET: /gp/gpSoftUpdate?request=progress</text><path d="M378,1057.4063 L378,1127.4063 L680,1127.4063 L680,1067.4063 L670,1057.4063 L378,1057.4063 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M670,1057.4063 L670,1067.4063 L680,1067.4063 L670,1057.4063 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="1074.4731">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="74" x="400" y="1089.606">"status":11,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="265" x="400" y="1104.7388">"message":"Firmware update in progress"</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="1119.8716">}</text><path d="M19,1144.9375 L19,1169.9375 L399,1169.9375 L399,1154.9375 L389,1144.9375 L19,1144.9375 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M389,1144.9375 L389,1154.9375 L399,1154.9375 L389,1144.9375 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="125" x="142" y="1162.0044">WiFi connection lost</text><path d="M5,1180.0703 L5,1205.0703 L414,1205.0703 L414,1190.0703 L404,1180.0703 L5,1180.0703 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M404,1180.0703 L404,1190.0703 L414,1190.0703 L404,1180.0703 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="388" x="11" y="1197.1372">Camera displays OSD "Update Complete", reboots 1-2 times</text></g></svg>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="1376px" preserveaspectratio="none" style="width:701px;height:1376px;background:#FFFFFF;" version="1.1" viewbox="0 0 701 1376" width="701px" zoomandpan="magnify"><defs></defs><g><rect fill="none" height="238.7266" style="stroke:#000000;stroke-width:1.5;" width="683.5" x="12" y="490.6875"></rect><rect fill="none" height="97.6641" style="stroke:#000000;stroke-width:1.5;" width="683.5" x="12" y="1110.9375"></rect><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="44" x2="44" y1="81.2969" y2="1295.8672"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="373" x2="373" y1="81.2969" y2="1295.8672"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="39" x="22" y="77.9951">Client</text><ellipse cx="44.5" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M44.5,21.5 L44.5,48.5 M31.5,29.5 L57.5,29.5 M44.5,48.5 L31.5,63.5 M44.5,48.5 L57.5,63.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="39" x="22" y="1307.8623">Client</text><ellipse cx="44.5" cy="1319.6641" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M44.5,1327.6641 L44.5,1354.6641 M31.5,1335.6641 L57.5,1335.6641 M44.5,1354.6641 L31.5,1369.6641 M44.5,1354.6641 L57.5,1369.6641 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="340" y="50"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="53" x="347" y="69.9951">Camera</text><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="340" y="1294.8672"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="53" x="347" y="1314.8623">Camera</text><path d="M15,96.2969 L15,121.2969 L402,121.2969 L402,106.2969 L392,96.2969 L15,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M392,96.2969 L392,106.2969 L402,106.2969 L392,96.2969 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="366" x="21" y="113.3638">Obtain UPDATE.zip from update page or firmware catalog</text><path d="M19,131.4297 L19,156.4297 L399,156.4297 L399,141.4297 L389,131.4297 L19,131.4297 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M389,131.4297 L389,141.4297 L399,141.4297 L389,131.4297 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="243" x="83" y="148.4966">Calculate SHA1_HASH for UPDATE.zip</text><polygon fill="#181818" points="361.5,181.6953,371.5,185.6953,361.5,189.6953,365.5,185.6953" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="185.6953" y2="185.6953"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="289" x="51.5" y="180.6294">HTTP/GET: /gp/gpSoftUpdate?request=delete</text><path d="M378,166.5625 L378,191.5625 L574,191.5625 L574,176.5625 L564,166.5625 L378,166.5625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M564,166.5625 L564,176.5625 L574,176.5625 L564,166.5625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="175" x="384" y="183.6294">Delete any old/cached data</text><polygon fill="#181818" points="55.5,262.2266,45.5,266.2266,55.5,270.2266,51.5,266.2266" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="266.2266" y2="266.2266"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="261.1606">HTTP/200 (OK)</text><path d="M378,201.6953 L378,316.6953 L543,316.6953 L543,211.6953 L533,201.6953 L378,201.6953 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M533,201.6953 L533,211.6953 L543,211.6953 L533,201.6953 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="44" x="384" y="218.7622">JSON {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="66" x="400" y="233.895">"status":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="400" y="249.0278">"message":"OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="59" x="400" y="264.1606">"sha1":"",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="128" x="400" y="279.2935">"bytes_complete":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="104" x="400" y="294.4263">"complete":false</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="309.5591">}</text><polygon fill="#181818" points="361.5,342.7578,371.5,346.7578,361.5,350.7578,365.5,346.7578" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="346.7578" y2="346.7578"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="292" x="51.5" y="341.6919">HTTP/GET: /gp/gpSoftUpdate?request=showui</text><path d="M378,327.625 L378,352.625 L617,352.625 L617,337.625 L607,327.625 L378,327.625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M607,327.625 L607,337.625 L617,337.625 L607,327.625 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="218" x="384" y="344.6919">Display update OSD on camera UI</text><polygon fill="#181818" points="55.5,423.2891,45.5,427.2891,55.5,431.2891,51.5,427.2891" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="427.2891" y2="427.2891"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="422.2231">HTTP/200 (OK)</text><path d="M378,362.7578 L378,477.7578 L543,477.7578 L543,372.7578 L533,362.7578 L378,362.7578 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M533,362.7578 L533,372.7578 L543,372.7578 L533,362.7578 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="379.8247">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="66" x="400" y="394.9575">"status":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="400" y="410.0903">"message":"OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="59" x="400" y="425.2231">"sha1":"",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="128" x="400" y="440.356">"bytes_complete":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="104" x="400" y="455.4888">"complete":false</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="470.6216">}</text><path d="M12,490.6875 L89,490.6875 L89,497.8203 L79,507.8203 L12,507.8203 L12,490.6875 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"></path><rect fill="none" height="238.7266" style="stroke:#000000;stroke-width:1.5;" width="683.5" x="12" y="490.6875"></rect><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthadjust="spacing" textlength="32" x="27" y="503.7544">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthadjust="spacing" textlength="358" x="104" y="502.8979">[read CHUNK_BYTES of UPDATE.zip, starting at OFFSET]</text><polygon fill="#181818" points="361.5,558.2188,371.5,562.2188,361.5,566.2188,365.5,562.2188" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="562.2188" y2="562.2188"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="191" x="51.5" y="557.1528">HTTP/POST: /gp/gpSoftUpdate</text><path d="M378,512.8203 L378,597.8203 L619,597.8203 L619,522.8203 L609,512.8203 L378,512.8203 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M609,512.8203 L609,522.8203 L619,522.8203 L609,512.8203 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="220" x="384" y="529.8872">Content-Type: multipart/form-data</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="35" x="384" y="545.02">Data:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="145" x="400" y="560.1528">sha1=&lt;SHA1_HASH&gt;</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="117" x="400" y="575.2856">offset=&lt;OFFSET&gt;</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="145" x="400" y="590.4185">file=&lt;CHUNK_BYTES&gt;</text><polygon fill="#181818" points="55.5,669.0156,45.5,673.0156,55.5,677.0156,51.5,673.0156" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="673.0156" y2="673.0156"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="667.9497">HTTP/200 (OK)</text><path d="M378,608.4844 L378,723.4844 L680,723.4844 L680,618.4844 L670,608.4844 L378,608.4844 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M670,608.4844 L670,618.4844 L680,618.4844 L670,608.4844 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="625.5513">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="70" x="400" y="640.6841">"status": 0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="109" x="400" y="655.8169">"message": "OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="144" x="400" y="670.9497">"sha1": "SHA1_HASH",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="265" x="400" y="686.0825">"bytes_complete": (total uploaded bytes),</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="108" x="400" y="701.2153">"complete": false</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="716.3481">}</text><polygon fill="#181818" points="361.5,779.2461,371.5,783.2461,361.5,787.2461,365.5,783.2461" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="783.2461" y2="783.2461"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="191" x="51.5" y="778.1802">HTTP/POST: /gp/gpSoftUpdate</text><path d="M378,741.4141 L378,811.4141 L619,811.4141 L619,751.4141 L609,741.4141 L378,741.4141 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M609,741.4141 L609,751.4141 L619,751.4141 L609,741.4141 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="220" x="384" y="758.481">Content-Type: multipart/form-data</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="35" x="384" y="773.6138">Data:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="145" x="392" y="788.7466">sha1=&lt;SHA1_HASH&gt;</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="97" x="392" y="803.8794">complete=true</text><polygon fill="#181818" points="55.5,882.4766,45.5,886.4766,55.5,890.4766,51.5,886.4766" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="886.4766" y2="886.4766"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="881.4106">HTTP/200 (OK)</text><path d="M378,821.9453 L378,936.9453 L664,936.9453 L664,831.9453 L654,821.9453 L378,821.9453 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M654,821.9453 L654,831.9453 L664,831.9453 L654,821.9453 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="839.0122">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="66" x="400" y="854.145">"status":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="400" y="869.2778">"message":"OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="140" x="400" y="884.4106">"sha1":"SHA1_HASH",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="249" x="400" y="899.5435">"bytes_complete":(size of UPDATE.zip),</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="100" x="400" y="914.6763">"complete":true</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="929.8091">}</text><polygon fill="#181818" points="361.5,963.0078,371.5,967.0078,361.5,971.0078,365.5,967.0078" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="967.0078" y2="967.0078"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="279" x="51.5" y="961.9419">HTTP/GET: /gp/gpSoftUpdate?request=start</text><path d="M378,947.875 L378,972.875 L550,972.875 L550,957.875 L540,947.875 L378,947.875 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M540,947.875 L540,957.875 L550,957.875 L540,947.875 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="151" x="384" y="964.9419">Start updating firmware</text><polygon fill="#181818" points="55.5,1043.5391,45.5,1047.5391,55.5,1051.5391,51.5,1047.5391" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="49.5" x2="372.5" y1="1047.5391" y2="1047.5391"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="92" x="61.5" y="1042.4731">HTTP/200 (OK)</text><path d="M378,983.0078 L378,1098.0078 L664,1098.0078 L664,993.0078 L654,983.0078 L378,983.0078 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M654,983.0078 L654,993.0078 L664,993.0078 L654,983.0078 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="1000.0747">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="66" x="400" y="1015.2075">"status":0,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="400" y="1030.3403">"message":"OK",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="140" x="400" y="1045.4731">"sha1":"SHA1_HASH",</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="249" x="400" y="1060.606">"bytes_complete":(size of UPDATE.zip),</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="100" x="400" y="1075.7388">"complete":true</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="1090.8716">}</text><path d="M12,1110.9375 L89,1110.9375 L89,1118.0703 L79,1128.0703 L12,1128.0703 L12,1110.9375 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"></path><rect fill="none" height="97.6641" style="stroke:#000000;stroke-width:1.5;" width="683.5" x="12" y="1110.9375"></rect><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthadjust="spacing" textlength="32" x="27" y="1124.0044">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthadjust="spacing" textlength="213" x="104" y="1123.1479">[while camera updates firmware]</text><polygon fill="#181818" points="361.5,1170.9023,371.5,1174.9023,361.5,1178.9023,365.5,1174.9023" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="44.5" x2="367.5" y1="1174.9023" y2="1174.9023"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="305" x="51.5" y="1169.8364">HTTP/GET: /gp/gpSoftUpdate?request=progress</text><path d="M378,1133.0703 L378,1203.0703 L680,1203.0703 L680,1143.0703 L670,1133.0703 L378,1133.0703 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M670,1133.0703 L670,1143.0703 L680,1143.0703 L670,1133.0703 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="384" y="1150.1372">JSON: {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="74" x="400" y="1165.27">"status":11,</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="265" x="400" y="1180.4028">"message":"Firmware update in progress"</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="8" x="384" y="1195.5356">}</text><path d="M19,1220.6016 L19,1245.6016 L399,1245.6016 L399,1230.6016 L389,1220.6016 L19,1220.6016 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M389,1220.6016 L389,1230.6016 L399,1230.6016 L389,1220.6016 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="125" x="142" y="1237.6685">WiFi connection lost</text><path d="M5,1255.7344 L5,1280.7344 L414,1280.7344 L414,1265.7344 L404,1255.7344 L5,1255.7344 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M404,1255.7344 L404,1265.7344 L414,1265.7344 L404,1255.7344 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="388" x="11" y="1272.8013">Camera displays OSD "Update Complete", reboots 1-2 times</text></g></svg>
 
 <h3 id="ota-update-status-codes">OTA Update Status Codes</h3>
 <table border="1">
