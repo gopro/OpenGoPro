@@ -80,7 +80,7 @@ Below is a table of cameras that support GoPro's public HTTP API:
 Connection to the camera via WiFi requires that the camera's WiFi Access Point be enabled.
 This can be done by connecting to the camera via
 <a href="https://gopro.github.io/OpenGoPro/ble">Bluetooth Low Energy (BLE)</a>
-and sending the AP Control command: WIFI AP ON.
+and sending a command to enable AP Mode.
 </p>
 
 ### USB
@@ -99,12 +99,12 @@ Connecting via USB requires the following steps:
 ### WiFi
 
 <p>
-Once the WiFi Access Point has been turned on, authentication with the camera simply requries connecting with the
+Once the WiFi Access Point has been turned on, authentication with the camera simply requires connecting with the
 correct SSID and password. This information can be obtained in two ways:
 
 <ul>
 <li>Put the camera into <a href="https://community.gopro.com/s/article/GoPro-Quik-How-To-Pair-Your-Camera?language=en_US">pairing mode</a> and tap the info button in the top-right corner of the screen.</li>
-<li>Read the SSID/password directly via Bluetooth Low Energy. See <i>Services and Characteristics</i> seciton in <a href="https://gopro.github.io/OpenGoPro/ble">BLE Specification</a> for details.</li>
+<li>Read the SSID/password directly via Bluetooth Low Energy. See <i>Services and Characteristics</i> section in <a href="https://gopro.github.io/OpenGoPro/ble">BLE Specification</a> for details.</li>
 </ul>
 </p>
 
@@ -266,6 +266,7 @@ Using the Open GoPro API, a client can perform various command, control, and que
 ## Commands Quick Reference
 <p>
 Below is a table of commands that can be sent to the camera and how to send them.<br />
+* Indicates that item is experimental<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
 >= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
@@ -533,56 +534,6 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>OTA Update</td>
-      <td>Ota update: show canceled/failed ui on the camera</td>
-      <td>GET</td>
-      <td>/gp/gpSoftUpdate?request=canceled</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>OTA Update</td>
-      <td>Ota update: delete cached update files</td>
-      <td>GET</td>
-      <td>/gp/gpSoftUpdate?request=delete</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>OTA Update</td>
-      <td>Ota update: get current update state</td>
-      <td>GET</td>
-      <td>/gp/gpSoftUpdate?request=progress</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>OTA Update</td>
-      <td>Ota update: display update ui on camera</td>
-      <td>GET</td>
-      <td>/gp/gpSoftUpdate?request=showui</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>OTA Update</td>
-      <td>Ota update: initiate firmware update</td>
-      <td>GET</td>
-      <td>/gp/gpSoftUpdate?request=start</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Open GoPro</td>
       <td>Get version</td>
@@ -675,7 +626,7 @@ Below is a table of commands that can be sent to the camera and how to send them
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Set Local Date/Time</td>
-      <td>Set local date/time to: 2023-01-31 03:04:05 (utc-02:00)  (dst: on)</td>
+      <td>Set local date/time to: 2023-01-31 03:04:05 (utc-02:00) (dst: on)</td>
       <td>GET</td>
       <td>/gopro/camera/set_date_time?date=2023_1_31&time=3_4_5&tzone=-120&dst=1</td>
       <td><span style="color:green">✔</span></td>
@@ -704,6 +655,56 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>Soft Update</td>
+      <td>Soft update: show canceled/failed ui on the camera</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=canceled</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Soft Update</td>
+      <td>Soft update: delete cached update files</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=delete</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Soft Update</td>
+      <td>Soft update: get current update state</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=progress</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Soft Update</td>
+      <td>Soft update: display update ui on camera</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=showui</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>Soft Update</td>
+      <td>Soft update: initiate firmware update</td>
+      <td>GET</td>
+      <td>/gp/gpSoftUpdate?request=start</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>Stream: Start</td>
       <td>Start preview stream</td>
       <td>GET</td>
@@ -713,7 +714,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Stream: Stop</td>
       <td>Stop preview stream</td>
       <td>GET</td>
@@ -723,7 +724,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Exit</td>
       <td>Exit webcam mode</td>
       <td>GET</td>
@@ -733,7 +734,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Preview</td>
       <td>Start preview stream</td>
       <td>GET</td>
@@ -743,7 +744,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Start</td>
       <td>Start webcam</td>
       <td>GET</td>
@@ -753,7 +754,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.40.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Start</td>
       <td>Start webcam</td>
       <td>GET</td>
@@ -763,7 +764,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Start</td>
       <td>Start webcam (res: resolution_1080, fov: wide)</td>
       <td>GET</td>
@@ -773,7 +774,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Status</td>
       <td>Get webcam status</td>
       <td>GET</td>
@@ -783,7 +784,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Stop</td>
       <td>Stop webcam</td>
       <td>GET</td>
@@ -793,7 +794,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Version</td>
       <td>Get webcam api version</td>
       <td>GET</td>
@@ -803,7 +804,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Wired USB Control</td>
       <td>Disable wired usb control</td>
       <td>GET</td>
@@ -813,7 +814,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.30.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Wired USB Control</td>
       <td>Enable wired usb control</td>
       <td>GET</td>
@@ -838,6 +839,7 @@ While most option values are enumerated values, some are complex bitmasked value
 ## Settings Quick Reference
 <p>
 Below is a table of setting options detailing how to set every option supported by Open GoPro cameras.<br />
+* Indicates that item is experimental<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
 >= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
@@ -1594,6 +1596,39 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
+      <td>167</td>
+      <td>Hindsight*</td>
+      <td>Set hindsight (id: 167) to 15 seconds (id: 2)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=167&option=2</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>167</td>
+      <td>Hindsight*</td>
+      <td>Set hindsight (id: 167) to 30 seconds (id: 3)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=167&option=3</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>167</td>
+      <td>Hindsight*</td>
+      <td>Set hindsight (id: 167) to off (id: 4)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=167&option=4</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to maximum video performance (id: 0)</td>
@@ -1604,7 +1639,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>\&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to extended battery (id: 1)</td>
@@ -1615,7 +1650,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>\&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to tripod / stationary video (id: 2)</td>
@@ -1626,7 +1661,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>\&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>175</td>
       <td>Controls</td>
       <td>Set controls (id: 175) to easy (id: 0)</td>
@@ -1637,7 +1672,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>175</td>
       <td>Controls</td>
       <td>Set controls (id: 175) to pro (id: 1)</td>
@@ -1648,7 +1683,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (id: 0)</td>
@@ -1659,7 +1694,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (id: 1)</td>
@@ -1670,7 +1705,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (id: 2)</td>
@@ -1681,7 +1716,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (low light) (id: 3)</td>
@@ -1692,7 +1727,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt) (id: 4)</td>
@@ -1703,7 +1738,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt) (id: 5)</td>
@@ -1714,7 +1749,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (ext. batt, low light) (id: 6)</td>
@@ -1725,7 +1760,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (50hz) (id: 7)</td>
@@ -1736,7 +1771,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (50hz) (id: 8)</td>
@@ -1747,7 +1782,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (50hz) (id: 9)</td>
@@ -1758,7 +1793,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (low light, 50hz) (id: 10)</td>
@@ -1769,7 +1804,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt, 50hz) (id: 11)</td>
@@ -1780,7 +1815,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt, 50hz) (id: 12)</td>
@@ -1791,7 +1826,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (ext. batt, low light, 50hz) (id: 13)</td>
@@ -1802,7 +1837,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (ext. batt) (id: 14)</td>
@@ -1813,7 +1848,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (ext. batt, 50hz) (id: 15)</td>
@@ -1824,7 +1859,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (long. batt) (id: 16)</td>
@@ -1835,7 +1870,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (long. batt) (id: 17)</td>
@@ -1846,7 +1881,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (long. batt) (id: 18)</td>
@@ -1857,7 +1892,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (long. batt, low light) (id: 19)</td>
@@ -1868,7 +1903,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (long. batt, 50hz) (id: 20)</td>
@@ -1879,7 +1914,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (long. batt, 50hz) (id: 21)</td>
@@ -1890,7 +1925,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (long. batt, 50hz) (id: 22)</td>
@@ -1901,7 +1936,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (long. batt, low light, 50hz) (id: 23)</td>
@@ -1912,7 +1947,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (4k) (id: 24)</td>
@@ -1923,7 +1958,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (2.7k) (id: 25)</td>
@@ -1934,7 +1969,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (4k, 50hz) (id: 26)</td>
@@ -1945,7 +1980,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (2.7k, 50hz) (id: 27)</td>
@@ -1956,7 +1991,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>177</td>
       <td>Enable Night Photo</td>
       <td>Set enable night photo (id: 177) to off (id: 0)</td>
@@ -1967,7 +2002,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>177</td>
       <td>Enable Night Photo</td>
       <td>Set enable night photo (id: 177) to on (id: 1)</td>
@@ -1978,7 +2013,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>178</td>
       <td>Wireless Band</td>
       <td>Set wireless band (id: 178) to 2.4ghz (id: 0)</td>
@@ -1989,7 +2024,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>178</td>
       <td>Wireless Band</td>
       <td>Set wireless band (id: 178) to 5ghz (id: 1)</td>
@@ -2000,7 +2035,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>179</td>
       <td>Trail Length</td>
       <td>Set trail length (id: 179) to short (id: 1)</td>
@@ -2011,7 +2046,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>179</td>
       <td>Trail Length</td>
       <td>Set trail length (id: 179) to long (id: 2)</td>
@@ -2022,7 +2057,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>179</td>
       <td>Trail Length</td>
       <td>Set trail length (id: 179) to max (id: 3)</td>
@@ -2033,7 +2068,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to highest quality (id: 0)</td>
@@ -2044,7 +2079,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to extended battery (id: 1)</td>
@@ -2055,7 +2090,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to extended battery (green icon) (id: 101)</td>
@@ -2066,7 +2101,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to longest battery (green icon) (id: 102)</td>
@@ -2145,8 +2180,11 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="19"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
-      <td rowspan="4">HERO11 Black Mini</td>
+      <td rowspan="20"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="5">HERO11 Black Mini</td>
+      <td>v02.30.00</td>
+    </tr>
+    <tr>
       <td>v02.20.00</td>
     </tr>
     <tr>
@@ -2576,10 +2614,8 @@ For details on which cameras are supported and how to enable and disable Turbo T
 
 ## Downloading Preview Stream
 <p>
-When the preview stream is started, the camera starts up a UDP client and begins writing MPEG Transport Stream
-data to the connected client on port 8554.
-In order to stream and save this data, the user can implement a UDP server that binds to the same port and appends
-datagrams to a file when they are received.
+When the preview stream is started, the camera starts up a UDP client and begins writing MPEG Transport Stream data to the client on port 8554.
+In order to stream this data, the client must implement a UDP connection that binds to the same port and decode the data.
 </p>
 
 
@@ -2629,6 +2665,7 @@ For settings, keys are setting IDs, and values are option values
 ## Status IDs
 <p>
 Below is a table of supported status IDs.<br />
+* Indicates that item is experimental<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
 >= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
@@ -3134,7 +3171,7 @@ Below is a table of supported status IDs.<br />
     <tr>
       <td>69</td>
       <td>Ap state</td>
-      <td>Is the WiFi radio enabled?</td>
+      <td>Is the camera in AP Mode?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
       <td><span style="color:green">✔</span></td>
@@ -3552,7 +3589,7 @@ Below is a table of supported status IDs.<br />
     <tr>
       <td>117</td>
       <td>Total sd space kb</td>
-      <td>Total SD card capacity in kilobytes</td>
+      <td>Total SD card capacity in Kilobytes</td>
       <td>integer</td>
       <td>*</td>
       <td><span style="color:green">✔</span></td>
@@ -3787,9 +3824,15 @@ JSON: {
 }
 end note
 
-loop read CHUNK of UPDATE.zip, starting at OFFSET
+loop read CHUNK_BYTES of UPDATE.zip, starting at OFFSET
 Client  -> Camera: HTTP/POST: /gp/gpSoftUpdate
-note right: Content-Type: multipart/form-data\ndata={"sha1": "SHA1_HASH", "offset": OFFSET, file: @CHUNK}
+note right
+Content-Type: multipart/form-data
+Data:
+    sha1=<SHA1_HASH>
+    offset=<OFFSET>
+    file=<CHUNK_BYTES>
+end note
 
 Client <-- Camera: HTTP/200 (OK)
 note right
@@ -3804,7 +3847,12 @@ JSON: {
 end
 
 Client  -> Camera: HTTP/POST: /gp/gpSoftUpdate
-note right: Content-Type: multipart/form-data\ndata={"sha1": "SHA1_HASH", "complete": true}
+note right
+Content-Type: multipart/form-data
+Data:
+  sha1=<SHA1_HASH>
+  complete=true
+end note
 
 Client <-- Camera: HTTP/200 (OK)
 note right

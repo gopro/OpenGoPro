@@ -194,7 +194,6 @@ class _EnumPresetIconEnumTypeWrapper(
     PRESET_ICON_FULL_FRAME: _EnumPresetIcon.ValueType
     PRESET_ICON_TIMELAPSE_PHOTO: _EnumPresetIcon.ValueType
     PRESET_ICON_NIGHTLAPSE_PHOTO: _EnumPresetIcon.ValueType
-    PRESET_ICON_MAX: _EnumPresetIcon.ValueType
 
 class EnumPresetIcon(_EnumPresetIcon, metaclass=_EnumPresetIconEnumTypeWrapper): ...
 
@@ -252,7 +251,6 @@ PRESET_ICON_LIGHT_TRAIL: EnumPresetIcon.ValueType
 PRESET_ICON_FULL_FRAME: EnumPresetIcon.ValueType
 PRESET_ICON_TIMELAPSE_PHOTO: EnumPresetIcon.ValueType
 PRESET_ICON_NIGHTLAPSE_PHOTO: EnumPresetIcon.ValueType
-PRESET_ICON_MAX: EnumPresetIcon.ValueType
 global___EnumPresetIcon = EnumPresetIcon
 
 class _EnumPresetTitle:
@@ -329,7 +327,6 @@ class _EnumPresetTitleEnumTypeWrapper(
     PRESET_TITLE_FULL_FRAME: _EnumPresetTitle.ValueType
     PRESET_TITLE_MAX_LENS_VIDEO: _EnumPresetTitle.ValueType
     PRESET_TITLE_MAX_LENS_TIMEWARP: _EnumPresetTitle.ValueType
-    PRESET_TITLE_MAX: _EnumPresetTitle.ValueType
 
 class EnumPresetTitle(_EnumPresetTitle, metaclass=_EnumPresetTitleEnumTypeWrapper): ...
 
@@ -399,7 +396,6 @@ PRESET_TITLE_LIGHT_TRAIL: EnumPresetTitle.ValueType
 PRESET_TITLE_FULL_FRAME: EnumPresetTitle.ValueType
 PRESET_TITLE_MAX_LENS_VIDEO: EnumPresetTitle.ValueType
 PRESET_TITLE_MAX_LENS_TIMEWARP: EnumPresetTitle.ValueType
-PRESET_TITLE_MAX: EnumPresetTitle.ValueType
 global___EnumPresetTitle = EnumPresetTitle
 
 class NotifyPresetStatus(google.protobuf.message.Message):

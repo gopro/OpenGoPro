@@ -1,5 +1,5 @@
 /* turbo_transfer.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Fri Mar 31 17:21:02 UTC 2023 */
+/* This copyright was auto-generated on Fri Jun  9 22:49:36 UTC 2023 */
 
 /*
 Defines the structure of protobuf messages for enabling and disabling Turbo Transfer feature

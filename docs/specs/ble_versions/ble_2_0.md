@@ -755,6 +755,7 @@ Unless indicated otherwise in the Quick Reference table below, command responses
 ### Commands Quick Reference
 <p>
 Below is a table of commands that can be sent to the camera and how to send them.<br />
+* Indicates that item is experimental<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
 >= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
@@ -831,7 +832,7 @@ Below is a table of commands that can be sent to the camera and how to send them
     <tr style="background-color: rgb(222,235,255);">
       <td>0x0F</td>
       <td>Set Local Date/Time</td>
-      <td>Set local date/time to: 2023-01-31 03:04:05 (utc-02:00)  (dst: on)</td>
+      <td>Set local date/time to: 2023-01-31 03:04:05 (utc-02:00) (dst: on)</td>
       <td>0C:0F:0A:07:E7:01:1F:03:04:05:FF:88:01</td>
       <td>02:0F:00</td>
       <td><span style="color:green">✔</span></td>
@@ -864,7 +865,7 @@ Below is a table of commands that can be sent to the camera and how to send them
     <tr style="background-color: rgb(245,249,255);">
       <td>0x17</td>
       <td>AP Control</td>
-      <td>WiFi AP: off</td>
+      <td>Ap mode: off</td>
       <td>03:17:01:00</td>
       <td>02:17:00</td>
       <td><span style="color:green">✔</span></td>
@@ -875,7 +876,7 @@ Below is a table of commands that can be sent to the camera and how to send them
     <tr style="background-color: rgb(245,249,255);">
       <td>0x17</td>
       <td>AP Control</td>
-      <td>WiFi AP: on</td>
+      <td>Ap mode: on</td>
       <td>03:17:01:01</td>
       <td>02:17:00</td>
       <td><span style="color:green">✔</span></td>
@@ -1310,6 +1311,7 @@ This will configure a setting on the camera. Only one setting may be sent on a p
 ### Settings Quick Reference
 <p>
 All settings are sent to UUID GP-0074. All values are hexadecimal and length are in bytes.<br />
+* Indicates that item is experimental<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
 >= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
@@ -2022,6 +2024,39 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>167</td>
+      <td>Hindsight*</td>
+      <td>Set hindsight (id: 167) to 15 seconds (id: 2)</td>
+      <td>03:A7:01:02</td>
+      <td>02:A7:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>167</td>
+      <td>Hindsight*</td>
+      <td>Set hindsight (id: 167) to 30 seconds (id: 3)</td>
+      <td>03:A7:01:03</td>
+      <td>02:A7:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>167</td>
+      <td>Hindsight*</td>
+      <td>Set hindsight (id: 167) to off (id: 4)</td>
+      <td>03:A7:01:04</td>
+      <td>02:A7:00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to maximum video performance (id: 0)</td>
@@ -2032,7 +2067,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>\&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to extended battery (id: 1)</td>
@@ -2043,7 +2078,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>\&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to tripod / stationary video (id: 2)</td>
@@ -2054,7 +2089,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td>\&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>175</td>
       <td>Controls</td>
       <td>Set controls (id: 175) to easy (id: 0)</td>
@@ -2065,7 +2100,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>175</td>
       <td>Controls</td>
       <td>Set controls (id: 175) to pro (id: 1)</td>
@@ -2076,7 +2111,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (id: 0)</td>
@@ -2087,7 +2122,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (id: 1)</td>
@@ -2098,7 +2133,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (id: 2)</td>
@@ -2109,7 +2144,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (low light) (id: 3)</td>
@@ -2120,7 +2155,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt) (id: 4)</td>
@@ -2131,7 +2166,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt) (id: 5)</td>
@@ -2142,7 +2177,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (ext. batt, low light) (id: 6)</td>
@@ -2153,7 +2188,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (50hz) (id: 7)</td>
@@ -2164,7 +2199,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (50hz) (id: 8)</td>
@@ -2175,7 +2210,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (50hz) (id: 9)</td>
@@ -2186,7 +2221,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (low light, 50hz) (id: 10)</td>
@@ -2197,7 +2232,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt, 50hz) (id: 11)</td>
@@ -2208,7 +2243,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt, 50hz) (id: 12)</td>
@@ -2219,7 +2254,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (ext. batt, low light, 50hz) (id: 13)</td>
@@ -2230,7 +2265,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (ext. batt) (id: 14)</td>
@@ -2241,7 +2276,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (ext. batt, 50hz) (id: 15)</td>
@@ -2252,7 +2287,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (long. batt) (id: 16)</td>
@@ -2263,7 +2298,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (long. batt) (id: 17)</td>
@@ -2274,7 +2309,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (long. batt) (id: 18)</td>
@@ -2285,7 +2320,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (long. batt, low light) (id: 19)</td>
@@ -2296,7 +2331,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (long. batt, 50hz) (id: 20)</td>
@@ -2307,7 +2342,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (long. batt, 50hz) (id: 21)</td>
@@ -2318,7 +2353,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (long. batt, 50hz) (id: 22)</td>
@@ -2329,7 +2364,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (long. batt, low light, 50hz) (id: 23)</td>
@@ -2340,7 +2375,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (4k) (id: 24)</td>
@@ -2351,7 +2386,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (2.7k) (id: 25)</td>
@@ -2362,7 +2397,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (4k, 50hz) (id: 26)</td>
@@ -2373,7 +2408,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (2.7k, 50hz) (id: 27)</td>
@@ -2384,7 +2419,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>177</td>
       <td>Enable Night Photo</td>
       <td>Set enable night photo (id: 177) to off (id: 0)</td>
@@ -2395,7 +2430,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>177</td>
       <td>Enable Night Photo</td>
       <td>Set enable night photo (id: 177) to on (id: 1)</td>
@@ -2406,7 +2441,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>178</td>
       <td>Wireless Band</td>
       <td>Set wireless band (id: 178) to 2.4ghz (id: 0)</td>
@@ -2417,7 +2452,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>178</td>
       <td>Wireless Band</td>
       <td>Set wireless band (id: 178) to 5ghz (id: 1)</td>
@@ -2428,7 +2463,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>179</td>
       <td>Trail Length</td>
       <td>Set trail length (id: 179) to short (id: 1)</td>
@@ -2439,7 +2474,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>179</td>
       <td>Trail Length</td>
       <td>Set trail length (id: 179) to long (id: 2)</td>
@@ -2450,7 +2485,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>179</td>
       <td>Trail Length</td>
       <td>Set trail length (id: 179) to max (id: 3)</td>
@@ -2461,7 +2496,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to highest quality (id: 0)</td>
@@ -2472,7 +2507,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to extended battery (id: 1)</td>
@@ -2483,7 +2518,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to extended battery (green icon) (id: 101)</td>
@@ -2494,7 +2529,7 @@ All settings are sent to UUID GP-0074. All values are hexadecimal and length are
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to longest battery (green icon) (id: 102)</td>
@@ -2573,8 +2608,11 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="19"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
-      <td rowspan="4">HERO11 Black Mini</td>
+      <td rowspan="20"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="5">HERO11 Black Mini</td>
+      <td>v02.30.00</td>
+    </tr>
+    <tr>
       <td>v02.20.00</td>
     </tr>
     <tr>
@@ -2886,6 +2924,7 @@ In order to discern between a <b>Type 1</b> and a <b>Type 2</b> response, the ca
 ### Status IDs
 <p>
 Below is a table of supported status IDs.<br />
+* Indicates that item is experimental<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
 >= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
@@ -3390,7 +3429,7 @@ Below is a table of supported status IDs.<br />
     <tr>
       <td>69</td>
       <td>Ap state</td>
-      <td>Is the WiFi radio enabled?</td>
+      <td>Is the camera in AP Mode?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
       <td><span style="color:green">✔</span></td>
@@ -3808,7 +3847,7 @@ Below is a table of supported status IDs.<br />
     <tr>
       <td>117</td>
       <td>Total sd space kb</td>
-      <td>Total SD card capacity in kilobytes</td>
+      <td>Total SD card capacity in Kilobytes</td>
       <td>integer</td>
       <td>*</td>
       <td><span style="color:green">✔</span></td>
@@ -3930,6 +3969,7 @@ For additional details, see <a href="#services-and-characteristics">Services and
 ## Protobuf Commands
 <p>
 Below is a table of protobuf commands that can be sent to the camera and their expected response.<br />
+* Indicates that item is experimental<br />
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
 >= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
