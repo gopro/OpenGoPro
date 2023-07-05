@@ -1,5 +1,5 @@
 /* network_management.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Fri Jun  9 22:49:36 UTC 2023 */
+/* This copyright was auto-generated on Wed Jul  5 19:32:05 UTC 2023 */
 
 /*
 Defines the structure of protobuf messages for network management
@@ -84,7 +84,7 @@ message RequestConnectNew {
 message RequestGetApEntries {
     required int32 start_index = 1; // Used for paging. 0 <= start_index < NotifStartScanning.total_entries
     required int32 max_entries = 2; // Used for paging. Value must be < NotifStartScanning.total_entries
-    required int32 scan_id     = 3; // ID corresponding to a set of scan results (i.e.
+    required int32 scan_id     = 3; // ID corresponding to a set of scan results (i.e. NotifStartScanning.scan_id)
 }
 
 message RequestReleaseNetwork {
