@@ -85,14 +85,14 @@ var store = [
         },
         {
             "title": "Protocol Documentation: EnumLiveStreamError",
-            "excerpt": "| Name | Number | Description | | ---- | ------ | ----------- | | LIVE_STREAM_ERROR_NONE | 0 | | | LIVE_STREAM_ERROR_NETWORK | 1 | | | LIVE_STREAM_ERROR_CREATESTREAM | 2 | | | LIVE_STREAM_ERROR_OUTOFMEMORY | 3 | | | LIVE_STREAM_ERROR_INPUTSTREAM | 4 | | | LIVE_STREAM_ERROR_INTERNET | 5 | | | LIVE_STREAM_ERROR_OSNETWORK | 6 | | | LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT | 7 | | | LIVE_STREAM_ERROR_SSL_HANDSHAKE | 8 | | | LIVE_STREAM_ERROR_CAMERA_BLOCKED | 9 | | | LIVE_STREAM_ERROR_UNKNOWN | 10 | | | LIVE_STREAM_ERROR_SD_CARD_FULL | 40 | | | LIVE_STREAM_ERROR_SD_CARD_REMOVED | 41 | |",
+            "excerpt": "| Name | Number | Description | | ---- | ------ | ----------- | | LIVE_STREAM_ERROR_NONE | 0 | No error (success) | | LIVE_STREAM_ERROR_NETWORK | 1 | General network error during the stream | | LIVE_STREAM_ERROR_CREATESTREAM | 2 | Startup error: bad URL or valid with live stream server | | LIVE_STREAM_ERROR_OUTOFMEMORY | 3 | Not enough memory on camera to complete task | | LIVE_STREAM_ERROR_INPUTSTREAM | 4 | Failed to get stream from low level camera system | | LIVE_STREAM_ERROR_INTERNET | 5 | No internet access detected on startup of streamer | | LIVE_STREAM_ERROR_OSNETWORK | 6 | Error occured in linux networking stack. usually means the server closed the connection | | LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT | 7 | Timed out attemping to connect to the wifi network when attemping live stream | | LIVE_STREAM_ERROR_SSL_HANDSHAKE | 8 | SSL handshake failed (commonly caused due to incorrect time / time zone) | | LIVE_STREAM_ERROR_CAMERA_BLOCKED | 9 | Low level camera system rejected attempt to start live stream | | LIVE_STREAM_ERROR_UNKNOWN | 10 | Unknown | | LIVE_STREAM_ERROR_SD_CARD_FULL | 40 | Can not perform livestream because sd card is full | | LIVE_STREAM_ERROR_SD_CARD_REMOVED | 41 | Livestream stopped because sd card was removed |",
             "categories": [],
             "tags": [],
             "url": "/OpenGoPro/protos#enumlivestreamerror"
         },
         {
             "title": "Protocol Documentation: EnumLiveStreamStatus",
-            "excerpt": "| Name | Number | Description | | ---- | ------ | ----------- | | LIVE_STREAM_STATE_IDLE | 0 | | | LIVE_STREAM_STATE_CONFIG | 1 | | | LIVE_STREAM_STATE_READY | 2 | | | LIVE_STREAM_STATE_STREAMING | 3 | | | LIVE_STREAM_STATE_COMPLETE_STAY_ON | 4 | | | LIVE_STREAM_STATE_FAILED_STAY_ON | 5 | | | LIVE_STREAM_STATE_RECONNECTING | 6 | |",
+            "excerpt": "| Name | Number | Description | | ---- | ------ | ----------- | | LIVE_STREAM_STATE_IDLE | 0 | Initial status. Livestream has not yet been configured | | LIVE_STREAM_STATE_CONFIG | 1 | Livestream is being configured | | LIVE_STREAM_STATE_READY | 2 | Livestream has finished configuration and is ready to start streaming | | LIVE_STREAM_STATE_STREAMING | 3 | Livestream is actively streaming | | LIVE_STREAM_STATE_COMPLETE_STAY_ON | 4 | Live stream is exiting. No errors occured. | | LIVE_STREAM_STATE_FAILED_STAY_ON | 5 | Live stream is exiting. An error occurred. | | LIVE_STREAM_STATE_RECONNECTING | 6 | An error occurred during livestream and stream is attempting to reconnect. |",
             "categories": [],
             "tags": [],
             "url": "/OpenGoPro/protos#enumlivestreamstatus"
@@ -316,7 +316,7 @@ var store = [
         },
         {
             "title": "Protocol Documentation: EnumRegisterPresetStatus",
-            "excerpt": "| Name | Number | Description | | ---- | ------ | ----------- | | REGISTER_PRESET_STATUS_PRESET | 1 | | | REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY | 2 | |",
+            "excerpt": "| Name | Number | Description | | ---- | ------ | ----------- | | REGISTER_PRESET_STATUS_PRESET | 1 | Send notification when properties of a preset change | | REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY | 2 | Send notification when properties of a preset group change |",
             "categories": [],
             "tags": [],
             "url": "/OpenGoPro/protos#enumregisterpresetstatus"

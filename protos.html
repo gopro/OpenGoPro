@@ -740,67 +740,67 @@
     <tr>
       <td>LIVE_STREAM_ERROR_NONE</td>
       <td>0</td>
-      <td> </td>
+      <td>No error (success)</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_ERROR_NETWORK</td>
       <td>1</td>
-      <td> </td>
+      <td>General network error during the stream</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_ERROR_CREATESTREAM</td>
       <td>2</td>
-      <td> </td>
+      <td>Startup error: bad URL or valid with live stream server</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_ERROR_OUTOFMEMORY</td>
       <td>3</td>
-      <td> </td>
+      <td>Not enough memory on camera to complete task</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_ERROR_INPUTSTREAM</td>
       <td>4</td>
-      <td> </td>
+      <td>Failed to get stream from low level camera system</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_ERROR_INTERNET</td>
       <td>5</td>
-      <td> </td>
+      <td>No internet access detected on startup of streamer</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_ERROR_OSNETWORK</td>
       <td>6</td>
-      <td> </td>
+      <td>Error occured in linux networking stack. usually means the server closed the connection</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT</td>
       <td>7</td>
-      <td> </td>
+      <td>Timed out attemping to connect to the wifi network when attemping live stream</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_ERROR_SSL_HANDSHAKE</td>
       <td>8</td>
-      <td> </td>
+      <td>SSL handshake failed (commonly caused due to incorrect time / time zone)</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_ERROR_CAMERA_BLOCKED</td>
       <td>9</td>
-      <td> </td>
+      <td>Low level camera system rejected attempt to start live stream</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_ERROR_UNKNOWN</td>
       <td>10</td>
-      <td> </td>
+      <td>Unknown</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_ERROR_SD_CARD_FULL</td>
       <td>40</td>
-      <td> </td>
+      <td>Can not perform livestream because sd card is full</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_ERROR_SD_CARD_REMOVED</td>
       <td>41</td>
-      <td> </td>
+      <td>Livestream stopped because sd card was removed</td>
     </tr>
   </tbody>
 </table>
@@ -821,37 +821,37 @@
     <tr>
       <td>LIVE_STREAM_STATE_IDLE</td>
       <td>0</td>
-      <td> </td>
+      <td>Initial status. Livestream has not yet been configured</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_STATE_CONFIG</td>
       <td>1</td>
-      <td> </td>
+      <td>Livestream is being configured</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_STATE_READY</td>
       <td>2</td>
-      <td> </td>
+      <td>Livestream has finished configuration and is ready to start streaming</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_STATE_STREAMING</td>
       <td>3</td>
-      <td> </td>
+      <td>Livestream is actively streaming</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_STATE_COMPLETE_STAY_ON</td>
       <td>4</td>
-      <td> </td>
+      <td>Live stream is exiting. No errors occured.</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_STATE_FAILED_STAY_ON</td>
       <td>5</td>
-      <td> </td>
+      <td>Live stream is exiting. An error occurred.</td>
     </tr>
     <tr>
       <td>LIVE_STREAM_STATE_RECONNECTING</td>
       <td>6</td>
-      <td> </td>
+      <td>An error occurred during livestream and stream is attempting to reconnect.</td>
     </tr>
   </tbody>
 </table>
@@ -1127,7 +1127,7 @@
       <td>scan_id</td>
       <td><a href="#int32">int32</a></td>
       <td>required</td>
-      <td>ID corresponding to a set of scan results (i.e.</td>
+      <td>ID corresponding to a set of scan results (i.e. NotifStartScanning.scan_id)</td>
     </tr>
   </tbody>
 </table>
@@ -2641,12 +2641,12 @@
     <tr>
       <td>REGISTER_PRESET_STATUS_PRESET</td>
       <td>1</td>
-      <td> </td>
+      <td>Send notification when properties of a preset change</td>
     </tr>
     <tr>
       <td>REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY</td>
       <td>2</td>
-      <td> </td>
+      <td>Send notification when properties of a preset group change</td>
     </tr>
   </tbody>
 </table>
