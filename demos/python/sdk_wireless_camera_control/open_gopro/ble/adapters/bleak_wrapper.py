@@ -3,25 +3,34 @@
 
 """Manage a Bluetooth connection using bleak."""
 
+import sys
 import asyncio
 import logging
 import platform
-import sys
 import threading
-from typing import Any, Callable, Optional, Pattern
+from typing import Pattern, Any, Callable, Optional
 
 import pexpect
-from bleak import BleakClient, BleakScanner
-from bleak.backends.characteristic import BleakGATTCharacteristic
-from bleak.backends.device import BLEDevice as BleakDevice
-from bleak.backends.scanner import AdvertisementData
 from packaging.version import Version
+from bleak import BleakScanner, BleakClient
+from bleak.backends.device import BLEDevice as BleakDevice
+from bleak.backends.characteristic import BleakGATTCharacteristic
+from bleak.backends.scanner import AdvertisementData
 
-from open_gopro.ble import (BLEController, BleUUID, Characteristic, CharProps,
-                            Descriptor, FailedToFindDevice, GattDB,
-                            NotiHandlerType, Service, UUIDs)
-from open_gopro.exceptions import ConnectFailed
 from open_gopro.util import Singleton
+from open_gopro.ble import (
+    Service,
+    Characteristic,
+    Descriptor,
+    GattDB,
+    BLEController,
+    NotiHandlerType,
+    FailedToFindDevice,
+    BleUUID,
+    UUIDs,
+    CharProps,
+)
+from open_gopro.exceptions import ConnectFailed
 
 logger = logging.getLogger(__name__)
 
