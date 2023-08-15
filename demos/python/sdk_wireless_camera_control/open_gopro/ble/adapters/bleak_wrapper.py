@@ -3,34 +3,25 @@
 
 """Manage a Bluetooth connection using bleak."""
 
-import sys
 import asyncio
 import logging
 import platform
+import sys
 import threading
-from packaging.version import Version
-from typing import Pattern, Any, Callable, Optional
+from typing import Any, Callable, Optional, Pattern
 
 import pexpect
-from bleak import BleakScanner, BleakClient
-from bleak.backends.device import BLEDevice as BleakDevice
+from bleak import BleakClient, BleakScanner
 from bleak.backends.characteristic import BleakGATTCharacteristic
+from bleak.backends.device import BLEDevice as BleakDevice
 from bleak.backends.scanner import AdvertisementData
+from packaging.version import Version
 
-from open_gopro.util import Singleton
-from open_gopro.ble import (
-    Service,
-    Characteristic,
-    Descriptor,
-    GattDB,
-    BLEController,
-    NotiHandlerType,
-    FailedToFindDevice,
-    BleUUID,
-    UUIDs,
-    CharProps,
-)
+from open_gopro.ble import (BLEController, BleUUID, Characteristic, CharProps,
+                            Descriptor, FailedToFindDevice, GattDB,
+                            NotiHandlerType, Service, UUIDs)
 from open_gopro.exceptions import ConnectFailed
+from open_gopro.util import Singleton
 
 logger = logging.getLogger(__name__)
 
@@ -303,6 +294,7 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
         async def _async_def_pair() -> None:
             logger.debug("Attempting to pair...")
             if (OS := platform.system()) == "Linux":
+                logger.info("Pairing with bluetoothctl")
                 # Manually control bluetoothctl on Linux
                 bluetoothctl = pexpect.spawn("bluetoothctl")
                 if logger.level == logging.DEBUG:
