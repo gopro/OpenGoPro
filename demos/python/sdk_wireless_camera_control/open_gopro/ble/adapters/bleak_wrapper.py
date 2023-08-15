@@ -317,9 +317,11 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                 else:
                     # We're not paired so do it now
                     bluetoothctl.sendline(f"pair {handle.address}")
-                    bluetoothctl.expect("Accept pairing")
-                    bluetoothctl.sendline("yes")
-                    bluetoothctl.expect("Pairing successful")
+                    if (match := bluetoothctl.expect(["Accept pairing", "Pairing successful"])) == 0:
+                        bluetoothctl.sendline("yes")
+                        bluetoothctl.expect("Pairing successful")
+                    elif match == 1:  # We received pairing successful so nothing else to do
+                        pass
 
             elif OS == "Darwin":
                 # No pairing on Mac

@@ -67,7 +67,7 @@ class Logger:
             "open_gopro.api.http_commands": logging.DEBUG,
             "open_gopro.api.ble_commands": logging.DEBUG,
             "open_gopro.communication_client": logging.DEBUG,
-            "open_gopro.ble.adapters.bleak_wrapper": logging.INFO,
+            "open_gopro.ble.adapters.bleak_wrapper": logging.INFO,  # DEBUG for pexpect communication
             "open_gopro.ble.client": logging.DEBUG,
             "open_gopro.wifi.adapters.wireless": logging.DEBUG,
             "open_gopro.responses": logging.DEBUG,
