@@ -8,6 +8,7 @@ import asyncio
 import logging
 import platform
 import threading
+from packaging.version import Version
 from typing import Pattern, Any, Callable, Optional
 
 import pexpect
@@ -307,9 +308,18 @@ class BleakWrapperController(BLEController[BleakDevice, BleakClient], Singleton)
                 if logger.level == logging.DEBUG:
                     bluetoothctl.logfile = sys.stdout.buffer
                 bluetoothctl.expect("Agent registered")
+                # Get the version
+                bluetoothctl.sendline("version")
+                bluetoothctl.expect(r"Version")
+                bluetoothctl.expect(r"\n")
+                version = Version(bluetoothctl.before.decode("utf-8").strip())
                 # First see if we are already paired
-                bluetoothctl.sendline("paired-devices")
-                bluetoothctl.expect("paired-devices")
+                if version >= Version("5.66"):
+                    bluetoothctl.sendline("devices Paired")
+                    bluetoothctl.expect("devices Paired")
+                else:
+                    bluetoothctl.sendline("paired-devices")
+                    bluetoothctl.expect("paired-devices")
                 bluetoothctl.expect(r"#")
                 for device in bluetoothctl.before.decode("utf-8").splitlines():
                     if "Device" in device and device.split()[1] == handle.address:
