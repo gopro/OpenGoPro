@@ -159,28 +159,103 @@ Note: GP-XXXX is shorthand for GoPro's 128-bit UUIDs: <b>b5f9xxxx-aa8d-11e3-9046
 
 <p>
 The Bluetooth Low Energy protocol limits messages to 20 bytes per packet.
-To accommodate this limitation, GoPro cameras use the packet header format below.
+To accommodate this limitation, GoPro cameras use <b>start packets</b> and <b>continuation packets</b>.
+If a message is 20 bytes or fewer, it can be sent with a single packet containing the start packet header.
+If a message is longer than 20 bytes, it must be chunked into multiple packets with the first packet containing a start packet header and subsequent packets containing continuation packet headers.
+</p>
+<p>
 All lengths are in bytes.
 </p>
 
-<p>
-Messages sent to and received from the camera are expected to be packetized and sent in 20 byte chunks.
-Messages received from the camera will always use the header with the smallest possible message length.
-For example, a three byte response will use the 5-bit General header, not the 13-bit or 16-bit Extended headers.
-</p>
-
-<p>
-Messages sent to the camera can use either the 5-bit General header or the 13-bit Extended header.
-</p>
-
 ### Packet Header Format
+<p>
+Message sending and receiving is accomplished by prepending <b>General (5-bit)</b>, <b>Extended (13-bit)</b>, <b>Extended (16-bit)</b>, or <b>Continuation</b> headers onto each packet depending on the message size.
+</p>
+
+#### General (5-bit) Messages (Send and Receive)
+<p>
+Messages that are 31 bytes or fewer can be sent or received using the following format:
+</p>
+
+<table border="1">
+    <tbody>
+      <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td colspan="8">Byte 1</td>
+      </tr>
+      <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+          <td>7</td>
+          <td>6</td>
+          <td>5</td>
+          <td>4</td>
+          <td>3</td>
+          <td>2</td>
+          <td>1</td>
+          <td>0</td>
+      </tr>
+      <tr>
+          <td>0: Start</td>
+          <td colspan="2">00: General</td>
+          <td colspan="5">Message Length: 5 bits</td>
+      </tr>
+    </tbody>
+</table>
+
+#### Extended (13-bit) Messages (Send and Receive)
+<p>
+Messages that are 8191 bytes or fewer can be sent or received using the following format:
+</p>
+
+<p>
+<i>Quickstart Tip: Always use Extended (13-bit) packet headers when sending messages to avoid having to work with multiple packet header formats.</i>
+</p>
+
+<table border="1">
+    <tbody>
+      <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+          <td colspan="8">Byte 1</td>
+          <td colspan="8">Byte 2</td>
+      </tr>
+      <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+          <td>7</td>
+          <td>6</td>
+          <td>5</td>
+          <td>4</td>
+          <td>3</td>
+          <td>2</td>
+          <td>1</td>
+          <td>0</td>
+          <td>7</td>
+          <td>6</td>
+          <td>5</td>
+          <td>4</td>
+          <td>3</td>
+          <td>2</td>
+          <td>1</td>
+          <td>0</td>
+      </tr>
+      <tr>
+          <td>0: Start</td>
+          <td colspan="2">01: Extended (13-bit)</td>
+          <td colspan="13">Message Length: 13 bits</td>
+      </tr>
+    </tbody>
+</table>
+
+#### Extended (16-bit) Messages (Receive only)
+<p>
+If a message is 8192 bytes or longer, the camera will respond using the format below.
+</p>
+
+<p>
+<i>Note: This format cannot be used for sending messages to the camera.</i>
+</p>
 
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
         <td colspan="8">Byte 1</td>
-        <td colspan="8">Byte 2 (optional)</td>
-        <td colspan="8">Byte 3 (optional)</td>
+        <td colspan="8">Byte 2</td>
+        <td colspan="8">Byte 3</td>
     </tr>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
         <td>7</td>
@@ -207,18 +282,6 @@ Messages sent to the camera can use either the 5-bit General header or the 13-bi
         <td>2</td>
         <td>1</td>
         <td>0</td>
-    </tr>
-    <tr>
-        <td>0: Start</td>
-        <td colspan="2">00: General</td>
-        <td colspan="5">Message Length: 5 bits</td>
-        <td colspan="16" style="background-color: rgb(198,210,229);"></td>
-    </tr>
-    <tr>
-        <td>0: Start</td>
-        <td colspan="2">01: Extended (13-bit)</td>
-        <td colspan="13">Message Length: 13 bits</td>
-        <td colspan="8" style="background-color: rgb(198,210,229);"></td>
     </tr>
     <tr>
         <td>0: Start</td>
@@ -226,23 +289,40 @@ Messages sent to the camera can use either the 5-bit General header or the 13-bi
         <td colspan="5" style="background-color: rgb(198,210,229);"></td>
         <td colspan="16">Message Length: 16 bits</td>
     </tr>
-    <tr>
-        <td>0: Start</td>
-        <td colspan="2">11: Reserved</td>
-        <td colspan="21" style="background-color: rgb(198,210,229);"></td>
+  </tbody>
+</table>
+
+#### Continuation Packets (Send and Receive)
+<p>
+When sending or receiving a message that is longer than 20 bytes, the message must be split into N packets with packet 1 containing a start packet header and packets 2..N containing a continuation packet header.
+</p>
+
+<p>
+Note: Counters start at 0x0 and reset after 0xF.
+</p>
+
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+        <td colspan="8">Byte 1</td>
+    </tr>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+        <td>7</td>
+        <td>6</td>
+        <td>5</td>
+        <td>4</td>
+        <td>3</td>
+        <td>2</td>
+        <td>1</td>
+        <td>0</td>
     </tr>
     <tr>
         <td>1: Continuation</td>
         <td colspan="3" style="background-color: rgb(198,210,229);"></td>
         <td colspan="4">Counter (4-bit)</td>
-        <td colspan="16" style="background-color: rgb(198,210,229);"></td>
     </tr>
   </tbody>
 </table>
-
-<p>
-Note: Continuation packet counters start at 0x0 and reset after 0xF.
-</p>
 
 ### Example: Packetizing a 5-bit General Message
 <p>
@@ -646,10 +726,6 @@ Command messages are sent to GP-0072 and responses/notifications are received on
       <td>Get Local Date/Time</td>
     </tr>
     <tr>
-      <td>0x15</td>
-      <td>Set Livestream Mode</td>
-    </tr>
-    <tr>
       <td>0x17</td>
       <td>AP Control</td>
     </tr>
@@ -852,17 +928,6 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>0x15</td>
-      <td>Set Livestream Mode</td>
-      <td>Set live stream mode: url: xxx, encode: true, window size: windowsize.size_720, cert: none</td>
-      <td>20:15:F1:79:0A:03:78:78:78:10:01:18:07:38:7B:40:95:06:48:C8:80:03:50:00</td>
-      <td>02:15:00</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
       <td>0x17</td>
       <td>AP Control</td>
       <td>Ap mode: off</td>
@@ -873,7 +938,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x17</td>
       <td>AP Control</td>
       <td>Ap mode: on</td>
@@ -884,7 +949,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>0x18</td>
       <td>Media: HiLight Moment</td>
       <td>Hilight moment during encoding</td>
@@ -895,7 +960,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x3C</td>
       <td>Get Hardware Info</td>
       <td>Get camera hardware info</td>
@@ -906,7 +971,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>0x3E</td>
       <td>Presets: Load Group</td>
       <td>Video</td>
@@ -917,7 +982,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>0x3E</td>
       <td>Presets: Load Group</td>
       <td>Photo</td>
@@ -928,7 +993,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>0x3E</td>
       <td>Presets: Load Group</td>
       <td>Timelapse</td>
@@ -939,7 +1004,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x40</td>
       <td>Presets: Load</td>
       <td>Example <a href="#presets">preset id</a>: 0x1234ABCD</td>
@@ -950,7 +1015,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>0x50</td>
       <td>Analytics</td>
       <td>Set third party client</td>
@@ -961,7 +1026,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x51</td>
       <td>Open GoPro</td>
       <td>Get version</td>
@@ -2608,7 +2673,7 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="20"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="21"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
       <td rowspan="5">HERO11 Black Mini</td>
       <td>v02.30.00</td>
     </tr>
@@ -2625,7 +2690,10 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>v01.10.00</td>
     </tr>
     <tr>
-      <td rowspan="5">HERO11 Black</td>
+      <td rowspan="6">HERO11 Black</td>
+      <td>v02.12.00</td>
+    </tr>
+    <tr>
       <td>v02.10.00</td>
     </tr>
     <tr>
@@ -3951,7 +4019,7 @@ For additional details, see <a href="#services-and-characteristics">Services and
     <tr>
       <td>Command</td>
       <td>0xF1</td>
-      <td>0x69, 0x6B, 0x78, 0x79, 0xE9, 0xEB, 0xF8, 0xF9</td>
+      <td>0x69, 0x6B, 0x79, 0xE9, 0xEB, 0xF9</td>
       <td>GP-0072</td>
       <td>GP-0073</td>
     </tr>
@@ -3973,6 +4041,13 @@ Below is a table of protobuf commands that can be sent to the camera and their e
 <span style="color:green">✔</span> Indicates support for all Open GoPro firmware versions.<br />
 <span style="color:red">❌</span> Indicates a lack of support for all Open GoPro firmware versions.<br />
 >= vXX.YY.ZZ indicates support for firmware versions equal to or newer than vXX.YY.ZZ
+</p>
+
+<p>
+<i>
+Note: Some protobuf commands currently have no fields, which means they serialize into a 0-byte bytestream.
+For consistency, best practice is to always serialize the protobuf objects regardless of how many fields they define.
+</i>
 </p>
 
 <table border="1">
@@ -4068,7 +4143,7 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
-      <td rowspan="4">0xF1</td>
+      <td rowspan="3">0xF1</td>
       <td>0x69</td>
       <td>0xE9</td>
       <td>Request set camera control status</td>
@@ -4085,17 +4160,6 @@ Below is a table of protobuf commands that can be sent to the camera and their e
       <td>Request set turbo active</td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/turbo_transfer.proto">RequestSetTurboActive</a></td>
       <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">ResponseGeneric</a></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>0x78</td>
-      <td>0xF8</td>
-      <td>Request release network</td>
-      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">RequestReleaseNetwork</a></td>
-      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseGeneric</a></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -4446,21 +4510,33 @@ end loop
 
 ### Disconnect from an Access Point
 <p>
-To disconnect from a connected Access Point and return the camera to AP mode, use <a href="#protobuf-commands">RequestReleaseNetwork</a>.
+To disconnect from a connected Access Point and return the camera to AP mode, set <b>AP Control: ON</b>, which disables Station Mode.
 </p>
 ```plantuml!
 
 
 actor Central
-participant "GP-0091" as GP0091
-participant "GP-0092" as GP0092
+participant "GP-0072" as GP0072
+participant "GP-0073" as GP0073
 
-note across: Scan for Access Points
-note across: Connect to a New/Provisioned Access Point\n(Camera: STA Mode)
-Central  -> GP0091  : RequestReleaseNetwork
-Central <-- GP0092  : ResponseGeneric
-note right: (Camera: AP Mode)
+note across
+    Scan for Access Points
+    Camera: STA Mode
+end note
 
+note across
+    Connect to a New/Provisioned Access Point
+end note
+
+Central  -> GP0072  : 03:17:01:01
+note right: AP Mode: ON
+
+Central <-- GP0073  : 02:17:00
+note right
+    Success
+    Camera: AP Mode
+    Disconnected from Access Point
+end note
 
 
 
@@ -4500,9 +4576,11 @@ For details on which cameras are supported and how to enable and disable Turbo T
 
 ## Live Streaming
 <p>
-The camera supports the ability to stream to social media platforms such as Twitch, YouTube, and Facebook or any other
-site that accepts RTMP URLs. For additional details about getting started with RTMP, see
-<a href="https://gopro.com/en/us/news/how-to-live-stream-on-gopro">How to Stream</a>.
+The camera supports the ability to stream to social media platforms such as Twitch, YouTube, Facebook or any other site that accepts RTMP(S) URLs.
+</p>
+
+<p>
+For additional details about getting started with RTMP, see <a href="https://gopro.com/en/us/news/how-to-live-stream-on-gopro">How to Stream</a>.
 </p>
 
 ### Overview
@@ -4514,7 +4592,6 @@ Live streaming with camera is accomplished as follows:
 <li>Put the camera into <b>Station Mode</b> and connect it to an access point (see <a href="#interface-with-access-points">Interface With Access Points</a>)</li>
 <li>Set the <b>Live Stream Mode</b></li>
 <li>Poll for <b>Live Stream Status</b> until the camera indicates it is ready</li>
-<li>Set any desired settings (e.g. Hypersmooth)</li>
 <li>Set the shutter to begin live streaming</li>
 <li>Unset the shutter to stop live streaming</li>
 </ol>
@@ -4533,28 +4610,29 @@ participant "GP-0075" as GP0075
 participant "GP-0076" as GP0076
 participant "GP-0077" as GP0077
 
-note over Central, GP0091: Set Live Stream Mode
+== Set live stream mode ==
 Central  -> GP0072 : RequestSetLiveStreamMode
 Central <-- GP0073 : ResponseGeneric
 
-note over Central, GP0092: Poll Live Stream Status until ready
+== Poll Live Stream Status until ready ==
 loop until LIVE_STREAM_STATE_READY
 Central  -> GP0076 : RequestGetLiveStreamStatus
 Central <-- GP0077 : NotifyLiveStreamStatus
 end loop
 
-note over Central, GP0091 : Set desired settings
+== Set desired settings ==
 loop until Desired camera state attained
 Central  -> GP0074 : Set setting
-Central <-- GP0075 : Response
+Central <-- GP0075 : success response
 end loop
 
-note over Central, GP0091: Start live streaming!
+== Start live streaming ==
 Central  -> GP0072 : Set shutter
-Central <-- GP0073 : response
-note over Central, GP0091: Stop live streaming
+Central <-- GP0073 : success response
+
+== Stop live streaming ==
 Central  -> GP0072 : Unset shutter
-Central <-- GP0073 : response
+Central <-- GP0073 : success response
 
 
 
@@ -4563,7 +4641,7 @@ Central <-- GP0073 : response
 
 ### Set Live Stream Mode
 <p>
-Setting the live stream mode is accomplished by sending a <b>RequestSetLiveStreamMode</b> command.
+Set the live stream mode by sending a <b>RequestSetLiveStreamMode</b> command.
 </p>
 
 <p>
@@ -4580,7 +4658,7 @@ Command and enum details are available in <a href="#protobuf-commands">Protobuf 
     <tr>
       <td>url</td>
       <td>string</td>
-      <td>RTMP url used to stream. Set to empty string to invalidate/cancel stream</td>
+      <td>RTMP(S) url used to stream. Set to empty string to invalidate/cancel stream</td>
     </tr>
     <tr>
       <td>encode</td>
@@ -4591,11 +4669,6 @@ Command and enum details are available in <a href="#protobuf-commands">Protobuf 
       <td>window_size</td>
       <td>EnumWindowSize</td>
       <td>Streaming video resolution</td>
-    </tr>
-    <tr>
-      <td>cert</td>
-      <td>string</td>
-      <td>Certificate from a trusted root for streaming services that use encryption</td>
     </tr>
     <tr>
       <td>minimum_bitrate</td>
@@ -4617,8 +4690,17 @@ Command and enum details are available in <a href="#protobuf-commands">Protobuf 
       <td>EnumLens</td>
       <td>Streaming Field of View</td>
     </tr>
+    <tr>
+      <td>cert</td>
+      <td>bytes</td>
+      <td>SSL certificate(s) from a trusted Root CA for streaming services that use encryption (RTMPS)</td>
+    </tr>
   </tbody>
 </table>
+
+<p>
+Note: For RTMPS, the <b>cert</b> parameter must be provided in <a href="https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail">PEM</a> format.
+</p>
 
 ### Get Live Stream Status
 <p>

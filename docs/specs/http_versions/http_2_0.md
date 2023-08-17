@@ -137,7 +137,7 @@ The camera's serial number can be obtained in any of the following ways:
 <ul>
 <li>Reading the sticker inside the camera's battery enclosure</li>
 <li>Camera UI: Preferences >> About >> Camera Info</li>
-<li>Bluetooth Low Energy by reading directly from Hardware Info . See <i>Commands</i> in <a href="https://gopro.github.io/OpenGoPro/ble">BLE Specification</a> for details.</li>
+<li>Bluetooth Low Energy: By reading directly from <b>Hardware Info</b></li>
 </ul>
 </p>
 
@@ -2180,7 +2180,7 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="20"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="21"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
       <td rowspan="5">HERO11 Black Mini</td>
       <td>v02.30.00</td>
     </tr>
@@ -2197,7 +2197,10 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>v01.10.00</td>
     </tr>
     <tr>
-      <td rowspan="5">HERO11 Black</td>
+      <td rowspan="6">HERO11 Black</td>
+      <td>v02.12.00</td>
+    </tr>
+    <tr>
       <td>v02.10.00</td>
     </tr>
     <tr>
@@ -3996,36 +3999,24 @@ For readers interested in using a GoPro camera as a webcam with preexisting tool
 
 ' Define states
 PREREQUISITE: Wired USB Control disabled
-OFF:          Webcam disabled
-IDLE:         Webcam ready
-HPP:          High power preview
-LPP:          Low power preview
-
-' Actions:
-'   Connect camera to system via USB
-'   Start
-'   Preview
-'   Stop
-'   Exit
+state "READY" as READY
+    READY : Webcam ready to start
+    READY : Status is either OFF (0) or IDLE (1)
+state "High Power Preview" as HPP : Status: 2
+state "Low Power Preview" as LPP : Status: 3
 
 ' Define transitions
 [*]          --> PREREQUISITE
-
-PREREQUISITE --> OFF
-
-OFF          --> IDLE: Connect USB
-
-IDLE         --> IDLE: Stop\nExit
-IDLE         --> HPP:  Start
-IDLE         --> LPP:  Preview
-
+PREREQUISITE --> READY: Connect USB to camera
+READY        --> READY: Stop\nExit
+READY        --> HPP:  Start
+READY        --> LPP:  Preview
 HPP          --> HPP:  Start
 HPP          --> LPP:  Preview
-HPP          --> IDLE: Stop\nExit
-
+HPP          --> READY: Stop\nExit
 LPP          --> LPP:  Preview
 LPP          --> HPP:  Start
-LPP          --> IDLE: Stop\nExit
+LPP          --> READY: Stop\nExit
 
 
 
@@ -4154,104 +4145,64 @@ For details about how to send this and webcam commands, see <a href="#commands-q
   </tbody>
 </table>
 
-### Webcam Settings
+### Webcam Capabilities
 
 <p>
-Aside from basic settings such as Resolution and FOV, the camera may support other settings such as Hypersmooth.
-In order to change these settings independently, the webcam must be in <b>IDLE</b> state.
+Webcam supports setting resolution and field of view.
+Changing other settings while in <b>IDLE</b> state such as Hypersmooth may succeed but are not officially supported.
 </p>
 
 <p>
-Note: There is a <a href="https://gopro.github.io/OpenGoPro/faq#known-issues">known issue</a> on some cameras in which the webcam state will be wrongly reported as IDLE after a new USB connection.
+There is a <a href="https://gopro.github.io/OpenGoPro/faq#known-issues">known issue</a> on some cameras in which the webcam status will be wrongly reported as <b>IDLE</b> instead of <b>OFF</b> after a new USB connection.
 The best workaround for this is to call <b>Webcam: Start</b> followed by the <b>Webcam: Stop</b> after connecting USB in order to attain the true IDLE state.
 </p>
 
-#### Resolutions
 <p>
-Note: If resolution is not set, 1080p will be used by default
+Note: If resolution is not set, 1080p will be used by default.
+If fov is not set, camera will default to the last-set fov or Wide if fov has never been set.
 </p>
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>ID</td>
-      <td>Resolution</td>
-      <td>HERO11 Black Mini</td>
-      <td>HERO11 Black</td>
-      <td>HERO10 Black</td>
-      <td>HERO9 Black</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>480</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>720</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
-      <td>12</td>
-      <td>1080</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-  </tbody>
-</table>
 
-#### Digital Lenses / FOV
-<p>
-Note: If fov is not set, camera will default to the last-set fov or Wide if fov has never been set.
-</p>
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>ID</td>
+      <td>Camera</td>
+      <td>Resolution</td>
       <td>FOV</td>
-      <td>HERO11 Black Mini</td>
-      <td>HERO11 Black</td>
-      <td>HERO10 Black</td>
-      <td>HERO9 Black</td>
     </tr>
     <tr>
-      <td>0</td>
-      <td>WIDE</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
+      <td rowspan="2">HERO11 Black</td>
+      <td>720p (id: 7)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
     </tr>
     <tr>
-      <td>2</td>
-      <td>NARROW</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
+      <td>1080p (id: 12)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
     </tr>
     <tr>
-      <td>3</td>
-      <td>SUPERVIEW</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
+      <td rowspan="3">HERO10 Black</td>
+      <td>480p (id: 4)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
     </tr>
     <tr>
-      <td>4</td>
-      <td>LINEAR</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
+      <td>720p (id: 7)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
+    </tr>
+    <tr>
+      <td>1080p (id: 12)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
+    </tr>
+    <tr>
+      <td rowspan="3">HERO9 Black</td>
+      <td>480p (id: 4)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
+    </tr>
+    <tr>
+      <td>720p (id: 7)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
+    </tr>
+    <tr>
+      <td>1080p (id: 12)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
     </tr>
   </tbody>
 </table>
