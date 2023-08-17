@@ -505,12 +505,7 @@
 <li><a href="#webcam-commands">Webcam Commands</a></li>
 <li><a href="#status-codes">Status Codes</a></li>
 <li><a href="#error-codes">Error Codes</a></li>
-<li>
-<a href="#webcam-settings">Webcam Settings</a><ul>
-<li><a href="#resolutions">Resolutions</a></li>
-<li><a href="#digital-lenses--fov">Digital Lenses / FOV</a></li>
-</ul>
-</li>
+<li><a href="#webcam-capabilities">Webcam Capabilities</a></li>
 </ul>
 </li>
 </ul>
@@ -659,7 +654,8 @@ The camera's serial number can be obtained in any of the following ways:
 <ul>
 <li>Reading the sticker inside the camera's battery enclosure</li>
 <li>Camera UI: Preferences &gt;&gt; About &gt;&gt; Camera Info</li>
-<li>Bluetooth Low Energy by reading directly from Hardware Info . See <i>Commands</i> in <a href="https://gopro.github.io/OpenGoPro/ble">BLE Specification</a> for details.</li>
+<li>Bluetooth Low Energy: By reading directly from <b>Hardware Info</b>
+</li>
 </ul>
 
 
@@ -2698,7 +2694,7 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="20">
+      <td rowspan="21">
 <a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a>
 </td>
       <td rowspan="5">HERO11 Black Mini</td>
@@ -2717,7 +2713,10 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>v01.10.00</td>
     </tr>
     <tr>
-      <td rowspan="5">HERO11 Black</td>
+      <td rowspan="6">HERO11 Black</td>
+      <td>v02.12.00</td>
+    </tr>
+    <tr>
       <td>v02.10.00</td>
     </tr>
     <tr>
@@ -4406,7 +4405,7 @@ For readers interested in using a GoPro camera as a webcam with preexisting tool
 </p>
 
 <h3 id="webcam-finite-state-machine">Webcam Finite State Machine</h3>
-<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="650px" preserveaspectratio="none" style="width:407px;height:650px;background:#FFFFFF;" version="1.1" viewbox="0 0 407 650" width="407px" zoomandpan="magnify"><defs></defs><g><g id="PREREQUISITE"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="190" x="148.5" y="87"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="148.5" x2="338.5" y1="113.2969" y2="113.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="101" x="193" y="104.9951">PREREQUISITE</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="170" x="153.5" y="129.4355">Wired USB Control disabled</text></g><g id="OFF"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="130" x="178.5" y="198"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="178.5" x2="308.5" y1="224.2969" y2="224.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="27" x="230" y="215.9951">OFF</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="110" x="183.5" y="240.4355">Webcam disabled</text></g><g id="IDLE"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="112" x="187.5" y="325"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="187.5" x2="299.5" y1="351.2969" y2="351.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="30" x="228.5" y="342.9951">IDLE</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="92" x="192.5" y="367.4355">Webcam ready</text></g><g id="HPP"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="141" x="7" y="467"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="148" y1="493.2969" y2="493.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="28" x="63.5" y="484.9951">HPP</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="121" x="12" y="509.4355">High power preview</text></g><g id="LPP"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="136" x="169.5" y="594"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="169.5" x2="305.5" y1="620.2969" y2="620.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="25" x="225" y="611.9951">LPP</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="116" x="174.5" y="636.4355">Low power preview</text></g><ellipse cx="243.5" cy="16" fill="#181818" rx="10" ry="10" style="stroke:none;stroke-width:1.0;"></ellipse><g id="link_*start*_PREREQUISITE"><path d="M243.5,26.36 C243.5,38.98 243.5,62.07 243.5,80.94 " fill="none" id="*start*-to-PREREQUISITE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="243.5,85.65,247.5,76.65,243.5,80.65,239.5,76.65,243.5,85.65" style="stroke:#181818;stroke-width:1.0;"></polygon></g><g id="link_PREREQUISITE_OFF"><path d="M243.5,137.46 C243.5,153.59 243.5,174.82 243.5,191.97 " fill="none" id="PREREQUISITE-to-OFF" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="243.5,196.62,247.5,187.62,243.5,191.62,239.5,187.62,243.5,196.62" style="stroke:#181818;stroke-width:1.0;"></polygon></g><g id="link_OFF_IDLE"><path d="M243.5,248.4 C243.5,268.53 243.5,297.19 243.5,318.78 " fill="none" id="OFF-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="243.5,323.66,247.5,314.66,243.5,318.66,239.5,314.66,243.5,323.66" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="85" x="244.5" y="291.0669">Connect USB</text></g><g id="link_IDLE_IDLE"><path d="M299.93,338.09 C319.1,338.03 334.5,342 334.5,350 C334.5,357.19 322.07,361.12 305.64,361.8 " fill="none" id="IDLE-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="300.93,361.91,309.9972,365.7551,305.9293,361.8243,309.8601,357.7563,300.93,361.91" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="30" x="340.5" y="347.0669">Stop</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="23" x="344" y="362.1997">Exit</text></g><g id="link_IDLE_HPP"><path d="M187.06,370.4 C167.66,378.93 146.75,390.39 130.5,405 C112.97,420.75 99.24,443.66 90.15,461.87 " fill="none" id="IDLE-to-HPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="87.71,465.88,95.2402,459.532,89.8945,461.3825,88.0441,456.0368,87.71,465.88" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="32" x="131.5" y="425.5669">Start</text></g><g id="link_HPP_IDLE"><path d="M125.23,466.5 C139.77,458.05 155.37,447.94 168.5,437 C188.71,420.17 208.12,397.67 222.14,379.9 " fill="none" id="HPP-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="225.58,376.49,216.8936,381.1319,222.5073,380.4345,223.2048,386.0481,225.58,376.49" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="30" x="201.5" y="418.0669">Stop</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="23" x="205" y="433.1997">Exit</text></g><g id="link_IDLE_LPP"><path d="M242.96,375.17 C241.86,423.99 239.38,534.28 238.18,587.77 " fill="none" id="IDLE-to-LPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="238.05,592.7,242.2546,583.7938,238.1643,587.7013,234.2567,583.6109,238.05,592.7" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="242.5" y="496.5669">Preview</text></g><g id="link_LPP_IDLE"><path d="M257.79,593.69 C272.58,574.3 291.39,545.71 299.5,517 C313.25,468.32 285.5,412.82 264.36,379.92 " fill="none" id="LPP-to-IDLE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="261.3,376.23,262.8639,385.9539,264.0305,380.4186,269.5657,381.5851,261.3,376.23" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="30" x="304.5" y="489.0669">Stop</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="23" x="308" y="504.1997">Exit</text></g><g id="link_HPP_HPP"><path d="M148,480.15 C167.8,480.67 183,484.62 183,492 C183,498.63 170.73,502.49 153.88,503.58 " fill="none" id="HPP-to-HPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="149,503.85,158.1733,507.4348,153.9948,503.6217,157.8079,499.4432,149,503.85" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="32" x="189" y="496.5669">Start</text></g><g id="link_HPP_LPP"><path d="M86.18,517.31 C92.6,532.38 102.64,551.24 116.5,564 C130.07,576.5 147.02,586.46 163.89,594.26 " fill="none" id="HPP-to-LPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="168.12,596.61,161.5542,589.269,163.5604,594.5582,158.2712,596.5644,168.12,596.61" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="117.5" y="560.0669">Preview</text></g><g id="link_LPP_HPP"><path d="M217.62,593.61 C205.04,579.06 187.9,560.79 170.5,547 C158.25,537.29 144.07,528.16 130.52,520.26 " fill="none" id="LPP-to-HPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="126.57,517.41,132.363,525.375,130.8997,519.9107,136.3641,518.4474,126.57,517.41" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="32" x="190.5" y="560.0669">Start</text></g><g id="link_LPP_LPP"><path d="M305.85,607.14 C325.41,607.61 340.5,611.56 340.5,619 C340.5,625.69 328.32,629.56 311.66,630.61 " fill="none" id="LPP-to-LPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="306.85,630.86,316.0135,634.4698,311.8454,630.6453,315.6699,626.4772,306.85,630.86" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="346.5" y="623.5669">Preview</text></g></g></svg>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="553px" preserveaspectratio="none" style="width:457px;height:553px;background:#FFFFFF;" version="1.1" viewbox="0 0 457 553" width="457px" zoomandpan="magnify"><defs></defs><g><g id="PREREQUISITE"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="190" x="161.5" y="87"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="161.5" x2="351.5" y1="113.2969" y2="113.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="101" x="206" y="104.9951">PREREQUISITE</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="170" x="166.5" y="129.4355">Wired USB Control disabled</text></g><g id="READY"><rect fill="#F1F1F1" height="64.2344" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="234" x="139.5" y="214"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="139.5" x2="373.5" y1="240.2969" y2="240.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="48" x="232.5" y="231.9951">READY</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="143" x="144.5" y="256.4355">Webcam ready to start</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="214" x="144.5" y="270.4043">Status is either OFF (0) or IDLE (1)</text></g><g id="HPP"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="155" x="7" y="370"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="162" y1="396.2969" y2="396.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="135" x="17" y="387.9951">High Power Preview</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="57" x="12" y="412.4355">Status: 2</text></g><g id="LPP"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="151" x="174" y="497"></rect><line style="stroke:#181818;stroke-width:0.5;" x1="174" x2="325" y1="523.2969" y2="523.2969"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="131" x="184" y="514.9951">Low Power Preview</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthadjust="spacing" textlength="57" x="179" y="539.4355">Status: 3</text></g><ellipse cx="256.5" cy="16" fill="#181818" rx="10" ry="10" style="stroke:none;stroke-width:1.0;"></ellipse><g id="link_*start*_PREREQUISITE"><path d="M256.5,26.36 C256.5,38.98 256.5,62.07 256.5,80.94 " fill="none" id="*start*-to-PREREQUISITE" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="256.5,85.65,260.5,76.65,256.5,80.65,252.5,76.65,256.5,85.65" style="stroke:#181818;stroke-width:1.0;"></polygon></g><g id="link_PREREQUISITE_READY"><path d="M256.5,137.21 C256.5,157.02 256.5,185.37 256.5,208.03 " fill="none" id="PREREQUISITE-to-READY" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="256.5,212.95,260.5,203.95,256.5,207.95,252.5,203.95,256.5,212.95" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="155" x="257.5" y="180.0669">Connect USB to camera</text></g><g id="link_READY_READY"><path d="M373.77,233.61 C394.25,235.26 408.5,239.39 408.5,246 C408.5,251.99 396.8,255.94 379.36,257.86 " fill="none" id="READY-to-READY" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="374.77,258.39,384.1074,261.5225,379.7477,257.918,383.3522,253.5582,374.77,258.39" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="30" x="414.5" y="243.0669">Stop</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="23" x="418" y="258.1997">Exit</text></g><g id="link_READY_HPP"><path d="M184.86,278.44 C169.95,286.81 155,296.72 142.5,308 C124.66,324.11 109.66,346.79 99.38,364.82 " fill="none" id="READY-to-HPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="96.61,368.77,104.5004,362.8758,99.0552,364.4087,97.5223,358.9635,96.61,368.77" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="32" x="143.5" y="328.5669">Start</text></g><g id="link_HPP_READY"><path d="M136.13,369.57 C151.2,361.26 167.18,351.2 180.5,340 C200.07,323.55 218.33,301.52 232.04,283.04 " fill="none" id="HPP-to-READY" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="235.43,279.42,226.8799,284.3082,232.4713,283.4507,233.3289,289.0421,235.43,279.42" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="30" x="212.5" y="321.0669">Stop</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="23" x="216" y="336.1997">Exit</text></g><g id="link_READY_LPP"><path d="M255.7,278.43 C254.34,331.62 251.6,438.69 250.27,490.94 " fill="none" id="READY-to-LPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="250.12,495.73,254.35,486.8358,250.2485,490.7317,246.3527,486.6302,250.12,495.73" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="254.5" y="399.5669">Preview</text></g><g id="link_LPP_READY"><path d="M269.79,496.69 C284.58,477.3 303.39,448.71 311.5,420 C324.93,372.45 301.28,318.25 280.93,283.38 " fill="none" id="LPP-to-READY" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="277.96,279.38,279.0981,289.1629,280.5051,283.6838,285.9842,285.0907,277.96,279.38" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="30" x="316.5" y="392.0669">Stop</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="23" x="320" y="407.1997">Exit</text></g><g id="link_HPP_HPP"><path d="M162.32,383.24 C182.13,384.01 197,387.93 197,395 C197,401.35 184.99,405.16 168.19,406.43 " fill="none" id="HPP-to-HPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="163.32,406.76,172.5335,410.24,168.3119,406.4748,172.0771,402.2531,163.32,406.76" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="32" x="203" y="399.5669">Start</text></g><g id="link_HPP_LPP"><path d="M94.98,420.3 C102.49,435.36 113.86,454.22 128.5,467 C140.88,477.81 155.76,486.79 170.8,494.12 " fill="none" id="HPP-to-LPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="174.9,496.54,168.4848,489.067,170.3831,494.3959,165.0542,496.2941,174.9,496.54" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="129.5" y="463.0669">Preview</text></g><g id="link_LPP_HPP"><path d="M230.02,496.81 C217.45,482.15 200.19,463.7 182.5,450 C169.85,440.2 155.19,431.12 141.13,423.3 " fill="none" id="LPP-to-HPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="136.98,420.48,142.9549,428.3094,141.3662,422.8803,146.7954,421.2915,136.98,420.48" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="32" x="202.5" y="463.0669">Start</text></g><g id="link_LPP_LPP"><path d="M325.42,510.22 C345.13,510.94 360,514.87 360,522 C360,528.41 348,532.23 331.27,533.46 " fill="none" id="LPP-to-LPP" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="326.42,533.78,335.6236,537.2863,331.4126,533.509,335.1899,529.298,326.42,533.78" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="48" x="366" y="526.5669">Preview</text></g></g></svg>
 
 <h3 id="webcam-commands">Webcam Commands</h3>
 <p>
@@ -4530,104 +4529,64 @@ For details about how to send this and webcam commands, see <a href="#commands-q
   </tbody>
 </table>
 
-<h3 id="webcam-settings">Webcam Settings</h3>
+<h3 id="webcam-capabilities">Webcam Capabilities</h3>
 
 <p>
-Aside from basic settings such as Resolution and FOV, the camera may support other settings such as Hypersmooth.
-In order to change these settings independently, the webcam must be in <b>IDLE</b> state.
+Webcam supports setting resolution and field of view.
+Changing other settings while in <b>IDLE</b> state such as Hypersmooth may succeed but are not officially supported.
 </p>
 
 <p>
-Note: There is a <a href="https://gopro.github.io/OpenGoPro/faq#known-issues">known issue</a> on some cameras in which the webcam state will be wrongly reported as IDLE after a new USB connection.
+There is a <a href="https://gopro.github.io/OpenGoPro/faq#known-issues">known issue</a> on some cameras in which the webcam status will be wrongly reported as <b>IDLE</b> instead of <b>OFF</b> after a new USB connection.
 The best workaround for this is to call <b>Webcam: Start</b> followed by the <b>Webcam: Stop</b> after connecting USB in order to attain the true IDLE state.
 </p>
 
-<h4 id="resolutions">Resolutions</h4>
 <p>
-Note: If resolution is not set, 1080p will be used by default
+Note: If resolution is not set, 1080p will be used by default.
+If fov is not set, camera will default to the last-set fov or Wide if fov has never been set.
 </p>
-<table border="1">
-  <tbody>
-    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>ID</td>
-      <td>Resolution</td>
-      <td>HERO11 Black Mini</td>
-      <td>HERO11 Black</td>
-      <td>HERO10 Black</td>
-      <td>HERO9 Black</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>480</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>720</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
-      <td>12</td>
-      <td>1080</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-  </tbody>
-</table>
 
-<h4 id="digital-lenses--fov">Digital Lenses / FOV</h4>
-<p>
-Note: If fov is not set, camera will default to the last-set fov or Wide if fov has never been set.
-</p>
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
-      <td>ID</td>
+      <td>Camera</td>
+      <td>Resolution</td>
       <td>FOV</td>
-      <td>HERO11 Black Mini</td>
-      <td>HERO11 Black</td>
-      <td>HERO10 Black</td>
-      <td>HERO9 Black</td>
     </tr>
     <tr>
-      <td>0</td>
-      <td>WIDE</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
+      <td rowspan="2">HERO11 Black</td>
+      <td>720p (id: 7)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
     </tr>
     <tr>
-      <td>2</td>
-      <td>NARROW</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
+      <td>1080p (id: 12)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
     </tr>
     <tr>
-      <td>3</td>
-      <td>SUPERVIEW</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
+      <td rowspan="3">HERO10 Black</td>
+      <td>480p (id: 4)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
     </tr>
     <tr>
-      <td>4</td>
-      <td>LINEAR</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
+      <td>720p (id: 7)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
+    </tr>
+    <tr>
+      <td>1080p (id: 12)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
+    </tr>
+    <tr>
+      <td rowspan="3">HERO9 Black</td>
+      <td>480p (id: 4)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
+    </tr>
+    <tr>
+      <td>720p (id: 7)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
+    </tr>
+    <tr>
+      <td>1080p (id: 12)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
     </tr>
   </tbody>
 </table>
