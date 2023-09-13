@@ -7,8 +7,9 @@ import sys
 
 try:
     import tkinter
-    import PIL
+
     import cv2
+    import PIL
 
 except ModuleNotFoundError:
     print(

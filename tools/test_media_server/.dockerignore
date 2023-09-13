@@ -1,0 +1,10 @@
+# Start by ignoring everything
+*
+
+# Explicitly unignore what we need for building
+!nginx.conf
+!hls.html
+!entrypoint.sh
+# TODO once we find which one works. Remove the other one
+!cert_request.ext
+!cert_request.ini

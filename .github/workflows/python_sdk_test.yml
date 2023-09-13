@@ -17,7 +17,7 @@ jobs:
         strategy:
             matrix:
                 os: [windows-latest, macos-latest, ubuntu-latest]
-                python-version: ["3.9", "3.10"]
+                python-version: ["3.9", "3.10", "3.11"]
                 include:
                     - os: ubuntu-latest
                       path: ~/.cache/pip
@@ -49,8 +49,8 @@ jobs:
               working-directory: ./demos/python/sdk_wireless_camera_control/
               run: |
                   python -m pip install --upgrade pip wheel
-                  pip install nox==2022.8.7
-                  pip install nox-poetry==1.0.1
+                  pip install nox==2023.4.22
+                  pip install nox-poetry==1.0.3
                   pip install poetry
 
             - name: Perform checks (format, types, lint, docstrings, unit tests, docs, safety)

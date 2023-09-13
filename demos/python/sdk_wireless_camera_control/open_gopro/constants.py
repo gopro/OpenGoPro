@@ -4,160 +4,12 @@
 """Constant numbers shared across the GoPro module. These do not change across Open GoPro Versions"""
 
 from __future__ import annotations
-from enum import IntEnum, Enum, IntFlag, EnumMeta
-from dataclasses import dataclass
-from typing import Protocol, Union, Iterator, TypeVar, Any, no_type_check, Final
 
-import construct
+from dataclasses import dataclass
+from typing import Final
 
 from open_gopro.ble import BleUUID, UUIDs
-
-T = TypeVar("T")
-
-
-##############################################################################################################
-#####################   Custom Enum for this Project  ########################################################
-##############################################################################################################
-
-
-class ProtobufDescriptor(Protocol):
-    """Protocol definition for Protobuf enum descriptor used to generate GoPro enums from protobufs"""
-
-    @property
-    def name(self) -> str:
-        """Human readable name of protobuf enum
-
-        # noqa: DAR202
-
-        Returns:
-            str: enum name
-        """
-
-    @property
-    def values_by_name(self) -> dict:
-        """Get the enum values by name
-
-        # noqa: DAR202
-
-        Returns:
-            dict: Dict of enum values mapped by name
-        """
-
-    @property
-    def values_by_number(self) -> dict:
-        """Get the enum values by number
-
-        # noqa: DAR202
-
-        Returns:
-            dict: dict of enum numbers mapped by numberf
-        """
-
-
-class GoProEnumMeta(EnumMeta):
-    """Modify enum metaclass to build GoPro specific enums"""
-
-    _is_proto = False
-    _iter_skip_names = ("NOT_APPLICABLE", "DESCRIPTOR")
-
-    @no_type_check
-    def __new__(mcs, name, bases, classdict, **kwargs) -> GoProEnumMeta:  # noqa
-        is_proto = "__is_proto__" in classdict
-        classdict["_ignore_"] = "__is_proto__"
-        classdict["__doc__"] = ""  # Don't use useless "An enumeration" docstring
-        e = super().__new__(mcs, name, bases, classdict, **kwargs)
-        setattr(e, "_is_proto", is_proto)
-        return e
-
-    @no_type_check
-    def __contains__(cls: type[Any], obj: object) -> bool:
-        if isinstance(obj, Enum):
-            return super().__contains__(obj)
-        if isinstance(obj, int):
-            return obj in [x.value for x in cls._member_map_.values()]
-        if isinstance(obj, str):
-            return obj.lower() in [x.name.lower() for x in cls._member_map_.values()]
-        raise TypeError(
-            f"unsupported operand type(s) for 'in': {type(obj).__qualname__} and {cls.__class__.__qualname__}"
-        )
-
-    def __iter__(cls: type[T]) -> Iterator[T]:
-        """Do not return enum values whose name is in the _iter_skip_names list
-
-        Returns:
-            Iterator[T]: enum iterator
-        """
-        return iter([x[1] for x in cls._member_map_.items() if x[0] not in GoProEnumMeta._iter_skip_names])  # type: ignore
-
-
-class GoProFlagEnum(IntFlag, metaclass=GoProEnumMeta):
-    """GoPro specific enum to be used for all settings, statuses, and parameters
-
-    The names NOT_APPLICABLE and DESCRIPTOR are special as they will not be returned as part of the enum iterator
-    """
-
-    def __eq__(self, other: object) -> bool:
-        if type(self)._is_proto:
-            if isinstance(other, int):
-                return self.value == other
-            if isinstance(other, str):
-                return self.name == other
-            if isinstance(other, Enum):
-                return self.value == other.value
-            raise TypeError(f"Unexpected case: proto enum can only be str or int, not {type(other)}")
-        return super().__eq__(other)
-
-    def __hash__(self) -> Any:
-        return hash(self.name or "" + str(self.value))
-
-
-class GoProEnum(IntEnum, metaclass=GoProEnumMeta):
-    """GoPro specific enum to be used for all settings, statuses, and parameters
-
-    The names NOT_APPLICABLE and DESCRIPTOR are special as they will not be returned as part of the enum iterator
-    """
-
-    def __eq__(self, other: object) -> bool:
-        if type(self)._is_proto:
-            if isinstance(other, int):
-                return self.value == other
-            if isinstance(other, str):
-                return self.name == other
-            if isinstance(other, Enum):
-                return self.value == other.value
-            raise TypeError(f"Unexpected case: proto enum can only be str or int, not {type(other)}")
-        return super().__eq__(other)
-
-    def __hash__(self) -> Any:
-        return hash(self.name + str(self.value))
-
-
-def enum_factory(proto_enum: ProtobufDescriptor) -> type[GoProEnum]:
-    """Dynamically build a GoProEnum from a protobuf enum
-
-    Args:
-        proto_enum (ProtobufDescriptor): input protobuf enum descriptor
-
-    Returns:
-        GoProEnum: generated GoProEnum
-    """
-    return GoProEnum(  # type: ignore # pylint: disable=too-many-function-args
-        proto_enum.name,  # type: ignore
-        {
-            **dict(
-                zip(
-                    proto_enum.values_by_name.keys(),
-                    proto_enum.values_by_number.keys(),
-                )
-            ),
-            "__is_proto__": True,
-        },
-    )
-
-
-##############################################################################################################
-#####################  End Enum Definition ###################################################################
-##############################################################################################################
+from open_gopro.enum import GoProEnum
 
 GOPRO_BASE_UUID: Final = "b5f9{}-aa8d-11e3-9046-0002a5d5c51b"
 
@@ -324,6 +176,7 @@ class SettingId(GoProEnum):
     INTERNAL_104 = 104
     INTERNAL_105 = 105
     INTERNAL_106 = 106
+    VIDEO_ASPECT_RATIO = 108
     INTERNAL_111 = 111
     INTERNAL_112 = 112
     INTERNAL_114 = 114
@@ -369,9 +222,11 @@ class SettingId(GoProEnum):
     INTERNAL_164 = 164
     INTERNAL_165 = 165
     INTERNAL_166 = 166
-    INTERNAL_167 = 167
+    HINDSIGHT = 167
     INTERNAL_168 = 168
     INTERNAL_169 = 169
+    PHOTO_INTERVAL = 171
+    PHOTO_INTERVAL_DURATION = 172
     VIDEO_PERFORMANCE_MODE = 173
     INTERNAL_174 = 174
     CAMERA_UX_MODE = 175
@@ -381,6 +236,18 @@ class SettingId(GoProEnum):
     STAR_TRAIL_LENGTH = 179
     SYSTEM_VIDEO_MODE = 180
     INTERNAL_181 = 181
+    BIT_RATE = 182
+    BIT_DEPTH = 183
+    VIDEO_PROFILE = 184
+    VIDEO_EASY_ASPECT_RATIO = 185
+    VIDEO_MODE = 186
+    TIMELAPSE_MODE = 187
+    MULTI_SHOT_EASY_ASPECT_RATIO = 188
+    ADDON_MAX_LENS_MOD = 189
+    ADDON_MAX_LENS_MOD_ENABLE = 190
+    PHOTO_MODE = 191
+    MULTI_SHOT_NLV_ASPECT_RATIO = 192
+    FRAMING = 193
     PROTOBUF_SETTING = 0xF3
     INVALID_FOR_TESTING = 0xFF
 
@@ -513,11 +380,24 @@ class StatusId(GoProEnum):
     TOTAL_SD_SPACE_KB = 117
 
 
-ProducerType = tuple[QueryCmdId, Union[SettingId, StatusId]]
-"""Types that can be registered for."""
+class WebcamStatus(GoProEnum):
+    """Webcam Statuses / states"""
 
-CmdType = Union[CmdId, QueryCmdId, ActionId]
-"""Types that identify a command."""
+    OFF = 0
+    IDLE = 1
+    HIGH_POWER_PREVIEW = 2
+    LOW_POWER_PREVIEW = 3
 
-ResponseType = Union[CmdType, StatusId, SettingId, BleUUID, str, construct.Enum]
-"""Types that are used to identify a response."""
+
+class WebcamError(GoProEnum):
+    """Errors common among Webcam commands"""
+
+    SUCCESS = 0
+    SET_PRESET = 1
+    SET_WINDOW_SIZE = 2
+    EXEC_STREAM = 3
+    SHUTTER = 4
+    COM_TIMEOUT = 5
+    INVALID_PARAM = 6
+    UNAVAILABLE = 7
+    EXIT = 8

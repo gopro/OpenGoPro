@@ -4,7 +4,15 @@
 # Open GoPro API Versions to test
 versions = ["2.0"]
 
+from open_gopro import GoProResp, constants
 from open_gopro.api import WirelessApi
 
 # The global parser map only gets set when API is instantiated. So ensure this is done.
 WirelessApi(None)  # type: ignore
+
+mock_good_response = GoProResp(
+    protocol=GoProResp.Protocol.BLE,
+    status=constants.ErrorCode.SUCCESS,
+    identifier="test response",
+    data=None,
+)

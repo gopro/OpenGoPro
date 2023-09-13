@@ -28,6 +28,7 @@ Complete documentation can be found on [Open GoPro](https://gopro.github.io/Open
     -   BLE implemented using [bleak](https://pypi.org/project/bleak/)
     -   Wi-Fi controller provided in the Open GoPro package (loosely based on the [Wireless Library](https://pypi.org/project/wireless/)
 -   Supports all commands, settings, and statuses from the [Open GoPro API](https://gopro.github.io/OpenGoPro/)
+-   [Asyncio](https://docs.python.org/3/library/asyncio.html) based
 -   Automatically handles connection maintenance:
     -   manage camera ready / encoding
     -   periodically sends keep alive signals
@@ -41,7 +42,7 @@ Complete documentation can be found on [Open GoPro](https://gopro.github.io/Open
 
 ## Installation
 
-> Note! This package requires Python >= 3.8 and < 3.11
+> Note! This package requires Python >= 3.8 and < 3.12
 
 The minimal install to use the Open GoPro library and the CLI demos is:
 
@@ -61,21 +62,23 @@ To automatically connect to GoPro device via BLE and WiFI, set the preset, set v
 video, and download all files:
 
 ```python
-import time
+import asyncio
 from open_gopro import WirelessGoPro, Params
 
-with WirelessGoPro() as gopro:
-    gopro.ble_command.load_preset(Params.Preset.CINEMATIC)
-    gopro.ble_setting.resolution.set(Params.Resolution.RES_4K)
-    gopro.ble_setting.fps.set(Params.FPS.FPS_30)
-    gopro.ble_command.set_shutter(Params.Shutter.ON)
-    time.sleep(2) # Record for 2 seconds
-    gopro.ble_command.set_shutter(Params.Shutter.OFF)
+async def main():
+    async with WirelessGoPro() as gopro:
+        await gopro.ble_setting.resolution.set(Params.Resolution.RES_4K)
+        await gopro.ble_setting.fps.set(Params.FPS.FPS_30)
+        await gopro.ble_command.set_shutter(shutter=Params.Toggle.ENABLE)
+        await asyncio.sleep(2) # Record for 2 seconds
+        await gopro.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
 
-    # Download all of the files from the camera
-    media_list = [x["n"] for x in gopro.wifi_command.get_media_list().flatten
-    for file in media_list:
-        gopro.wifi_command.download_file(camera_file=file)
+        # Download all of the files from the camera
+        media_list = (await gopro.http_command.get_media_list()).data.files
+        for item in media_list:
+            await gopro.http_command.download_file(camera_file=item.filename)
+
+asyncio.run(main())
 ```
 
 And much more!

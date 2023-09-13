@@ -3,48 +3,47 @@
 
 # pylint: disable=redefined-outer-name
 
-import re
 import asyncio
 import logging
+import re
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Pattern, Generic, Optional, Any
-from dataclasses import dataclass, field
+from typing import Any, Generic, Optional, Pattern
 
 import pytest
-from open_gopro.ble.services import CharProps
 
-from tests import versions
-from open_gopro import WirelessGoPro
-from open_gopro.ble import (
-    BleClient,
-    BLEController,
-    BleDevice,
-    BleHandle,
-    DisconnectHandlerType,
-    NotiHandlerType,
-    GattDB,
-    BleUUID,
-    UUIDs,
-    Descriptor,
-    Characteristic,
-    Service,
-)
-from open_gopro.wifi import WifiClient, WifiController, SsidState
-from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
-from open_gopro.responses import GoProResp
-from open_gopro.constants import ErrorCode, ProducerType, CmdId, GoProUUIDs, ResponseType
-from open_gopro.interface import GoProBle, GoProWifi
+from open_gopro import WiredGoPro, WirelessGoPro, types
 from open_gopro.api import (
-    WirelessApi,
     BleCommands,
     BleSettings,
     BleStatuses,
     HttpCommands,
     HttpSettings,
-    Params,
+    WirelessApi,
 )
+from open_gopro.ble import (
+    BleClient,
+    BLEController,
+    BleDevice,
+    BleHandle,
+    BleUUID,
+    Characteristic,
+    Descriptor,
+    DisconnectHandlerType,
+    GattDB,
+    NotiHandlerType,
+    Service,
+    UUIDs,
+)
+from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
+from open_gopro.ble.services import CharProps
+from open_gopro.communicator_interface import GoProBle, GoProWifi
+from open_gopro.constants import CmdId, ErrorCode, GoProUUIDs, StatusId
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
-from open_gopro.util import setup_logging, set_logging_level
+from open_gopro.logger import set_logging_level, setup_logging
+from open_gopro.models.response import GoProResp
+from open_gopro.wifi import SsidState, WifiClient, WifiController
+from tests import mock_good_response, versions
 
 api_versions = {"2.0": WirelessApi}
 
@@ -96,13 +95,13 @@ def event_loop():
 
 
 @pytest.fixture(scope="module")
-async def bleak_wrapper():
+async def mock_bleak_wrapper():
     ble = BleakWrapperController()
     yield ble
 
 
 @pytest.fixture(scope="module")
-async def bleak_client():
+async def mock_bleak_client():
     def disconnected_cb(_) -> None:
         print("Entered test disconnect callback")
 
@@ -112,10 +111,10 @@ async def bleak_client():
     ble = BleClient(
         BleakWrapperController(), disconnected_cb, notification_cb, target=re.compile("###invalid_device###")
     )
-    ble.open(timeout=30)
+    await ble.open(timeout=30)
     print("GoPro Bleak opened!")
     yield ble
-    ble.close()
+    await ble.close()
 
 
 ##############################################################################################################
@@ -124,23 +123,23 @@ async def bleak_client():
 
 
 @pytest.fixture()
-def descriptor():
+def mock_descriptor():
     yield Descriptor(0xABCD, UUIDs.CLIENT_CHAR_CONFIG)
 
 
 @pytest.fixture()
-def characteristic(descriptor: Descriptor):
-    yield Characteristic(2, UUIDs.ACC_APPEARANCE, CharProps.READ, init_descriptors=[descriptor])
+def mock_characteristic(mock_descriptor: Descriptor):
+    yield Characteristic(2, UUIDs.ACC_APPEARANCE, CharProps.READ, init_descriptors=[mock_descriptor])
 
 
 @pytest.fixture()
-def service(characteristic: Characteristic):
-    yield Service(UUIDs.S_GENERIC_ACCESS, 3, init_chars=[characteristic])
+def mock_service(mock_characteristic: Characteristic):
+    yield Service(UUIDs.S_GENERIC_ACCESS, 3, init_chars=[mock_characteristic])
 
 
 @pytest.fixture()
-def gatt_db(service: Service):
-    yield GattDB([service])
+def mock_gatt_db(mock_service: Service):
+    yield GattDB([mock_service])
 
 
 ##############################################################################################################
@@ -149,43 +148,43 @@ def gatt_db(service: Service):
 
 
 @dataclass
-class GattTable:
-    def handle2uuid(self):
-        ...
+class MockGattTable:
+    def handle2uuid(self, *args):
+        return GoProUUIDs.CQ_QUERY_RESP
 
 
-class BleControllerTest(BLEController, Generic[BleHandle, BleDevice]):
+class MockBleController(BLEController, Generic[BleHandle, BleDevice]):
     # pylint: disable=signature-differs
 
     def __init__(self, *args, **kwargs) -> None:
-        pass
+        self.gatt_db = MockGattTable()
 
-    def scan(self, token: Pattern, timeout: int, service_uuids: list[BleUUID] = None) -> str:
+    async def scan(self, token: Pattern, timeout: int, service_uuids: list[BleUUID] = None) -> str:
         if token == re.compile("device"):
             return "scanned_device"
         raise FailedToFindDevice
 
-    def read(self, handle: BleHandle, uuid: str) -> bytearray:
+    async def read(self, handle: BleHandle, uuid: str) -> bytearray:
         return bytearray()
 
-    def write(self, handle: BleHandle, uuid: str, data: bytearray) -> None:
+    async def write(self, handle: BleHandle, uuid: str, data: bytearray) -> None:
         return
 
-    def connect(self, disconnect_cb: DisconnectHandlerType, device: BleDevice, timeout: int) -> str:
+    async def connect(self, disconnect_cb: DisconnectHandlerType, device: BleDevice, timeout: int) -> str:
         if disconnect_cb is None:
             raise ConnectFailed("forced connect fail from test", timeout, 1)
         return "connected_device"
 
-    def pair(self, handle: BleHandle) -> None:
+    async def pair(self, handle: BleHandle) -> None:
         return
 
-    def enable_notifications(self, handle: BleHandle, handler: NotiHandlerType) -> None:
+    async def enable_notifications(self, handle: BleHandle, handler: NotiHandlerType) -> None:
         return
 
-    def discover_chars(self, handle: BleHandle, service_uuids: list[BleUUID] = None) -> GattTable:
-        return GattTable()
+    async def discover_chars(self, handle: BleHandle, service_uuids: list[BleUUID] = None) -> MockGattTable:
+        return self.gatt_db
 
-    def disconnect(self, handle: BleHandle) -> None:
+    async def disconnect(self, handle: BleHandle) -> None:
         return
 
 
@@ -198,9 +197,9 @@ def notification_handler(handle: int, data: bytearray) -> None:
 
 
 @pytest.fixture(scope="module")
-async def ble_client():
+async def mock_ble_client():
     test_client = BleClient(
-        controller=BleControllerTest(),
+        controller=MockBleController(),
         disconnected_cb=disconnection_handler,
         notification_cb=notification_handler,
         target=(re.compile("device"), []),
@@ -208,36 +207,26 @@ async def ble_client():
     yield test_client
 
 
-class BleCommunicatorTest(GoProBle):
+class MockBleCommunicator(GoProBle):
     # pylint: disable=signature-differs
 
     def __init__(self, test_version: str) -> None:
-        super().__init__(
-            BleControllerTest(), disconnection_handler, notification_handler, re.compile("target")
-        )
+        super().__init__(MockBleController(), disconnection_handler, notification_handler, re.compile("target"))
         self._api = api_versions[test_version](self)
 
-    def _register_listener(self, _) -> None:
-        return True
+    def register_update(self, callback: types.UpdateCb, update: types.UpdateType) -> None:
+        return
 
-    def _unregister_listener(self, _) -> None:
-        return True
+    def unregister_update(self, callback: types.UpdateCb, update: types.UpdateType = None) -> None:
+        return
 
-    def get_notification(self, timeout: float) -> int:
-        return 1
+    async def _send_ble_message(
+        self, uuid: BleUUID, data: bytearray, response_id: types.ResponseType, **kwargs
+    ) -> dict:
+        return dict(uuid=uuid, packet=data)
 
-    def _send_ble_message(
-        self, uuid: BleUUID, data: bytearray, response_id: ResponseType, **kwargs
-    ) -> GoProResp:
-        response = good_response
-        response._meta = [uuid]
-        response._raw_packet = data
-        return response
-
-    def _read_characteristic(self, uuid: BleUUID) -> GoProResp:
-        response = good_response
-        response._meta = [uuid]
-        return response
+    async def _read_characteristic(self, uuid: BleUUID) -> dict:
+        return dict(uuid=uuid)
 
     @property
     def ble_command(self) -> BleCommands:
@@ -253,8 +242,8 @@ class BleCommunicatorTest(GoProBle):
 
 
 @pytest.fixture(scope="module", params=versions)
-async def ble_communicator(request):
-    test_client = BleCommunicatorTest(request.param)
+async def mock_ble_communicator(request):
+    test_client = MockBleCommunicator(request.param)
     yield test_client
 
 
@@ -263,7 +252,7 @@ async def ble_communicator(request):
 ##############################################################################################################
 
 
-class WifiControllerTest(WifiController):
+class MockWifiController(WifiController):
     # pylint: disable=signature-differs
 
     def __init__(self, interface: Optional[str] = None, password: Optional[str] = None) -> None:
@@ -289,29 +278,34 @@ class WifiControllerTest(WifiController):
 
 
 @pytest.fixture(scope="module")
-async def wifi_client():
-    test_client = WifiClient(controller=WifiControllerTest())
+async def mock_wifi_client():
+    test_client = WifiClient(controller=MockWifiController())
     yield test_client
 
 
 @dataclass
-class DummyWifiResponse:
+class MockWifiResponse:
     url: str
-    _meta: list = field(default_factory=list)
 
 
-class WifiCommunicatorTest(GoProWifi):
+class MockWifiCommunicator(GoProWifi):
     # pylint: disable=signature-differs
 
     def __init__(self, test_version: str):
-        super().__init__(WifiControllerTest())
+        super().__init__(MockWifiController())
         self._api = api_versions[test_version](self)
 
-    def _get(self, url: str, _=None, **kwargs):
-        return DummyWifiResponse(url)
+    async def _http_get(self, url: str, _=None, **kwargs):
+        return MockWifiResponse(url)
 
-    def _stream_to_file(self, url: str, file: Path):
+    async def _stream_to_file(self, url: str, file: Path):
         return url, file
+
+    def register_update(self, callback: types.UpdateCb, update: types.UpdateType) -> None:
+        return
+
+    def unregister_update(self, callback: types.UpdateCb, update: types.UpdateType = None) -> None:
+        return
 
     @property
     def http_command(self) -> HttpCommands:
@@ -323,8 +317,8 @@ class WifiCommunicatorTest(GoProWifi):
 
 
 @pytest.fixture(scope="module", params=versions)
-async def wifi_communicator(request):
-    test_client = WifiCommunicatorTest(request.param)
+async def mock_wifi_communicator(request):
+    test_client = MockWifiCommunicator(request.param)
     yield test_client
 
 
@@ -333,84 +327,100 @@ async def wifi_communicator(request):
 ##############################################################################################################
 
 
-@dataclass
-class Version:
-    major: int
-    minor: int
-
-
-class FlattenPatch:
+class DataPatch:
     def __init__(self, value: Any) -> None:
         self.value = value
 
     @property
-    def flatten(self) -> Any:
+    def data(self) -> Any:
         return self.value
 
 
-good_response = GoProResp(meta=["test_response"], status=ErrorCode.SUCCESS)
+class MockWiredGoPro(WiredGoPro):
+    def __init__(self, test_version: str) -> None:
+        super().__init__(serial=None, poll_period=0.5)
+        self.http_command.wired_usb_control = self._mock_wired_usb_control
+        self.http_command.get_open_gopro_api_version = self._mock_get_version
+        self.http_command.get_camera_state = self._mock_get_state
+        self.state_response: types.CameraState = {}
 
-_test_response_id = CmdId.SET_SHUTTER
+    async def _mock_get_state(self, *args, **kwargs):
+        return DataPatch(self.state_response)
+
+    def set_state_response(self, response: types.CameraState):
+        self.state_response = response
+
+    async def _mock_wired_usb_control(self, *args, **kwargs):
+        return
+
+    async def _mock_get_version(self, *args, **kwargs):
+        return DataPatch("2.0")
 
 
-def _test_parse(self: GoProResp) -> None:
-    self._state = GoProResp._State.PARSED
-    self._meta = [_test_response_id]
+@pytest.fixture(scope="function")
+async def mock_wired_gopro():
+    test_client = MockWiredGoPro("2.0")
+    yield test_client
 
 
-class GoProTest(WirelessGoPro):
+class MockWirelessGoPro(WirelessGoPro):
     def __init__(self, test_version: str) -> None:
         super().__init__(
             target=re.compile("device"),
-            ble_adapter=BleControllerTest,
-            wifi_adapter=WifiControllerTest,
+            ble_adapter=MockBleController,
+            wifi_adapter=MockWifiController,
             enable_wifi=True,
             maintain_state=False,
         )
         self._test_version = test_version
-        self._api.ble_command.get_open_gopro_api_version = self._test_return_version
-        self._ble.write = self._test_write
+        self._api.ble_command.get_open_gopro_api_version = self._mock_version
+        self._ble.write = self._mock_write
+        self._ble._gatt_table = MockGattTable()
         self._ble._controller.disconnect = self._disconnect_handler
         self._test_response_uuid = GoProUUIDs.CQ_COMMAND
         self._test_response_data = bytearray()
 
-    def _open_wifi(self, timeout: int = 15, retries: int = 5) -> None:
-        self._api.ble_command.get_wifi_password = self._test_return_password
-        super()._open_wifi(timeout, retries)
+    async def _open_wifi(self, timeout: int = 15, retries: int = 5) -> None:
+        self._api.ble_command.get_wifi_password = self._mock_password
+        self._api.ble_command.get_wifi_ssid = self._mock_ssid
+        await super()._open_wifi(timeout, retries)
 
-    def _open_ble(self, timeout: int, retries: int) -> None:
-        super()._open_ble(timeout=timeout, retries=retries)
-        self._ble._gatt_table.handle2uuid = self._test_return_uuid
+    async def _open_ble(self, timeout: int, retries: int) -> None:
+        await super()._open_ble(timeout=timeout, retries=retries)
+        self._ble._gatt_table.handle2uuid = self._mock_uuid
 
-    def _send_ble_message(
+    async def _send_ble_message(
         self,
         uuid: BleUUID,
         data: bytearray,
-        response_id: ResponseType,
+        response_id: types.ResponseType,
         response_data: list[bytearray] = None,
         response_uuid: BleUUID = None,
         **kwargs
     ) -> GoProResp:
         if response_uuid is None:
-            return good_response
+            return mock_good_response
         else:
             self._test_response_data = response_data
             self._test_response_uuid = response_uuid
             global _test_response_id
             _test_response_id = response_id
-            self._ble.write = self._test_write
-            return super()._send_ble_message(uuid, data, response_id)
+            self._ble.write = self._mock_write
+            return await super()._send_ble_message(uuid, data, response_id)
 
-    def _test_return_version(self) -> FlattenPatch:
-        return FlattenPatch(Version(*[int(x) for x in self._test_version.split(".")]))
+    async def _mock_version(self) -> DataPatch:
+        return DataPatch("2.0")
 
-    def _test_return_password(self) -> FlattenPatch:
-        return FlattenPatch("password")
+    async def _mock_password(self) -> DataPatch:
+        return DataPatch("password")
 
-    def _test_return_uuid(self, _) -> BleUUID:
+    async def _mock_ssid(self) -> DataPatch:
+        return DataPatch("ssid")
+
+    def _mock_uuid(self, _) -> BleUUID:
         return self._test_response_uuid
 
-    def _test_write(self, uuid: str, data: bytearray) -> None:
+    async def _mock_write(self, uuid: str, data: bytearray) -> None:
         assert self._test_response_data is not None
         for packet in self._test_response_data:
             self._notification_handler(0, packet)
@@ -423,42 +433,64 @@ class GoProTest(WirelessGoPro):
     def is_http_connected(self) -> bool:
         return True
 
+    def close(self) -> None:
+        pass
 
-@pytest.fixture(scope="module", params=versions)
-async def gopro_client(request):
-    original_parse = GoProResp._parse
-    GoProResp._parse = _test_parse
-    test_client = GoProTest(request.param)
+
+_test_response_id = CmdId.SET_SHUTTER
+
+
+# TODO use mocking library instead of doing this manually?
+@pytest.fixture(params=versions)
+async def mock_wireless_gopro_basic(request):
+    test_client = MockWirelessGoPro(request.param)
     yield test_client
-    GoProResp._parse = original_parse
+    test_client.close()
 
 
-class GoProTestMaintainBle(WirelessGoPro):
+class MockGoProMaintainBle(WirelessGoPro):
     def __init__(self) -> None:
         super().__init__(
             target=re.compile("device"),
-            ble_adapter=BleControllerTest,
-            wifi_adapter=WifiControllerTest,
+            ble_adapter=MockBleController,
+            wifi_adapter=MockWifiController,
             enable_wifi=True,
             maintain_ble=True,
         )
         self._test_version = "2.0"
-        self._api.ble_command.get_open_gopro_api_version = self._test_return_version
-        self.ble_status.encoding_active.register_value_update = lambda *args: None
-        self.ble_status.system_ready.register_value_update = lambda *args: None
-        self.keep_alive = lambda *args: True
-        self._open_wifi = lambda *args: None
-        self._sync_resp_ready_q.get = lambda *args, **kwargs: good_response
+        self._api.ble_command.get_open_gopro_api_version = self._mock_get_version
+        self.ble_status.encoding_active.register_value_update = self._mock_register_encoding
+        self.ble_status.system_busy.register_value_update = self._mock_register_busy
+        self.ble_setting.led.set = self._mock_led_set
+        self._open_wifi = self._mock_open_wifi
+        self._sync_resp_ready_q.get = self._mock_q_get
 
-    def _open_ble(self, timeout: int, retries: int) -> None:
-        super()._open_ble(timeout=timeout, retries=retries)
-        self._ble._gatt_table.handle2uuid = lambda *args: GoProUUIDs.CQ_QUERY_RESP
+    async def _mock_q_get(self, *args, **kwargs):
+        return mock_good_response
 
-    def _test_return_version(self) -> FlattenPatch:
-        return FlattenPatch(Version(*[int(x) for x in self._test_version.split(".")]))
+    async def _mock_led_set(self, *args):
+        return mock_good_response
+
+    async def _mock_open_wifi(self, *args):
+        return None
+
+    async def _mock_register_encoding(self, *args):
+        return DataPatch({StatusId.ENCODING: 1})
+
+    async def _mock_register_busy(self, *args):
+        return DataPatch({StatusId.SYSTEM_BUSY: 1})
+
+    async def mock_handle2uuid(self, *args):
+        return GoProUUIDs.CQ_QUERY_RESP
+
+    async def _open_ble(self, timeout: int, retries: int) -> None:
+        await super()._open_ble(timeout=timeout, retries=retries)
+
+    async def _mock_get_version(self) -> DataPatch:
+        return DataPatch("2.0")
 
 
 @pytest.fixture(scope="function")
-async def gopro_client_maintain_ble():
-    test_client = GoProTestMaintainBle()
+async def mock_wireless_gopro():
+    test_client = MockGoProMaintainBle()
     yield test_client

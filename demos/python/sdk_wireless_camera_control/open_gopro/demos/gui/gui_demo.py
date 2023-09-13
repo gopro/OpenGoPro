@@ -4,12 +4,13 @@
 """Top level of GUI"""
 
 from __future__ import annotations
+
 import asyncio
 import logging
 import tkinter as tk
-from tkinter import ttk, font
+from tkinter import font, ttk
 
-from open_gopro.demos.gui.components import views, controllers, models, THEME
+from open_gopro.demos.gui.components import THEME, controllers, models, views
 
 logger = logging.getLogger(__name__)
 
@@ -66,9 +67,7 @@ class App(tk.Frame):
         self.video_controller.bind_status_bar(self.statusbar_controller)
         self.menubar_controller = controllers.Menubar(self.loop, self.quit)
         self.statustab_controller = controllers.StatusTab(self.loop, self.gopro_model)
-        self.message_palette_controller.register_response_handler(
-            self.statustab_controller.display_response_updates
-        )
+        self.message_palette_controller.register_response_handler(self.statustab_controller.display_response_updates)
         self.message_palette_controller.register_response_handler(self.video_controller.handle_auto_start)
         self.statustab_controller.bind_statusbar(self.statusbar_controller)
         for controller in self.controllers:

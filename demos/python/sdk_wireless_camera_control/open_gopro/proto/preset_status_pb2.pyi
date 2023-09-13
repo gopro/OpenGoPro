@@ -407,9 +407,7 @@ class NotifyPresetStatus(google.protobuf.message.Message):
         self,
     ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___PresetGroup]:
         """Array of Preset Groups"""
-    def __init__(
-        self, *, preset_group_array: collections.abc.Iterable[global___PresetGroup] | None = ...
-    ) -> None: ...
+    def __init__(self, *, preset_group_array: collections.abc.Iterable[global___PresetGroup] | None = ...) -> None: ...
     def ClearField(
         self, field_name: typing_extensions.Literal["preset_group_array", b"preset_group_array"]
     ) -> None: ...
@@ -539,9 +537,7 @@ class PresetGroup(google.protobuf.message.Message):
     ) -> None: ...
     def HasField(
         self,
-        field_name: typing_extensions.Literal[
-            "can_add_preset", b"can_add_preset", "icon", b"icon", "id", b"id"
-        ],
+        field_name: typing_extensions.Literal["can_add_preset", b"can_add_preset", "icon", b"icon", "id", b"id"],
     ) -> builtins.bool: ...
     def ClearField(
         self,
@@ -565,11 +561,7 @@ class PresetSetting(google.protobuf.message.Message):
     'Does this setting appear on the Preset "pill" in the camera UI?'
 
     def __init__(
-        self,
-        *,
-        id: builtins.int | None = ...,
-        value: builtins.int | None = ...,
-        is_caption: builtins.bool | None = ...
+        self, *, id: builtins.int | None = ..., value: builtins.int | None = ..., is_caption: builtins.bool | None = ...
     ) -> None: ...
     def HasField(
         self,

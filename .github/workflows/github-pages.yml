@@ -59,10 +59,10 @@ jobs:
               shell: bash
               run: sudo apt-get update && sudo apt install -y graphviz
 
-            - name: Set up Python 3.10.6
+            - name: Set up Python 3.11.4
               uses: actions/setup-python@v2
               with:
-                  python-version: 3.10.6
+                  python-version: 3.11.4
 
             - name: Restore cached pip environment
               uses: actions/cache@v2
@@ -76,8 +76,8 @@ jobs:
               working-directory: ./source/demos/python/sdk_wireless_camera_control/
               run: |
                   python -m pip install --upgrade pip wheel
-                  pip install nox==2022.8.7
-                  pip install nox-poetry==1.0.1
+                  pip install nox==2023.4.22
+                  pip install nox-poetry==1.0.3
                   pip install poetry
 
             - name: Build Sphinx Documentation
@@ -133,7 +133,7 @@ jobs:
                   if [[ ${{ github.repository }} == gopro/OpenGoPro ]]; then
                     make build
                   else
-                    make build BUILD_HOST_URL=${{ secrets.STAGING_GH_PAGES_SITE }} BUILD_BASE_URL='\"\"'
+                    make build BUILD_HOST_URL=${{ secrets.STAGING_GH_PAGES_SITE }} BUILD_BASE_URL="\'\'"
                   fi
 
             - name: Deploy to Github Pages

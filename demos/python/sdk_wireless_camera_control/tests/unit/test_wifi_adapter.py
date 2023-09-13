@@ -2,14 +2,15 @@
 # This copyright was auto-generated on Wed Sep 15 23:48:50 UTC 2021
 
 from __future__ import annotations
+
+from abc import ABC, abstractmethod
+from dataclasses import InitVar, dataclass
 from enum import Enum, auto
 from typing import Literal
-from abc import abstractmethod, ABC
-from dataclasses import InitVar, dataclass
 
 import pytest
 
-from open_gopro.wifi.adapters.wireless import Wireless, SsidState
+from open_gopro.wifi.adapters.wireless import SsidState, WifiCli
 
 operating_systems = ["windows"]
 
@@ -210,29 +211,29 @@ def command_sender(request, monkeypatch):
 
 @pytest.fixture(scope="function")
 def wireless(command_sender):
-    test_client = Wireless()
+    test_client = WifiCli()
     yield test_client
 
 
-def test_power(wireless: Wireless):
+def test_power(wireless: WifiCli):
     assert wireless.power(True) is False
     assert wireless.power(False) is True
 
 
-def test_initialized(wireless: Wireless):
+def test_initialized(wireless: WifiCli):
     assert wireless.current() == (None, SsidState.DISCONNECTED)
 
 
-def test_connect(wireless: Wireless, command_sender: CommandSender):
+def test_connect(wireless: WifiCli, command_sender: CommandSender):
     command_sender.interface_state = InterfaceState.CONNECTED
     assert wireless.connect(SSID, PASSWORD, timeout=1)
 
 
-def test_disconnect(wireless: Wireless):
+def test_disconnect(wireless: WifiCli):
     assert wireless.disconnect()
 
 
-def test_is_on(wireless: Wireless, command_sender: CommandSender):
+def test_is_on(wireless: WifiCli, command_sender: CommandSender):
     assert wireless.is_on
     command_sender.interface_state = InterfaceState.DISABLED
     assert not wireless.is_on

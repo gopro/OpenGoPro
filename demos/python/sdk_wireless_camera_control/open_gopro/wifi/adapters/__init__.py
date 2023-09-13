@@ -3,4 +3,4 @@
 
 """Universal WiFi adapter implementation for Open GoPro WiFi interface"""
 
-from .wireless import Wireless
+from .wireless import WifiCli

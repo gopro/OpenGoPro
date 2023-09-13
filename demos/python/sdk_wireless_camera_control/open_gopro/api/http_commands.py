@@ -6,65 +6,33 @@
 # mypy: disable-error-code=empty-body
 
 from __future__ import annotations
-import logging
-import datetime
-from pathlib import Path
-from typing import Any, Optional
 
-from open_gopro.interface import GoProHttp, HttpMessage, HttpMessages, MessageRules
-from open_gopro.constants import SettingId, StatusId, CmdId
-from open_gopro.responses import GoProResp, JsonParser
-from open_gopro.api.builders import HttpSetting, http_get_binary_command, http_get_json_command
+import datetime
+import logging
+from pathlib import Path
+
+from open_gopro import proto, types
+from open_gopro.api.builders import (
+    HttpSetting,
+    http_get_binary_command,
+    http_get_json_command,
+)
+from open_gopro.api.parsers import JsonParsers
+from open_gopro.communicator_interface import (
+    GoProHttp,
+    HttpMessage,
+    HttpMessages,
+    MessageRules,
+)
+from open_gopro.constants import CmdId, SettingId
+from open_gopro.models import CameraInfo, MediaList, MediaMetadata
+from open_gopro.models.general import WebcamResponse
+from open_gopro.models.response import GoProResp
+from open_gopro.parser_interface import Parser
+
 from . import params as Params
 
 logger = logging.getLogger(__name__)
-
-# pylint: disable = missing-class-docstring
-class HttpParsers:
-    """The collection of parsers used for additional JSON parsing"""
-
-    class CameraStateParser(JsonParser):
-        """Parse integer numbers into Enums"""
-
-        def parse(self, data: dict) -> dict:
-            """Parse dict of integer values into human readable (i.e. enum'ed) setting / status map
-
-            Args:
-                data (dict): input dict to parse
-
-            Returns:
-                dict: output human readable dict
-            """
-            parsed: dict[Any, Any] = {}
-            # Parse status and settings values into nice human readable things
-            for (name, id_map) in [("status", StatusId), ("settings", SettingId)]:
-                for k, v in data[name].items():
-                    identifier = id_map(int(k))
-                    try:
-                        parsed[identifier] = (
-                            container(v) if (container := GoProResp._get_query_container(identifier)) else v  # type: ignore
-                        )
-                    except ValueError:
-                        # This is the case where we receive a value that is not defined in our params.
-                        # This shouldn't happen and is either a firmware bug or means the documentation needs to
-                        # be updated. However, it isn't functionally critical.
-                        logger.warning(f"{identifier.name} does not contain a value {v}")
-                        parsed[identifier] = v
-            return parsed
-
-    class MediaListParser(JsonParser):
-        """Extract the list of files from the media list JSON"""
-
-        def parse(self, data: dict) -> dict:
-            """Get the list of files from the media list
-
-            Args:
-                data (dict): media list response
-
-            Returns:
-                dict: list of files
-            """
-            return {"files": data["media"][0]["fs"] if data["media"] else []}
 
 
 class HttpCommands(HttpMessages[HttpMessage, CmdId]):
@@ -78,7 +46,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
     #####################################################################################################
 
     @http_get_json_command(endpoint="gopro/camera/digital_zoom", arguments=["percent"])
-    def set_digital_zoom(self, *, percent: int) -> GoProResp:
+    async def set_digital_zoom(self, *, percent: int) -> GoProResp[None]:
         """Set digital zoom in percent.
 
         Args:
@@ -90,38 +58,55 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
 
     @http_get_json_command(
         endpoint="gopro/camera/state",
-        parser=HttpParsers.CameraStateParser(),
+        parser=Parser(json_parser=JsonParsers.CameraStateParser()),
         rules={MessageRules.FASTPASS: lambda **kwargs: True},
     )
-    def get_camera_state(self) -> GoProResp:
+    async def get_camera_state(self) -> GoProResp[types.CameraState]:
         """Get all camera statuses and settings
 
         Returns:
             GoProResp: status and settings as JSON
         """
 
+    @http_get_json_command(
+        endpoint="gopro/camera/info", parser=Parser(json_parser=JsonParsers.PydanticAdapter(CameraInfo))
+    )
+    async def get_camera_info(self) -> GoProResp[CameraInfo]:
+        """Get general information about the camera such as firmware version
+
+        Returns:
+            GoProResp: status and settings as JSON
+        """
+
     @http_get_json_command(endpoint="gopro/camera/keep_alive")
-    def set_keep_alive(self) -> GoProResp:
+    async def set_keep_alive(self) -> GoProResp[None]:
         """Send the keep alive signal to maintain the connection.
 
         Returns:
             GoProResp: command status
         """
 
-    @http_get_json_command(endpoint="gopro/media/info", arguments=["path"])
-    def get_media_info(self, *, file: str) -> GoProResp:
-        """Get media info for a file.
+    @http_get_json_command(
+        endpoint="gopro/media/info",
+        arguments=["path"],
+        parser=Parser(json_parser=JsonParsers.PydanticAdapter(MediaMetadata)),
+    )
+    async def get_media_metadata(self, *, file: str) -> GoProResp[MediaMetadata]:
+        """Get media metadata for a file.
 
         Args:
-            file (str): Media file to get info for
+            file (str): Media file to get metadata for
 
         Returns:
-            GoProResp: Media info as JSON
+            GoProResp: Media metadata JSON structure
         """
         return {"path": f"100GOPRO/{file}"}  # type: ignore
 
-    @http_get_json_command(endpoint="gopro/media/list", parser=HttpParsers.MediaListParser())
-    def get_media_list(self) -> GoProResp:
+    @http_get_json_command(
+        endpoint="gopro/media/list",
+        parser=Parser(json_parser=JsonParsers.PydanticAdapter(MediaList)),
+    )
+    async def get_media_list(self) -> GoProResp[MediaList]:
         """Get a list of media on the camera.
 
         Returns:
@@ -129,7 +114,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         """
 
     @http_get_json_command(endpoint="gopro/media/turbo_transfer", arguments=["p"])
-    def set_turbo_mode(self, *, mode: Params.Toggle) -> GoProResp:
+    async def set_turbo_mode(self, *, mode: Params.Toggle) -> GoProResp[None]:
         """Enable or disable Turbo transfer mode.
 
         Args:
@@ -140,16 +125,20 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         """
         return {"p": mode}  # type: ignore
 
-    @http_get_json_command(endpoint="gopro/version")
-    def get_open_gopro_api_version(self) -> GoProResp:
+    @http_get_json_command(
+        endpoint="gopro/version",
+        parser=Parser(json_parser=JsonParsers.LambdaParser(lambda data: f"{data['version']}")),
+    )
+    async def get_open_gopro_api_version(self) -> GoProResp[str]:
         """Get Open GoPro API version
 
         Returns:
             GoProResp: Open GoPro Version
         """
 
+    # TODO make pydantic
     @http_get_json_command(endpoint="gopro/camera/presets/get")
-    def get_preset_status(self) -> GoProResp:
+    async def get_preset_status(self) -> GoProResp[types.JsonDict]:
         """Get status of current presets
 
         Returns:
@@ -157,7 +146,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         """
 
     @http_get_json_command(endpoint="gopro/camera/presets/load", arguments=["id"])
-    def load_preset(self, *, preset: int) -> GoProResp:
+    async def load_preset(self, *, preset: int) -> GoProResp[None]:
         """Set camera to a given preset
 
         The preset ID can be found from :py:class:`open_gopro.api.http_commands.HttpCommands.get_preset_status`
@@ -171,13 +160,13 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         return {"id": preset}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/presets/set_group", arguments=["id"])
-    def load_preset_group(self, *, group: Params.PresetGroup) -> GoProResp:
+    async def load_preset_group(self, *, group: proto.EnumPresetGroup) -> GoProResp[None]:
         """Set the active preset group.
 
         The most recently used Preset in this group will be set.
 
         Args:
-            group (open_gopro.api.params.PresetGroup): desired Preset Group
+            group (open_gopro.proto.EnumPresetGroup): desired Preset Group
 
         Returns:
             GoProResp: command status
@@ -185,7 +174,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         return {"id": group}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/stream", components=["mode"], identifier="Preview Stream")
-    def set_preview_stream(self, *, mode: Params.Toggle) -> GoProResp:
+    async def set_preview_stream(self, *, mode: Params.Toggle) -> GoProResp[None]:
         """Start or stop the preview stream
 
         Args:
@@ -197,7 +186,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         return {"mode": "start" if mode is Params.Toggle.ENABLE else "stop"}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/analytics/set_client_info")
-    def set_third_party_client_info(self) -> GoProResp:
+    async def set_third_party_client_info(self) -> GoProResp[None]:
         """Flag as third party app
 
         Returns:
@@ -212,7 +201,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
             MessageRules.WAIT_FOR_ENCODING_START: lambda **kwargs: kwargs["shutter"] == Params.Toggle.ENABLE,
         },
     )
-    def set_shutter(self, *, shutter: Params.Toggle) -> GoProResp:
+    async def set_shutter(self, *, shutter: Params.Toggle) -> GoProResp[None]:
         """Set the shutter on or off
 
         Args:
@@ -224,7 +213,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         return {"mode": "start" if shutter is Params.Toggle.ENABLE else "stop"}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/control/set_ui_controller", arguments=["p"])
-    def set_camera_control(self, *, mode: Params.CameraControl) -> GoProResp:
+    async def set_camera_control(self, *, mode: Params.CameraControl) -> GoProResp[None]:
         """Configure global behaviors by setting camera control (to i.e. Idle, External)
 
         Args:
@@ -236,9 +225,13 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         return {"p": mode}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/set_date_time", arguments=["date", "time", "tzone", "dst"])
-    def set_date_time(
-        self, *, date_time: datetime.datetime, tz_offset: int = 0, is_dst: bool = False
-    ) -> GoProResp:
+    async def set_date_time(
+        self,
+        *,
+        date_time: datetime.datetime,
+        tz_offset: int = 0,
+        is_dst: bool = False,
+    ) -> GoProResp[None]:
         """Update the date and time of the camera
 
         Args:
@@ -256,76 +249,98 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
             "dst": int(is_dst),
         }
 
+    # TODO
     @http_get_json_command(endpoint="gopro/camera/get_date_time")
-    def get_date_time(self) -> GoProResp:
+    async def get_date_time(self) -> GoProResp[datetime.datetime]:
         """Get the date and time of the camera (Non timezone / DST aware)
 
         Returns:
             GoProResp: current date and time on camera
         """
 
-    @http_get_json_command(endpoint="gopro/webcam/status")
-    def get_webcam_status(self) -> GoProResp:
-        """Get the status of the webcam endpoint
-
-        Returns:
-            GoProResp: webcam status
-        """
-
     @http_get_json_command(endpoint="gopro/webcam/version")
-    def get_webcam_version(self) -> GoProResp:
+    async def get_webcam_version(self) -> GoProResp[str]:
         """Get the version of the webcam implementation
 
         Returns:
             GoProResp: version
         """
 
-    @http_get_json_command(endpoint="gopro/media/hilight/file", arguments=["path", "ms"])
-    def add_file_hilight(self, *, file: str, offset: Optional[int] = None) -> GoProResp:
+    @http_get_json_command(
+        endpoint="gopro/media/hilight/file",
+        arguments=["path", "ms"],
+    )
+    async def add_file_hilight(
+        self,
+        *,
+        file: str,
+        offset: int | None = None,
+    ) -> GoProResp[None]:
         """Add a hilight to a media file (.mp4)
 
         Args:
             file (str):  the media to add the hilight to
-            offset (Optional[int]): offset in ms from start of media
+            offset (int | None): offset in ms from start of media
 
         Returns:
             GoProResp: command status
         """
         return {"path": f"100GOPRO/{file}", "ms": offset or None}  # type: ignore
 
-    @http_get_json_command(endpoint="gopro/media/hilight/remove", arguments=["path", "ms"])
-    def remove_file_hilight(self, *, file: str, offset: Optional[int] = None) -> GoProResp:
+    @http_get_json_command(
+        endpoint="gopro/media/hilight/remove",
+        arguments=["path", "ms"],
+    )
+    async def remove_file_hilight(
+        self,
+        *,
+        file: str,
+        offset: int | None = None,
+    ) -> GoProResp[None]:
         """Remove a hilight from a media file (.mp4)
 
         Args:
             file (str):  the media to remove the hilight from
-            offset (Optional[int]): offset in ms from start of media
+            offset (int | None): offset in ms from start of media
 
         Returns:
             GoProResp: command status
         """
         return {"path": f"100GOPRO/{file}", "ms": offset}  # type: ignore
 
-    @http_get_json_command(endpoint="gopro/webcam/exit")
-    def webcam_exit(self) -> GoProResp:
+    @http_get_json_command(
+        endpoint="gopro/webcam/exit",
+        parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+    )
+    async def webcam_exit(self) -> GoProResp[WebcamResponse]:
         """Exit the webcam.
 
         Returns:
             GoProResp: command status
         """
 
-    @http_get_json_command(endpoint="gopro/webcam/preview")
-    def webcam_preview(self) -> GoProResp:
+    @http_get_json_command(
+        endpoint="gopro/webcam/preview",
+        parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+    )
+    async def webcam_preview(self) -> GoProResp[WebcamResponse]:
         """Start the webcam preview.
 
         Returns:
             GoProResp: command status
         """
 
-    @http_get_json_command(endpoint="gopro/webcam/start", arguments=["res", "fov"])
-    def webcam_start(
-        self, *, resolution: Optional[Params.WebcamResolution] = None, fov: Optional[Params.WebcamFOV] = None
-    ) -> GoProResp:
+    @http_get_json_command(
+        endpoint="gopro/webcam/start",
+        arguments=["res", "fov"],
+        parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+    )
+    async def webcam_start(
+        self,
+        *,
+        resolution: Params.WebcamResolution | None = None,
+        fov: Params.WebcamFOV | None = None,
+    ) -> GoProResp[WebcamResponse]:
         """Start the webcam.
 
         Args:
@@ -339,24 +354,34 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         """
         return {"res": resolution, "fov": fov}  # type: ignore
 
-    @http_get_json_command(endpoint="gopro/webcam/stop", rules={MessageRules.FASTPASS: lambda **kwargs: True})
-    def webcam_stop(self) -> GoProResp:
+    @http_get_json_command(
+        endpoint="gopro/webcam/stop",
+        rules={MessageRules.FASTPASS: lambda **kwargs: True},
+        parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+    )
+    async def webcam_stop(self) -> GoProResp[WebcamResponse]:
         """Stop the webcam.
 
         Returns:
             GoProResp: command status
         """
 
-    @http_get_json_command(endpoint="gopro/webcam/status")
-    def webcam_status(self) -> GoProResp:
+    @http_get_json_command(
+        endpoint="gopro/webcam/status",
+        parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+    )
+    async def webcam_status(self) -> GoProResp[WebcamResponse]:
         """Get the current status of the webcam
 
         Returns:
             GoProResp: command status including the webcam status
         """
 
-    @http_get_json_command(endpoint="gopro/camera/control/wired_usb", arguments=["p"])
-    def wired_usb_control(self, *, control: Params.Toggle) -> GoProResp:
+    @http_get_json_command(
+        endpoint="gopro/camera/control/wired_usb",
+        arguments=["p"],
+    )
+    async def wired_usb_control(self, *, control: Params.Toggle) -> GoProResp[None]:
         """Enable / disable wired usb control
 
         Args:
@@ -372,70 +397,70 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
     ######################################################################################################
 
     @http_get_binary_command(endpoint="gopro/media/gpmf?path=100GOPRO")
-    def get_gpmf_data(self, *, camera_file: str, local_file: Optional[Path] = None) -> Path:
+    async def get_gpmf_data(self, *, camera_file: str, local_file: Path | None = None) -> GoProResp[Path]:
         """Get GPMF data for a file.
 
         If local_file is none, the output location will be the same name as the camera_file.
 
         Args:
             camera_file (str): filename on camera to operate on
-            local_file (Optional[Path]): Location on computer to write output. Defaults to None.
+            local_file (Path | None): Location on computer to write output. Defaults to None.
 
         Returns:
             Path: Path to local_file that output was written to
         """
 
     @http_get_binary_command(endpoint="gopro/media/screennail?path=100GOPRO")
-    def get_screennail__call__(self, *, camera_file: str, local_file: Optional[Path] = None) -> Path:
+    async def get_screennail__call__(self, *, camera_file: str, local_file: Path | None = None) -> GoProResp[Path]:
         """Get screennail for a file.
 
         If local_file is none, the output location will be the same name as the camera_file.
 
         Args:
             camera_file (str): filename on camera to operate on
-            local_file (Optional[Path]): Location on computer to write output. Defaults to None.
+            local_file (Path | None): Location on computer to write output. Defaults to None.
 
         Returns:
             Path: Path to local_file that output was written to
         """
 
     @http_get_binary_command(endpoint="gopro/media/thumbnail?path=100GOPRO")
-    def get_thumbnail(self, *, camera_file: str, local_file: Optional[Path] = None) -> Path:
+    async def get_thumbnail(self, *, camera_file: str, local_file: Path | None = None) -> GoProResp[Path]:
         """Get thumbnail for a file.
 
         If local_file is none, the output location will be the same name as the camera_file.
 
         Args:
             camera_file (str): filename on camera to operate on
-            local_file (Optional[Path]): Location on computer to write output. Defaults to None.
+            local_file (Path | None): Location on computer to write output. Defaults to None.
 
         Returns:
             Path: Path to local_file that output was written to
         """
 
     @http_get_binary_command(endpoint="gopro/media/telemetry?path=100GOPRO")
-    def get_telemetry(self, *, camera_file: str, local_file: Optional[Path] = None) -> Path:
+    async def get_telemetry(self, *, camera_file: str, local_file: Path | None = None) -> GoProResp[Path]:
         """Download the telemetry data for a camera file and store in a local file.
 
         If local_file is none, the output location will be the same name as the camera_file.
 
         Args:
             camera_file (str): filename on camera to operate on
-            local_file (Optional[Path]): Location on computer to write output. Defaults to None.
+            local_file (Path | None): Location on computer to write output. Defaults to None.
 
         Returns:
             Path: Path to local_file that output was written to
         """
 
     @http_get_binary_command(endpoint="videos/DCIM/100GOPRO", identifier="Download File")
-    def download_file(self, *, camera_file: str, local_file: Optional[Path] = None) -> Path:
+    async def download_file(self, *, camera_file: str, local_file: Path | None = None) -> GoProResp[Path]:
         """Download a video from the camera to a local file.
 
         If local_file is none, the output location will be the same name as the camera_file.
 
         Args:
             camera_file (str): filename on camera to operate on
-            local_file (Optional[Path]): Location on computer to write output. Defaults to None.
+            local_file (Path | None): Location on computer to write output. Defaults to None.
 
         Returns:
             Path: Path to local_file that output was written to
@@ -459,9 +484,7 @@ class HttpSettings(HttpMessages[HttpSetting, SettingId]):
         self.fps: HttpSetting[Params.FPS] = HttpSetting[Params.FPS](communicator, SettingId.FPS)
         """Frames per second."""
 
-        self.auto_off: HttpSetting[Params.AutoOff] = HttpSetting[Params.AutoOff](
-            communicator, SettingId.AUTO_OFF
-        )
+        self.auto_off: HttpSetting[Params.AutoOff] = HttpSetting[Params.AutoOff](communicator, SettingId.AUTO_OFF)
         """Set the auto off time."""
 
         self.video_field_of_view: HttpSetting[Params.VideoFOV] = HttpSetting[Params.VideoFOV](
@@ -519,9 +542,7 @@ class HttpSettings(HttpMessages[HttpSetting, SettingId]):
         )
         """Night Photo easy mode."""
 
-        self.wifi_band: HttpSetting[Params.WifiBand] = HttpSetting[Params.WifiBand](
-            communicator, SettingId.WIFI_BAND
-        )
+        self.wifi_band: HttpSetting[Params.WifiBand] = HttpSetting[Params.WifiBand](communicator, SettingId.WIFI_BAND)
         """Current WiFi band being used."""
 
         self.star_trail_length: HttpSetting[Params.StarTrailLength] = HttpSetting[Params.StarTrailLength](
@@ -543,5 +564,101 @@ class HttpSettings(HttpMessages[HttpSetting, SettingId]):
             communicator, SettingId.PHOTO_HORIZON_LEVELING
         )
         """Lock / unlock horizon leveling for photo."""
+
+        self.bit_rate: HttpSetting[Params.BitRate] = HttpSetting[Params.BitRate](
+            communicator,
+            SettingId.BIT_RATE,
+        )
+        """System Video Bit Rate."""
+
+        self.bit_depth: HttpSetting[Params.BitDepth] = HttpSetting[Params.BitDepth](
+            communicator,
+            SettingId.BIT_DEPTH,
+        )
+        """System Video Bit depth."""
+
+        self.video_profile: HttpSetting[Params.VideoProfile] = HttpSetting[Params.VideoProfile](
+            communicator,
+            SettingId.VIDEO_PROFILE,
+        )
+        """Video Profile (hdr, etc.)"""
+
+        self.video_aspect_ratio: HttpSetting[Params.VideoAspectRatio] = HttpSetting[Params.VideoAspectRatio](
+            communicator,
+            SettingId.VIDEO_ASPECT_RATIO,
+        )
+        """Video aspect ratio"""
+
+        self.video_easy_aspect_ratio: HttpSetting[Params.EasyAspectRatio] = HttpSetting[Params.EasyAspectRatio](
+            communicator,
+            SettingId.VIDEO_EASY_ASPECT_RATIO,
+        )
+        """Video easy aspect ratio"""
+
+        self.multi_shot_easy_aspect_ratio: HttpSetting[Params.EasyAspectRatio] = HttpSetting[Params.EasyAspectRatio](
+            communicator,
+            SettingId.MULTI_SHOT_EASY_ASPECT_RATIO,
+        )
+        """Multi shot easy aspect ratio"""
+
+        self.multi_shot_nlv_aspect_ratio: HttpSetting[Params.EasyAspectRatio] = HttpSetting[Params.EasyAspectRatio](
+            communicator,
+            SettingId.MULTI_SHOT_NLV_ASPECT_RATIO,
+        )
+        """Multi shot NLV aspect ratio"""
+
+        self.video_mode: HttpSetting[Params.VideoMode] = HttpSetting[Params.VideoMode](
+            communicator,
+            SettingId.VIDEO_MODE,
+        )
+        """Video Mode (i.e. quality)"""
+
+        self.timelapse_mode: HttpSetting[Params.TimelapseMode] = HttpSetting[Params.TimelapseMode](
+            communicator,
+            SettingId.TIMELAPSE_MODE,
+        )
+        """Timelapse Mode"""
+
+        self.maxlens_mod_type: HttpSetting[Params.MaxLensModType] = HttpSetting[Params.MaxLensModType](
+            communicator,
+            SettingId.ADDON_MAX_LENS_MOD,
+        )
+        """Max lens mod? If so, what type?"""
+
+        self.maxlens_status: HttpSetting[Params.Toggle] = HttpSetting[Params.Toggle](
+            communicator,
+            SettingId.ADDON_MAX_LENS_MOD_ENABLE,
+        )
+        """Enable / disable max lens mod"""
+
+        self.photo_mode: HttpSetting[Params.PhotoMode] = HttpSetting[Params.PhotoMode](
+            communicator,
+            SettingId.PHOTO_MODE,
+        )
+        """Photo Mode"""
+
+        self.framing: HttpSetting[Params.Framing] = HttpSetting[Params.Framing](
+            communicator,
+            SettingId.FRAMING,
+        )
+        """Video Framing Mode"""
+
+        self.hindsight: HttpSetting[Params.Hindsight] = HttpSetting[Params.Hindsight](
+            communicator,
+            SettingId.HINDSIGHT,
+        )
+        """Hindsight time / disable"""
+
+        self.photo_interval: HttpSetting[Params.PhotoInterval] = HttpSetting[Params.PhotoInterval](
+            communicator,
+            SettingId.PHOTO_INTERVAL,
+        )
+        """Interval between photo captures"""
+
+        self.photo_duration: HttpSetting[Params.PhotoDuration] = HttpSetting[Params.PhotoDuration](
+            communicator,
+            SettingId.PHOTO_INTERVAL_DURATION,
+        )
+        """Interval between photo captures"""
 
         super().__init__(communicator)

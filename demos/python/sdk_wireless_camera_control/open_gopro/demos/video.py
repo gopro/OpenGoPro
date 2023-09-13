@@ -3,60 +3,59 @@
 
 """Entrypoint for taking a video demo."""
 
-import time
 import argparse
+import asyncio
 from pathlib import Path
-from typing import Optional, Union
 
 from rich.console import Console
 
-from open_gopro import WirelessGoPro, WiredGoPro, Params
-from open_gopro.util import setup_logging, add_cli_args_and_parse
+from open_gopro import Params, WiredGoPro, WirelessGoPro, proto
+from open_gopro.logger import setup_logging
+from open_gopro.util import add_cli_args_and_parse
 
-console = Console()  # rich consoler printer
+console = Console()
 
 
-def main(args: argparse.Namespace) -> None:
+async def main(args: argparse.Namespace) -> None:
     logger = setup_logging(__name__, args.log)
-    gopro: Optional[Union[WirelessGoPro, WiredGoPro]] = None
+    gopro: WirelessGoPro | WiredGoPro | None = None
 
     try:
-        with (
+        async with (
             WiredGoPro(args.identifier)  # type: ignore
             if args.wired
             else WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface)
         ) as gopro:
             assert gopro
             # Configure settings to prepare for video
-            if gopro.is_encoding:
-                gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE)
-            gopro.http_setting.video_performance_mode.set(Params.PerformanceMode.MAX_PERFORMANCE)
-            gopro.http_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT)
-            gopro.http_setting.camera_ux_mode.set(Params.CameraUxMode.PRO)
-            gopro.http_command.set_turbo_mode(mode=Params.Toggle.DISABLE)
-            assert gopro.http_command.load_preset_group(group=Params.PresetGroup.VIDEO).is_ok
+            await gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE)
+            await gopro.http_setting.video_performance_mode.set(Params.PerformanceMode.MAX_PERFORMANCE)
+            await gopro.http_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT)
+            await gopro.http_setting.camera_ux_mode.set(Params.CameraUxMode.PRO)
+            await gopro.http_command.set_turbo_mode(mode=Params.Toggle.DISABLE)
+            assert (await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_VIDEO)).ok
 
             # Get the media list before
-            media_set_before = set(x["n"] for x in gopro.http_command.get_media_list().flatten)
+            media_set_before = set((await gopro.http_command.get_media_list()).data.files)
             # Take a video
             console.print("Capturing a video...")
-            assert gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE).is_ok
-            time.sleep(args.record_time)
-            assert gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE).is_ok
+            assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
+            await asyncio.sleep(args.record_time)
+            assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE)).ok
 
             # Get the media list after
-            media_set_after = set(x["n"] for x in gopro.http_command.get_media_list().flatten)
+            media_set_after = set((await gopro.http_command.get_media_list()).data.files)
             # The video (is most likely) the difference between the two sets
             video = media_set_after.difference(media_set_before).pop()
             # Download the video
             console.print("Downloading the video...")
-            gopro.http_command.download_file(camera_file=video, local_file=args.output)
+            await gopro.http_command.download_file(camera_file=video.filename, local_file=args.output)
             console.print(f"Success!! :smiley: File has been downloaded to {args.output}")
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))
 
     if gopro:
-        gopro.close()
+        await gopro.close()
     console.print("Exiting...")
 
 
@@ -84,7 +83,7 @@ def parse_arguments() -> argparse.Namespace:
 
 # Needed for poetry scripts defined in pyproject.toml
 def entrypoint() -> None:
-    main(parse_arguments())
+    asyncio.run(main(parse_arguments()))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,15 @@
+# docker-compose.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Fri Jun  9 22:45:24 UTC 2023
+
+services:
+    nginx-rtmps:
+        build: .
+        volumes:
+            - ./.ssl:/ssl
+        ports:
+            - 1935:1935 # RTMP
+            - 1936:1936 # RTMPS
+            - 8080:8080 # HTTP
+            - 8443:8443 # HTTPS
+        environment:
+            - SSL_DOMAIN=${SSL_DOMAIN}

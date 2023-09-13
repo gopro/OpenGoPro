@@ -222,10 +222,7 @@ class RequestConnect(google.protobuf.message.Message):
     "Deprecated"
 
     def __init__(
-        self,
-        *,
-        ssid: builtins.str | None = ...,
-        owner_purpose: global___EnumNetworkOwner.ValueType | None = ...
+        self, *, ssid: builtins.str | None = ..., owner_purpose: global___EnumNetworkOwner.ValueType | None = ...
     ) -> None: ...
     def HasField(
         self, field_name: typing_extensions.Literal["owner_purpose", b"owner_purpose", "ssid", b"ssid"]
@@ -338,7 +335,7 @@ class RequestGetApEntries(google.protobuf.message.Message):
     max_entries: builtins.int
     "Used for paging. Value must be < NotifStartScanning.total_entries"
     scan_id: builtins.int
-    "ID corresponding to a set of scan results (i.e."
+    "ID corresponding to a set of scan results (i.e. NotifStartScanning.scan_id)"
 
     def __init__(
         self,
@@ -550,9 +547,7 @@ class ResponseGetApEntries(google.protobuf.message.Message):
     ) -> builtins.bool: ...
     def ClearField(
         self,
-        field_name: typing_extensions.Literal[
-            "entries", b"entries", "result", b"result", "scan_id", b"scan_id"
-        ],
+        field_name: typing_extensions.Literal["entries", b"entries", "result", b"result", "scan_id", b"scan_id"],
     ) -> None: ...
 
 global___ResponseGetApEntries = ResponseGetApEntries

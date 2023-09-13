@@ -11,7 +11,7 @@ nox.options.sessions = "format", "lint", "tests", "docstrings", "docs"
 SUPPORTED_VERSIONS = [
     "3.9",
     "3.10",
-    # "3.11",
+    "3.11",
 ]
 
 
@@ -22,7 +22,8 @@ def format(session) -> None:
     session.run("black", "--check", "open_gopro", "tests", "noxfile.py", "docs/conf.py")
 
 
-@session(python=SUPPORTED_VERSIONS)
+# Mypy is changing too much between versions. Let's only lint on the latest version
+@session(python=SUPPORTED_VERSIONS[-1])
 def lint(session) -> None:
     """Lint using pylint and check types with mypy."""
     session.install(".[gui]")
@@ -33,6 +34,8 @@ def lint(session) -> None:
         "mypy-protobuf",
         "types-requests",
         "types-attrs",
+        "types-pytz",
+        "types-tzlocal",
     )
     session.run("mypy", "open_gopro")
     session.run("pylint", "--no-docstring-rgx=__|main|parse_arguments|entrypoint", "open_gopro")
@@ -72,11 +75,9 @@ def docs(session) -> None:
         "sphinx-autodoc-typehints",
         "sphinx-rtd-theme",
         "sphinxcontrib-napoleon",
+        "autodoc-pydantic",
         "darglint",
-        "sphinxemoji",
     )
     session.run("sphinx-build", "docs", "docs/build")
     # Clean up for Jekyll consumption
-    session.run(
-        "rm", "-rf", "docs/build/.doctrees", "/docs/build/_sources", "/docs/build/_static/fonts", external=True
-    )
+    session.run("rm", "-rf", "docs/build/.doctrees", "/docs/build/_sources", "/docs/build/_static/fonts", external=True)

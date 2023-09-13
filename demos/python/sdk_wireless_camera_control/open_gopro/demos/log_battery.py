@@ -3,25 +3,26 @@
 
 """Example to continuously read the battery (with no Wifi connection)"""
 
-import csv
-import time
-import logging
 import argparse
-import threading
-from pathlib import Path
-from datetime import datetime
+import asyncio
+import csv
+import logging
 from dataclasses import dataclass
-from typing import Optional, Literal
+from datetime import datetime
+from pathlib import Path
+from typing import Optional
 
 from rich.console import Console
 
-from open_gopro import WirelessGoPro
+from open_gopro import WirelessGoPro, types
 from open_gopro.constants import StatusId
-from open_gopro.util import setup_logging, set_stream_logging_level, add_cli_args_and_parse
+from open_gopro.logger import set_stream_logging_level, setup_logging
+from open_gopro.util import add_cli_args_and_parse
 
-console = Console()  # rich consoler printer
+console = Console()
 
-BarsType = Literal[0, 1, 2, 3]
+last_percentage = 0
+last_bars = 0
 
 
 @dataclass
@@ -30,7 +31,7 @@ class Sample:
 
     index: int
     percentage: int
-    bars: BarsType
+    bars: int
 
     def __post_init__(self) -> None:
         self.time = datetime.now()
@@ -58,46 +59,36 @@ def dump_results_as_csv(location: Path) -> None:
             w.writerow([s.index, (s.time - initial_time).seconds, s.percentage, s.bars])
 
 
-def process_battery_notifications(
-    gopro: WirelessGoPro, initial_bars: BarsType, initial_percentage: int
-) -> None:
-    """Separate thread to continuously check for and store battery notifications.
-
-    If the CLI parameter was set to poll, this isn't used.
+async def process_battery_notifications(update: types.UpdateType, value: int) -> None:
+    """Handle asynchronous battery update notifications
 
     Args:
-        gopro (WirelessGoPro): instance to get updates from
-        initial_bars (BarsType): Initial bars level when notifications were enabled
-        initial_percentage (int): Initial percentage when notifications were enabled
+        update (types.UpdateType): type of update
+        value (int): value of update
     """
-    last_percentage = initial_percentage
-    last_bars = initial_bars
 
-    # Block until we receive an update
-    while notification := gopro.get_notification():
-        # Update data points if they have changed
-        last_percentage = (
-            notification.data[StatusId.INT_BATT_PER]
-            if StatusId.INT_BATT_PER in notification.data
-            else last_percentage
-        )
-        last_bars = (
-            notification.data[StatusId.BATT_LEVEL] if StatusId.BATT_LEVEL in notification.data else last_bars
-        )
-        # Append and print sample
-        global SAMPLE_INDEX
-        SAMPLES.append(Sample(index=SAMPLE_INDEX, percentage=last_percentage, bars=last_bars))
-        console.print(str(SAMPLES[-1]))
-        SAMPLE_INDEX += 1
+    global last_percentage
+    global last_bars
+
+    if update == StatusId.INT_BATT_PER:
+        last_percentage = value
+    elif update == StatusId.BATT_LEVEL:
+        last_bars = value
+
+    # Append and print sample
+    global SAMPLE_INDEX
+    SAMPLES.append(Sample(index=SAMPLE_INDEX, percentage=last_percentage, bars=last_bars))
+    console.print(str(SAMPLES[-1]))
+    SAMPLE_INDEX += 1
 
 
-def main(args: argparse.Namespace) -> None:
+async def main(args: argparse.Namespace) -> None:
     logger = setup_logging(__name__, args.log)
     global SAMPLE_INDEX
 
     gopro: Optional[WirelessGoPro] = None
     try:
-        with WirelessGoPro(args.identifier, enable_wifi=False) as gopro:
+        async with WirelessGoPro(args.identifier, enable_wifi=False) as gopro:
             set_stream_logging_level(logging.ERROR)
 
             if args.poll:
@@ -106,27 +97,34 @@ def main(args: argparse.Namespace) -> None:
                         SAMPLES.append(
                             Sample(
                                 index=SAMPLE_INDEX,
-                                percentage=gopro.ble_status.int_batt_per.get_value().flatten,
-                                bars=gopro.ble_status.batt_level.get_value().flatten,
+                                percentage=(await gopro.ble_status.int_batt_per.get_value()).data,
+                                bars=(await gopro.ble_status.batt_level.get_value()).data,
                             )
                         )
                         console.print(str(SAMPLES[-1]))
                         SAMPLE_INDEX += 1
-                        time.sleep(args.poll)
+                        await asyncio.sleep(args.poll)
             # Otherwise set up notifications
             else:
+                global last_bars
+                global last_percentage
+
                 console.print("Configuring battery notifications...")
                 # Enable notifications of the relevant battery statuses. Also store initial values.
-                bars = gopro.ble_status.batt_level.register_value_update().flatten
-                percentage = gopro.ble_status.int_batt_per.register_value_update().flatten
+                last_bars = (
+                    await gopro.ble_status.batt_level.register_value_update(process_battery_notifications)
+                ).data
+                last_percentage = (
+                    await gopro.ble_status.int_batt_per.register_value_update(process_battery_notifications)
+                ).data
+                # Append initial sample
+                SAMPLES.append(Sample(index=SAMPLE_INDEX, percentage=last_percentage, bars=last_bars))
+                console.print(str(SAMPLES[-1]))
+
                 # Start a thread to handle asynchronous battery level notifications
-                threading.Thread(
-                    target=process_battery_notifications, args=(gopro, bars, percentage), daemon=True
-                ).start()
-                with console.status("[bold green]Receiving battery notifications until it dies..."):
-                    # Sleep forever, allowing notification handler thread to deal with battery level notifications
-                    while True:
-                        time.sleep(1)
+                console.print("[bold green]Receiving battery notifications until it dies...")
+                while True:
+                    await asyncio.sleep(1)
 
     except KeyboardInterrupt:
         logger.warning("Received keyboard interrupt. Shutting down...")
@@ -134,7 +132,7 @@ def main(args: argparse.Namespace) -> None:
         csv_location = Path(args.log.parent) / "battery_results.csv"
         dump_results_as_csv(csv_location)
     if gopro:
-        gopro.close()
+        await gopro.close()
     console.print("Exiting...")
 
 
@@ -153,7 +151,7 @@ def parse_arguments() -> argparse.Namespace:
 
 
 def entrypoint() -> None:
-    main(parse_arguments())
+    asyncio.run(main(parse_arguments()))
 
 
 if __name__ == "__main__":

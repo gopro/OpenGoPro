@@ -7,7 +7,8 @@ import logging
 from typing import Optional
 
 from open_gopro.exceptions import ConnectFailed
-from .controller import WifiController, SsidState
+
+from .controller import SsidState, WifiController
 
 logger = logging.getLogger(__name__)
 

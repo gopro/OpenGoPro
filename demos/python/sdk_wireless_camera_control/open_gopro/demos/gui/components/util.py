@@ -4,11 +4,15 @@
 """Common GUI utilities"""
 
 from __future__ import annotations
+
+import logging
 import queue
 import threading
-from typing import Callable, Any
+from typing import Any, Callable
 
 import cv2
+
+logger = logging.getLogger(__name__)
 
 
 def display_video_blocking(source: str, printer: Callable = print) -> None:
@@ -35,17 +39,21 @@ class BufferlessVideoCapture(threading.Thread):
             printer (Callable): used to display output message. Defaults to print.
         """
         self.printer = printer
-        printer("Starting viewer...")
+        self.printer("Starting viewer...")
         self.cap = cv2.VideoCapture(source + "?overrun_nonfatal=1&fifo_size=50000000", cv2.CAP_FFMPEG)
         self.q: queue.Queue[Any] = queue.Queue()
         super().__init__(daemon=True)
         self.start()
-        printer("Viewer started")
-        printer("Press 'q' in viewer to quit")
+        self.printer("Viewer started")
+        self.printer("Press 'q' in viewer to quit")
         while True:
-            frame = self.q.get()
-            cv2.imshow("frame", frame)
-            if cv2.waitKey(1) & 0xFF == ord("q"):
+            try:
+                frame = self.q.get()
+                cv2.imshow("frame", frame)
+                if cv2.waitKey(1) & 0xFF == ord("q"):
+                    break
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.warning(e)
                 break
         self.cap.release()
         cv2.destroyAllWindows()
@@ -53,13 +61,15 @@ class BufferlessVideoCapture(threading.Thread):
     def run(self) -> None:
         """Read frames as soon as they are available, keeping only most recent one"""
         while True:
-            ret, frame = self.cap.read()
-            if not ret:
-                break
-            if not self.q.empty():
-                try:
+            try:
+                ret, frame = self.cap.read()
+                if not ret:
+                    self.printer("Received empty frame.")
+                    continue
+                if not self.q.empty():
                     self.q.get_nowait()  # discard previous (unprocessed) frame
-                except queue.Empty:
-                    pass
-
-            self.q.put(frame)
+                self.q.put(frame)
+            except queue.Empty:
+                pass
+            except:  # pylint: disable=bare-except
+                break

@@ -8,26 +8,26 @@
 
 import pytest
 
-from open_gopro.wifi import WifiClient
 from open_gopro.exceptions import ConnectFailed
+from open_gopro.wifi import WifiClient
 
 
-def test_gopro_wifi_client_failed_to_connect(wifi_client: WifiClient):
+def test_gopro_wifi_client_failed_to_connect(mock_wifi_client: WifiClient):
     with pytest.raises(ConnectFailed):
-        wifi_client.open("test_ssid", "invalid_password")
+        mock_wifi_client.open("test_ssid", "invalid_password")
 
 
-def test_gopro_wifi_client_open(wifi_client: WifiClient):
-    wifi_client.open("test_ssid", "password")
-    assert wifi_client.ssid == "test_ssid"
-    assert wifi_client.password == "password"
+def test_gopro_wifi_client_open(mock_wifi_client: WifiClient):
+    mock_wifi_client.open("test_ssid", "password")
+    assert mock_wifi_client.ssid == "test_ssid"
+    assert mock_wifi_client.password == "password"
 
 
-def test_gopro_wifi_client_is_connected(wifi_client: WifiClient):
-    assert wifi_client.is_connected
+def test_gopro_wifi_client_is_connected(mock_wifi_client: WifiClient):
+    assert mock_wifi_client.is_connected
 
 
-def test_gopro_wifi_client_close(wifi_client: WifiClient):
-    wifi_client.close()
-    assert wifi_client.ssid == "test_ssid"
-    assert wifi_client.password == "password"
+def test_gopro_wifi_client_close(mock_wifi_client: WifiClient):
+    mock_wifi_client.close()
+    assert mock_wifi_client.ssid == "test_ssid"
+    assert mock_wifi_client.password == "password"

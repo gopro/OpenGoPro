@@ -22,8 +22,25 @@ camera resource. The general procedure to communicate with the GoPro is:
 2. :ref:`Send Messages<Sending Messages>` and :ref:`Receive Responses<Handling Responses>` via BLE / HTTP
 3. Gracefully :ref:`close<Closing>` the connection with the GoPro
 
-.. tip:: There is a lot of logging throughout the Open GoPro package. See
+.. tip:: There is a lot of useful logging throughout the Open GoPro package. See
     :ref:`troubleshooting <troubleshooting>` for more info.
+
+Asyncio
+=======
+
+This package is `asyncio <https://docs.python.org/3/library/asyncio.html>`_-based which means that its awaitable
+methods need to be called from an async coroutine. For the code snippets throughout this documentation, assume that this
+is accomplished in the same manner as the demo scripts provided:
+
+.. code-block:: python
+
+    import asyncio
+
+    async def main() -> None:
+        # Put our code here
+
+    if __name__ == "__main__":
+        asyncio.run(main())
 
 Opening
 =======
@@ -40,7 +57,7 @@ The Wireless GoPro client can be opened either with the context manager:
 
     from open_gopro import WirelessGoPro
 
-    with WirelessGoPro() as gopro:
+    async with WirelessGoPro() as gopro:
         print("Yay! I'm connected via BLE, Wifi, opened, and ready to send / get data now!")
         # Send some messages now
 
@@ -51,7 +68,7 @@ The Wireless GoPro client can be opened either with the context manager:
     from open_gopro import WirelessGoPro
 
     gopro = WirelessGoPro()
-    gopro.open()
+    await gopro.open()
     print("Yay! I'm connected via BLE, Wifi, opened, and ready to send / get data now!")
     # Send some messages now
 
@@ -78,7 +95,7 @@ The Wired GoPro client can be opened either with the context manager:
 
     from open_gopro import WiredGoPro
 
-    with WiredGoPro() as gopro:
+    async with WiredGoPro() as gopro:
         print("Yay! I'm connected via USB, opened, and ready to send / get data now!")
         # Send some messages now
 
@@ -89,18 +106,17 @@ The Wired GoPro client can be opened either with the context manager:
     from open_gopro import WiredGoPro
 
     gopro = WiredGoPro()
-    gopro.open()
+    await gopro.open()
     print("Yay! I'm connected via USB, opened, and ready to send / get data now!")
     # Send some messages now
 
-If an identifier is not passed to the `WiredGoPro`, the mDNS server will be queried during opening to search
+If, as above,  an identifier is not passed to the `WiredGoPro`, the mDNS server will be queried during opening to search
 for a connected GoPro.
 
 Common Opening
 --------------
 
-The GoPro's state can be checked via several properties. All of the following will return True after a
-successful opening:
+The GoPro's state can be checked via several properties.
 
 -  :meth:`~open_gopro.gopro_base.GoProBase.is_ble_connected`
 -  :meth:`~open_gopro.gopro_base.GoProBase.is_http_connected`
@@ -120,22 +136,21 @@ Camera Readiness
 
 A message can not be sent to the camera if it is not ready where "ready" is defined as not encoding and not
 busy. These two states are managed automatically by the `WirelessGoPro` instance such that a call to any
-message will block until the camera is ready. It is possible to check these from the application via:
+message will block until the camera is ready. They are combined into the following ready state:
 
-- :meth:`~open_gopro.gopro_base.GoProBase.is_encoding`
-- :meth:`~open_gopro.gopro_base.GoProBase.is_busy`
+- :meth:`~open_gopro.gopro_base.GoProBase.is_ready`
 
 For example,
 
 .. code-block:: python
 
-    with GoPro() as gopro:
+    async with WirelessGoPro() as gopro:
         # A naive check for it to be ready
-        while gopro.is_encoding or gopro.is_ready:
+        while not await gopro.is_ready:
             pass
 
 To reiterate...it is not needed or recommended to worry about this as the internal state is managed automatically
-by the `WirelessGoPro` instance.
+by the `WirelessGoPro` instance. Just know that most commands will be (asynchronously) blocked until the camera is ready.
 
 Sending Messages
 ================
@@ -153,25 +168,25 @@ by transport protocol where the superset of message groups are:
      - WirelessGoPro (WiFi Enabled)
      - WirelessGoPro (WiFi Disabled)
    * - :meth:`~open_gopro.gopro_base.GoProBase.http_command`
-     - |:heavy_check_mark:|
-     - |:heavy_check_mark:|
-     - |:x:|
+     - ✔️
+     - ✔️
+     - ❌
    * - :meth:`~open_gopro.gopro_base.GoProBase.http_setting`
-     - |:heavy_check_mark:|
-     - |:heavy_check_mark:|
-     - |:x:|
+     - ✔️
+     - ✔️
+     - ❌
    * - :meth:`~open_gopro.gopro_base.GoProBase.ble_command`
-     - |:x:|
-     - |:heavy_check_mark:|
-     - |:heavy_check_mark:|
+     - ❌
+     - ✔️
+     - ✔️
    * - :meth:`~open_gopro.gopro_base.GoProBase.ble_setting`
-     - |:x:|
-     - |:heavy_check_mark:|
-     - |:heavy_check_mark:|
+     - ❌
+     - ✔️
+     - ✔️
    * - :meth:`~open_gopro.gopro_base.GoProBase.ble_status`
-     - |:x:|
-     - |:heavy_check_mark:|
-     - |:heavy_check_mark:|
+     - ❌
+     - ✔️
+     - ✔️
 
 In the case where a given group of messages is not supported, a `NotImplementedError` will be returned when
 the relevant property is accessed.
@@ -180,6 +195,9 @@ All messages are communicated via one of two strategies:
 
 - Performing synchronous :ref:`data operations<Synchronous Data Operations>` to send a message and receive a GoPro Response
 - Registering for :ref:`asynchronous push notifications<Asynchronous Push Notifications>` and getting these after they are enqueued
+
+.. note:: For the remainder of this document, the term (a)synchronous is in the context of communication with the camera.
+    Do not confuse this with `asyncio`: all operations from the user's perspective are awaitable.
 
 Both of these patterns will be expanded upon below. But first, a note on selecting parameters for use with messages...
 
@@ -209,7 +227,7 @@ Synchronous Data Operations
     all messages are synchronous messages.
 
 This section refers to sending commands, getting settings / statuses, and setting settings. In all cases here,
-the method will block until a :ref:`response<handling responses>` is received.
+the method will await until a :ref:`response<handling responses>` is received.
 
 Commands
 ^^^^^^^^
@@ -220,9 +238,12 @@ Commands are callable instance attributes of a Messages class instance
 
 .. code-block:: python
 
-    with GoPro() as gopro:
-        gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
-        gopro.http_command.set_shutter(Params.Toggle.DISABLE)
+    async with WirelessGoPro() as gopro:
+        await gopro.ble_command.set_shutter(shutter=Params.Toggle.ENABLE)
+        await gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE)
+
+.. warning:: Most commands specifically require `keyword-only arguments <https://peps.python.org/pep-3102/>`_. You can
+    not optionally use positional arguments in such cases as this will affect functionality.
 
 Statuses
 ^^^^^^^^
@@ -232,16 +253,16 @@ synchronously using their `get_value` method as such:
 
 .. code-block:: python
 
-    with GoPro() as gopro:
-        gopro.ble_status.encoding_active.get_value()
-        gopro.ble_status.int_batt_per.get_value()
+    async with WirelessGoPro() as gopro:
+        is_encoding = await gopro.ble_status.encoding_active.get_value()
+        battery = await gopro.ble_status.int_batt_per.get_value()
 
 It is also possible to read all statuses at once via:
 
 .. code-block:: python
 
-    with GoPro() as gopro:
-        gopro.ble_command.get_camera_statuses()
+    async with WirelessGoPro() as gopro:
+        statuses = await gopro.ble_command.get_camera_statuses()
 
 .. note::
     HTTP can not access individual statuses. Instead it can use
@@ -259,16 +280,16 @@ Their values can be read (via BLE only) using the `get_value` method as such:
 
 .. code-block:: python
 
-    with GoPro() as gopro:
-        gopro.ble_setting.resolution.get_value()
-        gopro.ble_setting.video_field_of_view.get_value()
+    async with WirelessGoPro() as gopro:
+        resolution = await gopro.ble_setting.resolution.get_value()
+        fov = await gopro.ble_setting.video_field_of_view.get_value()
 
 It is also possible to read all settings at once via:
 
 .. code-block:: python
 
-    with GoPro() as gopro:
-        gopro.ble_command.get_camera_settings()
+    async with WirelessGoPro() as gopro:
+        settings = await gopro.ble_command.get_camera_settings()
 
 .. note::
     HTTP can not access individual settings. Instead it can use
@@ -280,16 +301,16 @@ the current capabilities for a given setting (via BLE only) using the `get_capab
 
 .. code-block:: python
 
-    with GoPro() as gopro:
-        gopro.ble_setting.resolution.get_capabilities_values()
+    async with WirelessGoPro() as gopro:
+        capabilities = await gopro.ble_setting.resolution.get_capabilities_values()
 
 Settings' values can be set (via either BLE or WiFI) using the `set` method as such:
 
 .. code-block:: python
 
-    with GoPro() as gopro:
-        gopro.ble_setting.resolution.set(Params.Resolution.RES_4K)
-        gopro.http_setting.fps.set(Params.FPS.FPS_30)
+    async with WirelessGoPro() as gopro:
+        await gopro.ble_setting.resolution.set(Params.Resolution.RES_4K)
+        await gopro.http_setting.fps.set(Params.FPS.FPS_30)
 
 Asynchronous Push Notifications
 -------------------------------
@@ -302,11 +323,12 @@ It is possible to enable push notifications for any of the following:
 - setting capabilities via :meth:`~open_gopro.api.builders.BleSetting.register_capability_update`
 - status values via :meth:`~open_gopro.api.builders.BleStatus.register_value_update`
 
-Firstly, the desired settings / id must be registered for.
+Firstly, the desired settings / ID must be registered for and given a callback to handle received notifications.
+
+:meth:`~open_gopro.communicator_interface.BaseGoProCommunicator.register_update`.
 
 Once registered, the camera will send a push notification when the relevant setting / status changes. These
-responses are added to an internal queue of the `GoProBase` instance and can be retrieved via
-:meth:`~open_gopro.gopro_wireless.WirelessGoPro.get_notification`.
+responses will then be sent to the registered callback for handling.
 
 It is possible to stop receiving notifications by issuing the relevant unregister command, i.e.:
 
@@ -318,25 +340,20 @@ Here is an example of registering for and receiving FOV updates:
 
 .. code-block:: python
 
-    from open_gopro import WirelessGoPro
-    from open_gopro.constants import SettingId
+    async def process_battery_notifications(update: types.UpdateType, value: int) -> None:
+        if update == constants.StatusId.INT_BATT_PER:
+            ...
+        elif update == constants.StatusId.BATT_LEVEL:
+            ...
 
-    with WirelessGoPro() as gopro:
-        current_fov = gopro.ble_setting.video_field_of_view.register_value_update().flatten
-        print(f"Current FOV is {current_fov}")
-        # Get updates until we get a FOV update
-        while True:
-            update = gopro.get_notification() # Block until update is received
-            if SettingId.VIDEO_FOV in update:
-                print(f"New resolution is {update[SettingId.VIDEO_FOV]}")
-                break
-        # We don't care about FOV anymore so let's stop receiving notifications
-        gopro.ble_setting.video_field_of_view.unregister_value_update()
+    async with WirelessGoPro() as gopro:
+        await gopro.ble_status.int_batt_per.register_value_update(process_battery_notifications)
+        await gopro.ble_status.batt_level.register_value_update(process_battery_notifications)
 
-.. note:: The `register_XXX_update` methods will return the current value / capabilities. That is why we are
-    printing the current value in the example above.
+.. note:: The `register_XXX_update` methods also return the current value / capabilities.
 
-.. tip:: It is probably desirable to have a separate thread to retrieve these updates as the demo examples do.
+.. warning:: The coupling of command ID to command is not obvious. This is a temporary solution and will be improved upon
+    in a future release.
 
 It is also possible to register / unregister for **all** settings, statuses, and / or capabilities
 via one API call using the following commands:
@@ -352,34 +369,24 @@ Handling Responses
 ==================
 
 Unless otherwise stated, all commands, settings, and status operations return a `GoProResp`
-(:class:`~open_gopro.responses.GoProResp`) which is a container around a JSON serializable dict with some helper
+(:class:`~open_gopro.models.response.GoProResp`) which is a container around a JSON serializable dict with some helper
 functions.
 
 Response Structure
 ------------------
 
-A `GoProResp` has 3 relevant attributes for the end user:
+A `GoProResp` has the following relevant attributes / properties for the end user:
 
-- | :meth:`~open_gopro.responses.GoProResp.identifier`: identifier of the completed operation.
+- | :meth:`~open_gopro.models.response.GoProResp.identifier`: identifier of the completed operation.
   | This will vary based on what type the response is and will also contain the most specific identification information.
 
     - UUID if a direct BLE characteristic read
     - CmdId if an Open GoPro BLE Operation
     - endpoint string if a Wifi HTTP operation
-- :meth:`~open_gopro.responses.GoProResp.status`: the status returned from the camera
-- :meth:`~open_gopro.responses.GoProResp.data`: JSON serializable dict containing the responded data
-
-Besides the `identifier` attribute which always contains the most specific identification information, there are properties
-to attempt to access other identification information. If the property is not valid for the given response,
-it will return `None`.
-
-- :meth:`~open_gopro.responses.GoProResp.cmd`. Relevant for any BLE operation.
-- :meth:`~open_gopro.responses.GoProResp.uuid`. Relevant for any BLE operation.
-- :meth:`~open_gopro.responses.GoProResp.endpoint`. Relevant for any Wifi operation.
-
-There is also a property to check that the `status` is Success:
-
-- :meth:`~open_gopro.responses.GoProResp.is_ok`
+- :meth:`~open_gopro.models.response.GoProResp.protocol`: the communication protocol where the response was received
+- :meth:`~open_gopro.models.response.GoProResp.status`: the status returned from the camera
+- :meth:`~open_gopro.models.response.GoProResp.data`: JSON serializable dict containing the responded data
+- :meth:`~open_gopro.models.response.GoProResp.ok`: Is this a successful response?
 
 The response object can be serialized to a JSON string with the default Python `str()` function. Note that
 the `identifier` and `status` attributes are appended to the JSON.
@@ -388,10 +395,10 @@ For example, first let's connect, send a command, and then store the response:
 
 .. code-block:: console
 
-    >>> from open_gopro import WirelessGoPro
     >>> gopro = WirelessGoPro()
-    >>> gopro.open()
-    >>> response = gopro.ble_setting.resolution.get_value()
+    >>> await gopro.open()
+    >>> response = await (gopro.ble_setting.resolution).get_value()
+    >>> print(response)
 
 Now let's print the response (as JSON):
 
@@ -399,9 +406,12 @@ Now let's print the response (as JSON):
 
     >>> print(response)
     {
-        "status": "SUCCESS",
-        "identifier": "UUID.CQ_QUERY_RESP::QueryCmdId.GET_SETTING_VAL",
-        "SettingId.RESOLUTION": "RES_5_3_K"
+        "id" : "QueryCmdId.GET_SETTING_VAL",
+        "status" : "ErrorCode.SUCCESS",
+        "protocol" : "Protocol.BLE",
+        "data" : {
+            "SettingId.RESOLUTION" : "Resolution.RES_4K_16_9",
+        },
     }
 
 Now let's inspect the responses various attributes / properties:
@@ -410,87 +420,44 @@ Now let's inspect the responses various attributes / properties:
 
     >>> print(response.status)
     ErrorCode.SUCCESS
-    >>> print(response.is_ok)
+    >>> print(response.ok)
     True
     >>> print(response.identifier)
     QueryCmdId.GET_SETTING_VAL
-    >>> print(response.cmd)
-    QueryCmdId.GET_SETTING_VAL
-    >>> print(response.uuid)
-    UUID.CQ_QUERY_RESP
-
+    >>> print(response.protocol)
+    Protocol.BLE
 
 Data Access
 -----------
 
-The response data is stored in the `data` attribute (:meth:`~open_gopro.responses.GoProResp.data`) but can also
-be accessed via dict access on the instance since `__getitem__` has been overridden. For example, the must
-succinct way to access the current resolution from the response is:
+The response data is stored in the `data` attribute (:meth:`~open_gopro.models.response.GoProResp.data`) and its type
+is specified via the Generic type specified in the corresponding command signature where the response is defined.
 
-.. code-block:: console
-
-    >>> print(response[SettingId.RESOLUTION])
-    RES_5_3_K
-
-However, it is also possible to this as:
-
-.. code-block:: console
-
-    >>> print(response.data[SettingId.RESOLUTION])
-    RES_5_3_K
-
-Similarly, `__contains__`, `__keys__`, `__values__`, and `__items__` and `__iter__` have also been overridden to operate on the `data` attribute:
-
-.. code-block:: console
-
-    >>> SettingId.RESOLUTION in response
-    True
-    >>> [str(x) for x in response]
-    ['SettingId.RESOLUTION']
-
-.. note:: The `Open GoPro Documentation <https://gopro.github.io/OpenGoPro/>`_ should be referenced in regards
-    to how to access the JSON for each response.
-
-Value Flattening
-----------------
-
-For short responses, it is rather unwieldy to access the JSON dict as described above. Therefore, you can attempt to use the
-`flatten` property (:meth:`~open_gopro.responses.GoProResp.flatten`) to flatten the data:
-
-Continuing with our example above, where previously we accessed the responded resolution as:
-
-.. code-block:: console
-
-    >>> print(response[SettingId.RESOLUTION])
-    RES_5_3_K
-
-We can also do it as:
-
-.. code-block:: console
-
-    >>> print(response.flatten)
-    RES_5_3_K
-
-For example, we can get and print all resolution capabilities on one line via:
-
-    >>> print(", ".join(gopro.ble_setting.resolution.get_capabilities_values().flatten))
-    RES_4K, RES_2_7K, RES_2_7K_4_3, RES_1080, RES_4K_4_3, RES_5_K_4_3, RES_5_3_K
-
-If the response data is anything other than a single value or a list, it can't be flattened and so the entire
-data structure will be returned.
-
-Flattening works well when getting a single value (from a get status / value) or a list of values (from a get
-capabilities). This won't work for many cases.
-
-For complex JSON structures, you will need to read through the
-`Open GoPro API Documentation  <https://github.com/gopro/OpenGoPro/tree/main/docs/wifi>`_ for
-parsing it. There will be some future work to turn these (at least the media list) into nice Python classes. But
-for now, it will look ugly like this:
+For example, consider :meth:`~open_gopro.api.ble_commands.BleCommands.get_hardware_info`. It's signature is:
 
 .. code-block:: python
 
-    # Get list of media
-    gopro.media_list = http_command.get_media_list().data["media"][0]["fs"]
+    async def get_hardware_info(self) -> GoProResp[CameraInfo]:
+        ...
+
+Therefore, its response's `data` property is of type :meth:`~open_gopro.models.general.CameraInfo`. Continuing the
+example from above:
+
+
+.. code-block:: console
+
+    >>> gopro = WirelessGoPro(enable_wifi=False)
+    >>> await gopro.open()
+    >>> response = await gopro.ble_command.get_hardware_info()
+    >>> print(response.data)
+    {
+        "model_number" : "62",
+        "model_name" : "HERO12 Black",
+        "firmware_version" : "H23.01.01.09.67",
+        "serial_number" : "C3501324500702",
+        "ap_mac_addr" : "2674f7f66104",
+        "ap_ssid" : "GP24500702",
+    }
 
 Closing
 =======
@@ -511,10 +478,10 @@ Otherwise, you will need to manually call the `close` method, i.e.:
 .. code-block:: python
 
     gopro = WirelessGoPro()
-    gopro.open()
+    await gopro.open()
     print("Yay! I'm connected via BLE, Wifi, opened, and ready to send / get data now!")
     # When we're done...
-    gopro.close()
+    await gopro.close()
     # The camera resource is closed now!!
 
 The `close` method will handle gracefully disconnecting BLE and Wifi.

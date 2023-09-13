@@ -4,21 +4,22 @@
 """Implements top level interface to GoPro module."""
 
 from __future__ import annotations
-import time
-import json
+
+import asyncio
 import enum
+import json
 import logging
-import traceback
 import threading
-from pathlib import Path
+import traceback
 from abc import ABC, abstractmethod
-from typing import Any, Final, Callable, TypeVar, Generic, Optional
+from pathlib import Path
+from typing import Any, Awaitable, Callable, Final, Generic, Optional, TypeVar
 
-import wrapt
 import requests
+import wrapt
 
-from open_gopro.interface import JsonParser
 import open_gopro.exceptions as GpException
+from open_gopro import types
 from open_gopro.api import (
     BleCommands,
     BleSettings,
@@ -28,17 +29,15 @@ from open_gopro.api import (
     WiredApi,
     WirelessApi,
 )
-from open_gopro.responses import GoProResp
+from open_gopro.constants import ErrorCode
+from open_gopro.models.response import GoProResp, RequestsHttpRespBuilderDirector
+from open_gopro.parser_interface import Parser
 
 logger = logging.getLogger(__name__)
 
-WRITE_TIMEOUT: Final = 5
-GET_TIMEOUT: Final = 5
-HTTP_GET_RETRIES: Final = 5
-
 GoPro = TypeVar("GoPro", bound="GoProBase")
 ApiType = TypeVar("ApiType", WiredApi, WirelessApi)
-MessageMethodType = Callable[[Any, bool], GoProResp]
+MessageMethodType = Callable[[Any, bool], Awaitable[GoProResp]]
 
 
 class GoProMessageInterface(enum.Enum):
@@ -49,9 +48,7 @@ class GoProMessageInterface(enum.Enum):
 
 
 @wrapt.decorator
-def catch_thread_exception(
-    wrapped: Callable, instance: GoProBase, args: Any, kwargs: Any
-) -> Optional[Callable]:
+def catch_thread_exception(wrapped: Callable, instance: GoProBase, args: Any, kwargs: Any) -> Optional[Callable]:
     """Catch any exceptions from this method and pass them to the exception handler identifier by thread name
 
     Args:
@@ -65,7 +62,7 @@ def catch_thread_exception(
     """
     try:
         return wrapped(*args, **kwargs)
-    except Exception as e:  # pylint: disable=broad-except
+    except Exception as e:  # pylint: disable=broad-exception-caught
         instance._handle_exception(threading.current_thread().name, {"exception": e})
         return None
 
@@ -94,23 +91,22 @@ def ensure_opened(interface: tuple[GoProMessageInterface]) -> Callable:
 class GoProBase(ABC, Generic[ApiType]):
     """The base class for communicating with all GoPro Clients"""
 
+    GET_TIMEOUT: Final = 5
+    HTTP_GET_RETRIES: Final = 5
+
     def __init__(self, **kwargs: Any) -> None:
         self._should_maintain_state = kwargs.get("maintain_state", True)
         self._exception_cb = kwargs.get("exception_cb", None)
-        self._internal_state = GoProBase._InternalState.ENCODING | GoProBase._InternalState.SYSTEM_BUSY
 
-    def __enter__(self: GoPro) -> GoPro:
-        self.open()
+    async def __aenter__(self: GoPro) -> GoPro:
+        await self.open()
         return self
 
-    def __exit__(self, *_: Any) -> None:
-        self.close()
-
-    def __del__(self) -> None:
-        self.close()
+    async def __aexit__(self, *_: Any) -> None:
+        await self.close()
 
     @abstractmethod
-    def open(self, timeout: int = 10, retries: int = 5) -> None:
+    async def open(self, timeout: int = 10, retries: int = 5) -> None:
         """Connect to the GoPro Client and prepare it for communication
 
         Args:
@@ -120,37 +116,19 @@ class GoProBase(ABC, Generic[ApiType]):
         raise NotImplementedError
 
     @abstractmethod
-    def close(self) -> None:
+    async def close(self) -> None:
         """Gracefully close the GoPro Client connection"""
         raise NotImplementedError
 
     @property
-    def is_encoding(self) -> bool:
-        """Is the camera currently encoding?
-
-        Raises:
-            InvalidConfiguration: if maintain_state is False, there is no way to know the GoPro's state
+    @abstractmethod
+    async def is_ready(self) -> bool:
+        """Is gopro ready to receive commands
 
         Returns:
-            bool: True if yes, False if no
+            bool: yes if ready, no otherwise
         """
-        if not self._should_maintain_state:
-            raise GpException.InvalidConfiguration("Not maintaining BLE state so encoding is not applicable")
-        return bool(self._internal_state & GoProBase._InternalState.ENCODING)
-
-    @property
-    def is_busy(self) -> bool:
-        """Is the camera currently performing a task that prevents it from accepting commands?
-
-        Raises:
-            InvalidConfiguration: if maintain_state is False, there is no way to know the GoPro's state
-
-        Returns:
-            bool: True if yes, False if no
-        """
-        if not self._should_maintain_state:
-            raise GpException.InvalidConfiguration("Not maintaining BLE state so busy is not applicable")
-        return bool(self._internal_state & GoProBase._InternalState.SYSTEM_BUSY)
+        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -257,7 +235,7 @@ class GoProBase(ABC, Generic[ApiType]):
     #                                 End Public API
     ##########################################################################################################
 
-    def _handle_exception(self, source: Any, context: dict[str, Any]) -> None:
+    def _handle_exception(self, source: Any, context: types.JsonDict) -> None:
         """Gather exceptions from module threads and send through callback if registered.
 
         Note that this function signature matches asyncio's exception callback requirement.
@@ -327,8 +305,17 @@ class GoProBase(ABC, Generic[ApiType]):
         """
         return catch_thread_exception(*args, **kwargs)
 
+    # TODO use requests in async manner
     @ensure_opened((GoProMessageInterface.HTTP,))
-    def _get(self, url: str, parser: Optional[JsonParser] = None) -> GoProResp:
+    async def _http_get(  # pylint: disable=unused-argument
+        self,
+        url: str,
+        parser: Parser | None,
+        headers: dict | None = None,
+        certificate: Path | None = None,
+        timeout: int = GET_TIMEOUT,
+        **kwargs: Any,
+    ) -> GoProResp:
         """Send an HTTP GET request to an Open GoPro endpoint.
 
         There should hopefully not be a scenario where this needs to be called directly as it is generally
@@ -336,11 +323,14 @@ class GoProBase(ABC, Generic[ApiType]):
 
         Args:
             url (str): endpoint URL
-            parser (Optional[JsonParser]): Optional parser to further parse received JSON dict. Defaults to
-                None.
+            parser (Parser, optional): Optional parser to further parse received JSON dict.
+            headers (dict | None, optional): dict of additional HTTP headers. Defaults to None.
+            certificate (Path | None, optional): path to certificate CA bundle. Defaults to None.
+            timeout (int): timeout in seconds before retrying. Defaults to GET_TIMEOUT
+            kwargs (Any): additional arguments to be consumed by decorator / subclass
 
         Raises:
-            ResponseTimeout: Response was not received in GET_TIMEOUT seconds
+            ResponseTimeout: Response was not received in timeout seconds
 
         Returns:
             GoProResp: response
@@ -348,38 +338,38 @@ class GoProBase(ABC, Generic[ApiType]):
         url = self._base_url + url
         logger.debug(f"Sending:  {url}")
 
+        # Dynamically build get kwargs
+        request_args: dict[str, Any] = {}
+        if headers:
+            request_args["headers"] = headers
+        if certificate:
+            request_args["verify"] = str(certificate)
+
         response: Optional[GoProResp] = None
-        for _ in range(HTTP_GET_RETRIES):
+        for retry in range(GoProBase.HTTP_GET_RETRIES):
             try:
-                request = requests.get(url, timeout=GET_TIMEOUT)
-                request.raise_for_status()
+                request = requests.get(url, timeout=timeout, **request_args)
                 logger.trace(f"received raw json: {json.dumps(request.json() if request.text else {}, indent=4)}")  # type: ignore
-                response = GoProResp._from_http_response(parser, request)
-                break
-            except requests.exceptions.HTTPError as e:
-                # The camera responded with an error. Break since we successfully sent the command and attempt
-                # to continue
-                logger.warning(e)
-                response = GoProResp._from_http_response(parser, e.response)
+                if not request.ok:
+                    logger.warning(f"Received non-success status {request.status_code}: {request.reason}")
+                response = RequestsHttpRespBuilderDirector(request, parser)()
                 break
             except requests.exceptions.ConnectionError as e:
                 # This appears to only occur after initial connection after pairing
                 logger.warning(repr(e))
-                # Back off before retrying
-                time.sleep(2)
-            except Exception as e:  # pylint: disable=broad-except
+                # Back off before retrying. TODO This appears to be needed on MacOS
+                await asyncio.sleep(2)
+            except Exception as e:  # pylint: disable=broad-exception-caught
                 logger.critical(f"Unexpected error: {repr(e)}")
-            else:
-                pass
-            logger.warning("Retrying to send the command...")
+            logger.warning(f"Retrying #{retry} to send the command...")
         else:
-            raise GpException.ResponseTimeout(HTTP_GET_RETRIES)
+            raise GpException.ResponseTimeout(GoProBase.HTTP_GET_RETRIES)
 
         assert response is not None
         return response
 
     @ensure_opened((GoProMessageInterface.HTTP,))
-    def _stream_to_file(self, url: str, file: Path) -> GoProResp:
+    async def _stream_to_file(self, url: str, file: Path) -> GoProResp[Path]:
         """Send an HTTP GET request to an Open GoPro endpoint to download a binary file.
 
         There should hopefully not be a scenario where this needs to be called directly as it is generally
@@ -396,11 +386,16 @@ class GoProBase(ABC, Generic[ApiType]):
 
         url = self._base_url + url
         logger.debug(f"Sending: {url}")
-        with requests.get(url, stream=True, timeout=GET_TIMEOUT) as request:
+        with requests.get(url, stream=True, timeout=GoProBase.GET_TIMEOUT) as request:
             request.raise_for_status()
             with open(file, "wb") as f:
                 logger.debug(f"receiving stream to {file}...")
                 for chunk in request.iter_content(chunk_size=8192):
                     f.write(chunk)
 
-        return GoProResp._from_stream_response(request)
+        return GoProResp(
+            protocol=GoProResp.Protocol.HTTP,
+            status=ErrorCode.SUCCESS,
+            data=file,
+            identifier=url,
+        )

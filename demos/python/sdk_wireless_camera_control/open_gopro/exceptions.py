@@ -55,9 +55,7 @@ class ConnectFailed(GoProError):
     """
 
     def __init__(self, connection: str, timeout: float, retries: int):
-        super().__init__(
-            f"{connection} connection failed to establish after {retries} retries with timeout {timeout}"
-        )
+        super().__init__(f"{connection} connection failed to establish after {retries} retries with timeout {timeout}")
 
 
 class ConnectionTerminated(GoProError):

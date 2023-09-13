@@ -44,6 +44,12 @@ Below is a table of cameras that support GoPro's public HTTP API:
       <td>Minimal Firmware Version</td>
     </tr>
     <tr>
+      <td>62</td>
+      <td>H23.01</td>
+      <td>HERO12 Black</td>
+      <td><a href="https://gopro.com/en/us/update/hero11-black">v01.10.00</a></td>
+    </tr>
+    <tr>
       <td>60</td>
       <td>H22.03</td>
       <td>HERO11 Black Mini</td>
@@ -279,6 +285,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Description</td>
       <td>HTTP Method</td>
       <td>Endpoint</td>
+      <td>HERO12 Black</td>
       <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
@@ -289,6 +296,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Set third party client</td>
       <td>GET</td>
       <td>/gopro/camera/analytics/set_client_info</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.30.00</td>
@@ -303,6 +311,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Digital Zoom</td>
@@ -313,12 +322,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Get Date/Time</td>
       <td>Get date/time</td>
       <td>GET</td>
       <td>/gopro/camera/get_date_time</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.30.00</td>
@@ -333,12 +344,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Media: GPMF</td>
       <td>Get GPMF data (JPG)</td>
       <td>GET</td>
       <td>/gopro/media/gpmf?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -353,12 +366,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Media: HiLight (Add)</td>
       <td>Add hilight to 100GOPRO/xxx.JPG</td>
       <td>GET</td>
       <td>/gopro/media/hilight/file?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.30.00</td>
@@ -371,6 +386,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>/gopro/media/hilight/file?path=100GOPRO/XXX.MP4&ms=2500</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.30.00</td>
       <td>\&gt;= v01.70.00</td>
     </tr>
@@ -379,6 +395,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Remove hilight from 100GOPRO/xxx.JPG</td>
       <td>GET</td>
       <td>/gopro/media/hilight/remove?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.30.00</td>
@@ -391,6 +408,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>/gopro/media/hilight/remove?path=100GOPRO/XXX.MP4&ms=2500</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.30.00</td>
       <td>\&gt;= v01.70.00</td>
     </tr>
@@ -399,6 +417,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Hilight moment during encoding</td>
       <td>GET</td>
       <td>/gopro/media/hilight/moment</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.30.00</td>
@@ -413,12 +432,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Media: Info</td>
       <td>Get media info (MP4)</td>
       <td>GET</td>
       <td>/gopro/media/info?path=100GOPRO/XXX.MP4</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -433,12 +454,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Media: Screennail</td>
       <td>Get screennail for "100GOPRO/xxx.JPG"</td>
       <td>GET</td>
       <td>/gopro/media/screennail?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -453,12 +476,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Media: Telemetry</td>
       <td>Get telemetry track data (JPG)</td>
       <td>GET</td>
       <td>/gopro/media/telemetry?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -473,12 +498,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Media: Thumbnail</td>
       <td>Get thumbnail for "100GOPRO/xxx.JPG"</td>
       <td>GET</td>
       <td>/gopro/media/thumbnail?path=100GOPRO/XXX.JPG</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -493,12 +520,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Media: Turbo Transfer</td>
       <td>Turbo transfer: off</td>
       <td>GET</td>
       <td>/gopro/media/turbo_transfer?p=0</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -513,12 +542,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>OTA Update</td>
       <td>Soft update: upload 12345 bytes starting at offset 67890</td>
       <td>POST</td>
       <td>/gp/gpSoftUpdate (plus data)</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -533,12 +564,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Open GoPro</td>
       <td>Get version</td>
       <td>GET</td>
       <td>/gopro/version</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -553,12 +586,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load</td>
       <td>Example <a href="#presets">preset id</a>: 0x1234ABCD</td>
       <td>GET</td>
       <td>/gopro/camera/presets/load?id=305441741</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -573,12 +608,14 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Load Group</td>
       <td>Photo</td>
       <td>GET</td>
       <td>/gopro/camera/presets/set_group?id=1001</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -589,6 +626,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Timelapse</td>
       <td>GET</td>
       <td>/gopro/camera/presets/set_group?id=1002</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -601,6 +639,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>/gopro/camera/control/set_ui_controller?p=0</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.20.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -609,6 +648,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Set camera control status to external_control</td>
       <td>GET</td>
       <td>/gopro/camera/control/set_ui_controller?p=2</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.20.00</td>
@@ -621,6 +661,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>/gopro/camera/set_date_time?date=2023_1_31&time=3_4_5</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.30.00</td>
       <td>\&gt;= v01.70.00</td>
     </tr>
@@ -629,6 +670,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>Set local date/time to: 2023-01-31 03:04:05 (utc-02:00) (dst: on)</td>
       <td>GET</td>
       <td>/gopro/camera/set_date_time?date=2023_1_31&time=3_4_5&tzone=-120&dst=1</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -642,6 +684,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
@@ -652,9 +695,21 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>Simple OTA Update</td>
+      <td>Simple ota update with file: update.zip</td>
+      <td>POST</td>
+      <td>/gp/gpUpdate (plus data)</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>Soft Update</td>
       <td>Soft update: show canceled/failed ui on the camera</td>
       <td>GET</td>
@@ -663,8 +718,9 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Soft Update</td>
       <td>Soft update: delete cached update files</td>
       <td>GET</td>
@@ -673,8 +729,9 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Soft Update</td>
       <td>Soft update: get current update state</td>
       <td>GET</td>
@@ -683,8 +740,9 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Soft Update</td>
       <td>Soft update: display update ui on camera</td>
       <td>GET</td>
@@ -693,8 +751,9 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Soft Update</td>
       <td>Soft update: initiate firmware update</td>
       <td>GET</td>
@@ -703,8 +762,9 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Stream: Start</td>
       <td>Start preview stream</td>
       <td>GET</td>
@@ -713,8 +773,9 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Stream: Stop</td>
       <td>Stop preview stream</td>
       <td>GET</td>
@@ -723,102 +784,113 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Exit</td>
       <td>Exit webcam mode</td>
       <td>GET</td>
       <td>/gopro/webcam/exit</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Webcam: Preview</td>
+      <td>Start preview stream</td>
+      <td>GET</td>
+      <td>/gopro/webcam/preview</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>Webcam: Preview</td>
-      <td>Start preview stream</td>
-      <td>GET</td>
-      <td>/gopro/webcam/preview</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:red">❌</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Start</td>
       <td>Start webcam</td>
       <td>GET</td>
       <td>/gopro/webcam/start</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.40.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Start</td>
       <td>Start webcam</td>
       <td>GET</td>
       <td>/gopro/webcam/start?port=12345</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Start</td>
       <td>Start webcam (res: resolution_1080, fov: wide)</td>
       <td>GET</td>
       <td>/gopro/webcam/start?res=12&fov=0</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Status</td>
       <td>Get webcam status</td>
       <td>GET</td>
       <td>/gopro/webcam/status</td>
-      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:red">❌</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>Webcam: Stop</td>
-      <td>Stop webcam</td>
-      <td>GET</td>
-      <td>/gopro/webcam/stop</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td>Webcam: Version</td>
-      <td>Get webcam api version</td>
+      <td>Webcam: Stop</td>
+      <td>Stop webcam</td>
       <td>GET</td>
-      <td>/gopro/webcam/version</td>
+      <td>/gopro/webcam/stop</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
+      <td>Webcam: Version</td>
+      <td>Get webcam api version</td>
+      <td>GET</td>
+      <td>/gopro/webcam/version</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>Wired USB Control</td>
       <td>Disable wired usb control</td>
       <td>GET</td>
       <td>/gopro/camera/control/wired_usb?p=0</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.30.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Wired USB Control</td>
       <td>Enable wired usb control</td>
       <td>GET</td>
       <td>/gopro/camera/control/wired_usb?p=1</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.30.00</td>
@@ -853,6 +925,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Option</td>
       <td>HTTP Method</td>
       <td>Endpoint</td>
+      <td>HERO12 Black</td>
       <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
@@ -864,6 +937,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 4k (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&option=1</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -875,6 +949,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 2.7k (id: 4)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&option=4</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -886,6 +961,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 2.7k 4:3 (id: 6)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&option=6</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -900,6 +976,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
@@ -908,6 +985,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 1080 (id: 9)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&option=9</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -919,6 +997,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 4k 4:3 (id: 18)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&option=18</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -933,6 +1012,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
@@ -941,6 +1021,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 5k 4:3 (id: 25)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&option=25</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
@@ -954,6 +1035,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=2&option=26</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -963,6 +1045,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 5.3k 4:3 (id: 27)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&option=27</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -976,6 +1059,31 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=2&option=28</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>2</td>
+      <td>Resolution</td>
+      <td>Set video resolution (id: 2) to 4k 9:16 (id: 29)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&option=29</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>2</td>
+      <td>Resolution</td>
+      <td>Set video resolution (id: 2) to 1080 9:16 (id: 30)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&option=30</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -985,9 +1093,82 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video resolution (id: 2) to 5.3k (id: 100)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=2&option=100</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>2</td>
+      <td>Resolution</td>
+      <td>Set video resolution (id: 2) to 5.3k 16:9 (id: 101)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&option=101</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>2</td>
+      <td>Resolution</td>
+      <td>Set video resolution (id: 2) to 4k 16:9 (id: 102)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&option=102</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>2</td>
+      <td>Resolution</td>
+      <td>Set video resolution (id: 2) to 4k 4:3 (id: 103)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&option=103</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>2</td>
+      <td>Resolution</td>
+      <td>Set video resolution (id: 2) to 2.7k 16:9 (id: 104)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&option=104</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>2</td>
+      <td>Resolution</td>
+      <td>Set video resolution (id: 2) to 2.7k 4:3 (id: 105)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&option=105</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>2</td>
+      <td>Resolution</td>
+      <td>Set video resolution (id: 2) to 1080 16:9 (id: 106)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=2&option=106</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
@@ -996,6 +1177,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video fps (id: 3) to 240 (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=3&option=0</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1011,6 +1193,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1018,6 +1201,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video fps (id: 3) to 100 (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=3&option=2</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1033,6 +1217,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1040,6 +1225,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video fps (id: 3) to 50 (id: 6)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=3&option=6</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1055,6 +1241,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1062,6 +1249,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video fps (id: 3) to 25 (id: 9)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=3&option=9</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1077,6 +1265,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>3</td>
@@ -1084,6 +1273,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set video fps (id: 3) to 200 (id: 13)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=3&option=13</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1099,6 +1289,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>43</td>
@@ -1106,6 +1297,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set webcam digital lenses (id: 43) to narrow (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=43&option=2</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1121,6 +1313,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
       <td>43</td>
@@ -1132,6 +1325,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
       <td>59</td>
@@ -1139,6 +1333,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set auto power down (id: 59) to never (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=59&option=0</td>
+      <td><span style="color:green">✔</span></td>
       <td>\&gt;= v02.10.00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1150,6 +1345,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set auto power down (id: 59) to 1 min (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=59&option=1</td>
+      <td><span style="color:green">✔</span></td>
       <td>\&gt;= v02.10.00</td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
@@ -1161,6 +1357,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set auto power down (id: 59) to 5 min (id: 4)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=59&option=4</td>
+      <td><span style="color:green">✔</span></td>
       <td>\&gt;= v02.10.00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1172,6 +1369,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set auto power down (id: 59) to 15 min (id: 6)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=59&option=6</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1183,6 +1381,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set auto power down (id: 59) to 30 min (id: 7)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=59&option=7</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -1194,6 +1393,7 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set auto power down (id: 59) to 8 seconds (id: 11)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=59&option=11</td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.10.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
@@ -1205,12 +1405,61 @@ Below is a table of setting options detailing how to set every option supported 
       <td>Set auto power down (id: 59) to 30 seconds (id: 12)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=59&option=12</td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.10.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>108</td>
+      <td>Aspect Ratio</td>
+      <td>Set video aspect ratio (id: 108) to 4:3 (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=108&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>108</td>
+      <td>Aspect Ratio</td>
+      <td>Set video aspect ratio (id: 108) to 16:9 (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=108&option=1</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>108</td>
+      <td>Aspect Ratio</td>
+      <td>Set video aspect ratio (id: 108) to 8:7 (id: 3)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=108&option=3</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>108</td>
+      <td>Aspect Ratio</td>
+      <td>Set video aspect ratio (id: 108) to 9:16 (id: 4)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=108&option=4</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to wide (id: 0)</td>
@@ -1220,8 +1469,9 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to narrow (id: 2)</td>
@@ -1229,10 +1479,11 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=121&option=2</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to superview (id: 3)</td>
@@ -1242,8 +1493,9 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to linear (id: 4)</td>
@@ -1253,19 +1505,21 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to max superview (id: 7)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=121&option=7</td>
+      <td><span style="color:green">✔</span></td>
       <td>\&gt;= v02.00.00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to linear + horizon leveling (id: 8)</td>
@@ -1275,8 +1529,9 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to hyperview (id: 9)</td>
@@ -1284,10 +1539,11 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=121&option=9</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>121</td>
       <td>Video Digital Lenses</td>
       <td>Set video digital lenses (id: 121) to linear + horizon lock (id: 10)</td>
@@ -1295,10 +1551,23 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=121&option=10</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
+      <td>121</td>
+      <td>Video Digital Lenses</td>
+      <td>Set video digital lenses (id: 121) to max hyperview (id: 11)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=121&option=11</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>122</td>
       <td>Photo Digital Lenses</td>
       <td>Set photo digital lenses (id: 122) to narrow (id: 19)</td>
@@ -1306,43 +1575,47 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=122&option=19</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>122</td>
       <td>Photo Digital Lenses</td>
       <td>Set photo digital lenses (id: 122) to max superview (id: 100)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=122&option=100</td>
-      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>122</td>
-      <td>Photo Digital Lenses</td>
-      <td>Set photo digital lenses (id: 122) to wide (id: 101)</td>
-      <td>GET</td>
-      <td>/gopro/camera/setting?setting=122&option=101</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>122</td>
-      <td>Photo Digital Lenses</td>
-      <td>Set photo digital lenses (id: 122) to linear (id: 102)</td>
-      <td>GET</td>
-      <td>/gopro/camera/setting?setting=122&option=102</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>122</td>
+      <td>Photo Digital Lenses</td>
+      <td>Set photo digital lenses (id: 122) to wide (id: 101)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=122&option=101</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>122</td>
+      <td>Photo Digital Lenses</td>
+      <td>Set photo digital lenses (id: 122) to linear (id: 102)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=122&option=102</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>123</td>
       <td>Time Lapse Digital Lenses</td>
       <td>Set time lapse digital lenses (id: 123) to narrow (id: 19)</td>
@@ -1350,87 +1623,95 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=123&option=19</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>123</td>
       <td>Time Lapse Digital Lenses</td>
       <td>Set time lapse digital lenses (id: 123) to max superview (id: 100)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=123&option=100</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>123</td>
       <td>Time Lapse Digital Lenses</td>
       <td>Set time lapse digital lenses (id: 123) to wide (id: 101)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=123&option=101</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>123</td>
       <td>Time Lapse Digital Lenses</td>
       <td>Set time lapse digital lenses (id: 123) to linear (id: 102)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=123&option=102</td>
-      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>128</td>
-      <td>Media Format</td>
-      <td>Set media format (id: 128) to time lapse video (id: 13)</td>
-      <td>GET</td>
-      <td>/gopro/camera/setting?setting=128&option=13</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>128</td>
-      <td>Media Format</td>
-      <td>Set media format (id: 128) to time lapse photo (id: 20)</td>
-      <td>GET</td>
-      <td>/gopro/camera/setting?setting=128&option=20</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>128</td>
-      <td>Media Format</td>
-      <td>Set media format (id: 128) to night lapse photo (id: 21)</td>
-      <td>GET</td>
-      <td>/gopro/camera/setting?setting=128&option=21</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>128</td>
-      <td>Media Format</td>
-      <td>Set media format (id: 128) to night lapse video (id: 26)</td>
-      <td>GET</td>
-      <td>/gopro/camera/setting?setting=128&option=26</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>128</td>
+      <td>Media Format</td>
+      <td>Set media format (id: 128) to time lapse video (id: 13)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=128&option=13</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>128</td>
+      <td>Media Format</td>
+      <td>Set media format (id: 128) to time lapse photo (id: 20)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=128&option=20</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>128</td>
+      <td>Media Format</td>
+      <td>Set media format (id: 128) to night lapse photo (id: 21)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=128&option=21</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>128</td>
+      <td>Media Format</td>
+      <td>Set media format (id: 128) to night lapse video (id: 26)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=128&option=26</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>134</td>
       <td>Anti-Flicker</td>
       <td>Set setup anti flicker (id: 134) to 60hz (id: 2)</td>
@@ -1440,8 +1721,9 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>134</td>
       <td>Anti-Flicker</td>
       <td>Set setup anti flicker (id: 134) to 50hz (id: 3)</td>
@@ -1451,8 +1733,9 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>135</td>
       <td>Hypersmooth</td>
       <td>Set video hypersmooth (id: 135) to off (id: 0)</td>
@@ -1462,19 +1745,21 @@ Below is a table of setting options detailing how to set every option supported 
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>135</td>
       <td>Hypersmooth</td>
-      <td>Set video hypersmooth (id: 135) to on (id: 1)</td>
+      <td>Set video hypersmooth (id: 135) to low (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=135&option=1</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>135</td>
       <td>Hypersmooth</td>
       <td>Set video hypersmooth (id: 135) to high (id: 2)</td>
@@ -1482,21 +1767,23 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=135&option=2</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>135</td>
       <td>Hypersmooth</td>
       <td>Set video hypersmooth (id: 135) to boost (id: 3)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=135&option=3</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>135</td>
       <td>Hypersmooth</td>
       <td>Set video hypersmooth (id: 135) to auto boost (id: 4)</td>
@@ -1504,10 +1791,11 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=135&option=4</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>135</td>
       <td>Hypersmooth</td>
       <td>Set video hypersmooth (id: 135) to standard (id: 100)</td>
@@ -1515,120 +1803,371 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=135&option=100</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>150</td>
       <td>Horizon Leveling</td>
       <td>Set video horizon levelling (id: 150) to off (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=150&option=0</td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.00.00</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>150</td>
       <td>Horizon Leveling</td>
       <td>Set video horizon levelling (id: 150) to on (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=150&option=1</td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.00.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>150</td>
       <td>Horizon Leveling</td>
       <td>Set video horizon levelling (id: 150) to locked (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=150&option=2</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>151</td>
       <td>Horizon Leveling</td>
       <td>Set photo horizon levelling (id: 151) to off (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=151&option=0</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>151</td>
       <td>Horizon Leveling</td>
       <td>Set photo horizon levelling (id: 151) to locked (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=151&option=2</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>162</td>
       <td>Max Lens</td>
       <td>Set max lens (id: 162) to off (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=162&option=0</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.20.00</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>162</td>
       <td>Max Lens</td>
       <td>Set max lens (id: 162) to on (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=162&option=1</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.20.00</td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>167</td>
       <td>Hindsight*</td>
       <td>Set hindsight (id: 167) to 15 seconds (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=167&option=2</td>
-      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>167</td>
-      <td>Hindsight*</td>
-      <td>Set hindsight (id: 167) to 30 seconds (id: 3)</td>
-      <td>GET</td>
-      <td>/gopro/camera/setting?setting=167&option=3</td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>167</td>
-      <td>Hindsight*</td>
-      <td>Set hindsight (id: 167) to off (id: 4)</td>
-      <td>GET</td>
-      <td>/gopro/camera/setting?setting=167&option=4</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>167</td>
+      <td>Hindsight*</td>
+      <td>Set hindsight (id: 167) to 30 seconds (id: 3)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=167&option=3</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>167</td>
+      <td>Hindsight*</td>
+      <td>Set hindsight (id: 167) to off (id: 4)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=167&option=4</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>171</td>
+      <td>Interval</td>
+      <td>Set photo single interval (id: 171) to off (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=171&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>171</td>
+      <td>Interval</td>
+      <td>Set photo single interval (id: 171) to 0.5s (id: 2)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=171&option=2</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>171</td>
+      <td>Interval</td>
+      <td>Set photo single interval (id: 171) to 1s (id: 3)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=171&option=3</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>171</td>
+      <td>Interval</td>
+      <td>Set photo single interval (id: 171) to 2s (id: 4)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=171&option=4</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>171</td>
+      <td>Interval</td>
+      <td>Set photo single interval (id: 171) to 5s (id: 5)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=171&option=5</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>171</td>
+      <td>Interval</td>
+      <td>Set photo single interval (id: 171) to 10s (id: 6)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=171&option=6</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>171</td>
+      <td>Interval</td>
+      <td>Set photo single interval (id: 171) to 30s (id: 7)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=171&option=7</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>171</td>
+      <td>Interval</td>
+      <td>Set photo single interval (id: 171) to 60s (id: 8)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=171&option=8</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>171</td>
+      <td>Interval</td>
+      <td>Set photo single interval (id: 171) to 120s (id: 9)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=171&option=9</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>171</td>
+      <td>Interval</td>
+      <td>Set photo single interval (id: 171) to 3s (id: 10)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=171&option=10</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>172</td>
+      <td>Duration</td>
+      <td>Set photo interval duration (id: 172) to off (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=172&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>172</td>
+      <td>Duration</td>
+      <td>Set photo interval duration (id: 172) to 15 seconds (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=172&option=1</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>172</td>
+      <td>Duration</td>
+      <td>Set photo interval duration (id: 172) to 30 seconds (id: 2)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=172&option=2</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>172</td>
+      <td>Duration</td>
+      <td>Set photo interval duration (id: 172) to 1 minute (id: 3)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=172&option=3</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>172</td>
+      <td>Duration</td>
+      <td>Set photo interval duration (id: 172) to 5 minutes (id: 4)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=172&option=4</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>172</td>
+      <td>Duration</td>
+      <td>Set photo interval duration (id: 172) to 15 minutes (id: 5)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=172&option=5</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>172</td>
+      <td>Duration</td>
+      <td>Set photo interval duration (id: 172) to 30 minutes (id: 6)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=172&option=6</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>172</td>
+      <td>Duration</td>
+      <td>Set photo interval duration (id: 172) to 1 hour (id: 7)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=172&option=7</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>172</td>
+      <td>Duration</td>
+      <td>Set photo interval duration (id: 172) to 2 hours (id: 8)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=172&option=8</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>172</td>
+      <td>Duration</td>
+      <td>Set photo interval duration (id: 172) to 3 hours (id: 9)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=172&option=9</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to maximum video performance (id: 0)</td>
@@ -1636,10 +2175,11 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=173&option=0</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to extended battery (id: 1)</td>
@@ -1647,10 +2187,11 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=173&option=1</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>173</td>
       <td>Video Performance Mode</td>
       <td>Set video performance mode (id: 173) to tripod / stationary video (id: 2)</td>
@@ -1658,10 +2199,11 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=173&option=2</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v01.16.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>175</td>
       <td>Controls</td>
       <td>Set controls (id: 175) to easy (id: 0)</td>
@@ -1669,10 +2211,11 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=175&option=0</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>175</td>
       <td>Controls</td>
       <td>Set controls (id: 175) to pro (id: 1)</td>
@@ -1680,340 +2223,611 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=175&option=1</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=0</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=1</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (id: 2)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=2</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (low light) (id: 3)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=3</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt) (id: 4)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=4</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt) (id: 5)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=5</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (ext. batt, low light) (id: 6)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=6</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (50hz) (id: 7)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=7</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (50hz) (id: 8)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=8</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (50hz) (id: 9)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=9</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (low light, 50hz) (id: 10)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=10</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (ext. batt, 50hz) (id: 11)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=11</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (ext. batt, 50hz) (id: 12)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=12</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (ext. batt, low light, 50hz) (id: 13)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=13</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (ext. batt) (id: 14)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=14</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (ext. batt, 50hz) (id: 15)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=15</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (long. batt) (id: 16)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=16</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (long. batt) (id: 17)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=17</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (long. batt) (id: 18)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=18</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (long. batt, low light) (id: 19)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=19</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 8x ultra slo-mo (long. batt, 50hz) (id: 20)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=20</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (long. batt, 50hz) (id: 21)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=21</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (long. batt, 50hz) (id: 22)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=22</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 1x (long. batt, low light, 50hz) (id: 23)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=23</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (4k) (id: 24)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=24</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (2.7k) (id: 25)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=25</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 2x slo-mo (4k, 50hz) (id: 26)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=26</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>176</td>
       <td>Speed</td>
       <td>Set speed (id: 176) to 4x super slo-mo (2.7k, 50hz) (id: 27)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=176&option=27</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x speed / low light (id: 28)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=28</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x speed / low light (id: 29)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=29</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 2x slo-mo (id: 30)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=30</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 2x slo-mo (id: 31)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=31</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x speed / low light (id: 32)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=32</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x speed / low light (id: 33)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=33</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 2x slo-mo (id: 34)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=34</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 2x slo-mo (id: 35)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=35</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x speed / low light (id: 36)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=36</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x speed / low light (id: 37)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=37</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x speed / low light (id: 38)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=38</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x speed / low light (id: 39)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=39</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 2x slo-mo (id: 40)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=40</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 2x slo-mo (id: 41)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=41</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 2x slo-mo (id: 42)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=42</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 2x slo-mo (id: 43)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=43</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x speed / low light (id: 44)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=44</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x speed / low light (id: 45)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=45</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x speed / low light (id: 46)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=46</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>176</td>
+      <td>Speed</td>
+      <td>Set speed (id: 176) to 1x speed / low light (id: 47)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=176&option=47</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>177</td>
       <td>Enable Night Photo</td>
       <td>Set enable night photo (id: 177) to off (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=177&option=0</td>
       <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:red">❌</span></td>
-    </tr>
-    <tr style="background-color: rgb(245,249,255);">
-      <td>177</td>
-      <td>Enable Night Photo</td>
-      <td>Set enable night photo (id: 177) to on (id: 1)</td>
-      <td>GET</td>
-      <td>/gopro/camera/setting?setting=177&option=1</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>177</td>
+      <td>Enable Night Photo</td>
+      <td>Set enable night photo (id: 177) to on (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=177&option=1</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>178</td>
       <td>Wireless Band</td>
       <td>Set wireless band (id: 178) to 2.4ghz (id: 0)</td>
@@ -2021,10 +2835,11 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=178&option=0</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>178</td>
       <td>Wireless Band</td>
       <td>Set wireless band (id: 178) to 5ghz (id: 1)</td>
@@ -2032,10 +2847,11 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=178&option=1</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>179</td>
       <td>Trail Length</td>
       <td>Set trail length (id: 179) to short (id: 1)</td>
@@ -2043,10 +2859,11 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=179&option=1</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>179</td>
       <td>Trail Length</td>
       <td>Set trail length (id: 179) to long (id: 2)</td>
@@ -2054,10 +2871,11 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=179&option=2</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>179</td>
       <td>Trail Length</td>
       <td>Set trail length (id: 179) to max (id: 3)</td>
@@ -2065,50 +2883,499 @@ Below is a table of setting options detailing how to set every option supported 
       <td>/gopro/camera/setting?setting=179&option=3</td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to highest quality (id: 0)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=180&option=0</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to extended battery (id: 1)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=180&option=1</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to extended battery (green icon) (id: 101)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=180&option=101</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>180</td>
       <td>Video Mode</td>
       <td>Set video mode (id: 180) to longest battery (green icon) (id: 102)</td>
       <td>GET</td>
       <td>/gopro/camera/setting?setting=180&option=102</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td>\&gt;= v02.01.00</td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>182</td>
+      <td>Bit Rate</td>
+      <td>Set system video bit rate (id: 182) to standard (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=182&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>182</td>
+      <td>Bit Rate</td>
+      <td>Set system video bit rate (id: 182) to high (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=182&option=1</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>183</td>
+      <td>Bit Depth</td>
+      <td>Set system video bit depth (id: 183) to 8-bit (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=183&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>183</td>
+      <td>Bit Depth</td>
+      <td>Set system video bit depth (id: 183) to 10-bit (id: 2)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=183&option=2</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>184</td>
+      <td>Profiles</td>
+      <td>Set video profile (id: 184) to standard (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=184&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>184</td>
+      <td>Profiles</td>
+      <td>Set video profile (id: 184) to hdr (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=184&option=1</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>184</td>
+      <td>Profiles</td>
+      <td>Set video profile (id: 184) to log (id: 2)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=184&option=2</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>185</td>
+      <td>Aspect Ratio</td>
+      <td>Set video easy aspect ratio (id: 185) to widescreen (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=185&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>185</td>
+      <td>Aspect Ratio</td>
+      <td>Set video easy aspect ratio (id: 185) to mobile (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=185&option=1</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>185</td>
+      <td>Aspect Ratio</td>
+      <td>Set video easy aspect ratio (id: 185) to universal (id: 2)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=185&option=2</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>186</td>
+      <td>Video Mode</td>
+      <td>Set video easy presets (id: 186) to highest quality (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=186&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>186</td>
+      <td>Video Mode</td>
+      <td>Set video easy presets (id: 186) to standard quality (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=186&option=1</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>186</td>
+      <td>Video Mode</td>
+      <td>Set video easy presets (id: 186) to basic quality (id: 2)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=186&option=2</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>187</td>
+      <td>Lapse Mode</td>
+      <td>Set multi shot easy presets (id: 187) to timewarp (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=187&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>187</td>
+      <td>Lapse Mode</td>
+      <td>Set multi shot easy presets (id: 187) to star trails (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=187&option=1</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>187</td>
+      <td>Lapse Mode</td>
+      <td>Set multi shot easy presets (id: 187) to light painting (id: 2)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=187&option=2</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>187</td>
+      <td>Lapse Mode</td>
+      <td>Set multi shot easy presets (id: 187) to vehicle lights (id: 3)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=187&option=3</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>187</td>
+      <td>Lapse Mode</td>
+      <td>Set multi shot easy presets (id: 187) to max timewarp (id: 4)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=187&option=4</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>187</td>
+      <td>Lapse Mode</td>
+      <td>Set multi shot easy presets (id: 187) to max star trails (id: 5)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=187&option=5</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>187</td>
+      <td>Lapse Mode</td>
+      <td>Set multi shot easy presets (id: 187) to max light painting (id: 6)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=187&option=6</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>187</td>
+      <td>Lapse Mode</td>
+      <td>Set multi shot easy presets (id: 187) to max vehicle lights (id: 7)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=187&option=7</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>188</td>
+      <td>Aspect Ratio</td>
+      <td>Set multi shot easy aspect ratio (id: 188) to widescreen (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=188&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>188</td>
+      <td>Aspect Ratio</td>
+      <td>Set multi shot easy aspect ratio (id: 188) to mobile (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=188&option=1</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>188</td>
+      <td>Aspect Ratio</td>
+      <td>Set multi shot easy aspect ratio (id: 188) to universal (id: 2)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=188&option=2</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>189</td>
+      <td>Max Lens Mod</td>
+      <td>Set system addon lens active (id: 189) to none (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=189&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>189</td>
+      <td>Max Lens Mod</td>
+      <td>Set system addon lens active (id: 189) to max lens 1.0 (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=189&option=1</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>189</td>
+      <td>Max Lens Mod</td>
+      <td>Set system addon lens active (id: 189) to max lens 2.0 (id: 2)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=189&option=2</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>190</td>
+      <td>Max Lens Mod Enable</td>
+      <td>Set system addon lens status (id: 190) to off (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=190&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>190</td>
+      <td>Max Lens Mod Enable</td>
+      <td>Set system addon lens status (id: 190) to on (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=190&option=1</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>191</td>
+      <td>Photo Mode</td>
+      <td>Set photo easy presets (id: 191) to super photo (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=191&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>191</td>
+      <td>Photo Mode</td>
+      <td>Set photo easy presets (id: 191) to night photo (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=191&option=1</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>192</td>
+      <td>Aspect Ratio</td>
+      <td>Set multi shot nlv aspect ratio (id: 192) to 4:3 (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=192&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>192</td>
+      <td>Aspect Ratio</td>
+      <td>Set multi shot nlv aspect ratio (id: 192) to 16:9 (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=192&option=1</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>192</td>
+      <td>Aspect Ratio</td>
+      <td>Set multi shot nlv aspect ratio (id: 192) to 8:7 (id: 3)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=192&option=3</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>193</td>
+      <td>Framing</td>
+      <td>Set video easy framing (id: 193) to widescreen (id: 0)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=193&option=0</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>193</td>
+      <td>Framing</td>
+      <td>Set video easy framing (id: 193) to vertical (id: 1)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=193&option=1</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>193</td>
+      <td>Framing</td>
+      <td>Set video easy framing (id: 193) to full frame (id: 2)</td>
+      <td>GET</td>
+      <td>/gopro/camera/setting?setting=193&option=2</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
@@ -2180,7 +3447,11 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="21"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="22"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td>HERO12 Black</td>
+      <td>v01.10.00</td>
+    </tr>
+    <tr>
       <td rowspan="5">HERO11 Black Mini</td>
       <td>v02.30.00</td>
     </tr>
@@ -2329,6 +3600,401 @@ look like the following:
 ```
 
 
+## Media Info Format
+<p>
+The <b>Media: Info</b> command provides additional details about a media above and beyond its counterpart, the <b>Media: List</b> command.
+Such information includes resolution, frame rate, duration, hilight info, etc.
+</p>
+
+### Example Video Info:
+```
+{
+    "cre": "1613676644",
+    "s": "11305367",
+    "mahs": "1",
+    "us": "0",
+    "mos": [],
+    "eis": "0",
+    "pta": "1",
+    "ao": "stereo",
+    "tr": "0",
+    "mp": "0",
+    "ct": "0",
+    "rot": "0",
+    "fov": "4",
+    "lc": "0",
+    "prjn": "6",
+    "gumi": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "ls": "1072714",
+    "cl": "0",
+    "avc_profile": "4",
+    "profile": "42",
+    "hc": "0",
+    "hi": [],
+    "dur": "2",
+    "w": "1920",
+    "h": "1080",
+    "fps": "60000",
+    "fps_denom": "1001",
+    "prog": "1",
+    "subsample": "0"
+}
+```
+
+### Common Keys (Video / Photo)
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Key</td>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Examples</td>
+    </tr>
+    <tr>
+      <td>ao</td>
+      <td>string</td>
+      <td>Audio Option</td>
+      <td>off, stereo, wind, auto</td>
+    </tr>
+    <tr>
+      <td>avc_profile</td>
+      <td>uint8</td>
+      <td>Advanced Video Codec Profile</td>
+      <td>0..255</td>
+    </tr>
+    <tr>
+      <td>cl</td>
+      <td>bool</td>
+      <td>File clipped from another source?</td>
+      <td>0:false, 1:true</td>
+    </tr>
+    <tr>
+      <td>cre</td>
+      <td>uint32</td>
+      <td>File creation timestamp (sec since epoch)</td>
+      <td>1692992748</td>
+    </tr>
+    <tr>
+      <td>ct</td>
+      <td>uint32</td>
+      <td>Content type</td>
+      <td>0..12</td>
+    </tr>
+    <tr>
+      <td>dur</td>
+      <td>uint32</td>
+      <td>Duration of video in seconds</td>
+      <td>42</td>
+    </tr>
+    <tr>
+      <td>eis</td>
+      <td>bool</td>
+      <td>File made with Electronic Image Stabilization</td>
+      <td>0:false, 1:true</td>
+    </tr>
+    <tr>
+      <td>fps</td>
+      <td>uint32</td>
+      <td>Frame rate (numerator)</td>
+      <td>1001</td>
+    </tr>
+    <tr>
+      <td>fps_denom</td>
+      <td>uint32</td>
+      <td>Frme rate (denominator)</td>
+      <td>30000</td>
+    </tr>
+    <tr>
+      <td>gumi</td>
+      <td>string</td>
+      <td>Globally Unique Media ID</td>
+      <td>"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"</td>
+    </tr>
+    <tr>
+      <td>h</td>
+      <td>uint32</td>
+      <td>Video height in pixels</td>
+      <td>1080</td>
+    </tr>
+    <tr>
+      <td>hc</td>
+      <td>uint32</td>
+      <td>Hilight count</td>
+      <td>video:0..99, photo:0..1</td>
+    </tr>
+    <tr>
+      <td>hdr</td>
+      <td>bool</td>
+      <td>Photo taken with High Dynamic Range?</td>
+      <td>0:false, 1:true</td>
+    </tr>
+    <tr>
+      <td>hi</td>
+      <td>Array of uint32</td>
+      <td>Offset to hilights in media in milliseconds</td>
+      <td>[1500, 4700]</td>
+    </tr>
+    <tr>
+      <td>lc</td>
+      <td>uint32</td>
+      <td>Spherical Lens Config</td>
+      <td>0:front, 1:rear</td>
+    </tr>
+    <tr>
+      <td>ls</td>
+      <td>int32</td>
+      <td>Low Resolution Video file size in bytes (or -1 if no LRV file)</td>
+      <td>-1, 1234567890</td>
+    </tr>
+    <tr>
+      <td>mos</td>
+      <td>Array of string</td>
+      <td>Mobile Offload State</td>
+      <td>"app", "pc", "other"</td>
+    </tr>
+    <tr>
+      <td>mp</td>
+      <td>bool</td>
+      <td>Metadata Present?</td>
+      <td>0:no metadata, 1:metadata exists</td>
+    </tr>
+    <tr>
+      <td>profile</td>
+      <td>uint8</td>
+      <td>Advanced Video Codec Level</td>
+      <td>0..255</td>
+    </tr>
+    <tr>
+      <td>prog</td>
+      <td>bool</td>
+      <td>Is video progressive?</td>
+      <td>0:interlaced, 1:progressive</td>
+    </tr>
+    <tr>
+      <td>pta</td>
+      <td>bool</td>
+      <td>Media has Protune audio file?</td>
+      <td>0:false, 1:true</td>
+    </tr>
+    <tr>
+      <td>raw</td>
+      <td>bool</td>
+      <td>Photo has raw version?</td>
+      <td>0:false, 1:true</td>
+    </tr>
+    <tr>
+      <td>s</td>
+      <td>uint64</td>
+      <td>File size in bytes</td>
+      <td>1234567890</td>
+    </tr>
+    <tr>
+      <td>subsample</td>
+      <td>bool</td>
+      <td>Is video subsampled?</td>
+      <td>0:false, 1:true</td>
+    </tr>
+    <tr>
+      <td>tr</td>
+      <td>bool</td>
+      <td>Is file transcoded?</td>
+      <td>0:false, 1:true</td>
+    </tr>
+    <tr>
+      <td>w</td>
+      <td>uint32</td>
+      <td>Width of media in pixels</td>
+      <td>1920</td>
+    </tr>
+    <tr>
+      <td>wdr</td>
+      <td>bool</td>
+      <td>Photo taken with Wide Dynamic Range?</td>
+      <td>0:false, 1:true</td>
+    </tr>
+  </tbody>
+</table>
+
+### Video Keys
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Key</td>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Examples</td>
+    </tr>
+    <tr>
+      <td>ao</td>
+      <td>string</td>
+      <td>Audio Option</td>
+      <td>off, stereo, wind, auto</td>
+    </tr>
+    <tr>
+      <td>avc_profile</td>
+      <td>uint8</td>
+      <td>Advanced Video Codec Profile</td>
+      <td>0..255</td>
+    </tr>
+    <tr>
+      <td>cl</td>
+      <td>bool</td>
+      <td>File clipped from another source?</td>
+      <td>0:false, 1:true</td>
+    </tr>
+    <tr>
+      <td>dur</td>
+      <td>uint32</td>
+      <td>Duration of video in seconds</td>
+      <td>42</td>
+    </tr>
+    <tr>
+      <td>fps</td>
+      <td>uint32</td>
+      <td>Frame rate (numerator)</td>
+      <td>1001</td>
+    </tr>
+    <tr>
+      <td>fps_denom</td>
+      <td>uint32</td>
+      <td>Frme rate (denominator)</td>
+      <td>30000</td>
+    </tr>
+    <tr>
+      <td>hi</td>
+      <td>Array of uint32</td>
+      <td>Offset to hilights in media in milliseconds</td>
+      <td>[1500, 4700]</td>
+    </tr>
+    <tr>
+      <td>ls</td>
+      <td>int32</td>
+      <td>Low Resolution Video file size in bytes (or -1 if no LRV file)</td>
+      <td>-1, 1234567890</td>
+    </tr>
+    <tr>
+      <td>profile</td>
+      <td>uint8</td>
+      <td>Advanced Video Codec Level</td>
+      <td>0..255</td>
+    </tr>
+    <tr>
+      <td>prog</td>
+      <td>bool</td>
+      <td>Is video progressive?</td>
+      <td>0:interlaced, 1:progressive</td>
+    </tr>
+    <tr>
+      <td>pta</td>
+      <td>bool</td>
+      <td>Media has Protune audio file?</td>
+      <td>0:false, 1:true</td>
+    </tr>
+    <tr>
+      <td>subsample</td>
+      <td>bool</td>
+      <td>Is video subsampled?</td>
+      <td>0:false, 1:true</td>
+    </tr>
+  </tbody>
+</table>
+
+### Photo Keys
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Key</td>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Examples</td>
+    </tr>
+    <tr>
+      <td>hdr</td>
+      <td>bool</td>
+      <td>Photo taken with High Dynamic Range?</td>
+      <td>0:false, 1:true</td>
+    </tr>
+    <tr>
+      <td>raw</td>
+      <td>bool</td>
+      <td>Photo has raw version?</td>
+      <td>0:false, 1:true</td>
+    </tr>
+    <tr>
+      <td>wdr</td>
+      <td>bool</td>
+      <td>Photo taken with Wide Dynamic Range?</td>
+      <td>0:false, 1:true</td>
+    </tr>
+  </tbody>
+</table>
+
+### Media Info: Content Type
+<p>
+The "ct" (Content Type) metadata indicates what mode (or group) the media was captured in.
+</p>
+
+<p>
+<i>Note: All Time Lapse modes that result in MPEG media use the same content type ID.</i>
+</p>
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>ID</td>
+      <td>Mode</td>
+    </tr>
+    <tr>
+      <td>Video</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Looping</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Chaptered Video</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>Time Lapse</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>Single Photo</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Burst Photo</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>Time Lapse Photo</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>Night Lapse Photo</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>Night Photo</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <td>Continuous Photo</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>Raw Photo</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <td>Live Burst</td>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+
+
 ## Media List Format
 <p>
 The format of the media list is given below.
@@ -2361,6 +4027,10 @@ The outer structure of the media list and the inner structure of individual medi
     <tr>
       <td>b</td>
       <td>ID of first member of a group (for grouped media items)</td>
+    </tr>
+    <tr>
+      <td>cre</td>
+      <td>Creation timestamp (seconds since epoch)</td>
     </tr>
     <tr>
       <td>d</td>
@@ -2415,7 +4085,7 @@ The outer structure of the media list and the inner structure of individual medi
 
 ### Grouped Media Items
 <p>
-In order to minimize the size of the JSON transmitted by the camera, grouped media items such as Burst Photos,
+To minimize the size of the JSON transmitted by the camera, grouped media items such as Burst Photos,
 Time Lapse Photos, Night Lapse Photos, etc are represented with a single item in the media list with additional keys
 that allow the user to extrapolate individual filenames for each member of the group.
 </p>
@@ -2470,7 +4140,6 @@ G0010138.JPG, G0010140.JPG,<br/>
 ...,<br/>
 G0010394.JPG, G0010395.JPG. G0010396.JPG<br/>
 </p>
-
 
 
 ## Media HiLights
@@ -2682,6 +4351,7 @@ Below is a table of supported status IDs.<br />
       <td>Description</td>
       <td>Type</td>
       <td>Values</td>
+      <td>HERO12 Black</td>
       <td>HERO11 Black Mini</td>
       <td>HERO11 Black</td>
       <td>HERO10 Black</td>
@@ -2697,6 +4367,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>2</td>
@@ -2704,6 +4375,7 @@ Below is a table of supported status IDs.<br />
       <td>Rough approximation of internal battery level in bars</td>
       <td>integer</td>
       <td>0: Zero<br />1: One<br />2: Two<br />3: Three<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2719,6 +4391,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>8</td>
@@ -2726,6 +4399,7 @@ Below is a table of supported status IDs.<br />
       <td>Is the camera busy?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2741,6 +4415,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>10</td>
@@ -2748,6 +4423,7 @@ Below is a table of supported status IDs.<br />
       <td>Is the system encoding right now?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2763,6 +4439,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>13</td>
@@ -2770,6 +4447,7 @@ Below is a table of supported status IDs.<br />
       <td>When encoding video, this is the duration (seconds) of the video so far; 0 otherwise</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2785,6 +4463,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>19</td>
@@ -2792,6 +4471,7 @@ Below is a table of supported status IDs.<br />
       <td>The pairing state of the camera</td>
       <td>integer</td>
       <td>0: Never Started<br />1: Started<br />2: Aborted<br />3: Cancelled<br />4: Completed<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2807,6 +4487,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>21</td>
@@ -2814,6 +4495,7 @@ Below is a table of supported status IDs.<br />
       <td>Time (milliseconds) since boot of last successful pairing complete action</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2829,6 +4511,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>23</td>
@@ -2836,6 +4519,7 @@ Below is a table of supported status IDs.<br />
       <td>The time, in milliseconds since boot that the WiFi Access Point scan completed</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2851,6 +4535,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>26</td>
@@ -2858,6 +4543,7 @@ Below is a table of supported status IDs.<br />
       <td>Wireless remote control version</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2873,6 +4559,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>28</td>
@@ -2880,6 +4567,7 @@ Below is a table of supported status IDs.<br />
       <td>Wireless Pairing State</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2895,6 +4583,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>30</td>
@@ -2902,6 +4591,7 @@ Below is a table of supported status IDs.<br />
       <td>Camera's WIFI SSID. On BLE connection, value is big-endian byte-encoded int</td>
       <td>string</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2917,6 +4607,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>32</td>
@@ -2924,6 +4615,7 @@ Below is a table of supported status IDs.<br />
       <td>Is Preview Stream enabled?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2939,6 +4631,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>34</td>
@@ -2946,6 +4639,7 @@ Below is a table of supported status IDs.<br />
       <td>How many photos can be taken before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2961,6 +4655,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>36</td>
@@ -2968,6 +4663,7 @@ Below is a table of supported status IDs.<br />
       <td>How many group photos can be taken with current settings before sdcard is full</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -2983,6 +4679,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>38</td>
@@ -2990,6 +4687,7 @@ Below is a table of supported status IDs.<br />
       <td>Total number of photos on sdcard</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3005,6 +4703,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>41</td>
@@ -3012,6 +4711,7 @@ Below is a table of supported status IDs.<br />
       <td>The current status of Over The Air (OTA) update</td>
       <td>integer</td>
       <td>0: Idle<br />1: Downloading<br />2: Verifying<br />3: Download Failed<br />4: Verify Failed<br />5: Ready<br />6: GoPro App: Downloading<br />7: GoPro App: Verifying<br />8: GoPro App: Download Failed<br />9: GoPro App: Verify Failed<br />10: GoPro App: Ready<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3027,6 +4727,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>45</td>
@@ -3034,6 +4735,7 @@ Below is a table of supported status IDs.<br />
       <td>Is locate camera feature active?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3049,6 +4751,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>54</td>
@@ -3056,6 +4759,7 @@ Below is a table of supported status IDs.<br />
       <td>Remaining space on the sdcard in Kilobytes</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3071,6 +4775,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>56</td>
@@ -3078,6 +4783,7 @@ Below is a table of supported status IDs.<br />
       <td>WiFi signal strength in bars</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3093,6 +4799,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>59</td>
@@ -3100,6 +4807,7 @@ Below is a table of supported status IDs.<br />
       <td>Time since boot (msec) of most recent hilight in encoding video (set to 0 when encoding stops)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3115,6 +4823,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>64</td>
@@ -3126,6 +4835,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>65</td>
@@ -3133,6 +4843,7 @@ Below is a table of supported status IDs.<br />
       <td>Liveview Exposure Select Mode</td>
       <td>integer</td>
       <td>0: Disabled<br />1: Auto<br />2: ISO Lock<br />3: Hemisphere<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3144,6 +4855,7 @@ Below is a table of supported status IDs.<br />
       <td>Liveview Exposure Select: y-coordinate (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3155,6 +4867,7 @@ Below is a table of supported status IDs.<br />
       <td>Liveview Exposure Select: y-coordinate (percent)</td>
       <td>percent</td>
       <td>0-100</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3170,6 +4883,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>69</td>
@@ -3177,6 +4891,7 @@ Below is a table of supported status IDs.<br />
       <td>Is the camera in AP Mode?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3192,6 +4907,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>74</td>
@@ -3199,6 +4915,7 @@ Below is a table of supported status IDs.<br />
       <td>Microphone Accesstory status</td>
       <td>integer</td>
       <td>0: Microphone mod not connected<br />1: Microphone mod connected<br />2: Microphone mod connected and microphone plugged into Microphone mod<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3214,6 +4931,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>76</td>
@@ -3221,6 +4939,7 @@ Below is a table of supported status IDs.<br />
       <td>Wireless Band</td>
       <td>integer</td>
       <td>0: 2.4 GHz<br />1: 5 GHz<br />2: Max<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3236,6 +4955,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>78</td>
@@ -3247,6 +4967,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>79</td>
@@ -3254,6 +4975,7 @@ Below is a table of supported status IDs.<br />
       <td>Is the camera currently in First Time Use (FTU) UI flow?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3269,6 +4991,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>82</td>
@@ -3276,6 +4999,7 @@ Below is a table of supported status IDs.<br />
       <td>Is the system ready to accept commands?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3291,6 +5015,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>85</td>
@@ -3298,6 +5023,7 @@ Below is a table of supported status IDs.<br />
       <td>Is the camera getting too cold to continue recording?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3313,6 +5039,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>88</td>
@@ -3320,6 +5047,7 @@ Below is a table of supported status IDs.<br />
       <td>Is this camera capable of zooming while encoding (static value based on model, not settings)</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3335,6 +5063,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>93</td>
@@ -3346,6 +5075,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>94</td>
@@ -3353,6 +5083,7 @@ Below is a table of supported status IDs.<br />
       <td>Current Photo Preset (ID)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3368,6 +5099,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>96</td>
@@ -3375,6 +5107,7 @@ Below is a table of supported status IDs.<br />
       <td>Current Preset Group (ID)</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3390,6 +5123,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>98</td>
@@ -3397,6 +5131,7 @@ Below is a table of supported status IDs.<br />
       <td>Preset Modified Status, which contains an event ID and a preset (group) ID</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3409,6 +5144,7 @@ Below is a table of supported status IDs.<br />
       <td>integer</td>
       <td>*</td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3419,6 +5155,7 @@ Below is a table of supported status IDs.<br />
       <td>Total number of Live Bursts on sdcard</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3434,6 +5171,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>102</td>
@@ -3441,6 +5179,7 @@ Below is a table of supported status IDs.<br />
       <td>Media mod State</td>
       <td>integer</td>
       <td>0: Media mod microphone removed<br />2: Media mod microphone only<br />3: Media mod microphone with external microphone<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3456,6 +5195,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>104</td>
@@ -3465,15 +5205,17 @@ Below is a table of supported status IDs.<br />
       <td>0: False<br />1: True<br /></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>105</td>
       <td>Camera lens type</td>
-      <td>Camera lens type (reflects changes to setting 162)</td>
+      <td>Camera lens type (reflects changes to setting 162 or setting 189)</td>
       <td>integer</td>
-      <td>0: Default<br />1: Max Lens<br /></td>
+      <td>0: Default<br />1: Max Lens<br />2: Max Lens 2.0<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3485,6 +5227,7 @@ Below is a table of supported status IDs.<br />
       <td>Is Video Hindsight Capture Active?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3496,6 +5239,7 @@ Below is a table of supported status IDs.<br />
       <td>Scheduled Capture Preset ID</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3507,6 +5251,7 @@ Below is a table of supported status IDs.<br />
       <td>Is Scheduled Capture set?</td>
       <td>boolean</td>
       <td>0: False<br />1: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3518,6 +5263,7 @@ Below is a table of supported status IDs.<br />
       <td>Media Mode Status (bitmasked)</td>
       <td>integer</td>
       <td>0: 000 = Selfie mod: 0, HDMI: 0, Media Mod Connected: False<br />1: 001 = Selfie mod: 0, HDMI: 0, Media Mod Connected: True<br />2: 010 = Selfie mod: 0, HDMI: 1, Media Mod Connected: False<br />3: 011 = Selfie mod: 0, HDMI: 1, Media Mod Connected: True<br />4: 100 = Selfie mod: 1, HDMI: 0, Media Mod Connected: False<br />5: 101 = Selfie mod: 1, HDMI: 0, Media Mod Connected: True<br />6: 110 = Selfie mod: 1, HDMI: 1, Media Mod Connected: False<br />7: 111 = Selfie mod: 1, HDMI: 1, Media Mod Connected: True<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3532,6 +5278,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr>
@@ -3540,6 +5287,7 @@ Below is a table of supported status IDs.<br />
       <td>Number of sdcard write speed errors since device booted</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3555,6 +5303,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
       <td>114</td>
@@ -3562,6 +5311,7 @@ Below is a table of supported status IDs.<br />
       <td>Camera control status ID</td>
       <td>integer</td>
       <td>0: Camera Idle: No one is attempting to change camera settings<br />1: Camera Control: Camera is in a menu or changing settings. To intervene, app must request control<br />2: Camera External Control: An outside entity (app) has control and is in a menu or modifying settings<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -3576,6 +5326,7 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
     <tr>
@@ -3584,6 +5335,7 @@ Below is a table of supported status IDs.<br />
       <td>Camera control over USB state</td>
       <td>integer</td>
       <td>0: Disabled<br />1: Enabled<br /></td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td>\&gt;= v01.30.00</td>
@@ -3595,6 +5347,7 @@ Below is a table of supported status IDs.<br />
       <td>Total SD card capacity in Kilobytes</td>
       <td>integer</td>
       <td>*</td>
+      <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
@@ -3651,6 +5404,26 @@ Below is a table of settings that affect the current preset collection and there
     <tr>
       <td>180</td>
       <td>Video Mode</td>
+    </tr>
+    <tr>
+      <td>186</td>
+      <td>Video Mode</td>
+    </tr>
+    <tr>
+      <td>187</td>
+      <td>Lapse Mode</td>
+    </tr>
+    <tr>
+      <td>189</td>
+      <td>Max Lens Mod</td>
+    </tr>
+    <tr>
+      <td>190</td>
+      <td>Max Lens Mod Enable</td>
+    </tr>
+    <tr>
+      <td>191</td>
+      <td>Photo Mode</td>
     </tr>
   </tbody>
 </table>
@@ -3774,6 +5547,7 @@ Note:
 
 <p>
 The Over The Air (OTA) update feature allows the user to update the camera's firmware via HTTP connection.
+There are two ways to perform OTA updates: Simple OTA Update and Resumable OTA Update.
 </p>
 
 <p>
@@ -3781,27 +5555,73 @@ Firmware update files can be obtained from GoPro's <a href="https://gopro.com/en
 <a href="https://api.gopro.com/firmware/v2/catalog">firmware catalog</a>.
 </p>
 
-### OTA Update Flow
 <p>
-The OTA update process involves uploading chunks (or all) of a file along with its corresponding SHA1 hash,
-marking the file complete and then telling the camera to begin the update process.
-For specific command examples, see <b>/gp/gpSoftUpdate</b> in 
-<a href="#commands-quick-reference">Commands Quick Reference</a>.
-</p>
-
-<p>
-Note: Near the end of the firmware update process, in order to complete, the camera will need to reboot 1-2 times.
+Note: In order to complete the firmware update process, the camera will reboot one or more times.
 This will cause any existing HTTP connections to be lost.
 </p>
+
+### Simple OTA Update
+<p>
+The simple OTA update process is done by sending an entire update file to the camera in a single HTTP/POST.
+Details can be found in the diagram below.
+</p>
+
 ```plantuml!
 
+
+title Simple OTA Update
+
+actor Client
+participant Camera
+
+' Update Page and Firmware Catalog
+' https://gopro.com/en/us/update
+' https://api.gopro.com/firmware/v2/catalog
+
+== Obtain UPDATE.zip from update page or firmware catalog ==
+
+Client -> Client: Calculate SHA1_HASH for UPDATE.zip
+Client -> Camera: HTTP/POST: /gp/gpUpdate
+note right
+Content-Type: multipart/form-data
+Data:
+    DirectToSD=1
+    update=1
+    sha1=<SHA1_HASH>
+    file=<UPDATE.zip>
+end note
+
+Client <-- Camera: HTTP/200 (OK)
+note right
+JSON: { "status":"0" }
+end note
+
+== WiFi connection terminates ==
+== Camera displays "Update Complete" OSD, reboots 1-2 times ==
+
+
+
+
+```
+
+### Resumable OTA Update
+<p>
+The resumable OTA update process involves uploading chunks (or all) of a file, marking the file complete and then telling the camera to begin the update process.
+Chunks are stored until they are explicitly deleted, allowing the client to stop and resume as needed.
+Details can be found in the diagram below.
+</p>
+
+```plantuml!
+
+
+title Resumable OTA Update
 
 Actor Client
 participant Camera
 
-note across: Obtain UPDATE.zip from update page or firmware catalog
-note across: Calculate SHA1_HASH for UPDATE.zip
-Client  -> Camera: HTTP/GET: /gp/gpSoftUpdate?request=delete
+== Obtain UPDATE.zip from update page or firmware catalog ==
+Client -> Client: Calculate SHA1_HASH for UPDATE.zip
+Client -> Camera: HTTP/GET: /gp/gpSoftUpdate?request=delete
 note right: Delete any old/cached data
 Client <-- Camera: HTTP/200 (OK)
 note right
@@ -3815,7 +5635,7 @@ JSON {
 end note
 
 Client  -> Camera: HTTP/GET: /gp/gpSoftUpdate?request=showui
-note right: Display update OSD on camera UI
+note right: Display update OSD on camera UI (optional)
 Client <-- Camera: HTTP/200 (OK)
 note right
 JSON: {
@@ -3891,8 +5711,8 @@ JSON: {
 end note
 end
 
-note across: WiFi connection lost
-note across: Camera displays OSD "Update Complete", reboots 1-2 times
+== WiFi connection lost ==
+== Camera displays OSD "Update Complete", reboots 1-2 times ==
 
 
 
@@ -3900,6 +5720,7 @@ note across: Camera displays OSD "Update Complete", reboots 1-2 times
 ```
 
 ### OTA Update Status Codes
+
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
@@ -4025,7 +5846,7 @@ LPP          --> READY: Stop\nExit
 
 ### Webcam Commands
 <p>
-Note: Prior to issuing webcam commands, Wired USB Control must be disabled.
+Note: For USB connections, prior to issuing webcam commands, Wired USB Control must be disabled.
 For details about how to send this and webcam commands, see <a href="#commands-quick-reference">Commands Quick Reference</a>.
 </p>
 <table border="1">
@@ -4037,41 +5858,42 @@ For details about how to send this and webcam commands, see <a href="#commands-q
     </tr>
     <tr>
       <td>Webcam: Start</td>
-      <td>USB</td>
+      <td>USB, WIFI*</td>
       <td>Enters webcam mode, uses default resolution and last-used fov, starts high-res stream to the IP address of caller</td>
     </tr>
     <tr>
       <td>Webcam: Start (with args)</td>
-      <td>USB</td>
+      <td>USB, WIFI*</td>
       <td>Enters webcam mode, uses specified resolution and/or fov, starts streaming to the IP address of caller</td>
     </tr>
     <tr>
       <td>Webcam: Preview</td>
-      <td>USB</td>
+      <td>USB, WIFI*</td>
       <td>Enters webcam mode, sets stream resolution and bitrate, starts low-res stream to the IP address of caller.<br />Can set Webcam Digital Lenses and Digital Zoom levels while streaming</td>
     </tr>
     <tr>
       <td>Webcam: Stop</td>
-      <td>USB</td>
+      <td>USB, WIFI*</td>
       <td>Stops the webcam stream</td>
     </tr>
     <tr>
       <td>Webcam: Exit</td>
-      <td>USB</td>
+      <td>USB, WIFI*</td>
       <td>Stops the webcam stream and exits webcam mode</td>
     </tr>
     <tr>
       <td>Webcam: Status</td>
-      <td>USB</td>
+      <td>USB, WIFI</td>
       <td>Returns the current state of the webcam endpoint, including status and error codes (see tables below)</td>
     </tr>
     <tr>
       <td>Webcam: Version</td>
-      <td>USB</td>
+      <td>USB, WIFI</td>
       <td>Provides version information about webcam implementation in JSON format</td>
     </tr>
   </tbody>
 </table>
+<p>* Indicates that connection is supported in HERO12 Black v01.10.00 and newer versions/models</p>
 
 ### Status Codes
 <table border="1">
@@ -4170,6 +5992,15 @@ If fov is not set, camera will default to the last-set fov or Wide if fov has ne
       <td>FOV</td>
     </tr>
     <tr>
+      <td rowspan="2">HERO12 Black</td>
+      <td>720p (id: 7)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
+    </tr>
+    <tr>
+      <td>1080p (id: 12)</td>
+      <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
+    </tr>
+    <tr>
       <td rowspan="2">HERO11 Black</td>
       <td>720p (id: 7)</td>
       <td>Wide (id: 0), Narrow (id: 2), Superview (id: 3), Linear (id: 4)</td>
@@ -4207,8 +6038,59 @@ If fov is not set, camera will default to the last-set fov or Wide if fov has ne
   </tbody>
 </table>
 
+### Webcam Stabilization
+
+<p>
+Should the client require stabilization, the <b>Hypersmooth</b> setting can be used while in the state: <b>READY (Status: OFF)</b>.
+This setting can only be set while webcam is disabled, which requires either sending the <b>Webcam: Exit</b> command or reseating the USB-C connection to the camera.
+</p>
+
+<p>
+Note: The <b>Low</b> Hypersmooth option provides lower/lighter stabilization when used in Webcam mode vs other camera modes.
+</p>
+
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Camera</td>
+      <td>Version</td>
+      <td>Supported Hypersmooth Options</td>
+    </tr>
+    <tr>
+      <td>HERO12 Black</td>
+      <td>v01.10.00+</td>
+      <td>Off (id: 0), Low (id: 1), Auto Boost (id: 4)</td>
+    </tr>
+    <tr>
+      <td>HERO11 Black Mini</td>
+      <td>v01.10.00+</td>
+      <td>Off (id: 0), Low (id: 1), Boost (id: 3), Auto Boost (id: 4)</td>
+    </tr>
+    <tr>
+      <td>HERO11 Black</td>
+      <td>v01.10.00+</td>
+      <td>Off (id: 0), Low (id: 1), Boost (id: 3), Auto Boost (id: 4)</td>
+    </tr>
+    <tr>
+      <td>HERO10 Black</td>
+      <td>v01.10.00+</td>
+      <td>Off (id: 0), High (id: 2), Boost (id: 3), Standard (id: 100)</td>
+    </tr>
+    <tr>
+      <td>HERO9 Black</td>
+      <td>v01.70.00+</td>
+      <td>Off (id: 0), Low (id: 1), High (id: 2), Boost (id: 3)</td>
+    </tr>
+  </tbody>
+</table>
+
 # Limitations
 
+## HERO12 Black
+<ul>
+<li>The camera will reject requests to change settings while encoding; for example, if Hindsight feature is active, the user cannot change settings</li>
+<li>HTTP command arguments must be given in the order outlined in <a href="#commands-quick-reference">Commands Quick Reference</a></li>
+</ul>
 ## HERO11 Black Mini
 <ul>
 <li>The camera will reject requests to change settings while encoding; for example, if Hindsight feature is active, the user cannot change settings</li>

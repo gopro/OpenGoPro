@@ -6,9 +6,8 @@
 -   [ ] Refactor commands / parsers so that setting / status parsers (i.e. enums) can be accessed from class, not instance
     -  This is already done for commands but needs to be for others
 -   [ ] Better handle kwargs that match base dict args in command as_dict methods
--   [ ] Investigate worthiness of move to asyncio
 -   [ ] More test coverage
--   [ ] Clean up artifacts after testing
+-   [ ] Clean up artifacts after testing. Or use temp directory.
 -   [ ] Make scalable for multiple simultaneous cameras
 -   [ ] Allow encoding = False for Set Livestream Mode. Requires tracking livestream state to not pend on encoding started after sending Set Shutter On
 
@@ -36,5 +35,6 @@
 -   [ ] Investigate MacOS delay after connecting WiFi
 -   [ ] More Linux testing
 -   [ ] Use descriptors for main driver access to OS-driver implementation
+-   [ ] Move to program language (C?) instead of EN-US
 
 

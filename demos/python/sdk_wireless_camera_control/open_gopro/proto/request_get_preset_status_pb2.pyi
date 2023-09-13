@@ -29,14 +29,16 @@ class _EnumRegisterPresetStatusEnumTypeWrapper(
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     REGISTER_PRESET_STATUS_PRESET: _EnumRegisterPresetStatus.ValueType
+    "Send notification when properties of a preset change"
     REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY: _EnumRegisterPresetStatus.ValueType
+    "Send notification when properties of a preset group change"
 
-class EnumRegisterPresetStatus(
-    _EnumRegisterPresetStatus, metaclass=_EnumRegisterPresetStatusEnumTypeWrapper
-): ...
+class EnumRegisterPresetStatus(_EnumRegisterPresetStatus, metaclass=_EnumRegisterPresetStatusEnumTypeWrapper): ...
 
 REGISTER_PRESET_STATUS_PRESET: EnumRegisterPresetStatus.ValueType
+"Send notification when properties of a preset change"
 REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY: EnumRegisterPresetStatus.ValueType
+"Send notification when properties of a preset group change"
 global___EnumRegisterPresetStatus = EnumRegisterPresetStatus
 
 class RequestGetPresetStatus(google.protobuf.message.Message):
@@ -47,24 +49,18 @@ class RequestGetPresetStatus(google.protobuf.message.Message):
     @property
     def register_preset_status(
         self,
-    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[
-        global___EnumRegisterPresetStatus.ValueType
-    ]:
+    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumRegisterPresetStatus.ValueType]:
         """Array of Preset statuses to be notified about"""
     @property
     def unregister_preset_status(
         self,
-    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[
-        global___EnumRegisterPresetStatus.ValueType
-    ]:
+    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumRegisterPresetStatus.ValueType]:
         """Array of Preset statuses to stop being notified about"""
     def __init__(
         self,
         *,
-        register_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType]
-        | None = ...,
-        unregister_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType]
-        | None = ...
+        register_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...,
+        unregister_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...
     ) -> None: ...
     def ClearField(
         self,

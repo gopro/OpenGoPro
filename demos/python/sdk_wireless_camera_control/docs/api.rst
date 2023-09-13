@@ -76,6 +76,11 @@ These should not be imported directly and instead should be accessed using the r
 Base Types
 ----------
 
+GoPro Enum
+^^^^^^^^^^
+
+.. autoclass:: open_gopro.enum.GoProEnum
+
 BLE Setting
 ^^^^^^^^^^^
 
@@ -107,27 +112,27 @@ Message Bases
 These are the base types that are used to implement version-specific API's. These are published for reference
 but the end user should never need to use these directly.
 
-.. autoclass:: open_gopro.interface.Message
+.. autoclass:: open_gopro.communicator_interface.Message
    :show-inheritance:
 
-.. autoclass:: open_gopro.interface.HttpMessage
+.. autoclass:: open_gopro.communicator_interface.HttpMessage
    :show-inheritance:
 
-.. autoclass:: open_gopro.interface.BleMessage
+.. autoclass:: open_gopro.communicator_interface.BleMessage
    :show-inheritance:
 
-.. autoclass:: open_gopro.interface.Messages
+.. autoclass:: open_gopro.communicator_interface.Messages
    :show-inheritance:
 
-.. autoclass:: open_gopro.interface.BleMessages
+.. autoclass:: open_gopro.communicator_interface.BleMessages
    :show-inheritance:
 
-.. autoclass:: open_gopro.interface.HttpMessages
+.. autoclass:: open_gopro.communicator_interface.HttpMessages
    :show-inheritance:
 
-.. autoclass:: open_gopro.interface.MessageRules
+.. autoclass:: open_gopro.communicator_interface.MessageRules
 
-.. autoclass:: open_gopro.interface.RuleSignature
+.. autoclass:: open_gopro.communicator_interface.RuleSignature
 
 Parameters
 ----------
@@ -141,9 +146,10 @@ All of these parameters can be accessed via:
 .. automodule:: open_gopro.api.params
    :undoc-members:
 
-
 Responses
 =========
+
+Generic common response container:
 
 This can be imported via:
 
@@ -151,8 +157,41 @@ This can be imported via:
 
    from open_gopro import GoProResp
 
-.. autoclass:: open_gopro.responses.GoProResp
+.. autoclass:: open_gopro.models.response.GoProResp
 
+Data Models
+-----------
+
+These are the various models that are returned in responses, used in commands, etc. They can be imported with:
+
+.. code-block:: python
+
+   from open_gopro.models import ***
+
+.. autopydantic_model:: open_gopro.models.media_list.MediaMetadata
+
+.. autopydantic_model:: open_gopro.models.media_list.PhotoMetadata
+   :show-inheritance:
+
+.. autopydantic_model:: open_gopro.models.media_list.VideoMetadata
+   :show-inheritance:
+
+.. autopydantic_model:: open_gopro.models.media_list.MediaItem
+
+.. autopydantic_model:: open_gopro.models.media_list.GroupedMediaItem
+   :show-inheritance:
+
+.. autopydantic_model:: open_gopro.models.media_list.MediaFileSystem
+
+.. autopydantic_model:: open_gopro.models.media_list.MediaList
+
+.. autopydantic_model:: open_gopro.models.general.TzDstDateTime
+
+.. autopydantic_model:: open_gopro.models.general.CameraInfo
+
+.. autopydantic_model:: open_gopro.models.general.WebcamResponse
+
+.. autopydantic_model:: open_gopro.models.general.SupportedOption
 
 Constants
 =========
@@ -179,15 +218,17 @@ Common Interface
 
 .. autoclass:: open_gopro.gopro_base.GoProBase
 
-.. autoclass:: open_gopro.interface.GoProBle
+.. autoclass:: open_gopro.communicator_interface.GoProBle
 
-.. autoclass:: open_gopro.interface.GoProHttp
+.. autoclass:: open_gopro.communicator_interface.GoProHttp
 
-.. autoclass:: open_gopro.interface.GoProWifi
+.. autoclass:: open_gopro.communicator_interface.GoProWifi
 
-.. autoclass:: open_gopro.interface.GoProWiredInterface
+.. autoclass:: open_gopro.communicator_interface.GoProWiredInterface
 
-.. autoclass:: open_gopro.interface.GoProWirelessInterface
+.. autoclass:: open_gopro.communicator_interface.GoProWirelessInterface
+
+.. autoclass:: open_gopro.communicator_interface.BaseGoProCommunicator
 
 
 BLE Interface

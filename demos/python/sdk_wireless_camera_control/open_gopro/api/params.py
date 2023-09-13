@@ -7,108 +7,7 @@
 
 from __future__ import annotations
 
-from open_gopro.constants import GoProEnum, GoProFlagEnum
-
-# Import required parameters from protobuf
-import open_gopro.proto.live_streaming_pb2
-import open_gopro.proto.network_management_pb2
-import open_gopro.proto.request_get_preset_status_pb2
-import open_gopro.proto.set_camera_control_status_pb2
-
-
-class ScanEntry(GoProFlagEnum):
-    AUTHENTICATED = open_gopro.proto.network_management_pb2.SCAN_FLAG_AUTHENTICATED
-    CONFIGURED = open_gopro.proto.network_management_pb2.SCAN_FLAG_CONFIGURED
-    BEST_SSID = open_gopro.proto.network_management_pb2.SCAN_FLAG_BEST_SSID
-    ASSOCIATED = open_gopro.proto.network_management_pb2.SCAN_FLAG_ASSOCIATED
-    UNSUPPORTED_TYPE = open_gopro.proto.network_management_pb2.SCAN_FLAG_UNSUPPORTED_TYPE
-
-
-class ScanState(GoProEnum):
-    UNKNOWN = open_gopro.proto.network_management_pb2.SCANNING_UNKNOWN
-    NEVER_STARTED = open_gopro.proto.network_management_pb2.SCANNING_NEVER_STARTED
-    STARTED = open_gopro.proto.network_management_pb2.SCANNING_STARTED
-    ABORTED_BY_SYSTEM = open_gopro.proto.network_management_pb2.SCANNING_ABORTED_BY_SYSTEM
-    CANCELLED_BY_USER = open_gopro.proto.network_management_pb2.SCANNING_CANCELLED_BY_USER
-    SUCCESS = open_gopro.proto.network_management_pb2.SCANNING_SUCCESS
-
-
-class LiveStreamStatus(GoProEnum):
-    IDLE = open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_IDLE
-    CONFIG = open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_CONFIG
-    READY = open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_READY
-    STREAMING = open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_STREAMING
-    STAY_ON_COMPLETE = (
-        open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_COMPLETE_STAY_ON
-    )
-    STAY_ON_FAILED = open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_FAILED_STAY_ON
-    RECONNECTING = open_gopro.proto.live_streaming_pb2.EnumLiveStreamStatus.LIVE_STREAM_STATE_RECONNECTING
-
-
-class LensType(GoProEnum):
-    WIDE = open_gopro.proto.live_streaming_pb2.EnumLens.LENS_WIDE
-    LINEAR = open_gopro.proto.live_streaming_pb2.EnumLens.LENS_LINEAR
-    SUPERVIEW = open_gopro.proto.live_streaming_pb2.EnumLens.LENS_SUPERVIEW
-
-
-class WindowSize(GoProEnum):
-    SIZE_480 = open_gopro.proto.live_streaming_pb2.EnumWindowSize.WINDOW_SIZE_480
-    SIZE_720 = open_gopro.proto.live_streaming_pb2.EnumWindowSize.WINDOW_SIZE_720
-    SIZE_1080 = open_gopro.proto.live_streaming_pb2.EnumWindowSize.WINDOW_SIZE_1080
-
-
-class ProvisioningState(GoProEnum):
-    UNKNOWN = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_UNKNOWN
-    NEVER_STARTED = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_NEVER_STARTED
-    STARTED = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_STARTED
-    ABORTED_BY_SYSTEM = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_ABORTED_BY_SYSTEM
-    CANCELLED_BY_USER = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_CANCELLED_BY_USER
-    SUCCESS_NEW_AP = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_SUCCESS_NEW_AP
-    SUCCESS_OLD_AP = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_SUCCESS_OLD_AP
-    ERROR_FAILED_TO_ASSOCIATE = (
-        open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_ERROR_FAILED_TO_ASSOCIATE
-    )
-    ERROR_PASSWORD_AUTH = (
-        open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_ERROR_PASSWORD_AUTH
-    )
-    ERROR_EULA_BLOCKING = (
-        open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_ERROR_EULA_BLOCKING
-    )
-    ERROR_NO_INTERNET = open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_ERROR_NO_INTERNET
-    ERROR_UNSUPPORTED_TYPE = (
-        open_gopro.proto.network_management_pb2.EnumProvisioning.PROVISIONING_ERROR_UNSUPPORTED_TYPE
-    )
-
-
-class RegisterPreset(GoProEnum):
-    PRESET = (
-        open_gopro.proto.request_get_preset_status_pb2.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET
-    )
-    PRESET_GROUP_ARRAY = (
-        open_gopro.proto.request_get_preset_status_pb2.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY
-    )
-
-
-class RegisterLiveStream(GoProEnum):
-    MODE = open_gopro.proto.live_streaming_pb2.EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_MODE
-    ERROR = open_gopro.proto.live_streaming_pb2.EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_ERROR
-    STATUS = (
-        open_gopro.proto.live_streaming_pb2.EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_STATUS
-    )
-
-
-class CameraControlStatus(GoProEnum):
-    IDLE = open_gopro.proto.set_camera_control_status_pb2.EnumCameraControlStatus.CAMERA_IDLE
-    CONTROL = open_gopro.proto.set_camera_control_status_pb2.EnumCameraControlStatus.CAMERA_CONTROL
-    EXTERNAL_CONTROL = (
-        open_gopro.proto.set_camera_control_status_pb2.EnumCameraControlStatus.CAMERA_EXTERNAL_CONTROL
-    )
-
-
-class PresetGroup(GoProEnum):
-    VIDEO = 1000
-    PHOTO = 1001
-    TIMELAPSE = 1002
+from open_gopro.constants import GoProEnum
 
 
 class Resolution(GoProEnum):
@@ -120,11 +19,19 @@ class Resolution(GoProEnum):
     RES_1080 = 9
     RES_4K_4_3 = 18
     RES_5K = 24
-    RES_5_K_4_3 = 25
-    RES_5_3_K_8_7 = 26
-    RES_5_3_K_4_3 = 27
-    RES_4_K_8_7 = 28
-    RES_5_3_K = 100
+    RES_5K_4_3 = 25
+    RES_5_3K_8_7 = 26
+    RES_5_3K_4_3 = 27
+    RES_4K_8_7 = 28
+    RES_4K_9_16 = 29
+    RES_1080_9_16 = 30
+    RES_5_3K = 100
+    RES_5_3K_16_9 = 101
+    RES_4K_16_9 = 102
+    RES_4K_4_3_TODO = 103
+    RES_2_7K_16_9 = 104
+    RES_2_7K_4_3_TODO = 105
+    RES_1080_16_9 = 106
 
 
 class WebcamResolution(GoProEnum):
@@ -152,6 +59,8 @@ class AutoOff(GoProEnum):
     MIN_5 = 4
     MIN_15 = 6
     MIN_30 = 7
+    SEC_8 = 11
+    SEC_30 = 12
 
 
 class LensMode(GoProEnum):
@@ -168,6 +77,7 @@ class VideoFOV(GoProEnum):
     LINEAR_HORIZON_LEVELING = 8
     HYPERVIEW = 9
     LINEAR_HORIZON_LOCK = 10
+    MAX_HYPERVIEW = 11
 
 
 class WebcamFOV(GoProEnum):
@@ -335,6 +245,7 @@ class Flatmode(GoProEnum):
     LIVE_BURST = 25
     NIGHT_LAPSE_VIDEO = 26
     SLO_MO = 27
+    UNKNOWN = 28
 
 
 class Toggle(GoProEnum):
@@ -415,6 +326,27 @@ class Speed(GoProEnum):
     SUPER_SLO_MO_4X_2_7_K = 25
     SLO_MO_2X_4K_50_HZ = 26
     SUPER_SLO_MO_4X_2_7_K_50_HZ = 27
+    SUPER_SLO_MO_4X_2_7K_50HZ = 27
+    SPEED_1X_LOW_LIGHT = 28
+    SPEED_1X_LOW_LIGHT_2 = 29
+    SLO_MO_2X_2 = 30
+    SLO_MO_2X_3 = 31
+    SPEED_1X_LOW_LIGHT_3 = 32
+    SPEED_1X_LOW_LIGHT_4 = 33
+    SLO_MO_2X_4 = 34
+    SLO_MO_2X_5 = 35
+    SPEED_1X_LOW_LIGHT_5 = 36
+    SPEED_1X_LOW_LIGHT_6 = 37
+    SPEED_1X_LOW_LIGHT_7 = 38
+    SPEED_1X_LOW_LIGHT_8 = 39
+    SLO_MO_2X_6 = 40
+    SLO_MO_2X_7 = 41
+    SLO_MO_2X_8 = 42
+    SLO_MO_2X_9 = 43
+    SPEED_1X_LOW_LIGHT_9 = 44
+    SPEED_1X_LOW_LIGHT_10 = 45
+    SPEED_1X_LOW_LIGHT_11 = 46
+    SPEED_1X_LOW_LIGHT_12 = 47
 
 
 class PhotoEasyMode(GoProEnum):
@@ -436,3 +368,98 @@ class SystemVideoMode(GoProEnum):
     EXTENDED_BATTERY = 1
     EXTENDED_BATTERY_GREEN_ICON = 101
     LONGEST_BATTERY_GREEN_ICON = 102
+
+
+class BitRate(GoProEnum):
+    STANDARD = 0
+    HIGH = 1
+
+
+class BitDepth(GoProEnum):
+    BIT_8 = 0
+    BIT_10 = 2
+
+
+class VideoProfile(GoProEnum):
+    STANDARD = 0
+    HDR = 1
+    LOG = 2
+
+
+class VideoAspectRatio(GoProEnum):
+    RATIO_4_3 = 0
+    RATIO_16_9 = 1
+    RATIO_8_7 = 3
+    RATIO_9_16 = 4
+
+
+class EasyAspectRatio(GoProEnum):
+    WIDESCREEN = 0
+    MOBILE = 1
+    UNIVERSAL = 2
+
+
+class VideoMode(GoProEnum):
+    HIGHEST = 0
+    STANDARD = 1
+    BASIC = 2
+
+
+class TimelapseMode(GoProEnum):
+    TIMEWARP = 0
+    STAR_TRAILS = 1
+    LIGHT_PAINTING = 2
+    VEHICLE_LIGHTS = 3
+    MAX_TIMEWARP = 4
+    MAX_STAR_TRAILS = 5
+    MAX_LIGHT_PAINTING = 6
+    MAX_VEHICLE_LIGHTS = 7
+
+
+class PhotoMode(GoProEnum):
+    SUPER = 0
+    NIGHT = 1
+
+
+class Framing(GoProEnum):
+    WIDESCREEN = 0
+    VERTICAL = 1
+    FULL = 2
+
+
+class MaxLensModType(GoProEnum):
+    NONE = 0
+    V1 = 1
+    V2 = 2
+
+
+class Hindsight(GoProEnum):
+    SEC_15 = 2
+    SEC_30 = 3
+    OFF = 4
+
+
+class PhotoInterval(GoProEnum):
+    OFF = 0
+    SEC_0_5 = 2
+    SEC_1 = 3
+    SEC_2 = 4
+    SEC_5 = 5
+    SEC_10 = 6
+    SEC_30 = 7
+    SEC_60 = 8
+    SEC_120 = 9
+    SEC_3 = 10
+
+
+class PhotoDuration(GoProEnum):
+    OFF = 0
+    SEC_15 = 1
+    SEC_30 = 2
+    MIN_1 = 3
+    MIN_5 = 4
+    MIN_15 = 5
+    MIN_30 = 6
+    HOUR_1 = 7
+    HOUR_2 = 8
+    HOUR_3 = 9

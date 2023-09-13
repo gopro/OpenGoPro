@@ -8,16 +8,17 @@
 import sys
 
 # Validate python version
-if sys.version_info.major != 3 or not 9 <= sys.version_info.minor < 11:
-    raise RuntimeError("Python >= 3.9 and < 3.11 must be used")
+# This is to make it painfully clear so that people hopefully stop trying invalid versions
+if sys.version_info.major != 3 or not 9 <= sys.version_info.minor < 12:
+    raise RuntimeError("Python >= 3.9 and < 3.12 must be used")
 
 import logging
 
-from open_gopro.util import Logger
+from open_gopro.logger import Logger
 
 Logger.addLoggingLevel("TRACE", logging.DEBUG - 5)
 
-from open_gopro.gopro_wireless import WirelessGoPro
-from open_gopro.gopro_wired import WiredGoPro
 from open_gopro.api import Params
-from open_gopro.responses import GoProResp
+from open_gopro.gopro_wired import WiredGoPro
+from open_gopro.gopro_wireless import WirelessGoPro
+from open_gopro.models import GoProResp

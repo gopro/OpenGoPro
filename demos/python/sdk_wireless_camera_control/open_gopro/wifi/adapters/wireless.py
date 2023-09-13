@@ -4,18 +4,20 @@
 """Manage a WiFI connection using native OS commands."""
 
 from __future__ import annotations
-import os
-import re
-import time
+
 import ctypes
+import html
 import locale
 import logging
+import os
 import platform
+import re
 import tempfile
+import time
 from enum import Enum, auto
 from getpass import getpass
 from shutil import which
-from typing import Optional, Any, Callable
+from typing import Any, Callable, Optional
 
 import wrapt
 from packaging.version import Version
@@ -47,12 +49,12 @@ def ensure_us_english() -> None:
 
 
 @wrapt.decorator
-def pass_through_to_driver(wrapped: Callable, instance: Wireless, args: Any, kwargs: Any) -> Any:
+def pass_through_to_driver(wrapped: Callable, instance: WifiCli, args: Any, kwargs: Any) -> Any:
     """Call this same method on the _driver attribute
 
     Args:
         wrapped (Callable): method to call
-        instance (Wireless): instance to use to find driver
+        instance (WifiCli): instance to use to find driver
         args (Any): positional arguments
         kwargs (Any): keyword arguments
 
@@ -63,7 +65,7 @@ def pass_through_to_driver(wrapped: Callable, instance: Wireless, args: Any, kwa
     return driver_method(*args, **kwargs)
 
 
-class Wireless(WifiController):
+class WifiCli(WifiController):
     """Top level abstraction of different Wifi drivers.
 
     If interface is not specified (i.e. it is None), we will attempt to automatically
@@ -312,9 +314,7 @@ class NmcliWireless(WifiController):
 
         # attempt to connect
         logger.info(f"Connecting to {ssid}...")
-        response = cmd(
-            f'{self.sudo} nmcli dev wifi connect "{ssid}" password "{password}" iface "{self.interface}"'
-        )
+        response = cmd(f'{self.sudo} nmcli dev wifi connect "{ssid}" password "{password}" iface "{self.interface}"')
 
         # parse response
         return not self._error_in_response(response)
@@ -472,9 +472,7 @@ class Nmcli0990Wireless(WifiController):
 
         # attempt to connect
         logger.info(f"Connecting to {ssid}...")
-        response = cmd(
-            f'{self.sudo} nmcli dev wifi connect "{ssid}" password "{password}" ifname "{self.interface}"'
-        )
+        response = cmd(f'{self.sudo} nmcli dev wifi connect "{ssid}" password "{password}" ifname "{self.interface}"')
 
         # parse response
         return not self._error_in_response(response)
@@ -860,8 +858,9 @@ class NetshWireless(WifiController):
         Returns:
             bool: True if connected, False otherwise
         """
-        # Replace ampersand as it causes problems
-        password = password.replace("&", "&amp;")
+        # Replace xml tokens (&, <, >, etc.)
+        password = html.escape(password)
+        ssid = html.escape(ssid)
 
         logger.info(f"Attempting to establish Wifi connection to {ssid}...")
 

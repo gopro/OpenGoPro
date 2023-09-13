@@ -4,14 +4,14 @@
 # pylint: disable = redefined-outer-name
 
 import uuid
-from typing import List, Dict
+from typing import Dict, List
 
 import pytest
 
-from open_gopro.ble.services import UUIDs, UUIDsMeta, BLE_BASE_UUID
+from open_gopro.ble import BleUUID, Characteristic, Descriptor, GattDB, Service
+from open_gopro.ble.services import BLE_BASE_UUID, UUIDs, UUIDsMeta
 from open_gopro.constants import BleUUID
-from open_gopro.ble import Descriptor, Characteristic, Service, GattDB, BleUUID
-from tests.conftest import gatt_db
+from tests.conftest import mock_gatt_db
 
 
 def test_128_bit_uuid():
@@ -75,51 +75,51 @@ def test_ble_uuids_negative():
             BAD_ATTRIBUTE = 1
 
 
-def test_descriptor(descriptor: Descriptor):
-    assert descriptor.handle > 0
-    assert descriptor.name == descriptor.uuid.name
+def test_descriptor(mock_descriptor: Descriptor):
+    assert mock_descriptor.handle > 0
+    assert mock_descriptor.name == mock_descriptor.uuid.name
 
 
-def test_characteristic(characteristic: Characteristic):
-    assert characteristic.handle > 0
-    assert characteristic.name == characteristic.uuid.name
-    assert len(characteristic.descriptors)
+def test_characteristic(mock_characteristic: Characteristic):
+    assert mock_characteristic.handle > 0
+    assert mock_characteristic.name == mock_characteristic.uuid.name
+    assert len(mock_characteristic.descriptors)
 
-    assert characteristic.is_readable
-    assert not characteristic.is_writeable
-    assert not characteristic.is_notifiable
-    assert not characteristic.is_indicatable
-
-
-def test_service(service: Service):
-    assert service.start_handle > 0
-    assert service.name == service.uuid.name
-    assert len(service.characteristics) > 0
+    assert mock_characteristic.is_readable
+    assert not mock_characteristic.is_writeable
+    assert not mock_characteristic.is_notifiable
+    assert not mock_characteristic.is_indicatable
 
 
-def test_characteristic_view(gatt_db: GattDB):
+def test_service(mock_service: Service):
+    assert mock_service.start_handle > 0
+    assert mock_service.name == mock_service.uuid.name
+    assert len(mock_service.characteristics) > 0
+
+
+def test_characteristic_view(mock_gatt_db: GattDB):
     # Get all attributes by nested looping through services
     chars: list[Characteristic] = []
-    for service in gatt_db.services.values():
+    for service in mock_gatt_db.services.values():
         for char in service.characteristics.values():
             chars.append(char)
 
-    assert len(chars) == len(gatt_db.characteristics)
+    assert len(chars) == len(mock_gatt_db.characteristics)
 
     for char in chars:
-        assert char.uuid in gatt_db.characteristics
+        assert char.uuid in mock_gatt_db.characteristics
 
-    for char in gatt_db.characteristics:
+    for char in mock_gatt_db.characteristics:
         assert len(char.uuid.hex)
 
-    assert list(gatt_db.characteristics.keys()) == [c.uuid for c in chars]
-    assert list([c.uuid for c in gatt_db.characteristics.values()]) == [c.uuid for c in chars]
+    assert list(mock_gatt_db.characteristics.keys()) == [c.uuid for c in chars]
+    assert list([c.uuid for c in mock_gatt_db.characteristics.values()]) == [c.uuid for c in chars]
 
 
-def test_gatt_db(gatt_db: GattDB):
-    handles = set([c.handle for c in gatt_db.characteristics])
-    uuids = set([c.uuid for c in gatt_db.characteristics])
-    assert handles == set([gatt_db.uuid2handle(uuid) for uuid in uuids])
-    assert uuids == set([gatt_db.handle2uuid(handle) for handle in handles])
+def test_gatt_db(mock_gatt_db: GattDB):
+    handles = set([c.handle for c in mock_gatt_db.characteristics])
+    uuids = set([c.uuid for c in mock_gatt_db.characteristics])
+    assert handles == set([mock_gatt_db.uuid2handle(uuid) for uuid in uuids])
+    assert uuids == set([mock_gatt_db.handle2uuid(handle) for handle in handles])
 
-    gatt_db.dump_to_csv()
+    mock_gatt_db.dump_to_csv()

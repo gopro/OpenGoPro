@@ -6,20 +6,32 @@
 # pylint: disable = arguments-differ
 
 from __future__ import annotations
+
 import enum
 import json
 import logging
 import tkinter as tk
-from tkinter import ttk, font
 import tkinter.scrolledtext as ScrolledText
-from abc import abstractmethod, ABC
-from urllib.parse import urlparse, parse_qs
-from typing import Any, Union, Sequence, Callable, Optional, Generator, Generic, TypeVar, cast, no_type_check
+from abc import ABC, abstractmethod
+from tkinter import font, ttk
+from typing import (
+    Any,
+    Callable,
+    Generator,
+    Generic,
+    Optional,
+    Sequence,
+    TypeVar,
+    Union,
+    cast,
+    no_type_check,
+)
+from urllib.parse import parse_qs, urlparse
 
-from PIL import Image, ImageTk, ImageDraw
+from PIL import Image, ImageDraw, ImageTk
 
+from open_gopro.demos.gui.components import THEME, models
 from open_gopro.util import pretty_print
-from open_gopro.demos.gui.components import models, THEME
 
 MAX_TREEVIEW_ID = 1000000
 
@@ -392,7 +404,13 @@ class TreeViewLog(Log):
         def sanitize_message(self) -> None:
             """Clean up the directional headers from the logger message string"""
             self.message = (
-                self.message.replace(self.ASYNC_TOKEN, "").strip("<>").strip("-").strip("<>").replace("\t", "")
+                self.message.replace(self.ASYNC_TOKEN, "")
+                .strip("<>")
+                .strip("-")
+                .strip("<>")
+                .replace("\t", "")
+                .replace("\n", "")
+                .strip(",")
             )
 
         @property
@@ -421,11 +439,11 @@ class TreeViewLog(Log):
             # First yield top level
             out: list[str] = []
             for fmtstr in self.fmt:
-                out.append(pretty_print(work_dict.pop(fmtstr, "")))
-            yield pretty_print(work_dict.pop("id")), tuple(out)
+                out.append(pretty_print(work_dict.pop(fmtstr, ""), should_quote=False))
+            yield pretty_print(work_dict.pop("id"), should_quote=False), tuple(out)
             # Yield any additional items
             for key, value in work_dict.items():
-                yield pretty_print(key), (pretty_print(str(value)),)
+                yield pretty_print(key, should_quote=False), (pretty_print(str(value), should_quote=False),)
 
         def __str__(self) -> str:
             return json.dumps(self.data, indent=4)
@@ -438,10 +456,10 @@ class TreeViewLog(Log):
         self.tv.column("protocol", width=20)
         self.tv.column("status", width=50)
         self.tv.column("target", width=50)
-        self.tv.heading("log_time", text="Time")
+        self.tv.heading("log_time", text="Time / Value")
         self.tv.heading("protocol", text="Protocol")
         self.tv.heading("status", text="Status")
-        self.tv.heading("target", text="UUID/Endpoint")
+        self.tv.heading("target", text="UUID / Endpoint")
         self.tv.tag_configure(Log.Format.TX.name, background=Log.Format.TX.value, foreground="black")
         self.tv.tag_configure(Log.Format.RX.name, background=Log.Format.RX.value, foreground="black")
         self.tv.tag_configure(Log.Format.ERROR.name, background=Log.Format.ERROR.value, foreground="black")
@@ -450,12 +468,8 @@ class TreeViewLog(Log):
         self.sbv.config(command=self.tv.yview)
         self.index = 0
         self.img_open = ImageTk.PhotoImage(TreeViewLog.im_open, name="img_open", master=self.winfo_toplevel())
-        self.img_close = ImageTk.PhotoImage(
-            TreeViewLog.im_close, name="img_close", master=self.winfo_toplevel()
-        )
-        self.img_empty = ImageTk.PhotoImage(
-            TreeViewLog.im_empty, name="img_empty", master=self.winfo_toplevel()
-        )
+        self.img_close = ImageTk.PhotoImage(TreeViewLog.im_close, name="img_close", master=self.winfo_toplevel())
+        self.img_empty = ImageTk.PhotoImage(TreeViewLog.im_empty, name="img_empty", master=self.winfo_toplevel())
         self.style = ttk.Style(self.winfo_toplevel())
         self.style.element_create(
             "Treeitem.myindicator",
@@ -637,9 +651,7 @@ class ParamForm(View, tk.Frame):
         self.value_label = ttk.Label(self.active_arg_frame, text=param, anchor="w")
         self.value_label.pack(side=tk.LEFT)
 
-    def create_option_menu(
-        self, param: str, options: Sequence[str], default: Optional[str] = None
-    ) -> GetterType:
+    def create_option_menu(self, param: str, options: Sequence[str], default: Optional[str] = None) -> GetterType:
         """Create a drop down menu for an argument
 
         Args:
@@ -817,9 +829,7 @@ class StatusTab(View, tk.Frame):
             # The values key in TreeView will return all of its value (values and caps from our perspective)
             current_values = self.tv.item(tree_index)["values"]
             # Need to check is not None because falsy empty string is a valid input
-            new_values = tuple(
-                new if new is not None else old for new, old in zip((value, capability), current_values)
-            )
+            new_values = tuple(new if new is not None else old for new, old in zip((value, capability), current_values))
             self.tv.item(tree_index, tags=("recent",), values=new_values)
         else:
             store(int(identifier))

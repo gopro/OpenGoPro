@@ -8,25 +8,42 @@
 # to dynamically build messages
 
 from __future__ import annotations
-import re
-import enum
-import time
-import logging
-import inspect
-from pathlib import Path
+
+import asyncio
 import datetime
+import enum
+import inspect
+import logging
+import re
 import typing
-from typing import Pattern, Any, Callable, Generator, Optional, no_type_check, Union, Final
+from pathlib import Path
+from typing import (
+    Any,
+    Callable,
+    Final,
+    Generator,
+    Optional,
+    Pattern,
+    Union,
+    no_type_check,
+)
 
-from wrapt.decorators import BoundFunctionWrapper
 import construct
+from wrapt.decorators import BoundFunctionWrapper
 
-from open_gopro import WirelessGoPro, constants
-from open_gopro.api import BleStatus, HttpSetting, BleSetting
-from open_gopro.interface import BleMessage, HttpMessage, Message, Messages, GoProBle, GoProHttp
-import open_gopro.api.params
+import open_gopro.api.params  # needed for dynamic execution
 import open_gopro.api.params as Params
-from open_gopro.responses import GoProResp, ResponseType
+from open_gopro import WirelessGoPro, constants, proto, types
+from open_gopro.api import BleSetting, BleStatus, HttpSetting
+from open_gopro.communicator_interface import (
+    BleMessage,
+    GoProBle,
+    GoProHttp,
+    HttpMessage,
+    Message,
+    Messages,
+)
+from open_gopro.models.response import GoProResp
 
 PREVIEW_STREAM_URL: Final = r"udp://127.0.0.1:8554"
 
@@ -63,7 +80,7 @@ class GoProModel:
         # Initial instantiation just to get command strings
         self.gopro: CompoundGoPro = CompoundGoPro()
 
-    def start(self, identifier: Optional[Pattern]) -> None:
+    async def start(self, identifier: Optional[Pattern]) -> None:
         """Open the model (i.e. connect BLE and Wifi to camera)
 
         Args:
@@ -71,7 +88,7 @@ class GoProModel:
         """
         # Reinstantiate
         self.gopro = CompoundGoPro(target=identifier)
-        self.gopro.open()
+        await self.gopro.open()
 
     # NOTE: the following properties must be evaluated dynamically since self.gopro is changing
     # TODO hash and evaluate lazily
@@ -204,9 +221,7 @@ class GoProModel:
         """
         arg_types: list[type] = []
         arg_names: list[str] = []
-        method_info = inspect.getfullargspec(
-            message if (is_command := cls.is_command(message)) else message.set
-        )
+        method_info = inspect.getfullargspec(message if (is_command := cls.is_command(message)) else message.set)
         for arg in method_info.kwonlyargs if is_command else method_info.args[1:]:
             if arg.startswith("_"):
                 continue
@@ -224,9 +239,7 @@ class GoProModel:
             arg_names.append(arg)
         return arg_names, arg_types
 
-    def get_message_info(
-        self, message: Message
-    ) -> tuple[list[Callable], list[Callable], list[type], list[str]]:
+    def get_message_info(self, message: Message) -> tuple[list[Callable], list[Callable], list[type], list[str]]:
         """For a given message, get its adapters, validator, argument types, and argument names
 
         Args:
@@ -288,21 +301,21 @@ class GoProModel:
                 update value, update type)
         """
 
-        def get_update_type(container: GoProResp, identifier: ResponseType) -> GoProModel.Update:
+        def get_update_type(container: GoProResp, identifier: types.ResponseType) -> GoProModel.Update:
             if container.protocol is GoProResp.Protocol.BLE:
-                if container.cmd in [
+                if container.identifier in [
                     constants.QueryCmdId.GET_CAPABILITIES_VAL,
                     constants.QueryCmdId.REG_CAPABILITIES_UPDATE,
                     constants.QueryCmdId.SETTING_CAPABILITY_PUSH,
                 ]:
                     return GoProModel.Update.CAPABILITY
-                if container.cmd in [
+                if container.identifier in [
                     constants.QueryCmdId.GET_SETTING_VAL,
                     constants.QueryCmdId.REG_SETTING_VAL_UPDATE,
                     constants.QueryCmdId.SETTING_VAL_PUSH,
                 ]:
                     return GoProModel.Update.SETTING
-                if container.cmd in [
+                if container.identifier in [
                     constants.QueryCmdId.GET_STATUS_VAL,
                     constants.QueryCmdId.REG_STATUS_VAL_UPDATE,
                     constants.QueryCmdId.STATUS_VAL_PUSH,
@@ -319,11 +332,12 @@ class GoProModel:
             raise TypeError(f"Received unexpected protocol {container.protocol}")
 
         if isinstance(response, GoProResp):
-            for identifier, value in response.items():
+            for identifier, value in response.data():
                 if type(identifier) in (constants.SettingId, constants.StatusId):
                     yield identifier, value, get_update_type(response, identifier)
         elif response is None:
-            while update := self.gopro.get_notification(0):
+            # TODO need to update to new method. This is broken
+            while update := self.gopro.get_notification(0):  # type: ignore
                 for identifier, value in update.items():
                     yield identifier, value, get_update_type(update, identifier)
 
@@ -338,7 +352,7 @@ class CompoundCommand(Message):
     def __str__(self) -> str:
         return self._identifier
 
-    def _as_dict(self, *_: Any, **kwargs: Any) -> dict[str, Any]:
+    def _as_dict(self, *_: Any, **kwargs: Any) -> types.JsonDict:
         """Return the command as a dict
 
         Args:
@@ -346,7 +360,7 @@ class CompoundCommand(Message):
             **kwargs (Any) : additional dict keys to append
 
         Returns:
-            dict[str, Any]: Message as dict
+            types.JsonDict: Message as dict
         """
         return {"protocol": "Complex", "id": self._identifier} | kwargs
 
@@ -363,14 +377,14 @@ class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]
         """
 
         class LiveStream(CompoundCommand):
-            def __call__(  # type: ignore
+            async def __call__(  # type: ignore
                 self,
                 *,
                 ssid: str,
                 password: str,
                 url: str,
-                window_size: Params.WindowSize,
-                lens_type: Params.LensType,
+                window_size: proto.EnumWindowSize,
+                lens_type: proto.EnumLens,
                 min_bit: int,
                 max_bit: int,
                 start_bit: int,
@@ -381,60 +395,24 @@ class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]
                     ssid (str): SSID to connect to
                     password (str): password of WiFi network
                     url (str): url used to stream. Set to empty string to invalidate/cancel stream
-                    window_size (open_gopro.api.params.WindowSize): Streaming video resolution
-                    lens_type (open_gopro.api.params.LensType): Streaming Field of View
+                    window_size (open_gopro.api.proto.EnumWindowSize): Streaming video resolution
+                    lens_type (open_gopro.api.proto.EnumLens): Streaming Field of View
                     min_bit (int): Desired minimum streaming bitrate (>= 800)
                     max_bit (int): Desired maximum streaming bitrate (<= 8000)
                     start_bit (int): Initial streaming bitrate (honored if 800 <= value <= 8000)
 
-                Raises:
-                    RuntimeError: could not find desired ssid
-
                 Returns:
                     GoProResp: status and url to start livestream
                 """
-                self._communicator.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
-                self._communicator.ble_command.register_livestream_status(
-                    register=[Params.RegisterLiveStream.STATUS]
+                await self._communicator.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
+                await self._communicator.ble_command.register_livestream_status(
+                    register=[proto.EnumRegisterLiveStreamStatus]
                 )
 
-                self._communicator.ble_command.scan_wifi_networks()
-                # Wait to receive scanning success
-                scan_id: Optional[int] = None
-                while update := self._communicator.get_notification():
-                    if (
-                        update == constants.ActionId.NOTIF_START_SCAN
-                        and update["scanning_state"] == Params.ScanState.SUCCESS
-                    ):
-                        scan_id = update["scan_id"]
-                        break
-
-                # Get scan results and see if we need to provision
-                assert scan_id
-                for entry in self._communicator.ble_command.get_ap_entries(scan_id=scan_id)["entries"]:
-                    if entry["ssid"] == ssid:
-                        # Are we already provisioned?
-                        if entry["scan_entry_flags"] & Params.ScanEntry.CONFIGURED:
-                            logger.info("Connecting to already provisioned network...")
-                            self._communicator.ble_command.request_wifi_connect(ssid=ssid)
-                        else:
-                            logger.info("Provisioning new network...")
-                            self._communicator.ble_command.request_wifi_connect_new(
-                                ssid=ssid, password=password
-                            )
-                        # Wait to receive provisioning done notification (it is "New" AP in both cases)
-                        while update := self._communicator.get_notification():
-                            if (
-                                update == constants.ActionId.NOTIF_PROVIS_STATE
-                                and update["provisioning_state"] == Params.ProvisioningState.SUCCESS_NEW_AP
-                            ):
-                                break
-                        break
-                else:
-                    raise RuntimeError(f"Could not find network {ssid}")
+                await self._communicator.connect_to_access_point(ssid, password)
 
                 # Start livestream
-                self._communicator.ble_command.set_livestream_mode(
+                await self._communicator.ble_command.set_livestream_mode(
                     url=url,
                     window_size=window_size,
                     cert=bytes(),
@@ -443,19 +421,29 @@ class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]
                     starting_bitrate=start_bit,
                     lens=lens_type,
                 )
-                # Wait to receive livestream started status
-                while update := self._communicator.get_notification():
-                    if (
-                        update == constants.ActionId.LIVESTREAM_STATUS_NOTIF
-                        and update["live_stream_status"] == Params.LiveStreamStatus.READY
-                    ):
-                        break
-                time.sleep(2)
-                assert self._communicator.ble_command.set_shutter(shutter=Params.Toggle.ENABLE).is_ok
 
-                response = GoProResp(meta=["Livestream"], raw_packet={"url": url})
-                response._parse()
-                return response
+                live_stream_ready = asyncio.Event()
+
+                async def wait_for_livestream_ready(_: Any, value: proto.NotifyLiveStreamStatus) -> None:
+                    if value.live_stream_status == proto.EnumLiveStreamStatus.LIVE_STREAM_STATE_READY:
+                        live_stream_ready.set()
+
+                self._communicator.register_update(
+                    wait_for_livestream_ready, constants.ActionId.LIVESTREAM_STATUS_NOTIF
+                )
+                logger.info("Starting livestream")
+                assert (await self._communicator.ble_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
+                logger.info("Waiting for livestream to be ready...\n")
+                await live_stream_ready.wait()
+
+                assert self._communicator.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
+
+                return GoProResp(
+                    protocol=GoProResp.Protocol.BLE,
+                    status=constants.ErrorCode.SUCCESS,
+                    data=None,
+                    identifier="LiveStream",
+                )
 
         self.livestream = LiveStream(communicator, "Livestream")
 

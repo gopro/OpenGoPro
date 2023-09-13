@@ -47,34 +47,60 @@ class _EnumLiveStreamErrorEnumTypeWrapper(
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     LIVE_STREAM_ERROR_NONE: _EnumLiveStreamError.ValueType
+    "No error (success)"
     LIVE_STREAM_ERROR_NETWORK: _EnumLiveStreamError.ValueType
+    "General network error during the stream"
     LIVE_STREAM_ERROR_CREATESTREAM: _EnumLiveStreamError.ValueType
+    "Startup error: bad URL or valid with live stream server"
     LIVE_STREAM_ERROR_OUTOFMEMORY: _EnumLiveStreamError.ValueType
+    "Not enough memory on camera to complete task"
     LIVE_STREAM_ERROR_INPUTSTREAM: _EnumLiveStreamError.ValueType
+    "Failed to get stream from low level camera system"
     LIVE_STREAM_ERROR_INTERNET: _EnumLiveStreamError.ValueType
+    "No internet access detected on startup of streamer"
     LIVE_STREAM_ERROR_OSNETWORK: _EnumLiveStreamError.ValueType
+    "Error occured in linux networking stack. usually means the server closed the connection"
     LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT: _EnumLiveStreamError.ValueType
+    "Timed out attemping to connect to the wifi network when attemping live stream"
     LIVE_STREAM_ERROR_SSL_HANDSHAKE: _EnumLiveStreamError.ValueType
+    "SSL handshake failed (commonly caused due to incorrect time / time zone)"
     LIVE_STREAM_ERROR_CAMERA_BLOCKED: _EnumLiveStreamError.ValueType
+    "Low level camera system rejected attempt to start live stream"
     LIVE_STREAM_ERROR_UNKNOWN: _EnumLiveStreamError.ValueType
+    "Unknown"
     LIVE_STREAM_ERROR_SD_CARD_FULL: _EnumLiveStreamError.ValueType
+    "Can not perform livestream because sd card is full"
     LIVE_STREAM_ERROR_SD_CARD_REMOVED: _EnumLiveStreamError.ValueType
+    "Livestream stopped because sd card was removed"
 
 class EnumLiveStreamError(_EnumLiveStreamError, metaclass=_EnumLiveStreamErrorEnumTypeWrapper): ...
 
 LIVE_STREAM_ERROR_NONE: EnumLiveStreamError.ValueType
+"No error (success)"
 LIVE_STREAM_ERROR_NETWORK: EnumLiveStreamError.ValueType
+"General network error during the stream"
 LIVE_STREAM_ERROR_CREATESTREAM: EnumLiveStreamError.ValueType
+"Startup error: bad URL or valid with live stream server"
 LIVE_STREAM_ERROR_OUTOFMEMORY: EnumLiveStreamError.ValueType
+"Not enough memory on camera to complete task"
 LIVE_STREAM_ERROR_INPUTSTREAM: EnumLiveStreamError.ValueType
+"Failed to get stream from low level camera system"
 LIVE_STREAM_ERROR_INTERNET: EnumLiveStreamError.ValueType
+"No internet access detected on startup of streamer"
 LIVE_STREAM_ERROR_OSNETWORK: EnumLiveStreamError.ValueType
+"Error occured in linux networking stack. usually means the server closed the connection"
 LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT: EnumLiveStreamError.ValueType
+"Timed out attemping to connect to the wifi network when attemping live stream"
 LIVE_STREAM_ERROR_SSL_HANDSHAKE: EnumLiveStreamError.ValueType
+"SSL handshake failed (commonly caused due to incorrect time / time zone)"
 LIVE_STREAM_ERROR_CAMERA_BLOCKED: EnumLiveStreamError.ValueType
+"Low level camera system rejected attempt to start live stream"
 LIVE_STREAM_ERROR_UNKNOWN: EnumLiveStreamError.ValueType
+"Unknown"
 LIVE_STREAM_ERROR_SD_CARD_FULL: EnumLiveStreamError.ValueType
+"Can not perform livestream because sd card is full"
 LIVE_STREAM_ERROR_SD_CARD_REMOVED: EnumLiveStreamError.ValueType
+"Livestream stopped because sd card was removed"
 global___EnumLiveStreamError = EnumLiveStreamError
 
 class _EnumLiveStreamStatus:
@@ -86,22 +112,36 @@ class _EnumLiveStreamStatusEnumTypeWrapper(
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     LIVE_STREAM_STATE_IDLE: _EnumLiveStreamStatus.ValueType
+    "Initial status. Livestream has not yet been configured"
     LIVE_STREAM_STATE_CONFIG: _EnumLiveStreamStatus.ValueType
+    "Livestream is being configured"
     LIVE_STREAM_STATE_READY: _EnumLiveStreamStatus.ValueType
+    "Livestream has finished configuration and is ready to start streaming"
     LIVE_STREAM_STATE_STREAMING: _EnumLiveStreamStatus.ValueType
+    "Livestream is actively streaming"
     LIVE_STREAM_STATE_COMPLETE_STAY_ON: _EnumLiveStreamStatus.ValueType
+    "Live stream is exiting. No errors occured."
     LIVE_STREAM_STATE_FAILED_STAY_ON: _EnumLiveStreamStatus.ValueType
+    "Live stream is exiting. An error occurred."
     LIVE_STREAM_STATE_RECONNECTING: _EnumLiveStreamStatus.ValueType
+    "An error occurred during livestream and stream is attempting to reconnect."
 
 class EnumLiveStreamStatus(_EnumLiveStreamStatus, metaclass=_EnumLiveStreamStatusEnumTypeWrapper): ...
 
 LIVE_STREAM_STATE_IDLE: EnumLiveStreamStatus.ValueType
+"Initial status. Livestream has not yet been configured"
 LIVE_STREAM_STATE_CONFIG: EnumLiveStreamStatus.ValueType
+"Livestream is being configured"
 LIVE_STREAM_STATE_READY: EnumLiveStreamStatus.ValueType
+"Livestream has finished configuration and is ready to start streaming"
 LIVE_STREAM_STATE_STREAMING: EnumLiveStreamStatus.ValueType
+"Livestream is actively streaming"
 LIVE_STREAM_STATE_COMPLETE_STAY_ON: EnumLiveStreamStatus.ValueType
+"Live stream is exiting. No errors occured."
 LIVE_STREAM_STATE_FAILED_STAY_ON: EnumLiveStreamStatus.ValueType
+"Live stream is exiting. An error occurred."
 LIVE_STREAM_STATE_RECONNECTING: EnumLiveStreamStatus.ValueType
+"An error occurred during livestream and stream is attempting to reconnect."
 global___EnumLiveStreamStatus = EnumLiveStreamStatus
 
 class _EnumRegisterLiveStreamStatus:
@@ -292,9 +332,7 @@ class RequestGetLiveStreamStatus(google.protobuf.message.Message):
         *,
         register_live_stream_status: collections.abc.Iterable[global___EnumRegisterLiveStreamStatus.ValueType]
         | None = ...,
-        unregister_live_stream_status: collections.abc.Iterable[
-            global___EnumRegisterLiveStreamStatus.ValueType
-        ]
+        unregister_live_stream_status: collections.abc.Iterable[global___EnumRegisterLiveStreamStatus.ValueType]
         | None = ...
     ) -> None: ...
     def ClearField(

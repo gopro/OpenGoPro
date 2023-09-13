@@ -1,0 +1,19 @@
+[ req ]
+authorityKeyIdentifier = keyid,issuer
+distinguished_name = req_distinguished_name
+prompt = no
+req_extensions = req_ext
+[ req_distinguished_name ]
+countryName = US
+stateOrProvinceName = CA
+localityName = San Mateo
+organizationName = GoPro
+organizationalUnitName = Server
+commonName = GoPro Server
+[ req_ext ]
+basicConstraints = CA:FALSE
+subjectAltName = @alt_names
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectKeyIdentifier = hash
+[ alt_names ]
+IP.1 = __IP_ADDR__

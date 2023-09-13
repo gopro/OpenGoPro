@@ -3,13 +3,14 @@
 
 """Generic BLE Client definition that is composed of a BLE Controller."""
 
-import re
 import logging
+import re
 from pathlib import Path
-from typing import Generic, Optional, Union, Pattern
+from typing import Generic, Optional, Pattern, Union
 
 from open_gopro.ble import BleUUID
-from open_gopro.exceptions import FailedToFindDevice, ConnectFailed
+from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
+
 from .controller import (
     BLEController,
     BleDevice,
@@ -17,7 +18,7 @@ from .controller import (
     DisconnectHandlerType,
     NotiHandlerType,
 )
-from .services import GattDB, BleUUID, UUIDs
+from .services import BleUUID, GattDB, UUIDs
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +65,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
         self._identifier: Optional[str] = None if isinstance(self._target, Pattern) else str(self._target)
         self.uuids = uuids
 
-    def _find_device(self, timeout: int = 5, retries: int = 30) -> None:
+    async def _find_device(self, timeout: int = 5, retries: int = 30) -> None:
         """Scan for the target device.
 
         Args:
@@ -78,13 +79,13 @@ class BleClient(Generic[BleHandle, BleDevice]):
         assert isinstance(self._target, Pattern)
         for retry in range(1, retries):
             try:
-                self._device = self._controller.scan(self._target, timeout, self._service_uuids)
+                self._device = await self._controller.scan(self._target, timeout, self._service_uuids)
                 return
             except FailedToFindDevice:
                 logger.warning(f"Failed to find a device in {timeout} seconds. Retrying #{retry}")
         raise FailedToFindDevice
 
-    def open(self, timeout: int = 10, retries: int = 5) -> None:
+    async def open(self, timeout: int = 10, retries: int = 5) -> None:
         """Open the client resource so that it is ready to send and receive data.
 
         Args:
@@ -96,7 +97,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
         """
         # If we need we need to find the device to connect
         if isinstance(self._target, Pattern):
-            self._find_device(timeout, retries)
+            await self._find_device(timeout, retries)
         # Otherwise we already have it
         else:
             self._device = self._target
@@ -105,7 +106,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
         logger.info("Establishing the BLE connection")
         for retry in range(1, retries):
             try:
-                self._handle = self._controller.connect(self._disconnected_cb, self._device, timeout=timeout)
+                self._handle = await self._controller.connect(self._disconnected_cb, self._device, timeout=timeout)
                 break
             except ConnectFailed as e:
                 logger.warning(f"Failed to connect. Retrying #{retry}")
@@ -114,25 +115,25 @@ class BleClient(Generic[BleHandle, BleDevice]):
 
         assert self._handle is not None
         # Attempt to pair
-        self._controller.pair(self._handle)
+        await self._controller.pair(self._handle)
         # Discover characteristics
-        self._gatt_table = self._controller.discover_chars(self._handle, self.uuids)
+        self._gatt_table = await self._controller.discover_chars(self._handle, self.uuids)
         # Enable all GATT notifications
-        self._controller.enable_notifications(self._handle, self._notification_cb)
+        await self._controller.enable_notifications(self._handle, self._notification_cb)
 
-    def close(self) -> None:
+    async def close(self) -> None:
         """Close the client resource.
 
         This should always be called before exiting.
         """
         if self.is_connected:
             logger.info("Terminating the BLE connection")
-            self._controller.disconnect(self._handle)
+            await self._controller.disconnect(self._handle)
             self._handle = None
         else:
             logger.debug("BLE already disconnected")
 
-    def read(self, uuid: BleUUID) -> bytearray:
+    async def read(self, uuid: BleUUID) -> bytearray:
         """Read byte data from a characteristic (identified by BleUUID)
 
         Args:
@@ -141,28 +142,29 @@ class BleClient(Generic[BleHandle, BleDevice]):
         Returns:
             bytearray: byte data that was read
         """
-        return self._controller.read(self._handle, uuid)
+        return await self._controller.read(self._handle, uuid)
 
-    def write(self, uuid: BleUUID, data: bytearray) -> None:
+    async def write(self, uuid: BleUUID, data: bytearray) -> None:
         """Write byte data to a characteristic (identified by BleUUID)
 
         Args:
             uuid (BleUUID): characteristic to write to
             data (bytearray): byte data to write
         """
-        self._controller.write(self._handle, uuid, data)
+        await self._controller.write(self._handle, uuid, data)
 
     @property
     def gatt_db(self) -> GattDB:
         """Return the attribute table
 
+        Raises:
+            RuntimeError: GATT table hasn't been discovered
+
         Returns:
             GattDB: table of BLE attributes
         """
-        if self._gatt_table is None:
-            # Discover characteristics
-            assert self._handle is not None
-            self._gatt_table = self._controller.discover_chars(self._handle)
+        if not self._gatt_table:
+            raise RuntimeError("GATT table has not yet been discovered")
         return self._gatt_table
 
     @property

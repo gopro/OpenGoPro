@@ -6,49 +6,51 @@
 # pylint: disable= redefined-outer-name
 
 import requests
-
-import pytest
 import requests_mock
 
-from open_gopro import WirelessGoPro
-from open_gopro.constants import ActionId, CmdId, GoProUUIDs, QueryCmdId, SettingId, StatusId
-from open_gopro.responses import GoProResp
-from open_gopro.api.http_commands import HttpParsers
+from open_gopro.api.parsers import JsonParsers
+from open_gopro.constants import (
+    ActionId,
+    CmdId,
+    ErrorCode,
+    GoProUUIDs,
+    QueryCmdId,
+    SettingId,
+    StatusId,
+)
+from open_gopro.models.response import (
+    BleRespBuilder,
+    HttpRespBuilder,
+    RequestsHttpRespBuilderDirector,
+)
 
-
+# Resolution capability response with no valid capabilities
 test_push_receive_no_parameter = bytearray([0x08, 0xA2, 0x00, 0x02, 0x00, 0x03, 0x00, 0x79, 0x00])
 
 
 def test_push_response_no_parameter_values():
-    r = GoProResp([GoProUUIDs.CQ_QUERY_RESP])
-    r._accumulate(test_push_receive_no_parameter)
-    assert r.is_received
-    r._parse()
-    assert r.is_parsed
-    assert r.is_ok
-    assert r.identifier is QueryCmdId.SETTING_CAPABILITY_PUSH
-    assert r.cmd is QueryCmdId.SETTING_CAPABILITY_PUSH
-    assert r.uuid == GoProUUIDs.CQ_QUERY_RESP
-    assert r.endpoint is None
-    assert r[SettingId.RESOLUTION] == []
-    assert isinstance(r.flatten, dict)
+    builder = BleRespBuilder()
+    builder.set_uuid(GoProUUIDs.CQ_QUERY_RESP)
+    builder.accumulate(test_push_receive_no_parameter)
+    assert builder.is_finished_accumulating
+    r = builder.build()
+    assert r.ok
+    assert r.identifier == SettingId.RESOLUTION
+    assert r.data == []
 
 
 test_read_receive = bytearray([0x64, 0x62, 0x32, 0x2D, 0x73, 0x58, 0x56, 0x2D, 0x66, 0x62, 0x38])
 
 
 def test_read_command():
-    r = GoProResp._from_read_response(GoProUUIDs.WAP_PASSWORD, test_read_receive)
-    assert r.is_parsed
-    assert r.is_received
-    assert r.is_received
-    assert r.is_ok
+    builder = BleRespBuilder()
+    builder.set_uuid(GoProUUIDs.WAP_PASSWORD)
+    builder.set_packet(test_read_receive)
+    r = builder.build()
+    assert r.ok
     assert r.identifier is GoProUUIDs.WAP_PASSWORD
-    assert r.cmd is None
-    assert r.endpoint is None
-    assert r["password"] == "db2-sXV-fb8"
+    assert r.data == "db2-sXV-fb8"
     assert len(str(r)) > 0
-    assert isinstance(r.flatten, str)
 
 
 test_write_send = bytearray([0x05])  ## Sleep
@@ -56,12 +58,13 @@ test_write_recieve = bytearray([0x02, 0x05, 0x00])
 
 
 def test_write_command():
-    r = GoProResp([GoProUUIDs.CQ_COMMAND_RESP, CmdId.SLEEP])
-    r._accumulate(test_write_recieve)
-    assert r.is_received
-    r._parse()
-    assert r.is_parsed
-    assert r.is_ok
+    builder = BleRespBuilder()
+    builder.set_uuid(GoProUUIDs.CQ_COMMAND_RESP)
+    builder.accumulate(test_write_recieve)
+    assert builder.is_finished_accumulating
+    r = builder.build()
+    assert r.identifier is CmdId.SLEEP
+    assert r.ok
 
 
 test_complex_write_send = bytes([0x13])
@@ -463,31 +466,22 @@ test_complex_write_receive = bytes(
 
 
 def test_complex_write_command():
-    r = GoProResp([GoProUUIDs.CQ_QUERY_RESP, CmdId.GET_CAMERA_STATUSES])
+    builder = BleRespBuilder()
+    builder.set_uuid(GoProUUIDs.CQ_QUERY_RESP)
     idx = 0
-    while not r.is_received:
+    while not builder.is_finished_accumulating:
         end = len(test_complex_write_receive) if idx + 20 > len(test_complex_write_receive) else idx + 20
-        r._accumulate(test_complex_write_receive[idx:end])
+        builder.accumulate(test_complex_write_receive[idx:end])
         idx = end
-    assert r.is_received
-    r._parse()
-    assert r.is_parsed
-    assert r.is_received
-    assert "DEPRECATED" in list(r.values())
-    assert r.is_ok
+    assert builder.is_finished_accumulating
+    r = builder.build()
+    assert "DEPRECATED" in list(r.data.values())
+    assert r.ok
     assert r.identifier is QueryCmdId.GET_STATUS_VAL
-    assert r.cmd is QueryCmdId.GET_STATUS_VAL
-    assert r.uuid == GoProUUIDs.CQ_QUERY_RESP
-    assert StatusId.ENCODING in r
     # Test iterator
-    for x in r:
+    for x in r.data:
         assert isinstance(x, StatusId)
     assert len(str(r)) > 0
-    assert isinstance(r.flatten, dict)
-    # Test dict methods
-    assert len(r.items())
-    assert len(r.keys())
-    assert len(r.values())
 
 
 test_json = {
@@ -679,26 +673,21 @@ def test_http_response_with_extra_parsing():
     with requests_mock.Mocker() as m:
         m.get(url, json=test_json)
         response = requests.get(url)
-        r = GoProResp._from_http_response(HttpParsers.CameraStateParser(), response)
-
-        assert r.is_parsed
-        assert r.is_received
-        assert r.is_received
-        assert r.is_ok
-        assert r.cmd is None
-        assert r.uuid == None
+        director = RequestsHttpRespBuilderDirector(response, JsonParsers.CameraStateParser())
+        r = director()
+        assert "DEPRECATED" in r.data.values()
+        assert r.ok
         assert len(str(r)) > 0
-        assert r.endpoint
 
 
 receive_proto = bytes([0x0D, 0xF5, 0xFF, 0x28, 0x07, 0x30, 0x01, 0x38, 0x03, 0x40, 0x00, 0x80, 0x01, 0x01])
 
 
 def test_proto():
-
-    r = GoProResp([GoProUUIDs.CQ_QUERY_RESP])
-    r._accumulate(receive_proto)
-    assert r.is_received
-    r._parse()
-    assert r.is_parsed
-    assert r.is_ok
+    builder = BleRespBuilder()
+    builder.set_uuid(GoProUUIDs.CQ_QUERY_RESP)
+    builder.accumulate(receive_proto)
+    assert builder.is_finished_accumulating
+    r = builder.build()
+    assert r.identifier is ActionId.INTERNAL_FF
+    assert r.ok

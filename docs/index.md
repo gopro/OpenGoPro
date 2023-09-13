@@ -34,6 +34,7 @@ Open GoPro API is supported on all camera models since Hero 9 with the following
 | Hero 10 Black      |     v01.10.00      |
 | Hero 11 Black      |     v01.10.00      |
 | Hero 11 Black Mini |     v01.10.00      |
+| Hero 12 Black      |     v01.10.00      |
 
 While we strive to provide the same API functionality and logic for all newly launched cameras, minor changes
 are sometimes necessary. These are typically a consequence of HW component upgrades or improving or optimizing
@@ -98,13 +99,14 @@ directly from the cameras, either via USB or wireless connection.
 
 | Stream Type | Description                                   | WiFi | USB | Record while Streaming |
 | ----------- | --------------------------------------------- | :--: | :-: | :--------------------: |
-| : Preview : | Moderate video quality, primarily for framing |      |     |           \            |
+| : Preview : | Moderate video quality, primarily for framing |      |     |       `>=` Hero 12       |
 | Stream      | Low latency stabilization                     |  ✔️  | ✔️  |           \            |
 |             | Low power consumption                         |      |     |                        |
 | : Webcam :  | Cinematic video quality                       |      |     |           \            |
 | Mode        | Optional low latency stabilization            |  ✔️  | ✔️  |                        |
 | : Live :    | Cinematic video quality                       |      |     |           \            |
 | Stream      | Optional hypersmooth stabilization            |  ✔️  |     |           ✔️           |
+
 
 Each of the streaming types has different resolutions, bit rates, imaging pipelines, and different levels of
 configurability. Refer to the [FAQ]({% link faq.md %}).

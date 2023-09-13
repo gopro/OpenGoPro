@@ -2,36 +2,45 @@
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:05:55 PM
 
 import inspect
+import logging
 from pathlib import Path
 
-from open_gopro.interface import GoProWifi
+import pytest
+
+from open_gopro.communicator_interface import GoProWifi
 
 
-def test_get_with_no_params(wifi_communicator: GoProWifi):
-    response = wifi_communicator.http_command.get_media_list()
+@pytest.mark.asyncio
+async def test_get_with_no_params(mock_wifi_communicator: GoProWifi):
+    response = await mock_wifi_communicator.http_command.get_media_list()
     assert response.url == "gopro/media/list"
 
 
-def test_get_with_params(wifi_communicator: GoProWifi):
+@pytest.mark.asyncio
+async def test_get_with_params(mock_wifi_communicator: GoProWifi):
     zoom = 99
-    response = wifi_communicator.http_command.set_digital_zoom(percent=zoom)
+    response = await mock_wifi_communicator.http_command.set_digital_zoom(percent=zoom)
     assert response.url == f"gopro/camera/digital_zoom?percent={zoom}"
 
 
-def test_with_multiple_params(wifi_communicator: GoProWifi):
+@pytest.mark.asyncio
+async def test_with_multiple_params(mock_wifi_communicator: GoProWifi):
     media_file = "XXX.mp4"
     offset_ms = 2500
-    response = wifi_communicator.http_command.add_file_hilight(file=media_file, offset=offset_ms)
+    response = await mock_wifi_communicator.http_command.add_file_hilight(file=media_file, offset=offset_ms)
     assert response.url == "gopro/media/hilight/file?path=100GOPRO/XXX.mp4&ms=2500"
 
 
-def test_get_binary(wifi_communicator: GoProWifi):
-    file = wifi_communicator.http_command.download_file(camera_file="test_file", local_file=Path("local_file"))
+@pytest.mark.asyncio
+async def test_get_binary(mock_wifi_communicator: GoProWifi):
+    file = await mock_wifi_communicator.http_command.download_file(
+        camera_file="test_file", local_file=Path("local_file")
+    )
     assert str(file[1]) == "local_file"
 
 
-def test_ensure_no_positional_args(wifi_communicator: GoProWifi):
-    for command in wifi_communicator.http_command.values():
+def test_ensure_no_positional_args(mock_wifi_communicator: GoProWifi):
+    for command in mock_wifi_communicator.http_command.values():
         if inspect.getfullargspec(command).args != ["self"]:
             logging.error("All arguments to commands must be keyword-only")
             assert True

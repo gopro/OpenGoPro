@@ -4,17 +4,18 @@
 """GUI controllers and associated common functionality"""
 
 from __future__ import annotations
-import enum
-import queue
-import datetime
+
 import asyncio
+import datetime
+import enum
 import logging
-from pathlib import Path
-from functools import partial
+import queue
+import tkinter as tk
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-import tkinter as tk
-from typing import Optional, Callable, Any, Union, no_type_check
+from functools import partial
+from pathlib import Path
+from typing import Any, Callable, Optional, Union, no_type_check
 
 import cv2
 import PIL.Image
@@ -22,7 +23,8 @@ import PIL.ImageTk
 import wrapt
 
 from open_gopro.demos.gui.components import models, views
-from open_gopro.util import setup_logging, pretty_print, add_logging_handler
+from open_gopro.logger import add_logging_handler, setup_logging
+from open_gopro.util import pretty_print
 
 ResponseHandlerType = Callable[[str, models.GoProResp], None]
 
@@ -269,17 +271,11 @@ class StatusBar(Controller):
         elif status in StatusBar.Wifi:
             self.view.update_status(self.view.wifi_status, status.value, status.name.replace("_", " ").title())
         elif status in StatusBar.Ready:
-            self.view.update_status(
-                self.view.ready_status, status.value, status.name.replace("_", " ").title()
-            )
+            self.view.update_status(self.view.ready_status, status.value, status.name.replace("_", " ").title())
         elif status in StatusBar.Encoding:
-            self.view.update_status(
-                self.view.encoding_status, status.value, status.name.replace("_", " ").title()
-            )
+            self.view.update_status(self.view.encoding_status, status.value, status.name.replace("_", " ").title())
         elif status in StatusBar.Stream:
-            self.view.update_status(
-                self.view.stream_status, status.value, status.name.replace("_", " ").title()
-            )
+            self.view.update_status(self.view.stream_status, status.value, status.name.replace("_", " ").title())
         else:
             raise ValueError(f"No handler for status {status}")
 
@@ -379,13 +375,14 @@ class Video(Controller):
             response (models.GoProResp): response that was received
         """
         # Get binary's (which are of type Path) are not handled. TODO updating typing for this
-        if not isinstance(response, models.GoProResp) or not response.is_ok:
+        if not isinstance(response, models.GoProResp) or not response.ok:
             return
 
+        # TODO This is broken
         video_source: Optional[str] = None
         if str(identifier).lower() == "livestream":
-            video_source = response["url"]
-        elif str(identifier).lower() == "set preview stream" and "start" in (response.endpoint or ""):
+            video_source = response.identifier  # type: ignore
+        elif str(identifier).lower() == "set preview stream" and "start" in (str(response.identifier) or ""):
             video_source = models.PREVIEW_STREAM_URL
 
         if video_source:
@@ -708,9 +705,7 @@ class MessagePalette(Controller):
         async def on_message_send(self: MessagePalette) -> Optional[models.GoProResp]:
             assert self.active_message
             method = (
-                self.active_message.message
-                if attribute is None
-                else getattr(self.active_message.message, attribute)
+                self.active_message.message if attribute is None else getattr(self.active_message.message, attribute)
             )
             args = []
             kwargs = {}
@@ -746,9 +741,7 @@ class StatusTab(Controller):
         poll_period (int, optional): how often to refresh updates (in ms). Defaults to 200.
     """
 
-    def __init__(
-        self, loop: asyncio.AbstractEventLoop, model: models.GoProModel, poll_period: int = 200
-    ) -> None:
+    def __init__(self, loop: asyncio.AbstractEventLoop, model: models.GoProModel, poll_period: int = 200) -> None:
         super().__init__(loop)
         self.model = model
         self.period = poll_period

@@ -3,16 +3,18 @@
 
 """Connect to the Wifi AP of a GoPro camera."""
 
-import logging
 import argparse
+import asyncio
+import logging
 from typing import Optional
 
 from rich.console import Console
 
 from open_gopro import WirelessGoPro
-from open_gopro.util import setup_logging, set_stream_logging_level, add_cli_args_and_parse
+from open_gopro.logger import set_stream_logging_level, setup_logging
+from open_gopro.util import add_cli_args_and_parse, ainput
 
-console = Console()  # rich consoler printer
+console = Console()
 
 
 def parse_arguments() -> argparse.Namespace:
@@ -20,31 +22,27 @@ def parse_arguments() -> argparse.Namespace:
     return add_cli_args_and_parse(parser)
 
 
-def main(args: argparse.Namespace) -> None:
+async def main(args: argparse.Namespace) -> None:
     setup_logging(__name__, args.log)
     gopro: Optional[WirelessGoPro] = None
 
-    with WirelessGoPro(
-        args.identifier, wifi_interface=args.wifi_interface, sudo_password=args.password
-    ) as gopro:
+    async with WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface, sudo_password=args.password) as gopro:
         # Now we only want errors
         set_stream_logging_level(logging.ERROR)
-
-        gopro.http_command.set_keep_alive()
 
         console.print("\n\n🎆🎇✨ Success!! Wifi AP is connected 📡\n")
         console.print("Send commands as per https://gopro.github.io/OpenGoPro/http")
 
-        input("\nPress enter to disconnect Wifi and exit...")
+        await ainput("[blue]Press enter to disconnect Wifi and exit...", console.print)
         console.print("Exiting...")
 
     if gopro:
-        gopro.close()
+        await gopro.close()
 
 
 # Needed for poetry scripts defined in pyproject.toml
 def entrypoint() -> None:
-    main(parse_arguments())
+    asyncio.run(main(parse_arguments()))
 
 
 if __name__ == "__main__":

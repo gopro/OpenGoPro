@@ -4,14 +4,24 @@
 """Objects to nicely interact with BLE services, characteristics, and attributes."""
 
 from __future__ import annotations
+
 import csv
 import json
 import logging
 import uuid
+from dataclasses import InitVar, asdict, dataclass
+from enum import IntEnum, IntFlag
 from pathlib import Path
-from enum import IntFlag, IntEnum
-from dataclasses import dataclass, asdict, InitVar
-from typing import Iterator, Generator, Mapping, Optional, no_type_check, Union, Final, Any
+from typing import (
+    Any,
+    Final,
+    Generator,
+    Iterator,
+    Mapping,
+    Optional,
+    Union,
+    no_type_check,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -115,7 +125,7 @@ class BleUUID(uuid.UUID):
         return BleUUID.Format.BIT_16 if len(self.hex) == BleUUID.Format.BIT_16 else BleUUID.Format.BIT_128
 
     def __str__(self) -> str:  # pylint: disable=missing-return-doc
-        return self.hex if self.name == "" else self.name
+        return self.name if self.name else self.hex
 
     def __repr__(self) -> str:
         return self.__str__()
@@ -474,15 +484,11 @@ class GattDB:
                 )
                 # For each characteristic in service
                 for char in service.characteristics.values():
-                    w.writerow(
-                        [char.descriptor_handle, SpecUuidNumber.CHAR_DECLARATION, "28:03", str(char.props), ""]
-                    )
+                    w.writerow([char.descriptor_handle, SpecUuidNumber.CHAR_DECLARATION, "28:03", str(char.props), ""])
                     w.writerow([char.handle, char.name, char.uuid.hex, "", char.value])
                     # For each descriptor in characteristic
                     for descriptor in char.descriptors.values():
-                        w.writerow(
-                            [descriptor.handle, descriptor.name, descriptor.uuid.hex, "", descriptor.value]
-                        )
+                        w.writerow([descriptor.handle, descriptor.name, descriptor.uuid.hex, "", descriptor.value])
 
 
 class UUIDsMeta(type):

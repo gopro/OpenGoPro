@@ -3,22 +3,22 @@
 
 """Top level API module definition"""
 
+from . import params as Params
 from .api import WiredApi, WirelessApi
 from .ble_commands import BleCommands, BleSettings, BleStatuses
-from .http_commands import HttpCommands, HttpSettings
 from .builders import (
-    BleSetting,
-    BleStatus,
-    BleReadCommand,
     BleAsyncResponse,
     BleProtoCommand,
+    BleReadCommand,
+    BleSetting,
+    BleStatus,
     BleWriteCommand,
-    RegisterUnregisterAll,
-    HttpSetting,
     HttpGetBinary,
     HttpGetJsonCommand,
+    HttpSetting,
+    RegisterUnregisterAll,
 )
-from . import params as Params
+from .http_commands import HttpCommands, HttpSettings
 
 # TODO find a better way to set up parsers, etc besides instantiating
 

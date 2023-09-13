@@ -5,8 +5,9 @@
 
 from typing import Final
 
-from open_gopro.interface import GoProWirelessInterface, GoProHttp
-from .ble_commands import BleCommands, BleSettings, BleStatuses, BleAsyncResponses
+from open_gopro.communicator_interface import GoProHttp, GoProWirelessInterface
+
+from .ble_commands import BleAsyncResponses, BleCommands, BleSettings, BleStatuses
 from .http_commands import HttpCommands, HttpSettings
 
 

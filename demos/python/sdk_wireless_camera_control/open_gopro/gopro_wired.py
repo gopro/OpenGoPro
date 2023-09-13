@@ -4,22 +4,30 @@
 """Implements top level interface to GoPro module."""
 
 from __future__ import annotations
-import re
-import time
-import queue
+
+import asyncio
 import logging
 from pathlib import Path
-from typing import Final, Optional, Any, Union
+from typing import Any, Final
 
 import wrapt
-from zeroconf import IPVersion, ServiceBrowser, ServiceListener, Zeroconf
 
 import open_gopro.exceptions as GpException
+import open_gopro.wifi.mdns_scanner  # Imported this way for pytest monkeypatching
+from open_gopro import types
+from open_gopro.api import (
+    BleCommands,
+    BleSettings,
+    BleStatuses,
+    HttpCommands,
+    HttpSettings,
+    Params,
+    WiredApi,
+)
+from open_gopro.communicator_interface import GoProWiredInterface, MessageRules
+from open_gopro.constants import StatusId
 from open_gopro.gopro_base import GoProBase, MessageMethodType
-from open_gopro.constants import StatusId, SettingId
-from open_gopro.responses import GoProResp
-from open_gopro.api import WiredApi, BleCommands, BleSettings, BleStatuses, HttpCommands, HttpSettings, Params
-from open_gopro.interface import GoProWiredInterface, JsonParser, MessageRules
+from open_gopro.models import GoProResp
 
 logger = logging.getLogger(__name__)
 
@@ -28,9 +36,7 @@ HTTP_GET_RETRIES: Final = 5
 
 
 @wrapt.decorator
-def enforce_message_rules(
-    wrapped: MessageMethodType, instance: WiredGoPro, args: Any, kwargs: Any
-) -> GoProResp:
+async def enforce_message_rules(wrapped: MessageMethodType, instance: WiredGoPro, args: Any, kwargs: Any) -> GoProResp:
     """Wrap the input message method, applying any message rules (MessageRules)
 
     Args:
@@ -48,20 +54,20 @@ def enforce_message_rules(
     if instance._should_maintain_state and instance.is_open and not MessageRules.FASTPASS in rules:
         # Wait for not encoding and not busy
         logger.trace("Waiting for camera to be ready to receive messages.")  # type: ignore
-        instance._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_BUSY: False})
+        await instance._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_BUSY: False})
         logger.trace("Camera is ready to receive messages")  # type: ignore
-        response = wrapped(*args, **kwargs)
+        response = await wrapped(*args, **kwargs)
     else:  # Either we're not maintaining state, we're not opened yet, or this is a fastpass message
-        response = wrapped(*args, **kwargs)
+        response = await wrapped(*args, **kwargs)
 
     # Release the lock if we acquired it
     if instance._should_maintain_state:
-        if response.is_ok:
+        if response.ok:
             # Is there any special handling required after receiving the response?
             if MessageRules.WAIT_FOR_ENCODING_START in rules:
                 logger.trace("Waiting to receive encoding started.")  # type: ignore
                 # Wait for encoding to start
-                instance._wait_for_state({StatusId.ENCODING: True})
+                await instance._wait_for_state({StatusId.ENCODING: True})
     return response
 
 
@@ -78,21 +84,20 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
 
     It can be used via context manager:
 
-    >>> from open_gopro import WiredGoPro
-    >>> with WiredGoPro() as gopro:
-    >>>     gopro.http_command.set_shutter(Params.Toggle.ENABLE)
+    >>> async with WiredGoPro() as gopro:
+    >>>     print("Yay! I'm connected via USB, opened, and ready to send / get data now!")
+    >>>     # Send some messages now
 
     Or without:
 
-    >>> from open_gopro import WiredGoPro
     >>> gopro = WiredGoPro()
-    >>> gopro.open()
-    >>> gopro.http_command.set_shutter(Params.Toggle.ENABLE)
-    >>> gopro.close()
+    >>> await gopro.open()
+    >>> print("Yay! I'm connected via USB, opened, and ready to send / get data now!")
+    >>> # Send some messages now
 
     Args:
         serial (Optional[str]): (at least) last 3 digits of GoPro Serial number. If not set, first GoPro
-            discovered from mDNS will be used.
+            discovered from mDNS will be used. Defaults to None
         kwargs (Any): additional keyword arguments to pass to base class
     """
 
@@ -100,15 +105,18 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
     _BASE_ENDPOINT: Final[str] = "http://{ip}:8080/"
     _MDNS_SERVICE_NAME: Final[str] = "_gopro-web._tcp.local."
 
-    def __init__(self, serial: Optional[str], **kwargs: Any) -> None:
+    def __init__(self, serial: str | None = None, **kwargs: Any) -> None:
         GoProBase.__init__(self, **kwargs)
         GoProWiredInterface.__init__(self)
         self._serial = serial
         # We currently only support version 2.0
         self._wired_api = WiredApi(self)
         self._open = False
+        self._poll_period = kwargs.get("poll_period", 2)
+        self._encoding = False
+        self._busy = False
 
-    def open(self, timeout: int = 10, retries: int = 1) -> None:
+    async def open(self, timeout: int = 10, retries: int = 1) -> None:
         """Connect to the Wired GoPro Client and prepare it for communication
 
         Args:
@@ -124,27 +132,42 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         if not self._serial:
             for retry in range(retries + 1):
                 try:
-                    self._serial = WiredGoPro._find_serial_via_mdns(timeout)
-                    if self._serial:
-                        break
+                    ip_addr = await open_gopro.wifi.mdns_scanner.find_first_ip_addr(
+                        WiredGoPro._MDNS_SERVICE_NAME, timeout
+                    )
+                    self._serial = "GoPro X" + "".join([ip_addr[5], *ip_addr[8:10]])
+                    break
                 except GpException.FailedToFindDevice as e:
                     if retry == retries:
                         raise e
                     logger.warning(f"Failed to discover GoPro. Retrying #{retry + 1}")
 
-        self.http_command.wired_usb_control(control=Params.Toggle.ENABLE)
+        await self.http_command.wired_usb_control(control=Params.Toggle.ENABLE)
         # Find and configure API version
-        if (version := self.http_command.get_open_gopro_api_version().flatten) != self.version:
+        version = await self.http_command.get_open_gopro_api_version()
+        if (version := (await self.http_command.get_open_gopro_api_version()).data) != self.version:
             raise GpException.InvalidOpenGoProVersion(version)
         logger.info(f"Using Open GoPro API version {version}")
 
         # Wait for initial ready state
-        self._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_BUSY: False})
+        await self._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_BUSY: False})
 
         self._open = True
 
-    def close(self) -> None:
+    async def close(self) -> None:
         """Gracefully close the GoPro Client connection"""
+
+    @property
+    async def is_ready(self) -> bool:
+        """Is gopro ready to receive commands
+
+        Returns:
+            bool: yes if ready, no otherwise
+        """
+        current_state = (await self.http_command.get_camera_state()).data
+        self._encoding = bool(current_state[StatusId.ENCODING])
+        self._busy = bool(current_state[StatusId.SYSTEM_BUSY])
+        return not (self._encoding or self._busy)
 
     @property
     def identifier(self) -> str:
@@ -243,93 +266,48 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         """
         return True  # TODO find a better way to do this
 
+    def register_update(self, callback: types.UpdateCb, update: types.UpdateType) -> None:
+        """Register for callbacks when an update occurs
+
+        Args:
+            callback (types.UpdateCb): callback to be notified in
+            update (types.UpdateType): update to register for
+
+        Raises:
+            NotImplementedError: not yet possible
+        """
+        raise NotImplementedError
+
+    def unregister_update(self, callback: types.UpdateCb, update: types.UpdateType | None = None) -> None:
+        """Unregister for asynchronous update(s)
+
+        Args:
+            callback (types.UpdateCb): callback to stop receiving update(s) on
+            update (types.UpdateType | None): updates to unsubscribe for. Defaults to None (all
+                updates that use this callback will be unsubscribed).
+
+        Raises:
+            NotImplementedError: not yet possible
+        """
+        raise NotImplementedError
+
     ##########################################################################################################
     #                                 End Public API
     ##########################################################################################################
 
-    @classmethod
-    def _find_serial_via_mdns(cls, timeout: int) -> str:
-        """Query the mDNS server to find a GoPro
-
-        Args:
-            timeout (int): how long to search for before timing out
-
-        Raises:
-            FailedToFindDevice: search timed out
-            RuntimeError: unexpected runtime error
-
-        Returns:
-            str: First discovered IP address matching base GoPro socket address for USB connections
-        """
-
-        class ZeroconfListener(ServiceListener):
-            """Listens for mDNS services on the local system and save fully-formed ipaddr URLs"""
-
-            def __init__(self) -> None:
-                self.urls: queue.Queue[str] = queue.Queue()
-
-            def add_service(self, zc: Zeroconf, type_: str, name: str) -> None:
-                """Callback called by ServiceBrowser when a new service is discovered
-
-                Args:
-                    zc (Zeroconf): instantiated zeroconf object that owns the search
-                    type_ (str): name of mDNS service that search is occurring on
-                    name (str): discovered device
-                """
-                if not (info := zc.get_service_info(type_, name)):
-                    return  # Could not resolve info
-
-                for ipv4_address in info.parsed_addresses(IPVersion.V4Only):
-                    if re.match(r"172.2\d.1\d\d.51", ipv4_address):
-                        self.urls.put_nowait(ipv4_address)
-
-            def update_service(self, *_: Any) -> None:
-                """Not used
-
-                Args:
-                    *_ (Any): not used
-                """
-
-            def remove_service(self, *_: Any) -> None:
-                """Not used
-
-                Args:
-                    *_ (Any): not used
-                """
-
-        logger.info("Querying mDNS to find a GoPro...")
-        zeroconf = Zeroconf(unicast=True)
-        listener = ZeroconfListener()
-        browser = ServiceBrowser(zeroconf, WiredGoPro._MDNS_SERVICE_NAME, listener=listener)
-        # Wait for URL discovery
-        gopro_ip: Optional[str] = None
-        exc: Optional[queue.Empty] = None
-        try:
-            gopro_ip = listener.urls.get(timeout=timeout)
-        except queue.Empty as e:
-            exc = e
-        browser.cancel()
-        zeroconf.close()
-        if gopro_ip:
-            logger.info(f"Found GoPro @ {gopro_ip}")
-            return "".join([gopro_ip[5], *gopro_ip[8:10]])
-        if exc:
-            raise GpException.FailedToFindDevice() from exc
-        raise RuntimeError("Should never get here")
-
-    def _wait_for_state(self, check: dict[Union[StatusId, SettingId], Any], poll_period: int = 1) -> None:
+    async def _wait_for_state(self, check: types.CameraState) -> None:
         """Poll the current state until a variable amount of states are all equal to desired values
 
         Args:
             check (dict[Union[StatusId, SettingId], Any]): dict{setting / status: value} of settings / statuses
                 and values to wait for
-            poll_period (int): How frequently (in seconds) to poll the current state. Defaults to 1.
 
         """
-        while state := self.http_command.get_camera_state():
+        while True:
+            state = (await self.http_command.get_camera_state()).data
             for key, value in check.items():
-                if state[key] != value:
-                    time.sleep(poll_period)
+                if state.get(key) != value:
+                    await asyncio.sleep(self._poll_period)
                     break  # Get new state and try again
             else:
                 return  # Everything matches. Exit
@@ -353,9 +331,5 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         return WiredGoPro._BASE_ENDPOINT.format(ip=WiredGoPro._BASE_IP.format(*self._serial[-3:]))
 
     @enforce_message_rules
-    def _get(self, url: str, parser: Optional[JsonParser] = None, **kwargs: Any) -> GoProResp:
-        return super()._get(url, parser, **kwargs)
-
-    @enforce_message_rules
-    def _stream_to_file(self, url: str, file: Path) -> GoProResp:
-        return super()._stream_to_file(url, file)
+    async def _stream_to_file(self, url: str, file: Path) -> GoProResp:
+        return await super()._stream_to_file(url, file)

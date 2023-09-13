@@ -4,37 +4,76 @@
 """GoPro specific BLE client"""
 
 from __future__ import annotations
-import re
+
 import enum
 import inspect
 import logging
-from pathlib import Path
+import re
 from abc import ABC, abstractmethod
-from typing import Generic, Optional, Union, Pattern, Any, TypeVar, Generator, Protocol
+from pathlib import Path
+from typing import Any, Generator, Generic, Pattern, Protocol, TypeVar, Union
 
-from construct import BitStruct, BitsInteger, Padding, Const, Bit, Construct
+from construct import Bit, BitsInteger, BitStruct, Const, Construct, Padding
 
+from open_gopro import types
 from open_gopro.ble import (
+    BleClient,
+    BLEController,
     BleDevice,
     BleHandle,
-    BLEController,
+    BleUUID,
     DisconnectHandlerType,
     NotiHandlerType,
-    BleClient,
-    BleUUID,
+)
+from open_gopro.constants import ActionId, CmdId, GoProUUIDs, SettingId, StatusId
+from open_gopro.models.response import GoProResp, Header
+from open_gopro.parser_interface import (
+    BytesParser,
+    BytesTransformer,
+    GlobalParsers,
+    JsonParser,
+    JsonTransformer,
+    Parser,
 )
 from open_gopro.wifi import WifiClient, WifiController
-from open_gopro.responses import GoProResp, Header, BytesParser, JsonParser
-from open_gopro.constants import GoProUUIDs, ProducerType, ResponseType, SettingId, StatusId, ActionId, CmdId
 
 logger = logging.getLogger(__name__)
 
+##############################################################################################################
+####### Communicators / Clients
+##############################################################################################################
 
-class GoProHttp(ABC):
+
+class BaseGoProCommunicator(ABC):
+    """Common Communicator interface"""
+
+    @abstractmethod
+    def register_update(self, callback: types.UpdateCb, update: types.UpdateType) -> None:
+        """Register for callbacks when an update occurs
+
+        Args:
+            callback (types.UpdateCb): callback to be notified in
+            update (types.UpdateType): update to register for
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def unregister_update(self, callback: types.UpdateCb, update: types.UpdateType | None = None) -> None:
+        """Unregister for asynchronous update(s)
+
+        Args:
+            callback (types.UpdateCb): callback to stop receiving update(s) on
+            update (types.UpdateType | None): updates to unsubscribe for. Defaults to None (all
+                updates that use this callback will be unsubscribed).
+        """
+        raise NotImplementedError
+
+
+class GoProHttp(BaseGoProCommunicator):
     """Base class interface for all HTTP commands"""
 
     @abstractmethod
-    def _get(self, url: str, parser: Optional[JsonParser] = None, **kwargs: Any) -> GoProResp:
+    async def _http_get(self, url: str, parser: Parser | None = None, **kwargs: Any) -> GoProResp:
         """Send an HTTP GET request to a string endpoint.
 
         Args:
@@ -50,7 +89,7 @@ class GoProHttp(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def _stream_to_file(self, url: str, file: Path) -> GoProResp:
+    async def _stream_to_file(self, url: str, file: Path) -> GoProResp:
         """Send an HTTP GET request to an Open GoPro endpoint to download a binary file.
 
         Args:
@@ -72,32 +111,32 @@ class GoProWifi(GoProHttp):
         self._wifi: WifiClient = WifiClient(controller)
 
     @property
-    def password(self) -> Optional[str]:
+    def password(self) -> str | None:
         """Get the GoPro AP's password
 
         Returns:
-            Optional[str]: password or None if it is not known
+            str | None: password or None if it is not known
         """
         return self._wifi.password
 
     @property
-    def ssid(self) -> Optional[str]:
+    def ssid(self) -> str | None:
         """Get the GoPro AP's WiFi SSID
 
         Returns:
-            Optional[str]: SSID or None if it is not known
+            str | None: SSID or None if it is not known
         """
         return self._wifi.ssid
 
 
-class GoProBle(ABC, Generic[BleHandle, BleDevice]):
+class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
     """GoPro specific BLE Client
 
     Args:
         controller (BLEController): controller implementation to use for this client
         disconnected_cb (DisconnectHandlerType): disconnected callback
         notification_cb (NotiHandlerType): notification callback
-        target (Union[Pattern, BleDevice]): regex or device to connect to
+        target (Pattern | BleDevice): regex or device to connect to
     """
 
     def __init__(
@@ -105,7 +144,7 @@ class GoProBle(ABC, Generic[BleHandle, BleDevice]):
         controller: BLEController,
         disconnected_cb: DisconnectHandlerType,
         notification_cb: NotiHandlerType,
-        target: Union[Pattern, BleDevice],
+        target: Pattern | BleDevice,
     ) -> None:
         self._ble: BleClient = BleClient(
             controller,
@@ -116,45 +155,15 @@ class GoProBle(ABC, Generic[BleHandle, BleDevice]):
         )
 
     @abstractmethod
-    def _register_listener(self, producer: ProducerType) -> None:
-        """Register to receive notifications for a producer.
-
-        Args:
-            producer (ProducerType): producer that we want to receive notifications from
-        """
-        raise NotImplementedError
-
-    @abstractmethod
-    def _unregister_listener(self, producer: ProducerType) -> None:
-        """Stop receiving notifications from a producer.
-
-        Args:
-            producer (ProducerType): Producer to stop receiving notifications for
-        """
-        raise NotImplementedError
-
-    @abstractmethod
-    def get_notification(self, timeout: Optional[float] = None) -> GoProResp:
-        """Get a notification that was received from a registered producer.
-
-        Args:
-            timeout (float, Optional): Time to wait for a notification before returning. Defaults to None (wait forever)
-
-        Returns:
-            GoProResp: the received update
-        """
-        raise NotImplementedError
-
-    @abstractmethod
-    def _send_ble_message(
-        self, uuid: BleUUID, data: bytearray, response_id: ResponseType, **kwargs: Any
+    async def _send_ble_message(
+        self, uuid: BleUUID, data: bytearray, response_id: types.ResponseType, **kwargs: Any
     ) -> GoProResp:
         """Write a characteristic and block until its corresponding notification response is received.
 
         Args:
             uuid (BleUUID): characteristic to write to
             data (bytearray): bytes to write
-            response_id (ResponseType): identifier to claim parsed response in notification handler
+            response_id (types.ResponseType): identifier to claim parsed response in notification handler
             **kwargs (Any):
                 - rules (list[MessageRules]): rules to be enforced for this message
 
@@ -164,7 +173,7 @@ class GoProBle(ABC, Generic[BleHandle, BleDevice]):
         raise NotImplementedError
 
     @abstractmethod
-    def _read_characteristic(self, uuid: BleUUID) -> GoProResp:
+    async def _read_characteristic(self, uuid: BleUUID) -> GoProResp:
         """Read a characteristic and block until its corresponding notification response is received.
 
         Args:
@@ -250,10 +259,10 @@ class GoProWirelessInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle])
     def __init__(
         self,
         ble_controller: BLEController,
-        wifi_controller: Optional[WifiController],
+        wifi_controller: WifiController | None,
         disconnected_cb: DisconnectHandlerType,
         notification_cb: NotiHandlerType,
-        target: Union[Pattern, BleDevice],
+        target: Pattern | BleDevice,
     ) -> None:
         """Constructor
 
@@ -262,7 +271,7 @@ class GoProWirelessInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle])
             wifi_controller (Optional[WifiController]): Wifi controller instance
             disconnected_cb (DisconnectHandlerType): callback for BLE disconnects
             notification_cb (NotiHandlerType): callback for BLE received notifications
-            target (Union[Pattern, BleDevice]): BLE device to search for
+            target (Pattern | BleDevice): BLE device to search for
         """
         # Initialize GoPro Communication Client
         GoProBle.__init__(self, ble_controller, disconnected_cb, notification_cb, target)
@@ -273,6 +282,12 @@ class GoProWirelessInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle])
 CommunicatorType = TypeVar("CommunicatorType", bound=Union[GoProBle, GoProHttp])
 IdType = TypeVar("IdType", SettingId, StatusId, ActionId, CmdId, BleUUID, str)
 ParserType = TypeVar("ParserType", BytesParser, JsonParser)
+FilterType = TypeVar("FilterType", BytesTransformer, JsonTransformer)
+
+
+##############################################################################################################
+####### Messages (commands, etc.)
+##############################################################################################################
 
 
 class RuleSignature(Protocol):
@@ -296,25 +311,25 @@ class MessageRules(enum.Enum):
     WAIT_FOR_ENCODING_START = enum.auto()  #: Message must not complete until encoding has started
 
 
-class Message(Generic[CommunicatorType, IdType, ParserType], ABC):
+class Message(Generic[CommunicatorType, IdType], ABC):
     """Base class for all messages that will be contained in a Messages class"""
 
     def __init__(
         self,
         identifier: IdType,
-        parser: Optional[ParserType] = None,
-        rules: Optional[dict[MessageRules, RuleSignature]] = None,
+        parser: Parser | None = None,
+        rules: dict[MessageRules, RuleSignature] | None = None,
     ) -> None:
         """Constructor
 
         Args:
             identifier (IdType): id to access this message by
             parser (ParserType): optional parser and builder
-            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
+            rules (dict[MessageRules, RuleSignature] | None): rules to apply when executing this
                 message. Defaults to None.
         """
         self._identifier: IdType = identifier
-        self._parser: Optional[ParserType] = parser
+        self._parser = parser
         self._rules = rules or {}
 
     def _evaluate_rules(self, **kwargs: Any) -> list[MessageRules]:
@@ -333,7 +348,7 @@ class Message(Generic[CommunicatorType, IdType, ParserType], ABC):
         return enforced_rules
 
     @abstractmethod
-    def __call__(self, __communicator__: CommunicatorType, **kwargs: Any) -> Any:
+    async def __call__(self, __communicator__: CommunicatorType, **kwargs: Any) -> Any:
         """Execute the message by sending it to the target device
 
         Args:
@@ -346,7 +361,7 @@ class Message(Generic[CommunicatorType, IdType, ParserType], ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def _as_dict(self, *_: Any, **kwargs: Any) -> dict[str, Any]:
+    def _as_dict(self, *_: Any, **kwargs: Any) -> types.JsonDict:
         """Return the attributes of the message as a dict
 
         Args:
@@ -354,12 +369,12 @@ class Message(Generic[CommunicatorType, IdType, ParserType], ABC):
             **kwargs (Any): additional entries for the dict
 
         Returns:
-            dict[str, Any]: message as dict
+            types.JsonDict: message as dict
         """
         raise NotImplementedError
 
 
-class BleMessage(Message[GoProBle, IdType, BytesParser]):
+class BleMessage(Message[GoProBle, IdType]):
     """The base class for all BLE messages to store common info
 
     Args:
@@ -370,46 +385,46 @@ class BleMessage(Message[GoProBle, IdType, BytesParser]):
     def __init__(
         self,
         uuid: BleUUID,
-        parser: Optional[BytesParser],
+        parser: Parser | None,
         identifier: IdType,
-        rules: Optional[dict[MessageRules, RuleSignature]] = None,
+        rules: dict[MessageRules, RuleSignature] | None = None,
     ) -> None:
         Message.__init__(self, identifier, parser, rules)
         self._uuid = uuid
         self._base_dict = {"protocol": "BLE", "uuid": self._uuid}
 
-        if self._parser:
-            GoProResp._add_global_parser(identifier, self._parser)
+        if parser:
+            GlobalParsers.add(identifier, parser)
 
 
-class HttpMessage(Message[GoProHttp, IdType, JsonParser]):
+class HttpMessage(Message[GoProHttp, IdType]):
     """The base class for all HTTP messages. Stores common information."""
 
     def __init__(
         self,
         endpoint: str,
         identifier: IdType,
-        components: Optional[list[str]] = None,
-        arguments: Optional[list[str]] = None,
-        parser: Optional[JsonParser] = None,
-        rules: Optional[dict[MessageRules, RuleSignature]] = None,
+        components: list[str] | None = None,
+        arguments: list[str] | None = None,
+        parser: Parser | None = None,
+        rules: dict[MessageRules, RuleSignature] | None = None,
     ) -> None:
         """Constructor
 
         Args:
             endpoint (str): base endpoint
             identifier (IdType): explicitly set message identifier. Defaults to None (generated from endpoint).
-            components (Optional[list[str]]): conditional endpoint components. Defaults to None.
-            arguments (Optional[list[str]]): URL argument names. Defaults to None.
-            parser (Optional[JsonParser]): additional parsing of JSON response. Defaults to None.
-            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
+            components (list[str] | None): conditional endpoint components. Defaults to None.
+            arguments (list[str] | None): URL argument names. Defaults to None.
+            parser (Parser | None]): additional parsing of JSON response. Defaults to None.
+            rules (dict[MessageRules, RuleSignature] | None): rules to apply when executing this
                 message. Defaults to None.
         """
         self._endpoint = endpoint
         self._components = components
         self._args = arguments
         Message.__init__(self, identifier, parser, rules=rules)
-        self._base_dict: dict[str, Any] = {
+        self._base_dict: types.JsonDict = {
             "id": self._identifier,
             "protocol": "HTTP",
             "endpoint": self._endpoint,
@@ -418,7 +433,7 @@ class HttpMessage(Message[GoProHttp, IdType, JsonParser]):
     def __str__(self) -> str:
         return str(self._identifier).title()
 
-    def _as_dict(self, *_: Any, **kwargs: Any) -> dict[str, Any]:
+    def _as_dict(self, *_: Any, **kwargs: Any) -> types.JsonDict:
         """Return the attributes of the message as a dict
 
         Args:
@@ -426,7 +441,7 @@ class HttpMessage(Message[GoProHttp, IdType, JsonParser]):
             **kwargs (Any): additional entries for the dict
 
         Returns:
-            dict[str, Any]: message as dict
+            types.JsonDict: message as dict
         """
         # If any kwargs keys were to conflict with base dict, append underscore
         return self._base_dict | {f"{'_' if k in ['id', 'protocol'] else ''}{k}": v for k, v in kwargs.items()}
@@ -452,14 +467,14 @@ class Messages(ABC, dict, Generic[MessageType, IdType, CommunicatorType]):
         """
         self._communicator = communicator
         # Append any automatically discovered instance attributes (i.e. for settings and statuses)
-        message_map: dict[Union[IdType, str], MessageType] = {}
+        message_map: dict[IdType | str, MessageType] = {}
         for message in self.__dict__.values():
             if isinstance(message, Message):
                 message_map[message._identifier] = message  # type: ignore
         # Append any automatically discovered methods (i.e. for commands)
         for name, method in inspect.getmembers(self, predicate=inspect.ismethod):
             if not name.startswith("_"):
-                message_map[name.replace("_", " ").title()] = method
+                message_map[name.replace("_", " ").title()] = method  # type: ignore
         dict.__init__(self, message_map)
 
 

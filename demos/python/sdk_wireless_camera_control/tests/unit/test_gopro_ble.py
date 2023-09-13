@@ -18,53 +18,55 @@ def disconnection_handler(_) -> None:
     print("Entered test disconnect callback")
 
 
-def test_gopro_ble_client_instantiation(ble_client: BleClient):
-    assert not ble_client.is_discovered
-    assert not ble_client.is_connected
+def test_gopro_ble_client_instantiation(mock_ble_client: BleClient):
+    assert not mock_ble_client.is_discovered
+    assert not mock_ble_client.is_connected
 
 
-def test_gopro_ble_client_failed_to_find_device(ble_client: BleClient):
-    ble_client._target = re.compile("invalid_device")
+@pytest.mark.asyncio
+async def test_gopro_ble_client_failed_to_find_device(mock_ble_client: BleClient):
+    mock_ble_client._target = re.compile("invalid_device")
     with pytest.raises(FailedToFindDevice):
-        ble_client._find_device()
-    assert not ble_client.is_discovered
-    assert not ble_client.is_connected
+        await mock_ble_client._find_device()
+    assert not mock_ble_client.is_discovered
+    assert not mock_ble_client.is_connected
 
 
-def test_gopro_ble_client_failed_to_connect(ble_client: BleClient):
-    ble_client._target = re.compile("device")
-    ble_client._disconnected_cb = None
+@pytest.mark.asyncio
+async def test_gopro_ble_client_failed_to_connect(mock_ble_client: BleClient):
+    mock_ble_client._target = re.compile("device")
+    mock_ble_client._disconnected_cb = None
     with pytest.raises(ConnectFailed):
-        ble_client.open()
-    assert ble_client.is_discovered
-    assert not ble_client.is_connected
+        await mock_ble_client.open()
+    assert mock_ble_client.is_discovered
+    assert not mock_ble_client.is_connected
 
 
-def test_gopro_ble_client_open(ble_client: BleClient):
-    ble_client._disconnected_cb = disconnection_handler
-    ble_client.open()
-    assert ble_client.is_discovered
-    assert ble_client.is_connected
+@pytest.mark.asyncio
+async def test_gopro_ble_client_open(mock_ble_client: BleClient):
+    mock_ble_client._disconnected_cb = disconnection_handler
+    await mock_ble_client.open()
+    assert mock_ble_client.is_discovered
+    assert mock_ble_client.is_connected
 
 
-def test_gopro_ble_client_identifier(ble_client: BleClient):
-    assert ble_client.identifier == "scanned_device"
+@pytest.mark.asyncio
+async def test_gopro_ble_client_identifier(mock_ble_client: BleClient):
+    assert mock_ble_client.identifier == "scanned_device"
 
 
-def test_gopro_ble_client_read(ble_client: BleClient):
-    assert ble_client.read("uuid") == bytearray()
+@pytest.mark.asyncio
+async def test_gopro_ble_client_read(mock_ble_client: BleClient):
+    assert await mock_ble_client.read("uuid") == bytearray()
 
 
-def test_gopro_ble_client_write(ble_client: BleClient):
-    ble_client.write("uuid", bytearray())
+@pytest.mark.asyncio
+async def test_gopro_ble_client_write(mock_ble_client: BleClient):
+    await mock_ble_client.write("uuid", bytearray())
     assert True
 
 
-def test_get_gatt_table(ble_client: BleClient):
-    ble_client._gatt_table = None
-    assert ble_client.gatt_db is not None
-
-
-def test_gopro_ble_client_close(ble_client: BleClient):
-    ble_client.close()
-    assert not ble_client.is_connected
+@pytest.mark.asyncio
+async def test_gopro_ble_client_close(mock_ble_client: BleClient):
+    await mock_ble_client.close()
+    assert not mock_ble_client.is_connected
