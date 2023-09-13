@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2023-08-17T13:19:15-07:00">
+  <meta property="article:published_time" content="2023-09-13T11:34:37-07:00">
 
 
 
@@ -344,7 +344,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Open GoPro Python SDK">
     <meta itemprop="description" content="Open GoPro Python SDK">
-    <meta itemprop="datePublished" content="2023-08-17T13:19:15-07:00">
+    <meta itemprop="datePublished" content="2023-09-13T11:34:37-07:00">
     
 
     <div class="page__inner-wrap">
@@ -440,6 +440,8 @@ interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and
   </li>
   <li>Supports all commands, settings, and statuses from the <a href="https://gopro.github.io/OpenGoPro/">Open GoPro API</a>
 </li>
+  <li>
+<a href="https://docs.python.org/3/library/asyncio.html">Asyncio</a> based</li>
   <li>Automatically handles connection maintenance:
     <ul>
       <li>manage camera ready / encoding</li>
@@ -461,7 +463,7 @@ interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and
 <h2 id="installation">Installation</h2>
 
 <blockquote>
-  <p>Note! This package requires Python &gt;= 3.8 and &lt; 3.11</p>
+  <p>Note! This package requires Python &gt;= 3.8 and &lt; 3.12</p>
 </blockquote>
 
 <p>The minimal install to use the Open GoPro library and the CLI demos is:</p>
@@ -479,21 +481,23 @@ interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and
 <p>To automatically connect to GoPro device via BLE and WiFI, set the preset, set video parameters, take a
 video, and download all files:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">time</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">asyncio</span>
 <span class="kn">from</span> <span class="n">open_gopro</span> <span class="kn">import</span> <span class="n">WirelessGoPro</span><span class="p">,</span> <span class="n">Params</span>
 
-<span class="k">with</span> <span class="nc">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="nf">load_preset</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Preset</span><span class="p">.</span><span class="n">CINEMATIC</span><span class="p">)</span>
-    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">resolution</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Resolution</span><span class="p">.</span><span class="n">RES_4K</span><span class="p">)</span>
-    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">fps</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">FPS</span><span class="p">.</span><span class="n">FPS_30</span><span class="p">)</span>
-    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="nf">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Shutter</span><span class="p">.</span><span class="n">ON</span><span class="p">)</span>
-    <span class="n">time</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Record for 2 seconds
-</span>    <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="nf">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Shutter</span><span class="p">.</span><span class="n">OFF</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="nc">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">resolution</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">Resolution</span><span class="p">.</span><span class="n">RES_4K</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">gopro</span><span class="p">.</span><span class="n">ble_setting</span><span class="p">.</span><span class="n">fps</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="n">Params</span><span class="p">.</span><span class="n">FPS</span><span class="p">.</span><span class="n">FPS_30</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="nf">set_shutter</span><span class="p">(</span><span class="n">shutter</span><span class="o">=</span><span class="n">Params</span><span class="p">.</span><span class="n">Toggle</span><span class="p">.</span><span class="n">ENABLE</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Record for 2 seconds
+</span>        <span class="k">await</span> <span class="n">gopro</span><span class="p">.</span><span class="n">ble_command</span><span class="p">.</span><span class="nf">set_shutter</span><span class="p">(</span><span class="n">shutter</span><span class="o">=</span><span class="n">Params</span><span class="p">.</span><span class="n">Toggle</span><span class="p">.</span><span class="n">DISABLE</span><span class="p">)</span>
 
-    <span class="c1"># Download all of the files from the camera
-</span>    <span class="n">media_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="sh">"</span><span class="s">n</span><span class="sh">"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">gopro</span><span class="p">.</span><span class="n">wifi_command</span><span class="p">.</span><span class="nf">get_media_list</span><span class="p">().</span><span class="n">flatten</span>
-    <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">:</span>
-        <span class="n">gopro</span><span class="p">.</span><span class="n">wifi_command</span><span class="p">.</span><span class="nf">download_file</span><span class="p">(</span><span class="n">camera_file</span><span class="o">=</span><span class="nb">file</span><span class="p">)</span>
+        <span class="c1"># Download all of the files from the camera
+</span>        <span class="n">media_list</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">gopro</span><span class="p">.</span><span class="n">http_command</span><span class="p">.</span><span class="nf">get_media_list</span><span class="p">()).</span><span class="n">data</span><span class="p">.</span><span class="n">files</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">gopro</span><span class="p">.</span><span class="n">http_command</span><span class="p">.</span><span class="nf">download_file</span><span class="p">(</span><span class="n">camera_file</span><span class="o">=</span><span class="n">item</span><span class="p">.</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="p">.</span><span class="nf">run</span><span class="p">(</span><span class="nf">main</span><span class="p">())</span>
 </code></pre></div></div>
 
 <p>And much more!</p>
@@ -575,7 +579,7 @@ optional arguments:
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-08-17T13:19:15-07:00">August 17, 2023</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-09-13T11:34:37-07:00">September 13, 2023</time></p>
 
 
       </footer>
