@@ -58,7 +58,7 @@ Ready to contribute? Here's how to set up Open GoPro for local development.
 Minimal Requirements
 ~~~~~~~~~~~~~~~~~~~~
 
-* Python (>= 3.9, < 3.11)
+* Python (>= 3.9, < 3.12)
 * `Poetry <https://python-poetry.org/docs/#installation>`_ : Needed to install dependencies / development tasks
 
 Additional Optional Requirements:
@@ -92,7 +92,7 @@ Steps
 
     .. code-block:: console
 
-        $ poetry install --extras gui
+        $ poetry install --all-extras
 
 #. Make your changes locally. When you're done making changes, check that your changes are:
 
@@ -127,7 +127,7 @@ Before you submit a pull request, check that it meets these guidelines:
         $ poetry run poe docs
 
 #. Modify the ``CHANGELOG.rst``.
-#. The pull request should work for Python 3.8 - 3.10 on the following platforms:
+#. The pull request should work for Python 3.8 - 3.12 on the following platforms:
 
     - Windows 10, version 16299 (Fall Creators Update) and greater
     - Linux distributions with BlueZ >= 5.43

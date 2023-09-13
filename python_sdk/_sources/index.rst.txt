@@ -40,7 +40,7 @@ For more information on the API, see the relevant documentation:
 - `HTTP API <https://gopro.github.io/OpenGoPro/http>`_
 
 .. warning::
-    This package requires Python >= version 3.9 and < 3.11
+    This package requires Python >= version 3.9 and < 3.12
 
 Features
 --------

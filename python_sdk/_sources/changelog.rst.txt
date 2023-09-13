@@ -13,6 +13,7 @@ Unreleased
 ----------
 * Improve video viewer latency
 * Improve BLE and HTTP setting documentation
+* Add media list and metadata pydantic models
 
 0.13.0 (February-24-2023)
 -------------------------

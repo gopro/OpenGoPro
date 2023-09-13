@@ -23,7 +23,7 @@ All of the demos use this and here is an example:
 
     logger = setup_logging(__name__, Path("my_log.log"))
 
-    with WirelessGoPro() as gopro:
+    async with WirelessGoPro() as gopro:
         logger.info("I'm logged!")
 
 There are several other logging-related functions that extend and / or offer finer logging control.

@@ -1,7 +1,7 @@
 <map id="inheritancee0cfc0e4dd" name="inheritancee0cfc0e4dd">
 <area shape="rect" id="node1" title="Helper class that provides a standard way to create an ABC using" alt="" coords="12,225,84,251"/>
-<area shape="rect" id="node3" href="#open_gopro.interface.Message" target="_top" title="Base class for all messages that will be contained in a Messages class" alt="" coords="16,152,96,177"/>
-<area shape="rect" id="node2" href="#open_gopro.interface.BleMessage" target="_top" title="The base class for all BLE messages to store common info" alt="" coords="5,79,107,104"/>
+<area shape="rect" id="node3" href="#open_gopro.communicator_interface.Message" target="_top" title="Base class for all messages that will be contained in a Messages class" alt="" coords="16,152,96,177"/>
+<area shape="rect" id="node2" href="#open_gopro.communicator_interface.BleMessage" target="_top" title="The base class for all BLE messages to store common info" alt="" coords="5,79,107,104"/>
 <area shape="rect" id="node4" href="#open_gopro.api.builders.BleSetting" target="_top" title="An individual camera setting that is interacted with via BLE." alt="" coords="55,5,145,31"/>
 <area shape="rect" id="node5" title="Abstract base class for generic types." alt="" coords="108,225,180,251"/>
 </map>

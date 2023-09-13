@@ -8,6 +8,7 @@
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/autodoc_pydantic.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -149,7 +150,7 @@ articles, and such.</p>
 <section id="minimal-requirements">
 <h3>Minimal Requirements<a class="headerlink" href="#minimal-requirements" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p>Python (&gt;= 3.9, &lt; 3.11)</p></li>
+<li><p>Python (&gt;= 3.9, &lt; 3.12)</p></li>
 <li><p><a class="reference external" href="https://python-poetry.org/docs/#installation">Poetry</a> : Needed to install dependencies / development tasks</p></li>
 </ul>
 <p>Additional Optional Requirements:</p>
@@ -185,7 +186,7 @@ articles, and such.</p>
 </li>
 <li><p>Install your local copy into a virtual environment.</p>
 <blockquote>
-<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>poetry<span class="w"> </span>install<span class="w"> </span>--extras<span class="w"> </span>gui
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>poetry<span class="w"> </span>install<span class="w"> </span>--all-extras
 </pre></div>
 </div>
 </div></blockquote>
@@ -225,7 +226,7 @@ Github Actions will test the changes across multiple OS’s and Python versions.
 </div></blockquote>
 </li>
 <li><p>Modify the <code class="docutils literal notranslate"><span class="pre">CHANGELOG.rst</span></code>.</p></li>
-<li><p>The pull request should work for Python 3.8 - 3.10 on the following platforms:</p>
+<li><p>The pull request should work for Python 3.8 - 3.12 on the following platforms:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>Windows 10, version 16299 (Fall Creators Update) and greater</p></li>
