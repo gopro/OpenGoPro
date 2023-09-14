@@ -99,14 +99,13 @@ directly from the cameras, either via USB or wireless connection.
 
 | Stream Type | Description                                   | WiFi | USB | Record while Streaming |
 | ----------- | --------------------------------------------- | :--: | :-: | :--------------------: |
-| : Preview : | Moderate video quality, primarily for framing |      |     |       `>=` Hero 12       |
+| : Preview : | Moderate video quality, primarily for framing |      |     |    \`>=\` Hero 12 \      |
 | Stream      | Low latency stabilization                     |  ✔️  | ✔️  |           \            |
 |             | Low power consumption                         |      |     |                        |
 | : Webcam :  | Cinematic video quality                       |      |     |           \            |
 | Mode        | Optional low latency stabilization            |  ✔️  | ✔️  |                        |
 | : Live :    | Cinematic video quality                       |      |     |           \            |
 | Stream      | Optional hypersmooth stabilization            |  ✔️  |     |           ✔️           |
-
 
 Each of the streaming types has different resolutions, bit rates, imaging pipelines, and different levels of
 configurability. Refer to the [FAQ]({% link faq.md %}).
