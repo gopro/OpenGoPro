@@ -53,13 +53,13 @@ jobs:
                   pip install nox-poetry==1.0.3
                   pip install poetry
 
-            - name: Perform checks (format, types, lint, docstrings, unit tests, docs, safety)
+            - name: Perform checks (format, types, lint, docstrings, unit tests)
               working-directory: ./demos/python/sdk_wireless_camera_control/
               run: nox -p ${{ matrix.python-version }}
 
             # Only test docs with latest Python on ubuntu since we need graphviz
             - name: Test docs build
-              if: ${{ matrix.os == 'ubuntu-latest'}} && ${{ matrix.python-version == '3.11' }}
+              if: matrix.os == 'ubuntu-latest' &&  matrix.python-version == '3.11'
               working-directory: ./demos/python/sdk_wireless_camera_control/
               run: nox -s docs
 
