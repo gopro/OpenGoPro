@@ -59,7 +59,7 @@ jobs:
 
             # Only test docs with latest Python on ubuntu since we need graphviz
             - name: Test docs build
-              if: ${{ matrix.os == 'ubuntu-latest'}}
+              if: ${{ matrix.os == 'ubuntu-latest'}} && ${{ matrix.python-version == '3.11' }}
               working-directory: ./demos/python/sdk_wireless_camera_control/
               run: nox -s docs
 
