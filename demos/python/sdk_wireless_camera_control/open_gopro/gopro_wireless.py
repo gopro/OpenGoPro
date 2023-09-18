@@ -27,7 +27,7 @@ from open_gopro.api import (
 )
 from open_gopro.ble import BleakWrapperController, BleUUID
 from open_gopro.communicator_interface import GoProWirelessInterface, MessageRules
-from open_gopro.constants import ActionId, GoProUUIDs, QueryCmdId, SettingId, StatusId
+from open_gopro.constants import ActionId, GoProUUIDs, StatusId
 from open_gopro.gopro_base import GoProBase, GoProMessageInterface, MessageMethodType
 from open_gopro.logger import Logger
 from open_gopro.models.response import BleRespBuilder, GoProResp
@@ -538,12 +538,17 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             logger.trace("Control setting encoded started")  # type: ignore
             self._encoding_started.set()
 
+    # TODO this needs unit testing
     async def _route_response(self, response: GoProResp) -> None:
         """After parsing response, route it to any stakeholders (such as registered listeners)
 
         Args:
             response (GoProResp): parsed response
         """
+        # Flatten data if possible
+        if response._is_query and not response._is_push:
+            response.data = list(response.data.values())[0]
+
         # Check if this is the awaited synchronous response (id matches). Note! these have to come in order.
         response_claimed = False
         if await self._sync_resp_wait_q.peek_front() == response.identifier:
@@ -554,10 +559,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # If this wasn't the awaited synchronous response...
         if not response_claimed:
             logger.info(Logger.build_log_rx_str(response, asynchronous=True))
-        if isinstance(response.identifier, QueryCmdId):
+        if response._is_push:
             for update_id, value in response.data.items():
                 await self._notify_listeners(update_id, value)
-        elif isinstance(response.identifier, (StatusId, SettingId, ActionId)):
+        elif isinstance(response.identifier, ActionId):
             await self._notify_listeners(response.identifier, response.data)
 
     def _notification_handler(self, handle: int, data: bytearray) -> None:

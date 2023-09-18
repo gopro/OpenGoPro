@@ -40,6 +40,7 @@ from open_gopro.ble.services import CharProps
 from open_gopro.communicator_interface import GoProBle, GoProWifi
 from open_gopro.constants import CmdId, ErrorCode, GoProUUIDs, StatusId
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
+from open_gopro.gopro_base import GoProBase
 from open_gopro.logger import set_logging_level, setup_logging
 from open_gopro.models.response import GoProResp
 from open_gopro.wifi import SsidState, WifiClient, WifiController
@@ -444,6 +445,7 @@ _test_response_id = CmdId.SET_SHUTTER
 @pytest.fixture(params=versions)
 async def mock_wireless_gopro_basic(request):
     test_client = MockWirelessGoPro(request.param)
+    GoProBase.HTTP_GET_RETRIES = 1
     yield test_client
     test_client.close()
 
