@@ -17,7 +17,7 @@ jobs:
         strategy:
             matrix:
                 os: [windows-latest, macos-latest, ubuntu-latest]
-                python-version: ["3.9", "3.10", "3.11"]
+                python-version: ['3.9', '3.10', '3.11']
                 include:
                     - os: ubuntu-latest
                       path: ~/.cache/pip
@@ -41,8 +41,8 @@ jobs:
                   key: ${{ runner.os }}-${{ matrix.python-version }}-pip-${{ hashFiles('demos/python/sdk_wireless_camera_control/poetry.lock') }}
                   restore-keys: ${{ runner.os }}-pip-
 
-            - name: Install Bluez on Ubuntu
-              run: sudo apt-get update && sudo apt install -y bluez
+            - name: Install prereqs on Ubuntu
+              run: sudo apt-get update && sudo apt install -y bluez graphviz
               if: ${{ matrix.os == 'ubuntu-latest'}}
 
             - name: Install dependencies
@@ -53,9 +53,15 @@ jobs:
                   pip install nox-poetry==1.0.3
                   pip install poetry
 
-            - name: Perform checks (format, types, lint, docstrings, unit tests, docs, safety)
+            - name: Perform checks (format, types, lint, docstrings, unit tests)
               working-directory: ./demos/python/sdk_wireless_camera_control/
               run: nox -p ${{ matrix.python-version }}
+
+            # Only test docs with latest Python on ubuntu since we need graphviz
+            - name: Test docs build
+              if: matrix.os == 'ubuntu-latest' &&  matrix.python-version == '3.11'
+              working-directory: ./demos/python/sdk_wireless_camera_control/
+              run: nox -s docs
 
             - name: Archive test report on failure
               uses: actions/upload-artifact@v2

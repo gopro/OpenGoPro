@@ -6,7 +6,8 @@
 import nox
 from nox_poetry import session
 
-nox.options.sessions = "format", "lint", "tests", "docstrings", "docs"
+# Don't run docs by default since it needs graphviz.
+nox.options.sessions = "format", "lint", "tests", "docstrings"
 
 SUPPORTED_VERSIONS = [
     "3.9",
@@ -78,6 +79,6 @@ def docs(session) -> None:
         "autodoc-pydantic",
         "darglint",
     )
-    session.run("sphinx-build", "docs", "docs/build")
+    session.run("sphinx-build", "-W", "docs", "docs/build")
     # Clean up for Jekyll consumption
     session.run("rm", "-rf", "docs/build/.doctrees", "/docs/build/_sources", "/docs/build/_static/fonts", external=True)

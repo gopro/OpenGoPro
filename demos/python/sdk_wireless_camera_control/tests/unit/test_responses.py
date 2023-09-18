@@ -35,8 +35,10 @@ def test_push_response_no_parameter_values():
     assert builder.is_finished_accumulating
     r = builder.build()
     assert r.ok
-    assert r.identifier == SettingId.RESOLUTION
-    assert r.data == []
+    assert r.identifier == QueryCmdId.SETTING_CAPABILITY_PUSH
+    assert r.data[SettingId.RESOLUTION] == []
+    assert r.data[SettingId.FPS] == []
+    assert r.data[SettingId.VIDEO_FOV] == []
 
 
 test_read_receive = bytearray([0x64, 0x62, 0x32, 0x2D, 0x73, 0x58, 0x56, 0x2D, 0x66, 0x62, 0x38])

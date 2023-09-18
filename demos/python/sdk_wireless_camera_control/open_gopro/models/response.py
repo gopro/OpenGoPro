@@ -143,6 +143,28 @@ class GoProResp(Generic[T]):
         """
         return self.status in [ErrorCode.SUCCESS, ErrorCode.UNKNOWN]
 
+    @property
+    def _is_push(self) -> bool:
+        """Was this response an asynchronous push?
+
+        Returns:
+            bool: True if yes, False otherwise
+        """
+        return self.identifier in [
+            QueryCmdId.STATUS_VAL_PUSH,
+            QueryCmdId.SETTING_VAL_PUSH,
+            QueryCmdId.SETTING_CAPABILITY_PUSH,
+        ]
+
+    @property
+    def _is_query(self) -> bool:
+        """Is this response to a settings / status query?
+
+        Returns:
+            bool: True if yes, False otherwise
+        """
+        return isinstance(self.identifier, QueryCmdId)
+
 
 class RespBuilder(ABC, Generic[T]):
     """Common Response Builder Interface"""
@@ -437,12 +459,6 @@ class BleRespBuilder(RespBuilder[bytearray]):
 
             # Query (setting get value, status get value, etc.)
             if query_type:
-                is_multiple = self._identifier in [
-                    QueryCmdId.GET_CAPABILITIES_VAL,
-                    QueryCmdId.REG_CAPABILITIES_UPDATE,
-                    QueryCmdId.SETTING_CAPABILITY_PUSH,
-                ]
-
                 camera_state: types.CameraState = defaultdict(list)
                 self._status = ErrorCode(buf[0])
                 buf = buf[1:]
@@ -467,7 +483,11 @@ class BleRespBuilder(RespBuilder[bytearray]):
                             camera_state[param_id] = param_val
                             continue
                         # These can be more than 1 value so use a list
-                        if is_multiple:
+                        if self._identifier in [
+                            QueryCmdId.GET_CAPABILITIES_VAL,
+                            QueryCmdId.REG_CAPABILITIES_UPDATE,
+                            QueryCmdId.SETTING_CAPABILITY_PUSH,
+                        ]:
                             # Parse using parser from global map and append
                             camera_state[param_id].append(parser.parse(param_val))
                         else:
@@ -479,12 +499,8 @@ class BleRespBuilder(RespBuilder[bytearray]):
                         # isn't functionally critical
                         logger.warning(f"{param_id} does not contain a value {param_val}")
                         camera_state[param_id] = param_val
-                # Flatten if not multiple
-                if is_multiple:
-                    self._identifier = list(camera_state.keys())[0]
-                    parsed = list(camera_state.values())[0]
-                else:
-                    parsed = camera_state
+                parsed = camera_state
+
             else:  # Commands,  Protobuf, and direct Reads
                 if is_cmd := isinstance(self._identifier, CmdId):
                     # All (non-protobuf) commands have a status

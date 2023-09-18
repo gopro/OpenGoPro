@@ -131,7 +131,7 @@ async def test_get_update(mock_wireless_gopro_basic: WirelessGoPro):
         event.set()
 
     mock_wireless_gopro_basic.register_update(receive_encoding_status, StatusId.ENCODING)
-    not_encoding = bytearray([0x05, 0x13, 0x00, StatusId.ENCODING.value, 0x01, 0x00])
+    not_encoding = bytearray([0x05, 0x93, 0x00, StatusId.ENCODING.value, 0x01, 0x00])
     mock_wireless_gopro_basic._notification_handler(0xFF, not_encoding)
     await event.wait()
 
@@ -153,7 +153,7 @@ async def test_get_update_unregister_all(mock_wireless_gopro_basic: WirelessGoPr
         event.set()
 
     mock_wireless_gopro_basic.register_update(receive_encoding_status, StatusId.ENCODING)
-    not_encoding = bytearray([0x05, 0x13, 0x00, StatusId.ENCODING.value, 0x01, 0x00])
+    not_encoding = bytearray([0x05, 0x93, 0x00, StatusId.ENCODING.value, 0x01, 0x00])
     mock_wireless_gopro_basic._notification_handler(0xFF, not_encoding)
     await event.wait()
 
