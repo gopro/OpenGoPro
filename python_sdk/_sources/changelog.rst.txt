@@ -13,6 +13,7 @@ Unreleased
 ----------
 * Fix BLE notifications not being routed correctly
 * Don't hardcode media directory. Also append directory to filenames in media list.
+* Fix malformed Set Setting HTTP url
 
 0.14.0 (September-13-2022)
 --------------------------
