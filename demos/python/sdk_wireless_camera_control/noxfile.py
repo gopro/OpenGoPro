@@ -50,6 +50,7 @@ def tests(session) -> None:
         "pytest",
         "pytest-cov",
         "pytest-asyncio",
+        "pytest-timeout",
         "pytest-mock",
         "pytest-html",
         "coverage[toml]",
