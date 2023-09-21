@@ -991,9 +991,9 @@ class HttpSetting(HttpMessage[SettingId], Generic[ValueType]):
         Returns:
             GoProResp: Status of set
         """
+        value = value.value if isinstance(value, enum.Enum) else value
         url = self._endpoint.format(int(self._identifier), value)
         logger.info(Logger.build_log_tx_str(pretty_print(self._as_dict(value=value, endpoint=url))))
-        value = value.value if isinstance(value, enum.Enum) else value
         # Send to camera
         if response := await self._communicator._http_get(
             url,
