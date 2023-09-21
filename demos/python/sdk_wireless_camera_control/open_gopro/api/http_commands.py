@@ -100,7 +100,6 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: Media metadata JSON structure
         """
-        return {"path": f"100GOPRO/{file}"}  # type: ignore
 
     @http_get_json_command(
         endpoint="gopro/media/list",
@@ -249,7 +248,6 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
             "dst": int(is_dst),
         }
 
-    # TODO
     @http_get_json_command(endpoint="gopro/camera/get_date_time")
     async def get_date_time(self) -> GoProResp[datetime.datetime]:
         """Get the date and time of the camera (Non timezone / DST aware)
@@ -285,7 +283,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: command status
         """
-        return {"path": f"100GOPRO/{file}", "ms": offset or None}  # type: ignore
+        return {"path": file, "ms": offset or None}  # type: ignore
 
     @http_get_json_command(
         endpoint="gopro/media/hilight/remove",
@@ -306,7 +304,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         Returns:
             GoProResp: command status
         """
-        return {"path": f"100GOPRO/{file}", "ms": offset}  # type: ignore
+        return {"path": file, "ms": offset}  # type: ignore
 
     @http_get_json_command(
         endpoint="gopro/webcam/exit",
@@ -396,7 +394,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
     #                          HTTP GET BINARY COMMANDS
     ######################################################################################################
 
-    @http_get_binary_command(endpoint="gopro/media/gpmf?path=100GOPRO")
+    @http_get_binary_command(endpoint="gopro/media/gpmf", arguments=["path"])
     async def get_gpmf_data(self, *, camera_file: str, local_file: Path | None = None) -> GoProResp[Path]:
         """Get GPMF data for a file.
 
@@ -410,7 +408,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
             Path: Path to local_file that output was written to
         """
 
-    @http_get_binary_command(endpoint="gopro/media/screennail?path=100GOPRO")
+    @http_get_binary_command(endpoint="gopro/media/screennail", arguments=["path"])
     async def get_screennail__call__(self, *, camera_file: str, local_file: Path | None = None) -> GoProResp[Path]:
         """Get screennail for a file.
 
@@ -424,7 +422,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
             Path: Path to local_file that output was written to
         """
 
-    @http_get_binary_command(endpoint="gopro/media/thumbnail?path=100GOPRO")
+    @http_get_binary_command(endpoint="gopro/media/thumbnail", arguments=["path"])
     async def get_thumbnail(self, *, camera_file: str, local_file: Path | None = None) -> GoProResp[Path]:
         """Get thumbnail for a file.
 
@@ -438,7 +436,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
             Path: Path to local_file that output was written to
         """
 
-    @http_get_binary_command(endpoint="gopro/media/telemetry?path=100GOPRO")
+    @http_get_binary_command(endpoint="gopro/media/telemetry", arguments=["path"])
     async def get_telemetry(self, *, camera_file: str, local_file: Path | None = None) -> GoProResp[Path]:
         """Download the telemetry data for a camera file and store in a local file.
 
@@ -452,7 +450,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
             Path: Path to local_file that output was written to
         """
 
-    @http_get_binary_command(endpoint="videos/DCIM/100GOPRO", identifier="Download File")
+    @http_get_binary_command(endpoint="videos/DCIM", components=["path"], identifier="Download File")
     async def download_file(self, *, camera_file: str, local_file: Path | None = None) -> GoProResp[Path]:
         """Download a video from the camera to a local file.
 

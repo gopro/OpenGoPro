@@ -7,39 +7,46 @@ from pathlib import Path
 
 import pytest
 
-from open_gopro.communicator_interface import GoProWifi
+from open_gopro.gopro_base import GoProBase
+
+camera_file = "100GOPRO/XXX.mp4"
 
 
 @pytest.mark.asyncio
-async def test_get_with_no_params(mock_wifi_communicator: GoProWifi):
+async def test_get_with_no_params(mock_wifi_communicator: GoProBase):
     response = await mock_wifi_communicator.http_command.get_media_list()
     assert response.url == "gopro/media/list"
 
 
 @pytest.mark.asyncio
-async def test_get_with_params(mock_wifi_communicator: GoProWifi):
+async def test_get_with_params(mock_wifi_communicator: GoProBase):
     zoom = 99
     response = await mock_wifi_communicator.http_command.set_digital_zoom(percent=zoom)
     assert response.url == f"gopro/camera/digital_zoom?percent={zoom}"
 
 
 @pytest.mark.asyncio
-async def test_with_multiple_params(mock_wifi_communicator: GoProWifi):
-    media_file = "XXX.mp4"
-    offset_ms = 2500
-    response = await mock_wifi_communicator.http_command.add_file_hilight(file=media_file, offset=offset_ms)
-    assert response.url == "gopro/media/hilight/file?path=100GOPRO/XXX.mp4&ms=2500"
+async def test_get_binary(mock_wifi_communicator: GoProBase):
+    url, file = await mock_wifi_communicator.http_command.get_gpmf_data(camera_file=camera_file)
+    assert url == f"gopro/media/gpmf?path={camera_file}"
+    assert file == Path("XXX.mp4")
 
 
 @pytest.mark.asyncio
-async def test_get_binary(mock_wifi_communicator: GoProWifi):
-    file = await mock_wifi_communicator.http_command.download_file(
-        camera_file="test_file", local_file=Path("local_file")
-    )
-    assert str(file[1]) == "local_file"
+async def test_get_binary_with_component(mock_wifi_communicator: GoProBase):
+    url, file = await mock_wifi_communicator.http_command.download_file(camera_file=camera_file)
+    assert url == f"videos/DCIM/{camera_file}"
+    assert file == Path("XXX.mp4")
 
 
-def test_ensure_no_positional_args(mock_wifi_communicator: GoProWifi):
+@pytest.mark.asyncio
+async def test_with_multiple_params(mock_wifi_communicator: GoProBase):
+    offset_ms = 2500
+    response = await mock_wifi_communicator.http_command.add_file_hilight(file=camera_file, offset=offset_ms)
+    assert response.url == f"gopro/media/hilight/file?path={camera_file}&ms=2500"
+
+
+def test_ensure_no_positional_args(mock_wifi_communicator: GoProBase):
     for command in mock_wifi_communicator.http_command.values():
         if inspect.getfullargspec(command).args != ["self"]:
             logging.error("All arguments to commands must be keyword-only")

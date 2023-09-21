@@ -801,25 +801,15 @@ class HttpCommand(HttpMessage[str]):
 
         super().__init__(endpoint, identifier, components, arguments, parser, rules)
 
-
-class HttpGetJsonCommand(HttpCommand):
-    """An HTTP command that performs a GET operation and receives JSON as response"""
-
-    async def __call__(
-        self, __communicator__: GoProHttp, rules: list[MessageRules] | None = None, **kwargs: Any
-    ) -> GoProResp:
-        """Execute the command by sending it via HTTP
+    def build_url(self, **kwargs: Any) -> str:
+        """Build the URL string from the passed in components and arguments
 
         Args:
-            __communicator__ (GoProHttp): HTTP communicator
-            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
-                message. Defaults to None.
-            **kwargs (Any): arguments to message
+            **kwargs (Any): additional entries for the dict
 
         Returns:
-            GoProResp: Response received via HTTP
+            str: built URL
         """
-        # Append components
         url = self._endpoint
         for component in self._components or []:
             url += "/" + kwargs.pop(component)
@@ -835,7 +825,30 @@ class HttpGetJsonCommand(HttpCommand):
             )
         ):
             url += "?" + arg_part
+        return url
 
+
+class HttpGetJsonCommand(HttpCommand):
+    """An HTTP command that performs a GET operation and receives JSON as response"""
+
+    async def __call__(
+        self,
+        __communicator__: GoProHttp,
+        rules: list[MessageRules] | None = None,
+        **kwargs: Any,
+    ) -> GoProResp:
+        """Execute the command by sending it via HTTP
+
+        Args:
+            __communicator__ (GoProHttp): HTTP communicator
+            rules (Optional[dict[MessageRules, RuleSignature]], optional): rules to apply when executing this
+                message. Defaults to None.
+            **kwargs (Any): arguments to message
+
+        Returns:
+            GoProResp: Response received via HTTP
+        """
+        url = self.build_url(**kwargs)
         # Send to camera
         logger.info(Logger.build_log_tx_str(pretty_print(self._as_dict(**kwargs, endpoint=url))))
         response = await __communicator__._http_get(url, self._parser, rules=rules)
@@ -849,7 +862,11 @@ class HttpGetBinary(HttpCommand):
     """An HTTP command that performs a GET operation and receives a binary stream as response"""
 
     async def __call__(  # type: ignore
-        self, __communicator__: GoProHttp, *, camera_file: str, local_file: Path | None = None
+        self,
+        __communicator__: GoProHttp,
+        *,
+        camera_file: str,
+        local_file: Path | None = None,
     ) -> GoProResp:
         """Execute the command by getting the binary data from the communicator
 
@@ -863,8 +880,8 @@ class HttpGetBinary(HttpCommand):
             GoProResp: location on local device that file was written to
         """
         # The method that will actually send the command and receive the stream
-        local_file = local_file or Path(".") / camera_file
-        url = self._endpoint + "/" + camera_file
+        local_file = local_file or Path(".") / Path(camera_file).name
+        url = self.build_url(path=camera_file)
         logger.info(
             Logger.build_log_tx_str(
                 pretty_print(self._as_dict(endpoint=url, camera_file=camera_file, local_file=local_file))

@@ -6,9 +6,9 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Optional
+from typing import Any, Optional
 
-from pydantic import Field, validator
+from pydantic import Field, PrivateAttr, validator
 
 from open_gopro import types
 from open_gopro.models.bases import CustomBaseModel
@@ -139,6 +139,16 @@ class MediaList(CustomBaseModel):
 
     identifier: str = Field(alias="id")  #: String identifier of this media list
     media: list[MediaFileSystem]  #: Media filesystem(s)
+    _files: list[MediaItem] = PrivateAttr(default_factory=list)
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+        # self.thing = 1
+        # Modify each file name to use full path
+        for directory in self.media:
+            for media in directory.file_system:
+                media.filename = f"{directory.directory}/{media.filename}"
+                self._files.append(media)
 
     @property
     def files(self) -> list[MediaItem]:
@@ -147,4 +157,4 @@ class MediaList(CustomBaseModel):
         Returns:
             list[MediaItem]: all media items in this media list
         """
-        return [item for media in self.media for item in media.file_system]
+        return self._files

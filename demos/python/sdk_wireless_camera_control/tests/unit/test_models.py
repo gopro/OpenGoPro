@@ -136,6 +136,7 @@ def test_media_list():
     items = media_list.files
     assert len(items) == 12
     assert len([item for item in items if isinstance(item, GroupedMediaItem)]) == 2
+    assert media_list.files[0].filename == "100GOPRO/GX010001.MP4"
 
 
 VIDEO_METADATA: Final = {

@@ -46,7 +46,7 @@ async def main(args: argparse.Namespace) -> None:
             # The photo is (most likely) the difference between the two sets
             photo = media_set_after.difference(media_set_before).pop()
             # Download the photo
-            console.print("Downloading the photo...")
+            console.print(f"Downloading {photo.filename}...")
             await gopro.http_command.download_file(camera_file=photo.filename, local_file=args.output)
             console.print(f"Success!! :smiley: File has been downloaded to {args.output}")
     except Exception as e:  # pylint: disable = broad-except
