@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
-0.14.1 (September-13-2022)
+0.14.1 (September-21-2022)
 --------------------------
 * Fix BLE notifications not being routed correctly
 * Don't hardcode media directory. Also append directory to filenames in media list.
