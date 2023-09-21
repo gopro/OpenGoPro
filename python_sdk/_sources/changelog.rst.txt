@@ -12,6 +12,7 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 Unreleased
 ----------
 * Fix BLE notifications not being routed correctly
+* Don't hardcode media directory. Also append directory to filenames in media list.
 
 0.14.0 (September-13-2022)
 --------------------------
