@@ -299,10 +299,9 @@ class NmcliWireless(WifiController):
         discovered = False
         while not discovered and (time.time() - start) <= timeout:
             # Scan for network
-            response = cmd(f"{self.sudo} nmcli device wifi list")
+            response = cmd(f"{self.sudo} nmcli -f SSID device wifi list")
             for result in response.splitlines()[1:]:  # Skip title row
-                # Remove * in IN-USE column since it makes the SSID column non-determinant
-                if result.strip(" *").split()[1] == ssid:
+                if result.strip() == ssid.strip():
                     discovered = True
                     break
             if discovered:
@@ -457,10 +456,9 @@ class Nmcli0990Wireless(WifiController):
         while not discovered and (time.time() - start) <= timeout:
             # Scan for network
             cmd(f"{self.sudo} nmcli device wifi rescan")
-            response = cmd(f"{self.sudo} nmcli device wifi list")
+            response = cmd(f"{self.sudo} nmcli -f SSID device wifi list")
             for result in response.splitlines()[1:]:  # Skip title row
-                # Remove * in IN-USE column since it makes the SSID column non-determinant
-                if result.strip(" *").split()[1] == ssid:
+                if result.strip() == ssid.strip():
                     discovered = True
                     break
             if discovered:
@@ -693,8 +691,12 @@ class NetworksetupWireless(WifiController):
             response = cmd(
                 r"/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --scan"
             )
-            for result in response.splitlines()[1:]:  # Skip title row
-                if result.split()[0] == ssid:
+            lines = response.splitlines()
+            ssid_end_index = lines[0].index("SSID") + 4 # Find where the SSID column ends
+
+            for result in lines[1:]:  # Skip title row
+                current_ssid = result[:ssid_end_index].strip()
+                if current_ssid == ssid.strip():
                     discovered = True
                     break
             if discovered:
