@@ -1,7 +1,7 @@
 ---
-permalink: "/tutorials/parse-ble-responses"
+permalink: '/tutorials/parse-ble-responses'
 sidebar:
-  nav: "tutorials"
+    nav: 'tutorials'
 lesson: 3
 ---
 
@@ -44,7 +44,6 @@ Python >= 3.8.x must be used as specified in the requirements
 {% accordion Parsing a One Packet TLV Response %}
 
 You can test parsing a one packet TLV response with your camera through BLE using the following script:
-
 ```console
 $ python ble_command_get_version.py
 ```
@@ -63,13 +62,12 @@ optional arguments:
                         Last 4 digits of GoPro serial number, which is the last 4 digits of the
                         default camera SSID. If not used, first discovered GoPro will be connected to
 ```
-
 {% endaccordion %}
+
 
 {% accordion Parsing Multiple Packet TLV Responses %}
 
 You can test parsing multiple packet TVL responses with your camera through BLE using the following script:
-
 ```console
 $ python ble_command_get_state.py
 ```
@@ -88,7 +86,6 @@ optional arguments:
                         Last 4 digits of GoPro serial number, which is the last 4 digits of the
                         default camera SSID. If not used, first discovered GoPro will be connected to
 ```
-
 {% endaccordion %}
 
 {% endtab %}
@@ -185,8 +182,8 @@ response will be used for most Commands and Setting Responses as seen in the
 There are some commands that do return additional response data. These are called "complex responses."
 From the [commands reference]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), we can see that these are:
 
-- Get Open GoPro Version (ID == 0x51)
-- Get Hardware Info (ID == 0x3C)
+-   Get Open GoPro Version (ID == 0x51)
+-   Get Hardware Info (ID == 0x3C)
 
 In this tutorial, we will walk through creating a simple parser to parse the Open GoPro Get Version Command.
 
@@ -199,7 +196,6 @@ First, we send the command to the Command Request [UUID]({% link specs/ble_versi
 
 {% linkedTabs send_command %}
 {% tab send_command python %}
-
 ```python
 COMMAND_REQ_UUID = GOPRO_BASE_UUID.format("0072")
 event.clear()
@@ -213,10 +209,8 @@ We then receive a response at the expected handle. This is logged as:
 INFO:root:Getting the Open GoPro version...
 INFO:root:Received response at handle=52: b'06:51:00:01:02:01:00'
 ```
-
 {% endtab %}
 {% tab send_command kotlin %}
-
 ```kotlin
     val getVersion = ubyteArrayOf(0x01U, 0x51U)
     ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, getVersion)
@@ -232,7 +226,6 @@ Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b
 Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 06:51:00:01:02:01:00
 Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 06:51:00:01:02:01:00
 ```
-
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -268,6 +261,7 @@ values formatted as such:
 The snippets of code included in this section are taken from the `notification handler`
 {% endnote %}
 
+
 ```python
 # Parse first 3 bytes
 len = data[0]
@@ -285,7 +279,6 @@ while index <= length:
     params.append(data[index : index + param_len])
     index += param_len
 ```
-
 {% endtab %}
 {% tab parse_response kotlin %}
 {% note %}
@@ -314,7 +307,6 @@ while (buf.isNotEmpty()) {
     buf = buf.drop(paramLen)
 }
 ```
-
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -323,7 +315,6 @@ the minor version so let's print them (and all of the other response information
 
 {% linkedTabs print_response %}
 {% tab print_response python %}
-
 ```python
 major, minor = params
 logger.info(f"Received a response to {command_id=} with {status=}: version={major[0]}.{minor[0]}")
@@ -334,10 +325,8 @@ which shows on the log as:
 ```console
 INFO:root:Received a response to command_id=81 with status=0: version=2.0
 ```
-
 {% endtab %}
 {% tab print_response kotlin %}
-
 ```kotlin
 val version = receivedResponse.receive() as Response.Complex // Wait to receive response
 val major = version.data[0].first().toInt()
@@ -350,6 +339,7 @@ which shows on the log as such:
 ```console
 Got the Open GoPro version successfully: 2.0
 ```
+
 
 {% endtab %}
 {% endlinkedTabs %}
@@ -482,24 +472,20 @@ Continuation bit set?
 
 {% linkedTabs is_cont_set %}
 {% tab is_cont_set python %}
-
 ```python
 if buf[0] & CONT_MASK:
     buf.pop(0)
 else:
     ...
 ```
-
 {% endtab %}
 {% tab is_cont_set kotlin %}
-
 ```kotlin
 if (data.first().and(Mask.Continuation.value) == Mask.Continuation.value) {
     buf = buf.drop(1).toUByteArray() // Pop the header byte
 } else { // This is a new packet
     ...
 ```
-
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -507,7 +493,6 @@ No, continuation bit was not set. So create new response, then get its length.
 
 {% linkedTabs cont_not_set %}
 {% tab cont_not_set python %}
-
 ```python
 # This is a new packet so start with an empty byte array
 self.bytes = bytearray()
@@ -522,10 +507,8 @@ elif hdr is Header.EXT_16:
     self.bytes_remaining = (buf[1] << 8) + buf[2]
     buf = buf[3:]
 ```
-
 {% endtab %}
 {% tab cont_not_set kotlin %}
-
 ```kotlin
 // This is a new packet so start with empty array
 packet = ubyteArrayOf()
@@ -548,7 +531,6 @@ when (Header.fromValue((buf.first() and Mask.Header.value).toInt() shr 5)) {
     }
 }
 ```
-
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -556,22 +538,18 @@ Append current packet to response and decrement bytes remaining.
 
 {% linkedTabs append_packet %}
 {% tab append_packet python %}
-
 ```python
 # Append payload to buffer and update remaining / complete
 self.bytes.extend(buf)
 self.bytes_remaining -= len(buf)
 ```
-
 {% endtab %}
 {% tab append_packet kotlin %}
-
 ```kotlin
 // Accumulate the payload now that headers are handled and dropped
 packet += buf
 bytesRemaining -= buf.size
 ```
-
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -579,22 +557,18 @@ In the notification handler, we are then parsing if there are no bytes remaining
 
 {% linkedTabs parse_if_done %}
 {% tab parse_if_done python %}
-
 ```python
     if response.is_received:
         response.parse()
 ```
-
 {% endtab %}
 {% tab parse_if_done kotlin %}
-
 ```kotlin
 rsp.accumulate(data)
 if (rsp.isReceived) {
     rsp.parse()
     ...
 ```
-
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -628,23 +602,19 @@ We send the command as such:
 
 {% linkedTabs get_all_settings_values %}
 {% tab get_all_settings_values python %}
-
 ```python
 QUERY_REQ_UUID = GOPRO_BASE_UUID.format("0076")
 event.clear()
 await client.write_gatt_char(QUERY_REQ_UUID, bytearray([0x01, 0x12]))
 await event.wait()  # Wait to receive the notification response
 ```
-
 {% endtab %}
 {% tab get_all_settings_values kotlin %}
-
 ```kotlin
 val getCameraSettings = ubyteArrayOf(0x01U, 0x12U)
 ble.writeCharacteristic(goproAddress, GoProUUID.CQ_QUERY.uuid, getCameraSettings)
 val settings = receivedResponse.receive()
 ```
-
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -653,7 +623,6 @@ received the entire response, at which point we notify the writer that the respo
 
 {% linkedTabs parse_get_all_settings_values %}
 {% tab parse_get_all_settings_values python %}
-
 ```python
  def notification_handler(handle: int, data: bytes) -> None:
         response.accumulate(data)
@@ -664,10 +633,8 @@ received the entire response, at which point we notify the writer that the respo
             # Notify writer that procedure is complete
             event.set()
 ```
-
 {% endtab %}
 {% tab parse_get_all_settings_values kotlin %}
-
 ```kotlin
 private fun tlvResponseNotificationHandler(characteristic: UUID, data: UByteArray) {
     ...
@@ -680,7 +647,6 @@ private fun tlvResponseNotificationHandler(characteristic: UUID, data: UByteArra
         CoroutineScope(Dispatchers.IO).launch { receivedResponse.send(rsp) }
     }
 ```
-
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -692,7 +658,6 @@ We can see the individual packets being accumulated in the log:
 
 {% linkedTabs print_get_all_settings_values %}
 {% tab print_get_all_settings_values python %}
-
 ```console
 INFO:root:Getting the camera's settings...
 INFO:root:Received response at handle=62: b'21:25:12:00:02:01:09:03:01:01:05:0
@@ -729,7 +694,6 @@ INFO:root:Received response at handle=62: b'8e:a8:04:00:00:00:00:a9:01:01'
 INFO:root:self.bytes_remaining=0
 INFO:root:Successfully received the response
 ```
-
 {% endtab %}
 {% tab print_get_all_settings_values kotlin %}
 
@@ -787,7 +751,6 @@ Received packet of length 15. 0 bytes remaining
 Received the expected successful response
 Got the camera's settings successfully
 ```
-
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -845,20 +808,16 @@ ID and Status:
 
 {% linkedTabs id_status_query_response %}
 {% tab id_status_query_response python %}
-
 ```python
 self.id = self.bytes[0]
 self.status = self.bytes[1]
 ```
-
 {% endtab %}
 {% tab id_status_query_response kotlin %}
-
 ```kotlin
 id = packet[0].toInt()
 status = packet[1].toInt()
 ```
-
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -867,7 +826,6 @@ storing each value in a hash map indexed by ID for later access.
 
 {% linkedTabs tlv_query_response %}
 {% tab tlv_query_response python %}
-
 ```python
 buf = self.bytes[2:]
 while len(buf) > 0:
@@ -884,10 +842,8 @@ while len(buf) > 0:
     # Advance the buffer
     buf = buf[param_len:]
 ```
-
 {% endtab %}
 {% tab tlv_query_response kotlin %}
-
 ```kotlin
 while (buf.isNotEmpty()) {
     // Get each parameter's ID and length
@@ -902,7 +858,6 @@ while (buf.isNotEmpty()) {
     buf = buf.drop(paramLen)
 }
 ```
-
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -960,7 +915,6 @@ INFO:root:Received settings
     "169": "01"
 }
 ```
-
 {% endtab %}
 {% tab print_query_response kotlin %}
 
@@ -1014,6 +968,7 @@ INFO:root:Received settings
 }
 ```
 
+
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -1022,8 +977,8 @@ We can see what each of these values mean by looking at the
 
 For example:
 
-- ID 2 == 9 equates to Resolution == 1080
-- ID 3 == 1 equates to FPS == 120
+-   ID 2 == 9 equates to Resolution == 1080
+-   ID 3 == 1 equates to FPS == 120
 
 {% quiz
     question="How many packets are query responses?"
