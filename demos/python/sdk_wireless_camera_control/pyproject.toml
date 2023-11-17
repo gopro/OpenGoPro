@@ -31,6 +31,7 @@ gopro-webcam = "open_gopro.demos.gui.webcam:entrypoint"
 gopro-livestream = "open_gopro.demos.gui.livestream:entrypoint"
 gopro-preview-stream = "open_gopro.demos.gui.preview_stream:entrypoint"
 gopro-gui = "open_gopro.demos.gui.gui_demo:entrypoint"
+gopro-cohn = "open_gopro.demos.cohn:entrypoint"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -49,13 +50,12 @@ pexpect = "^4"
 zeroconf = "^0"
 pydantic = "^1"
 opencv-python = { version = "^4", optional = true }
-tk = { version= "^0.1", optional = true }
 Pillow = {version= "^9", optional = true}
 pytz = "^2023.3"
 tzlocal = "^5.0.1"
 
 [tool.poetry.extras]
-gui = ["opencv-python", "tk", "pillow"]
+gui = ["opencv-python", "pillow"]
 
 [tool.poetry.group.dev.dependencies]
 pydocstyle = { extras = ["toml"], version = "^6" }
@@ -85,8 +85,8 @@ pytest-timeout = "^2"
 isort = "^5"
 protoletariat = "^3"
 
-[tool.poe.tasks.unit_tests]
-cmd = "pytest tests/unit --cov-fail-under=70"
+[tool.poe.tasks.tests]
+cmd = "pytest tests --cov-fail-under=70"
 help = "Run unit tests"
 
 [tool.poe.tasks.types]
@@ -158,7 +158,7 @@ sequence = ["clean_artifacts", "clean_tests", "clean_docs", "clean_build"]
 help = "Clean everything"
 
 [tool.poe.tasks.all]
-sequence = ["format", "types", "lint", "unit_tests", "docs"]
+sequence = ["format", "types", "lint", "tests", "docs"]
 help = "Format, check types, lint, check docstrings, and run unit tests"
 
 [tool.mypy]

@@ -53,6 +53,12 @@ async def test_with_multiple_params(mock_wifi_communicator: GoProBase):
     assert response.url == f"gopro/media/hilight/file?path={camera_file}&ms=2500"
 
 
+@pytest.mark.asyncio
+async def test_string_arg(mock_wifi_communicator: GoProBase):
+    response = await mock_wifi_communicator.http_command.webcam_start(protocol=Params.WebcamProtocol.RTSP)
+    assert response.url == f"gopro/webcam/start?protocol=RTSP"
+
+
 def test_ensure_no_positional_args(mock_wifi_communicator: GoProBase):
     for command in mock_wifi_communicator.http_command.values():
         if inspect.getfullargspec(command).args != ["self"]:

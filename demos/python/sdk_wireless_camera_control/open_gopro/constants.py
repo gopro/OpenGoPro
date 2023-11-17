@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from typing import Final
 
 from open_gopro.ble import BleUUID, UUIDs
-from open_gopro.enum import GoProEnum
+from open_gopro.enum import GoProIntEnum
 
 GOPRO_BASE_UUID: Final = "b5f9{}-aa8d-11e3-9046-0002a5d5c51b"
 
@@ -50,7 +50,7 @@ class GoProUUIDs(UUIDs):
     INTERNAL_84 = BleUUID("Internal 84", hex=GOPRO_BASE_UUID.format("0084"))
 
 
-class ErrorCode(GoProEnum):
+class ErrorCode(GoProIntEnum):
     """Status Codes."""
 
     SUCCESS = 0
@@ -59,7 +59,7 @@ class ErrorCode(GoProEnum):
     UNKNOWN = -1
 
 
-class CmdId(GoProEnum):
+class CmdId(GoProIntEnum):
     """Command ID's that are written to GoProUUIDs.CQ_COMMAND."""
 
     SET_SHUTTER = 0x01
@@ -89,7 +89,7 @@ class CmdId(GoProEnum):
     UNREGISTER_ALL_CAPABILITIES = 0x82
 
 
-class ActionId(GoProEnum):
+class ActionId(GoProIntEnum):
     """Action ID's that identify a protobuf command."""
 
     SCAN_WIFI_NETWORKS = 0x02
@@ -108,8 +108,18 @@ class ActionId(GoProEnum):
     GET_AP_ENTRIES_RSP = 0x83
     REQUEST_WIFI_CONNECT_RSP = 0x84
     REQUEST_WIFI_CONNECT_NEW_RSP = 0x85
+    REQUEST_COHN_SETTING = 0x65
+    REQUEST_CLEAR_COHN_CERT = 0x66
+    REQUEST_CREATE_COHN_CERT = 0x67
+    REQUEST_GET_COHN_CERT = 0x6E
+    REQUEST_GET_COHN_STATUS = 0x6F
+    RESPONSE_COHN_SETTING = 0xE5
+    RESPONSE_CLEAR_COHN_CERT = 0xE6
+    RESPONSE_CREATE_COHN_CERT = 0xE7
     SET_CAMERA_CONTROL_RSP = 0xE9
     SET_TURBO_MODE_RSP = 0xEB
+    RESPONSE_GET_COHN_CERT = 0xEE
+    RESPONSE_GET_COHN_STATUS = 0xEF
     GET_PRESET_STATUS_RSP = 0xF2
     PRESET_MODIFIED_NOTIFICATION = 0xF3
     LIVESTREAM_STATUS_RSP = 0xF4
@@ -119,7 +129,7 @@ class ActionId(GoProEnum):
     INTERNAL_FF = 0xFF
 
 
-class FeatureId(GoProEnum):
+class FeatureId(GoProIntEnum):
     """ID's that group protobuf commands"""
 
     NETWORK_MANAGEMENT = 0x02
@@ -128,7 +138,7 @@ class FeatureId(GoProEnum):
     QUERY = 0xF5
 
 
-class SettingId(GoProEnum):
+class SettingId(GoProIntEnum):
     """Setting ID's that identify settings and are written to GoProUUIDs.CQ_SETTINGS."""
 
     RESOLUTION = 2
@@ -252,7 +262,7 @@ class SettingId(GoProEnum):
     INVALID_FOR_TESTING = 0xFF
 
 
-class QueryCmdId(GoProEnum):
+class QueryCmdId(GoProIntEnum):
     """Command ID that is written to GoProUUIDs.CQ_QUERY."""
 
     GET_SETTING_VAL = 0x12
@@ -273,7 +283,7 @@ class QueryCmdId(GoProEnum):
     INVALID_FOR_TESTING = 0xFF
 
 
-class StatusId(GoProEnum):
+class StatusId(GoProIntEnum):
     """Status ID to identify statuses sent to GoProUUIDs.CQ_QUERY or received from GoProUUIDs.CQ_QUERY_RESP."""
 
     BATT_PRESENT = 1
@@ -380,7 +390,7 @@ class StatusId(GoProEnum):
     TOTAL_SD_SPACE_KB = 117
 
 
-class WebcamStatus(GoProEnum):
+class WebcamStatus(GoProIntEnum):
     """Webcam Statuses / states"""
 
     OFF = 0
@@ -389,7 +399,7 @@ class WebcamStatus(GoProEnum):
     LOW_POWER_PREVIEW = 3
 
 
-class WebcamError(GoProEnum):
+class WebcamError(GoProIntEnum):
     """Errors common among Webcam commands"""
 
     SUCCESS = 0

@@ -6,10 +6,10 @@
 import enum
 
 from open_gopro import proto
-from open_gopro.enum import GoProEnum, enum_factory
+from open_gopro.enum import GoProIntEnum, enum_factory
 
 
-class EnumTest(GoProEnum):
+class EnumTest(GoProIntEnum):
     RESULT_SUCCESS = 1
     TWO = 2
     NOT_APPLICABLE = 3

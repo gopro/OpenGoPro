@@ -231,6 +231,33 @@ class GoProBase(ABC, Generic[ApiType]):
         """
         raise NotImplementedError
 
+    @abstractmethod
+    async def configure_cohn(self, timeout: int = 60) -> bool:
+        """Prepare Camera on the Home Network
+
+        Provision if not provisioned
+        Then wait for COHN to be connected and ready
+
+        Args:
+            timeout (int): time in seconds to wait for COHN to be ready. Defaults to 60.
+
+        Returns:
+            bool: True if success, False otherwise
+        """
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    async def is_cohn_provisioned(self) -> bool:
+        """Is COHN currently provisioned?
+
+        Get the current COHN status from the camera
+
+        Returns:
+            bool: True if COHN is provisioned, False otherwise
+        """
+        raise NotImplementedError
+
     ##########################################################################################################
     #                                 End Public API
     ##########################################################################################################
@@ -346,7 +373,7 @@ class GoProBase(ABC, Generic[ApiType]):
             request_args["verify"] = str(certificate)
 
         response: Optional[GoProResp] = None
-        for retry in range(GoProBase.HTTP_GET_RETRIES):
+        for retry in range(1, GoProBase.HTTP_GET_RETRIES + 1):
             try:
                 request = requests.get(url, timeout=timeout, **request_args)
                 logger.trace(f"received raw json: {json.dumps(request.json() if request.text else {}, indent=4)}")  # type: ignore

@@ -38,7 +38,7 @@ from open_gopro.constants import (
     SettingId,
     StatusId,
 )
-from open_gopro.enum import GoProEnum
+from open_gopro.enum import GoProIntEnum
 from open_gopro.logger import Logger
 from open_gopro.models.general import HttpInvalidSettingResponse
 from open_gopro.models.response import GlobalParsers, GoProResp
@@ -50,7 +50,7 @@ logger = logging.getLogger(__name__)
 ValueType = TypeVar("ValueType")
 IdType = TypeVar("IdType")
 
-QueryParserType = Union[construct.Construct, type[GoProEnum], BytesParserBuilder]
+QueryParserType = Union[construct.Construct, type[GoProIntEnum], BytesParserBuilder]
 
 
 ######################################################## BLE #################################################
@@ -142,7 +142,7 @@ class BleWriteCommand(BleMessage[CmdId]):
         response = await __communicator__._send_ble_message(
             self._uuid, data, self._identifier, rules=self._evaluate_rules(**kwargs)
         )
-        logger.info(Logger.build_log_rx_str(response))
+        # logger.info(Logger.build_log_rx_str(response))
         return response
 
     def __str__(self) -> str:
@@ -284,7 +284,7 @@ class BleProtoCommand(BleMessage[ActionId]):
         data = self.build_data(**kwargs)
         # Allow exception to pass through if protobuf not completely initialized
         response = await __communicator__._send_ble_message(self._uuid, data, self.response_action_id)
-        logger.info(Logger.build_log_rx_str(response))
+        # logger.info(Logger.build_log_rx_str(response))
         return response
 
     def __str__(self) -> str:
@@ -465,7 +465,7 @@ class BleSetting(BleMessage[SettingId], Generic[ValueType]):
             parser.byte_json_adapter = ByteParserBuilders.Construct(parser_builder)
         elif isinstance(parser_builder, BytesParserBuilder):
             parser.byte_json_adapter = parser_builder
-        elif issubclass(parser_builder, GoProEnum):
+        elif issubclass(parser_builder, GoProIntEnum):
             parser.byte_json_adapter = ByteParserBuilders.GoProEnum(parser_builder)
         else:
             raise TypeError(f"Unexpected {parser_builder=}")
@@ -661,7 +661,7 @@ class BleStatus(BleMessage[StatusId], Generic[ValueType]):
             parser_builder.byte_json_adapter = ByteParserBuilders.Construct(parser)
         elif isinstance(parser, BytesParserBuilder):
             parser_builder.byte_json_adapter = parser
-        elif issubclass(parser, GoProEnum):
+        elif issubclass(parser, GoProIntEnum):
             parser_builder.byte_json_adapter = ByteParserBuilders.GoProEnum(parser)
         else:
             raise TypeError(f"Unexpected {parser_builder=}")
@@ -697,7 +697,7 @@ class BleStatus(BleMessage[StatusId], Generic[ValueType]):
         data = self._build_cmd(response_id)
         logger.info(Logger.build_log_tx_str(pretty_print(self._as_dict(f"{response_id.name}.{str(self._identifier)}"))))
         response = await self._communicator._send_ble_message(self.UUID, data, response_id)
-        logger.info(Logger.build_log_rx_str(response))
+        # logger.info(Logger.build_log_rx_str(response))
         return response
 
     def _as_dict(  # pylint: disable = arguments-differ

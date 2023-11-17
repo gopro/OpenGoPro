@@ -161,7 +161,7 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         """
 
     @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.LOAD_PRESET_GROUP, Int16ub)
-    async def load_preset_group(self, *, group: proto.EnumPresetGroup) -> GoProResp[None]:
+    async def load_preset_group(self, *, group: proto.EnumPresetGroup.ValueType) -> GoProResp[None]:
         """Load a Preset Group.
 
         Once complete, the most recently used preset in this group will be active.
@@ -453,7 +453,9 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         request_proto=proto.RequestSetCameraControlStatus,
         response_proto=proto.ResponseGeneric,
     )
-    async def set_camera_control(self, *, camera_control_status: proto.EnumCameraControlStatus) -> GoProResp[None]:
+    async def set_camera_control(
+        self, *, camera_control_status: proto.EnumCameraControlStatus.ValueType
+    ) -> GoProResp[None]:
         """Tell the camera that the app (i.e. External Control) wishes to claim control of the camera.
 
         Args:
@@ -494,8 +496,8 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
     async def get_preset_status(
         self,
         *,
-        register: list[proto.EnumRegisterPresetStatus] | None = None,
-        unregister: list[proto.EnumRegisterPresetStatus] | None = None,
+        register: list[proto.EnumRegisterPresetStatus.ValueType] | None = None,
+        unregister: list[proto.EnumRegisterPresetStatus.ValueType] | None = None,
     ) -> GoProResp[proto.NotifyPresetStatus]:
         """Get information about what Preset Groups and Presets the camera supports in its current state
 
@@ -609,11 +611,11 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         self,
         *,
         url: str,
-        window_size: proto.EnumWindowSize,
+        window_size: proto.EnumWindowSize.ValueType,
         minimum_bitrate: int,
         maximum_bitrate: int,
         starting_bitrate: int,
-        lens: proto.EnumLens,
+        lens: proto.EnumLens.ValueType,
         certs: list[Path] | None = None,
     ) -> GoProResp[None]:
         """Initiate livestream to any site that accepts an RTMP URL and simultaneously encode to camera.
@@ -661,8 +663,8 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
     async def register_livestream_status(
         self,
         *,
-        register: list[proto.EnumRegisterLiveStreamStatus] | None = None,
-        unregister: list[proto.EnumRegisterLiveStreamStatus] | None = None,
+        register: list[proto.EnumRegisterLiveStreamStatus.ValueType] | None = None,
+        unregister: list[proto.EnumRegisterLiveStreamStatus.ValueType] | None = None,
     ) -> GoProResp[proto.NotifyLiveStreamStatus]:
         """Register / unregister to receive asynchronous livestream statuses
 
@@ -676,6 +678,108 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
             GoProResp: current livestream status
         """
         return {"register_live_stream_status": register or [], "unregister_live_stream_status": unregister or []}  # type: ignore
+
+    @ble_proto_command(
+        uuid=GoProUUIDs.CQ_COMMAND,
+        feature_id=FeatureId.COMMAND,
+        action_id=ActionId.RELEASE_NETWORK,
+        response_action_id=ActionId.RELEASE_NETWORK_RSP,
+        request_proto=proto.RequestReleaseNetwork,
+        response_proto=proto.ResponseGeneric,
+    )
+    async def release_network(self) -> GoProResp[None]:
+        """Disconnect the camera Wifi network in STA mode so that it returns to AP mode.
+
+        Returns:
+            GoProResp: status of release request
+        """
+
+    @ble_proto_command(
+        uuid=GoProUUIDs.CQ_QUERY,
+        feature_id=FeatureId.QUERY,
+        action_id=ActionId.REQUEST_GET_COHN_STATUS,
+        response_action_id=ActionId.RESPONSE_GET_COHN_STATUS,
+        request_proto=proto.RequestGetCOHNStatus,
+        response_proto=proto.NotifyCOHNStatus,
+    )
+    async def cohn_get_status(self, *, register: bool) -> GoProResp[proto.NotifyCOHNStatus]:
+        """Get (and optionally register for) the current COHN status
+
+        Args:
+            register (bool): whether or not to register
+
+        Returns:
+            GoProResp[proto.NotifyCOHNStatus]: current COHN status
+        """
+        return {"register_cohn_status": int(register)}  # type: ignore
+
+    @ble_proto_command(
+        uuid=GoProUUIDs.CQ_COMMAND,
+        feature_id=FeatureId.COMMAND,
+        action_id=ActionId.REQUEST_CREATE_COHN_CERT,
+        response_action_id=ActionId.RESPONSE_CREATE_COHN_CERT,
+        request_proto=proto.RequestCreateCOHNCert,
+        response_proto=proto.ResponseGeneric,
+    )
+    async def cohn_create_certificate(self, *, override: bool = False) -> GoProResp[None]:
+        """Create an SSL certificate on the camera to use for COHN
+
+        Args:
+            override (bool): Should the current cert be overwritten?. Defaults to True.
+
+        Returns:
+            GoProResp[None]: certificate creation status
+        """
+        return {"override": int(override)}  # type: ignore
+
+    @ble_proto_command(
+        uuid=GoProUUIDs.CQ_COMMAND,
+        feature_id=FeatureId.COMMAND,
+        action_id=ActionId.REQUEST_CLEAR_COHN_CERT,
+        response_action_id=ActionId.RESPONSE_CLEAR_COHN_CERT,
+        request_proto=proto.RequestClearCOHNCert,
+        response_proto=proto.ResponseGeneric,
+    )
+    async def cohn_clear_certificate(self) -> GoProResp[None]:
+        """Clear the current SSL certificate on the camera that is used for COHN
+
+        Returns:
+            GoProResp[None]: was the clear successful?
+        """
+
+    @ble_proto_command(
+        uuid=GoProUUIDs.CQ_QUERY,
+        feature_id=FeatureId.QUERY,
+        action_id=ActionId.REQUEST_GET_COHN_CERT,
+        response_action_id=ActionId.RESPONSE_GET_COHN_CERT,
+        request_proto=proto.RequestCOHNCert,
+        response_proto=proto.ResponseCOHNCert,
+    )
+    async def cohn_get_certificate(self) -> GoProResp[proto.ResponseCOHNCert]:
+        """Get the current SSL certificate that the camera is using for COHN.
+
+        Returns:
+            GoProResp[proto.ResponseCOHNCert]: the certificate
+        """
+
+    @ble_proto_command(
+        uuid=GoProUUIDs.CQ_COMMAND,
+        feature_id=FeatureId.COMMAND,
+        action_id=ActionId.REQUEST_COHN_SETTING,
+        response_action_id=ActionId.RESPONSE_COHN_SETTING,
+        request_proto=proto.RequestSetCOHNSetting,
+        response_proto=proto.ResponseGeneric,
+    )
+    async def cohn_set_setting(self, *, mode: Params.Toggle) -> GoProResp[None]:
+        """Set a COHN specific setting.
+
+        Args:
+            mode (open_gopro.api.params.Toggle): should camera auto connect to home network?
+
+        Returns:
+            GoProResp[None]: status of set
+        """
+        return {"cohn_active": mode}  # type: ignore
 
 
 class BleSettings(BleMessages[BleSetting, SettingId]):

@@ -9,7 +9,7 @@ from open_gopro.communicator_interface import GoProBle
 from open_gopro.constants import CmdId
 from open_gopro.models.response import GlobalParsers
 from open_gopro.parser_interface import Parser
-from open_gopro.proto import EnumResultGeneric, ResponseGetApEntries, ScanEntry
+from open_gopro.proto import EnumResultGeneric, ResponseGetApEntries
 
 
 def test_version_response(mock_ble_communicator: GoProBle):
@@ -21,8 +21,12 @@ def test_version_response(mock_ble_communicator: GoProBle):
 
 
 def test_recursive_protobuf_proxying():
-    scan1 = ScanEntry(ssid="one", signal_strength_bars=0, signal_frequency_mhz=0, scan_entry_flags=0)
-    scan2 = ScanEntry(ssid="two", signal_strength_bars=0, signal_frequency_mhz=0, scan_entry_flags=0)
+    scan1 = ResponseGetApEntries.ScanEntry(
+        ssid="one", signal_strength_bars=0, signal_frequency_mhz=0, scan_entry_flags=0
+    )
+    scan2 = ResponseGetApEntries.ScanEntry(
+        ssid="two", signal_strength_bars=0, signal_frequency_mhz=0, scan_entry_flags=0
+    )
     response = ResponseGetApEntries(result=EnumResultGeneric.RESULT_SUCCESS, scan_id=1, entries=[scan1, scan2])
     raw = response.SerializeToString()
     parser = Parser[ResponseGetApEntries](byte_json_adapter=ByteParserBuilders.Protobuf(ResponseGetApEntries))

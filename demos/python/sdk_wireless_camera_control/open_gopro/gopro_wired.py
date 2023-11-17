@@ -130,7 +130,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
             FailedToFindDevice: could not auto-discover GoPro via mDNS # noqa: DAR402
         """
         if not self._serial:
-            for retry in range(retries + 1):
+            for retry in range(1, retries + 1):
                 try:
                     ip_addr = await open_gopro.wifi.mdns_scanner.find_first_ip_addr(
                         WiredGoPro._MDNS_SERVICE_NAME, timeout
@@ -140,7 +140,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
                 except GpException.FailedToFindDevice as e:
                     if retry == retries:
                         raise e
-                    logger.warning(f"Failed to discover GoPro. Retrying #{retry + 1}")
+                    logger.warning(f"Failed to discover GoPro. Retrying #{retry}")
 
         await self.http_command.wired_usb_control(control=Params.Toggle.ENABLE)
         # Find and configure API version
@@ -285,6 +285,37 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
             callback (types.UpdateCb): callback to stop receiving update(s) on
             update (types.UpdateType | None): updates to unsubscribe for. Defaults to None (all
                 updates that use this callback will be unsubscribed).
+
+        Raises:
+            NotImplementedError: not yet possible
+        """
+        raise NotImplementedError
+
+    async def configure_cohn(self, timeout: int = 60) -> bool:
+        """Prepare Camera on the Home Network
+
+        Provision if not provisioned
+        Then wait for COHN to be connected and ready
+
+        Args:
+            timeout (int): time in seconds to wait for COHN to be ready. Defaults to 60.
+
+        Returns:
+            bool: True if success, False otherwise
+
+        Raises:
+            NotImplementedError: not yet possible
+        """
+        raise NotImplementedError
+
+    @property
+    async def is_cohn_provisioned(self) -> bool:
+        """Is COHN currently provisioned?
+
+        Get the current COHN status from the camera
+
+        Returns:
+            bool: True if COHN is provisioned, False otherwise
 
         Raises:
             NotImplementedError: not yet possible

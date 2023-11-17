@@ -7,10 +7,10 @@
 
 from __future__ import annotations
 
-from open_gopro.constants import GoProEnum
+from open_gopro.enum import GoProEnum, GoProIntEnum
 
 
-class Resolution(GoProEnum):
+class Resolution(GoProIntEnum):
     NOT_APPLICABLE = 0
     RES_4K = 1
     RES_2_7K = 4
@@ -34,14 +34,14 @@ class Resolution(GoProEnum):
     RES_1080_16_9 = 106
 
 
-class WebcamResolution(GoProEnum):
+class WebcamResolution(GoProIntEnum):
     NOT_APPLICABLE = 0
     RES_480 = 4
     RES_720 = 7
     RES_1080 = 12
 
 
-class FPS(GoProEnum):
+class FPS(GoProIntEnum):
     FPS_240 = 0
     FPS_120 = 1
     FPS_100 = 2
@@ -53,7 +53,7 @@ class FPS(GoProEnum):
     FPS_200 = 13
 
 
-class AutoOff(GoProEnum):
+class AutoOff(GoProIntEnum):
     NEVER = 0
     MIN_1 = 1
     MIN_5 = 4
@@ -63,12 +63,12 @@ class AutoOff(GoProEnum):
     SEC_30 = 12
 
 
-class LensMode(GoProEnum):
+class LensMode(GoProIntEnum):
     SINGLE = 0
     DUAL = 5
 
 
-class VideoFOV(GoProEnum):
+class VideoFOV(GoProIntEnum):
     WIDE = 0
     NARROW = 2
     SUPERVIEW = 3
@@ -80,14 +80,19 @@ class VideoFOV(GoProEnum):
     MAX_HYPERVIEW = 11
 
 
-class WebcamFOV(GoProEnum):
+class WebcamFOV(GoProIntEnum):
     WIDE = 0
     NARROW = 2
     SUPERVIEW = 3
     LINEAR = 4
 
 
-class PhotoFOV(GoProEnum):
+class WebcamProtocol(GoProEnum):
+    TS = "TS"
+    RTSP = "RTSP"
+
+
+class PhotoFOV(GoProIntEnum):
     NOT_APPLICABLE = 0
     HYPERVIEW = 9
     NARROW = 19
@@ -97,7 +102,7 @@ class PhotoFOV(GoProEnum):
     LINEAR_HORIZON = 121
 
 
-class MultishotFOV(GoProEnum):
+class MultishotFOV(GoProIntEnum):
     NOT_APPLICABLE = 0
     NARROW = 19
     MAX_SUPERVIEW = 100
@@ -105,7 +110,7 @@ class MultishotFOV(GoProEnum):
     LINEAR = 102
 
 
-class LED(GoProEnum):
+class LED(GoProIntEnum):
     LED_2 = 2
     ALL_ON = 3
     ALL_OFF = 4
@@ -113,7 +118,7 @@ class LED(GoProEnum):
     BLE_KEEP_ALIVE = 66
 
 
-class PairState(GoProEnum):
+class PairState(GoProIntEnum):
     NOT_STARTED = 0
     IN_PROGRESS = 1
     FAILED = 2
@@ -121,14 +126,14 @@ class PairState(GoProEnum):
     COMPLETED = 4
 
 
-class PairType(GoProEnum):
+class PairType(GoProIntEnum):
     NOT_PAIRING = 0
     PAIRING_APP = 1
     PAIRING_REMOTE_CONTROL = 2
     PAIRING_BLUETOOTH = 3
 
 
-class WAPState(GoProEnum):
+class WAPState(GoProIntEnum):
     NEVER_STARTED = 0
     STARTED = 1
     ABORTED = 2
@@ -136,7 +141,7 @@ class WAPState(GoProEnum):
     COMPLETED = 4
 
 
-class SDStatus(GoProEnum):
+class SDStatus(GoProIntEnum):
     OK = 0
     FULL = 1
     REMOVED = 2
@@ -146,7 +151,7 @@ class SDStatus(GoProEnum):
     UNKNOWN = 0xFF
 
 
-class OTAStatus(GoProEnum):
+class OTAStatus(GoProIntEnum):
     IDLE = 0
     DOWNLOADING = 1
     VERIFYING = 2
@@ -160,45 +165,45 @@ class OTAStatus(GoProEnum):
     GOPRO_APP_READY = 10
 
 
-class AnalyticsState(GoProEnum):
+class AnalyticsState(GoProIntEnum):
     NOT_READY = 0
     READY = 1
     ON_CONNECT = 2
 
 
-class ExposureMode(GoProEnum):
+class ExposureMode(GoProIntEnum):
     DISABLED = 0
     AUTO = 1
     ISO_LOCK = 2
     HEMISPHERE = 3
 
 
-class AccMicStatus(GoProEnum):
+class AccMicStatus(GoProIntEnum):
     NOT_CONNECTED = 0
     CONNECTED = 1
     CONNECTED_AND_PLUGGED_IN = 2
 
 
-class WifiBand(GoProEnum):
+class WifiBand(GoProIntEnum):
     BAND_2_4_GHZ = 0
     BAND_5_GHZ = 1
     BAND_MAX = 2
 
 
-class Orientation(GoProEnum):
+class Orientation(GoProIntEnum):
     UPRIGHT = 0
     UPSIDE_DOWN = 1
     ON_RIGHT_SIDE = 2
     ON_LEFT_SIDE = 3
 
 
-class MediaModMicStatus(GoProEnum):
+class MediaModMicStatus(GoProIntEnum):
     REMOVED = 0
     ONLY = 1
     WITH_EXTERNAL = 2
 
 
-class TimeWarpSpeed(GoProEnum):
+class TimeWarpSpeed(GoProIntEnum):
     SPEED_15X = 0
     SPEED_30X = 1
     SPEED_60X = 2
@@ -214,12 +219,12 @@ class TimeWarpSpeed(GoProEnum):
     SPEED_HALF = 12
 
 
-class MaxLensMode(GoProEnum):
+class MaxLensMode(GoProIntEnum):
     DEFAULT = 0
     MAX_LENS = 1
 
 
-class MediaModStatus(GoProEnum):
+class MediaModStatus(GoProIntEnum):
     SELFIE_0_HDMI_0_MEDIAMODCONNECTED_FALSE = 0
     SELFIE_0_HDMI_0_MEDIAMODCONNECTED_TRUE = 1
     SELFIE_0_HDMI_1_MEDIAMODCONNECTED_FALSE = 2
@@ -230,7 +235,7 @@ class MediaModStatus(GoProEnum):
     SELFIE_1_HDMI_1_MEDIAMODCONNECTED_TRUE = 7
 
 
-class Flatmode(GoProEnum):
+class Flatmode(GoProIntEnum):
     NOT_APPLICABLE = 0
     VIDEO = 12
     LOOPING = 15
@@ -248,12 +253,12 @@ class Flatmode(GoProEnum):
     UNKNOWN = 28
 
 
-class Toggle(GoProEnum):
+class Toggle(GoProIntEnum):
     ENABLE = 1
     DISABLE = 0
 
 
-class HypersmoothMode(GoProEnum):
+class HypersmoothMode(GoProIntEnum):
     OFF = 0
     ON = 1
     HIGH = 2
@@ -262,42 +267,42 @@ class HypersmoothMode(GoProEnum):
     STANDARD = 100
 
 
-class CameraControl(GoProEnum):
+class CameraControl(GoProIntEnum):
     IDLE = 0
     CAMERA = 1
     EXTERNAL = 2
 
 
-class PerformanceMode(GoProEnum):
+class PerformanceMode(GoProIntEnum):
     MAX_PERFORMANCE = 0
     EXTENDED_BATTERY = 1
     STATIONARY = 2
 
 
-class MediaFormat(GoProEnum):
+class MediaFormat(GoProIntEnum):
     TIME_LAPSE_VIDEO = 13
     TIME_LAPSE_PHOTO = 20
     NIGHT_LAPSE_PHOTO = 21
     NIGHT_LAPSE_VIDEO = 26
 
 
-class AntiFlicker(GoProEnum):
+class AntiFlicker(GoProIntEnum):
     HZ_60 = 2
     HZ_50 = 3
 
 
-class CameraUxMode(GoProEnum):
+class CameraUxMode(GoProIntEnum):
     EASY = 0
     PRO = 1
 
 
-class HorizonLeveling(GoProEnum):
+class HorizonLeveling(GoProIntEnum):
     OFF = 0
     ON = 1
     LOCKED = 2
 
 
-class Speed(GoProEnum):
+class Speed(GoProIntEnum):
     ULTRA_SLO_MO_8X = 0
     SUPER_SLO_MO_4X = 1
     SLO_MO_2X = 2
@@ -349,63 +354,63 @@ class Speed(GoProEnum):
     SPEED_1X_LOW_LIGHT_12 = 47
 
 
-class PhotoEasyMode(GoProEnum):
+class PhotoEasyMode(GoProIntEnum):
     OFF = 0
     ON = 1
     SUPER_PHOTO = 100
     NIGHT_PHOTO = 101
 
 
-class StarTrailLength(GoProEnum):
+class StarTrailLength(GoProIntEnum):
     NOT_APPLICABLE = 0
     SHORT = 1
     LONG = 2
     MAX = 3
 
 
-class SystemVideoMode(GoProEnum):
+class SystemVideoMode(GoProIntEnum):
     HIGHEST_QUALITY = 0
     EXTENDED_BATTERY = 1
     EXTENDED_BATTERY_GREEN_ICON = 101
     LONGEST_BATTERY_GREEN_ICON = 102
 
 
-class BitRate(GoProEnum):
+class BitRate(GoProIntEnum):
     STANDARD = 0
     HIGH = 1
 
 
-class BitDepth(GoProEnum):
+class BitDepth(GoProIntEnum):
     BIT_8 = 0
     BIT_10 = 2
 
 
-class VideoProfile(GoProEnum):
+class VideoProfile(GoProIntEnum):
     STANDARD = 0
     HDR = 1
     LOG = 2
 
 
-class VideoAspectRatio(GoProEnum):
+class VideoAspectRatio(GoProIntEnum):
     RATIO_4_3 = 0
     RATIO_16_9 = 1
     RATIO_8_7 = 3
     RATIO_9_16 = 4
 
 
-class EasyAspectRatio(GoProEnum):
+class EasyAspectRatio(GoProIntEnum):
     WIDESCREEN = 0
     MOBILE = 1
     UNIVERSAL = 2
 
 
-class VideoMode(GoProEnum):
+class VideoMode(GoProIntEnum):
     HIGHEST = 0
     STANDARD = 1
     BASIC = 2
 
 
-class TimelapseMode(GoProEnum):
+class TimelapseMode(GoProIntEnum):
     TIMEWARP = 0
     STAR_TRAILS = 1
     LIGHT_PAINTING = 2
@@ -416,30 +421,30 @@ class TimelapseMode(GoProEnum):
     MAX_VEHICLE_LIGHTS = 7
 
 
-class PhotoMode(GoProEnum):
+class PhotoMode(GoProIntEnum):
     SUPER = 0
     NIGHT = 1
 
 
-class Framing(GoProEnum):
+class Framing(GoProIntEnum):
     WIDESCREEN = 0
     VERTICAL = 1
     FULL = 2
 
 
-class MaxLensModType(GoProEnum):
+class MaxLensModType(GoProIntEnum):
     NONE = 0
     V1 = 1
     V2 = 2
 
 
-class Hindsight(GoProEnum):
+class Hindsight(GoProIntEnum):
     SEC_15 = 2
     SEC_30 = 3
     OFF = 4
 
 
-class PhotoInterval(GoProEnum):
+class PhotoInterval(GoProIntEnum):
     OFF = 0
     SEC_0_5 = 2
     SEC_1 = 3
@@ -452,7 +457,7 @@ class PhotoInterval(GoProEnum):
     SEC_3 = 10
 
 
-class PhotoDuration(GoProEnum):
+class PhotoDuration(GoProIntEnum):
     OFF = 0
     SEC_15 = 1
     SEC_30 = 2

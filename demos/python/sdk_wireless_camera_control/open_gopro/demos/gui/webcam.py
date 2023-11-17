@@ -57,12 +57,17 @@ async def main(args: argparse.Namespace) -> None:
 
     try:
         async with (
-            WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface)  # type: ignore
-            if args.wireless
+            WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface, enable_wifi=not args.cohn)  # type: ignore
+            if bool(args.cohn or args.wireless)
             else WiredGoPro(args.identifier)
         ) as gopro:
             assert gopro
-            await gopro.http_command.wired_usb_control(control=Params.Toggle.DISABLE)
+
+            if args.cohn:
+                assert await gopro.is_cohn_provisioned
+                assert await gopro.configure_cohn()
+            else:
+                await gopro.http_command.wired_usb_control(control=Params.Toggle.DISABLE)
 
             await gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE)
             if (await gopro.http_command.webcam_status()).data.status not in {
@@ -94,11 +99,18 @@ async def main(args: argparse.Namespace) -> None:
 
 
 def parse_arguments() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Setup and view a GoPro webcam.")
-    parser.add_argument(
+    parser = argparse.ArgumentParser(description="Setup and view a GoPro webcam using TS protocol.")
+    protocol = parser.add_argument_group("protocol", "Mutually exclusive Protocol option if not default wired USB.")
+    group = protocol.add_mutually_exclusive_group()
+    group.add_argument(
         "--wireless",
         action="store_true",
         help="Set to use wireless (BLE / WIFI) instead of wired (USB)) interface",
+    )
+    group.add_argument(
+        "--cohn",
+        action="store_true",
+        help="Communicate via COHN. Assumes COHN is already provisioned.",
     )
     return add_cli_args_and_parse(parser)
 

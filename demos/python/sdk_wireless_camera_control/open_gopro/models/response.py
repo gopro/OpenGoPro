@@ -22,7 +22,7 @@ from open_gopro.constants import (
     CmdId,
     ErrorCode,
     FeatureId,
-    GoProEnum,
+    GoProIntEnum,
     GoProUUIDs,
     QueryCmdId,
     SettingId,
@@ -122,7 +122,7 @@ class GoProResp(Generic[T]):
         return d
 
     def __eq__(self, obj: object) -> bool:
-        if isinstance(obj, GoProEnum):
+        if isinstance(obj, GoProIntEnum):
             return self.identifier == obj
         if isinstance(obj, GoProResp):
             return self.identifier == obj.identifier
