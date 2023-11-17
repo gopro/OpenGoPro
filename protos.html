@@ -387,6 +387,19 @@
               <ul class="toc__menu">
 <li><a href="#protobuf-files">Protobuf Files</a></li>
 <li>
+<a href="#cohnproto">cohn.proto</a><ul>
+<li><a href="#notifycohnstatus">NotifyCOHNStatus</a></li>
+<li><a href="#requestcohncert">RequestCOHNCert</a></li>
+<li><a href="#requestclearcohncert">RequestClearCOHNCert</a></li>
+<li><a href="#requestcreatecohncert">RequestCreateCOHNCert</a></li>
+<li><a href="#requestgetcohnstatus">RequestGetCOHNStatus</a></li>
+<li><a href="#requestsetcohnsetting">RequestSetCOHNSetting</a></li>
+<li><a href="#responsecohncert">ResponseCOHNCert</a></li>
+<li><a href="#enumcohnnetworkstate">EnumCOHNNetworkState</a></li>
+<li><a href="#enumcohnstatus">EnumCOHNStatus</a></li>
+</ul>
+</li>
+<li>
 <a href="#live_streamingproto">live_streaming.proto</a><ul>
 <li><a href="#notifylivestreamstatus">NotifyLiveStreamStatus</a></li>
 <li><a href="#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
@@ -410,9 +423,8 @@
 <li><a href="#responseconnect">ResponseConnect</a></li>
 <li><a href="#responseconnectnew">ResponseConnectNew</a></li>
 <li><a href="#responsegetapentries">ResponseGetApEntries</a></li>
+<li><a href="#responsegetapentriesscanentry">ResponseGetApEntries.ScanEntry</a></li>
 <li><a href="#responsestartscanning">ResponseStartScanning</a></li>
-<li><a href="#scanentry">ScanEntry</a></li>
-<li><a href="#enumnetworkowner">EnumNetworkOwner</a></li>
 <li><a href="#enumprovisioning">EnumProvisioning</a></li>
 <li><a href="#enumscanentryflags">EnumScanEntryFlags</a></li>
 <li><a href="#enumscanning">EnumScanning</a></li>
@@ -464,6 +476,9 @@
 
 <ul>
   <li>
+    <p><a href="#cohn-proto">cohn.proto</a></p>
+  </li>
+  <li>
     <p><a href="#live_streaming-proto">live_streaming.proto</a></p>
   </li>
   <li>
@@ -486,6 +501,291 @@
   </li>
 </ul>
 
+<p><a name="cohn-proto"></a></p>
+
+<h2 id="cohnproto">cohn.proto</h2>
+
+<p><a name="open_gopro-NotifyCOHNStatus"></a></p>
+
+<h3 id="notifycohnstatus">NotifyCOHNStatus</h3>
+<p>Current COHN status triggered by a RequestGetCOHNStatus</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>status</td>
+      <td><a href="#open_gopro-EnumCOHNStatus">EnumCOHNStatus</a></td>
+      <td>optional</td>
+      <td>Current COHN status</td>
+    </tr>
+    <tr>
+      <td>state</td>
+      <td><a href="#open_gopro-EnumCOHNNetworkState">EnumCOHNNetworkState</a></td>
+      <td>optional</td>
+      <td>Current COHN network state</td>
+    </tr>
+    <tr>
+      <td>username</td>
+      <td><a href="#string">string</a></td>
+      <td>optional</td>
+      <td>Username used for http basic auth header</td>
+    </tr>
+    <tr>
+      <td>password</td>
+      <td><a href="#string">string</a></td>
+      <td>optional</td>
+      <td>Password used for http basic auth header</td>
+    </tr>
+    <tr>
+      <td>ipaddress</td>
+      <td><a href="#string">string</a></td>
+      <td>optional</td>
+      <td>Camera’s IP address on the local network</td>
+    </tr>
+    <tr>
+      <td>enabled</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Is COHN currently enabled</td>
+    </tr>
+    <tr>
+      <td>ssid</td>
+      <td><a href="#string">string</a></td>
+      <td>optional</td>
+      <td>Currently connected SSID</td>
+    </tr>
+    <tr>
+      <td>macaddress</td>
+      <td><a href="#string">string</a></td>
+      <td>optional</td>
+      <td>MAC address of the wifi adapter</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-RequestCOHNCert"></a></p>
+
+<h3 id="requestcohncert">RequestCOHNCert</h3>
+<p>Get the COHN certificate.</p>
+
+<p>Returns a @ref ResponseCOHNCert</p>
+
+<p><a name="open_gopro-RequestClearCOHNCert"></a></p>
+
+<h3 id="requestclearcohncert">RequestClearCOHNCert</h3>
+<p>Clear the COHN certificate.</p>
+
+<p>Returns a @ref ResponseGeneric with the status of the clear</p>
+
+<p><a name="open_gopro-RequestCreateCOHNCert"></a></p>
+
+<h3 id="requestcreatecohncert">RequestCreateCOHNCert</h3>
+<p>Create the COHN certificate.</p>
+
+<p>Returns a @ref ResponseGeneric with the status of the creation</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>override</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>Override current provisioning and create new cert</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-RequestGetCOHNStatus"></a></p>
+
+<h3 id="requestgetcohnstatus">RequestGetCOHNStatus</h3>
+<p>Get the current COHN status.</p>
+
+<p>This always returns a @ref NotifyCOHNStatus</p>
+
+<p>Additionally, asynchronous updates can also be registerd to return more @ref NotifyCOHNStatus when a value
+changes.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>register_cohn_status</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>1 to register, 0 to unregister</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-RequestSetCOHNSetting"></a></p>
+
+<h3 id="requestsetcohnsetting">RequestSetCOHNSetting</h3>
+<p>Enable and disable COHN if provisioned</p>
+
+<p>Returns a @ref ResponseGeneric</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cohn_active</td>
+      <td><a href="#bool">bool</a></td>
+      <td>optional</td>
+      <td>1 to enable, 0 to disable</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-ResponseCOHNCert"></a></p>
+
+<h3 id="responsecohncert">ResponseCOHNCert</h3>
+<p>COHN Certificate response triggered by RequestCOHNCert</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>result</td>
+      <td><a href="#open_gopro-EnumResultGeneric">EnumResultGeneric</a></td>
+      <td>optional</td>
+      <td>Was request successful?</td>
+    </tr>
+    <tr>
+      <td>cert</td>
+      <td><a href="#string">string</a></td>
+      <td>optional</td>
+      <td>Root CA cert (ASCII text)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end messages --></p>
+
+<p><a name="open_gopro-EnumCOHNNetworkState"></a></p>
+
+<h3 id="enumcohnnetworkstate">EnumCOHNNetworkState</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>COHN_STATE_Init</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>COHN_STATE_Error</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>COHN_STATE_Exit</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>COHN_STATE_Idle</td>
+      <td>5</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>COHN_STATE_NetworkConnected</td>
+      <td>27</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>COHN_STATE_NetworkDisconnected</td>
+      <td>28</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>COHN_STATE_ConnectingToNetwork</td>
+      <td>29</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>COHN_STATE_Invalid</td>
+      <td>30</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-EnumCOHNStatus"></a></p>
+
+<h3 id="enumcohnstatus">EnumCOHNStatus</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>COHN_UNPROVISIONED</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>COHN_PROVISIONED</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><!-- end enums --></p>
+
+<p><!-- end HasExtensions --></p>
+
+<p><!-- end services --></p>
+
 <p><a name="live_streaming-proto"></a></p>
 
 <h2 id="live_streamingproto">live_streaming.proto</h2>
@@ -493,6 +793,13 @@
 <p><a name="open_gopro-NotifyLiveStreamStatus"></a></p>
 
 <h3 id="notifylivestreamstatus">NotifyLiveStreamStatus</h3>
+<p>Live Stream status</p>
+
+<p>Sent either:</p>
+<ul>
+  <li>as a syncrhonous response to initial @ref RequestGetLiveStreamStatus</li>
+  <li>as asynchronous notifications registered for via @ref RequestGetLiveStreamStatus</li>
+</ul>
 
 <table>
   <thead>
@@ -532,56 +839,75 @@
       <td>live_stream_window_size_supported_array</td>
       <td><a href="#open_gopro-EnumWindowSize">EnumWindowSize</a></td>
       <td>repeated</td>
-      <td>Live stream resolution capabilities</td>
-    </tr>
-    <tr>
-      <td>live_stream_encode_supported</td>
-      <td><a href="#bool">bool</a></td>
-      <td>optional</td>
-      <td>Does the camera support encoding while live streaming?</td>
-    </tr>
-    <tr>
-      <td>live_stream_max_lens_unsupported</td>
-      <td><a href="#bool">bool</a></td>
-      <td>optional</td>
-      <td>Is the Max Lens feature NOT supported?</td>
-    </tr>
-    <tr>
-      <td>live_stream_minimum_stream_bitrate</td>
-      <td><a href="#int32">int32</a></td>
-      <td>optional</td>
-      <td>Camera-defined minimum bitrate (static) (Kbps)</td>
-    </tr>
-    <tr>
-      <td>live_stream_maximum_stream_bitrate</td>
-      <td><a href="#int32">int32</a></td>
-      <td>optional</td>
-      <td>Camera-defined maximum bitrate (static) (Kbps)</td>
-    </tr>
-    <tr>
-      <td>live_stream_lens_supported</td>
-      <td><a href="#bool">bool</a></td>
-      <td>optional</td>
-      <td>Does camera support setting lens for live streaming?</td>
-    </tr>
-    <tr>
-      <td>live_stream_lens_supported_array</td>
-      <td><a href="#open_gopro-EnumLens">EnumLens</a></td>
-      <td>repeated</td>
-      <td>Array of supported lenses for live streaming</td>
-    </tr>
-    <tr>
-      <td>deprecated</td>
-      <td><a href="#bool">bool</a></td>
-      <td>optional</td>
-      <td>Deprecated</td>
+      <td>List of supported resolutions returned when live stream is registered or requested</td>
     </tr>
   </tbody>
 </table>
 
+<ol>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>register –&gt; camera 2. register response (with capabilities) –&gt; mobile 3. async notifications (without capabilities) –&gt; mobile</td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td> </td>
+          <td>live_stream_encode_supported</td>
+          <td><a href="#bool">bool</a></td>
+          <td>optional</td>
+          <td>Does the camera support encoding while live streaming?</td>
+        </tr>
+        <tr>
+          <td> </td>
+          <td>live_stream_max_lens_unsupported</td>
+          <td><a href="#bool">bool</a></td>
+          <td>optional</td>
+          <td>Is the Max Lens feature NOT supported?</td>
+        </tr>
+        <tr>
+          <td> </td>
+          <td>live_stream_minimum_stream_bitrate</td>
+          <td><a href="#int32">int32</a></td>
+          <td>optional</td>
+          <td>Camera-defined minimum bitrate (static) (Kbps)</td>
+        </tr>
+        <tr>
+          <td> </td>
+          <td>live_stream_maximum_stream_bitrate</td>
+          <td><a href="#int32">int32</a></td>
+          <td>optional</td>
+          <td>Camera-defined maximum bitrate (static) (Kbps)</td>
+        </tr>
+        <tr>
+          <td> </td>
+          <td>live_stream_lens_supported</td>
+          <td><a href="#bool">bool</a></td>
+          <td>optional</td>
+          <td>Does camera support setting lens for live streaming?</td>
+        </tr>
+        <tr>
+          <td> </td>
+          <td>live_stream_lens_supported_array</td>
+          <td><a href="#open_gopro-EnumLens">EnumLens</a></td>
+          <td>repeated</td>
+          <td>Array of supported lenses for live streaming</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ol>
+
 <p><a name="open_gopro-RequestGetLiveStreamStatus"></a></p>
 
 <h3 id="requestgetlivestreamstatus">RequestGetLiveStreamStatus</h3>
+<p>Get the current livestream status (and optionally register for future status changes)</p>
+
+<p>Both current status and future status changes are sent via @ref NotifyLiveStreamStatus</p>
 
 <table>
   <thead>
@@ -611,6 +937,11 @@
 <p><a name="open_gopro-RequestSetLiveStreamMode"></a></p>
 
 <h3 id="requestsetlivestreammode">RequestSetLiveStreamMode</h3>
+<p>Configure lives streaming</p>
+
+<p>The current livestream status can be queried via @ref RequestGetLiveStreamStatus</p>
+
+<p>TODO What is the response?</p>
 
 <table>
   <thead>
@@ -641,18 +972,6 @@
       <td>Live stream resolution</td>
     </tr>
     <tr>
-      <td>reserved1</td>
-      <td><a href="#string">string</a></td>
-      <td>optional</td>
-      <td>Reserved</td>
-    </tr>
-    <tr>
-      <td>reserved2</td>
-      <td><a href="#string">string</a></td>
-      <td>optional</td>
-      <td>Reserved</td>
-    </tr>
-    <tr>
       <td>cert</td>
       <td><a href="#bytes">bytes</a></td>
       <td>optional</td>
@@ -680,13 +999,7 @@
       <td>lens</td>
       <td><a href="#open_gopro-EnumLens">EnumLens</a></td>
       <td>optional</td>
-      <td>Lens to use for live stream (see</td>
-    </tr>
-    <tr>
-      <td>reserved3</td>
-      <td><a href="#int32">int32</a></td>
-      <td>optional</td>
-      <td>Reserved</td>
+      <td>Lens to use for live stream (see NotifyLiveStreamStatus.live_stream_lens_supported)</td>
     </tr>
   </tbody>
 </table>
@@ -936,6 +1249,9 @@
 <p><a name="open_gopro-NotifProvisioningState"></a></p>
 
 <h3 id="notifprovisioningstate">NotifProvisioningState</h3>
+<p>Provision state notification</p>
+
+<p>TODO refernce where this is triggered</p>
 
 <table>
   <thead>
@@ -951,7 +1267,7 @@
       <td>provisioning_state</td>
       <td><a href="#open_gopro-EnumProvisioning">EnumProvisioning</a></td>
       <td>required</td>
-      <td>Provisioning/connection state</td>
+      <td>Provisioning / connection state</td>
     </tr>
   </tbody>
 </table>
@@ -959,6 +1275,9 @@
 <p><a name="open_gopro-NotifStartScanning"></a></p>
 
 <h3 id="notifstartscanning">NotifStartScanning</h3>
+<p>Scanning state notification</p>
+
+<p>Triggered via @ref RequestStartScan</p>
 
 <table>
   <thead>
@@ -1000,6 +1319,11 @@
 <p><a name="open_gopro-RequestConnect"></a></p>
 
 <h3 id="requestconnect">RequestConnect</h3>
+<p>Connect to (but do not authenticate with) an Access Point</p>
+
+<p>This is intended to be used to connect to a previously-connected Access Point</p>
+
+<p>Response: @ref ResponseConnect</p>
 
 <table>
   <thead>
@@ -1017,18 +1341,19 @@
       <td>required</td>
       <td>AP SSID</td>
     </tr>
-    <tr>
-      <td>owner_purpose</td>
-      <td><a href="#open_gopro-EnumNetworkOwner">EnumNetworkOwner</a></td>
-      <td>optional</td>
-      <td>Deprecated</td>
-    </tr>
   </tbody>
 </table>
 
 <p><a name="open_gopro-RequestConnectNew"></a></p>
 
 <h3 id="requestconnectnew">RequestConnectNew</h3>
+<p>Connect to and authenticate with an Access Point</p>
+
+<p>This is only intended to be used if the AP is not previously provisioned.</p>
+
+<p>Response: @ref ResponseConnectNew sent immediately</p>
+
+<p>Notification: @ref NotifProvisioningState sent periodically as provisioning state changes</p>
 
 <table>
   <thead>
@@ -1082,24 +1407,15 @@
       <td>optional</td>
       <td>Secondary DNS</td>
     </tr>
-    <tr>
-      <td>set_to_least_preferred_ap</td>
-      <td><a href="#bool">bool</a></td>
-      <td>optional</td>
-      <td>Deprecated</td>
-    </tr>
-    <tr>
-      <td>owner_purpose</td>
-      <td><a href="#open_gopro-EnumNetworkOwner">EnumNetworkOwner</a></td>
-      <td>optional</td>
-      <td>Deprecated</td>
-    </tr>
   </tbody>
 </table>
 
 <p><a name="open_gopro-RequestGetApEntries"></a></p>
 
 <h3 id="requestgetapentries">RequestGetApEntries</h3>
+<p>Get a list of Access Points found during a @ref RequestStartScan</p>
+
+<p>Response: @ref ResponseGetApEntries</p>
 
 <table>
   <thead>
@@ -1115,19 +1431,19 @@
       <td>start_index</td>
       <td><a href="#int32">int32</a></td>
       <td>required</td>
-      <td>Used for paging. 0 &lt;= start_index &lt; NotifStartScanning.total_entries</td>
+      <td>Used for paging. 0 &lt;= start_index &lt; @ref ResponseGetApEntries .total_entries</td>
     </tr>
     <tr>
       <td>max_entries</td>
       <td><a href="#int32">int32</a></td>
       <td>required</td>
-      <td>Used for paging. Value must be &lt; NotifStartScanning.total_entries</td>
+      <td>Used for paging. Value must be &lt; @ref ResponseGetApEntries .total_entries</td>
     </tr>
     <tr>
       <td>scan_id</td>
       <td><a href="#int32">int32</a></td>
       <td>required</td>
-      <td>ID corresponding to a set of scan results (i.e. NotifStartScanning.scan_id)</td>
+      <td>ID corresponding to a set of scan results (i.e. @ref ResponseGetApEntries .scan_id)</td>
     </tr>
   </tbody>
 </table>
@@ -1135,14 +1451,27 @@
 <p><a name="open_gopro-RequestReleaseNetwork"></a></p>
 
 <h3 id="requestreleasenetwork">RequestReleaseNetwork</h3>
+<p>Request to disconnect from current AP network</p>
+
+<p>Response: @ref ResponseGeneric</p>
 
 <p><a name="open_gopro-RequestStartScan"></a></p>
 
 <h3 id="requeststartscan">RequestStartScan</h3>
+<p>Start scanning for Access Points</p>
+
+<p>@note Serialization of this object is zero bytes.</p>
+
+<p>Response: @ref ResponseStartScanning  are sent immediately after the camera receives this command</p>
+
+<p>Notifications: @ref NotifStartScanning are sent periodically as scanning state changes. Use to detect scan complete.</p>
 
 <p><a name="open_gopro-ResponseConnect"></a></p>
 
 <h3 id="responseconnect">ResponseConnect</h3>
+<p>The status of an attempt to connect to an Access Point</p>
+
+<p>Sent as the initial response to @ref RequestConnect</p>
 
 <table>
   <thead>
@@ -1178,6 +1507,9 @@
 <p><a name="open_gopro-ResponseConnectNew"></a></p>
 
 <h3 id="responseconnectnew">ResponseConnectNew</h3>
+<p>The status of an attempt to connect to an Access Point</p>
+
+<p>Sent as the initial response to @ref RequestConnectNew</p>
 
 <table>
   <thead>
@@ -1205,7 +1537,7 @@
       <td>timeout_seconds</td>
       <td><a href="#int32">int32</a></td>
       <td>required</td>
-      <td> </td>
+      <td>number of seconds camera will wait before declaring a network connection attempt failed.</td>
     </tr>
   </tbody>
 </table>
@@ -1213,6 +1545,9 @@
 <p><a name="open_gopro-ResponseGetApEntries"></a></p>
 
 <h3 id="responsegetapentries">ResponseGetApEntries</h3>
+<p>A list of scan entries describing a scanned Access Point</p>
+
+<p>This is sent in response to a @ref RequestGetApEntries</p>
 
 <table>
   <thead>
@@ -1238,9 +1573,51 @@
     </tr>
     <tr>
       <td>entries</td>
-      <td><a href="#open_gopro-ScanEntry">ScanEntry</a></td>
+      <td><a href="#open_gopro-ResponseGetApEntries-ScanEntry">ResponseGetApEntries.ScanEntry</a></td>
       <td>repeated</td>
       <td>Array containing details about discovered APs</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="open_gopro-ResponseGetApEntries-ScanEntry"></a></p>
+
+<h3 id="responsegetapentriesscanentry">ResponseGetApEntries.ScanEntry</h3>
+<p>The individual Scan Entry model</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Label</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ssid</td>
+      <td><a href="#string">string</a></td>
+      <td>required</td>
+      <td>AP SSID</td>
+    </tr>
+    <tr>
+      <td>signal_strength_bars</td>
+      <td><a href="#int32">int32</a></td>
+      <td>required</td>
+      <td>Signal strength (3 bars: &gt;-70 dBm; 2 bars: &gt;-85 dBm; 1 bar: &lt;=-85 dBm)</td>
+    </tr>
+    <tr>
+      <td>signal_frequency_mhz</td>
+      <td><a href="#int32">int32</a></td>
+      <td>required</td>
+      <td>Signal frequency (MHz)</td>
+    </tr>
+    <tr>
+      <td>scan_entry_flags</td>
+      <td><a href="#int32">int32</a></td>
+      <td>required</td>
+      <td>Bitmasked value from @ref EnumScanEntryFlags</td>
     </tr>
   </tbody>
 </table>
@@ -1248,6 +1625,9 @@
 <p><a name="open_gopro-ResponseStartScanning"></a></p>
 
 <h3 id="responsestartscanning">ResponseStartScanning</h3>
+<p>The current scanning state.</p>
+
+<p>This is the initial response to a @ref RequestStartScan</p>
 
 <table>
   <thead>
@@ -1274,105 +1654,7 @@
   </tbody>
 </table>
 
-<p><a name="open_gopro-ScanEntry"></a></p>
-
-<h3 id="scanentry">ScanEntry</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Label</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>ssid</td>
-      <td><a href="#string">string</a></td>
-      <td>required</td>
-      <td>AP SSID</td>
-    </tr>
-    <tr>
-      <td>signal_strength_bars</td>
-      <td><a href="#int32">int32</a></td>
-      <td>required</td>
-      <td>Signal strength (3 bars: &gt;-70 dBm; 2 bars: &gt;-85 dBm; 1 bar: &lt;=-85</td>
-    </tr>
-    <tr>
-      <td>signal_frequency_mhz</td>
-      <td><a href="#int32">int32</a></td>
-      <td>required</td>
-      <td>Signal frequency (MHz)</td>
-    </tr>
-    <tr>
-      <td>scan_entry_flags</td>
-      <td><a href="#int32">int32</a></td>
-      <td>required</td>
-      <td>Bitmasked value from EnumScanEntryFlags</td>
-    </tr>
-    <tr>
-      <td>owner_purpose</td>
-      <td><a href="#open_gopro-EnumNetworkOwner">EnumNetworkOwner</a></td>
-      <td>optional</td>
-      <td>Deprecated</td>
-    </tr>
-  </tbody>
-</table>
-
 <p><!-- end messages --></p>
-
-<p><a name="open_gopro-EnumNetworkOwner"></a></p>
-
-<h3 id="enumnetworkowner">EnumNetworkOwner</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Number</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>DEPRECATED_1</td>
-      <td>0</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>DEPRECATED_2</td>
-      <td>1</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>DEPRECATED_3</td>
-      <td>2</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>DEPRECATED_4</td>
-      <td>3</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>DEPRECATED_5</td>
-      <td>4</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>DEPRECATED_6</td>
-      <td>8</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>DEPRECATED_7</td>
-      <td>16</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
 
 <p><a name="open_gopro-EnumProvisioning"></a></p>
 
@@ -1493,11 +1775,6 @@
       <td>16</td>
       <td> </td>
     </tr>
-    <tr>
-      <td>DEPRECATED</td>
-      <td>32</td>
-      <td> </td>
-    </tr>
   </tbody>
 </table>
 
@@ -1560,6 +1837,13 @@
 <p><a name="open_gopro-NotifyPresetStatus"></a></p>
 
 <h3 id="notifypresetstatus">NotifyPresetStatus</h3>
+<p>Current Preset status</p>
+
+<p>Sent either:</p>
+<ul>
+  <li>synchronously via initial response to @ref RequestGetPresetStatus</li>
+  <li>asynchronously when Preset change if registered in @rev RequestGetPresetStatus</li>
+</ul>
 
 <table>
   <thead>
@@ -1575,7 +1859,7 @@
       <td>preset_group_array</td>
       <td><a href="#open_gopro-PresetGroup">PresetGroup</a></td>
       <td>repeated</td>
-      <td>Array of Preset Groups</td>
+      <td>Array of currently available Preset Groups</td>
     </tr>
   </tbody>
 </table>
@@ -1583,6 +1867,7 @@
 <p><a name="open_gopro-Preset"></a></p>
 
 <h3 id="preset">Preset</h3>
+<p>An individual preset.</p>
 
 <table>
   <thead>
@@ -1640,7 +1925,7 @@
       <td>is_modified</td>
       <td><a href="#bool">bool</a></td>
       <td>optional</td>
-      <td>Has Preset been modified from factory</td>
+      <td>Has Preset been modified from factory defaults? (False for user-defined Presets)</td>
     </tr>
     <tr>
       <td>is_fixed</td>
@@ -1648,12 +1933,19 @@
       <td>optional</td>
       <td>Is this Preset mutable?</td>
     </tr>
+    <tr>
+      <td>custom_name</td>
+      <td><a href="#string">string</a></td>
+      <td>optional</td>
+      <td>Custom string name given to this preset via @ref RequestCustomPresetUpdate</td>
+    </tr>
   </tbody>
 </table>
 
 <p><a name="open_gopro-PresetGroup"></a></p>
 
 <h3 id="presetgroup">PresetGroup</h3>
+<p>Preset Group meta information and contained Presets</p>
 
 <table>
   <thead>
@@ -1695,6 +1987,7 @@
 <p><a name="open_gopro-PresetSetting"></a></p>
 
 <h3 id="presetsetting">PresetSetting</h3>
+<p>Setting representation that comprises a  @ref Preset</p>
 
 <table>
   <thead>
@@ -2146,9 +2439,59 @@
       <td> </td>
     </tr>
     <tr>
+      <td>PRESET_ICON_STARS</td>
+      <td>34</td>
+      <td>New custom icon (34 - 43)added for HERO 12</td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_ACTION</td>
+      <td>35</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_FOLLOW_CAM</td>
+      <td>36</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_SURF</td>
+      <td>37</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_CITY</td>
+      <td>38</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_SHAKY</td>
+      <td>39</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_CHESTY</td>
+      <td>40</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_HELMET</td>
+      <td>41</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_BITE</td>
+      <td>42</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_ICON_MTB</td>
+      <td>43</td>
+      <td> </td>
+    </tr>
+    <tr>
       <td>PRESET_ICON_MAX_VIDEO</td>
       <td>55</td>
-      <td>Reserved 34 - 50 for Custom presets</td>
+      <td>Reserved 44 - 50 for Custom presets. Add icons below for new presets starting from 51</td>
     </tr>
     <tr>
       <td>PRESET_ICON_MAX_PHOTO</td>
@@ -2497,9 +2840,59 @@
       <td> </td>
     </tr>
     <tr>
+      <td>PRESET_TITLE_STARS</td>
+      <td>34</td>
+      <td>New custom names (34 - 43)added for HERO 12</td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_ACTION</td>
+      <td>35</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_FOLLOW_CAM</td>
+      <td>36</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_SURF</td>
+      <td>37</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_CITY</td>
+      <td>38</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_SHAKY</td>
+      <td>39</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_CHESTY</td>
+      <td>40</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_HELMET</td>
+      <td>41</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_BITE</td>
+      <td>42</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PRESET_TITLE_MTB</td>
+      <td>43</td>
+      <td> </td>
+    </tr>
+    <tr>
       <td>PRESET_TITLE_360_TIMELAPSE</td>
       <td>51</td>
-      <td>Reserved 34 - 50 for custom presets.</td>
+      <td>Reserved 44 - 50 for custom presets.</td>
     </tr>
     <tr>
       <td>PRESET_TITLE_360_NIGHT_LAPSE</td>
@@ -2711,6 +3104,11 @@
       <td>93</td>
       <td> </td>
     </tr>
+    <tr>
+      <td>PRESET_TITLE_USER_DEFINED_CUSTOM_NAME</td>
+      <td>94</td>
+      <td> </td>
+    </tr>
   </tbody>
 </table>
 
@@ -2727,6 +3125,11 @@
 <p><a name="open_gopro-RequestGetPresetStatus"></a></p>
 
 <h3 id="requestgetpresetstatus">RequestGetPresetStatus</h3>
+<p>Get preset status (and optionally register to be notified when it changes)</p>
+
+<p>Response: @ref NotifyPresetStatus sent immediately</p>
+
+<p>Notification: @ref NotifyPresetStatus sent periodically as preset status changes, if registered.</p>
 
 <table>
   <thead>
@@ -2794,6 +3197,9 @@
 <p><a name="open_gopro-ResponseGeneric"></a></p>
 
 <h3 id="responsegeneric">ResponseGeneric</h3>
+<p>Generic Response used across most response / notification messages</p>
+
+<p>@ref EnumResultGeneric</p>
 
 <table>
   <thead>
@@ -2875,6 +3281,9 @@
 <p><a name="open_gopro-RequestSetCameraControlStatus"></a></p>
 
 <h3 id="requestsetcameracontrolstatus">RequestSetCameraControlStatus</h3>
+<p>Set Camera Control Status (as part of Global Behaviors feature)</p>
+
+<p>Response: @ref ResponseGeneric</p>
 
 <table>
   <thead>
@@ -2918,7 +3327,7 @@
     <tr>
       <td>CAMERA_CONTROL</td>
       <td>1</td>
-      <td>Can only be set by camera, not by third-party</td>
+      <td>Can only be set by camera, not by app or third party</td>
     </tr>
     <tr>
       <td>CAMERA_EXTERNAL_CONTROL</td>
@@ -2941,6 +3350,9 @@
 <p><a name="open_gopro-RequestSetTurboActive"></a></p>
 
 <h3 id="requestsetturboactive">RequestSetTurboActive</h3>
+<p>Enable/disable display of “Transferring Media” UI</p>
+
+<p>Response: @ref ResponseGeneric</p>
 
 <table>
   <thead>

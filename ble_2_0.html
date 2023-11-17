@@ -386,7 +386,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          58 minute read
+          61 minute read
         
       </span>
     
@@ -549,6 +549,17 @@
 <li><a href="#live-streaming-sequence">Live Streaming Sequence</a></li>
 <li><a href="#set-live-stream-mode">Set Live Stream Mode</a></li>
 <li><a href="#get-live-stream-status">Get Live Stream Status</a></li>
+</ul>
+</li>
+<li>
+<a href="#camera-on-the-home-network-cohn">Camera On the Home Network (COHN)</a><ul>
+<li>
+<a href="#https-and-ssltls-certificates">HTTPS and SSL/TLS Certificates</a><ul><li><a href="#ssltls-certificate">SSL/TLS Certificate</a></li></ul>
+</li>
+<li><a href="#provision-cohn">Provision COHN</a></li>
+<li><a href="#verifying-cohn-cert-is-valid">Verifying COHN Cert is Valid</a></li>
+<li><a href="#view-cohn-cert-details">View COHN Cert Details</a></li>
+<li><a href="#communicate-via-cohn">Communicate via COHN</a></li>
 </ul>
 </li>
 </ul>
@@ -5063,7 +5074,7 @@ Below is a table of supported status IDs.<br>
     <tr>
       <td>36</td>
       <td>Num group photos</td>
-      <td>How many group photos can be taken with current settings before sdcard is full</td>
+      <td>Total number of group photos on sdcard</td>
       <td>integer</td>
       <td>*</td>
       <td><span style="color:green">✔</span></td>
@@ -5882,14 +5893,14 @@ For additional details, see <a href="#services-and-characteristics">Services and
     <tr>
       <td>Command</td>
       <td>0xF1</td>
-      <td>0x69, 0x6B, 0x79, 0xE9, 0xEB, 0xF9</td>
+      <td>0x65, 0x66, 0x67, 0x69, 0x6B, 0x79, 0xE5, 0xE6, 0xE7, 0xE9, 0xEB, 0xF9</td>
       <td>GP-0072</td>
       <td>GP-0073</td>
     </tr>
     <tr>
       <td>Query</td>
       <td>0xF5</td>
-      <td>0x72, 0x74, 0xF2, 0xF3, 0xF4, 0xF5</td>
+      <td>0x6E, 0x6F, 0x72, 0x74, 0xEE, 0xEF, 0xF2, 0xF3, 0xF4, 0xF5</td>
       <td>GP-0076</td>
       <td>GP-0077</td>
     </tr>
@@ -6019,7 +6030,43 @@ For consistency, best practice is to always serialize the protobuf objects regar
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
-      <td rowspan="3">0xF1</td>
+      <td rowspan="6">0xF1</td>
+      <td>0x65</td>
+      <td>0xE5</td>
+      <td>Request cohn setting</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">RequestSetCOHNSetting</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseGeneric</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x66</td>
+      <td>0xE6</td>
+      <td>Request clear cohn cert</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">RequestClearCOHNCert</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseGeneric</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x67</td>
+      <td>0xE7</td>
+      <td>Request create cohn cert</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">RequestCreateCOHNCert</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseGeneric</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>0x69</td>
       <td>0xE9</td>
       <td>Request set camera control status</td>
@@ -6056,7 +6103,45 @@ For consistency, best practice is to always serialize the protobuf objects regar
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td rowspan="4">0xF5</td>
+      <td rowspan="7">0xF5</td>
+      <td>0x6E</td>
+      <td>0xEE</td>
+      <td>Request get cohn cert</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">RequestCOHNCert</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">ResponseCOHNCert</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>0x6F</td>
+      <td>0xEF</td>
+      <td>Request cohn status</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">RequestGetCOHNStatus</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">NotifyCOHNStatus</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>
+</td>
+      <td>0xEF</td>
+      <td>Async status update</td>
+      <td>
+</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">NotifyCOHNStatus</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x72</td>
       <td>0xF2</td>
       <td>Request get preset status</td>
@@ -6529,6 +6614,87 @@ Command and enum details are available in <a href="#protobuf-commands">Protobuf 
     </tr>
   </tbody>
 </table>
+
+<h2 id="camera-on-the-home-network-cohn">Camera On the Home Network (COHN)</h2>
+<p>
+Some cameras support Camera On the Home Network (COHN).
+This capability allows the client to perform command and control with the camera indirectly through an access point such as a router at home.
+For security purposes, all communications are performed over HTTPS.
+</p>
+
+<p>
+In order to use the COHN capability, the camera must first be provisioned for COHN.
+At a high level, the provisioning process is as follows:
+</p>
+<ol>
+<li>Create the COHN certificate</li>
+<li>Get the COHN certificate</li>
+<li>Get Basic auth credentials</li>
+<li>Connect the camera to an access point</li>
+</ol>
+
+
+<h3 id="https-and-ssltls-certificates">HTTPS and SSL/TLS Certificates</h3>
+<p>
+Secure communication with the camera over HTTPS requires two things: A trusted <a href="https://www.digicert.com/faq/public-trust-and-certificates/what-is-ssl">SSL/TLS</a> certificate and Basic auth username/password used in the HTTPS header.
+</p>
+
+<h4 id="ssltls-certificate">SSL/TLS Certificate</h4>
+<p>
+A provisioned camera has two certificates:
+</p>
+<ul>
+<li>A <b>Root CA cert</b> provided to the client, which has a 1 year lifespan</li>
+<li>A <b>Camera cert</b>, which contains the camera's current IP address on the local network and is signed by the Root CA cert</li>
+</ul>
+ 
+
+<p>
+This use of a <a href="https://knowledge.digicert.com/solution/SO16297.html">certificate chain</a> allows the camera's IP address to change 
+(e.g. when DHCP lease expires or when access point is reset/replaced) without the client needing to download and install/trust a new certificate.
+</p>
+
+<h3 id="provision-cohn">Provision COHN</h3>
+<p>
+In order to use COHN for the first time or deauthenticate existing users,
+the client should clear and then create the COHN cert, get COHN status for basic authorization (username/password) and
+then <a href="#interface-with-access-points">connect the camera to an access point</a>.
+</p>
+
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="857px" preserveaspectratio="none" style="width:934px;height:857px;background:#FFFFFF;" version="1.1" viewbox="0 0 934 857" width="934px" zoomandpan="magnify"><defs></defs><g><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthadjust="spacing" textlength="161" x="387.5" y="27.9951">(Re-)Provision COHN</text><rect fill="none" height="153.4688" style="stroke:#000000;stroke-width:1.5;" width="522.5" x="10" y="250.125"></rect><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="41" x2="41" y1="118.5938" y2="776.5859"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="226" x2="226" y1="118.5938" y2="776.5859"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="369" x2="369" y1="118.5938" y2="776.5859"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="501" x2="501" y1="118.5938" y2="776.5859"></line><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="619" x2="619" y1="118.5938" y2="776.5859"></line><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="37" x="20" y="115.292">client</text><ellipse cx="41.5" cy="50.7969" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M41.5,58.7969 L41.5,85.7969 M28.5,66.7969 L54.5,66.7969 M41.5,85.7969 L28.5,100.7969 M41.5,85.7969 L54.5,100.7969 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="37" x="20" y="788.5811">client</text><ellipse cx="41.5" cy="800.3828" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"></ellipse><path d="M41.5,808.3828 L41.5,835.3828 M28.5,816.3828 L54.5,816.3828 M41.5,835.3828 L28.5,850.3828 M41.5,835.3828 L54.5,850.3828 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><rect fill="#E2E2F0" height="46.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95" x="179" y="71"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="196" y="90.9951">GP-0072</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="81" x="186" y="107.292">(Command)</text><rect fill="#E2E2F0" height="46.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95" x="179" y="775.5859"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="196" y="795.5811">GP-0072</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="81" x="186" y="811.8779">(Command)</text><rect fill="#E2E2F0" height="46.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="170" x="284" y="71"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="338.5" y="90.9951">GP-0073</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="156" x="291" y="107.292">(Command Response)</text><rect fill="#E2E2F0" height="46.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="170" x="284" y="775.5859"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="338.5" y="795.5811">GP-0073</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="156" x="291" y="811.8779">(Command Response)</text><rect fill="#E2E2F0" height="46.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="464" y="71"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="471" y="90.9951">GP-0076</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="51" x="476" y="107.292">(Query)</text><rect fill="#E2E2F0" height="46.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="464" y="775.5859"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="471" y="795.5811">GP-0076</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="51" x="476" y="811.8779">(Query)</text><rect fill="#E2E2F0" height="46.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="140" x="549" y="71"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="588.5" y="90.9951">GP-0077</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="126" x="556" y="107.292">(Query Response)</text><rect fill="#E2E2F0" height="46.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="140" x="549" y="775.5859"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="61" x="588.5" y="795.5811">GP-0077</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="126" x="556" y="811.8779">(Query Response)</text><path d="M9,133.5938 L9,158.5938 L258,158.5938 L258,143.5938 L248,133.5938 L9,133.5938 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M248,133.5938 L248,143.5938 L258,143.5938 L248,133.5938 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="207" x="25.5" y="150.6606">Connect camera to access point</text><polygon fill="#181818" points="489.5,180.8594,499.5,184.8594,489.5,188.8594,493.5,184.8594" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="41.5" x2="495.5" y1="184.8594" y2="184.8594"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="156" x="48.5" y="179.7935">RequestGetCOHNStatus</text><polygon fill="#181818" points="52.5,220.5586,42.5,224.5586,52.5,228.5586,48.5,224.5586" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="46.5" x2="618" y1="224.5586" y2="224.5586"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="118" x="58.5" y="219.4927">NotifyCOHNStatus</text><path d="M624,197.8594 L624,237.8594 L744,237.8594 L744,207.8594 L734,197.8594 L624,197.8594 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M734,197.8594 L734,207.8594 L744,207.8594 L734,197.8594 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="60" x="630" y="214.9263">Contains:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="99" x="630" y="230.0591">1. COHN status</text><path d="M10,250.125 L74,250.125 L74,257.2578 L64,267.2578 L10,267.2578 L10,250.125 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"></path><rect fill="none" height="153.4688" style="stroke:#000000;stroke-width:1.5;" width="522.5" x="10" y="250.125"></rect><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthadjust="spacing" textlength="19" x="25" y="263.1919">alt</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthadjust="spacing" textlength="435" x="89" y="262.3354">[NotifyCOHNStatus.status == EnumCOHNState.COHN_PROVISIONED]</text><polygon fill="#181818" points="214.5,294.957,224.5,298.957,214.5,302.957,218.5,298.957" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="41.5" x2="220.5" y1="298.957" y2="298.957"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="151" x="48.5" y="293.8911">RequestClearCOHNCert</text><path d="M231,272.2578 L231,312.2578 L517,312.2578 L517,282.2578 L507,272.2578 L231,272.2578 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M507,272.2578 L507,282.2578 L517,282.2578 L507,272.2578 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="265" x="237" y="289.3247">1. Camera disconnects from access point</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="263" x="237" y="304.4575">2. Root CA and Camera certs are deleted</text><polygon fill="#181818" points="52.5,334.6563,42.5,338.6563,52.5,342.6563,48.5,338.6563" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="46.5" x2="368" y1="338.6563" y2="338.6563"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="111" x="58.5" y="333.5903">ResponseGeneric</text><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="10" x2="532.5" y1="347.6563" y2="347.6563"></line><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthadjust="spacing" textlength="453" x="15" y="357.8667">[NotifyCOHNStatus.status == EnumCOHNState.COHN_UNPROVISIONED]</text><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="41.5" x2="83.5" y1="382.5938" y2="382.5938"></line><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="83.5" x2="83.5" y1="382.5938" y2="395.5938"></line><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="42.5" x2="83.5" y1="395.5938" y2="395.5938"></line><polygon fill="#181818" points="52.5,391.5938,42.5,395.5938,52.5,399.5938,48.5,395.5938" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="37" x="48.5" y="377.5278">no-op</text><polygon fill="#181818" points="214.5,460.9922,224.5,464.9922,214.5,468.9922,218.5,464.9922" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="41.5" x2="220.5" y1="464.9922" y2="464.9922"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="161" x="48.5" y="459.9263">RequestCreateCOHNCert</text><path d="M231,415.5938 L231,500.5938 L514,500.5938 L514,425.5938 L504,415.5938 L231,415.5938 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M504,415.5938 L504,425.5938 L514,425.5938 L504,415.5938 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="187" x="237" y="432.6606">Camera creates Root CA cert</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="4" x="237" y="447.7935"> </text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="262" x="237" y="462.9263">If connected to access point, camera will:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="143" x="237" y="478.0591">1. Create Camera cert</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="241" x="237" y="493.1919">2. Sign Camera cert with Root CA cert</text><polygon fill="#181818" points="52.5,523.3906,42.5,527.3906,52.5,531.3906,48.5,527.3906" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="46.5" x2="368" y1="527.3906" y2="527.3906"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="111" x="58.5" y="522.3247">ResponseGeneric</text><polygon fill="#181818" points="489.5,552.5234,499.5,556.5234,489.5,560.5234,493.5,556.5234" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="41.5" x2="495.5" y1="556.5234" y2="556.5234"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="118" x="48.5" y="551.4575">RequestCOHNCert</text><polygon fill="#181818" points="52.5,599.7891,42.5,603.7891,52.5,607.7891,48.5,603.7891" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="46.5" x2="618" y1="603.7891" y2="603.7891"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="128" x="58.5" y="598.7231">ResponseCOHNCert</text><path d="M624,569.5234 L624,624.5234 L750,624.5234 L750,579.5234 L740,569.5234 L624,569.5234 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M740,569.5234 L740,579.5234 L750,579.5234 L740,569.5234 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="60" x="630" y="586.5903">Contains:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="105" x="630" y="601.7231">1. Generic result</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="96" x="630" y="616.856">2. Root CA cert</text><line style="stroke:#181818;stroke-width:1.0;" x1="41.5" x2="83.5" y1="651.0547" y2="651.0547"></line><line style="stroke:#181818;stroke-width:1.0;" x1="83.5" x2="83.5" y1="651.0547" y2="664.0547"></line><line style="stroke:#181818;stroke-width:1.0;" x1="42.5" x2="83.5" y1="664.0547" y2="664.0547"></line><polygon fill="#181818" points="52.5,660.0547,42.5,664.0547,52.5,668.0547,48.5,664.0547" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="154" x="48.5" y="645.9888">Store cert for future use</text><polygon fill="#181818" points="489.5,689.1875,499.5,693.1875,489.5,697.1875,493.5,693.1875" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;" x1="41.5" x2="495.5" y1="693.1875" y2="693.1875"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="156" x="48.5" y="688.1216">RequestGetCOHNStatus</text><polygon fill="#181818" points="52.5,736.4531,42.5,740.4531,52.5,744.4531,48.5,740.4531" style="stroke:#181818;stroke-width:1.0;"></polygon><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="46.5" x2="618" y1="740.4531" y2="740.4531"></line><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="118" x="58.5" y="735.3872">NotifyCOHNStatus</text><path d="M624,706.1875 L624,761.1875 L927,761.1875 L927,716.1875 L917,706.1875 L624,706.1875 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M917,706.1875 L917,716.1875 L927,716.1875 L917,706.1875 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="60" x="630" y="723.2544">Contains:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="244" x="630" y="738.3872">1. Camera IP address on local network</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="282" x="630" y="753.52">2. Basic auth username/password for HTTPS</text></g></svg>
+
+<h3 id="verifying-cohn-cert-is-valid">Verifying COHN Cert is Valid</h3>
+<p>
+The camera acts as the Root Certificate Authority in creating the COHN certificate (Root CA cert).
+Clients can verify that the certificate is valid using utilities such as <a href="https://www.openssl.org">openssl</a>:
+</p>
+
+<p>
+Example:
+</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl verify -CAfile '/path/to/GoProRootCA.crt' '/path/to/GoProRootCA.crt'
+GoProRootCA.crt: OK
+</code></pre></div></div>
+
+<h3 id="view-cohn-cert-details">View COHN Cert Details</h3>
+<p>
+Most operating systems have utilities to view details about a SSL/TLS certificate:
+</p>
+<ul>
+<li>MacOS: Right-mouse-click &gt;&gt; Quick Look</li>
+<li>Windows: Right-mouse-click &gt;&gt; Properties</li>
+<li>Ubuntu: Right-mouse-click &gt;&gt; Open with View File</li>
+<li>Commandline: <code>openssl x509 -in /path/to/GoProRootCA.crt -noout -text</code>
+</li>
+</ul> 
+
+
+<h3 id="communicate-via-cohn">Communicate via COHN</h3>
+<p>
+Once the camera is provisioned, the client can communicate with the camera via HTTPS.
+The camera supports nearly all functionality over HTTPS that it does over HTTP.
+For more details about HTTP/HTTPS, see the <a href="https://gopro.github.io/OpenGoPro/http_2_0">Open GoPro HTTP spec</a>.  
+</p>
 
         
       </section>
