@@ -376,16 +376,34 @@
 </li>
       <li><a href="api.html#open_gopro.constants.GoProUUIDs.CN_NET_MGMT_RESP">CN_NET_MGMT_RESP (GoProUUIDs attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.constants.WebcamError.COM_TIMEOUT">COM_TIMEOUT (WebcamError attribute)</a>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.cohn_clear_certificate">cohn_clear_certificate() (BleCommands method)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.cohn_create_certificate">cohn_create_certificate() (BleCommands method)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.cohn_get_certificate">cohn_get_certificate() (BleCommands method)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.cohn_get_status">cohn_get_status() (BleCommands method)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.cohn_set_setting">cohn_set_setting() (BleCommands method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.constants.WebcamError.COM_TIMEOUT">COM_TIMEOUT (WebcamError attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.constants.FeatureId.COMMAND">COMMAND (FeatureId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.params.PairState.COMPLETED">COMPLETED (PairState attribute)</a>
 
       <ul>
         <li><a href="api.html#open_gopro.api.params.WAPState.COMPLETED">(WAPState attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.gopro_base.GoProBase.configure_cohn">configure_cohn() (GoProBase method)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.gopro_wired.WiredGoPro.configure_cohn">(WiredGoPro method)</a>
+</li>
+        <li><a href="api.html#open_gopro.gopro_wireless.WirelessGoPro.configure_cohn">(WirelessGoPro method)</a>
 </li>
       </ul></li>
       <li><a href="api.html#open_gopro.ble.controller.BLEController.connect">connect() (BLEController method)</a>
@@ -734,10 +752,10 @@
 </li>
       <li><a href="api.html#open_gopro.constants.QueryCmdId.GET_SETTING_NAME">GET_SETTING_NAME (QueryCmdId attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.QueryCmdId.GET_SETTING_VAL">GET_SETTING_VAL (QueryCmdId attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.CmdId.GET_SETTINGS_JSON">GET_SETTINGS_JSON (CmdId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.QueryCmdId.GET_STATUS_VAL">GET_STATUS_VAL (QueryCmdId attribute)</a>
@@ -779,6 +797,8 @@
       <li><a href="api.html#open_gopro.exceptions.GoProError">GoProError</a>
 </li>
       <li><a href="api.html#open_gopro.communicator_interface.GoProHttp">GoProHttp (class in open_gopro.communicator_interface)</a>
+</li>
+      <li><a href="api.html#open_gopro.enum.GoProIntEnum">GoProIntEnum (class in open_gopro.enum)</a>
 </li>
       <li><a href="api.html#open_gopro.exceptions.GoProNotOpened">GoProNotOpened</a>
 </li>
@@ -970,8 +990,6 @@
       </ul></li>
       <li><a href="api.html#open_gopro.exceptions.InvalidConfiguration">InvalidConfiguration</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.exceptions.InvalidOpenGoProVersion">InvalidOpenGoProVersion</a>
 </li>
       <li><a href="api.html#open_gopro.gopro_base.GoProBase.is_ble_connected">is_ble_connected (GoProBase property)</a>
@@ -980,6 +998,16 @@
         <li><a href="api.html#open_gopro.gopro_wired.WiredGoPro.is_ble_connected">(WiredGoPro property)</a>
 </li>
         <li><a href="api.html#open_gopro.gopro_wireless.WirelessGoPro.is_ble_connected">(WirelessGoPro property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.gopro_base.GoProBase.is_cohn_provisioned">is_cohn_provisioned (GoProBase property)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.gopro_wired.WiredGoPro.is_cohn_provisioned">(WiredGoPro property)</a>
+</li>
+        <li><a href="api.html#open_gopro.gopro_wireless.WirelessGoPro.is_cohn_provisioned">(WirelessGoPro property)</a>
 </li>
       </ul></li>
       <li><a href="api.html#open_gopro.ble.client.BleClient.is_connected">is_connected (BleClient property)</a>
@@ -1805,6 +1833,8 @@
       </ul></li>
       <li><a href="api.html#open_gopro.constants.ActionId.RELEASE_NETWORK">RELEASE_NETWORK (ActionId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.release_network">release_network() (BleCommands method)</a>
+</li>
       <li><a href="api.html#open_gopro.constants.ActionId.RELEASE_NETWORK_RSP">RELEASE_NETWORK_RSP (ActionId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.remote_ctrl_conn">remote_ctrl_conn (BleStatuses attribute)</a>
@@ -1823,6 +1853,16 @@
         <li><a href="api.html#open_gopro.api.params.SDStatus.REMOVED">(SDStatus attribute)</a>
 </li>
       </ul></li>
+      <li><a href="api.html#open_gopro.constants.ActionId.REQUEST_CLEAR_COHN_CERT">REQUEST_CLEAR_COHN_CERT (ActionId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.REQUEST_COHN_SETTING">REQUEST_COHN_SETTING (ActionId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.REQUEST_CREATE_COHN_CERT">REQUEST_CREATE_COHN_CERT (ActionId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.REQUEST_GET_COHN_CERT">REQUEST_GET_COHN_CERT (ActionId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.REQUEST_GET_COHN_STATUS">REQUEST_GET_COHN_STATUS (ActionId attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT">REQUEST_WIFI_CONNECT (ActionId attribute)</a>
 </li>
   </ul></td>
@@ -1893,11 +1933,23 @@
 </li>
       <li><a href="api.html#open_gopro.constants.SettingId.RESOLUTION">RESOLUTION (SettingId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.constants.ActionId.RESPONSE_CLEAR_COHN_CERT">RESPONSE_CLEAR_COHN_CERT (ActionId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.RESPONSE_COHN_SETTING">RESPONSE_COHN_SETTING (ActionId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.RESPONSE_CREATE_COHN_CERT">RESPONSE_CREATE_COHN_CERT (ActionId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.RESPONSE_GET_COHN_CERT">RESPONSE_GET_COHN_CERT (ActionId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.constants.ActionId.RESPONSE_GET_COHN_STATUS">RESPONSE_GET_COHN_STATUS (ActionId attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.exceptions.ResponseParseError">ResponseParseError</a>
 </li>
       <li><a href="api.html#open_gopro.exceptions.ResponseTimeout">ResponseTimeout</a>
 </li>
       <li><a href="api.html#open_gopro.models.media_list.MediaMetadata.rotate">rotate (MediaMetadata attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.WebcamProtocol.RTSP">RTSP (WebcamProtocol attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.communicator_interface.RuleSignature">RuleSignature (class in open_gopro.communicator_interface)</a>
 </li>
@@ -2371,6 +2423,8 @@
 </li>
       <li><a href="api.html#open_gopro.models.media_list.MediaMetadata.transcoded">transcoded (MediaMetadata attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.params.WebcamProtocol.TS">TS (WebcamProtocol attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.turbo_mode">turbo_mode (BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.TURBO_MODE">TURBO_MODE (StatusId attribute)</a>
@@ -2628,6 +2682,8 @@
       <li><a href="api.html#open_gopro.constants.WebcamError">WebcamError (class in open_gopro.constants)</a>
 </li>
       <li><a href="api.html#open_gopro.api.params.WebcamFOV">WebcamFOV (class in open_gopro.api.params)</a>
+</li>
+      <li><a href="api.html#open_gopro.api.params.WebcamProtocol">WebcamProtocol (class in open_gopro.api.params)</a>
 </li>
       <li><a href="api.html#open_gopro.api.params.WebcamResolution">WebcamResolution (class in open_gopro.api.params)</a>
 </li>

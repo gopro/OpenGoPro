@@ -62,7 +62,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#graphical-user-interface-gui-demos">Graphical User Interface (GUI) Demos</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#wired-webcam-demo">Wired Webcam Demo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#livestream-demo">Livestream Demo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#api-gui-demo">API GUI Demo</a></li>
 </ul>
 </li>
 </ul>
@@ -297,41 +296,6 @@ livestream, then use <a class="reference external" href="https://pypi.org/projec
 <span class="go">                        discovered GoPro will be connected to</span>
 </pre></div>
 </div>
-</section>
-<section id="api-gui-demo">
-<h3>API GUI Demo<a class="headerlink" href="#api-gui-demo" title="Permalink to this heading"></a></h3>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This is a work in progress and some complex responses are not yet easily viewed.</p>
-</div>
-<p>This is a GUI which allows the user to connect a camera and send any command, view status / setting
-updates, view a video stream, and log sent / received messages. It can be started with:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-gui
-</pre></div>
-</div>
-<p>This will launch a camera chooser screen where the user can either manually enter a camera to connect to
-or automatically connect to the first found camera. Once connected, the GUI will appear. Usages is as follows:</p>
-<ul class="simple">
-<li><p>Choose a command from the Command Pallette on the left</p>
-<ul>
-<li><p>Note that besides supporting all of the commands from the Open GoPro API, there is also a “Compound” commands
-section which contains commands that combine API functionality. One of these, for example, is Livestream
-which will connect Wifi, configure and start livestreaming.</p></li>
-</ul>
-</li>
-<li><p>Once chosen, enter the desired parameters in the entry form at the top middle</p></li>
-<li><p>In the same entry form, click the button to send the command</p></li>
-<li><p>The sent command and received response will be logged in the log in the bottom middle as well as any
-asynchronously received messages.</p></li>
-<li><p>Any log messages with a down arrow can be expanded to view their details</p></li>
-<li><p>Any received statuses, settings, and setting capabilities will be updated in the pane at the top right.</p>
-<ul>
-<li><p>The most recently received updates will be highlighted in blue</p></li>
-</ul>
-</li>
-<li><p>A network stream can be started using the video pane in the bottom right. This will automatically get started
-after sending the Livestream command</p></li>
-</ul>
 </section>
 </section>
 </section>

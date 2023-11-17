@@ -67,6 +67,11 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#open-gopro-api">Open GoPro API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands"><code class="docutils literal notranslate"><span class="pre">BleCommands</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.cohn_clear_certificate"><code class="docutils literal notranslate"><span class="pre">BleCommands.cohn_clear_certificate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.cohn_create_certificate"><code class="docutils literal notranslate"><span class="pre">BleCommands.cohn_create_certificate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.cohn_get_certificate"><code class="docutils literal notranslate"><span class="pre">BleCommands.cohn_get_certificate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.cohn_get_status"><code class="docutils literal notranslate"><span class="pre">BleCommands.cohn_get_status()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.cohn_set_setting"><code class="docutils literal notranslate"><span class="pre">BleCommands.cohn_set_setting()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.enable_wifi_ap"><code class="docutils literal notranslate"><span class="pre">BleCommands.enable_wifi_ap()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.get_ap_entries"><code class="docutils literal notranslate"><span class="pre">BleCommands.get_ap_entries()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.get_camera_capabilities"><code class="docutils literal notranslate"><span class="pre">BleCommands.get_camera_capabilities()</span></code></a></li>
@@ -86,6 +91,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.register_for_all_settings"><code class="docutils literal notranslate"><span class="pre">BleCommands.register_for_all_settings()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.register_for_all_statuses"><code class="docutils literal notranslate"><span class="pre">BleCommands.register_for_all_statuses()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.register_livestream_status"><code class="docutils literal notranslate"><span class="pre">BleCommands.register_livestream_status()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.release_network"><code class="docutils literal notranslate"><span class="pre">BleCommands.release_network()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.request_wifi_connect"><code class="docutils literal notranslate"><span class="pre">BleCommands.request_wifi_connect()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.request_wifi_connect_new"><code class="docutils literal notranslate"><span class="pre">BleCommands.request_wifi_connect_new()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.scan_wifi_networks"><code class="docutils literal notranslate"><span class="pre">BleCommands.scan_wifi_networks()</span></code></a></li>
@@ -364,6 +370,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.VideoProfile"><code class="docutils literal notranslate"><span class="pre">VideoProfile</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.WAPState"><code class="docutils literal notranslate"><span class="pre">WAPState</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.WebcamFOV"><code class="docutils literal notranslate"><span class="pre">WebcamFOV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.WebcamProtocol"><code class="docutils literal notranslate"><span class="pre">WebcamProtocol</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.WebcamResolution"><code class="docutils literal notranslate"><span class="pre">WebcamResolution</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.WifiBand"><code class="docutils literal notranslate"><span class="pre">WifiBand</span></code></a></li>
 </ul>
@@ -410,10 +417,20 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.PRESET_MODIFIED_NOTIFICATION"><code class="docutils literal notranslate"><span class="pre">ActionId.PRESET_MODIFIED_NOTIFICATION</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RELEASE_NETWORK"><code class="docutils literal notranslate"><span class="pre">ActionId.RELEASE_NETWORK</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RELEASE_NETWORK_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.RELEASE_NETWORK_RSP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_CLEAR_COHN_CERT"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_CLEAR_COHN_CERT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_COHN_SETTING"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_COHN_SETTING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_CREATE_COHN_CERT"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_CREATE_COHN_CERT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_GET_COHN_CERT"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_GET_COHN_CERT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_GET_COHN_STATUS"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_GET_COHN_STATUS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_WIFI_CONNECT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_NEW"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_WIFI_CONNECT_NEW</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_NEW_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_WIFI_CONNECT_NEW_RSP</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_WIFI_CONNECT_RSP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RESPONSE_CLEAR_COHN_CERT"><code class="docutils literal notranslate"><span class="pre">ActionId.RESPONSE_CLEAR_COHN_CERT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RESPONSE_COHN_SETTING"><code class="docutils literal notranslate"><span class="pre">ActionId.RESPONSE_COHN_SETTING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RESPONSE_CREATE_COHN_CERT"><code class="docutils literal notranslate"><span class="pre">ActionId.RESPONSE_CREATE_COHN_CERT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RESPONSE_GET_COHN_CERT"><code class="docutils literal notranslate"><span class="pre">ActionId.RESPONSE_GET_COHN_CERT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RESPONSE_GET_COHN_STATUS"><code class="docutils literal notranslate"><span class="pre">ActionId.RESPONSE_GET_COHN_STATUS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.SCAN_WIFI_NETWORKS"><code class="docutils literal notranslate"><span class="pre">ActionId.SCAN_WIFI_NETWORKS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.SCAN_WIFI_NETWORKS_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.SCAN_WIFI_NETWORKS_RSP</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.SET_CAMERA_CONTROL"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_CAMERA_CONTROL</span></code></a></li>
@@ -683,10 +700,12 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.gopro_base.GoProBase.ble_setting"><code class="docutils literal notranslate"><span class="pre">GoProBase.ble_setting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.gopro_base.GoProBase.ble_status"><code class="docutils literal notranslate"><span class="pre">GoProBase.ble_status</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.gopro_base.GoProBase.close"><code class="docutils literal notranslate"><span class="pre">GoProBase.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.gopro_base.GoProBase.configure_cohn"><code class="docutils literal notranslate"><span class="pre">GoProBase.configure_cohn()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.gopro_base.GoProBase.http_command"><code class="docutils literal notranslate"><span class="pre">GoProBase.http_command</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.gopro_base.GoProBase.http_setting"><code class="docutils literal notranslate"><span class="pre">GoProBase.http_setting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.gopro_base.GoProBase.identifier"><code class="docutils literal notranslate"><span class="pre">GoProBase.identifier</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.gopro_base.GoProBase.is_ble_connected"><code class="docutils literal notranslate"><span class="pre">GoProBase.is_ble_connected</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.gopro_base.GoProBase.is_cohn_provisioned"><code class="docutils literal notranslate"><span class="pre">GoProBase.is_cohn_provisioned</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.gopro_base.GoProBase.is_http_connected"><code class="docutils literal notranslate"><span class="pre">GoProBase.is_http_connected</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.gopro_base.GoProBase.is_open"><code class="docutils literal notranslate"><span class="pre">GoProBase.is_open</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.gopro_base.GoProBase.is_ready"><code class="docutils literal notranslate"><span class="pre">GoProBase.is_ready</span></code></a></li>
@@ -952,6 +971,25 @@ prevent reconnection issues because the OS has never disconnected from the previ
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.gopro_wireless.WirelessGoPro.configure_cohn">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configure_cohn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#open_gopro.gopro_wireless.WirelessGoPro.configure_cohn" title="Permalink to this definition"></a></dt>
+<dd><p>Prepare Camera on the Home Network</p>
+<p>Provision if not provisioned
+Then wait for COHN to be connected and ready</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – time in seconds to wait for COHN to be ready. Defaults to 60.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if success, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.gopro_wireless.WirelessGoPro.connect_to_access_point">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">connect_to_access_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ssid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#open_gopro.gopro_wireless.WirelessGoPro.connect_to_access_point" title="Permalink to this definition"></a></dt>
 <dd><p>Connect the camera to a Wifi Access Point</p>
@@ -1026,6 +1064,21 @@ scan for the camera for BLE.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if yes, False if no</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="open_gopro.gopro_wireless.WirelessGoPro.is_cohn_provisioned">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_cohn_provisioned</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#open_gopro.gopro_wireless.WirelessGoPro.is_cohn_provisioned" title="Permalink to this definition"></a></dt>
+<dd><p>Is COHN currently provisioned?</p>
+<p>Get the current COHN status from the camera</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if COHN is provisioned, False otherwise</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>
@@ -1274,6 +1327,28 @@ discovered from mDNS will be used. Defaults to None</p></li>
 <dd><p>Gracefully close the GoPro Client connection</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.gopro_wired.WiredGoPro.configure_cohn">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configure_cohn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#open_gopro.gopro_wired.WiredGoPro.configure_cohn" title="Permalink to this definition"></a></dt>
+<dd><p>Prepare Camera on the Home Network</p>
+<p>Provision if not provisioned
+Then wait for COHN to be connected and ready</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – time in seconds to wait for COHN to be ready. Defaults to 60.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if success, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – not yet possible</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="open_gopro.gopro_wired.WiredGoPro.http_command">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">http_command</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands" title="open_gopro.api.http_commands.HttpCommands"><span class="pre">HttpCommands</span></a></em><a class="headerlink" href="#open_gopro.gopro_wired.WiredGoPro.http_command" title="Permalink to this definition"></a></dt>
@@ -1329,6 +1404,24 @@ discovered from mDNS will be used. Defaults to None</p></li>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="open_gopro.gopro_wired.WiredGoPro.is_cohn_provisioned">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_cohn_provisioned</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#open_gopro.gopro_wired.WiredGoPro.is_cohn_provisioned" title="Permalink to this definition"></a></dt>
+<dd><p>Is COHN currently provisioned?</p>
+<p>Get the current COHN status from the camera</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if COHN is provisioned, False otherwise</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – not yet possible</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1464,6 +1557,85 @@ version-specific API’s themselves.</p>
 <dd><p>Bases: <a class="reference internal" href="#open_gopro.communicator_interface.BleMessages" title="open_gopro.communicator_interface.BleMessages"><code class="xref py py-class docutils literal notranslate"><span class="pre">BleMessages</span></code></a>[<a class="reference internal" href="#open_gopro.communicator_interface.BleMessage" title="open_gopro.communicator_interface.BleMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">BleMessage</span></code></a>, <a class="reference internal" href="#open_gopro.constants.CmdId" title="open_gopro.constants.CmdId"><code class="xref py py-class docutils literal notranslate"><span class="pre">CmdId</span></code></a>]</p>
 <p>All of the BLE commands.</p>
 <p>To be used as a delegate for a GoProBle instance to build commands</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.cohn_clear_certificate">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cohn_clear_certificate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.cohn_clear_certificate" title="Permalink to this definition"></a></dt>
+<dd><p>Clear the current SSL certificate on the camera that is used for COHN</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>was the clear successful?</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.cohn_create_certificate">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cohn_create_certificate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.cohn_create_certificate" title="Permalink to this definition"></a></dt>
+<dd><p>Create an SSL certificate on the camera to use for COHN</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>override</strong> (<em>bool</em>) – Should the current cert be overwritten?. Defaults to True.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>certificate creation status</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.cohn_get_certificate">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cohn_get_certificate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">ResponseCOHNCert</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.cohn_get_certificate" title="Permalink to this definition"></a></dt>
+<dd><p>Get the current SSL certificate that the camera is using for COHN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the certificate</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[proto.ResponseCOHNCert]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.cohn_get_status">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cohn_get_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">register</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NotifyCOHNStatus</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.cohn_get_status" title="Permalink to this definition"></a></dt>
+<dd><p>Get (and optionally register for) the current COHN status</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>register</strong> (<em>bool</em>) – whether or not to register</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>current COHN status</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[proto.NotifyCOHNStatus]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.cohn_set_setting">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cohn_set_setting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.api.params.Toggle" title="open_gopro.api.params.Toggle"><span class="pre">Toggle</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.cohn_set_setting" title="Permalink to this definition"></a></dt>
+<dd><p>Set a COHN specific setting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mode</strong> (<a class="reference internal" href="#open_gopro.api.params.Toggle" title="open_gopro.api.params.Toggle"><em>open_gopro.api.params.Toggle</em></a>) – should camera auto connect to home network?</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>status of set</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[None]</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.enable_wifi_ap">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enable_wifi_ap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.enable_wifi_ap" title="Permalink to this definition"></a></dt>
@@ -1602,7 +1774,7 @@ version-specific API’s themselves.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.get_preset_status">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_preset_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">register:</span> <span class="pre">list[&lt;google.protobuf.internal.enum_type_wrapper.EnumTypeWrapper</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fa678fded50&gt;]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unregister:</span> <span class="pre">list[&lt;google.protobuf.internal.enum_type_wrapper.EnumTypeWrapper</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fa678fded50&gt;]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NotifyPresetStatus</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.get_preset_status" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_preset_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">register</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unregister</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NotifyPresetStatus</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.get_preset_status" title="Permalink to this definition"></a></dt>
 <dd><p>Get information about what Preset Groups and Presets the camera supports in its current state</p>
 <p>Also optionally (un)register for preset / group preset modified notifications which  will be
 sent asynchronously as <a class="reference internal" href="#open_gopro.constants.ActionId.PRESET_MODIFIED_NOTIFICATION" title="open_gopro.constants.ActionId.PRESET_MODIFIED_NOTIFICATION"><code class="xref py py-attr docutils literal notranslate"><span class="pre">open_gopro.constants.ActionId.PRESET_MODIFIED_NOTIFICATION</span></code></a></p>
@@ -1672,7 +1844,7 @@ updates to unregister for. Defaults to None.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.load_preset_group">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_preset_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group:</span> <span class="pre">&lt;google.protobuf.internal.enum_type_wrapper.EnumTypeWrapper</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fa678ef4210&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.load_preset_group" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_preset_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.load_preset_group" title="Permalink to this definition"></a></dt>
 <dd><p>Load a Preset Group.</p>
 <p>Once complete, the most recently used preset in this group will be active.</p>
 <dl class="field-list simple">
@@ -1755,7 +1927,7 @@ updates to unregister for. Defaults to None.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.register_livestream_status">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register_livestream_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">register:</span> <span class="pre">list[&lt;google.protobuf.internal.enum_type_wrapper.EnumTypeWrapper</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fa678fdef50&gt;]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unregister:</span> <span class="pre">list[&lt;google.protobuf.internal.enum_type_wrapper.EnumTypeWrapper</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fa678fdef50&gt;]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NotifyLiveStreamStatus</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.register_livestream_status" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register_livestream_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">register</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unregister</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NotifyLiveStreamStatus</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.register_livestream_status" title="Permalink to this definition"></a></dt>
 <dd><p>Register / unregister to receive asynchronous livestream statuses</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1771,6 +1943,20 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.release_network">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">release_network</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.release_network" title="Permalink to this definition"></a></dt>
+<dd><p>Disconnect the camera Wifi network in STA mode so that it returns to AP mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>status of release request</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1830,7 +2016,7 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.set_camera_control">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_camera_control</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_control_status:</span> <span class="pre">&lt;google.protobuf.internal.enum_type_wrapper.EnumTypeWrapper</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fa678ef7910&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.set_camera_control" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_camera_control</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_control_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.set_camera_control" title="Permalink to this definition"></a></dt>
 <dd><p>Tell the camera that the app (i.e. External Control) wishes to claim control of the camera.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1885,7 +2071,7 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.set_livestream_mode">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_livestream_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size:</span> <span class="pre">&lt;google.protobuf.internal.enum_type_wrapper.EnumTypeWrapper</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fa678fdfb90&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_bitrate:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum_bitrate:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_bitrate:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lens:</span> <span class="pre">&lt;google.protobuf.internal.enum_type_wrapper.EnumTypeWrapper</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fa678ff4450&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">certs:</span> <span class="pre">list[pathlib.Path]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.set_livestream_mode" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_livestream_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_bitrate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum_bitrate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_bitrate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">certs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.set_livestream_mode" title="Permalink to this definition"></a></dt>
 <dd><p>Initiate livestream to any site that accepts an RTMP URL and simultaneously encode to camera.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -3091,7 +3277,7 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.http_commands.HttpCommands.load_preset_group">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_preset_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group:</span> <span class="pre">&lt;google.protobuf.internal.enum_type_wrapper.EnumTypeWrapper</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fa678ef4210&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.http_commands.HttpCommands.load_preset_group" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_preset_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.http_commands.HttpCommands.load_preset_group" title="Permalink to this definition"></a></dt>
 <dd><p>Set the active preset group.</p>
 <p>The most recently used Preset in this group will be set.</p>
 <dl class="field-list simple">
@@ -3291,7 +3477,7 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.http_commands.HttpCommands.webcam_start">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">webcam_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.api.params.WebcamResolution" title="open_gopro.api.params.WebcamResolution"><span class="pre">open_gopro.api.params.WebcamResolution</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fov</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.api.params.WebcamFOV" title="open_gopro.api.params.WebcamFOV"><span class="pre">open_gopro.api.params.WebcamFOV</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.models.general.WebcamResponse" title="open_gopro.models.general.WebcamResponse"><span class="pre">WebcamResponse</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.http_commands.HttpCommands.webcam_start" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">webcam_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.api.params.WebcamResolution" title="open_gopro.api.params.WebcamResolution"><span class="pre">open_gopro.api.params.WebcamResolution</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fov</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.api.params.WebcamFOV" title="open_gopro.api.params.WebcamFOV"><span class="pre">open_gopro.api.params.WebcamFOV</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.api.params.WebcamProtocol" title="open_gopro.api.params.WebcamProtocol"><span class="pre">open_gopro.api.params.WebcamProtocol</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.models.general.WebcamResponse" title="open_gopro.models.general.WebcamResponse"><span class="pre">WebcamResponse</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.http_commands.HttpCommands.webcam_start" title="Permalink to this definition"></a></dt>
 <dd><p>Start the webcam.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -3300,6 +3486,9 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 camera default will be used.</p></li>
 <li><p><strong>fov</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#open_gopro.api.params.WebcamFOV" title="open_gopro.api.params.WebcamFOV"><em>open_gopro.api.params.WebcamFOV</em></a><em>]</em>) – field of view to use. If not set, camera
 default will be used.</p></li>
+<li><p><strong>port</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – port to use for streaming. If not set, camera default of 8554 will be used.</p></li>
+<li><p><strong>protocol</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#open_gopro.api.params.WebcamProtocol" title="open_gopro.api.params.WebcamProtocol"><em>open_gopro.api.params.WebcamProtocol</em></a><em>]</em>) – streaming protocol to use. If not set, camera
+default of TS will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -3589,6 +3778,11 @@ default will be used.</p></li>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GoProEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.enum.GoProEnum" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="open_gopro.enum.GoProIntEnum">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GoProIntEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.enum.GoProIntEnum" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </section>
 <section id="ble-setting">
 <h4>BLE Setting<a class="headerlink" href="#ble-setting" title="Permalink to this heading"></a></h4>
@@ -3599,7 +3793,7 @@ default will be used.</p></li>
 <area shape="rect" id="node4" href="#open_gopro.api.builders.BleSetting" target="_top" title="An individual camera setting that is interacted with via BLE." alt="" coords="55,5,145,31"/>
 </map><dl class="py class">
 <dt class="sig sig-object py" id="open_gopro.api.builders.BleSetting">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BleSetting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.communicator_interface.GoProBle" title="open_gopro.communicator_interface.GoProBle"><span class="pre">GoProBle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.constants.SettingId" title="open_gopro.constants.SettingId"><span class="pre">SettingId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser_builder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Construct</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.enum.GoProEnum" title="open_gopro.enum.GoProEnum"><span class="pre">open_gopro.enum.GoProEnum</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">BytesParserBuilder</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.builders.BleSetting" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BleSetting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.communicator_interface.GoProBle" title="open_gopro.communicator_interface.GoProBle"><span class="pre">GoProBle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.constants.SettingId" title="open_gopro.constants.SettingId"><span class="pre">SettingId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser_builder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Construct</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.enum.GoProIntEnum" title="open_gopro.enum.GoProIntEnum"><span class="pre">open_gopro.enum.GoProIntEnum</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">BytesParserBuilder</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.builders.BleSetting" title="Permalink to this definition"></a></dt>
 <dd><p>An individual camera setting that is interacted with via BLE.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.builders.BleSetting.get_capabilities_values">
@@ -3726,7 +3920,7 @@ default will be used.</p></li>
 <area shape="rect" id="node4" href="#open_gopro.api.builders.BleStatus" target="_top" title="An individual camera status that is interacted with via BLE." alt="" coords="58,5,142,31"/>
 </map><dl class="py class">
 <dt class="sig sig-object py" id="open_gopro.api.builders.BleStatus">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BleStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.communicator_interface.GoProBle" title="open_gopro.communicator_interface.GoProBle"><span class="pre">GoProBle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.constants.StatusId" title="open_gopro.constants.StatusId"><span class="pre">StatusId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Construct</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.enum.GoProEnum" title="open_gopro.enum.GoProEnum"><span class="pre">open_gopro.enum.GoProEnum</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">BytesParserBuilder</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.builders.BleStatus" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BleStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communicator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.communicator_interface.GoProBle" title="open_gopro.communicator_interface.GoProBle"><span class="pre">GoProBle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.constants.StatusId" title="open_gopro.constants.StatusId"><span class="pre">StatusId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Construct</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.enum.GoProIntEnum" title="open_gopro.enum.GoProIntEnum"><span class="pre">open_gopro.enum.GoProIntEnum</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">BytesParserBuilder</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.builders.BleStatus" title="Permalink to this definition"></a></dt>
 <dd><p>An individual camera status that is interacted with via BLE.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.builders.BleStatus.get_value">
@@ -5633,6 +5827,21 @@ instantiation</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="open_gopro.api.params.WebcamProtocol">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WebcamProtocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.params.WebcamProtocol" title="Permalink to this definition"></a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.WebcamProtocol.RTSP">
+<span class="sig-name descname"><span class="pre">RTSP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RTSP'</span></em><a class="headerlink" href="#open_gopro.api.params.WebcamProtocol.RTSP" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.WebcamProtocol.TS">
+<span class="sig-name descname"><span class="pre">TS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'TS'</span></em><a class="headerlink" href="#open_gopro.api.params.WebcamProtocol.TS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="open_gopro.api.params.WebcamResolution">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WebcamResolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.params.WebcamResolution" title="Permalink to this definition"></a></dt>
 <dd><dl class="py attribute">
@@ -7281,6 +7490,31 @@ instantiation</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_CLEAR_COHN_CERT">
+<span class="sig-name descname"><span class="pre">REQUEST_CLEAR_COHN_CERT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">102</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_CLEAR_COHN_CERT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_COHN_SETTING">
+<span class="sig-name descname"><span class="pre">REQUEST_COHN_SETTING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">101</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_COHN_SETTING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_CREATE_COHN_CERT">
+<span class="sig-name descname"><span class="pre">REQUEST_CREATE_COHN_CERT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">103</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_CREATE_COHN_CERT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_GET_COHN_CERT">
+<span class="sig-name descname"><span class="pre">REQUEST_GET_COHN_CERT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">110</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_GET_COHN_CERT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_GET_COHN_STATUS">
+<span class="sig-name descname"><span class="pre">REQUEST_GET_COHN_STATUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">111</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_GET_COHN_STATUS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT">
 <span class="sig-name descname"><span class="pre">REQUEST_WIFI_CONNECT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -7298,6 +7532,31 @@ instantiation</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_RSP">
 <span class="sig-name descname"><span class="pre">REQUEST_WIFI_CONNECT_RSP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">132</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_RSP" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.RESPONSE_CLEAR_COHN_CERT">
+<span class="sig-name descname"><span class="pre">RESPONSE_CLEAR_COHN_CERT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">230</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.RESPONSE_CLEAR_COHN_CERT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.RESPONSE_COHN_SETTING">
+<span class="sig-name descname"><span class="pre">RESPONSE_COHN_SETTING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">229</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.RESPONSE_COHN_SETTING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.RESPONSE_CREATE_COHN_CERT">
+<span class="sig-name descname"><span class="pre">RESPONSE_CREATE_COHN_CERT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">231</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.RESPONSE_CREATE_COHN_CERT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.RESPONSE_GET_COHN_CERT">
+<span class="sig-name descname"><span class="pre">RESPONSE_GET_COHN_CERT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">238</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.RESPONSE_GET_COHN_CERT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.RESPONSE_GET_COHN_STATUS">
+<span class="sig-name descname"><span class="pre">RESPONSE_GET_COHN_STATUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">239</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.RESPONSE_GET_COHN_STATUS" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -8573,6 +8832,25 @@ instantiation</p>
 <dd><p>Gracefully close the GoPro Client connection</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.gopro_base.GoProBase.configure_cohn">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configure_cohn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#open_gopro.gopro_base.GoProBase.configure_cohn" title="Permalink to this definition"></a></dt>
+<dd><p>Prepare Camera on the Home Network</p>
+<p>Provision if not provisioned
+Then wait for COHN to be connected and ready</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – time in seconds to wait for COHN to be ready. Defaults to 60.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if success, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="open_gopro.gopro_base.GoProBase.http_command">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">http_command</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands" title="open_gopro.api.http_commands.HttpCommands"><span class="pre">HttpCommands</span></a></em><a class="headerlink" href="#open_gopro.gopro_base.GoProBase.http_command" title="Permalink to this definition"></a></dt>
@@ -8622,6 +8900,21 @@ instantiation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if yes, False if no</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="open_gopro.gopro_base.GoProBase.is_cohn_provisioned">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_cohn_provisioned</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#open_gopro.gopro_base.GoProBase.is_cohn_provisioned" title="Permalink to this definition"></a></dt>
+<dd><p>Is COHN currently provisioned?</p>
+<p>Get the current COHN status from the camera</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if COHN is provisioned, False otherwise</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>

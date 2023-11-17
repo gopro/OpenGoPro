@@ -81,6 +81,8 @@ GoPro Enum
 
 .. autoclass:: open_gopro.enum.GoProEnum
 
+.. autoclass:: open_gopro.enum.GoProIntEnum
+
 BLE Setting
 ^^^^^^^^^^^
 
