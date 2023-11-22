@@ -3513,8 +3513,14 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="22"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
-      <td>HERO12 Black</td>
+      <td rowspan="24"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="3">HERO12 Black</td>
+      <td>v01.30.00</td>
+    </tr>
+    <tr>
+      <td>v01.20.00</td>
+    </tr>
+    <tr>
       <td>v01.10.00</td>
     </tr>
     <tr>
@@ -6236,10 +6242,39 @@ This capability allows the client to perform command and control with the camera
 For security purposes, all communications are performed over HTTPS.
 </p>
 
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Camera</td>
+      <td>Supported</td>
+    </tr>
+    <tr>
+      <td>HERO12 Black</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr>
+      <td>HERO11 Black Mini</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>HERO11 Black</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>HERO10 Black</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>HERO9 Black</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+  </tbody>
+</table>
+
 ### Provisioning COHN
 <p>
 In order to use the COHN capability, the camera must first be provisioned for COHN.
-For instructions on how to do this, see <a href="https://gopro.github.io/OpenGoPro/ble_2_0#cohn">Open GoPro BLE spec</a>.
+For instructions on how to do this, see <a href="https://gopro.github.io/OpenGoPro/ble_2_0#camera-on-the-home-network-cohn">Open GoPro BLE spec</a>.
 </p>
 
 ### Send Messages via HTTPS
