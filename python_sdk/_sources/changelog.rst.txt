@@ -14,6 +14,7 @@ Unreleased
 * Add alpha support for COHN (Camera-on-the-Home-Network)
     * A real implementation is going to require a major rearchitecture to dynamically add connection types.
 * Remove TKinter GUI. Will be replaced with Textual TUI in the future
+* Improve wifi SSID matching
 
 0.14.1 (September-21-2022)
 --------------------------
