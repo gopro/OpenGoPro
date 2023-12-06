@@ -692,7 +692,7 @@ class NetworksetupWireless(WifiController):
                 r"/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --scan"
             )
             lines = response.splitlines()
-            ssid_end_index = lines[0].index("SSID") + 4 # Find where the SSID column ends
+            ssid_end_index = lines[0].index("SSID") + 4  # Find where the SSID column ends
 
             for result in lines[1:]:  # Skip title row
                 current_ssid = result[:ssid_end_index].strip()
