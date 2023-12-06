@@ -3,6 +3,8 @@
 
 """Base classes shared throughout models"""
 
+import json
+
 from pydantic import BaseModel
 
 from open_gopro.util import pretty_print, scrub
@@ -12,7 +14,13 @@ class CustomBaseModel(BaseModel):
     """Additional functionality added to Pydantic BaseModel"""
 
     def __hash__(self) -> int:
-        return hash((type(self),) + tuple(getattr(self, f) for f in self.__fields__.keys()))
+        h = hash((type(self),))
+        for field in self.__fields__.keys():
+            if isinstance(field, (dict, list)):
+                h += json.loads(field)
+            # Base case
+            h += hash(field)
+        return h
 
     def __str__(self) -> str:
         d = dict(self)
