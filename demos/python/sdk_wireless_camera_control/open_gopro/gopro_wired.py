@@ -144,7 +144,6 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
 
         await self.http_command.wired_usb_control(control=Params.Toggle.ENABLE)
         # Find and configure API version
-        version = await self.http_command.get_open_gopro_api_version()
         if (version := (await self.http_command.get_open_gopro_api_version()).data) != self.version:
             raise GpException.InvalidOpenGoProVersion(version)
         logger.info(f"Using Open GoPro API version {version}")
