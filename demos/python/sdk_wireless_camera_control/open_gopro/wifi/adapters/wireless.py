@@ -691,6 +691,10 @@ class NetworksetupWireless(WifiController):
             response = cmd(
                 r"/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --scan"
             )
+            # TODO Sometimes the response is blank?
+            if not response:
+                logger.warning("MacOS did not return a response to SSID scanning.")
+                continue
             lines = response.splitlines()
             ssid_end_index = lines[0].index("SSID") + 4  # Find where the SSID column ends
 
