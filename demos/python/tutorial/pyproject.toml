@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "open-gopro-tutorials"
-version = "0.1.0"
+version = "0.2.0"
 description = "Open GoPro Python Tutorials"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 license = "MIT"
