@@ -264,7 +264,7 @@ The snippets of code included in this section are taken from the `notification h
 
 ```python
 # Parse first 3 bytes
-len = data[0]
+length = data[0]
 command_id = data[1]
 status = data[2]
 ```
@@ -273,7 +273,7 @@ status = data[2]
 # Parse remaining four bytes
 index = 3
 params = []
-while index <= len:
+while index <= length:
     param_len = data[index]
     index += 1
     params.append(data[index : index + param_len])
