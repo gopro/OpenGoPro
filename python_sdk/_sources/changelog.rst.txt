@@ -9,11 +9,11 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
-Unreleased
-----------
+0.15.1 (December-6-2023)
+------------------------
 * Fix livestream demo.
 
-0.15.0 (December-6-2021)
+0.15.0 (December-6-2023)
 ------------------------
 * Add alpha support for COHN (Camera-on-the-Home-Network)
     * A real implementation is going to require a major rearchitecture to dynamically add connection types.
@@ -21,13 +21,13 @@ Unreleased
 * Improve wifi SSID matching
 * Fix unhashable pydantic base models
 
-0.14.1 (September-21-2022)
+0.14.1 (September-21-2023)
 --------------------------
 * Fix BLE notifications not being routed correctly
 * Don't hardcode media directory. Also append directory to filenames in media list.
 * Fix malformed Set Setting HTTP url
 
-0.14.0 (September-13-2022)
+0.14.0 (September-13-2023)
 --------------------------
 * NOTE! This is a major update and includes massive API breaking changes.
 * Move to asyncio-based framework
