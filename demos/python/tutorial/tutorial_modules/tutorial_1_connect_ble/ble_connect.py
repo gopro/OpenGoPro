@@ -5,12 +5,12 @@ import re
 import sys
 import asyncio
 import argparse
-from typing import Dict, Any, List, Callable, Optional
+from typing import Dict, Any, List, Optional
 
 from bleak import BleakScanner, BleakClient
 from bleak.backends.device import BLEDevice as BleakDevice
 
-from tutorial_modules import logger
+from tutorial_modules import logger, noti_handler_T
 
 
 def exception_handler(loop: asyncio.AbstractEventLoop, context: Dict[str, Any]) -> None:
@@ -25,10 +25,7 @@ def exception_handler(loop: asyncio.AbstractEventLoop, context: Dict[str, Any]) 
     logger.critical("This is unexpected and unrecoverable.")
 
 
-async def connect_ble(
-    notification_handler: Callable[[int, bytes], None],
-    identifier: Optional[str] = None,
-) -> BleakClient:
+async def connect_ble(notification_handler: noti_handler_T, identifier: Optional[str] = None) -> BleakClient:
     """Connect to a GoPro, then pair, and enable notifications
 
     If identifier is None, the first discovered GoPro will be connected to.
@@ -36,7 +33,7 @@ async def connect_ble(
     Retry 10 times
 
     Args:
-        notification_handler (Callable[[int, bytes], None]): callback when notification is received
+        notification_handler (noti_handler_T): callback when notification is received
         identifier (str, optional): Last 4 digits of GoPro serial number. Defaults to None.
 
     Raises:
@@ -102,7 +99,7 @@ async def connect_ble(
                 for char in service.characteristics:
                     if "notify" in char.properties:
                         logger.info(f"Enabling notification on char {char.uuid}")
-                        await client.start_notify(char, notification_handler)  # type: ignore
+                        await client.start_notify(char, notification_handler)
             logger.info("Done enabling notifications")
 
             return client
