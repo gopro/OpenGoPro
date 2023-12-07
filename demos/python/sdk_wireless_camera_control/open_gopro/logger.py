@@ -39,29 +39,29 @@ class Logger:
         self,
         logger: Any,
         output: Path | None = None,
-        modules: dict[str, int] | None = None,
+        modules: list[str] | None = None,
     ) -> None:
-        self.modules = {
-            "open_gopro.gopro_base": logging.DEBUG,  # TRACE for raw HTTP responses
-            "open_gopro.gopro_wired": logging.DEBUG,  # TRACE for concurrency debugging
-            "open_gopro.gopro_wireless": logging.DEBUG,  # TRACE for concurrency debugging
-            "open_gopro.api.builders": logging.DEBUG,
-            "open_gopro.api.http_commands": logging.DEBUG,
-            "open_gopro.api.ble_commands": logging.DEBUG,
-            "open_gopro.communication_client": logging.DEBUG,
-            "open_gopro.ble.adapters.bleak_wrapper": logging.INFO,  # DEBUG for pexpect communication
-            "open_gopro.ble.client": logging.DEBUG,
-            "open_gopro.wifi.adapters.wireless": logging.DEBUG,
-            "open_gopro.wifi.mdns_scanner": logging.DEBUG,
-            "open_gopro.responses": logging.DEBUG,
-            "open_gopro.util": logging.DEBUG,
-            "bleak": logging.DEBUG,
-            "urllib3": logging.DEBUG,
-            "http.client": logging.DEBUG,
-        }
+        self.modules = [
+            "open_gopro.gopro_base",
+            "open_gopro.gopro_wired",
+            "open_gopro.gopro_wireless",
+            "open_gopro.api.builders",
+            "open_gopro.api.http_commands",
+            "open_gopro.api.ble_commands",
+            "open_gopro.communication_client",
+            "open_gopro.ble.adapters.bleak_wrapper",
+            "open_gopro.ble.client",
+            "open_gopro.wifi.adapters.wireless",
+            "open_gopro.wifi.mdns_scanner",
+            "open_gopro.responses",
+            "open_gopro.util",
+            "bleak",
+            "urllib3",
+            "http.client",
+        ]
 
         self.logger = logger
-        self.modules = {**self.modules, **modules} if modules else self.modules
+        self.modules = modules or self.modules
         self.handlers: list[logging.Handler] = []
 
         # monkey-patch a `print` global into the http.client module; all calls to
@@ -78,7 +78,8 @@ class Logger:
                 datefmt="%H:%M:%S",
             )
             self.file_handler.setFormatter(file_formatter)
-            self.file_handler.setLevel(logging.TRACE)  # type: ignore # pylint: disable=no-member
+            # Set to TRACE for concurrency debugging
+            self.file_handler.setLevel(logging.DEBUG)  # type: ignore # pylint: disable=no-member
             logger.addHandler(self.file_handler)
             self.addLoggingHandler(self.file_handler)
         else:
@@ -121,9 +122,9 @@ class Logger:
         self.handlers.append(handler)
 
         # Enable / disable logging in modules
-        for module, level in self.modules.items():
+        for module in self.modules:
             l = logging.getLogger(module)
-            l.setLevel(level)
+            l.setLevel(logging.TRACE) # type: ignore
             l.addHandler(handler)
 
     # From https://stackoverflow.com/questions/2183233/how-to-add-a-custom-loglevel-to-pythons-logging-facility/35804945#35804945
@@ -203,7 +204,7 @@ class Logger:
 
 
 def setup_logging(
-    base: logging.Logger | str, output: Path | None = None, modules: dict[str, int] | None = None
+    base: logging.Logger | str, output: Path | None = None, modules: list[str] | None = None
 ) -> logging.Logger:
     """Configure the GoPro modules for logging and get a logger that can be used by the application
 
@@ -258,10 +259,10 @@ def set_logging_level(level: int) -> None:
     set_stream_logging_level(level)
 
 
-def add_logging_handler(handler: logging.Handler) -> None:
+def add_logging_handler(handler: logging.Handler, level: int) -> None:
     """Add a handler to all of the GoPro internal modules
 
     Args:
         handler (logging.Handler): handler to add
     """
-    Logger.get_instance().addLoggingHandler(handler)
+    Logger.get_instance().addLoggingHandler(handler, level)
