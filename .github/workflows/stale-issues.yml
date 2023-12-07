@@ -1,0 +1,21 @@
+name: 'Label and / or close stale issues'
+on:
+    schedule:
+        - cron: '30 1 * * *'
+
+jobs:
+    stale:
+        permissions:
+            issues: write
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/stale@v9.0.0
+              with:
+                  only-issue-labels: "feedback requested"
+                  stale-issue-message: 'This issue is stale because it has been open 30 days with no activity. Remove stale label or comment or this will be closed in 10 days.'
+                  close-issue-message: 'This issue was closed because it has been stalled for 10 days with no activity.'
+                  days-before-stale: 30
+                  days-before-close: 10
+                  # We aren't automatically managing PR's
+                  days-before-pr-close: -1
+                  days-before-pr-stale: -1
