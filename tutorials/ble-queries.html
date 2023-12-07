@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2023-12-06T16:19:55-08:00">
+  <meta property="article:published_time" content="2023-12-07T13:10:27-08:00">
 
 
 
@@ -410,7 +410,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 4: BLE Queries">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to implement theOpen GoPro Interface to query the camera’s setting and statusinformation via BLE.">
-    <meta itemprop="datePublished" content="2023-12-06T16:19:55-08:00">
+    <meta itemprop="datePublished" content="2023-12-07T13:10:27-08:00">
     
 
     <div class="page__inner-wrap">
@@ -500,7 +500,7 @@ are present and configured correctly.</p>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="b5602288-42df-42c0-9aa6-473f1ba06002">
+    <ul class="tab tab-linked" data-tab="296391a7-e545-4408-9831-123dd0da0378">
         
             <li class="active">
                 <a href="">python </a>
@@ -511,7 +511,7 @@ are present and configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="b5602288-42df-42c0-9aa6-473f1ba06002">
+        <ul class="tab-content" id="296391a7-e545-4408-9831-123dd0da0378">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 2
@@ -634,7 +634,7 @@ and parse notification responses to the Query Response
 <a href="/OpenGoPro/ble_2_0#services-and-characteristics">characteristic</a>.
 Throughout this tutorial, the query information that we will be reading is the Resolution Setting (ID 0x02).</p>
 <div>
-    <ul class="tab tab-linked" data-tab="0e5593f5-c28b-42b1-8826-db01a018ef42">
+    <ul class="tab tab-linked" data-tab="03b6b1dd-2f34-4d2b-be92-2cd023141352">
         
             <li class="active">
                 <a href="">python </a>
@@ -645,19 +645,19 @@ Throughout this tutorial, the query information that we will be reading is the R
             </li>
         
         </ul>
-        <ul class="tab-content" id="0e5593f5-c28b-42b1-8826-db01a018ef42">
+        <ul class="tab-content" id="03b6b1dd-2f34-4d2b-be92-2cd023141352">
         
             <li class="active tab-content-container">
 <p>Therefore, we have slightly changed the notification handler to update a global resolution variable as it
 queries the resolution:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">characteristic</span><span class="p">:</span> <span class="n">BleakGATTCharacteristic</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
     <span class="n">response</span><span class="p">.</span><span class="nf">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">is_received</span><span class="p">:</span>
         <span class="n">response</span><span class="p">.</span><span class="nf">parse</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">QUERY_RSP_UUID</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">characteristic</span><span class="p">.</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">QUERY_RSP_UUID</span><span class="p">:</span>
             <span class="n">resolution</span> <span class="o">=</span> <span class="nc">Resolution</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">RESOLUTION_ID</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 
         <span class="c1"># Notify writer that the procedure is complete
@@ -773,7 +773,7 @@ parse these responses as was described in
 <p>First we send the query command:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="a00ae9cf-5415-4cda-96cc-e69428f5746a">
+    <ul class="tab tab-linked" data-tab="559de98e-163b-49de-885f-e567d3034057">
         
             <li class="active">
                 <a href="">python </a>
@@ -784,7 +784,7 @@ parse these responses as was described in
             </li>
         
         </ul>
-        <ul class="tab-content" id="a00ae9cf-5415-4cda-96cc-e69428f5746a">
+        <ul class="tab-content" id="559de98e-163b-49de-885f-e567d3034057">
         
             <li class="active tab-content-container">
 <p>The sample code can be found in in <code class="language-plaintext highlighter-rouge">ble_query_poll_resolution_value.py</code>.
@@ -814,7 +814,7 @@ Let’s first define the UUID’s to write to and receive from:</p>
 <p>When the response is received in / from the notification handler, we update the global resolution variable:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="ec73508b-541a-4fcd-8d99-e15b69a8417b">
+    <ul class="tab tab-linked" data-tab="a3fc7a89-8b05-4462-a138-e47d4c74a50d">
         
             <li class="active">
                 <a href="">python </a>
@@ -825,10 +825,10 @@ Let’s first define the UUID’s to write to and receive from:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="ec73508b-541a-4fcd-8d99-e15b69a8417b">
+        <ul class="tab-content" id="a3fc7a89-8b05-4462-a138-e47d4c74a50d">
         
             <li class="active tab-content-container">
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">characteristic</span><span class="p">:</span> <span class="n">BleakGATTCharacteristic</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
     <span class="n">response</span><span class="p">.</span><span class="nf">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="c1"># Notify the writer if we have received the entire response
@@ -836,7 +836,7 @@ Let’s first define the UUID’s to write to and receive from:</p>
         <span class="n">response</span><span class="p">.</span><span class="nf">parse</span><span class="p">()</span>
 
         <span class="c1"># If this is query response, it must contain a resolution value
-</span>        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">QUERY_RSP_UUID</span><span class="p">:</span>
+</span>        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">characteristic</span><span class="p">.</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">QUERY_RSP_UUID</span><span class="p">:</span>
             <span class="n">resolution</span> <span class="o">=</span> <span class="nc">Resolution</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">RESOLUTION_ID</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 </code></pre></div></div>
 
@@ -878,7 +878,7 @@ Camera resolution is RES_2_7K
 has changed:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="b0098c45-da97-4f63-85c0-1e816121e2a6">
+    <ul class="tab tab-linked" data-tab="c6e9bbc0-306f-4325-83f8-032f65f1d0e4">
         
             <li class="active">
                 <a href="">python </a>
@@ -889,7 +889,7 @@ has changed:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="b0098c45-da97-4f63-85c0-1e816121e2a6">
+        <ul class="tab-content" id="c6e9bbc0-306f-4325-83f8-032f65f1d0e4">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Changing the resolution to Resolution.RES_2_7K...
@@ -945,7 +945,7 @@ below. It is very similar to the previous example except for the following:</p>
 <p>The query command now includes 3 settings: Resolution, FPS, and FOV.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="1c5f8e1f-071d-41ea-86dd-b9119afe2f79">
+    <ul class="tab tab-linked" data-tab="377e3e01-ca4e-4f29-a475-630d1e044b71">
         
             <li class="active">
                 <a href="">python </a>
@@ -956,7 +956,7 @@ below. It is very similar to the previous example except for the following:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="1c5f8e1f-071d-41ea-86dd-b9119afe2f79">
+        <ul class="tab-content" id="377e3e01-ca4e-4f29-a475-630d1e044b71">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RESOLUTION_ID</span> <span class="o">=</span> <span class="mi">2</span>
@@ -981,7 +981,7 @@ below. It is very similar to the previous example except for the following:</p>
 <p>We are also parsing the response to get all 3 values:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="d2300297-b092-4ec4-b5cc-b18313e6606e">
+    <ul class="tab tab-linked" data-tab="563d7f80-92e5-4ab3-bbff-f1e0c4d90954">
         
             <li class="active">
                 <a href="">python </a>
@@ -992,16 +992,16 @@ below. It is very similar to the previous example except for the following:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="d2300297-b092-4ec4-b5cc-b18313e6606e">
+        <ul class="tab-content" id="563d7f80-92e5-4ab3-bbff-f1e0c4d90954">
         
             <li class="active tab-content-container">
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">characteristic</span><span class="p">:</span> <span class="n">BleakGATTCharacteristic</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
     <span class="n">response</span><span class="p">.</span><span class="nf">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">is_received</span><span class="p">:</span>
         <span class="n">response</span><span class="p">.</span><span class="nf">parse</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">QUERY_RSP_UUID</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">characteristic</span><span class="p">.</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">QUERY_RSP_UUID</span><span class="p">:</span>
             <span class="n">resolution</span> <span class="o">=</span> <span class="nc">Resolution</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">RESOLUTION_ID</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">fps</span> <span class="o">=</span> <span class="nc">FPS</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">FPS_ID</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">video_fov</span> <span class="o">=</span> <span class="nc">VideoFOV</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">FOV_ID</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
@@ -1024,7 +1024,7 @@ sometimes settings / statuses are bytes, words, strings, etc.</span>
 <p>They are then printed to the log which will look like the following:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="8eb70b21-e698-41be-9324-3b6681f5b702">
+    <ul class="tab tab-linked" data-tab="d22e1019-2d5e-4f27-97d5-5cb86e58e8a4">
         
             <li class="active">
                 <a href="">python </a>
@@ -1035,7 +1035,7 @@ sometimes settings / statuses are bytes, words, strings, etc.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="8eb70b21-e698-41be-9324-3b6681f5b702">
+        <ul class="tab-content" id="d22e1019-2d5e-4f27-97d5-5cb86e58e8a4">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Received response at handle=62: b'0b:12:00:02:01:07:03:01:01:79:01:00'
@@ -1085,10 +1085,10 @@ tutorial</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_04c9002b-2d7b-4505-8d70-cda95b66e9d9" class="quiz">
+<div id="quiz_37a67173-7ca0-4f14-b5e5-a3db73d58499" class="quiz">
     <div>
-        <div id="question_04c9002b-2d7b-4505-8d70-cda95b66e9d9" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
-        <div id="answers_04c9002b-2d7b-4505-8d70-cda95b66e9d9">
+        <div id="question_37a67173-7ca0-4f14-b5e5-a3db73d58499" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
+        <div id="answers_37a67173-7ca0-4f14-b5e5-a3db73d58499">
         
             <input type="radio" name="question" value="A"><label>A: Concatenate a ‘Get Setting Value’ command and a ‘Get Status’ command with the relevant ID’s</label>
             <br>
@@ -1101,10 +1101,10 @@ tutorial</p>
         
         </div>
     </div>
-    <button onclick="showResults('04c9002b-2d7b-4505-8d70-cda95b66e9d9', 'C')">Submit Answer</button>
-    <div id="results_04c9002b-2d7b-4505-8d70-cda95b66e9d9" style="display: none">
-        <span id="correct_04c9002b-2d7b-4505-8d70-cda95b66e9d9" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_04c9002b-2d7b-4505-8d70-cda95b66e9d9" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('37a67173-7ca0-4f14-b5e5-a3db73d58499', 'C')">Submit Answer</button>
+    <div id="results_37a67173-7ca0-4f14-b5e5-a3db73d58499" style="display: none">
+        <span id="correct_37a67173-7ca0-4f14-b5e5-a3db73d58499" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_37a67173-7ca0-4f14-b5e5-a3db73d58499" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         It is not possible to concatenate commands. This would result in an unknown sequence of bytes
         from the camera’s perspective. So it is not possible to get a setting value and a status value in one
         command. The Get Setting command (with resolution ID) and Get Status command(with encoding ID) must be
@@ -1191,7 +1191,7 @@ be sent whenever the query changes until the client unregisters for push notific
 <p>First, let’s register for updates when the resolution setting changes:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="02e47b3e-0bdf-4247-8d89-f6c87c645685">
+    <ul class="tab tab-linked" data-tab="45a0f979-15b6-421a-a2e0-7d8203ae8d30">
         
             <li class="active">
                 <a href="">python </a>
@@ -1202,7 +1202,7 @@ be sent whenever the query changes until the client unregisters for push notific
             </li>
         
         </ul>
-        <ul class="tab-content" id="02e47b3e-0bdf-4247-8d89-f6c87c645685">
+        <ul class="tab-content" id="45a0f979-15b6-421a-a2e0-7d8203ae8d30">
         
             <li class="active tab-content-container">
 <p>First, let’s define the UUID’s we will be using:</p>
@@ -1237,7 +1237,7 @@ example with the exception that the Query ID is now 0x52 (Register Updates for S
 the raw byte data as well as by inspecting the response’s <code class="language-plaintext highlighter-rouge">id</code> property.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="b53bbc02-ca14-4514-adaa-e119a099b62b">
+    <ul class="tab tab-linked" data-tab="afdb50a9-ef52-44a5-9c9a-186a69c2a298">
         
             <li class="active">
                 <a href="">python </a>
@@ -1248,11 +1248,11 @@ the raw byte data as well as by inspecting the response’s <code class="languag
             </li>
         
         </ul>
-        <ul class="tab-content" id="b53bbc02-ca14-4514-adaa-e119a099b62b">
+        <ul class="tab-content" id="afdb50a9-ef52-44a5-9c9a-186a69c2a298">
         
             <li class="active tab-content-container">
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
-    <span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Received response at </span><span class="si">{</span><span class="n">handle</span><span class="o">=</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">hexlify</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="sh">"</span><span class="si">:</span><span class="sh">"</span><span class="s">)</span><span class="si">!r}</span><span class="sh">'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">characteristic</span><span class="p">:</span> <span class="n">BleakGATTCharacteristic</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Received response at handle </span><span class="si">{</span><span class="n">characteristic</span><span class="p">.</span><span class="n">handle</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">data</span><span class="p">.</span><span class="nb">hex</span><span class="p">(</span><span class="sh">"</span><span class="si">:</span><span class="sh">"</span><span class="s">)</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
 
     <span class="n">response</span><span class="p">.</span><span class="nf">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
@@ -1261,7 +1261,7 @@ the raw byte data as well as by inspecting the response’s <code class="languag
         <span class="n">response</span><span class="p">.</span><span class="nf">parse</span><span class="p">()</span>
 
         <span class="c1"># If this is query response, it must contain a resolution value
-</span>        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">QUERY_RSP_UUID</span><span class="p">:</span>
+</span>        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">characteristic</span><span class="p">.</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">QUERY_RSP_UUID</span><span class="p">:</span>
             <span class="k">global</span> <span class="n">resolution</span>
             <span class="n">resolution</span> <span class="o">=</span> <span class="nc">Resolution</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">RESOLUTION_ID</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 </code></pre></div></div>
@@ -1305,7 +1305,7 @@ INFO:root:Resolution is currently Resolution.RES_2_7K
 the resolution changes. We verify this in the demo by then changing the resolution.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="d46cbcb7-c076-410e-87d0-0ba6b252c761">
+    <ul class="tab tab-linked" data-tab="7a732503-dcd3-41fb-baf4-098a5f6d763f">
         
             <li class="active">
                 <a href="">python </a>
@@ -1316,7 +1316,7 @@ the resolution changes. We verify this in the demo by then changing the resoluti
             </li>
         
         </ul>
-        <ul class="tab-content" id="d46cbcb7-c076-410e-87d0-0ba6b252c761">
+        <ul class="tab-content" id="7a732503-dcd3-41fb-baf4-098a5f6d763f">
         
             <li class="active tab-content-container">
 <p>This will show in the log as such:</p>
@@ -1368,11 +1368,11 @@ polled above</span>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_04ebe435-6b9b-42f3-b5b6-89ca0c1c37c0" class="quiz">
+<div id="quiz_82b9e435-355c-47f7-bef4-43009da98735" class="quiz">
     <div>
-        <div id="question_04ebe435-6b9b-42f3-b5b6-89ca0c1c37c0" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
+        <div id="question_82b9e435-355c-47f7-bef4-43009da98735" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
     receive push notifications for it.</div>
-        <div id="answers_04ebe435-6b9b-42f3-b5b6-89ca0c1c37c0">
+        <div id="answers_82b9e435-355c-47f7-bef4-43009da98735">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1382,20 +1382,20 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('04ebe435-6b9b-42f3-b5b6-89ca0c1c37c0', 'A')">Submit Answer</button>
-    <div id="results_04ebe435-6b9b-42f3-b5b6-89ca0c1c37c0" style="display: none">
-        <span id="correct_04ebe435-6b9b-42f3-b5b6-89ca0c1c37c0" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_04ebe435-6b9b-42f3-b5b6-89ca0c1c37c0" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('82b9e435-355c-47f7-bef4-43009da98735', 'A')">Submit Answer</button>
+    <div id="results_82b9e435-355c-47f7-bef4-43009da98735" style="display: none">
+        <span id="correct_82b9e435-355c-47f7-bef4-43009da98735" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_82b9e435-355c-47f7-bef4-43009da98735" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         While there is probably not a good reason to do so, there is nothing preventing polling
         in this manner.
     </div>
 </div>
 
-<div id="quiz_82a42760-83ae-4b9f-b9b0-884064c7ff51" class="quiz">
+<div id="quiz_8dc0c264-3ae5-45c9-ab62-dab99793d5c1" class="quiz">
     <div>
-        <div id="question_82a42760-83ae-4b9f-b9b0-884064c7ff51" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
+        <div id="question_8dc0c264-3ae5-45c9-ab62-dab99793d5c1" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
     about one setting ID.</div>
-        <div id="answers_82a42760-83ae-4b9f-b9b0-884064c7ff51">
+        <div id="answers_8dc0c264-3ae5-45c9-ab62-dab99793d5c1">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1405,10 +1405,10 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('82a42760-83ae-4b9f-b9b0-884064c7ff51', 'B')">Submit Answer</button>
-    <div id="results_82a42760-83ae-4b9f-b9b0-884064c7ff51" style="display: none">
-        <span id="correct_82a42760-83ae-4b9f-b9b0-884064c7ff51" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_82a42760-83ae-4b9f-b9b0-884064c7ff51" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('8dc0c264-3ae5-45c9-ab62-dab99793d5c1', 'B')">Submit Answer</button>
+    <div id="results_8dc0c264-3ae5-45c9-ab62-dab99793d5c1" style="display: none">
+        <span id="correct_8dc0c264-3ae5-45c9-ab62-dab99793d5c1" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_8dc0c264-3ae5-45c9-ab62-dab99793d5c1" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is possible for push notifications to contain multiple setting ID’s if both setting ID’s have
     push notifications registered and both settings change at the same time.
     </div>
@@ -1443,7 +1443,7 @@ proceed to the next tutorial.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-12-06T16:19:55-08:00">December 6, 2023</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-12-07T13:10:27-08:00">December 7, 2023</time></p>
 
 
       </footer>
