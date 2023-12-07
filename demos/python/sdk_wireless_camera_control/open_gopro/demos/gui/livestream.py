@@ -56,7 +56,7 @@ async def main(args: argparse.Namespace) -> None:
         console.print("[yellow]Starting livestream")
         assert (await gopro.ble_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
 
-        console.print("Livestream is now streaming and should be available for viewing.")
+        console.print("[yellow]Livestream is now streaming and should be available for viewing.")
         await ainput("Press enter to stop livestreaming...\n")
 
         await gopro.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
@@ -80,7 +80,7 @@ def parse_arguments() -> argparse.Namespace:
         default=proto.EnumWindowSize.WINDOW_SIZE_720,
     )
     parser.add_argument(
-        "--fov", help="Field of View.", choices=list(proto.EnumLens.values()), default=proto.EnumLens.LENS_WIDE
+        "--fov", help="Field of View.", choices=list(proto.EnumLens.values()), default=proto.EnumLens.LENS_LINEAR
     )
     return add_cli_args_and_parse(parser, wifi=False)
 
