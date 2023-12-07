@@ -6,7 +6,8 @@
 import asyncio
 import logging
 import platform
-import sys
+import tempfile
+from pathlib import Path
 from typing import Any, Callable, Optional, Pattern
 
 import bleak
@@ -254,37 +255,41 @@ class BleakWrapperController(BLEController[BleakDevice, bleak.BleakClient], Sing
             handle (bleak.BleakClient): Device to pair to
         """
         logger.debug("Attempting to pair...")
+
         if (OS := platform.system()) == "Linux":
-            logger.info("Pairing with bluetoothctl")
-            # Manually control bluetoothctl on Linux
-            bluetoothctl = pexpect.spawn("bluetoothctl")
-            if logger.level == logging.DEBUG:
-                bluetoothctl.logfile = sys.stdout.buffer
-            bluetoothctl.expect("Agent registered")
-            # Get the version
-            bluetoothctl.sendline("version")
-            bluetoothctl.expect(r"Version")
-            bluetoothctl.expect(r"\n")
-            version = Version(bluetoothctl.before.decode("utf-8").strip())
-            # First see if we are already paired
-            if version >= Version("5.66"):
-                bluetoothctl.sendline("devices Paired")
-                bluetoothctl.expect("devices Paired")
-            else:
-                bluetoothctl.sendline("paired-devices")
-                bluetoothctl.expect("paired-devices")
-            bluetoothctl.expect(r"#")
-            for device in bluetoothctl.before.decode("utf-8").splitlines():
-                if "Device" in device and device.split()[1] == handle.address:
-                    break  # The device is already paired
-            else:
-                # We're not paired so do it now
-                bluetoothctl.sendline(f"pair {handle.address}")
-                if (match := bluetoothctl.expect(["Accept pairing", "Pairing successful"])) == 0:
-                    bluetoothctl.sendline("yes")
-                    bluetoothctl.expect("Pairing successful")
-                elif match == 1:  # We received pairing successful so nothing else to do
-                    pass
+            temp_file = Path(tempfile.gettempdir()) / "pexpect.log"
+            with open(temp_file, "wb") as fp:
+                logger.info("Pairing with bluetoothctl")
+                # Manually control bluetoothctl on Linux
+                bluetoothctl = pexpect.spawn("bluetoothctl")
+                bluetoothctl.logfile = fp
+                bluetoothctl.expect("Agent registered")
+                # Get the version
+                bluetoothctl.sendline("version")
+                bluetoothctl.expect(r"Version")
+                bluetoothctl.expect(r"\n")
+                version = Version(bluetoothctl.before.decode("utf-8").strip())
+                # First see if we are already paired
+                if version >= Version("5.66"):
+                    bluetoothctl.sendline("devices Paired")
+                    bluetoothctl.expect("devices Paired")
+                else:
+                    bluetoothctl.sendline("paired-devices")
+                    bluetoothctl.expect("paired-devices")
+                bluetoothctl.expect(r"#")
+                for device in bluetoothctl.before.decode("utf-8").splitlines():
+                    if "Device" in device and device.split()[1] == handle.address:
+                        break  # The device is already paired
+                else:
+                    # We're not paired so do it now
+                    bluetoothctl.sendline(f"pair {handle.address}")
+                    if (match := bluetoothctl.expect(["Accept pairing", "Pairing successful"])) == 0:
+                        bluetoothctl.sendline("yes")
+                        bluetoothctl.expect("Pairing successful")
+                    elif match == 1:  # We received pairing successful so nothing else to do
+                        pass
+
+            logger.debug(temp_file.read_bytes().decode("utf-8"))
 
         elif OS == "Darwin":
             # No pairing on Mac
