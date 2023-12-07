@@ -5,11 +5,11 @@ import sys
 import asyncio
 import argparse
 from typing import Optional
-from binascii import hexlify
 
 from bleak import BleakClient
+from bleak.backends.characteristic import BleakGATTCharacteristic
 
-from tutorial_modules import GOPRO_BASE_UUID, connect_ble, logger
+from tutorial_modules import GOPRO_BASE_UUID, connect_ble, logger, noti_handler_T
 
 
 async def main(identifier: Optional[str]) -> None:
@@ -23,11 +23,11 @@ async def main(identifier: Optional[str]) -> None:
 
     client: BleakClient
 
-    def notification_handler(handle: int, data: bytes) -> None:
-        logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
+    def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
+        logger.info(f'Received response at handle {characteristic.handle}: {data.hex(":")}')
 
         # If this is the correct handle and the status is success, the command was a success
-        if client.services.characteristics[handle].uuid == response_uuid and data[2] == 0x00:
+        if client.services.characteristics[characteristic.handle].uuid == response_uuid and data[2] == 0x00:
             logger.info("Command sent successfully")
         # Anything else is unexpected. This shouldn't happen
         else:

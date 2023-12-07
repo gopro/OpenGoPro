@@ -3,7 +3,10 @@
 
 # pylint: disable=wrong-import-position
 
+from typing import Callable
 import logging
+
+from bleak.backends.characteristic import BleakGATTCharacteristic
 
 from rich.logging import RichHandler
 from rich import traceback
@@ -24,6 +27,8 @@ traceback.install()  # Enable exception tracebacks in rich logger
 
 GOPRO_BASE_UUID = "b5f9{}-aa8d-11e3-9046-0002a5d5c51b"
 GOPRO_BASE_URL = "http://10.5.5.9:8080"
+
+noti_handler_T = Callable[[BleakGATTCharacteristic, bytearray], None]
 
 from tutorial_modules.tutorial_1_connect_ble.ble_connect import connect_ble
 from tutorial_modules.tutorial_3_parse_ble_tlv_responses.ble_command_get_state import Response

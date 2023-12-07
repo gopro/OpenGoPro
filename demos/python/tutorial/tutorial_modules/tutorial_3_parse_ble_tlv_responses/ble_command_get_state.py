@@ -10,6 +10,7 @@ from binascii import hexlify
 from typing import Dict, Optional
 
 from bleak import BleakClient
+from bleak.backends.characteristic import BleakGATTCharacteristic
 
 from tutorial_modules import GOPRO_BASE_UUID, connect_ble, logger
 
@@ -94,8 +95,8 @@ async def main(identifier: Optional[str]) -> None:
     client: BleakClient
     response = Response()
 
-    def notification_handler(handle: int, data: bytes) -> None:
-        logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
+    def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
+        logger.info(f'Received response at handle {characteristic.handle}: {data.hex(":")}')
 
         response.accumulate(data)
 
@@ -103,7 +104,10 @@ async def main(identifier: Optional[str]) -> None:
             response.parse()
 
             # If this is the correct handle and the status is success, the command was a success
-            if client.services.characteristics[handle].uuid == response_uuid and response.status == 0:
+            if (
+                client.services.characteristics[characteristic.handle].uuid == response_uuid
+                and response.status == 0
+            ):
                 logger.info("Successfully received the response")
             # Anything else is unexpected. This shouldn't happen
             else:

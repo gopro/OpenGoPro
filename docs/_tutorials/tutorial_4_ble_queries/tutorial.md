@@ -149,13 +149,13 @@ Therefore, we have slightly changed the notification handler to update a global 
 queries the resolution:
 
 ```python
-def notification_handler(handle: int, data: bytes) -> None:
+def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
     response.accumulate(data)
 
     if response.is_received:
         response.parse()
 
-        if client.services.characteristics[handle].uuid == QUERY_RSP_UUID:
+        if client.services.characteristics[characteristic.handle].uuid == QUERY_RSP_UUID:
             resolution = Resolution(response.data[RESOLUTION_ID][0])
 
         # Notify writer that the procedure is complete
@@ -290,7 +290,7 @@ When the response is received in / from the notification handler, we update the 
 {% linkedTabs individual_parse %}
 {% tab individual_parse python %}
 ```python
-def notification_handler(handle: int, data: bytes) -> None:
+def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
     response.accumulate(data)
 
     # Notify the writer if we have received the entire response
@@ -298,7 +298,7 @@ def notification_handler(handle: int, data: bytes) -> None:
         response.parse()
 
         # If this is query response, it must contain a resolution value
-        if client.services.characteristics[handle].uuid == QUERY_RSP_UUID:
+        if client.services.characteristics[characteristic.handle].uuid == QUERY_RSP_UUID:
             resolution = Resolution(response.data[RESOLUTION_ID][0])
 ```
 
@@ -417,13 +417,13 @@ We are also parsing the response to get all 3 values:
 {% linkedTabs multiple_parse %}
 {% tab multiple_parse python %}
 ```python
-def notification_handler(handle: int, data: bytes) -> None:
+def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
     response.accumulate(data)
 
     if response.is_received:
         response.parse()
 
-        if client.services.characteristics[handle].uuid == QUERY_RSP_UUID:
+        if client.services.characteristics[characteristic.handle].uuid == QUERY_RSP_UUID:
             resolution = Resolution(response.data[RESOLUTION_ID][0])
             fps = FPS(response.data[FPS_ID][0])
             video_fov = VideoFOV(response.data[FOV_ID][0])
@@ -578,8 +578,8 @@ the raw byte data as well as by inspecting the response's `id` property.
 {% linkedTabs register_parse %}
 {% tab register_parse python %}
 ```python
-def notification_handler(handle: int, data: bytes) -> None:
-    logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
+def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
+    logger.info(f'Received response at handle {characteristic.handle}: {data.hex(":")}')
 
     response.accumulate(data)
 
@@ -588,7 +588,7 @@ def notification_handler(handle: int, data: bytes) -> None:
         response.parse()
 
         # If this is query response, it must contain a resolution value
-        if client.services.characteristics[handle].uuid == QUERY_RSP_UUID:
+        if client.services.characteristics[characteristic.handle].uuid == QUERY_RSP_UUID:
             global resolution
             resolution = Resolution(response.data[RESOLUTION_ID][0])
 ```

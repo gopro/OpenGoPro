@@ -167,11 +167,11 @@ This is a very simple handler; response parsing will be expanded upon in the
 {% linkedTabs response_parsing %}
 {% tab response_parsing python %}
 ```python
-def notification_handler(handle: int, data: bytes) -> None:
-    logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
+def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
+    logger.info(f'Received response at handle {characteristic.handle}: {data.hex(":")}')
 
     # If this is the correct handle and the status is success, the command was a success
-    if client.services.characteristics[handle].uuid == response_uuid and data[2] == 0x00:
+    if client.services.characteristics[characteristic.handle].uuid == response_uuid and data[2] == 0x00:
         logger.info("Command sent successfully")
     # Anything else is unexpected. This shouldn't happen
     else:
