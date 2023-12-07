@@ -3,7 +3,7 @@
   - [SSL Configuration](#ssl-configuration)
 - [Test Stream](#test-stream)
   - [RTMP](#rtmp)
-  - [RTMPS](#rtmps)
+  - [~~RTMPS~~](#rtmps)
 - [More Information](#more-information)
 
 # What is this?
@@ -11,7 +11,9 @@
 This is a test server that can used for isolated testing of the following streams:
 
 -   RTMP
--   RTMP
+-   ~~RTMPS~~
+
+> Note! RTMPS functionality is not currently working as indicated by strike-throughs below
 
 # Usage
 
@@ -25,13 +27,13 @@ where `IP_ADDRESS` is the IP Address of the device the server is running on.
 
 The server accepts communication on the following endpoints / ports:
 
-| Port | Endpoint  | Communication Type     | Example                             |
-| ---- | --------- | ---------------------- | ----------------------------------- |
-| 8080 |           | HLS stream viewer      | http://{IP_ADDRESS}:8080            |
-| 8080 | stats     | stream stats via HTTP  | http://{IP_ADDRESS}:8080/stats      |
-| 8443 | stats     | stream stats via HTTPS | https://{IP_ADDRESS}:8443/stats     |
-| 1935 | live/test | RTMP stream            | rtmp://{IP_ADDRESS}:1935/live/test  |
-| 1936 | live/test | RTMPS stream           | rtmps://{IP_ADDRESS}:1936/live/test |
+| Port     | Endpoint      | Communication Type     | Example                                 |
+| -------- | ------------- | ---------------------- | --------------------------------------- |
+| 8080     |               | HLS stream viewer      | http://{IP_ADDRESS}:8080                |
+| 8080     | stats         | stream stats via HTTP  | http://{IP_ADDRESS}:8080/stats          |
+| 8443     | stats         | stream stats via HTTPS | https://{IP_ADDRESS}:8443/stats         |
+| 1935     | live/test     | RTMP stream            | rtmp://{IP_ADDRESS}:1935/live/test      |
+| ~~1936~~ | ~~live/test~~ | ~~RTMPS stream~~       | ~~rtmps://{IP_ADDRESS}:1936/live/test~~ |
 
 The general usage is:
 
@@ -65,15 +67,16 @@ docker run --rm jrottenberg/ffmpeg:4.1-alpine -r 30 -f lavfi -i testsrc -vf scal
 
 2. View at: http://localhost:8080
 
-## RTMPS
+## ~~RTMPS~~
 
-1. Test via:
+~~1. Test via:~~
+
 
 ```
 docker run --rm jrottenberg/ffmpeg:4.1-alpine -r 30 -f lavfi -i testsrc -vf scale=1280:960 -vcodec libx264 -profile:v baseline -pix_fmt yuv420p -f flv rtmps://{IP_ADDRESS}:1936/live/test
 ```
 
-2. View at: http://localhost:8080
+~~2. View at: http://localhost:8080~~
 
 # More Information
 

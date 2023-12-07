@@ -81,8 +81,8 @@ class GoProEnumMeta(EnumMeta):
         return iter([x[1] for x in cls._member_map_.items() if x[0] not in GoProEnumMeta._iter_skip_names])  # type: ignore
 
 
-class GoProEnum(IntEnum, metaclass=GoProEnumMeta):
-    """GoPro specific enum to be used for all settings, statuses, and parameters
+class GoProIntEnum(IntEnum, metaclass=GoProEnumMeta):
+    """GoPro specific integer enum to be used for all settings, statuses, and parameters
 
     The names NOT_APPLICABLE and DESCRIPTOR are special as they will not be returned as part of the enum iterator
     """
@@ -105,7 +105,28 @@ class GoProEnum(IntEnum, metaclass=GoProEnumMeta):
         return super(IntEnum, self).__str__()
 
 
-def enum_factory(proto_enum: ProtobufDescriptor) -> type[GoProEnum]:
+class GoProEnum(Enum, metaclass=GoProEnumMeta):
+    """GoPro specific enum to be used for all settings, statuses, and parameters
+
+    The names NOT_APPLICABLE and DESCRIPTOR are special as they will not be returned as part of the enum iterator
+    """
+
+    def __eq__(self, other: object) -> bool:
+        if type(self)._is_proto:
+            if isinstance(other, int):
+                return self.value == other
+            if isinstance(other, str):
+                return self.name == other
+            if isinstance(other, Enum):
+                return self.value == other.value
+            raise TypeError(f"Unexpected case: proto enum can only be str or int, not {type(other)}")
+        return super().__eq__(other)
+
+    def __hash__(self) -> Any:
+        return hash(self.name + str(self.value))
+
+
+def enum_factory(proto_enum: ProtobufDescriptor) -> type[GoProIntEnum]:
     """Dynamically build a GoProEnum from a protobuf enum
 
     Args:
@@ -119,7 +140,7 @@ def enum_factory(proto_enum: ProtobufDescriptor) -> type[GoProEnum]:
     # This has somehow changed between protobuf versions
     if isinstance(proto_enum.values_by_number, dict):
         values.reverse()
-    return GoProEnum(  # type: ignore # pylint: disable=too-many-function-args
+    return GoProIntEnum(  # type: ignore # pylint: disable=too-many-function-args
         proto_enum.name,  # type: ignore
         {
             **dict(zip(keys, values)),

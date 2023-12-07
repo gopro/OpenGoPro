@@ -17,7 +17,7 @@ from pydantic import BaseModel
 
 from open_gopro import types
 from open_gopro.constants import SettingId, StatusId
-from open_gopro.enum import GoProEnum, enum_factory
+from open_gopro.enum import GoProIntEnum, enum_factory
 from open_gopro.parser_interface import (
     BytesBuilder,
     BytesParser,
@@ -32,6 +32,7 @@ logger = logging.getLogger(__name__)
 
 ProtobufPrinter = google.protobuf.json_format._Printer  # type: ignore # noqa
 original_field_to_json = ProtobufPrinter._FieldToJsonObject
+
 
 # TODO move into below class
 def construct_adapter_factory(target: Construct) -> BytesParserBuilder:
@@ -120,7 +121,7 @@ class JsonParsers:
             """
             parsed: dict = {}
             # Parse status and settings values into nice human readable things
-            for (name, id_map) in [("status", StatusId), ("settings", SettingId)]:
+            for name, id_map in [("status", StatusId), ("settings", SettingId)]:
                 for k, v in data[name].items():
                     identifier = cast(types.ResponseType, id_map(int(k)))
                     try:
@@ -207,18 +208,17 @@ class ByteParserBuilders:
             target (type[GoProEnum]): enum type to parse into
         """
 
-        def __init__(self, target: type[GoProEnum]) -> None:
-
+        def __init__(self, target: type[GoProIntEnum]) -> None:
             self._container = target
 
-        def parse(self, data: bytes) -> GoProEnum:
+        def parse(self, data: bytes) -> GoProIntEnum:
             """Parse bytes into GoPro enum
 
             Args:
                 data (bytes): bytes to parse
 
             Returns:
-                GoProEnum: parsed enum
+                GoProIntEnum: parsed enum
             """
             return self._container(data[0])
 
@@ -299,7 +299,7 @@ class ByteParserBuilders:
                 bytes: bytestream built from datetime
             """
             byte_data = [*Int16ub.build(obj.year), obj.month, obj.day, obj.hour, obj.minute, obj.second]
-            if tzone and is_dst:
+            if tzone is not None and is_dst is not None:
                 byte_data.extend([*Int16sb.build(tzone), *Flag.build(is_dst)])
             return bytes(byte_data)
 

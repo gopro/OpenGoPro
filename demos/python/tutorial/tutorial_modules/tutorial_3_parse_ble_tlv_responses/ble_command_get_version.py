@@ -4,10 +4,10 @@
 import sys
 import asyncio
 import argparse
-from binascii import hexlify
 from typing import Dict, Optional
 
 from bleak import BleakClient
+from bleak.backends.characteristic import BleakGATTCharacteristic
 
 from tutorial_modules import GOPRO_BASE_UUID, connect_ble, logger
 
@@ -23,11 +23,11 @@ async def main(identifier: Optional[str]) -> None:
 
     client: BleakClient
 
-    def notification_handler(handle: int, data: bytes) -> None:
-        logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
+    def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
+        logger.info(f'Received response at handle {characteristic.handle}: {data.hex(":")}')
 
         # If this is the correct handle and the status is success, the command was a success
-        if client.services.characteristics[handle].uuid == response_uuid:
+        if client.services.characteristics[characteristic.handle].uuid == response_uuid:
             # First byte is the length for this command.
             length = data[0]
             # Second byte is the ID

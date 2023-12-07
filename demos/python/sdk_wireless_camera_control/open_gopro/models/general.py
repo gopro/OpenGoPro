@@ -6,9 +6,12 @@
 from __future__ import annotations
 
 import datetime
+from base64 import b64encode
+from dataclasses import dataclass
+from pathlib import Path
 from typing import Optional
 
-from pydantic import Field
+from pydantic import ConfigDict, Field
 
 from open_gopro import constants
 from open_gopro.models.bases import CustomBaseModel
@@ -17,6 +20,7 @@ from open_gopro.models.bases import CustomBaseModel
 class CameraInfo(CustomBaseModel):
     """General camera info"""
 
+    model_config = ConfigDict(protected_namespaces=())
     model_number: int  #: Camera model number
     model_name: str  #: Camera model name as string
     firmware_version: str  #: Complete firmware version
@@ -56,3 +60,22 @@ class HttpInvalidSettingResponse(CustomBaseModel):
     setting_id: constants.SettingId
     option_id: Optional[int] = Field(default=None)
     supported_options: Optional[list[SupportedOption]] = Field(default=None)
+
+
+# TODO add to / from json methods
+@dataclass
+class CohnInfo:
+    """Data model to store Camera on the Home Network connection info"""
+
+    ip_address: str
+    username: str
+    password: str
+    certificate: str
+    cert_path: Path = Path("cohn.crt")
+
+    def __post_init__(self) -> None:
+        token = b64encode(f"{self.username}:{self.password}".encode("utf-8")).decode("ascii")
+        self.auth_token = f"Basic {token}"
+        # self.token = f"Basic {token}"
+        with open(self.cert_path, "w") as fp:
+            fp.write(self.certificate)

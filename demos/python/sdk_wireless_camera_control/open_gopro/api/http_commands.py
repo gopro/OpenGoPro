@@ -159,7 +159,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         return {"id": preset}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/presets/set_group", arguments=["id"])
-    async def load_preset_group(self, *, group: proto.EnumPresetGroup) -> GoProResp[None]:
+    async def load_preset_group(self, *, group: proto.EnumPresetGroup.ValueType) -> GoProResp[None]:
         """Set the active preset group.
 
         The most recently used Preset in this group will be set.
@@ -330,7 +330,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
 
     @http_get_json_command(
         endpoint="gopro/webcam/start",
-        arguments=["res", "fov"],
+        arguments=["res", "fov", "port", "protocol"],
         parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
     )
     async def webcam_start(
@@ -338,6 +338,8 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         *,
         resolution: Params.WebcamResolution | None = None,
         fov: Params.WebcamFOV | None = None,
+        port: int | None = None,
+        protocol: Params.WebcamProtocol | None = None,
     ) -> GoProResp[WebcamResponse]:
         """Start the webcam.
 
@@ -346,11 +348,14 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
                 camera default will be used.
             fov (Optional[open_gopro.api.params.WebcamFOV]): field of view to use. If not set, camera
                 default will be used.
+            port (Optional[int]): port to use for streaming. If not set, camera default of 8554 will be used.
+            protocol (Optional[open_gopro.api.params.WebcamProtocol]): streaming protocol to use. If not set, camera
+                default of TS will be used.
 
         Returns:
             GoProResp: command status
         """
-        return {"res": resolution, "fov": fov}  # type: ignore
+        return {"res": resolution, "fov": fov, "port": port, "protocol": protocol}  # type: ignore
 
     @http_get_json_command(
         endpoint="gopro/webcam/stop",

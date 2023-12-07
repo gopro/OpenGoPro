@@ -3892,8 +3892,14 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="22"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
-      <td>HERO12 Black</td>
+      <td rowspan="24"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="3">HERO12 Black</td>
+      <td>v01.30.00</td>
+    </tr>
+    <tr>
+      <td>v01.20.00</td>
+    </tr>
+    <tr>
       <td>v01.10.00</td>
     </tr>
     <tr>
@@ -4526,30 +4532,6 @@ Below is a table of supported status IDs.<br />
       <td>35</td>
       <td>Remaining video time</td>
       <td>How many minutes of video can be captured with current settings before sdcard is full</td>
-      <td>integer</td>
-      <td>*</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
-      <td>36</td>
-      <td>Num group photos</td>
-      <td>How many group photos can be taken with current settings before sdcard is full</td>
-      <td>integer</td>
-      <td>*</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
-      <td>37</td>
-      <td>Num group videos</td>
-      <td>Total number of group videos on sdcard</td>
       <td>integer</td>
       <td>*</td>
       <td><span style="color:green">✔</span></td>
@@ -5326,14 +5308,14 @@ For additional details, see <a href="#services-and-characteristics">Services and
     <tr>
       <td>Command</td>
       <td>0xF1</td>
-      <td>0x69, 0x6B, 0x79, 0xE9, 0xEB, 0xF9</td>
+      <td>0x65, 0x66, 0x67, 0x69, 0x6B, 0x79, 0xE5, 0xE6, 0xE7, 0xE9, 0xEB, 0xF9</td>
       <td>GP-0072</td>
       <td>GP-0073</td>
     </tr>
     <tr>
       <td>Query</td>
       <td>0xF5</td>
-      <td>0x72, 0x74, 0xF2, 0xF3, 0xF4, 0xF5</td>
+      <td>0x6E, 0x6F, 0x72, 0x74, 0xEE, 0xEF, 0xF2, 0xF3, 0xF4, 0xF5</td>
       <td>GP-0076</td>
       <td>GP-0077</td>
     </tr>
@@ -5458,7 +5440,43 @@ For consistency, best practice is to always serialize the protobuf objects regar
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
-      <td rowspan="3">0xF1</td>
+      <td rowspan="6">0xF1</td>
+      <td>0x65</td>
+      <td>0xE5</td>
+      <td>Request cohn setting</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">RequestSetCOHNSetting</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseGeneric</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x66</td>
+      <td>0xE6</td>
+      <td>Request clear cohn cert</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">RequestClearCOHNCert</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseGeneric</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>0x67</td>
+      <td>0xE7</td>
+      <td>Request create cohn cert</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">RequestCreateCOHNCert</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">ResponseGeneric</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>0x69</td>
       <td>0xE9</td>
       <td>Request set camera control status</td>
@@ -5495,7 +5513,43 @@ For consistency, best practice is to always serialize the protobuf objects regar
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
-      <td rowspan="4">0xF5</td>
+      <td rowspan="7">0xF5</td>
+      <td>0x6E</td>
+      <td>0xEE</td>
+      <td>Request get cohn cert</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">RequestCOHNCert</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">ResponseCOHNCert</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>0x6F</td>
+      <td>0xEF</td>
+      <td>Request cohn status</td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">RequestGetCOHNStatus</a></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">NotifyCOHNStatus</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td></td>
+      <td>0xEF</td>
+      <td>Async status update</td>
+      <td></td>
+      <td><a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">NotifyCOHNStatus</a></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
       <td>0x72</td>
       <td>0xF2</td>
       <td>Request get preset status</td>
@@ -6126,3 +6180,180 @@ Command and enum details are available in <a href="#protobuf-commands">Protobuf 
     </tr>
   </tbody>
 </table>
+
+
+## Camera On the Home Network (COHN)
+<p>
+Some cameras support Camera On the Home Network (COHN).
+This capability allows the client to perform command and control with the camera indirectly through an access point such as a router at home.
+For security purposes, all communications are performed over HTTPS.
+</p>
+
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Camera</td>
+      <td>Supported</td>
+    </tr>
+    <tr>
+      <td>HERO12 Black</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr>
+      <td>HERO11 Black Mini</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>HERO11 Black</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>HERO10 Black</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>HERO9 Black</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+In order to use the COHN capability, the camera must first be provisioned for COHN.
+At a high level, the provisioning process is as follows:
+<ol>
+<li>Create the COHN certificate</li>
+<li>Get the COHN certificate</li>
+<li>Get Basic auth credentials</li>
+<li>Connect the camera to an access point</li>
+</ol>
+</p>
+
+### HTTPS and SSL/TLS Certificates
+<p>
+Secure communication with the camera over HTTPS requires two things: A trusted <a href="https://www.digicert.com/faq/public-trust-and-certificates/what-is-ssl">SSL/TLS</a> certificate and Basic auth username/password used in the HTTPS header.
+</p>
+
+#### SSL/TLS Certificate
+<p>
+A provisioned camera has two certificates:
+<ul>
+<li>A <b>Root CA cert</b> provided to the client, which has a 1 year lifespan</li>
+<li>A <b>Camera cert</b>, which contains the camera's current IP address on the local network and is signed by the Root CA cert</li>
+</ul>
+ </p>
+
+<p>
+This use of a <a href="https://knowledge.digicert.com/solution/SO16297.html">certificate chain</a> allows the camera's IP address to change 
+(e.g. when DHCP lease expires or when access point is reset/replaced) without the client needing to download and install/trust a new certificate.
+</p>
+
+### Provision COHN
+<p>
+In order to use COHN for the first time or deauthenticate existing users,
+the client should clear and then create the COHN cert, get COHN status for basic authorization (username/password) and
+then <a href="#interface-with-access-points">connect the camera to an access point</a>.
+</p>
+
+```plantuml!
+
+
+title (Re-)Provision COHN
+
+actor client
+participant "GP-0072\n(Command)" as command
+participant "GP-0073\n(Command Response)" as command_response
+participant "GP-0076\n(Query)" as query
+participant "GP-0077\n(Query Response)" as query_response
+
+note over client, command
+Connect camera to access point
+end note
+
+'  Get COHN status to check for provision state
+client  -> query          : RequestGetCOHNStatus
+client <-- query_response : NotifyCOHNStatus
+note right
+Contains:
+1. COHN status
+end note
+
+' if (already provisioned) -> clear existing certs
+' else -> pass
+alt NotifyCOHNStatus.status == EnumCOHNState.COHN_PROVISIONED
+    client -> command           : RequestClearCOHNCert
+    note right
+    1. Camera disconnects from access point
+    2. Root CA and Camera certs are deleted
+    end note
+    client <-- command_response : ResponseGeneric
+else NotifyCOHNStatus.status == EnumCOHNState.COHN_UNPROVISIONED
+    client --> client : no-op
+end
+
+' Create COHN Cert
+client -> command : RequestCreateCOHNCert
+note right
+Camera creates Root CA cert
+
+If connected to access point, camera will:
+1. Create Camera cert
+2. Sign Camera cert with Root CA cert
+end note
+client <-- command_response : ResponseGeneric
+
+' Get COHN Cert
+client  -> query          : RequestCOHNCert
+client <-- query_response : ResponseCOHNCert
+note right
+Contains:
+1. Generic result
+2. Root CA cert
+end note
+client  -> client : Store cert for future use
+
+' Get COHN status for Basic auth username/password
+client  -> query          : RequestGetCOHNStatus
+client <-- query_response : NotifyCOHNStatus
+note right
+Contains:
+1. Camera IP address on local network
+2. Basic auth username/password for HTTPS
+end note
+
+
+
+
+```
+
+### Verifying COHN Cert is Valid
+<p>
+The camera acts as the Root Certificate Authority in creating the COHN certificate (Root CA cert).
+Clients can verify that the certificate is valid using utilities such as <a href="https://www.openssl.org">openssl</a>:
+</p>
+
+<p>
+Example:
+</p>
+```
+$ openssl verify -CAfile '/path/to/GoProRootCA.crt' '/path/to/GoProRootCA.crt'
+GoProRootCA.crt: OK
+```
+
+### View COHN Cert Details
+<p>
+Most operating systems have utilities to view details about a SSL/TLS certificate:
+<ul>
+<li>MacOS: Right-mouse-click >> Quick Look</li>
+<li>Windows: Right-mouse-click >> Properties</li>
+<li>Ubuntu: Right-mouse-click >> Open with View File</li>
+<li>Commandline: <code>openssl x509 -in /path/to/GoProRootCA.crt -noout -text</code></li>
+</ul> 
+</p>
+
+### Communicate via COHN
+<p>
+Once the camera is provisioned, the client can communicate with the camera via HTTPS.
+The camera supports nearly all functionality over HTTPS that it does over HTTP.
+For more details about HTTP/HTTPS, see the <a href="https://gopro.github.io/OpenGoPro/http_2_0">Open GoPro HTTP spec</a>.
+</p>

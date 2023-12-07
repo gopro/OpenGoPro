@@ -624,7 +624,7 @@ received the entire response, at which point we notify the writer that the respo
 {% linkedTabs parse_get_all_settings_values %}
 {% tab parse_get_all_settings_values python %}
 ```python
- def notification_handler(handle: int, data: bytes) -> None:
+ def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
         response.accumulate(data)
 
         if response.is_received:

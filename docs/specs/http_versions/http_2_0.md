@@ -303,6 +303,39 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.70.00</td>
     </tr>
     <tr style="background-color: rgb(245,249,255);">
+      <td>COHN: Get cert</td>
+      <td>Get cohn cert</td>
+      <td>GET</td>
+      <td>/GoProRootCA.crt</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>COHN: Get status</td>
+      <td>Get cohn status</td>
+      <td>POST</td>
+      <td>/gopro/cohn/status</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(222,235,255);">
+      <td>COHN: Get status</td>
+      <td>Get cohn status</td>
+      <td>POST</td>
+      <td>/gopro/cohn/status</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>Camera: Get State</td>
       <td>Get camera state (status + settings)</td>
       <td>GET</td>
@@ -336,6 +369,17 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.70.00</td>
     </tr>
     <tr style="background-color: rgb(222,235,255);">
+      <td>Get Hardware Info</td>
+      <td>Get camera hardware info</td>
+      <td>GET</td>
+      <td>/gopro/camera/info</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>Keep-alive</td>
       <td>Send keep-alive</td>
       <td>GET</td>
@@ -346,7 +390,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Media: GPMF</td>
       <td>Get GPMF data (JPG)</td>
       <td>GET</td>
@@ -357,7 +401,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Media: GPMF</td>
       <td>Get GPMF data (MP4)</td>
       <td>GET</td>
@@ -368,7 +412,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Media: HiLight (Add)</td>
       <td>Add hilight to 100GOPRO/xxx.JPG</td>
       <td>GET</td>
@@ -379,7 +423,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.30.00</td>
       <td>\&gt;= v01.70.00</td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Media: HiLight (Add)</td>
       <td>Add hilight to 100GOPRO/xxx.MP4 at offset 2500 ms</td>
       <td>GET</td>
@@ -390,7 +434,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.30.00</td>
       <td>\&gt;= v01.70.00</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Media: HiLight (Remove)</td>
       <td>Remove hilight from 100GOPRO/xxx.JPG</td>
       <td>GET</td>
@@ -401,7 +445,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.30.00</td>
       <td>\&gt;= v01.70.00</td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Media: HiLight (Remove)</td>
       <td>Remove hilight from 100GOPRO/xxx.MP4 at offset 2500ms</td>
       <td>GET</td>
@@ -412,7 +456,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.30.00</td>
       <td>\&gt;= v01.70.00</td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Media: HiLight Moment</td>
       <td>Hilight moment during encoding</td>
       <td>GET</td>
@@ -423,7 +467,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.30.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Media: Info</td>
       <td>Get media info (JPG)</td>
       <td>GET</td>
@@ -434,7 +478,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Media: Info</td>
       <td>Get media info (MP4)</td>
       <td>GET</td>
@@ -445,7 +489,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Media: List</td>
       <td>Get media list</td>
       <td>GET</td>
@@ -456,7 +500,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Media: Screennail</td>
       <td>Get screennail for "100GOPRO/xxx.JPG"</td>
       <td>GET</td>
@@ -467,7 +511,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Media: Screennail</td>
       <td>Get screennail for "100GOPRO/xxx.MP4"</td>
       <td>GET</td>
@@ -478,7 +522,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Media: Telemetry</td>
       <td>Get telemetry track data (JPG)</td>
       <td>GET</td>
@@ -489,7 +533,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Media: Telemetry</td>
       <td>Get telemetry track data (MP4)</td>
       <td>GET</td>
@@ -500,7 +544,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Media: Thumbnail</td>
       <td>Get thumbnail for "100GOPRO/xxx.JPG"</td>
       <td>GET</td>
@@ -511,7 +555,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Media: Thumbnail</td>
       <td>Get thumbnail for "100GOPRO/xxx.MP4"</td>
       <td>GET</td>
@@ -522,7 +566,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Media: Turbo Transfer</td>
       <td>Turbo transfer: off</td>
       <td>GET</td>
@@ -533,7 +577,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Media: Turbo Transfer</td>
       <td>Turbo transfer: on</td>
       <td>GET</td>
@@ -544,7 +588,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>OTA Update</td>
       <td>Soft update: upload 12345 bytes starting at offset 67890</td>
       <td>POST</td>
@@ -555,7 +599,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>OTA Update</td>
       <td>Soft update: mark upload complete</td>
       <td>POST</td>
@@ -566,7 +610,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Open GoPro</td>
       <td>Get version</td>
       <td>GET</td>
@@ -577,7 +621,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Get Status</td>
       <td>Get preset status</td>
       <td>GET</td>
@@ -588,7 +632,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Presets: Load</td>
       <td>Example <a href="#presets">preset id</a>: 0x1234ABCD</td>
       <td>GET</td>
@@ -599,7 +643,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load Group</td>
       <td>Video</td>
       <td>GET</td>
@@ -610,7 +654,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load Group</td>
       <td>Photo</td>
       <td>GET</td>
@@ -621,7 +665,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Presets: Load Group</td>
       <td>Timelapse</td>
       <td>GET</td>
@@ -632,7 +676,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Set Camera Control Status</td>
       <td>Set camera control status to idle</td>
       <td>GET</td>
@@ -643,7 +687,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.20.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Set Camera Control Status</td>
       <td>Set camera control status to external_control</td>
       <td>GET</td>
@@ -654,7 +698,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.20.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Set Date/Time</td>
       <td>Set date/time to 2023-01-31 03:04:05</td>
       <td>GET</td>
@@ -665,7 +709,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.30.00</td>
       <td>\&gt;= v01.70.00</td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Set Local Date/Time</td>
       <td>Set local date/time to: 2023-01-31 03:04:05 (utc-02:00) (dst: on)</td>
       <td>GET</td>
@@ -676,7 +720,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Set shutter</td>
       <td>Shutter: on</td>
       <td>GET</td>
@@ -687,7 +731,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Set shutter</td>
       <td>Shutter: off</td>
       <td>GET</td>
@@ -698,7 +742,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Simple OTA Update</td>
       <td>Simple ota update with file: update.zip</td>
       <td>POST</td>
@@ -709,7 +753,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Soft Update</td>
       <td>Soft update: show canceled/failed ui on the camera</td>
       <td>GET</td>
@@ -720,7 +764,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Soft Update</td>
       <td>Soft update: delete cached update files</td>
       <td>GET</td>
@@ -731,7 +775,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Soft Update</td>
       <td>Soft update: get current update state</td>
       <td>GET</td>
@@ -742,7 +786,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Soft Update</td>
       <td>Soft update: display update ui on camera</td>
       <td>GET</td>
@@ -753,7 +797,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Soft Update</td>
       <td>Soft update: initiate firmware update</td>
       <td>GET</td>
@@ -764,7 +808,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Stream: Start</td>
       <td>Start preview stream</td>
       <td>GET</td>
@@ -775,7 +819,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Stream: Stop</td>
       <td>Stop preview stream</td>
       <td>GET</td>
@@ -786,7 +830,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Exit</td>
       <td>Exit webcam mode</td>
       <td>GET</td>
@@ -797,7 +841,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Preview</td>
       <td>Start preview stream</td>
       <td>GET</td>
@@ -808,7 +852,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Start</td>
       <td>Start webcam</td>
       <td>GET</td>
@@ -819,9 +863,9 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.40.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Start</td>
-      <td>Start webcam</td>
+      <td>Start webcam (port: 12345)</td>
       <td>GET</td>
       <td>/gopro/webcam/start?port=12345</td>
       <td><span style="color:green">✔</span></td>
@@ -830,7 +874,29 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:red">❌</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Webcam: Start</td>
+      <td>Start webcam (port: 12345, protocol: rtsp)</td>
+      <td>GET</td>
+      <td>/gopro/webcam/start?port=12345&protocol=RTSP</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
+      <td>Webcam: Start</td>
+      <td>Start webcam (port: 12345, protocol: ts)</td>
+      <td>GET</td>
+      <td>/gopro/webcam/start?port=12345&protocol=TS</td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:green">✔</span></td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Start</td>
       <td>Start webcam (res: resolution_1080, fov: wide)</td>
       <td>GET</td>
@@ -841,7 +907,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Status</td>
       <td>Get webcam status</td>
       <td>GET</td>
@@ -852,7 +918,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Webcam: Stop</td>
       <td>Stop webcam</td>
       <td>GET</td>
@@ -863,7 +929,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(245,249,255);">
+    <tr style="background-color: rgb(222,235,255);">
       <td>Webcam: Version</td>
       <td>Get webcam api version</td>
       <td>GET</td>
@@ -874,7 +940,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td><span style="color:green">✔</span></td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Wired USB Control</td>
       <td>Disable wired usb control</td>
       <td>GET</td>
@@ -885,7 +951,7 @@ Below is a table of commands that can be sent to the camera and how to send them
       <td>\&gt;= v01.30.00</td>
       <td><span style="color:red">❌</span></td>
     </tr>
-    <tr style="background-color: rgb(222,235,255);">
+    <tr style="background-color: rgb(245,249,255);">
       <td>Wired USB Control</td>
       <td>Enable wired usb control</td>
       <td>GET</td>
@@ -3447,8 +3513,14 @@ If the user tries to set Video FPS to 240, it will fail because 4K/240fps is not
       <td>Release</td>
     </tr>
     <tr>
-      <td rowspan="22"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
-      <td>HERO12 Black</td>
+      <td rowspan="24"><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">capabilities.xlsx</a><br /><a href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">capabilities.json</a></td>
+      <td rowspan="3">HERO12 Black</td>
+      <td>v01.30.00</td>
+    </tr>
+    <tr>
+      <td>v01.20.00</td>
+    </tr>
+    <tr>
       <td>v01.10.00</td>
     </tr>
     <tr>
@@ -4658,30 +4730,6 @@ Below is a table of supported status IDs.<br />
       <td><span style="color:green">✔</span></td>
     </tr>
     <tr>
-      <td>36</td>
-      <td>Num group photos</td>
-      <td>How many group photos can be taken with current settings before sdcard is full</td>
-      <td>integer</td>
-      <td>*</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:red">❌</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
-      <td>37</td>
-      <td>Num group videos</td>
-      <td>Total number of group videos on sdcard</td>
-      <td>integer</td>
-      <td>*</td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-      <td><span style="color:green">✔</span></td>
-    </tr>
-    <tr>
       <td>38</td>
       <td>Num total photos</td>
       <td>Total number of photos on sdcard</td>
@@ -5800,14 +5848,33 @@ end
 ## Webcam
 
 <p>
-The webcam feature enables developers who are interested in writing custom drivers to make the camera broadcast its
-video preview with a limited set of resolution and field of view options.
+The webcam feature enables developers who are interested in writing custom drivers to broadcast the camera's video preview with a limited set of resolution, field of view, port, and protocol options.
 </p>
 
 <p>
-While active, the webcam feature runs a UDP client that sends raw Transport Stream data to the connected client on port 8554.
-To test basic functionality, connect the camera to your system, start the webcam, and use an application such as VLC to
-start a network stream on udp://@0.0.0.0:8554.
+While active, the webcam feature sends raw data to the connected client using a supported protocol.
+To enable multi-cam support, some cameras support running on a user-specified port.
+Protocol and port details are provided in a table below.
+</p>
+
+<p>
+To test basic functionality, start the webcam, and use an application such as VLC to open a network stream:
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Protocol</td>
+      <td>VLC Network URL</td>
+    </tr>
+    <tr>
+      <td>TS</td>
+      <td>udp://@:{PORT}</td>
+    </tr>
+    <tr>
+      <td>RTSP</td>
+      <td>rtsp://{CAMERA_IP}:554/live</td>
+    </tr>
+  </tbody>
+</table>
 </p>
 
 <p>
@@ -5846,7 +5913,7 @@ LPP          --> READY: Stop\nExit
 
 ### Webcam Commands
 <p>
-Note: For USB connections, prior to issuing webcam commands, Wired USB Control must be disabled.
+Note: For USB connections, prior to issuing webcam commands, Wired USB Control should be disabled.
 For details about how to send this and webcam commands, see <a href="#commands-quick-reference">Commands Quick Reference</a>.
 </p>
 <table border="1">
@@ -5864,7 +5931,7 @@ For details about how to send this and webcam commands, see <a href="#commands-q
     <tr>
       <td>Webcam: Start (with args)</td>
       <td>USB, WIFI*</td>
-      <td>Enters webcam mode, uses specified resolution and/or fov, starts streaming to the IP address of caller</td>
+      <td>Enters webcam mode, uses specified res/fov/protocol/port, starts streaming to the IP address of caller</td>
     </tr>
     <tr>
       <td>Webcam: Preview</td>
@@ -5979,11 +6046,29 @@ There is a <a href="https://gopro.github.io/OpenGoPro/faq#known-issues">known is
 The best workaround for this is to call <b>Webcam: Start</b> followed by the <b>Webcam: Stop</b> after connecting USB in order to attain the true IDLE state.
 </p>
 
-<p>
-Note: If resolution is not set, 1080p will be used by default.
-If fov is not set, camera will default to the last-set fov or Wide if fov has never been set.
-</p>
+#### Default Parameter Values
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Parameter</td>
+      <td>Default Value</td>
+    </tr>
+    <tr>
+      <td>res</td>
+      <td>12 (1080p)</td>
+    </tr>
+    <tr>
+      <td>fov</td>
+      <td>Last-used or 0 (Wide) if FOV not previously set</td>
+    </tr>
+    <tr>
+      <td>protocol</td>
+      <td>"TS"</td>
+    </tr>
+  </tbody>
+</table>
 
+#### Webcam Capabilities
 <table border="1">
   <tbody>
     <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
@@ -6038,6 +6123,47 @@ If fov is not set, camera will default to the last-set fov or Wide if fov has ne
   </tbody>
 </table>
 
+#### Supported Protocols
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Camera</td>
+      <td>Protocol</td>
+      <td>Default Port</td>
+      <td>Supports User-Defined Port?</td>
+    </tr>
+    <tr>
+      <td rowspan="2">HERO12 Black</td>
+      <td>TS</td>
+      <td>8554</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr>
+      <td>RTSP</td>
+      <td>554</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>HERO11 Black</td>
+      <td>TS</td>
+      <td>8554</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr>
+      <td>HERO10 Black</td>
+      <td>TS</td>
+      <td>8554</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>HERO9 Black</td>
+      <td>TS</td>
+      <td>8554</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+  </tbody>
+</table>
+
 ### Webcam Stabilization
 
 <p>
@@ -6083,6 +6209,120 @@ Note: The <b>Low</b> Hypersmooth option provides lower/lighter stabilization whe
     </tr>
   </tbody>
 </table>
+
+
+## Camera On the Home Network (COHN)
+<p>
+Some cameras support Camera On the Home Network (COHN).
+This capability allows the client to perform command and control with the camera indirectly through an access point such as a router at home.
+For security purposes, all communications are performed over HTTPS.
+</p>
+
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Camera</td>
+      <td>Supported</td>
+    </tr>
+    <tr>
+      <td>HERO12 Black</td>
+      <td><span style="color:green">✔</span></td>
+    </tr>
+    <tr>
+      <td>HERO11 Black Mini</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>HERO11 Black</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>HERO10 Black</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+    <tr>
+      <td>HERO9 Black</td>
+      <td><span style="color:red">❌</span></td>
+    </tr>
+  </tbody>
+</table>
+
+### Provisioning COHN
+<p>
+In order to use the COHN capability, the camera must first be provisioned for COHN.
+For instructions on how to do this, see <a href="https://gopro.github.io/OpenGoPro/ble_2_0#camera-on-the-home-network-cohn">Open GoPro BLE spec</a>.
+</p>
+
+### Send Messages via HTTPS
+<p>
+Once the camera is provisioned, the client can issue
+<a href="#commands-quick-reference">commands</a>
+and set <a href="#settings-quick-reference">settings</a>
+via HTTPS using the COHN certificate and Basic authorization (username/password) credentials obtained during provisioning or subsequently by querying for COHN status.
+</p>
+
+### HTTPS Headers
+
+<p>
+All HTTPS messages must contain <a href="https://en.wikipedia.org/wiki/Basic_access_authentication">Basic access authentication</a> headers, using the username and password from the COHN status obtained during or after provisioning.
+</p>
+
+### COHN Commands
+
+#### Command
+<table border="1">
+  <tbody>
+    <tr style="background-color: rgb(0,0,0); color: rgb(255,255,255);">
+      <td>Command</td>
+      <td>Response Format</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td>/GoProRootCA.crt</td>
+      <td>Text</td>
+      <td>Get COHN cert</td>
+    </tr>
+    <tr>
+      <td>/gopro/cohn/status</td>
+      <td>JSON</td>
+      <td>Get current COHN status</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Get COHN Cert
+<p>
+The <b>/GoProRootCA.crt</b> endpoint provides a way to obtain the COHN cert via HTTP(S).
+The response content is in plain text. For example:
+</p>
+
+```
+-----BEGIN CERTIFICATE-----
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+-----END CERTIFICATE-----
+```
+
+#### Get COHN Status
+<p>
+The <b>/gopro/cohn/status</b> endpoint provides a way to get the current status of COHN.
+The status's format is <a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">NotifyCOHNStatus</a> (a <a href="https://developers.google.com/protocol-buffers/docs/reference/proto2-spec">Google Procol Buffer v2</a> message) converted into JSON.
+</p>
+
+<p>
+Example:
+</p>
+```
+{
+ "status": "COHN_PROVISIONED",
+ "state": "COHN_STATE_NetworkConnected",
+ "username": "gopro",
+ "password": "xxxxxxxxxxxx",
+ "ipaddress": "xxx.xxx.xxx.xxx",
+ "enabled": true
+}
+```
 
 # Limitations
 

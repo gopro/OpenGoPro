@@ -6,9 +6,9 @@ import enum
 import asyncio
 import argparse
 from typing import Optional
-from binascii import hexlify
 
 from bleak import BleakClient
+from bleak.backends.characteristic import BleakGATTCharacteristic
 
 from tutorial_modules import GOPRO_BASE_UUID, connect_ble, Response
 
@@ -70,8 +70,8 @@ async def main(identifier: Optional[str]) -> None:
     client: BleakClient
     response = Response()
 
-    def notification_handler(handle: int, data: bytes) -> None:
-        logger.info(f'Received response at {handle=}: {hexlify(data, ":")!r}')
+    def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
+        logger.info(f'Received response at handle {characteristic.handle}: {data.hex(":")}')
 
         response.accumulate(data)
 
@@ -80,7 +80,7 @@ async def main(identifier: Optional[str]) -> None:
             response.parse()
 
             # If this is query response, it must contain a resolution value
-            if client.services.characteristics[handle].uuid == QUERY_RSP_UUID:
+            if client.services.characteristics[characteristic.handle].uuid == QUERY_RSP_UUID:
                 global resolution
                 global fps
                 global video_fov
@@ -88,7 +88,7 @@ async def main(identifier: Optional[str]) -> None:
                 fps = FPS(response.data[FPS_ID][0])
                 video_fov = VideoFOV(response.data[FOV_ID][0])
             # If this is a setting response, it will just show the status
-            elif client.services.characteristics[handle].uuid == SETTINGS_RSP_UUID:
+            elif client.services.characteristics[characteristic.handle].uuid == SETTINGS_RSP_UUID:
                 logger.info("Command sent successfully")
             # Anything else is unexpected. This shouldn't happen
             else:
