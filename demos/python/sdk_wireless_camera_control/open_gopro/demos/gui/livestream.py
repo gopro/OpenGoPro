@@ -5,69 +5,84 @@
 
 import argparse
 import asyncio
+from typing import Any
 
 from rich.console import Console
 
-from open_gopro import Params, WirelessGoPro
-from open_gopro.constants import WebcamError, WebcamStatus
+from open_gopro import Params, WirelessGoPro, constants, proto
 from open_gopro.logger import setup_logging
 from open_gopro.util import add_cli_args_and_parse, ainput
 
-console = Console()
-
-
-async def wait_for_webcam_status(gopro: WirelessGoPro, status: WebcamStatus, timeout: int = 10) -> bool:
-    """Wait for a specified webcam status for a given timeout
-
-    Args:
-        gopro (WirelessGoPro): gopro to communicate with
-        status (WebcamStatus): status to wait for
-        timeout (int): timeout in seconds. Defaults to 10.
-
-    Returns:
-        bool: True if status was received before timing out, False if timed out or received error
-    """
-
-    async def poll_for_status() -> bool:
-        # Poll until status is received
-        while True:
-            response = (await gopro.http_command.webcam_status()).data
-            if response.error != WebcamError.SUCCESS:
-                # Something bad happened
-                return False
-            if response.status == status:
-                # We found the desired status
-                return True
-
-    # Wait for either status or timeout
-    try:
-        return await asyncio.wait_for(poll_for_status(), timeout)
-    except TimeoutError:
-        return False
+console = Console()  # rich consoler printer
 
 
 async def main(args: argparse.Namespace) -> None:
     setup_logging(__name__, args.log)
 
-    async with WirelessGoPro(args.identifier) as gopro:
+    async with WirelessGoPro(args.identifier, enable_wifi=False) as gopro:
         await gopro.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
-        if (await gopro.http_command.webcam_status()).data.status != WebcamStatus.OFF:
-            console.print("[blue]Webcam is currently on. Turning if off.")
-            assert (await gopro.http_command.webcam_stop()).ok
-            await wait_for_webcam_status(gopro, WebcamStatus.OFF)
+        await gopro.ble_command.register_livestream_status(
+            register=[proto.EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_STATUS]
+        )
 
-        console.print("[blue]Starting webcam...")
-        await gopro.http_command.webcam_start()
-        await wait_for_webcam_status(gopro, WebcamStatus.HIGH_POWER_PREVIEW)
+        console.print(f"[yellow]Connecting to {args.ssid}...")
+        await gopro.connect_to_access_point(args.ssid, args.password)
 
-        await ainput("Press enter to exit.", console.print)
+        # Start livestream
+        livestream_is_ready = asyncio.Event()
+
+        async def wait_for_livestream_start(_: Any, update: proto.NotifyLiveStreamStatus) -> None:
+            if update.live_stream_status == proto.EnumLiveStreamStatus.LIVE_STREAM_STATE_READY:
+                livestream_is_ready.set()
+
+        console.print("[yellow]Configuring livestream...")
+        gopro.register_update(wait_for_livestream_start, constants.ActionId.LIVESTREAM_STATUS_NOTIF)
+        await gopro.ble_command.set_livestream_mode(
+            url=args.url,
+            window_size=args.resolution,
+            minimum_bitrate=args.min_bit,
+            maximum_bitrate=args.max_bit,
+            starting_bitrate=args.start_bit,
+            lens=args.fov,
+        )
+
+        # Wait to receive livestream started status
+        console.print("[yellow]Waiting for livestream to be ready...\n")
+        await livestream_is_ready.wait()
+
+        # TODO Is this still needed
+        await asyncio.sleep(2)
+
+        console.print("[yellow]Starting livestream")
+        assert (await gopro.ble_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
+
+        console.print("Livestream is now streaming and should be available for viewing.")
+        await ainput("Press enter to stop livestreaming...\n")
+
+        await gopro.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
+        await gopro.ble_command.release_network()
 
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Connect to the GoPro via BLE and Wifi, start and view wireless webcam."
+        description="Connect to the GoPro via BLE only, configure then start a Livestream, then display it with CV2."
     )
-    return add_cli_args_and_parse(parser)
+    parser.add_argument("ssid", type=str, help="WiFi SSID to connect to.")
+    parser.add_argument("password", type=str, help="Password of WiFi SSID.")
+    parser.add_argument("url", type=str, help="RTMP server URL to stream to.")
+    parser.add_argument("--min_bit", type=int, help="Minimum bitrate.", default=1000)
+    parser.add_argument("--max_bit", type=int, help="Maximum bitrate.", default=1000)
+    parser.add_argument("--start_bit", type=int, help="Starting bitrate.", default=1000)
+    parser.add_argument(
+        "--resolution",
+        help="Resolution.",
+        choices=list(proto.EnumWindowSize.values()),
+        default=proto.EnumWindowSize.WINDOW_SIZE_720,
+    )
+    parser.add_argument(
+        "--fov", help="Field of View.", choices=list(proto.EnumLens.values()), default=proto.EnumLens.LENS_WIDE
+    )
+    return add_cli_args_and_parse(parser, wifi=False)
 
 
 def entrypoint() -> None:

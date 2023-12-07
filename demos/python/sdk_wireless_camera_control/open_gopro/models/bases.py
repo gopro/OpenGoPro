@@ -15,11 +15,11 @@ class CustomBaseModel(BaseModel):
 
     def __hash__(self) -> int:
         h = hash((type(self),))
-        for field in self.__fields__.keys():
-            if isinstance(field, (dict, list)):
-                h += json.loads(field)
-            # Base case
-            h += hash(field)
+        for v in self.__dict__.values():
+            if isinstance(v, (dict, list)):
+                h += hash(json.dumps(v))
+            else:
+                h += hash(v)
         return h
 
     def __str__(self) -> str:

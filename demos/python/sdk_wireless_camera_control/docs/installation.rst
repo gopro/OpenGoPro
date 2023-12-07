@@ -35,6 +35,13 @@ To additionally install the extra dependencies to run the GUI demos:
     $ pip install open-gopro[gui]
 
 
+External Dependencies
+^^^^^^^^^^^^^^^^^^^^^
+
+In order to use any of the Webcam API's, ensure first that your system is setup to
+`Use the GoPro as a Webcam <https://community.gopro.com/s/article/GoPro-Webcam?language=de>`_
+
+
 From sources
 ------------
 

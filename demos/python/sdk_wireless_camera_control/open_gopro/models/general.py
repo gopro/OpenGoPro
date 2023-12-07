@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
-from pydantic import Field
+from pydantic import ConfigDict, Field
 
 from open_gopro import constants
 from open_gopro.models.bases import CustomBaseModel
@@ -20,6 +20,7 @@ from open_gopro.models.bases import CustomBaseModel
 class CameraInfo(CustomBaseModel):
     """General camera info"""
 
+    model_config = ConfigDict(protected_namespaces=())
     model_number: int  #: Camera model number
     model_name: str  #: Camera model name as string
     firmware_version: str  #: Complete firmware version
