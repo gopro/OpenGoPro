@@ -3,11 +3,10 @@
 
 """Manage a Bluetooth connection using bleak."""
 
-import sys
-import tempfile
 import asyncio
 import logging
 import platform
+import tempfile
 from pathlib import Path
 from typing import Any, Callable, Optional, Pattern
 

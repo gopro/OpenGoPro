@@ -79,7 +79,7 @@ class Logger:
             )
             self.file_handler.setFormatter(file_formatter)
             # Set to TRACE for concurrency debugging
-            self.file_handler.setLevel(logging.DEBUG)  # type: ignore # pylint: disable=no-member
+            self.file_handler.setLevel(logging.DEBUG)
             logger.addHandler(self.file_handler)
             self.addLoggingHandler(self.file_handler)
         else:
@@ -124,7 +124,7 @@ class Logger:
         # Enable / disable logging in modules
         for module in self.modules:
             l = logging.getLogger(module)
-            l.setLevel(logging.TRACE) # type: ignore
+            l.setLevel(logging.TRACE)  # type: ignore
             l.addHandler(handler)
 
     # From https://stackoverflow.com/questions/2183233/how-to-add-a-custom-loglevel-to-pythons-logging-facility/35804945#35804945
@@ -259,10 +259,10 @@ def set_logging_level(level: int) -> None:
     set_stream_logging_level(level)
 
 
-def add_logging_handler(handler: logging.Handler, level: int) -> None:
+def add_logging_handler(handler: logging.Handler) -> None:
     """Add a handler to all of the GoPro internal modules
 
     Args:
         handler (logging.Handler): handler to add
     """
-    Logger.get_instance().addLoggingHandler(handler, level)
+    Logger.get_instance().addLoggingHandler(handler)
