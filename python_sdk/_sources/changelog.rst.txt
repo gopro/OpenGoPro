@@ -11,10 +11,15 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 
 Unreleased
 ----------
+* Fix livestream demo.
+
+0.15.0 (December-6-2021)
+------------------------
 * Add alpha support for COHN (Camera-on-the-Home-Network)
     * A real implementation is going to require a major rearchitecture to dynamically add connection types.
 * Remove TKinter GUI. Will be replaced with Textual TUI in the future
 * Improve wifi SSID matching
+* Fix unhashable pydantic base models
 
 0.14.1 (September-21-2022)
 --------------------------
