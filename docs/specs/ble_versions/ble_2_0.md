@@ -389,7 +389,7 @@ Note: Counters start at 0x0 and reset after 0xF.
       <td rowspan="2">2</td>
       <td>Header</td>
       <td>80</td>
-      <td>(0) continuation packet<br/>(000) ignored<br/>(0000) counter: 0</td>
+      <td>(1) continuation packet<br/>(000) ignored<br/>(0000) counter: 0</td>
     </tr>
     <tr>
       <td>Payload</td>
@@ -400,7 +400,7 @@ Note: Counters start at 0x0 and reset after 0xF.
       <td rowspan="2">3</td>
       <td>Header</td>
       <td>81</td>
-      <td>(0) continuation packet<br/>(000) ignored<br/>(0001) counter: 1</td>
+      <td>(1) continuation packet<br/>(000) ignored<br/>(0001) counter: 1</td>
     </tr>
     <tr>
       <td>Payload</td>
@@ -410,7 +410,7 @@ Note: Counters start at 0x0 and reset after 0xF.
   </tbody>
 </table>
 
-### Example: Depacketizing a Mutli-Packet Message
+### Example: Depacketizing a Multi-Packet Message
 <p>
 <b>Packets Received:</b> 5
 </p>
@@ -4255,9 +4255,9 @@ Below is a table of supported status IDs.<br />
     <tr>
       <td>2</td>
       <td>Internal battery level</td>
-      <td>Rough approximation of internal battery level in bars</td>
+      <td>Rough approximation of internal battery level in bars (or charging)</td>
       <td>integer</td>
-      <td>0: Zero<br />1: One<br />2: Two<br />3: Three<br /></td>
+      <td>0: Zero<br />1: One<br />2: Two<br />3: Three<br />4: Charging<br /></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -4459,7 +4459,7 @@ Below is a table of supported status IDs.<br />
     <tr>
       <td>29</td>
       <td>Wlan ssid</td>
-      <td>Provisioned WIFI AP SSID. On BLE connection, value is big-endian byte-encoded int</td>
+      <td>SSID of the AP the camera is currently connected to. On BLE connection, value is big-endian byte-encoded int</td>
       <td>string</td>
       <td>*</td>
       <td><span style="color:green">✔</span></td>
@@ -4471,7 +4471,7 @@ Below is a table of supported status IDs.<br />
     <tr>
       <td>30</td>
       <td>Ap ssid</td>
-      <td>Camera's WIFI SSID. On BLE connection, value is big-endian byte-encoded int</td>
+      <td>The camera's WiFi SSID. On BLE connection, value is big-endian byte-encoded int</td>
       <td>string</td>
       <td>*</td>
       <td><span style="color:green">✔</span></td>

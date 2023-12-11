@@ -4444,9 +4444,9 @@ Below is a table of supported status IDs.<br />
     <tr>
       <td>2</td>
       <td>Internal battery level</td>
-      <td>Rough approximation of internal battery level in bars</td>
+      <td>Rough approximation of internal battery level in bars (or charging)</td>
       <td>integer</td>
-      <td>0: Zero<br />1: One<br />2: Two<br />3: Three<br /></td>
+      <td>0: Zero<br />1: One<br />2: Two<br />3: Three<br />4: Charging<br /></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
       <td><span style="color:green">✔</span></td>
@@ -4648,7 +4648,7 @@ Below is a table of supported status IDs.<br />
     <tr>
       <td>29</td>
       <td>Wlan ssid</td>
-      <td>Provisioned WIFI AP SSID. On BLE connection, value is big-endian byte-encoded int</td>
+      <td>SSID of the AP the camera is currently connected to. On BLE connection, value is big-endian byte-encoded int</td>
       <td>string</td>
       <td>*</td>
       <td><span style="color:green">✔</span></td>
@@ -4660,7 +4660,7 @@ Below is a table of supported status IDs.<br />
     <tr>
       <td>30</td>
       <td>Ap ssid</td>
-      <td>Camera's WIFI SSID. On BLE connection, value is big-endian byte-encoded int</td>
+      <td>The camera's WiFi SSID. On BLE connection, value is big-endian byte-encoded int</td>
       <td>string</td>
       <td>*</td>
       <td><span style="color:green">✔</span></td>
