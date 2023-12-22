@@ -87,20 +87,12 @@ class _EnumPresetGroupEnumTypeWrapper(
     PRESET_GROUP_ID_VIDEO: _EnumPresetGroup.ValueType
     PRESET_GROUP_ID_PHOTO: _EnumPresetGroup.ValueType
     PRESET_GROUP_ID_TIMELAPSE: _EnumPresetGroup.ValueType
-    PRESET_GROUP_ID_VIDEO_DUAL_LENS: _EnumPresetGroup.ValueType
-    PRESET_GROUP_ID_PHOTO_DUAL_LENS: _EnumPresetGroup.ValueType
-    PRESET_GROUP_ID_TIMELAPSE_DUAL_LENS: _EnumPresetGroup.ValueType
-    PRESET_GROUP_ID_SPECIAL: _EnumPresetGroup.ValueType
 
 class EnumPresetGroup(_EnumPresetGroup, metaclass=_EnumPresetGroupEnumTypeWrapper): ...
 
 PRESET_GROUP_ID_VIDEO: EnumPresetGroup.ValueType
 PRESET_GROUP_ID_PHOTO: EnumPresetGroup.ValueType
 PRESET_GROUP_ID_TIMELAPSE: EnumPresetGroup.ValueType
-PRESET_GROUP_ID_VIDEO_DUAL_LENS: EnumPresetGroup.ValueType
-PRESET_GROUP_ID_PHOTO_DUAL_LENS: EnumPresetGroup.ValueType
-PRESET_GROUP_ID_TIMELAPSE_DUAL_LENS: EnumPresetGroup.ValueType
-PRESET_GROUP_ID_SPECIAL: EnumPresetGroup.ValueType
 global___EnumPresetGroup = EnumPresetGroup
 
 class _EnumPresetGroupIcon:
@@ -175,7 +167,7 @@ class _EnumPresetIconEnumTypeWrapper(
     PRESET_ICON_WATER: _EnumPresetIcon.ValueType
     PRESET_ICON_LOOPING: _EnumPresetIcon.ValueType
     PRESET_ICON_STARS: _EnumPresetIcon.ValueType
-    "*\n    New custom icon (34 - 43)added for HERO 12\n    "
+    "*\n    New custom icon (34 - 42)added for HERO 12\n    "
     PRESET_ICON_ACTION: _EnumPresetIcon.ValueType
     PRESET_ICON_FOLLOW_CAM: _EnumPresetIcon.ValueType
     PRESET_ICON_SURF: _EnumPresetIcon.ValueType
@@ -184,9 +176,8 @@ class _EnumPresetIconEnumTypeWrapper(
     PRESET_ICON_CHESTY: _EnumPresetIcon.ValueType
     PRESET_ICON_HELMET: _EnumPresetIcon.ValueType
     PRESET_ICON_BITE: _EnumPresetIcon.ValueType
-    PRESET_ICON_MTB: _EnumPresetIcon.ValueType
     PRESET_ICON_MAX_VIDEO: _EnumPresetIcon.ValueType
-    "\n    Reserved 44 - 50 for Custom presets. Add icons below for new presets starting from 51\n    "
+    "*\n    Reserved 43 - 50 for Custom presets. Add icons below for new presets starting from 51\n    "
     PRESET_ICON_MAX_PHOTO: _EnumPresetIcon.ValueType
     PRESET_ICON_MAX_TIMEWARP: _EnumPresetIcon.ValueType
     PRESET_ICON_BASIC: _EnumPresetIcon.ValueType
@@ -257,7 +248,7 @@ PRESET_ICON_TRAVEL: EnumPresetIcon.ValueType
 PRESET_ICON_WATER: EnumPresetIcon.ValueType
 PRESET_ICON_LOOPING: EnumPresetIcon.ValueType
 PRESET_ICON_STARS: EnumPresetIcon.ValueType
-"*\nNew custom icon (34 - 43)added for HERO 12\n"
+"*\nNew custom icon (34 - 42)added for HERO 12\n"
 PRESET_ICON_ACTION: EnumPresetIcon.ValueType
 PRESET_ICON_FOLLOW_CAM: EnumPresetIcon.ValueType
 PRESET_ICON_SURF: EnumPresetIcon.ValueType
@@ -266,9 +257,8 @@ PRESET_ICON_SHAKY: EnumPresetIcon.ValueType
 PRESET_ICON_CHESTY: EnumPresetIcon.ValueType
 PRESET_ICON_HELMET: EnumPresetIcon.ValueType
 PRESET_ICON_BITE: EnumPresetIcon.ValueType
-PRESET_ICON_MTB: EnumPresetIcon.ValueType
 PRESET_ICON_MAX_VIDEO: EnumPresetIcon.ValueType
-"\nReserved 44 - 50 for Custom presets. Add icons below for new presets starting from 51\n"
+"*\nReserved 43 - 50 for Custom presets. Add icons below for new presets starting from 51\n"
 PRESET_ICON_MAX_PHOTO: EnumPresetIcon.ValueType
 PRESET_ICON_MAX_TIMEWARP: EnumPresetIcon.ValueType
 PRESET_ICON_BASIC: EnumPresetIcon.ValueType
@@ -346,7 +336,7 @@ class _EnumPresetTitleEnumTypeWrapper(
     PRESET_TITLE_WATER: _EnumPresetTitle.ValueType
     PRESET_TITLE_LOOPING: _EnumPresetTitle.ValueType
     PRESET_TITLE_STARS: _EnumPresetTitle.ValueType
-    "\n    New custom names (34 - 43)added for HERO 12\n    "
+    "*\n    New custom names (34 - 42)added for HERO 12\n    "
     PRESET_TITLE_ACTION: _EnumPresetTitle.ValueType
     PRESET_TITLE_FOLLOW_CAM: _EnumPresetTitle.ValueType
     PRESET_TITLE_SURF: _EnumPresetTitle.ValueType
@@ -355,9 +345,8 @@ class _EnumPresetTitleEnumTypeWrapper(
     PRESET_TITLE_CHESTY: _EnumPresetTitle.ValueType
     PRESET_TITLE_HELMET: _EnumPresetTitle.ValueType
     PRESET_TITLE_BITE: _EnumPresetTitle.ValueType
-    PRESET_TITLE_MTB: _EnumPresetTitle.ValueType
     PRESET_TITLE_360_TIMELAPSE: _EnumPresetTitle.ValueType
-    "*\n    Reserved 44 - 50 for custom presets.\n    "
+    "*\n    Reserved 43 - 50 for custom presets.\n    "
     PRESET_TITLE_360_NIGHT_LAPSE: _EnumPresetTitle.ValueType
     PRESET_TITLE_360_NIGHT_PHOTO: _EnumPresetTitle.ValueType
     PRESET_TITLE_PANO_TIME_LAPSE: _EnumPresetTitle.ValueType
@@ -439,7 +428,7 @@ PRESET_TITLE_TRAVEL: EnumPresetTitle.ValueType
 PRESET_TITLE_WATER: EnumPresetTitle.ValueType
 PRESET_TITLE_LOOPING: EnumPresetTitle.ValueType
 PRESET_TITLE_STARS: EnumPresetTitle.ValueType
-"\nNew custom names (34 - 43)added for HERO 12\n"
+"*\nNew custom names (34 - 42)added for HERO 12\n"
 PRESET_TITLE_ACTION: EnumPresetTitle.ValueType
 PRESET_TITLE_FOLLOW_CAM: EnumPresetTitle.ValueType
 PRESET_TITLE_SURF: EnumPresetTitle.ValueType
@@ -448,9 +437,8 @@ PRESET_TITLE_SHAKY: EnumPresetTitle.ValueType
 PRESET_TITLE_CHESTY: EnumPresetTitle.ValueType
 PRESET_TITLE_HELMET: EnumPresetTitle.ValueType
 PRESET_TITLE_BITE: EnumPresetTitle.ValueType
-PRESET_TITLE_MTB: EnumPresetTitle.ValueType
 PRESET_TITLE_360_TIMELAPSE: EnumPresetTitle.ValueType
-"*\nReserved 44 - 50 for custom presets.\n"
+"*\nReserved 43 - 50 for custom presets.\n"
 PRESET_TITLE_360_NIGHT_LAPSE: EnumPresetTitle.ValueType
 PRESET_TITLE_360_NIGHT_PHOTO: EnumPresetTitle.ValueType
 PRESET_TITLE_PANO_TIME_LAPSE: EnumPresetTitle.ValueType
@@ -537,17 +525,17 @@ class Preset(google.protobuf.message.Message):
     IS_FIXED_FIELD_NUMBER: builtins.int
     CUSTOM_NAME_FIELD_NUMBER: builtins.int
     id: builtins.int
-    " Preset ID"
+    "Preset ID"
     mode: global___EnumFlatMode.ValueType
-    " Preset flatmode ID"
+    "Preset flatmode ID"
     title_id: global___EnumPresetTitle.ValueType
-    " Preset Title ID"
+    "Preset Title ID"
     title_number: builtins.int
-    " Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)"
+    "Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)"
     user_defined: builtins.bool
-    " Is the Preset custom/user-defined?"
+    "Is the Preset custom/user-defined?"
     icon: global___EnumPresetIcon.ValueType
-    " Preset Icon ID"
+    "Preset Icon ID"
 
     @property
     def setting_array(
@@ -555,11 +543,11 @@ class Preset(google.protobuf.message.Message):
     ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___PresetSetting]:
         """Array of settings associated with this Preset"""
     is_modified: builtins.bool
-    " Has Preset been modified from factory defaults? (False for user-defined Presets)"
+    "Has Preset been modified from factory defaults? (False for user-defined Presets)"
     is_fixed: builtins.bool
-    " Is this Preset mutable?"
+    "Is this Preset mutable?"
     custom_name: builtins.str
-    " Custom string name given to this preset via @ref RequestCustomPresetUpdate"
+    "Custom string name given to this preset via @ref RequestCustomPresetUpdate"
 
     def __init__(
         self,
@@ -626,6 +614,62 @@ class Preset(google.protobuf.message.Message):
 
 global___Preset = Preset
 
+class RequestCustomPresetUpdate(google.protobuf.message.Message):
+    """*
+    Request to update the active custom preset
+
+    This only operates on the currently active Preset and will fail if the current
+    Preset is not custom.
+
+    The use cases are:
+
+    1. Update the Custom Preset Icon
+        - `icon_id` is always optional and can always be passed
+
+    and / or
+
+    2. Update the Custom Preset Title to a...
+         - **Factory Preset Title**: Set `title_id` to a non-94 value
+         - **Custom Preset Name**: Set `title_id` to 94 and specify a `custom_name`
+    *
+    Preset Title ID
+
+    The range of acceptable custom title ID's can be found in the initial @ref NotifyPresetStatus response
+    to @ref RequestGetPresetStatus
+    """
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    TITLE_ID_FIELD_NUMBER: builtins.int
+    CUSTOM_NAME_FIELD_NUMBER: builtins.int
+    ICON_ID_FIELD_NUMBER: builtins.int
+    title_id: global___EnumPresetTitle.ValueType
+    custom_name: builtins.str
+    "utf-8 encoded target custom preset name"
+    icon_id: global___EnumPresetIcon.ValueType
+    "*\n    Preset Icon ID\n\n    The range of acceptable custom icon ID's can be found in the initial @ref NotifyPresetStatus response to\n    @ref RequestGetPresetStatus\n    "
+
+    def __init__(
+        self,
+        *,
+        title_id: global___EnumPresetTitle.ValueType | None = ...,
+        custom_name: builtins.str | None = ...,
+        icon_id: global___EnumPresetIcon.ValueType | None = ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "custom_name", b"custom_name", "icon_id", b"icon_id", "title_id", b"title_id"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "custom_name", b"custom_name", "icon_id", b"icon_id", "title_id", b"title_id"
+        ],
+    ) -> None: ...
+
+global___RequestCustomPresetUpdate = RequestCustomPresetUpdate
+
 class PresetGroup(google.protobuf.message.Message):
     """
     Preset Group meta information and contained Presets
@@ -637,15 +681,15 @@ class PresetGroup(google.protobuf.message.Message):
     CAN_ADD_PRESET_FIELD_NUMBER: builtins.int
     ICON_FIELD_NUMBER: builtins.int
     id: global___EnumPresetGroup.ValueType
-    " Preset Group ID"
+    "Preset Group ID"
 
     @property
     def preset_array(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Preset]:
         """Array of Presets contained in this Preset Group"""
     can_add_preset: builtins.bool
-    " Is there room in the group to add additional Presets?"
+    "Is there room in the group to add additional Presets?"
     icon: global___EnumPresetGroupIcon.ValueType
-    " The icon to display for this preset group"
+    "The icon to display for this preset group"
 
     def __init__(
         self,
@@ -677,11 +721,11 @@ class PresetSetting(google.protobuf.message.Message):
     VALUE_FIELD_NUMBER: builtins.int
     IS_CAPTION_FIELD_NUMBER: builtins.int
     id: builtins.int
-    " Setting ID"
+    "Setting ID"
     value: builtins.int
-    " Setting value"
+    "Setting value"
     is_caption: builtins.bool
-    ' Does this setting appear on the Preset "pill" in the camera UI?'
+    'Does this setting appear on the Preset "pill" in the camera UI?'
 
     def __init__(
         self, *, id: builtins.int | None = ..., value: builtins.int | None = ..., is_caption: builtins.bool | None = ...

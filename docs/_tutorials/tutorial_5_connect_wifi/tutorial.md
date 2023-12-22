@@ -8,7 +8,7 @@ lesson: 5
 # Tutorial 5: Connect WiFi
 
 This document will provide a walk-through tutorial to implement
-the [Open GoPro Interface]({% link specs/http_versions/http_2_0.md %}) to enable the GoPro's WiFi Access Point (AP) so that it
+the [Open GoPro Interface](/http) to enable the GoPro's WiFi Access Point (AP) so that it
 can be connected to. It will also provide an example of connecting to the WiFi AP.
 
 {% tip %}
@@ -367,4 +367,4 @@ Congratulations 🤙
 {% endsuccess %}
 
 You are now connected to the GoPro's Wifi AP and can send any of the HTTP commands defined in the
-[Open GoPro Interface]({% link specs/http_versions/http_2_0.md %}). Proceed to the next tutorial.
+[Open GoPro Interface](/http). Proceed to the next tutorial.

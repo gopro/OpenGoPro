@@ -27,27 +27,7 @@ services:
         networks:
             - open_gopro
         depends_on:
-            - protos
-            - demos
             - plant_uml
-
-    protos:
-        image: ghcr.io/gopro/opengopro/gpprotodoc:main
-        container_name: protos
-        build:
-            context: .admin/proto_doc_gen
-        volumes:
-            - ./protobuf:/protos
-            - ./docs:/site
-
-    demos:
-        container_name: demos
-        image: ghcr.io/gopro/opengopro/gpdemodoc:main
-        build:
-            context: .admin/prepare_demos
-        volumes:
-            - ./demos:/demos
-            - ./docs:/site
 
     plant_uml:
         container_name: plant_uml

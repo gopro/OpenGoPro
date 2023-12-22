@@ -17,10 +17,6 @@ xcuserdata/
 # This is built and stored in the Docker image
 /docs/Gemfile.lock
 
-
-# Generated documentation
-/docs/protos.md
-
 # Vim
 *~
 *.sw[p_]
@@ -49,6 +45,4 @@ codekit-config.json
 /docs/.sass-cache
 /docs/_asset_bundler_cache
 /docs/_site
-/docs/**/demos
-/docs/**/_demos
 !/docs/assets/images/demos

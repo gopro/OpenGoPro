@@ -106,6 +106,8 @@ kramdown:
 include:
     - .htaccess
     - _pages
+    - .openapi.yml
+    - .enums.yml
 exclude:
     - .vscode
     - .asset-cache
@@ -187,6 +189,13 @@ defaults:
       values:
           identifier: http_spec
           classes: spec
+          sidebar:
+              nav: 'specs'
+    - scope:
+          path: 'protos/open_gopro'
+      values:
+          redirect_from:
+              - 'protos'
           sidebar:
               nav: 'specs'
 

@@ -8,7 +8,7 @@ lesson: 7
 # Tutorial 7: Camera Media List
 
 This document will provide a walk-through tutorial to send Open GoPro
-[HTTP commands]({% link specs/http_versions/http_2_0.md %}) to the GoPro, specifically to get the media list
+[HTTP commands](/http) to the GoPro, specifically to get the media list
 and perform operations on it (downloading pictures, videos, etc.)
 
 {% tip %}
@@ -117,7 +117,7 @@ to send HTTP commands as in the
 [previous tutorial]({% link _tutorials/tutorial_6_send_wifi_commands/tutorial.md %}).
 
 We get the media list via the
-[Get Media List command]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference).
+[Get Media List command](/http#commands-quick-reference).
 This command will return a JSON structure of all of the media files (pictures, videos) on the camera with
 corresponding information about each media file.
 
@@ -234,7 +234,7 @@ Complete media list: {
 {% endlinkedTabs %}
 
 The media list format is defined in the
-[Open GoPro Specification]({% link specs/http_versions/http_2_0.md %}#media-list-format).
+[Open GoPro Specification](/http#media-list-format).
 We won't be rehashing that here but will provide examples below of using the media list.
 
 One common functionality is to get the list of media file names, which can be done as such:
@@ -294,7 +294,7 @@ sequenceDiagram
 ## Download Media File
 
 The next command we will be sending is
-[Download Media]({% link specs/http_versions/http_2_0.md %}#downloading-media). Specifically, we
+[Download Media](/http#downloading-media). Specifically, we
 will be downloading a photo. The camera must have at least one photo in its media list in order for this to
 work.
 
@@ -394,7 +394,7 @@ Once complete, the photo will display in the tutorial window.
 ## Get Media Thumbnail
 
 The next command we will be sending is
-[Get Media thumbnail ]({% link specs/http_versions/http_2_0.md %}#downloading-media).
+[Get Media thumbnail ](/http#downloading-media).
 Specifically, we will be getting the thumbnail for a photo. The camera must have at least one photo in its
 media list in order for this to work.
 
@@ -486,4 +486,4 @@ You can now query the GoPro's media list and retrieve binary information for med
 last tutorial. Stay tuned for more 👍
 
 At this point you should be able to start creating a useful example using the Open GoPro Interface. For some
-inspiration check out some of the [demos]({% link demos.md %}).
+inspiration check out some of the [demos](https://github.com/gopro/OpenGoPro/tree/main/demos).

@@ -1,5 +1,5 @@
 /* cohn.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Sat Nov  4 21:02:36 UTC 2023 */
+/* This copyright was auto-generated on Thu Dec 21 23:28:43 UTC 2023 */
 
 /***********************************************************************************************************************
  *
@@ -41,21 +41,21 @@ enum EnumCOHNNetworkState {
  * changes.
  */
 message RequestGetCOHNStatus {
-    optional bool register_cohn_status = 1; //  1 to register, 0 to unregister
+    optional bool register_cohn_status = 1; // 1 to register, 0 to unregister
 }
 
 /*
  * Current COHN status triggered by a RequestGetCOHNStatus
  */
 message NotifyCOHNStatus {
-    optional EnumCOHNStatus       status     = 1; //   Current COHN status
-    optional EnumCOHNNetworkState state      = 2; //   Current COHN network state
-    optional string               username   = 3; //   Username used for http basic auth header
-    optional string               password   = 4; //   Password used for http basic auth header
-    optional string               ipaddress  = 5; //   Camera’s IP address on the local network
-    optional bool                 enabled    = 6; //   Is COHN currently enabled
-    optional string               ssid       = 7; //   Currently connected SSID
-    optional string               macaddress = 8; //   MAC address of the wifi adapter
+    optional EnumCOHNStatus       status     = 1; // Current COHN status
+    optional EnumCOHNNetworkState state      = 2; // Current COHN network state
+    optional string               username   = 3; // Username used for http basic auth header
+    optional string               password   = 4; // Password used for http basic auth header
+    optional string               ipaddress  = 5; // Camera's IP address on the local network
+    optional bool                 enabled    = 6; // Is COHN currently enabled
+    optional string               ssid       = 7; // Currently connected SSID
+    optional string               macaddress = 8; // MAC address of the wifi adapter
 }
 
 /**
@@ -64,7 +64,7 @@ message NotifyCOHNStatus {
  * Returns a @ref ResponseGeneric with the status of the creation
  */
 message RequestCreateCOHNCert {
-    optional bool override = 1; //  Override current provisioning and create new cert
+    optional bool override = 1; // Override current provisioning and create new cert
 }
 
 /**
@@ -85,8 +85,8 @@ message RequestCOHNCert {}
  * COHN Certificate response triggered by RequestCOHNCert
  */
 message ResponseCOHNCert {
-    optional EnumResultGeneric result = 1; //  Was request successful?
-    optional string            cert   = 2; //  Root CA cert (ASCII text)
+    optional EnumResultGeneric result = 1; // Was request successful?
+    optional string            cert   = 2; // Root CA cert (ASCII text)
 }
 
 /**
@@ -95,5 +95,5 @@ message ResponseCOHNCert {
  * Returns a @ref ResponseGeneric
  */
 message RequestSetCOHNSetting {
-    optional bool cohn_active = 1; //   1 to enable, 0 to disable
+    optional bool cohn_active = 1; // 1 to enable, 0 to disable
 }

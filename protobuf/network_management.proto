@@ -1,5 +1,5 @@
 /* network_management.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Sat Nov  4 21:02:36 UTC 2023 */
+/* This copyright was auto-generated on Thu Dec 21 23:28:43 UTC 2023 */
 
 /***********************************************************************************************************************
  *
@@ -46,7 +46,7 @@ enum EnumScanning {
  * TODO refernce where this is triggered
  */
 message NotifProvisioningState {
-    required EnumProvisioning provisioning_state = 1; //  Provisioning / connection state
+    required EnumProvisioning provisioning_state = 1; // Provisioning / connection state
 }
 
 /*
@@ -55,10 +55,10 @@ message NotifProvisioningState {
  * Triggered via @ref RequestStartScan
  */
 message NotifStartScanning {
-    required EnumScanning scanning_state        = 1; //  Scanning state
-    optional int32        scan_id               = 2; //  ID associated with scan results (included if scan was successful)
-    optional int32        total_entries         = 3; //  Number of APs found during scan (included if scan was successful)
-    required int32        total_configured_ssid = 4; //  Total count of camera's provisioned SSIDs
+    required EnumScanning scanning_state        = 1; // Scanning state
+    optional int32        scan_id               = 2; // ID associated with scan results (included if scan was successful)
+    optional int32        total_entries         = 3; // Number of APs found during scan (included if scan was successful)
+    required int32        total_configured_ssid = 4; // Total count of camera's provisioned SSIDs
 }
 
 /**
@@ -69,7 +69,7 @@ message NotifStartScanning {
  * Response: @ref ResponseConnect
  */
 message RequestConnect {
-    required string ssid = 1; //  AP SSID
+    required string ssid = 1; // AP SSID
 }
 
 /**
@@ -82,13 +82,13 @@ message RequestConnect {
  * Notification: @ref NotifProvisioningState sent periodically as provisioning state changes
  */
 message RequestConnectNew {
-    required string ssid          = 1; //  AP SSID
-    required string password      = 2; //  AP password
-    optional bytes  static_ip     = 3; //  Static IP address
-    optional bytes  gateway       = 4; //  Gateway IP address
-    optional bytes  subnet        = 5; //  Subnet mask
-    optional bytes  dns_primary   = 6; //  Primary DNS
-    optional bytes  dns_secondary = 7; //  Secondary DNS
+    required string ssid          = 1; // AP SSID
+    required string password      = 2; // AP password
+    optional bytes  static_ip     = 3; // Static IP address
+    optional bytes  gateway       = 4; // Gateway IP address
+    optional bytes  subnet        = 5; // Subnet mask
+    optional bytes  dns_primary   = 6; // Primary DNS
+    optional bytes  dns_secondary = 7; // Secondary DNS
 }
 
 /**
@@ -97,9 +97,9 @@ message RequestConnectNew {
  * Response: @ref ResponseGetApEntries
  */
 message RequestGetApEntries {
-    required int32 start_index = 1; //  Used for paging. 0 <= start_index < @ref ResponseGetApEntries .total_entries
-    required int32 max_entries = 2; //  Used for paging. Value must be < @ref ResponseGetApEntries .total_entries
-    required int32 scan_id     = 3; //  ID corresponding to a set of scan results (i.e. @ref ResponseGetApEntries .scan_id)
+    required int32 start_index = 1; // Used for paging. 0 <= start_index < @ref ResponseGetApEntries .total_entries
+    required int32 max_entries = 2; // Used for paging. Value must be < @ref ResponseGetApEntries .total_entries
+    required int32 scan_id     = 3; // ID corresponding to a set of scan results (i.e. @ref ResponseGetApEntries .scan_id)
 }
 
 /**
@@ -126,9 +126,9 @@ message RequestStartScan {}
  * Sent as the initial response to @ref RequestConnect
  */
 message ResponseConnect {
-    required EnumResultGeneric result             = 1; //  Generic pass/fail/error info
-    required EnumProvisioning  provisioning_state = 2; //  Provisioning/connection state
-    required int32             timeout_seconds    = 3; //  Network connection timeout (seconds)
+    required EnumResultGeneric result             = 1; // Generic pass/fail/error info
+    required EnumProvisioning  provisioning_state = 2; // Provisioning/connection state
+    required int32             timeout_seconds    = 3; // Network connection timeout (seconds)
 }
 
 /**
@@ -137,8 +137,8 @@ message ResponseConnect {
  * Sent as the initial response to @ref RequestConnectNew
  */
 message ResponseConnectNew {
-    required EnumResultGeneric result             = 1; //  Status of Connect New request
-    required EnumProvisioning  provisioning_state = 2; //  Current provisioning state of the network
+    required EnumResultGeneric result             = 1; // Status of Connect New request
+    required EnumProvisioning  provisioning_state = 2; // Current provisioning state of the network
     /**
      * number of seconds camera will wait before declaring a network connection attempt failed.
      */
@@ -146,11 +146,11 @@ message ResponseConnectNew {
 }
 
 enum EnumScanEntryFlags {
-    SCAN_FLAG_OPEN             = 0x00; //  This network does not require authentication
-    SCAN_FLAG_AUTHENTICATED    = 0x01; //  This network requires authentication
-    SCAN_FLAG_CONFIGURED       = 0x02; //  This network has been previously provisioned
+    SCAN_FLAG_OPEN             = 0x00; // This network does not require authentication
+    SCAN_FLAG_AUTHENTICATED    = 0x01; // This network requires authentication
+    SCAN_FLAG_CONFIGURED       = 0x02; // This network has been previously provisioned
     SCAN_FLAG_BEST_SSID        = 0x04;
-    SCAN_FLAG_ASSOCIATED       = 0x08; //  camera is connected to this AP
+    SCAN_FLAG_ASSOCIATED       = 0x08; // camera is connected to this AP
     SCAN_FLAG_UNSUPPORTED_TYPE = 0x10;
 }
 
@@ -160,16 +160,16 @@ enum EnumScanEntryFlags {
  * This is sent in response to a @ref RequestGetApEntries
  */
 message ResponseGetApEntries {
-    required EnumResultGeneric result  = 1; //  Generic pass/fail/error info
-    required int32             scan_id = 2; //   ID associated with this batch of results
-    //  The individual Scan Entry model
+    required EnumResultGeneric result  = 1; // Generic pass/fail/error info
+    required int32             scan_id = 2; // ID associated with this batch of results
+    // The individual Scan Entry model
     message                    ScanEntry {
-        required string ssid                 = 1; //   AP SSID
-        required int32  signal_strength_bars = 2; //   Signal strength (3 bars: >-70 dBm; 2 bars: >-85 dBm; 1 bar: <=-85 dBm)
-        required int32  signal_frequency_mhz = 4; //   Signal frequency (MHz)
-        required int32  scan_entry_flags     = 5; //   Bitmasked value from @ref EnumScanEntryFlags
+        required string ssid                 = 1; // AP SSID
+        required int32  signal_strength_bars = 2; // Signal strength (3 bars: >-70 dBm; 2 bars: >-85 dBm; 1 bar: <=-85 dBm)
+        required int32  signal_frequency_mhz = 4; // Signal frequency (MHz)
+        required int32  scan_entry_flags     = 5; // Bitmasked value from @ref EnumScanEntryFlags
     }
-    repeated ScanEntry entries = 3; //   Array containing details about discovered APs
+    repeated ScanEntry entries = 3; // Array containing details about discovered APs
 }
 
 /**
@@ -178,6 +178,6 @@ message ResponseGetApEntries {
  * This is the initial response to a @ref RequestStartScan
  */
 message ResponseStartScanning {
-    required EnumResultGeneric result         = 1; //  Generic pass/fail/error info
-    required EnumScanning      scanning_state = 2; //  Scanning state
+    required EnumResultGeneric result         = 1; // Generic pass/fail/error info
+    required EnumScanning      scanning_state = 2; // Scanning state
 }

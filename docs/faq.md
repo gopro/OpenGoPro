@@ -91,7 +91,7 @@ The stream has a minimum latency of about 210ms. If you are seeing latency highe
 that as a result of using off-the-shelf libraries like ffmpeg which adds its own buffering. For preview and
 framing use cases, we don't recommend using the live streaming RTMP protocol because it adds unnecessary
 steps in the pipeline, and puts the camera in the streaming preset, which offers little other control.
-A low latency streaming demo is available in the [demos]({% link demos.md %}).
+A low latency streaming demo is available in the [demos](https://github.com/gopro/OpenGoPro/tree/main/demos).
 {% endaccordion %}
 
 {% accordion How do I minimize latency of video preview with FFPLAY?  %}

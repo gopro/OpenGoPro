@@ -91,27 +91,27 @@ class _EnumScanEntryFlagsEnumTypeWrapper(
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     SCAN_FLAG_OPEN: _EnumScanEntryFlags.ValueType
-    " This network does not require authentication"
+    "This network does not require authentication"
     SCAN_FLAG_AUTHENTICATED: _EnumScanEntryFlags.ValueType
-    " This network requires authentication"
+    "This network requires authentication"
     SCAN_FLAG_CONFIGURED: _EnumScanEntryFlags.ValueType
-    " This network has been previously provisioned"
+    "This network has been previously provisioned"
     SCAN_FLAG_BEST_SSID: _EnumScanEntryFlags.ValueType
     SCAN_FLAG_ASSOCIATED: _EnumScanEntryFlags.ValueType
-    " camera is connected to this AP"
+    "camera is connected to this AP"
     SCAN_FLAG_UNSUPPORTED_TYPE: _EnumScanEntryFlags.ValueType
 
 class EnumScanEntryFlags(_EnumScanEntryFlags, metaclass=_EnumScanEntryFlagsEnumTypeWrapper): ...
 
 SCAN_FLAG_OPEN: EnumScanEntryFlags.ValueType
-" This network does not require authentication"
+"This network does not require authentication"
 SCAN_FLAG_AUTHENTICATED: EnumScanEntryFlags.ValueType
-" This network requires authentication"
+"This network requires authentication"
 SCAN_FLAG_CONFIGURED: EnumScanEntryFlags.ValueType
-" This network has been previously provisioned"
+"This network has been previously provisioned"
 SCAN_FLAG_BEST_SSID: EnumScanEntryFlags.ValueType
 SCAN_FLAG_ASSOCIATED: EnumScanEntryFlags.ValueType
-" camera is connected to this AP"
+"camera is connected to this AP"
 SCAN_FLAG_UNSUPPORTED_TYPE: EnumScanEntryFlags.ValueType
 global___EnumScanEntryFlags = EnumScanEntryFlags
 
@@ -125,7 +125,7 @@ class NotifProvisioningState(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     PROVISIONING_STATE_FIELD_NUMBER: builtins.int
     provisioning_state: global___EnumProvisioning.ValueType
-    " Provisioning / connection state"
+    "Provisioning / connection state"
 
     def __init__(self, *, provisioning_state: global___EnumProvisioning.ValueType | None = ...) -> None: ...
     def HasField(
@@ -150,13 +150,13 @@ class NotifStartScanning(google.protobuf.message.Message):
     TOTAL_ENTRIES_FIELD_NUMBER: builtins.int
     TOTAL_CONFIGURED_SSID_FIELD_NUMBER: builtins.int
     scanning_state: global___EnumScanning.ValueType
-    " Scanning state"
+    "Scanning state"
     scan_id: builtins.int
-    " ID associated with scan results (included if scan was successful)"
+    "ID associated with scan results (included if scan was successful)"
     total_entries: builtins.int
-    " Number of APs found during scan (included if scan was successful)"
+    "Number of APs found during scan (included if scan was successful)"
     total_configured_ssid: builtins.int
-    " Total count of camera's provisioned SSIDs"
+    "Total count of camera's provisioned SSIDs"
 
     def __init__(
         self,
@@ -207,7 +207,7 @@ class RequestConnect(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     SSID_FIELD_NUMBER: builtins.int
     ssid: builtins.str
-    " AP SSID"
+    "AP SSID"
 
     def __init__(self, *, ssid: builtins.str | None = ...) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["ssid", b"ssid"]) -> builtins.bool: ...
@@ -235,19 +235,19 @@ class RequestConnectNew(google.protobuf.message.Message):
     DNS_PRIMARY_FIELD_NUMBER: builtins.int
     DNS_SECONDARY_FIELD_NUMBER: builtins.int
     ssid: builtins.str
-    " AP SSID"
+    "AP SSID"
     password: builtins.str
-    " AP password"
+    "AP password"
     static_ip: builtins.bytes
-    " Static IP address"
+    "Static IP address"
     gateway: builtins.bytes
-    " Gateway IP address"
+    "Gateway IP address"
     subnet: builtins.bytes
-    " Subnet mask"
+    "Subnet mask"
     dns_primary: builtins.bytes
-    " Primary DNS"
+    "Primary DNS"
     dns_secondary: builtins.bytes
-    " Secondary DNS"
+    "Secondary DNS"
 
     def __init__(
         self,
@@ -313,11 +313,11 @@ class RequestGetApEntries(google.protobuf.message.Message):
     MAX_ENTRIES_FIELD_NUMBER: builtins.int
     SCAN_ID_FIELD_NUMBER: builtins.int
     start_index: builtins.int
-    " Used for paging. 0 <= start_index < @ref ResponseGetApEntries .total_entries"
+    "Used for paging. 0 <= start_index < @ref ResponseGetApEntries .total_entries"
     max_entries: builtins.int
-    " Used for paging. Value must be < @ref ResponseGetApEntries .total_entries"
+    "Used for paging. Value must be < @ref ResponseGetApEntries .total_entries"
     scan_id: builtins.int
-    " ID corresponding to a set of scan results (i.e. @ref ResponseGetApEntries .scan_id)"
+    "ID corresponding to a set of scan results (i.e. @ref ResponseGetApEntries .scan_id)"
 
     def __init__(
         self,
@@ -383,11 +383,11 @@ class ResponseConnect(google.protobuf.message.Message):
     PROVISIONING_STATE_FIELD_NUMBER: builtins.int
     TIMEOUT_SECONDS_FIELD_NUMBER: builtins.int
     result: response_generic_pb2.EnumResultGeneric.ValueType
-    " Generic pass/fail/error info"
+    "Generic pass/fail/error info"
     provisioning_state: global___EnumProvisioning.ValueType
-    " Provisioning/connection state"
+    "Provisioning/connection state"
     timeout_seconds: builtins.int
-    " Network connection timeout (seconds)"
+    "Network connection timeout (seconds)"
 
     def __init__(
         self,
@@ -423,9 +423,9 @@ class ResponseConnectNew(google.protobuf.message.Message):
     PROVISIONING_STATE_FIELD_NUMBER: builtins.int
     TIMEOUT_SECONDS_FIELD_NUMBER: builtins.int
     result: response_generic_pb2.EnumResultGeneric.ValueType
-    " Status of Connect New request"
+    "Status of Connect New request"
     provisioning_state: global___EnumProvisioning.ValueType
-    " Current provisioning state of the network"
+    "Current provisioning state of the network"
     timeout_seconds: builtins.int
     "*\n    number of seconds camera will wait before declaring a network connection attempt failed.\n    "
 
@@ -469,13 +469,13 @@ class ResponseGetApEntries(google.protobuf.message.Message):
         SIGNAL_FREQUENCY_MHZ_FIELD_NUMBER: builtins.int
         SCAN_ENTRY_FLAGS_FIELD_NUMBER: builtins.int
         ssid: builtins.str
-        "  AP SSID"
+        "AP SSID"
         signal_strength_bars: builtins.int
-        "  Signal strength (3 bars: >-70 dBm; 2 bars: >-85 dBm; 1 bar: <=-85 dBm)"
+        "Signal strength (3 bars: >-70 dBm; 2 bars: >-85 dBm; 1 bar: <=-85 dBm)"
         signal_frequency_mhz: builtins.int
-        "  Signal frequency (MHz)"
+        "Signal frequency (MHz)"
         scan_entry_flags: builtins.int
-        "  Bitmasked value from @ref EnumScanEntryFlags"
+        "Bitmasked value from @ref EnumScanEntryFlags"
 
         def __init__(
             self,
@@ -515,9 +515,9 @@ class ResponseGetApEntries(google.protobuf.message.Message):
     SCAN_ID_FIELD_NUMBER: builtins.int
     ENTRIES_FIELD_NUMBER: builtins.int
     result: response_generic_pb2.EnumResultGeneric.ValueType
-    " Generic pass/fail/error info"
+    "Generic pass/fail/error info"
     scan_id: builtins.int
-    "  ID associated with this batch of results"
+    "ID associated with this batch of results"
 
     @property
     def entries(
@@ -551,9 +551,9 @@ class ResponseStartScanning(google.protobuf.message.Message):
     RESULT_FIELD_NUMBER: builtins.int
     SCANNING_STATE_FIELD_NUMBER: builtins.int
     result: response_generic_pb2.EnumResultGeneric.ValueType
-    " Generic pass/fail/error info"
+    "Generic pass/fail/error info"
     scanning_state: global___EnumScanning.ValueType
-    " Scanning state"
+    "Scanning state"
 
     def __init__(
         self,

@@ -519,6 +519,62 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         }
 
     @ble_proto_command(
+        uuid=GoProUUIDs.CQ_COMMAND,
+        feature_id=FeatureId.COMMAND,
+        action_id=ActionId.REQUEST_PRESET_UPDATE_CUSTOM,
+        response_action_id=ActionId.RESPONSE_PRESET_UPDATE_CUSTOM,
+        request_proto=proto.RequestCustomPresetUpdate,
+        response_proto=proto.ResponseGeneric,
+    )
+    async def custom_preset_update(
+        self,
+        icon_id: proto.EnumPresetIcon.ValueType | None = None,
+        title: str | proto.EnumPresetTitle.ValueType | None = None,
+    ) -> GoProResp[proto.ResponseGeneric]:
+        """Update a custom preset title and / or icon
+
+        Args:
+            icon_id (proto.EnumPresetIcon.ValueType | None): Icon ID. Defaults to None.
+            title (str | proto.EnumPresetTitle.ValueType | None): Custom Preset name or Factory Title ID. Defaults to None.
+
+        Raises:
+            ValueError: Did not set a parameter
+            TypeError: Title was not proto.EnumPresetTitle.ValueType or string
+
+        Returns:
+            GoProResp[proto.ResponseGeneric]: status of preset update
+        """
+        if icon_id is None and title is None:
+            raise ValueError("One of the parameters must be set")
+        d: dict[Any, Any] = {}
+        if icon_id:
+            d["icon_id"] = icon_id
+        if title is not None:
+            if isinstance(title, str):
+                d["title_id"] = proto.EnumPresetTitle.PRESET_TITLE_USER_DEFINED_CUSTOM_NAME
+                d["custom_name"] = title
+            elif isinstance(title, proto.EnumPresetTitle.ValueType):
+                d["title_id"] = title
+            else:
+                raise TypeError("Title must be either int or str")
+        return d  # type: ignore
+
+    @ble_proto_command(
+        uuid=GoProUUIDs.CQ_QUERY,
+        feature_id=FeatureId.QUERY,
+        action_id=ActionId.REQUEST_GET_LAST_MEDIA,
+        response_action_id=ActionId.RESPONSE_GET_LAST_MEDIA,
+        request_proto=proto.RequestGetLastCapturedMedia,
+        response_proto=proto.ResponseLastCapturedMedia,
+    )
+    async def get_last_captured_media(self) -> GoProResp[proto.ResponseLastCapturedMedia]:
+        """Get the last captured media file
+
+        Returns:
+            GoProResp[proto.ResponseLastCapturedMedia]: status of request and last captured file if successful
+        """
+
+    @ble_proto_command(
         uuid=GoProUUIDs.CM_NET_MGMT_COMM,
         feature_id=FeatureId.NETWORK_MANAGEMENT,
         action_id=ActionId.SCAN_WIFI_NETWORKS,
@@ -794,7 +850,6 @@ class BleSettings(BleMessages[BleSetting, SettingId]):
     """
 
     def __init__(self, communicator: GoProBle):
-
         self.resolution: BleSetting[Params.Resolution] = BleSetting[Params.Resolution](
             communicator, SettingId.RESOLUTION, Params.Resolution
         )

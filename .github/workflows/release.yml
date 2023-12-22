@@ -48,6 +48,10 @@ jobs:
 
                   # Move entire release folder (except .git) into target
                   mv !(.git) * ../target > /dev/null 2>&1 || true
+
+                  # Remove internal-only files
+                  rm -rf ../target/.internal
+                  rm ../target/.gitmodules
                   popd
 
                   # Stage changed files

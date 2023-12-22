@@ -25,7 +25,7 @@ from open_gopro.communicator_interface import (
     MessageRules,
 )
 from open_gopro.constants import CmdId, SettingId
-from open_gopro.models import CameraInfo, MediaList, MediaMetadata
+from open_gopro.models import CameraInfo, MediaList, MediaMetadata, MediaPath
 from open_gopro.models.general import WebcamResponse
 from open_gopro.models.response import GoProResp
 from open_gopro.parser_interface import Parser
@@ -44,6 +44,37 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
     #####################################################################################################
     #                         HTTP GET JSON COMMANDS
     #####################################################################################################
+
+    @http_get_json_command(
+        endpoint="gopro/media/last_captured",
+        parser=Parser(json_parser=JsonParsers.PydanticAdapter(MediaPath)),
+    )
+    async def get_last_captured_media(self) -> GoProResp[MediaPath]:
+        """Get the last captured media file.
+
+        Returns:
+            GoProResp[MediaPath]: path of last captured media file
+        """
+
+    # async def update_custom_preset(
+    #     self,
+    #     icon_id: proto.EnumPresetIcon.ValueType | None = None,
+    #     title: str | proto.EnumPresetTitle.ValueType | None = None,
+    # ) -> GoProResp[MediaPath]:
+    #     """Update a custom preset title and / or icon
+
+    #     Args:
+    #         icon_id (proto.EnumPresetIcon.ValueType | None, optional): Icon ID. Defaults to None.
+    #         title (str | proto.EnumPresetTitle.ValueType | None, optional): Custom Preset name or Factory Title ID. Defaults to None.
+
+    #     Raises:
+    #         ValueError: Did not set a parameter
+    #         TypeError: Title was not proto.EnumPresetTitle.ValueType or string
+
+    #     Returns:
+    #         GoProResp[proto.ResponseGeneric]: status of preset update
+    #     """
+    #     raise NotImplementedError("Need to add support for PUT requests")
 
     @http_get_json_command(endpoint="gopro/camera/digital_zoom", arguments=["percent"])
     async def set_digital_zoom(self, *, percent: int) -> GoProResp[None]:

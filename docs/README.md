@@ -1,26 +1,34 @@
 # Open GoPro Documentation
 
-TODO this is out of date :(
+- [Open GoPro Documentation](#open-gopro-documentation)
+  - [Directory Structure](#directory-structure)
+  - [Usage](#usage)
+    - [Requirements](#requirements)
+    - [Usage](#usage-1)
+    - [Deployment](#deployment)
+  - [Site layout](#site-layout)
+  - [Contribution](#contribution)
+  - [Testing](#testing)
+
 
 This directory houses the documentation as well as the framework required to build the Jekyll site.
+
+The documentation files consist of:
+
+-   Interface specifications
+-   Walk-through tutorials in various languages / frameworks
 
 It is based on the [minimal mistakes theme](https://mmistakes.github.io/minimal-mistakes/).
 
 ## Directory Structure
 
 ```
-├── Gemfile: Required Ruby gems to build the site
-├── Gemfile.lock: Specific Ruby gem versions. This is generated from the Gemfile
 ├── README.md: This file
-├── _config*.yml: Jekyll site configurations (different configs are needed for test, local, and deployment)
+├── _config.yml: Jekyll site configuration
 ├── _data
 │   └── navigation.yml: navigation menu definitions
 ├── _includes: html files that are added via the "include" liquid tag
-│   ├── figure: used to add figures with some parameters
-│   ├── footer: custom footer (not currently used)
-│   └── head: custom header (used to add favicons)
 ├── _layouts: any layouts that overwrite default layouts or are new layouts
-│   └── demo.html: adds Github button to the "single" layout
 ├── _plugins: Ruby files and templates for custom liquid tags and filters
 │   ├── accordion.rb: accordion used for faq's
 │   ├── accordion_template.erb: html template for accordion
@@ -34,31 +42,57 @@ It is based on the [minimal mistakes theme](https://mmistakes.github.io/minimal-
 │   └── warning.rb: red warning callout
 ├── _sass: .scss files that overwrite the default minimal mistakes files
 │   ├── ...
-├── _site: location of generated site when it is built
+├── _site: location of generated site when it is built (ignored via .gitignore)
 ├── assets: static assets served along with the built html files
-│   ├── css
-│   ├── images (add any static images from demos, tutorials, etc in relevant subdirectories here)
-│   └── js
 ├── contribution.md: an example of various tools / functionality for writing .md files in this repo
-├── demos.md: the top-level demos documentation
 ├── faq.md: frequently asked questions
-├── index.html: the home page.
+├── tutorials.md: top-level tutorials entrypoint
+├── index.md: the home page.
 ├── specs: Open GoPro interface specifications
-│   ├── ble.md: top level BLE spec information
-│   └── http.md: top level HTTP spec information
 │   ├── ble_versions: individual BLE specs
 │   └── http_versions: individual HTTP specs
 └── tutorials: This is the Jekyll collections directory.
-    ├── _bash-tutorials: bash tutorial source documentation
-    ├── _demos: this is generated before the site is built from the top level demos folder in this repo
-    ├── _python-tutorials: python tutorial source documentation
-    └── tutorials.md: the top-level tutorials documentation
+    ├── tutorial_X_XXX: per-tutorial documentation
+    └── ...
 ```
 
 ## Usage
 
-See the top-level [README](../README.md) for how to use the Docker image defined in this repo
-to locally serve the site for development.
+### Requirements
+
+-   It is assumed that your environment has access to GNU or BSD tools (i.e. this will not run natively on Windows)
+-   [Docker](https://www.docker.com) must be installed
+-   To edit any files tracked by `.gitattributes`, git-lfs must be [installed](https://git-lfs.github.com/)
+
+### Usage
+
+First, build and serve the site locally via:
+
+```
+make serve
+```
+
+The site can then be viewed at `http://localhost:4998`
+
+> Note! This is different than the address from the Jekyll CLI output
+
+As you modify .md files in the `docs` repo, the changes will be mirrored to the local site when the page is
+refreshed. The local site is served with an "incremental" build such that only the necessary files are re-built
+after a change. This should work fine for modifications to .md files. However, if a sweeping change such
+as site-wide configuration is made, it will likely be necessary to re-build the entire site via:
+
+```
+make clean serve
+```
+
+### Deployment
+
+Github Pages serves the site from the `gh-pages` branch of this repo. Whenever the main branch is updated (such
+as via a Pull Request being merged),
+the "Jekyll Build and Deploy" [Github Actions](hhttps://github.com/gopro/OpenGoPro/actions/workflows/release.yml) workflow will automatically
+be triggered to build the site from `main` and update the `gh-pages` branch.
+
+> Note! This process should be invisible to the developer
 
 ## Site layout
 

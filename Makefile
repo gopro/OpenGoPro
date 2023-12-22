@@ -15,46 +15,41 @@ help: ## Display this help which is generated from Make goal comments
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 # Docker images are currently not public. So we build if pull fails for the local use case.
-.PHONY: setup
-setup:
+.PHONY: docker-setup
+docker-setup:
 	-@docker-compose pull || docker-compose build
+
+.PHONY: docker-kill
+docker-kill:
+	-@docker kill jekyll plant_uml > /dev/null 2>&1
 
 .PHONY: clean
 clean: ## Clean cached jekyll files
 	@echo "🧼 Cleaning jekyll artifacts..."
 	-@docker-compose down > /dev/null 2>&1
-	@rm -rf docs/_site docs/.jekyll-cache docs/.jekyll-metadata docs/_demos docs/protos.md
+	@rm -rf docs/_site docs/.jekyll-cache docs/.jekyll-metadata
 
 .PHONY: serve
-serve: setup
+serve: docker-kill docker-setup
 serve: ## Serve site locally
 	@echo COMMAND="-u http://localhost:4998/ -b \"\" -p 4998 serve" > .env
 	@docker-compose up
 	@rm -rf .env
 
 .PHONY: build
-build: setup
+build: docker-setup
 build: ## Build site for deployment
 	@echo COMMAND=\"-u ${BUILD_HOST_URL} -b ${BUILD_BASE_URL} build\" > .env
 	@docker-compose up --abort-on-container-exit
 	@rm -rf .env
 
 .PHONY: tests
-tests: setup
+tests: docker-setup
 tests: ## Serve, then run link checker. Times out after 5 minutes.
 	-@docker-compose pull linkchecker || docker-compose build linkchecker
 	@echo COMMAND="-u http://jekyll:4998/ -b \"\" -p 4998 serve" > .env
 	@docker-compose --profile test up --abort-on-container-exit
 	@rm -rf .env
-
-.PHONY: version
-version: ## Update the Open GoPro version
-	@if test $(VERSION) == $(ORIGINAL_VERSION); then \
-		echo "$(VERSION) is not a new version" ; false;\
-	fi
-	@echo "⬆️ Updating version to $(VERSION)"
-	@sed -i.bak "s/Current Version: $(ORIGINAL_VERSION)/Current Version: ${VERSION}/g" README.md && rm README.md.bak
-	@make copyright
 
 .PHONY: copyright
 copyright: ## Check for and add missing copyrights

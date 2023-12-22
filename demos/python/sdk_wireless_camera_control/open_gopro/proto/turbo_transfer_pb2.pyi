@@ -25,7 +25,7 @@ class RequestSetTurboActive(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     ACTIVE_FIELD_NUMBER: builtins.int
     active: builtins.bool
-    " Enable or disable Turbo Transfer feature"
+    "Enable or disable Turbo Transfer feature"
 
     def __init__(self, *, active: builtins.bool | None = ...) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["active", b"active"]) -> builtins.bool: ...

@@ -11,7 +11,7 @@ main:
     - title: 'Tutorials'
       url: /tutorials
     - title: 'Demos'
-      url: /demos
+      url: https://github.com/gopro/OpenGoPro/tree/main/demos
     - title: 'FAQ'
       url: /faq
 
@@ -37,5 +37,5 @@ specs:
     - title: 'HTTP 2.0'
       url: /http_2_0
     - title: 'Protobuf'
-      url: /protos
+      url: /protos/open_gopro
 

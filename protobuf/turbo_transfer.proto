@@ -1,5 +1,5 @@
 /* turbo_transfer.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Sat Nov  4 21:02:36 UTC 2023 */
+/* This copyright was auto-generated on Thu Dec 21 23:28:43 UTC 2023 */
 
 /***********************************************************************************************************************
  *
@@ -20,5 +20,5 @@ package open_gopro;
  * Response: @ref ResponseGeneric
  */
 message RequestSetTurboActive {
-    required bool active = 1; //  Enable or disable Turbo Transfer feature
+    required bool active = 1; // Enable or disable Turbo Transfer feature
 }

@@ -17,10 +17,6 @@ jobs:
                       image: ghcr.io/${{ github.repository }}/gpJekyll
                     - context: ./.admin/linkchecker
                       image: ghcr.io/${{ github.repository }}/gpLinkChecker
-                    - context: ./.admin/proto_doc_gen
-                      image: ghcr.io/${{ github.repository }}/gpProtoDoc
-                    - context: ./.admin/prepare_demos
-                      image: ghcr.io/${{ github.repository }}/gpDemoDoc
         permissions:
             contents: read
             packages: write

@@ -5,7 +5,6 @@
 
 They are imported here so they can be imported from open_gopro.proto
 """
-
 from open_gopro.proto.cohn_pb2 import (
     EnumCOHNNetworkState,
     EnumCOHNStatus,
@@ -26,6 +25,10 @@ from open_gopro.proto.live_streaming_pb2 import (
     RequestGetLiveStreamStatus,
     RequestSetLiveStreamMode,
 )
+from open_gopro.proto.media_pb2 import (
+    RequestGetLastCapturedMedia,
+    ResponseLastCapturedMedia,
+)
 from open_gopro.proto.network_management_pb2 import (
     EnumProvisioning,
     EnumScanEntryFlags,
@@ -44,16 +47,23 @@ from open_gopro.proto.network_management_pb2 import (
 )
 from open_gopro.proto.preset_status_pb2 import (
     EnumPresetGroup,
+    EnumPresetIcon,
+    EnumPresetTitle,
     NotifyPresetStatus,
     Preset,
     PresetGroup,
     PresetSetting,
+    RequestCustomPresetUpdate,
 )
 from open_gopro.proto.request_get_preset_status_pb2 import (
     EnumRegisterPresetStatus,
     RequestGetPresetStatus,
 )
-from open_gopro.proto.response_generic_pb2 import EnumResultGeneric, ResponseGeneric
+from open_gopro.proto.response_generic_pb2 import (
+    EnumResultGeneric,
+    Media,
+    ResponseGeneric,
+)
 from open_gopro.proto.set_camera_control_status_pb2 import (
     EnumCameraControlStatus,
     RequestSetCameraControlStatus,

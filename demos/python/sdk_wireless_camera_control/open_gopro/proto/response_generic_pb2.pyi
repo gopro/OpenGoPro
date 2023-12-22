@@ -31,6 +31,7 @@ class _EnumResultGenericEnumTypeWrapper(
     RESULT_NOT_SUPPORTED: _EnumResultGeneric.ValueType
     RESULT_ARGUMENT_OUT_OF_BOUNDS: _EnumResultGeneric.ValueType
     RESULT_ARGUMENT_INVALID: _EnumResultGeneric.ValueType
+    RESULT_RESOURCE_NOT_AVAILABLE: _EnumResultGeneric.ValueType
 
 class EnumResultGeneric(_EnumResultGeneric, metaclass=_EnumResultGenericEnumTypeWrapper): ...
 
@@ -40,6 +41,7 @@ RESULT_ILL_FORMED: EnumResultGeneric.ValueType
 RESULT_NOT_SUPPORTED: EnumResultGeneric.ValueType
 RESULT_ARGUMENT_OUT_OF_BOUNDS: EnumResultGeneric.ValueType
 RESULT_ARGUMENT_INVALID: EnumResultGeneric.ValueType
+RESULT_RESOURCE_NOT_AVAILABLE: EnumResultGeneric.ValueType
 global___EnumResultGeneric = EnumResultGeneric
 
 class ResponseGeneric(google.protobuf.message.Message):
@@ -52,10 +54,31 @@ class ResponseGeneric(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     RESULT_FIELD_NUMBER: builtins.int
     result: global___EnumResultGeneric.ValueType
-    " Generic pass/fail/error info"
+    "Generic pass/fail/error info"
 
     def __init__(self, *, result: global___EnumResultGeneric.ValueType | None = ...) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["result", b"result"]) -> builtins.bool: ...
     def ClearField(self, field_name: typing_extensions.Literal["result", b"result"]) -> None: ...
 
 global___ResponseGeneric = ResponseGeneric
+
+class Media(google.protobuf.message.Message):
+    """*
+    A reusable model to represent a media file
+    """
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    FOLDER_FIELD_NUMBER: builtins.int
+    FILE_FIELD_NUMBER: builtins.int
+    folder: builtins.str
+    "Directory that the media is contained in"
+    file: builtins.str
+    "Filename of media"
+
+    def __init__(self, *, folder: builtins.str | None = ..., file: builtins.str | None = ...) -> None: ...
+    def HasField(
+        self, field_name: typing_extensions.Literal["file", b"file", "folder", b"folder"]
+    ) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["file", b"file", "folder", b"folder"]) -> None: ...
+
+global___Media = Media

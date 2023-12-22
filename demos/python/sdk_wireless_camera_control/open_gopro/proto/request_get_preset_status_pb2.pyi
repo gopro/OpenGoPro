@@ -28,16 +28,16 @@ class _EnumRegisterPresetStatusEnumTypeWrapper(
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     REGISTER_PRESET_STATUS_PRESET: _EnumRegisterPresetStatus.ValueType
-    " Send notification when properties of a preset change"
+    "Send notification when properties of a preset change"
     REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY: _EnumRegisterPresetStatus.ValueType
-    " Send notification when properties of a preset group change"
+    "Send notification when properties of a preset group change"
 
 class EnumRegisterPresetStatus(_EnumRegisterPresetStatus, metaclass=_EnumRegisterPresetStatusEnumTypeWrapper): ...
 
 REGISTER_PRESET_STATUS_PRESET: EnumRegisterPresetStatus.ValueType
-" Send notification when properties of a preset change"
+"Send notification when properties of a preset change"
 REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY: EnumRegisterPresetStatus.ValueType
-" Send notification when properties of a preset group change"
+"Send notification when properties of a preset group change"
 global___EnumRegisterPresetStatus = EnumRegisterPresetStatus
 
 class RequestGetPresetStatus(google.protobuf.message.Message):

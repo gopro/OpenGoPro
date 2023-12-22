@@ -27,14 +27,14 @@ class _EnumCameraControlStatusEnumTypeWrapper(
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     CAMERA_IDLE: _EnumCameraControlStatus.ValueType
     CAMERA_CONTROL: _EnumCameraControlStatus.ValueType
-    " Can only be set by camera, not by app or third party"
+    "Can only be set by camera, not by app or third party"
     CAMERA_EXTERNAL_CONTROL: _EnumCameraControlStatus.ValueType
 
 class EnumCameraControlStatus(_EnumCameraControlStatus, metaclass=_EnumCameraControlStatusEnumTypeWrapper): ...
 
 CAMERA_IDLE: EnumCameraControlStatus.ValueType
 CAMERA_CONTROL: EnumCameraControlStatus.ValueType
-" Can only be set by camera, not by app or third party"
+"Can only be set by camera, not by app or third party"
 CAMERA_EXTERNAL_CONTROL: EnumCameraControlStatus.ValueType
 global___EnumCameraControlStatus = EnumCameraControlStatus
 
@@ -48,7 +48,7 @@ class RequestSetCameraControlStatus(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CAMERA_CONTROL_STATUS_FIELD_NUMBER: builtins.int
     camera_control_status: global___EnumCameraControlStatus.ValueType
-    "  Declare who is taking control of the camera"
+    "Declare who is taking control of the camera"
 
     def __init__(self, *, camera_control_status: global___EnumCameraControlStatus.ValueType | None = ...) -> None: ...
     def HasField(

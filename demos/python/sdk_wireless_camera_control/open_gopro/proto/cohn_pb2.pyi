@@ -77,7 +77,7 @@ class RequestGetCOHNStatus(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     REGISTER_COHN_STATUS_FIELD_NUMBER: builtins.int
     register_cohn_status: builtins.bool
-    " 1 to register, 0 to unregister"
+    "1 to register, 0 to unregister"
 
     def __init__(self, *, register_cohn_status: builtins.bool | None = ...) -> None: ...
     def HasField(
@@ -104,21 +104,21 @@ class NotifyCOHNStatus(google.protobuf.message.Message):
     SSID_FIELD_NUMBER: builtins.int
     MACADDRESS_FIELD_NUMBER: builtins.int
     status: global___EnumCOHNStatus.ValueType
-    "  Current COHN status"
+    "Current COHN status"
     state: global___EnumCOHNNetworkState.ValueType
-    "  Current COHN network state"
+    "Current COHN network state"
     username: builtins.str
-    "  Username used for http basic auth header"
+    "Username used for http basic auth header"
     password: builtins.str
-    "  Password used for http basic auth header"
+    "Password used for http basic auth header"
     ipaddress: builtins.str
-    "  Camera’s IP address on the local network"
+    "Camera's IP address on the local network"
     enabled: builtins.bool
-    "  Is COHN currently enabled"
+    "Is COHN currently enabled"
     ssid: builtins.str
-    "  Currently connected SSID"
+    "Currently connected SSID"
     macaddress: builtins.str
-    "  MAC address of the wifi adapter"
+    "MAC address of the wifi adapter"
 
     def __init__(
         self,
@@ -187,7 +187,7 @@ class RequestCreateCOHNCert(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     OVERRIDE_FIELD_NUMBER: builtins.int
     override: builtins.bool
-    " Override current provisioning and create new cert"
+    "Override current provisioning and create new cert"
 
     def __init__(self, *, override: builtins.bool | None = ...) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["override", b"override"]) -> builtins.bool: ...
@@ -230,9 +230,9 @@ class ResponseCOHNCert(google.protobuf.message.Message):
     RESULT_FIELD_NUMBER: builtins.int
     CERT_FIELD_NUMBER: builtins.int
     result: response_generic_pb2.EnumResultGeneric.ValueType
-    " Was request successful?"
+    "Was request successful?"
     cert: builtins.str
-    " Root CA cert (ASCII text)"
+    "Root CA cert (ASCII text)"
 
     def __init__(
         self, *, result: response_generic_pb2.EnumResultGeneric.ValueType | None = ..., cert: builtins.str | None = ...
@@ -254,7 +254,7 @@ class RequestSetCOHNSetting(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     COHN_ACTIVE_FIELD_NUMBER: builtins.int
     cohn_active: builtins.bool
-    "  1 to enable, 0 to disable"
+    "1 to enable, 0 to disable"
 
     def __init__(self, *, cohn_active: builtins.bool | None = ...) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["cohn_active", b"cohn_active"]) -> builtins.bool: ...

@@ -8,7 +8,7 @@ lesson: 6
 # Tutorial 6: Send WiFi Commands
 
 This document will provide a walk-through tutorial to send Open GoPro
-[HTTP commands]({% link specs/http_versions/http_2_0.md %}) to the GoPro.
+[HTTP commands](/http) to the GoPro.
 
 {% tip %}
 It is suggested that you have first completed the
@@ -240,7 +240,7 @@ sequenceDiagram
 ## Get State
 
 The first command we will be sending is
-[Get State]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). This command will
+[Get State](/http#commands-quick-reference). This command will
 return all of the current settings and values. It is basically a combination of the
 [Get All Settings]({% link _tutorials/tutorial_4_ble_queries/tutorial.md %}#query-all) and
 [Get All Statuses]({% link _tutorials/tutorial_4_ble_queries/tutorial.md %}#query-all)
@@ -457,7 +457,7 @@ this by seeing the preset name in the pill at bottom middle of the screen.
 ## Set Shutter
 
 The next command we will be sending is
-[Set Shutter]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). which is
+[Set Shutter](/http#commands-quick-reference). which is
 used to start and stop encoding.
 
 {% linkedTabs set_shutter_send %}
@@ -519,7 +519,7 @@ attempt to do so will result in an error response.
 
 ## Set Setting
 
-The next command will be sending is [Set Setting]({% link specs/http_versions/http_2_0.md %}#settings-quick-reference).
+The next command will be sending is [Set Setting](/http#settings-quick-reference).
 This end point is used to update all of the settings on the camera. It is analogous to BLE commands like
 [Set Video Resolution]({% link _tutorials/tutorial_2_send_ble_commands/tutorial.md %}#set-the-video-resolution).
 
@@ -597,7 +597,7 @@ As a reader exercise, try using the [Get State] command to verify that the resol
 ## Preview Stream
 
 The next command we will be sending is
-[Preview Stream]({% link specs/http_versions/http_2_0.md %}#commands-quick-reference). This command will
+[Preview Stream](/http#commands-quick-reference). This command will
 enable (or disable) the preview stream . It is then possible to view the preview stream from a media player.
 
 The commands write to the following endpoints:
@@ -720,6 +720,6 @@ Congratulations 🤙
 {% endsuccess %}
 
 You can now send any of the HTTP commands defined in the
-[Open GoPro Interface]({% link specs/http_versions/http_2_0.md %}) that return JSON responses. You
+[Open GoPro Interface](/http) that return JSON responses. You
 may have noted that we did not discuss one of these (Get Media List) in this tutorial. Proceed to the
 next tutorial to see how to get and perform operations using the media list.

@@ -1,5 +1,5 @@
 /* request_get_preset_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Sat Nov  4 21:02:36 UTC 2023 */
+/* This copyright was auto-generated on Thu Dec 21 23:28:43 UTC 2023 */
 
 /***********************************************************************************************************************
  *
@@ -15,8 +15,8 @@ syntax = "proto2";
 package open_gopro;
 
 enum EnumRegisterPresetStatus {
-    REGISTER_PRESET_STATUS_PRESET             = 1; //  Send notification when properties of a preset change
-    REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY = 2; //  Send notification when properties of a preset group change
+    REGISTER_PRESET_STATUS_PRESET             = 1; // Send notification when properties of a preset change
+    REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY = 2; // Send notification when properties of a preset group change
 }
 
 /**
@@ -27,6 +27,6 @@ enum EnumRegisterPresetStatus {
  * Notification: @ref NotifyPresetStatus sent periodically as preset status changes, if registered.
  */
 message RequestGetPresetStatus {
-    repeated EnumRegisterPresetStatus register_preset_status   = 1; //  Array of Preset statuses to be notified about
-    repeated EnumRegisterPresetStatus unregister_preset_status = 2; //  Array of Preset statuses to stop being notified about
+    repeated EnumRegisterPresetStatus register_preset_status   = 1; // Array of Preset statuses to be notified about
+    repeated EnumRegisterPresetStatus unregister_preset_status = 2; // Array of Preset statuses to stop being notified about
 }

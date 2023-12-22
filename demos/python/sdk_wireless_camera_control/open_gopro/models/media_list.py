@@ -14,6 +14,18 @@ from open_gopro import types
 from open_gopro.models.bases import CustomBaseModel
 
 ##############################################################################################################
+# Generic
+##############################################################################################################
+
+
+class MediaPath(ABC, CustomBaseModel):
+    """Model to represent media path"""
+
+    folder: str  #: directory that media lives in
+    file: str  #: media file name (including file extension)
+
+
+##############################################################################################################
 # Metadata
 ##############################################################################################################
 

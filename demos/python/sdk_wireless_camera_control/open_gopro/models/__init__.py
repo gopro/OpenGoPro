@@ -9,6 +9,7 @@ from .media_list import (
     MediaItem,
     MediaList,
     MediaMetadata,
+    MediaPath,
     PhotoMetadata,
     VideoMetadata,
 )

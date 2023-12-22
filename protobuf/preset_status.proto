@@ -1,5 +1,5 @@
 /* preset_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Sat Nov  4 21:02:36 UTC 2023 */
+/* This copyright was auto-generated on Thu Dec 21 23:28:43 UTC 2023 */
 
 /***********************************************************************************************************************
  *
@@ -13,6 +13,8 @@
 
 syntax = "proto2";
 package open_gopro;
+
+import "response_generic.proto";
 
 enum EnumFlatMode {
     FLAT_MODE_UNKNOWN              = -1;
@@ -40,13 +42,9 @@ enum EnumFlatMode {
 }
 
 enum EnumPresetGroup {
-    PRESET_GROUP_ID_VIDEO               = 1000;
-    PRESET_GROUP_ID_PHOTO               = 1001;
-    PRESET_GROUP_ID_TIMELAPSE           = 1002;
-    PRESET_GROUP_ID_VIDEO_DUAL_LENS     = 1003;
-    PRESET_GROUP_ID_PHOTO_DUAL_LENS     = 1004;
-    PRESET_GROUP_ID_TIMELAPSE_DUAL_LENS = 1005;
-    PRESET_GROUP_ID_SPECIAL             = 1006;
+    PRESET_GROUP_ID_VIDEO     = 1000;
+    PRESET_GROUP_ID_PHOTO     = 1001;
+    PRESET_GROUP_ID_TIMELAPSE = 1002;
 }
 
 enum EnumPresetGroupIcon {
@@ -61,89 +59,60 @@ enum EnumPresetGroupIcon {
 }
 
 enum EnumPresetIcon {
-    PRESET_ICON_VIDEO                   = 0;
-    PRESET_ICON_ACTIVITY                = 1;
-    PRESET_ICON_CINEMATIC               = 2;
-    PRESET_ICON_PHOTO                   = 3;
-    PRESET_ICON_LIVE_BURST              = 4;
-    PRESET_ICON_BURST                   = 5;
-    PRESET_ICON_PHOTO_NIGHT             = 6;
-    PRESET_ICON_TIMEWARP                = 7;
-    PRESET_ICON_TIMELAPSE               = 8;
-    PRESET_ICON_NIGHTLAPSE              = 9;
-    PRESET_ICON_SNAIL                   = 10;
-    PRESET_ICON_VIDEO_2                 = 11;
-    PRESET_ICON_360_VIDEO               = 12;
-    PRESET_ICON_PHOTO_2                 = 13;
-    PRESET_ICON_PANORAMA                = 14;
-    PRESET_ICON_BURST_2                 = 15;
-    PRESET_ICON_TIMEWARP_2              = 16;
-    PRESET_ICON_TIMELAPSE_2             = 17;
-    PRESET_ICON_CUSTOM                  = 18;
-    PRESET_ICON_AIR                     = 19;
-    PRESET_ICON_BIKE                    = 20;
-    PRESET_ICON_EPIC                    = 21;
-    PRESET_ICON_INDOOR                  = 22;
-    PRESET_ICON_MOTOR                   = 23;
-    PRESET_ICON_MOUNTED                 = 24;
-    PRESET_ICON_OUTDOOR                 = 25;
-    PRESET_ICON_POV                     = 26;
-    PRESET_ICON_SELFIE                  = 27;
-    PRESET_ICON_SKATE                   = 28;
-    PRESET_ICON_SNOW                    = 29;
-    PRESET_ICON_TRAIL                   = 30;
-    PRESET_ICON_TRAVEL                  = 31;
-    PRESET_ICON_WATER                   = 32;
-    PRESET_ICON_LOOPING                 = 33;
-    /**
-     * New custom icon (34 - 43)added for HERO 12
-     */
-    PRESET_ICON_STARS                   = 34;
-    PRESET_ICON_ACTION                  = 35;
-    PRESET_ICON_FOLLOW_CAM              = 36;
-    PRESET_ICON_SURF                    = 37;
-    PRESET_ICON_CITY                    = 38;
-    PRESET_ICON_SHAKY                   = 39;
-    PRESET_ICON_CHESTY                  = 40;
-    PRESET_ICON_HELMET                  = 41;
-    PRESET_ICON_BITE                    = 42;
-    PRESET_ICON_MTB                     = 43;
-    /*
-     * Reserved 44 - 50 for Custom presets. Add icons below for new presets starting from 51
-     */
-    PRESET_ICON_MAX_VIDEO               = 55;
-    PRESET_ICON_MAX_PHOTO               = 56;
-    PRESET_ICON_MAX_TIMEWARP            = 57;
-    PRESET_ICON_BASIC                   = 58;
-    PRESET_ICON_ULTRA_SLO_MO            = 59;
-    PRESET_ICON_STANDARD_ENDURANCE      = 60;
-    PRESET_ICON_ACTIVITY_ENDURANCE      = 61;
-    PRESET_ICON_CINEMATIC_ENDURANCE     = 62;
-    PRESET_ICON_SLOMO_ENDURANCE         = 63;
-    PRESET_ICON_STATIONARY_1            = 64;
-    PRESET_ICON_STATIONARY_2            = 65;
-    PRESET_ICON_STATIONARY_3            = 66;
-    PRESET_ICON_STATIONARY_4            = 67;
-    PRESET_ICON_SIMPLE_SUPER_PHOTO      = 70;
-    PRESET_ICON_SIMPLE_NIGHT_PHOTO      = 71;
-    PRESET_ICON_HIGHEST_QUALITY_VIDEO   = 73;
-    PRESET_ICON_STANDARD_QUALITY_VIDEO  = 74;
-    PRESET_ICON_BASIC_QUALITY_VIDEO     = 75;
-    PRESET_ICON_STAR_TRAIL              = 76;
-    PRESET_ICON_LIGHT_PAINTING          = 77;
-    PRESET_ICON_LIGHT_TRAIL             = 78;
-    PRESET_ICON_FULL_FRAME              = 79;
-    PRESET_ICON_EASY_MAX_VIDEO          = 80;
-    PRESET_ICON_EASY_MAX_PHOTO          = 81;
-    PRESET_ICON_EASY_MAX_TIMEWARP       = 82;
-    PRESET_ICON_EASY_MAX_STAR_TRAIL     = 83;
-    PRESET_ICON_EASY_MAX_LIGHT_PAINTING = 84;
-    PRESET_ICON_EASY_MAX_LIGHT_TRAIL    = 85;
-    PRESET_ICON_MAX_STAR_TRAIL          = 89;
-    PRESET_ICON_MAX_LIGHT_PAINTING      = 90;
-    PRESET_ICON_MAX_LIGHT_TRAIL         = 91;
-    PRESET_ICON_TIMELAPSE_PHOTO         = 1000;
-    PRESET_ICON_NIGHTLAPSE_PHOTO        = 1001;
+    PRESET_ICON_VIDEO                  = 0;
+    PRESET_ICON_ACTIVITY               = 1;
+    PRESET_ICON_CINEMATIC              = 2;
+    PRESET_ICON_PHOTO                  = 3;
+    PRESET_ICON_LIVE_BURST             = 4;
+    PRESET_ICON_BURST                  = 5;
+    PRESET_ICON_PHOTO_NIGHT            = 6;
+    PRESET_ICON_TIMEWARP               = 7;
+    PRESET_ICON_TIMELAPSE              = 8;
+    PRESET_ICON_NIGHTLAPSE             = 9;
+    PRESET_ICON_SNAIL                  = 10;
+    PRESET_ICON_VIDEO_2                = 11;
+    PRESET_ICON_PHOTO_2                = 13;
+    PRESET_ICON_PANORAMA               = 14;
+    PRESET_ICON_BURST_2                = 15;
+    PRESET_ICON_TIMEWARP_2             = 16;
+    PRESET_ICON_TIMELAPSE_2            = 17;
+    PRESET_ICON_CUSTOM                 = 18;
+    PRESET_ICON_AIR                    = 19;
+    PRESET_ICON_BIKE                   = 20;
+    PRESET_ICON_EPIC                   = 21;
+    PRESET_ICON_INDOOR                 = 22;
+    PRESET_ICON_MOTOR                  = 23;
+    PRESET_ICON_MOUNTED                = 24;
+    PRESET_ICON_OUTDOOR                = 25;
+    PRESET_ICON_POV                    = 26;
+    PRESET_ICON_SELFIE                 = 27;
+    PRESET_ICON_SKATE                  = 28;
+    PRESET_ICON_SNOW                   = 29;
+    PRESET_ICON_TRAIL                  = 30;
+    PRESET_ICON_TRAVEL                 = 31;
+    PRESET_ICON_WATER                  = 32;
+    PRESET_ICON_LOOPING                = 33;
+    PRESET_ICON_BASIC                  = 58;
+    PRESET_ICON_ULTRA_SLO_MO           = 59;
+    PRESET_ICON_STANDARD_ENDURANCE     = 60;
+    PRESET_ICON_ACTIVITY_ENDURANCE     = 61;
+    PRESET_ICON_CINEMATIC_ENDURANCE    = 62;
+    PRESET_ICON_SLOMO_ENDURANCE        = 63;
+    PRESET_ICON_STATIONARY_1           = 64;
+    PRESET_ICON_STATIONARY_2           = 65;
+    PRESET_ICON_STATIONARY_3           = 66;
+    PRESET_ICON_STATIONARY_4           = 67;
+    PRESET_ICON_SIMPLE_SUPER_PHOTO     = 70;
+    PRESET_ICON_SIMPLE_NIGHT_PHOTO     = 71;
+    PRESET_ICON_HIGHEST_QUALITY_VIDEO  = 73;
+    PRESET_ICON_STANDARD_QUALITY_VIDEO = 74;
+    PRESET_ICON_BASIC_QUALITY_VIDEO    = 75;
+    PRESET_ICON_STAR_TRAIL             = 76;
+    PRESET_ICON_LIGHT_PAINTING         = 77;
+    PRESET_ICON_LIGHT_TRAIL            = 78;
+    PRESET_ICON_FULL_FRAME             = 79;
+    PRESET_ICON_TIMELAPSE_PHOTO        = 1000;
+    PRESET_ICON_NIGHTLAPSE_PHOTO       = 1001;
 }
 
 enum EnumPresetTitle {
@@ -159,12 +128,9 @@ enum EnumPresetTitle {
     PRESET_TITLE_NIGHT_LAPSE              = 9;
     PRESET_TITLE_VIDEO                    = 10;
     PRESET_TITLE_SLOMO                    = 11;
-    PRESET_TITLE_360_VIDEO                = 12;
     PRESET_TITLE_PHOTO_2                  = 13;
     PRESET_TITLE_PANORAMA                 = 14;
-    PRESET_TITLE_360_PHOTO                = 15;
     PRESET_TITLE_TIME_WARP_2              = 16;
-    PRESET_TITLE_360_TIME_WARP            = 17;
     PRESET_TITLE_CUSTOM                   = 18;
     PRESET_TITLE_AIR                      = 19;
     PRESET_TITLE_BIKE                     = 20;
@@ -181,29 +147,6 @@ enum EnumPresetTitle {
     PRESET_TITLE_TRAVEL                   = 31;
     PRESET_TITLE_WATER                    = 32;
     PRESET_TITLE_LOOPING                  = 33;
-    /*
-     * New custom names (34 - 43)added for HERO 12
-     */
-    PRESET_TITLE_STARS                    = 34;
-    PRESET_TITLE_ACTION                   = 35;
-    PRESET_TITLE_FOLLOW_CAM               = 36;
-    PRESET_TITLE_SURF                     = 37;
-    PRESET_TITLE_CITY                     = 38;
-    PRESET_TITLE_SHAKY                    = 39;
-    PRESET_TITLE_CHESTY                   = 40;
-    PRESET_TITLE_HELMET                   = 41;
-    PRESET_TITLE_BITE                     = 42;
-    PRESET_TITLE_MTB                      = 43;
-    /**
-     * Reserved 44 - 50 for custom presets.
-     */
-    PRESET_TITLE_360_TIMELAPSE            = 51;
-    PRESET_TITLE_360_NIGHT_LAPSE          = 52;
-    PRESET_TITLE_360_NIGHT_PHOTO          = 53;
-    PRESET_TITLE_PANO_TIME_LAPSE          = 54;
-    PRESET_TITLE_MAX_VIDEO                = 55;
-    PRESET_TITLE_MAX_PHOTO                = 56;
-    PRESET_TITLE_MAX_TIMEWARP             = 57;
     PRESET_TITLE_BASIC                    = 58;
     PRESET_TITLE_ULTRA_SLO_MO             = 59;
     PRESET_TITLE_STANDARD_ENDURANCE       = 60;
@@ -226,19 +169,8 @@ enum EnumPresetTitle {
     PRESET_TITLE_LIGHT_PAINTING           = 77;
     PRESET_TITLE_LIGHT_TRAIL              = 78;
     PRESET_TITLE_FULL_FRAME               = 79;
-    PRESET_TITLE_MAX_LENS_VIDEO           = 80;
-    PRESET_TITLE_MAX_LENS_TIMEWARP        = 81;
     PRESET_TITLE_STANDARD_QUALITY_VIDEO   = 82;
     PRESET_TITLE_BASIC_QUALITY_VIDEO      = 83;
-    PRESET_TITLE_EASY_MAX_VIDEO           = 84;
-    PRESET_TITLE_EASY_MAX_PHOTO           = 85;
-    PRESET_TITLE_EASY_MAX_TIMEWARP        = 86;
-    PRESET_TITLE_EASY_MAX_STAR_TRAIL      = 87;
-    PRESET_TITLE_EASY_MAX_LIGHT_PAINTING  = 88;
-    PRESET_TITLE_EASY_MAX_LIGHT_TRAIL     = 89;
-    PRESET_TITLE_MAX_STAR_TRAIL           = 90;
-    PRESET_TITLE_MAX_LIGHT_PAINTING       = 91;
-    PRESET_TITLE_MAX_LIGHT_TRAIL          = 92;
     PRESET_TITLE_HIGHEST_QUALITY_VIDEO    = 93;
     PRESET_TITLE_USER_DEFINED_CUSTOM_NAME = 94;
 }
@@ -251,40 +183,76 @@ enum EnumPresetTitle {
  * - asynchronously when Preset change if registered in @rev RequestGetPresetStatus
  */
 message NotifyPresetStatus {
-    repeated PresetGroup preset_group_array = 1; //  Array of currently available Preset Groups
+    repeated PresetGroup preset_group_array = 1; // Array of currently available Preset Groups
 }
 
 /**
  * An individual preset.
  */
 message Preset {
-    optional int32           id            = 1;  //  Preset ID
-    optional EnumFlatMode    mode          = 2;  //  Preset flatmode ID
-    optional EnumPresetTitle title_id      = 3;  //  Preset Title ID
-    optional int32           title_number  = 4;  //  Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
-    optional bool            user_defined  = 5;  //  Is the Preset custom/user-defined?
-    optional EnumPresetIcon  icon          = 6;  //  Preset Icon ID
-    repeated PresetSetting   setting_array = 7;  //  Array of settings associated with this Preset
-    optional bool            is_modified   = 8;  //  Has Preset been modified from factory defaults? (False for user-defined Presets)
-    optional bool            is_fixed      = 9;  //  Is this Preset mutable?
-    optional string          custom_name   = 10; //  Custom string name given to this preset via @ref RequestCustomPresetUpdate
+    optional int32           id            = 1;  // Preset ID
+    optional EnumFlatMode    mode          = 2;  // Preset flatmode ID
+    optional EnumPresetTitle title_id      = 3;  // Preset Title ID
+    optional int32           title_number  = 4;  // Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
+    optional bool            user_defined  = 5;  // Is the Preset custom/user-defined?
+    optional EnumPresetIcon  icon          = 6;  // Preset Icon ID
+    repeated PresetSetting   setting_array = 7;  // Array of settings associated with this Preset
+    optional bool            is_modified   = 8;  // Has Preset been modified from factory defaults? (False for user-defined Presets)
+    optional bool            is_fixed      = 9;  // Is this Preset mutable?
+    optional string          custom_name   = 10; // Custom string name given to this preset via @ref RequestCustomPresetUpdate
+}
+
+/**
+ * Request to update the active custom preset
+ *
+ * This only operates on the currently active Preset and will fail  if the current
+ * Preset is not custom.
+ *
+ * The use cases are:
+ *
+ * 1. Update the Custom Preset Icon
+ *     - `icon_id` is always optional and can always be passed
+ *
+ * and / or
+ *
+ * 2. Update the Custom Preset Title to a...
+ *      - **Factory Preset Title**: Set `title_id` to a non-94 value
+ *      - **Custom Preset Name**: Set `title_id` to 94 and specify a `custom_name`
+ *
+ * Returns a @ref ResponseGeneric with the status of the preset update request.
+ */
+message RequestCustomPresetUpdate { /**
+     * Preset Title ID
+     *
+     * The range of acceptable custom title ID's can be found in the initial @ref NotifyPresetStatus response
+     * to @ref RequestGetPresetStatus
+     */
+    optional EnumPresetTitle title_id    = 1;
+    optional string          custom_name = 2; // utf-8 encoded target custom preset name
+    /**
+     * Preset Icon ID
+     *
+     * The range of acceptable custom icon ID's can be found in the initial @ref NotifyPresetStatus response to
+     * @ref RequestGetPresetStatus
+     */
+    optional EnumPresetIcon  icon_id     = 3;
 }
 
 /*
  * Preset Group meta information and contained Presets
  */
 message PresetGroup {
-    optional EnumPresetGroup     id             = 1; //  Preset Group ID
-    repeated Preset              preset_array   = 2; //  Array of Presets contained in this Preset Group
-    optional bool                can_add_preset = 3; //  Is there room in the group to add additional Presets?
-    optional EnumPresetGroupIcon icon           = 4; //  The icon to display for this preset group
+    optional EnumPresetGroup     id             = 1; // Preset Group ID
+    repeated Preset              preset_array   = 2; // Array of Presets contained in this Preset Group
+    optional bool                can_add_preset = 3; // Is there room in the group to add additional Presets?
+    optional EnumPresetGroupIcon icon           = 4; // The icon to display for this preset group
 }
 
 /**
  * Setting representation that comprises a  @ref Preset
  */
 message PresetSetting {
-    optional int32 id         = 1; //  Setting ID
-    optional int32 value      = 2; //  Setting value
-    optional bool  is_caption = 3; //  Does this setting appear on the Preset "pill" in the camera UI?
+    optional int32 id         = 1; // Setting ID
+    optional int32 value      = 2; // Setting value
+    optional bool  is_caption = 3; // Does this setting appear on the Preset "pill" in the camera UI?
 }
