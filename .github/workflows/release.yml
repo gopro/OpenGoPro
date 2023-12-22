@@ -51,7 +51,7 @@ jobs:
 
                   # Remove internal-only files
                   rm -rf ../target/.internal
-                  rm ../target/.gitmodules
+                  rm -f ../target/.gitmodules
                   popd
 
                   # Stage changed files
