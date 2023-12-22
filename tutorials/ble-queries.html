@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2023-12-11T15:38:12-08:00">
+  <meta property="article:published_time" content="2023-12-21T16:22:03-08:00">
 
 
 
@@ -142,7 +142,7 @@
               <a href="/OpenGoPro/tutorials">Tutorials</a>
             </li>
 <li class="masthead__menu-item">
-              <a href="/OpenGoPro/demos">Demos</a>
+              <a href="https://github.com/gopro/OpenGoPro/tree/main/demos">Demos</a>
             </li>
 <li class="masthead__menu-item">
               <a href="/OpenGoPro/faq">FAQ</a>
@@ -410,7 +410,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 4: BLE Queries">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to implement theOpen GoPro Interface to query the camera’s setting and statusinformation via BLE.">
-    <meta itemprop="datePublished" content="2023-12-11T15:38:12-08:00">
+    <meta itemprop="datePublished" content="2023-12-21T16:22:03-08:00">
     
 
     <div class="page__inner-wrap">
@@ -500,7 +500,7 @@ are present and configured correctly.</p>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="9807c172-1c26-4aca-8c1d-b2dc0600f39c">
+    <ul class="tab tab-linked" data-tab="1ca0f3c5-fbf7-470f-839f-2cf810efac55">
         
             <li class="active">
                 <a href="">python </a>
@@ -511,7 +511,7 @@ are present and configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="9807c172-1c26-4aca-8c1d-b2dc0600f39c">
+        <ul class="tab-content" id="1ca0f3c5-fbf7-470f-839f-2cf810efac55">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 2
@@ -634,7 +634,7 @@ and parse notification responses to the Query Response
 <a href="/OpenGoPro/ble_2_0#services-and-characteristics">characteristic</a>.
 Throughout this tutorial, the query information that we will be reading is the Resolution Setting (ID 0x02).</p>
 <div>
-    <ul class="tab tab-linked" data-tab="be2bcffc-cbc3-477a-b21f-c7bca12f4a0f">
+    <ul class="tab tab-linked" data-tab="942e48b9-bd18-463b-a3d1-cea9650ada1e">
         
             <li class="active">
                 <a href="">python </a>
@@ -645,7 +645,7 @@ Throughout this tutorial, the query information that we will be reading is the R
             </li>
         
         </ul>
-        <ul class="tab-content" id="be2bcffc-cbc3-477a-b21f-c7bca12f4a0f">
+        <ul class="tab-content" id="942e48b9-bd18-463b-a3d1-cea9650ada1e">
         
             <li class="active tab-content-container">
 <p>Therefore, we have slightly changed the notification handler to update a global resolution variable as it
@@ -773,7 +773,7 @@ parse these responses as was described in
 <p>First we send the query command:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="4b66a356-cf03-4b87-8682-8c614b7ce2cc">
+    <ul class="tab tab-linked" data-tab="8afb5ce1-de9d-4f07-ad90-b34d264dc2c9">
         
             <li class="active">
                 <a href="">python </a>
@@ -784,7 +784,7 @@ parse these responses as was described in
             </li>
         
         </ul>
-        <ul class="tab-content" id="4b66a356-cf03-4b87-8682-8c614b7ce2cc">
+        <ul class="tab-content" id="8afb5ce1-de9d-4f07-ad90-b34d264dc2c9">
         
             <li class="active tab-content-container">
 <p>The sample code can be found in in <code class="language-plaintext highlighter-rouge">ble_query_poll_resolution_value.py</code>.
@@ -814,7 +814,7 @@ Let’s first define the UUID’s to write to and receive from:</p>
 <p>When the response is received in / from the notification handler, we update the global resolution variable:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="b8fd1caf-d16f-42d4-a416-10d2294fa2f1">
+    <ul class="tab tab-linked" data-tab="b6ecbdb9-fea8-4fcc-b053-cc4a4331b53f">
         
             <li class="active">
                 <a href="">python </a>
@@ -825,7 +825,7 @@ Let’s first define the UUID’s to write to and receive from:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="b8fd1caf-d16f-42d4-a416-10d2294fa2f1">
+        <ul class="tab-content" id="b6ecbdb9-fea8-4fcc-b053-cc4a4331b53f">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">characteristic</span><span class="p">:</span> <span class="n">BleakGATTCharacteristic</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
@@ -878,7 +878,7 @@ Camera resolution is RES_2_7K
 has changed:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="87611651-76d5-4e35-b5ba-8ba95d328228">
+    <ul class="tab tab-linked" data-tab="d4346c04-bd0c-4a46-87e7-2acc1b129166">
         
             <li class="active">
                 <a href="">python </a>
@@ -889,7 +889,7 @@ has changed:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="87611651-76d5-4e35-b5ba-8ba95d328228">
+        <ul class="tab-content" id="d4346c04-bd0c-4a46-87e7-2acc1b129166">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Changing the resolution to Resolution.RES_2_7K...
@@ -945,7 +945,7 @@ below. It is very similar to the previous example except for the following:</p>
 <p>The query command now includes 3 settings: Resolution, FPS, and FOV.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="a18793ae-7933-42e5-b98c-31ca54ef4564">
+    <ul class="tab tab-linked" data-tab="ced7338e-84a1-4cd8-9a59-e8a109be60a8">
         
             <li class="active">
                 <a href="">python </a>
@@ -956,7 +956,7 @@ below. It is very similar to the previous example except for the following:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="a18793ae-7933-42e5-b98c-31ca54ef4564">
+        <ul class="tab-content" id="ced7338e-84a1-4cd8-9a59-e8a109be60a8">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RESOLUTION_ID</span> <span class="o">=</span> <span class="mi">2</span>
@@ -981,7 +981,7 @@ below. It is very similar to the previous example except for the following:</p>
 <p>We are also parsing the response to get all 3 values:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="65a59401-0b8e-4f4a-a82a-ccdafecfa488">
+    <ul class="tab tab-linked" data-tab="201c4d1f-3daf-4710-a5a2-970be8c1a306">
         
             <li class="active">
                 <a href="">python </a>
@@ -992,7 +992,7 @@ below. It is very similar to the previous example except for the following:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="65a59401-0b8e-4f4a-a82a-ccdafecfa488">
+        <ul class="tab-content" id="201c4d1f-3daf-4710-a5a2-970be8c1a306">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">characteristic</span><span class="p">:</span> <span class="n">BleakGATTCharacteristic</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
@@ -1024,7 +1024,7 @@ sometimes settings / statuses are bytes, words, strings, etc.</span>
 <p>They are then printed to the log which will look like the following:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="108026cd-6ff6-438a-8278-f240b4030238">
+    <ul class="tab tab-linked" data-tab="5d36ba87-41bc-4c41-86d0-bcf068c408a5">
         
             <li class="active">
                 <a href="">python </a>
@@ -1035,7 +1035,7 @@ sometimes settings / statuses are bytes, words, strings, etc.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="108026cd-6ff6-438a-8278-f240b4030238">
+        <ul class="tab-content" id="5d36ba87-41bc-4c41-86d0-bcf068c408a5">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Received response at handle=62: b'0b:12:00:02:01:07:03:01:01:79:01:00'
@@ -1085,10 +1085,10 @@ tutorial</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_924b4377-ea93-4fa7-8c29-a8128a142783" class="quiz">
+<div id="quiz_e7c95da8-a0fc-4435-aaad-03205b7f655c" class="quiz">
     <div>
-        <div id="question_924b4377-ea93-4fa7-8c29-a8128a142783" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
-        <div id="answers_924b4377-ea93-4fa7-8c29-a8128a142783">
+        <div id="question_e7c95da8-a0fc-4435-aaad-03205b7f655c" class="quiz__question">How can we poll the encoding status and the resolution setting using one command?</div>
+        <div id="answers_e7c95da8-a0fc-4435-aaad-03205b7f655c">
         
             <input type="radio" name="question" value="A"><label>A: Concatenate a ‘Get Setting Value’ command and a ‘Get Status’ command with the relevant ID’s</label>
             <br>
@@ -1101,10 +1101,10 @@ tutorial</p>
         
         </div>
     </div>
-    <button onclick="showResults('924b4377-ea93-4fa7-8c29-a8128a142783', 'C')">Submit Answer</button>
-    <div id="results_924b4377-ea93-4fa7-8c29-a8128a142783" style="display: none">
-        <span id="correct_924b4377-ea93-4fa7-8c29-a8128a142783" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_924b4377-ea93-4fa7-8c29-a8128a142783" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('e7c95da8-a0fc-4435-aaad-03205b7f655c', 'C')">Submit Answer</button>
+    <div id="results_e7c95da8-a0fc-4435-aaad-03205b7f655c" style="display: none">
+        <span id="correct_e7c95da8-a0fc-4435-aaad-03205b7f655c" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_e7c95da8-a0fc-4435-aaad-03205b7f655c" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         It is not possible to concatenate commands. This would result in an unknown sequence of bytes
         from the camera’s perspective. So it is not possible to get a setting value and a status value in one
         command. The Get Setting command (with resolution ID) and Get Status command(with encoding ID) must be
@@ -1191,7 +1191,7 @@ be sent whenever the query changes until the client unregisters for push notific
 <p>First, let’s register for updates when the resolution setting changes:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="c73c59c2-ed22-4b91-aeb9-bf3798cf8b2d">
+    <ul class="tab tab-linked" data-tab="a629de32-abcb-4577-986a-17f8ba6e48ad">
         
             <li class="active">
                 <a href="">python </a>
@@ -1202,7 +1202,7 @@ be sent whenever the query changes until the client unregisters for push notific
             </li>
         
         </ul>
-        <ul class="tab-content" id="c73c59c2-ed22-4b91-aeb9-bf3798cf8b2d">
+        <ul class="tab-content" id="a629de32-abcb-4577-986a-17f8ba6e48ad">
         
             <li class="active tab-content-container">
 <p>First, let’s define the UUID’s we will be using:</p>
@@ -1237,7 +1237,7 @@ example with the exception that the Query ID is now 0x52 (Register Updates for S
 the raw byte data as well as by inspecting the response’s <code class="language-plaintext highlighter-rouge">id</code> property.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="4b8cd0b8-857c-4dc1-a688-79f5023babb3">
+    <ul class="tab tab-linked" data-tab="1765c1a9-4c9b-4c1c-adb5-f2fdc13ebe4b">
         
             <li class="active">
                 <a href="">python </a>
@@ -1248,7 +1248,7 @@ the raw byte data as well as by inspecting the response’s <code class="languag
             </li>
         
         </ul>
-        <ul class="tab-content" id="4b8cd0b8-857c-4dc1-a688-79f5023babb3">
+        <ul class="tab-content" id="1765c1a9-4c9b-4c1c-adb5-f2fdc13ebe4b">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">characteristic</span><span class="p">:</span> <span class="n">BleakGATTCharacteristic</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
@@ -1305,7 +1305,7 @@ INFO:root:Resolution is currently Resolution.RES_2_7K
 the resolution changes. We verify this in the demo by then changing the resolution.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="b5691078-c0eb-4ac8-8f18-62b5f7455cce">
+    <ul class="tab tab-linked" data-tab="75f8e002-351b-4813-bfe4-53ca6015d3d4">
         
             <li class="active">
                 <a href="">python </a>
@@ -1316,7 +1316,7 @@ the resolution changes. We verify this in the demo by then changing the resoluti
             </li>
         
         </ul>
-        <ul class="tab-content" id="b5691078-c0eb-4ac8-8f18-62b5f7455cce">
+        <ul class="tab-content" id="75f8e002-351b-4813-bfe4-53ca6015d3d4">
         
             <li class="active tab-content-container">
 <p>This will show in the log as such:</p>
@@ -1368,11 +1368,11 @@ polled above</span>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_31e7c041-93ae-4c7d-9058-93b266090c9d" class="quiz">
+<div id="quiz_6d050282-bbe4-4e98-8187-182b9d7f83fd" class="quiz">
     <div>
-        <div id="question_31e7c041-93ae-4c7d-9058-93b266090c9d" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
+        <div id="question_6d050282-bbe4-4e98-8187-182b9d7f83fd" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
     receive push notifications for it.</div>
-        <div id="answers_31e7c041-93ae-4c7d-9058-93b266090c9d">
+        <div id="answers_6d050282-bbe4-4e98-8187-182b9d7f83fd">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1382,20 +1382,20 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('31e7c041-93ae-4c7d-9058-93b266090c9d', 'A')">Submit Answer</button>
-    <div id="results_31e7c041-93ae-4c7d-9058-93b266090c9d" style="display: none">
-        <span id="correct_31e7c041-93ae-4c7d-9058-93b266090c9d" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_31e7c041-93ae-4c7d-9058-93b266090c9d" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('6d050282-bbe4-4e98-8187-182b9d7f83fd', 'A')">Submit Answer</button>
+    <div id="results_6d050282-bbe4-4e98-8187-182b9d7f83fd" style="display: none">
+        <span id="correct_6d050282-bbe4-4e98-8187-182b9d7f83fd" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_6d050282-bbe4-4e98-8187-182b9d7f83fd" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         While there is probably not a good reason to do so, there is nothing preventing polling
         in this manner.
     </div>
 </div>
 
-<div id="quiz_18bb6f43-6bdc-47b9-b4f9-11c9f49b2d84" class="quiz">
+<div id="quiz_cef9ac6b-f56d-49d6-90f4-39d4efc11da2" class="quiz">
     <div>
-        <div id="question_18bb6f43-6bdc-47b9-b4f9-11c9f49b2d84" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
+        <div id="question_cef9ac6b-f56d-49d6-90f4-39d4efc11da2" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
     about one setting ID.</div>
-        <div id="answers_18bb6f43-6bdc-47b9-b4f9-11c9f49b2d84">
+        <div id="answers_cef9ac6b-f56d-49d6-90f4-39d4efc11da2">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1405,10 +1405,10 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('18bb6f43-6bdc-47b9-b4f9-11c9f49b2d84', 'B')">Submit Answer</button>
-    <div id="results_18bb6f43-6bdc-47b9-b4f9-11c9f49b2d84" style="display: none">
-        <span id="correct_18bb6f43-6bdc-47b9-b4f9-11c9f49b2d84" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_18bb6f43-6bdc-47b9-b4f9-11c9f49b2d84" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('cef9ac6b-f56d-49d6-90f4-39d4efc11da2', 'B')">Submit Answer</button>
+    <div id="results_cef9ac6b-f56d-49d6-90f4-39d4efc11da2" style="display: none">
+        <span id="correct_cef9ac6b-f56d-49d6-90f4-39d4efc11da2" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_cef9ac6b-f56d-49d6-90f4-39d4efc11da2" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is possible for push notifications to contain multiple setting ID’s if both setting ID’s have
     push notifications registered and both settings change at the same time.
     </div>
@@ -1443,7 +1443,7 @@ proceed to the next tutorial.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-12-11T15:38:12-08:00">December 11, 2023</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-12-21T16:22:03-08:00">December 21, 2023</time></p>
 
 
       </footer>
