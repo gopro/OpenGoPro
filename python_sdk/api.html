@@ -72,6 +72,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.cohn_get_certificate"><code class="docutils literal notranslate"><span class="pre">BleCommands.cohn_get_certificate()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.cohn_get_status"><code class="docutils literal notranslate"><span class="pre">BleCommands.cohn_get_status()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.cohn_set_setting"><code class="docutils literal notranslate"><span class="pre">BleCommands.cohn_set_setting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.custom_preset_update"><code class="docutils literal notranslate"><span class="pre">BleCommands.custom_preset_update()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.enable_wifi_ap"><code class="docutils literal notranslate"><span class="pre">BleCommands.enable_wifi_ap()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.get_ap_entries"><code class="docutils literal notranslate"><span class="pre">BleCommands.get_ap_entries()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.get_camera_capabilities"><code class="docutils literal notranslate"><span class="pre">BleCommands.get_camera_capabilities()</span></code></a></li>
@@ -80,6 +81,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.get_date_time"><code class="docutils literal notranslate"><span class="pre">BleCommands.get_date_time()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.get_date_time_tz_dst"><code class="docutils literal notranslate"><span class="pre">BleCommands.get_date_time_tz_dst()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.get_hardware_info"><code class="docutils literal notranslate"><span class="pre">BleCommands.get_hardware_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.get_last_captured_media"><code class="docutils literal notranslate"><span class="pre">BleCommands.get_last_captured_media()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.get_open_gopro_api_version"><code class="docutils literal notranslate"><span class="pre">BleCommands.get_open_gopro_api_version()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.get_preset_status"><code class="docutils literal notranslate"><span class="pre">BleCommands.get_preset_status()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.get_wifi_password"><code class="docutils literal notranslate"><span class="pre">BleCommands.get_wifi_password()</span></code></a></li>
@@ -248,6 +250,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_camera_state"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_camera_state()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_date_time"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_date_time()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_gpmf_data"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_gpmf_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_last_captured_media"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_last_captured_media()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_media_list"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_media_list()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_media_metadata"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_media_metadata()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_open_gopro_api_version"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_open_gopro_api_version()</span></code></a></li>
@@ -422,6 +425,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_CREATE_COHN_CERT"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_CREATE_COHN_CERT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_GET_COHN_CERT"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_GET_COHN_CERT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_GET_COHN_STATUS"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_GET_COHN_STATUS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_GET_LAST_MEDIA"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_GET_LAST_MEDIA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_PRESET_UPDATE_CUSTOM"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_PRESET_UPDATE_CUSTOM</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_WIFI_CONNECT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_NEW"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_WIFI_CONNECT_NEW</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT_NEW_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.REQUEST_WIFI_CONNECT_NEW_RSP</span></code></a></li>
@@ -431,6 +436,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RESPONSE_CREATE_COHN_CERT"><code class="docutils literal notranslate"><span class="pre">ActionId.RESPONSE_CREATE_COHN_CERT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RESPONSE_GET_COHN_CERT"><code class="docutils literal notranslate"><span class="pre">ActionId.RESPONSE_GET_COHN_CERT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RESPONSE_GET_COHN_STATUS"><code class="docutils literal notranslate"><span class="pre">ActionId.RESPONSE_GET_COHN_STATUS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RESPONSE_GET_LAST_MEDIA"><code class="docutils literal notranslate"><span class="pre">ActionId.RESPONSE_GET_LAST_MEDIA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.RESPONSE_PRESET_UPDATE_CUSTOM"><code class="docutils literal notranslate"><span class="pre">ActionId.RESPONSE_PRESET_UPDATE_CUSTOM</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.SCAN_WIFI_NETWORKS"><code class="docutils literal notranslate"><span class="pre">ActionId.SCAN_WIFI_NETWORKS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.SCAN_WIFI_NETWORKS_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.SCAN_WIFI_NETWORKS_RSP</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.ActionId.SET_CAMERA_CONTROL"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_CAMERA_CONTROL</span></code></a></li>
@@ -1637,6 +1644,32 @@ version-specific API’s themselves.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.custom_preset_update">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">custom_preset_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">icon_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">ResponseGeneric</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.custom_preset_update" title="Permalink to this definition"></a></dt>
+<dd><p>Update a custom preset title and / or icon</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>icon_id</strong> (<em>proto.EnumPresetIcon.ValueType</em><em> | </em><em>None</em>) – Icon ID. Defaults to None.</p></li>
+<li><p><strong>title</strong> (<em>str</em><em> | </em><em>proto.EnumPresetTitle.ValueType</em><em> | </em><em>None</em>) – Custom Preset name or Factory Title ID. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – Did not set a parameter</p></li>
+<li><p><strong>TypeError</strong> – Title was not proto.EnumPresetTitle.ValueType or string</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>status of preset update</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[proto.ResponseGeneric]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.enable_wifi_ap">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enable_wifi_ap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.enable_wifi_ap" title="Permalink to this definition"></a></dt>
 <dd><p>Enable / disable the Wi-Fi Access Point.</p>
@@ -1754,6 +1787,20 @@ version-specific API’s themselves.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.get_last_captured_media">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_last_captured_media</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">ResponseLastCapturedMedia</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.get_last_captured_media" title="Permalink to this definition"></a></dt>
+<dd><p>Get the last captured media file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>status of request and last captured file if successful</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[proto.ResponseLastCapturedMedia]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3117,6 +3164,20 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.http_commands.HttpCommands.get_last_captured_media">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_last_captured_media</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">MediaPath</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.http_commands.HttpCommands.get_last_captured_media" title="Permalink to this definition"></a></dt>
+<dd><p>Get the last captured media file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>path of last captured media file</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[MediaPath]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -7799,6 +7860,16 @@ instantiation</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_GET_LAST_MEDIA">
+<span class="sig-name descname"><span class="pre">REQUEST_GET_LAST_MEDIA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">109</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_GET_LAST_MEDIA" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_PRESET_UPDATE_CUSTOM">
+<span class="sig-name descname"><span class="pre">REQUEST_PRESET_UPDATE_CUSTOM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_PRESET_UPDATE_CUSTOM" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT">
 <span class="sig-name descname"><span class="pre">REQUEST_WIFI_CONNECT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.REQUEST_WIFI_CONNECT" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -7841,6 +7912,16 @@ instantiation</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.ActionId.RESPONSE_GET_COHN_STATUS">
 <span class="sig-name descname"><span class="pre">RESPONSE_GET_COHN_STATUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">239</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.RESPONSE_GET_COHN_STATUS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.RESPONSE_GET_LAST_MEDIA">
+<span class="sig-name descname"><span class="pre">RESPONSE_GET_LAST_MEDIA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">237</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.RESPONSE_GET_LAST_MEDIA" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.ActionId.RESPONSE_PRESET_UPDATE_CUSTOM">
+<span class="sig-name descname"><span class="pre">RESPONSE_PRESET_UPDATE_CUSTOM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">228</span></em><a class="headerlink" href="#open_gopro.constants.ActionId.RESPONSE_PRESET_UPDATE_CUSTOM" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
