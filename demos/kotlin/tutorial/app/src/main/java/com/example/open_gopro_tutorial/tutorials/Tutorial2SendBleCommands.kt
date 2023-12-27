@@ -78,14 +78,14 @@ class Tutorial2SendBleCommands(number: Int, name: String, prerequisites: List<Pr
         // Set the Resolution
         Timber.i("Setting resolution to 1080")
         val setResolution = ubyteArrayOf(0x03U, 0x02U, 0x01U, 0x09U)
-        ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, setResolution)
+        ble.writeCharacteristic(goproAddress, GoProUUID.CQ_SETTING.uuid, setResolution)
         // Wait to receive the notification response, then check its status
         checkStatus(receivedData.receive())
 
         // Set the FPS
         Timber.i("Setting the FPS to 240")
         val setFps = ubyteArrayOf(0x03U, 0x03U, 0x01U, 0x00U)
-        ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, setFps)
+        ble.writeCharacteristic(goproAddress, GoProUUID.CQ_SETTING.uuid, setFps)
         // Wait to receive the notification response, then check its status
         checkStatus(receivedData.receive())
 
