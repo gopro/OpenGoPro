@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2023-12-21T16:25:43-08:00">
+  <meta property="article:published_time" content="2024-01-08T09:46:19-08:00">
 
 
 
@@ -410,7 +410,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 2: Send BLE Commands">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to use theOpen GoPro BLE Interface to send commands and receive responses.">
-    <meta itemprop="datePublished" content="2023-12-21T16:25:43-08:00">
+    <meta itemprop="datePublished" content="2024-01-08T09:46:19-08:00">
     
 
     <div class="page__inner-wrap">
@@ -497,7 +497,7 @@ management / synchronization when sending multiple commands. This will be discus
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="2dfe581b-ed36-4127-866f-6d265cdf7ebb">
+    <ul class="tab tab-linked" data-tab="e834e034-e1e8-4d73-9728-5f45f5220192">
         
             <li class="active">
                 <a href="">python </a>
@@ -508,7 +508,7 @@ management / synchronization when sending multiple commands. This will be discus
             </li>
         
         </ul>
-        <ul class="tab-content" id="2dfe581b-ed36-4127-866f-6d265cdf7ebb">
+        <ul class="tab-content" id="e834e034-e1e8-4d73-9728-5f45f5220192">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 2
@@ -658,7 +658,7 @@ this case, however, we are defining a meaningful (albeit naive) notification han
 <a href="/OpenGoPro/tutorials/parse-ble-responses">next tutorial</a>.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="0665b24d-b38a-4496-adf0-bcbca85ebab1">
+    <ul class="tab tab-linked" data-tab="ba129893-7703-4dd1-9fa6-7caa9b0697a5">
         
             <li class="active">
                 <a href="">python </a>
@@ -669,7 +669,7 @@ this case, however, we are defining a meaningful (albeit naive) notification han
             </li>
         
         </ul>
-        <ul class="tab-content" id="0665b24d-b38a-4496-adf0-bcbca85ebab1">
+        <ul class="tab-content" id="ba129893-7703-4dd1-9fa6-7caa9b0697a5">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">characteristic</span><span class="p">:</span> <span class="n">BleakGATTCharacteristic</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
@@ -764,7 +764,7 @@ can send some commands.</p>
 </ul>
 
 <div>
-    <ul class="tab tab-linked" data-tab="31ed68de-d376-4177-aef9-c727173c30ff">
+    <ul class="tab tab-linked" data-tab="13316574-5ee2-47a2-9dab-09e41f9d13c0">
         
             <li class="active">
                 <a href="">python </a>
@@ -775,7 +775,7 @@ can send some commands.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="31ed68de-d376-4177-aef9-c727173c30ff">
+        <ul class="tab-content" id="13316574-5ee2-47a2-9dab-09e41f9d13c0">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">COMMAND_REQ_UUID</span> <span class="o">=</span> <span class="n">GOPRO_BASE_UUID</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="sh">"</span><span class="s">0072</span><span class="sh">"</span><span class="p">)</span>
@@ -841,7 +841,7 @@ which at byte level is:</p>
 <p>Now, let’s write the bytes to the “Command Request” UUID to turn the shutter on and start encoding!</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="d0e428d1-7799-4835-8010-7c9b952921c8">
+    <ul class="tab tab-linked" data-tab="39911a54-26bf-453d-8467-0f84d385f02d">
         
             <li class="active">
                 <a href="">python </a>
@@ -852,7 +852,7 @@ which at byte level is:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="d0e428d1-7799-4835-8010-7c9b952921c8">
+        <ul class="tab-content" id="39911a54-26bf-453d-8467-0f84d385f02d">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
@@ -886,7 +886,7 @@ Command Response characteristic since we enabled its notifications in
 This can be seen in the demo log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="87c971ed-e4e2-4872-a4cf-85f0afa645e5">
+    <ul class="tab tab-linked" data-tab="5df90c2f-0590-4871-adf4-d88af40e902f">
         
             <li class="active">
                 <a href="">python </a>
@@ -897,7 +897,7 @@ This can be seen in the demo log:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="87c971ed-e4e2-4872-a4cf-85f0afa645e5">
+        <ul class="tab-content" id="5df90c2f-0590-4871-adf4-d88af40e902f">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Setting the shutter on
@@ -929,7 +929,7 @@ Command sent successfully
 </div>
 
 <div>
-    <ul class="tab tab-linked" data-tab="390d63bf-4ba8-46a3-ac7e-69cab94ce726">
+    <ul class="tab tab-linked" data-tab="ae0e6394-c62f-4fae-adc6-39776fe60943">
         
             <li class="active">
                 <a href="">python </a>
@@ -940,7 +940,7 @@ Command sent successfully
             </li>
         
         </ul>
-        <ul class="tab-content" id="390d63bf-4ba8-46a3-ac7e-69cab94ce726">
+        <ul class="tab-content" id="ae0e6394-c62f-4fae-adc6-39776fe60943">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">time</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -1016,7 +1016,7 @@ commands.</span>
 <p>Now, let’s write the bytes to the “Command Request” UUID to change the preset group to Video!</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="046a93f1-c707-4ccd-8462-98ef5e08723d">
+    <ul class="tab tab-linked" data-tab="c4b5c8a0-9a4c-4171-ae02-eee18b6e76b1">
         
             <li class="active">
                 <a href="">python </a>
@@ -1027,7 +1027,7 @@ commands.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="046a93f1-c707-4ccd-8462-98ef5e08723d">
+        <ul class="tab-content" id="c4b5c8a0-9a4c-4171-ae02-eee18b6e76b1">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
@@ -1076,7 +1076,7 @@ Command Response characteristic since we enabled its notifications in
 be seen in the demo log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="a0e427d2-a5ae-4176-be82-187e403944a0">
+    <ul class="tab tab-linked" data-tab="bc63d31b-f8c1-4b15-a912-2714d908e509">
         
             <li class="active">
                 <a href="">python </a>
@@ -1087,7 +1087,7 @@ be seen in the demo log:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="a0e427d2-a5ae-4176-be82-187e403944a0">
+        <ul class="tab-content" id="bc63d31b-f8c1-4b15-a912-2714d908e509">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Loading the video preset group...
@@ -1153,7 +1153,7 @@ for video resolution.</span>
 <p>Now, let’s write the bytes to the “Setting Request” UUID to change the video resolution to 1080!</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="7824ed6a-8b23-4e68-9eba-863f83c7e455">
+    <ul class="tab tab-linked" data-tab="211b8d80-385a-4804-a817-84f002f1d165">
         
             <li class="active">
                 <a href="">python </a>
@@ -1164,7 +1164,7 @@ for video resolution.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="7824ed6a-8b23-4e68-9eba-863f83c7e455">
+        <ul class="tab-content" id="211b8d80-385a-4804-a817-84f002f1d165">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
@@ -1214,7 +1214,7 @@ Command Response characteristic since we enabled its notifications in
 be seen in the demo log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="d7396cca-774b-4b25-ae0e-6a86280bfdae">
+    <ul class="tab tab-linked" data-tab="67052980-f992-4503-9436-5a05421c89b2">
         
             <li class="active">
                 <a href="">python </a>
@@ -1225,7 +1225,7 @@ be seen in the demo log:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="d7396cca-774b-4b25-ae0e-6a86280bfdae">
+        <ul class="tab-content" id="67052980-f992-4503-9436-5a05421c89b2">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Loading the video preset group...
@@ -1296,7 +1296,7 @@ Therefore, it is necessary to
 <p>Now, let’s write the bytes to the “Setting Request” UUID to change the FPS to 240!</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="8d41399e-c0f0-43dc-8cfe-43e98c28fcc5">
+    <ul class="tab tab-linked" data-tab="28cc7258-cd3b-478c-8c58-296946643af5">
         
             <li class="active">
                 <a href="">python </a>
@@ -1307,7 +1307,7 @@ Therefore, it is necessary to
             </li>
         
         </ul>
-        <ul class="tab-content" id="8d41399e-c0f0-43dc-8cfe-43e98c28fcc5">
+        <ul class="tab-content" id="28cc7258-cd3b-478c-8c58-296946643af5">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
@@ -1356,7 +1356,7 @@ Command Response characteristic since we enabled its notifications in
 be seen in the demo log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="81b5cb75-b6d4-47f3-a258-66f025951541">
+    <ul class="tab tab-linked" data-tab="10fc41d8-f98c-4cc6-9f3b-d6afa8935942">
         
             <li class="active">
                 <a href="">python </a>
@@ -1367,7 +1367,7 @@ be seen in the demo log:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="81b5cb75-b6d4-47f3-a258-66f025951541">
+        <ul class="tab-content" id="10fc41d8-f98c-4cc6-9f3b-d6afa8935942">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Setting the fps to 240
@@ -1395,10 +1395,10 @@ was higher, for example 5K, this would fail.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_0c3a46cd-2f17-4775-b7ae-e0a534c097d2" class="quiz">
+<div id="quiz_2e4cf488-e5b4-453b-b777-f2c3e657758f" class="quiz">
     <div>
-        <div id="question_0c3a46cd-2f17-4775-b7ae-e0a534c097d2" class="quiz__question">Which of the following is not a real preset group?</div>
-        <div id="answers_0c3a46cd-2f17-4775-b7ae-e0a534c097d2">
+        <div id="question_2e4cf488-e5b4-453b-b777-f2c3e657758f" class="quiz__question">Which of the following is not a real preset group?</div>
+        <div id="answers_2e4cf488-e5b4-453b-b777-f2c3e657758f">
         
             <input type="radio" name="question" value="A"><label>A: Timelapse</label>
             <br>
@@ -1414,19 +1414,19 @@ was higher, for example 5K, this would fail.</p>
         
         </div>
     </div>
-    <button onclick="showResults('0c3a46cd-2f17-4775-b7ae-e0a534c097d2', 'C')">Submit Answer</button>
-    <div id="results_0c3a46cd-2f17-4775-b7ae-e0a534c097d2" style="display: none">
-        <span id="correct_0c3a46cd-2f17-4775-b7ae-e0a534c097d2" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_0c3a46cd-2f17-4775-b7ae-e0a534c097d2" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('2e4cf488-e5b4-453b-b777-f2c3e657758f', 'C')">Submit Answer</button>
+    <div id="results_2e4cf488-e5b4-453b-b777-f2c3e657758f" style="display: none">
+        <span id="correct_2e4cf488-e5b4-453b-b777-f2c3e657758f" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_2e4cf488-e5b4-453b-b777-f2c3e657758f" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There are 3 preset groups (Timelapse, Photo, and Video). These can be
     set via the Load Preset Group command.
     </div>
 </div>
 
-<div id="quiz_4129fca3-c751-4a91-a84a-e582324b1f54" class="quiz">
+<div id="quiz_80cefac0-d832-4e58-8c53-9a83ae8d6336" class="quiz">
     <div>
-        <div id="question_4129fca3-c751-4a91-a84a-e582324b1f54" class="quiz__question">True or False: Every combination of resolution and FPS value is valid.</div>
-        <div id="answers_4129fca3-c751-4a91-a84a-e582324b1f54">
+        <div id="question_80cefac0-d832-4e58-8c53-9a83ae8d6336" class="quiz__question">True or False: Every combination of resolution and FPS value is valid.</div>
+        <div id="answers_80cefac0-d832-4e58-8c53-9a83ae8d6336">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1436,18 +1436,18 @@ was higher, for example 5K, this would fail.</p>
         
         </div>
     </div>
-    <button onclick="showResults('4129fca3-c751-4a91-a84a-e582324b1f54', 'B')">Submit Answer</button>
-    <div id="results_4129fca3-c751-4a91-a84a-e582324b1f54" style="display: none">
-        <span id="correct_4129fca3-c751-4a91-a84a-e582324b1f54" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_4129fca3-c751-4a91-a84a-e582324b1f54" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('80cefac0-d832-4e58-8c53-9a83ae8d6336', 'B')">Submit Answer</button>
+    <div id="results_80cefac0-d832-4e58-8c53-9a83ae8d6336" style="display: none">
+        <span id="correct_80cefac0-d832-4e58-8c53-9a83ae8d6336" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_80cefac0-d832-4e58-8c53-9a83ae8d6336" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         Each resolution can support all or only some FPS values. You can find out which resolutions support which fps values by consulting the <a href="https://gopro.github.io/OpenGoPro/ble_2_0#camera-capabilities">capabilities section of the spec</a>.
     </div>
 </div>
 
-<div id="quiz_13f9c48b-f6fa-45a1-9cb8-32d32532c768" class="quiz">
+<div id="quiz_aee0ed15-2b8c-4d03-a6c3-2089836cf617" class="quiz">
     <div>
-        <div id="question_13f9c48b-f6fa-45a1-9cb8-32d32532c768" class="quiz__question">True or False: Every camera supports the same combination of resolution and FPS values.</div>
-        <div id="answers_13f9c48b-f6fa-45a1-9cb8-32d32532c768">
+        <div id="question_aee0ed15-2b8c-4d03-a6c3-2089836cf617" class="quiz__question">True or False: Every camera supports the same combination of resolution and FPS values.</div>
+        <div id="answers_aee0ed15-2b8c-4d03-a6c3-2089836cf617">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1457,10 +1457,10 @@ was higher, for example 5K, this would fail.</p>
         
         </div>
     </div>
-    <button onclick="showResults('13f9c48b-f6fa-45a1-9cb8-32d32532c768', 'B')">Submit Answer</button>
-    <div id="results_13f9c48b-f6fa-45a1-9cb8-32d32532c768" style="display: none">
-        <span id="correct_13f9c48b-f6fa-45a1-9cb8-32d32532c768" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_13f9c48b-f6fa-45a1-9cb8-32d32532c768" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('aee0ed15-2b8c-4d03-a6c3-2089836cf617', 'B')">Submit Answer</button>
+    <div id="results_aee0ed15-2b8c-4d03-a6c3-2089836cf617" style="display: none">
+        <span id="correct_aee0ed15-2b8c-4d03-a6c3-2089836cf617" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_aee0ed15-2b8c-4d03-a6c3-2089836cf617" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         The only way to know what values are supported is to first check the Open GoPro version.
     See the relevant version of the BLE or WiFi spec to see what is supported.
     </div>
@@ -1492,7 +1492,7 @@ a similar manner.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-12-21T16:25:43-08:00">December 21, 2023</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-01-08T09:46:19-08:00">January 8, 2024</time></p>
 
 
       </footer>
@@ -1576,7 +1576,7 @@ a similar manner.</p>
 </div>
 
 <div class="page__footer-copyright">
-    © 2023 GoPro. Powered by
+    © 2024 GoPro. Powered by
     <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
     <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
     <p>
