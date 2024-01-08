@@ -44,7 +44,7 @@ build: ## Build site for deployment
 	@rm -rf .env
 
 .PHONY: tests
-tests: docker-setup
+tests: docker-setup clean
 tests: ## Serve, then run link checker. Times out after 5 minutes.
 	-@docker-compose pull linkchecker || docker-compose build linkchecker
 	@echo COMMAND="-u http://jekyll:4998/ -b \"\" -p 4998 serve" > .env
