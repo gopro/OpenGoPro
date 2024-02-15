@@ -143,13 +143,20 @@ class WifiCli(WifiController):
     def _sudo_from_stdin(self) -> str:
         """Ask for sudo password input from stdin
 
+        This method prompts the user to enter the sudo password from the command line.
+        It validates the password by running a command with sudo and checking if the password is valid.
+
         Returns:
-            str: password
+            str: The entered sudo password.
+
+        Raises:
+            RuntimeError: If the password is empty or invalid.
         """
         # Need password for sudo
         if not self._password:
             self._password = getpass("Need to run as sudo. Enter password: ")
-            assert self._password, 'Password is required'
+        if not self._password:
+            raise RuntimeError("Can't use sudo with empty password.")
         # Validate password
         if "VALID PASSWORD" not in cmd(f'echo "{self._password}" | sudo -S echo "VALID PASSWORD"'):
             raise RuntimeError("Invalid password")
@@ -248,7 +255,7 @@ class WifiCli(WifiController):
 class NmcliWireless(WifiController):
     """Linux nmcli Driver < 0.9.9.0."""
 
-    def __init__(self, password: str, interface: Optional[str] = None) -> None:
+    def __init__(self, password: str | None, interface: Optional[str] = None) -> None:
         WifiController.__init__(self, interface=interface, password=password)
 
     def _clean(self, partial: str) -> None:
@@ -409,7 +416,7 @@ class NmcliWireless(WifiController):
 class Nmcli0990Wireless(WifiController):
     """Linux nmcli Driver >= 0.9.9.0."""
 
-    def __init__(self, password: str, interface: Optional[str] = None) -> None:
+    def __init__(self, password: str | None, interface: Optional[str] = None) -> None:
         WifiController.__init__(self, interface=interface, password=password)
 
     def _clean(self, partial: str) -> None:
@@ -568,7 +575,7 @@ class WpasupplicantWireless(WifiController):
 
     _file = "/tmp/wpa_supplicant.conf"
 
-    def __init__(self, password: str, interface: Optional[str] = None) -> None:
+    def __init__(self, password: str | None, interface: Optional[str] = None) -> None:
         WifiController.__init__(self, interface=interface, password=password)
 
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
