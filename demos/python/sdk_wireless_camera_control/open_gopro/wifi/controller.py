@@ -143,12 +143,9 @@ Is there an available Wifi interface on this computer? To verify this, try:
     def sudo(self) -> str:
         """Return the sudo encapsulated password
 
-        Raises:
-            RuntimeError: No password has been supplied
-
         Returns:
             str: echo "**********" | sudo -S
         """
         if not self._password:
-            raise RuntimeError("Can't use sudo with empty password.")
+            return ""
         return f'echo "{self._password}" | sudo -S'

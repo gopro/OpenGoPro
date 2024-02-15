@@ -117,15 +117,16 @@ class WifiCli(WifiController):
         if which("networksetup"):
             return NetworksetupWireless()
 
-        # Try Linux options. Need password for sudo
-        if not self._password:
-            self._password = getpass("Need to run as sudo. Enter password: ")
-        # Validate password
-        if "VALID PASSWORD" not in cmd(f'echo "{self._password}" | sudo -S echo "VALID PASSWORD"'):
-            raise RuntimeError("Invalid password")
-
+        # Try Linux options.
         # try nmcli (Ubuntu 14.04). Allow for use in Snap Package
         if which("nmcli") or which("nmcli", path="/snap/bin/"):
+
+            ctrl_wifi = cmd("nmcli general permissions |grep enable-disable-wifi")
+            scan_wifi = cmd("nmcli general permissions |grep scan")
+
+            if not "yes" in ctrl_wifi or not "yes" in scan_wifi:
+                self._sudo_from_stdin()
+
             version = cmd("nmcli --version").split()[-1]
             return (
                 Nmcli0990Wireless(password=self._password)
@@ -134,9 +135,26 @@ class WifiCli(WifiController):
             )
         # try nmcli (Ubuntu w/o network-manager)
         if which("wpa_supplicant"):
+            self._sudo_from_stdin()
             return WpasupplicantWireless(password=self._password)
 
         raise RuntimeError("Unable to find compatible wireless driver.")
+
+    def _sudo_from_stdin(self) -> str:
+        """Ask for sudo password input from stdin
+
+        Returns:
+            str: password
+        """
+        # Need password for sudo
+        if not self._password:
+            self._password = getpass("Need to run as sudo. Enter password: ")
+            assert self._password, 'Password is required'
+        # Validate password
+        if "VALID PASSWORD" not in cmd(f'echo "{self._password}" | sudo -S echo "VALID PASSWORD"'):
+            raise RuntimeError("Invalid password")
+
+        return self._password
 
     @pass_through_to_driver
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:  # type: ignore
