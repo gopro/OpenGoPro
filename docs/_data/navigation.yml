@@ -5,7 +5,7 @@ main:
     - title: 'Home'
       url: /
     - title: 'BLE Spec'
-      url: /ble
+      url: /ble/
     - title: 'HTTP Spec'
       url: /http
     - title: 'Tutorials'
