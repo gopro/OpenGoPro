@@ -367,7 +367,7 @@ GET request to: http://10.5.5.9:8080/gopro/camera/state
 {% endlinkedTabs %}
 
 We can see what each of these values mean by looking at the
-[Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}#settings-quick-reference).
+[Open GoPro Interface](/ble/index.html#settings-quick-reference).
 
 For example (for settings):
 
@@ -377,7 +377,7 @@ For example (for settings):
 ## Load Preset Group
 
 The next command we will be sending is
-[Load Preset Group]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), which is used
+[Load Preset Group](/ble/index.html#commands-quick-reference), which is used
 to toggle between the 3 groups of presets (video, photo, and timelapse). The preset groups ID's are:
 
 | Command                     | Bytes |
@@ -525,7 +525,7 @@ This end point is used to update all of the settings on the camera. It is analog
 
 It is important to note that many settings are dependent on the video resolution (and other settings).
 For example, certain FPS values are not valid with certain resolutions. In general, higher resolutions
-only allow lower FPS values. Check the [camera capabilities]({% link specs/ble_versions/ble_2_0.md %}#camera-capabilities)
+only allow lower FPS values. Check the [camera capabilities](/ble/index.html#camera-capabilities)
 to see which settings are valid for given use cases.
 
 Let's build the endpoint first to set the Video Resolution to 1080 (the setting_id and option value comes from

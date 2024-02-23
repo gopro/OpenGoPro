@@ -8,7 +8,7 @@ lesson: 4
 # Tutorial 4: BLE Queries
 
 This document will provide a walk-through tutorial to implement the
-[Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}) to query the camera's setting and status
+[Open GoPro Interface](/ble/index.html) to query the camera's setting and status
 information via BLE.
 
 "Queries" in this sense are specifically procedures that:
@@ -141,7 +141,7 @@ We must first connect as was discussed in the
 We will also be using the **Response** class that was defined in the
 [parsing responses]({% link _tutorials/tutorial_3_parse_ble_tlv_responses/tutorial.md %}) tutorial to accumulate
 and parse notification responses to the Query Response
-[characteristic]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics).
+[characteristic](/ble/index.html#services-and-characteristics).
 Throughout this tutorial, the query information that we will be reading is the Resolution Setting (ID 0x02).
 {% linkedTabs notification_handler %}
 {% tab notification_handler python %}
@@ -219,7 +219,7 @@ section:
 # Polling Query Information
 
 It is possible to poll one or more setting / status values using the following
-[commands]({% link specs/ble_versions/ble_2_0.md %}#query-commands):
+[commands](/ble/index.html#query-commands):
 
 | Query ID | Request              | Query        |
 | -------- | -------------------- | ------------ |
@@ -489,7 +489,7 @@ tutorial
 Rather than polling the query information, it is also possible to use an interrupt scheme to register for
 push notifications when the relevant query information changes.
 
-The relevant [commands]({% link specs/ble_versions/ble_2_0.md %}#query-commands) are:
+The relevant [commands](/ble/index.html#query-commands) are:
 
 | Query ID | Request                           | Query        |
 | -------- | --------------------------------- | ------------ |

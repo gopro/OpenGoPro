@@ -8,7 +8,7 @@ lesson: 3
 # Tutorial 3: Parse BLE TLV Responses
 
 This document will provide a walk-through tutorial to implement
-the [Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}) to parse BLE
+the [Open GoPro Interface](/ble/index.html) to parse BLE
 [Type-Length-Value](https://en.wikipedia.org/wiki/Type-length-value) (TLV) Responses.
 
 Besides TLV, some BLE commands instead return protobuf responses. These are not considered here and will be
@@ -128,7 +128,7 @@ sequenceDiagram
 ```
 
 In actuality, responses can be more complicated. As described in the
-[Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}#packet-headers), responses can be
+[Open GoPro Interface](/ble/index.html#packet-headers), responses can be
 be comprised of multiple packets where each packet is <= 20 bytes such as:
 
 ```mermaid!
@@ -180,7 +180,7 @@ response will be used for most Commands and Setting Responses as seen in the
 ## Complex Command Response
 
 There are some commands that do return additional response data. These are called "complex responses."
-From the [commands reference]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), we can see that these are:
+From the [commands reference](/ble/index.html#commands-quick-reference), we can see that these are:
 
 -   Get Open GoPro Version (ID == 0x51)
 -   Get Hardware Info (ID == 0x3C)
@@ -192,7 +192,7 @@ It is important to always query the version after connecting in order to know wh
 See the relevant version of the BLE and / or WiFi spec for more details about each version.
 {% endtip %}
 
-First, we send the command to the Command Request [UUID]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics):
+First, we send the command to the Command Request [UUID](/ble/index.html#services-and-characteristics):
 
 {% linkedTabs send_command %}
 {% tab send_command python %}
@@ -237,7 +237,7 @@ This response equates to:
 | 0x06            | 0x51 == Get Version           | 0x00 == Success | 0x01 0x02 0x01 0x00 |
 
 We can see that this "complex response" contains 4 additional bytes that need to be parsed. Using the information
-from the [interface description]({% link specs/ble_versions/ble_2_0.md %}#complex-command-responses),
+from the [interface description](/ble/index.html#complex-command-responses),
 we know to parse this as:
 
 | Byte | Meaning                        |
@@ -973,7 +973,7 @@ INFO:root:Received settings
 {% endlinkedTabs %}
 
 We can see what each of these values mean by looking at the
-[Open GoPro Interface]({% link specs/ble_versions/ble_2_0.md %}#settings-quick-reference).
+[Open GoPro Interface](/ble/index.html#settings-quick-reference).
 
 For example:
 

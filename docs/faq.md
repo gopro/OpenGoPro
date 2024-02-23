@@ -70,7 +70,8 @@ Wi-Fi, USB, or both.
 | ------------------- | -------------------------- | ------------------------- | ------------------------ | ---------------------------- | ---------------------------- |
 |                     | ViewFinder Preview         | LiveStream                | ViewFinder Preview       | Webcam Preview               | Webcam                       |
 | Orientation         | Floating or Fixed          | Landscape facing up       | Floating or Fixed        | Landscape: Floating or Fixed | Landscape: Floating or Fixed |
-| Streaming Protocol  | UDP (MPEG-TS)              | RTMP                      | UDP (MPEG-TS)            | UDP (MPEG-TS)                | UDP (MPEG-TS)                |
+| Streaming Protocols | UDP (MPEG-TS)              | RTMP                      | UDP (MPEG-TS)            | UDP (MPEG-TS)                | UDP (MPEG-TS) \              |
+|                     |                            |                           |                          | RTSP                         | RTSP                         |
 | Connection Protocol | Wifi - AP Mode             | WiFi - STA Mode           | NCM                      | NCM                          | NCM                          |
 | Resolution          | 480p, 720p                 | 480p, 720p, 1080p         | 480p, 720p               | 720p, 1080p                  | 720p, 1080p                  |
 | Frame Rate          | 30                         | 30                        | 30                       | 30                           | 30                           |
@@ -174,7 +175,7 @@ most interesting moments in the video.
 
 {% accordion Which cameras are supported by Open GoPro? %}
 The answer at a high level is >= Hero 9. However, there are also certain firmware requirements. For a complete
-answer, see the [Specification]({% link specs/ble_versions/ble_2_0.md %}#supported-cameras).
+answer, see the [Specification](/ble/index.html#supported-cameras).
 {% endaccordion %}
 
 ## Camera Logic
@@ -201,7 +202,7 @@ you are already connected to it from a previous session. To be sure, power cycle
 
 {% accordion Workaround for intermittent Wifi AP Connection failure %}
 On >= Hero 11, try disabling and then re-enabling the camera's Wifi AP using the
-[AP Control BLE Command]({% link specs/ble_versions/ble_2_0.md %}#commands)
+[AP Control BLE Command](/ble/index.html#commands)
 {% endaccordion %}
 
 # Known Issues

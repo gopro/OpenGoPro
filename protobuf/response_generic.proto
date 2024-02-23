@@ -1,5 +1,5 @@
 /* response_generic.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Mon Jan  8 21:03:36 UTC 2024 */
+/* This copyright was auto-generated on Fri Feb 23 19:56:08 UTC 2024 */
 
 /***********************************************************************************************************************
  *
@@ -25,18 +25,16 @@ enum EnumResultGeneric {
 }
 
 /*
- * Generic Response used across most response / notification messages
- *
- * @ref EnumResultGeneric
+ * Generic Response used across many response / notification messages
  */
 message ResponseGeneric {
     required EnumResultGeneric result = 1; // Generic pass/fail/error info
 }
 
 /**
- * A reusable model to represent a media file
+ * A common model to represent a media file
  */
 message Media {
-    optional string folder = 1; // Directory that the media is contained in
+    optional string folder = 1; // Directory in which the media is contained
     optional string file   = 2; // Filename of media
 }

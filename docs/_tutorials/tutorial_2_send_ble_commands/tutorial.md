@@ -8,14 +8,14 @@ lesson: 2
 # Tutorial 2: Send BLE Commands
 
 This document will provide a walk-through tutorial to use the
-[Open GoPro BLE Interface]({% link specs/ble_versions/ble_2_0.md %}) to send commands and receive responses.
+[Open GoPro BLE Interface](/ble/index.html) to send commands and receive responses.
 
 "Commands" in this sense are specifically procedures that are initiated by either:
 
 -   Writing to the Command Request UUID and receiving responses via the Command Response UUID. They are
-    listed [here]({% link specs/ble_versions/ble_2_0.md %}#commands).
+    listed [here](/ble/index.html#commands).
 -   Writing to the Setting UUID and receiving responses via the Setting Response UUID. They are listed
-    [here]({% link specs/ble_versions/ble_2_0.md %}#settings).
+    [here](/ble/index.html#settings).
 
 {% tip %}
 It is suggested that you have first completed the
@@ -296,7 +296,7 @@ enum class GoProUUID(val uuid: UUID) {
 
 ## Set Shutter
 
-The first command we will be sending is [Set Shutter]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference),
+The first command we will be sending is [Set Shutter](/ble/index.html#commands-quick-reference),
 which at byte level is:
 
 | Command         |        Bytes        |
@@ -407,7 +407,7 @@ Command sent successfully
 ## Load Preset Group
 
 The next command we will be sending is
-[Load Preset Group]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference), which is used
+[Load Preset Group](/ble/index.html#commands-quick-reference), which is used
 to toggle between the 3 groups of presets (video, photo, and timelapse). At byte level, the commands are:
 
 | Command                     |          Bytes           |
@@ -483,7 +483,7 @@ As expected, the response was received on the correct handle and the status was 
 ## Set the Video Resolution
 
 The next command we will be sending is
-[Set Video Resolution]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference). This is
+[Set Video Resolution](/ble/index.html#commands-quick-reference). This is
 used to change the value of the Video Resolution setting. It is important to note that this only affects
 **video** resolution (not photo). Therefore, the Video Preset Group must be active in order for it to succeed.
 This can be done either manually through the camera UI or by sending [Load Preset Group](#load-preset-group).
@@ -564,11 +564,11 @@ Group was not Video, the status will not be success.
 ## Set the Frames Per Second (FPS)
 
 The next command we will be sending is
-[Set FPS]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference). This is
+[Set FPS](/ble/index.html#commands-quick-reference). This is
 used to change the value of the FPS setting. It is important to note that this setting is dependent on the
 video resolution. That is, certain FPS values are not valid with certain resolutions. In general, higher
 resolutions only allow lower FPS values. Also, the current anti-flicker value may further limit possible FPS
-values. Check the [camera capabilities ]({% link specs/ble_versions/ble_2_0.md %}#camera-capabilities) to see which FPS
+values. Check the [camera capabilities ](/ble/index.html#camera-capabilities) to see which FPS
 values are valid for given use cases.
 
 Therefore, for this step of the tutorial, it is assumed that the resolution has

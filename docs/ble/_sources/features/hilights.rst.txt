@@ -1,0 +1,15 @@
+Hilights
+========
+
+Operations
+----------
+
+.. operation:tlv-command:: Hilight Moment
+    :id: 0x18
+
+    Add a hilight while recording. This can only be used during encoding.
+
+    .. operation:tlv-message:: Request
+        :uuid: Command
+    .. operation:tlv-message:: Response
+        :uuid: Command Response

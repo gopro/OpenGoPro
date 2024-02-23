@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Query &mdash; Open GoPro BLE API 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=4391a3cb" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Access Point" href="access_points.html" />
+    <link rel="prev" title="Control" href="control.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Open GoPro BLE API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../protocol.html">Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#pairing-mode">Pairing Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#finish-pairing">Finish Pairing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#ble-characteristics">BLE Characteristics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#send-messages">Send Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../protocol/data_protocol.html">Data Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#packetization">Packetization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#packet-headers">Packet Headers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#decipher-message-payload-type">Decipher Message Payload Type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#message-payload">Message Payload</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#type-length-value">Type Length Value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#protobuf">Protobuf</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../protocol/state_management.html">State Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#camera-readiness">Camera Readiness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#keep-alive">Keep Alive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#camera-control">Camera Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../protocol/id_tables.html">ID Tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#command-ids">Command IDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#query-ids">Query IDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#protobuf-ids">Protobuf IDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#setting-ids">Setting IDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#status-ids">Status IDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../protocol/protobuf.html">Protobuf Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#enums">Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcohnnetworkstate">EnumCOHNNetworkState</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcohnstatus">EnumCOHNStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcameracontrolstatus">EnumCameraControlStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumflatmode">EnumFlatMode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumlens">EnumLens</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumlivestreamerror">EnumLiveStreamError</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumlivestreamstatus">EnumLiveStreamStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumpresetgroup">EnumPresetGroup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumpresetgroupicon">EnumPresetGroupIcon</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumpreseticon">EnumPresetIcon</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumpresettitle">EnumPresetTitle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumprovisioning">EnumProvisioning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumregisterlivestreamstatus">EnumRegisterLiveStreamStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumregisterpresetstatus">EnumRegisterPresetStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumresultgeneric">EnumResultGeneric</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumscanentryflags">EnumScanEntryFlags</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumscanning">EnumScanning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumwindowsize">EnumWindowSize</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#media">Media</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#notifprovisioningstate">NotifProvisioningState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#notifstartscanning">NotifStartScanning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#notifycohnstatus">NotifyCOHNStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#notifylivestreamstatus">NotifyLiveStreamStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#notifypresetstatus">NotifyPresetStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#preset">Preset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#presetgroup">PresetGroup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#presetsetting">PresetSetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestcohncert">RequestCOHNCert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestclearcohncert">RequestClearCOHNCert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestconnect">RequestConnect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestconnectnew">RequestConnectNew</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestcreatecohncert">RequestCreateCOHNCert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestcustompresetupdate">RequestCustomPresetUpdate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetapentries">RequestGetApEntries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetcohnstatus">RequestGetCOHNStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetlastcapturedmedia">RequestGetLastCapturedMedia</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetpresetstatus">RequestGetPresetStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestreleasenetwork">RequestReleaseNetwork</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcohnsetting">RequestSetCOHNSetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcameracontrolstatus">RequestSetCameraControlStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetlivestreammode">RequestSetLiveStreamMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetturboactive">RequestSetTurboActive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requeststartscan">RequestStartScan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responsecohncert">ResponseCOHNCert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responseconnect">ResponseConnect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responseconnectnew">ResponseConnectNew</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responsegeneric">ResponseGeneric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responsegetapentries">ResponseGetApEntries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responselastcapturedmedia">ResponseLastCapturedMedia</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responsestartscanning">ResponseStartScanning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responsegetapentries-scanentry">ResponseGetApEntries::ScanEntry</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="control.html">Control</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="control.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="control.html#keep_alive"><code class="docutils literal notranslate"><span class="pre">Keep</span> <span class="pre">Alive</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set_analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set_ap_control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set_camera_control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set_date_time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set_local_date_time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set_shutter"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Shutter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set_turbo_transfer"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Turbo</span> <span class="pre">Transfer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#sleep"><code class="docutils literal notranslate"><span class="pre">Sleep</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Query</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get_open_gopro_version"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Open</span> <span class="pre">GoPro</span> <span class="pre">Version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get_date_time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get_hardware_info"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Hardware</span> <span class="pre">Info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get_local_date_time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get_last_captured_media"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Last</span> <span class="pre">Captured</span> <span class="pre">Media</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get_setting_values"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Setting</span> <span class="pre">Values</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get_status_values"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Status</span> <span class="pre">Values</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get_setting_capabilities"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Setting</span> <span class="pre">Capabilities</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#register_for_setting_value_updates"><code class="docutils literal notranslate"><span class="pre">Register</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Value</span> <span class="pre">Updates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#register_for_status_value_updates"><code class="docutils literal notranslate"><span class="pre">Register</span> <span class="pre">for</span> <span class="pre">Status</span> <span class="pre">Value</span> <span class="pre">Updates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#register_for_setting_capability_updates"><code class="docutils literal notranslate"><span class="pre">Register</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Capability</span> <span class="pre">Updates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unregister_for_setting_value_updates"><code class="docutils literal notranslate"><span class="pre">Unregister</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Value</span> <span class="pre">Updates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unregister_for_status_value_updates"><code class="docutils literal notranslate"><span class="pre">Unregister</span> <span class="pre">for</span> <span class="pre">Status</span> <span class="pre">Value</span> <span class="pre">Updates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unregister_for_setting_capability_updates"><code class="docutils literal notranslate"><span class="pre">Unregister</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Capability</span> <span class="pre">Updates</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="access_points.html">Access Point</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="access_points.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="access_points.html#scan_for_access_points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_points.html#get_ap_scan_results"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">AP</span> <span class="pre">Scan</span> <span class="pre">Results</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_points.html#connect_to_provisioned_access_point"><code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">Provisioned</span> <span class="pre">Access</span> <span class="pre">Point</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_points.html#connect_to_a_new_access_point"><code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">a</span> <span class="pre">New</span> <span class="pre">Access</span> <span class="pre">Point</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_points.html#disconnect-from-access-point">Disconnect from Access Point</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="live_streaming.html">Live Streaming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="live_streaming.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="live_streaming.html#set_livestream_mode"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="live_streaming.html#get_livestream_status"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Livestream</span> <span class="pre">Status</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cohn.html">Camera on the Home Network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cohn.html#certificates">Certificates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#verifying-certificate">Verifying Certificate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#view-certificate-details">View Certificate Details</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cohn.html#provisioning-procedure">Provisioning Procedure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cohn.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#clear_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Clear</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#create_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#get_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#get_cohn_status"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Status</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#set_cohn_setting"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">COHN</span> <span class="pre">Setting</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hilights.html">Hilights</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hilights.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hilights.html#hilight_moment"><code class="docutils literal notranslate"><span class="pre">Hilight</span> <span class="pre">Moment</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="presets.html">Presets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#preset-groups">Preset Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="presets.html#get_available_presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="presets.html#load_preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="presets.html#load_preset_group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="presets.html#update_custom_preset"><code class="docutils literal notranslate"><span class="pre">Update</span> <span class="pre">Custom</span> <span class="pre">Preset</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#camera-capabilities">Camera Capabilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#xlsx">XLSX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#json">JSON</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#set_setting"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#setting-ids">Setting IDs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="statuses.html">Statuses</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Open GoPro BLE API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Query</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/features/query.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="query">
+<h1>Query<a class="headerlink" href="#query" title="Link to this heading"></a></h1>
+<p>This section describes operations to query various GoPro state / information.</p>
+<section id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="Link to this heading"></a></h2>
+<dl class="operation tlv-command" id="tlv-message-0">
+<dt class="sig sig-object operation" id="get_open_gopro_version">
+<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Open</span> <span class="pre">GoPro</span> <span class="pre">Version</span></span><a class="headerlink" href="#get_open_gopro_version" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#commands"><em>TLV command</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x51</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<p>Get the current version of the Open GoPro API.</p>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd></dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd></dd></dl>
+
+<dl class="field-list">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul>
+<li><strong>major_length</strong><em> (uint8) - </em>length of major parameter</li>
+<li><strong>major</strong><em> (unsigned major_length bytes) - </em>major part of version number</li>
+<li><strong>minor_length</strong><em> (uint8) - </em>length of minor parameter</li>
+<li><strong>minor</strong><em> (unsigned minor_length bytes) - </em>minor part of version number</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="operation tlv-command" id="tlv-message-1">
+<dt class="sig sig-object operation" id="get_date_time">
+<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Date</span> <span class="pre">Time</span></span><a class="headerlink" href="#get_date_time" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#commands"><em>TLV command</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x0E</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<p>Get the current date and time (without daylight savings times and timezone information).</p>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd></dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd></dd></dl>
+
+<dl class="field-list">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul>
+<li><strong>response_length</strong><em> (uint8) - </em>length of response payload</li>
+<li><strong>year</strong><em> (uint16) - </em>year</li>
+<li><strong>month</strong><em> (uint8) - </em>month from 1 - 12</li>
+<li><strong>day</strong><em> (uint8) - </em>day from 1 - 31</li>
+<li><strong>hour</strong><em> (uint8) - </em>hour from 0 - 23</li>
+<li><strong>minute</strong><em> (uint8) - </em>minute from 0 - 59</li>
+<li><strong>second</strong><em> (uint8) - </em>second from 0 - 59</li>
+<li><strong>weekday</strong><em> (uint8) - </em>Sunday = 0, Saturday = 6</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="operation tlv-command" id="tlv-message-2">
+<dt class="sig sig-object operation" id="get_hardware_info">
+<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Hardware</span> <span class="pre">Info</span></span><a class="headerlink" href="#get_hardware_info" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#commands"><em>TLV command</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x3C</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<p>Get information about the camera and firmware.</p>
+<p>Note that the model numbers are found under <a class="reference internal" href="../index.html#supported-cameras"><span class="std std-ref">Supported Cameras</span></a></p>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd></dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd></dd></dl>
+
+<dl class="field-list">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul>
+<li><strong>model_number_length</strong><em> (uint8) - </em>length of model_number parameter</li>
+<li><strong>model_number</strong><em> (unsigned model_number_length) - </em>model number. See note above.</li>
+<li><strong>model_name_length</strong><em> (uint8) - </em>length of model_name parameter</li>
+<li><strong>model_name</strong><em> (string of length model_name_length) - </em>i.e. &quot;HERO12 Black&quot;</li>
+<li><strong>deprecated_length</strong><em> (uint8) - </em>length of deprecated parameter</li>
+<li><strong>deprecated</strong><em> (unsigned deprecated_length) - </em>deprecated</li>
+<li><strong>firmware_version_length</strong><em> (uint8) - </em>length of firmware_version parameter</li>
+<li><strong>firmware_version</strong><em> (string of length firmware_version_length) - </em>&quot;H23.01.01.99.56&quot;</li>
+<li><strong>serial_number_length</strong><em> (uint8) - </em>length of serial_number parameter</li>
+<li><strong>serial_number</strong><em> (string of length serial_number_length) - </em>i.e. &quot;C1234567812345&quot;</li>
+<li><strong>ap_ssid_length</strong><em> (uint8) - </em>length of ap_ssid parameter</li>
+<li><strong>ap_ssid</strong><em> (string of length ap_ssid_length) - </em>i.e. &quot;GP12345678&quot;</li>
+<li><strong>ap_mac_address_length</strong><em> (uint8) - </em>length of ap_mac_address parameter</li>
+<li><strong>ap_mac_address</strong><em> (string of length ap_mac_address_length) - </em>i.e. &quot;2674f7f65f78&quot;</li>
+<li><strong>reserved</strong><em> (11 bytes) - </em>reserved data not part of the payload</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="operation tlv-command" id="tlv-message-3">
+<dt class="sig sig-object operation" id="get_local_date_time">
+<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></span><a class="headerlink" href="#get_local_date_time" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#commands"><em>TLV command</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x10</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<p>Get the current date and time with daylight savings and timezone information.</p>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd></dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd></dd></dl>
+
+<dl class="field-list">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul>
+<li><strong>response_length</strong><em> (uint8) - </em>length of response payload</li>
+<li><strong>year</strong><em> (uint16) - </em>year</li>
+<li><strong>month</strong><em> (uint8) - </em>month from 1 - 12</li>
+<li><strong>day</strong><em> (uint8) - </em>day from 1 - 31</li>
+<li><strong>hour</strong><em> (uint8) - </em>hour from 0 - 23</li>
+<li><strong>minute</strong><em> (uint8) - </em>minute from 0 - 59</li>
+<li><strong>second</strong><em> (uint8) - </em>second from 0 - 59</li>
+<li><strong>offset</strong><em> (int16) - </em>UTC offset in minutes</li>
+<li><strong>is_dst</strong><em> (uint8) - </em>Is daylight savings? 1 if yes, 0 if no</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="operation protobuf">
+<dt class="sig sig-object operation" id="get_last_captured_media">
+<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Last</span> <span class="pre">Captured</span> <span class="pre">Media</span></span><a class="headerlink" href="#get_last_captured_media" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
+</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<dl class="operation protobuf-message" id="protobuf-message-0">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd><p>Get the last captured media filename</p>
+<p>Returns a <a class="reference internal" href="../protocol/protobuf.html#proto-responselastcapturedmedia"><span class="std std-ref">ResponseLastCapturedMedia</span></a></p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dd class="field-even">0xF5</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dd class="field-odd">0x6D</dd>
+<dt class="field-even">Message<span class="colon">:</span></dt>
+<dd class="field-even"><p>RequestGetLastCapturedMedia (<a class="reference external" href="../protocol/protobuf.html#proto-requestgetlastcapturedmedia"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/media.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+<dl class="operation protobuf-message" id="protobuf-message-1">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd><p>The Last Captured Media</p>
+<p>Message is sent in response to a <a class="reference internal" href="../protocol/protobuf.html#proto-requestgetlastcapturedmedia"><span class="std std-ref">RequestGetLastCapturedMedia</span></a>.</p>
+<p>This contains the relative path of the last captured media starting from the <cite>DCIM</cite> directory on the SDCard. Depending
+on the type of media captured, it will return:</p>
+<ul class="simple">
+<li><p>The single media path for single photo/video media</p></li>
+<li><p>The path to the first captured media in the group for grouped media</p></li>
+</ul>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dd class="field-even">0xF5</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dd class="field-odd">0xED</dd>
+<dt class="field-even">Message<span class="colon">:</span></dt>
+<dd class="field-even"><p>ResponseLastCapturedMedia (<a class="reference external" href="../protocol/protobuf.html#proto-responselastcapturedmedia"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/media.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="operation tlv-query" id="tlv-message-4">
+<dt class="sig sig-object operation" id="get_setting_values">
+<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Setting</span> <span class="pre">Values</span></span><a class="headerlink" href="#get_setting_values" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#queries"><em>TLV query</em></a></p>
+</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<p>Get the current value associated with one or more settings.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the element ID array is empty, all settings will be queried</p>
+</div>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd><p>The element ID array is an array of uint8 <a class="reference internal" href="../protocol/id_tables.html#setting-ids"><span class="std std-ref">Setting IDs</span></a> to query.</p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x12</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd><p>The fields of the results array are:</p>
+<ul class="simple">
+<li><p><strong>ID</strong>: <a class="reference internal" href="../protocol/id_tables.html#setting-ids"><span class="std std-ref">Setting ID</span></a></p></li>
+<li><p><strong>value</strong>: Setting value defined via the individual <a class="reference internal" href="settings.html"><span class="doc">Setting</span></a> documentation</p></li>
+</ul>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x12</dd>
+</dl>
+</dd></dl>
+
+<dl class="operation tlv-query" id="tlv-message-5">
+<dt class="sig sig-object operation" id="get_status_values">
+<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Status</span> <span class="pre">Values</span></span><a class="headerlink" href="#get_status_values" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#queries"><em>TLV query</em></a></p>
+</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<p>Get the current value of one or more camera statuses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the element ID array is empty, all statuses will be queried</p>
+</div>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd><p>The element ID array is an array of uint8 <a class="reference internal" href="../protocol/id_tables.html#status-ids"><span class="std std-ref">Status IDs</span></a> to query.</p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x13</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd><p>The fields of the results array are:</p>
+<ul class="simple">
+<li><p><strong>ID</strong>: <a class="reference internal" href="../protocol/id_tables.html#status-ids"><span class="std std-ref">Status ID</span></a></p></li>
+<li><p><strong>value</strong>: Status value defined via the individual <a class="reference internal" href="statuses.html"><span class="doc">Status</span></a> documentation</p></li>
+</ul>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x13</dd>
+</dl>
+</dd></dl>
+
+<dl class="operation tlv-query" id="tlv-message-6">
+<dt class="sig sig-object operation" id="get_setting_capabilities">
+<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Setting</span> <span class="pre">Capabilities</span></span><a class="headerlink" href="#get_setting_capabilities" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#queries"><em>TLV query</em></a></p>
+</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<p>Get one or more setting value capabilities. The reported capabilities are only those setting options that are
+<strong>currently</strong> supported.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the element ID array is empty, all settings will be queried.</p>
+</div>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd><p>The element ID array is an array of uint8 <a class="reference internal" href="../protocol/id_tables.html#setting-ids"><span class="std std-ref">Setting IDs</span></a> to query.</p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x32</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd><p>The fields of the results array are:</p>
+<ul class="simple">
+<li><p><strong>ID</strong>: <a class="reference internal" href="../protocol/id_tables.html#setting-ids"><span class="std std-ref">Setting ID</span></a></p></li>
+<li><p><strong>value</strong>: Setting value defined via the individual <a class="reference internal" href="settings.html"><span class="doc">Setting</span></a> documentation</p></li>
+</ul>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x32</dd>
+</dl>
+</dd></dl>
+
+<dl class="operation tlv-query" id="tlv-message-7">
+<dt class="sig sig-object operation" id="register_for_setting_value_updates">
+<span class="sig-name descname"><span class="pre">Register</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Value</span> <span class="pre">Updates</span></span><a class="headerlink" href="#register_for_setting_value_updates" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#queries"><em>TLV query</em></a></p>
+</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<p>Register to receive updates when one or more setting values change. The initial response contains the current
+setting values. Notifications will be sent whenever one of the requested setting’s values change.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the element ID array is empty, all settings will be registered for.</p>
+</div>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd><p>The element ID array is an array of uint8 <a class="reference internal" href="../protocol/id_tables.html#setting-ids"><span class="std std-ref">Setting IDs</span></a> to register for.</p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x52</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd><p>The fields of the results array are:</p>
+<ul class="simple">
+<li><p><strong>ID</strong>: <a class="reference internal" href="../protocol/id_tables.html#setting-ids"><span class="std std-ref">Setting ID</span></a></p></li>
+<li><p><strong>value</strong>: Setting value defined via the individual <a class="reference internal" href="settings.html"><span class="doc">Setting</span></a> documentation</p></li>
+</ul>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x52</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Notification</span></span></dt>
+<dd><p>The fields of the results array are:</p>
+<ul class="simple">
+<li><p><strong>ID</strong>: <a class="reference internal" href="../protocol/id_tables.html#setting-ids"><span class="std std-ref">Setting ID</span></a></p></li>
+<li><p><strong>value</strong>: Setting value defined via the individual <a class="reference internal" href="settings.html"><span class="doc">Setting</span></a> documentation</p></li>
+</ul>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x92</dd>
+</dl>
+</dd></dl>
+
+<dl class="operation tlv-query" id="tlv-message-8">
+<dt class="sig sig-object operation" id="register_for_status_value_updates">
+<span class="sig-name descname"><span class="pre">Register</span> <span class="pre">for</span> <span class="pre">Status</span> <span class="pre">Value</span> <span class="pre">Updates</span></span><a class="headerlink" href="#register_for_status_value_updates" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#queries"><em>TLV query</em></a></p>
+</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<p>Register to receive updates when one or more status values change. The initial response contains the current
+status values. Notifications will be sent whenever one of the requested statuses’ values change.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the element ID array is empty, all statuses will be registered for.</p>
+</div>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd><p>The element ID array is an array of uint8 <a class="reference internal" href="../protocol/id_tables.html#status-ids"><span class="std std-ref">Status IDs</span></a> to register for.</p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x53</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd><p>The fields of the results array are:</p>
+<ul class="simple">
+<li><p><strong>ID</strong>: <a class="reference internal" href="../protocol/id_tables.html#status-ids"><span class="std std-ref">Status ID</span></a></p></li>
+<li><p><strong>value</strong>: Status value defined via the individual <a class="reference internal" href="statuses.html"><span class="doc">Status</span></a> documentation</p></li>
+</ul>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x53</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Notification</span></span></dt>
+<dd><p>The fields of the results array are:</p>
+<ul class="simple">
+<li><p><strong>ID</strong>: <a class="reference internal" href="../protocol/id_tables.html#status-ids"><span class="std std-ref">Status ID</span></a></p></li>
+<li><p><strong>value</strong>: Status value defined via the individual <a class="reference internal" href="statuses.html"><span class="doc">Status</span></a> documentation</p></li>
+</ul>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x93</dd>
+</dl>
+</dd></dl>
+
+<dl class="operation tlv-query" id="tlv-message-9">
+<dt class="sig sig-object operation" id="register_for_setting_capability_updates">
+<span class="sig-name descname"><span class="pre">Register</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Capability</span> <span class="pre">Updates</span></span><a class="headerlink" href="#register_for_setting_capability_updates" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#queries"><em>TLV query</em></a></p>
+</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<p>Register to receive updates when one or more setting capabilities change. The initial response contains the current
+setting capabilities. Notifications will be sent whenever one of the requested settings’ capabilities change.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the element ID array is empty, all settings will be registered for.</p>
+</div>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd><p>The element ID array is an array of uint8 <a class="reference internal" href="../protocol/id_tables.html#setting-ids"><span class="std std-ref">Setting IDs</span></a> to register for.</p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x62</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd><p>The fields of the results array are:</p>
+<ul class="simple">
+<li><p><strong>ID</strong>: <a class="reference internal" href="../protocol/id_tables.html#setting-ids"><span class="std std-ref">Setting ID</span></a></p></li>
+<li><p><strong>value</strong>: Setting value defined via the individual <a class="reference internal" href="settings.html"><span class="doc">Setting</span></a> documentation</p></li>
+</ul>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x62</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Notification</span></span></dt>
+<dd><p>The fields of the results array are:</p>
+<ul class="simple">
+<li><p><strong>ID</strong>: <a class="reference internal" href="../protocol/id_tables.html#setting-ids"><span class="std std-ref">Setting ID</span></a></p></li>
+<li><p><strong>value</strong>: Setting value defined via the individual <a class="reference internal" href="settings.html"><span class="doc">Setting</span></a> documentation</p></li>
+</ul>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0xA2</dd>
+</dl>
+</dd></dl>
+
+<dl class="operation tlv-query" id="tlv-message-10">
+<dt class="sig sig-object operation" id="unregister_for_setting_value_updates">
+<span class="sig-name descname"><span class="pre">Unregister</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Value</span> <span class="pre">Updates</span></span><a class="headerlink" href="#unregister_for_setting_value_updates" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#queries"><em>TLV query</em></a></p>
+</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<p>Cancel ongoing setting value updates.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the element ID array is empty, all settings will be unregistered for.</p>
+</div>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd><p>The element ID array is an array of uint8 <a class="reference internal" href="../protocol/id_tables.html#setting-ids"><span class="std std-ref">Setting IDs</span></a> to unregister for.</p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x72</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd></dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x72</dd>
+</dl>
+</dd></dl>
+
+<dl class="operation tlv-query" id="tlv-message-11">
+<dt class="sig sig-object operation" id="unregister_for_status_value_updates">
+<span class="sig-name descname"><span class="pre">Unregister</span> <span class="pre">for</span> <span class="pre">Status</span> <span class="pre">Value</span> <span class="pre">Updates</span></span><a class="headerlink" href="#unregister_for_status_value_updates" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#queries"><em>TLV query</em></a></p>
+</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<p>Cancel ongoing status value updates.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the element ID array is empty, all Statuses will be unregistered for.</p>
+</div>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd><p>The element ID array is an array of uint8 <a class="reference internal" href="../protocol/id_tables.html#status-ids"><span class="std std-ref">Status IDs</span></a> to unregister for.</p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x73</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd></dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x73</dd>
+</dl>
+</dd></dl>
+
+<dl class="operation tlv-query" id="tlv-message-12">
+<dt class="sig sig-object operation" id="unregister_for_setting_capability_updates">
+<span class="sig-name descname"><span class="pre">Unregister</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Capability</span> <span class="pre">Updates</span></span><a class="headerlink" href="#unregister_for_setting_capability_updates" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#queries"><em>TLV query</em></a></p>
+</dd>
+</dl>
+Supported cameras:<ul class="simple">
+<li>HERO12 Black</li>
+<li>HERO11 Black Mini</li>
+<li>HERO11 Black</li>
+<li>HERO10 Black</li>
+<li>HERO9 Black</li>
+</ul>
+<p>Cancel ongoing setting capability updates.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the element array is empty, all settings will be unregistered for.</p>
+</div>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span></dt>
+<dd><p>The element ID array is an array of uint8 <a class="reference internal" href="../protocol/id_tables.html#setting-ids"><span class="std std-ref">Setting IDs</span></a> to unregister for.</p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x82</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span></dt>
+<dd></dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span></dt>
+<dd class="field-even">0x82</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="control.html" class="btn btn-neutral float-left" title="Control" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="access_points.html" class="btn btn-neutral float-right" title="Access Point" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 /* live_streaming.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Mon Jan  8 21:03:36 UTC 2024 */
+/* This copyright was auto-generated on Fri Feb 23 19:56:08 UTC 2024 */
 
 /***********************************************************************************************************************
  *
@@ -27,7 +27,7 @@ enum EnumLiveStreamError {
     LIVE_STREAM_ERROR_OUTOFMEMORY            = 3;  // Not enough memory on camera to complete task
     LIVE_STREAM_ERROR_INPUTSTREAM            = 4;  // Failed to get stream from low level camera system
     LIVE_STREAM_ERROR_INTERNET               = 5;  // No internet access detected on startup of streamer
-    LIVE_STREAM_ERROR_OSNETWORK              = 6;  // Error occured in linux networking stack. usually means the server closed the connection
+    LIVE_STREAM_ERROR_OSNETWORK              = 6;  // Error occured in linux networking stack. Usually means the server closed the connection
     LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT = 7;  // Timed out attemping to connect to the wifi network when attemping live stream
     LIVE_STREAM_ERROR_SSL_HANDSHAKE          = 8;  // SSL handshake failed (commonly caused due to incorrect time / time zone)
     LIVE_STREAM_ERROR_CAMERA_BLOCKED         = 9;  // Low level camera system rejected attempt to start live stream
@@ -66,8 +66,9 @@ enum EnumWindowSize {
  * Live Stream status
  *
  * Sent either:
- *   - as a syncrhonous response to initial @ref RequestGetLiveStreamStatus
- *   - as asynchronous notifications registered for via @ref RequestGetLiveStreamStatus
+ *
+ *   - As a synchronous response to initial @ref RequestGetLiveStreamStatus
+ *   - As an asynchronous notifications registered for via @ref RequestGetLiveStreamStatus
  */
 message NotifyLiveStreamStatus {
     optional EnumLiveStreamStatus live_stream_status                      = 1;  // Live stream status
@@ -86,7 +87,9 @@ message NotifyLiveStreamStatus {
 /**
  * Get the current livestream status (and optionally register for future status changes)
  *
- * Both current status and future status changes are sent via @ref NotifyLiveStreamStatus
+ * Response: @ref NotifyLiveStreamStatus
+ *
+ * Notification: @ref NotifyLiveStreamStatus
  */
 message RequestGetLiveStreamStatus {
     repeated EnumRegisterLiveStreamStatus register_live_stream_status   = 1; // Array of live stream statuses to be notified about
@@ -94,9 +97,7 @@ message RequestGetLiveStreamStatus {
 }
 
 /**
- * Configure lives streaming
- *
- * The current livestream status can be queried via @ref RequestGetLiveStreamStatus
+ * Configure Live Streaming
  *
  * Response: @ref ResponseGeneric
  */
@@ -109,7 +110,7 @@ message RequestSetLiveStreamMode {
      * The set of supported lenses is only available from the `live_stream_window_size_supported_array` in @ref NotifyLiveStreamStatus)
      */
     optional EnumWindowSize window_size      = 3;
-    optional bytes          cert             = 6; // Certificate for servers that require it
+    optional bytes          cert             = 6; // Certificate for servers that require it in PEM format
     optional int32          minimum_bitrate  = 7; // Minimum desired bitrate (may or may not be honored)
     optional int32          maximum_bitrate  = 8; // Maximum desired bitrate (may or may not be honored)
     optional int32          starting_bitrate = 9; // Starting bitrate

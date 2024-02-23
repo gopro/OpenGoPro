@@ -102,12 +102,16 @@ kramdown:
     smart_quotes: lsquo,rsquo,ldquo,rdquo
     enable_coderay: false
 
-# Reading Files
 include:
     - .htaccess
     - _pages
     - .openapi.yml
     - .enums.yml
+    # Need to manually specify sphinx underscore dirs since jekyll ignores them by default
+    - _images
+    - _sources
+    - _static
+    - _sphinx_javascript_frameworks_compat.js
 exclude:
     - .vscode
     - .asset-cache

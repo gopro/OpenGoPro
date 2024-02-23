@@ -1,0 +1,100 @@
+Access Point
+============
+
+The camera supports connecting to access points in `Station Mode (STA) <https://en.wikipedia.org/wiki/Station_(networking)>`__.
+This is necessary for features such as  :doc:`Live Streaming <live_streaming>` where the camera needs an
+Internet connection. While in this mode, HTTP command and control of the camera is not available on some cameras.
+
+Operations
+----------
+
+.. operation:protobuf:: Scan for Access Points
+
+    .. image:: ../../assets/images/plantuml_ble_scan_for_ssids.png
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0x02
+        :action-id: 0x02
+        :uuid: Network Management Command
+        :message: RequestStartScan
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0x02
+        :action-id: 0x82
+        :uuid: Network Management Response
+        :message: ResponseStartScanning
+
+    .. operation:protobuf-message:: notification
+        :feature-id: 0x02
+        :action-id: 0x0B
+        :uuid: Network Management Response
+        :message: NotifStartScanning
+
+.. operation:protobuf:: Get AP Scan Results
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0x02
+        :action-id: 0x04
+        :uuid: Network Management Command
+        :message: RequestGetApEntries
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0x02
+        :action-id: 0x84
+        :uuid: Network Management Response
+        :message: ResponseGetApEntries
+
+.. operation:protobuf:: Connect to Provisioned Access Point
+
+    .. image:: ../../assets/images/plantuml_ble_connect_ap.png
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0x02
+        :action-id: 0x04
+        :uuid: Network Management Command
+        :message: RequestConnect
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0x02
+        :action-id: 0x84
+        :uuid: Network Management Response
+        :message: ResponseConnect
+
+    .. operation:protobuf-message:: notification
+        :feature-id: 0x02
+        :action-id: 0x0C
+        :uuid: Network Management Response
+        :message: NotifProvisioningState
+
+.. operation:protobuf:: Connect to a New Access Point
+
+    .. note:: This should only be done once to provision the AP; subsequent connections should use RequestConnect.
+
+    .. image:: ../../assets/images/plantuml_ble_connect_new_ap.png
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0x02
+        :action-id: 0x05
+        :uuid: Network Management Command
+        :message: RequestConnectNew
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0x02
+        :action-id: 0x85
+        :uuid: Network Management Response
+        :message: ResponseConnectNew
+
+    .. operation:protobuf-message:: notification
+        :feature-id: 0x02
+        :action-id: 0x0C
+        :uuid: Network Management Response
+        :message: NotifProvisioningState
+
+Disconnect from Access Point
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To disconnect from a connected Access Point and return the camera to AP mode, use
+`Set AP Control <../features/control.html#set_ap_control>`__
+to set AP Control: ON, which disables Station Mode.
+
+.. image:: ../../assets/images/plantuml_ble_disconnect_ap.png

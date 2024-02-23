@@ -139,7 +139,7 @@ Response pattern, the WiFi Information is retrieved via direct Read Requests to 
 ### Get WiFi SSID
 
 The WiFi SSID can be found by reading from the WiFi AP SSID
-[characteristic]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics) of the
+[characteristic](/ble/index.html#services-and-characteristics) of the
 WiFi Access Point service.
 
 First, let's send the read request to get the SSID (and decode it into a string).
@@ -190,7 +190,7 @@ SSID is debughero11
 ### Get WiFi Password
 
 The WiFi password can be found by reading from the WiFi AP password
-[characteristic]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics) of the
+[characteristic](/ble/index.html#services-and-characteristics) of the
 WiFi Access Point service.
 
 First, let's send the read request to get the password (and decode it into a string).
@@ -235,7 +235,7 @@ Password is z3y-DCX-Phj
 ## Enable WiFi AP
 
 Before we can connect to the WiFi AP, we have to make sure it is enabled. This is accomplished by using the
-"AP Control" [command]({% link specs/ble_versions/ble_2_0.md %}#commands-quick-reference):
+"AP Control" [command](/ble/index.html#commands-quick-reference):
 
 | Command            |        Bytes        |
 | ------------------ | :-----------------: |

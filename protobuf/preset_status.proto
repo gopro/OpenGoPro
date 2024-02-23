@@ -1,5 +1,5 @@
 /* preset_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Mon Jan  8 21:03:36 UTC 2024 */
+/* This copyright was auto-generated on Fri Feb 23 19:56:08 UTC 2024 */
 
 /***********************************************************************************************************************
  *
@@ -92,6 +92,15 @@ enum EnumPresetIcon {
     PRESET_ICON_TRAVEL                 = 31;
     PRESET_ICON_WATER                  = 32;
     PRESET_ICON_LOOPING                = 33;
+    PRESET_ICON_STARS                  = 34;
+    PRESET_ICON_ACTION                 = 35;
+    PRESET_ICON_FOLLOW_CAM             = 36;
+    PRESET_ICON_SURF                   = 37;
+    PRESET_ICON_CITY                   = 38;
+    PRESET_ICON_SHAKY                  = 39;
+    PRESET_ICON_CHESTY                 = 40;
+    PRESET_ICON_HELMET                 = 41;
+    PRESET_ICON_BITE                   = 42;
     PRESET_ICON_BASIC                  = 58;
     PRESET_ICON_ULTRA_SLO_MO           = 59;
     PRESET_ICON_STANDARD_ENDURANCE     = 60;
@@ -147,6 +156,15 @@ enum EnumPresetTitle {
     PRESET_TITLE_TRAVEL                   = 31;
     PRESET_TITLE_WATER                    = 32;
     PRESET_TITLE_LOOPING                  = 33;
+    PRESET_TITLE_STARS                    = 34;
+    PRESET_TITLE_ACTION                   = 35;
+    PRESET_TITLE_FOLLOW_CAM               = 36;
+    PRESET_TITLE_SURF                     = 37;
+    PRESET_TITLE_CITY                     = 38;
+    PRESET_TITLE_SHAKY                    = 39;
+    PRESET_TITLE_CHESTY                   = 40;
+    PRESET_TITLE_HELMET                   = 41;
+    PRESET_TITLE_BITE                     = 42;
     PRESET_TITLE_BASIC                    = 58;
     PRESET_TITLE_ULTRA_SLO_MO             = 59;
     PRESET_TITLE_STANDARD_ENDURANCE       = 60;
@@ -179,11 +197,12 @@ enum EnumPresetTitle {
  * Current Preset status
  *
  * Sent either:
- * - synchronously via initial response to @ref RequestGetPresetStatus
- * - asynchronously when Preset change if registered in @rev RequestGetPresetStatus
+ *
+ * - Synchronously via initial response to @ref RequestGetPresetStatus
+ * - Asynchronously when Preset change if registered in @ref RequestGetPresetStatus
  */
 message NotifyPresetStatus {
-    repeated PresetGroup preset_group_array = 1; // Array of currently available Preset Groups
+    repeated PresetGroup preset_group_array = 1; // List of currently available Preset Groups
 }
 
 /**
@@ -203,7 +222,7 @@ message Preset {
 }
 
 /**
- * Request to update the active custom preset
+ * Request to Update the Title and / or Icon of the Active Custom Preset
  *
  * This only operates on the currently active Preset and will fail  if the current
  * Preset is not custom.
@@ -211,13 +230,15 @@ message Preset {
  * The use cases are:
  *
  * 1. Update the Custom Preset Icon
+ *
  *     - `icon_id` is always optional and can always be passed
  *
  * and / or
  *
  * 2. Update the Custom Preset Title to a...
- *      - **Factory Preset Title**: Set `title_id` to a non-94 value
- *      - **Custom Preset Name**: Set `title_id` to 94 and specify a `custom_name`
+ *
+ *      - **Factory Preset Title**: Set `title_id` to a non-PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) value
+ *      - **Custom Preset Name**: Set `title_id` to PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) and specify a `custom_name`
  *
  * Returns a @ref ResponseGeneric with the status of the preset update request.
  */
@@ -228,7 +249,16 @@ message RequestCustomPresetUpdate { /**
      * to @ref RequestGetPresetStatus
      */
     optional EnumPresetTitle title_id    = 1;
-    optional string          custom_name = 2; // utf-8 encoded target custom preset name
+    /**
+     * UTF-8 encoded custom preset name
+     *
+     * The name must obey the following:
+     *
+     *   - Custom titles must be between 1 and 16 characters (inclusive)
+     *   - No special characters outside of the following languages: English, French, Italian, German,
+     *     Spanish, Portuguese, Swedish, Russian
+     */
+    optional string          custom_name = 2;
     /**
      * Preset Icon ID
      *

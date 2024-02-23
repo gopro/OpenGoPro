@@ -1,0 +1,310 @@
+Query
+=====
+
+This section describes operations to query various GoPro state / information.
+
+Operations
+----------
+
+.. operation:tlv-command:: Get Open GoPro Version
+    :id: 0x51
+
+    Get the current version of the Open GoPro API.
+
+    .. operation:tlv-message:: Request
+        :uuid: Command
+    .. operation:tlv-message:: Response
+        :uuid: Command Response
+        :params:
+            - major_length (uint8): length of major parameter
+            - major (unsigned major_length bytes) : major part of version number
+            - minor_length (uint8): length of minor parameter
+            - minor (unsigned minor_length bytes) : minor part of version number
+
+.. operation:tlv-command:: Get Date Time
+    :id: 0x0E
+
+    Get the current date and time (without daylight savings times and timezone information).
+
+    .. operation:tlv-message:: Request
+        :uuid: Command
+    .. operation:tlv-message:: Response
+        :uuid: Command Response
+        :params:
+            - response_length (uint8): length of response payload
+            - year (uint16) : year
+            - month (uint8) : month from 1 - 12
+            - day (uint8) : day from 1 - 31
+            - hour (uint8) : hour from 0 - 23
+            - minute (uint8) : minute from 0 - 59
+            - second (uint8) : second from 0 - 59
+            - weekday (uint8): Sunday = 0, Saturday = 6
+
+.. operation:tlv-command:: Get Hardware Info
+    :id: 0x3C
+
+    Get information about the camera and firmware.
+
+    Note that the model numbers are found under :ref:`Supported Cameras<index:supported cameras>`
+
+    .. operation:tlv-message:: Request
+        :uuid: Command
+    .. operation:tlv-message:: Response
+        :uuid: Command Response
+        :params:
+            - model_number_length (uint8): length of model_number parameter
+            - model_number (unsigned model_number_length) : model number. See note above.
+            - model_name_length (uint8): length of model_name parameter
+            - model_name (string of length model_name_length) : i.e. "HERO12 Black"
+            - deprecated_length (uint8): length of deprecated parameter
+            - deprecated (unsigned deprecated_length): deprecated
+            - firmware_version_length (uint8): length of firmware_version parameter
+            - firmware_version (string of length firmware_version_length) : "H23.01.01.99.56"
+            - serial_number_length (uint8): length of serial_number parameter
+            - serial_number (string of length serial_number_length): i.e. "C1234567812345"
+            - ap_ssid_length (uint8): length of ap_ssid parameter
+            - ap_ssid (string of length ap_ssid_length) : i.e. "GP12345678"
+            - ap_mac_address_length (uint8): length of ap_mac_address parameter
+            - ap_mac_address (string of length ap_mac_address_length) : i.e. "2674f7f65f78"
+            - reserved (11 bytes): reserved data not part of the payload
+
+.. operation:tlv-command:: Get Local Date Time
+    :id: 0x10
+    :unsupported: boilers kongs
+
+    Get the current date and time with daylight savings and timezone information.
+
+    .. operation:tlv-message:: Request
+        :uuid: Command
+    .. operation:tlv-message:: Response
+        :uuid: Command Response
+        :params:
+            - response_length (uint8): length of response payload
+            - year (uint16) : year
+            - month (uint8) : month from 1 - 12
+            - day (uint8) : day from 1 - 31
+            - hour (uint8) : hour from 0 - 23
+            - minute (uint8) : minute from 0 - 59
+            - second (uint8) : second from 0 - 59
+            - offset (int16): UTC offset in minutes
+            - is_dst (uint8): Is daylight savings? 1 if yes, 0 if no
+
+.. operation:protobuf:: Get Last Captured Media
+    :unsupported: boilers kongs pismo sultans
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0xF5
+        :action-id: 0x6D
+        :uuid: Query
+        :message: WSDK_RequestGetLastCapturedMedia
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0xF5
+        :action-id: 0xED
+        :uuid: Query Response
+        :message: WSDK_ResponseLastCapturedMedia
+
+.. operation:tlv-query:: Get Setting Values
+
+    Get the current value associated with one or more settings.
+
+    .. note:: If the element ID array is empty, all settings will be queried
+
+    .. operation:tlv-message:: Request
+        :id: 0x12
+        :uuid: Query
+
+        The element ID array is an array of uint8 :ref:`Setting IDs<protocol/id_tables:setting ids>` to query.
+
+    .. operation:tlv-message:: Response
+        :id: 0x12
+        :uuid: Query Response
+
+        The fields of the results array are:
+
+        - **ID**: :ref:`Setting ID<protocol/id_tables:setting ids>`
+        - **value**: Setting value defined via the individual :doc:`Setting<settings>` documentation
+
+.. operation:tlv-query:: Get Status Values
+
+    Get the current value of one or more camera statuses.
+
+    .. note:: If the element ID array is empty, all statuses will be queried
+
+    .. operation:tlv-message:: Request
+        :uuid: Query
+        :id: 0x13
+
+        The element ID array is an array of uint8 :ref:`Status IDs<protocol/id_tables:status ids>` to query.
+
+    .. operation:tlv-message:: Response
+        :uuid: Query Response
+        :id: 0x13
+
+        The fields of the results array are:
+
+        - **ID**: :ref:`Status ID<protocol/id_tables:status ids>`
+        - **value**: Status value defined via the individual :doc:`Status<statuses>` documentation
+
+.. operation:tlv-query:: Get Setting Capabilities
+
+    Get one or more setting value capabilities. The reported capabilities are only those setting options that are
+    **currently** supported.
+
+    .. note:: If the element ID array is empty, all settings will be queried.
+
+    .. operation:tlv-message:: Request
+        :uuid: Query
+        :id: 0x32
+
+        The element ID array is an array of uint8 :ref:`Setting IDs<protocol/id_tables:setting ids>` to query.
+
+    .. operation:tlv-message:: Response
+        :uuid: Query Response
+        :id: 0x32
+
+        The fields of the results array are:
+
+        - **ID**: :ref:`Setting ID<protocol/id_tables:setting ids>`
+        - **value**: Setting value defined via the individual :doc:`Setting<settings>` documentation
+
+.. operation:tlv-query:: Register for Setting Value Updates
+
+    Register to receive updates when one or more setting values change. The initial response contains the current
+    setting values. Notifications will be sent whenever one of the requested setting's values change.
+
+    .. note:: If the element ID array is empty, all settings will be registered for.
+
+    .. operation:tlv-message:: Request
+        :uuid: Query
+        :id: 0x52
+
+        The element ID array is an array of uint8 :ref:`Setting IDs<protocol/id_tables:setting ids>` to register for.
+
+    .. operation:tlv-message:: Response
+        :uuid: Query Response
+        :id: 0x52
+
+        The fields of the results array are:
+
+        - **ID**: :ref:`Setting ID<protocol/id_tables:setting ids>`
+        - **value**: Setting value defined via the individual :doc:`Setting<settings>` documentation
+
+    .. operation:tlv-message:: Notification
+        :uuid: Query Response
+        :id: 0x92
+
+        The fields of the results array are:
+
+        - **ID**: :ref:`Setting ID<protocol/id_tables:setting ids>`
+        - **value**: Setting value defined via the individual :doc:`Setting<settings>` documentation
+
+.. operation:tlv-query:: Register for Status Value Updates
+
+    Register to receive updates when one or more status values change. The initial response contains the current
+    status values. Notifications will be sent whenever one of the requested statuses' values change.
+
+    .. note:: If the element ID array is empty, all statuses will be registered for.
+
+    .. operation:tlv-message:: Request
+        :uuid: Query
+        :id: 0x53
+
+        The element ID array is an array of uint8 :ref:`Status IDs<protocol/id_tables:status ids>` to register for.
+
+    .. operation:tlv-message:: Response
+        :uuid: Query Response
+        :id: 0x53
+
+        The fields of the results array are:
+
+        - **ID**: :ref:`Status ID<protocol/id_tables:status ids>`
+        - **value**: Status value defined via the individual :doc:`Status<statuses>` documentation
+
+    .. operation:tlv-message:: Notification
+        :uuid: Query Response
+        :id: 0x93
+
+        The fields of the results array are:
+
+        - **ID**: :ref:`Status ID<protocol/id_tables:status ids>`
+        - **value**: Status value defined via the individual :doc:`Status<statuses>` documentation
+
+.. operation:tlv-query:: Register for Setting Capability Updates
+
+    Register to receive updates when one or more setting capabilities change. The initial response contains the current
+    setting capabilities. Notifications will be sent whenever one of the requested settings' capabilities change.
+
+    .. note:: If the element ID array is empty, all settings will be registered for.
+
+    .. operation:tlv-message:: Request
+        :uuid: Query
+        :id: 0x62
+
+        The element ID array is an array of uint8 :ref:`Setting IDs<protocol/id_tables:setting ids>` to register for.
+
+    .. operation:tlv-message:: Response
+        :uuid: Query Response
+        :id: 0x62
+
+        The fields of the results array are:
+
+        - **ID**: :ref:`Setting ID<protocol/id_tables:setting ids>`
+        - **value**: Setting value defined via the individual :doc:`Setting<settings>` documentation
+
+    .. operation:tlv-message:: Notification
+        :uuid: Query Response
+        :id: 0xA2
+
+        The fields of the results array are:
+
+        - **ID**: :ref:`Setting ID<protocol/id_tables:setting ids>`
+        - **value**: Setting value defined via the individual :doc:`Setting<settings>` documentation
+
+.. operation:tlv-query:: Unregister for Setting Value Updates
+
+    Cancel ongoing setting value updates.
+
+    .. note:: If the element ID array is empty, all settings will be unregistered for.
+
+    .. operation:tlv-message:: Request
+        :uuid: Query
+        :id: 0x72
+
+        The element ID array is an array of uint8 :ref:`Setting IDs<protocol/id_tables:setting ids>` to unregister for.
+
+    .. operation:tlv-message:: Response
+        :uuid: Query Response
+        :id: 0x72
+
+.. operation:tlv-query:: Unregister for Status Value Updates
+
+    Cancel ongoing status value updates.
+
+    .. note:: If the element ID array is empty, all Statuses will be unregistered for.
+
+    .. operation:tlv-message:: Request
+        :uuid: Query
+        :id: 0x73
+
+        The element ID array is an array of uint8 :ref:`Status IDs<protocol/id_tables:status ids>` to unregister for.
+
+    .. operation:tlv-message:: Response
+        :uuid: Query Response
+        :id: 0x73
+
+.. operation:tlv-query:: Unregister for Setting Capability Updates
+
+    Cancel ongoing setting capability updates.
+
+    .. note:: If the element array is empty, all settings will be unregistered for.
+
+    .. operation:tlv-message:: Request
+        :uuid: Query
+        :id: 0x82
+
+        The element ID array is an array of uint8 :ref:`Setting IDs<protocol/id_tables:setting ids>` to unregister for.
+
+    .. operation:tlv-message:: Response
+        :uuid: Query Response
+        :id: 0x82

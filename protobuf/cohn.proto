@@ -1,5 +1,5 @@
 /* cohn.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Mon Jan  8 21:03:35 UTC 2024 */
+/* This copyright was auto-generated on Fri Feb 23 19:56:08 UTC 2024 */
 
 /***********************************************************************************************************************
  *
@@ -35,9 +35,9 @@ enum EnumCOHNNetworkState {
 /**
  * Get the current COHN status.
  *
- * This always returns a @ref NotifyCOHNStatus
+ * Response: @ref NotifyCOHNStatus
  *
- * Additionally, asynchronous updates can also be registerd to return more @ref NotifyCOHNStatus when a value
+ * Additionally, asynchronous updates can also be registered to return more @ref NotifyCOHNStatus when a value
  * changes.
  */
 message RequestGetCOHNStatus {
@@ -45,7 +45,7 @@ message RequestGetCOHNStatus {
 }
 
 /*
- * Current COHN status triggered by a RequestGetCOHNStatus
+ * Current COHN status triggered by a @ref RequestGetCOHNStatus
  */
 message NotifyCOHNStatus {
     optional EnumCOHNStatus       status     = 1; // Current COHN status
@@ -53,13 +53,13 @@ message NotifyCOHNStatus {
     optional string               username   = 3; // Username used for http basic auth header
     optional string               password   = 4; // Password used for http basic auth header
     optional string               ipaddress  = 5; // Camera's IP address on the local network
-    optional bool                 enabled    = 6; // Is COHN currently enabled
+    optional bool                 enabled    = 6; // Is COHN currently enabled?
     optional string               ssid       = 7; // Currently connected SSID
     optional string               macaddress = 8; // MAC address of the wifi adapter
 }
 
 /**
- * Create the COHN certificate.
+ * Create the Camera On the Home Network SSL/TLS certificate.
  *
  * Returns a @ref ResponseGeneric with the status of the creation
  */
@@ -82,7 +82,7 @@ message RequestClearCOHNCert {}
 message RequestCOHNCert {}
 
 /*
- * COHN Certificate response triggered by RequestCOHNCert
+ * COHN Certificate response triggered by @ref RequestCOHNCert
  */
 message ResponseCOHNCert {
     optional EnumResultGeneric result = 1; // Was request successful?
@@ -90,10 +90,14 @@ message ResponseCOHNCert {
 }
 
 /**
- * Enable and disable COHN if provisioned
+ * Configure a COHN Setting
  *
  * Returns a @ref ResponseGeneric
  */
-message RequestSetCOHNSetting {
-    optional bool cohn_active = 1; // 1 to enable, 0 to disable
+message RequestSetCOHNSetting { /**
+     * 1 to enable COHN, 0 to disable COHN
+     *
+     * When set to 1, STA Mode connection will be dropped and camera will not automatically re-connect for COHN.
+     */
+    optional bool cohn_active = 1;
 }

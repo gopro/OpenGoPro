@@ -1,0 +1,258 @@
+Data Protocol
+*************
+
+Note the following terminology used in this section:
+
+- **packet**: GATT-level byte data including packet headers
+- **message**: Payload data accumulated from one or more packets (not including packet headers)
+
+This section will describe the data protocol used to send and receive BLE messages. The general procedure to parse a
+message is to:
+
+#. :ref:`Accumulate and depacketize <protocol/data_protocol:packetization>` BLE packets to extract the message payload
+#. :ref:`Decipher <protocol/data_protocol:decipher message payload type>` the message's ID and payload type
+#. Depending on the :ref:`payload type <protocol/data_protocol:message payload>`, use the per-message documentation
+   (identified by the message's ID) to parse the message
+
+.. note:: All byte ordering is in Big Endian unless otherwise noted.
+
+Packetization
+=============
+
+The BLE protocol (<= v4.2) limits packet size to 20 bytes per packet. To accommodate this limitation, GoPro
+cameras use start and continuation packets to packetize larger payloads. If a message is less than 20 bytes, it
+can be sent with a single packet containing the start packet header. Otherwise,
+it must be split into multiple packets with the first packet containing a start packet header and subsequent packets
+containing continuation packet headers.
+
+Packet Headers
+--------------
+
+Message sending and receiving is accomplished by prepending **General (5-bit)**, **Extended (13-bit)**,
+**Extended (16-bit)**, or **Continuation** headers onto each packet depending on the message size and state.
+
+.. note:: For byte-level examples of the below packet types, see the
+    `tutorials <https://gopro.github.io/OpenGoPro/tutorials/parse-ble-responses#parsing-multiple-packet-tlv-responses>`__
+
+General (5-bit) Packets
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Messages that are 31 bytes or fewer can be sent or received using the following format:
+
++-----------+---+----------+---+---+---+---+------+
+| Byte 0                                          |
++===========+===+==========+===+===+===+===+======+
+| 7         | 6 | 5        | 4 | 3 | 2 | 1 | 0    |
++-----------+---+----------+---+---+---+---+------+
+| Start (0) | General (00) | 5-bit Message Length |
++-----------+---+----------+---+---+---+---+------+
+
+Extended (13-bit) Packets
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Messages that are 8191 bytes or fewer can be sent or received using the following format:
+
++-----------+---+------------------+---+---+---+---+------+---+---+---+---+---+---+---+---+
+| Byte 0                                                  | Byte 1                        |
++===========+===+==================+===+===+===+===+======+===+===+===+===+===+===+===+===+
+| 7         | 6 | 5                | 4 | 3 | 2 | 1 | 0    | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
++-----------+---+------------------+---+---+---+---+------+---+---+---+---+---+---+---+---+
+| Start (0) | 13-bit Extended (01) | 13-bit Message Length                                |
++-----------+---+------------------+---+---+---+---+------+---+---+---+---+---+---+---+---+
+
+.. tip:: Always use Extended (13-bit) packet headers when sending messages to avoid having to work with multiple packet
+    header formats.
+
+Extended (16-bit) Packets
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If a message is 8192 bytes or longer, the camera will respond using the format below.
+
++-----------+---+------------------+---+---+---+---+------+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+| Byte 0                                                  | Byte 1                        | Byte 2                        |
++===========+===+==================+===+===+===+===+======+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+
+| 7         | 6 | 5                | 4 | 3 | 2 | 1 | 0    | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
++-----------+---+------------------+---+---+---+---+------+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+| Start (0) | 13-bit Extended (10) | Reserved             | 16-bit Message Length                                         |
++-----------+---+------------------+---+---+---+---+------+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+
+.. warning:: This format can not be used for sending messages to the camera. It is only used to receive messages.
+
+Continuation Packets
+^^^^^^^^^^^^^^^^^^^^
+
+When sending or receiving a message that is longer than 20 bytes, the message must be split into N packets with packet 1
+containing a start packet header and packets 2..N containing a continuation packet header.
+
+.. note:: Counters start at 0x0 and reset after 0xF.
+
++------------------+---+----+---+---+---+---+---+
+| Byte 0                                        |
++==================+===+====+===+===+===+===+===+
+| 7                | 6 | 5  | 4 | 3 | 2 | 1 | 0 |
++------------------+---+----+---+---+---+---+---+
+| Continuation (1) | Reserved   | 4-bit Counter |
++------------------+------------+---+---+---+---+
+
+Decipher Message Payload Type
+=============================
+
+Once the packets have been accumulated and the payload has been extracted, it is necessary to decipher the message type
+in order to determine whether it is TLV or Protobuf and then parse it appropriately.
+
+Below is pseudocode describing how to do this:
+
+.. parsed-literal::
+
+    Camera sends response message from UUID U (string) with payload P (array of bytes)
+    // Is it a Protobuf response?
+    for each row in the :ref:`Protobuf IDs table<protocol/id_tables:protobuf ids>` {
+        F (int) = Feature ID
+        A (array of int) = Action IDs
+        if P[0] == F and P[1] in A {
+            P is a :ref:`Protobuf Message<protocol/data_protocol:protobuf>`
+            Match Feature ID P[0] and Action ID P[1] to a Protobuf message in the :ref:`Protobuf IDs table<protocol/id_tables:protobuf ids>`
+            Use matched :doc:`Protobuf message <protobuf>` to parse byte payload into useful data structure
+            Exit
+        }
+    }
+    // Nope. It is a TLV response
+    if U == GP-0072 (Command) {
+        Parse message payload using :ref:`Command Table<protocol/id_tables:command ids>` with :ref:`Command scheme<protocol/data_protocol:commands>`
+    }
+    else if U == GP-0074 (Settings) {
+        Parse using :ref:`Setting ID mapping<protocol/id_tables:setting ids>` with :ref:`Command scheme<protocol/data_protocol:commands>`
+    }
+    else if U == GP-0076 (Query) {
+        Parse message payload using :ref:`Query Table<protocol/id_tables:query ids>` with :ref:`Query scheme<protocol/data_protocol:queries>`
+    }
+
+Alternatively this is described in flowchart form here:
+
+.. image:: ../../assets/images/plantuml_ble_tlv_vs_protobuf.png
+
+Message Payload
+===============
+
+Once the payload has been extracted and had its type deciphered, it can then be parsed depending on its type.
+The Open GoPro protocol uses two different top-level message payload formats:
+
+- :ref:`Type Length Value (TLV) <protocol/data_protocol:type length value>`
+- :ref:`Protobuf <protocol/data_protocol:protobuf>`
+
+.. note:: The byte table examples in this section do not contain the :ref:`protocol/data_protocol:packet headers`; they only consider the payload.
+
+Type Length Value
+-----------------
+
+There are two different request / response Type-Length-Value (TLV) schemes as described in the following sections.
+
+Commands
+^^^^^^^^
+
+Commands are messages sent / received on either:
+
+- The Command and Command Response :ref:`characteristics <protocol/ble_setup:ble characteristics>`
+- The Setting and Setting Response :ref:`characteristics <protocol/ble_setup:ble characteristics>`
+
+They are summarized in the :ref:`commands table<protocol/id_tables:command ids>` and individually documented throughout
+the relevant feature section.
+
+.. rubric:: Command Request
+
+Below is the top level message format for command requests:
+
+=========================== ===========================
+Type (Command / Setting ID) Optional Parameters
+=========================== ===========================
+1 Byte                      Array of length-value pairs
+=========================== ===========================
+
+where each element of the parameter array is:
+
+====== ================
+Length Value
+====== ================
+1 Byte **Length** Bytes
+====== ================
+
+The individual command documentation specified by the message's :ref:`Command ID<protocol/id_tables:command ids>`
+will define the length and value options for each of its parameters.
+
+.. rubric:: Command Response
+
+Below is the top level message format for command responses:
+
+=========================== ============== =================
+Type (Command / Setting ID) Command Status Optional Response
+=========================== ============== =================
+1 Byte                      1 Byte         Variable Length
+=========================== ============== =================
+
+The individual command documentation specified by the message's
+:ref:`Command ID<protocol/id_tables:command ids>` will define the response.
+
+.. tip::  For byte-level examples, see the
+    `tutorials <https://gopro.github.io/OpenGoPro/tutorials/send-ble-commands#sending-commands>`__.
+
+Queries
+^^^^^^^
+
+Queries are messages sent / received on the Query and Query Response :ref:`characteristics <protocol/ble_setup:ble characteristics>`,
+respectively. They are summarized in the :ref:`queries table<protocol/id_tables:query ids>` and individually documented
+in :doc:`../features/query`.
+
+.. rubric:: Query Request
+
+Below is the top level message format for query requests:
+
+========= ====================
+Query ID  Array of Element IDs
+========= ====================
+1 Byte    Variable
+========= ====================
+
+The individual query documentation specified by the message's :ref:`Query ID<protocol/id_tables:query ids>`
+will define the elements that comprise the element ID array.
+
+.. rubric:: Query Response
+
+Below is the top level message format for query responses:
+
+========= ============== =================================
+Query ID  Command Status Query Results
+========= ============== =================================
+1 Byte    1 Byte         Array of id-length-value triplets
+========= ============== =================================
+
+where each element of the results array is:
+
+====== ====== ================
+ID     Length Value
+====== ====== ================
+1 Byte 1 byte **Length** Bytes
+====== ====== ================
+
+The individual query documentation specified by the message's
+:ref:`Query ID<protocol/id_tables:query ids>` will define the format of the result array.
+
+.. tip::  For byte-level examples, see the
+    `tutorials <https://gopro.github.io/OpenGoPro/tutorials/parse-ble-responses#parsing-a-one-packet-tlv-response>`__.
+
+Protobuf
+--------
+
+In order to maximize BLE bandwidth, some commands use `Google Protobuf (Protocol Buffers) <https://developers.google.com/protocol-buffers>`_.
+Open GoPro currently uses Protocol Buffers `Version 2 <https://developers.google.com/protocol-buffers/docs/reference/proto2-spec>`_
+
+Protobuf requests and responses are identified by a Feature ID and an Action ID prepended before their serialized payload.
+The top level message format for a Protobuf message is as follows:
+
+============ ========== ===========================
+Feature ID   Action ID  Serialized Protobuf Message
+============ ========== ===========================
+1 Byte       1 Byte     Variable Length
+============ ========== ===========================
+
+The individual Protobuf object specified by the message's
+:ref:`action / feature id<protocol/id_tables:protobuf ids>` is used to serialize / deserialize the payload.

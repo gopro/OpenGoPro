@@ -13,7 +13,7 @@ This tutorial will provide a walk-through to connect to the GoPro camera via Blu
 
 ## Hardware
 
-* A GoPro camera that is [supported by Open GoPro]({% link specs/ble_versions/ble_2_0.md %}#supported-cameras)
+* A GoPro camera that is [supported by Open GoPro](/ble/index.html#supported-cameras)
 {% linkedTabs hardware_prereqs %}
 {% tab hardware_prereqs python %}
 * One of the following systems:
@@ -518,7 +518,7 @@ re-establish encryption using stored keys. That is, they are "bonded."
 
 ## Enable Notifications
 
-As specified in the [Open GoPro Bluetooth API]({% link specs/ble_versions/ble_2_0.md %}#sending-and-receiving-messages),
+As specified in the [Open GoPro Bluetooth API](/ble/index.html#sending-and-receiving-messages),
 we must enable notifications for a given characteristic to receive responses from it.
 
 To enable notifications, we loop over each characteristic in each service and enable the characteristic
@@ -597,7 +597,7 @@ Bluetooth is ready for communication!
 {% endlinkedTabs %}
 
 The characteristics that correspond to each UUID listed in the log can be found in the
-[Open GoPro API]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics). These
+[Open GoPro API](/ble/index.html#services-and-characteristics). These
 will be used in a future tutorial to send data.
 
 Once the notifications are enabled, the GoPro BLE initialization is complete and it is ready to communicate via

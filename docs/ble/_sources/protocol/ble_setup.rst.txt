@@ -1,0 +1,89 @@
+BLE Setup
+*********
+
+Before sending and receiving data, it is first necessary to configure the BLE connection for communication.
+
+Below is an overview of setting up communication. See the relevant section below for more information:
+
+#. Ensure the camera is connectable and in `pairing mode <https://community.gopro.com/s/article/GoPro-Quik-How-To-Pair-Your-Camera?language=en_US>`__
+#. Scan to discover :ref:`advertisements <protocol/ble_setup:advertisements>` from GoPro peripheral devices (which can be narrowed by
+   limiting to peripherals that advertise service **0xFEA6**)
+#. Connect to a discovered peripheral device
+#. :ref:`Finish pairing <protocol/ble_setup:finish pairing>` with the peripheral device
+#. Discover all advertised services and characteristics
+#. :ref:`Subscribe to notifications <protocol/ble_setup:configure gatt characteristics>` from all characteristics that have the notify flag set
+
+Pairing Mode
+============
+
+In order for the camera to be discoverable and allow connections, it must first be put into
+`pairing mode <https://community.gopro.com/s/article/GoPro-Quik-How-To-Pair-Your-Camera?language=en_US>`__ via the
+camera UI.
+
+
+Advertisements
+==============
+
+Once in pairing mode, the camera will send BLE advertisements while it is ON and for the first 8 hours after the camera
+is put to sleep. During this time, the camera is discoverable and can be connected to. If the camera is in sleep mode,
+connecting to it will cause the camera to wake and boot up.
+
+Finish Pairing
+==============
+
+In order to communicate with a GoPro camera via BLE, a client must first be paired with the camera. The pairing
+procedure must be done once for each new client. If the camera is factory reset, all clients will need to pair again.
+The camera will store pairing information so subsequent connections with this client do not require pairing.
+
+Configure GATT Characteristics
+==============================
+
+In order to enable two-way communication with a GoPro camera, clients must subscribe to characteristics that have the
+notify flag set. Best practice is to query the GATT table to dynamically discover all notifiable characteristics.
+Alternatively, see the GATT table below.
+
+.. warning:: The GoPro device does not support the BLE feature of caching these subscriptions so the characteristics must be
+   re-subscribed for upon each connection.
+
+BLE Characteristics
+-------------------
+
+.. note:: **GP-XXXX** is shorthand for GoPro's 128-bit UUID: **b5f9XXXX-aa8d-11e3-9046-0002a5d5c51b**
+
++--------------+-------------------------+---------------------+----------------------------+-----------------+
+| Service UUID | Service                 | Characteristic UUID | Description                | Permissions     |
++==============+=========================+=====================+============================+=================+
+| GP-0001      | GoPro Wifi Access Point | GP-0002             | WiFi AP SSID               | Read / Write    |
++              |                         +---------------------+----------------------------+-----------------+
+|              |                         | GP-0003             | WiFi AP Password           | Read / Write    |
++              |                         +---------------------+----------------------------+-----------------+
+|              |                         | GP-0004             | WiFi AP Power              | Write           |
++              |                         +---------------------+----------------------------+-----------------+
+|              |                         | GP-0005             | WiFi AP State              | Read / Indicate |
++--------------+-------------------------+---------------------+----------------------------+-----------------+
+| GP-0090      | GoPro Camera Management | GP-0091             | Network Management Command | Write           |
++              |                         +---------------------+----------------------------+-----------------+
+|              |                         | GP-0092             | Network Management Response| Notify          |
++--------------+-------------------------+---------------------+----------------------------+-----------------+
+| FEA6         | Control & Query         | GP-0072             | Command                    | Write           |
++              |                         +---------------------+----------------------------+-----------------+
+|              |                         | GP-0073             | Command Response           | Notify          |
++              |                         +---------------------+----------------------------+-----------------+
+|              |                         | GP-0074             | Settings                   | Write           |
++              |                         +---------------------+----------------------------+-----------------+
+|              |                         | GP-0075             | Settings Response          | Notify          |
++              |                         +---------------------+----------------------------+-----------------+
+|              |                         | GP-0076             | Query                      | Write           |
++              |                         +---------------------+----------------------------+-----------------+
+|              |                         | GP-0077             | Query Response             | Notify          |
++--------------+-------------------------+---------------------+----------------------------+-----------------+
+
+Send Messages
+-------------
+
+Messages are sent to the camera by writing to a write-enabled UUID and then waiting for a notification
+from the corresponding response / notification UUID. Responses and notifications indicate whether the message was valid
+and will be (asynchronously) processed. For example, to send a camera control command, a client should write to
+GP-0072 and then wait for a response notification from GP-0073.
+
+See the following Protocol sections for steps to build and parse messages.

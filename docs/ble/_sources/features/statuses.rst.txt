@@ -1,0 +1,7 @@
+Statuses
+********
+
+This section will describe each status and its supported values. See the :doc:`Query<query>` section for operations to query
+status values.
+
+.. operation:status-descriptions::
