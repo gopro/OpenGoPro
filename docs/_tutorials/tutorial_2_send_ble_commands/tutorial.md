@@ -663,7 +663,7 @@ was higher, for example 5K, this would fail.
     option="A:::True"
     option="B:::False"
     correct="B"
-    info="Each resolution can support all or only some FPS values. You can find out which resolutions support which fps values by consulting the [capabilities section of the spec](https://gopro.github.io/OpenGoPro/ble_2_0#camera-capabilities)."
+    info="Each resolution can support all or only some FPS values. You can find out which resolutions support which fps values by consulting the [capabilities section of the spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-capabilities)."
 %}
 
 {% quiz

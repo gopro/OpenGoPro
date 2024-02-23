@@ -421,7 +421,7 @@ catching the exception when it fails.
 {% tab pair kotlin %}
 Rather than explicitly request pairing, we rely on the fact that Android will automatically start the pairing
 process if you try to read a characteristic that requires encryption. To do this, we read the
-[Wifi AP Password characteristic](https://gopro.github.io/OpenGoPro/ble_2_0#services-and-characteristics).
+[Wifi AP Password characteristic](https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#ble-characteristics).
 
 First we discover all characteristics (this will also be needed later when enabling notifications):
 
