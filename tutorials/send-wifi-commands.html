@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2024-01-08T13:07:39-08:00">
+  <meta property="article:published_time" content="2024-02-23T13:42:33-08:00">
 
 
 
@@ -410,7 +410,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 6: Send WiFi Commands">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to send Open GoProHTTP commands to the GoPro.">
-    <meta itemprop="datePublished" content="2024-01-08T13:07:39-08:00">
+    <meta itemprop="datePublished" content="2024-02-23T13:42:33-08:00">
     
 
     <div class="page__inner-wrap">
@@ -496,7 +496,7 @@ are present and configured correctly.</p>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="2d87a579-0b64-4638-be93-eb19f4fa9ce4">
+    <ul class="tab tab-linked" data-tab="82d656ad-af76-4c19-8310-77619c0de47b">
         
             <li class="active">
                 <a href="">python </a>
@@ -507,7 +507,7 @@ are present and configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="2d87a579-0b64-4638-be93-eb19f4fa9ce4">
+        <ul class="tab-content" id="82d656ad-af76-4c19-8310-77619c0de47b">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 2
@@ -673,7 +673,7 @@ This requires:</p>
 <p>Now that we are are connected via WiFi, we can communicate via HTTP commands.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="5fa98922-4521-492c-99f8-7c8961459643">
+    <ul class="tab tab-linked" data-tab="e322d952-95d1-48d5-b7c4-867adf5a828f">
         
             <li class="active">
                 <a href="">python </a>
@@ -684,7 +684,7 @@ This requires:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="5fa98922-4521-492c-99f8-7c8961459643">
+        <ul class="tab-content" id="e322d952-95d1-48d5-b7c4-867adf5a828f">
         
             <li class="active tab-content-container">
 <p>We will use the <a href="https://pypi.org/project/requests/">requests</a> package to send the various HTTP commands.</p>
@@ -755,7 +755,7 @@ setting / status information via WiFi.</p>
 Any errors will raise an exception.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="51212324-ec36-4bfc-aaf8-c8314ed5ca1e">
+    <ul class="tab tab-linked" data-tab="050383f8-6e9c-4557-9c26-36223f841e60">
         
             <li class="active">
                 <a href="">python </a>
@@ -766,7 +766,7 @@ Any errors will raise an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="51212324-ec36-4bfc-aaf8-c8314ed5ca1e">
+        <ul class="tab-content" id="050383f8-6e9c-4557-9c26-36223f841e60">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/gopro/camera/state</span><span class="sh">"</span>
@@ -788,7 +788,7 @@ Any errors will raise an exception.</p>
 <p>Lastly, we print the response’s JSON data:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="54d8298a-8555-4078-9460-744cc5a1a8aa">
+    <ul class="tab tab-linked" data-tab="a32e2302-f422-47c5-977a-cc17ac02a549">
         
             <li class="active">
                 <a href="">python </a>
@@ -799,7 +799,7 @@ Any errors will raise an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="54d8298a-8555-4078-9460-744cc5a1a8aa">
+        <ul class="tab-content" id="a32e2302-f422-47c5-977a-cc17ac02a549">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
@@ -891,7 +891,7 @@ GET request to: http://10.5.5.9:8080/gopro/camera/state
 </div>
 
 <p>We can see what each of these values mean by looking at the
-<a href="/OpenGoPro/ble_2_0#settings-quick-reference">Open GoPro Interface</a>.</p>
+<a href="/ble/index.html#settings-quick-reference">Open GoPro Interface</a>.</p>
 
 <p>For example (for settings):</p>
 
@@ -903,7 +903,7 @@ GET request to: http://10.5.5.9:8080/gopro/camera/state
 <h2 id="load-preset-group">Load Preset Group</h2>
 
 <p>The next command we will be sending is
-<a href="/OpenGoPro/ble_2_0#commands-quick-reference">Load Preset Group</a>, which is used
+<a href="/ble/index.html#commands-quick-reference">Load Preset Group</a>, which is used
 to toggle between the 3 groups of presets (video, photo, and timelapse). The preset groups ID’s are:</p>
 
 <table>
@@ -936,7 +936,7 @@ commands.</span>
 </div>
 
 <div>
-    <ul class="tab tab-linked" data-tab="efcf8db1-0799-49c5-acc3-1e69b2c5d9f3">
+    <ul class="tab tab-linked" data-tab="d0e7f0b3-c704-48c5-bebe-0b4ca4011da4">
         
             <li class="active">
                 <a href="">python </a>
@@ -947,7 +947,7 @@ commands.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="efcf8db1-0799-49c5-acc3-1e69b2c5d9f3">
+        <ul class="tab-content" id="d0e7f0b3-c704-48c5-bebe-0b4ca4011da4">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/gopro/camera/presets/set_group?id=1000</span><span class="sh">"</span>
@@ -969,7 +969,7 @@ commands.</span>
 <p>Lastly, we print the response’s JSON data:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="e99e7175-4afe-42b5-bb41-7876624bc9b6">
+    <ul class="tab tab-linked" data-tab="04dfcb1c-47e2-4cc8-bdb0-64f3eeaf47ab">
         
             <li class="active">
                 <a href="">python </a>
@@ -980,7 +980,7 @@ commands.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="e99e7175-4afe-42b5-bb41-7876624bc9b6">
+        <ul class="tab-content" id="04dfcb1c-47e2-4cc8-bdb0-64f3eeaf47ab">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
@@ -1042,7 +1042,7 @@ this by seeing the preset name in the pill at bottom middle of the screen.</p>
 used to start and stop encoding.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="5893f9ec-4721-48d2-aaa0-467483ab8236">
+    <ul class="tab tab-linked" data-tab="28d4b0a0-0500-4e6a-a0f0-1c6707ec2e5e">
         
             <li class="active">
                 <a href="">python </a>
@@ -1053,7 +1053,7 @@ used to start and stop encoding.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="5893f9ec-4721-48d2-aaa0-467483ab8236">
+        <ul class="tab-content" id="28d4b0a0-0500-4e6a-a0f0-1c6707ec2e5e">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="sh">"</span><span class="s">/gopro/camera/shutter/start</span><span class="sh">"</span>
@@ -1081,7 +1081,7 @@ used to start and stop encoding.</p>
 <p>This will log as such:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="553541b4-339f-48e5-b65f-877466f93666">
+    <ul class="tab tab-linked" data-tab="0b1ea415-888a-43f8-af9f-ef90138dad29">
         
             <li class="active">
                 <a href="">python </a>
@@ -1092,7 +1092,7 @@ used to start and stop encoding.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="553541b4-339f-48e5-b65f-877466f93666">
+        <ul class="tab-content" id="0b1ea415-888a-43f8-af9f-ef90138dad29">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Turning the shutter on: sending http://10.5.5.9:8080/gopro/camera/shutter/start
@@ -1132,14 +1132,14 @@ This end point is used to update all of the settings on the camera. It is analog
 
 <p>It is important to note that many settings are dependent on the video resolution (and other settings).
 For example, certain FPS values are not valid with certain resolutions. In general, higher resolutions
-only allow lower FPS values. Check the <a href="/OpenGoPro/ble_2_0#camera-capabilities">camera capabilities</a>
+only allow lower FPS values. Check the <a href="/ble/index.html#camera-capabilities">camera capabilities</a>
 to see which settings are valid for given use cases.</p>
 
 <p>Let’s build the endpoint first to set the Video Resolution to 1080 (the setting_id and option value comes from
 the command table linked above).</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="dc9a2efc-4964-45b8-ab7c-fbe7803722bc">
+    <ul class="tab tab-linked" data-tab="88ad00b9-c1c9-4f2b-8745-b21723dd747f">
         
             <li class="active">
                 <a href="">python </a>
@@ -1150,7 +1150,7 @@ the command table linked above).</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="dc9a2efc-4964-45b8-ab7c-fbe7803722bc">
+        <ul class="tab-content" id="88ad00b9-c1c9-4f2b-8745-b21723dd747f">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="sh">"</span><span class="s">/gopro/camera/setting?setting=2&amp;option=9</span><span class="sh">"</span>
@@ -1172,7 +1172,7 @@ the command table linked above).</p>
 <p>Lastly, we print the response’s JSON data:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="a74f52e2-474a-4fe1-a6f0-5ad5a0f50972">
+    <ul class="tab tab-linked" data-tab="c27bc292-591a-4894-ad68-8a7e639fe35b">
         
             <li class="active">
                 <a href="">python </a>
@@ -1183,7 +1183,7 @@ the command table linked above).</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="a74f52e2-474a-4fe1-a6f0-5ad5a0f50972">
+        <ul class="tab-content" id="c27bc292-591a-4894-ad68-8a7e639fe35b">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
@@ -1270,7 +1270,7 @@ enable (or disable) the preview stream . It is then possible to view the preview
 Any errors will raise an exception.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="edbf7083-10ea-4132-b301-b9ad9c9b9ee8">
+    <ul class="tab tab-linked" data-tab="490b521e-1f4d-4b14-ad50-da3850fbdf57">
         
             <li class="active">
                 <a href="">python </a>
@@ -1281,7 +1281,7 @@ Any errors will raise an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="edbf7083-10ea-4132-b301-b9ad9c9b9ee8">
+        <ul class="tab-content" id="490b521e-1f4d-4b14-ad50-da3850fbdf57">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/gopro/camera/stream/start</span><span class="sh">"</span>
@@ -1302,7 +1302,7 @@ Any errors will raise an exception.</p>
 <p>Lastly, we print the response’s JSON data:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="8f2de5d4-32e9-4498-bf9f-ba06663ba5d7">
+    <ul class="tab tab-linked" data-tab="9a49ec21-1332-44de-9a06-8c6646bf41f2">
         
             <li class="active">
                 <a href="">python </a>
@@ -1313,7 +1313,7 @@ Any errors will raise an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="8f2de5d4-32e9-4498-bf9f-ba06663ba5d7">
+        <ul class="tab-content" id="9a49ec21-1332-44de-9a06-8c6646bf41f2">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
@@ -1374,10 +1374,10 @@ INFO:root:Response: {}
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_5790b4bf-9b21-49d8-8cf3-5e545826b3c1" class="quiz">
+<div id="quiz_70f82315-1d21-4273-8874-2e384d136625" class="quiz">
     <div>
-        <div id="question_5790b4bf-9b21-49d8-8cf3-5e545826b3c1" class="quiz__question">What is the significance of empty JSON in an HTTP response?</div>
-        <div id="answers_5790b4bf-9b21-49d8-8cf3-5e545826b3c1">
+        <div id="question_70f82315-1d21-4273-8874-2e384d136625" class="quiz__question">What is the significance of empty JSON in an HTTP response?</div>
+        <div id="answers_70f82315-1d21-4273-8874-2e384d136625">
         
             <input type="radio" name="question" value="A"><label>A: Always an error! The command was not received correctly.</label>
             <br>
@@ -1390,19 +1390,19 @@ INFO:root:Response: {}
         
         </div>
     </div>
-    <button onclick="showResults('5790b4bf-9b21-49d8-8cf3-5e545826b3c1', 'B')">Submit Answer</button>
-    <div id="results_5790b4bf-9b21-49d8-8cf3-5e545826b3c1" style="display: none">
-        <span id="correct_5790b4bf-9b21-49d8-8cf3-5e545826b3c1" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_5790b4bf-9b21-49d8-8cf3-5e545826b3c1" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('70f82315-1d21-4273-8874-2e384d136625', 'B')">Submit Answer</button>
+    <div id="results_70f82315-1d21-4273-8874-2e384d136625" style="display: none">
+        <span id="correct_70f82315-1d21-4273-8874-2e384d136625" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_70f82315-1d21-4273-8874-2e384d136625" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is common for the JSON response to be empty if the command was received successfully
     but there is no additional information to return at the current time.
     </div>
 </div>
 
-<div id="quiz_e21461c2-a658-4ab3-b28b-4e9a105ce802" class="quiz">
+<div id="quiz_5ceededc-f461-477f-95ac-b1691bb0f3a4" class="quiz">
     <div>
-        <div id="question_e21461c2-a658-4ab3-b28b-4e9a105ce802" class="quiz__question">Which of the of the following is not a real preset group?</div>
-        <div id="answers_e21461c2-a658-4ab3-b28b-4e9a105ce802">
+        <div id="question_5ceededc-f461-477f-95ac-b1691bb0f3a4" class="quiz__question">Which of the of the following is not a real preset group?</div>
+        <div id="answers_5ceededc-f461-477f-95ac-b1691bb0f3a4">
         
             <input type="radio" name="question" value="A"><label>A: Timelapse</label>
             <br>
@@ -1418,19 +1418,19 @@ INFO:root:Response: {}
         
         </div>
     </div>
-    <button onclick="showResults('e21461c2-a658-4ab3-b28b-4e9a105ce802', 'C')">Submit Answer</button>
-    <div id="results_e21461c2-a658-4ab3-b28b-4e9a105ce802" style="display: none">
-        <span id="correct_e21461c2-a658-4ab3-b28b-4e9a105ce802" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_e21461c2-a658-4ab3-b28b-4e9a105ce802" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('5ceededc-f461-477f-95ac-b1691bb0f3a4', 'C')">Submit Answer</button>
+    <div id="results_5ceededc-f461-477f-95ac-b1691bb0f3a4" style="display: none">
+        <span id="correct_5ceededc-f461-477f-95ac-b1691bb0f3a4" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_5ceededc-f461-477f-95ac-b1691bb0f3a4" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There are 3 preset groups (Timelapse, Photo, and Video). These can be
     set via the Load Preset Group command.
     </div>
 </div>
 
-<div id="quiz_b2976d6c-a70b-45e9-88dd-fea0c8ab3394" class="quiz">
+<div id="quiz_359573a4-fbb4-4e4f-9f50-04708261ade3" class="quiz">
     <div>
-        <div id="question_b2976d6c-a70b-45e9-88dd-fea0c8ab3394" class="quiz__question">How do you query the current video resolution setting (id = 2) via WiFi?</div>
-        <div id="answers_b2976d6c-a70b-45e9-88dd-fea0c8ab3394">
+        <div id="question_359573a4-fbb4-4e4f-9f50-04708261ade3" class="quiz__question">How do you query the current video resolution setting (id = 2) via WiFi?</div>
+        <div id="answers_359573a4-fbb4-4e4f-9f50-04708261ade3">
         
             <input type="radio" name="question" value="A"><label>A: Send GET to <code class="language-plaintext highlighter-rouge">/gopro/camera/state?setting_id=2</code></label>
             <br>
@@ -1446,10 +1446,10 @@ INFO:root:Response: {}
         
         </div>
     </div>
-    <button onclick="showResults('b2976d6c-a70b-45e9-88dd-fea0c8ab3394', 'D')">Submit Answer</button>
-    <div id="results_b2976d6c-a70b-45e9-88dd-fea0c8ab3394" style="display: none">
-        <span id="correct_b2976d6c-a70b-45e9-88dd-fea0c8ab3394" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_b2976d6c-a70b-45e9-88dd-fea0c8ab3394" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('359573a4-fbb4-4e4f-9f50-04708261ade3', 'D')">Submit Answer</button>
+    <div id="results_359573a4-fbb4-4e4f-9f50-04708261ade3" style="display: none">
+        <span id="correct_359573a4-fbb4-4e4f-9f50-04708261ade3" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_359573a4-fbb4-4e4f-9f50-04708261ade3" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         You can’t query individual settings or statuses with the HTTP API. In order to get the value of a specific setting you’ll need to send a GET to <code class="language-plaintext highlighter-rouge">/gopro/camera/state</code> and parse the value of the desired setting from the JSON response.
     </div>
 </div>
@@ -1502,7 +1502,7 @@ next tutorial to see how to get and perform operations using the media list.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-01-08T13:07:39-08:00">January 8, 2024</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-02-23T13:42:33-08:00">February 23, 2024</time></p>
 
 
       </footer>

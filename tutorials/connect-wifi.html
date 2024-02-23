@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2024-01-08T13:07:39-08:00">
+  <meta property="article:published_time" content="2024-02-23T13:42:33-08:00">
 
 
 
@@ -410,7 +410,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 5: Connect WiFi">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to implementthe Open GoPro Interface to enable the GoPro’s WiFi Access Point (AP) so that itcan be connected to. It will also provide an example of connecting to the WiFi AP.">
-    <meta itemprop="datePublished" content="2024-01-08T13:07:39-08:00">
+    <meta itemprop="datePublished" content="2024-02-23T13:42:33-08:00">
     
 
     <div class="page__inner-wrap">
@@ -494,7 +494,7 @@ are present and configured correctly.</p>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="d170f683-f8a2-4e4e-9cbd-bdd08ad2f2b7">
+    <ul class="tab tab-linked" data-tab="6dbe3318-1545-468e-be16-c2fc9c8cfae4">
         
             <li class="active">
                 <a href="">python </a>
@@ -505,7 +505,7 @@ are present and configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="d170f683-f8a2-4e4e-9cbd-bdd08ad2f2b7">
+        <ul class="tab-content" id="6dbe3318-1545-468e-be16-c2fc9c8cfae4">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 2
@@ -603,13 +603,13 @@ Response pattern, the WiFi Information is retrieved via direct Read Requests to 
 <h3 id="get-wifi-ssid">Get WiFi SSID</h3>
 
 <p>The WiFi SSID can be found by reading from the WiFi AP SSID
-<a href="/OpenGoPro/ble_2_0#services-and-characteristics">characteristic</a> of the
+<a href="/ble/index.html#services-and-characteristics">characteristic</a> of the
 WiFi Access Point service.</p>
 
 <p>First, let’s send the read request to get the SSID (and decode it into a string).</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="39c0ad76-e9d2-4c17-a5d0-0615f8b53691">
+    <ul class="tab tab-linked" data-tab="51bdda89-6f4d-44b8-bf68-03c62e855291">
         
             <li class="active">
                 <a href="">python </a>
@@ -620,7 +620,7 @@ WiFi Access Point service.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="39c0ad76-e9d2-4c17-a5d0-0615f8b53691">
+        <ul class="tab-content" id="51bdda89-6f4d-44b8-bf68-03c62e855291">
         
             <li class="active tab-content-container">
 <p>Let’s define the attribute to read from:</p>
@@ -665,13 +665,13 @@ SSID is debughero11
 <h3 id="get-wifi-password">Get WiFi Password</h3>
 
 <p>The WiFi password can be found by reading from the WiFi AP password
-<a href="/OpenGoPro/ble_2_0#services-and-characteristics">characteristic</a> of the
+<a href="/ble/index.html#services-and-characteristics">characteristic</a> of the
 WiFi Access Point service.</p>
 
 <p>First, let’s send the read request to get the password (and decode it into a string).</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="2fa554d9-79c2-4ddf-bad0-9935a6750315">
+    <ul class="tab tab-linked" data-tab="21d473fa-c8d0-4021-b218-bd34d2570207">
         
             <li class="active">
                 <a href="">python </a>
@@ -682,7 +682,7 @@ WiFi Access Point service.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="2fa554d9-79c2-4ddf-bad0-9935a6750315">
+        <ul class="tab-content" id="21d473fa-c8d0-4021-b218-bd34d2570207">
         
             <li class="active tab-content-container">
 <p>Let’s define the attribute to read from:</p>
@@ -722,7 +722,7 @@ Password is z3y-DCX-Phj
 <h2 id="enable-wifi-ap">Enable WiFi AP</h2>
 
 <p>Before we can connect to the WiFi AP, we have to make sure it is enabled. This is accomplished by using the
-“AP Control” <a href="/OpenGoPro/ble_2_0#commands-quick-reference">command</a>:</p>
+“AP Control” <a href="/ble/index.html#commands-quick-reference">command</a>:</p>
 
 <table>
   <thead>
@@ -749,7 +749,7 @@ Password is z3y-DCX-Phj
 <p>Now, let’s write the bytes to the “Command Request UUID” to enable the WiFi AP!</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="33e379fc-6639-468a-add6-aaeb34d05c0a">
+    <ul class="tab tab-linked" data-tab="76d3c0b3-2321-4f48-8ab3-e504e9a7eb2a">
         
             <li class="active">
                 <a href="">python </a>
@@ -760,7 +760,7 @@ Password is z3y-DCX-Phj
             </li>
         
         </ul>
-        <ul class="tab-content" id="33e379fc-6639-468a-add6-aaeb34d05c0a">
+        <ul class="tab-content" id="76d3c0b3-2321-4f48-8ab3-e504e9a7eb2a">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
@@ -790,7 +790,7 @@ Command Response characteristic since we enabled it’s notifications in
 be seen in the demo log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="f2d0b7bd-403b-4a89-bd6e-ca812f7a30e0">
+    <ul class="tab tab-linked" data-tab="ed4b2db5-48a1-443a-ac5b-f83fde047c76">
         
             <li class="active">
                 <a href="">python </a>
@@ -801,7 +801,7 @@ be seen in the demo log:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="f2d0b7bd-403b-4a89-bd6e-ca812f7a30e0">
+        <ul class="tab-content" id="ed4b2db5-48a1-443a-ac5b-f83fde047c76">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Enabling the WiFi AP
@@ -829,7 +829,7 @@ Command sent successfully
 <h2 id="establish-connection-to-wifi-ap">Establish Connection to WiFi AP</h2>
 
 <div>
-    <ul class="tab tab-linked" data-tab="80bacc97-1adf-4a1e-9b1c-a8349f91fc70">
+    <ul class="tab tab-linked" data-tab="e6b0e1b8-db51-4ccb-9fbb-296256131b30">
         
             <li class="active">
                 <a href="">python </a>
@@ -840,7 +840,7 @@ Command sent successfully
             </li>
         
         </ul>
-        <ul class="tab-content" id="80bacc97-1adf-4a1e-9b1c-a8349f91fc70">
+        <ul class="tab-content" id="e6b0e1b8-db51-4ccb-9fbb-296256131b30">
         
             <li class="active tab-content-container">
 <p>If you have been following through the <code class="language-plaintext highlighter-rouge">ble_enable_wifi.py</code> script, you will notice that it ends here such that
@@ -874,10 +874,10 @@ connected.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_b82eb946-7b09-4601-bae5-333f887e0c6f" class="quiz">
+<div id="quiz_07532603-929f-42a0-94e2-097747a8aace" class="quiz">
     <div>
-        <div id="question_b82eb946-7b09-4601-bae5-333f887e0c6f" class="quiz__question">How is the WiFi password response received?</div>
-        <div id="answers_b82eb946-7b09-4601-bae5-333f887e0c6f">
+        <div id="question_07532603-929f-42a0-94e2-097747a8aace" class="quiz__question">How is the WiFi password response received?</div>
+        <div id="answers_07532603-929f-42a0-94e2-097747a8aace">
         
             <input type="radio" name="question" value="A"><label>A: As a read response from the WiFi AP Password characteristic</label>
             <br>
@@ -890,10 +890,10 @@ connected.</p>
         
         </div>
     </div>
-    <button onclick="showResults('b82eb946-7b09-4601-bae5-333f887e0c6f', 'A')">Submit Answer</button>
-    <div id="results_b82eb946-7b09-4601-bae5-333f887e0c6f" style="display: none">
-        <span id="correct_b82eb946-7b09-4601-bae5-333f887e0c6f" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_b82eb946-7b09-4601-bae5-333f887e0c6f" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('07532603-929f-42a0-94e2-097747a8aace', 'A')">Submit Answer</button>
+    <div id="results_07532603-929f-42a0-94e2-097747a8aace" style="display: none">
+        <span id="correct_07532603-929f-42a0-94e2-097747a8aace" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_07532603-929f-42a0-94e2-097747a8aace" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         This (and WiFi AP SSID) is an exception to the rule. Usually responses
     are received as notifications to a response characteristic. However, in this case, it is
     received as a direct read response (since we are reading from the characteristic and not
@@ -901,10 +901,10 @@ connected.</p>
     </div>
 </div>
 
-<div id="quiz_dad0781c-e06e-4961-b615-874f7696f92e" class="quiz">
+<div id="quiz_39df3d03-fd0f-40e4-8d3d-fda92ed739e9" class="quiz">
     <div>
-        <div id="question_dad0781c-e06e-4961-b615-874f7696f92e" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
-        <div id="answers_dad0781c-e06e-4961-b615-874f7696f92e">
+        <div id="question_39df3d03-fd0f-40e4-8d3d-fda92ed739e9" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
+        <div id="answers_39df3d03-fd0f-40e4-8d3d-fda92ed739e9">
         
             <input type="radio" name="question" value="A"><label>A: It only needs to be enabled once and it will then always remain on</label>
             <br>
@@ -920,10 +920,10 @@ connected.</p>
         
         </div>
     </div>
-    <button onclick="showResults('dad0781c-e06e-4961-b615-874f7696f92e', 'D')">Submit Answer</button>
-    <div id="results_dad0781c-e06e-4961-b615-874f7696f92e" style="display: none">
-        <span id="correct_dad0781c-e06e-4961-b615-874f7696f92e" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_dad0781c-e06e-4961-b615-874f7696f92e" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('39df3d03-fd0f-40e4-8d3d-fda92ed739e9', 'D')">Submit Answer</button>
+    <div id="results_39df3d03-fd0f-40e4-8d3d-fda92ed739e9" style="display: none">
+        <span id="correct_39df3d03-fd0f-40e4-8d3d-fda92ed739e9" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_39df3d03-fd0f-40e4-8d3d-fda92ed739e9" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         While the WiFi AP will remain on for some time, it can and will eventually turn off so
     it is always recommended to first connect via BLE and ensure that it is enabled. The password
     and SSID will almost never change. However, they will change if the connections are reset via
@@ -955,7 +955,7 @@ connected.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-01-08T13:07:39-08:00">January 8, 2024</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-02-23T13:42:33-08:00">February 23, 2024</time></p>
 
 
       </footer>

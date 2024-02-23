@@ -1,0 +1,92 @@
+Presets
+=======
+
+The camera organizes many modes of operation into Presets.
+
+Depending on the camera's state, different collections of presets will be available for immediate loading and use.
+Below is a table of settings that affect the current preset collection and thereby which presets can be loaded
+
+=== =======================
+ID  Setting
+=== =======================
+162 Max Lens
+173 Video Performance Mode
+175 Controls
+177 Enable Night Photo
+180 Video Mode
+186 Video Mode
+187 Lapse Mode
+189 Max Lens Mod
+190 Max Lens Mod Enable
+191 Photo Mode
+=== =======================
+
+Preset Groups
+-------------
+
+Presets are organized into Preset Groups.
+
+To find the currently available Presets / Preset Groups, use `Get Available Presets <../features/presets.html#get_available_presets>`__
+
+Operations
+----------
+
+.. operation:protobuf:: Get Available Presets
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0xF5
+        :action-id: 0x72
+        :uuid: Query
+        :message: WSDK_RequestGetPresetStatus
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0xF5
+        :action-id: 0xF2
+        :uuid: Query Response
+        :message: WSDK_NotifyPresetStatus
+
+    .. operation:protobuf-message:: notification
+        :feature-id: 0xF5
+        :action-id: 0xF3
+        :uuid: Query Response
+        :message: WSDK_NotifyPresetStatus
+
+.. operation:tlv-command:: Load Preset
+   :id: 0x40
+
+   Load preset by ID. The ID must be found from `Get Available Presets <../features/presets.html#get_available_presets>`__
+
+   .. operation:tlv-message:: Request
+      :uuid: Command
+      :params:
+            - preset (uint32): preset ID
+   .. operation:tlv-message:: Response
+      :uuid: Command Response
+
+
+.. operation:tlv-command:: Load Preset Group
+   :id: 0x3E
+
+   Load preset group by ID. The ID must be found from `Get Available Presets <../features/presets.html#get_available_presets>`__
+
+   .. operation:tlv-message:: Request
+      :uuid: Command
+      :params:
+            - preset (uint32): preset group ID
+   .. operation:tlv-message:: Response
+      :uuid: Command Response
+
+.. operation:protobuf:: Update Custom Preset
+   :unsupported: boilers kongs pismo sultans
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0xF1
+        :action-id: 0x64
+        :uuid: Command
+        :message: WSDK_RequestCustomPresetUpdate
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0xF1
+        :action-id: 0xE4
+        :uuid: Command Response
+        :message: ResponseGeneric
