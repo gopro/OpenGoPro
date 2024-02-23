@@ -176,32 +176,6 @@ defaults:
           read_time: true
           toc: true
           toc_sticky: true
-    - scope:
-          path: ''
-          type: demos
-      values:
-          layout: demo
-    - scope:
-          path: 'specs/ble_versions'
-      values:
-          identifier: ble_spec
-          classes: spec
-          sidebar:
-              nav: 'specs'
-    - scope:
-          path: 'specs/http_versions'
-      values:
-          identifier: http_spec
-          classes: spec
-          sidebar:
-              nav: 'specs'
-    - scope:
-          path: 'protos/open_gopro'
-      values:
-          redirect_from:
-              - 'protos'
-          sidebar:
-              nav: 'specs'
 
 jekyll-spaceship:
     # default enabled processors

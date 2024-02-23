@@ -31,11 +31,4 @@ tutorials:
     - title: '7: Camera Media List'
       url: /tutorials/camera-media-list
 
-specs:
-    - title: 'BLE 2.0'
-      url: /ble_2_0
-    - title: 'HTTP 2.0'
-      url: /http_2_0
-    - title: 'Protobuf'
-      url: /protos/open_gopro
 
