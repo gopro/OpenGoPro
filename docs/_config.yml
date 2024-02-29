@@ -163,8 +163,6 @@ collections:
     tutorials:
         output: true
         sort_by: lesson
-    demos:
-        output: true
 
 # Defaults
 defaults:
@@ -176,6 +174,17 @@ defaults:
           read_time: true
           toc: true
           toc_sticky: true
+    - scope:
+          path: ble
+      values:
+          layout: spec
+          canonical_url: https://gopro.github.io/OpenGoPro/ble # Minimal mistakes is overwriting this to bad value in seo.html
+    - scope:
+          path: http
+      values:
+          layout: spec
+          canonical_url: https://gopro.github.io/OpenGoPro/http # Minimal mistakes is overwriting this to bad value in seo.html
+
 
 jekyll-spaceship:
     # default enabled processors

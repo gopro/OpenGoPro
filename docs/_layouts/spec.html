@@ -1,0 +1,14 @@
+---
+---
+
+<!doctype html>
+<html lang="{{ site.locale | slice: 0,2 | default: "en" }}" class="no-js">
+    <head>
+        {% include head_spec.html %}
+        {% include head/custom.html %}
+    </head>
+    <body>
+        {% include_cached masthead_spec.html %}
+        {{ content }}
+    </body>
+</html>

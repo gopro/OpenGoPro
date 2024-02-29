@@ -29,7 +29,7 @@ module Jekyll
             content = converter.convert(render_block(context))
             # Place results into html
             output = <<~EOS
-            <div class="accordion-container">
+            <div class="accordion-container anchored">
                 <button class="accordion">#{title}<i class="fa fa-chevron-down"></i></button>
                 <div class="panel">#{content}</div>
             </div>

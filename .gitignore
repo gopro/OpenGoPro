@@ -1,6 +1,11 @@
 /.env
 **.log
 
+/docs/ble/_sources/
+/docs/ble/.doctrees/
+/docs/ble/.buildinfo
+/docs/ble/objects.inv
+
 /test.html
 /link_results
 .vscode

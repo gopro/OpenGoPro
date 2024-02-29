@@ -259,3 +259,8 @@ img.mermaid {
 .panel p {
     margin: 0 0 0.2em !important;
 }
+
+/* https://www.bryanbraun.com/anchorjs/#pages-with-a-sticky-navbar */
+:target {
+    scroll-margin-top: 4em;
+}
