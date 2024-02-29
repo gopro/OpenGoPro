@@ -1,13 +1,157 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="en" class="no-js">
+    <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Camera on the Home Network &mdash; Open GoPro BLE API 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=4391a3cb" />
+<!-- begin _includes/seo.html --><title>Open GoPro</title>
+<meta name="description" content="Open Source GoPro Interface">
+
+
+  <meta name="author" content="GoPro">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Open GoPro">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/ble">
+
+
+  <meta property="og:description" content="Open Source GoPro Interface">
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/ble">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "https://gopro.github.io/OpenGoPro/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- TODO This is probably where our masthead highlighting is going wrong -->
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main_spec.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+  
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+<script>
+    // Add anchors on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function (event) {
+        var manualAnchors = new AnchorJS();
+        manualAnchors.options = {
+            titleText: 'Permalink',
+            placement: 'left'
+        };
+        manualAnchors.add('.anchored');
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+    </head>
+    <body>
+        
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/OpenGoPro/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/ble/">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/http">HTTP Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro/tree/main/demos">Demos</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
+</ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+        
+
+
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camera on the Home Network — Open GoPro BLE API 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1">
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094">
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=cbc3bc38">
 
   
   <!--[if lt IE 9]>
@@ -20,17 +164,17 @@
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Hilights" href="hilights.html" />
-    <link rel="prev" title="Live Streaming" href="live_streaming.html" /> 
-</head>
+    <link rel="index" title="Index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="next" title="Hilights" href="hilights.html">
+    <link rel="prev" title="Live Streaming" href="live_streaming.html"> 
 
-<body class="wy-body-for-nav"> 
+
+ 
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
 
           
           
@@ -39,45 +183,54 @@
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+        </div>
+<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../protocol.html">Protocol</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../protocol.html">Protocol</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#pairing-mode">Pairing Mode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#finish-pairing">Finish Pairing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#ble-characteristics">BLE Characteristics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#send-messages">Send Messages</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/data_protocol.html">Data Protocol</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#packetization">Packetization</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/data_protocol.html">Data Protocol</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/data_protocol.html#packetization">Packetization</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#packet-headers">Packet Headers</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#decipher-message-payload-type">Decipher Message Payload Type</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#message-payload">Message Payload</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/data_protocol.html#message-payload">Message Payload</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#type-length-value">Type Length Value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#protobuf">Protobuf</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/state_management.html">State Management</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/state_management.html">State Management</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#camera-readiness">Camera Readiness</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#keep-alive">Keep Alive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#camera-control">Camera Control</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/id_tables.html">ID Tables</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/id_tables.html">ID Tables</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#command-ids">Command IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#query-ids">Query IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#protobuf-ids">Protobuf IDs</a></li>
@@ -85,8 +238,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#status-ids">Status IDs</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/protobuf.html">Protobuf Documentation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#enums">Enums</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/protobuf.html">Protobuf Documentation</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/protobuf.html#enums">Enums</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcohnnetworkstate">EnumCOHNNetworkState</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcohnstatus">EnumCOHNStatus</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcameracontrolstatus">EnumCameraControlStatus</a></li>
@@ -147,8 +302,10 @@
 </li>
 </ul>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="control.html">Control</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="control.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="control.html">Control</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="control.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="control.html#keep_alive"><code class="docutils literal notranslate"><span class="pre">Keep</span> <span class="pre">Alive</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set_analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set_ap_control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
@@ -162,8 +319,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="query.html">Query</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="query.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="query.html">Query</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="query.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="query.html#get_open_gopro_version"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Open</span> <span class="pre">GoPro</span> <span class="pre">Version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="query.html#get_date_time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="query.html#get_hardware_info"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Hardware</span> <span class="pre">Info</span></code></a></li>
@@ -182,8 +341,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="access_points.html">Access Point</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="access_points.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="access_points.html">Access Point</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="access_points.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#scan_for_access_points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#get_ap_scan_results"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">AP</span> <span class="pre">Scan</span> <span class="pre">Results</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#connect_to_provisioned_access_point"><code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">Provisioned</span> <span class="pre">Access</span> <span class="pre">Point</span></code></a></li>
@@ -193,22 +354,27 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="live_streaming.html">Live Streaming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="live_streaming.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="live_streaming.html">Live Streaming</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="live_streaming.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="live_streaming.html#set_livestream_mode"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="live_streaming.html#get_livestream_status"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Livestream</span> <span class="pre">Status</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Camera on the Home Network</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#certificates">Certificates</a><ul>
+<li class="toctree-l1 current">
+<a class="current reference internal" href="#">Camera on the Home Network</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="#certificates">Certificates</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#verifying-certificate">Verifying Certificate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#view-certificate-details">View Certificate Details</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#provisioning-procedure">Provisioning Procedure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#clear_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Clear</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#create_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#get_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
@@ -218,16 +384,20 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="hilights.html">Hilights</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hilights.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="hilights.html">Hilights</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="hilights.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="hilights.html#hilight_moment"><code class="docutils literal notranslate"><span class="pre">Hilight</span> <span class="pre">Moment</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="presets.html">Presets</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="presets.html">Presets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="presets.html#preset-groups">Preset Groups</a></li>
-<li class="toctree-l2"><a class="reference internal" href="presets.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="presets.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#get_available_presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load_preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load_preset_group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
@@ -236,13 +406,16 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="settings.html#camera-capabilities">Camera Capabilities</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="settings.html">Settings</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="settings.html#camera-capabilities">Camera Capabilities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#xlsx">XLSX</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#json">JSON</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="settings.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="settings.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#set_setting"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a></li>
 </ul>
 </li>
@@ -256,7 +429,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Open GoPro BLE API</a>
       </nav>
@@ -268,45 +441,52 @@
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Camera on the Home Network</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/features/cohn.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
-  <hr/>
+  <hr>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
   <section id="camera-on-the-home-network">
-<h1>Camera on the Home Network<a class="headerlink" href="#camera-on-the-home-network" title="Link to this heading"></a></h1>
+<h1>Camera on the Home Network<a class="headerlink" href="#camera-on-the-home-network" title="Link to this heading"></a>
+</h1>
 <p>Some cameras support Camera On the Home Network (COHN). This capability allows the client to perform command and control
 with the camera indirectly through an access point such as a router at home. For security purposes, all communications
 are performed over HTTPS.</p>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Camera</p></th>
-<th class="head"><p>Supported</p></th>
+<tr class="row-odd">
+<th class="head">Camera</th>
+<th class="head">Supported</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>Hero12 Black</p></td>
-<td><p>✔</p></td>
+<tr class="row-even">
+<td>Hero12 Black</td>
+<td>✔</td>
 </tr>
-<tr class="row-odd"><td><p>Hero11 Black Mini</p></td>
-<td><p>❌</p></td>
+<tr class="row-odd">
+<td>Hero11 Black Mini</td>
+<td>❌</td>
 </tr>
-<tr class="row-even"><td><p>Hero11 Black</p></td>
-<td><p>❌</p></td>
+<tr class="row-even">
+<td>Hero11 Black</td>
+<td>❌</td>
 </tr>
-<tr class="row-odd"><td><p>Hero10 Black</p></td>
-<td><p>❌</p></td>
+<tr class="row-odd">
+<td>Hero10 Black</td>
+<td>❌</td>
 </tr>
-<tr class="row-even"><td><p>Hero9 Black</p></td>
-<td><p>❌</p></td>
+<tr class="row-even">
+<td>Hero9 Black</td>
+<td>❌</td>
 </tr>
 </tbody>
 </table>
 <section id="certificates">
-<h2>Certificates<a class="headerlink" href="#certificates" title="Link to this heading"></a></h2>
+<h2>Certificates<a class="headerlink" href="#certificates" title="Link to this heading"></a>
+</h2>
 <p>Secure communication with the camera over HTTPS requires two things: a trusted
 <a class="reference external" href="https://www.digicert.com/faq/public-trust-and-certificates/what-is-ssl">SSL/TLS</a>  certificate and Basic auth
 username/password used in the HTTPS header.</p>
@@ -319,16 +499,19 @@ username/password used in the HTTPS header.</p>
 address to change (e.g. when DHCP lease expires or when access point is reset/replaced) without the client needing to
 download and install/trust a new certificate.</p>
 <section id="verifying-certificate">
-<h3>Verifying Certificate<a class="headerlink" href="#verifying-certificate" title="Link to this heading"></a></h3>
+<h3>Verifying Certificate<a class="headerlink" href="#verifying-certificate" title="Link to this heading"></a>
+</h3>
 <p>The camera acts as the Root Certificate Authority in creating the COHN certificate (Root CA cert). Clients can verify
 that the certificate is valid using utilities such as openssl:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>openssl<span class="w"> </span>verify<span class="w"> </span>-CAfile<span class="w"> </span><span class="s1">&#39;/path/to/GoProRootCA.crt&#39;</span><span class="w"> </span><span class="s1">&#39;/path/to/GoProRootCA.crt&#39;</span>
+<div class="highlight-shell notranslate">
+<div class="highlight"><pre><span></span>$<span class="w"> </span>openssl<span class="w"> </span>verify<span class="w"> </span>-CAfile<span class="w"> </span><span class="s1">'/path/to/GoProRootCA.crt'</span><span class="w"> </span><span class="s1">'/path/to/GoProRootCA.crt'</span>
 GoProRootCA.crt:<span class="w"> </span>OK
 </pre></div>
 </div>
 </section>
 <section id="view-certificate-details">
-<h3>View Certificate Details<a class="headerlink" href="#view-certificate-details" title="Link to this heading"></a></h3>
+<h3>View Certificate Details<a class="headerlink" href="#view-certificate-details" title="Link to this heading"></a>
+</h3>
 <p>Most operating systems have utilities to view details about a SSL/TLS certificate:</p>
 <ul class="simple">
 <li><p>MacOS: Right-mouse-click &gt;&gt; Quick Look</p></li>
@@ -339,7 +522,8 @@ GoProRootCA.crt:<span class="w"> </span>OK
 </section>
 </section>
 <section id="provisioning-procedure">
-<h2>Provisioning Procedure<a class="headerlink" href="#provisioning-procedure" title="Link to this heading"></a></h2>
+<h2>Provisioning Procedure<a class="headerlink" href="#provisioning-procedure" title="Link to this heading"></a>
+</h2>
 <p>In order to use the COHN capability, the camera must first be provisioned for COHN. At a high level, the provisioning process
 is as follows:</p>
 <ol class="arabic simple">
@@ -352,19 +536,24 @@ is as follows:</p>
 <p class="admonition-title">Tip</p>
 <p>Depending on the use case, some of these steps can be performed via <a class="reference external" href="https://gopro.github.io/OpenGoPro/http#tag/COHN">HTTP</a></p>
 </div>
-<img alt="../_images/plantuml_ble_cohn_provision.png" src="../_images/plantuml_ble_cohn_provision.png" />
+<img alt="../_images/plantuml_ble_cohn_provision.png" src="../_images/plantuml_ble_cohn_provision.png">
 <p>Once the camera is provisioned, the client can communicate with the camera via HTTPS. The camera supports nearly all
 functionality over HTTPS that it does over HTTP. For more details about HTTP/HTTPS, see the
 Open GoPro <a class="reference external" href="https://gopro.github.io/OpenGoPro/http">HTTP specification</a>.</p>
 </section>
 <section id="operations">
-<h2>Operations<a class="headerlink" href="#operations" title="Link to this heading"></a></h2>
+<h2>Operations<a class="headerlink" href="#operations" title="Link to this heading"></a>
+</h2>
 <dl class="operation protobuf">
 <dt class="sig sig-object operation" id="clear_cohn_certificate">
-<span class="sig-name descname"><span class="pre">Clear</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></span><a class="headerlink" href="#clear_cohn_certificate" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
+<span class="sig-name descname"><span class="pre">Clear</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></span><a class="headerlink" href="#clear_cohn_certificate" title="Link to this definition"></a>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
 </dd>
 </dl>
 Supported cameras:<ul class="simple">
@@ -376,49 +565,72 @@ Supported cameras:<ul class="simple">
 </ul>
 <dl class="operation protobuf-message" id="protobuf-message-0">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Request</span></span></dt>
-<dd><p>Clear the COHN certificate.</p>
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd>
+<p>Clear the COHN certificate.</p>
 <p>Returns a <a class="reference internal" href="../protocol/protobuf.html#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a> with the status of the clear</p>
-</dd></dl>
+</dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
 </dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0xF1</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
 <dd class="field-odd">0x66</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>RequestClearCOHNCert (<a class="reference external" href="../protocol/protobuf.html#proto-requestclearcohncert"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>RequestClearCOHNCert (<a class="reference external" href="../protocol/protobuf.html#proto-requestclearcohncert"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
 <dl class="operation protobuf-message" id="protobuf-message-1">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Response</span></span></dt>
-<dd><p>Generic Response used across many response / notification messages</p>
-</dd></dl>
-
-<dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Response</em></a></p>
-</dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
-<dd class="field-even">0xF1</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
-<dd class="field-odd">0xE6</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>ResponseGeneric (<a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto"><em>source</em></a>)</p>
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd>
+<p>Generic Response used across many response / notification messages</p>
 </dd>
 </dl>
-</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Response</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0xF1</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">0xE6</dd>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>ResponseGeneric (<a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+</dd>
+</dl>
 
 <dl class="operation protobuf">
 <dt class="sig sig-object operation" id="create_cohn_certificate">
-<span class="sig-name descname"><span class="pre">Create</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></span><a class="headerlink" href="#create_cohn_certificate" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
+<span class="sig-name descname"><span class="pre">Create</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></span><a class="headerlink" href="#create_cohn_certificate" title="Link to this definition"></a>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
 </dd>
 </dl>
 Supported cameras:<ul class="simple">
@@ -430,49 +642,72 @@ Supported cameras:<ul class="simple">
 </ul>
 <dl class="operation protobuf-message" id="protobuf-message-2">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Request</span></span></dt>
-<dd><p>Create the Camera On the Home Network SSL/TLS certificate.</p>
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd>
+<p>Create the Camera On the Home Network SSL/TLS certificate.</p>
 <p>Returns a <a class="reference internal" href="../protocol/protobuf.html#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a> with the status of the creation</p>
-</dd></dl>
+</dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
 </dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0xF1</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
 <dd class="field-odd">0x67</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>RequestCreateCOHNCert (<a class="reference external" href="../protocol/protobuf.html#proto-requestcreatecohncert"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>RequestCreateCOHNCert (<a class="reference external" href="../protocol/protobuf.html#proto-requestcreatecohncert"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
 <dl class="operation protobuf-message" id="protobuf-message-3">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Response</span></span></dt>
-<dd><p>Generic Response used across many response / notification messages</p>
-</dd></dl>
-
-<dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Response</em></a></p>
-</dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
-<dd class="field-even">0xF1</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
-<dd class="field-odd">0xE7</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>ResponseGeneric (<a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto"><em>source</em></a>)</p>
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd>
+<p>Generic Response used across many response / notification messages</p>
 </dd>
 </dl>
-</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Response</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0xF1</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">0xE7</dd>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>ResponseGeneric (<a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+</dd>
+</dl>
 
 <dl class="operation protobuf">
 <dt class="sig sig-object operation" id="get_cohn_certificate">
-<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></span><a class="headerlink" href="#get_cohn_certificate" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
+<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></span><a class="headerlink" href="#get_cohn_certificate" title="Link to this definition"></a>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
 </dd>
 </dl>
 Supported cameras:<ul class="simple">
@@ -484,49 +719,72 @@ Supported cameras:<ul class="simple">
 </ul>
 <dl class="operation protobuf-message" id="protobuf-message-4">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Request</span></span></dt>
-<dd><p>Get the COHN certificate.</p>
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd>
+<p>Get the COHN certificate.</p>
 <p>Returns a <a class="reference internal" href="../protocol/protobuf.html#proto-responsecohncert"><span class="std std-ref">ResponseCOHNCert</span></a></p>
-</dd></dl>
+</dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
 </dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0xF5</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
 <dd class="field-odd">0x6E</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>RequestCOHNCert (<a class="reference external" href="../protocol/protobuf.html#proto-requestcohncert"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>RequestCOHNCert (<a class="reference external" href="../protocol/protobuf.html#proto-requestcohncert"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
 <dl class="operation protobuf-message" id="protobuf-message-5">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Response</span></span></dt>
-<dd><p>COHN Certificate response triggered by <a class="reference internal" href="../protocol/protobuf.html#proto-requestcohncert"><span class="std std-ref">RequestCOHNCert</span></a></p>
-</dd></dl>
-
-<dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Response</em></a></p>
-</dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
-<dd class="field-even">0xF5</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
-<dd class="field-odd">0xEE</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>ResponseCOHNCert (<a class="reference external" href="../protocol/protobuf.html#proto-responsecohncert"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd>
+<p>COHN Certificate response triggered by <a class="reference internal" href="../protocol/protobuf.html#proto-requestcohncert"><span class="std std-ref">RequestCOHNCert</span></a></p>
 </dd>
 </dl>
-</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Response</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0xF5</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">0xEE</dd>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>ResponseCOHNCert (<a class="reference external" href="../protocol/protobuf.html#proto-responsecohncert"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+</dd>
+</dl>
 
 <dl class="operation protobuf">
 <dt class="sig sig-object operation" id="get_cohn_status">
-<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Status</span></span><a class="headerlink" href="#get_cohn_status" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
+<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Status</span></span><a class="headerlink" href="#get_cohn_status" title="Link to this definition"></a>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
 </dd>
 </dl>
 Supported cameras:<ul class="simple">
@@ -538,69 +796,101 @@ Supported cameras:<ul class="simple">
 </ul>
 <dl class="operation protobuf-message" id="protobuf-message-6">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Request</span></span></dt>
-<dd><p>Get the current COHN status.</p>
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd>
+<p>Get the current COHN status.</p>
 <p>Response: <a class="reference internal" href="../protocol/protobuf.html#proto-notifycohnstatus"><span class="std std-ref">NotifyCOHNStatus</span></a></p>
 <p>Additionally, asynchronous updates can also be registered to return more <a class="reference internal" href="../protocol/protobuf.html#proto-notifycohnstatus"><span class="std std-ref">NotifyCOHNStatus</span></a> when a value
 changes.</p>
-</dd></dl>
+</dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
 </dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0xF5</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
 <dd class="field-odd">0x6F</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>RequestGetCOHNStatus (<a class="reference external" href="../protocol/protobuf.html#proto-requestgetcohnstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>RequestGetCOHNStatus (<a class="reference external" href="../protocol/protobuf.html#proto-requestgetcohnstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
 <dl class="operation protobuf-message" id="protobuf-message-7">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Response</span></span></dt>
-<dd><p>Current COHN status triggered by a <a class="reference internal" href="../protocol/protobuf.html#proto-requestgetcohnstatus"><span class="std std-ref">RequestGetCOHNStatus</span></a></p>
-</dd></dl>
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd>
+<p>Current COHN status triggered by a <a class="reference internal" href="../protocol/protobuf.html#proto-requestgetcohnstatus"><span class="std std-ref">RequestGetCOHNStatus</span></a></p>
+</dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Response</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Response</em></a></p>
 </dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0xF5</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
 <dd class="field-odd">0xEF</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>NotifyCOHNStatus (<a class="reference external" href="../protocol/protobuf.html#proto-notifycohnstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>NotifyCOHNStatus (<a class="reference external" href="../protocol/protobuf.html#proto-notifycohnstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
 <dl class="operation protobuf-message" id="protobuf-message-8">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Notification</span></span></dt>
-<dd><p>Current COHN status triggered by a <a class="reference internal" href="../protocol/protobuf.html#proto-requestgetcohnstatus"><span class="std std-ref">RequestGetCOHNStatus</span></a></p>
-</dd></dl>
-
-<dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Response</em></a></p>
-</dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
-<dd class="field-even">0xF5</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
-<dd class="field-odd">0xEF</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>NotifyCOHNStatus (<a class="reference external" href="../protocol/protobuf.html#proto-notifycohnstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
+<span class="sig-name descname"><span class="pre">Notification</span></span>
+</dt>
+<dd>
+<p>Current COHN status triggered by a <a class="reference internal" href="../protocol/protobuf.html#proto-requestgetcohnstatus"><span class="std std-ref">RequestGetCOHNStatus</span></a></p>
 </dd>
 </dl>
-</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Response</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0xF5</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">0xEF</dd>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>NotifyCOHNStatus (<a class="reference external" href="../protocol/protobuf.html#proto-notifycohnstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+</dd>
+</dl>
 
 <dl class="operation protobuf">
 <dt class="sig sig-object operation" id="set_cohn_setting">
-<span class="sig-name descname"><span class="pre">Set</span> <span class="pre">COHN</span> <span class="pre">Setting</span></span><a class="headerlink" href="#set_cohn_setting" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
+<span class="sig-name descname"><span class="pre">Set</span> <span class="pre">COHN</span> <span class="pre">Setting</span></span><a class="headerlink" href="#set_cohn_setting" title="Link to this definition"></a>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
 </dd>
 </dl>
 Supported cameras:<ul class="simple">
@@ -612,42 +902,61 @@ Supported cameras:<ul class="simple">
 </ul>
 <dl class="operation protobuf-message" id="protobuf-message-9">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Request</span></span></dt>
-<dd><p>Configure a COHN Setting</p>
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd>
+<p>Configure a COHN Setting</p>
 <p>Returns a <a class="reference internal" href="../protocol/protobuf.html#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
-</dd></dl>
+</dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
 </dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0xF1</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
 <dd class="field-odd">0x65</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>RequestSetCOHNSetting (<a class="reference external" href="../protocol/protobuf.html#proto-requestsetcohnsetting"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>RequestSetCOHNSetting (<a class="reference external" href="../protocol/protobuf.html#proto-requestsetcohnsetting"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
 <dl class="operation protobuf-message" id="protobuf-message-10">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Response</span></span></dt>
-<dd><p>Generic Response used across many response / notification messages</p>
-</dd></dl>
-
-<dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Response</em></a></p>
-</dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
-<dd class="field-even">0xF1</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
-<dd class="field-odd">0xE5</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>ResponseGeneric (<a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto"><em>source</em></a>)</p>
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd>
+<p>Generic Response used across many response / notification messages</p>
 </dd>
 </dl>
-</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Response</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0xF1</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">0xE5</dd>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>ResponseGeneric (<a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+</dd>
+</dl>
 
 </section>
 </section>
@@ -660,10 +969,10 @@ Supported cameras:<ul class="simple">
         <a href="hilights.html" class="btn btn-neutral float-right" title="Hilights" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
-  <hr/>
+  <hr>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023.</p>
+    <p>© Copyright 2023.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
@@ -682,5 +991,7 @@ Supported cameras:<ul class="simple">
       });
   </script> 
 
-</body>
+
+
+    </body>
 </html>

@@ -86,7 +86,19 @@
   
 
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+    <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+<script>
+    // Add anchors on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function (event) {
+        var manualAnchors = new AnchorJS();
+        manualAnchors.options = {
+            titleText: 'Permalink',
+            placement: 'left'
+        };
+        manualAnchors.add('.anchored');
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
 <link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
@@ -371,7 +383,7 @@ expand upon much of the information here. These can be found, among other places
 
 <h2 id="connectivity">Connectivity</h2>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">What is the distance from the camera that BLE will still work?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>It is standard Bluetooth 4.0 range and it depends on external factors such as: Interference: anything
@@ -381,7 +393,7 @@ connected device, the range varies from less than 10 meters to 100 meters.</p>
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Can I connect using WiFi only?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>Theoretically yes, if you already know the SSID, password, and the camera’s WiFi AP has been enabled.
@@ -389,7 +401,7 @@ However, practically no because BLE is required in order to discover this inform
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Can I connect using BLE only?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>Yes, however there is some functionality that is not possible over BLE such as accessing the media list
@@ -397,7 +409,7 @@ and downloading files.</p>
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">How to allow third-party devices to automatically discover close-by GoPro cameras?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>Devices can only be discovered via BLE by scanning for advertising GoPro cameras</p>
@@ -406,7 +418,7 @@ and downloading files.</p>
 
 <h2 id="multi-camera-setups">Multi Camera Setups</h2>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">How many devices can connect to the camera?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>Simultaneously, only one device can connect at a time. However, the camera stores BLE security keys and
@@ -414,7 +426,7 @@ other connection information so it is possible to connect multiple devices seque
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Is there currently a way to connect multiple cameras on the same Wifi network?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>No. Cameras can only be connected through Wi-Fi by becoming an access point itself (generating its own Wi-Fi
@@ -422,7 +434,7 @@ network), not as a peripheral.</p>
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">What is the time offset between multiple cameras executing the same command?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>In cases when camera sync is important, we recommend using the USB connection, which minimizes the variance
@@ -431,7 +443,7 @@ Using BLE for that purpose will further increase it.</p>
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Is there a way to precisely time sync cameras so the footage can be aligned during post-processing?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>The cameras set their time via GPS. By default, the camera seeks GPS at the beginning of every session, but
@@ -445,7 +457,7 @@ smartphone or PC.</p>
 
 <h2 id="streaming">Streaming</h2>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">What are the differences between the streaming options for GoPros?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>There are currently 3 different options on how to stream out of GoPro cameras. They are available either via
@@ -618,7 +630,7 @@ power via USB</td>
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">How to achieve low latency feed streaming onto displays?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>The stream has a minimum latency of about 210ms. If you are seeing latency higher than that, we often find
@@ -629,7 +641,7 @@ A low latency streaming demo is available in the <a href="https://github.com/gop
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">How do I minimize latency of video preview with FFPLAY?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>FFPLAY by default will buffer remote streams. You can minimize the buffer using:</p>
@@ -646,7 +658,7 @@ than that.</p>
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">How to view the video stream in VLC?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>To view the stream in VLC, you need to open network stream <code class="language-plaintext highlighter-rouge">udp://@0.0.0.0:8554</code>. You will still see latency
@@ -656,7 +668,7 @@ because VLC uses its own caching.</p>
 
 <h2 id="power">Power</h2>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">What are the power requirements for GoPro if connected over USB?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>All cameras have minimum power requirements, as specified
@@ -672,7 +684,7 @@ components that deliver the correct power output</p>
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">How to enable automatic power on and off in wired setups?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>Cameras cannot be switched on remotely over USB, or “woken up” remotely after they “go to sleep”. The best
@@ -684,7 +696,7 @@ as it detects USB power and switch off when the powering stops. Refer to the WAK
 
 <h2 id="metadata">Metadata</h2>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Can I use the GPS track from the camera in real time?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>No. The GPS track on the camera as well as other metadata is not available until the file is written and
@@ -693,7 +705,7 @@ another device (phone, wearable,… ) and sync it to the video feed.</p>
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">What can be accessed in the metadata file?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>Metadata exists as a proprietary GPMF (GoPro Metadata Format) and can be extracted from the file via
@@ -713,7 +725,7 @@ can be extracted:</p>
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Is there a way to change the file names or otherwise classify my video file?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>Currently there are two options to do that, and both require GoPro Labs firmware. The stock firmware doesn’t
@@ -724,7 +736,7 @@ with the <a href="https://github.com/gopro/gpmf-parser">GPMF</a> parser) or use
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Is there a way to add time stamps to the video files and mark specific moments?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>Open GoPro users can add time stamped markers, called “Hilights”, to flag specific moments in the video.
@@ -736,24 +748,24 @@ most interesting moments in the video.</p>
 
 <h2 id="general">General</h2>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Which cameras are supported by Open GoPro?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>The answer at a high level is &gt;= Hero 9. However, there are also certain firmware requirements. For a complete
-answer, see the <a href="/OpenGoPro/ble/index.html#supported-cameras">Specification</a>.</p>
+answer, see the <a href="/OpenGoPro/ble/#supported-cameras">Specification</a>.</p>
 </div>
 </div>
 
 <h2 id="camera-logic">Camera Logic</h2>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Do commands operate as priority-wise or time-related?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>The cameras use first-in, first-out logic.</p>
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Is there an option to send the commands in cyclic format instead of sending requests for each command?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>If you want to receive information asynchronously, it is possible via registering for BLE notifications.
@@ -765,7 +777,7 @@ See an example (tracking battery) in the Python SDK.</p>
 
 <p>If you are able to consistently reproduce a problem, please file a bug on <a href="https://github.com/gopro/OpenGoPro/issues">Github Issues</a></p>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Why is the camera not advertising?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>If you have not yet paired to the camera with the desired device, then you need to first set the
@@ -775,11 +787,11 @@ you are already connected to it from a previous session. To be sure, power cycle
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Workaround for intermittent Wifi AP Connection failure<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>On &gt;= Hero 11, try disabling and then re-enabling the camera’s Wifi AP using the
-<a href="/OpenGoPro/ble/index.html#commands">AP Control BLE Command</a></p>
+<a href="/OpenGoPro/ble/#commands">AP Control BLE Command</a></p>
 </div>
 </div>
 
@@ -787,7 +799,7 @@ you are already connected to it from a previous session. To be sure, power cycle
 
 <h2 id="relevant-to-all-supported-cameras">Relevant to All Supported Cameras</h2>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Webcam does not enter idle mode once plugged in<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>The webcam status will be wrongly reported as IDLE instead of OFF after a new USB connection.
@@ -796,7 +808,7 @@ order to make the webcam truly IDLE and thus willing to accept setting changes.<
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Intermittent failure to connect to the cameras Wifi Access Point<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>On rare occasions, connections to the camera’s Wifi AP will continuously fail until the camera is reset.
@@ -804,7 +816,7 @@ It is possible to workaround this as described in <a href="#troubleshooting">Tro
 </div>
 </div>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Spurious Protobuf Notifications sent once camera is connected in Station mode<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>Once the camera has been connected in station mode (STA), it will start sending protobuf notifications with
@@ -814,7 +826,7 @@ action ID 0xFF. These should be ignored.</p>
 
 <h2 id="hero-11-v011000-specific">Hero 11 (v01.10.00) Specific</h2>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Wired Communication is broken after update mode<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>This is fixed by Resetting Connections and then re-pairing.</p>

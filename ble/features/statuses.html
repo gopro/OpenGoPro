@@ -1,13 +1,157 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="en" class="no-js">
+    <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Statuses &mdash; Open GoPro BLE API 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=4391a3cb" />
+<!-- begin _includes/seo.html --><title>Open GoPro</title>
+<meta name="description" content="Open Source GoPro Interface">
+
+
+  <meta name="author" content="GoPro">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Open GoPro">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/ble">
+
+
+  <meta property="og:description" content="Open Source GoPro Interface">
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/ble">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "https://gopro.github.io/OpenGoPro/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- TODO This is probably where our masthead highlighting is going wrong -->
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main_spec.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+  
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+<script>
+    // Add anchors on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function (event) {
+        var manualAnchors = new AnchorJS();
+        manualAnchors.options = {
+            titleText: 'Permalink',
+            placement: 'left'
+        };
+        manualAnchors.add('.anchored');
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+    </head>
+    <body>
+        
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/OpenGoPro/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/ble/">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/http">HTTP Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro/tree/main/demos">Demos</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
+</ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+        
+
+
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statuses — Open GoPro BLE API 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1">
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094">
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=cbc3bc38">
 
   
   <!--[if lt IE 9]>
@@ -20,16 +164,16 @@
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Settings" href="settings.html" /> 
-</head>
+    <link rel="index" title="Index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="prev" title="Settings" href="settings.html"> 
 
-<body class="wy-body-for-nav"> 
+
+ 
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
 
           
           
@@ -38,45 +182,54 @@
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+        </div>
+<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../protocol.html">Protocol</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../protocol.html">Protocol</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#pairing-mode">Pairing Mode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#finish-pairing">Finish Pairing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#ble-characteristics">BLE Characteristics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#send-messages">Send Messages</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/data_protocol.html">Data Protocol</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#packetization">Packetization</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/data_protocol.html">Data Protocol</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/data_protocol.html#packetization">Packetization</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#packet-headers">Packet Headers</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#decipher-message-payload-type">Decipher Message Payload Type</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#message-payload">Message Payload</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/data_protocol.html#message-payload">Message Payload</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#type-length-value">Type Length Value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#protobuf">Protobuf</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/state_management.html">State Management</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/state_management.html">State Management</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#camera-readiness">Camera Readiness</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#keep-alive">Keep Alive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#camera-control">Camera Control</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/id_tables.html">ID Tables</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/id_tables.html">ID Tables</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#command-ids">Command IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#query-ids">Query IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#protobuf-ids">Protobuf IDs</a></li>
@@ -84,8 +237,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#status-ids">Status IDs</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/protobuf.html">Protobuf Documentation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#enums">Enums</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/protobuf.html">Protobuf Documentation</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/protobuf.html#enums">Enums</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcohnnetworkstate">EnumCOHNNetworkState</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcohnstatus">EnumCOHNStatus</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcameracontrolstatus">EnumCameraControlStatus</a></li>
@@ -146,8 +301,10 @@
 </li>
 </ul>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="control.html">Control</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="control.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="control.html">Control</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="control.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="control.html#keep_alive"><code class="docutils literal notranslate"><span class="pre">Keep</span> <span class="pre">Alive</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set_analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set_ap_control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
@@ -161,8 +318,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="query.html">Query</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="query.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="query.html">Query</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="query.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="query.html#get_open_gopro_version"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Open</span> <span class="pre">GoPro</span> <span class="pre">Version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="query.html#get_date_time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="query.html#get_hardware_info"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Hardware</span> <span class="pre">Info</span></code></a></li>
@@ -181,8 +340,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="access_points.html">Access Point</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="access_points.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="access_points.html">Access Point</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="access_points.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#scan_for_access_points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#get_ap_scan_results"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">AP</span> <span class="pre">Scan</span> <span class="pre">Results</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#connect_to_provisioned_access_point"><code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">Provisioned</span> <span class="pre">Access</span> <span class="pre">Point</span></code></a></li>
@@ -192,22 +353,27 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="live_streaming.html">Live Streaming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="live_streaming.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="live_streaming.html">Live Streaming</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="live_streaming.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="live_streaming.html#set_livestream_mode"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="live_streaming.html#get_livestream_status"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Livestream</span> <span class="pre">Status</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cohn.html">Camera on the Home Network</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cohn.html#certificates">Certificates</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="cohn.html">Camera on the Home Network</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="cohn.html#certificates">Certificates</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#verifying-certificate">Verifying Certificate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#view-certificate-details">View Certificate Details</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="cohn.html#provisioning-procedure">Provisioning Procedure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cohn.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="cohn.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#clear_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Clear</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#create_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#get_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
@@ -217,16 +383,20 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="hilights.html">Hilights</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hilights.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="hilights.html">Hilights</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="hilights.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="hilights.html#hilight_moment"><code class="docutils literal notranslate"><span class="pre">Hilight</span> <span class="pre">Moment</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="presets.html">Presets</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="presets.html">Presets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="presets.html#preset-groups">Preset Groups</a></li>
-<li class="toctree-l2"><a class="reference internal" href="presets.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="presets.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#get_available_presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load_preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load_preset_group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
@@ -235,13 +405,16 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="settings.html#camera-capabilities">Camera Capabilities</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="settings.html">Settings</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="settings.html#camera-capabilities">Camera Capabilities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#xlsx">XLSX</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#json">JSON</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="settings.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="settings.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#set_setting"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a></li>
 </ul>
 </li>
@@ -255,7 +428,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Open GoPro BLE API</a>
       </nav>
@@ -267,20 +440,21 @@
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Statuses</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/features/statuses.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
-  <hr/>
+  <hr>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
   <section id="statuses">
-<h1>Statuses<a class="headerlink" href="#statuses" title="Link to this heading"></a></h1>
+<h1>Statuses<a class="headerlink" href="#statuses" title="Link to this heading"></a>
+</h1>
 <p>This section will describe each status and its supported values. See the <a class="reference internal" href="query.html"><span class="doc">Query</span></a> section for operations to query
 status values.</p>
 <section id="status_1">
-<h2>Is The System'S Internal Battery Present? (1)<a class="headerlink" href="#status_1" title="Link to this heading"></a></h2>
+<h2>Is The System'S Internal Battery Present? (1)<a class="headerlink" href="#status_1" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -291,21 +465,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_2">
-<h2>Rough Approximation Of Internal Battery Level In Bars (Or Charging) (2)<a class="headerlink" href="#status_2" title="Link to this heading"></a></h2>
+<h2>Rough Approximation Of Internal Battery Level In Bars (Or Charging) (2)<a class="headerlink" href="#status_2" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -316,30 +494,37 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Zero</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>Zero</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>One</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>One</td>
 </tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>Two</p></td>
+<tr class="row-even">
+<td>2</td>
+<td>Two</td>
 </tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>Three</p></td>
+<tr class="row-odd">
+<td>3</td>
+<td>Three</td>
 </tr>
-<tr class="row-even"><td><p>4</p></td>
-<td><p>Charging</p></td>
+<tr class="row-even">
+<td>4</td>
+<td>Charging</td>
 </tr>
 </tbody>
 </table>
 <section id="status_6">
-<h2>Is The System Currently Overheating? (6)<a class="headerlink" href="#status_6" title="Link to this heading"></a></h2>
+<h2>Is The System Currently Overheating? (6)<a class="headerlink" href="#status_6" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -350,21 +535,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_8">
-<h2>Is The Camera Busy? (8)<a class="headerlink" href="#status_8" title="Link to this heading"></a></h2>
+<h2>Is The Camera Busy? (8)<a class="headerlink" href="#status_8" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -375,21 +564,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_9">
-<h2>Is Quick Capture Feature Enabled? (9)<a class="headerlink" href="#status_9" title="Link to this heading"></a></h2>
+<h2>Is Quick Capture Feature Enabled? (9)<a class="headerlink" href="#status_9" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -400,21 +593,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_10">
-<h2>Is The System Encoding Right Now? (10)<a class="headerlink" href="#status_10" title="Link to this heading"></a></h2>
+<h2>Is The System Encoding Right Now? (10)<a class="headerlink" href="#status_10" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -425,21 +622,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_11">
-<h2>Is Lcd Lock Active? (11)<a class="headerlink" href="#status_11" title="Link to this heading"></a></h2>
+<h2>Is Lcd Lock Active? (11)<a class="headerlink" href="#status_11" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -450,21 +651,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_13">
-<h2>When Encoding Video, This Is The Duration (Seconds) Of The Video So Far; 0 Otherwise (13)<a class="headerlink" href="#status_13" title="Link to this heading"></a></h2>
+<h2>When Encoding Video, This Is The Duration (Seconds) Of The Video So Far; 0 Otherwise (13)<a class="headerlink" href="#status_13" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -474,7 +679,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_17">
-<h2>Are Wireless Connections Enabled? (17)<a class="headerlink" href="#status_17" title="Link to this heading"></a></h2>
+<h2>Are Wireless Connections Enabled? (17)<a class="headerlink" href="#status_17" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -485,21 +691,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_19">
-<h2>The Pairing State Of The Camera (19)<a class="headerlink" href="#status_19" title="Link to this heading"></a></h2>
+<h2>The Pairing State Of The Camera (19)<a class="headerlink" href="#status_19" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -510,30 +720,37 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Never Started</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>Never Started</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>Started</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>Started</td>
 </tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>Aborted</p></td>
+<tr class="row-even">
+<td>2</td>
+<td>Aborted</td>
 </tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>Cancelled</p></td>
+<tr class="row-odd">
+<td>3</td>
+<td>Cancelled</td>
 </tr>
-<tr class="row-even"><td><p>4</p></td>
-<td><p>Completed</p></td>
+<tr class="row-even">
+<td>4</td>
+<td>Completed</td>
 </tr>
 </tbody>
 </table>
 <section id="status_20">
-<h2>The Last Type Of Pairing In Which The Camera Was Engaged (20)<a class="headerlink" href="#status_20" title="Link to this heading"></a></h2>
+<h2>The Last Type Of Pairing In Which The Camera Was Engaged (20)<a class="headerlink" href="#status_20" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -544,27 +761,33 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Not Pairing</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>Not Pairing</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>Pairing App</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>Pairing App</td>
 </tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>Pairing Remote Control</p></td>
+<tr class="row-even">
+<td>2</td>
+<td>Pairing Remote Control</td>
 </tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>Pairing Bluetooth Device</p></td>
+<tr class="row-odd">
+<td>3</td>
+<td>Pairing Bluetooth Device</td>
 </tr>
 </tbody>
 </table>
 <section id="status_21">
-<h2>Time Since Boot (Milliseconds) Of Last Successful Pairing Complete Action (21)<a class="headerlink" href="#status_21" title="Link to this heading"></a></h2>
+<h2>Time Since Boot (Milliseconds) Of Last Successful Pairing Complete Action (21)<a class="headerlink" href="#status_21" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO11 Black Mini</li>
@@ -573,7 +796,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_22">
-<h2>State Of Current Scan For Wifi Access Points (22)<a class="headerlink" href="#status_22" title="Link to this heading"></a></h2>
+<h2>State Of Current Scan For Wifi Access Points (22)<a class="headerlink" href="#status_22" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -584,30 +808,37 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Never started</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>Never started</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>Started</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>Started</td>
 </tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>Aborted</p></td>
+<tr class="row-even">
+<td>2</td>
+<td>Aborted</td>
 </tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>Canceled</p></td>
+<tr class="row-odd">
+<td>3</td>
+<td>Canceled</td>
 </tr>
-<tr class="row-even"><td><p>4</p></td>
-<td><p>Completed</p></td>
+<tr class="row-even">
+<td>4</td>
+<td>Completed</td>
 </tr>
 </tbody>
 </table>
 <section id="status_23">
-<h2>Time Since Boot (Milliseconds) That The Wifi Access Point Scan Completed (23)<a class="headerlink" href="#status_23" title="Link to this heading"></a></h2>
+<h2>Time Since Boot (Milliseconds) That The Wifi Access Point Scan Completed (23)<a class="headerlink" href="#status_23" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -617,7 +848,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_24">
-<h2>Wifi Ap Provisioning State (24)<a class="headerlink" href="#status_24" title="Link to this heading"></a></h2>
+<h2>Wifi Ap Provisioning State (24)<a class="headerlink" href="#status_24" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -628,30 +860,37 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Never started</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>Never started</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>Started</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>Started</td>
 </tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>Aborted</p></td>
+<tr class="row-even">
+<td>2</td>
+<td>Aborted</td>
 </tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>Canceled</p></td>
+<tr class="row-odd">
+<td>3</td>
+<td>Canceled</td>
 </tr>
-<tr class="row-even"><td><p>4</p></td>
-<td><p>Completed</p></td>
+<tr class="row-even">
+<td>4</td>
+<td>Completed</td>
 </tr>
 </tbody>
 </table>
 <section id="status_26">
-<h2>Wireless Remote Control Version (26)<a class="headerlink" href="#status_26" title="Link to this heading"></a></h2>
+<h2>Wireless Remote Control Version (26)<a class="headerlink" href="#status_26" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO11 Black Mini</li>
@@ -660,7 +899,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_27">
-<h2>Is A Wireless Remote Control Connected? (27)<a class="headerlink" href="#status_27" title="Link to this heading"></a></h2>
+<h2>Is A Wireless Remote Control Connected? (27)<a class="headerlink" href="#status_27" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -671,21 +911,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_28">
-<h2>Wireless Pairing State. Each Bit Contains State Information (See Wirelesspairingstateflags) (28)<a class="headerlink" href="#status_28" title="Link to this heading"></a></h2>
+<h2>Wireless Pairing State. Each Bit Contains State Information (See Wirelesspairingstateflags) (28)<a class="headerlink" href="#status_28" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO11 Black Mini</li>
@@ -694,7 +938,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_29">
-<h2>Ssid Of The Ap The Camera Is Currently Connected To. On Ble Connection, Value Is Big-Endian Byte-Encoded Int32 (29)<a class="headerlink" href="#status_29" title="Link to this heading"></a></h2>
+<h2>Ssid Of The Ap The Camera Is Currently Connected To. On Ble Connection, Value Is Big-Endian Byte-Encoded Int32 (29)<a class="headerlink" href="#status_29" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -705,7 +950,8 @@ Supported cameras:<ul class="simple">
 </ul>
 <p>This is a string value.</p>
 <section id="status_30">
-<h2>The Camera'S Wifi Ssid. On Ble Connection, Value Is Big-Endian Byte-Encoded Int32 (30)<a class="headerlink" href="#status_30" title="Link to this heading"></a></h2>
+<h2>The Camera'S Wifi Ssid. On Ble Connection, Value Is Big-Endian Byte-Encoded Int32 (30)<a class="headerlink" href="#status_30" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -716,7 +962,8 @@ Supported cameras:<ul class="simple">
 </ul>
 <p>This is a string value.</p>
 <section id="status_31">
-<h2>The Number Of Wireless Devices Connected To The Camera (31)<a class="headerlink" href="#status_31" title="Link to this heading"></a></h2>
+<h2>The Number Of Wireless Devices Connected To The Camera (31)<a class="headerlink" href="#status_31" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -726,7 +973,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_32">
-<h2>Is Preview Stream Enabled? (32)<a class="headerlink" href="#status_32" title="Link to this heading"></a></h2>
+<h2>Is Preview Stream Enabled? (32)<a class="headerlink" href="#status_32" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -737,21 +985,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_33">
-<h2>Primary Storage Status (33)<a class="headerlink" href="#status_33" title="Link to this heading"></a></h2>
+<h2>Primary Storage Status (33)<a class="headerlink" href="#status_33" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -762,36 +1014,45 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>-1</p></td>
-<td><p>Unknown</p></td>
+<tr class="row-even">
+<td>-1</td>
+<td>Unknown</td>
 </tr>
-<tr class="row-odd"><td><p>0</p></td>
-<td><p>OK</p></td>
+<tr class="row-odd">
+<td>0</td>
+<td>OK</td>
 </tr>
-<tr class="row-even"><td><p>1</p></td>
-<td><p>SD Card Full</p></td>
+<tr class="row-even">
+<td>1</td>
+<td>SD Card Full</td>
 </tr>
-<tr class="row-odd"><td><p>2</p></td>
-<td><p>SD Card Removed</p></td>
+<tr class="row-odd">
+<td>2</td>
+<td>SD Card Removed</td>
 </tr>
-<tr class="row-even"><td><p>3</p></td>
-<td><p>SD Card Format Error</p></td>
+<tr class="row-even">
+<td>3</td>
+<td>SD Card Format Error</td>
 </tr>
-<tr class="row-odd"><td><p>4</p></td>
-<td><p>SD Card Busy</p></td>
+<tr class="row-odd">
+<td>4</td>
+<td>SD Card Busy</td>
 </tr>
-<tr class="row-even"><td><p>8</p></td>
-<td><p>SD Card Swapped</p></td>
+<tr class="row-even">
+<td>8</td>
+<td>SD Card Swapped</td>
 </tr>
 </tbody>
 </table>
 <section id="status_34">
-<h2>How Many Photos Can Be Taken With Current Settings Before Sdcard Is Full (34)<a class="headerlink" href="#status_34" title="Link to this heading"></a></h2>
+<h2>How Many Photos Can Be Taken With Current Settings Before Sdcard Is Full (34)<a class="headerlink" href="#status_34" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -800,7 +1061,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_35">
-<h2>How Many Minutes Of Video Can Be Captured With Current Settings Before Sdcard Is Full (35)<a class="headerlink" href="#status_35" title="Link to this heading"></a></h2>
+<h2>How Many Minutes Of Video Can Be Captured With Current Settings Before Sdcard Is Full (35)<a class="headerlink" href="#status_35" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -810,7 +1072,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_38">
-<h2>Total Number Of Photos On Sdcard (38)<a class="headerlink" href="#status_38" title="Link to this heading"></a></h2>
+<h2>Total Number Of Photos On Sdcard (38)<a class="headerlink" href="#status_38" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -820,7 +1083,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_39">
-<h2>Total Number Of Videos On Sdcard (39)<a class="headerlink" href="#status_39" title="Link to this heading"></a></h2>
+<h2>Total Number Of Videos On Sdcard (39)<a class="headerlink" href="#status_39" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -830,7 +1094,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_41">
-<h2>The Current Status Of Over The Air (Ota) Update (41)<a class="headerlink" href="#status_41" title="Link to this heading"></a></h2>
+<h2>The Current Status Of Over The Air (Ota) Update (41)<a class="headerlink" href="#status_41" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -841,48 +1106,61 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Idle</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>Idle</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>Downloading</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>Downloading</td>
 </tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>Verifying</p></td>
+<tr class="row-even">
+<td>2</td>
+<td>Verifying</td>
 </tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>Download Failed</p></td>
+<tr class="row-odd">
+<td>3</td>
+<td>Download Failed</td>
 </tr>
-<tr class="row-even"><td><p>4</p></td>
-<td><p>Verify Failed</p></td>
+<tr class="row-even">
+<td>4</td>
+<td>Verify Failed</td>
 </tr>
-<tr class="row-odd"><td><p>5</p></td>
-<td><p>Ready</p></td>
+<tr class="row-odd">
+<td>5</td>
+<td>Ready</td>
 </tr>
-<tr class="row-even"><td><p>6</p></td>
-<td><p>GoPro App: Downloading</p></td>
+<tr class="row-even">
+<td>6</td>
+<td>GoPro App: Downloading</td>
 </tr>
-<tr class="row-odd"><td><p>7</p></td>
-<td><p>GoPro App: Verifying</p></td>
+<tr class="row-odd">
+<td>7</td>
+<td>GoPro App: Verifying</td>
 </tr>
-<tr class="row-even"><td><p>8</p></td>
-<td><p>GoPro App: Download Failed</p></td>
+<tr class="row-even">
+<td>8</td>
+<td>GoPro App: Download Failed</td>
 </tr>
-<tr class="row-odd"><td><p>9</p></td>
-<td><p>GoPro App: Verify Failed</p></td>
+<tr class="row-odd">
+<td>9</td>
+<td>GoPro App: Verify Failed</td>
 </tr>
-<tr class="row-even"><td><p>10</p></td>
-<td><p>GoPro App: Ready</p></td>
+<tr class="row-even">
+<td>10</td>
+<td>GoPro App: Ready</td>
 </tr>
 </tbody>
 </table>
 <section id="status_42">
-<h2>Is There A Pending Request To Cancel A Firmware Update Download? (42)<a class="headerlink" href="#status_42" title="Link to this heading"></a></h2>
+<h2>Is There A Pending Request To Cancel A Firmware Update Download? (42)<a class="headerlink" href="#status_42" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -893,21 +1171,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_45">
-<h2>Is Locate Camera Feature Active? (45)<a class="headerlink" href="#status_45" title="Link to this heading"></a></h2>
+<h2>Is Locate Camera Feature Active? (45)<a class="headerlink" href="#status_45" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -918,21 +1200,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_49">
-<h2>The Current Timelapse Interval Countdown Value (E.G. 5...4...3...2...1...) (49)<a class="headerlink" href="#status_49" title="Link to this heading"></a></h2>
+<h2>The Current Timelapse Interval Countdown Value (E.G. 5...4...3...2...1...) (49)<a class="headerlink" href="#status_49" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -942,7 +1228,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_54">
-<h2>Remaining Space On The Sdcard In Kilobytes (54)<a class="headerlink" href="#status_54" title="Link to this heading"></a></h2>
+<h2>Remaining Space On The Sdcard In Kilobytes (54)<a class="headerlink" href="#status_54" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -952,7 +1239,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_55">
-<h2>Is Preview Stream Supported In Current Recording/Mode/Secondary-Stream? (55)<a class="headerlink" href="#status_55" title="Link to this heading"></a></h2>
+<h2>Is Preview Stream Supported In Current Recording/Mode/Secondary-Stream? (55)<a class="headerlink" href="#status_55" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -963,21 +1251,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_56">
-<h2>Wifi Signal Strength In Bars (56)<a class="headerlink" href="#status_56" title="Link to this heading"></a></h2>
+<h2>Wifi Signal Strength In Bars (56)<a class="headerlink" href="#status_56" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -987,7 +1279,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_58">
-<h2>The Number Of Hilights In Currently-Encoding Video (Value Is Set To 0 When Encoding Stops) (58)<a class="headerlink" href="#status_58" title="Link to this heading"></a></h2>
+<h2>The Number Of Hilights In Currently-Encoding Video (Value Is Set To 0 When Encoding Stops) (58)<a class="headerlink" href="#status_58" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -997,7 +1290,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_59">
-<h2>Time Since Boot (Milliseconds) Of Most Recent Hilight In Encoding Video (Set To 0 When Encoding Stops) (59)<a class="headerlink" href="#status_59" title="Link to this heading"></a></h2>
+<h2>Time Since Boot (Milliseconds) Of Most Recent Hilight In Encoding Video (Set To 0 When Encoding Stops) (59)<a class="headerlink" href="#status_59" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1007,7 +1301,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_60">
-<h2>The Minimum Time Between Camera Status Updates (Milliseconds). Best Practice Is To Not Poll For Status More Often Than This (60)<a class="headerlink" href="#status_60" title="Link to this heading"></a></h2>
+<h2>The Minimum Time Between Camera Status Updates (Milliseconds). Best Practice Is To Not Poll For Status More Often Than This (60)<a class="headerlink" href="#status_60" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1017,7 +1312,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_64">
-<h2>How Many Minutes Of Time Lapse Video Can Be Captured With Current Settings Before Sdcard Is Full (64)<a class="headerlink" href="#status_64" title="Link to this heading"></a></h2>
+<h2>How Many Minutes Of Time Lapse Video Can Be Captured With Current Settings Before Sdcard Is Full (64)<a class="headerlink" href="#status_64" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1027,7 +1323,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_65">
-<h2>Liveview Exposure Select Mode (65)<a class="headerlink" href="#status_65" title="Link to this heading"></a></h2>
+<h2>Liveview Exposure Select Mode (65)<a class="headerlink" href="#status_65" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1037,27 +1334,33 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Disabled</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>Disabled</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>Auto</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>Auto</td>
 </tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>ISO Lock</p></td>
+<tr class="row-even">
+<td>2</td>
+<td>ISO Lock</td>
 </tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>Hemisphere</p></td>
+<tr class="row-odd">
+<td>3</td>
+<td>Hemisphere</td>
 </tr>
 </tbody>
 </table>
 <section id="status_66">
-<h2>Liveview Exposure Select: Y-Coordinate (Percent) (66)<a class="headerlink" href="#status_66" title="Link to this heading"></a></h2>
+<h2>Liveview Exposure Select: Y-Coordinate (Percent) (66)<a class="headerlink" href="#status_66" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1067,7 +1370,8 @@ Supported cameras:<ul class="simple">
 </ul>
 <p>This is a percentage from 0-100.</p>
 <section id="status_67">
-<h2>Liveview Exposure Select: Y-Coordinate (Percent) (67)<a class="headerlink" href="#status_67" title="Link to this heading"></a></h2>
+<h2>Liveview Exposure Select: Y-Coordinate (Percent) (67)<a class="headerlink" href="#status_67" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1077,7 +1381,8 @@ Supported cameras:<ul class="simple">
 </ul>
 <p>This is a percentage from 0-100.</p>
 <section id="status_68">
-<h2>Does The Camera Currently Have A Gps Lock? (68)<a class="headerlink" href="#status_68" title="Link to this heading"></a></h2>
+<h2>Does The Camera Currently Have A Gps Lock? (68)<a class="headerlink" href="#status_68" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1088,21 +1393,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_69">
-<h2>Is The Camera In Ap Mode? (69)<a class="headerlink" href="#status_69" title="Link to this heading"></a></h2>
+<h2>Is The Camera In Ap Mode? (69)<a class="headerlink" href="#status_69" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1113,21 +1422,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_70">
-<h2>Internal Battery Level (Percent) (70)<a class="headerlink" href="#status_70" title="Link to this heading"></a></h2>
+<h2>Internal Battery Level (Percent) (70)<a class="headerlink" href="#status_70" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1138,7 +1451,8 @@ Supported cameras:<ul class="simple">
 </ul>
 <p>This is a percentage from 0-100.</p>
 <section id="status_74">
-<h2>Microphone Accessory Status (74)<a class="headerlink" href="#status_74" title="Link to this heading"></a></h2>
+<h2>Microphone Accessory Status (74)<a class="headerlink" href="#status_74" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1149,24 +1463,29 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Accessory not connected</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>Accessory not connected</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>Accessory connected</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>Accessory connected</td>
 </tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>Accessory connected and a microphone is plugged into the accessory</p></td>
+<tr class="row-even">
+<td>2</td>
+<td>Accessory connected and a microphone is plugged into the accessory</td>
 </tr>
 </tbody>
 </table>
 <section id="status_75">
-<h2>Digital Zoom Level (Percent) (75)<a class="headerlink" href="#status_75" title="Link to this heading"></a></h2>
+<h2>Digital Zoom Level (Percent) (75)<a class="headerlink" href="#status_75" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1177,7 +1496,8 @@ Supported cameras:<ul class="simple">
 </ul>
 <p>This is a percentage from 0-100.</p>
 <section id="status_76">
-<h2>Wireless Band (76)<a class="headerlink" href="#status_76" title="Link to this heading"></a></h2>
+<h2>Wireless Band (76)<a class="headerlink" href="#status_76" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1188,21 +1508,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>2.4 GHz</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>2.4 GHz</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>5 GHz</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>5 GHz</td>
 </tr>
 </tbody>
 </table>
 <section id="status_77">
-<h2>Is Digital Zoom Feature Available? (77)<a class="headerlink" href="#status_77" title="Link to this heading"></a></h2>
+<h2>Is Digital Zoom Feature Available? (77)<a class="headerlink" href="#status_77" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1213,21 +1537,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_78">
-<h2>Are Current Video Settings Mobile Friendly? (Related To Video Compression And Frame Rate) (78)<a class="headerlink" href="#status_78" title="Link to this heading"></a></h2>
+<h2>Are Current Video Settings Mobile Friendly? (Related To Video Compression And Frame Rate) (78)<a class="headerlink" href="#status_78" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1238,21 +1566,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_79">
-<h2>Is The Camera Currently In First Time Use (Ftu) Ui Flow? (79)<a class="headerlink" href="#status_79" title="Link to this heading"></a></h2>
+<h2>Is The Camera Currently In First Time Use (Ftu) Ui Flow? (79)<a class="headerlink" href="#status_79" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO10 Black</li>
@@ -1260,21 +1592,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_81">
-<h2>Is 5Ghz Wireless Band Available? (81)<a class="headerlink" href="#status_81" title="Link to this heading"></a></h2>
+<h2>Is 5Ghz Wireless Band Available? (81)<a class="headerlink" href="#status_81" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1285,21 +1621,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_82">
-<h2>Is The System Fully Booted And Ready To Accept Commands? (82)<a class="headerlink" href="#status_82" title="Link to this heading"></a></h2>
+<h2>Is The System Fully Booted And Ready To Accept Commands? (82)<a class="headerlink" href="#status_82" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1310,21 +1650,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_83">
-<h2>Is The Internal Battery Charged Sufficiently To Start Over The Air (Ota) Update? (83)<a class="headerlink" href="#status_83" title="Link to this heading"></a></h2>
+<h2>Is The Internal Battery Charged Sufficiently To Start Over The Air (Ota) Update? (83)<a class="headerlink" href="#status_83" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1335,21 +1679,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_85">
-<h2>Is The Camera Getting Too Cold To Continue Recording? (85)<a class="headerlink" href="#status_85" title="Link to this heading"></a></h2>
+<h2>Is The Camera Getting Too Cold To Continue Recording? (85)<a class="headerlink" href="#status_85" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1360,21 +1708,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_86">
-<h2>Rotational Orientation Of The Camera (86)<a class="headerlink" href="#status_86" title="Link to this heading"></a></h2>
+<h2>Rotational Orientation Of The Camera (86)<a class="headerlink" href="#status_86" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1385,27 +1737,33 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>0 degrees (upright)</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>0 degrees (upright)</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>180 degrees (upside down)</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>180 degrees (upside down)</td>
 </tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>90 degrees (laying on right side)</p></td>
+<tr class="row-even">
+<td>2</td>
+<td>90 degrees (laying on right side)</td>
 </tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>270 degrees (laying on left side)</p></td>
+<tr class="row-odd">
+<td>3</td>
+<td>270 degrees (laying on left side)</td>
 </tr>
 </tbody>
 </table>
 <section id="status_88">
-<h2>Is This Camera Model Capable Of Zooming While Encoding? (88)<a class="headerlink" href="#status_88" title="Link to this heading"></a></h2>
+<h2>Is This Camera Model Capable Of Zooming While Encoding? (88)<a class="headerlink" href="#status_88" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1416,21 +1774,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_89">
-<h2>Current Flatmode Id (89)<a class="headerlink" href="#status_89" title="Link to this heading"></a></h2>
+<h2>Current Flatmode Id (89)<a class="headerlink" href="#status_89" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1440,7 +1802,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_93">
-<h2>Current Video Preset (Id) (93)<a class="headerlink" href="#status_93" title="Link to this heading"></a></h2>
+<h2>Current Video Preset (Id) (93)<a class="headerlink" href="#status_93" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1450,7 +1813,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_94">
-<h2>Current Photo Preset (Id) (94)<a class="headerlink" href="#status_94" title="Link to this heading"></a></h2>
+<h2>Current Photo Preset (Id) (94)<a class="headerlink" href="#status_94" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1459,7 +1823,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_95">
-<h2>Current Time Lapse Preset (Id) (95)<a class="headerlink" href="#status_95" title="Link to this heading"></a></h2>
+<h2>Current Time Lapse Preset (Id) (95)<a class="headerlink" href="#status_95" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1469,7 +1834,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_96">
-<h2>Current Preset Group (Id) (Corresponds To Ui_Mode_Groups In Settings.Json) (96)<a class="headerlink" href="#status_96" title="Link to this heading"></a></h2>
+<h2>Current Preset Group (Id) (Corresponds To Ui_Mode_Groups In Settings.Json) (96)<a class="headerlink" href="#status_96" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1479,7 +1845,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_97">
-<h2>Current Preset (Id) (97)<a class="headerlink" href="#status_97" title="Link to this heading"></a></h2>
+<h2>Current Preset (Id) (97)<a class="headerlink" href="#status_97" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1489,7 +1856,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_98">
-<h2>Preset Modified Status, Which Contains An Event Id And A Preset (Group) Id (98)<a class="headerlink" href="#status_98" title="Link to this heading"></a></h2>
+<h2>Preset Modified Status, Which Contains An Event Id And A Preset (Group) Id (98)<a class="headerlink" href="#status_98" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1499,7 +1867,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_99">
-<h2>The Number Of Live Bursts Can Be Captured With Current Settings Before Sdcard Is Full (99)<a class="headerlink" href="#status_99" title="Link to this heading"></a></h2>
+<h2>The Number Of Live Bursts Can Be Captured With Current Settings Before Sdcard Is Full (99)<a class="headerlink" href="#status_99" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO11 Black</li>
@@ -1507,7 +1876,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_100">
-<h2>Total Number Of Live Bursts On Sdcard (100)<a class="headerlink" href="#status_100" title="Link to this heading"></a></h2>
+<h2>Total Number Of Live Bursts On Sdcard (100)<a class="headerlink" href="#status_100" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO11 Black</li>
@@ -1515,7 +1885,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_101">
-<h2>Is Capture Delay Currently Active (I.E. Counting Down)? (101)<a class="headerlink" href="#status_101" title="Link to this heading"></a></h2>
+<h2>Is Capture Delay Currently Active (I.E. Counting Down)? (101)<a class="headerlink" href="#status_101" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1526,21 +1897,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_102">
-<h2>Media Mod State (102)<a class="headerlink" href="#status_102" title="Link to this heading"></a></h2>
+<h2>Media Mod State (102)<a class="headerlink" href="#status_102" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1551,24 +1926,29 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Media Mod microphone removed</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>Media Mod microphone removed</td>
 </tr>
-<tr class="row-odd"><td><p>2</p></td>
-<td><p>Media Mod microphone only</p></td>
+<tr class="row-odd">
+<td>2</td>
+<td>Media Mod microphone only</td>
 </tr>
-<tr class="row-even"><td><p>3</p></td>
-<td><p>Media Mod microphone with external microphone</p></td>
+<tr class="row-even">
+<td>3</td>
+<td>Media Mod microphone with external microphone</td>
 </tr>
 </tbody>
 </table>
 <section id="status_103">
-<h2>Time Warp Speed (103)<a class="headerlink" href="#status_103" title="Link to this heading"></a></h2>
+<h2>Time Warp Speed (103)<a class="headerlink" href="#status_103" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1579,54 +1959,69 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>15x</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>15x</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>30x</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>30x</td>
 </tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>60x</p></td>
+<tr class="row-even">
+<td>2</td>
+<td>60x</td>
 </tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>150x</p></td>
+<tr class="row-odd">
+<td>3</td>
+<td>150x</td>
 </tr>
-<tr class="row-even"><td><p>4</p></td>
-<td><p>300x</p></td>
+<tr class="row-even">
+<td>4</td>
+<td>300x</td>
 </tr>
-<tr class="row-odd"><td><p>5</p></td>
-<td><p>900x</p></td>
+<tr class="row-odd">
+<td>5</td>
+<td>900x</td>
 </tr>
-<tr class="row-even"><td><p>6</p></td>
-<td><p>1800x</p></td>
+<tr class="row-even">
+<td>6</td>
+<td>1800x</td>
 </tr>
-<tr class="row-odd"><td><p>7</p></td>
-<td><p>2x</p></td>
+<tr class="row-odd">
+<td>7</td>
+<td>2x</td>
 </tr>
-<tr class="row-even"><td><p>8</p></td>
-<td><p>5x</p></td>
+<tr class="row-even">
+<td>8</td>
+<td>5x</td>
 </tr>
-<tr class="row-odd"><td><p>9</p></td>
-<td><p>10x</p></td>
+<tr class="row-odd">
+<td>9</td>
+<td>10x</td>
 </tr>
-<tr class="row-even"><td><p>10</p></td>
-<td><p>Auto</p></td>
+<tr class="row-even">
+<td>10</td>
+<td>Auto</td>
 </tr>
-<tr class="row-odd"><td><p>11</p></td>
-<td><p>1x (realtime)</p></td>
+<tr class="row-odd">
+<td>11</td>
+<td>1x (realtime)</td>
 </tr>
-<tr class="row-even"><td><p>12</p></td>
-<td><p>1/2x (slow-motion)</p></td>
+<tr class="row-even">
+<td>12</td>
+<td>1/2x (slow-motion)</td>
 </tr>
 </tbody>
 </table>
 <section id="status_104">
-<h2>Is The System'S Linux Core Active? (104)<a class="headerlink" href="#status_104" title="Link to this heading"></a></h2>
+<h2>Is The System'S Linux Core Active? (104)<a class="headerlink" href="#status_104" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO10 Black</li>
@@ -1634,21 +2029,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_105">
-<h2>Camera Lens Type (Reflects Changes To Setting 162 Or Setting 189) (105)<a class="headerlink" href="#status_105" title="Link to this heading"></a></h2>
+<h2>Camera Lens Type (Reflects Changes To Setting 162 Or Setting 189) (105)<a class="headerlink" href="#status_105" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1659,24 +2058,29 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Default</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>Default</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>Max Lens</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>Max Lens</td>
 </tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>Max Lens 2.0</p></td>
+<tr class="row-even">
+<td>2</td>
+<td>Max Lens 2.0</td>
 </tr>
 </tbody>
 </table>
 <section id="status_106">
-<h2>Is Video Hindsight Capture Active? (106)<a class="headerlink" href="#status_106" title="Link to this heading"></a></h2>
+<h2>Is Video Hindsight Capture Active? (106)<a class="headerlink" href="#status_106" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1686,21 +2090,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_107">
-<h2>Scheduled Capture Preset Id (107)<a class="headerlink" href="#status_107" title="Link to this heading"></a></h2>
+<h2>Scheduled Capture Preset Id (107)<a class="headerlink" href="#status_107" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1709,7 +2117,8 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <section id="status_108">
-<h2>Is Scheduled Capture Set? (108)<a class="headerlink" href="#status_108" title="Link to this heading"></a></h2>
+<h2>Is Scheduled Capture Set? (108)<a class="headerlink" href="#status_108" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1719,21 +2128,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_110">
-<h2>Display Mod Status (Bitmasked) (110)<a class="headerlink" href="#status_110" title="Link to this heading"></a></h2>
+<h2>Display Mod Status (Bitmasked) (110)<a class="headerlink" href="#status_110" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1743,39 +2156,49 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>000 = Display Mod: 0, HDMI: 0, Display Mod Connected: False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>000 = Display Mod: 0, HDMI: 0, Display Mod Connected: False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>001 = Display Mod: 0, HDMI: 0, Display Mod Connected: True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>001 = Display Mod: 0, HDMI: 0, Display Mod Connected: True</td>
 </tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>010 = Display Mod: 0, HDMI: 1, Display Mod Connected: False</p></td>
+<tr class="row-even">
+<td>2</td>
+<td>010 = Display Mod: 0, HDMI: 1, Display Mod Connected: False</td>
 </tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>011 = Display Mod: 0, HDMI: 1, Display Mod Connected: True</p></td>
+<tr class="row-odd">
+<td>3</td>
+<td>011 = Display Mod: 0, HDMI: 1, Display Mod Connected: True</td>
 </tr>
-<tr class="row-even"><td><p>4</p></td>
-<td><p>100 = Display Mod: 1, HDMI: 0, Display Mod Connected: False</p></td>
+<tr class="row-even">
+<td>4</td>
+<td>100 = Display Mod: 1, HDMI: 0, Display Mod Connected: False</td>
 </tr>
-<tr class="row-odd"><td><p>5</p></td>
-<td><p>101 = Display Mod: 1, HDMI: 0, Display Mod Connected: True</p></td>
+<tr class="row-odd">
+<td>5</td>
+<td>101 = Display Mod: 1, HDMI: 0, Display Mod Connected: True</td>
 </tr>
-<tr class="row-even"><td><p>6</p></td>
-<td><p>110 = Display Mod: 1, HDMI: 1, Display Mod Connected: False</p></td>
+<tr class="row-even">
+<td>6</td>
+<td>110 = Display Mod: 1, HDMI: 1, Display Mod Connected: False</td>
 </tr>
-<tr class="row-odd"><td><p>7</p></td>
-<td><p>111 = Display Mod: 1, HDMI: 1, Display Mod Connected: True</p></td>
+<tr class="row-odd">
+<td>7</td>
+<td>111 = Display Mod: 1, HDMI: 1, Display Mod Connected: True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_111">
-<h2>Does Sdcard Meet Specified Minimum Write Speed? (111)<a class="headerlink" href="#status_111" title="Link to this heading"></a></h2>
+<h2>Does Sdcard Meet Specified Minimum Write Speed? (111)<a class="headerlink" href="#status_111" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1785,21 +2208,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_112">
-<h2>Number Of Sdcard Write Speed Errors Since Device Booted (112)<a class="headerlink" href="#status_112" title="Link to this heading"></a></h2>
+<h2>Number Of Sdcard Write Speed Errors Since Device Booted (112)<a class="headerlink" href="#status_112" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1808,7 +2235,8 @@ Supported cameras:<ul class="simple">
 <li>HERO10 Black</li>
 </ul>
 <section id="status_113">
-<h2>Is Turbo Transfer Active? (113)<a class="headerlink" href="#status_113" title="Link to this heading"></a></h2>
+<h2>Is Turbo Transfer Active? (113)<a class="headerlink" href="#status_113" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1819,21 +2247,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_114">
-<h2>Camera Control Status Id (114)<a class="headerlink" href="#status_114" title="Link to this heading"></a></h2>
+<h2>Camera Control Status Id (114)<a class="headerlink" href="#status_114" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1843,24 +2275,29 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Camera Idle: No one is attempting to change camera settings</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>Camera Idle: No one is attempting to change camera settings</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>Camera Control: Camera is in a menu or changing settings. To intervene, app must request control</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>Camera Control: Camera is in a menu or changing settings. To intervene, app must request control</td>
 </tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>Camera External Control: An outside entity (app) has control and is in a menu or modifying settings</p></td>
+<tr class="row-even">
+<td>2</td>
+<td>Camera External Control: An outside entity (app) has control and is in a menu or modifying settings</td>
 </tr>
 </tbody>
 </table>
 <section id="status_115">
-<h2>Is The Camera Connected To A Pc Via Usb? (115)<a class="headerlink" href="#status_115" title="Link to this heading"></a></h2>
+<h2>Is The Camera Connected To A Pc Via Usb? (115)<a class="headerlink" href="#status_115" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1870,21 +2307,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>False</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>False</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>True</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
 <section id="status_116">
-<h2>Camera Control Over Usb State (116)<a class="headerlink" href="#status_116" title="Link to this heading"></a></h2>
+<h2>Camera Control Over Usb State (116)<a class="headerlink" href="#status_116" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1894,21 +2335,25 @@ Supported cameras:<ul class="simple">
 </ul>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Value Name</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Value Name</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Disabled</p></td>
+<tr class="row-even">
+<td>0</td>
+<td>Disabled</td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>Enabled</p></td>
+<tr class="row-odd">
+<td>1</td>
+<td>Enabled</td>
 </tr>
 </tbody>
 </table>
 <section id="status_117">
-<h2>Total Sd Card Capacity In Kilobytes (117)<a class="headerlink" href="#status_117" title="Link to this heading"></a></h2>
+<h2>Total Sd Card Capacity In Kilobytes (117)<a class="headerlink" href="#status_117" title="Link to this heading"></a>
+</h2>
 </section>
 Supported cameras:<ul class="simple">
 <li>HERO12 Black</li>
@@ -1924,10 +2369,10 @@ Supported cameras:<ul class="simple">
         <a href="settings.html" class="btn btn-neutral float-left" title="Settings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
-  <hr/>
+  <hr>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023.</p>
+    <p>© Copyright 2023.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
@@ -1946,5 +2391,7 @@ Supported cameras:<ul class="simple">
       });
   </script> 
 
-</body>
+
+
+    </body>
 </html>

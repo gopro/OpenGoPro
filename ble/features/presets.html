@@ -1,13 +1,157 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="en" class="no-js">
+    <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Presets &mdash; Open GoPro BLE API 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=4391a3cb" />
+<!-- begin _includes/seo.html --><title>Open GoPro</title>
+<meta name="description" content="Open Source GoPro Interface">
+
+
+  <meta name="author" content="GoPro">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Open GoPro">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/ble">
+
+
+  <meta property="og:description" content="Open Source GoPro Interface">
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/ble">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "https://gopro.github.io/OpenGoPro/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- TODO This is probably where our masthead highlighting is going wrong -->
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main_spec.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+  
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+<script>
+    // Add anchors on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function (event) {
+        var manualAnchors = new AnchorJS();
+        manualAnchors.options = {
+            titleText: 'Permalink',
+            placement: 'left'
+        };
+        manualAnchors.add('.anchored');
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+    </head>
+    <body>
+        
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/OpenGoPro/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/ble/">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/http">HTTP Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro/tree/main/demos">Demos</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
+</ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+        
+
+
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presets — Open GoPro BLE API 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1">
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094">
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=cbc3bc38">
 
   
   <!--[if lt IE 9]>
@@ -20,17 +164,17 @@
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Settings" href="settings.html" />
-    <link rel="prev" title="Hilights" href="hilights.html" /> 
-</head>
+    <link rel="index" title="Index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="next" title="Settings" href="settings.html">
+    <link rel="prev" title="Hilights" href="hilights.html"> 
 
-<body class="wy-body-for-nav"> 
+
+ 
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
 
           
           
@@ -39,45 +183,54 @@
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+        </div>
+<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../protocol.html">Protocol</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../protocol.html">Protocol</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#pairing-mode">Pairing Mode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#finish-pairing">Finish Pairing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#ble-characteristics">BLE Characteristics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#send-messages">Send Messages</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/data_protocol.html">Data Protocol</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#packetization">Packetization</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/data_protocol.html">Data Protocol</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/data_protocol.html#packetization">Packetization</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#packet-headers">Packet Headers</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#decipher-message-payload-type">Decipher Message Payload Type</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#message-payload">Message Payload</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/data_protocol.html#message-payload">Message Payload</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#type-length-value">Type Length Value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#protobuf">Protobuf</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/state_management.html">State Management</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/state_management.html">State Management</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#camera-readiness">Camera Readiness</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#keep-alive">Keep Alive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#camera-control">Camera Control</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/id_tables.html">ID Tables</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/id_tables.html">ID Tables</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#command-ids">Command IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#query-ids">Query IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#protobuf-ids">Protobuf IDs</a></li>
@@ -85,8 +238,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#status-ids">Status IDs</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/protobuf.html">Protobuf Documentation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#enums">Enums</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/protobuf.html">Protobuf Documentation</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/protobuf.html#enums">Enums</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcohnnetworkstate">EnumCOHNNetworkState</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcohnstatus">EnumCOHNStatus</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcameracontrolstatus">EnumCameraControlStatus</a></li>
@@ -147,8 +302,10 @@
 </li>
 </ul>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="control.html">Control</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="control.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="control.html">Control</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="control.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="control.html#keep_alive"><code class="docutils literal notranslate"><span class="pre">Keep</span> <span class="pre">Alive</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set_analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set_ap_control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
@@ -162,8 +319,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="query.html">Query</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="query.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="query.html">Query</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="query.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="query.html#get_open_gopro_version"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Open</span> <span class="pre">GoPro</span> <span class="pre">Version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="query.html#get_date_time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="query.html#get_hardware_info"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Hardware</span> <span class="pre">Info</span></code></a></li>
@@ -182,8 +341,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="access_points.html">Access Point</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="access_points.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="access_points.html">Access Point</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="access_points.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#scan_for_access_points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#get_ap_scan_results"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">AP</span> <span class="pre">Scan</span> <span class="pre">Results</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#connect_to_provisioned_access_point"><code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">Provisioned</span> <span class="pre">Access</span> <span class="pre">Point</span></code></a></li>
@@ -193,22 +354,27 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="live_streaming.html">Live Streaming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="live_streaming.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="live_streaming.html">Live Streaming</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="live_streaming.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="live_streaming.html#set_livestream_mode"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="live_streaming.html#get_livestream_status"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Livestream</span> <span class="pre">Status</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cohn.html">Camera on the Home Network</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cohn.html#certificates">Certificates</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="cohn.html">Camera on the Home Network</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="cohn.html#certificates">Certificates</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#verifying-certificate">Verifying Certificate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#view-certificate-details">View Certificate Details</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="cohn.html#provisioning-procedure">Provisioning Procedure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cohn.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="cohn.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#clear_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Clear</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#create_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#get_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
@@ -218,16 +384,20 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="hilights.html">Hilights</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hilights.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="hilights.html">Hilights</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="hilights.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="hilights.html#hilight_moment"><code class="docutils literal notranslate"><span class="pre">Hilight</span> <span class="pre">Moment</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Presets</a><ul>
+<li class="toctree-l1 current">
+<a class="current reference internal" href="#">Presets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#preset-groups">Preset Groups</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#get_available_presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#load_preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#load_preset_group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
@@ -236,13 +406,16 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="settings.html#camera-capabilities">Camera Capabilities</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="settings.html">Settings</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="settings.html#camera-capabilities">Camera Capabilities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#xlsx">XLSX</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#json">JSON</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="settings.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="settings.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#set_setting"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a></li>
 </ul>
 </li>
@@ -256,7 +429,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Open GoPro BLE API</a>
       </nav>
@@ -268,71 +441,88 @@
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Presets</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/features/presets.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
-  <hr/>
+  <hr>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
   <section id="presets">
-<h1>Presets<a class="headerlink" href="#presets" title="Link to this heading"></a></h1>
+<h1>Presets<a class="headerlink" href="#presets" title="Link to this heading"></a>
+</h1>
 <p>The camera organizes many modes of operation into Presets.</p>
 <p>Depending on the camera’s state, different collections of presets will be available for immediate loading and use.
 Below is a table of settings that affect the current preset collection and thereby which presets can be loaded</p>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Setting</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Setting</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>162</p></td>
-<td><p>Max Lens</p></td>
+<tr class="row-even">
+<td>162</td>
+<td>Max Lens</td>
 </tr>
-<tr class="row-odd"><td><p>173</p></td>
-<td><p>Video Performance Mode</p></td>
+<tr class="row-odd">
+<td>173</td>
+<td>Video Performance Mode</td>
 </tr>
-<tr class="row-even"><td><p>175</p></td>
-<td><p>Controls</p></td>
+<tr class="row-even">
+<td>175</td>
+<td>Controls</td>
 </tr>
-<tr class="row-odd"><td><p>177</p></td>
-<td><p>Enable Night Photo</p></td>
+<tr class="row-odd">
+<td>177</td>
+<td>Enable Night Photo</td>
 </tr>
-<tr class="row-even"><td><p>180</p></td>
-<td><p>Video Mode</p></td>
+<tr class="row-even">
+<td>180</td>
+<td>Video Mode</td>
 </tr>
-<tr class="row-odd"><td><p>186</p></td>
-<td><p>Video Mode</p></td>
+<tr class="row-odd">
+<td>186</td>
+<td>Video Mode</td>
 </tr>
-<tr class="row-even"><td><p>187</p></td>
-<td><p>Lapse Mode</p></td>
+<tr class="row-even">
+<td>187</td>
+<td>Lapse Mode</td>
 </tr>
-<tr class="row-odd"><td><p>189</p></td>
-<td><p>Max Lens Mod</p></td>
+<tr class="row-odd">
+<td>189</td>
+<td>Max Lens Mod</td>
 </tr>
-<tr class="row-even"><td><p>190</p></td>
-<td><p>Max Lens Mod Enable</p></td>
+<tr class="row-even">
+<td>190</td>
+<td>Max Lens Mod Enable</td>
 </tr>
-<tr class="row-odd"><td><p>191</p></td>
-<td><p>Photo Mode</p></td>
+<tr class="row-odd">
+<td>191</td>
+<td>Photo Mode</td>
 </tr>
 </tbody>
 </table>
 <section id="preset-groups">
-<h2>Preset Groups<a class="headerlink" href="#preset-groups" title="Link to this heading"></a></h2>
+<h2>Preset Groups<a class="headerlink" href="#preset-groups" title="Link to this heading"></a>
+</h2>
 <p>Presets are organized into Preset Groups.</p>
 <p>To find the currently available Presets / Preset Groups, use <a class="reference external" href="../features/presets.html#get_available_presets">Get Available Presets</a></p>
 </section>
 <section id="operations">
-<h2>Operations<a class="headerlink" href="#operations" title="Link to this heading"></a></h2>
+<h2>Operations<a class="headerlink" href="#operations" title="Link to this heading"></a>
+</h2>
 <dl class="operation protobuf">
 <dt class="sig sig-object operation" id="get_available_presets">
-<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></span><a class="headerlink" href="#get_available_presets" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
+<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></span><a class="headerlink" href="#get_available_presets" title="Link to this definition"></a>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
 </dd>
 </dl>
 Supported cameras:<ul class="simple">
@@ -344,80 +534,113 @@ Supported cameras:<ul class="simple">
 </ul>
 <dl class="operation protobuf-message" id="protobuf-message-0">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Request</span></span></dt>
-<dd><p>Get preset status (and optionally register to be notified when it changes)</p>
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd>
+<p>Get preset status (and optionally register to be notified when it changes)</p>
 <p>Response: <a class="reference internal" href="../protocol/protobuf.html#proto-notifypresetstatus"><span class="std std-ref">NotifyPresetStatus</span></a> sent immediately</p>
 <p>Notification: <a class="reference internal" href="../protocol/protobuf.html#proto-notifypresetstatus"><span class="std std-ref">NotifyPresetStatus</span></a> sent periodically as preset status changes, if registered.</p>
-</dd></dl>
+</dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query</em></a></p>
 </dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0xF5</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
 <dd class="field-odd">0x72</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>RequestGetPresetStatus (<a class="reference external" href="../protocol/protobuf.html#proto-requestgetpresetstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto"><em>source</em></a>)</p>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>RequestGetPresetStatus (<a class="reference external" href="../protocol/protobuf.html#proto-requestgetpresetstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
 <dl class="operation protobuf-message" id="protobuf-message-1">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Response</span></span></dt>
-<dd><p>Current Preset status</p>
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd>
+<p>Current Preset status</p>
 <p>Sent either:</p>
 <ul class="simple">
 <li><p>Synchronously via initial response to <a class="reference internal" href="../protocol/protobuf.html#proto-requestgetpresetstatus"><span class="std std-ref">RequestGetPresetStatus</span></a></p></li>
 <li><p>Asynchronously when Preset change if registered in <a class="reference internal" href="../protocol/protobuf.html#proto-requestgetpresetstatus"><span class="std std-ref">RequestGetPresetStatus</span></a></p></li>
 </ul>
-</dd></dl>
+</dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
 </dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0xF5</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
 <dd class="field-odd">0xF2</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>NotifyPresetStatus (<a class="reference external" href="../protocol/protobuf.html#proto-notifypresetstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto"><em>source</em></a>)</p>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>NotifyPresetStatus (<a class="reference external" href="../protocol/protobuf.html#proto-notifypresetstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
 <dl class="operation protobuf-message" id="protobuf-message-2">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Notification</span></span></dt>
-<dd><p>Current Preset status</p>
+<span class="sig-name descname"><span class="pre">Notification</span></span>
+</dt>
+<dd>
+<p>Current Preset status</p>
 <p>Sent either:</p>
 <ul class="simple">
 <li><p>Synchronously via initial response to <a class="reference internal" href="../protocol/protobuf.html#proto-requestgetpresetstatus"><span class="std std-ref">RequestGetPresetStatus</span></a></p></li>
 <li><p>Asynchronously when Preset change if registered in <a class="reference internal" href="../protocol/protobuf.html#proto-requestgetpresetstatus"><span class="std std-ref">RequestGetPresetStatus</span></a></p></li>
 </ul>
-</dd></dl>
-
-<dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
-</dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
-<dd class="field-even">0xF5</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
-<dd class="field-odd">0xF3</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>NotifyPresetStatus (<a class="reference external" href="../protocol/protobuf.html#proto-notifypresetstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
-</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Query Response</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0xF5</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">0xF3</dd>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>NotifyPresetStatus (<a class="reference external" href="../protocol/protobuf.html#proto-notifypresetstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+</dd>
+</dl>
 
 <dl class="operation tlv-command" id="tlv-message-0">
 <dt class="sig sig-object operation" id="load_preset">
-<span class="sig-name descname"><span class="pre">Load</span> <span class="pre">Preset</span></span><a class="headerlink" href="#load_preset" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#commands"><em>TLV command</em></a></p>
+<span class="sig-name descname"><span class="pre">Load</span> <span class="pre">Preset</span></span><a class="headerlink" href="#load_preset" title="Link to this definition"></a>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#commands"><em>TLV command</em></a></p>
 </dd>
-<dt class="field-even">ID<span class="colon">:</span></dt>
+<dt class="field-even">ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0x40</dd>
 </dl>
 Supported cameras:<ul class="simple">
@@ -430,39 +653,56 @@ Supported cameras:<ul class="simple">
 <p>Load preset by ID. The ID must be found from <a class="reference external" href="../features/presets.html#get_available_presets">Get Available Presets</a></p>
 <dl class="operation tlv-message">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Request</span></span></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd></dd>
+</dl>
 
 <dl class="field-list">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
 </dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul>
-<li><strong>preset</strong><em> (uint32) - </em>preset ID</li>
+<dt class="field-even">Parameters<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<ul>
+<li>
+<strong>preset</strong><em> (uint32) - </em>preset ID</li>
 </ul>
 </dd>
 </dl>
 <dl class="operation tlv-message">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Response</span></span></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd></dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
 </dd>
 </dl>
-</dd></dl>
+</dd>
+</dl>
 
 <dl class="operation tlv-command" id="tlv-message-1">
 <dt class="sig sig-object operation" id="load_preset_group">
-<span class="sig-name descname"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></span><a class="headerlink" href="#load_preset_group" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#commands"><em>TLV command</em></a></p>
+<span class="sig-name descname"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></span><a class="headerlink" href="#load_preset_group" title="Link to this definition"></a>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#commands"><em>TLV command</em></a></p>
 </dd>
-<dt class="field-even">ID<span class="colon">:</span></dt>
+<dt class="field-even">ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0x3E</dd>
 </dl>
 Supported cameras:<ul class="simple">
@@ -475,37 +715,53 @@ Supported cameras:<ul class="simple">
 <p>Load preset group by ID. The ID must be found from <a class="reference external" href="../features/presets.html#get_available_presets">Get Available Presets</a></p>
 <dl class="operation tlv-message">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Request</span></span></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd></dd>
+</dl>
 
 <dl class="field-list">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
 </dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul>
-<li><strong>preset</strong><em> (uint32) - </em>preset group ID</li>
+<dt class="field-even">Parameters<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<ul>
+<li>
+<strong>preset</strong><em> (uint32) - </em>preset group ID</li>
 </ul>
 </dd>
 </dl>
 <dl class="operation tlv-message">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Response</span></span></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd></dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
 </dd>
 </dl>
-</dd></dl>
+</dd>
+</dl>
 
 <dl class="operation protobuf">
 <dt class="sig sig-object operation" id="update_custom_preset">
-<span class="sig-name descname"><span class="pre">Update</span> <span class="pre">Custom</span> <span class="pre">Preset</span></span><a class="headerlink" href="#update_custom_preset" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
+<span class="sig-name descname"><span class="pre">Update</span> <span class="pre">Custom</span> <span class="pre">Preset</span></span><a class="headerlink" href="#update_custom_preset" title="Link to this definition"></a>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
 </dd>
 </dl>
 Supported cameras:<ul class="simple">
@@ -516,68 +772,95 @@ Supported cameras:<ul class="simple">
 <li>HERO9 Black</li>
 </ul>
 <blockquote>
-<div><dl class="operation protobuf-message" id="protobuf-message-3">
+<div>
+<dl class="operation protobuf-message" id="protobuf-message-3">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Request</span></span></dt>
-<dd><p>Request to Update the Title and / or Icon of the Active Custom Preset</p>
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd>
+<p>Request to Update the Title and / or Icon of the Active Custom Preset</p>
 <p>This only operates on the currently active Preset and will fail  if the current
 Preset is not custom.</p>
 <p>The use cases are:</p>
 <ol class="arabic">
-<li><p>Update the Custom Preset Icon</p>
+<li>
+<p>Update the Custom Preset Icon</p>
 <blockquote>
-<div><ul class="simple">
+<div>
+<ul class="simple">
 <li><p><cite>icon_id</cite> is always optional and can always be passed</p></li>
 </ul>
-</div></blockquote>
+</div>
+</blockquote>
 </li>
 </ol>
 <p>and / or</p>
 <ol class="arabic" start="2">
-<li><p>Update the Custom Preset Title to a…</p>
+<li>
+<p>Update the Custom Preset Title to a…</p>
 <blockquote>
-<div><ul class="simple">
+<div>
+<ul class="simple">
 <li><p><strong>Factory Preset Title</strong>: Set <cite>title_id</cite> to a non-PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) value</p></li>
 <li><p><strong>Custom Preset Name</strong>: Set <cite>title_id</cite> to PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) and specify a <cite>custom_name</cite></p></li>
 </ul>
-</div></blockquote>
+</div>
+</blockquote>
 </li>
 </ol>
 <p>Returns a <a class="reference internal" href="../protocol/protobuf.html#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a> with the status of the preset update request.</p>
-</dd></dl>
+</dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
 </dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0xF1</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
 <dd class="field-odd">0x64</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>RequestCustomPresetUpdate (<a class="reference external" href="../protocol/protobuf.html#proto-requestcustompresetupdate"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto"><em>source</em></a>)</p>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>RequestCustomPresetUpdate (<a class="reference external" href="../protocol/protobuf.html#proto-requestcustompresetupdate"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
 <dl class="operation protobuf-message" id="protobuf-message-4">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Response</span></span></dt>
-<dd><p>Generic Response used across many response / notification messages</p>
-</dd></dl>
-
-<dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
-</dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
-<dd class="field-even">0xF1</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
-<dd class="field-odd">0xE4</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>ResponseGeneric (<a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto"><em>source</em></a>)</p>
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd>
+<p>Generic Response used across many response / notification messages</p>
 </dd>
 </dl>
-</div></blockquote>
-</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0xF1</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">0xE4</dd>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>ResponseGeneric (<a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+</div>
+</blockquote>
+</dd>
+</dl>
 
 </section>
 </section>
@@ -590,10 +873,10 @@ Preset is not custom.</p>
         <a href="settings.html" class="btn btn-neutral float-right" title="Settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
-  <hr/>
+  <hr>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023.</p>
+    <p>© Copyright 2023.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
@@ -612,5 +895,7 @@ Preset is not custom.</p>
       });
   </script> 
 
-</body>
+
+
+    </body>
 </html>

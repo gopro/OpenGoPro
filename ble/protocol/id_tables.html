@@ -1,13 +1,157 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="en" class="no-js">
+    <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ID Tables &mdash; Open GoPro BLE API 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=4391a3cb" />
+<!-- begin _includes/seo.html --><title>Open GoPro</title>
+<meta name="description" content="Open Source GoPro Interface">
+
+
+  <meta name="author" content="GoPro">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Open GoPro">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/ble">
+
+
+  <meta property="og:description" content="Open Source GoPro Interface">
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/ble">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "https://gopro.github.io/OpenGoPro/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- TODO This is probably where our masthead highlighting is going wrong -->
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main_spec.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+  
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+<script>
+    // Add anchors on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function (event) {
+        var manualAnchors = new AnchorJS();
+        manualAnchors.options = {
+            titleText: 'Permalink',
+            placement: 'left'
+        };
+        manualAnchors.add('.anchored');
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+    </head>
+    <body>
+        
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/OpenGoPro/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/ble/">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/http">HTTP Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro/tree/main/demos">Demos</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
+</ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+        
+
+
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ID Tables — Open GoPro BLE API 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1">
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094">
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=cbc3bc38">
 
   
   <!--[if lt IE 9]>
@@ -20,17 +164,17 @@
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Protobuf Documentation" href="protobuf.html" />
-    <link rel="prev" title="State Management" href="state_management.html" /> 
-</head>
+    <link rel="index" title="Index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="next" title="Protobuf Documentation" href="protobuf.html">
+    <link rel="prev" title="State Management" href="state_management.html"> 
 
-<body class="wy-body-for-nav"> 
+
+ 
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
 
           
           
@@ -39,45 +183,54 @@
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+        </div>
+<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../protocol.html">Protocol</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="ble_setup.html">BLE Setup</a><ul>
+<li class="toctree-l1 current">
+<a class="reference internal" href="../protocol.html">Protocol</a><ul class="current">
+<li class="toctree-l2">
+<a class="reference internal" href="ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="ble_setup.html#pairing-mode">Pairing Mode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ble_setup.html#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ble_setup.html#finish-pairing">Finish Pairing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="ble_setup.html#ble-characteristics">BLE Characteristics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="ble_setup.html#send-messages">Send Messages</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="data_protocol.html">Data Protocol</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="data_protocol.html#packetization">Packetization</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="data_protocol.html">Data Protocol</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="data_protocol.html#packetization">Packetization</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="data_protocol.html#packet-headers">Packet Headers</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="data_protocol.html#decipher-message-payload-type">Decipher Message Payload Type</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_protocol.html#message-payload">Message Payload</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="data_protocol.html#message-payload">Message Payload</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="data_protocol.html#type-length-value">Type Length Value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="data_protocol.html#protobuf">Protobuf</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="state_management.html">State Management</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="state_management.html">State Management</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="state_management.html#camera-readiness">Camera Readiness</a></li>
 <li class="toctree-l3"><a class="reference internal" href="state_management.html#keep-alive">Keep Alive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="state_management.html#camera-control">Camera Control</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">ID Tables</a><ul>
+<li class="toctree-l2 current">
+<a class="current reference internal" href="#">ID Tables</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#command-ids">Command IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#query-ids">Query IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#protobuf-ids">Protobuf IDs</a></li>
@@ -85,8 +238,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#status-ids">Status IDs</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="protobuf.html">Protobuf Documentation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="protobuf.html#enums">Enums</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="protobuf.html">Protobuf Documentation</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="protobuf.html#enums">Enums</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="protobuf.html#enumcohnnetworkstate">EnumCOHNNetworkState</a></li>
 <li class="toctree-l4"><a class="reference internal" href="protobuf.html#enumcohnstatus">EnumCOHNStatus</a></li>
 <li class="toctree-l4"><a class="reference internal" href="protobuf.html#enumcameracontrolstatus">EnumCameraControlStatus</a></li>
@@ -147,8 +302,10 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../features/control.html">Control</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/control.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/control.html">Control</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/control.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#keep_alive"><code class="docutils literal notranslate"><span class="pre">Keep</span> <span class="pre">Alive</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set_analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set_ap_control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
@@ -162,8 +319,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/query.html">Query</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/query.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/query.html">Query</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/query.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/query.html#get_open_gopro_version"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Open</span> <span class="pre">GoPro</span> <span class="pre">Version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/query.html#get_date_time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/query.html#get_hardware_info"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Hardware</span> <span class="pre">Info</span></code></a></li>
@@ -182,8 +341,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/access_points.html">Access Point</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/access_points.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/access_points.html">Access Point</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/access_points.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/access_points.html#scan_for_access_points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/access_points.html#get_ap_scan_results"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">AP</span> <span class="pre">Scan</span> <span class="pre">Results</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/access_points.html#connect_to_provisioned_access_point"><code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">Provisioned</span> <span class="pre">Access</span> <span class="pre">Point</span></code></a></li>
@@ -193,22 +354,27 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/live_streaming.html">Live Streaming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/live_streaming.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/live_streaming.html">Live Streaming</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/live_streaming.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/live_streaming.html#set_livestream_mode"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/live_streaming.html#get_livestream_status"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Livestream</span> <span class="pre">Status</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/cohn.html">Camera on the Home Network</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/cohn.html#certificates">Certificates</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/cohn.html">Camera on the Home Network</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/cohn.html#certificates">Certificates</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/cohn.html#verifying-certificate">Verifying Certificate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/cohn.html#view-certificate-details">View Certificate Details</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../features/cohn.html#provisioning-procedure">Provisioning Procedure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../features/cohn.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/cohn.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/cohn.html#clear_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Clear</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/cohn.html#create_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/cohn.html#get_cohn_certificate"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
@@ -218,16 +384,20 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/hilights.html">Hilights</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/hilights.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/hilights.html">Hilights</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/hilights.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/hilights.html#hilight_moment"><code class="docutils literal notranslate"><span class="pre">Hilight</span> <span class="pre">Moment</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/presets.html">Presets</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/presets.html">Presets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../features/presets.html#preset-groups">Preset Groups</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../features/presets.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/presets.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#get_available_presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#load_preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#load_preset_group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
@@ -236,13 +406,16 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/settings.html">Settings</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/settings.html#camera-capabilities">Camera Capabilities</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/settings.html">Settings</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/settings.html#camera-capabilities">Camera Capabilities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#xlsx">XLSX</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#json">JSON</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../features/settings.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/settings.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#set_setting"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a></li>
 </ul>
 </li>
@@ -256,7 +429,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Open GoPro BLE API</a>
       </nav>
@@ -269,690 +442,880 @@
           <li class="breadcrumb-item"><a href="../protocol.html">Protocol</a></li>
       <li class="breadcrumb-item active">ID Tables</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/protocol/id_tables.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
-  <hr/>
+  <hr>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
   <section id="id-tables">
-<h1>ID Tables<a class="headerlink" href="#id-tables" title="Link to this heading"></a></h1>
+<h1>ID Tables<a class="headerlink" href="#id-tables" title="Link to this heading"></a>
+</h1>
 <section id="command-ids">
-<h2>Command IDs<a class="headerlink" href="#command-ids" title="Link to this heading"></a></h2>
+<h2>Command IDs<a class="headerlink" href="#command-ids" title="Link to this heading"></a>
+</h2>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Command</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Command</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0x01</p></td>
-<td><p><a class="reference external" href="../features/control.html#tlv-message-5"><em>Set Shutter</em></a></p></td>
+<tr class="row-even">
+<td>0x01</td>
+<td><a class="reference external" href="../features/control.html#tlv-message-5"><em>Set Shutter</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0x05</p></td>
-<td><p><a class="reference external" href="../features/control.html#tlv-message-6"><em>Sleep</em></a></p></td>
+<tr class="row-odd">
+<td>0x05</td>
+<td><a class="reference external" href="../features/control.html#tlv-message-6"><em>Sleep</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0x0D</p></td>
-<td><p><a class="reference external" href="../features/control.html#tlv-message-3"><em>Set Date Time</em></a></p></td>
+<tr class="row-even">
+<td>0x0D</td>
+<td><a class="reference external" href="../features/control.html#tlv-message-3"><em>Set Date Time</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0x0E</p></td>
-<td><p><a class="reference external" href="../features/query.html#tlv-message-1"><em>Get Date Time</em></a></p></td>
+<tr class="row-odd">
+<td>0x0E</td>
+<td><a class="reference external" href="../features/query.html#tlv-message-1"><em>Get Date Time</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0x0F</p></td>
-<td><p><a class="reference external" href="../features/control.html#tlv-message-4"><em>Set Local Date Time</em></a></p></td>
+<tr class="row-even">
+<td>0x0F</td>
+<td><a class="reference external" href="../features/control.html#tlv-message-4"><em>Set Local Date Time</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0x10</p></td>
-<td><p><a class="reference external" href="../features/query.html#tlv-message-3"><em>Get Local Date Time</em></a></p></td>
+<tr class="row-odd">
+<td>0x10</td>
+<td><a class="reference external" href="../features/query.html#tlv-message-3"><em>Get Local Date Time</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0x17</p></td>
-<td><p><a class="reference external" href="../features/control.html#tlv-message-2"><em>Set AP Control</em></a></p></td>
+<tr class="row-even">
+<td>0x17</td>
+<td><a class="reference external" href="../features/control.html#tlv-message-2"><em>Set AP Control</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0x18</p></td>
-<td><p><a class="reference external" href="../features/hilights.html#tlv-message-0"><em>Hilight Moment</em></a></p></td>
+<tr class="row-odd">
+<td>0x18</td>
+<td><a class="reference external" href="../features/hilights.html#tlv-message-0"><em>Hilight Moment</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0x3C</p></td>
-<td><p><a class="reference external" href="../features/query.html#tlv-message-2"><em>Get Hardware Info</em></a></p></td>
+<tr class="row-even">
+<td>0x3C</td>
+<td><a class="reference external" href="../features/query.html#tlv-message-2"><em>Get Hardware Info</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0x3E</p></td>
-<td><p><a class="reference external" href="../features/presets.html#tlv-message-1"><em>Load Preset Group</em></a></p></td>
+<tr class="row-odd">
+<td>0x3E</td>
+<td><a class="reference external" href="../features/presets.html#tlv-message-1"><em>Load Preset Group</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0x40</p></td>
-<td><p><a class="reference external" href="../features/presets.html#tlv-message-0"><em>Load Preset</em></a></p></td>
+<tr class="row-even">
+<td>0x40</td>
+<td><a class="reference external" href="../features/presets.html#tlv-message-0"><em>Load Preset</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0x50</p></td>
-<td><p><a class="reference external" href="../features/control.html#tlv-message-1"><em>Set Analytics</em></a></p></td>
+<tr class="row-odd">
+<td>0x50</td>
+<td><a class="reference external" href="../features/control.html#tlv-message-1"><em>Set Analytics</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0x51</p></td>
-<td><p><a class="reference external" href="../features/query.html#tlv-message-0"><em>Get Open GoPro Version</em></a></p></td>
+<tr class="row-even">
+<td>0x51</td>
+<td><a class="reference external" href="../features/query.html#tlv-message-0"><em>Get Open GoPro Version</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0x5B</p></td>
-<td><p><a class="reference external" href="../features/control.html#tlv-message-0"><em>Keep Alive</em></a></p></td>
+<tr class="row-odd">
+<td>0x5B</td>
+<td><a class="reference external" href="../features/control.html#tlv-message-0"><em>Keep Alive</em></a></td>
 </tr>
-<tr class="row-even"><td><p>SettingID</p></td>
-<td><p><a class="reference external" href="../features/settings.html#tlv-message-0"><em>Set Setting</em></a></p></td>
+<tr class="row-even">
+<td>SettingID</td>
+<td><a class="reference external" href="../features/settings.html#tlv-message-0"><em>Set Setting</em></a></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="query-ids">
-<h2>Query IDs<a class="headerlink" href="#query-ids" title="Link to this heading"></a></h2>
+<h2>Query IDs<a class="headerlink" href="#query-ids" title="Link to this heading"></a>
+</h2>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Query ID</p></th>
-<th class="head"><p>Query</p></th>
+<tr class="row-odd">
+<th class="head">Query ID</th>
+<th class="head">Query</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0x12</p></td>
-<td><p><a class="reference external" href="../features/query.html#get_setting_values">Get Setting Values</a></p></td>
+<tr class="row-even">
+<td>0x12</td>
+<td><a class="reference external" href="../features/query.html#get_setting_values">Get Setting Values</a></td>
 </tr>
-<tr class="row-odd"><td><p>0x13</p></td>
-<td><p><a class="reference external" href="../features/query.html#get_status_values">Get Status Values</a></p></td>
+<tr class="row-odd">
+<td>0x13</td>
+<td><a class="reference external" href="../features/query.html#get_status_values">Get Status Values</a></td>
 </tr>
-<tr class="row-even"><td><p>0x32</p></td>
-<td><p><a class="reference external" href="../features/query.html#get_setting_capabilities">Get Setting Capabilities</a></p></td>
+<tr class="row-even">
+<td>0x32</td>
+<td><a class="reference external" href="../features/query.html#get_setting_capabilities">Get Setting Capabilities</a></td>
 </tr>
-<tr class="row-odd"><td><p>0x52</p></td>
-<td><p><a class="reference external" href="../features/query.html#register_for_setting_value_updates">Register for Setting Value Updates</a></p></td>
+<tr class="row-odd">
+<td>0x52</td>
+<td><a class="reference external" href="../features/query.html#register_for_setting_value_updates">Register for Setting Value Updates</a></td>
 </tr>
-<tr class="row-even"><td><p>0x53</p></td>
-<td><p><a class="reference external" href="../features/query.html#register_for_status_value_updates">Register for Status Value Updates</a></p></td>
+<tr class="row-even">
+<td>0x53</td>
+<td><a class="reference external" href="../features/query.html#register_for_status_value_updates">Register for Status Value Updates</a></td>
 </tr>
-<tr class="row-odd"><td><p>0x62</p></td>
-<td><p><a class="reference external" href="../features/query.html#register_for_setting_capability_updates">Register for Setting Capability Updates</a></p></td>
+<tr class="row-odd">
+<td>0x62</td>
+<td><a class="reference external" href="../features/query.html#register_for_setting_capability_updates">Register for Setting Capability Updates</a></td>
 </tr>
-<tr class="row-even"><td><p>0x72</p></td>
-<td><p><a class="reference external" href="../features/query.html#unregister_for_setting_value_updates">Unregister for Setting Value Updates</a></p></td>
+<tr class="row-even">
+<td>0x72</td>
+<td><a class="reference external" href="../features/query.html#unregister_for_setting_value_updates">Unregister for Setting Value Updates</a></td>
 </tr>
-<tr class="row-odd"><td><p>0x73</p></td>
-<td><p><a class="reference external" href="../features/query.html#unregister_for_status_value_updates">Unregister for Status Value Updates</a></p></td>
+<tr class="row-odd">
+<td>0x73</td>
+<td><a class="reference external" href="../features/query.html#unregister_for_status_value_updates">Unregister for Status Value Updates</a></td>
 </tr>
-<tr class="row-even"><td><p>0x82</p></td>
-<td><p><a class="reference external" href="../features/query.html#unregister_for_setting_capability_updates">Unregister for Setting Capability Updates</a></p></td>
+<tr class="row-even">
+<td>0x82</td>
+<td><a class="reference external" href="../features/query.html#unregister_for_setting_capability_updates">Unregister for Setting Capability Updates</a></td>
 </tr>
-<tr class="row-odd"><td><p>0x92</p></td>
-<td><p><a class="reference external" href="../features/query.html#register_for_setting_value_updates">Asynchronous setting value Notification</a></p></td>
+<tr class="row-odd">
+<td>0x92</td>
+<td><a class="reference external" href="../features/query.html#register_for_setting_value_updates">Asynchronous setting value Notification</a></td>
 </tr>
-<tr class="row-even"><td><p>0x93</p></td>
-<td><p><a class="reference external" href="../features/query.html#register_for_status_value_updates">Asynchronous status value Notification</a></p></td>
+<tr class="row-even">
+<td>0x93</td>
+<td><a class="reference external" href="../features/query.html#register_for_status_value_updates">Asynchronous status value Notification</a></td>
 </tr>
-<tr class="row-odd"><td><p>0xA2</p></td>
-<td><p><a class="reference external" href="../features/query.html#register_for_setting_capability_updates">Asynchronous setting capability Notification</a></p></td>
+<tr class="row-odd">
+<td>0xA2</td>
+<td><a class="reference external" href="../features/query.html#register_for_setting_capability_updates">Asynchronous setting capability Notification</a></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="protobuf-ids">
-<h2>Protobuf IDs<a class="headerlink" href="#protobuf-ids" title="Link to this heading"></a></h2>
+<h2>Protobuf IDs<a class="headerlink" href="#protobuf-ids" title="Link to this heading"></a>
+</h2>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Feature ID</p></th>
-<th class="head"><p>Action ID</p></th>
-<th class="head"><p>Operation Element</p></th>
-<th class="head"><p>Protobuf Message</p></th>
+<tr class="row-odd">
+<th class="head">Feature ID</th>
+<th class="head">Action ID</th>
+<th class="head">Operation Element</th>
+<th class="head">Protobuf Message</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0x02</p></td>
-<td><p>0x02</p></td>
-<td><p><a class="reference external" href="../features/access_points.html#protobuf-message-0"><em>&quot;Scan for Access Points&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requeststartscan"><em>RequestStartScan</em></a></p></td>
+<tr class="row-even">
+<td>0x02</td>
+<td>0x02</td>
+<td><a class="reference external" href="../features/access_points.html#protobuf-message-0"><em>"Scan for Access Points" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requeststartscan"><em>RequestStartScan</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0x02</p></td>
-<td><p>0x04</p></td>
-<td><p><a class="reference external" href="../features/access_points.html#protobuf-message-3"><em>&quot;Get AP Scan Results&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestgetapentries"><em>RequestGetApEntries</em></a></p></td>
+<tr class="row-odd">
+<td>0x02</td>
+<td>0x04</td>
+<td><a class="reference external" href="../features/access_points.html#protobuf-message-3"><em>"Get AP Scan Results" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestgetapentries"><em>RequestGetApEntries</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0x02</p></td>
-<td><p>0x04</p></td>
-<td><p><a class="reference external" href="../features/access_points.html#protobuf-message-5"><em>&quot;Connect to Provisioned Access Point&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestconnect"><em>RequestConnect</em></a></p></td>
+<tr class="row-even">
+<td>0x02</td>
+<td>0x04</td>
+<td><a class="reference external" href="../features/access_points.html#protobuf-message-5"><em>"Connect to Provisioned Access Point" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestconnect"><em>RequestConnect</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0x02</p></td>
-<td><p>0x05</p></td>
-<td><p><a class="reference external" href="../features/access_points.html#protobuf-message-8"><em>&quot;Connect to a New Access Point&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestconnectnew"><em>RequestConnectNew</em></a></p></td>
+<tr class="row-odd">
+<td>0x02</td>
+<td>0x05</td>
+<td><a class="reference external" href="../features/access_points.html#protobuf-message-8"><em>"Connect to a New Access Point" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestconnectnew"><em>RequestConnectNew</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0x02</p></td>
-<td><p>0x0B</p></td>
-<td><p><a class="reference external" href="../features/access_points.html#protobuf-message-2"><em>&quot;Scan for Access Points&quot; Notification</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-notifstartscanning"><em>NotifStartScanning</em></a></p></td>
+<tr class="row-even">
+<td>0x02</td>
+<td>0x0B</td>
+<td><a class="reference external" href="../features/access_points.html#protobuf-message-2"><em>"Scan for Access Points" Notification</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-notifstartscanning"><em>NotifStartScanning</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0x02</p></td>
-<td><p>0x0C</p></td>
-<td><p><a class="reference external" href="../features/access_points.html#protobuf-message-7"><em>&quot;Connect to Provisioned Access Point&quot; Notification</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-notifprovisioningstate"><em>NotifProvisioningState</em></a></p></td>
+<tr class="row-odd">
+<td>0x02</td>
+<td>0x0C</td>
+<td><a class="reference external" href="../features/access_points.html#protobuf-message-7"><em>"Connect to Provisioned Access Point" Notification</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-notifprovisioningstate"><em>NotifProvisioningState</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0x02</p></td>
-<td><p>0x0C</p></td>
-<td><p><a class="reference external" href="../features/access_points.html#protobuf-message-10"><em>&quot;Connect to a New Access Point&quot; Notification</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-notifprovisioningstate"><em>NotifProvisioningState</em></a></p></td>
+<tr class="row-even">
+<td>0x02</td>
+<td>0x0C</td>
+<td><a class="reference external" href="../features/access_points.html#protobuf-message-10"><em>"Connect to a New Access Point" Notification</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-notifprovisioningstate"><em>NotifProvisioningState</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0x02</p></td>
-<td><p>0x82</p></td>
-<td><p><a class="reference external" href="../features/access_points.html#protobuf-message-1"><em>&quot;Scan for Access Points&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-responsestartscanning"><em>ResponseStartScanning</em></a></p></td>
+<tr class="row-odd">
+<td>0x02</td>
+<td>0x82</td>
+<td><a class="reference external" href="../features/access_points.html#protobuf-message-1"><em>"Scan for Access Points" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-responsestartscanning"><em>ResponseStartScanning</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0x02</p></td>
-<td><p>0x84</p></td>
-<td><p><a class="reference external" href="../features/access_points.html#protobuf-message-4"><em>&quot;Get AP Scan Results&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-responsegetapentries"><em>ResponseGetApEntries</em></a></p></td>
+<tr class="row-even">
+<td>0x02</td>
+<td>0x84</td>
+<td><a class="reference external" href="../features/access_points.html#protobuf-message-4"><em>"Get AP Scan Results" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-responsegetapentries"><em>ResponseGetApEntries</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0x02</p></td>
-<td><p>0x84</p></td>
-<td><p><a class="reference external" href="../features/access_points.html#protobuf-message-6"><em>&quot;Connect to Provisioned Access Point&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-responseconnect"><em>ResponseConnect</em></a></p></td>
+<tr class="row-odd">
+<td>0x02</td>
+<td>0x84</td>
+<td><a class="reference external" href="../features/access_points.html#protobuf-message-6"><em>"Connect to Provisioned Access Point" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-responseconnect"><em>ResponseConnect</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0x02</p></td>
-<td><p>0x85</p></td>
-<td><p><a class="reference external" href="../features/access_points.html#protobuf-message-9"><em>&quot;Connect to a New Access Point&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-responseconnectnew"><em>ResponseConnectNew</em></a></p></td>
+<tr class="row-even">
+<td>0x02</td>
+<td>0x85</td>
+<td><a class="reference external" href="../features/access_points.html#protobuf-message-9"><em>"Connect to a New Access Point" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-responseconnectnew"><em>ResponseConnectNew</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF1</p></td>
-<td><p>0x64</p></td>
-<td><p><a class="reference external" href="../features/presets.html#protobuf-message-3"><em>&quot;Update Custom Preset&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestcustompresetupdate"><em>RequestCustomPresetUpdate</em></a></p></td>
+<tr class="row-odd">
+<td>0xF1</td>
+<td>0x64</td>
+<td><a class="reference external" href="../features/presets.html#protobuf-message-3"><em>"Update Custom Preset" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestcustompresetupdate"><em>RequestCustomPresetUpdate</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0xF1</p></td>
-<td><p>0x65</p></td>
-<td><p><a class="reference external" href="../features/cohn.html#protobuf-message-9"><em>&quot;Set COHN Setting&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestsetcohnsetting"><em>RequestSetCOHNSetting</em></a></p></td>
+<tr class="row-even">
+<td>0xF1</td>
+<td>0x65</td>
+<td><a class="reference external" href="../features/cohn.html#protobuf-message-9"><em>"Set COHN Setting" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestsetcohnsetting"><em>RequestSetCOHNSetting</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF1</p></td>
-<td><p>0x66</p></td>
-<td><p><a class="reference external" href="../features/cohn.html#protobuf-message-0"><em>&quot;Clear COHN Certificate&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestclearcohncert"><em>RequestClearCOHNCert</em></a></p></td>
+<tr class="row-odd">
+<td>0xF1</td>
+<td>0x66</td>
+<td><a class="reference external" href="../features/cohn.html#protobuf-message-0"><em>"Clear COHN Certificate" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestclearcohncert"><em>RequestClearCOHNCert</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0xF1</p></td>
-<td><p>0x67</p></td>
-<td><p><a class="reference external" href="../features/cohn.html#protobuf-message-2"><em>&quot;Create COHN Certificate&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestcreatecohncert"><em>RequestCreateCOHNCert</em></a></p></td>
+<tr class="row-even">
+<td>0xF1</td>
+<td>0x67</td>
+<td><a class="reference external" href="../features/cohn.html#protobuf-message-2"><em>"Create COHN Certificate" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestcreatecohncert"><em>RequestCreateCOHNCert</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF1</p></td>
-<td><p>0x69</p></td>
-<td><p><a class="reference external" href="../features/control.html#protobuf-message-0"><em>&quot;Set Camera Control&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestsetcameracontrolstatus"><em>RequestSetCameraControlStatus</em></a></p></td>
+<tr class="row-odd">
+<td>0xF1</td>
+<td>0x69</td>
+<td><a class="reference external" href="../features/control.html#protobuf-message-0"><em>"Set Camera Control" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestsetcameracontrolstatus"><em>RequestSetCameraControlStatus</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0xF1</p></td>
-<td><p>0x6B</p></td>
-<td><p><a class="reference external" href="../features/control.html#protobuf-message-2"><em>&quot;Set Turbo Transfer&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestsetturboactive"><em>RequestSetTurboActive</em></a></p></td>
+<tr class="row-even">
+<td>0xF1</td>
+<td>0x6B</td>
+<td><a class="reference external" href="../features/control.html#protobuf-message-2"><em>"Set Turbo Transfer" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestsetturboactive"><em>RequestSetTurboActive</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF1</p></td>
-<td><p>0x79</p></td>
-<td><p><a class="reference external" href="../features/live_streaming.html#protobuf-message-0"><em>&quot;Set Livestream Mode&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestsetlivestreammode"><em>RequestSetLiveStreamMode</em></a></p></td>
+<tr class="row-odd">
+<td>0xF1</td>
+<td>0x79</td>
+<td><a class="reference external" href="../features/live_streaming.html#protobuf-message-0"><em>"Set Livestream Mode" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestsetlivestreammode"><em>RequestSetLiveStreamMode</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0xF1</p></td>
-<td><p>0xE4</p></td>
-<td><p><a class="reference external" href="../features/presets.html#protobuf-message-4"><em>&quot;Update Custom Preset&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></p></td>
+<tr class="row-even">
+<td>0xF1</td>
+<td>0xE4</td>
+<td><a class="reference external" href="../features/presets.html#protobuf-message-4"><em>"Update Custom Preset" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF1</p></td>
-<td><p>0xE5</p></td>
-<td><p><a class="reference external" href="../features/cohn.html#protobuf-message-10"><em>&quot;Set COHN Setting&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></p></td>
+<tr class="row-odd">
+<td>0xF1</td>
+<td>0xE5</td>
+<td><a class="reference external" href="../features/cohn.html#protobuf-message-10"><em>"Set COHN Setting" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0xF1</p></td>
-<td><p>0xE6</p></td>
-<td><p><a class="reference external" href="../features/cohn.html#protobuf-message-1"><em>&quot;Clear COHN Certificate&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></p></td>
+<tr class="row-even">
+<td>0xF1</td>
+<td>0xE6</td>
+<td><a class="reference external" href="../features/cohn.html#protobuf-message-1"><em>"Clear COHN Certificate" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF1</p></td>
-<td><p>0xE7</p></td>
-<td><p><a class="reference external" href="../features/cohn.html#protobuf-message-3"><em>&quot;Create COHN Certificate&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></p></td>
+<tr class="row-odd">
+<td>0xF1</td>
+<td>0xE7</td>
+<td><a class="reference external" href="../features/cohn.html#protobuf-message-3"><em>"Create COHN Certificate" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0xF1</p></td>
-<td><p>0xE9</p></td>
-<td><p><a class="reference external" href="../features/control.html#protobuf-message-1"><em>&quot;Set Camera Control&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></p></td>
+<tr class="row-even">
+<td>0xF1</td>
+<td>0xE9</td>
+<td><a class="reference external" href="../features/control.html#protobuf-message-1"><em>"Set Camera Control" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF1</p></td>
-<td><p>0xEB</p></td>
-<td><p><a class="reference external" href="../features/control.html#protobuf-message-3"><em>&quot;Set Turbo Transfer&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></p></td>
+<tr class="row-odd">
+<td>0xF1</td>
+<td>0xEB</td>
+<td><a class="reference external" href="../features/control.html#protobuf-message-3"><em>"Set Turbo Transfer" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0xF1</p></td>
-<td><p>0xF9</p></td>
-<td><p><a class="reference external" href="../features/live_streaming.html#protobuf-message-1"><em>&quot;Set Livestream Mode&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></p></td>
+<tr class="row-even">
+<td>0xF1</td>
+<td>0xF9</td>
+<td><a class="reference external" href="../features/live_streaming.html#protobuf-message-1"><em>"Set Livestream Mode" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-responsegeneric"><em>ResponseGeneric</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF5</p></td>
-<td><p>0x6D</p></td>
-<td><p><a class="reference external" href="../features/query.html#protobuf-message-0"><em>&quot;Get Last Captured Media&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestgetlastcapturedmedia"><em>RequestGetLastCapturedMedia</em></a></p></td>
+<tr class="row-odd">
+<td>0xF5</td>
+<td>0x6D</td>
+<td><a class="reference external" href="../features/query.html#protobuf-message-0"><em>"Get Last Captured Media" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestgetlastcapturedmedia"><em>RequestGetLastCapturedMedia</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0xF5</p></td>
-<td><p>0x6E</p></td>
-<td><p><a class="reference external" href="../features/cohn.html#protobuf-message-4"><em>&quot;Get COHN Certificate&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestcohncert"><em>RequestCOHNCert</em></a></p></td>
+<tr class="row-even">
+<td>0xF5</td>
+<td>0x6E</td>
+<td><a class="reference external" href="../features/cohn.html#protobuf-message-4"><em>"Get COHN Certificate" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestcohncert"><em>RequestCOHNCert</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF5</p></td>
-<td><p>0x6F</p></td>
-<td><p><a class="reference external" href="../features/cohn.html#protobuf-message-6"><em>&quot;Get COHN Status&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestgetcohnstatus"><em>RequestGetCOHNStatus</em></a></p></td>
+<tr class="row-odd">
+<td>0xF5</td>
+<td>0x6F</td>
+<td><a class="reference external" href="../features/cohn.html#protobuf-message-6"><em>"Get COHN Status" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestgetcohnstatus"><em>RequestGetCOHNStatus</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0xF5</p></td>
-<td><p>0x72</p></td>
-<td><p><a class="reference external" href="../features/presets.html#protobuf-message-0"><em>&quot;Get Available Presets&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestgetpresetstatus"><em>RequestGetPresetStatus</em></a></p></td>
+<tr class="row-even">
+<td>0xF5</td>
+<td>0x72</td>
+<td><a class="reference external" href="../features/presets.html#protobuf-message-0"><em>"Get Available Presets" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestgetpresetstatus"><em>RequestGetPresetStatus</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF5</p></td>
-<td><p>0x74</p></td>
-<td><p><a class="reference external" href="../features/live_streaming.html#protobuf-message-2"><em>&quot;Get Livestream Status&quot; Request</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-requestgetlivestreamstatus"><em>RequestGetLiveStreamStatus</em></a></p></td>
+<tr class="row-odd">
+<td>0xF5</td>
+<td>0x74</td>
+<td><a class="reference external" href="../features/live_streaming.html#protobuf-message-2"><em>"Get Livestream Status" Request</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-requestgetlivestreamstatus"><em>RequestGetLiveStreamStatus</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0xF5</p></td>
-<td><p>0xED</p></td>
-<td><p><a class="reference external" href="../features/query.html#protobuf-message-1"><em>&quot;Get Last Captured Media&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-responselastcapturedmedia"><em>ResponseLastCapturedMedia</em></a></p></td>
+<tr class="row-even">
+<td>0xF5</td>
+<td>0xED</td>
+<td><a class="reference external" href="../features/query.html#protobuf-message-1"><em>"Get Last Captured Media" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-responselastcapturedmedia"><em>ResponseLastCapturedMedia</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF5</p></td>
-<td><p>0xEE</p></td>
-<td><p><a class="reference external" href="../features/cohn.html#protobuf-message-5"><em>&quot;Get COHN Certificate&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-responsecohncert"><em>ResponseCOHNCert</em></a></p></td>
+<tr class="row-odd">
+<td>0xF5</td>
+<td>0xEE</td>
+<td><a class="reference external" href="../features/cohn.html#protobuf-message-5"><em>"Get COHN Certificate" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-responsecohncert"><em>ResponseCOHNCert</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0xF5</p></td>
-<td><p>0xEF</p></td>
-<td><p><a class="reference external" href="../features/cohn.html#protobuf-message-7"><em>&quot;Get COHN Status&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-notifycohnstatus"><em>NotifyCOHNStatus</em></a></p></td>
+<tr class="row-even">
+<td>0xF5</td>
+<td>0xEF</td>
+<td><a class="reference external" href="../features/cohn.html#protobuf-message-7"><em>"Get COHN Status" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-notifycohnstatus"><em>NotifyCOHNStatus</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF5</p></td>
-<td><p>0xEF</p></td>
-<td><p><a class="reference external" href="../features/cohn.html#protobuf-message-8"><em>&quot;Get COHN Status&quot; Notification</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-notifycohnstatus"><em>NotifyCOHNStatus</em></a></p></td>
+<tr class="row-odd">
+<td>0xF5</td>
+<td>0xEF</td>
+<td><a class="reference external" href="../features/cohn.html#protobuf-message-8"><em>"Get COHN Status" Notification</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-notifycohnstatus"><em>NotifyCOHNStatus</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0xF5</p></td>
-<td><p>0xF2</p></td>
-<td><p><a class="reference external" href="../features/presets.html#protobuf-message-1"><em>&quot;Get Available Presets&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-notifypresetstatus"><em>NotifyPresetStatus</em></a></p></td>
+<tr class="row-even">
+<td>0xF5</td>
+<td>0xF2</td>
+<td><a class="reference external" href="../features/presets.html#protobuf-message-1"><em>"Get Available Presets" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-notifypresetstatus"><em>NotifyPresetStatus</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF5</p></td>
-<td><p>0xF3</p></td>
-<td><p><a class="reference external" href="../features/presets.html#protobuf-message-2"><em>&quot;Get Available Presets&quot; Notification</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-notifypresetstatus"><em>NotifyPresetStatus</em></a></p></td>
+<tr class="row-odd">
+<td>0xF5</td>
+<td>0xF3</td>
+<td><a class="reference external" href="../features/presets.html#protobuf-message-2"><em>"Get Available Presets" Notification</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-notifypresetstatus"><em>NotifyPresetStatus</em></a></td>
 </tr>
-<tr class="row-even"><td><p>0xF5</p></td>
-<td><p>0xF4</p></td>
-<td><p><a class="reference external" href="../features/live_streaming.html#protobuf-message-3"><em>&quot;Get Livestream Status&quot; Response</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-notifylivestreamstatus"><em>NotifyLiveStreamStatus</em></a></p></td>
+<tr class="row-even">
+<td>0xF5</td>
+<td>0xF4</td>
+<td><a class="reference external" href="../features/live_streaming.html#protobuf-message-3"><em>"Get Livestream Status" Response</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-notifylivestreamstatus"><em>NotifyLiveStreamStatus</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>0xF5</p></td>
-<td><p>0xF5</p></td>
-<td><p><a class="reference external" href="../features/live_streaming.html#protobuf-message-4"><em>&quot;Get Livestream Status&quot; Notification</em></a></p></td>
-<td><p><a class="reference external" href="../protocol/protobuf.html#proto-notifylivestreamstatus"><em>NotifyLiveStreamStatus</em></a></p></td>
+<tr class="row-odd">
+<td>0xF5</td>
+<td>0xF5</td>
+<td><a class="reference external" href="../features/live_streaming.html#protobuf-message-4"><em>"Get Livestream Status" Notification</em></a></td>
+<td><a class="reference external" href="../protocol/protobuf.html#proto-notifylivestreamstatus"><em>NotifyLiveStreamStatus</em></a></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="setting-ids">
-<h2>Setting IDs<a class="headerlink" href="#setting-ids" title="Link to this heading"></a></h2>
+<h2>Setting IDs<a class="headerlink" href="#setting-ids" title="Link to this heading"></a>
+</h2>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Setting</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Setting</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>2</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_2"><em>Video Resolution</em></a></p></td>
+<tr class="row-even">
+<td>2</td>
+<td><a class="reference external" href="../features/settings.html#setting_2"><em>Video Resolution</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_3"><em>Video Fps</em></a></p></td>
+<tr class="row-odd">
+<td>3</td>
+<td><a class="reference external" href="../features/settings.html#setting_3"><em>Video Fps</em></a></td>
 </tr>
-<tr class="row-even"><td><p>43</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_43"><em>Broadcast Fov</em></a></p></td>
+<tr class="row-even">
+<td>43</td>
+<td><a class="reference external" href="../features/settings.html#setting_43"><em>Broadcast Fov</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>59</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_59"><em>Setup Auto Power Down</em></a></p></td>
+<tr class="row-odd">
+<td>59</td>
+<td><a class="reference external" href="../features/settings.html#setting_59"><em>Setup Auto Power Down</em></a></td>
 </tr>
-<tr class="row-even"><td><p>108</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_108"><em>Video Aspect Ratio</em></a></p></td>
+<tr class="row-even">
+<td>108</td>
+<td><a class="reference external" href="../features/settings.html#setting_108"><em>Video Aspect Ratio</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>121</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_121"><em>Video Digital Lenses</em></a></p></td>
+<tr class="row-odd">
+<td>121</td>
+<td><a class="reference external" href="../features/settings.html#setting_121"><em>Video Digital Lenses</em></a></td>
 </tr>
-<tr class="row-even"><td><p>122</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_122"><em>Photo Digital Lenses</em></a></p></td>
+<tr class="row-even">
+<td>122</td>
+<td><a class="reference external" href="../features/settings.html#setting_122"><em>Photo Digital Lenses</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>123</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_123"><em>Multi Shot Digital Lenses</em></a></p></td>
+<tr class="row-odd">
+<td>123</td>
+<td><a class="reference external" href="../features/settings.html#setting_123"><em>Multi Shot Digital Lenses</em></a></td>
 </tr>
-<tr class="row-even"><td><p>128</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_128"><em>General Format</em></a></p></td>
+<tr class="row-even">
+<td>128</td>
+<td><a class="reference external" href="../features/settings.html#setting_128"><em>General Format</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>134</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_134"><em>Setup Anti Flicker</em></a></p></td>
+<tr class="row-odd">
+<td>134</td>
+<td><a class="reference external" href="../features/settings.html#setting_134"><em>Setup Anti Flicker</em></a></td>
 </tr>
-<tr class="row-even"><td><p>135</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_135"><em>Video Hypersmooth</em></a></p></td>
+<tr class="row-even">
+<td>135</td>
+<td><a class="reference external" href="../features/settings.html#setting_135"><em>Video Hypersmooth</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>150</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_150"><em>Video Horizon Levelling</em></a></p></td>
+<tr class="row-odd">
+<td>150</td>
+<td><a class="reference external" href="../features/settings.html#setting_150"><em>Video Horizon Levelling</em></a></td>
 </tr>
-<tr class="row-even"><td><p>151</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_151"><em>Photo Horizon Levelling</em></a></p></td>
+<tr class="row-even">
+<td>151</td>
+<td><a class="reference external" href="../features/settings.html#setting_151"><em>Photo Horizon Levelling</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>162</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_162"><em>Mods Max Lens Enable</em></a></p></td>
+<tr class="row-odd">
+<td>162</td>
+<td><a class="reference external" href="../features/settings.html#setting_162"><em>Mods Max Lens Enable</em></a></td>
 </tr>
-<tr class="row-even"><td><p>167</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_167"><em>Video Hindsight Length</em></a></p></td>
+<tr class="row-even">
+<td>167</td>
+<td><a class="reference external" href="../features/settings.html#setting_167"><em>Video Hindsight Length</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>171</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_171"><em>Photo Single Interval</em></a></p></td>
+<tr class="row-odd">
+<td>171</td>
+<td><a class="reference external" href="../features/settings.html#setting_171"><em>Photo Single Interval</em></a></td>
 </tr>
-<tr class="row-even"><td><p>172</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_172"><em>Photo Interval Duration</em></a></p></td>
+<tr class="row-even">
+<td>172</td>
+<td><a class="reference external" href="../features/settings.html#setting_172"><em>Photo Interval Duration</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>173</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_173"><em>System Power Profile</em></a></p></td>
+<tr class="row-odd">
+<td>173</td>
+<td><a class="reference external" href="../features/settings.html#setting_173"><em>System Power Profile</em></a></td>
 </tr>
-<tr class="row-even"><td><p>175</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_175"><em>Setup Camera Ux Mode</em></a></p></td>
+<tr class="row-even">
+<td>175</td>
+<td><a class="reference external" href="../features/settings.html#setting_175"><em>Setup Camera Ux Mode</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>176</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_176"><em>Video Easy Mode Speed</em></a></p></td>
+<tr class="row-odd">
+<td>176</td>
+<td><a class="reference external" href="../features/settings.html#setting_176"><em>Video Easy Mode Speed</em></a></td>
 </tr>
-<tr class="row-even"><td><p>177</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_177"><em>Photo Easy Mode Night Photo</em></a></p></td>
+<tr class="row-even">
+<td>177</td>
+<td><a class="reference external" href="../features/settings.html#setting_177"><em>Photo Easy Mode Night Photo</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>178</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_178"><em>Wireless Wireless Band</em></a></p></td>
+<tr class="row-odd">
+<td>178</td>
+<td><a class="reference external" href="../features/settings.html#setting_178"><em>Wireless Wireless Band</em></a></td>
 </tr>
-<tr class="row-even"><td><p>179</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_179"><em>Multi Shot Trail Length</em></a></p></td>
+<tr class="row-even">
+<td>179</td>
+<td><a class="reference external" href="../features/settings.html#setting_179"><em>Multi Shot Trail Length</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>180</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_180"><em>System Video Mode</em></a></p></td>
+<tr class="row-odd">
+<td>180</td>
+<td><a class="reference external" href="../features/settings.html#setting_180"><em>System Video Mode</em></a></td>
 </tr>
-<tr class="row-even"><td><p>182</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_182"><em>System Video Bit Rate</em></a></p></td>
+<tr class="row-even">
+<td>182</td>
+<td><a class="reference external" href="../features/settings.html#setting_182"><em>System Video Bit Rate</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>183</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_183"><em>System Video Bit Depth</em></a></p></td>
+<tr class="row-odd">
+<td>183</td>
+<td><a class="reference external" href="../features/settings.html#setting_183"><em>System Video Bit Depth</em></a></td>
 </tr>
-<tr class="row-even"><td><p>184</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_184"><em>Video Profile</em></a></p></td>
+<tr class="row-even">
+<td>184</td>
+<td><a class="reference external" href="../features/settings.html#setting_184"><em>Video Profile</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>186</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_186"><em>Video Easy Presets</em></a></p></td>
+<tr class="row-odd">
+<td>186</td>
+<td><a class="reference external" href="../features/settings.html#setting_186"><em>Video Easy Presets</em></a></td>
 </tr>
-<tr class="row-even"><td><p>187</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_187"><em>Multi Shot Easy Presets</em></a></p></td>
+<tr class="row-even">
+<td>187</td>
+<td><a class="reference external" href="../features/settings.html#setting_187"><em>Multi Shot Easy Presets</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>189</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_189"><em>System Addon Lens Active</em></a></p></td>
+<tr class="row-odd">
+<td>189</td>
+<td><a class="reference external" href="../features/settings.html#setting_189"><em>System Addon Lens Active</em></a></td>
 </tr>
-<tr class="row-even"><td><p>190</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_190"><em>System Addon Lens Status</em></a></p></td>
+<tr class="row-even">
+<td>190</td>
+<td><a class="reference external" href="../features/settings.html#setting_190"><em>System Addon Lens Status</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>191</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_191"><em>Photo Easy Presets</em></a></p></td>
+<tr class="row-odd">
+<td>191</td>
+<td><a class="reference external" href="../features/settings.html#setting_191"><em>Photo Easy Presets</em></a></td>
 </tr>
-<tr class="row-even"><td><p>192</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_192"><em>Multi Shot Nlv Aspect Ratio</em></a></p></td>
+<tr class="row-even">
+<td>192</td>
+<td><a class="reference external" href="../features/settings.html#setting_192"><em>Multi Shot Nlv Aspect Ratio</em></a></td>
 </tr>
-<tr class="row-odd"><td><p>193</p></td>
-<td><p><a class="reference external" href="../features/settings.html#setting_193"><em>Video Easy Framing</em></a></p></td>
+<tr class="row-odd">
+<td>193</td>
+<td><a class="reference external" href="../features/settings.html#setting_193"><em>Video Easy Framing</em></a></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="status-ids">
-<h2>Status IDs<a class="headerlink" href="#status-ids" title="Link to this heading"></a></h2>
+<h2>Status IDs<a class="headerlink" href="#status-ids" title="Link to this heading"></a>
+</h2>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Status</p></th>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Status</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>1</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_1"><em>Is the system's internal battery present?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>2</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_2"><em>Rough approximation of internal battery level in bars (or charging)</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>6</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_6"><em>Is the system currently overheating?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>8</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_8"><em>Is the camera busy?</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>9</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_9"><em>Is Quick Capture feature enabled?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>10</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_10"><em>Is the system encoding right now?</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>11</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_11"><em>Is LCD lock active?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>13</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_13"><em>When encoding video, this is the duration (seconds) of the video so far; 0 otherwise</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>17</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_17"><em>Are Wireless Connections enabled?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>19</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_19"><em>The pairing state of the camera</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>20</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_20"><em>The last type of pairing in which the camera was engaged</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>21</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_21"><em>Time since boot (milliseconds) of last successful pairing complete action</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>22</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_22"><em>State of current scan for WiFi Access Points</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>23</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_23"><em>Time since boot (milliseconds) that the WiFi Access Point scan completed</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>24</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_24"><em>WiFi AP provisioning state</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>26</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_26"><em>Wireless remote control version</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>27</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_27"><em>Is a wireless remote control connected?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>28</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_28"><em>Wireless Pairing State. Each bit contains state information (see WirelessPairingStateFlags)</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>29</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_29"><em>SSID of the AP the camera is currently connected to. On BLE connection, value is big-endian byte-encoded int32</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>30</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_30"><em>The camera's WiFi SSID. On BLE connection, value is big-endian byte-encoded int32</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>31</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_31"><em>The number of wireless devices connected to the camera</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>32</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_32"><em>Is Preview Stream enabled?</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>33</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_33"><em>Primary Storage Status</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>34</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_34"><em>How many photos can be taken with current settings before sdcard is full</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>35</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_35"><em>How many minutes of video can be captured with current settings before sdcard is full</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>38</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_38"><em>Total number of photos on sdcard</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>39</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_39"><em>Total number of videos on sdcard</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>41</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_41"><em>The current status of Over The Air (OTA) update</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>42</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_42"><em>Is there a pending request to cancel a firmware update download?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>45</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_45"><em>Is locate camera feature active?</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>49</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_49"><em>The current timelapse interval countdown value (e.g. 5...4...3...2...1...)</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>54</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_54"><em>Remaining space on the sdcard in Kilobytes</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>55</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_55"><em>Is preview stream supported in current recording/mode/secondary-stream?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>56</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_56"><em>WiFi signal strength in bars</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>58</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_58"><em>The number of hilights in currently-encoding video (value is set to 0 when encoding stops)</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>59</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_59"><em>Time since boot (milliseconds) of most recent hilight in encoding video (set to 0 when encoding stops)</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>60</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_60"><em>The minimum time between camera status updates (milliseconds). Best practice is to not poll for status more often than this</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>64</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_64"><em>How many minutes of Time Lapse Video can be captured with current settings before sdcard is full</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>65</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_65"><em>Liveview Exposure Select Mode</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>66</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_66"><em>Liveview Exposure Select: y-coordinate (percent)</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>67</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_67"><em>Liveview Exposure Select: y-coordinate (percent)</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>68</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_68"><em>Does the camera currently have a GPS lock?</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>69</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_69"><em>Is the camera in AP Mode?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>70</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_70"><em>Internal battery level (percent)</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>74</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_74"><em>Microphone Accessory status</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>75</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_75"><em>Digital Zoom level (percent)</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>76</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_76"><em>Wireless Band</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>77</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_77"><em>Is Digital Zoom feature available?</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>78</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_78"><em>Are current video settings mobile friendly? (related to video compression and frame rate)</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>79</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_79"><em>Is the camera currently in First Time Use (FTU) UI flow?</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>81</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_81"><em>Is 5GHz wireless band available?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>82</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_82"><em>Is the system fully booted and ready to accept commands?</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>83</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_83"><em>Is the internal battery charged sufficiently to start Over The Air (OTA) update?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>85</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_85"><em>Is the camera getting too cold to continue recording?</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>86</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_86"><em>Rotational orientation of the camera</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>88</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_88"><em>Is this camera model capable of zooming while encoding?</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>89</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_89"><em>Current Flatmode ID</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>93</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_93"><em>Current Video Preset (ID)</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>94</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_94"><em>Current Photo Preset (ID)</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>95</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_95"><em>Current Time Lapse Preset (ID)</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>96</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_96"><em>Current Preset Group (ID) (corresponds to ui_mode_groups in settings.json)</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>97</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_97"><em>Current Preset (ID)</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>98</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_98"><em>Preset Modified Status, which contains an event ID and a Preset (Group) ID</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>99</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_99"><em>The number of Live Bursts can be captured with current settings before sdcard is full</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>100</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_100"><em>Total number of Live Bursts on sdcard</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>101</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_101"><em>Is Capture Delay currently active (i.e. counting down)?</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>102</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_102"><em>Media Mod state</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>103</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_103"><em>Time Warp Speed</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>104</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_104"><em>Is the system's Linux core active?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>105</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_105"><em>Camera lens type (reflects changes to setting 162 or setting 189)</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>106</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_106"><em>Is Video Hindsight Capture Active?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>107</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_107"><em>Scheduled Capture Preset ID</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>108</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_108"><em>Is Scheduled Capture set?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>110</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_110"><em>Display Mod Status (bitmasked)</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>111</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_111"><em>Does sdcard meet specified minimum write speed?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>112</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_112"><em>Number of sdcard write speed errors since device booted</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>113</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_113"><em>Is Turbo Transfer active?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>114</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_114"><em>Camera control status ID</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>115</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_115"><em>Is the camera connected to a PC via USB?</em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>116</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_116"><em>Camera control over USB state</em></a></p></td>
-</tr>
-<tr class="row-even"><td><p>117</p></td>
-<td><p><a class="reference external" href="../features/statuses.html#status_117"><em>Total SD card capacity in Kilobytes</em></a></p></td>
+<tr class="row-even">
+<td>1</td>
+<td><a class="reference external" href="../features/statuses.html#status_1"><em>Is the system's internal battery present?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>2</td>
+<td><a class="reference external" href="../features/statuses.html#status_2"><em>Rough approximation of internal battery level in bars (or charging)</em></a></td>
+</tr>
+<tr class="row-even">
+<td>6</td>
+<td><a class="reference external" href="../features/statuses.html#status_6"><em>Is the system currently overheating?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>8</td>
+<td><a class="reference external" href="../features/statuses.html#status_8"><em>Is the camera busy?</em></a></td>
+</tr>
+<tr class="row-even">
+<td>9</td>
+<td><a class="reference external" href="../features/statuses.html#status_9"><em>Is Quick Capture feature enabled?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>10</td>
+<td><a class="reference external" href="../features/statuses.html#status_10"><em>Is the system encoding right now?</em></a></td>
+</tr>
+<tr class="row-even">
+<td>11</td>
+<td><a class="reference external" href="../features/statuses.html#status_11"><em>Is LCD lock active?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>13</td>
+<td><a class="reference external" href="../features/statuses.html#status_13"><em>When encoding video, this is the duration (seconds) of the video so far; 0 otherwise</em></a></td>
+</tr>
+<tr class="row-even">
+<td>17</td>
+<td><a class="reference external" href="../features/statuses.html#status_17"><em>Are Wireless Connections enabled?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>19</td>
+<td><a class="reference external" href="../features/statuses.html#status_19"><em>The pairing state of the camera</em></a></td>
+</tr>
+<tr class="row-even">
+<td>20</td>
+<td><a class="reference external" href="../features/statuses.html#status_20"><em>The last type of pairing in which the camera was engaged</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>21</td>
+<td><a class="reference external" href="../features/statuses.html#status_21"><em>Time since boot (milliseconds) of last successful pairing complete action</em></a></td>
+</tr>
+<tr class="row-even">
+<td>22</td>
+<td><a class="reference external" href="../features/statuses.html#status_22"><em>State of current scan for WiFi Access Points</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>23</td>
+<td><a class="reference external" href="../features/statuses.html#status_23"><em>Time since boot (milliseconds) that the WiFi Access Point scan completed</em></a></td>
+</tr>
+<tr class="row-even">
+<td>24</td>
+<td><a class="reference external" href="../features/statuses.html#status_24"><em>WiFi AP provisioning state</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>26</td>
+<td><a class="reference external" href="../features/statuses.html#status_26"><em>Wireless remote control version</em></a></td>
+</tr>
+<tr class="row-even">
+<td>27</td>
+<td><a class="reference external" href="../features/statuses.html#status_27"><em>Is a wireless remote control connected?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>28</td>
+<td><a class="reference external" href="../features/statuses.html#status_28"><em>Wireless Pairing State. Each bit contains state information (see WirelessPairingStateFlags)</em></a></td>
+</tr>
+<tr class="row-even">
+<td>29</td>
+<td><a class="reference external" href="../features/statuses.html#status_29"><em>SSID of the AP the camera is currently connected to. On BLE connection, value is big-endian byte-encoded int32</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>30</td>
+<td><a class="reference external" href="../features/statuses.html#status_30"><em>The camera's WiFi SSID. On BLE connection, value is big-endian byte-encoded int32</em></a></td>
+</tr>
+<tr class="row-even">
+<td>31</td>
+<td><a class="reference external" href="../features/statuses.html#status_31"><em>The number of wireless devices connected to the camera</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>32</td>
+<td><a class="reference external" href="../features/statuses.html#status_32"><em>Is Preview Stream enabled?</em></a></td>
+</tr>
+<tr class="row-even">
+<td>33</td>
+<td><a class="reference external" href="../features/statuses.html#status_33"><em>Primary Storage Status</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>34</td>
+<td><a class="reference external" href="../features/statuses.html#status_34"><em>How many photos can be taken with current settings before sdcard is full</em></a></td>
+</tr>
+<tr class="row-even">
+<td>35</td>
+<td><a class="reference external" href="../features/statuses.html#status_35"><em>How many minutes of video can be captured with current settings before sdcard is full</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>38</td>
+<td><a class="reference external" href="../features/statuses.html#status_38"><em>Total number of photos on sdcard</em></a></td>
+</tr>
+<tr class="row-even">
+<td>39</td>
+<td><a class="reference external" href="../features/statuses.html#status_39"><em>Total number of videos on sdcard</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>41</td>
+<td><a class="reference external" href="../features/statuses.html#status_41"><em>The current status of Over The Air (OTA) update</em></a></td>
+</tr>
+<tr class="row-even">
+<td>42</td>
+<td><a class="reference external" href="../features/statuses.html#status_42"><em>Is there a pending request to cancel a firmware update download?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>45</td>
+<td><a class="reference external" href="../features/statuses.html#status_45"><em>Is locate camera feature active?</em></a></td>
+</tr>
+<tr class="row-even">
+<td>49</td>
+<td><a class="reference external" href="../features/statuses.html#status_49"><em>The current timelapse interval countdown value (e.g. 5...4...3...2...1...)</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>54</td>
+<td><a class="reference external" href="../features/statuses.html#status_54"><em>Remaining space on the sdcard in Kilobytes</em></a></td>
+</tr>
+<tr class="row-even">
+<td>55</td>
+<td><a class="reference external" href="../features/statuses.html#status_55"><em>Is preview stream supported in current recording/mode/secondary-stream?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>56</td>
+<td><a class="reference external" href="../features/statuses.html#status_56"><em>WiFi signal strength in bars</em></a></td>
+</tr>
+<tr class="row-even">
+<td>58</td>
+<td><a class="reference external" href="../features/statuses.html#status_58"><em>The number of hilights in currently-encoding video (value is set to 0 when encoding stops)</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>59</td>
+<td><a class="reference external" href="../features/statuses.html#status_59"><em>Time since boot (milliseconds) of most recent hilight in encoding video (set to 0 when encoding stops)</em></a></td>
+</tr>
+<tr class="row-even">
+<td>60</td>
+<td><a class="reference external" href="../features/statuses.html#status_60"><em>The minimum time between camera status updates (milliseconds). Best practice is to not poll for status more often than this</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>64</td>
+<td><a class="reference external" href="../features/statuses.html#status_64"><em>How many minutes of Time Lapse Video can be captured with current settings before sdcard is full</em></a></td>
+</tr>
+<tr class="row-even">
+<td>65</td>
+<td><a class="reference external" href="../features/statuses.html#status_65"><em>Liveview Exposure Select Mode</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>66</td>
+<td><a class="reference external" href="../features/statuses.html#status_66"><em>Liveview Exposure Select: y-coordinate (percent)</em></a></td>
+</tr>
+<tr class="row-even">
+<td>67</td>
+<td><a class="reference external" href="../features/statuses.html#status_67"><em>Liveview Exposure Select: y-coordinate (percent)</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>68</td>
+<td><a class="reference external" href="../features/statuses.html#status_68"><em>Does the camera currently have a GPS lock?</em></a></td>
+</tr>
+<tr class="row-even">
+<td>69</td>
+<td><a class="reference external" href="../features/statuses.html#status_69"><em>Is the camera in AP Mode?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>70</td>
+<td><a class="reference external" href="../features/statuses.html#status_70"><em>Internal battery level (percent)</em></a></td>
+</tr>
+<tr class="row-even">
+<td>74</td>
+<td><a class="reference external" href="../features/statuses.html#status_74"><em>Microphone Accessory status</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>75</td>
+<td><a class="reference external" href="../features/statuses.html#status_75"><em>Digital Zoom level (percent)</em></a></td>
+</tr>
+<tr class="row-even">
+<td>76</td>
+<td><a class="reference external" href="../features/statuses.html#status_76"><em>Wireless Band</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>77</td>
+<td><a class="reference external" href="../features/statuses.html#status_77"><em>Is Digital Zoom feature available?</em></a></td>
+</tr>
+<tr class="row-even">
+<td>78</td>
+<td><a class="reference external" href="../features/statuses.html#status_78"><em>Are current video settings mobile friendly? (related to video compression and frame rate)</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>79</td>
+<td><a class="reference external" href="../features/statuses.html#status_79"><em>Is the camera currently in First Time Use (FTU) UI flow?</em></a></td>
+</tr>
+<tr class="row-even">
+<td>81</td>
+<td><a class="reference external" href="../features/statuses.html#status_81"><em>Is 5GHz wireless band available?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>82</td>
+<td><a class="reference external" href="../features/statuses.html#status_82"><em>Is the system fully booted and ready to accept commands?</em></a></td>
+</tr>
+<tr class="row-even">
+<td>83</td>
+<td><a class="reference external" href="../features/statuses.html#status_83"><em>Is the internal battery charged sufficiently to start Over The Air (OTA) update?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>85</td>
+<td><a class="reference external" href="../features/statuses.html#status_85"><em>Is the camera getting too cold to continue recording?</em></a></td>
+</tr>
+<tr class="row-even">
+<td>86</td>
+<td><a class="reference external" href="../features/statuses.html#status_86"><em>Rotational orientation of the camera</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>88</td>
+<td><a class="reference external" href="../features/statuses.html#status_88"><em>Is this camera model capable of zooming while encoding?</em></a></td>
+</tr>
+<tr class="row-even">
+<td>89</td>
+<td><a class="reference external" href="../features/statuses.html#status_89"><em>Current Flatmode ID</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>93</td>
+<td><a class="reference external" href="../features/statuses.html#status_93"><em>Current Video Preset (ID)</em></a></td>
+</tr>
+<tr class="row-even">
+<td>94</td>
+<td><a class="reference external" href="../features/statuses.html#status_94"><em>Current Photo Preset (ID)</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>95</td>
+<td><a class="reference external" href="../features/statuses.html#status_95"><em>Current Time Lapse Preset (ID)</em></a></td>
+</tr>
+<tr class="row-even">
+<td>96</td>
+<td><a class="reference external" href="../features/statuses.html#status_96"><em>Current Preset Group (ID) (corresponds to ui_mode_groups in settings.json)</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>97</td>
+<td><a class="reference external" href="../features/statuses.html#status_97"><em>Current Preset (ID)</em></a></td>
+</tr>
+<tr class="row-even">
+<td>98</td>
+<td><a class="reference external" href="../features/statuses.html#status_98"><em>Preset Modified Status, which contains an event ID and a Preset (Group) ID</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>99</td>
+<td><a class="reference external" href="../features/statuses.html#status_99"><em>The number of Live Bursts can be captured with current settings before sdcard is full</em></a></td>
+</tr>
+<tr class="row-even">
+<td>100</td>
+<td><a class="reference external" href="../features/statuses.html#status_100"><em>Total number of Live Bursts on sdcard</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>101</td>
+<td><a class="reference external" href="../features/statuses.html#status_101"><em>Is Capture Delay currently active (i.e. counting down)?</em></a></td>
+</tr>
+<tr class="row-even">
+<td>102</td>
+<td><a class="reference external" href="../features/statuses.html#status_102"><em>Media Mod state</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>103</td>
+<td><a class="reference external" href="../features/statuses.html#status_103"><em>Time Warp Speed</em></a></td>
+</tr>
+<tr class="row-even">
+<td>104</td>
+<td><a class="reference external" href="../features/statuses.html#status_104"><em>Is the system's Linux core active?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>105</td>
+<td><a class="reference external" href="../features/statuses.html#status_105"><em>Camera lens type (reflects changes to setting 162 or setting 189)</em></a></td>
+</tr>
+<tr class="row-even">
+<td>106</td>
+<td><a class="reference external" href="../features/statuses.html#status_106"><em>Is Video Hindsight Capture Active?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>107</td>
+<td><a class="reference external" href="../features/statuses.html#status_107"><em>Scheduled Capture Preset ID</em></a></td>
+</tr>
+<tr class="row-even">
+<td>108</td>
+<td><a class="reference external" href="../features/statuses.html#status_108"><em>Is Scheduled Capture set?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>110</td>
+<td><a class="reference external" href="../features/statuses.html#status_110"><em>Display Mod Status (bitmasked)</em></a></td>
+</tr>
+<tr class="row-even">
+<td>111</td>
+<td><a class="reference external" href="../features/statuses.html#status_111"><em>Does sdcard meet specified minimum write speed?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>112</td>
+<td><a class="reference external" href="../features/statuses.html#status_112"><em>Number of sdcard write speed errors since device booted</em></a></td>
+</tr>
+<tr class="row-even">
+<td>113</td>
+<td><a class="reference external" href="../features/statuses.html#status_113"><em>Is Turbo Transfer active?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>114</td>
+<td><a class="reference external" href="../features/statuses.html#status_114"><em>Camera control status ID</em></a></td>
+</tr>
+<tr class="row-even">
+<td>115</td>
+<td><a class="reference external" href="../features/statuses.html#status_115"><em>Is the camera connected to a PC via USB?</em></a></td>
+</tr>
+<tr class="row-odd">
+<td>116</td>
+<td><a class="reference external" href="../features/statuses.html#status_116"><em>Camera control over USB state</em></a></td>
+</tr>
+<tr class="row-even">
+<td>117</td>
+<td><a class="reference external" href="../features/statuses.html#status_117"><em>Total SD card capacity in Kilobytes</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -967,10 +1330,10 @@
         <a href="protobuf.html" class="btn btn-neutral float-right" title="Protobuf Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
-  <hr/>
+  <hr>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023.</p>
+    <p>© Copyright 2023.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
@@ -989,5 +1352,7 @@
       });
   </script> 
 
-</body>
+
+
+    </body>
 </html>

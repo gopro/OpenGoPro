@@ -86,7 +86,19 @@
   
 
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+    <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+<script>
+    // Add anchors on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function (event) {
+        var manualAnchors = new AnchorJS();
+        manualAnchors.options = {
+            titleText: 'Permalink',
+            placement: 'left'
+        };
+        manualAnchors.add('.anchored');
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
 <link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
@@ -499,7 +511,7 @@ This is for tips.
 
 <p>Here is an example:</p>
 
-<div class="accordion-container">
+<div class="accordion-container anchored">
     <button class="accordion">Question<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>answer=”Answer”</p>
@@ -520,10 +532,10 @@ This is for tips.
 %}
 </code></pre></div></div>
 
-<div id="quiz_7299e3cb-2a2f-479d-9e88-5fb81445e8dc" class="quiz">
+<div id="quiz_60ecefd1-c10c-471e-ae94-4269c905e4d5" class="quiz">
     <div>
-        <div id="question_7299e3cb-2a2f-479d-9e88-5fb81445e8dc" class="quiz__question">What is the question?</div>
-        <div id="answers_7299e3cb-2a2f-479d-9e88-5fb81445e8dc">
+        <div id="question_60ecefd1-c10c-471e-ae94-4269c905e4d5" class="quiz__question">What is the question?</div>
+        <div id="answers_60ecefd1-c10c-471e-ae94-4269c905e4d5">
         
             <input type="radio" name="question" value="A"><label>A: Option 1 (this one is correct)</label>
             <br>
@@ -536,10 +548,10 @@ This is for tips.
         
         </div>
     </div>
-    <button onclick="showResults('7299e3cb-2a2f-479d-9e88-5fb81445e8dc', 'A')">Submit Answer</button>
-    <div id="results_7299e3cb-2a2f-479d-9e88-5fb81445e8dc" style="display: none">
-        <span id="correct_7299e3cb-2a2f-479d-9e88-5fb81445e8dc" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_7299e3cb-2a2f-479d-9e88-5fb81445e8dc" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('60ecefd1-c10c-471e-ae94-4269c905e4d5', 'A')">Submit Answer</button>
+    <div id="results_60ecefd1-c10c-471e-ae94-4269c905e4d5" style="display: none">
+        <span id="correct_60ecefd1-c10c-471e-ae94-4269c905e4d5" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_60ecefd1-c10c-471e-ae94-4269c905e4d5" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         And here is some more info
     </div>
 </div>
@@ -555,10 +567,10 @@ This is for tips.
 %}
 </code></pre></div></div>
 
-<div id="quiz_aea95090-3d2d-42f9-a38a-9ba179f9fb99" class="quiz">
+<div id="quiz_86a0f2c9-8971-4027-ab6e-5819085a5776" class="quiz">
     <div>
-        <div id="question_aea95090-3d2d-42f9-a38a-9ba179f9fb99" class="quiz__question">True or False?</div>
-        <div id="answers_aea95090-3d2d-42f9-a38a-9ba179f9fb99">
+        <div id="question_86a0f2c9-8971-4027-ab6e-5819085a5776" class="quiz__question">True or False?</div>
+        <div id="answers_86a0f2c9-8971-4027-ab6e-5819085a5776">
         
             <input type="radio" name="question" value="True"><label>True: Option 1(this one is correct)</label>
             <br>
@@ -568,10 +580,10 @@ This is for tips.
         
         </div>
     </div>
-    <button onclick="showResults('aea95090-3d2d-42f9-a38a-9ba179f9fb99', 'True')">Submit Answer</button>
-    <div id="results_aea95090-3d2d-42f9-a38a-9ba179f9fb99" style="display: none">
-        <span id="correct_aea95090-3d2d-42f9-a38a-9ba179f9fb99" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_aea95090-3d2d-42f9-a38a-9ba179f9fb99" style="display: none"> Incorrect!! 😭 The correct answer is True.</span>
+    <button onclick="showResults('86a0f2c9-8971-4027-ab6e-5819085a5776', 'True')">Submit Answer</button>
+    <div id="results_86a0f2c9-8971-4027-ab6e-5819085a5776" style="display: none">
+        <span id="correct_86a0f2c9-8971-4027-ab6e-5819085a5776" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_86a0f2c9-8971-4027-ab6e-5819085a5776" style="display: none"> Incorrect!! 😭 The correct answer is True.</span>
         And here is some more info
     </div>
 </div>
@@ -594,7 +606,7 @@ This is the content of the third tab.
 </code></pre></div></div>
 
 <div>
-    <ul class="tab" data-tab="1cfb15f0-5d0a-4c20-9409-6e1422285a17">
+    <ul class="tab" data-tab="d01044ae-cd9b-43ea-8cc3-37e157c45d05">
         
             <li class="active">
                 <a href="">tab1 </a>
@@ -609,7 +621,7 @@ This is the content of the third tab.
             </li>
         
         </ul>
-        <ul class="tab-content" id="1cfb15f0-5d0a-4c20-9409-6e1422285a17">
+        <ul class="tab-content" id="d01044ae-cd9b-43ea-8cc3-37e157c45d05">
         
             <li class="active tab-content-container">
 <p>This is the content of the first tab.</p>
