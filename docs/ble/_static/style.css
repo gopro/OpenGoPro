@@ -1,10 +1,30 @@
 /* style.css/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Thu Feb 29 20:44:51 UTC 2024 */
+/* This copyright was auto-generated on Tue Mar  5 22:20:17 UTC 2024 */
 
 .wy-nav-content {
     max-width: 1100px !important;
 }
 
 .btn-link:visited {
-    color: #0092ca !important;
+    color: #3c6779 !important;
+}
+
+.protobuf {
+    display: grid !important;
+
+    dd {
+        img:first-of-type {
+            padding-left: 1em;
+        }
+    }
+}
+
+.tlv-command {
+    display: grid !important;
+
+    dd {
+        img:first-of-type {
+            padding-left: 1em;
+        }
+    }
 }
