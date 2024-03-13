@@ -1,5 +1,5 @@
 /* preset_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue Mar  5 22:34:23 UTC 2024 */
+/* This copyright was auto-generated on Wed Mar 13 20:30:03 UTC 2024 */
 
 /***********************************************************************************************************************
  *
@@ -243,7 +243,8 @@ message Preset {
  *
  * Returns a @ref ResponseGeneric with the status of the preset update request.
  */
-message RequestCustomPresetUpdate { /**
+message RequestCustomPresetUpdate {
+    /**
      * Preset Title ID
      *
      * The range of acceptable custom title ID's can be found in the initial @ref NotifyPresetStatus response

@@ -1,5 +1,5 @@
 /* request_get_preset_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue Mar  5 22:34:23 UTC 2024 */
+/* This copyright was auto-generated on Wed Mar 13 20:30:03 UTC 2024 */
 
 /***********************************************************************************************************************
  *
@@ -20,11 +20,17 @@ enum EnumRegisterPresetStatus {
 }
 
 /**
- * Get preset status (and optionally register to be notified when it changes)
+ * Get the set of currently available presets and optionally register to be notified when it changes.
  *
  * Response: @ref NotifyPresetStatus sent immediately
  *
  * Notification: @ref NotifyPresetStatus sent periodically as preset status changes, if registered.
+ *
+ * The preset status changes when:
+ *
+ * - A client changes one of a preset's captioned settings via the API
+ * - The user exits from a preset's settings UI on the camera (e.g. long-press the preset pill and then press the back arrow)
+ * - The user creates/deletes/reorders a preset within a group
  */
 message RequestGetPresetStatus {
     repeated EnumRegisterPresetStatus register_preset_status   = 1; // Array of Preset statuses to be notified about
