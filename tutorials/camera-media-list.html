@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2024-03-05T14:42:10-08:00">
+  <meta property="article:published_time" content="2024-03-13T13:36:12-07:00">
 
 
 
@@ -422,7 +422,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 7: Camera Media List">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to send Open GoProHTTP commands to the GoPro, specifically to get the media listand perform operations on it (downloading pictures, videos, etc.)">
-    <meta itemprop="datePublished" content="2024-03-05T14:42:10-08:00">
+    <meta itemprop="datePublished" content="2024-03-13T13:36:12-07:00">
     
 
     <div class="page__inner-wrap">
@@ -503,7 +503,7 @@ configured correctly.</p>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="b8af0a7a-9632-4c8a-b43e-16da9762dd46">
+    <ul class="tab tab-linked" data-tab="b1716f00-e412-4aca-8e0c-d9e193897fd9">
         
             <li class="active">
                 <a href="">python </a>
@@ -514,7 +514,7 @@ configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="b8af0a7a-9632-4c8a-b43e-16da9762dd46">
+        <ul class="tab-content" id="b1716f00-e412-4aca-8e0c-d9e193897fd9">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 2
@@ -628,7 +628,7 @@ corresponding information about each media file.</p>
 an exception.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="c791d429-62d8-488a-8338-aa58d212f912">
+    <ul class="tab tab-linked" data-tab="50f67e7a-842e-47b3-bdc1-832013b05f2f">
         
             <li class="active">
                 <a href="">python </a>
@@ -639,7 +639,7 @@ an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="c791d429-62d8-488a-8338-aa58d212f912">
+        <ul class="tab-content" id="50f67e7a-842e-47b3-bdc1-832013b05f2f">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/gopro/media/list</span><span class="sh">"</span>
@@ -661,7 +661,7 @@ an exception.</p>
 <p>Lastly, we print the response’s JSON data:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="745cef8e-9a08-4f8b-9937-c36d56a63d7a">
+    <ul class="tab tab-linked" data-tab="2e9b0818-4744-49db-8c4d-2690702108f5">
         
             <li class="active">
                 <a href="">python </a>
@@ -672,7 +672,7 @@ an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="745cef8e-9a08-4f8b-9937-c36d56a63d7a">
+        <ul class="tab-content" id="2e9b0818-4744-49db-8c4d-2690702108f5">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
@@ -768,7 +768,7 @@ We won’t be rehashing that here but will provide examples below of using the m
 <p>One common functionality is to get the list of media file names, which can be done as such:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="2ae7d75e-ec3a-4677-b214-42049f1f160c">
+    <ul class="tab tab-linked" data-tab="dd928fb1-c7c8-4a91-bdd6-2d8e33c7d102">
         
             <li class="active">
                 <a href="">python </a>
@@ -779,7 +779,7 @@ We won’t be rehashing that here but will provide examples below of using the m
             </li>
         
         </ul>
-        <ul class="tab-content" id="2ae7d75e-ec3a-4677-b214-42049f1f160c">
+        <ul class="tab-content" id="dd928fb1-c7c8-4a91-bdd6-2d8e33c7d102">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="sh">"</span><span class="s">n</span><span class="sh">"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">[</span><span class="sh">"</span><span class="s">media</span><span class="sh">"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="sh">"</span><span class="s">fs</span><span class="sh">"</span><span class="p">]])</span>
@@ -832,7 +832,7 @@ Then we search through the list of file names in the media list looking for a ph
 ends in <strong>.jpg</strong>). Once we find a photo, we proceed:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="a92e32cb-6c97-47c2-ae7c-de368112e6f4">
+    <ul class="tab tab-linked" data-tab="987ff7d3-5f19-4b4d-bfb5-c18012f9009e">
         
             <li class="active">
                 <a href="">python </a>
@@ -843,7 +843,7 @@ ends in <strong>.jpg</strong>). Once we find a photo, we proceed:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="a92e32cb-6c97-47c2-ae7c-de368112e6f4">
+        <ul class="tab-content" id="987ff7d3-5f19-4b4d-bfb5-c18012f9009e">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">media_list</span> <span class="o">=</span> <span class="nf">get_media_list</span><span class="p">()</span>
@@ -876,7 +876,7 @@ an exception.</p>
 </div>
 
 <div>
-    <ul class="tab tab-linked" data-tab="9dae40a5-bb91-464a-9e24-7aa3674883c7">
+    <ul class="tab tab-linked" data-tab="0e1b9fc3-2c25-409e-b715-9e6f76621b92">
         
             <li class="active">
                 <a href="">python </a>
@@ -887,7 +887,7 @@ an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="9dae40a5-bb91-464a-9e24-7aa3674883c7">
+        <ul class="tab-content" id="0e1b9fc3-2c25-409e-b715-9e6f76621b92">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="sh">"</span><span class="s">videos/DCIM/100GOPRO/</span><span class="si">{</span><span class="n">photo</span><span class="si">}</span><span class="sh">"</span>
@@ -924,7 +924,7 @@ an exception.</p>
 <p>This will log as such:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="ffab3457-c9bd-4953-a9c8-cb01c23238ff">
+    <ul class="tab tab-linked" data-tab="7a4566b5-b266-43ea-a9e3-8cb750adb52b">
         
             <li class="active">
                 <a href="">python </a>
@@ -935,7 +935,7 @@ an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="ffab3457-c9bd-4953-a9c8-cb01c23238ff">
+        <ul class="tab-content" id="7a4566b5-b266-43ea-a9e3-8cb750adb52b">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:found a photo: GOPR0987.JPG
@@ -976,7 +976,7 @@ Then we search through the list of file names in the media list looking for a ph
 ends in <strong>.jpg</strong>). Once we find a photo, we proceed:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="a97a1e11-3ebf-42b0-8160-98eeb5de7403">
+    <ul class="tab tab-linked" data-tab="38208cc5-4369-444a-b0f6-15eba78bbef8">
         
             <li class="active">
                 <a href="">python </a>
@@ -987,7 +987,7 @@ ends in <strong>.jpg</strong>). Once we find a photo, we proceed:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="a97a1e11-3ebf-42b0-8160-98eeb5de7403">
+        <ul class="tab-content" id="38208cc5-4369-444a-b0f6-15eba78bbef8">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">media_list</span> <span class="o">=</span> <span class="nf">get_media_list</span><span class="p">()</span>
@@ -1013,7 +1013,7 @@ ends in <strong>.jpg</strong>). Once we find a photo, we proceed:</p>
 an exception.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="81e49531-0897-43ac-8eba-1a048d2e8f3d">
+    <ul class="tab tab-linked" data-tab="11b8b309-ffb1-48ce-9803-457d19c2e231">
         
             <li class="active">
                 <a href="">python </a>
@@ -1024,7 +1024,7 @@ an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="81e49531-0897-43ac-8eba-1a048d2e8f3d">
+        <ul class="tab-content" id="11b8b309-ffb1-48ce-9803-457d19c2e231">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="sh">"</span><span class="s">/gopro/media/thumbnail?path=100GOPRO/</span><span class="si">{</span><span class="n">photo</span><span class="si">}</span><span class="sh">"</span>
@@ -1054,7 +1054,7 @@ an exception.</p>
 <p>This will log as such:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="3c63c9a7-eb9b-454c-9057-6d3daa46e351">
+    <ul class="tab tab-linked" data-tab="f616732f-1e69-49e1-ad2d-83ae971a6449">
         
             <li class="active">
                 <a href="">python </a>
@@ -1065,7 +1065,7 @@ an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="3c63c9a7-eb9b-454c-9057-6d3daa46e351">
+        <ul class="tab-content" id="f616732f-1e69-49e1-ad2d-83ae971a6449">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:found a photo: GOPR0987.JPG
@@ -1109,7 +1109,7 @@ inspiration check out some of the <a href="https://github.com/gopro/OpenGoPro/tr
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-03-05T14:42:10-08:00">March 5, 2024</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-03-13T13:36:12-07:00">March 13, 2024</time></p>
 
 
       </footer>
