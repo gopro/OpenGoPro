@@ -6,7 +6,7 @@ QuickStart Guide
 
 .. warning:: This section assumes you have successfully :ref:`installed<Installation>` the package.
 
-Open GoPro installs with severaldemos to demonstrate BLE and Wi-Fi. The source code for these examples
+Open GoPro installs with several demos to demonstrate BLE and Wi-Fi. The source code for these examples
 can be found on `Github <https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control/open_gopro/demos>`_
 or locally in `$INSTALL/open_gopro/demos` where $INSTALL can be found with:
 
