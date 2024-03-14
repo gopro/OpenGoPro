@@ -127,6 +127,10 @@ class WifiCli(WifiController):
         # try nmcli (Ubuntu 14.04). Allow for use in Snap Package
         if which("nmcli") or which("nmcli", path="/snap/bin/"):
             version = cmd("nmcli --version").split()[-1]
+            # On RHEL based systems, the version is in the form of 1.44.2-1.fc39
+            # wich raises an error when trying to compare it with the Version class
+            if any(c.isalpha() for c in version):
+                version = version.split("-")[0]
             return (
                 Nmcli0990Wireless(password=self._password)
                 if Version(version) >= Version("0.9.9.0")
