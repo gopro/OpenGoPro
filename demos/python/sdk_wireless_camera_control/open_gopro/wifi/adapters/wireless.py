@@ -117,15 +117,16 @@ class WifiCli(WifiController):
         if which("networksetup"):
             return NetworksetupWireless()
 
-        # Try Linux options. Need password for sudo
-        if not self._password:
-            self._password = getpass("Need to run as sudo. Enter password: ")
-        # Validate password
-        if "VALID PASSWORD" not in cmd(f'echo "{self._password}" | sudo -S echo "VALID PASSWORD"'):
-            raise RuntimeError("Invalid password")
-
+        # Try Linux options.
         # try nmcli (Ubuntu 14.04). Allow for use in Snap Package
         if which("nmcli") or which("nmcli", path="/snap/bin/"):
+
+            ctrl_wifi = cmd("nmcli general permissions |grep enable-disable-wifi")
+            scan_wifi = cmd("nmcli general permissions |grep scan")
+
+            if not "yes" in ctrl_wifi or not "yes" in scan_wifi:
+                self._sudo_from_stdin()
+
             version = cmd("nmcli --version").split()[-1]
             return (
                 Nmcli0990Wireless(password=self._password)
@@ -134,9 +135,33 @@ class WifiCli(WifiController):
             )
         # try nmcli (Ubuntu w/o network-manager)
         if which("wpa_supplicant"):
+            self._sudo_from_stdin()
             return WpasupplicantWireless(password=self._password)
 
         raise RuntimeError("Unable to find compatible wireless driver.")
+
+    def _sudo_from_stdin(self) -> str:
+        """Ask for sudo password input from stdin
+
+        This method prompts the user to enter the sudo password from the command line.
+        It validates the password by running a command with sudo and checking if the password is valid.
+
+        Returns:
+            str: The entered sudo password.
+
+        Raises:
+            RuntimeError: If the password is empty or invalid.
+        """
+        # Need password for sudo
+        if not self._password:
+            self._password = getpass("Need to run as sudo. Enter password: ")
+        if not self._password:
+            raise RuntimeError("Can't use sudo with empty password.")
+        # Validate password
+        if "VALID PASSWORD" not in cmd(f'echo "{self._password}" | sudo -S echo "VALID PASSWORD"'):
+            raise RuntimeError("Invalid password")
+
+        return self._password
 
     @pass_through_to_driver
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:  # type: ignore
@@ -230,7 +255,7 @@ class WifiCli(WifiController):
 class NmcliWireless(WifiController):
     """Linux nmcli Driver < 0.9.9.0."""
 
-    def __init__(self, password: str, interface: Optional[str] = None) -> None:
+    def __init__(self, password: str | None, interface: Optional[str] = None) -> None:
         WifiController.__init__(self, interface=interface, password=password)
 
     def _clean(self, partial: str) -> None:
@@ -391,7 +416,7 @@ class NmcliWireless(WifiController):
 class Nmcli0990Wireless(WifiController):
     """Linux nmcli Driver >= 0.9.9.0."""
 
-    def __init__(self, password: str, interface: Optional[str] = None) -> None:
+    def __init__(self, password: str | None, interface: Optional[str] = None) -> None:
         WifiController.__init__(self, interface=interface, password=password)
 
     def _clean(self, partial: str) -> None:
@@ -550,7 +575,7 @@ class WpasupplicantWireless(WifiController):
 
     _file = "/tmp/wpa_supplicant.conf"
 
-    def __init__(self, password: str, interface: Optional[str] = None) -> None:
+    def __init__(self, password: str | None, interface: Optional[str] = None) -> None:
         WifiController.__init__(self, interface=interface, password=password)
 
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
