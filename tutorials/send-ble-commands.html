@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2024-04-09T13:00:03-07:00">
+  <meta property="article:published_time" content="2024-04-09T13:57:14-07:00">
 
 
 
@@ -438,7 +438,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 2: Send BLE TLV Commands">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to use theOpen GoPro BLE Interface to send Type-Length-Value(TLV)commands and receive TLV responses.">
-    <meta itemprop="datePublished" content="2024-04-09T13:00:03-07:00">
+    <meta itemprop="datePublished" content="2024-04-09T13:57:14-07:00">
     
 
     <div class="page__inner-wrap">
@@ -510,7 +510,7 @@
 </li>
 </ul>
 
-<p>A list of TLV commands can be found in the <a href="http://localhost:4998/ble/protocol/id_tables.html#command-ids">Command ID Table</a>.</p>
+<p>A list of TLV commands can be found in the [Command ID Table]/OpenGoPro/ble/protocol/id_tables.html#command-ids).</p>
 
 <div class="callout note">
 <i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>This tutorial only considers sending these as one-off commands. That is, it does not consider state
@@ -531,7 +531,7 @@ this tutorial.</span>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="70e62d93-82ec-4bc9-9552-180f63a09c43">
+    <ul class="tab tab-linked" data-tab="17a2e073-fcec-492c-9b8f-f5c52f2a20bf">
         
             <li class="active">
                 <a href="">python </a>
@@ -542,7 +542,7 @@ this tutorial.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="70e62d93-82ec-4bc9-9552-180f63a09c43">
+        <ul class="tab-content" id="17a2e073-fcec-492c-9b8f-f5c52f2a20bf">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 2
@@ -700,7 +700,7 @@ In this case, however, we are defining a functional (albeit naive) notification 
 <a href="/OpenGoPro/tutorials/parse-ble-responses">next tutorial</a>.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="8f24485c-b153-47a8-b2db-edd0d9329d18">
+    <ul class="tab tab-linked" data-tab="4e79b4e9-bb58-4f9b-94fa-aa5f2c55db43">
         
             <li class="active">
                 <a href="">python </a>
@@ -711,7 +711,7 @@ In this case, however, we are defining a functional (albeit naive) notification 
             </li>
         
         </ul>
-        <ul class="tab-content" id="8f24485c-b153-47a8-b2db-edd0d9329d18">
+        <ul class="tab-content" id="4e79b4e9-bb58-4f9b-94fa-aa5f2c55db43">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">characteristic</span><span class="p">:</span> <span class="n">BleakGATTCharacteristic</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
@@ -789,11 +789,11 @@ The relevant behavior of the GoPro must be observed to verify when the command�
 <p>Now that we are are connected, paired, and have enabled notifications (registered to our defined callback), we
 can send some commands.</p>
 
-<p>First, we need to define the <a href="http://localhost:4998/ble/protocol/ble_setup.html#configure-gatt-characteristics">UUIDs</a>
+<p>First, we need to define the <a href="/OpenGoPro/ble/protocol/ble_setup.html#configure-gatt-characteristics">UUIDs</a>
 to write to / receive responses from, which are:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="ef2b9b31-eb27-4b17-aa4d-cfeb90109aab">
+    <ul class="tab tab-linked" data-tab="a98c2930-d8e2-4b08-a2a9-1b2b1c2eec06">
         
             <li class="active">
                 <a href="">python </a>
@@ -804,7 +804,7 @@ to write to / receive responses from, which are:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="ef2b9b31-eb27-4b17-aa4d-cfeb90109aab">
+        <ul class="tab-content" id="a98c2930-d8e2-4b08-a2a9-1b2b1c2eec06">
         
             <li class="active tab-content-container">
 <p>We’ll define these and any others used throughout the tutorials and store them in a <code class="language-plaintext highlighter-rouge">GoProUUID</code> class:</p>
@@ -877,7 +877,7 @@ which at byte level is:</p>
 <p>Now, let’s write the bytes to the “Command Request” UUID to turn the shutter on and start encoding!</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="7daf91e0-2122-4507-8824-830fb714bae4">
+    <ul class="tab tab-linked" data-tab="b99c0afd-f60a-4741-b05e-4474afe0b5b4">
         
             <li class="active">
                 <a href="">python </a>
@@ -888,7 +888,7 @@ which at byte level is:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="7daf91e0-2122-4507-8824-830fb714bae4">
+        <ul class="tab-content" id="b99c0afd-f60a-4741-b05e-4474afe0b5b4">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">request_uuid</span> <span class="o">=</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">COMMAND_REQ_UUID</span>
@@ -929,7 +929,7 @@ Command Response characteristic since we enabled its notifications in
 This can be seen in the demo log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="f7f7114a-0be8-49c6-942a-7cccea5cc2e5">
+    <ul class="tab tab-linked" data-tab="55014710-cc7c-4bdd-bff3-d13b96ff31c0">
         
             <li class="active">
                 <a href="">python </a>
@@ -940,7 +940,7 @@ This can be seen in the demo log:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="f7f7114a-0be8-49c6-942a-7cccea5cc2e5">
+        <ul class="tab-content" id="55014710-cc7c-4bdd-bff3-d13b96ff31c0">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Setting the shutter on
@@ -973,7 +973,7 @@ Command sent successfully
 </div>
 
 <div>
-    <ul class="tab tab-linked" data-tab="e2a8d590-bda2-4908-9a87-463936d1d342">
+    <ul class="tab tab-linked" data-tab="b5063d75-e8bb-4978-88d3-ffe61dd0ba41">
         
             <li class="active">
                 <a href="">python </a>
@@ -984,7 +984,7 @@ Command sent successfully
             </li>
         
         </ul>
-        <ul class="tab-content" id="e2a8d590-bda2-4908-9a87-463936d1d342">
+        <ul class="tab-content" id="b5063d75-e8bb-4978-88d3-ffe61dd0ba41">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -1063,7 +1063,7 @@ to toggle between the 3 groups of presets (video, photo, and timelapse). At byte
 <p>Now, let’s write the bytes to the “Command Request” UUID to change the preset group to Video!</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="454e64db-9dc8-4b8e-b8db-225bbae84227">
+    <ul class="tab tab-linked" data-tab="f26dfa5d-c532-4286-8dec-25b5616cf92e">
         
             <li class="active">
                 <a href="">python </a>
@@ -1074,7 +1074,7 @@ to toggle between the 3 groups of presets (video, photo, and timelapse). At byte
             </li>
         
         </ul>
-        <ul class="tab-content" id="454e64db-9dc8-4b8e-b8db-225bbae84227">
+        <ul class="tab-content" id="f26dfa5d-c532-4286-8dec-25b5616cf92e">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">request_uuid</span> <span class="o">=</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">COMMAND_REQ_UUID</span>
@@ -1130,7 +1130,7 @@ Command Response characteristic since we enabled its notifications in
 be seen in the demo log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="c285f2b3-491a-4d1c-a2be-2b600c9c35ce">
+    <ul class="tab tab-linked" data-tab="a5d62d20-9a9d-4607-8b42-2f6c316fbb34">
         
             <li class="active">
                 <a href="">python </a>
@@ -1141,7 +1141,7 @@ be seen in the demo log:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="c285f2b3-491a-4d1c-a2be-2b600c9c35ce">
+        <ul class="tab-content" id="a5d62d20-9a9d-4607-8b42-2f6c316fbb34">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Loading the video preset group...
@@ -1211,7 +1211,7 @@ for video resolution.</span>
 <p>Now, let’s write the bytes to the “Setting Request” UUID to change the video resolution to 1080!</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="d4048de1-ebf7-4c33-bc38-ffd1410d42d5">
+    <ul class="tab tab-linked" data-tab="abe68d08-7617-4395-95fb-618c4f1cf39f">
         
             <li class="active">
                 <a href="">python </a>
@@ -1222,7 +1222,7 @@ for video resolution.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="d4048de1-ebf7-4c33-bc38-ffd1410d42d5">
+        <ul class="tab-content" id="abe68d08-7617-4395-95fb-618c4f1cf39f">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">request_uuid</span> <span class="o">=</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">COMMAND_REQ_UUID</span>
@@ -1279,7 +1279,7 @@ Command Response characteristic since we enabled its notifications in
 be seen in the demo log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="edf87b9d-39f9-4306-8dae-360a796966df">
+    <ul class="tab tab-linked" data-tab="c8ad5979-23bd-404d-801c-a985f977d7c8">
         
             <li class="active">
                 <a href="">python </a>
@@ -1290,7 +1290,7 @@ be seen in the demo log:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="edf87b9d-39f9-4306-8dae-360a796966df">
+        <ul class="tab-content" id="c8ad5979-23bd-404d-801c-a985f977d7c8">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Setting the video resolution to 1080
@@ -1364,7 +1364,7 @@ been set to 1080 as in <a href="#set-the-video-resolution">Set the Video Resolut
 <p>Now, let’s write the bytes to the “Setting Request” UUID to change the FPS to 240!</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="0d0edf33-165e-4743-8618-2dde27682cfa">
+    <ul class="tab tab-linked" data-tab="50ce48cc-3b31-4c2b-b789-fa50be761bd8">
         
             <li class="active">
                 <a href="">python </a>
@@ -1375,7 +1375,7 @@ been set to 1080 as in <a href="#set-the-video-resolution">Set the Video Resolut
             </li>
         
         </ul>
-        <ul class="tab-content" id="0d0edf33-165e-4743-8618-2dde27682cfa">
+        <ul class="tab-content" id="50ce48cc-3b31-4c2b-b789-fa50be761bd8">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">request_uuid</span> <span class="o">=</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">COMMAND_REQ_UUID</span>
@@ -1431,7 +1431,7 @@ Command Response characteristic since we enabled its notifications in
 be seen in the demo log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="f9fe61c4-c133-4ca7-82a3-cf47e319ac8e">
+    <ul class="tab tab-linked" data-tab="50454577-b9e9-4483-a374-a1747700dae9">
         
             <li class="active">
                 <a href="">python </a>
@@ -1442,7 +1442,7 @@ be seen in the demo log:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="f9fe61c4-c133-4ca7-82a3-cf47e319ac8e">
+        <ul class="tab-content" id="50454577-b9e9-4483-a374-a1747700dae9">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Setting the fps to 240
@@ -1473,10 +1473,10 @@ resolution was higher, for example 5K, this would fail.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_d3daaebf-fd24-453f-96dc-e80fb7fd685d" class="quiz">
+<div id="quiz_7fbb7c53-e985-4b02-8fd6-8b3a82117574" class="quiz">
     <div>
-        <div id="question_d3daaebf-fd24-453f-96dc-e80fb7fd685d" class="quiz__question">Which of the following is not a real preset group?</div>
-        <div id="answers_d3daaebf-fd24-453f-96dc-e80fb7fd685d">
+        <div id="question_7fbb7c53-e985-4b02-8fd6-8b3a82117574" class="quiz__question">Which of the following is not a real preset group?</div>
+        <div id="answers_7fbb7c53-e985-4b02-8fd6-8b3a82117574">
         
             <input type="radio" name="question" value="A"><label>A: Timelapse</label>
             <br>
@@ -1492,19 +1492,19 @@ resolution was higher, for example 5K, this would fail.</p>
         
         </div>
     </div>
-    <button onclick="showResults('d3daaebf-fd24-453f-96dc-e80fb7fd685d', 'C')">Submit Answer</button>
-    <div id="results_d3daaebf-fd24-453f-96dc-e80fb7fd685d" style="display: none">
-        <span id="correct_d3daaebf-fd24-453f-96dc-e80fb7fd685d" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_d3daaebf-fd24-453f-96dc-e80fb7fd685d" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('7fbb7c53-e985-4b02-8fd6-8b3a82117574', 'C')">Submit Answer</button>
+    <div id="results_7fbb7c53-e985-4b02-8fd6-8b3a82117574" style="display: none">
+        <span id="correct_7fbb7c53-e985-4b02-8fd6-8b3a82117574" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_7fbb7c53-e985-4b02-8fd6-8b3a82117574" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There are 3 preset groups (Timelapse, Photo, and Video). These can be
     set via the Load Preset Group command.
     </div>
 </div>
 
-<div id="quiz_7665c71d-2eb9-4bed-8b07-9cf8875c9bd5" class="quiz">
+<div id="quiz_35cdf052-728d-4bfa-88ab-37a5d9514b95" class="quiz">
     <div>
-        <div id="question_7665c71d-2eb9-4bed-8b07-9cf8875c9bd5" class="quiz__question">True or False: Every combination of resolution and FPS value is valid.</div>
-        <div id="answers_7665c71d-2eb9-4bed-8b07-9cf8875c9bd5">
+        <div id="question_35cdf052-728d-4bfa-88ab-37a5d9514b95" class="quiz__question">True or False: Every combination of resolution and FPS value is valid.</div>
+        <div id="answers_35cdf052-728d-4bfa-88ab-37a5d9514b95">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1514,18 +1514,18 @@ resolution was higher, for example 5K, this would fail.</p>
         
         </div>
     </div>
-    <button onclick="showResults('7665c71d-2eb9-4bed-8b07-9cf8875c9bd5', 'B')">Submit Answer</button>
-    <div id="results_7665c71d-2eb9-4bed-8b07-9cf8875c9bd5" style="display: none">
-        <span id="correct_7665c71d-2eb9-4bed-8b07-9cf8875c9bd5" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_7665c71d-2eb9-4bed-8b07-9cf8875c9bd5" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('35cdf052-728d-4bfa-88ab-37a5d9514b95', 'B')">Submit Answer</button>
+    <div id="results_35cdf052-728d-4bfa-88ab-37a5d9514b95" style="display: none">
+        <span id="correct_35cdf052-728d-4bfa-88ab-37a5d9514b95" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_35cdf052-728d-4bfa-88ab-37a5d9514b95" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         Each resolution can support all or only some FPS values. You can find out which resolutions support which FPS values by consulting the <a href="https://gopro.github.io/OpenGoPro/ble_2_0#camera-capabilities">capabilities section of the spec</a>.
     </div>
 </div>
 
-<div id="quiz_7baaacd2-3dc5-445d-9754-93300db2fc52" class="quiz">
+<div id="quiz_c0cd681a-54e0-4590-94d4-a8f65acc6ce4" class="quiz">
     <div>
-        <div id="question_7baaacd2-3dc5-445d-9754-93300db2fc52" class="quiz__question">True or False: Every camera supports the same combination of resolution and FPS values.</div>
-        <div id="answers_7baaacd2-3dc5-445d-9754-93300db2fc52">
+        <div id="question_c0cd681a-54e0-4590-94d4-a8f65acc6ce4" class="quiz__question">True or False: Every camera supports the same combination of resolution and FPS values.</div>
+        <div id="answers_c0cd681a-54e0-4590-94d4-a8f65acc6ce4">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1535,10 +1535,10 @@ resolution was higher, for example 5K, this would fail.</p>
         
         </div>
     </div>
-    <button onclick="showResults('7baaacd2-3dc5-445d-9754-93300db2fc52', 'B')">Submit Answer</button>
-    <div id="results_7baaacd2-3dc5-445d-9754-93300db2fc52" style="display: none">
-        <span id="correct_7baaacd2-3dc5-445d-9754-93300db2fc52" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_7baaacd2-3dc5-445d-9754-93300db2fc52" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('c0cd681a-54e0-4590-94d4-a8f65acc6ce4', 'B')">Submit Answer</button>
+    <div id="results_c0cd681a-54e0-4590-94d4-a8f65acc6ce4" style="display: none">
+        <span id="correct_c0cd681a-54e0-4590-94d4-a8f65acc6ce4" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_c0cd681a-54e0-4590-94d4-a8f65acc6ce4" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         The only way to know what values are supported is to first check the Open GoPro version.
     See the relevant version of the BLE or WiFi spec to see what is supported.
     </div>
@@ -1570,7 +1570,7 @@ Open GoPro documentation in a similar manner.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-09T13:00:03-07:00">April 9, 2024</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-09T13:57:14-07:00">April 9, 2024</time></p>
 
 
       </footer>

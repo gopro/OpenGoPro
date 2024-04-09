@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2024-04-09T13:00:03-07:00">
+  <meta property="article:published_time" content="2024-04-09T13:57:14-07:00">
 
 
 
@@ -438,7 +438,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 9: Camera on the Home Network">
     <meta itemprop="description" content="Tutorial 9: Camera on the Home Network">
-    <meta itemprop="datePublished" content="2024-04-09T13:00:03-07:00">
+    <meta itemprop="datePublished" content="2024-04-09T13:57:14-07:00">
     
 
     <div class="page__inner-wrap">
@@ -516,12 +516,12 @@ tutorials before proceeding.</span>
 are present and configured correctly.</p>
 
 <p>The scripts that will be used for this tutorial can be found in the
-<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_9_connect_wifi">Tutorial 9 Folder</a>.</p>
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_6_connect_wifi">Tutorial 9 Folder</a>.</p>
 
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="0b42c0bf-441e-4239-9268-1e9edd65faf4">
+    <ul class="tab tab-linked" data-tab="650361c5-f065-4cba-b62f-6b31efdc79eb">
         
             <li class="active">
                 <a href="">python </a>
@@ -532,11 +532,11 @@ are present and configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="0b42c0bf-441e-4239-9268-1e9edd65faf4">
+        <ul class="tab-content" id="650361c5-f065-4cba-b62f-6b31efdc79eb">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 9
-<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_9_connect_wifi/">directory</a>.</p>
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_6_connect_wifi/">directory</a>.</p>
 
 <div class="callout warning">
 <i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.9 and &lt; 3.12 must be used as specified in the requirements</span>
@@ -673,7 +673,7 @@ using the <a href="/OpenGoPro/ble/features/control.html#set-local-date-time">Set
 <p>For the provisioning demo discussed in this tutorial, this is done programatically:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="208bf19c-7c5b-4a6e-84ee-1c8148f898be">
+    <ul class="tab tab-linked" data-tab="0daa25be-19eb-45f5-bdb0-df18f6a77c23">
         
             <li class="active">
                 <a href="">python </a>
@@ -684,7 +684,7 @@ using the <a href="/OpenGoPro/ble/features/control.html#set-local-date-time">Set
             </li>
         
         </ul>
-        <ul class="tab-content" id="208bf19c-7c5b-4a6e-84ee-1c8148f898be">
+        <ul class="tab-content" id="0daa25be-19eb-45f5-bdb0-df18f6a77c23">
         
             <li class="active tab-content-container">
 <div class="callout note">
@@ -741,7 +741,7 @@ continue to provision COHN.</p>
 <p>Let’s instruct the GoPro to <a href="/OpenGoPro/ble/features/cohn.html#create-cohn-certificate">Create a COHN certificate</a>.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="c23e2b7c-b1c5-47d4-8ba6-e8c9b84ee21a">
+    <ul class="tab tab-linked" data-tab="f8ea7069-b1f2-4d5a-bd15-60d2e464f04e">
         
             <li class="active">
                 <a href="">python </a>
@@ -752,7 +752,7 @@ continue to provision COHN.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="c23e2b7c-b1c5-47d4-8ba6-e8c9b84ee21a">
+        <ul class="tab-content" id="f8ea7069-b1f2-4d5a-bd15-60d2e464f04e">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">create_request</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span>
@@ -809,7 +809,7 @@ the COHN credentials that will be used for HTTPS communication. These are:</p>
 <p>We can immediately get the COHN certificate as such:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="6071d3db-689f-4ec5-95d2-32925d4bb06e">
+    <ul class="tab tab-linked" data-tab="99766145-58ba-45ee-847d-24e3e197b015">
         
             <li class="active">
                 <a href="">python </a>
@@ -820,7 +820,7 @@ the COHN credentials that will be used for HTTPS communication. These are:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="6071d3db-689f-4ec5-95d2-32925d4bb06e">
+        <ul class="tab-content" id="99766145-58ba-45ee-847d-24e3e197b015">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cert_request</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span>
@@ -856,7 +856,7 @@ This final status contains the remaining credentials: username, password, and IP
 <p>To do this, we first register to receive asynchronous COHN status updates:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="ad5147af-75ed-4cf3-bf62-dac3eb083a44">
+    <ul class="tab tab-linked" data-tab="ad7153b5-acbb-4077-9c3c-fa6f726b7236">
         
             <li class="active">
                 <a href="">python </a>
@@ -867,7 +867,7 @@ This final status contains the remaining credentials: username, password, and IP
             </li>
         
         </ul>
-        <ul class="tab-content" id="ad5147af-75ed-4cf3-bf62-dac3eb083a44">
+        <ul class="tab-content" id="ad7153b5-acbb-4077-9c3c-fa6f726b7236">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">status_request</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span>
@@ -894,7 +894,7 @@ This final status contains the remaining credentials: username, password, and IP
 <p>Then we continuously receive and check the updates until we receive the desired status:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="70716c97-c6f1-4318-97ca-51439744a82a">
+    <ul class="tab tab-linked" data-tab="b15943c1-7ce7-46e9-a1b7-8c9f378e80a8">
         
             <li class="active">
                 <a href="">python </a>
@@ -905,7 +905,7 @@ This final status contains the remaining credentials: username, password, and IP
             </li>
         
         </ul>
-        <ul class="tab-content" id="70716c97-c6f1-4318-97ca-51439744a82a">
+        <ul class="tab-content" id="b15943c1-7ce7-46e9-a1b7-8c9f378e80a8">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="n">response</span> <span class="p">:</span><span class="o">=</span> <span class="k">await</span> <span class="n">manager</span><span class="p">.</span><span class="nf">get_next_response_as_protobuf</span><span class="p">():</span>
@@ -948,7 +948,7 @@ Successfully provisioned COHN.
 <p>Finally we accumulate all of the credentials and log them, also storing the certificate to a <code class="language-plaintext highlighter-rouge">cohn.crt</code> file:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="e3f359bd-c67b-4b40-86a7-65c49f186c68">
+    <ul class="tab tab-linked" data-tab="a6a7c0ca-ead5-4786-8282-4e33a4dd1b8c">
         
             <li class="active">
                 <a href="">python </a>
@@ -959,7 +959,7 @@ Successfully provisioned COHN.
             </li>
         
         </ul>
-        <ul class="tab-content" id="e3f359bd-c67b-4b40-86a7-65c49f186c68">
+        <ul class="tab-content" id="a6a7c0ca-ead5-4786-8282-4e33a4dd1b8c">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">credentials</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">provision_cohn</span><span class="p">(</span><span class="n">manager</span><span class="p">)</span>
@@ -1019,7 +1019,7 @@ HTTPS over the provisioned home network for communication.</p>
 <a href="/OpenGoPro/http#tag/Query/operation/OGP_GET_STATE">Get the Camera State</a>.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="24ba8d28-20f0-452c-a4d5-032467a75cf6">
+    <ul class="tab tab-linked" data-tab="084b9e04-0e9b-4f23-a8a4-67562627575c">
         
             <li class="active">
                 <a href="">python </a>
@@ -1030,7 +1030,7 @@ HTTPS over the provisioned home network for communication.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="24ba8d28-20f0-452c-a4d5-032467a75cf6">
+        <ul class="tab-content" id="084b9e04-0e9b-4f23-a8a4-67562627575c">
         
             <li class="active tab-content-container">
 <div class="callout note">
@@ -1130,7 +1130,7 @@ over your home network without needing a direct BLE or WiFi connection.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-09T13:00:03-07:00">April 9, 2024</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-09T13:57:14-07:00">April 9, 2024</time></p>
 
 
       </footer>
