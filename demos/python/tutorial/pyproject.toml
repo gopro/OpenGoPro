@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "open-gopro-tutorials"
-version = "0.2.0"
+version = "0.3.0"
 description = "Open GoPro Python Tutorials"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 license = "MIT"
@@ -18,20 +18,25 @@ classifiers = [
     "Operating System :: MacOS :: MacOS X",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.11"
+python = ">=3.9,<3.12"
 bleak = "0.21.1"
 requests = "^2"
 rich = "^13"
+pytz = "^2024.1"
+tzlocal = "^5.2"
+mypy-protobuf = "*"
 
 [tool.poetry.group.dev.dependencies]
+types-pytz = "^2024.1.0.20240203"
 poethepoet = "^0"
 black = "*"
+isort = "*"
 mypy = "*"
 pytest = "^7"
 pytest-asyncio = "^0"
@@ -40,6 +45,7 @@ pytest-cov = "^4"
 coverage = { extras = ["toml"], version = "^6" }
 pylint = "^2"
 types-requests = "*"
+protoletariat = "^3"
 
 [build-system]
 requires = ["poetry-core"]
@@ -47,39 +53,47 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks.tests]
 cmd = "pytest tests --cov-fail-under=60"
-help = "Run end-to-end tests"
+help = "Run end-to-end tests. Requires ssid=${SSID} and password=${ssid} args to connect to AP"
 
-[tool.poe.tasks.types]
+[tool.poe.tasks._types]
 cmd = "mypy tutorial_modules"
 help = "Check types"
 
-[tool.poe.tasks.lint]
-cmd = "pylint --no-docstring-rgx=main tutorial_modules"
+[tool.poe.tasks._pylint]
+cmd = "pylint --no-docstring-rgx=main|_ tutorial_modules"
 help = "Run pylint"
+
+[tool.poe.tasks._sort_imports]
+cmd = "isort open_gopro tests"
+help = "Sort imports with isort"
 
 [tool.poe.tasks.format]
 cmd = "black tutorial_modules tests"
 help = "Apply black formatting to source code"
 
-[tool.poe.tasks.clean_artifacts]
+[tool.poe.tasks._clean_artifacts]
 cmd = "rm -rf **/__pycache__ *.csv *.mp4 *.jpg *.log .mypy_cache .nox"
 help = "Clean testing artifacts and pycache"
 
-[tool.poe.tasks.clean_tests]
+[tool.poe.tasks._clean_tests]
 cmd = "rm -rf .reports && rm -rf .pytest_cache"
 help = "Clean test reports"
 
-[tool.poe.tasks.clean_build]
+[tool.poe.tasks._clean_build]
 cmd = "rm -rf dist"
 help = "Clean module build output"
 
 [tool.poe.tasks.clean]
-sequence = ["clean_artifacts", "clean_tests", "clean_build"]
+sequence = ["_clean_artifacts", "_clean_tests", "_clean_build"]
 help = "Clean everything"
 
-[tool.poe.tasks.all]
-sequence = ["format", "types", "lint", "tests"]
-help = "Format, check types, lint, check docstrings, and run end-to-end tests"
+[tool.poe.tasks.protobuf]
+cmd = "bash ../../../tools/build_python_protos.sh tutorial_modules"
+help = "generate protobuf source from .proto (assumes protoc >= 3.20.1 available)"
+
+[tool.poe.tasks.lint]
+sequence = ["format", "_sort_imports", "_types", "_pylint",]
+help = "Format, check types, lint, and check docstrings"
 
 [tool.mypy]
 ignore_missing_imports = true
@@ -126,7 +140,6 @@ directory = ".reports/coverage"
 exclude_lines = ["raise NotImplementedError"]
 
 [tool.pylint.'MASTER']
-extension-pkg-whitelist = "cv2" # TODO this isn't working
 load-plugins = "pylint.extensions.docparams"
 accept-no-param-doc = "yes"
 accept-no-return-doc = "yes"
@@ -165,8 +178,11 @@ disable = [
 ]
 
 [tool.pylint.'FORMAT']
-max-line-length = 160
+max-line-length = 300 # Handled by black
 
 [tool.black]
-line-length = 111
+line-length = 120
 exclude = ".venv"
+
+[tool.isort]
+profile = "black"

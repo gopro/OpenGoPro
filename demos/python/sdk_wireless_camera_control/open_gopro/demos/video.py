@@ -27,12 +27,6 @@ async def main(args: argparse.Namespace) -> None:
             else WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface)
         ) as gopro:
             assert gopro
-            # Configure settings to prepare for video
-            await gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE)
-            await gopro.http_setting.video_performance_mode.set(Params.PerformanceMode.MAX_PERFORMANCE)
-            await gopro.http_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT)
-            await gopro.http_setting.camera_ux_mode.set(Params.CameraUxMode.PRO)
-            await gopro.http_command.set_turbo_mode(mode=Params.Toggle.DISABLE)
             assert (await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_VIDEO)).ok
 
             # Get the media list before
@@ -47,8 +41,9 @@ async def main(args: argparse.Namespace) -> None:
             media_set_after = set((await gopro.http_command.get_media_list()).data.files)
             # The video (is most likely) the difference between the two sets
             video = media_set_after.difference(media_set_before).pop()
+
             # Download the video
-            console.print("Downloading the video...")
+            console.print(f"Downloading {video.filename}...")
             await gopro.http_command.download_file(camera_file=video.filename, local_file=args.output)
             console.print(f"Success!! :smiley: File has been downloaded to {args.output}")
     except Exception as e:  # pylint: disable = broad-except

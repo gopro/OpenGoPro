@@ -147,6 +147,10 @@ img.mermaid {
 
 .md_column {
     display: flex;
+
+    * {
+        max-width: none !important;
+    }
 }
 
 /* Github button for demo layout */

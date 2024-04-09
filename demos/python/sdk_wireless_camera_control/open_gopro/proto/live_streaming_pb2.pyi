@@ -4,6 +4,7 @@ isort:skip_file
 *
 Defines the structure of protobuf messages for working with Live Streams
 """
+
 import builtins
 import collections.abc
 import google.protobuf.descriptor
@@ -24,7 +25,8 @@ class _EnumLens:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumLensEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLens.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLens.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     LENS_WIDE: _EnumLens.ValueType
@@ -43,7 +45,8 @@ class _EnumLiveStreamError:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumLiveStreamErrorEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLiveStreamError.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLiveStreamError.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     LIVE_STREAM_ERROR_NONE: _EnumLiveStreamError.ValueType
@@ -59,7 +62,7 @@ class _EnumLiveStreamErrorEnumTypeWrapper(
     LIVE_STREAM_ERROR_INTERNET: _EnumLiveStreamError.ValueType
     "No internet access detected on startup of streamer"
     LIVE_STREAM_ERROR_OSNETWORK: _EnumLiveStreamError.ValueType
-    "Error occured in linux networking stack. usually means the server closed the connection"
+    "Error occured in linux networking stack. Usually means the server closed the connection"
     LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT: _EnumLiveStreamError.ValueType
     "Timed out attemping to connect to the wifi network when attemping live stream"
     LIVE_STREAM_ERROR_SSL_HANDSHAKE: _EnumLiveStreamError.ValueType
@@ -88,7 +91,7 @@ LIVE_STREAM_ERROR_INPUTSTREAM: EnumLiveStreamError.ValueType
 LIVE_STREAM_ERROR_INTERNET: EnumLiveStreamError.ValueType
 "No internet access detected on startup of streamer"
 LIVE_STREAM_ERROR_OSNETWORK: EnumLiveStreamError.ValueType
-"Error occured in linux networking stack. usually means the server closed the connection"
+"Error occured in linux networking stack. Usually means the server closed the connection"
 LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT: EnumLiveStreamError.ValueType
 "Timed out attemping to connect to the wifi network when attemping live stream"
 LIVE_STREAM_ERROR_SSL_HANDSHAKE: EnumLiveStreamError.ValueType
@@ -108,7 +111,8 @@ class _EnumLiveStreamStatus:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumLiveStreamStatusEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLiveStreamStatus.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLiveStreamStatus.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     LIVE_STREAM_STATE_IDLE: _EnumLiveStreamStatus.ValueType
@@ -149,7 +153,8 @@ class _EnumRegisterLiveStreamStatus:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumRegisterLiveStreamStatusEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumRegisterLiveStreamStatus.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumRegisterLiveStreamStatus.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     REGISTER_LIVE_STREAM_STATUS_STATUS: _EnumRegisterLiveStreamStatus.ValueType
@@ -158,7 +163,8 @@ class _EnumRegisterLiveStreamStatusEnumTypeWrapper(
     REGISTER_LIVE_STREAM_STATUS_BITRATE: _EnumRegisterLiveStreamStatus.ValueType
 
 class EnumRegisterLiveStreamStatus(
-    _EnumRegisterLiveStreamStatus, metaclass=_EnumRegisterLiveStreamStatusEnumTypeWrapper
+    _EnumRegisterLiveStreamStatus,
+    metaclass=_EnumRegisterLiveStreamStatusEnumTypeWrapper,
 ): ...
 
 REGISTER_LIVE_STREAM_STATUS_STATUS: EnumRegisterLiveStreamStatus.ValueType
@@ -172,7 +178,8 @@ class _EnumWindowSize:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumWindowSizeEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumWindowSize.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumWindowSize.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     WINDOW_SIZE_480: _EnumWindowSize.ValueType
@@ -186,13 +193,15 @@ WINDOW_SIZE_720: EnumWindowSize.ValueType
 WINDOW_SIZE_1080: EnumWindowSize.ValueType
 global___EnumWindowSize = EnumWindowSize
 
+@typing_extensions.final
 class NotifyLiveStreamStatus(google.protobuf.message.Message):
     """*
     Live Stream status
 
     Sent either:
-      - as a syncrhonous response to initial @ref RequestGetLiveStreamStatus
-      - as asynchronous notifications registered for via @ref RequestGetLiveStreamStatus
+
+      - As a synchronous response to initial @ref RequestGetLiveStreamStatus
+      - As an asynchronous notifications registered for via @ref RequestGetLiveStreamStatus
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -244,14 +253,15 @@ class NotifyLiveStreamStatus(google.protobuf.message.Message):
         live_stream_error: global___EnumLiveStreamError.ValueType | None = ...,
         live_stream_encode: builtins.bool | None = ...,
         live_stream_bitrate: builtins.int | None = ...,
-        live_stream_window_size_supported_array: collections.abc.Iterable[global___EnumWindowSize.ValueType]
-        | None = ...,
+        live_stream_window_size_supported_array: (
+            collections.abc.Iterable[global___EnumWindowSize.ValueType] | None
+        ) = ...,
         live_stream_encode_supported: builtins.bool | None = ...,
         live_stream_max_lens_unsupported: builtins.bool | None = ...,
         live_stream_minimum_stream_bitrate: builtins.int | None = ...,
         live_stream_maximum_stream_bitrate: builtins.int | None = ...,
         live_stream_lens_supported: builtins.bool | None = ...,
-        live_stream_lens_supported_array: collections.abc.Iterable[global___EnumLens.ValueType] | None = ...
+        live_stream_lens_supported_array: (collections.abc.Iterable[global___EnumLens.ValueType] | None) = ...
     ) -> None: ...
     def HasField(
         self,
@@ -306,11 +316,14 @@ class NotifyLiveStreamStatus(google.protobuf.message.Message):
 
 global___NotifyLiveStreamStatus = NotifyLiveStreamStatus
 
+@typing_extensions.final
 class RequestGetLiveStreamStatus(google.protobuf.message.Message):
     """*
     Get the current livestream status (and optionally register for future status changes)
 
-    Both current status and future status changes are sent via @ref NotifyLiveStreamStatus
+    Response: @ref NotifyLiveStreamStatus
+
+    Notification: @ref NotifyLiveStreamStatus
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -334,10 +347,12 @@ class RequestGetLiveStreamStatus(google.protobuf.message.Message):
     def __init__(
         self,
         *,
-        register_live_stream_status: collections.abc.Iterable[global___EnumRegisterLiveStreamStatus.ValueType]
-        | None = ...,
-        unregister_live_stream_status: collections.abc.Iterable[global___EnumRegisterLiveStreamStatus.ValueType]
-        | None = ...
+        register_live_stream_status: (
+            collections.abc.Iterable[global___EnumRegisterLiveStreamStatus.ValueType] | None
+        ) = ...,
+        unregister_live_stream_status: (
+            collections.abc.Iterable[global___EnumRegisterLiveStreamStatus.ValueType] | None
+        ) = ...
     ) -> None: ...
     def ClearField(
         self,
@@ -351,11 +366,10 @@ class RequestGetLiveStreamStatus(google.protobuf.message.Message):
 
 global___RequestGetLiveStreamStatus = RequestGetLiveStreamStatus
 
+@typing_extensions.final
 class RequestSetLiveStreamMode(google.protobuf.message.Message):
     """*
-    Configure lives streaming
-
-    The current livestream status can be queried via @ref RequestGetLiveStreamStatus
+    Configure Live Streaming
 
     Response: @ref ResponseGeneric
     """
@@ -376,7 +390,7 @@ class RequestSetLiveStreamMode(google.protobuf.message.Message):
     window_size: global___EnumWindowSize.ValueType
     "*\n    Resolution to use for live stream\n\n    The set of supported lenses is only available from the `live_stream_window_size_supported_array` in @ref NotifyLiveStreamStatus)\n    "
     cert: builtins.bytes
-    "Certificate for servers that require it"
+    "Certificate for servers that require it in PEM format"
     minimum_bitrate: builtins.int
     "Minimum desired bitrate (may or may not be honored)"
     maximum_bitrate: builtins.int

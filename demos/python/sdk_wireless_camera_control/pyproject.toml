@@ -71,7 +71,6 @@ types-requests = "*"
 types-attrs = "*"
 types-pytz = "*"
 types-tzlocal = "*"
-mypy-protobuf = "*"
 construct-typing = "*"
 sphinx = "^5"
 sphinx-rtd-theme = "^1"
@@ -82,69 +81,69 @@ poethepoet = "^0"
 autodoc-pydantic = "^2"
 pytest-timeout = "^2"
 isort = "*"
-protoletariat = "^3"
+types-protobuf = "^4"
 
 [tool.poe.tasks.tests]
 cmd = "pytest tests --cov-fail-under=70"
 help = "Run unit tests"
 
-[tool.poe.tasks.types]
+[tool.poe.tasks._types]
 cmd = "mypy open_gopro"
 help = "Check types"
 
-[tool.poe.tasks.lint]
+[tool.poe.tasks._pylint]
 cmd = "pylint open_gopro"
 help = "Run pylint"
 
-[tool.poe.tasks.format_code]
+[tool.poe.tasks._format_code]
 cmd = "black open_gopro tests noxfile.py docs/conf.py"
 help = "Apply black formatting to source code"
 
-[tool.poe.tasks.sort_imports]
+[tool.poe.tasks._sort_imports]
 cmd = "isort open_gopro tests"
 help = "Sort imports with isort"
 
 [tool.poe.tasks.format]
-sequence = ["format_code", "sort_imports"]
+sequence = ["_format_code", "_sort_imports"]
 help = "Format code and sort imports"
 
-[tool.poe.tasks.pydocstyle]
+[tool.poe.tasks.lint]
+sequence = ["format", "_types", "_pylint"]
+help = "Perform all static code analysis"
+
+[tool.poe.tasks._pydocstyle]
 cmd = "pydocstyle --config pyproject.toml -v open_gopro"
 help = "check docstrings style"
 
-[tool.poe.tasks.darglint]
+[tool.poe.tasks._darglint]
 cmd = "darglint -v 2 open_gopro"
 help = "validate docstrings"
 
 [tool.poe.tasks.docstrings]
-sequence = ["pydocstyle", "darglint"]
+sequence = ["_pydocstyle", "_darglint"]
 help = "Format, check types, lint, check docstrings, and run unit tests"
 
 [tool.poe.tasks.sphinx]
 cmd = "sphinx-build -W --keep-going -a -E -b html docs docs/build"
 help = "Build sphinx documentation."
 
-[tool.poe.tasks.coverage]
+[tool.poe.tasks._coverage]
 cmd = "coverage-badge -f -o docs/_static/coverage.svg"
 help = "update coverage badge"
 
-[tool.poe.tasks.protobuf]
-cmd = "bash ./tools/build_protos.sh"
-help = "generate protobuf source from .proto (assumes protoc >= 3.20.1 available)"
-
-[tool.poe.tasks.clean_artifacts]
+[tool.poe.tasks._clean_artifacts]
 cmd = "rm -rf **/__pycache__ *.csv *.mp4 *.jpg *.log .mypy_cache .nox"
 help = "Clean testing artifacts and pycache"
 
-[tool.poe.tasks.clean_tests]
+[tool.poe.tasks._clean_tests]
 cmd = "rm -rf .reports && rm -rf .pytest_cache"
 help = "Clean test reports"
 
-[tool.poe.tasks.clean_docs]
+[tool.poe.tasks._clean_docs]
 cmd = "rm -f docs/modules.rst && rm -rf docs/build"
 help = "Clean built docs output"
 
-[tool.poe.tasks.clean_build]
+[tool.poe.tasks._clean_build]
 cmd = "rm -rf dist"
 help = "Clean module build output"
 
@@ -153,11 +152,11 @@ sequence = ["docstrings", "sphinx"]
 help = "Validate docstrings and build docs"
 
 [tool.poe.tasks.clean]
-sequence = ["clean_artifacts", "clean_tests", "clean_docs", "clean_build"]
+sequence = ["_clean_artifacts", "_clean_tests", "_clean_docs", "_clean_build"]
 help = "Clean everything"
 
 [tool.poe.tasks.all]
-sequence = ["format", "types", "lint", "tests", "docs"]
+sequence = ["format", "lint", "tests", "docs"]
 help = "Format, check types, lint, check docstrings, and run unit tests"
 
 [tool.mypy]
@@ -217,6 +216,7 @@ ignore = ["tests", "proto"]
 
 [tool.pylint.'MESSAGES CONTROL']
 disable = [
+    "use-maxsplit-arg",
     "unnecessary-lambda",
     "unnecessary-lambda-assignment",
     "too-many-ancestors",

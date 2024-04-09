@@ -304,23 +304,31 @@ class BleRespBuilder(RespBuilder[bytearray]):
         """
         return isinstance(self._identifier, (ActionId, FeatureId))
 
-    def _set_response_meta(self) -> None:
-        """Set the identifier based on what is currently known about the packet"""
+    @classmethod
+    def get_response_identifier(cls, uuid: BleUUID, packet: bytearray) -> types.ResponseType:
+        """Get the identifier based on what is currently known about the packet
+
+        Args:
+            uuid (BleUUID): UUID packet was received on
+            packet (bytearray): raw bytes contained in packet
+
+        Returns:
+            types.ResponseType: identifier of this response
+        """
         # If it's a protobuf command
-        identifier = self._packet[0]
+        identifier = packet[0]
         try:
             FeatureId(identifier)
-            self._identifier = ActionId(self._packet[1])
+            return ActionId(packet[1])
         # Otherwise it's a TLV command
         except ValueError:
-            if self._uuid is GoProUUIDs.CQ_SETTINGS_RESP:
-                self._identifier = SettingId(identifier)
-            elif self._uuid is GoProUUIDs.CQ_QUERY_RESP:
-                self._identifier = QueryCmdId(identifier)
-            elif self._uuid in [GoProUUIDs.CQ_COMMAND_RESP, GoProUUIDs.CN_NET_MGMT_RESP]:
-                self._identifier = CmdId(identifier)
-            else:
-                self._identifier = self._uuid
+            if uuid is GoProUUIDs.CQ_SETTINGS_RESP:
+                return SettingId(identifier)
+            if uuid is GoProUUIDs.CQ_QUERY_RESP:
+                return QueryCmdId(identifier)
+            if uuid in [GoProUUIDs.CQ_COMMAND_RESP, GoProUUIDs.CN_NET_MGMT_RESP]:
+                return CmdId(identifier)
+            return uuid
 
     def set_parser(self, parser: Parser) -> None:
         """Store a parser. This is optional.
@@ -429,15 +437,15 @@ class BleRespBuilder(RespBuilder[bytearray]):
         Returns:
             GoProResp: built response
         """
-        self._set_response_meta()
-        buf = self._packet
-
-        if not self._is_direct_read:  # length byte
-            buf.pop(0)
-        if self._is_protobuf:  # feature ID byte
-            buf.pop(0)
-
         try:
+            self._identifier = self.get_response_identifier(self._uuid, self._packet)
+            buf = self._packet
+
+            if not self._is_direct_read:  # length byte
+                buf.pop(0)
+            if self._is_protobuf:  # feature ID byte
+                buf.pop(0)
+
             parsed: Any = None
             query_type: type[StatusId] | type[SettingId] | StatusId | SettingId | None = None
             # Need to delineate QueryCmd responses between settings and status
@@ -480,7 +488,7 @@ class BleRespBuilder(RespBuilder[bytearray]):
                         if not (parser := GlobalParsers.get_parser(param_id)):
                             # We don't have defined params for all ID's yet. Just store raw bytes
                             logger.warning(f"No parser defined for {param_id}")
-                            camera_state[param_id] = param_val
+                            camera_state[param_id] = param_val.hex(":")
                             continue
                         # These can be more than 1 value so use a list
                         if self._identifier in [
@@ -527,7 +535,7 @@ class BleRespBuilder(RespBuilder[bytearray]):
                         if parsed.get("result") == EnumResultGeneric.RESULT_SUCCESS
                         else ErrorCode.ERROR
                     )
-        except KeyError as e:
+        except Exception as e:
             self._state = RespBuilder._State.ERROR
             raise ResponseParseError(str(self._identifier), buf) from e
 

@@ -1,0 +1,3 @@
+mypy-protobuf==3.5.0
+protoletariat==3.2.19
+black

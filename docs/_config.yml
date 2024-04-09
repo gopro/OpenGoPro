@@ -222,7 +222,7 @@ jekyll-spaceship:
         syntax:
             code: 'plantuml!'
             custom: ['@startuml', '@enduml']
-        src: http://plant_uml:8080/svg/ # TODO make this run-time configurable
+        src: http://plant-uml:8080/svg/ # TODO make this run-time configurable
     mermaid-processor:
         mode: pre-fetch # fetch image at build-time
         css:

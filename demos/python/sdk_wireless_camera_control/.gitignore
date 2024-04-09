@@ -1,13 +1,13 @@
 **/*.crt
+**/*.jpg
+**/*.mp4
 **/temp
-.reports/
 
 # Docs output
 docs/build
 
 # Test artifacts
-/*.jpg
-/*.mp4
+.reports/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

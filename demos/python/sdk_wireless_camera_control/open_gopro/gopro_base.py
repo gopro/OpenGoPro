@@ -11,9 +11,8 @@ import json
 import logging
 import threading
 import traceback
-from abc import ABC, abstractmethod
-from pathlib import Path
-from typing import Any, Awaitable, Callable, Final, Generic, Optional, TypeVar
+from abc import abstractmethod
+from typing import Any, Awaitable, Callable, Final, Generic, TypeVar
 
 import requests
 import wrapt
@@ -29,9 +28,16 @@ from open_gopro.api import (
     WiredApi,
     WirelessApi,
 )
+from open_gopro.communicator_interface import (
+    GoProHttp,
+    HttpMessage,
+    Message,
+    MessageRules,
+)
 from open_gopro.constants import ErrorCode
+from open_gopro.logger import Logger
 from open_gopro.models.response import GoProResp, RequestsHttpRespBuilderDirector
-from open_gopro.parser_interface import Parser
+from open_gopro.util import pretty_print
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +54,7 @@ class GoProMessageInterface(enum.Enum):
 
 
 @wrapt.decorator
-def catch_thread_exception(wrapped: Callable, instance: GoProBase, args: Any, kwargs: Any) -> Optional[Callable]:
+def catch_thread_exception(wrapped: Callable, instance: GoProBase, args: Any, kwargs: Any) -> Callable | None:
     """Catch any exceptions from this method and pass them to the exception handler identifier by thread name
 
     Args:
@@ -88,10 +94,26 @@ def ensure_opened(interface: tuple[GoProMessageInterface]) -> Callable:
     return wrapper
 
 
-class GoProBase(ABC, Generic[ApiType]):
+@wrapt.decorator
+async def enforce_message_rules(wrapped: MessageMethodType, instance: GoProBase, args: Any, kwargs: Any) -> GoProResp:
+    """Decorator proxy to call the GoProBase's _enforce_message_rules method.
+
+    Args:
+        wrapped (MessageMethodType): Operation to enforce
+        instance (GoProBase): GoProBase instance to use
+        args (Any): positional arguments to wrapped
+        kwargs (Any): keyword arguments to wrapped
+
+    Returns:
+        GoProResp: common response object
+    """
+    return await instance._enforce_message_rules(wrapped, *args, **kwargs)
+
+
+class GoProBase(GoProHttp, Generic[ApiType]):
     """The base class for communicating with all GoPro Clients"""
 
-    GET_TIMEOUT: Final = 5
+    HTTP_TIMEOUT: Final = 5
     HTTP_GET_RETRIES: Final = 5
 
     def __init__(self, **kwargs: Any) -> None:
@@ -262,6 +284,22 @@ class GoProBase(ABC, Generic[ApiType]):
     #                                 End Public API
     ##########################################################################################################
 
+    @abstractmethod
+    async def _enforce_message_rules(
+        self, wrapped: Callable, message: Message, rules: MessageRules, **kwargs: Any
+    ) -> GoProResp:
+        """Rule Enforcer. Called by enforce_message_rules decorator.
+
+        Args:
+            wrapped (Callable): operation to enforce
+            message (Message): message passed to operation
+            rules (MessageRules): rules to enforce
+            kwargs (Any) : arguments passed to operation
+
+        Returns:
+            GoProResp: Operation response
+        """
+
     def _handle_exception(self, source: Any, context: types.JsonDict) -> None:
         """Gather exceptions from module threads and send through callback if registered.
 
@@ -320,7 +358,7 @@ class GoProBase(ABC, Generic[ApiType]):
         return ensure_opened(interface)
 
     @staticmethod
-    def _catch_thread_exception(*args: Any, **kwargs: Any) -> Optional[Callable]:
+    def _catch_thread_exception(*args: Any, **kwargs: Any) -> Callable | None:
         """Catch any exceptions from this method and pass them to the exception handler identifier by thread name
 
         Args:
@@ -332,54 +370,85 @@ class GoProBase(ABC, Generic[ApiType]):
         """
         return catch_thread_exception(*args, **kwargs)
 
-    # TODO use requests in async manner
-    @ensure_opened((GoProMessageInterface.HTTP,))
-    async def _http_get(  # pylint: disable=unused-argument
-        self,
-        url: str,
-        parser: Parser | None,
-        headers: dict | None = None,
-        certificate: Path | None = None,
-        timeout: int = GET_TIMEOUT,
-        **kwargs: Any,
-    ) -> GoProResp:
-        """Send an HTTP GET request to an Open GoPro endpoint.
-
-        There should hopefully not be a scenario where this needs to be called directly as it is generally
-        called from the instance's delegates (i.e. self.wifi_command and self.wifi_status)
+    def _build_http_request_args(self, message: HttpMessage) -> dict[str, Any]:
+        """Helper method to build request kwargs from message
 
         Args:
-            url (str): endpoint URL
-            parser (Parser, optional): Optional parser to further parse received JSON dict.
-            headers (dict | None, optional): dict of additional HTTP headers. Defaults to None.
-            certificate (Path | None, optional): path to certificate CA bundle. Defaults to None.
-            timeout (int): timeout in seconds before retrying. Defaults to GET_TIMEOUT
-            kwargs (Any): additional arguments to be consumed by decorator / subclass
-
-        Raises:
-            ResponseTimeout: Response was not received in timeout seconds
+            message (HttpMessage): message to build args from
 
         Returns:
-            GoProResp: response
+            dict[str, Any]: built args
         """
-        url = self._base_url + url
-        logger.debug(f"Sending:  {url}")
-
         # Dynamically build get kwargs
         request_args: dict[str, Any] = {}
-        if headers:
-            request_args["headers"] = headers
-        if certificate:
-            request_args["verify"] = str(certificate)
+        if message._headers:
+            request_args["headers"] = message._headers
+        if message._certificate:
+            request_args["verify"] = str(message._certificate)
+        return request_args
 
-        response: Optional[GoProResp] = None
+    @enforce_message_rules
+    async def _get_json(
+        self, message: HttpMessage, *, timeout: int = HTTP_TIMEOUT, rules: MessageRules = MessageRules(), **kwargs: Any
+    ) -> GoProResp:
+        url = self._base_url + message.build_url(**kwargs)
+        logger.debug(f"Sending:  {url}")
+        logger.info(Logger.build_log_tx_str(pretty_print(message._as_dict(**kwargs))))
+        response: GoProResp | None = None
         for retry in range(1, GoProBase.HTTP_GET_RETRIES + 1):
             try:
-                request = requests.get(url, timeout=timeout, **request_args)
-                logger.trace(f"received raw json: {json.dumps(request.json() if request.text else {}, indent=4)}")  # type: ignore
-                if not request.ok:
-                    logger.warning(f"Received non-success status {request.status_code}: {request.reason}")
-                response = RequestsHttpRespBuilderDirector(request, parser)()
+                http_response = requests.get(url, timeout=timeout, **self._build_http_request_args(message))
+                logger.trace(f"received raw json: {json.dumps(http_response.json() if http_response.text else {}, indent=4)}")  # type: ignore
+                if not http_response.ok:
+                    logger.warning(f"Received non-success status {http_response.status_code}: {http_response.reason}")
+                response = RequestsHttpRespBuilderDirector(http_response, message._parser)()
+                break
+            except requests.exceptions.ConnectionError as e:
+                # This appears to only occur after initial connection after pairing
+                logger.warning(repr(e))
+                # Back off before retrying. TODO This appears to be needed on MacOS
+                await asyncio.sleep(2)
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.critical(f"Unexpected error: {repr(e)}")
+            logger.warning(f"Retrying #{retry} to send the command...")
+        else:
+            raise GpException.ResponseTimeout(GoProBase.HTTP_GET_RETRIES)
+
+        assert response is not None
+        logger.info(Logger.build_log_rx_str(pretty_print(response._as_dict())))
+        return response
+
+    @enforce_message_rules
+    async def _get_stream(
+        self, message: HttpMessage, *, timeout: int = HTTP_TIMEOUT, rules: MessageRules = MessageRules(), **kwargs: Any
+    ) -> GoProResp:
+        url = self._base_url + message.build_url(path=kwargs["camera_file"])
+        logger.debug(f"Sending:  {url}")
+        with requests.get(url, stream=True, timeout=timeout, **self._build_http_request_args(message)) as request:
+            request.raise_for_status()
+            file = kwargs["local_file"]
+            with open(file, "wb") as f:
+                logger.debug(f"receiving stream to {file}...")
+                for chunk in request.iter_content(chunk_size=8192):
+                    f.write(chunk)
+
+        return GoProResp(protocol=GoProResp.Protocol.HTTP, status=ErrorCode.SUCCESS, data=file, identifier=url)
+
+    @enforce_message_rules
+    async def _put_json(
+        self, message: HttpMessage, *, timeout: int = HTTP_TIMEOUT, rules: MessageRules = MessageRules(), **kwargs: Any
+    ) -> GoProResp:
+        url = self._base_url + message.build_url(**kwargs)
+        body = message.build_body(**kwargs)
+        logger.debug(f"Sending:  {url} with body: {json.dumps(body, indent=4)}")
+        response: GoProResp | None = None
+        for retry in range(1, GoProBase.HTTP_GET_RETRIES + 1):
+            try:
+                http_response = requests.put(url, timeout=timeout, json=body, **self._build_http_request_args(message))
+                logger.trace(f"received raw json: {json.dumps(http_response.json() if http_response.text else {}, indent=4)}")  # type: ignore
+                if not http_response.ok:
+                    logger.warning(f"Received non-success status {http_response.status_code}: {http_response.reason}")
+                response = RequestsHttpRespBuilderDirector(http_response, message._parser)()
                 break
             except requests.exceptions.ConnectionError as e:
                 # This appears to only occur after initial connection after pairing
@@ -394,35 +463,3 @@ class GoProBase(ABC, Generic[ApiType]):
 
         assert response is not None
         return response
-
-    @ensure_opened((GoProMessageInterface.HTTP,))
-    async def _stream_to_file(self, url: str, file: Path) -> GoProResp[Path]:
-        """Send an HTTP GET request to an Open GoPro endpoint to download a binary file.
-
-        There should hopefully not be a scenario where this needs to be called directly as it is generally
-        called from the instance's delegates (i.e. self.wifi_command and self.wifi_status)
-
-        Args:
-            url (str): endpoint URL
-            file (Path): location where file should be downloaded to
-
-        Returns:
-            GoProResp: location of file that was written
-        """
-        assert self.is_http_connected
-
-        url = self._base_url + url
-        logger.debug(f"Sending: {url}")
-        with requests.get(url, stream=True, timeout=GoProBase.GET_TIMEOUT) as request:
-            request.raise_for_status()
-            with open(file, "wb") as f:
-                logger.debug(f"receiving stream to {file}...")
-                for chunk in request.iter_content(chunk_size=8192):
-                    f.write(chunk)
-
-        return GoProResp(
-            protocol=GoProResp.Protocol.HTTP,
-            status=ErrorCode.SUCCESS,
-            data=file,
-            identifier=url,
-        )

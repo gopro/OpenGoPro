@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import argparse
 import asyncio
-import logging
 
 from rich.console import Console
 
@@ -17,19 +16,18 @@ from open_gopro.util import add_cli_args_and_parse
 
 console = Console()  # rich consoler printer
 
-logger: logging.Logger
-
 MDNS_SERVICE = "_gopro-web._tcp.local."
 
 
 async def main(args: argparse.Namespace) -> None:
-    global logger
     logger = setup_logging(__name__, args.log)
 
     gopro: WirelessGoPro | None = None
     try:
         # Start with Wifi Disabled (i.e. don't allow camera in AP mode).
         async with WirelessGoPro(args.identifier, enable_wifi=False) as gopro:
+            await gopro.ble_command.cohn_clear_certificate()
+
             if await gopro.is_cohn_provisioned:
                 console.print("[yellow]COHN is already provisioned")
             else:
@@ -42,6 +40,7 @@ async def main(args: argparse.Namespace) -> None:
 
         # Prove we can communicate via the COHN HTTP channel without a BLE or Wifi connection
         assert (await gopro.http_command.get_camera_state()).ok
+        console.print("Successfully communicated via COHN!!")
 
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))

@@ -8,10 +8,10 @@ If you are a user of the tutorials, please visit the above link. Developer's of 
 
 ## Development Environment Setup
 
-With Python >= 3.8 and < 3.11, perform:
+With Python >= 3.9 and < 3.12, perform:
 
 ```
-pip install -r requirements-dev.txt
+poetry install
 ```
 
 ## Tutorial Documentation
@@ -29,7 +29,7 @@ shall be tested as detailed below.
 There should be no static typing or linting errors as checked via:
 
 ```
-make lint
+poetry run poe lint
 ```
 
 ## Testing
@@ -39,7 +39,7 @@ Each script shall be tested via pytest by adding a case to the `tests/testtutori
 Tests can be run via:
 
 ```
-make tests
+poetry run poe tests
 ```
 
-After running th tests, test logs and a summary test report can be found in the `reports` folder.
+After running the tests, test logs and a summary test report can be found in the `.reports` folder.

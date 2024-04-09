@@ -8,11 +8,23 @@ lesson: 3
 # Tutorial 3: Parse BLE TLV Responses
 
 This document will provide a walk-through tutorial to implement
-the [Open GoPro Interface](/ble/index.html) to parse BLE
+the [Open GoPro Interface]({{site.baseurl}}/ble/index.html) to parse BLE
 [Type-Length-Value](https://en.wikipedia.org/wiki/Type-length-value) (TLV) Responses.
 
-Besides TLV, some BLE commands instead return protobuf responses. These are not considered here and will be
-discussed in a future tutorial.
+{% note %}
+Besides TLV, some BLE operations instead return protobuf responses. These are not considered here and will be
+discussed in a [future tutorial]({% link _tutorials/tutorial_5_ble_protobuf/tutorial.md %})
+{% endnote %}
+
+This tutorial will provide an overview of how to handle responses of both single and multiple packets lengths, then
+give parsing examples for each case, and finally create `Response` and `TlvResponse` classes that will be reused in
+future tutorials.
+
+# Requirements
+
+It is assumed that the hardware and software requirements from the
+[connecting BLE tutorial]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %})
+are present and configured correctly.
 
 {% tip %}
 It is suggested that you have first completed the
@@ -21,29 +33,21 @@ and [sending commands]({% link _tutorials/tutorial_2_send_ble_commands/tutorial.
 through this tutorial.
 {% endtip %}
 
-This tutorial will give an overview of types of responses, then give examples of parsing each type
-before finally providing a **Response** class that will be used in future tutorials.
-
-# Requirements
-
-It is assumed that the hardware and software requirements from the
-[connect tutorial]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %})
-are present and configured correctly.
-
 # Just Show me the Demo(s)!!
 
 {% linkedTabs demo %}
 {% tab demo python %}
-Each of the scripts for this tutorial can be found in the Tutorial 2
+Each of the scripts for this tutorial can be found in the Tutorial 3
 [directory](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_3_parse_ble_tlv_responses/).
 
 {% warning %}
-Python >= 3.8.x must be used as specified in the requirements
+Python >= 3.9 and < 3.12 must be used as specified in the requirements
 {% endwarning %}
 
 {% accordion Parsing a One Packet TLV Response %}
 
 You can test parsing a one packet TLV response with your camera through BLE using the following script:
+
 ```console
 $ python ble_command_get_version.py
 ```
@@ -62,30 +66,33 @@ optional arguments:
                         Last 4 digits of GoPro serial number, which is the last 4 digits of the
                         default camera SSID. If not used, first discovered GoPro will be connected to
 ```
-{% endaccordion %}
 
+{% endaccordion %}
 
 {% accordion Parsing Multiple Packet TLV Responses %}
 
 You can test parsing multiple packet TVL responses with your camera through BLE using the following script:
+
 ```console
-$ python ble_command_get_state.py
+$ python ble_command_get_hardware_info.py
 ```
 
 See the help for parameter definitions:
 
 ```console
-$ python ble_command_get_state.py --help
-usage: ble_command_get_state.py [-h] [-i IDENTIFIER]
+$ python ble_command_get_hardware_info.py --help
+usage: ble_command_get_hardware_info.py [-h] [-i IDENTIFIER]
 
-Connect to a GoPro camera via BLE, then get its statuses and settings.
+Connect to a GoPro camera via BLE, then get its hardware info.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -i IDENTIFIER, --identifier IDENTIFIER
-                        Last 4 digits of GoPro serial number, which is the last 4 digits of the
-                        default camera SSID. If not used, first discovered GoPro will be connected to
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of
+                        the default camera SSID. If not used, first discovered GoPro will be
+                        connected to
 ```
+
 {% endaccordion %}
 
 {% endtab %}
@@ -108,14 +115,14 @@ This will start the tutorial and log to the screen as it executes. When the tuto
 # Setup
 
 We must first connect as was discussed in the
-[connect tutorial]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %}). When enabling notifications,
+[connecting BLE tutorial]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %}). When enabling notifications,
 one of the notification handlers described in the following sections will be used.
 
 # Response Overview
 
 In the preceding tutorials, we have been using a very simple response handling procedure where the notification
 handler simply checks that the UUID is the expected UUID and that the status byte of the response is 0 (Success).
-This has been fine since we were only sending specific commands where this works and we know that the sequence
+This has been fine since we were only performing specific operations where this works and we know that the sequence
 always appears as such (connection sequence left out for brevity):
 
 ```mermaid!
@@ -128,8 +135,8 @@ sequenceDiagram
 ```
 
 In actuality, responses can be more complicated. As described in the
-[Open GoPro Interface](/ble/index.html#packet-headers), responses can be
-be comprised of multiple packets where each packet is <= 20 bytes such as:
+[BLE Spec]({{site.baseurl}}/ble/protocol/data_protocol.html#packetization), responses can be be comprised of multiple
+packets where each packet is <= 20 bytes such as:
 
 ```mermaid!
 sequenceDiagram
@@ -143,19 +150,19 @@ sequenceDiagram
   GoPro ->> PC: Notification Response (MSB == 1 (continuation))
 ```
 
-This requires the implementation of accumulating and parsing algorithms which will be described in
-[Parsing Multiple Packet TLV Responses].
+This requires the implementation of accumulating and parsing algorithms which will be described
+[below](#parsing-multiple-packet-tlv-responses).
 
 # Parsing a One Packet TLV Response
 
 This section will describe how to parse one packet (<= 20 byte) responses. A one-packet response
 is formatted as such:
 
-| Header (length) | Command / Setting ID | Status  | Response         |
-| --------------- | -------------------- | ------- | ---------------- |
-| 1 byte          | 1 byte               | 1 bytes | Length - 2 bytes |
+| Header (length) | Operation ID | Status  | Response         |
+| --------------- | ------------ | ------- | ---------------- |
+| 1 byte          | 1 byte       | 1 bytes | Length - 2 bytes |
 
-## Command / Setting Responses with Response Length 0
+## Responses with Payload Length 0
 
 These are the only responses that we have seen thus far through the first 2 tutorials. They
 return a status but have a 0 length additional response. For example, consider
@@ -168,178 +175,194 @@ of:
 
 This equates to:
 
-| Header (length) | Command / Setting / Status ID | Status          | Response         |
-| --------------- | ----------------------------- | --------------- | ---------------- |
-| 1 byte          | 1 byte                        | 1 bytes         | Length - 2 bytes |
-| 0x02            | 0x01 == Set Shutter           | 0x00 == Success | (2 -2 = 0 bytes) |
+| Header (length) | Command ID          | Status          | Response         |
+| --------------- | ------------------- | --------------- | ---------------- |
+| 1 byte          | 1 byte              | 1 bytes         | Length - 2 bytes |
+| 0x02            | 0x01 == Set Shutter | 0x00 == Success | (2 -2 = 0 bytes) |
 
 We can see how this response includes the status but no additional response data. This type of
 response will be used for most Commands and Setting Responses as seen in the
 [previous tutorial]({% link _tutorials/tutorial_2_send_ble_commands/tutorial.md %}).
 
-## Complex Command Response
+## Responses with Payload
 
-There are some commands that do return additional response data. These are called "complex responses."
-From the [commands reference](/ble/index.html#commands-quick-reference), we can see that these are:
+However, there are some operations that do return additional response data. These are identified by the presence of
+`parameters` in their Response documentation as shown in the red box here:
 
--   Get Open GoPro Version (ID == 0x51)
--   Get Hardware Info (ID == 0x3C)
+{% include figure image_path="/assets/images/tutorials/complex_response_doc.png" alt="complex response example" size="40%" caption="Response With Payload" %}
 
-In this tutorial, we will walk through creating a simple parser to parse the Open GoPro Get Version Command.
+In this tutorial, we will walk through creating a simple parser to parse the
+[Open GoPro Get Version Command]({{site.baseurl}}/ble/features/query.html#get-open-gopro-version) which is an example
+of such an operation.
 
 {% tip %}
 It is important to always query the version after connecting in order to know which API is supported.
 See the relevant version of the BLE and / or WiFi spec for more details about each version.
 {% endtip %}
 
-First, we send the command to the Command Request [UUID](/ble/index.html#services-and-characteristics):
+First, we send the Get Version Command to the Command Request
+[UUID]({{site.baseurl}}/ble/protocol/ble_setup.html#configure-gatt-characteristics) in the same manner as commands
+were sent in the previous tutorial:
 
 {% linkedTabs send_command %}
 {% tab send_command python %}
+
 ```python
-COMMAND_REQ_UUID = GOPRO_BASE_UUID.format("0072")
-event.clear()
-await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x01, 0x51]))
+request_uuid = GoProUuid.COMMAND_REQ_UUID
+request = bytes([0x01, 0x51])
+await client.write_gatt_char(request_uuid.value, request, response=True)
 await event.wait()  # Wait to receive the notification response
+```
+
+We receive a response at the expected handle (as a TLV Response). This is logged as:
+
+```console
+Getting the Open GoPro version...
+Writing to GoProUuid.COMMAND_REQ_UUID: 01:51
+Received response GoProUuid.COMMAND_RSP_UUID: 06:51:00:01:02:01:00
+```
+
+{% endtab %}
+{% tab send_command kotlin %}
+
+```kotlin
+val versionRequest = ubyteArrayOf(0x01U, 0x51U)
+ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, versionRequest)
+var tlvResponse = receivedResponses.receive() as Response.Tlv
 ```
 
 We then receive a response at the expected handle. This is logged as:
 
-```console
-INFO:root:Getting the Open GoPro version...
-INFO:root:Received response at handle=52: b'06:51:00:01:02:01:00'
-```
-{% endtab %}
-{% tab send_command kotlin %}
-```kotlin
-    val getVersion = ubyteArrayOf(0x01U, 0x51U)
-    ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, getVersion)
-    val version = receivedResponse.receive() as Response.Complex // Wait to receive response
-```
-
-This is loged as such:
+This is logged as such:
 
 ```console
 Getting the Open GoPro version
 Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==> 01:51
 Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b
 Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 06:51:00:01:02:01:00
-Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 06:51:00:01:02:01:00
+Received response on CQ_COMMAND_RSP
+Received packet of length 6. 0 bytes remaining
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
 This response equates to:
 
-| Header (length) | Command / Setting / Status ID | Status          | Response            |
-| --------------- | ----------------------------- | --------------- | ------------------- |
-| 1 byte          | 1 byte                        | 1 bytes         | Length - 2 bytes    |
-| 0x06            | 0x51 == Get Version           | 0x00 == Success | 0x01 0x02 0x01 0x00 |
+| Header (length) | Command ID          | Status          | Response            |
+| --------------- | ------------------- | --------------- | ------------------- |
+| 1 byte          | 1 byte              | 1 bytes         | Length - 2 bytes    |
+| 0x06            | 0x51 == Get Version | 0x00 == Success | 0x01 0x02 0x01 0x00 |
 
-We can see that this "complex response" contains 4 additional bytes that need to be parsed. Using the information
-from the [interface description](/ble/index.html#complex-command-responses),
-we know to parse this as:
+We can see that this response payload contains 4 additional bytes that need to be parsed. Using the information
+from the [Get Version Documentation]({{site.baseurl}}/ble/features/query.html#get-open-gopro-version), we know to
+parse this as:
 
-| Byte | Meaning                        |
-| ---- | ------------------------------ |
-| 0x01 | Length of Major Version Number |
-| 0x02 | Major Version Number           |
-| 0x01 | Length of Minor Version Number |
-| 0x00 | Minor Version Number           |
+| Byte | Meaning                               |
+| ---- | ------------------------------------- |
+| 0x01 | Length of Major Version Number        |
+| 0x02 | Major Version Number of length 1 byte |
+| 0x01 | Length of Minor Version Number        |
+| 0x00 | Minor Version Number of length 1 byte |
 
-We implement this in the notification handler as follows. First, we parse the length, command ID, and status
-from the first 3 bytes of the response. Then we parse the remaining four bytes of the response as individual
-values formatted as such:
-
-| Length | Value        |
-| ------ | ------------ |
-| 1 byte | Length bytes |
+We implement this as follows. First, we parse the length, command ID, and status from the first 3 bytes of the response.
+The remainder is stored as the payload. This is all of the common parsing across TLV Responses. Each individual
+response will document how to further parse the payload.
 
 {% linkedTabs parse_response %}
 {% tab parse_response python %}
+
 {% note %}
 The snippets of code included in this section are taken from the `notification handler`
 {% endnote %}
 
-
 ```python
-# Parse first 3 bytes
+# First byte is the length of this response.
 length = data[0]
+# Second byte is the ID
 command_id = data[1]
+# Third byte is the status
 status = data[2]
+# The remainder is the payload
+payload = data[3 : length + 1]
 ```
 
-```python
-# Parse remaining four bytes
-index = 3
-params = []
-while index <= length:
-    param_len = data[index]
-    index += 1
-    params.append(data[index : index + param_len])
-    index += param_len
-```
 {% endtab %}
 {% tab parse_response kotlin %}
+
 {% note %}
-The snippets of code included in this section are taken from the `Response.Complex` `parse` method. For the
-contrived code in this tutorial, we have separate `Response` sealed classes to handle each use case.
+The snippets of code included in this section are taken from the `Response.Tlv.Parse` method
 {% endnote %}
 
 ```kotlin
 // Parse header bytes
-id = packet[0].toInt()
-status = packet[1].toInt()
-var buf = packet.drop(2)
+tlvResponse.parse()
+
+...
+
+open fun parse() {
+    require(isReceived)
+    id = rawBytes[0].toInt()
+    status = rawBytes[1].toInt()
+    // Store remainder as payload
+    payload = rawBytes.drop(2).toUByteArray()
+}
+
 ```
 
-```kotlin
-// Parse remaining packet
-while (buf.isNotEmpty()) {
-    // Get each parameter's ID and length
-    val paramLen = buf[0].toInt()
-    buf = buf.drop(1)
-    // Get the parameter's value
-    val paramVal = buf.take(paramLen)
-    // Store in data list
-    data += paramVal.toUByteArray()
-    // Advance the buffer for continued parsing
-    buf = buf.drop(paramLen)
-}
-```
 {% endtab %}
 {% endlinkedTabs %}
 
-From the complex response definition, we know these parameters are one byte each and equate to the major and
+From the response definition, we know these parameters are one byte each and equate to the major and
 the minor version so let's print them (and all of the other response information) as such:
 
 {% linkedTabs print_response %}
 {% tab print_response python %}
+
 ```python
-major, minor = params
+major_length = payload[0]
+payload.pop(0)
+major = payload[:major_length]
+payload.pop(major_length)
+minor_length = payload[0]
+payload.pop(0)
+minor = payload[:minor_length]
+logger.info(f"The version is Open GoPro {major[0]}.{minor[0]}")
 logger.info(f"Received a response to {command_id=} with {status=}: version={major[0]}.{minor[0]}")
 ```
 
 which shows on the log as:
 
 ```console
-INFO:root:Received a response to command_id=81 with status=0: version=2.0
+Received a response to command_id=81 with status=0, payload=01:02:01:00
+The version is Open GoPro 2.0
 ```
+
 {% endtab %}
 {% tab print_response kotlin %}
+
+{% note %}
+The snippets of code included in this section are taken from the `OpenGoProVersion` `from_bytes` method. This class
+is a simple data class to contain the Get Version information.
+{% endnote %}
+
 ```kotlin
-val version = receivedResponse.receive() as Response.Complex // Wait to receive response
-val major = version.data[0].first().toInt()
-val minor = version.data[1].first().toInt()
-Timber.i("Got the Open GoPro version successfully: $major.$minor")
+var buf = data.toUByteArray()
+val minorLen = buf[0].toInt()
+buf = buf.drop(1).toUByteArray()
+val minor = buf.take(minorLen).toInt()
+val majorLen = buf[0].toInt()
+buf = buf.drop(1).toUByteArray()
+val major = buf.take(majorLen).toInt()
+return OpenGoProVersion(minor, major)
 ```
 
 which shows on the log as such:
 
 ```console
+Received response: ID: 81, Status: 0, Payload: 01:02:01:00
 Got the Open GoPro version successfully: 2.0
 ```
-
 
 {% endtab %}
 {% endlinkedTabs %}
@@ -347,7 +370,7 @@ Got the Open GoPro version successfully: 2.0
 **Quiz time! 📚 ✏️**
 
 {% quiz
-    question="What is the maximum size of an individual notification response packet?"
+    question="What is the maximum size of an individual notification response packet at the Open GoPro application layer?"
     option="A:::20 bytes"
     option="B:::256 bytes"
     option="C:::There is no maximum size"
@@ -357,7 +380,7 @@ Got the Open GoPro version successfully: 2.0
 %}
 
 {% quiz
-    question="What is the maximum amount of packets that one response can be composed of?"
+    question="What is the maximum amount of bytes that one response can be composed of?"
     option="A:::20 bytes"
     option="B:::256 bytes"
     option="C:::There is no maximum size"
@@ -366,38 +389,36 @@ Got the Open GoPro version successfully: 2.0
 %}
 
 {% quiz
-    question="What is the maximum amount of packets that one response can be composed of?"
+    question="How many packets are command responses composed of?"
     option="A:::Always 1 packet"
     option="B:::Always multiple packets."
-    option="C:::Always 1 packet except for complex responses."
+    option="C:::A variable amount of packets depending on the payload size"
     correct="C"
-    info="Command responses are almost always 1 packet (just returning the status).
-    The exception are complex responses which can be multiple packets (in the case of Get Hardware
-    Info)"
+    info="Command responses are sometimes 1 packet (just returning the status).
+    Other times, command responses also contain a payload and can thus be multiple packets if the payload is big enough
+    (i.e. in the case of Get Hardware Info). This is described in the per-command documentation in the BLE spec."
 %}
 
 {% quiz
     question="How many packets are setting responses comprised of?"
     option="A:::Always 1 packet"
     option="B:::Always multiple packets."
-    option="C:::Always 1 packet except for complex responses."
+    option="C:::A variable amount of packets depending on the payload size"
     correct="A"
-    info="Settings Responses only ever contain the command status. Furthermore, there
-    is no concept of complex responses for setting commands."
+    info="Settings Responses only ever contain the response status."
 %}
 
 # Parsing Multiple Packet TLV Responses
 
 This section will describe parsing TLV responses that contain more than one packet. It will first describe how
-to accumulate such responses and then provide a parsing example. The example script that will be walked through
-for this section is `ble_command_get_state.py`. We will be creating a small _Response_ class that will be
-re-used for future tutorials.
+to accumulate such responses and then provide a parsing example. We will be creating small _Response_ and _TlvResponse_
+classes that will be re-used for future tutorials.
 
 ## Accumulating the Response
 
 The first step is to accumulate the multiple packets into one response. Whereas for all tutorials until now, we
-have just used the header bytes of the response as the length, we now must completely parse the header as it is
-defined:
+have just used the header bytes of the response as the length, we now must completely parse the headers as they are
+[defined]({{site.baseurl}}/ble/protocol/data_protocol.html#packet-headers), reproduced for reference here:
 
 <table border="1">
   <tbody>
@@ -462,37 +483,46 @@ defined:
   </tbody>
 </table>
 
-The basic algorithm here (which is implemented in the _Message.accumulate_ method) is as follows:
+The basic accumulation algorithm (which is implemented in the _Response.Accumulate_ method) is as follows:
 
 ---
 
 <div class="md_column">
 <div markdown="1">
-Continuation bit set?
+Is the continuation bit set?
 
 {% linkedTabs is_cont_set %}
 {% tab is_cont_set python %}
+
+{% note %}
+The example script that will be walked through for this section is `ble_command_get_hardware_info.py`.
+{% endnote %}
+
 ```python
 if buf[0] & CONT_MASK:
     buf.pop(0)
 else:
     ...
 ```
+
 {% endtab %}
 {% tab is_cont_set kotlin %}
+
 ```kotlin
 if (data.first().and(Mask.Continuation.value) == Mask.Continuation.value) {
     buf = buf.drop(1).toUByteArray() // Pop the header byte
 } else { // This is a new packet
     ...
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
-No, continuation bit was not set. So create new response, then get its length.
+No, the continuation bit was not set. Therefore create new response, then get its length.
 
 {% linkedTabs cont_not_set %}
 {% tab cont_not_set python %}
+
 ```python
 # This is a new packet so start with an empty byte array
 self.bytes = bytearray()
@@ -507,8 +537,10 @@ elif hdr is Header.EXT_16:
     self.bytes_remaining = (buf[1] << 8) + buf[2]
     buf = buf[3:]
 ```
+
 {% endtab %}
 {% tab cont_not_set kotlin %}
+
 ```kotlin
 // This is a new packet so start with empty array
 packet = ubyteArrayOf()
@@ -531,6 +563,7 @@ when (Header.fromValue((buf.first() and Mask.Header.value).toInt() shr 5)) {
     }
 }
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -538,43 +571,69 @@ Append current packet to response and decrement bytes remaining.
 
 {% linkedTabs append_packet %}
 {% tab append_packet python %}
+
 ```python
 # Append payload to buffer and update remaining / complete
 self.bytes.extend(buf)
 self.bytes_remaining -= len(buf)
 ```
+
 {% endtab %}
 {% tab append_packet kotlin %}
+
 ```kotlin
 // Accumulate the payload now that headers are handled and dropped
 packet += buf
 bytesRemaining -= buf.size
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
-In the notification handler, we are then parsing if there are no bytes remaining.
+In the notification handler, we are then enqueueing the received response if there are no bytes remaining.
 
 {% linkedTabs parse_if_done %}
 {% tab parse_if_done python %}
+
 ```python
     if response.is_received:
-        response.parse()
+        ...
+        await received_responses.put(response)
 ```
+
+and finally parsing the payload back in the main task after it receives the accumulated response from the queue which,
+at the current TLV Response level, is just extracting the ID, status, and payload:
+
+```python
+class TlvResponse(Response):
+    def parse(self) -> None:
+        self.id = self.raw_bytes[0]
+        self.status = self.raw_bytes[1]
+        self.payload = self.raw_bytes[2:]
+
+...
+
+response = await received_responses.get()
+response.parse()
+```
+
 {% endtab %}
 {% tab parse_if_done kotlin %}
+
 ```kotlin
-rsp.accumulate(data)
-if (rsp.isReceived) {
-    rsp.parse()
+if (response.isReceived) {
+    if (uuid == GoProUUID.CQ_COMMAND_RSP) {
+        CoroutineScope(Dispatchers.IO).launch { receivedResponses.send(response) }
+    }
     ...
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
 </div>
 
-<div markdown="1" style="60%">
+<div markdown="1" style="flex-basis: 50em; max-width: max-content">
 <br><br><br>
 ```mermaid!
 graph TD
@@ -592,169 +651,265 @@ graph TD
 
 ---
 
-We can see this in action when we send the _Get All Setting Values_ Query.
-
-{% note %}
-Queries aren't introduced until the next tutorial so for now, just pay attention to the response.
-{% endnote %}
-
-We send the command as such:
+We can see this in action when we send the
+[Get Hardware Info]({{site.baseurl}}/ble/features/query.html#get-hardware-info) Command:
 
 {% linkedTabs get_all_settings_values %}
 {% tab get_all_settings_values python %}
+
 ```python
-QUERY_REQ_UUID = GOPRO_BASE_UUID.format("0076")
-event.clear()
-await client.write_gatt_char(QUERY_REQ_UUID, bytearray([0x01, 0x12]))
-await event.wait()  # Wait to receive the notification response
+request_uuid = GoProUuid.COMMAND_REQ_UUID
+request = bytearray([0x01, 0x3C])
+await client.write_gatt_char(request_uuid.value, request, response=True)
+response = await received_responses.get()
 ```
+
 {% endtab %}
 {% tab get_all_settings_values kotlin %}
+
 ```kotlin
-val getCameraSettings = ubyteArrayOf(0x01U, 0x12U)
-ble.writeCharacteristic(goproAddress, GoProUUID.CQ_QUERY.uuid, getCameraSettings)
-val settings = receivedResponse.receive()
+val hardwareInfoRequest = ubyteArrayOf(0x01U, 0x3CU)
+ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, hardwareInfoRequest)
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
-Then, in the notification handler, we continuously receive and accumulate packets until we have
-received the entire response, at which point we notify the writer that the response is ready:
-
-{% linkedTabs parse_get_all_settings_values %}
-{% tab parse_get_all_settings_values python %}
-```python
- def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
-        response.accumulate(data)
-
-        if response.is_received:
-            response.parse()
-
-            # Notify writer that procedure is complete
-            event.set()
-```
-{% endtab %}
-{% tab parse_get_all_settings_values kotlin %}
-```kotlin
-private fun tlvResponseNotificationHandler(characteristic: UUID, data: UByteArray) {
-    ...
-    rsp.accumulate(data)
-    if (rsp.isReceived) {
-        rsp.parse()
-
-        // Notify the command sender the the procedure is complete
-        response = null // Clear for next command
-        CoroutineScope(Dispatchers.IO).launch { receivedResponse.send(rsp) }
-    }
-```
-{% endtab %}
-{% endlinkedTabs %}
+Then, in the notification handler, we continuously receive and accumulate packets (per UUID) until we have
+received an entire response, at which point we perform common TLV parsing (via the `TlvResponse`'s `parse` method)
+to extract Command ID, Status, and payload. Then we enqueue the received response to notify the writer that the response
+is ready. Finally we reset the per-UUID response to prepare it to receive a new response.
 
 {% note %}
-We also first parse the response but that will be described in the next section.
+This notification handler is only designed to handle TlvResponses. This is fine for this tutorial since that is all
+we will be receiving.
 {% endnote %}
+
+{% linkedTabs parse_get_hardware_info %}
+{% tab parse_get_hardware_info python %}
+
+```python
+request_uuid = GoProUuid.COMMAND_REQ_UUID
+response_uuid = GoProUuid.COMMAND_RSP_UUID
+responses_by_uuid = GoProUuid.dict_by_uuid(TlvResponse)
+received_responses: asyncio.Queue[TlvResponse] = asyncio.Queue()
+
+async def tlv_notification_handler(characteristic: BleakGATTCharacteristic, data: bytearray) -> None:
+    uuid = GoProUuid(client.services.characteristics[characteristic.handle].uuid)
+    response = responses_by_uuid[uuid]
+    response.accumulate(data)
+
+    if response.is_received:
+        # If this is the correct handle, enqueue it for processing
+        if uuid is response_uuid:
+            logger.info("Received the get hardware info response")
+            await received_responses.put(response)
+        # Anything else is unexpected. This shouldn't happen
+        else:
+            logger.error("Unexpected response")
+        # Reset the per-UUID response
+        responses_by_uuid[uuid] = TlvResponse(uuid)
+```
+
+{% endtab %}
+{% tab parse_get_hardware_info kotlin %}
+
+```kotlin
+private fun notificationHandler(characteristic: UUID, data: UByteArray) {
+    ...
+    responsesByUuid[uuid]?.let { response ->
+        response.accumulate(data)
+        if (response.isReceived) {
+            if (uuid == GoProUUID.CQ_COMMAND_RSP) {
+                CoroutineScope(Dispatchers.IO).launch { receivedResponses.send(response) }
+            }
+            ...
+            responsesByUuid[uuid] = Response.muxByUuid(uuid)
+        }
+    }
+}
+```
+
+{% endtab %}
+{% endlinkedTabs %}
 
 We can see the individual packets being accumulated in the log:
 
-{% linkedTabs print_get_all_settings_values %}
-{% tab print_get_all_settings_values python %}
-```console
-INFO:root:Getting the camera's settings...
-INFO:root:Received response at handle=62: b'21:25:12:00:02:01:09:03:01:01:05:0
-INFO:root:self.bytes_remaining=275
-INFO:root:Received response at handle=62: b'80:01:00:18:01:00:1e:04:00:00:00:0
-INFO:root:self.bytes_remaining=256
-INFO:root:Received response at handle=62: b'81:0a:25:01:00:29:01:09:2a:01:05:2
-INFO:root:self.bytes_remaining=237
-INFO:root:Received response at handle=62: b'82:2f:01:04:30:01:03:36:01:00:3b:0
-INFO:root:self.bytes_remaining=218
-INFO:root:Received response at handle=62: b'83:04:00:00:00:00:3e:04:00:00:00:0
-INFO:root:self.bytes_remaining=199
-INFO:root:Received response at handle=62: b'84:00:42:04:00:00:00:00:43:04:00:0
-INFO:root:self.bytes_remaining=180
-INFO:root:Received response at handle=62: b'85:4f:01:00:53:01:00:54:01:00:55:0
-INFO:root:self.bytes_remaining=161
-INFO:root:Received response at handle=62: b'86:01:28:5b:01:02:60:01:00:66:01:0
-INFO:root:self.bytes_remaining=142
-INFO:root:Received response at handle=62: b'87:00:6a:01:00:6f:01:0a:70:01:ff:7
-INFO:root:self.bytes_remaining=123
-INFO:root:Received response at handle=62: b'88:75:01:00:76:01:04:79:01:00:7a:0
-INFO:root:self.bytes_remaining=104
-INFO:root:Received response at handle=62: b'89:01:00:7e:01:00:80:01:0c:81:01:0
-INFO:root:self.bytes_remaining=85
-INFO:root:Received response at handle=62: b'8a:0c:85:01:09:86:01:00:87:01:01:8
-INFO:root:self.bytes_remaining=66
-INFO:root:Received response at handle=62: b'8b:92:01:00:93:01:00:94:01:02:95:0
-INFO:root:self.bytes_remaining=47
-INFO:root:Received response at handle=62: b'8c:01:00:9c:01:00:9d:01:00:9e:01:0
-INFO:root:self.bytes_remaining=28
-INFO:root:Received response at handle=62: b'8d:00:a2:01:00:a3:01:01:a4:01:00:a
-INFO:root:self.bytes_remaining=9
-INFO:root:Received response at handle=62: b'8e:a8:04:00:00:00:00:a9:01:01'
-INFO:root:self.bytes_remaining=0
-INFO:root:Successfully received the response
-```
-{% endtab %}
-{% tab print_get_all_settings_values kotlin %}
+{% linkedTabs get_hardware_info_log %}
+{% tab get_hardware_info_log python %}
 
 ```console
-Writing characteristic b5f90076-aa8d-11e3-9046-0002a5d5c51b ==> 01:12
-Wrote characteristic b5f90076-aa8d-11e3-9046-0002a5d5c51b
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 21:2B:12:00:02:01:04:03:01:05:05:01:00:06:01:01:0D:01:01:13
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 21:2B:12:00:02:01:04:03:01:05:05:01:00:06:01:01:0D:01:01:13
-Received packet of length 18. 281 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 80:01:00:18:01:00:1E:04:00:00:00:6E:1F:01:00:20:04:00:00:00
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 80:01:00:18:01:00:1E:04:00:00:00:6E:1F:01:00:20:04:00:00:00
-Received packet of length 19. 262 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 81:0A:25:01:00:29:01:09:2A:01:08:2B:01:00:2C:01:09:2D:01:08
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 81:0A:25:01:00:29:01:09:2A:01:08:2B:01:00:2C:01:09:2D:01:08
-Received packet of length 19. 243 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 82:2F:01:07:36:01:01:3B:01:04:3C:04:00:00:00:00:3D:04:00:00
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 82:2F:01:07:36:01:01:3B:01:04:3C:04:00:00:00:00:3D:04:00:00
-Received packet of length 19. 224 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 83:00:00:3E:04:00:12:4F:80:40:01:04:41:04:00:00:00:00:42:04
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 83:00:00:3E:04:00:12:4F:80:40:01:04:41:04:00:00:00:00:42:04
-Received packet of length 19. 205 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 84:00:00:00:00:43:04:00:12:4F:80:4B:01:00:4C:01:00:53:01:01
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 84:00:00:00:00:43:04:00:12:4F:80:4B:01:00:4C:01:00:53:01:01
-Received packet of length 19. 186 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 85:54:01:00:55:01:00:56:01:00:57:01:00:58:01:32:5B:01:03:66
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 85:54:01:00:55:01:00:56:01:00:57:01:00:58:01:32:5B:01:03:66
-Received packet of length 19. 167 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 86:01:08:67:01:03:69:01:00:6F:01:0A:70:01:64:72:01:01:73:01
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 86:01:08:67:01:03:69:01:00:6F:01:0A:70:01:64:72:01:01:73:01
-Received packet of length 19. 148 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 87:00:74:01:02:75:01:01:76:01:04:79:01:03:7A:01:65:7B:01:65
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 87:00:74:01:02:75:01:01:76:01:04:79:01:03:7A:01:65:7B:01:65
-Received packet of length 19. 129 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 88:7C:01:64:7D:01:00:7E:01:00:80:01:0D:81:01:02:82:01:69:83
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 88:7C:01:64:7D:01:00:7E:01:00:80:01:0D:81:01:02:82:01:69:83
-Received packet of length 19. 110 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 89:01:03:84:01:0C:86:01:02:87:01:01:8B:01:03:90:01:0C:91:01
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 89:01:03:84:01:0C:86:01:02:87:01:01:8B:01:03:90:01:0C:91:01
-Received packet of length 19. 91 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 8A:00:92:01:00:93:01:00:94:01:01:95:01:02:96:01:00:97:01:00
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 8A:00:92:01:00:93:01:00:94:01:01:95:01:02:96:01:00:97:01:00
-Received packet of length 19. 72 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 8B:99:01:64:9A:01:02:9B:01:64:9C:01:64:9D:01:64:9E:01:01:9F
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 8B:99:01:64:9A:01:02:9B:01:64:9C:01:64:9D:01:64:9E:01:01:9F
-Received packet of length 19. 53 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 8C:01:01:A0:01:00:A1:01:64:A2:01:00:A3:01:01:A4:01:64:A7:01
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 8C:01:01:A0:01:00:A1:01:64:A2:01:00:A3:01:01:A4:01:64:A7:01
-Received packet of length 19. 34 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 8D:04:A8:04:00:00:00:00:A9:01:01:AE:01:00:AF:01:01:B0:01:03
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 8D:04:A8:04:00:00:00:00:A9:01:01:AE:01:00:AF:01:01:B0:01:03
-Received packet of length 19. 15 bytes remaining
-Characteristic b5f90077-aa8d-11e3-9046-0002a5d5c51b changed | value: 8E:B1:01:00:B2:01:01:B3:01:03:B4:01:00:B5:01:00
-Received response on b5f90077-aa8d-11e3-9046-0002a5d5c51b: 8E:B1:01:00:B2:01:01:B3:01:03:B4:01:00:B5:01:00
-Received packet of length 15. 0 bytes remaining
-Received the expected successful response
-Got the camera's settings successfully
+Getting the camera's hardware info...
+Writing to GoProUuid.COMMAND_REQ_UUID: 01:3c
+Received response at handle 47: 20:62:3c:00:04:00:00:00:3e:0c:48:45:52:4f:31:32:20:42:6c:61
+self.bytes_remaining=80
+Received response at handle 47: 80:63:6b:04:30:78:30:35:0f:48:32:33:2e:30:31:2e:30:31:2e:39
+self.bytes_remaining=61
+Received response at handle 47: 81:39:2e:35:36:0e:43:33:35:30:31:33:32:34:35:30:30:37:30:32
+self.bytes_remaining=42
+Received response at handle 47: 82:11:48:45:52:4f:31:32:20:42:6c:61:63:6b:64:65:62:75:67:0c
+self.bytes_remaining=23
+Received response at handle 47: 83:32:36:37:34:66:37:66:36:36:31:30:34:01:00:01:01:01:00:02
+self.bytes_remaining=4
+Received response at handle 47: 84:5b:5d:01:01
+self.bytes_remaining=0
+Received the get hardware info response
 ```
+
+{% endtab %}
+{% tab get_hardware_info_log kotlin %}
+
+```console
+Getting the Hardware Info
+Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==> 01:3C
+Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 20:5B:3C:00:04:00:00:00:3E:0C:48:45:52:4F:31:32:20:42:6C:61
+Received response on CQ_COMMAND_RSP
+Received packet of length 18. 73 bytes remaining
+Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 80:63:6B:04:30:78:30:35:0F:48:32:33:2E:30:31:2E:30:31:2E:39
+Received response on CQ_COMMAND_RSP
+Received packet of length 19. 54 bytes remaining
+Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b
+Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 81:39:2E:35:36:0E:43:33:35:30:31:33:32:34:35:30:30:37:30:32
+Received response on CQ_COMMAND_RSP
+Received packet of length 19. 35 bytes remaining
+Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 82:0A:47:50:32:34:35:30:30:37:30:32:0C:32:36:37:34:66:37:66
+Received response on CQ_COMMAND_RSP
+Received packet of length 19. 16 bytes remaining
+Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 83:36:36:31:30:34:01:00:01:01:01:00:02:5B:5D:01:01
+Received response on CQ_COMMAND_RSP
+Received packet of length 16. 0 bytes remaining
+```
+
 {% endtab %}
 {% endlinkedTabs %}
 
-At this point the response has been accumulated. See the next section for how to parse it.
+At this point the response has been accumulated. We then parse and log the payload using the
+[Get Hardware Info]({{site.baseurl}}/ble/features/query.html#get-hardware-info) response documentation:
+
+{% linkedTabs parse_get_hardware_info_payload %}
+{% tab parse_get_hardware_info_payload python %}
+
+```python
+hardware_info = HardwareInfo.from_bytes(response.payload)
+logger.info(f"Received hardware info: {hardware_info}")
+```
+
+where the parsing is done as such:
+
+```python
+    @classmethod
+    def from_bytes(cls, data: bytes) -> HardwareInfo:
+        buf = bytearray(data)
+        # Get model number
+        model_num_length = buf.pop(0)
+        model = int.from_bytes(buf[:model_num_length])
+        buf = buf[model_num_length:]
+        # Get model name
+        model_name_length = buf.pop(0)
+        model_name = (buf[:model_name_length]).decode()
+        buf = buf[model_name_length:]
+        # Advance past deprecated bytes
+        deprecated_length = buf.pop(0)
+        buf = buf[deprecated_length:]
+        # Get firmware version
+        firmware_length = buf.pop(0)
+        firmware = (buf[:firmware_length]).decode()
+        buf = buf[firmware_length:]
+        # Get serial number
+        serial_length = buf.pop(0)
+        serial = (buf[:serial_length]).decode()
+        buf = buf[serial_length:]
+        # Get AP SSID
+        ssid_length = buf.pop(0)
+        ssid = (buf[:ssid_length]).decode()
+        buf = buf[ssid_length:]
+        # Get MAC address
+        mac_length = buf.pop(0)
+        mac = (buf[:mac_length]).decode()
+        buf = buf[mac_length:]
+
+        return cls(model, model_name, firmware, serial, ssid, mac)
+```
+
+This logs as:
+
+```console
+Parsed hardware info: {
+        "model_name": "HERO12 Black",
+        "firmware_version": "H23.01.01.99.56",
+        "serial_number": "C3501324500702",
+        "ap_ssid": "HERO12 Blackdebug",
+        "ap_mac_address": "2674f7f66104"
+    }
+```
+
+{% endtab %}
+{% tab parse_get_hardware_info_payload kotlin %}
+
+```kotlin
+tlvResponse.parse()
+val hardwareInfo = HardwareInfo.fromBytes(tlvResponse.payload)
+```
+
+where the parsing is done as such:
+
+```kotlin
+fun fromBytes(data: UByteArray): HardwareInfo {
+    // Parse header bytes
+    var buf = data.toUByteArray()
+    // Get model number
+    val modelNumLength = buf.first().toInt()
+    buf = buf.drop(1).toUByteArray()
+    val model = buf.take(modelNumLength).toInt()
+    buf = buf.drop(modelNumLength).toUByteArray()
+    // Get model name
+    val modelNameLength = buf.first().toInt()
+    buf = buf.drop(1).toUByteArray()
+    val modelName = buf.take(modelNameLength).decodeToString()
+    buf = buf.drop(modelNameLength).toUByteArray()
+    // Advance past deprecated bytes
+    val deprecatedLength = buf.first().toInt()
+    buf = buf.drop(1).toUByteArray()
+    buf = buf.drop(deprecatedLength).toUByteArray()
+    // Get firmware version
+    val firmwareLength = buf.first().toInt()
+    buf = buf.drop(1).toUByteArray()
+    val firmware = buf.take(firmwareLength).decodeToString()
+    buf = buf.drop(firmwareLength).toUByteArray()
+    // Get serial number
+    val serialLength = buf.first().toInt()
+    buf = buf.drop(1).toUByteArray()
+    val serial = buf.take(serialLength).decodeToString()
+    buf = buf.drop(serialLength).toUByteArray()
+    // Get AP SSID
+    val ssidLength = buf.first().toInt()
+    buf = buf.drop(1).toUByteArray()
+    val ssid = buf.take(ssidLength).decodeToString()
+    buf = buf.drop(ssidLength).toUByteArray()
+    // Get MAC Address
+    val macLength = buf.first().toInt()
+    buf = buf.drop(1).toUByteArray()
+    val mac = buf.take(macLength).decodeToString()
+
+    return HardwareInfo(model, modelName, firmware, serial, ssid, mac)
+}
+```
+
+This logs as:
+
+```console
+Got the Hardware Info successfully: HardwareInfo(
+    modelNumber=1040187392,
+    modelName=HERO12 Black,
+    firmwareVersion=H23.01.01.99.56,
+    serialNumber=C3501324500702,
+    apSsid=GP24500702,
+    apMacAddress=2674f7f66104
+)
+```
+
+{% endtab %}
+{% endlinkedTabs %}
 
 **Quiz time! 📚 ✏️**
 
@@ -769,241 +924,6 @@ At this point the response has been accumulated. See the next section for how to
         have been received. A and C are just made up 😜."
 %}
 
-## Parsing a Query Response
-
-This section is going to describe responses to to BLE status / setting queries. We don't actually
-introduce such queries until [the next tutorial]({% link _tutorials/tutorial_4_ble_queries/tutorial.md %}) so
-for now, only the parsing of the response is important.
-
-{% tip %}
-While multi-packet responses are almost always Query Responses, they can also be from Command Complex
-responses. In a real-world implementation, it is therefore necessary to check the received UUID to see
-how to parse.
-{% endtip %}
-
-Query Responses contain one or more TLV groups in their Response data. To recap, the generic response format is:
-
-| Header (length) | Query ID | Status  | Response         |
-| --------------- | -------- | ------- | ---------------- |
-| 1-2 bytes       | 1 byte   | 1 bytes | Length - 2 bytes |
-
-This means that query responses will contain an array of additional TLV groups in the "Response" field as such:
-
-| ID1    | Length1 | Value1        | ID2    | Length2 | Value 2       | ... | IDN    | LengthN | ValueN        |
-| ------ | ------- | ------------- | ------ | ------- | ------------- | --- | ------ | ------- | ------------- |
-| 1 byte | 1 byte  | Length1 bytes | 1 byte | 1 byte  | Length2 bytes | ... | 1 byte | 1 byte  | LengthN bytes |
-
-Depending on the amount of query results in the response, this response can be one or multiple packets.
-Therefore, we need to account for the possibility that it may always be more than 1 packet.
-
-We can see an example of such parsing in the response parse method as shown below:
-
----
-
-<div class="md_column">
-<div markdown="1">
-
-We have already parsed the length when we were accumulating the packet. So the next step is to parse the Query
-ID and Status:
-
-{% linkedTabs id_status_query_response %}
-{% tab id_status_query_response python %}
-```python
-self.id = self.bytes[0]
-self.status = self.bytes[1]
-```
-{% endtab %}
-{% tab id_status_query_response kotlin %}
-```kotlin
-id = packet[0].toInt()
-status = packet[1].toInt()
-```
-{% endtab %}
-{% endlinkedTabs %}
-
-We then continuously parse **Type (ID) - Length - Value** groups until we have consumed the response. We are
-storing each value in a hash map indexed by ID for later access.
-
-{% linkedTabs tlv_query_response %}
-{% tab tlv_query_response python %}
-```python
-buf = self.bytes[2:]
-while len(buf) > 0:
-    # Get ID and Length
-    param_id = buf[0]
-    param_len = buf[1]
-    buf = buf[2:]
-    # Get the value
-    value = buf[:param_len]
-
-    # Store in dict for later access
-    self.data[param_id] = value
-
-    # Advance the buffer
-    buf = buf[param_len:]
-```
-{% endtab %}
-{% tab tlv_query_response kotlin %}
-```kotlin
-while (buf.isNotEmpty()) {
-    // Get each parameter's ID and length
-    val paramId = buf[0]
-    val paramLen = buf[1].toInt()
-    buf = buf.drop(2)
-    // Get the parameter's value
-    val paramVal = buf.take(paramLen)
-    // Store in data dict for access later
-    data[paramId] = paramVal.toUByteArray()
-    // Advance the buffer for continued parsing
-    buf = buf.drop(paramLen)
-}
-```
-{% endtab %}
-{% endlinkedTabs %}
-
-</div>
-<div markdown="1" style="flex:60%">
-
-<br><br><br>
-
-```mermaid!
-graph TD
-    A[Parse Query ID] --> B[Parse Status]
-    B --> C{More data?}
-    C --> |yes|D[Get Value ID]
-    D --> E[Get Value Length]
-    E --> F[Get Value]
-    F --> C
-    C --> |no|G(done)
-```
-
-</div>
-</div>
-
----
-
-In the tutorial demo, we then log this entire dict after parsing is complete as such (abbreviated for brevity):
-
-{% linkedTabs print_query_response %}
-{% tab print_query_response python %}
-
-```console
-INFO:root:Received settings
-: {
-    "2": "09",
-    "3": "01",
-    "5": "00",
-    "6": "01",
-    "13": "01",
-    "19": "00",
-    "30": "00:00:00:00",
-    "31": "00",
-    "32": "00:00:00:0a",
-    "41": "09",
-    "42": "05",
-    "43": "00",
-    ...
-    "160": "00",
-    "161": "00",
-    "162": "00",
-    "163": "01",
-    "164": "00",
-    "165": "00",
-    "166": "00",
-    "167": "04",
-    "168": "00:00:00:00",
-    "169": "01"
-}
-```
-{% endtab %}
-{% tab print_query_response kotlin %}
-
-```console
-{
-    "2": "09",
-    "3": "01",
-    "5": "00",
-    "6": "01",
-    "13": "01",
-    "19": "00",
-    "24": "00",
-    "30": "00:00:00:6E",
-    "31": "00",
-    "32": "00:00:00:0A",
-    "37": "00",
-    "41": "09",
-    "42": "08",
-    "43": "00",
-    "44": "09",
-    "45": "08",
-    "47": "07",
-       ...
-    "115": "00",
-    "116": "02",
-    "117": "01",
-    "151": "00",
-    "153": "64",
-    "154": "02",
-    "155": "64",
-    "156": "64",
-    "157": "64",
-    "158": "01",
-    "159": "01",
-    "160": "00",
-    "161": "64",
-    "162": "00",
-    "163": "01",
-    "164": "64",
-    "167": "04",
-    "168": "00:00:00:00",
-    "169": "01",
-    "174": "00",
-    "175": "01",
-    "176": "03",
-    "177": "00",
-    "178": "01",
-    "179": "03",
-    "180": "00",
-    "181": "00"
-}
-```
-
-
-{% endtab %}
-{% endlinkedTabs %}
-
-We can see what each of these values mean by looking at the
-[Open GoPro Interface](/ble/index.html#settings-quick-reference).
-
-For example:
-
--   ID 2 == 9 equates to Resolution == 1080
--   ID 3 == 1 equates to FPS == 120
-
-{% quiz
-    question="How many packets are query responses?"
-    option="A:::Always 1 packet"
-    option="B:::Always multiple packets"
-    option="C:::Always 1 packet except for complex responses"
-    option="D:::Can be 1 or multiple packets"
-    correct="D"
-    info="Query responses can be one packet (if for example querying a specific
-setting) or multiple packets (when querying many or all settings as in the example here).
-See the next tutorial for more information on queries."
-%}
-
-{% quiz
-    question="Which field is not common to all responses?"
-    option="A:::length"
-    option="B:::status"
-    option="C:::ID"
-    option="D:::None of the Above"
-    correct="D"
-    info="Query responses can be one packet (if for example querying a specific
-setting) or multiple packets (when querying many or all settings as in the example here).
-See the next tutorial for more information on queries."
-%}
-
 # Troubleshooting
 
 See the first tutorial's
@@ -1015,9 +935,9 @@ See the first tutorial's
 Congratulations 🤙
 {% endsuccess %}
 
-You can now parse any TLV response that is received from the GoPro, at least if it is received uninterrupted.
+You now know how to accumulate TLV responses that are received from the GoPro, at least if they are received uninterrupted.
 There is additional logic required for a complete solution such as checking the UUID the response is received
 on and storing a dict of response per UUID. At the current time, this endeavor is left for the reader. For a
 complete example of this, see the [Open GoPro Python SDK](https://gopro.github.io/OpenGoPro/python_sdk/).
 
-To learn more about queries, go to the next tutorial.
+To learn about a different type of operation (Queries), go to the next tutorial.

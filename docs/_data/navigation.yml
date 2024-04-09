@@ -24,11 +24,15 @@ tutorials:
       url: /tutorials/parse-ble-responses
     - title: '4: BLE Queries'
       url: /tutorials/ble-queries
-    - title: '5: Connect WiFi'
+    - title: '5: BLE Protobuf'
+      url: /tutorials/ble-protobuf
+    - title: '6: Connect WiFi'
       url: /tutorials/connect-wifi
-    - title: '6: Send WiFi Commands'
+    - title: '7: Send WiFi Commands'
       url: /tutorials/send-wifi-commands
-    - title: '7: Camera Media List'
+    - title: '8: Camera Media List'
       url: /tutorials/camera-media-list
+    - title: '9: Camera on the Home Network'
+      url: /tutorials/cohn
 
 

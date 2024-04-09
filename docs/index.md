@@ -30,11 +30,11 @@ Open GoPro API is supported on all camera models since Hero 9 with the following
 
 | Camera             | Minimum FW Version |
 | ------------------ | :----------------: |
-| Hero 9 Black       |     v01.70.00      |
-| Hero 10 Black      |     v01.10.00      |
-| Hero 11 Black      |     v01.10.00      |
-| Hero 11 Black Mini |     v01.10.00      |
 | Hero 12 Black      |     v01.10.00      |
+| Hero 11 Black Mini |     v01.10.00      |
+| Hero 11 Black      |     v01.10.00      |
+| Hero 10 Black      |     v01.10.00      |
+| Hero 9 Black       |     v01.70.00      |
 
 While we strive to provide the same API functionality and logic for all newly launched cameras, minor changes
 are sometimes necessary. These are typically a consequence of HW component upgrades or improving or optimizing

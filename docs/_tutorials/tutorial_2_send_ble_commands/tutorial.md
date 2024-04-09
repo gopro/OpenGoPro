@@ -5,31 +5,36 @@ sidebar:
 lesson: 2
 ---
 
-# Tutorial 2: Send BLE Commands
+# Tutorial 2: Send BLE TLV Commands
 
 This document will provide a walk-through tutorial to use the
-[Open GoPro BLE Interface](/ble/index.html) to send commands and receive responses.
+[Open GoPro BLE Interface]({{site.baseurl}}/ble/index.html) to send [Type-Length-Value](https://en.wikipedia.org/wiki/Type-length-value)
+(TLV)commands and receive TLV responses.
 
-"Commands" in this sense are specifically procedures that are initiated by either:
+[Commands]({{site.baseurl}}/ble/protocol/data_protocol.html#commands) in this sense are operations that are initiated by either:
 
--   Writing to the Command Request UUID and receiving responses via the Command Response UUID. They are
-    listed [here](/ble/index.html#commands).
--   Writing to the Setting UUID and receiving responses via the Setting Response UUID. They are listed
-    [here](/ble/index.html#settings).
+-   Writing to the Command Request UUID and receiving responses via the Command Response
+    [UUID]({{site.baseurl}}/ble/protocol/ble_setup.html#ble-characteristics).
+-   Writing to the Setting UUID and receiving responses via the Setting Response
+    [UUID]({{site.baseurl}}/ble/protocol/ble_setup.html#ble-characteristics)
 
-{% tip %}
-It is suggested that you have first completed the
-[connect tutorial]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %}#requirements) before going through
-this tutorial.
-{% endtip %}
+A list of TLV commands can be found in the [Command ID Table](http://localhost:4998/ble/protocol/id_tables.html#command-ids).
 
-This tutorial only considers sending these commands as one-off commands. That is, it does not consider state
+{% note %}
+This tutorial only considers sending these as one-off commands. That is, it does not consider state
 management / synchronization when sending multiple commands. This will be discussed in a future lab.
+{% endnote %}
 
 # Requirements
 
 It is assumed that the hardware and software requirements from the
-[connect tutorial]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %}) are present and configured correctly.
+[connecting BLE tutorial]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %}) are present and configured correctly.
+
+{% tip %}
+It is suggested that you have first completed the
+[connecting BLE tutorial]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %}#requirements) before going through
+this tutorial.
+{% endtip %}
 
 # Just Show me the Demo(s)!!
 
@@ -39,12 +44,13 @@ Each of the scripts for this tutorial can be found in the Tutorial 2
 [directory](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_2_send_ble_commands/).
 
 {% warning %}
-Python >= 3.8.x must be used as specified in the requirements
+Python >= 3.9 and < 3.12 must be used as specified in the requirements
 {% endwarning %}
 
 {% accordion Set Shutter %}
 
 You can test sending the Set Shutter command to your camera through BLE using the following script:
+
 ```console
 $ python ble_command_set_shutter.py
 ```
@@ -63,11 +69,13 @@ optional arguments:
                         Last 4 digits of GoPro serial number, which is the last 4 digits of the
                         default camera SSID. If not used, first discovered GoPro will be connected to
 ```
+
 {% endaccordion %}
 
 {% accordion Load Preset Group %}
 
 You can test sending the Load Preset Group command to your camera through BLE using the following script:
+
 ```console
 $ python ble_command_load_group.py
 ```
@@ -86,12 +94,13 @@ optional arguments:
                         Last 4 digits of GoPro serial number, which is the last 4 digits of the
                         default camera SSID. If not used, first discovered GoPro will be connected to
 ```
-{% endaccordion %}
 
+{% endaccordion %}
 
 {% accordion Set the Video Resolution %}
 
 You can test sending the Set Video Resolution command to your camera through BLE using the following script:
+
 ```console
 $ python ble_command_set_resolution.py
 ```
@@ -110,12 +119,13 @@ optional arguments:
                         Last 4 digits of GoPro serial number, which is the last 4 digits of the
                         default camera SSID. If not used, first discovered GoPro will be connected to
 ```
-{% endaccordion %}
 
+{% endaccordion %}
 
 {% accordion Set the Frames Per Second (FPS) %}
 
 You can test sending the Set FPS command to your camera through BLE using the following script:
+
 ```console
 $ python ble_command_set_fps.py
 ```
@@ -134,6 +144,7 @@ optional arguments:
                         Last 4 digits of GoPro serial number, which is the last 4 digits of the
                         default camera SSID. If not used, first discovered GoPro will be connected to
 ```
+
 {% endaccordion %}
 {% endtab %}
 {% tab demo kotlin %}
@@ -144,7 +155,7 @@ To perform the tutorial, run the Android Studio project, select "Tutorial 2" fro
 This requires that a GoPro is already connected via BLE, i.e. that Tutorial 1 was already run. You can
 check the BLE status at the top of the app.
 
-{% include figure image_path="/assets/images/tutorials/kotlin/tutorial_1.png" alt="kotlin_tutorial_2" size="40%" caption="Perform Tutorial 2" %}
+{% include figure image_path="/assets/images/tutorials/kotlin/tutorial_2.png" alt="kotlin_tutorial_2" size="40%" caption="Perform Tutorial 2" %}
 
 This will start the tutorial and log to the screen as it executes. When the tutorial is complete, click
 "Exit Tutorial" to return to the Tutorial selection screen.
@@ -154,20 +165,21 @@ This will start the tutorial and log to the screen as it executes. When the tuto
 
 # Setup
 
-We must first connect as was discussed in the [connect tutorial]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %}). In
-this case, however, we are defining a meaningful (albeit naive) notification handler that will:
+We must first connect as was discussed in the [connecting BLE tutorial]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %}).
+In this case, however, we are defining a functional (albeit naive) notification handler that will:
 
-1. print byte data and handle that the notification was received on
-1. check if the response is what we expected
-1. set an event to notify the writer that the response was received
+1. Log byte data and handle that the notification was received on
+1. Check if the response is what we expected
+1. Set an event to notify the writer that the response was received
 
 This is a very simple handler; response parsing will be expanded upon in the
 [next tutorial]({% link _tutorials/tutorial_3_parse_ble_tlv_responses/tutorial.md %}).
 
 {% linkedTabs response_parsing %}
 {% tab response_parsing python %}
+
 ```python
-def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
+async def notification_handler(characteristic: BleakGATTCharacteristic, data: bytearray) -> None:
     logger.info(f'Received response at handle {characteristic.handle}: {data.hex(":")}')
 
     # If this is the correct handle and the status is success, the command was a success
@@ -186,6 +198,7 @@ received. For now, we're just checking that the handle matches what is expected 
 that the status (third byte) is success (0x00).
 {% endtab %}
 {% tab response_parsing kotlin %}
+
 ```kotlin
 private val receivedData: Channel<UByteArray> = Channel()
 
@@ -209,6 +222,7 @@ We are registering this notification handler with the BLE API before sending any
 ```kotlin
 ble.registerListener(goproAddress, bleListeners)
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -217,16 +231,16 @@ discussed in future tutorials.
 
 # Command Overview
 
-Both Command Requests and Setting Requests follow the same procedure:
+All commands follow the same procedure:
 
-1. Write to relevant request UUID
+1. Write to the relevant request UUID
 1. Receive confirmation from GoPro (via notification from relevant response UUID) that request was received.
 1. GoPro reacts to command
 
-{% note %}
+{% warning %}
 The notification response only indicates that the request was received and whether it was accepted or rejected.
 The relevant behavior of the GoPro must be observed to verify when the command's effects have been applied.
-{% endnote %}
+{% endwarning %}
 
 Here is the procedure from power-on to finish:
 
@@ -247,25 +261,26 @@ sequenceDiagram
 Now that we are are connected, paired, and have enabled notifications (registered to our defined callback), we
 can send some commands.
 
-First, we need to define the attributes to write to / receive responses from, which are:
-
--   For commands
-    -   "Command Request" characteristic (UUID `b5f90072-aa8d-11e3-9046-0002a5d5c51b`)
-    -   "Command Response" characteristic (UUID `b5f90073-aa8d-11e3-9046-0002a5d5c51b`)
--   For settings
-    -   "Settings" characteristic (UUID `b5f90074-aa8d-11e3-9046-0002a5d5c51b`)
-    -   "Settings Response" (UUID `b5f90075-aa8d-11e3-9046-0002a5d5c51b`)
+First, we need to define the [UUIDs](http://localhost:4998/ble/protocol/ble_setup.html#configure-gatt-characteristics)
+to write to / receive responses from, which are:
 
 {% linkedTabs uuid %}
 {% tab uuid python %}
-```python
-COMMAND_REQ_UUID = GOPRO_BASE_UUID.format("0072")
-COMMAND_RSP_UUID = GOPRO_BASE_UUID.format("0073")
-```
+
+We'll define these and any others used throughout the tutorials and store them in a `GoProUUID` class:
 
 ```python
-SETTINGS_REQ_UUID = GOPRO_BASE_UUID.format("0074")
-SETTINGS_RSP_UUID = GOPRO_BASE_UUID.format("0075")
+class GoProUuid:
+    COMMAND_REQ_UUID = GOPRO_BASE_UUID.format("0072")
+    COMMAND_RSP_UUID = GOPRO_BASE_UUID.format("0073")
+    SETTINGS_REQ_UUID = GOPRO_BASE_UUID.format("0074")
+    SETTINGS_RSP_UUID = GOPRO_BASE_UUID.format("0075")
+    QUERY_REQ_UUID = GOPRO_BASE_UUID.format("0076")
+    QUERY_RSP_UUID = GOPRO_BASE_UUID.format("0077")
+    WIFI_AP_SSID_UUID = GOPRO_BASE_UUID.format("0002")
+    WIFI_AP_PASSWORD_UUID = GOPRO_BASE_UUID.format("0003")
+    NETWORK_MANAGEMENT_REQ_UUID = GOPRO_BASE_UUID.format("0091")
+    NETWORK_MANAGEMENT_RSP_UUID = GOPRO_BASE_UUID.format("0092")
 ```
 
 {% tip %}
@@ -296,7 +311,7 @@ enum class GoProUUID(val uuid: UUID) {
 
 ## Set Shutter
 
-The first command we will be sending is [Set Shutter](/ble/index.html#commands-quick-reference),
+The first command we will be sending is [Set Shutter]({{site.baseurl}}/ble/features/control.html#set-shutter),
 which at byte level is:
 
 | Command         |        Bytes        |
@@ -308,10 +323,13 @@ Now, let's write the bytes to the "Command Request" UUID to turn the shutter on 
 
 {% linkedTabs set_shutter_on %}
 {% tab set_shutter_on python %}
+
 ```python
+request_uuid = GoProUuid.COMMAND_REQ_UUID
 event.clear()
-await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([3, 1, 1, 1]))
-await event.wait() # Wait to receive the notification response
+request = bytes([3, 1, 1, 1])
+await client.write_gatt_char(request_uuid.value, request, response=True)
+await event.wait()  # Wait to receive the notification response
 ```
 
 {% success %}
@@ -320,12 +338,18 @@ the notification callback.
 {% endsuccess %}
 {% endtab %}
 {% tab set_shutter_on kotlin %}
+
 ```kotlin
 val setShutterOnCmd = ubyteArrayOf(0x03U, 0x01U, 0x01U, 0x01U)
 ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, setShutterOnCmd)
 // Wait to receive the notification response, then check its status
 checkStatus(receivedData.receive())
 ```
+
+{% success %}
+We're waiting to receive the data from the queue that is posted to in the notification handler when the response is received.
+{% endsuccess %}
+
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -339,13 +363,17 @@ This can be seen in the demo log:
 
 {% linkedTabs set_shutter_on %}
 {% tab set_shutter_on python %}
+
 ```console
-INFO:root:Setting the shutter on
-INFO:root:Received response at handle=52: b'02:01:00'
-INFO:root:Shutter command sent successfully
+Setting the shutter on
+Writing to GoProUuid.COMMAND_REQ_UUID: 03:01:01:01
+Received response at GoProUuid.COMMAND_RSP_UUID: 02:01:00
+Command sent successfully
 ```
+
 {% endtab %}
 {% tab set_shutter_on kotlin %}
+
 ```console
 Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==> 03:01:01:01
 Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b
@@ -353,14 +381,13 @@ Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:01:00
 Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:01:00
 Command sent successfully
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
-As expected, the response was received on the correct handle and the status was "success".
+As expected, the response was received on the correct UUID and the status was "success" (third byte == 0x00).
 
-If you are recording a video, continue reading to set the shutter off.
-
-We can now set the shutter off:
+If you are recording a video, continue reading to set the shutter off:
 
 {% tip %}
 We're waiting 2 seconds in case you are in video mode so that we can capture a 2 second video.
@@ -368,28 +395,38 @@ We're waiting 2 seconds in case you are in video mode so that we can capture a 2
 
 {% linkedTabs set_shutter_off %}
 {% tab set_shutter_off python %}
+
 ```python
-time.sleep(2)
+await asyncio.sleep(2)
+request_uuid = GoProUuid.COMMAND_REQ_UUID
+request = bytes([3, 1, 1, 0])
 event.clear()
-await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([3, 1, 1, 0]))
-await event.wait() # Wait to receive the notification response
+await client.write_gatt_char(request_uuid.value, request, response=True)
+await event.wait()  # Wait to receive the notification response
 ```
 
 This will log in the console as follows:
 
 ```python
-INFO:root:Setting the shutter off
-INFO:root:Received response at handle=52: b'02:01:00'
-INFO:root:Shutter command sent successfully
+Setting the shutter off
+Writing to GoProUuid.COMMAND_REQ_UUID: 03:01:01:00
+Received response at GoProUuid.COMMAND_RSP_UUID: 02:01:00
+Command sent successfully
 ```
+
 {% endtab %}
 {% tab set_shutter_off kotlin %}
+
 ```kotlin
 delay(2000)
 val setShutterOffCmd = ubyteArrayOf(0x03U, 0x01U, 0x01U, 0x00U)
 // Wait to receive the notification response, then check its status
 checkStatus(receivedData.receive())
 ```
+
+{% success %}
+We're waiting to receive the data from the queue that is posted to in the notification handler when the response is received.
+{% endsuccess %}
 
 This will log as such:
 
@@ -401,13 +438,14 @@ Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:01:00
 Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:01:00
 Command sent successfully
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
 ## Load Preset Group
 
 The next command we will be sending is
-[Load Preset Group](/ble/index.html#commands-quick-reference), which is used
+[Load Preset Group]({{site.baseurl}}/ble/features/presets.html#load-preset-group), which is used
 to toggle between the 3 groups of presets (video, photo, and timelapse). At byte level, the commands are:
 
 | Command                     |          Bytes           |
@@ -416,19 +454,16 @@ to toggle between the 3 groups of presets (video, photo, and timelapse). At byte
 | Load Photo Preset Group     | 0x04 0x3E 0x02 0x03 0xE9 |
 | Load Timelapse Preset Group | 0x04 0x3E 0x02 0x03 0xEA |
 
-{% note %}
-It is possible that the preset GroupID values will vary in future cameras. The only absolutely correct way to know
-the preset ID is to read them from the "Get Preset Status" protobuf command. A future lab will discuss protobuf
-commands.
-{% endnote %}
-
 Now, let's write the bytes to the "Command Request" UUID to change the preset group to Video!
 
 {% linkedTabs load_preset_group_send %}
 {% tab load_preset_group_send python %}
+
 ```python
+request_uuid = GoProUuid.COMMAND_REQ_UUID
+request = bytes([0x04, 0x3E, 0x02, 0x03, 0xE8])
 event.clear()
-await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x04, 0x3E, 0x02, 0x03, 0xE8]))
+await client.write_gatt_char(request_uuid.value, request, response=True)
 await event.wait()  # Wait to receive the notification response
 ```
 
@@ -438,12 +473,18 @@ the notification callback.
 {% endsuccess %}
 {% endtab %}
 {% tab load_preset_group_send kotlin %}
+
 ```kotlin
 val loadPreset = ubyteArrayOf(0x04U, 0x3EU, 0x02U, 0x03U, 0xE8U)
 ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, loadPreset)
 // Wait to receive the notification response, then check its status
 checkStatus(receivedData.receive())
 ```
+
+{% success %}
+We're waiting to receive the data from the queue that is posted to in the notification handler when the response is received.
+{% endsuccess %}
+
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -459,13 +500,17 @@ be seen in the demo log:
 
 {% linkedTabs load_preset_group_receive %}
 {% tab load_preset_group_receive python %}
+
 ```console
-INFO:root:Loading the video preset group...
-INFO:root:Received response at handle=52: b'02:3e:00'
-INFO:root:Command sent successfully
+Loading the video preset group...
+Sending to GoProUuid.COMMAND_REQ_UUID: 04:3e:02:03:e8
+Received response at GoProUuid.COMMAND_RSP_UUID: 02:3e:00
+Command sent successfully
 ```
+
 {% endtab %}
 {% tab load_preset_group_receive kotlin %}
+
 ```console
 Loading Video Preset Group
 Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==> 04:3E:02:03:E8
@@ -475,16 +520,18 @@ Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:3E:00
 Command status received
 Command sent successfully
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
-As expected, the response was received on the correct handle and the status was "success".
+As expected, the response was received on the correct UUID and the status was "success" (third byte == 0x00).
 
 ## Set the Video Resolution
 
 The next command we will be sending is
-[Set Video Resolution](/ble/index.html#commands-quick-reference). This is
-used to change the value of the Video Resolution setting. It is important to note that this only affects
+[Set Setting]({{site.baseurl}}/ble/features/settings.html#set-setting) to set the
+[Video Resolution]({{site.baseurl}}/ble/features/settings.html#setting-2).
+This is used to change the value of the Video Resolution setting. It is important to note that this only affects
 **video** resolution (not photo). Therefore, the Video Preset Group must be active in order for it to succeed.
 This can be done either manually through the camera UI or by sending [Load Preset Group](#load-preset-group).
 
@@ -505,9 +552,12 @@ Now, let's write the bytes to the "Setting Request" UUID to change the video res
 
 {% linkedTabs set_resolution %}
 {% tab set_resolution python %}
+
 ```python
+request_uuid = GoProUuid.COMMAND_REQ_UUID
+request = bytes([0x03, 0x02, 0x01, 0x09])
 event.clear()
-await client.write_gatt_char(SETTINGS_REQ_UUID, bytearray([0x03, 0x02, 0x01, 0x09]))
+await client.write_gatt_char(request_uuid.value, request, response=True)
 await event.wait()  # Wait to receive the notification response
 ```
 
@@ -518,12 +568,18 @@ the notification callback.
 
 {% endtab %}
 {% tab set_resolution kotlin %}
+
 ```kotlin
 val setResolution = ubyteArrayOf(0x03U, 0x02U, 0x01U, 0x09U)
 ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, setResolution)
 // Wait to receive the notification response, then check its status
 checkStatus(receivedData.receive())
 ```
+
+{% success %}
+We're waiting to receive the data from the queue that is posted to in the notification handler when the response is received.
+{% endsuccess %}
+
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -534,18 +590,22 @@ screen:
 
 Also note that we have received the "Command Status" notification response from the
 Command Response characteristic since we enabled its notifications in
-[Enable Notifications]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %}#enable-notifications).. This can
+[Enable Notifications]({% link _tutorials/tutorial_1_connect_ble/tutorial.md %}#enable-notifications). This can
 be seen in the demo log:
 
 {% linkedTabs set_resolution %}
 {% tab set_resolution python %}
+
 ```console
-INFO:root:Loading the video preset group...
-INFO:root:Received response at handle=52: b'02:3e:00'
-INFO:root:Command sent successfully
+Setting the video resolution to 1080
+Writing to GoProUuid.SETTINGS_REQ_UUID: 03:02:01:09
+Received response at GoProUuid.SETTINGS_RSP_UUID: 02:02:00
+Command sent successfully
 ```
+
 {% endtab %}
 {% tab set_resolution kotlin %}
+
 ```console
 Setting resolution to 1080
 Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==> 03:02:01:09
@@ -555,21 +615,24 @@ Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:02:00
 Command status received
 Command sent successfully
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
-As expected, the response was received on the correct handle and the status was "success". If the Preset
+As expected, the response was received on the correct UUID and the status was "success" (third byte == 0x00). If the Preset
 Group was not Video, the status will not be success.
 
 ## Set the Frames Per Second (FPS)
 
 The next command we will be sending is
-[Set FPS](/ble/index.html#commands-quick-reference). This is
+[Set Setting]({{site.baseurl}}/ble/features/settings.html#set-setting) to set the
+[FPS]({{site.baseurl}}/ble/features/settings.html#setting-3). This is
 used to change the value of the FPS setting. It is important to note that this setting is dependent on the
 video resolution. That is, certain FPS values are not valid with certain resolutions. In general, higher
-resolutions only allow lower FPS values. Also, the current anti-flicker value may further limit possible FPS
-values. Check the [camera capabilities ](/ble/index.html#camera-capabilities) to see which FPS
-values are valid for given use cases.
+resolutions only allow lower FPS values. Other settings such as the current anti-flicker value may further limit possible
+FPS values. Futhermore, these capabilities all vary by camera. Check the
+[camera capabilities ]({{site.baseurl}}/ble/index.html#camera-capabilities) to see which FPS values are valid for
+given use cases.
 
 Therefore, for this step of the tutorial, it is assumed that the resolution has
 been set to 1080 as in [Set the Video Resolution](#set-the-video-resolution).
@@ -582,17 +645,18 @@ Here are some of the byte level commands for various FPS values.
 | Set FPS to 60  | 0x03 0x03 0x01 0x05 |
 | Set FPS to 240 | 0x03 0x03 0x01 0x00 |
 
-Note that the possible FPS values can vary based on the Open GoPro version that the camera supports.
-Therefore, it is necessary to
-[check the version]({% link _tutorials/tutorial_3_parse_ble_tlv_responses/tutorial.md %}#complex-command-response).
+Note that the possible FPS values can vary based on the Camera that is being operated on.
 
 Now, let's write the bytes to the "Setting Request" UUID to change the FPS to 240!
 
 {% linkedTabs set_fps %}
 {% tab set_fps python %}
+
 ```python
+request_uuid = GoProUuid.COMMAND_REQ_UUID
+request = bytes([0x03, 0x03, 0x01, 0x00])
 event.clear()
-await client.write_gatt_char(SETTINGS_REQ_UUID, bytearray([0x03, 0x03, 0x01, 0x00]))
+await client.write_gatt_char(request_uuid.value, request, response=True)
 await event.wait()  # Wait to receive the notification response
 ```
 
@@ -602,12 +666,18 @@ the notification callback.
 {% endsuccess %}
 {% endtab %}
 {% tab set_fps kotlin %}
+
 ```kotlin
 val setFps = ubyteArrayOf(0x03U, 0x03U, 0x01U, 0x00U)
 ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, setFps)
 // Wait to receive the notification response, then check its status
 checkStatus(receivedData.receive())
 ```
+
+{% success %}
+We're waiting to receive the data from the queue that is posted to in the notification handler when the response is received.
+{% endsuccess %}
+
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -623,13 +693,17 @@ be seen in the demo log:
 
 {% linkedTabs set_fps %}
 {% tab set_fps python %}
+
 ```console
-INFO:root:Setting the fps to 240
-INFO:root:Received response at handle=57: b'02:03:00'
-INFO:root:Command sent successfully
+Setting the fps to 240
+Writing to GoProUuid.SETTINGS_REQ_UUID: 03:03:01:00
+Received response at GoProUuid.SETTINGS_RSP_UUID: 02:03:00
+Command sent successfully
 ```
+
 {% endtab %}
 {% tab set_fps kotlin %}
+
 ```console
 Setting the FPS to 240
 Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==> 03:03:01:00
@@ -639,11 +713,12 @@ Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:03:00
 Command status received
 Command sent successfully
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
-As expected, the response was received on the correct handle and the status was "success". If the video resolution
-was higher, for example 5K, this would fail.
+As expected, the response was received on the correct UUID and the status was "success" (third byte == 0x00). If the video
+resolution was higher, for example 5K, this would fail.
 
 **Quiz time! 📚 ✏️**
 
@@ -663,7 +738,7 @@ was higher, for example 5K, this would fail.
     option="A:::True"
     option="B:::False"
     correct="B"
-    info="Each resolution can support all or only some FPS values. You can find out which resolutions support which fps values by consulting the [capabilities section of the spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-capabilities)."
+    info="Each resolution can support all or only some FPS values. You can find out which resolutions support which FPS values by consulting the [capabilities section of the spec](https://gopro.github.io/OpenGoPro/ble_2_0#camera-capabilities)."
 %}
 
 {% quiz
@@ -686,7 +761,7 @@ See the first tutorial's
 Congratulations 🤙
 {% endsuccess %}
 
-You can now send any of the other BLE commands detailed in the Open GoPro documentation in
-a similar manner.
+You can now send any of the other BLE [commands]({{site.baseurl}}/ble/protocol/data_protocol.html#commands) detailed in the
+Open GoPro documentation in a similar manner.
 
-To see how to parse more complicate responses, proceed to the next tutorial.
+To see how to parse responses, proceed to the next tutorial.

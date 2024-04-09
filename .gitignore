@@ -1,3 +1,6 @@
+**/*.crt
+/.build
+
 /.env
 **.log
 
