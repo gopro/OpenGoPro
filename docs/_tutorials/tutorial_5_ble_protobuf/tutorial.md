@@ -334,7 +334,7 @@ TODO
 
 # Deciphering Response Type
 
-This same procedure is used for all [Protobuf Operations]({site.{baseurl}}ble/protocol/id_tables.html#protobuf-ids).
+This same procedure is used for all [Protobuf Operations]({{site.baseurl}}ble/protocol/id_tables.html#protobuf-ids).
 Coupled with the information from previous tutorials, you are now capable of parsing any response received from the
 GoPro.
 
