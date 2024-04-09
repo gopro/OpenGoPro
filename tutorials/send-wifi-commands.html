@@ -9,8 +9,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Tutorial 6: Send WiFi Commands :  Open GoPro</title>
-<meta name="description" content="This document will provide a walk-through tutorial to send Open GoPro HTTP commands to the GoPro.">
+<!-- begin _includes/seo.html --><title>Tutorial 7: Send WiFi Commands :  Open GoPro</title>
+<meta name="description" content="This document will provide a walk-through tutorial to perform Open GoPro HTTP Operations with the GoPro.">
 
 
   <meta name="author" content="GoPro">
@@ -22,11 +22,11 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Open GoPro">
-<meta property="og:title" content="Tutorial 6: Send WiFi Commands">
+<meta property="og:title" content="Tutorial 7: Send WiFi Commands">
 <meta property="og:url" content="https://gopro.github.io/OpenGoPro/tutorials/send-wifi-commands">
 
 
-  <meta property="og:description" content="This document will provide a walk-through tutorial to send Open GoPro HTTP commands to the GoPro.">
+  <meta property="og:description" content="This document will provide a walk-through tutorial to perform Open GoPro HTTP Operations with the GoPro.">
 
 
 
@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2024-03-13T13:36:12-07:00">
+  <meta property="article:published_time" content="2024-04-09T13:00:03-07:00">
 
 
 
@@ -209,7 +209,7 @@
     
       
       
-        <li class="current">Tutorial 6: Send WiFi Commands</li>
+        <li class="current">Tutorial 7: Send WiFi Commands</li>
       
     
   </ol>
@@ -388,7 +388,7 @@
     
       <li>
         
-          <a href="/OpenGoPro/tutorials/connect-wifi"><span class="nav__sub-title">5: Connect WiFi</span></a>
+          <a href="/OpenGoPro/tutorials/ble-protobuf"><span class="nav__sub-title">5: BLE Protobuf</span></a>
         
 
         
@@ -396,7 +396,7 @@
     
       <li>
         
-          <a href="/OpenGoPro/tutorials/send-wifi-commands"><span class="nav__sub-title">6: Send WiFi Commands</span></a>
+          <a href="/OpenGoPro/tutorials/connect-wifi"><span class="nav__sub-title">6: Connect WiFi</span></a>
         
 
         
@@ -404,7 +404,23 @@
     
       <li>
         
-          <a href="/OpenGoPro/tutorials/camera-media-list"><span class="nav__sub-title">7: Camera Media List</span></a>
+          <a href="/OpenGoPro/tutorials/send-wifi-commands"><span class="nav__sub-title">7: Send WiFi Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/camera-media-list"><span class="nav__sub-title">8: Camera Media List</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/cohn"><span class="nav__sub-title">9: Camera on the Home Network</span></a>
         
 
         
@@ -420,15 +436,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Tutorial 6: Send WiFi Commands">
-    <meta itemprop="description" content="This document will provide a walk-through tutorial to send Open GoProHTTP commands to the GoPro.">
-    <meta itemprop="datePublished" content="2024-03-13T13:36:12-07:00">
+    <meta itemprop="headline" content="Tutorial 7: Send WiFi Commands">
+    <meta itemprop="description" content="This document will provide a walk-through tutorial to perform Open GoPro HTTP Operationswith the GoPro.">
+    <meta itemprop="datePublished" content="2024-04-09T13:00:03-07:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Tutorial 6: Send WiFi Commands
+          <h1 id="page-title" class="page__title" itemprop="headline">Tutorial 7: Send WiFi Commands
 </h1>
           
 
@@ -444,7 +460,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          11 minute read
+          10 minute read
         
       </span>
     
@@ -466,7 +482,7 @@
 <li><a href="#setup">Setup</a></li>
 <li>
 <a href="#sending-http-commands-with-json-responses">Sending HTTP Commands with JSON Responses</a><ul>
-<li><a href="#get-state">Get State</a></li>
+<li><a href="#get-camera-state">Get Camera State</a></li>
 <li><a href="#load-preset-group">Load Preset Group</a></li>
 <li><a href="#set-shutter">Set Shutter</a></li>
 <li><a href="#set-setting">Set Setting</a></li>
@@ -482,8 +498,8 @@
             </nav>
           </aside>
         
-        <p>This document will provide a walk-through tutorial to send Open GoPro
-<a href="/http">HTTP commands</a> to the GoPro.</p>
+        <p>This document will provide a walk-through tutorial to perform Open GoPro <a href="/OpenGoPro/http">HTTP Operations</a>
+with the GoPro.</p>
 
 <div class="callout tip">
 <i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>It is suggested that you have first completed the
@@ -495,20 +511,22 @@ synchronization when sending multiple commands. This will be discussed in a futu
 
 <p>There are two types of responses that can be received from the HTTP commands: JSON and binary. This section
 will deal with commands that return JSON responses. For commands with binary responses (as well as commands with
-JSON responses that work with the media list), see the <a href="/OpenGoPro/tutorials/camera-media-list">next tutorial</a>.</p>
+JSON responses that work with the media list), see the
+<a href="/OpenGoPro/tutorials/camera-media-list">next tutorial</a>.</p>
 
 <h1 id="requirements">Requirements</h1>
 
-<p>It is assumed that the hardware and software requirements from the <a href="/OpenGoPro/tutorials/connect-ble#requirements">connect tutorial</a>
+<p>It is assumed that the hardware and software requirements from the
+<a href="/OpenGoPro/tutorials/connect-ble#requirements">connecting BLE tutorial</a>
 are present and configured correctly.</p>
 
 <p>The scripts that will be used for this tutorial can be found in the
-<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_6_send_wifi_commands">Tutorial 6 Folder</a>.</p>
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_7_send_wifi_commands">Tutorial 7 Folder</a>.</p>
 
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="6a2647b0-6ee2-4843-b5d7-e9099f401b3e">
+    <ul class="tab tab-linked" data-tab="1afed2f9-ddec-4633-aa79-8b26115fcf51">
         
             <li class="active">
                 <a href="">python </a>
@@ -519,14 +537,14 @@ are present and configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="6a2647b0-6ee2-4843-b5d7-e9099f401b3e">
+        <ul class="tab-content" id="1afed2f9-ddec-4633-aa79-8b26115fcf51">
         
             <li class="active tab-content-container">
-<p>Each of the scripts for this tutorial can be found in the Tutorial 2
-<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_6_send_wifi_commands/">directory</a>.</p>
+<p>Each of the scripts for this tutorial can be found in the Tutorial 7
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_7_send_wifi_commands/">directory</a>.</p>
 
 <div class="callout warning">
-<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.8.x must be used as specified in the requirements</span>
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.9 and &lt; 3.12 must be used as specified in the requirements</span>
 </div>
 
 <div class="callout warning">
@@ -535,9 +553,10 @@ are present and configured correctly.</p>
 </div>
 
 <div class="accordion-container anchored">
-    <button class="accordion">Get State<i class="fa fa-chevron-down"></i></button>
+    <button class="accordion">Get Camera State<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>You can test querying the state of your camera with HTTP over WiFi using the following script:</p>
+
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_get_state.py
 </code></pre></div></div>
 
@@ -551,6 +570,7 @@ Get the state of the GoPro (status and settings).
 optional arguments:
   -h, --help  show this help message and exit
 </span></code></pre></div></div>
+
 </div>
 </div>
 
@@ -558,6 +578,7 @@ optional arguments:
     <button class="accordion">Preview Stream<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>You can test enabling the UDP preview stream with HTTP over WiFi using the following script:</p>
+
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_preview_stream.py
 </code></pre></div></div>
 
@@ -581,6 +602,7 @@ optional arguments:
     <button class="accordion">Load Preset Group<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>You can test sending the load preset group command with HTTP over WiFi using the following script:</p>
+
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_load_group.py
 </code></pre></div></div>
 
@@ -594,6 +616,7 @@ Load the video preset group.
 optional arguments:
   -h, --help  show this help message and exit
 </span></code></pre></div></div>
+
 </div>
 </div>
 
@@ -601,6 +624,7 @@ optional arguments:
     <button class="accordion">Set Shutter<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>You can test sending the Set Shutter command with HTTP over WiFi using the following script:</p>
+
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_set_shutter.py
 </code></pre></div></div>
 
@@ -614,6 +638,7 @@ Take a 3 second video.
 optional arguments:
   -h, --help  show this help message and exit
 </span></code></pre></div></div>
+
 </div>
 </div>
 
@@ -621,6 +646,7 @@ optional arguments:
     <button class="accordion">Set Setting<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>You can test setting the resolution setting with HTTP over WiFi using the following script:</p>
+
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_command_set_resolution.py
 </code></pre></div></div>
 
@@ -634,6 +660,7 @@ Set the video resolution to 1080.
 optional arguments:
   -h, --help  show this help message and exit
 </span></code></pre></div></div>
+
 </div>
 </div>
 
@@ -643,8 +670,9 @@ optional arguments:
 <p>The Kotlin file for this tutorial can be found on
 <a href="https://github.com/gopro/OpenGoPro/tree/main/demos/kotlin/tutorial/app/src/main/java/com/example/open_gopro_tutorial/tutorials/Tutorial6SendWifiCommands.kt">Github</a>.</p>
 
-<p>To perform the tutorial, run the Android Studio project, select “Tutorial 6” from the dropdown and click on “Perform.”
+<p>To perform the tutorial, run the Android Studio project, select “Tutorial 7” from the dropdown and click on “Perform.”
 This requires:</p>
+
 <ul>
   <li>a GoPro is already connected via BLE, i.e. that Tutorial 1 was already run.</li>
   <li>a GoPro is already connected via Wifi, i.e. that Tutorial 5 was already run.</li>
@@ -657,13 +685,13 @@ This requires:</p>
         text-align: center;
         margin: 10px auto;
     ">
-    <img src="/OpenGoPro/assets/images/tutorials/kotlin/tutorial_6.png" alt="kotlin_tutorial_6" style="
+    <img src="/OpenGoPro/assets/images/tutorials/kotlin/tutorial_7.png" alt="kotlin_tutorial_7" style="
             width: 40%;
             display: block;
             margin-left: auto;
             margin-right: auto;
         "><figcaption>
-            Perform Tutorial 6
+            Perform Tutorial 7
 
         </figcaption></figure>
 
@@ -685,7 +713,7 @@ This requires:</p>
 <p>Now that we are are connected via WiFi, we can communicate via HTTP commands.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="b17ebbbd-7990-4091-a473-4f98219b5248">
+    <ul class="tab tab-linked" data-tab="e5bec53d-d868-4d13-80f0-a31ef3e9e274">
         
             <li class="active">
                 <a href="">python </a>
@@ -696,7 +724,7 @@ This requires:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="b17ebbbd-7990-4091-a473-4f98219b5248">
+        <ul class="tab-content" id="e5bec53d-d868-4d13-80f0-a31ef3e9e274">
         
             <li class="active tab-content-container">
 <p>We will use the <a href="https://pypi.org/project/requests/">requests</a> package to send the various HTTP commands.</p>
@@ -727,6 +755,7 @@ This requires:</p>
     <span class="k">return</span> <span class="n">prettyJson</span><span class="p">.</span><span class="nf">parseToJsonElement</span><span class="p">(</span><span class="n">bodyAsString</span><span class="p">).</span><span class="n">jsonObject</span>
 <span class="p">}</span>
 </code></pre></div></div>
+
 </li>
         
     </ul>
@@ -745,16 +774,16 @@ This requires:</p>
 GoPro must be observed to verify when the command’s effects have been applied.</span>
 </div>
 
-<svg class="mermaid" id="mermaid-svg" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 624.5px;" viewbox="-50 -10 624.5 388" role="graphics-document document" aria-roledescription="sequence" xmlns:xlink="http://www.w3.org/1999/xlink"><g><rect x="324.5" y="302" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="399.5" y="334.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="399.5" dy="0">GoPro</tspan></text></g><g><rect x="0" y="302" fill="#eaeaea" stroke="#666" width="177" height="65" rx="3" ry="3" class="actor"></rect><text x="88.5" y="334.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="88.5" dy="0">Open GoPro user device</tspan></text></g><g><line id="actor1" x1="399.5" y1="5" x2="399.5" y2="302" class="200" stroke-width="0.5px" stroke="#999"></line><g id="root-1"><rect x="324.5" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="399.5" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="399.5" dy="0">GoPro</tspan></text></g></g><g><line id="actor0" x1="88.5" y1="5" x2="88.5" y2="302" class="200" stroke-width="0.5px" stroke="#999"></line><g id="root-0"><rect x="0" y="0" fill="#eaeaea" stroke="#666" width="177" height="65" rx="3" ry="3" class="actor"></rect><text x="88.5" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="88.5" dy="0">Open GoPro user device</tspan></text></g></g><style>#mermaid-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-svg .error-icon{fill:#552222;}#mermaid-svg .error-text{fill:#552222;stroke:#552222;}#mermaid-svg .edge-thickness-normal{stroke-width:2px;}#mermaid-svg .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg .marker{fill:#333333;stroke:#333333;}#mermaid-svg .marker.cross{stroke:#333333;}#mermaid-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg .actor{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg text.actor&gt;tspan{fill:black;stroke:none;}#mermaid-svg .actor-line{stroke:grey;}#mermaid-svg .messageLine0{stroke-width:1.5;stroke-dasharray:none;stroke:#333;}#mermaid-svg .messageLine1{stroke-width:1.5;stroke-dasharray:2,2;stroke:#333;}#mermaid-svg #arrowhead path{fill:#333;stroke:#333;}#mermaid-svg .sequenceNumber{fill:white;}#mermaid-svg #sequencenumber{fill:#333;}#mermaid-svg #crosshead path{fill:#333;stroke:#333;}#mermaid-svg .messageText{fill:#333;stroke:none;}#mermaid-svg .labelBox{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg .labelText,#mermaid-svg .labelText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .loopText,#mermaid-svg .loopText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .loopLine{stroke-width:2px;stroke-dasharray:2,2;stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);}#mermaid-svg .note{stroke:#aaaa33;fill:#fff5ad;}#mermaid-svg .noteText,#mermaid-svg .noteText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .activation0{fill:#f4f4f4;stroke:#666;}#mermaid-svg .activation1{fill:#f4f4f4;stroke:#666;}#mermaid-svg .activation2{fill:#f4f4f4;stroke:#666;}#mermaid-svg .actorPopupMenu{position:absolute;}#mermaid-svg .actorPopupMenuPanel{position:absolute;fill:#ECECFF;box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);filter:drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));}#mermaid-svg .actor-man line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg .actor-man circle,#mermaid-svg line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;stroke-width:2px;}#mermaid-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
+<svg class="mermaid" id="mermaid-svg" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 624.5px;" viewbox="-50 -10 624.5 388" role="graphics-document document" aria-roledescription="sequence" xmlns:xlink="http://www.w3.org/1999/xlink"><g><rect x="324.5" y="302" fill="#eaeaea" stroke="#666" width="150" height="65" name="GoPro" rx="3" ry="3" class="actor actor-bottom"></rect><text x="399.5" y="334.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="399.5" dy="0">GoPro</tspan></text></g><g><rect x="0" y="302" fill="#eaeaea" stroke="#666" width="177" height="65" name="PC" rx="3" ry="3" class="actor actor-bottom"></rect><text x="88.5" y="334.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="88.5" dy="0">Open GoPro user device</tspan></text></g><g><line id="actor1" x1="399.5" y1="5" x2="399.5" y2="302" class="200" stroke-width="0.5px" stroke="#999"></line><g id="root-1"><rect x="324.5" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" name="GoPro" rx="3" ry="3" class="actor actor-top"></rect><text x="399.5" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="399.5" dy="0">GoPro</tspan></text></g></g><g><line id="actor0" x1="88.5" y1="5" x2="88.5" y2="302" class="200" stroke-width="0.5px" stroke="#999"></line><g id="root-0"><rect x="0" y="0" fill="#eaeaea" stroke="#666" width="177" height="65" name="PC" rx="3" ry="3" class="actor actor-top"></rect><text x="88.5" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="88.5" dy="0">Open GoPro user device</tspan></text></g></g><style>#mermaid-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-svg .error-icon{fill:#552222;}#mermaid-svg .error-text{fill:#552222;stroke:#552222;}#mermaid-svg .edge-thickness-normal{stroke-width:2px;}#mermaid-svg .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg .marker{fill:#333333;stroke:#333333;}#mermaid-svg .marker.cross{stroke:#333333;}#mermaid-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg .actor{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg text.actor&gt;tspan{fill:black;stroke:none;}#mermaid-svg .actor-line{stroke:grey;}#mermaid-svg .messageLine0{stroke-width:1.5;stroke-dasharray:none;stroke:#333;}#mermaid-svg .messageLine1{stroke-width:1.5;stroke-dasharray:2,2;stroke:#333;}#mermaid-svg #arrowhead path{fill:#333;stroke:#333;}#mermaid-svg .sequenceNumber{fill:white;}#mermaid-svg #sequencenumber{fill:#333;}#mermaid-svg #crosshead path{fill:#333;stroke:#333;}#mermaid-svg .messageText{fill:#333;stroke:none;}#mermaid-svg .labelBox{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg .labelText,#mermaid-svg .labelText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .loopText,#mermaid-svg .loopText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .loopLine{stroke-width:2px;stroke-dasharray:2,2;stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);}#mermaid-svg .note{stroke:#aaaa33;fill:#fff5ad;}#mermaid-svg .noteText,#mermaid-svg .noteText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .activation0{fill:#f4f4f4;stroke:#666;}#mermaid-svg .activation1{fill:#f4f4f4;stroke:#666;}#mermaid-svg .activation2{fill:#f4f4f4;stroke:#666;}#mermaid-svg .actorPopupMenu{position:absolute;}#mermaid-svg .actorPopupMenuPanel{position:absolute;fill:#ECECFF;box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);filter:drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));}#mermaid-svg .actor-man line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg .actor-man circle,#mermaid-svg line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;stroke-width:2px;}#mermaid-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
 <g></g><defs><symbol id="computer" width="24" height="24"><path transform="scale(.5)" d="M2 2v13h20v-13h-20zm18 11h-16v-9h16v9zm-10.228 6l.466-1h3.524l.467 1h-4.457zm14.228 3h-24l2-6h2.104l-1.33 4h18.45l-1.297-4h2.073l2 6zm-5-10h-14v-7h14v7z"></path></symbol></defs><defs><symbol id="database" fill-rule="evenodd" clip-rule="evenodd"><path transform="scale(.5)" d="M12.258.001l.256.004.255.005.253.008.251.01.249.012.247.015.246.016.242.019.241.02.239.023.236.024.233.027.231.028.229.031.225.032.223.034.22.036.217.038.214.04.211.041.208.043.205.045.201.046.198.048.194.05.191.051.187.053.183.054.18.056.175.057.172.059.168.06.163.061.16.063.155.064.15.066.074.033.073.033.071.034.07.034.069.035.068.035.067.035.066.035.064.036.064.036.062.036.06.036.06.037.058.037.058.037.055.038.055.038.053.038.052.038.051.039.05.039.048.039.047.039.045.04.044.04.043.04.041.04.04.041.039.041.037.041.036.041.034.041.033.042.032.042.03.042.029.042.027.042.026.043.024.043.023.043.021.043.02.043.018.044.017.043.015.044.013.044.012.044.011.045.009.044.007.045.006.045.004.045.002.045.001.045v17l-.001.045-.002.045-.004.045-.006.045-.007.045-.009.044-.011.045-.012.044-.013.044-.015.044-.017.043-.018.044-.02.043-.021.043-.023.043-.024.043-.026.043-.027.042-.029.042-.03.042-.032.042-.033.042-.034.041-.036.041-.037.041-.039.041-.04.041-.041.04-.043.04-.044.04-.045.04-.047.039-.048.039-.05.039-.051.039-.052.038-.053.038-.055.038-.055.038-.058.037-.058.037-.06.037-.06.036-.062.036-.064.036-.064.036-.066.035-.067.035-.068.035-.069.035-.07.034-.071.034-.073.033-.074.033-.15.066-.155.064-.16.063-.163.061-.168.06-.172.059-.175.057-.18.056-.183.054-.187.053-.191.051-.194.05-.198.048-.201.046-.205.045-.208.043-.211.041-.214.04-.217.038-.22.036-.223.034-.225.032-.229.031-.231.028-.233.027-.236.024-.239.023-.241.02-.242.019-.246.016-.247.015-.249.012-.251.01-.253.008-.255.005-.256.004-.258.001-.258-.001-.256-.004-.255-.005-.253-.008-.251-.01-.249-.012-.247-.015-.245-.016-.243-.019-.241-.02-.238-.023-.236-.024-.234-.027-.231-.028-.228-.031-.226-.032-.223-.034-.22-.036-.217-.038-.214-.04-.211-.041-.208-.043-.204-.045-.201-.046-.198-.048-.195-.05-.19-.051-.187-.053-.184-.054-.179-.056-.176-.057-.172-.059-.167-.06-.164-.061-.159-.063-.155-.064-.151-.066-.074-.033-.072-.033-.072-.034-.07-.034-.069-.035-.068-.035-.067-.035-.066-.035-.064-.036-.063-.036-.062-.036-.061-.036-.06-.037-.058-.037-.057-.037-.056-.038-.055-.038-.053-.038-.052-.038-.051-.039-.049-.039-.049-.039-.046-.039-.046-.04-.044-.04-.043-.04-.041-.04-.04-.041-.039-.041-.037-.041-.036-.041-.034-.041-.033-.042-.032-.042-.03-.042-.029-.042-.027-.042-.026-.043-.024-.043-.023-.043-.021-.043-.02-.043-.018-.044-.017-.043-.015-.044-.013-.044-.012-.044-.011-.045-.009-.044-.007-.045-.006-.045-.004-.045-.002-.045-.001-.045v-17l.001-.045.002-.045.004-.045.006-.045.007-.045.009-.044.011-.045.012-.044.013-.044.015-.044.017-.043.018-.044.02-.043.021-.043.023-.043.024-.043.026-.043.027-.042.029-.042.03-.042.032-.042.033-.042.034-.041.036-.041.037-.041.039-.041.04-.041.041-.04.043-.04.044-.04.046-.04.046-.039.049-.039.049-.039.051-.039.052-.038.053-.038.055-.038.056-.038.057-.037.058-.037.06-.037.061-.036.062-.036.063-.036.064-.036.066-.035.067-.035.068-.035.069-.035.07-.034.072-.034.072-.033.074-.033.151-.066.155-.064.159-.063.164-.061.167-.06.172-.059.176-.057.179-.056.184-.054.187-.053.19-.051.195-.05.198-.048.201-.046.204-.045.208-.043.211-.041.214-.04.217-.038.22-.036.223-.034.226-.032.228-.031.231-.028.234-.027.236-.024.238-.023.241-.02.243-.019.245-.016.247-.015.249-.012.251-.01.253-.008.255-.005.256-.004.258-.001.258.001zm-9.258 20.499v.01l.001.021.003.021.004.022.005.021.006.022.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.023.018.024.019.024.021.024.022.025.023.024.024.025.052.049.056.05.061.051.066.051.07.051.075.051.079.052.084.052.088.052.092.052.097.052.102.051.105.052.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.048.144.049.147.047.152.047.155.047.16.045.163.045.167.043.171.043.176.041.178.041.183.039.187.039.19.037.194.035.197.035.202.033.204.031.209.03.212.029.216.027.219.025.222.024.226.021.23.02.233.018.236.016.24.015.243.012.246.01.249.008.253.005.256.004.259.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.021.224-.024.22-.026.216-.027.212-.028.21-.031.205-.031.202-.034.198-.034.194-.036.191-.037.187-.039.183-.04.179-.04.175-.042.172-.043.168-.044.163-.045.16-.046.155-.046.152-.047.148-.048.143-.049.139-.049.136-.05.131-.05.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.053.083-.051.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.05.023-.024.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.023.01-.022.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.127l-.077.055-.08.053-.083.054-.085.053-.087.052-.09.052-.093.051-.095.05-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.045-.118.044-.12.043-.122.042-.124.042-.126.041-.128.04-.13.04-.132.038-.134.038-.135.037-.138.037-.139.035-.142.035-.143.034-.144.033-.147.032-.148.031-.15.03-.151.03-.153.029-.154.027-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.01-.179.008-.179.008-.181.006-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.006-.179-.008-.179-.008-.178-.01-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.027-.153-.029-.151-.03-.15-.03-.148-.031-.146-.032-.145-.033-.143-.034-.141-.035-.14-.035-.137-.037-.136-.037-.134-.038-.132-.038-.13-.04-.128-.04-.126-.041-.124-.042-.122-.042-.12-.044-.117-.043-.116-.045-.113-.045-.112-.046-.109-.047-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.05-.093-.052-.09-.051-.087-.052-.085-.053-.083-.054-.08-.054-.077-.054v4.127zm0-5.654v.011l.001.021.003.021.004.021.005.022.006.022.007.022.009.022.01.022.011.023.012.023.013.023.015.024.016.023.017.024.018.024.019.024.021.024.022.024.023.025.024.024.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.052.11.051.114.051.119.052.123.05.127.051.131.05.135.049.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.044.171.042.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.022.23.02.233.018.236.016.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.012.241-.015.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.048.139-.05.136-.049.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.051.051-.049.023-.025.023-.024.021-.025.02-.024.019-.024.018-.024.017-.024.015-.023.014-.023.013-.024.012-.022.01-.023.01-.023.008-.022.006-.022.006-.022.004-.021.004-.022.001-.021.001-.021v-4.139l-.077.054-.08.054-.083.054-.085.052-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.044-.118.044-.12.044-.122.042-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.035-.143.033-.144.033-.147.033-.148.031-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.009-.179.009-.179.007-.181.007-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.007-.179-.007-.179-.009-.178-.009-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.031-.146-.033-.145-.033-.143-.033-.141-.035-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.04-.126-.041-.124-.042-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.051-.093-.051-.09-.051-.087-.053-.085-.052-.083-.054-.08-.054-.077-.054v4.139zm0-5.666v.011l.001.02.003.022.004.021.005.022.006.021.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.024.018.023.019.024.021.025.022.024.023.024.024.025.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.051.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.043.171.043.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.021.23.02.233.018.236.017.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.013.241-.014.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.049.139-.049.136-.049.131-.051.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.049.023-.025.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.022.01-.023.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.153l-.077.054-.08.054-.083.053-.085.053-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.048-.105.048-.106.048-.109.046-.111.046-.114.046-.115.044-.118.044-.12.043-.122.043-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.034-.143.034-.144.033-.147.032-.148.032-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.024-.161.024-.162.023-.163.023-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.01-.178.01-.179.009-.179.007-.181.006-.182.006-.182.004-.184.003-.184.001-.185.001-.185-.001-.184-.001-.184-.003-.182-.004-.182-.006-.181-.006-.179-.007-.179-.009-.178-.01-.176-.01-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.023-.162-.023-.161-.024-.159-.024-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.032-.146-.032-.145-.033-.143-.034-.141-.034-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.041-.126-.041-.124-.041-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.048-.105-.048-.102-.048-.1-.05-.097-.049-.095-.051-.093-.051-.09-.052-.087-.052-.085-.053-.083-.053-.08-.054-.077-.054v4.153zm8.74-8.179l-.257.004-.254.005-.25.008-.247.011-.244.012-.241.014-.237.016-.233.018-.231.021-.226.022-.224.023-.22.026-.216.027-.212.028-.21.031-.205.032-.202.033-.198.034-.194.036-.191.038-.187.038-.183.04-.179.041-.175.042-.172.043-.168.043-.163.045-.16.046-.155.046-.152.048-.148.048-.143.048-.139.049-.136.05-.131.05-.126.051-.123.051-.118.051-.114.052-.11.052-.106.052-.101.052-.096.052-.092.052-.088.052-.083.052-.079.052-.074.051-.07.052-.065.051-.06.05-.056.05-.051.05-.023.025-.023.024-.021.024-.02.025-.019.024-.018.024-.017.023-.015.024-.014.023-.013.023-.012.023-.01.023-.01.022-.008.022-.006.023-.006.021-.004.022-.004.021-.001.021-.001.021.001.021.001.021.004.021.004.022.006.021.006.023.008.022.01.022.01.023.012.023.013.023.014.023.015.024.017.023.018.024.019.024.02.025.021.024.023.024.023.025.051.05.056.05.06.05.065.051.07.052.074.051.079.052.083.052.088.052.092.052.096.052.101.052.106.052.11.052.114.052.118.051.123.051.126.051.131.05.136.05.139.049.143.048.148.048.152.048.155.046.16.046.163.045.168.043.172.043.175.042.179.041.183.04.187.038.191.038.194.036.198.034.202.033.205.032.21.031.212.028.216.027.22.026.224.023.226.022.231.021.233.018.237.016.241.014.244.012.247.011.25.008.254.005.257.004.26.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.022.224-.023.22-.026.216-.027.212-.028.21-.031.205-.032.202-.033.198-.034.194-.036.191-.038.187-.038.183-.04.179-.041.175-.042.172-.043.168-.043.163-.045.16-.046.155-.046.152-.048.148-.048.143-.048.139-.049.136-.05.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.05.051-.05.023-.025.023-.024.021-.024.02-.025.019-.024.018-.024.017-.023.015-.024.014-.023.013-.023.012-.023.01-.023.01-.022.008-.022.006-.023.006-.021.004-.022.004-.021.001-.021.001-.021-.001-.021-.001-.021-.004-.021-.004-.022-.006-.021-.006-.023-.008-.022-.01-.022-.01-.023-.012-.023-.013-.023-.014-.023-.015-.024-.017-.023-.018-.024-.019-.024-.02-.025-.021-.024-.023-.024-.023-.025-.051-.05-.056-.05-.06-.05-.065-.051-.07-.052-.074-.051-.079-.052-.083-.052-.088-.052-.092-.052-.096-.052-.101-.052-.106-.052-.11-.052-.114-.052-.118-.051-.123-.051-.126-.051-.131-.05-.136-.05-.139-.049-.143-.048-.148-.048-.152-.048-.155-.046-.16-.046-.163-.045-.168-.043-.172-.043-.175-.042-.179-.041-.183-.04-.187-.038-.191-.038-.194-.036-.198-.034-.202-.033-.205-.032-.21-.031-.212-.028-.216-.027-.22-.026-.224-.023-.226-.022-.231-.021-.233-.018-.237-.016-.241-.014-.244-.012-.247-.011-.25-.008-.254-.005-.257-.004-.26-.001-.26.001z"></path></symbol></defs><defs><symbol id="clock" width="24" height="24"><path transform="scale(.5)" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z"></path></symbol></defs><defs><marker id="arrowhead" refx="7.9" refy="5" markerunits="userSpaceOnUse" markerwidth="12" markerheight="12" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs><defs><marker id="crosshead" markerwidth="15" markerheight="8" orient="auto" refx="4" refy="4.5"><path fill="none" stroke="#000000" stroke-width="1pt" d="M 1,2 L 6,7 M 6,2 L 1,7" style="stroke-dasharray: 0, 0;"></path></marker></defs><defs><marker id="filled-head" refx="15.5" refy="7" markerwidth="20" markerheight="28" orient="auto"><path d="M 18,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><defs><marker id="sequencenumber" refx="15" refy="15" markerwidth="60" markerheight="40" orient="auto"><circle cx="15" cy="15" r="6"></circle></marker></defs><g><rect x="63.5" y="75" fill="#EDF2AE" stroke="#666" width="361" height="39" rx="0" ry="0" class="note"></rect><text x="244" y="80" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="noteText" dy="1em" style="font-size: 16px; font-weight: 400;"><tspan x="244">PC connected to WiFi AP</tspan></text></g><g><rect x="394.5" y="160" fill="#EDF2AE" stroke="#666" width="10" height="122" rx="0" ry="0" class="activation0"></rect></g><text x="243" y="129" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-size: 16px; font-weight: 400;">Command Request (GET)</text><line x1="89.5" y1="160" x2="395.5" y2="160" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><text x="244" y="175" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-size: 16px; font-weight: 400;">Command Response (HTTP 200 OK)</text><line x1="394.5" y1="206" x2="92.5" y2="206" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><text x="405" y="221" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-size: 16px; font-weight: 400;">Apply affects of command when able</text><path d="M 404.5,252 C 464.5,242 464.5,282 404.5,272" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></path><style>@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");</style></svg>
 
-<h2 id="get-state">Get State</h2>
+<h2 id="get-camera-state">Get Camera State</h2>
 
 <p>The first command we will be sending is
-<a href="/http#commands-quick-reference">Get State</a>. This command will
+<a href="/OpenGoPro/http#tag/Query/operation/OGP_GET_STATE">Get Camera State</a>. This command will
 return all of the current settings and values. It is basically a combination of the
-<a href="/OpenGoPro/tutorials/ble-queries#query-all">Get All Settings</a> and
-<a href="/OpenGoPro/tutorials/ble-queries#query-all">Get All Statuses</a>
+<a href="/OpenGoPro/ble/features/query.html#get-setting-values">Get All Settings</a> and
+<a href="/OpenGoPro/ble/features/query.html#get-status-values">Get All Statuses</a>
 commands that were sent via BLE. Since there is no way to query individual settings / statuses
 via WiFi (or register for asynchronous notifications when they change), this is the only option to query
 setting / status information via WiFi.</p>
@@ -763,11 +792,11 @@ setting / status information via WiFi.</p>
 
 <p><code class="language-plaintext highlighter-rouge">/gopro/camera/state</code></p>
 
-<p>Let’s build the endpoint then send the GET request and check the response for errors.
+<p>Let’s build the endpoint then perform the GET operation and check the response for errors.
 Any errors will raise an exception.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="c4996b23-82a4-4da1-95e7-a941660ee6ac">
+    <ul class="tab tab-linked" data-tab="bd7a2670-3617-4c58-98a8-1ce2f2cadede">
         
             <li class="active">
                 <a href="">python </a>
@@ -778,7 +807,7 @@ Any errors will raise an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="c4996b23-82a4-4da1-95e7-a941660ee6ac">
+        <ul class="tab-content" id="bd7a2670-3617-4c58-98a8-1ce2f2cadede">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/gopro/camera/state</span><span class="sh">"</span>
@@ -787,11 +816,13 @@ Any errors will raise an exception.</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">response</span><span class="p">.</span><span class="nf">raise_for_status</span><span class="p">()</span>
 </code></pre></div></div>
+
 </li>
         
             <li class="tab-content-container">
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="py">response</span> <span class="p">=</span> <span class="n">wifi</span><span class="p">.</span><span class="k">get</span><span class="p">(</span><span class="nc">GOPRO_BASE_URL</span> <span class="p">+</span> <span class="s">"gopro/camera/state"</span><span class="p">)</span>
 </code></pre></div></div>
+
 </li>
         
     </ul>
@@ -800,7 +831,7 @@ Any errors will raise an exception.</p>
 <p>Lastly, we print the response’s JSON data:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="41b13ecb-d7d5-400f-95bc-18c4bd92d80b">
+    <ul class="tab tab-linked" data-tab="cf1ed6ff-6f3f-403c-9438-ed4d468c9403">
         
             <li class="active">
                 <a href="">python </a>
@@ -811,7 +842,7 @@ Any errors will raise an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="41b13ecb-d7d5-400f-95bc-18c4bd92d80b">
+        <ul class="tab-content" id="cf1ed6ff-6f3f-403c-9438-ed4d468c9403">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
@@ -852,6 +883,7 @@ INFO:root:Response: {
       "41": 9,
       "42": 5,
 </span></code></pre></div></div>
+
 </li>
         
             <li class="tab-content-container">
@@ -902,8 +934,8 @@ GET request to: http://10.5.5.9:8080/gopro/camera/state
     </ul>
 </div>
 
-<p>We can see what each of these values mean by looking at the
-<a href="/ble/index.html#settings-quick-reference">Open GoPro Interface</a>.</p>
+<p>We can see what each of these values mean by looking at relevant documentation in the <code class="language-plaintext highlighter-rouge">settings</code> or <code class="language-plaintext highlighter-rouge">status</code> object of the
+<a href="/OpenGoPro/http#schema/State">State</a> schema.</p>
 
 <p>For example (for settings):</p>
 
@@ -915,7 +947,7 @@ GET request to: http://10.5.5.9:8080/gopro/camera/state
 <h2 id="load-preset-group">Load Preset Group</h2>
 
 <p>The next command we will be sending is
-<a href="/ble/index.html#commands-quick-reference">Load Preset Group</a>, which is used
+<a href="/OpenGoPro/http#tag/Presets/operation/OGP_PRESET_SET_GROUP">Load Preset Group</a>, which is used
 to toggle between the 3 groups of presets (video, photo, and timelapse). The preset groups ID’s are:</p>
 
 <table>
@@ -941,14 +973,8 @@ to toggle between the 3 groups of presets (video, photo, and timelapse). The pre
   </tbody>
 </table>
 
-<div class="callout note">
-<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>It is possible that the preset GroupID values will vary in future cameras. The only absolutely correct way to know
-the preset ID is to read them from the “Get Preset Status” protobuf command. A future lab will discuss protobuf
-commands.</span>
-</div>
-
 <div>
-    <ul class="tab tab-linked" data-tab="62606c8b-46ae-4ffd-a2dd-0e46c8b33fc5">
+    <ul class="tab tab-linked" data-tab="b1724d0a-6152-4b71-a496-8ad618f412d6">
         
             <li class="active">
                 <a href="">python </a>
@@ -959,7 +985,7 @@ commands.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="62606c8b-46ae-4ffd-a2dd-0e46c8b33fc5">
+        <ul class="tab-content" id="b1724d0a-6152-4b71-a496-8ad618f412d6">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/gopro/camera/presets/set_group?id=1000</span><span class="sh">"</span>
@@ -968,11 +994,13 @@ commands.</span>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">response</span><span class="p">.</span><span class="nf">raise_for_status</span><span class="p">()</span>
 </code></pre></div></div>
+
 </li>
         
             <li class="tab-content-container">
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="p">=</span> <span class="n">wifi</span><span class="p">.</span><span class="k">get</span><span class="p">(</span><span class="nc">GOPRO_BASE_URL</span> <span class="p">+</span> <span class="s">"gopro/camera/presets/load?id=1000"</span><span class="p">)</span>
 </code></pre></div></div>
+
 </li>
         
     </ul>
@@ -981,7 +1009,7 @@ commands.</span>
 <p>Lastly, we print the response’s JSON data:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="66ee4c39-33d3-4c67-a8d4-683f59ab00a7">
+    <ul class="tab tab-linked" data-tab="b5cc36c4-ae58-4cb6-b1c4-fde634961bfc">
         
             <li class="active">
                 <a href="">python </a>
@@ -992,7 +1020,7 @@ commands.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="66ee4c39-33d3-4c67-a8d4-683f59ab00a7">
+        <ul class="tab-content" id="b5cc36c4-ae58-4cb6-b1c4-fde634961bfc">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
@@ -1004,6 +1032,7 @@ commands.</span>
 INFO:root:Command sent successfully
 INFO:root:Response: {}
 </span></code></pre></div></div>
+
 </li>
         
             <li class="tab-content-container">
@@ -1049,12 +1078,11 @@ this by seeing the preset name in the pill at bottom middle of the screen.</p>
 
 <h2 id="set-shutter">Set Shutter</h2>
 
-<p>The next command we will be sending is
-<a href="/http#commands-quick-reference">Set Shutter</a>. which is
+<p>The next command we will be sending is <a href="/OpenGoPro/http#tag/Control/operation/OGP_SHUTTER">Set Shutter</a>. which is
 used to start and stop encoding.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="66e00814-b268-4196-8ffd-c576aa486998">
+    <ul class="tab tab-linked" data-tab="efb72650-2cca-40fc-b018-ceae2a59835e">
         
             <li class="active">
                 <a href="">python </a>
@@ -1065,7 +1093,7 @@ used to start and stop encoding.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="66e00814-b268-4196-8ffd-c576aa486998">
+        <ul class="tab-content" id="efb72650-2cca-40fc-b018-ceae2a59835e">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="sh">"</span><span class="s">/gopro/camera/shutter/start</span><span class="sh">"</span>
@@ -1074,11 +1102,13 @@ used to start and stop encoding.</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">response</span><span class="p">.</span><span class="nf">raise_for_status</span><span class="p">()</span>
 </code></pre></div></div>
+
 </li>
         
             <li class="tab-content-container">
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="p">=</span> <span class="n">wifi</span><span class="p">.</span><span class="k">get</span><span class="p">(</span><span class="nc">GOPRO_BASE_URL</span> <span class="p">+</span> <span class="s">"gopro/camera/shutter/start"</span><span class="p">)</span>
 </code></pre></div></div>
+
 </li>
         
     </ul>
@@ -1093,7 +1123,7 @@ used to start and stop encoding.</p>
 <p>This will log as such:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="8fe20097-c488-4e1c-994e-e8fa0e1e67ad">
+    <ul class="tab tab-linked" data-tab="e42dc066-4147-4a08-a951-28359fbae6f2">
         
             <li class="active">
                 <a href="">python </a>
@@ -1104,12 +1134,13 @@ used to start and stop encoding.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="8fe20097-c488-4e1c-994e-e8fa0e1e67ad">
+        <ul class="tab-content" id="e42dc066-4147-4a08-a951-28359fbae6f2">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Turning the shutter on: sending http://10.5.5.9:8080/gopro/camera/shutter/start
 INFO:root:Command sent successfully
 </span></code></pre></div></div>
+
 </li>
         
             <li class="tab-content-container">
@@ -1138,20 +1169,20 @@ attempt to do so will result in an error response.</span>
 
 <h2 id="set-setting">Set Setting</h2>
 
-<p>The next command will be sending is <a href="/http#settings-quick-reference">Set Setting</a>.
+<p>The next command will be sending is <a href="/OpenGoPro/http#tag/settings">Set Setting</a>.
 This end point is used to update all of the settings on the camera. It is analogous to BLE commands like
 <a href="/OpenGoPro/tutorials/send-ble-commands#set-the-video-resolution">Set Video Resolution</a>.</p>
 
 <p>It is important to note that many settings are dependent on the video resolution (and other settings).
 For example, certain FPS values are not valid with certain resolutions. In general, higher resolutions
-only allow lower FPS values. Check the <a href="/ble/index.html#camera-capabilities">camera capabilities</a>
+only allow lower FPS values. Check the <a href="/OpenGoPro/http#tag/settings/Capabilities">camera capabilities</a>
 to see which settings are valid for given use cases.</p>
 
 <p>Let’s build the endpoint first to set the Video Resolution to 1080 (the setting_id and option value comes from
 the command table linked above).</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="069777ed-0c8f-44ee-a17b-c8646f4930dd">
+    <ul class="tab tab-linked" data-tab="8cd42d58-4262-4034-a669-754f122b34bb">
         
             <li class="active">
                 <a href="">python </a>
@@ -1162,7 +1193,7 @@ the command table linked above).</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="069777ed-0c8f-44ee-a17b-c8646f4930dd">
+        <ul class="tab-content" id="8cd42d58-4262-4034-a669-754f122b34bb">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="sh">"</span><span class="s">/gopro/camera/setting?setting=2&amp;option=9</span><span class="sh">"</span>
@@ -1171,11 +1202,13 @@ the command table linked above).</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">response</span><span class="p">.</span><span class="nf">raise_for_status</span><span class="p">()</span>
 </code></pre></div></div>
+
 </li>
         
             <li class="tab-content-container">
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="p">=</span> <span class="n">wifi</span><span class="p">.</span><span class="k">get</span><span class="p">(</span><span class="nc">GOPRO_BASE_URL</span> <span class="p">+</span> <span class="s">"gopro/camera/setting?setting=2&amp;option=9"</span><span class="p">)</span>
 </code></pre></div></div>
+
 </li>
         
     </ul>
@@ -1184,7 +1217,7 @@ the command table linked above).</p>
 <p>Lastly, we print the response’s JSON data:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="f96b9300-7dcd-4c72-a840-0e167c58b6fb">
+    <ul class="tab tab-linked" data-tab="bfeb8376-c4f0-4e7e-b152-bad2d1f36e7c">
         
             <li class="active">
                 <a href="">python </a>
@@ -1195,7 +1228,7 @@ the command table linked above).</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="f96b9300-7dcd-4c72-a840-0e167c58b6fb">
+        <ul class="tab-content" id="bfeb8376-c4f0-4e7e-b152-bad2d1f36e7c">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
@@ -1249,12 +1282,12 @@ screen:</p>
 
         </figcaption></figure>
 
-<p>As a reader exercise, try using the [Get State] command to verify that the resolution has changed.</p>
+<p>As a reader exercise, try using the <a href="#get-camera-state">Get Camera State</a> command to verify that the resolution has changed.</p>
 
 <h2 id="preview-stream">Preview Stream</h2>
 
 <p>The next command we will be sending is
-<a href="/http#commands-quick-reference">Preview Stream</a>. This command will
+<a href="/OpenGoPro/http#tag/Preview-Stream/operation/OGP_PREVIEW_STREAM_START">Start Preview Stream</a>. This command will
 enable (or disable) the preview stream . It is then possible to view the preview stream from a media player.</p>
 
 <p>The commands write to the following endpoints:</p>
@@ -1282,7 +1315,7 @@ enable (or disable) the preview stream . It is then possible to view the preview
 Any errors will raise an exception.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="48ba05fb-a706-4c7d-9136-04055270d428">
+    <ul class="tab tab-linked" data-tab="de573364-4a14-4bdd-bb9e-4194948480f0">
         
             <li class="active">
                 <a href="">python </a>
@@ -1293,7 +1326,7 @@ Any errors will raise an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="48ba05fb-a706-4c7d-9136-04055270d428">
+        <ul class="tab-content" id="de573364-4a14-4bdd-bb9e-4194948480f0">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/gopro/camera/stream/start</span><span class="sh">"</span>
@@ -1302,6 +1335,7 @@ Any errors will raise an exception.</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">response</span><span class="p">.</span><span class="nf">raise_for_status</span><span class="p">()</span>
 </code></pre></div></div>
+
 </li>
         
             <li class="tab-content-container">
@@ -1314,7 +1348,7 @@ Any errors will raise an exception.</p>
 <p>Lastly, we print the response’s JSON data:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="6174d2da-9bb8-493a-a357-f308879c7a56">
+    <ul class="tab tab-linked" data-tab="c7427d1d-22a0-4978-8c7f-6d6c6697251c">
         
             <li class="active">
                 <a href="">python </a>
@@ -1325,7 +1359,7 @@ Any errors will raise an exception.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="6174d2da-9bb8-493a-a357-f308879c7a56">
+        <ul class="tab-content" id="c7427d1d-22a0-4978-8c7f-6d6c6697251c">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
@@ -1337,6 +1371,7 @@ Any errors will raise an exception.</p>
 INFO:root:Command sent successfully
 INFO:root:Response: {}
 </span></code></pre></div></div>
+
 </li>
         
             <li class="tab-content-container">
@@ -1386,10 +1421,10 @@ INFO:root:Response: {}
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_c780a521-8212-44d1-98d2-df9d5bcc3915" class="quiz">
+<div id="quiz_567501f0-beea-42bf-9edf-c3f1d3848b34" class="quiz">
     <div>
-        <div id="question_c780a521-8212-44d1-98d2-df9d5bcc3915" class="quiz__question">What is the significance of empty JSON in an HTTP response?</div>
-        <div id="answers_c780a521-8212-44d1-98d2-df9d5bcc3915">
+        <div id="question_567501f0-beea-42bf-9edf-c3f1d3848b34" class="quiz__question">What is the significance of empty JSON in an HTTP response?</div>
+        <div id="answers_567501f0-beea-42bf-9edf-c3f1d3848b34">
         
             <input type="radio" name="question" value="A"><label>A: Always an error! The command was not received correctly.</label>
             <br>
@@ -1402,19 +1437,19 @@ INFO:root:Response: {}
         
         </div>
     </div>
-    <button onclick="showResults('c780a521-8212-44d1-98d2-df9d5bcc3915', 'B')">Submit Answer</button>
-    <div id="results_c780a521-8212-44d1-98d2-df9d5bcc3915" style="display: none">
-        <span id="correct_c780a521-8212-44d1-98d2-df9d5bcc3915" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_c780a521-8212-44d1-98d2-df9d5bcc3915" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('567501f0-beea-42bf-9edf-c3f1d3848b34', 'B')">Submit Answer</button>
+    <div id="results_567501f0-beea-42bf-9edf-c3f1d3848b34" style="display: none">
+        <span id="correct_567501f0-beea-42bf-9edf-c3f1d3848b34" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_567501f0-beea-42bf-9edf-c3f1d3848b34" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is common for the JSON response to be empty if the command was received successfully
     but there is no additional information to return at the current time.
     </div>
 </div>
 
-<div id="quiz_2ec490b8-aae3-4874-8c42-f69e9a825817" class="quiz">
+<div id="quiz_6a13a231-6434-4619-8ad9-c487ff51c29b" class="quiz">
     <div>
-        <div id="question_2ec490b8-aae3-4874-8c42-f69e9a825817" class="quiz__question">Which of the of the following is not a real preset group?</div>
-        <div id="answers_2ec490b8-aae3-4874-8c42-f69e9a825817">
+        <div id="question_6a13a231-6434-4619-8ad9-c487ff51c29b" class="quiz__question">Which of the of the following is not a real preset group?</div>
+        <div id="answers_6a13a231-6434-4619-8ad9-c487ff51c29b">
         
             <input type="radio" name="question" value="A"><label>A: Timelapse</label>
             <br>
@@ -1430,19 +1465,19 @@ INFO:root:Response: {}
         
         </div>
     </div>
-    <button onclick="showResults('2ec490b8-aae3-4874-8c42-f69e9a825817', 'C')">Submit Answer</button>
-    <div id="results_2ec490b8-aae3-4874-8c42-f69e9a825817" style="display: none">
-        <span id="correct_2ec490b8-aae3-4874-8c42-f69e9a825817" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_2ec490b8-aae3-4874-8c42-f69e9a825817" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('6a13a231-6434-4619-8ad9-c487ff51c29b', 'C')">Submit Answer</button>
+    <div id="results_6a13a231-6434-4619-8ad9-c487ff51c29b" style="display: none">
+        <span id="correct_6a13a231-6434-4619-8ad9-c487ff51c29b" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_6a13a231-6434-4619-8ad9-c487ff51c29b" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There are 3 preset groups (Timelapse, Photo, and Video). These can be
     set via the Load Preset Group command.
     </div>
 </div>
 
-<div id="quiz_78f7e089-1d16-467f-b096-dd26362a621c" class="quiz">
+<div id="quiz_29c853bf-c08a-4777-92e9-c2d4627847be" class="quiz">
     <div>
-        <div id="question_78f7e089-1d16-467f-b096-dd26362a621c" class="quiz__question">How do you query the current video resolution setting (id = 2) via WiFi?</div>
-        <div id="answers_78f7e089-1d16-467f-b096-dd26362a621c">
+        <div id="question_29c853bf-c08a-4777-92e9-c2d4627847be" class="quiz__question">How do you query the current video resolution setting (id = 2) via WiFi?</div>
+        <div id="answers_29c853bf-c08a-4777-92e9-c2d4627847be">
         
             <input type="radio" name="question" value="A"><label>A: Send GET to <code class="language-plaintext highlighter-rouge">/gopro/camera/state?setting_id=2</code></label>
             <br>
@@ -1458,10 +1493,10 @@ INFO:root:Response: {}
         
         </div>
     </div>
-    <button onclick="showResults('78f7e089-1d16-467f-b096-dd26362a621c', 'D')">Submit Answer</button>
-    <div id="results_78f7e089-1d16-467f-b096-dd26362a621c" style="display: none">
-        <span id="correct_78f7e089-1d16-467f-b096-dd26362a621c" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_78f7e089-1d16-467f-b096-dd26362a621c" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('29c853bf-c08a-4777-92e9-c2d4627847be', 'D')">Submit Answer</button>
+    <div id="results_29c853bf-c08a-4777-92e9-c2d4627847be" style="display: none">
+        <span id="correct_29c853bf-c08a-4777-92e9-c2d4627847be" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_29c853bf-c08a-4777-92e9-c2d4627847be" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         You can’t query individual settings or statuses with the HTTP API. In order to get the value of a specific setting you’ll need to send a GET to <code class="language-plaintext highlighter-rouge">/gopro/camera/state</code> and parse the value of the desired setting from the JSON response.
     </div>
 </div>
@@ -1500,7 +1535,7 @@ between the PC and the GoPro.</p>
 </div>
 
 <p>You can now send any of the HTTP commands defined in the
-<a href="/http">Open GoPro Interface</a> that return JSON responses. You
+<a href="/OpenGoPro/http">Open GoPro Interface</a> that return JSON responses. You
 may have noted that we did not discuss one of these (Get Media List) in this tutorial. Proceed to the
 next tutorial to see how to get and perform operations using the media list.</p>
 
@@ -1514,7 +1549,7 @@ next tutorial to see how to get and perform operations using the media list.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-03-13T13:36:12-07:00">March 13, 2024</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-09T13:00:03-07:00">April 9, 2024</time></p>
 
 
       </footer>
@@ -1524,11 +1559,11 @@ next tutorial to see how to get and perform operations using the media list.</p>
       
   <nav class="pagination">
     
-      <a href="/OpenGoPro/tutorials/connect-wifi" class="pagination--pager" title="Tutorial 5: Connect WiFi
+      <a href="/OpenGoPro/tutorials/connect-wifi" class="pagination--pager" title="Tutorial 6: Connect WiFi
 ">Previous</a>
     
     
-      <a href="/OpenGoPro/tutorials/camera-media-list" class="pagination--pager" title="Tutorial 7: Camera Media List
+      <a href="/OpenGoPro/tutorials/camera-media-list" class="pagination--pager" title="Tutorial 8: Camera Media List
 ">Next</a>
     
   </nav>

@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Tutorial 9: Camera on the Home Network :  Open GoPro</title>
+<meta name="description" content="Tutorial 9: Camera on the Home Network">
+
+
+  <meta name="author" content="GoPro">
+  
+  <meta property="article:author" content="GoPro">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Tutorial 9: Camera on the Home Network">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/tutorials/cohn">
+
+
+  <meta property="og:description" content="Tutorial 9: Camera on the Home Network">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-04-09T13:00:03-07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/tutorials/cohn">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "https://gopro.github.io/OpenGoPro/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+  
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
+
+    <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+<script>
+    // Add anchors on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function (event) {
+        var manualAnchors = new AnchorJS();
+        manualAnchors.options = {
+            titleText: 'Permalink',
+            placement: 'left'
+        };
+        manualAnchors.add('.anchored');
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/OpenGoPro/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/ble/">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/http">HTTP Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro/tree/main/demos">Demos</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="https://gopro.github.io/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/OpenGoPro/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
+          <meta itemprop="position" content="2">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Tutorial 9: Camera on the Home Network</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">GoPro</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Be a <strong>hero</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox">
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/connect-ble"><span class="nav__sub-title">1: Connect BLE</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/send-ble-commands"><span class="nav__sub-title">2: Send BLE Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/parse-ble-responses"><span class="nav__sub-title">3: Parse BLE TLV Responses</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/ble-queries"><span class="nav__sub-title">4: BLE Queries</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/ble-protobuf"><span class="nav__sub-title">5: BLE Protobuf</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/connect-wifi"><span class="nav__sub-title">6: Connect WiFi</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/send-wifi-commands"><span class="nav__sub-title">7: Send WiFi Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/camera-media-list"><span class="nav__sub-title">8: Camera Media List</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/cohn"><span class="nav__sub-title">9: Camera on the Home Network</span></a>
+        
+
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Tutorial 9: Camera on the Home Network">
+    <meta itemprop="description" content="Tutorial 9: Camera on the Home Network">
+    <meta itemprop="datePublished" content="2024-04-09T13:00:03-07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Tutorial 9: Camera on the Home Network
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#just-show-me-the-demos">Just Show me the Demo(s)!!</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#cohn-overview">COHN Overview</a></li>
+<li>
+<a href="#provisioning">Provisioning</a><ul>
+<li><a href="#set-date-time">Set Date Time</a></li>
+<li><a href="#create-the-cohn-certificate">Create the COHN Certificate</a></li>
+<li><a href="#get-the-cohn-credentials">Get the COHN Credentials</a></li>
+</ul>
+</li>
+<li><a href="#communicating-via-cohn">Communicating via COHN</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#good-job">Good Job!</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>This document will provide a walk-through tutorial to use the Open GoPro Interface to configure and demonstrate
+the <a href="/OpenGoPro/ble/features/cohn.html">Camera on the Home Network</a> (COHN) feature.</p>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>It is recommended that you have first completed the
+<a href="/OpenGoPro/tutorials/connect-ble">connecting BLE</a>,
+<a href="/OpenGoPro/tutorials/send-ble-commands">sending commands</a>,
+<a href="/OpenGoPro/tutorials/parse-ble-responses">parsing responses</a>,
+<a href="/OpenGoPro/tutorials/ble-protobuf">protobuf</a>, and
+<a href="/OpenGoPro/tutorials/connect-wifi">connecting WiFi</a>
+tutorials before proceeding.</span>
+</div>
+
+<h1 id="requirements">Requirements</h1>
+
+<p>It is assumed that the hardware and software requirements from the
+<a href="/OpenGoPro/tutorials/connect-ble#requirements">connecting BLE tutorial</a>
+are present and configured correctly.</p>
+
+<p>The scripts that will be used for this tutorial can be found in the
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_9_connect_wifi">Tutorial 9 Folder</a>.</p>
+
+<h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
+
+<div>
+    <ul class="tab tab-linked" data-tab="0b42c0bf-441e-4239-9268-1e9edd65faf4">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="0b42c0bf-441e-4239-9268-1e9edd65faf4">
+        
+            <li class="active tab-content-container">
+<p>Each of the scripts for this tutorial can be found in the Tutorial 9
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_9_connect_wifi/">directory</a>.</p>
+
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.9 and &lt; 3.12 must be used as specified in the requirements</span>
+</div>
+
+<div class="accordion-container anchored">
+    <button class="accordion">Provision COHN<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can provision the GoPro for COHN to communicate via a network via:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python provision_cohn.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python provision_cohn.py <span class="nt">--help</span>
+<span class="go">usage: provision_cohn.py [-h] [-i IDENTIFIER] [-c CERTIFICATE] ssid password
+
+Provision COHN via BLE to be ready for communication.
+
+positional arguments:
+  ssid                  SSID of network to connect to
+  password              Password of network to connect to
+
+options:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera
+                        SSID. If not used, first discovered GoPro will be connected to
+  -c CERTIFICATE, --certificate CERTIFICATE
+                        Path to write retrieved COHN certificate.
+</span></code></pre></div></div>
+
+</div>
+</div>
+
+<div class="accordion-container anchored">
+    <button class="accordion">Communicate via COHN<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can see an example of communicating HTTPS via COHN (assuming it has already been provisioned) via:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python communicate_via_cohn.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python communicate_via_cohn.py <span class="nt">--help</span>
+<span class="go">usage: communicate_via_cohn.py [-h] ip_address username password certificate
+
+Demonstrate HTTPS communication via COHN.
+
+positional arguments:
+  ip_address   IP Address of camera on the home network
+  username     COHN username
+  password     COHN password
+  certificate  Path to read COHN cert from.
+
+options:
+  -h, --help   show this help message and exit
+</span></code></pre></div></div>
+
+</div>
+</div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<h1 id="setup">Setup</h1>
+
+<p>We must first connect to BLE as was discussed in the
+<a href="/OpenGoPro/tutorials/connect-ble">connecting BLE tutorial</a>.
+The GoPro must then be connected to an access point as was discussed in the
+<a href="/OpenGoPro/tutorials/connect-wifi#station-sta-mode">Connecting WiFi Tutorial</a>.
+For all of the BLE operations, we are using the same <code class="language-plaintext highlighter-rouge">ResponseManager</code> class that was defined in the
+<a href="/OpenGoPro/tutorials/ble-protobuf#response-manager">Protobuf tutorial</a>.</p>
+
+<h1 id="cohn-overview">COHN Overview</h1>
+
+<p>The Camera on the Home Network feature allows the GoPro to connect (in
+<a href="/OpenGoPro/tutorials/connect-wifi#station-sta-mode">Station Mode</a>) to an Access Point (AP)
+such as a router in order to be controlled over a local network via the <a href="/OpenGoPro/http">HTTP API</a>.</p>
+
+<p>In order to protect users who connect to a network that includes Bad Actors, COHN uses
+<a href="https://www.websecurity.digicert.com/security-topics/what-is-ssl-tls-https">SSL/TLS</a> so that command and responses are
+sent securely encrypted via <code class="language-plaintext highlighter-rouge">https://</code> rather than <code class="language-plaintext highlighter-rouge">http://</code>.</p>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>Once COHN is provisioned it is possible to control the GoPro without a BLE connection by communicating via HTTPS over the
+provisioned network.</span>
+</div>
+
+<h1 id="provisioning">Provisioning</h1>
+
+<p>In order to use the COHN capability, the GoPro must first be provisioned for COHN via BLE. At a high level, the
+provisioning process is as follows:</p>
+
+<ul>
+  <li><a href="/OpenGoPro/tutorials/connect-wifi#station-sta-mode">Connect the GoPro to an access point</a></li>
+  <li>Instruct the GoPro to create a COHN Certificate</li>
+  <li>Get the created COHN certificate</li>
+  <li>Get the COHN status to retrieve and store COHN credentials for future use</li>
+</ul>
+
+<p>A summary of this process is shown here and will be expanded upon in the following sections:</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/OpenGoPro/assets/images/plantuml_ble_cohn_provision.png" alt="provision_cohn" style="
+            width: 70%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Provision COHN
+
+        </figcaption></figure>
+
+<h2 id="set-date-time">Set Date Time</h2>
+
+<p>While not explicitly part of of the provisioning process, it is important that the GoPro’s date and time are correct
+so that it generates a valid SSL certificate. This can be done manually through the camera UI or programatically
+using the <a href="/OpenGoPro/ble/features/control.html#set-local-date-time">Set Local Datetime</a> command.</p>
+
+<p>For the provisioning demo discussed in this tutorial, this is done programatically:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="208bf19c-7c5b-4a6e-84ee-1c8148f898be">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="208bf19c-7c5b-4a6e-84ee-1c8148f898be">
+        
+            <li class="active tab-content-container">
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>The code shown here can be found in <code class="language-plaintext highlighter-rouge">provision_cohn.py</code></span>
+</div>
+
+<p>We’re using the <a href="https://pypi.org/project/pytz/">pytz</a> and <a href="https://pypi.org/project/tzlocal/">tzlocal</a> libraries to
+find the timezone offset and daylight savings time status. In the <code class="language-plaintext highlighter-rouge">set_date_time</code> method, we send the request and wait to
+receive the successful response:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">datetime_request</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="mh">0x0F</span><span class="p">,</span>  <span class="c1"># Command ID
+</span>        <span class="mi">10</span><span class="p">,</span>  <span class="c1"># Length of following datetime parameter
+</span>        <span class="o">*</span><span class="n">now</span><span class="p">.</span><span class="n">year</span><span class="p">.</span><span class="nf">to_bytes</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="sh">"</span><span class="s">big</span><span class="sh">"</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>  <span class="c1"># uint16 year
+</span>        <span class="n">now</span><span class="p">.</span><span class="n">month</span><span class="p">,</span>
+        <span class="n">now</span><span class="p">.</span><span class="n">day</span><span class="p">,</span>
+        <span class="n">now</span><span class="p">.</span><span class="n">hour</span><span class="p">,</span>
+        <span class="n">now</span><span class="p">.</span><span class="n">minute</span><span class="p">,</span>
+        <span class="n">now</span><span class="p">.</span><span class="n">second</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">offset</span><span class="p">.</span><span class="nf">to_bytes</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="sh">"</span><span class="s">big</span><span class="sh">"</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>  <span class="c1"># int16 offset in minutes
+</span>        <span class="n">is_dst</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">datetime_request</span><span class="p">.</span><span class="nf">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">datetime_request</span><span class="p">))</span>
+<span class="k">await</span> <span class="n">manager</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="nf">write_gatt_char</span><span class="p">(</span><span class="n">GoProUuid</span><span class="p">.</span><span class="n">COMMAND_REQ_UUID</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">datetime_request</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">manager</span><span class="p">.</span><span class="nf">get_next_response_as_tlv</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>which logs as:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Setting the camera's date and time to 2024-04-04 13:00:05.097305-07:00:-420 is_dst=True
+Writing: 0c:0f:0a:07:e8:04:04:0d:00:05:fe:5c:01
+Received response at GoProUuid.COMMAND_RSP_UUID: 02:0f:00
+Successfully set the date time.
+</span></code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<h2 id="create-the-cohn-certificate">Create the COHN Certificate</h2>
+
+<p>Now that the GoPro’s date and time are valid and it has been
+<a href="/OpenGoPro/tutorials/connect-wifi#station-sta-mode">connected to an Access Point</a>, we can
+continue to provision COHN.</p>
+
+<p>Let’s instruct the GoPro to <a href="/OpenGoPro/ble/features/cohn.html#create-cohn-certificate">Create a COHN certificate</a>.</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="c23e2b7c-b1c5-47d4-8ba6-e8c9b84ee21a">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="c23e2b7c-b1c5-47d4-8ba6-e8c9b84ee21a">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">create_request</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="mh">0xF1</span><span class="p">,</span>  <span class="c1"># Feature ID
+</span>        <span class="mh">0x67</span><span class="p">,</span>  <span class="c1"># Action ID
+</span>      <span class="o">*</span><span class="n">proto</span><span class="p">.</span><span class="nc">RequestCreateCOHNCert</span><span class="p">().</span><span class="nc">SerializePartialToString</span><span class="p">(),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">create_request</span><span class="p">.</span><span class="nf">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">create_request</span><span class="p">))</span>
+<span class="k">await</span> <span class="n">manager</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="nf">write_gatt_char</span><span class="p">(</span><span class="n">GoProUuid</span><span class="p">.</span><span class="n">COMMAND_REQ_UUID</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">create_request</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">response</span> <span class="p">:</span><span class="o">=</span> <span class="k">await</span> <span class="n">manager</span><span class="p">.</span><span class="nf">get_next_response_as_protobuf</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>which logs as:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Creating a new COHN certificate.
+Writing: 02:f1:67
+Received response at GoProUuid.COMMAND_RSP_UUID: 04:f1:e7:08:01
+COHN certificate successfully created
+</span></code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>You may notice that the provisioning demo first
+<a href="/OpenGoPro/ble/features/cohn.html#clear-cohn-certificate">Clears the COHN Certificate</a>. This is is only to
+ensure a consistent starting state in the case that COHN has already been provisioned. It is not necessary to clear
+the certificate if COHN has not yet been provisioned.</span>
+</div>
+
+<h2 id="get-the-cohn-credentials">Get the COHN Credentials</h2>
+
+<p>At this point the GoPro has created the certificate and is in the process of provisioning COHN. We now need to get
+the COHN credentials that will be used for HTTPS communication. These are:</p>
+
+<ul>
+  <li>COHN certificate</li>
+  <li>Basic auth <a href="https://en.wikipedia.org/wiki/Basic_access_authentication">username</a>
+</li>
+  <li>Baisc auth <a href="https://en.wikipedia.org/wiki/Basic_access_authentication">password</a>
+</li>
+  <li>IP Address of COHN network</li>
+</ul>
+
+<p>We can immediately get the COHN certificate as such:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="6071d3db-689f-4ec5-95d2-32925d4bb06e">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="6071d3db-689f-4ec5-95d2-32925d4bb06e">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cert_request</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="mh">0xF5</span><span class="p">,</span>  <span class="c1"># Feature ID
+</span>        <span class="mh">0x6E</span><span class="p">,</span>  <span class="c1"># Action ID
+</span>        <span class="o">*</span><span class="n">proto</span><span class="p">.</span><span class="nc">RequestCOHNCert</span><span class="p">().</span><span class="nc">SerializePartialToString</span><span class="p">(),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">cert_request</span><span class="p">.</span><span class="nf">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">cert_request</span><span class="p">))</span>
+<span class="k">await</span> <span class="n">manager</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="nf">write_gatt_char</span><span class="p">(</span><span class="n">GoProUuid</span><span class="p">.</span><span class="n">QUERY_REQ_UUID</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">cert_request</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">response</span> <span class="p">:</span><span class="o">=</span> <span class="k">await</span> <span class="n">manager</span><span class="p">.</span><span class="nf">get_next_response_as_protobuf</span><span class="p">():</span>
+<span class="n">cert_response</span><span class="p">:</span> <span class="n">proto</span><span class="p">.</span><span class="n">ResponseCOHNCert</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">data</span>  <span class="c1"># type: ignore
+</span><span class="k">return</span> <span class="n">cert_response</span><span class="p">.</span><span class="n">cert</span>
+</code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<p>For the remaining credentials, we need to wait until the COHN network is connected. That is, we need to
+<a href="/OpenGoPro/ble/features/cohn.html#get-cohn-status">Get COHN Status</a> until we receive a status where the
+<a href="/OpenGoPro/ble/protocol/protobuf.html#notifycohnstatus">state</a> is set to
+<a href="/OpenGoPro/ble/protocol/protobuf.html#proto-enumcohnnetworkstate">COHN_STATE_NetworkConnected</a>.
+This final status contains the remaining credentials: username, password, and IP Address.</p>
+
+<p>To do this, we first register to receive asynchronous COHN status updates:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="ad5147af-75ed-4cf3-bf62-dac3eb083a44">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="ad5147af-75ed-4cf3-bf62-dac3eb083a44">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">status_request</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="mh">0xF5</span><span class="p">,</span>  <span class="c1"># Feature ID
+</span>        <span class="mh">0x6F</span><span class="p">,</span>  <span class="c1"># Action ID
+</span>        <span class="o">*</span><span class="n">proto</span><span class="p">.</span><span class="nc">RequestGetCOHNStatus</span><span class="p">(</span><span class="n">register_cohn_status</span><span class="o">=</span><span class="bp">True</span><span class="p">).</span><span class="nc">SerializePartialToString</span><span class="p">(),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">status_request</span><span class="p">.</span><span class="nf">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">status_request</span><span class="p">))</span>
+<span class="k">await</span> <span class="n">manager</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="nf">write_gatt_char</span><span class="p">(</span><span class="n">GoProUuid</span><span class="p">.</span><span class="n">QUERY_REQ_UUID</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">status_request</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<p>Then we continuously receive and check the updates until we receive the desired status:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="70716c97-c6f1-4318-97ca-51439744a82a">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="70716c97-c6f1-4318-97ca-51439744a82a">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="n">response</span> <span class="p">:</span><span class="o">=</span> <span class="k">await</span> <span class="n">manager</span><span class="p">.</span><span class="nf">get_next_response_as_protobuf</span><span class="p">():</span>
+    <span class="n">cohn_status</span><span class="p">:</span> <span class="n">proto</span><span class="p">.</span><span class="n">NotifyCOHNStatus</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">data</span>  <span class="c1"># type: ignore
+</span>    <span class="k">if</span> <span class="n">cohn_status</span><span class="p">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">proto</span><span class="p">.</span><span class="n">EnumCOHNNetworkState</span><span class="p">.</span><span class="n">COHN_STATE_NetworkConnected</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">cohn_status</span>
+</code></pre></div></div>
+
+<p>This will all display in the log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Checking COHN status until provisioning is complete
+Writing: 04:f5:6f:08:01
+</span><span class="c">...
+</span><span class="go">Received response at GoProUuid.QUERY_RSP_UUID: 20:47:f5:ef:08:01:10:1b:1a:05:67:6f:70:72:6f:22:0c:47:7a:74
+Received response at GoProUuid.QUERY_RSP_UUID: 80:32:6d:36:59:4d:76:4c:41:6f:2a:0e:31:39:32:2e:31:36:38:2e
+Received response at GoProUuid.QUERY_RSP_UUID: 81:35:30:2e:31:30:33:30:01:3a:0a:64:61:62:75:67:64:61:62:75
+Received response at GoProUuid.QUERY_RSP_UUID: 82:67:42:0c:32:34:37:34:66:37:66:36:36:31:30:34
+Received COHN Status:
+         status: COHN_PROVISIONED
+         state: COHN_STATE_NetworkConnected
+         username: "gopro"
+         password: "Gzt2m6YMvLAo"
+         ipaddress: "192.168.50.103"
+         enabled: true
+         ssid: "dabugdabug"
+         macaddress: "2474f7f66104"
+Successfully provisioned COHN.
+</span></code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<p>Finally we accumulate all of the credentials and log them, also storing the certificate to a <code class="language-plaintext highlighter-rouge">cohn.crt</code> file:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="e3f359bd-c67b-4b40-86a7-65c49f186c68">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="e3f359bd-c67b-4b40-86a7-65c49f186c68">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">credentials</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">provision_cohn</span><span class="p">(</span><span class="n">manager</span><span class="p">)</span>
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="n">certificate</span><span class="p">,</span> <span class="sh">"</span><span class="s">w</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="n">fp</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">credentials</span><span class="p">.</span><span class="n">certificate</span><span class="p">)</span>
+    <span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Certificate written to </span><span class="si">{</span><span class="n">certificate</span><span class="p">.</span><span class="nf">resolve</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">{
+    "certificate": "-----BEGIN
+         CERTIFICATE-----\nMIIDnzCCAoegAwIBAgIUC7DGLtJJ61TzRY/mYQyhOegnz6cwDQYJKoZIhvcNAQ
+         EL\nBQAwaTELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAkNBMRIwEAYDVQQHDAlTYW4gTWF0\nZW8xDjAMBg
+         NVBAoMBUdvUHJvMQ0wCwYDVQQLDARIZXJvMRowGAYDVQQDDBFHb1By\nbyBDYW1lcmEgUm9vdDAeFw0y
+         NDA0MDQyMDAwMTJaFw0zNDA0MDIyMDAwMTJaMGkx\nCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJDQTESMB
+         AGA1UEBwwJU2FuIE1hdGVvMQ4w\nDAYDVQQKDAVHb1BybzENMAsGA1UECwwESGVybzEaMBgGA1UEAwwR
+         R29Qcm8gQ2Ft\nZXJhIFJvb3QwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC05o1QIN5r\n
+         PmtTntzpzBQvfq64OM1j/tjdNCJsyB9/ipPrPcKdItOy+5gZZF8iOFiw8cG8O2nA\nvLSIJkpQ6d3cuE
+         48nAQpc1+jJzskM7Vgqc/i43OqnB8iTKjtNJgj+lJtreQBNJw7\nf00a0GbbUJMo6DhaW58ZIsOJKu3i
+         +w8w+LNEZECfDN6RMSmkYoLXaHeKAlvhlRYv\nxkNO7pB2OwhbD9awgzKVTiKvZ8Hrxl6lGlH5SHHimU
+         uo2O1yiNKDWv+MhirCVnup\nVvP/N5S+230KpXreEnHmo65fsHmdM11qYu8WJXGzOViCnQi24wgCuoMx
+         np9hAeKs\nVj4vxhyCu8gZAgMBAAGjPzA9MA8GA1UdEwQIMAYBAf8CAQAwCwYDVR0PBAQDAgGG\nMB0G
+         A1UdDgQWBBTYDT4QXVDsi23ukLr2ohJk5+8+gDANBgkqhkiG9w0BAQsFAAOC\nAQEAU4Z9120CGtRGo3
+         QfWEy66BGdqI6ohdudmb/3qag0viXag2FyWar18lRFiEWc\nZcsqw6i0CM6lKNVUluEsSBiGGVAbAHKu
+         +fcpId5NLEI7G1XY5MFRHMIMi4PNKbJr\nVi0ks/biMy7u9++FOBgmCXGAdbMJBfe2gxEJNdyU6wjgGs
+         2o402/parrWN8x9J+k\ndBgYqiKpZK0Fad/qM4ivbgkMijXhGFODhWs/GlQWnPeaLusRnn3T/w2CsFzM
+         kf0i\n6fFT3FAQBU5LCZs1Fp/XFRrnFMp+sNhbmdfnI9EDyZOXzlRS4O48k/AW/nSkCozk\nugYW+61H
+         /RYPVEgF4VNxRqn+uA==\n-----END CERTIFICATE-----\n",
+    "username": "gopro",
+    "password": "Gzt2m6YMvLAo",
+    "ip_address": "192.168.50.103"
+}
+Certificate written to C:\Users\user\gopro\OpenGoPro\demos\python\tutorial\tutorial_modules\tutorial_9_cohn\cohn.crt
+</span></code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>Make sure to keep these credentials for use in the next section.</span>
+</div>
+
+<h1 id="communicating-via-cohn">Communicating via COHN</h1>
+
+<p>Once the GoPro has provisioned for COHN, we can use the stored credentials for HTTPS communication.</p>
+
+<p>For the setup of this demo, there is no pre-existing BLE or WiFi connection to the GoPro. We are only going to be using
+HTTPS over the provisioned home network for communication.</p>
+
+<p>In order to demonstrate COHN communication we are going to
+<a href="/OpenGoPro/http#tag/Query/operation/OGP_GET_STATE">Get the Camera State</a>.</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="24ba8d28-20f0-452c-a4d5-032467a75cf6">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="24ba8d28-20f0-452c-a4d5-032467a75cf6">
+        
+            <li class="active tab-content-container">
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>The code shown below is taken from <code class="language-plaintext highlighter-rouge">communicate_via_cohn.py</code>. The credentials logged and stored from the previous demo
+must be passed in as command line arguments to this script. Run <code class="language-plaintext highlighter-rouge">python communicate_via_cohn.py --help</code> for usage.</span>
+</div>
+
+<p>We’re going to use the <a href="https://pypi.org/project/requests/">requests</a> library to perform the HTTPS request. First let’s
+build the url using the <code class="language-plaintext highlighter-rouge">ip_address</code> CLI argument:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">"</span><span class="s">https://</span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/gopro/camera/state</span><span class="sh">"</span>
+</code></pre></div></div>
+
+<p>Then let’s build the <a href="https://www.debugbear.com/basic-auth-header-generator">basic auth token</a> from the <code class="language-plaintext highlighter-rouge">username</code> and
+<code class="language-plaintext highlighter-rouge">password</code> CLI arguments:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">token</span> <span class="o">=</span> <span class="nf">b64encode</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s">:</span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="sh">"</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)).</span><span class="nf">decode</span><span class="p">(</span><span class="sh">"</span><span class="s">ascii</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Lastly we build and send the request using the above endpoint and token combined with the path to the certificate
+from the CLI <code class="language-plaintext highlighter-rouge">certificate</code> argument:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span>
+    <span class="n">url</span><span class="p">,</span>
+    <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="sh">"</span><span class="s">Authorization</span><span class="sh">"</span><span class="p">:</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Basic </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="sh">"</span><span class="p">},</span>
+    <span class="n">verify</span><span class="o">=</span><span class="nf">str</span><span class="p">(</span><span class="n">certificate</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<p>This should result in logging the complete cameras state, truncated here for brevity:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Sending:  https://192.168.50.103/gopro/camera/state
+Command sent successfully
+Response: {
+    "status": {
+        "1": 1,
+        "2": 4,
+        "3": 0,
+        "4": 255,
+        "6": 0,
+        "8": 0,
+        "9": 0,
+</span><span class="c">        ...
+</span><span class="go">    "settings": {
+        "2": 1,
+        "3": 0,
+        "5": 0,
+        "6": 0,
+        "13": 0,
+</span><span class="c">        ...
+</span></code></pre></div></div>
+
+<p>See the
+<a href="/OpenGoPro/tutorials/send-wifi-commands">sending Wifi commands tutorial</a> for more information
+on this and other HTTP(S) functionality.</p>
+
+<p><strong>Quiz time! 📚 ✏️</strong></p>
+
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>See the first tutorial’s
+<a href="/OpenGoPro/tutorials/connect-ble#troubleshooting">troubleshooting section</a> to troubleshoot
+any BLE problems.</p>
+
+<p>See the Sending Wifi Command tutorial’s
+<a href="/OpenGoPro/tutorials/send-wifi-commands#troubleshooting">troubleshooting section</a> to
+troubleshoot HTTP communication.</p>
+
+<h1 id="good-job">Good Job!</h1>
+
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>Congratulations 🤙</span>
+</div>
+
+<p>You have now provisioned COHN and performed an HTTPS operation. In the future, you can now communicate with the GoPro
+over your home network without needing a direct BLE or WiFi connection.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-09T13:00:03-07:00">April 9, 2024</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/OpenGoPro/tutorials/camera-media-list" class="pagination--pager" title="Tutorial 8: Camera Media List
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+    <ul class="social-icons">
+        
+        <li><strong>Follow:</strong></li>
+           
+        <li>
+            <a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i>
+                Website</a>
+        </li>
+          
+        <li>
+            <a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i>
+                Twitter</a>
+        </li>
+          
+        <li>
+            <a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i>
+                Facebook</a>
+        </li>
+          
+        <li>
+            <a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i>
+                GitHub</a>
+        </li>
+          
+        <li>
+            <a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i>
+                Instagram</a>
+        </li>
+           
+    </ul>
+</div>
+
+<div class="page__footer-copyright">
+    © 2024 GoPro. Powered by
+    <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
+    <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
+    <p>
+        Can be used with GoPro® HERO9 and HERO10 cameras. You must include the following text on
+        every page where it can be seen by someone purchasing such an item: <em>"This product
+        and/or service is not affiliated with, endorsed by or in any way associated with
+        GoPro Inc. or its products and services. GoPro, HERO, and their respective logos
+        are trademarks or registered trademarks of GoPro, Inc."</em>
+    </p>
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/OpenGoPro/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/OpenGoPro/assets/js/lunr/lunr.min.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-store.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
