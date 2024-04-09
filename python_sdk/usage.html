@@ -360,7 +360,7 @@ not optionally use positional arguments in such cases as this will affect functi
 </section>
 <section id="statuses">
 <h4>Statuses<a class="headerlink" href="#statuses" title="Permalink to this heading"></a></h4>
-<p>Statuses are instances of a BleStatus(<a class="reference internal" href="api.html#open_gopro.api.builders.BleStatus" title="open_gopro.api.builders.BleStatus"><code class="xref py py-class docutils literal notranslate"><span class="pre">BleStatus</span></code></a>). They can be read
+<p>Statuses are instances of a BleStatus(<a class="reference internal" href="api.html#open_gopro.api.builders.BleStatusFacade" title="open_gopro.api.builders.BleStatusFacade"><code class="xref py py-class docutils literal notranslate"><span class="pre">BleStatusFacade</span></code></a>). They can be read
 synchronously using their <cite>get_value</cite> method as such:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
     <span class="n">is_encoding</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_status</span><span class="o">.</span><span class="n">encoding_active</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
@@ -381,7 +381,7 @@ to retrieve all of them (as well as all of the settings) at once</p>
 </section>
 <section id="settings">
 <h4>Settings<a class="headerlink" href="#settings" title="Permalink to this heading"></a></h4>
-<p>Settings are instances of a BleSetting(<a class="reference internal" href="api.html#open_gopro.api.builders.BleSetting" title="open_gopro.api.builders.BleSetting"><code class="xref py py-class docutils literal notranslate"><span class="pre">BleSetting</span></code></a>)
+<p>Settings are instances of a BleSetting(<a class="reference internal" href="api.html#open_gopro.api.builders.BleSettingFacade" title="open_gopro.api.builders.BleSettingFacade"><code class="xref py py-class docutils literal notranslate"><span class="pre">BleSettingFacade</span></code></a>)
 or HttpSetting(<a class="reference internal" href="api.html#open_gopro.api.builders.HttpSetting" title="open_gopro.api.builders.HttpSetting"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpSetting</span></code></a>). They can be interacted synchronously in several
 ways.</p>
 <p>Their values can be read (via BLE only) using the <cite>get_value</cite> method as such:</p>
@@ -420,9 +420,9 @@ the current capabilities for a given setting (via BLE only) using the <cite>get_
 <p>This section describes how to register for and handle asynchronous push notifications. This is only relevant for BLE.</p>
 <p>It is possible to enable push notifications for any of the following:</p>
 <ul class="simple">
-<li><p>setting values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSetting.register_value_update" title="open_gopro.api.builders.BleSetting.register_value_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_value_update()</span></code></a></p></li>
-<li><p>setting capabilities via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSetting.register_capability_update" title="open_gopro.api.builders.BleSetting.register_capability_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_capability_update()</span></code></a></p></li>
-<li><p>status values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleStatus.register_value_update" title="open_gopro.api.builders.BleStatus.register_value_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_value_update()</span></code></a></p></li>
+<li><p>setting values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSettingFacade.register_value_update" title="open_gopro.api.builders.BleSettingFacade.register_value_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_value_update()</span></code></a></p></li>
+<li><p>setting capabilities via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSettingFacade.register_capability_update" title="open_gopro.api.builders.BleSettingFacade.register_capability_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_capability_update()</span></code></a></p></li>
+<li><p>status values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleStatusFacade.register_value_update" title="open_gopro.api.builders.BleStatusFacade.register_value_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_value_update()</span></code></a></p></li>
 </ul>
 <p>Firstly, the desired settings / ID must be registered for and given a callback to handle received notifications.</p>
 <p><a class="reference internal" href="api.html#open_gopro.communicator_interface.BaseGoProCommunicator.register_update" title="open_gopro.communicator_interface.BaseGoProCommunicator.register_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_update()</span></code></a>.</p>
@@ -430,9 +430,9 @@ the current capabilities for a given setting (via BLE only) using the <cite>get_
 responses will then be sent to the registered callback for handling.</p>
 <p>It is possible to stop receiving notifications by issuing the relevant unregister command, i.e.:</p>
 <ul class="simple">
-<li><p>setting values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSetting.unregister_value_update" title="open_gopro.api.builders.BleSetting.unregister_value_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_value_update()</span></code></a></p></li>
-<li><p>setting capabilities via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSetting.unregister_capability_update" title="open_gopro.api.builders.BleSetting.unregister_capability_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_capability_update()</span></code></a></p></li>
-<li><p>status values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleStatus.unregister_value_update" title="open_gopro.api.builders.BleStatus.unregister_value_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_value_update()</span></code></a></p></li>
+<li><p>setting values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSettingFacade.unregister_value_update" title="open_gopro.api.builders.BleSettingFacade.unregister_value_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_value_update()</span></code></a></p></li>
+<li><p>setting capabilities via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSettingFacade.unregister_capability_update" title="open_gopro.api.builders.BleSettingFacade.unregister_capability_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_capability_update()</span></code></a></p></li>
+<li><p>status values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleStatusFacade.unregister_value_update" title="open_gopro.api.builders.BleStatusFacade.unregister_value_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_value_update()</span></code></a></p></li>
 </ul>
 <p>Here is an example of registering for and receiving FOV updates:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span> <span class="nf">process_battery_notifications</span><span class="p">(</span><span class="n">update</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -594,7 +594,7 @@ already connected to.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, GoPro Inc..</p>
+    <p>&#169; Copyright 2024, GoPro Inc..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
