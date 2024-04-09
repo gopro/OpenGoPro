@@ -11,4 +11,5 @@ jobs:
             - name: Build and publish to pypi
               uses: JRubics/poetry-publish@v2.0
               with:
+                  package_directory: ./demos/python/sdk_wireless_camera_control/
                   pypi_token: ${{ secrets.PYTHON_SDK_PYPI_TOKEN }}
