@@ -18,7 +18,7 @@ This document will provide a walk-through tutorial to use the
 -   Writing to the Setting UUID and receiving responses via the Setting Response
     [UUID]({{site.baseurl}}/ble/protocol/ble_setup.html#ble-characteristics)
 
-A list of TLV commands can be found in the [Command ID Table](http://localhost:4998/ble/protocol/id_tables.html#command-ids).
+A list of TLV commands can be found in the [Command ID Table]{{site.baseurl}}/ble/protocol/id_tables.html#command-ids).
 
 {% note %}
 This tutorial only considers sending these as one-off commands. That is, it does not consider state
@@ -261,7 +261,7 @@ sequenceDiagram
 Now that we are are connected, paired, and have enabled notifications (registered to our defined callback), we
 can send some commands.
 
-First, we need to define the [UUIDs](http://localhost:4998/ble/protocol/ble_setup.html#configure-gatt-characteristics)
+First, we need to define the [UUIDs]({{site.baseurl}}/ble/protocol/ble_setup.html#configure-gatt-characteristics)
 to write to / receive responses from, which are:
 
 {% linkedTabs uuid %}

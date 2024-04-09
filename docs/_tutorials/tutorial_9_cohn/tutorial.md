@@ -27,14 +27,14 @@ It is assumed that the hardware and software requirements from the
 are present and configured correctly.
 
 The scripts that will be used for this tutorial can be found in the
-[Tutorial 9 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_9_connect_wifi).
+[Tutorial 9 Folder](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_6_connect_wifi).
 
 # Just Show me the Demo(s)!!
 
 {% linkedTabs demo %}
 {% tab demo python %}
 Each of the scripts for this tutorial can be found in the Tutorial 9
-[directory](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_9_connect_wifi/).
+[directory](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_6_connect_wifi/).
 
 {% warning %}
 Python >= 3.9 and < 3.12 must be used as specified in the requirements

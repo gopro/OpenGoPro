@@ -101,7 +101,7 @@ To perform the tutorial, run the Android Studio project, select "Tutorial 6" fro
 This requires that a GoPro is already connected via BLE, i.e. that Tutorial 1 was already run. You can
 check the BLE status at the top of the app.
 
-{% include figure image_path="/assets/images/tutorials/kotlin/tutorial_6.png" alt="kotlin_tutorial_6" size="40%" caption="Perform Tutorial 6" %}
+{% include figure image_path="/assets/images/tutorials/kotlin/tutorial_5.png" alt="kotlin_connect_wifi" size="40%" caption="Perform Tutorial 6" %}
 
 This will start the tutorial and log to the screen as it executes. When the tutorial is complete, click
 "Exit Tutorial" to return to the Tutorial selection screen.
@@ -472,7 +472,7 @@ First we must request the GoPro to
 The code here is taken from `connect_as_sta.py`
 {% endnote %}
 
-Let's send the [scan request]({{site.baseurl}}//ble/protocol/protobuf.html#requeststartscan) and then retrieve and parse
+Let's send the [scan request]({{site.baseurl}}/ble/protocol/protobuf.html#requeststartscan) and then retrieve and parse
 [notifications]({{site.baseurl}}/ble/protocol/protobuf.html#notifstartscanning) until we receive a notification where the
 `scanning_state` is set to [SCANNING_SUCCESS]({{site.baseurl}}/ble/protocol/protobuf.html#enumscanning).
 Then we store the `scan id` from the notification for later use in retrieving the scan results.

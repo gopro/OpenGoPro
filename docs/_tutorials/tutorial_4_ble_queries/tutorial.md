@@ -14,7 +14,7 @@ and status information via BLE.
 writing to the Query [UUID]({{site.baseurl}}/ble/protocol/ble_setup.html#ble-characteristics) and receiving responses
 via the Query Response [UUID]({{site.baseurl}}/ble/protocol/ble_setup.html#ble-characteristics).
 
-A list of queries can be found in the [Query ID Table](http://localhost:4998/ble/protocol/id_tables.html#query-ids).
+A list of queries can be found in the [Query ID Table]({{site.baseurl}}/ble/protocol/id_tables.html#query-ids).
 
 It is important to distinguish between queries and
 [commands]({% link _tutorials/tutorial_2_send_ble_commands/tutorial.md %}) because they each have different request
