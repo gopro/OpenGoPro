@@ -8,7 +8,7 @@ read_time: false
 # Frequently Asked Questions (FAQ)
 
 If you have somehow stumbled here first, note that there are specifications, demos, and tutorials which
-expand upon much of the information here. These can be found, among other places, from the [home page](/).
+expand upon much of the information here. These can be found, among other places, from the [home page]({{site.baseurl}}/).
 
 ## Connectivity
 

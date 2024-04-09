@@ -57,7 +57,7 @@ enabled upon each connection via BLE.
 
 WiFi needs to be switched on by a BLE command. Besides command & control, Wi-Fi also allows for video streaming and media
 manipulation. With the exception of live-streaming, the camera always acts as an Wi-Fi access point that other devices
-need to connect to. For more information, see the [Wifi Specification](/http).
+need to connect to. For more information, see the [HTTP Specification]({{site.baseurl}}/http).
 
 ## USB
 

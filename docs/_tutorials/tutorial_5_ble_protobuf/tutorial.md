@@ -15,7 +15,7 @@ Open GoPro uses [Protocol Buffers Version 2](https://protobuf.dev/reference/prot
 {% endtip %}
 
 A list of Protobuf Operations can be found in the
-[Protobuf ID Table](http://localhost:4998/ble/protocol/id_tables.html#protobuf-ids).
+[Protobuf ID Table]({{site.baseurl}}/ble/protocol/id_tables.html#protobuf-ids).
 
 {% note %}
 This tutorial only considers sending these as one-off operations. That is, it does not consider state
@@ -228,7 +228,7 @@ is as follows:
 
 This Feature / Action ID pair is used to identify the Protobuf Message that should be used to serialize / deserialize
 the payload. This mapping can be found in the
-[Protobuf ID Table](http://localhost:4998/ble/protocol/id_tables.html#protobuf-ids).
+[Protobuf ID Table]({{site.baseurl}}/ble/protocol/id_tables.html#protobuf-ids).
 
 ## Protobuf Response Parser
 
@@ -334,7 +334,7 @@ TODO
 
 # Deciphering Response Type
 
-This same procedure is used for all [Protobuf Operations](<(http://localhost:4998/ble/protocol/id_tables.html#protobuf-ids)>).
+This same procedure is used for all [Protobuf Operations]({{site.baseurl}}/ble/protocol/id_tables.html#protobuf-ids).
 Coupled with the information from previous tutorials, you are now capable of parsing any response received from the
 GoPro.
 
