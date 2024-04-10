@@ -8,14 +8,14 @@ import com.example.open_gopro_tutorial.AppContainer
 import com.example.open_gopro_tutorial.DataStore
 import com.example.open_gopro_tutorial.network.BleEventListener
 import com.example.open_gopro_tutorial.network.Bluetooth
-import com.example.open_gopro_tutorial.util.*
+import com.example.open_gopro_tutorial.util.GoProUUID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
-import java.util.*
+import java.util.UUID
 
 private const val RESOLUTION_ID: UByte = 2U
 
@@ -26,6 +26,7 @@ class Tutorial4BleQueries(number: Int, name: String, prerequisites: List<Prerequ
         RES_4K(1U),
         RES_2_7K(4U),
         RES_2_7K_4_3(6U),
+        RES_1440(7U),
         RES_1080(9U),
         RES_4K_4_3(18U),
         RES_5K(24U);
@@ -37,172 +38,139 @@ class Tutorial4BleQueries(number: Int, name: String, prerequisites: List<Prerequ
         }
     }
 
-    private val receivedResponse: Channel<Response.Query> = Channel()
-    private var response: Response.Query? = null
     private lateinit var resolution: Resolution
+    private lateinit var receivedResponses: Channel<Response>
+    private val responsesByUuid = GoProUUID.mapByUuid { Response.muxByUuid(it) }
+
+    @OptIn(ExperimentalUnsignedTypes::class)
+    private fun notificationHandler(characteristic: UUID, data: UByteArray) {
+        // Get the UUID (assuming it is a GoPro UUID)
+        val uuid = GoProUUID.fromUuid(characteristic) ?: return
+        Timber.d("Received response on $uuid")
+
+        responsesByUuid[uuid]?.let { response ->
+            response.accumulate(data)
+            if (response.isReceived) {
+                when (uuid) {
+                    GoProUUID.CQ_QUERY_RSP -> {
+                        Timber.d("Received Query Response")
+                        CoroutineScope(Dispatchers.IO).launch {
+                            receivedResponses.send(
+                                response
+                            )
+                        }
+                    }
+
+                    GoProUUID.CQ_SETTING_RSP -> {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            receivedResponses.send(
+                                response
+                            )
+                        }
+                        Timber.d("Received set setting response.")
+                    }
+
+                    else -> Timber.e("Unexpected Response")
+                }
+                responsesByUuid[uuid] = Response.muxByUuid(uuid)
+            }
+        }
+    }
+
+    @OptIn(ExperimentalUnsignedTypes::class)
+    val bleListeners by lazy {
+        BleEventListener().apply {
+            onNotification = ::notificationHandler
+        }
+    }
 
     @RequiresPermission(allOf = ["android.permission.BLUETOOTH_SCAN", "android.permission.BLUETOOTH_CONNECT"])
     private suspend fun performPollingTutorial(ble: Bluetooth, goproAddress: String) {
-        @OptIn(ExperimentalUnsignedTypes::class)
-        fun resolutionPollingNotificationHandler(characteristic: UUID, data: UByteArray) {
-            GoProUUID.fromUuid(characteristic)?.let {
-                // If response is currently empty, create a new one
-                response =
-                    response ?: Response.Query() // We're only handling queries in this tutorial
-            }
-                ?: return // We don't care about non-GoPro characteristics (i.e. the BT Core Battery service)
-
-            Timber.d("Received response on $characteristic: ${data.toHexString()}")
-
-            response?.let { rsp ->
-                rsp.accumulate(data)
-                if (rsp.isReceived) {
-                    rsp.parse()
-
-                    // If this is a query response, it must contain a resolution value
-                    if (characteristic == GoProUUID.CQ_QUERY_RSP.uuid) {
-                        Timber.i("Received resolution query response")
-                    }
-                    // If this is a setting response, it will just show the status
-                    else if (characteristic == GoProUUID.CQ_SETTING_RSP.uuid) {
-                        Timber.i("Command sent successfully")
-                    }
-                    // Anything else is unexpected. This shouldn't happen
-                    else {
-                        Timber.i("Received unexpected response")
-                    }
-
-                    // Notify the command sender the the procedure is complete
-                    response = null // Clear for next command
-                    CoroutineScope(Dispatchers.IO).launch { receivedResponse.send(rsp) }
-                }
-            }
-        }
-
-        @OptIn(ExperimentalUnsignedTypes::class)
-        val bleListeners by lazy {
-            BleEventListener().apply {
-                onNotification = ::resolutionPollingNotificationHandler
-            }
-        }
-
-        // Register our notification handler callback for characteristic change updates
-        ble.registerListener(goproAddress, bleListeners)
+        // Flush the channel. Just create a new one.
+        receivedResponses = Channel()
 
         // Write to query BleUUID to poll the current resolution
         Timber.i("Polling the current resolution")
         val pollResolution = ubyteArrayOf(0x02U, 0x12U, RESOLUTION_ID)
         ble.writeCharacteristic(goproAddress, GoProUUID.CQ_QUERY.uuid, pollResolution)
-        resolution = Resolution.fromValue(
-            receivedResponse.receive().data.getValue(RESOLUTION_ID).first()
-        )
+        val queryResponse = (receivedResponses.receive() as Response.Query).apply { parse() }
+        resolution = Resolution.fromValue(queryResponse.data.getValue(RESOLUTION_ID).first())
         Timber.i("Camera resolution is $resolution")
 
         // Write to command request BleUUID to change the video resolution (either to 1080 or 2.7K)
-        val newResolution =
+        val targetResolution =
             if (resolution == Resolution.RES_2_7K) Resolution.RES_1080 else Resolution.RES_2_7K
-        Timber.i("Changing the resolution to $newResolution")
-        val setResolution = ubyteArrayOf(0x03U, RESOLUTION_ID, 0x01U, newResolution.value)
+        Timber.i("Changing the resolution to $targetResolution")
+        val setResolution = ubyteArrayOf(0x03U, RESOLUTION_ID, 0x01U, targetResolution.value)
         ble.writeCharacteristic(goproAddress, GoProUUID.CQ_SETTING.uuid, setResolution)
-        val setResolutionResponse = receivedResponse.receive()
+        val setResolutionResponse = (receivedResponses.receive() as Response.Tlv).apply { parse() }
         if (setResolutionResponse.status == 0) {
             Timber.i("Resolution successfully changed")
         } else {
-            Timber.e("Failed to set resolution")
+            Timber.e("Failed to set resolution to to $targetResolution. Ensure camera is in a valid state to allow this resolution.")
+            return
         }
 
         // Now let's poll until an update occurs
         Timber.i("Polling the resolution until it changes")
-        while (resolution != newResolution) {
+        while (resolution != targetResolution) {
             ble.writeCharacteristic(goproAddress, GoProUUID.CQ_QUERY.uuid, pollResolution)
-            resolution = Resolution.fromValue(
-                receivedResponse.receive().data.getValue(RESOLUTION_ID).first()
-            )
+            val queryNotification =
+                (receivedResponses.receive() as Response.Query).apply { parse() }
+            resolution =
+                Resolution.fromValue(queryNotification.data.getValue(RESOLUTION_ID).first())
             Timber.i("Camera resolution is currently $resolution")
         }
-
-        // Other tutorials will use their own notification handler so unregister ours now
-        ble.unregisterListener(bleListeners)
     }
 
     @RequiresPermission(allOf = ["android.permission.BLUETOOTH_SCAN", "android.permission.BLUETOOTH_CONNECT"])
     private suspend fun performRegisteringForAsyncUpdatesTutorial(
         ble: Bluetooth, goproAddress: String
     ) {
-        @OptIn(ExperimentalUnsignedTypes::class)
-        fun resolutionRegisteringNotificationHandler(characteristic: UUID, data: UByteArray) {
-            GoProUUID.fromUuid(characteristic)?.let {
-                // If response is currently empty, create a new one
-                response = response ?: Response.Query() // We're only handling queries in this tutorial
-            } ?: return // We don't care about non-GoPro characteristics (i.e. the BT Core Battery service)
-
-            Timber.d("Received response on $characteristic: ${data.toHexString()}")
-
-            response?.let { rsp ->
-                rsp.accumulate(data)
-
-                if (rsp.isReceived) {
-                    rsp.parse()
-
-                    // If this is a query response, it must contain a resolution value
-                    if (characteristic == GoProUUID.CQ_QUERY_RSP.uuid) {
-                        Timber.i("Received resolution query response")
-                        resolution = Resolution.fromValue(rsp.data.getValue(RESOLUTION_ID).first())
-                        Timber.i("Resolution is now $resolution")
-                    }
-                    // If this is a setting response, it will just show the status
-                    else if (characteristic == GoProUUID.CQ_SETTING_RSP.uuid) {
-                        Timber.i("Command sent successfully")
-                    }
-                    // Anything else is unexpected. This shouldn't happen
-                    else {
-                        Timber.i("Received unexpected response")
-                    }
-
-                    // Notify the command sender the the procedure is complete
-                    response = null
-                    CoroutineScope(Dispatchers.IO).launch { receivedResponse.send(rsp) }
-                }
-            }
-        }
-
-        @OptIn(ExperimentalUnsignedTypes::class)
-        val bleListeners by lazy {
-            BleEventListener().apply {
-                onNotification = ::resolutionRegisteringNotificationHandler
-            }
-        }
-
-        // Register our notification handler callback for characteristic change updates
-        ble.registerListener(goproAddress, bleListeners)
+        // Flush the channel. Just create a new one.
+        receivedResponses = Channel()
 
         // Register with the GoPro for updates when resolution updates occur
         Timber.i("Registering for resolution value updates")
         val registerResolutionUpdates = ubyteArrayOf(0x02U, 0x52U, RESOLUTION_ID)
         ble.writeCharacteristic(goproAddress, GoProUUID.CQ_QUERY.uuid, registerResolutionUpdates)
+        val queryResponse =
+            (receivedResponses.receive() as Response.Query).apply { parse() }
+        resolution =
+            Resolution.fromValue(queryResponse.data.getValue(RESOLUTION_ID).first())
         Timber.i("Camera resolution is $resolution")
 
         // Write to command request BleUUID to change the video resolution (either to 1080 or 2.7K)
-        val newResolution =
+        val targetResolution =
             if (resolution == Resolution.RES_2_7K) Resolution.RES_1080 else Resolution.RES_2_7K
-        Timber.i("Changing the resolution to $newResolution")
-        val setResolution = ubyteArrayOf(0x03U, RESOLUTION_ID, 0x01U, newResolution.value)
+        Timber.i("Changing the resolution to $targetResolution")
+        val setResolution = ubyteArrayOf(0x03U, RESOLUTION_ID, 0x01U, targetResolution.value)
         ble.writeCharacteristic(goproAddress, GoProUUID.CQ_SETTING.uuid, setResolution)
-        val setResolutionResponse = receivedResponse.receive()
+        val setResolutionResponse = (receivedResponses.receive() as Response.Tlv).apply { parse() }
         if (setResolutionResponse.status == 0) {
             Timber.i("Resolution successfully changed")
         } else {
-            Timber.e("Failed to set resolution")
+            Timber.e("Failed to set resolution to to $targetResolution. Ensure camera is in a valid state to allow this resolution.")
+            return
         }
 
         // Verify we receive the update from the camera when the resolution changes
-        while (resolution != newResolution) {
+        while (resolution != targetResolution) {
             Timber.i("Waiting for camera to inform us about the resolution change")
-            receivedResponse.receive()
+            val queryNotification =
+                (receivedResponses.receive() as Response.Query).apply { parse() }
+            resolution =
+                Resolution.fromValue(queryNotification.data.getValue(RESOLUTION_ID).first())
+            Timber.i("Camera resolution is $resolution")
         }
 
-        // Other tutorials will use their own notification handler so unregister ours now
-        ble.unregisterListener(bleListeners)
+        Timber.i("Resolution Update Notification has been received.")
+
+        // Unregister for notifications
+        Timber.i("Unregistering for resolution value updates")
+        val unregisterResolutionUpdates = ubyteArrayOf(0x02U, 0x72U, RESOLUTION_ID)
+        ble.writeCharacteristic(goproAddress, GoProUUID.CQ_QUERY.uuid, unregisterResolutionUpdates)
+        receivedResponses.receive()
     }
 
     @RequiresPermission(allOf = ["android.permission.BLUETOOTH_SCAN", "android.permission.BLUETOOTH_CONNECT"])
@@ -211,9 +179,14 @@ class Tutorial4BleQueries(number: Int, name: String, prerequisites: List<Prerequ
         val goproAddress =
             DataStore.connectedGoPro ?: throw Exception("No GoPro is currently connected")
 
+        ble.registerListener(goproAddress, bleListeners)
+
         performPollingTutorial(ble, goproAddress)
 
         performRegisteringForAsyncUpdatesTutorial(ble, goproAddress)
+
+        // Other tutorials will use their own notification handler so unregister ours now
+        ble.unregisterListener(bleListeners)
 
         return null
     }

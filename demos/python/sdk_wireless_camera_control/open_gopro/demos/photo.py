@@ -19,6 +19,7 @@ console = Console()
 
 async def main(args: argparse.Namespace) -> None:
     logger = setup_logging(__name__, args.log)
+
     gopro: GoProBase | None = None
 
     try:
@@ -28,33 +29,24 @@ async def main(args: argparse.Namespace) -> None:
             else WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface)
         ) as gopro:
             assert gopro
-            # Configure settings to prepare for photo
-            await gopro.http_setting.video_performance_mode.set(Params.PerformanceMode.MAX_PERFORMANCE)
-            await gopro.http_setting.max_lens_mode.set(Params.MaxLensMode.DEFAULT)
-            await gopro.http_setting.camera_ux_mode.set(Params.CameraUxMode.PRO)
-            await gopro.http_command.set_turbo_mode(mode=Params.Toggle.DISABLE)
             assert (await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_PHOTO)).ok
 
-            # # Get the media list before
-            # media_set_before = set((await gopro.http_command.get_media_list()).data.files)
+            # Get the media list before
+            media_set_before = set((await gopro.http_command.get_media_list()).data.files)
+
             # Take a photo
-            # console.print("Capturing a photo...")
-            # assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
+            assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
 
-            # # Get the media list after
-            # media_set_after = set((await gopro.http_command.get_media_list()).data.files)
-            # # The photo is (most likely) the difference between the two sets
-            # photo = media_set_after.difference(media_set_before).pop()
+            # Get the media list after
+            media_set_after = set((await gopro.http_command.get_media_list()).data.files)
+            # The video (is most likely) the difference between the two sets
+            photo = media_set_after.difference(media_set_before).pop()
 
-            # Get the last captured media
-            test = await gopro.http_command.get_last_captured_media()
-            # test = await gopro.ble_command.get_last_captured_media()
-            print(f"Photo from new command ==> {test.data.folder} ::: {test.data.file}")
+            # Download the photo
+            console.print(f"Downloading {photo.filename}...")
+            await gopro.http_command.download_file(camera_file=photo.filename, local_file=args.output)
+            console.print(f"Success!! :smiley: File has been downloaded to {Path(args.output).absolute()}")
 
-            # # Download the photo
-            # console.print(f"Downloading {photo.filename}...")
-            # await gopro.http_command.download_file(camera_file=photo.filename, local_file=args.output)
-            # console.print(f"Success!! :smiley: File has been downloaded to {args.output}")
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))
 

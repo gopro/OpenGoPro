@@ -50,7 +50,7 @@ async def main(args: argparse.Namespace) -> None:
         console.print("[yellow]Waiting for livestream to be ready...\n")
         await livestream_is_ready.wait()
 
-        # TODO Is this still needed
+        # TODO Is this still needed?
         await asyncio.sleep(2)
 
         console.print("[yellow]Starting livestream")

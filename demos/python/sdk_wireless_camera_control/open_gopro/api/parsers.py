@@ -33,32 +33,6 @@ logger = logging.getLogger(__name__)
 ProtobufPrinter = google.protobuf.json_format._Printer  # type: ignore # noqa
 original_field_to_json = ProtobufPrinter._FieldToJsonObject
 
-
-# TODO move into below class
-def construct_adapter_factory(target: Construct) -> BytesParserBuilder:
-    """Build a construct parser adapter from a construct
-
-    Args:
-        target (Construct): construct to use for parsing and building
-
-    Returns:
-        BytesParserBuilder: instance of generated class
-    """
-
-    class ParserBuilder(BytesParserBuilder):
-        """Adapt the construct for our interface"""
-
-        container = target
-
-        def parse(self, data: bytes) -> Any:
-            return self.container.parse(data)
-
-        def build(self, *args: Any, **kwargs: Any) -> bytes:
-            return self.container.build(*args, **kwargs)
-
-    return ParserBuilder()
-
-
 T = TypeVar("T")
 
 
@@ -250,14 +224,14 @@ class ByteParserBuilders:
 
                 protobuf = proto
 
-                # TODO can we do this without relying on Protobuf internal implementation
                 # pylint: disable=not-callable
                 def parse(self, data: bytes) -> Any:
                     response: types.Protobuf = self.protobuf().FromString(bytes(data))
 
+                    # TODO can translate from Protobuf enums without relying on Protobuf internal implementation?
                     # Monkey patch the field-to-json function to use our enum translation
-                    ProtobufPrinter._FieldToJsonObject = (
-                        lambda self, field, value: enum_factory(field.enum_type)(value)
+                    ProtobufPrinter._FieldToJsonObject = lambda self, field, value: (
+                        enum_factory(field.enum_type)(value)
                         if field.cpp_type == descriptor.FieldDescriptor.CPPTYPE_ENUM
                         else original_field_to_json(self, field, value)
                     )
@@ -331,7 +305,31 @@ class ByteParserBuilders:
         """
 
         def __init__(self, construct: Construct) -> None:
-            self._construct = construct_adapter_factory(construct)
+            self._construct = self._construct_adapter_factory(construct)
+
+        @classmethod
+        def _construct_adapter_factory(cls, target: Construct) -> BytesParserBuilder:
+            """Build a construct parser adapter from a construct
+
+            Args:
+                target (Construct): construct to use for parsing and building
+
+            Returns:
+                BytesParserBuilder: instance of generated class
+            """
+
+            class ParserBuilder(BytesParserBuilder):
+                """Adapt the construct for our interface"""
+
+                container = target
+
+                def parse(self, data: bytes) -> Any:
+                    return self.container.parse(data)
+
+                def build(self, *args: Any, **kwargs: Any) -> bytes:
+                    return self.container.build(*args, **kwargs)
+
+            return ParserBuilder()
 
         def parse(self, data: bytes) -> Construct:
             """Parse bytes into construct container

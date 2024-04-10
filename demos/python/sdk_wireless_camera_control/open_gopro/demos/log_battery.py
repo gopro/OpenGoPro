@@ -119,6 +119,7 @@ async def main(args: argparse.Namespace) -> None:
                     ).data
                     # Append initial sample
                     SAMPLES.append(Sample(index=SAMPLE_INDEX, percentage=last_percentage, bars=last_bars))
+                    SAMPLE_INDEX += 1
                     console.print(str(SAMPLES[-1]))
                     console.print("[bold green]Receiving battery notifications until it dies...")
 

@@ -7,10 +7,25 @@ from pathlib import Path
 
 import pytest
 
-from open_gopro import Params
+from open_gopro import Params, proto
 from open_gopro.gopro_base import GoProBase
 
 camera_file = "100GOPRO/XXX.mp4"
+
+
+@pytest.mark.asyncio
+async def test_put_with_body_args(mock_wifi_communicator: GoProBase):
+    response = await mock_wifi_communicator.http_command.update_custom_preset(
+        custom_name="Custom Name",
+        icon_id=proto.EnumPresetIcon.PRESET_ICON_ACTION,
+        title_id=proto.EnumPresetTitle.PRESET_TITLE_ACTION,
+    )
+    assert response.url == "gopro/camera/presets/update_custom"
+    assert response.body == {
+        "custom_name": "Custom Name",
+        "icon_id": proto.EnumPresetIcon.PRESET_ICON_ACTION,
+        "title_id": proto.EnumPresetTitle.PRESET_TITLE_ACTION,
+    }
 
 
 @pytest.mark.asyncio
@@ -34,16 +49,18 @@ async def test_get_with_params(mock_wifi_communicator: GoProBase):
 
 @pytest.mark.asyncio
 async def test_get_binary(mock_wifi_communicator: GoProBase):
-    url, file = await mock_wifi_communicator.http_command.get_gpmf_data(camera_file=camera_file)
-    assert url == f"gopro/media/gpmf?path={camera_file}"
+    response, file = await mock_wifi_communicator.http_command.get_gpmf_data(camera_file=camera_file)
+    assert response.url == f"gopro/media/gpmf?path={camera_file}"
     assert file == Path("XXX.mp4")
 
 
 @pytest.mark.asyncio
 async def test_get_binary_with_component(mock_wifi_communicator: GoProBase):
-    url, file = await mock_wifi_communicator.http_command.download_file(camera_file=camera_file)
-    assert url == f"videos/DCIM/{camera_file}"
-    assert file == Path("XXX.mp4")
+    response, file = await mock_wifi_communicator.http_command.download_file(
+        camera_file=camera_file, local_file=Path("cheese.mp4")
+    )
+    assert response.url == f"videos/DCIM/{camera_file}"
+    assert file == Path("cheese.mp4")
 
 
 @pytest.mark.asyncio

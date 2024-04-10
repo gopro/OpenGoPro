@@ -10,16 +10,13 @@ from .builders import (
     BleAsyncResponse,
     BleProtoCommand,
     BleReadCommand,
-    BleSetting,
-    BleStatus,
+    BleSettingFacade,
+    BleStatusFacade,
     BleWriteCommand,
-    HttpGetBinary,
-    HttpGetJsonCommand,
     HttpSetting,
     RegisterUnregisterAll,
 )
 from .http_commands import HttpCommands, HttpSettings
 
-# TODO find a better way to set up parsers, etc besides instantiating
-
+# We need to ensure the API instantiated so that all parsers are set up.
 WirelessApi(None)  # type: ignore

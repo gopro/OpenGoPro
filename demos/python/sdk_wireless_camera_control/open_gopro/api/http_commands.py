@@ -16,6 +16,7 @@ from open_gopro.api.builders import (
     HttpSetting,
     http_get_binary_command,
     http_get_json_command,
+    http_put_json_command,
 )
 from open_gopro.api.parsers import JsonParsers
 from open_gopro.communicator_interface import (
@@ -24,7 +25,7 @@ from open_gopro.communicator_interface import (
     HttpMessages,
     MessageRules,
 )
-from open_gopro.constants import CmdId, SettingId
+from open_gopro.constants import SettingId
 from open_gopro.models import CameraInfo, MediaList, MediaMetadata, MediaPath
 from open_gopro.models.general import WebcamResponse
 from open_gopro.models.response import GoProResp
@@ -35,15 +36,11 @@ from . import params as Params
 logger = logging.getLogger(__name__)
 
 
-class HttpCommands(HttpMessages[HttpMessage, CmdId]):
+class HttpCommands(HttpMessages[HttpMessage]):
     """All of the HTTP commands.
 
     To be used as a delegate for a GoProHttp to build commands
     """
-
-    #####################################################################################################
-    #                         HTTP GET JSON COMMANDS
-    #####################################################################################################
 
     @http_get_json_command(
         endpoint="gopro/media/last_captured",
@@ -56,25 +53,28 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
             GoProResp[MediaPath]: path of last captured media file
         """
 
-    # async def update_custom_preset(
-    #     self,
-    #     icon_id: proto.EnumPresetIcon.ValueType | None = None,
-    #     title: str | proto.EnumPresetTitle.ValueType | None = None,
-    # ) -> GoProResp[MediaPath]:
-    #     """Update a custom preset title and / or icon
+    @http_put_json_command(
+        endpoint="gopro/camera/presets/update_custom",
+        body_args=["custom_name", "icon_id", "title_id"],
+    )
+    async def update_custom_preset(
+        self,
+        *,
+        icon_id: proto.EnumPresetIcon.ValueType | None = None,
+        title_id: str | proto.EnumPresetTitle.ValueType | None = None,
+        custom_name: str | None = None,
+    ) -> GoProResp[None]:
+        """For a custom preset, update the Icon and / or the Title
 
-    #     Args:
-    #         icon_id (proto.EnumPresetIcon.ValueType | None, optional): Icon ID. Defaults to None.
-    #         title (str | proto.EnumPresetTitle.ValueType | None, optional): Custom Preset name or Factory Title ID. Defaults to None.
+        Args:
+            icon_id (proto.EnumPresetIcon.ValueType | None): Icon to use. Defaults to None.
+            title_id (str | proto.EnumPresetTitle.ValueType | None): Title to use. Defaults to None.
+            custom_name (str | None): Custom name to use if title_id is set to
+                `proto.EnumPresetTitle.PRESET_TITLE_USER_DEFINED_CUSTOM_NAME`. Defaults to None.
 
-    #     Raises:
-    #         ValueError: Did not set a parameter
-    #         TypeError: Title was not proto.EnumPresetTitle.ValueType or string
-
-    #     Returns:
-    #         GoProResp[proto.ResponseGeneric]: status of preset update
-    #     """
-    #     raise NotImplementedError("Need to add support for PUT requests")
+        Returns:
+            GoProResp: command status
+        """
 
     @http_get_json_command(endpoint="gopro/camera/digital_zoom", arguments=["percent"])
     async def set_digital_zoom(self, *, percent: int) -> GoProResp[None]:
@@ -90,7 +90,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
     @http_get_json_command(
         endpoint="gopro/camera/state",
         parser=Parser(json_parser=JsonParsers.CameraStateParser()),
-        rules={MessageRules.FASTPASS: lambda **kwargs: True},
+        rules=MessageRules(fastpass_analyzer=MessageRules.always_true),
     )
     async def get_camera_state(self) -> GoProResp[types.CameraState]:
         """Get all camera statuses and settings
@@ -122,11 +122,11 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         arguments=["path"],
         parser=Parser(json_parser=JsonParsers.PydanticAdapter(MediaMetadata)),
     )
-    async def get_media_metadata(self, *, file: str) -> GoProResp[MediaMetadata]:
+    async def get_media_metadata(self, *, path: str) -> GoProResp[MediaMetadata]:
         """Get media metadata for a file.
 
         Args:
-            file (str): Media file to get metadata for
+            path (str): Path on camera of media file to get metadata for
 
         Returns:
             GoProResp: Media metadata JSON structure
@@ -166,7 +166,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
             GoProResp: Open GoPro Version
         """
 
-    # TODO make pydantic
+    # TODO make pydantic model of preset status
     @http_get_json_command(endpoint="gopro/camera/presets/get")
     async def get_preset_status(self) -> GoProResp[types.JsonDict]:
         """Get status of current presets
@@ -226,10 +226,10 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
     @http_get_json_command(
         endpoint="gopro/camera/shutter",
         components=["mode"],
-        rules={
-            MessageRules.FASTPASS: lambda **kwargs: kwargs["shutter"] == Params.Toggle.DISABLE,
-            MessageRules.WAIT_FOR_ENCODING_START: lambda **kwargs: kwargs["shutter"] == Params.Toggle.ENABLE,
-        },
+        rules=MessageRules(
+            fastpass_analyzer=lambda **kwargs: kwargs["mode"] == "stop",
+            wait_for_encoding_analyzer=lambda **kwargs: kwargs["mode"] == "start",
+        ),
     )
     async def set_shutter(self, *, shutter: Params.Toggle) -> GoProResp[None]:
         """Set the shutter on or off
@@ -340,6 +340,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
     @http_get_json_command(
         endpoint="gopro/webcam/exit",
         parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+        rules=MessageRules(fastpass_analyzer=MessageRules.always_true),
     )
     async def webcam_exit(self) -> GoProResp[WebcamResponse]:
         """Exit the webcam.
@@ -351,6 +352,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
     @http_get_json_command(
         endpoint="gopro/webcam/preview",
         parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+        rules=MessageRules(fastpass_analyzer=MessageRules.always_true),
     )
     async def webcam_preview(self) -> GoProResp[WebcamResponse]:
         """Start the webcam preview.
@@ -363,6 +365,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         endpoint="gopro/webcam/start",
         arguments=["res", "fov", "port", "protocol"],
         parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+        rules=MessageRules(fastpass_analyzer=MessageRules.always_true),
     )
     async def webcam_start(
         self,
@@ -390,7 +393,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
 
     @http_get_json_command(
         endpoint="gopro/webcam/stop",
-        rules={MessageRules.FASTPASS: lambda **kwargs: True},
+        rules=MessageRules(fastpass_analyzer=MessageRules.always_true),
         parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
     )
     async def webcam_stop(self) -> GoProResp[WebcamResponse]:
@@ -403,6 +406,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
     @http_get_json_command(
         endpoint="gopro/webcam/status",
         parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+        rules=MessageRules(fastpass_analyzer=MessageRules.always_true),
     )
     async def webcam_status(self) -> GoProResp[WebcamResponse]:
         """Get the current status of the webcam
@@ -425,10 +429,6 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
             GoProResp: command status
         """
         return {"p": control}  # type: ignore
-
-    ######################################################################################################
-    #                          HTTP GET BINARY COMMANDS
-    ######################################################################################################
 
     @http_get_binary_command(endpoint="gopro/media/gpmf", arguments=["path"])
     async def get_gpmf_data(self, *, camera_file: str, local_file: Path | None = None) -> GoProResp[Path]:
@@ -501,7 +501,7 @@ class HttpCommands(HttpMessages[HttpMessage, CmdId]):
         """
 
 
-class HttpSettings(HttpMessages[HttpSetting, SettingId]):
+class HttpSettings(HttpMessages[HttpSetting]):
     # pylint: disable=missing-class-docstring, unused-argument
     """The collection of all HTTP Settings
 
@@ -566,9 +566,7 @@ class HttpSettings(HttpMessages[HttpSetting, SettingId]):
         )
         """Camera controls configuration."""
 
-        self.video_easy_mode: HttpSetting[Params.Speed] = HttpSetting[Params.Speed](
-            communicator, SettingId.VIDEO_EASY_MODE
-        )
+        self.video_easy_mode: HttpSetting[int] = HttpSetting[int](communicator, SettingId.VIDEO_EASY_MODE)
         """Video easy mode speed."""
 
         self.photo_easy_mode: HttpSetting[Params.PhotoEasyMode] = HttpSetting[Params.PhotoEasyMode](

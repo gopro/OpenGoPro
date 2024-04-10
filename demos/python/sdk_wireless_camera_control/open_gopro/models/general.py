@@ -62,7 +62,6 @@ class HttpInvalidSettingResponse(CustomBaseModel):
     supported_options: Optional[list[SupportedOption]] = Field(default=None)
 
 
-# TODO add to / from json methods
 @dataclass
 class CohnInfo:
     """Data model to store Camera on the Home Network connection info"""
@@ -76,6 +75,5 @@ class CohnInfo:
     def __post_init__(self) -> None:
         token = b64encode(f"{self.username}:{self.password}".encode("utf-8")).decode("ascii")
         self.auth_token = f"Basic {token}"
-        # self.token = f"Basic {token}"
         with open(self.cert_path, "w") as fp:
             fp.write(self.certificate)

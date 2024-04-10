@@ -4,6 +4,7 @@ isort:skip_file
 *
 Defines the structure of protobuf message received from camera containing preset status
 """
+
 import builtins
 import collections.abc
 import google.protobuf.descriptor
@@ -24,7 +25,8 @@ class _EnumFlatMode:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumFlatModeEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumFlatMode.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumFlatMode.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     FLAT_MODE_UNKNOWN: _EnumFlatMode.ValueType
@@ -49,6 +51,7 @@ class _EnumFlatModeEnumTypeWrapper(
     FLAT_MODE_VIDEO_STAR_TRAIL: _EnumFlatMode.ValueType
     FLAT_MODE_VIDEO_LIGHT_PAINTING: _EnumFlatMode.ValueType
     FLAT_MODE_VIDEO_LIGHT_TRAIL: _EnumFlatMode.ValueType
+    FLAT_MODE_VIDEO_BURST_SLOMO: _EnumFlatMode.ValueType
 
 class EnumFlatMode(_EnumFlatMode, metaclass=_EnumFlatModeEnumTypeWrapper): ...
 
@@ -74,6 +77,7 @@ FLAT_MODE_IDLE: EnumFlatMode.ValueType
 FLAT_MODE_VIDEO_STAR_TRAIL: EnumFlatMode.ValueType
 FLAT_MODE_VIDEO_LIGHT_PAINTING: EnumFlatMode.ValueType
 FLAT_MODE_VIDEO_LIGHT_TRAIL: EnumFlatMode.ValueType
+FLAT_MODE_VIDEO_BURST_SLOMO: EnumFlatMode.ValueType
 global___EnumFlatMode = EnumFlatMode
 
 class _EnumPresetGroup:
@@ -81,7 +85,8 @@ class _EnumPresetGroup:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumPresetGroupEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetGroup.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetGroup.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     PRESET_GROUP_ID_VIDEO: _EnumPresetGroup.ValueType
@@ -100,7 +105,8 @@ class _EnumPresetGroupIcon:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumPresetGroupIconEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetGroupIcon.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetGroupIcon.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     PRESET_GROUP_VIDEO_ICON_ID: _EnumPresetGroupIcon.ValueType
@@ -129,7 +135,8 @@ class _EnumPresetIcon:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumPresetIconEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetIcon.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetIcon.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     PRESET_ICON_VIDEO: _EnumPresetIcon.ValueType
@@ -144,7 +151,6 @@ class _EnumPresetIconEnumTypeWrapper(
     PRESET_ICON_NIGHTLAPSE: _EnumPresetIcon.ValueType
     PRESET_ICON_SNAIL: _EnumPresetIcon.ValueType
     PRESET_ICON_VIDEO_2: _EnumPresetIcon.ValueType
-    PRESET_ICON_360_VIDEO: _EnumPresetIcon.ValueType
     PRESET_ICON_PHOTO_2: _EnumPresetIcon.ValueType
     PRESET_ICON_PANORAMA: _EnumPresetIcon.ValueType
     PRESET_ICON_BURST_2: _EnumPresetIcon.ValueType
@@ -167,7 +173,6 @@ class _EnumPresetIconEnumTypeWrapper(
     PRESET_ICON_WATER: _EnumPresetIcon.ValueType
     PRESET_ICON_LOOPING: _EnumPresetIcon.ValueType
     PRESET_ICON_STARS: _EnumPresetIcon.ValueType
-    "*\n    New custom icon (34 - 42)added for HERO 12\n    "
     PRESET_ICON_ACTION: _EnumPresetIcon.ValueType
     PRESET_ICON_FOLLOW_CAM: _EnumPresetIcon.ValueType
     PRESET_ICON_SURF: _EnumPresetIcon.ValueType
@@ -176,10 +181,6 @@ class _EnumPresetIconEnumTypeWrapper(
     PRESET_ICON_CHESTY: _EnumPresetIcon.ValueType
     PRESET_ICON_HELMET: _EnumPresetIcon.ValueType
     PRESET_ICON_BITE: _EnumPresetIcon.ValueType
-    PRESET_ICON_MAX_VIDEO: _EnumPresetIcon.ValueType
-    "*\n    Reserved 43 - 50 for Custom presets. Add icons below for new presets starting from 51\n    "
-    PRESET_ICON_MAX_PHOTO: _EnumPresetIcon.ValueType
-    PRESET_ICON_MAX_TIMEWARP: _EnumPresetIcon.ValueType
     PRESET_ICON_BASIC: _EnumPresetIcon.ValueType
     PRESET_ICON_ULTRA_SLO_MO: _EnumPresetIcon.ValueType
     PRESET_ICON_STANDARD_ENDURANCE: _EnumPresetIcon.ValueType
@@ -199,15 +200,6 @@ class _EnumPresetIconEnumTypeWrapper(
     PRESET_ICON_LIGHT_PAINTING: _EnumPresetIcon.ValueType
     PRESET_ICON_LIGHT_TRAIL: _EnumPresetIcon.ValueType
     PRESET_ICON_FULL_FRAME: _EnumPresetIcon.ValueType
-    PRESET_ICON_EASY_MAX_VIDEO: _EnumPresetIcon.ValueType
-    PRESET_ICON_EASY_MAX_PHOTO: _EnumPresetIcon.ValueType
-    PRESET_ICON_EASY_MAX_TIMEWARP: _EnumPresetIcon.ValueType
-    PRESET_ICON_EASY_MAX_STAR_TRAIL: _EnumPresetIcon.ValueType
-    PRESET_ICON_EASY_MAX_LIGHT_PAINTING: _EnumPresetIcon.ValueType
-    PRESET_ICON_EASY_MAX_LIGHT_TRAIL: _EnumPresetIcon.ValueType
-    PRESET_ICON_MAX_STAR_TRAIL: _EnumPresetIcon.ValueType
-    PRESET_ICON_MAX_LIGHT_PAINTING: _EnumPresetIcon.ValueType
-    PRESET_ICON_MAX_LIGHT_TRAIL: _EnumPresetIcon.ValueType
     PRESET_ICON_TIMELAPSE_PHOTO: _EnumPresetIcon.ValueType
     PRESET_ICON_NIGHTLAPSE_PHOTO: _EnumPresetIcon.ValueType
 
@@ -225,7 +217,6 @@ PRESET_ICON_TIMELAPSE: EnumPresetIcon.ValueType
 PRESET_ICON_NIGHTLAPSE: EnumPresetIcon.ValueType
 PRESET_ICON_SNAIL: EnumPresetIcon.ValueType
 PRESET_ICON_VIDEO_2: EnumPresetIcon.ValueType
-PRESET_ICON_360_VIDEO: EnumPresetIcon.ValueType
 PRESET_ICON_PHOTO_2: EnumPresetIcon.ValueType
 PRESET_ICON_PANORAMA: EnumPresetIcon.ValueType
 PRESET_ICON_BURST_2: EnumPresetIcon.ValueType
@@ -248,7 +239,6 @@ PRESET_ICON_TRAVEL: EnumPresetIcon.ValueType
 PRESET_ICON_WATER: EnumPresetIcon.ValueType
 PRESET_ICON_LOOPING: EnumPresetIcon.ValueType
 PRESET_ICON_STARS: EnumPresetIcon.ValueType
-"*\nNew custom icon (34 - 42)added for HERO 12\n"
 PRESET_ICON_ACTION: EnumPresetIcon.ValueType
 PRESET_ICON_FOLLOW_CAM: EnumPresetIcon.ValueType
 PRESET_ICON_SURF: EnumPresetIcon.ValueType
@@ -257,10 +247,6 @@ PRESET_ICON_SHAKY: EnumPresetIcon.ValueType
 PRESET_ICON_CHESTY: EnumPresetIcon.ValueType
 PRESET_ICON_HELMET: EnumPresetIcon.ValueType
 PRESET_ICON_BITE: EnumPresetIcon.ValueType
-PRESET_ICON_MAX_VIDEO: EnumPresetIcon.ValueType
-"*\nReserved 43 - 50 for Custom presets. Add icons below for new presets starting from 51\n"
-PRESET_ICON_MAX_PHOTO: EnumPresetIcon.ValueType
-PRESET_ICON_MAX_TIMEWARP: EnumPresetIcon.ValueType
 PRESET_ICON_BASIC: EnumPresetIcon.ValueType
 PRESET_ICON_ULTRA_SLO_MO: EnumPresetIcon.ValueType
 PRESET_ICON_STANDARD_ENDURANCE: EnumPresetIcon.ValueType
@@ -280,15 +266,6 @@ PRESET_ICON_STAR_TRAIL: EnumPresetIcon.ValueType
 PRESET_ICON_LIGHT_PAINTING: EnumPresetIcon.ValueType
 PRESET_ICON_LIGHT_TRAIL: EnumPresetIcon.ValueType
 PRESET_ICON_FULL_FRAME: EnumPresetIcon.ValueType
-PRESET_ICON_EASY_MAX_VIDEO: EnumPresetIcon.ValueType
-PRESET_ICON_EASY_MAX_PHOTO: EnumPresetIcon.ValueType
-PRESET_ICON_EASY_MAX_TIMEWARP: EnumPresetIcon.ValueType
-PRESET_ICON_EASY_MAX_STAR_TRAIL: EnumPresetIcon.ValueType
-PRESET_ICON_EASY_MAX_LIGHT_PAINTING: EnumPresetIcon.ValueType
-PRESET_ICON_EASY_MAX_LIGHT_TRAIL: EnumPresetIcon.ValueType
-PRESET_ICON_MAX_STAR_TRAIL: EnumPresetIcon.ValueType
-PRESET_ICON_MAX_LIGHT_PAINTING: EnumPresetIcon.ValueType
-PRESET_ICON_MAX_LIGHT_TRAIL: EnumPresetIcon.ValueType
 PRESET_ICON_TIMELAPSE_PHOTO: EnumPresetIcon.ValueType
 PRESET_ICON_NIGHTLAPSE_PHOTO: EnumPresetIcon.ValueType
 global___EnumPresetIcon = EnumPresetIcon
@@ -298,7 +275,8 @@ class _EnumPresetTitle:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumPresetTitleEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetTitle.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetTitle.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     PRESET_TITLE_ACTIVITY: _EnumPresetTitle.ValueType
@@ -313,12 +291,9 @@ class _EnumPresetTitleEnumTypeWrapper(
     PRESET_TITLE_NIGHT_LAPSE: _EnumPresetTitle.ValueType
     PRESET_TITLE_VIDEO: _EnumPresetTitle.ValueType
     PRESET_TITLE_SLOMO: _EnumPresetTitle.ValueType
-    PRESET_TITLE_360_VIDEO: _EnumPresetTitle.ValueType
     PRESET_TITLE_PHOTO_2: _EnumPresetTitle.ValueType
     PRESET_TITLE_PANORAMA: _EnumPresetTitle.ValueType
-    PRESET_TITLE_360_PHOTO: _EnumPresetTitle.ValueType
     PRESET_TITLE_TIME_WARP_2: _EnumPresetTitle.ValueType
-    PRESET_TITLE_360_TIME_WARP: _EnumPresetTitle.ValueType
     PRESET_TITLE_CUSTOM: _EnumPresetTitle.ValueType
     PRESET_TITLE_AIR: _EnumPresetTitle.ValueType
     PRESET_TITLE_BIKE: _EnumPresetTitle.ValueType
@@ -336,7 +311,6 @@ class _EnumPresetTitleEnumTypeWrapper(
     PRESET_TITLE_WATER: _EnumPresetTitle.ValueType
     PRESET_TITLE_LOOPING: _EnumPresetTitle.ValueType
     PRESET_TITLE_STARS: _EnumPresetTitle.ValueType
-    "*\n    New custom names (34 - 42)added for HERO 12\n    "
     PRESET_TITLE_ACTION: _EnumPresetTitle.ValueType
     PRESET_TITLE_FOLLOW_CAM: _EnumPresetTitle.ValueType
     PRESET_TITLE_SURF: _EnumPresetTitle.ValueType
@@ -345,14 +319,6 @@ class _EnumPresetTitleEnumTypeWrapper(
     PRESET_TITLE_CHESTY: _EnumPresetTitle.ValueType
     PRESET_TITLE_HELMET: _EnumPresetTitle.ValueType
     PRESET_TITLE_BITE: _EnumPresetTitle.ValueType
-    PRESET_TITLE_360_TIMELAPSE: _EnumPresetTitle.ValueType
-    "*\n    Reserved 43 - 50 for custom presets.\n    "
-    PRESET_TITLE_360_NIGHT_LAPSE: _EnumPresetTitle.ValueType
-    PRESET_TITLE_360_NIGHT_PHOTO: _EnumPresetTitle.ValueType
-    PRESET_TITLE_PANO_TIME_LAPSE: _EnumPresetTitle.ValueType
-    PRESET_TITLE_MAX_VIDEO: _EnumPresetTitle.ValueType
-    PRESET_TITLE_MAX_PHOTO: _EnumPresetTitle.ValueType
-    PRESET_TITLE_MAX_TIMEWARP: _EnumPresetTitle.ValueType
     PRESET_TITLE_BASIC: _EnumPresetTitle.ValueType
     PRESET_TITLE_ULTRA_SLO_MO: _EnumPresetTitle.ValueType
     PRESET_TITLE_STANDARD_ENDURANCE: _EnumPresetTitle.ValueType
@@ -375,19 +341,8 @@ class _EnumPresetTitleEnumTypeWrapper(
     PRESET_TITLE_LIGHT_PAINTING: _EnumPresetTitle.ValueType
     PRESET_TITLE_LIGHT_TRAIL: _EnumPresetTitle.ValueType
     PRESET_TITLE_FULL_FRAME: _EnumPresetTitle.ValueType
-    PRESET_TITLE_MAX_LENS_VIDEO: _EnumPresetTitle.ValueType
-    PRESET_TITLE_MAX_LENS_TIMEWARP: _EnumPresetTitle.ValueType
     PRESET_TITLE_STANDARD_QUALITY_VIDEO: _EnumPresetTitle.ValueType
     PRESET_TITLE_BASIC_QUALITY_VIDEO: _EnumPresetTitle.ValueType
-    PRESET_TITLE_EASY_MAX_VIDEO: _EnumPresetTitle.ValueType
-    PRESET_TITLE_EASY_MAX_PHOTO: _EnumPresetTitle.ValueType
-    PRESET_TITLE_EASY_MAX_TIMEWARP: _EnumPresetTitle.ValueType
-    PRESET_TITLE_EASY_MAX_STAR_TRAIL: _EnumPresetTitle.ValueType
-    PRESET_TITLE_EASY_MAX_LIGHT_PAINTING: _EnumPresetTitle.ValueType
-    PRESET_TITLE_EASY_MAX_LIGHT_TRAIL: _EnumPresetTitle.ValueType
-    PRESET_TITLE_MAX_STAR_TRAIL: _EnumPresetTitle.ValueType
-    PRESET_TITLE_MAX_LIGHT_PAINTING: _EnumPresetTitle.ValueType
-    PRESET_TITLE_MAX_LIGHT_TRAIL: _EnumPresetTitle.ValueType
     PRESET_TITLE_HIGHEST_QUALITY_VIDEO: _EnumPresetTitle.ValueType
     PRESET_TITLE_USER_DEFINED_CUSTOM_NAME: _EnumPresetTitle.ValueType
 
@@ -405,12 +360,9 @@ PRESET_TITLE_TIME_LAPSE: EnumPresetTitle.ValueType
 PRESET_TITLE_NIGHT_LAPSE: EnumPresetTitle.ValueType
 PRESET_TITLE_VIDEO: EnumPresetTitle.ValueType
 PRESET_TITLE_SLOMO: EnumPresetTitle.ValueType
-PRESET_TITLE_360_VIDEO: EnumPresetTitle.ValueType
 PRESET_TITLE_PHOTO_2: EnumPresetTitle.ValueType
 PRESET_TITLE_PANORAMA: EnumPresetTitle.ValueType
-PRESET_TITLE_360_PHOTO: EnumPresetTitle.ValueType
 PRESET_TITLE_TIME_WARP_2: EnumPresetTitle.ValueType
-PRESET_TITLE_360_TIME_WARP: EnumPresetTitle.ValueType
 PRESET_TITLE_CUSTOM: EnumPresetTitle.ValueType
 PRESET_TITLE_AIR: EnumPresetTitle.ValueType
 PRESET_TITLE_BIKE: EnumPresetTitle.ValueType
@@ -428,7 +380,6 @@ PRESET_TITLE_TRAVEL: EnumPresetTitle.ValueType
 PRESET_TITLE_WATER: EnumPresetTitle.ValueType
 PRESET_TITLE_LOOPING: EnumPresetTitle.ValueType
 PRESET_TITLE_STARS: EnumPresetTitle.ValueType
-"*\nNew custom names (34 - 42)added for HERO 12\n"
 PRESET_TITLE_ACTION: EnumPresetTitle.ValueType
 PRESET_TITLE_FOLLOW_CAM: EnumPresetTitle.ValueType
 PRESET_TITLE_SURF: EnumPresetTitle.ValueType
@@ -437,14 +388,6 @@ PRESET_TITLE_SHAKY: EnumPresetTitle.ValueType
 PRESET_TITLE_CHESTY: EnumPresetTitle.ValueType
 PRESET_TITLE_HELMET: EnumPresetTitle.ValueType
 PRESET_TITLE_BITE: EnumPresetTitle.ValueType
-PRESET_TITLE_360_TIMELAPSE: EnumPresetTitle.ValueType
-"*\nReserved 43 - 50 for custom presets.\n"
-PRESET_TITLE_360_NIGHT_LAPSE: EnumPresetTitle.ValueType
-PRESET_TITLE_360_NIGHT_PHOTO: EnumPresetTitle.ValueType
-PRESET_TITLE_PANO_TIME_LAPSE: EnumPresetTitle.ValueType
-PRESET_TITLE_MAX_VIDEO: EnumPresetTitle.ValueType
-PRESET_TITLE_MAX_PHOTO: EnumPresetTitle.ValueType
-PRESET_TITLE_MAX_TIMEWARP: EnumPresetTitle.ValueType
 PRESET_TITLE_BASIC: EnumPresetTitle.ValueType
 PRESET_TITLE_ULTRA_SLO_MO: EnumPresetTitle.ValueType
 PRESET_TITLE_STANDARD_ENDURANCE: EnumPresetTitle.ValueType
@@ -467,30 +410,21 @@ PRESET_TITLE_STAR_TRAIL: EnumPresetTitle.ValueType
 PRESET_TITLE_LIGHT_PAINTING: EnumPresetTitle.ValueType
 PRESET_TITLE_LIGHT_TRAIL: EnumPresetTitle.ValueType
 PRESET_TITLE_FULL_FRAME: EnumPresetTitle.ValueType
-PRESET_TITLE_MAX_LENS_VIDEO: EnumPresetTitle.ValueType
-PRESET_TITLE_MAX_LENS_TIMEWARP: EnumPresetTitle.ValueType
 PRESET_TITLE_STANDARD_QUALITY_VIDEO: EnumPresetTitle.ValueType
 PRESET_TITLE_BASIC_QUALITY_VIDEO: EnumPresetTitle.ValueType
-PRESET_TITLE_EASY_MAX_VIDEO: EnumPresetTitle.ValueType
-PRESET_TITLE_EASY_MAX_PHOTO: EnumPresetTitle.ValueType
-PRESET_TITLE_EASY_MAX_TIMEWARP: EnumPresetTitle.ValueType
-PRESET_TITLE_EASY_MAX_STAR_TRAIL: EnumPresetTitle.ValueType
-PRESET_TITLE_EASY_MAX_LIGHT_PAINTING: EnumPresetTitle.ValueType
-PRESET_TITLE_EASY_MAX_LIGHT_TRAIL: EnumPresetTitle.ValueType
-PRESET_TITLE_MAX_STAR_TRAIL: EnumPresetTitle.ValueType
-PRESET_TITLE_MAX_LIGHT_PAINTING: EnumPresetTitle.ValueType
-PRESET_TITLE_MAX_LIGHT_TRAIL: EnumPresetTitle.ValueType
 PRESET_TITLE_HIGHEST_QUALITY_VIDEO: EnumPresetTitle.ValueType
 PRESET_TITLE_USER_DEFINED_CUSTOM_NAME: EnumPresetTitle.ValueType
 global___EnumPresetTitle = EnumPresetTitle
 
+@typing_extensions.final
 class NotifyPresetStatus(google.protobuf.message.Message):
     """*
     Current Preset status
 
     Sent either:
-    - synchronously via initial response to @ref RequestGetPresetStatus
-    - asynchronously when Preset change if registered in @rev RequestGetPresetStatus
+
+    - Synchronously via initial response to @ref RequestGetPresetStatus
+    - Asynchronously when Preset change if registered in @ref RequestGetPresetStatus
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -500,14 +434,16 @@ class NotifyPresetStatus(google.protobuf.message.Message):
     def preset_group_array(
         self,
     ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___PresetGroup]:
-        """Array of currently available Preset Groups"""
+        """List of currently available Preset Groups"""
     def __init__(self, *, preset_group_array: collections.abc.Iterable[global___PresetGroup] | None = ...) -> None: ...
     def ClearField(
-        self, field_name: typing_extensions.Literal["preset_group_array", b"preset_group_array"]
+        self,
+        field_name: typing_extensions.Literal["preset_group_array", b"preset_group_array"],
     ) -> None: ...
 
 global___NotifyPresetStatus = NotifyPresetStatus
 
+@typing_extensions.final
 class Preset(google.protobuf.message.Message):
     """*
     An individual preset.
@@ -614,28 +550,28 @@ class Preset(google.protobuf.message.Message):
 
 global___Preset = Preset
 
+@typing_extensions.final
 class RequestCustomPresetUpdate(google.protobuf.message.Message):
     """*
-    Request to update the active custom preset
+    Request to Update the Title and / or Icon of the Active Custom Preset
 
-    This only operates on the currently active Preset and will fail if the current
+    This only operates on the currently active Preset and will fail  if the current
     Preset is not custom.
 
     The use cases are:
 
     1. Update the Custom Preset Icon
+
         - `icon_id` is always optional and can always be passed
 
     and / or
 
     2. Update the Custom Preset Title to a...
-         - **Factory Preset Title**: Set `title_id` to a non-94 value
-         - **Custom Preset Name**: Set `title_id` to 94 and specify a `custom_name`
-    *
-    Preset Title ID
 
-    The range of acceptable custom title ID's can be found in the initial @ref NotifyPresetStatus response
-    to @ref RequestGetPresetStatus
+         - **Factory Preset Title**: Set `title_id` to a non-PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) value
+         - **Custom Preset Name**: Set `title_id` to PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) and specify a `custom_name`
+
+    Returns a @ref ResponseGeneric with the status of the preset update request.
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -643,8 +579,9 @@ class RequestCustomPresetUpdate(google.protobuf.message.Message):
     CUSTOM_NAME_FIELD_NUMBER: builtins.int
     ICON_ID_FIELD_NUMBER: builtins.int
     title_id: global___EnumPresetTitle.ValueType
+    "*\n    Preset Title ID\n\n    The range of acceptable custom title ID's can be found in the initial @ref NotifyPresetStatus response\n    to @ref RequestGetPresetStatus\n    "
     custom_name: builtins.str
-    "utf-8 encoded target custom preset name"
+    "*\n    UTF-8 encoded custom preset name\n\n    The name must obey the following:\n\n      - Custom titles must be between 1 and 16 characters (inclusive)\n      - No special characters outside of the following languages: English, French, Italian, German,\n        Spanish, Portuguese, Swedish, Russian\n    "
     icon_id: global___EnumPresetIcon.ValueType
     "*\n    Preset Icon ID\n\n    The range of acceptable custom icon ID's can be found in the initial @ref NotifyPresetStatus response to\n    @ref RequestGetPresetStatus\n    "
 
@@ -658,18 +595,29 @@ class RequestCustomPresetUpdate(google.protobuf.message.Message):
     def HasField(
         self,
         field_name: typing_extensions.Literal[
-            "custom_name", b"custom_name", "icon_id", b"icon_id", "title_id", b"title_id"
+            "custom_name",
+            b"custom_name",
+            "icon_id",
+            b"icon_id",
+            "title_id",
+            b"title_id",
         ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
-            "custom_name", b"custom_name", "icon_id", b"icon_id", "title_id", b"title_id"
+            "custom_name",
+            b"custom_name",
+            "icon_id",
+            b"icon_id",
+            "title_id",
+            b"title_id",
         ],
     ) -> None: ...
 
 global___RequestCustomPresetUpdate = RequestCustomPresetUpdate
 
+@typing_extensions.final
 class PresetGroup(google.protobuf.message.Message):
     """
     Preset Group meta information and contained Presets
@@ -684,7 +632,9 @@ class PresetGroup(google.protobuf.message.Message):
     "Preset Group ID"
 
     @property
-    def preset_array(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Preset]:
+    def preset_array(
+        self,
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Preset]:
         """Array of Presets contained in this Preset Group"""
     can_add_preset: builtins.bool
     "Is there room in the group to add additional Presets?"
@@ -700,17 +650,26 @@ class PresetGroup(google.protobuf.message.Message):
         icon: global___EnumPresetGroupIcon.ValueType | None = ...
     ) -> None: ...
     def HasField(
-        self, field_name: typing_extensions.Literal["can_add_preset", b"can_add_preset", "icon", b"icon", "id", b"id"]
+        self,
+        field_name: typing_extensions.Literal["can_add_preset", b"can_add_preset", "icon", b"icon", "id", b"id"],
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
-            "can_add_preset", b"can_add_preset", "icon", b"icon", "id", b"id", "preset_array", b"preset_array"
+            "can_add_preset",
+            b"can_add_preset",
+            "icon",
+            b"icon",
+            "id",
+            b"id",
+            "preset_array",
+            b"preset_array",
         ],
     ) -> None: ...
 
 global___PresetGroup = PresetGroup
 
+@typing_extensions.final
 class PresetSetting(google.protobuf.message.Message):
     """*
     Setting representation that comprises a  @ref Preset
@@ -731,10 +690,12 @@ class PresetSetting(google.protobuf.message.Message):
         self, *, id: builtins.int | None = ..., value: builtins.int | None = ..., is_caption: builtins.bool | None = ...
     ) -> None: ...
     def HasField(
-        self, field_name: typing_extensions.Literal["id", b"id", "is_caption", b"is_caption", "value", b"value"]
+        self,
+        field_name: typing_extensions.Literal["id", b"id", "is_caption", b"is_caption", "value", b"value"],
     ) -> builtins.bool: ...
     def ClearField(
-        self, field_name: typing_extensions.Literal["id", b"id", "is_caption", b"is_caption", "value", b"value"]
+        self,
+        field_name: typing_extensions.Literal["id", b"id", "is_caption", b"is_caption", "value", b"value"],
     ) -> None: ...
 
 global___PresetSetting = PresetSetting

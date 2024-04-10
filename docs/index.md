@@ -30,11 +30,11 @@ Open GoPro API is supported on all camera models since Hero 9 with the following
 
 | Camera             | Minimum FW Version |
 | ------------------ | :----------------: |
-| Hero 9 Black       |     v01.70.00      |
-| Hero 10 Black      |     v01.10.00      |
-| Hero 11 Black      |     v01.10.00      |
-| Hero 11 Black Mini |     v01.10.00      |
 | Hero 12 Black      |     v01.10.00      |
+| Hero 11 Black Mini |     v01.10.00      |
+| Hero 11 Black      |     v01.10.00      |
+| Hero 10 Black      |     v01.10.00      |
+| Hero 9 Black       |     v01.70.00      |
 
 While we strive to provide the same API functionality and logic for all newly launched cameras, minor changes
 are sometimes necessary. These are typically a consequence of HW component upgrades or improving or optimizing
@@ -57,7 +57,7 @@ enabled upon each connection via BLE.
 
 WiFi needs to be switched on by a BLE command. Besides command & control, Wi-Fi also allows for video streaming and media
 manipulation. With the exception of live-streaming, the camera always acts as an Wi-Fi access point that other devices
-need to connect to. For more information, see the [Wifi Specification](/http).
+need to connect to. For more information, see the [HTTP Specification]({{site.baseurl}}/http).
 
 ## USB
 

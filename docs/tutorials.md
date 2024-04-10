@@ -16,6 +16,11 @@ The tutorials only support Open GoPro Version 2.0 and must be run on a
 They will provide walk-throughs and sample code to use the relevant language / framework to exercise the
 Open GoPro Interface using Bluetooth Low Energy (BLE) and HTTP over WiFi.
 
+{% warning %}
+The tutorials are only tested on the latest camera / firmware combination. This is only an issue in cases where
+capabilities change between cameras such as setting options.
+{% endwarning %}
+
 The tutorials are meant as an introduction to the Open GoPro specification. They are not a substitute
 for the complete [BLE](/ble/index.html) and [HTTP](/http)
 specifications which will be your main source of reference after completing the tutorials.

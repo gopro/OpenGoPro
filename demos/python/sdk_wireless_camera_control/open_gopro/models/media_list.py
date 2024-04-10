@@ -24,6 +24,18 @@ class MediaPath(ABC, CustomBaseModel):
     folder: str  #: directory that media lives in
     file: str  #: media file name (including file extension)
 
+    @property
+    def as_path(self) -> str:
+        """Return the model as a camera path (folder/file)
+
+        Returns:
+            str: camera path
+        """
+        return f"{self.folder}/{self.file}"
+
+    def __str__(self) -> str:
+        return self.as_path
+
 
 ##############################################################################################################
 # Metadata
@@ -155,12 +167,16 @@ class MediaList(CustomBaseModel):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        # self.thing = 1
         # Modify each file name to use full path
         for directory in self.media:
             for media in directory.file_system:
                 media.filename = f"{directory.directory}/{media.filename}"
                 self._files.append(media)
+
+    def __contains__(self, key: MediaItem | MediaPath | str) -> bool:
+        if isinstance(key, MediaItem):
+            return key in self.files
+        return str(key) in [m.filename for m in self.files]
 
     @property
     def files(self) -> list[MediaItem]:

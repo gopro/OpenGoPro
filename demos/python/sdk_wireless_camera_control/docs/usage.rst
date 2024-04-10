@@ -248,7 +248,7 @@ Commands are callable instance attributes of a Messages class instance
 Statuses
 ^^^^^^^^
 
-Statuses are instances of a BleStatus(:class:`~open_gopro.api.builders.BleStatus`). They can be read
+Statuses are instances of a BleStatus(:class:`~open_gopro.api.builders.BleStatusFacade`). They can be read
 synchronously using their `get_value` method as such:
 
 .. code-block:: python
@@ -272,7 +272,7 @@ It is also possible to read all statuses at once via:
 Settings
 ^^^^^^^^
 
-Settings are instances of a BleSetting(:class:`~open_gopro.api.builders.BleSetting`)
+Settings are instances of a BleSetting(:class:`~open_gopro.api.builders.BleSettingFacade`)
 or HttpSetting(:class:`~open_gopro.api.builders.HttpSetting`). They can be interacted synchronously in several
 ways.
 
@@ -319,9 +319,9 @@ This section describes how to register for and handle asynchronous push notifica
 
 It is possible to enable push notifications for any of the following:
 
-- setting values via :meth:`~open_gopro.api.builders.BleSetting.register_value_update`
-- setting capabilities via :meth:`~open_gopro.api.builders.BleSetting.register_capability_update`
-- status values via :meth:`~open_gopro.api.builders.BleStatus.register_value_update`
+- setting values via :meth:`~open_gopro.api.builders.BleSettingFacade.register_value_update`
+- setting capabilities via :meth:`~open_gopro.api.builders.BleSettingFacade.register_capability_update`
+- status values via :meth:`~open_gopro.api.builders.BleStatusFacade.register_value_update`
 
 Firstly, the desired settings / ID must be registered for and given a callback to handle received notifications.
 
@@ -332,9 +332,9 @@ responses will then be sent to the registered callback for handling.
 
 It is possible to stop receiving notifications by issuing the relevant unregister command, i.e.:
 
-- setting values via :meth:`~open_gopro.api.builders.BleSetting.unregister_value_update`
-- setting capabilities via :meth:`~open_gopro.api.builders.BleSetting.unregister_capability_update`
-- status values via :meth:`~open_gopro.api.builders.BleStatus.unregister_value_update`
+- setting values via :meth:`~open_gopro.api.builders.BleSettingFacade.unregister_value_update`
+- setting capabilities via :meth:`~open_gopro.api.builders.BleSettingFacade.unregister_capability_update`
+- status values via :meth:`~open_gopro.api.builders.BleStatusFacade.unregister_value_update`
 
 Here is an example of registering for and receiving FOV updates:
 

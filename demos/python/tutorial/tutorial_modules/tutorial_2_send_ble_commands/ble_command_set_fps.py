@@ -4,31 +4,28 @@
 import sys
 import asyncio
 import argparse
-from typing import Optional
-from binascii import hexlify
 
 from bleak import BleakClient
 from bleak.backends.characteristic import BleakGATTCharacteristic
 
-from tutorial_modules import GOPRO_BASE_UUID, connect_ble, logger
+from tutorial_modules import connect_ble, logger, GoProUuid
 
 
-async def main(identifier: Optional[str]) -> None:
+async def main(identifier: str | None) -> None:
     # Synchronization event to wait until notification response is received
     event = asyncio.Event()
 
-    # UUIDs to write to and receive responses from
-    SETTINGS_REQ_UUID = GOPRO_BASE_UUID.format("0074")
-    SETTINGS_RSP_UUID = GOPRO_BASE_UUID.format("0075")
-    response_uuid = SETTINGS_RSP_UUID
+    request_uuid = GoProUuid.SETTINGS_REQ_UUID
+    response_uuid = GoProUuid.SETTINGS_RSP_UUID
 
     client: BleakClient
 
-    def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
-        logger.info(f'Received response at handle {characteristic.handle}: {data.hex(":")}')
+    async def notification_handler(characteristic: BleakGATTCharacteristic, data: bytearray) -> None:
+        uuid = GoProUuid(client.services.characteristics[characteristic.handle].uuid)
+        logger.info(f'Received response at {uuid}: {data.hex(":")}')
 
         # If this is the correct handle and the status is success, the command was a success
-        if client.services.characteristics[characteristic.handle].uuid == response_uuid and data[2] == 0x00:
+        if uuid is response_uuid and data[2] == 0x00:
             logger.info("Command sent successfully")
         # Anything else is unexpected. This shouldn't happen
         else:
@@ -41,16 +38,16 @@ async def main(identifier: Optional[str]) -> None:
 
     # Write to command request BleUUID to change the fps to 240
     logger.info("Setting the fps to 240")
+    request = bytes([0x03, 0x03, 0x01, 0x00])
+    logger.debug(f"Writing to {request_uuid}: {request.hex(':')}")
     event.clear()
-    await client.write_gatt_char(SETTINGS_REQ_UUID, bytearray([0x03, 0x03, 0x01, 0x00]), response=True)
+    await client.write_gatt_char(request_uuid.value, request, response=True)
     await event.wait()  # Wait to receive the notification response
     await client.disconnect()
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Connect to a GoPro camera, then attempt to change the fps to 240."
-    )
+    parser = argparse.ArgumentParser(description="Connect to a GoPro camera, then attempt to change the fps to 240.")
     parser.add_argument(
         "-i",
         "--identifier",
@@ -62,7 +59,7 @@ if __name__ == "__main__":
 
     try:
         asyncio.run(main(args.identifier))
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         logger.error(e)
         sys.exit(-1)
     else:

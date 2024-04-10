@@ -33,12 +33,14 @@ class Tutorial6SendWifiCommands(number: Int, name: String, prerequisites: List<P
         response = wifi.get(GOPRO_BASE_URL + "gopro/camera/shutter/start")
         Timber.i(prettyJson.encodeToString(response))
 
-        delay(2000)
+        delay(4000)
 
         // Set Shutter
         Timber.i("Attempting to Set Shutter Off")
         response = wifi.get(GOPRO_BASE_URL + "gopro/camera/shutter/stop")
         Timber.i(prettyJson.encodeToString(response))
+
+        delay(4000)
 
         // Set Resolution
         Timber.i("Setting Resolution to 1080")

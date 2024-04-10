@@ -41,7 +41,7 @@ class Tutorial2SendBleCommands(number: Int, name: String, prerequisites: List<Pr
 
     private fun checkStatus(data: UByteArray) =
         if (data[2].toUInt() == 0U) Timber.i("Command sent successfully")
-        else Timber.i("Command Failed")
+        else Timber.e("Command Failed")
 
     @OptIn(ExperimentalUnsignedTypes::class)
     @RequiresPermission(allOf = ["android.permission.BLUETOOTH_SCAN", "android.permission.BLUETOOTH_CONNECT"])
@@ -67,6 +67,8 @@ class Tutorial2SendBleCommands(number: Int, name: String, prerequisites: List<Pr
         ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, setShutterOffCmd)
         // Wait to receive the notification response, then check its status
         checkStatus(receivedData.receive())
+
+        delay(3000)
 
         // Load Preset Group
         Timber.i("Loading Video Preset Group")
