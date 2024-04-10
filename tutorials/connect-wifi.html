@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2024-04-10T12:25:44-07:00">
+  <meta property="article:published_time" content="2024-04-10T12:33:07-07:00">
 
 
 
@@ -438,7 +438,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 6: Connect WiFi">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to use the Open GoPro Interface to connect the GoPro to a Wifinetwork either in Access Point (AP) mode or Station (STA) Mode.">
-    <meta itemprop="datePublished" content="2024-04-10T12:25:44-07:00">
+    <meta itemprop="datePublished" content="2024-04-10T12:33:07-07:00">
     
 
     <div class="page__inner-wrap">
@@ -533,7 +533,7 @@ are present and configured correctly.</p>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="9960a534-f98a-4f93-843e-c1b04b67cfeb">
+    <ul class="tab tab-linked" data-tab="34d982d3-77dd-452b-9817-48655501a374">
         
             <li class="active">
                 <a href="">python </a>
@@ -544,7 +544,7 @@ are present and configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="9960a534-f98a-4f93-843e-c1b04b67cfeb">
+        <ul class="tab-content" id="34d982d3-77dd-452b-9817-48655501a374">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 6
@@ -688,7 +688,7 @@ WiFi Access Point service.</p>
 <p>Let’s send the read request to get the SSID and decode it into a string.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="3e06d731-7510-4223-90ba-11806550bde1">
+    <ul class="tab tab-linked" data-tab="3f962009-d501-44a1-8217-c235392ae56f">
         
             <li class="active">
                 <a href="">python </a>
@@ -699,7 +699,7 @@ WiFi Access Point service.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="3e06d731-7510-4223-90ba-11806550bde1">
+        <ul class="tab-content" id="3f962009-d501-44a1-8217-c235392ae56f">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssid_uuid</span> <span class="o">=</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">WIFI_AP_SSID_UUID</span>
@@ -747,7 +747,7 @@ WiFi Access Point service.</p>
 <p>Let’s send the read request to get the password and decode it into a string.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="6ab5c53f-8236-4e85-8b15-5b14fffb37fe">
+    <ul class="tab tab-linked" data-tab="e776cf8b-03ca-42d3-8aaa-36fa22abc274">
         
             <li class="active">
                 <a href="">python </a>
@@ -758,7 +758,7 @@ WiFi Access Point service.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="6ab5c53f-8236-4e85-8b15-5b14fffb37fe">
+        <ul class="tab-content" id="e776cf8b-03ca-42d3-8aaa-36fa22abc274">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">password_uuid</span> <span class="o">=</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">WIFI_AP_PASSWORD_UUID</span>
@@ -829,7 +829,7 @@ Password is z3y-DCX-Phj
 <p>Let’s write the bytes to the “Command Request UUID” to enable the WiFi AP!</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="c29f90ca-127f-4ff2-9520-1404d38921c8">
+    <ul class="tab tab-linked" data-tab="33ac4c7b-1ca2-4e5b-bfca-158da53bb353">
         
             <li class="active">
                 <a href="">python </a>
@@ -840,7 +840,7 @@ Password is z3y-DCX-Phj
             </li>
         
         </ul>
-        <ul class="tab-content" id="c29f90ca-127f-4ff2-9520-1404d38921c8">
+        <ul class="tab-content" id="33ac4c7b-1ca2-4e5b-bfca-158da53bb353">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
@@ -873,7 +873,7 @@ Command Response characteristic since we enabled it’s notifications in
 be seen in the demo log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="65f9b4a9-fc60-4746-9dcd-341805166122">
+    <ul class="tab tab-linked" data-tab="bfe90625-4e8d-4283-9fcc-13556926603f">
         
             <li class="active">
                 <a href="">python </a>
@@ -884,7 +884,7 @@ be seen in the demo log:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="65f9b4a9-fc60-4746-9dcd-341805166122">
+        <ul class="tab-content" id="bfe90625-4e8d-4283-9fcc-13556926603f">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Enabling the WiFi AP
@@ -915,7 +915,7 @@ Command sent successfully
 <h2 id="establish-connection-to-wifi-ap">Establish Connection to WiFi AP</h2>
 
 <div>
-    <ul class="tab tab-linked" data-tab="9b5348c8-9c1a-4ef2-9054-0ceb32a8aa15">
+    <ul class="tab tab-linked" data-tab="b2fd80f5-3580-441e-9bd9-06293dba75fd">
         
             <li class="active">
                 <a href="">python </a>
@@ -926,7 +926,7 @@ Command sent successfully
             </li>
         
         </ul>
-        <ul class="tab-content" id="9b5348c8-9c1a-4ef2-9054-0ceb32a8aa15">
+        <ul class="tab-content" id="b2fd80f5-3580-441e-9bd9-06293dba75fd">
         
             <li class="active tab-content-container">
 <p>If you have been following through the <code class="language-plaintext highlighter-rouge">ble_enable_wifi.py</code> script, you will notice that it ends here such that
@@ -960,10 +960,10 @@ connected.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_5aca7eda-0bb5-400a-9bc3-0a8742b65441" class="quiz">
+<div id="quiz_9a7ec4a8-124a-48c3-ac2d-c588d5fbe691" class="quiz">
     <div>
-        <div id="question_5aca7eda-0bb5-400a-9bc3-0a8742b65441" class="quiz__question">How is the WiFi password response received?</div>
-        <div id="answers_5aca7eda-0bb5-400a-9bc3-0a8742b65441">
+        <div id="question_9a7ec4a8-124a-48c3-ac2d-c588d5fbe691" class="quiz__question">How is the WiFi password response received?</div>
+        <div id="answers_9a7ec4a8-124a-48c3-ac2d-c588d5fbe691">
         
             <input type="radio" name="question" value="A"><label>A: As a read response from the WiFi AP Password characteristic</label>
             <br>
@@ -976,10 +976,10 @@ connected.</p>
         
         </div>
     </div>
-    <button onclick="showResults('5aca7eda-0bb5-400a-9bc3-0a8742b65441', 'A')">Submit Answer</button>
-    <div id="results_5aca7eda-0bb5-400a-9bc3-0a8742b65441" style="display: none">
-        <span id="correct_5aca7eda-0bb5-400a-9bc3-0a8742b65441" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_5aca7eda-0bb5-400a-9bc3-0a8742b65441" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('9a7ec4a8-124a-48c3-ac2d-c588d5fbe691', 'A')">Submit Answer</button>
+    <div id="results_9a7ec4a8-124a-48c3-ac2d-c588d5fbe691" style="display: none">
+        <span id="correct_9a7ec4a8-124a-48c3-ac2d-c588d5fbe691" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_9a7ec4a8-124a-48c3-ac2d-c588d5fbe691" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         This (and WiFi AP SSID) is an exception to the rule. Usually responses
     are received as notifications to a response characteristic. However, in this case, it is
     received as a direct read response (since we are reading from the characteristic and not
@@ -987,10 +987,10 @@ connected.</p>
     </div>
 </div>
 
-<div id="quiz_76926292-6a93-44ba-9fa3-00b866d6ba7e" class="quiz">
+<div id="quiz_7f00a4da-e16b-4a29-9207-86218f4b8f07" class="quiz">
     <div>
-        <div id="question_76926292-6a93-44ba-9fa3-00b866d6ba7e" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
-        <div id="answers_76926292-6a93-44ba-9fa3-00b866d6ba7e">
+        <div id="question_7f00a4da-e16b-4a29-9207-86218f4b8f07" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
+        <div id="answers_7f00a4da-e16b-4a29-9207-86218f4b8f07">
         
             <input type="radio" name="question" value="A"><label>A: It only needs to be enabled once and it will then always remain on</label>
             <br>
@@ -1006,10 +1006,10 @@ connected.</p>
         
         </div>
     </div>
-    <button onclick="showResults('76926292-6a93-44ba-9fa3-00b866d6ba7e', 'D')">Submit Answer</button>
-    <div id="results_76926292-6a93-44ba-9fa3-00b866d6ba7e" style="display: none">
-        <span id="correct_76926292-6a93-44ba-9fa3-00b866d6ba7e" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_76926292-6a93-44ba-9fa3-00b866d6ba7e" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('7f00a4da-e16b-4a29-9207-86218f4b8f07', 'D')">Submit Answer</button>
+    <div id="results_7f00a4da-e16b-4a29-9207-86218f4b8f07" style="display: none">
+        <span id="correct_7f00a4da-e16b-4a29-9207-86218f4b8f07" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_7f00a4da-e16b-4a29-9207-86218f4b8f07" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         While the WiFi AP will remain on for some time, it can and will eventually turn off so
     it is always recommended to first connect via BLE and ensure that it is enabled. The password
     and SSID will almost never change. However, they will change if the connections are reset via
@@ -1072,7 +1072,7 @@ is available. Failure to do so follows an untested and unsupported path in the G
 <a href="/OpenGoPro/ble/features/access_points.html#scan-for-access-points">Scan For Access Points</a>:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="ad714660-175b-4bf4-a63e-accae38ad33a">
+    <ul class="tab tab-linked" data-tab="53ade556-a222-4890-ba3a-962df7a40a9b">
         
             <li class="active">
                 <a href="">python </a>
@@ -1083,7 +1083,7 @@ is available. Failure to do so follows an untested and unsupported path in the G
             </li>
         
         </ul>
-        <ul class="tab-content" id="ad714660-175b-4bf4-a63e-accae38ad33a">
+        <ul class="tab-content" id="53ade556-a222-4890-ba3a-962df7a40a9b">
         
             <li class="active tab-content-container">
 <div class="callout note">
@@ -1141,7 +1141,7 @@ Using the <code class="language-plaintext highlighter-rouge">scan_id</code> from
 retrieve and parse the response:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="bf8ea47d-d2e8-4065-ad35-78540aecad56">
+    <ul class="tab tab-linked" data-tab="534f281a-8dc5-4223-8d9c-7c4ae1a5139d">
         
             <li class="active">
                 <a href="">python </a>
@@ -1152,7 +1152,7 @@ retrieve and parse the response:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="bf8ea47d-d2e8-4065-ad35-78540aecad56">
+        <ul class="tab-content" id="534f281a-8dc5-4223-8d9c-7c4ae1a5139d">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">results_request</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span>
@@ -1234,7 +1234,7 @@ is essentially the inverse of the
 We accomplish this as follows:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="cadb5de4-285f-450d-b8e9-5c5bc7adddec">
+    <ul class="tab tab-linked" data-tab="51fabf8e-5894-4db8-b189-271bf11037bb">
         
             <li class="active">
                 <a href="">python </a>
@@ -1245,7 +1245,7 @@ We accomplish this as follows:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="cadb5de4-285f-450d-b8e9-5c5bc7adddec">
+        <ul class="tab-content" id="51fabf8e-5894-4db8-b189-271bf11037bb">
         
             <li class="active tab-content-container">
 <p>Let’s create a generator to yield fragmented packets (<code class="language-plaintext highlighter-rouge">yield_fragmented_packets</code>) from a monolithic payload. First,
@@ -1313,7 +1313,7 @@ bit is set (and thus we have already provisioned this network) then we must use
 <a href="/OpenGoPro/ble/features/access_points.html#connect-to-a-new-access-point">Connect New</a>:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="b085685a-f0b8-4ccc-92d1-2e69e2853c59">
+    <ul class="tab tab-linked" data-tab="864f66c1-21e4-4454-a3aa-4aae33b154f1">
         
             <li class="active">
                 <a href="">python </a>
@@ -1324,7 +1324,7 @@ bit is set (and thus we have already provisioned this network) then we must use
             </li>
         
         </ul>
-        <ul class="tab-content" id="b085685a-f0b8-4ccc-92d1-2e69e2853c59">
+        <ul class="tab-content" id="864f66c1-21e4-4454-a3aa-4aae33b154f1">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">entry</span><span class="p">.</span><span class="n">scan_entry_flags</span> <span class="o">&amp;</span> <span class="n">proto</span><span class="p">.</span><span class="n">EnumScanEntryFlags</span><span class="p">.</span><span class="n">SCAN_FLAG_CONFIGURED</span><span class="p">:</span>
@@ -1383,7 +1383,7 @@ Connect New use cases.</span>
         </figcaption></figure>
 
 <div>
-    <ul class="tab tab-linked" data-tab="a7bb9352-a9b3-4b68-add9-a92b2e2c3499">
+    <ul class="tab tab-linked" data-tab="5979ade7-13cc-40c5-9e90-e1c39e5ae512">
         
             <li class="active">
                 <a href="">python </a>
@@ -1394,7 +1394,7 @@ Connect New use cases.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="a7bb9352-a9b3-4b68-add9-a92b2e2c3499">
+        <ul class="tab-content" id="5979ade7-13cc-40c5-9e90-e1c39e5ae512">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">await</span> <span class="nf">fragment_and_write_gatt_char</span><span class="p">(</span><span class="n">manager</span><span class="p">.</span><span class="n">client</span><span class="p">,</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">NETWORK_MANAGEMENT_REQ_UUID</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">connect_request</span><span class="p">)</span>
@@ -1419,10 +1419,10 @@ Connect New use cases.</span>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_b869e590-bcac-4aa0-b6d9-ef807966a6ee" class="quiz">
+<div id="quiz_1e190a63-780b-4790-a237-f991545ef5e7" class="quiz">
     <div>
-        <div id="question_b869e590-bcac-4aa0-b6d9-ef807966a6ee" class="quiz__question">True or False: When the GoPro is in Station Mode, it can be communicated with via both BLE and HTTP.</div>
-        <div id="answers_b869e590-bcac-4aa0-b6d9-ef807966a6ee">
+        <div id="question_1e190a63-780b-4790-a237-f991545ef5e7" class="quiz__question">True or False: When the GoPro is in Station Mode, it can be communicated with via both BLE and HTTP.</div>
+        <div id="answers_1e190a63-780b-4790-a237-f991545ef5e7">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1432,10 +1432,10 @@ Connect New use cases.</span>
         
         </div>
     </div>
-    <button onclick="showResults('b869e590-bcac-4aa0-b6d9-ef807966a6ee', 'B')">Submit Answer</button>
-    <div id="results_b869e590-bcac-4aa0-b6d9-ef807966a6ee" style="display: none">
-        <span id="correct_b869e590-bcac-4aa0-b6d9-ef807966a6ee" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_b869e590-bcac-4aa0-b6d9-ef807966a6ee" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('1e190a63-780b-4790-a237-f991545ef5e7', 'B')">Submit Answer</button>
+    <div id="results_1e190a63-780b-4790-a237-f991545ef5e7" style="display: none">
+        <span id="correct_1e190a63-780b-4790-a237-f991545ef5e7" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_1e190a63-780b-4790-a237-f991545ef5e7" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         When the GoPro is in station mode, it is connected via WiFi to another Access Point; not connected via Wifi
     to you (the client). However, it is possible to maintain the BLE connection in STA mode so that you can still control
     the GoPro.
@@ -1471,7 +1471,7 @@ BLE problems.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-10T12:25:44-07:00">April 10, 2024</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-10T12:33:07-07:00">April 10, 2024</time></p>
 
 
       </footer>
