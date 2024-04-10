@@ -9,6 +9,13 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
+0.16.0 (April-9-2024)
+---------------------
+* Refactor all network operations to operate on common Message class
+* Add PUT Operation support
+* Add Custom Preset Update
+* Update Bleak to 0.21.1
+
 0.15.1 (December-6-2023)
 ------------------------
 * Fix livestream demo.

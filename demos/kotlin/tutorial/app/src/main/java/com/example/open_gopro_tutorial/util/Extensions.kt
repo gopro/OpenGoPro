@@ -15,6 +15,24 @@ import java.util.*
  * Most of these are taken from https://punchthrough.com/android-ble-guide/
  */
 
+@OptIn(ExperimentalUnsignedTypes::class)
+fun Int.toUByteArrayBigEndian(size: Int): UByteArray {
+    var bytes = byteArrayOf()
+    for (i in 1..size) {
+        bytes += (this and (0xFF shl (i * 8))).toByte()
+    }
+    return bytes.toUByteArray()
+}
+
+fun List<UByte>.toInt(): Int {
+    var value = 0
+    this.forEachIndexed { index, byte ->
+        value += (byte.toInt() shl (index * 8))
+    }
+    return value
+}
+
+
 fun ByteArray.toHexString(): String = joinToString(separator = ":") { String.format("%02X", it) }
 
 @OptIn(ExperimentalUnsignedTypes::class)
@@ -22,6 +40,9 @@ fun UByteArray.toHexString(): String = this.toByteArray().toHexString()
 
 @OptIn(ExperimentalUnsignedTypes::class)
 fun UByteArray.decodeToString(): String = this.toByteArray().decodeToString()
+
+@OptIn(ExperimentalUnsignedTypes::class)
+fun List<UByte>.decodeToString() = this.toUByteArray().decodeToString()
 
 fun BluetoothGatt.findCharacteristic(uuid: UUID): BluetoothGattCharacteristic? {
     services?.forEach { service ->

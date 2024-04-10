@@ -4,6 +4,7 @@ isort:skip_file
 *
 Defines the structure of protobuf messages for obtaining preset status
 """
+
 import builtins
 import collections.abc
 import google.protobuf.descriptor
@@ -24,7 +25,8 @@ class _EnumRegisterPresetStatus:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumRegisterPresetStatusEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumRegisterPresetStatus.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumRegisterPresetStatus.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     REGISTER_PRESET_STATUS_PRESET: _EnumRegisterPresetStatus.ValueType
@@ -40,13 +42,20 @@ REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY: EnumRegisterPresetStatus.ValueType
 "Send notification when properties of a preset group change"
 global___EnumRegisterPresetStatus = EnumRegisterPresetStatus
 
+@typing_extensions.final
 class RequestGetPresetStatus(google.protobuf.message.Message):
     """*
-    Get preset status (and optionally register to be notified when it changes)
+    Get the set of currently available presets and optionally register to be notified when it changes.
 
     Response: @ref NotifyPresetStatus sent immediately
 
     Notification: @ref NotifyPresetStatus sent periodically as preset status changes, if registered.
+
+    The preset status changes when:
+
+    - A client changes one of a preset's captioned settings via the API
+    - The user exits from a preset's settings UI on the camera (e.g. long-press the preset pill and then press the back arrow)
+    - The user creates/deletes/reorders a preset within a group
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -66,13 +75,16 @@ class RequestGetPresetStatus(google.protobuf.message.Message):
     def __init__(
         self,
         *,
-        register_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...,
-        unregister_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...
+        register_preset_status: (collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None) = ...,
+        unregister_preset_status: (collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None) = ...
     ) -> None: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
-            "register_preset_status", b"register_preset_status", "unregister_preset_status", b"unregister_preset_status"
+            "register_preset_status",
+            b"register_preset_status",
+            "unregister_preset_status",
+            b"unregister_preset_status",
         ],
     ) -> None: ...
 

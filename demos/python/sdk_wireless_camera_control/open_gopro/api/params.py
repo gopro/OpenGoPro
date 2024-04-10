@@ -20,9 +20,9 @@ class Resolution(GoProIntEnum):
     RES_4K_4_3 = 18
     RES_5K = 24
     RES_5K_4_3 = 25
-    RES_5_3K_8_7 = 26
+    RES_5_3K_8_7_LEGACY = 26
     RES_5_3K_4_3 = 27
-    RES_4K_8_7 = 28
+    RES_4K_8_7_LEGACY = 28
     RES_4K_9_16 = 29
     RES_1080_9_16 = 30
     RES_5_3K = 100
@@ -32,6 +32,11 @@ class Resolution(GoProIntEnum):
     RES_2_7K_16_9 = 104
     RES_2_7K_4_3_TODO = 105
     RES_1080_16_9 = 106
+    RES_5_3K_8_7 = 107
+    RES_4K_8_7 = 108
+    RES_4K_8_7_ = 109
+    RES_1080_8_7 = 110
+    RES_2_7_K_8_7 = 11
 
 
 class WebcamResolution(GoProIntEnum):
@@ -302,58 +307,6 @@ class HorizonLeveling(GoProIntEnum):
     LOCKED = 2
 
 
-class Speed(GoProIntEnum):
-    ULTRA_SLO_MO_8X = 0
-    SUPER_SLO_MO_4X = 1
-    SLO_MO_2X = 2
-    LOW_LIGHT_1X = 3
-    SUPER_SLO_MO_4X_EXT_BATT = 4
-    SLO_MO_2X_EXT_BATT = 5
-    LOW_LIGHT_1X_EXT_BATT = 6
-    ULTRA_SLO_MO_8X_50_HZ = 7
-    SUPER_SLO_MO_4X_50_HZ = 8
-    SLO_MO_2X_50_HZ = 9
-    LOW_LIGHT_1X_50_HZ = 10
-    SUPER_SLO_MO_4X_EXT_BATT_50_HZ = 11
-    SLO_MO_2X_EXT_BATT_50_HZ = 12
-    LOW_LIGHT_1X_EXT_BATT_50_HZ = 13
-    ULTRA_SLO_MO_8X_EXT_BATT = 14
-    ULTRA_SLO_MO_8X_EXT_BATT_50_HZ = 15
-    ULTRA_SLO_MO_8X_LONG_BATT = 16
-    SUPER_SLO_MO_4X_LONG_BATT = 17
-    SLO_MO_2X_LONG_BATT = 18
-    LOW_LIGHT_1X_LONG_BATT = 19
-    ULTRA_SLO_MO_8X_LONG_BATT_50_HZ = 20
-    SUPER_SLO_MO_4X_LONG_BATT_50_HZ = 21
-    SLO_MO_2X_LONG_BATT_50_HZ = 22
-    LOW_LIGHT_1X_LONG_BATT_50_HZ = 23
-    SLO_MO_2X_4K = 24
-    SUPER_SLO_MO_4X_2_7_K = 25
-    SLO_MO_2X_4K_50_HZ = 26
-    SUPER_SLO_MO_4X_2_7_K_50_HZ = 27
-    SUPER_SLO_MO_4X_2_7K_50HZ = 27
-    SPEED_1X_LOW_LIGHT = 28
-    SPEED_1X_LOW_LIGHT_2 = 29
-    SLO_MO_2X_2 = 30
-    SLO_MO_2X_3 = 31
-    SPEED_1X_LOW_LIGHT_3 = 32
-    SPEED_1X_LOW_LIGHT_4 = 33
-    SLO_MO_2X_4 = 34
-    SLO_MO_2X_5 = 35
-    SPEED_1X_LOW_LIGHT_5 = 36
-    SPEED_1X_LOW_LIGHT_6 = 37
-    SPEED_1X_LOW_LIGHT_7 = 38
-    SPEED_1X_LOW_LIGHT_8 = 39
-    SLO_MO_2X_6 = 40
-    SLO_MO_2X_7 = 41
-    SLO_MO_2X_8 = 42
-    SLO_MO_2X_9 = 43
-    SPEED_1X_LOW_LIGHT_9 = 44
-    SPEED_1X_LOW_LIGHT_10 = 45
-    SPEED_1X_LOW_LIGHT_11 = 46
-    SPEED_1X_LOW_LIGHT_12 = 47
-
-
 class PhotoEasyMode(GoProIntEnum):
     OFF = 0
     ON = 1
@@ -468,3 +421,9 @@ class PhotoDuration(GoProIntEnum):
     HOUR_1 = 7
     HOUR_2 = 8
     HOUR_3 = 9
+
+
+class PresetGroup(GoProIntEnum):
+    VIDEO = 1000
+    PHOTO = 1001
+    TIMELAPSE = 1002

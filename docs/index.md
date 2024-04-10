@@ -30,11 +30,11 @@ Open GoPro API is supported on all camera models since Hero 9 with the following
 
 | Camera             | Minimum FW Version |
 | ------------------ | :----------------: |
-| Hero 9 Black       |     v01.70.00      |
-| Hero 10 Black      |     v01.10.00      |
-| Hero 11 Black      |     v01.10.00      |
-| Hero 11 Black Mini |     v01.10.00      |
 | Hero 12 Black      |     v01.10.00      |
+| Hero 11 Black Mini |     v01.10.00      |
+| Hero 11 Black      |     v01.10.00      |
+| Hero 10 Black      |     v01.10.00      |
+| Hero 9 Black       |     v01.70.00      |
 
 While we strive to provide the same API functionality and logic for all newly launched cameras, minor changes
 are sometimes necessary. These are typically a consequence of HW component upgrades or improving or optimizing
@@ -55,10 +55,9 @@ enabled upon each connection via BLE.
 
 ## WiFi
 
-WiFi needs to be switched on by a BLE command. Besides command & control, Wi-Fi also allows for video streaming
-and media manipulation. With the exception of live-streaming, the camera always acts as an Wi-Fi access point
-that other devices need to connect to. For more information, see the
-[Wifi Specification](/http)
+WiFi needs to be switched on by a BLE command. Besides command & control, Wi-Fi also allows for video streaming and media
+manipulation. With the exception of live-streaming, the camera always acts as an Wi-Fi access point that other devices
+need to connect to. For more information, see the [HTTP Specification]({{site.baseurl}}/http).
 
 ## USB
 
@@ -99,7 +98,7 @@ directly from the cameras, either via USB or wireless connection.
 
 | Stream Type | Description                                   | WiFi | USB | Record while Streaming |
 | ----------- | --------------------------------------------- | :--: | :-: | :--------------------: |
-| : Preview : | Moderate video quality, primarily for framing |      |     |    \`>=\` Hero 12 \      |
+| : Preview : | Moderate video quality, primarily for framing |      |     |   \`>=\` Hero 12 \     |
 | Stream      | Low latency stabilization                     |  ✔️  | ✔️  |           \            |
 |             | Low power consumption                         |      |     |                        |
 | : Webcam :  | Cinematic video quality                       |      |     |           \            |
@@ -139,11 +138,12 @@ has been written either entirely or selectively for a specific metric such as GP
 Controlling multiple cameras from one client is supported via BLE, Wifi, and USB with varying functionality
 depending on the protocol used. Refer to the table below.
 
-| Protocol | Available Functionality                           | Notes                                                            |
-| -------- | ------------------------------------------------- | ---------------------------------------------------------------- |
-| BLE      | Command and control of several cameras            | Each camera can connect only to one BLE-enabled device at a time |
-| WiFI     | Command and control and live-streaming (RTMP)     | RTMP stream must be initiated via BLE                            |
-| USB      | Command and control and streaming via Webcam mode | Available only from HERO11 onward                                |
+| Protocol | Available Functionality                                                      | Notes                                                            |
+| -------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| BLE      | Command and control of several cameras                                       | Each camera can connect only to one BLE-enabled device at a time |
+| WiFi     | Command and control in Wi-fi station mode (COHN)                             | COHN is available only from HERO12 onwards \                     |
+|          | Webcam and Preview Stream in Wi-fi station mode (COHN) Live-streaming (RTMP) | RTMP stream must be initiated via BLE                            |
+| USB      | Command and control and streaming via Webcam mode                            | Available only from HERO11 onward                                |
 
 # Use GoPro Cloud and Editing Engine
 

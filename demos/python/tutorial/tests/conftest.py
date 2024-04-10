@@ -7,6 +7,12 @@ from pathlib import Path
 
 import pytest
 
+
+def pytest_addoption(parser):
+    parser.addoption("--ssid", action="store", required=True)
+    parser.addoption("--password", action="store", required=True)
+
+
 ##############################################################################################################
 #                                             Log Management
 ##############################################################################################################
@@ -15,7 +21,7 @@ import pytest
 @pytest.fixture(scope="class", autouse=True)
 def manage_logs(request):
     log_file = Path(request.node.name + ".log")
-    request.config.pluginmanager.get_plugin("logging-plugin").set_log_path(Path("reports") / "logs" / log_file)
+    request.config.pluginmanager.get_plugin("logging-plugin").set_log_path(Path(".reports") / "logs" / log_file)
 
 
 @pytest.fixture(scope="function", autouse=True)

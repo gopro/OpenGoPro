@@ -4,47 +4,46 @@
 import sys
 import asyncio
 import argparse
-from typing import Dict, Optional
 
 from bleak import BleakClient
 from bleak.backends.characteristic import BleakGATTCharacteristic
 
-from tutorial_modules import GOPRO_BASE_UUID, connect_ble, logger
+from tutorial_modules import GoProUuid, connect_ble, logger
 
 
-async def main(identifier: Optional[str]) -> None:
+async def main(identifier: str | None) -> None:
     # Synchronization event to wait until notification response is received
     event = asyncio.Event()
 
-    # UUIDs to write to and receive responses from
-    COMMAND_REQ_UUID = GOPRO_BASE_UUID.format("0072")
-    COMMAND_RSP_UUID = GOPRO_BASE_UUID.format("0073")
-    response_uuid = COMMAND_RSP_UUID
-
     client: BleakClient
 
-    def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
-        logger.info(f'Received response at handle {characteristic.handle}: {data.hex(":")}')
+    request_uuid = GoProUuid.COMMAND_REQ_UUID
+    response_uuid = GoProUuid.COMMAND_RSP_UUID
+
+    async def notification_handler(characteristic: BleakGATTCharacteristic, data: bytearray) -> None:
+        uuid = GoProUuid(client.services.characteristics[characteristic.handle].uuid)
+        logger.info(f'Received response {uuid}: {data.hex(":")}')
 
         # If this is the correct handle and the status is success, the command was a success
-        if client.services.characteristics[characteristic.handle].uuid == response_uuid:
-            # First byte is the length for this command.
+        if uuid is response_uuid:
+            # First byte is the length of this response.
             length = data[0]
             # Second byte is the ID
             command_id = data[1]
             # Third byte is the status
             status = data[2]
-            index = 3
-            params = []
-            # Remaining bytes are individual values of (length...length bytes)
-            while index <= length:
-                param_len = data[index]
-                index += 1
-                params.append(data[index : index + param_len])
-                index += param_len
-            major, minor = params
+            # The remainder is the payload
+            payload = data[3 : length + 1]
+            logger.info(f"Received a response to {command_id=} with {status=}, payload={payload.hex(':')}")
 
-            logger.info(f"Received a response to {command_id=} with {status=}")
+            # Now parse the payload from the response documentation
+            major_length = payload[0]
+            payload.pop(0)
+            major = payload[:major_length]
+            payload.pop(major_length)
+            minor_length = payload[0]
+            payload.pop(0)
+            minor = payload[:minor_length]
             logger.info(f"The version is Open GoPro {major[0]}.{minor[0]}")
 
         # Anything else is unexpected. This shouldn't happen
@@ -59,16 +58,15 @@ async def main(identifier: Optional[str]) -> None:
     # Write to command request BleUUID to get the Open GoPro Version
     logger.info("Getting the Open GoPro version...")
     event.clear()
-    await client.write_gatt_char(COMMAND_REQ_UUID, bytearray([0x01, 0x51]), response=True)
+    request = bytes([0x01, 0x51])
+    logger.debug(f"Writing to {request_uuid}: {request.hex(':')}")
+    await client.write_gatt_char(request_uuid.value, request, response=True)
     await event.wait()  # Wait to receive the notification response
-
     await client.disconnect()
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Connect to a GoPro camera via BLE, then get the Open GoPro version."
-    )
+    parser = argparse.ArgumentParser(description="Connect to a GoPro camera via BLE, then get the Open GoPro version.")
     parser.add_argument(
         "-i",
         "--identifier",
@@ -80,7 +78,7 @@ if __name__ == "__main__":
 
     try:
         asyncio.run(main(args.identifier))
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         logger.error(e)
         sys.exit(-1)
     else:

@@ -12,12 +12,17 @@ to implement basic functionality to interact with a GoPro device using the follo
 - More to come!
 
 The tutorials only support Open GoPro Version 2.0 and must be run on a
-[supported camera]({% link specs/ble_versions/ble_2_0.md %}#supported-cameras).
+[supported camera](/ble/index.html#supported-cameras).
 They will provide walk-throughs and sample code to use the relevant language / framework to exercise the
 Open GoPro Interface using Bluetooth Low Energy (BLE) and HTTP over WiFi.
 
+{% warning %}
+The tutorials are only tested on the latest camera / firmware combination. This is only an issue in cases where
+capabilities change between cameras such as setting options.
+{% endwarning %}
+
 The tutorials are meant as an introduction to the Open GoPro specification. They are not a substitute
-for the complete [BLE]({% link specs/ble_versions/ble_2_0.md %}) and [HTTP](/http)
+for the complete [BLE](/ble/index.html) and [HTTP](/http)
 specifications which will be your main source of reference after completing the tutorials.
 
 {% for tutorial in site.tutorials %}

@@ -17,7 +17,7 @@ simultaneously from the same PC.
 ## Assumptions
 
 It is assumed that the GoPro's are using firmware versions that support the port parameter to the Start Webcam
-endpoint. See the Open GoPro Commands [Quick Reference](https://gopro.github.io/OpenGoPro/http_2_0#command)
+endpoint. See the Open GoPro Command [Quick Reference](https://gopro.github.io/OpenGoPro/http#tag/Webcam/operation/OGP_WEBCAM_START)
 for more information.
 
 ## Installation

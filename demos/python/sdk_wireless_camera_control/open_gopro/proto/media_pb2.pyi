@@ -4,6 +4,7 @@ isort:skip_file
 *
 Commands to query and manipulate media files
 """
+
 import builtins
 import google.protobuf.descriptor
 import google.protobuf.message
@@ -16,6 +17,7 @@ else:
     import typing_extensions
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
+@typing_extensions.final
 class RequestGetLastCapturedMedia(google.protobuf.message.Message):
     """*
     Get the last captured media filename
@@ -29,14 +31,18 @@ class RequestGetLastCapturedMedia(google.protobuf.message.Message):
 
 global___RequestGetLastCapturedMedia = RequestGetLastCapturedMedia
 
+@typing_extensions.final
 class ResponseLastCapturedMedia(google.protobuf.message.Message):
     """*
-    Message sent in response to a @ref RequestGetLastCapturedMedia
+    The Last Captured Media
 
-    This contains the complete path of the last captured media. Depending on the type of media captured, it will return:
+    Message is sent in response to a @ref RequestGetLastCapturedMedia.
 
-    - Single photo / video: The single media path
-    - Any grouped media: The path to the first captured media in the group
+    This contains the relative path of the last captured media starting from the `DCIM` directory on the SDCard. Depending
+    on the type of media captured, it will return:
+
+    - The single media path for single photo/video media
+    - The path to the first captured media in the group for grouped media
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -57,8 +63,12 @@ class ResponseLastCapturedMedia(google.protobuf.message.Message):
         media: response_generic_pb2.Media | None = ...
     ) -> None: ...
     def HasField(
-        self, field_name: typing_extensions.Literal["media", b"media", "result", b"result"]
+        self,
+        field_name: typing_extensions.Literal["media", b"media", "result", b"result"],
     ) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["media", b"media", "result", b"result"]) -> None: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal["media", b"media", "result", b"result"],
+    ) -> None: ...
 
 global___ResponseLastCapturedMedia = ResponseLastCapturedMedia

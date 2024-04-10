@@ -28,10 +28,10 @@ from construct import (
 )
 
 from open_gopro import proto, types
+from open_gopro.api.builders import BleAsyncResponse
+from open_gopro.api.builders import BleSettingFacade as BleSetting
+from open_gopro.api.builders import BleStatusFacade as BleStatus
 from open_gopro.api.builders import (
-    BleAsyncResponse,
-    BleSetting,
-    BleStatus,
     RegisterUnregisterAll,
     ble_proto_command,
     ble_read_command,
@@ -50,7 +50,6 @@ from open_gopro.constants import (
     CmdId,
     FeatureId,
     GoProUUIDs,
-    QueryCmdId,
     SettingId,
     StatusId,
 )
@@ -64,7 +63,7 @@ from . import params as Params
 logger = logging.getLogger(__name__)
 
 
-class BleCommands(BleMessages[BleMessage, CmdId]):
+class BleCommands(BleMessages[BleMessage]):
     """All of the BLE commands.
 
     To be used as a delegate for a GoProBle instance to build commands
@@ -78,10 +77,10 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         uuid=GoProUUIDs.CQ_COMMAND,
         cmd=CmdId.SET_SHUTTER,
         param_builder=Int8ub,
-        rules={
-            MessageRules.FASTPASS: lambda **kwargs: kwargs["shutter"] == Params.Toggle.DISABLE,
-            MessageRules.WAIT_FOR_ENCODING_START: lambda **kwargs: kwargs["shutter"] == Params.Toggle.ENABLE,
-        },
+        rules=MessageRules(
+            fastpass_analyzer=lambda **kwargs: kwargs["shutter"] == Params.Toggle.DISABLE,
+            wait_for_encoding_analyzer=lambda **kwargs: kwargs["shutter"] == Params.Toggle.ENABLE,
+        ),
     )
     async def set_shutter(self, *, shutter: Params.Toggle) -> GoProResp[None]:
         """Set the Shutter to start / stop encoding
@@ -343,7 +342,6 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         GoProUUIDs.CQ_QUERY,
         CmdId.REGISTER_ALL_STATUSES,
         update_set=StatusId,
-        responded_cmd=QueryCmdId.STATUS_VAL_PUSH,  # TODO probably remove this
         action=RegisterUnregisterAll.Action.REGISTER,
     )
     async def register_for_all_statuses(self, callback: types.UpdateCb) -> GoProResp[None]:
@@ -360,7 +358,6 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         GoProUUIDs.CQ_QUERY,
         CmdId.UNREGISTER_ALL_STATUSES,
         update_set=StatusId,
-        responded_cmd=QueryCmdId.STATUS_VAL_PUSH,
         action=RegisterUnregisterAll.Action.UNREGISTER,
     )
     async def unregister_for_all_statuses(self, callback: types.UpdateCb) -> GoProResp[None]:
@@ -377,7 +374,6 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         GoProUUIDs.CQ_QUERY,
         CmdId.REGISTER_ALL_SETTINGS,
         update_set=SettingId,
-        responded_cmd=QueryCmdId.SETTING_VAL_PUSH,
         action=RegisterUnregisterAll.Action.REGISTER,
     )
     async def register_for_all_settings(self, callback: types.UpdateCb) -> GoProResp[None]:
@@ -394,7 +390,6 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         GoProUUIDs.CQ_QUERY,
         CmdId.UNREGISTER_ALL_SETTINGS,
         update_set=SettingId,
-        responded_cmd=QueryCmdId.SETTING_VAL_PUSH,
         action=RegisterUnregisterAll.Action.UNREGISTER,
     )
     async def unregister_for_all_settings(self, callback: types.UpdateCb) -> GoProResp[None]:
@@ -411,7 +406,6 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         GoProUUIDs.CQ_QUERY,
         CmdId.REGISTER_ALL_CAPABILITIES,
         update_set=SettingId,
-        responded_cmd=QueryCmdId.SETTING_CAPABILITY_PUSH,
         action=RegisterUnregisterAll.Action.REGISTER,
     )
     async def register_for_all_capabilities(self, callback: types.UpdateCb) -> GoProResp[None]:
@@ -428,7 +422,6 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         GoProUUIDs.CQ_QUERY,
         CmdId.UNREGISTER_ALL_CAPABILITIES,
         update_set=SettingId,
-        responded_cmd=QueryCmdId.SETTING_CAPABILITY_PUSH,
         action=RegisterUnregisterAll.Action.UNREGISTER,
     )
     async def unregister_for_all_capabilities(self, callback: types.UpdateCb) -> GoProResp[None]:
@@ -838,7 +831,7 @@ class BleCommands(BleMessages[BleMessage, CmdId]):
         return {"cohn_active": mode}  # type: ignore
 
 
-class BleSettings(BleMessages[BleSetting, SettingId]):
+class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
     # pylint: disable=missing-class-docstring, unused-argument
     """The collection of all BLE Settings.
 
@@ -917,12 +910,12 @@ class BleSettings(BleMessages[BleSetting, SettingId]):
         )
         """Camera controls configuration."""
 
-        self.video_easy_mode: BleSetting[Params.Speed] = BleSetting[Params.Speed](
+        self.video_easy_mode: BleSetting[int] = BleSetting[int](
             communicator,
             SettingId.VIDEO_EASY_MODE,
-            Params.Speed,
+            Int8ub,
         )
-        """Video easy mode speed."""
+        """Video easy mode speed. It is not feasible to maintain this setting without code generation so just read as int."""
 
         self.photo_easy_mode: BleSetting[Params.PhotoEasyMode] = BleSetting[Params.PhotoEasyMode](
             communicator,
@@ -1114,7 +1107,7 @@ class BleAsyncResponses:
             GlobalParsers.add_feature_action_id_mapping(response.feature_id, response.action_id)
 
 
-class BleStatuses(BleMessages[BleStatus, StatusId]):
+class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
     """All of the BLE Statuses.
 
     To be used by a GoProBle delegate to build status messages.
@@ -1131,7 +1124,6 @@ class BleStatuses(BleMessages[BleStatus, StatusId]):
         self.batt_level: BleStatus[int] = BleStatus(communicator, StatusId.BATT_LEVEL, Int8ub)
         """Rough approximation of internal battery level in bars."""
 
-        # TODO can we just not define deprecated statuses?
         self.deprecated_3: BleStatus[Any] = BleStatus(
             communicator, StatusId.DEPRECATED_3, ByteParserBuilders.DeprecatedMarker()
         )

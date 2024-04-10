@@ -90,6 +90,7 @@ nitpick_ignore_regex = [
     (r".*", r".*response.T*"),
 ]
 
+
 # This is the expected signature of the handler for this event, cf doc
 def autodoc_skip_member_handler(app, what, name, *_):
     for skip in ("internal", "deprecated"):

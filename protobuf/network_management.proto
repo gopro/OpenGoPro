@@ -1,5 +1,5 @@
 /* network_management.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Mon Jan  8 21:03:36 UTC 2024 */
+/* This copyright was auto-generated on Tue Apr  9 19:25:32 UTC 2024 */
 
 /***********************************************************************************************************************
  *
@@ -43,7 +43,7 @@ enum EnumScanning {
 /*
  * Provision state notification
  *
- * TODO refernce where this is triggered
+ * Sent during provisioning triggered via @ref RequestConnect or @ref RequestConnectNew
  */
 message NotifProvisioningState {
     required EnumProvisioning provisioning_state = 1; // Provisioning / connection state
@@ -67,6 +67,8 @@ message NotifStartScanning {
  * This is intended to be used to connect to a previously-connected Access Point
  *
  * Response: @ref ResponseConnect
+ *
+ * Notification: @ref NotifProvisioningState sent periodically as provisioning state changes
  */
 message RequestConnect {
     required string ssid = 1; // AP SSID
@@ -103,7 +105,9 @@ message RequestGetApEntries {
 }
 
 /**
- * Request to disconnect from current AP network
+ * Request to disconnect from currently-connected AP
+ *
+ * This drops the camera out of Station (STA) Mode and returns it to Access Point (AP) mode.
  *
  * Response: @ref ResponseGeneric
  */
@@ -140,7 +144,7 @@ message ResponseConnectNew {
     required EnumResultGeneric result             = 1; // Status of Connect New request
     required EnumProvisioning  provisioning_state = 2; // Current provisioning state of the network
     /**
-     * number of seconds camera will wait before declaring a network connection attempt failed.
+     * Number of seconds camera will wait before declaring a network connection attempt failed
      */
     required int32             timeout_seconds    = 3;
 }
@@ -150,7 +154,7 @@ enum EnumScanEntryFlags {
     SCAN_FLAG_AUTHENTICATED    = 0x01; // This network requires authentication
     SCAN_FLAG_CONFIGURED       = 0x02; // This network has been previously provisioned
     SCAN_FLAG_BEST_SSID        = 0x04;
-    SCAN_FLAG_ASSOCIATED       = 0x08; // camera is connected to this AP
+    SCAN_FLAG_ASSOCIATED       = 0x08; // Camera is connected to this AP
     SCAN_FLAG_UNSUPPORTED_TYPE = 0x10;
 }
 
@@ -162,7 +166,11 @@ enum EnumScanEntryFlags {
 message ResponseGetApEntries {
     required EnumResultGeneric result  = 1; // Generic pass/fail/error info
     required int32             scan_id = 2; // ID associated with this batch of results
-    // The individual Scan Entry model
+    /**
+     * An individual Scan Entry in a @ref ResponseGetApEntries response
+     *
+     * @note When `scan_entry_flags` contains `SCAN_FLAG_CONFIGURED`, it is an indication that this network has already been provisioned.
+     */
     message                    ScanEntry {
         required string ssid                 = 1; // AP SSID
         required int32  signal_strength_bars = 2; // Signal strength (3 bars: >-70 dBm; 2 bars: >-85 dBm; 1 bar: <=-85 dBm)

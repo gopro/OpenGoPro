@@ -1,13 +1,11 @@
 # test_parsers.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Mon Jul 31 17:04:06 UTC 2023
 
-from typing import cast
-
 from open_gopro.api.ble_commands import BleCommands
 from open_gopro.api.parsers import ByteParserBuilders
 from open_gopro.communicator_interface import GoProBle
 from open_gopro.constants import CmdId
-from open_gopro.models.response import GlobalParsers
+from open_gopro.models.response import BleRespBuilder, GlobalParsers
 from open_gopro.parser_interface import Parser
 from open_gopro.proto import EnumResultGeneric, ResponseGetApEntries
 

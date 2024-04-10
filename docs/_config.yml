@@ -102,12 +102,16 @@ kramdown:
     smart_quotes: lsquo,rsquo,ldquo,rdquo
     enable_coderay: false
 
-# Reading Files
 include:
     - .htaccess
     - _pages
     - .openapi.yml
     - .enums.yml
+    # Need to manually specify sphinx underscore dirs since jekyll ignores them by default
+    - _images
+    - _sources
+    - _static
+    - _sphinx_javascript_frameworks_compat.js
 exclude:
     - .vscode
     - .asset-cache
@@ -159,8 +163,6 @@ collections:
     tutorials:
         output: true
         sort_by: lesson
-    demos:
-        output: true
 
 # Defaults
 defaults:
@@ -173,31 +175,16 @@ defaults:
           toc: true
           toc_sticky: true
     - scope:
-          path: ''
-          type: demos
+          path: ble
       values:
-          layout: demo
+          layout: spec
+          canonical_url: https://gopro.github.io/OpenGoPro/ble # Minimal mistakes is overwriting this to bad value in seo.html
     - scope:
-          path: 'specs/ble_versions'
+          path: http
       values:
-          identifier: ble_spec
-          classes: spec
-          sidebar:
-              nav: 'specs'
-    - scope:
-          path: 'specs/http_versions'
-      values:
-          identifier: http_spec
-          classes: spec
-          sidebar:
-              nav: 'specs'
-    - scope:
-          path: 'protos/open_gopro'
-      values:
-          redirect_from:
-              - 'protos'
-          sidebar:
-              nav: 'specs'
+          layout: spec
+          canonical_url: https://gopro.github.io/OpenGoPro/http # Minimal mistakes is overwriting this to bad value in seo.html
+
 
 jekyll-spaceship:
     # default enabled processors
@@ -235,7 +222,7 @@ jekyll-spaceship:
         syntax:
             code: 'plantuml!'
             custom: ['@startuml', '@enduml']
-        src: http://plant_uml:8080/svg/ # TODO make this run-time configurable
+        src: http://plant-uml:8080/svg/ # TODO make this run-time configurable
     mermaid-processor:
         mode: pre-fetch # fetch image at build-time
         css:
