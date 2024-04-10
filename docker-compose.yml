@@ -27,10 +27,10 @@ services:
         networks:
             - open_gopro
         depends_on:
-            - plant_uml
+            - plant-uml
 
-    plant_uml:
-        container_name: plant_uml
+    plant-uml:
+        container_name: plant-uml
         # Note! v1.2023.7 seems to be broken
         image: plantuml/plantuml-server:jetty-v1.2023.6
         ports:
@@ -38,6 +38,16 @@ services:
             - '8081:8080'
         networks:
             - open_gopro
+
+    proto-build:
+        build:
+            context: .admin/proto_build
+        container_name: proto-build
+        profiles:
+            - ephemeral
+        volumes:
+            - ./protobuf:/proto_in
+            - ./.build/protobuf/python:/proto_python_out
 
     linkchecker:
         image: ghcr.io/gopro/opengopro/gplinkchecker:main

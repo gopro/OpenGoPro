@@ -1,7 +1,7 @@
 # usb.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Fri Nov 18 00:18:13 UTC 2022
 
-"""USB webcam demo"""
+"""USB / wireless webcam demo"""
 
 import argparse
 import asyncio

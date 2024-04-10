@@ -83,7 +83,7 @@ class Webcam:
         """Start the webcam stream
 
         Note that the FOV and Resolution param values come from the Open GoPro Spec:
-        https://gopro.github.io/OpenGoPro/http_2_0#commands-quick-reference
+        https://gopro.github.io/OpenGoPro/http#tag/settings
 
         Args:
             port (Optional[int]): Port to stream to. Defaults to None (will be auto-assigned by the camera).
@@ -246,7 +246,7 @@ class GoProWebcamPlayer:
         """Configure and start the GoPro Webcam. Then open and display the stream.
 
         Note that the FOV and Resolution param values come from the Open GoPro Spec:
-        https://gopro.github.io/OpenGoPro/http_2_0#commands-quick-reference
+        https://gopro.github.io/OpenGoPro/http#tag/settings
 
         Args:
             resolution (Optional[int]): Resolution for webcam stream. Defaults to None (will be assigned by GoPro).

@@ -13,17 +13,21 @@ This tutorial will provide a walk-through to connect to the GoPro camera via Blu
 
 ## Hardware
 
-* A GoPro camera that is [supported by Open GoPro]({% link specs/ble_versions/ble_2_0.md %}#supported-cameras)
+-   A GoPro camera that is [supported by Open GoPro]({{site.baseurl}}/ble/index.html#supported-cameras)
+
 {% linkedTabs hardware_prereqs %}
 {% tab hardware_prereqs python %}
-* One of the following systems:
 
-    - Windows 10, version 16299 (Fall Creators Update) or greater
-    - Linux distribution with [BlueZ](http://www.bluez.org/) >= 5.43
-    - OS X/macOS support via Core Bluetooth API, from at least OS X version 10.11
+-   One of the following systems:
+    -   Windows 10, version 16299 (Fall Creators Update) or greater
+    -   Linux distribution with [BlueZ](http://www.bluez.org/) >= 5.43
+    -   OS X/macOS support via Core Bluetooth API, from at least OS X version 10.11
+
 {% endtab %}
 {% tab hardware_prereqs kotlin %}
-* An Android Device supporting SDK >= 33
+
+-   An Android Device supporting SDK >= 33
+
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -31,12 +35,13 @@ This tutorial will provide a walk-through to connect to the GoPro camera via Blu
 
 {% linkedTabs software_prereqs %}
 {% tab software_prereqs python %}
--   Python >= 3.8.x must be installed. See this [Python installation guide](https://docs.python-guide.org/starting/installation/).
-{% endtab %}
-{% tab software_prereqs kotlin %}
-- [Android Studio](https://developer.android.com/studio) >= 2022.1.1 (Electric Eel)
-{% endtab %}
-{% endlinkedTabs %}
+
+-   Python >= 3.9 and < 3.12 must be installed. See this [Python installation guide](https://docs.python-guide.org/starting/installation/).
+    {% endtab %}
+    {% tab software_prereqs kotlin %}
+-   [Android Studio](https://developer.android.com/studio) >= 2022.1.1 (Electric Eel)
+    {% endtab %}
+    {% endlinkedTabs %}
 
 # Overview / Assumptions
 
@@ -47,8 +52,7 @@ This tutorial will use [bleak](https://pypi.org/project/bleak/) to control the O
 {% warning %}
 The Bleak BLE controller does not currently support autonomous pairing for the BlueZ backend. So if you are using
 BlueZ (i.e. Ubuntu, RaspberryPi, etc.), you need to first pair the camera from the command line as shown in the
-[BlueZ tutorial](https://gopro.github.io/OpenGoPro/tutorials/bash/bluez). There is work to add this feature
-and progress can be tracked on the [Github Issue](https://github.com/hbldh/bleak/pull/1100).
+[BlueZ tutorial](https://gopro.github.io/OpenGoPro/tutorials/bash/bluez).
 {% endwarning %}
 
 The bleak module is based on asyncio which means that its awaitable functions need to
@@ -93,10 +97,10 @@ do not prioritize the following:
 
 These tutorials assume familiarity and a base level of competence with:
 
--   Android Studio
--   Bluetooth Low Energy
--   JSON
--   HTTP
+-   [Android Studio](https://developer.android.com/studio)
+-   [Bluetooth Low Energy](https://www.bluetooth.com/bluetooth-resources/intro-to-bluetooth-low-energy/)
+-   [JSON](https://www.w3schools.com/js/js_json_intro.asp)
+-   [HTTP](https://www.tutorialspoint.com/http/index.htm)
 
 {% endtab %}
 {% endlinkedTabs %}
@@ -144,7 +148,7 @@ Required-by:
 {% tab setup kotlin %}
 This set of tutorials is accompanied by an Android Studio project consisting of, among other project infrastructure,
 Kotlin files separated by tutorial module.
-The project  can be found on [Github](https://github.com/gopro/OpenGoPro/tree/main/demos/kotlin/tutorial/). Once the
+The project can be found on [Github](https://github.com/gopro/OpenGoPro/tree/main/demos/kotlin/tutorial/). Once the
 Github repo has been cloned or downloaded to your local machine, open the project in Android studio.
 
 At this point you should be able to build and load the project to your Android device.
@@ -160,10 +164,10 @@ The project will not work on an emulated device since BLE can not be emulated.
 {% linkedTabs demo %}
 {% tab demo python %}
 Each of the scripts for this tutorial can be found in the Tutorial 1
-[directory](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_1_connect_ble)..
+[directory](https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_1_connect_ble).
 
 {% warning %}
-Python >= 3.8.x must be used as specified in the requirements
+Python >= 3.9 and < 3.12 must be used as specified in the requirements
 {% endwarning %}
 
 You can test connecting to your camera through BLE using the following script:
@@ -261,8 +265,9 @@ We are keeping any devices that have a device name.
 # Scan callback to also catch nonconnectable scan responses
 def _scan_callback(device: BleakDevice, _: Any) -> None:
     # Add to the dict if not unknown
-    if device.name != "Unknown" and device.name is not None:
+    if device.name and device.name != "Unknown":
         devices[device.name] = device
+
 
 # Now discover and add connectable advertisements
 for device in await BleakScanner.discover(timeout=5, detection_callback=_scan_callback):
@@ -280,11 +285,10 @@ steps accordingly.
 {% endwarning %}
 
 First, we define a regex which is either "GoPro " followed by any four alphanumeric characters if no identifier was passed,
-or "GoPro " concatenated with the identifier if it exists. In the demo `ble_connect.py`, the identifier is taken
-from the command-line arguments.
+or the identifier if it exists. In the demo `ble_connect.py`, the identifier is taken from the command-line arguments.
 
 ```python
-token = re.compile(r"GoPro [A-Z0-9]{4}" if identifier is None else f"GoPro {identifier}")
+token = re.compile(identifier or r"GoPro [A-Z0-9]{4}")
 ```
 
 Now we build a list of matched devices by checking if each device's name includes the token regex.
@@ -324,8 +328,8 @@ your camera's serial number.
 
 {% endtab %}
 {% tab scan kotlin %}
-First let's define a filter to find the GoPro. We do this by filtering on the GoPro Service UUID that is
-included in all GoPro advertisements:
+First let's define a filter that will be used to find GoPro device advertisements. We do this by filtering on the GoPro
+Service UUID that is included in all GoPro advertisements:
 
 ```kotlin
 private val scanFilters = listOf<ScanFilter>(
@@ -353,7 +357,7 @@ ble.startScan(scanFilters).onSuccess { scanResults ->
 }
 ```
 
-At this point, the GoPro's BLE address is stored (as a String) in `goproAddress`.
+At this point, the GoPro's BLE address is stored (as a string) in `goproAddress`.
 
 Here is an example log output from this process:
 
@@ -362,6 +366,7 @@ Scanning for GoPro's
 Received scan result: GoPro 0992
 Found GoPro: GoPro 0992
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -372,6 +377,7 @@ establish a BLE connection to the camera.
 
 {% linkedTabs connect %}
 {% tab connect python %}
+
 ```python
 # We're just taking the first device if there are multiple.
 device = matched_devices[0]
@@ -387,8 +393,10 @@ INFO:root:Establishing BLE connection to EF:5A:F6:13:E6:5A: GoPro 0456...
 INFO:bleak.backends.dotnet.client:Services resolved for BleakClientDotNet (EF:5A:F6:13:E6:5A)
 INFO:root:BLE Connected!
 ```
+
 {% endtab %}
 {% tab connect kotlin %}
+
 ```kotlin
 ble.connect(goproAddress)
 ```
@@ -406,6 +414,7 @@ writing to them. Therefore now that we are connected, we need to attempt to pair
 
 {% linkedTabs pair %}
 {% tab pair python %}
+
 ```python
 try:
     await client.pair()
@@ -429,6 +438,11 @@ First we discover all characteristics (this will also be needed later when enabl
 ble.discoverCharacteristics(goproAddress)
 ```
 
+{% note %}
+This API will discover the characteristics over-the-air but not return them here. They are stored to the `ble` object
+for later access via the `servicesOf` method.
+{% endnote %}
+
 Then we read the relevant characteristic to trigger pairing:
 
 ```kotlin
@@ -450,50 +464,7 @@ Characteristics:
 |--00002a00-0000-1000-8000-00805f9b34fb: READABLE
 |--00002a01-0000-1000-8000-00805f9b34fb: READABLE
 |--00002a04-0000-1000-8000-00805f9b34fb: READABLE
-Service 0000180f-0000-1000-8000-00805f9b34fb
-Characteristics:
-|--00002a19-0000-1000-8000-00805f9b34fb: READABLE, NOTIFIABLE
-|------00002902-0000-1000-8000-00805f9b34fb: EMPTY
-Service 0000180a-0000-1000-8000-00805f9b34fb
-Characteristics:
-|--00002a29-0000-1000-8000-00805f9b34fb: READABLE
-|--00002a24-0000-1000-8000-00805f9b34fb: READABLE
-|--00002a25-0000-1000-8000-00805f9b34fb: READABLE
-|--00002a27-0000-1000-8000-00805f9b34fb: READABLE
-|--00002a26-0000-1000-8000-00805f9b34fb: READABLE
-|--00002a28-0000-1000-8000-00805f9b34fb: READABLE
-|--00002a23-0000-1000-8000-00805f9b34fb: READABLE
-|--00002a50-0000-1000-8000-00805f9b34fb: READABLE
-Service b5f90001-aa8d-11e3-9046-0002a5d5c51b
-Characteristics:
-|--b5f90002-aa8d-11e3-9046-0002a5d5c51b: READABLE, WRITABLE
-|--b5f90003-aa8d-11e3-9046-0002a5d5c51b: READABLE, WRITABLE
-|--b5f90004-aa8d-11e3-9046-0002a5d5c51b: WRITABLE
-|--b5f90005-aa8d-11e3-9046-0002a5d5c51b: READABLE, INDICATABLE
-|------00002902-0000-1000-8000-00805f9b34fb: EMPTY
-|--b5f90006-aa8d-11e3-9046-0002a5d5c51b: READABLE
-Service 0000fea6-0000-1000-8000-00805f9b34fb
-Characteristics:
-|--b5f90072-aa8d-11e3-9046-0002a5d5c51b: WRITABLE
-|--b5f90073-aa8d-11e3-9046-0002a5d5c51b: NOTIFIABLE
-|------00002902-0000-1000-8000-00805f9b34fb: EMPTY
-|--b5f90074-aa8d-11e3-9046-0002a5d5c51b: WRITABLE
-|--b5f90075-aa8d-11e3-9046-0002a5d5c51b: NOTIFIABLE
-|------00002902-0000-1000-8000-00805f9b34fb: EMPTY
-|--b5f90076-aa8d-11e3-9046-0002a5d5c51b: WRITABLE
-|--b5f90077-aa8d-11e3-9046-0002a5d5c51b: NOTIFIABLE
-|------00002902-0000-1000-8000-00805f9b34fb: EMPTY
-|--b5f90078-aa8d-11e3-9046-0002a5d5c51b: WRITABLE
-|--b5f90079-aa8d-11e3-9046-0002a5d5c51b: NOTIFIABLE
-|------00002902-0000-1000-8000-00805f9b34fb: EMPTY
-Service b5f90090-aa8d-11e3-9046-0002a5d5c51b
-Characteristics:
-|--b5f90091-aa8d-11e3-9046-0002a5d5c51b: WRITABLE
-|--b5f90092-aa8d-11e3-9046-0002a5d5c51b: NOTIFIABLE
-|------00002902-0000-1000-8000-00805f9b34fb: EMPTY
-Service b5f90080-aa8d-11e3-9046-0002a5d5c51b
-Characteristics:
-|--b5f90081-aa8d-11e3-9046-0002a5d5c51b: NOTIFIABLE
+...
 |------00002902-0000-1000-8000-00805f9b34fb: EMPTY
 |--b5f90082-aa8d-11e3-9046-0002a5d5c51b: WRITABLE
 |--b5f90083-aa8d-11e3-9046-0002a5d5c51b: NOTIFIABLE
@@ -506,6 +477,7 @@ Characteristics:
 Pairing
 Read characteristic b5f90003-aa8d-11e3-9046-0002a5d5c51b : value: 66:3F:54:2D:38:35:72:2D:4E:35:63
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
@@ -518,8 +490,9 @@ re-establish encryption using stored keys. That is, they are "bonded."
 
 ## Enable Notifications
 
-As specified in the [Open GoPro Bluetooth API]({% link specs/ble_versions/ble_2_0.md %}#sending-and-receiving-messages),
-we must enable notifications for a given characteristic to receive responses from it.
+As specified in the Open GoPRo BLE Spec, we must
+[enable notifications]({{site.baseurl}}/ble/protocol/ble_setup.html#configure-gatt-characteristics) for a given
+characteristic to receive responses from it.
 
 To enable notifications, we loop over each characteristic in each service and enable the characteristic
 for notification if it has `notify` properties:
@@ -554,9 +527,12 @@ INFO:root:Enabling notification on char b5f90081-aa8d-11e3-9046-0002a5d5c51b
 INFO:root:Enabling notification on char b5f90083-aa8d-11e3-9046-0002a5d5c51b
 INFO:root:Enabling notification on char b5f90084-aa8d-11e3-9046-0002a5d5c51b
 INFO:root:Done enabling notifications
+INFO:root:BLE Connection is ready for communication.
 ```
+
 {% endtab %}
 {% tab enable_notifications kotlin %}
+
 ```kotlin
 ble.servicesOf(goproAddress).onSuccess { services ->
     services.forEach { service ->
@@ -593,11 +569,12 @@ Enabling notifications for b5f90084-aa8d-11e3-9046-0002a5d5c51b
 Wrote to descriptor 00002902-0000-1000-8000-00805f9b34fb
 Bluetooth is ready for communication!
 ```
+
 {% endtab %}
 {% endlinkedTabs %}
 
 The characteristics that correspond to each UUID listed in the log can be found in the
-[Open GoPro API]({% link specs/ble_versions/ble_2_0.md %}#services-and-characteristics). These
+[Open GoPro API]({{site.baseurl}}/ble/protocol/ble_setup.html#ble-characteristics). These
 will be used in a future tutorial to send data.
 
 Once the notifications are enabled, the GoPro BLE initialization is complete and it is ready to communicate via

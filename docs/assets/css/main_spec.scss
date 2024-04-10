@@ -1,0 +1,35 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+/* Variables */
+@import 'minimal-mistakes/variables';
+
+/* Mixins and functions */
+@import 'minimal-mistakes/vendor/breakpoint/breakpoint';
+@include breakpoint-set('to ems', true);
+@import 'minimal-mistakes/vendor/magnific-popup/magnific-popup'; // Magnific Popup
+@import 'minimal-mistakes/vendor/susy/susy';
+@import 'minimal-mistakes/mixins';
+
+/* Core CSS */
+@import 'minimal-mistakes/base_spec';
+@import 'minimal-mistakes/animations';
+
+/* Components */
+@import 'minimal-mistakes/masthead';
+@import 'minimal-mistakes/search';
+@import 'minimal-mistakes/navigation';
+
+/********************************************************************************************************************
+ * Workarounds to handle Jekyll / Redocly / Sphinx clobberings
+ */
+
+div[class*='sc-'] {
+    white-space: normal !important;
+}
+
+td[class*='sc-'] {
+    text-align: left !important;
+}
+

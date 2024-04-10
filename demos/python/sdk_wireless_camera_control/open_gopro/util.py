@@ -98,7 +98,7 @@ def pretty_print(obj: Any, stringify_all: bool = True, should_quote: bool = True
         obj (Any): object to recurse through
         stringify_all (bool): At the end of each recursion, should the element be turned into a string?
             For example, should an int be turned into a str? Defaults to True.
-        should_quote (bool): _description_. Defaults to True.
+        should_quote (bool): Should each element be surrounded in quotes?. Defaults to True.
 
     Returns:
         str: pretty-printed string
@@ -301,7 +301,7 @@ async def ainput(string: str, printer: Callable = sys.stdout.write) -> str:
     Returns:
         str: Input read from console
     """
-    await asyncio.get_event_loop().run_in_executor(None, lambda s=string: printer(s + " "))
+    await asyncio.get_event_loop().run_in_executor(None, lambda s=string: printer(s + " "))  # type: ignore
     return await asyncio.get_event_loop().run_in_executor(None, sys.stdin.readline)
 
 
@@ -319,4 +319,6 @@ def get_current_dst_aware_time() -> tuple[datetime, int, bool]:
     except AttributeError:
         is_dst = False
         offset = now.utcoffset().total_seconds() / 60  # type: ignore
+    if is_dst:
+        offset += 60
     return (now, int(offset), is_dst)

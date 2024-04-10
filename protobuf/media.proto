@@ -1,5 +1,5 @@
 /* media.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Mon Jan  8 21:03:36 UTC 2024 */
+/* This copyright was auto-generated on Tue Apr  9 19:25:32 UTC 2024 */
 
 /***********************************************************************************************************************
  *
@@ -24,12 +24,15 @@ import "response_generic.proto";
 message RequestGetLastCapturedMedia {}
 
 /**
- * Message sent in response to a @ref RequestGetLastCapturedMedia
+ * The Last Captured Media
  *
- * This contains the complete path of the last captured media. Depending on the type of media captured, it will return:
+ * Message is sent in response to a @ref RequestGetLastCapturedMedia.
  *
- * - Single photo / video: The single media path
- * - Any grouped media: The path to the first captured media in the group
+ * This contains the relative path of the last captured media starting from the `DCIM` directory on the SDCard. Depending
+ * on the type of media captured, it will return:
+ *
+ * - The single media path for single photo/video media
+ * - The path to the first captured media in the group for grouped media
  */
 message ResponseLastCapturedMedia {
     optional EnumResultGeneric result = 1; // Was the request successful?
