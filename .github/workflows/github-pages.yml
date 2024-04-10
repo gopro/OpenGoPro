@@ -130,6 +130,7 @@ jobs:
     jekyll:
         name: Build and Deploy Jekyll Site
         needs: [copyright, check, python_sdk]
+        if: always()
         runs-on: ubuntu-latest
         steps:
             - name: Checkout source branch (the PR branch)
