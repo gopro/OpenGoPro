@@ -5,29 +5,17 @@ import sys
 import enum
 import asyncio
 import argparse
-from typing import Optional
 
 from bleak import BleakClient
 from bleak.backends.characteristic import BleakGATTCharacteristic
 
-from tutorial_modules import GOPRO_BASE_UUID, connect_ble, Response
-
-from tutorial_modules import logger
-
-
-# Note these may change based on the Open GoPro version!
-class Resolution(enum.Enum):
-    RES_4K = 1
-    RES_2_7K = 4
-    RES_2_7K_4_3 = 6
-    RES_1440 = 7
-    RES_1080 = 9
-    RES_4K_4_3 = 18
-    RES_5K = 24
+from tutorial_modules import GoProUuid, connect_ble, QueryResponse, logger, Resolution
 
 
 # Note these may change based on the Open GoPro version!
 class FPS(enum.Enum):
+    """Common Frames-per-second values"""
+
     FPS_240 = 0
     FPS_120 = 1
     FPS_100 = 2
@@ -40,6 +28,8 @@ class FPS(enum.Enum):
 
 # Note these may change based on the Open GoPro version!
 class VideoFOV(enum.Enum):
+    """Common Video Field of View values"""
+
     FOV_WIDE = 0
     FOV_NARROW = 2
     FOV_SUPERVIEW = 3
@@ -48,67 +38,50 @@ class VideoFOV(enum.Enum):
     FOV_LINEAR_HORIZON_LEVELING = 8
 
 
-resolution: Resolution
-fps: FPS
-video_fov: VideoFOV
-
-
-async def main(identifier: Optional[str]) -> None:
-    # Synchronization event to wait until notification response is received
-    event = asyncio.Event()
-
-    # UUIDs to write to and receive responses from
-    QUERY_REQ_UUID = GOPRO_BASE_UUID.format("0076")
-    QUERY_RSP_UUID = GOPRO_BASE_UUID.format("0077")
-    SETTINGS_REQ_UUID = GOPRO_BASE_UUID.format("0074")
-    SETTINGS_RSP_UUID = GOPRO_BASE_UUID.format("0075")
-
+async def main(identifier: str | None) -> None:
     RESOLUTION_ID = 2
     FPS_ID = 3
     FOV_ID = 121
 
     client: BleakClient
-    response = Response()
+    responses_by_uuid = GoProUuid.dict_by_uuid(value_creator=QueryResponse)
+    received_responses: asyncio.Queue[QueryResponse] = asyncio.Queue()
 
-    def notification_handler(characteristic: BleakGATTCharacteristic, data: bytes) -> None:
-        logger.info(f'Received response at handle {characteristic.handle}: {data.hex(":")}')
+    query_request_uuid = GoProUuid.QUERY_REQ_UUID
+    query_response_uuid = GoProUuid.QUERY_RSP_UUID
 
+    async def notification_handler(characteristic: BleakGATTCharacteristic, data: bytearray) -> None:
+        uuid = GoProUuid(client.services.characteristics[characteristic.handle].uuid)
+        logger.info(f'Received response at {uuid}: {data.hex(":")}')
+
+        response = responses_by_uuid[uuid]
         response.accumulate(data)
 
         # Notify the writer if we have received the entire response
         if response.is_received:
-            response.parse()
-
-            # If this is query response, it must contain a resolution value
-            if client.services.characteristics[characteristic.handle].uuid == QUERY_RSP_UUID:
-                global resolution
-                global fps
-                global video_fov
-                resolution = Resolution(response.data[RESOLUTION_ID][0])
-                fps = FPS(response.data[FPS_ID][0])
-                video_fov = VideoFOV(response.data[FOV_ID][0])
-            # If this is a setting response, it will just show the status
-            elif client.services.characteristics[characteristic.handle].uuid == SETTINGS_RSP_UUID:
-                logger.info("Command sent successfully")
+            # If this is query response, enqueue it
+            if uuid is query_response_uuid:
+                logger.info("Received the Query Response")
+                await received_responses.put(response)
             # Anything else is unexpected. This shouldn't happen
             else:
                 logger.error("Unexpected response")
-
-            # Notify writer that the procedure is complete
-            event.set()
+            # Reset the per-uuuid response
+            responses_by_uuid[uuid] = QueryResponse(uuid)
 
     client = await connect_ble(notification_handler, identifier)
 
     # Write to query BleUUID to poll the current resolution, fps, and fov
-    logger.info("Getting the current resolution, fps, and fov,")
-    event.clear()
-    await client.write_gatt_char(
-        QUERY_REQ_UUID, bytearray([0x04, 0x12, RESOLUTION_ID, FPS_ID, FOV_ID]), response=True
-    )
-    await event.wait()  # Wait to receive the notification response
-    logger.info(f"Resolution is currently {resolution}")
-    logger.info(f"Video FOV is currently {video_fov}")
-    logger.info(f"FPS is currently {fps}")
+    logger.info("Getting the current resolution, fps, and fov.")
+    request = bytes([0x04, 0x12, RESOLUTION_ID, FPS_ID, FOV_ID])
+    logger.debug(f"Writing to {query_request_uuid}: {request.hex(':')}")
+    await client.write_gatt_char(query_request_uuid.value, request, response=True)
+    response = await received_responses.get()  # Wait to receive the notification response
+    # Parse Query headers and query items
+    response.parse()
+    logger.info(f"Resolution is currently {Resolution(response.data[RESOLUTION_ID][0])}")
+    logger.info(f"Video FOV is currently {VideoFOV(response.data[FOV_ID][0])}")
+    logger.info(f"FPS is currently {FPS(response.data[FPS_ID][0])}")
 
     await client.disconnect()
 
@@ -128,7 +101,7 @@ if __name__ == "__main__":
 
     try:
         asyncio.run(main(args.identifier))
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         logger.error(e)
         sys.exit(-1)
     else:

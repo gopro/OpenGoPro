@@ -5,7 +5,7 @@ import re
 import sys
 import asyncio
 import argparse
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 from bleak import BleakScanner, BleakClient
 from bleak.backends.device import BLEDevice as BleakDevice
@@ -13,7 +13,7 @@ from bleak.backends.device import BLEDevice as BleakDevice
 from tutorial_modules import logger, noti_handler_T
 
 
-def exception_handler(loop: asyncio.AbstractEventLoop, context: Dict[str, Any]) -> None:
+def exception_handler(loop: asyncio.AbstractEventLoop, context: dict[str, Any]) -> None:
     """Catch exceptions from non-main thread
 
     Args:
@@ -25,7 +25,7 @@ def exception_handler(loop: asyncio.AbstractEventLoop, context: Dict[str, Any]) 
     logger.critical("This is unexpected and unrecoverable.")
 
 
-async def connect_ble(notification_handler: noti_handler_T, identifier: Optional[str] = None) -> BleakClient:
+async def connect_ble(notification_handler: noti_handler_T, identifier: str | None = None) -> BleakClient:
     """Connect to a GoPro, then pair, and enable notifications
 
     If identifier is None, the first discovered GoPro will be connected to.
@@ -49,7 +49,7 @@ async def connect_ble(notification_handler: noti_handler_T, identifier: Optional
     for retry in range(RETRIES):
         try:
             # Map of discovered devices indexed by name
-            devices: Dict[str, BleakDevice] = {}
+            devices: dict[str, BleakDevice] = {}
 
             # Scan for devices
             logger.info("Scanning for bluetooth devices...")
@@ -62,17 +62,17 @@ async def connect_ble(notification_handler: noti_handler_T, identifier: Optional
                     devices[device.name] = device
 
             # Scan until we find devices
-            matched_devices: List[BleakDevice] = []
+            matched_devices: list[BleakDevice] = []
             while len(matched_devices) == 0:
                 # Now get list of connectable advertisements
                 for device in await BleakScanner.discover(timeout=5, detection_callback=_scan_callback):
-                    if device.name != "Unknown" and device.name is not None:
+                    if device.name and device.name != "Unknown":
                         devices[device.name] = device
                 # Log every device we discovered
                 for d in devices:
                     logger.info(f"\tDiscovered: {d}")
                 # Now look for our matching device(s)
-                token = re.compile(r"GoPro [A-Z0-9]{4}" if identifier is None else f"GoPro {identifier}")
+                token = re.compile(identifier or r"GoPro [A-Z0-9]{4}")
                 matched_devices = [device for name, device in devices.items() if token.match(name)]
                 logger.info(f"Found {len(matched_devices)} matching devices.")
 
@@ -101,6 +101,7 @@ async def connect_ble(notification_handler: noti_handler_T, identifier: Optional
                         logger.info(f"Enabling notification on char {char.uuid}")
                         await client.start_notify(char, notification_handler)
             logger.info("Done enabling notifications")
+            logger.info("BLE Connection is ready for communication.")
 
             return client
         except Exception as exc:  # pylint: disable=broad-exception-caught
@@ -110,9 +111,8 @@ async def connect_ble(notification_handler: noti_handler_T, identifier: Optional
     raise RuntimeError(f"Couldn't establish BLE connection after {RETRIES} retries")
 
 
-async def main(identifier: Optional[str]) -> None:
-    def dummy_notification_handler(*_: Any) -> None:
-        ...
+async def main(identifier: str | None) -> None:
+    async def dummy_notification_handler(*_: Any) -> None: ...
 
     client = await connect_ble(dummy_notification_handler, identifier)
     await client.disconnect()

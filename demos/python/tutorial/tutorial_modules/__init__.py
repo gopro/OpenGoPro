@@ -3,7 +3,7 @@
 
 # pylint: disable=wrong-import-position
 
-from typing import Callable
+from typing import Awaitable, Callable, Any
 import logging
 
 from bleak.backends.characteristic import BleakGATTCharacteristic
@@ -17,7 +17,7 @@ stream_formatter = logging.Formatter("%(asctime)s.%(msecs)03d %(message)s", date
 sh.setFormatter(stream_formatter)
 sh.setLevel(logging.DEBUG)
 logger.addHandler(sh)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 bleak_logger = logging.getLogger("bleak")
 bleak_logger.setLevel(logging.WARNING)
@@ -28,9 +28,15 @@ traceback.install()  # Enable exception tracebacks in rich logger
 GOPRO_BASE_UUID = "b5f9{}-aa8d-11e3-9046-0002a5d5c51b"
 GOPRO_BASE_URL = "http://10.5.5.9:8080"
 
-noti_handler_T = Callable[[BleakGATTCharacteristic, bytearray], None]
+noti_handler_T = Callable[[BleakGATTCharacteristic, bytearray], Awaitable[None]]
 
 from tutorial_modules.tutorial_1_connect_ble.ble_connect import connect_ble
-from tutorial_modules.tutorial_3_parse_ble_tlv_responses.ble_command_get_state import Response
-from tutorial_modules.tutorial_5_connect_wifi.wifi_enable import enable_wifi
-from tutorial_modules.tutorial_6_send_wifi_commands.wifi_command_get_media_list import get_media_list
+from tutorial_modules.tutorial_2_send_ble_commands.ble_command_set_shutter import GoProUuid
+from tutorial_modules.tutorial_3_parse_ble_tlv_responses.ble_command_get_hardware_info import Response, TlvResponse
+from tutorial_modules.tutorial_4_ble_queries.ble_query_poll_resolution_value import QueryResponse, Resolution
+from tutorial_modules.tutorial_6_connect_wifi.enable_wifi_ap import enable_wifi
+from tutorial_modules.tutorial_7_send_wifi_commands.wifi_command_get_media_list import get_media_list
+from tutorial_modules.tutorial_5_ble_protobuf import proto
+from tutorial_modules.tutorial_5_ble_protobuf.set_turbo_mode import ProtobufResponse
+from tutorial_modules.tutorial_5_ble_protobuf.decipher_response import ResponseManager
+from tutorial_modules.tutorial_6_connect_wifi.connect_as_sta import connect_to_access_point

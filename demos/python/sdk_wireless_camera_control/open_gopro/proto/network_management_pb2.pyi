@@ -4,6 +4,7 @@ isort:skip_file
 *
 Defines the structure of protobuf messages for network management
 """
+
 import builtins
 import collections.abc
 import google.protobuf.descriptor
@@ -25,7 +26,8 @@ class _EnumProvisioning:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumProvisioningEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumProvisioning.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumProvisioning.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     PROVISIONING_UNKNOWN: _EnumProvisioning.ValueType
@@ -62,7 +64,8 @@ class _EnumScanning:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumScanningEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumScanning.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumScanning.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     SCANNING_UNKNOWN: _EnumScanning.ValueType
@@ -87,7 +90,8 @@ class _EnumScanEntryFlags:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumScanEntryFlagsEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumScanEntryFlags.ValueType], builtins.type
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumScanEntryFlags.ValueType],
+    builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     SCAN_FLAG_OPEN: _EnumScanEntryFlags.ValueType
@@ -98,7 +102,7 @@ class _EnumScanEntryFlagsEnumTypeWrapper(
     "This network has been previously provisioned"
     SCAN_FLAG_BEST_SSID: _EnumScanEntryFlags.ValueType
     SCAN_FLAG_ASSOCIATED: _EnumScanEntryFlags.ValueType
-    "camera is connected to this AP"
+    "Camera is connected to this AP"
     SCAN_FLAG_UNSUPPORTED_TYPE: _EnumScanEntryFlags.ValueType
 
 class EnumScanEntryFlags(_EnumScanEntryFlags, metaclass=_EnumScanEntryFlagsEnumTypeWrapper): ...
@@ -111,15 +115,16 @@ SCAN_FLAG_CONFIGURED: EnumScanEntryFlags.ValueType
 "This network has been previously provisioned"
 SCAN_FLAG_BEST_SSID: EnumScanEntryFlags.ValueType
 SCAN_FLAG_ASSOCIATED: EnumScanEntryFlags.ValueType
-"camera is connected to this AP"
+"Camera is connected to this AP"
 SCAN_FLAG_UNSUPPORTED_TYPE: EnumScanEntryFlags.ValueType
 global___EnumScanEntryFlags = EnumScanEntryFlags
 
+@typing_extensions.final
 class NotifProvisioningState(google.protobuf.message.Message):
     """
     Provision state notification
 
-    TODO refernce where this is triggered
+    Sent during provisioning triggered via @ref RequestConnect or @ref RequestConnectNew
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -129,14 +134,17 @@ class NotifProvisioningState(google.protobuf.message.Message):
 
     def __init__(self, *, provisioning_state: global___EnumProvisioning.ValueType | None = ...) -> None: ...
     def HasField(
-        self, field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"]
+        self,
+        field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"],
     ) -> builtins.bool: ...
     def ClearField(
-        self, field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"]
+        self,
+        field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"],
     ) -> None: ...
 
 global___NotifProvisioningState = NotifProvisioningState
 
+@typing_extensions.final
 class NotifStartScanning(google.protobuf.message.Message):
     """
     Scanning state notification
@@ -195,6 +203,7 @@ class NotifStartScanning(google.protobuf.message.Message):
 
 global___NotifStartScanning = NotifStartScanning
 
+@typing_extensions.final
 class RequestConnect(google.protobuf.message.Message):
     """*
     Connect to (but do not authenticate with) an Access Point
@@ -202,6 +211,8 @@ class RequestConnect(google.protobuf.message.Message):
     This is intended to be used to connect to a previously-connected Access Point
 
     Response: @ref ResponseConnect
+
+    Notification: @ref NotifProvisioningState sent periodically as provisioning state changes
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -215,6 +226,7 @@ class RequestConnect(google.protobuf.message.Message):
 
 global___RequestConnect = RequestConnect
 
+@typing_extensions.final
 class RequestConnectNew(google.protobuf.message.Message):
     """*
     Connect to and authenticate with an Access Point
@@ -301,6 +313,7 @@ class RequestConnectNew(google.protobuf.message.Message):
 
 global___RequestConnectNew = RequestConnectNew
 
+@typing_extensions.final
 class RequestGetApEntries(google.protobuf.message.Message):
     """*
     Get a list of Access Points found during a @ref RequestStartScan
@@ -329,21 +342,34 @@ class RequestGetApEntries(google.protobuf.message.Message):
     def HasField(
         self,
         field_name: typing_extensions.Literal[
-            "max_entries", b"max_entries", "scan_id", b"scan_id", "start_index", b"start_index"
+            "max_entries",
+            b"max_entries",
+            "scan_id",
+            b"scan_id",
+            "start_index",
+            b"start_index",
         ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
-            "max_entries", b"max_entries", "scan_id", b"scan_id", "start_index", b"start_index"
+            "max_entries",
+            b"max_entries",
+            "scan_id",
+            b"scan_id",
+            "start_index",
+            b"start_index",
         ],
     ) -> None: ...
 
 global___RequestGetApEntries = RequestGetApEntries
 
+@typing_extensions.final
 class RequestReleaseNetwork(google.protobuf.message.Message):
     """*
-    Request to disconnect from current AP network
+    Request to disconnect from currently-connected AP
+
+    This drops the camera out of Station (STA) Mode and returns it to Access Point (AP) mode.
 
     Response: @ref ResponseGeneric
     """
@@ -354,6 +380,7 @@ class RequestReleaseNetwork(google.protobuf.message.Message):
 
 global___RequestReleaseNetwork = RequestReleaseNetwork
 
+@typing_extensions.final
 class RequestStartScan(google.protobuf.message.Message):
     """*
     Start scanning for Access Points
@@ -371,6 +398,7 @@ class RequestStartScan(google.protobuf.message.Message):
 
 global___RequestStartScan = RequestStartScan
 
+@typing_extensions.final
 class ResponseConnect(google.protobuf.message.Message):
     """*
     The status of an attempt to connect to an Access Point
@@ -399,18 +427,29 @@ class ResponseConnect(google.protobuf.message.Message):
     def HasField(
         self,
         field_name: typing_extensions.Literal[
-            "provisioning_state", b"provisioning_state", "result", b"result", "timeout_seconds", b"timeout_seconds"
+            "provisioning_state",
+            b"provisioning_state",
+            "result",
+            b"result",
+            "timeout_seconds",
+            b"timeout_seconds",
         ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
-            "provisioning_state", b"provisioning_state", "result", b"result", "timeout_seconds", b"timeout_seconds"
+            "provisioning_state",
+            b"provisioning_state",
+            "result",
+            b"result",
+            "timeout_seconds",
+            b"timeout_seconds",
         ],
     ) -> None: ...
 
 global___ResponseConnect = ResponseConnect
 
+@typing_extensions.final
 class ResponseConnectNew(google.protobuf.message.Message):
     """*
     The status of an attempt to connect to an Access Point
@@ -427,7 +466,7 @@ class ResponseConnectNew(google.protobuf.message.Message):
     provisioning_state: global___EnumProvisioning.ValueType
     "Current provisioning state of the network"
     timeout_seconds: builtins.int
-    "*\n    number of seconds camera will wait before declaring a network connection attempt failed.\n    "
+    "*\n    Number of seconds camera will wait before declaring a network connection attempt failed\n    "
 
     def __init__(
         self,
@@ -439,18 +478,29 @@ class ResponseConnectNew(google.protobuf.message.Message):
     def HasField(
         self,
         field_name: typing_extensions.Literal[
-            "provisioning_state", b"provisioning_state", "result", b"result", "timeout_seconds", b"timeout_seconds"
+            "provisioning_state",
+            b"provisioning_state",
+            "result",
+            b"result",
+            "timeout_seconds",
+            b"timeout_seconds",
         ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
-            "provisioning_state", b"provisioning_state", "result", b"result", "timeout_seconds", b"timeout_seconds"
+            "provisioning_state",
+            b"provisioning_state",
+            "result",
+            b"result",
+            "timeout_seconds",
+            b"timeout_seconds",
         ],
     ) -> None: ...
 
 global___ResponseConnectNew = ResponseConnectNew
 
+@typing_extensions.final
 class ResponseGetApEntries(google.protobuf.message.Message):
     """*
     A list of scan entries describing a scanned Access Point
@@ -460,8 +510,13 @@ class ResponseGetApEntries(google.protobuf.message.Message):
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
+    @typing_extensions.final
     class ScanEntry(google.protobuf.message.Message):
-        """The individual Scan Entry model"""
+        """*
+        An individual Scan Entry in a @ref ResponseGetApEntries response
+
+        @note When `scan_entry_flags` contains `SCAN_FLAG_CONFIGURED`, it is an indication that this network has already been provisioned.
+        """
 
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         SSID_FIELD_NUMBER: builtins.int
@@ -511,6 +566,7 @@ class ResponseGetApEntries(google.protobuf.message.Message):
                 b"ssid",
             ],
         ) -> None: ...
+
     RESULT_FIELD_NUMBER: builtins.int
     SCAN_ID_FIELD_NUMBER: builtins.int
     ENTRIES_FIELD_NUMBER: builtins.int
@@ -529,17 +585,20 @@ class ResponseGetApEntries(google.protobuf.message.Message):
         *,
         result: response_generic_pb2.EnumResultGeneric.ValueType | None = ...,
         scan_id: builtins.int | None = ...,
-        entries: collections.abc.Iterable[global___ResponseGetApEntries.ScanEntry] | None = ...
+        entries: (collections.abc.Iterable[global___ResponseGetApEntries.ScanEntry] | None) = ...
     ) -> None: ...
     def HasField(
-        self, field_name: typing_extensions.Literal["result", b"result", "scan_id", b"scan_id"]
+        self,
+        field_name: typing_extensions.Literal["result", b"result", "scan_id", b"scan_id"],
     ) -> builtins.bool: ...
     def ClearField(
-        self, field_name: typing_extensions.Literal["entries", b"entries", "result", b"result", "scan_id", b"scan_id"]
+        self,
+        field_name: typing_extensions.Literal["entries", b"entries", "result", b"result", "scan_id", b"scan_id"],
     ) -> None: ...
 
 global___ResponseGetApEntries = ResponseGetApEntries
 
+@typing_extensions.final
 class ResponseStartScanning(google.protobuf.message.Message):
     """*
     The current scanning state.
@@ -562,10 +621,12 @@ class ResponseStartScanning(google.protobuf.message.Message):
         scanning_state: global___EnumScanning.ValueType | None = ...
     ) -> None: ...
     def HasField(
-        self, field_name: typing_extensions.Literal["result", b"result", "scanning_state", b"scanning_state"]
+        self,
+        field_name: typing_extensions.Literal["result", b"result", "scanning_state", b"scanning_state"],
     ) -> builtins.bool: ...
     def ClearField(
-        self, field_name: typing_extensions.Literal["result", b"result", "scanning_state", b"scanning_state"]
+        self,
+        field_name: typing_extensions.Literal["result", b"result", "scanning_state", b"scanning_state"],
     ) -> None: ...
 
 global___ResponseStartScanning = ResponseStartScanning

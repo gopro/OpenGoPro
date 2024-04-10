@@ -120,7 +120,7 @@ class Parser(ABC, Generic[T]):
             RuntimeError: attempted to parse bytes when a byte-json adapter does not exist
 
         Returns:
-            T: TODO
+            T: final parsed output
         """
         parsed_json: types.JsonDict
         if isinstance(data, (bytes, bytearray)):
@@ -196,9 +196,6 @@ class GlobalParsers:
     """Parsers that relate globally to ID's as opposed to contextualized per-message
 
     This is intended to be used as a singleton, i.e. not instantiated
-
-    Returns:
-        _type_: _description_
     """
 
     _feature_action_id_map: ClassVar[dict[FeatureId, list[ActionId]]] = defaultdict(list)

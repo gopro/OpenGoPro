@@ -2,7 +2,6 @@
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:05:35 PM
 
 # This workflow will run pre-merge checks to verify a PR before it is merged:
-#    - copyright: Checks to see if there are any missing copyrights
 
 name: Pre Merge Checks
 
@@ -11,39 +10,7 @@ on:
         branches: [main, develop, release]
 
 jobs:
-    copyright:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Extract branch name
-              shell: bash
-              run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF#refs/heads/})"
-              id: extract_branch
-
-            - name: Checkout PR branch
-              uses: actions/checkout@v3
-              with:
-                  ref: ${{ steps.extract_branch.outputs.branch }}
-                  ssh-key: ${{ secrets.PUSH_FROM_WORKFLOW_TO_RETRIGGER }}
-
-            - name: Check for (and add) missing copyrights
-              shell: bash
-              run: |
-                  make copyright
-                  echo "NUM_MODIFIED=$(git diff --numstat | wc -l)" >> $GITHUB_ENV
-
-            - name: Push changes
-              if: env.NUM_MODIFIED != 0
-              shell: bash
-              run: |
-                  git config core.fileMode false
-                  git config user.name github-actions
-                  git config user.email github-actions@github.com
-                  git add .
-                  git commit -m "updating copyrights from pre merge check in github action"
-                  git push -f origin HEAD:${{ steps.extract_branch.outputs.branch }}
-
     test_github_pages:
-        needs: copyright
         timeout-minutes: 5
         runs-on: ubuntu-latest
         steps:
@@ -60,6 +27,7 @@ jobs:
                   password: ${{ secrets.GITHUB_TOKEN }}
 
             - uses: actions/checkout@v3
+
             - name: Test Jekyll Build and Check Links
               run: make tests
 
@@ -71,7 +39,7 @@ jobs:
               uses: actions/checkout@v3
               with:
                   ref: release
-                  ssh-key: ${{ secrets.PUSH_FROM_WORKFLOW_TO_RETRIGGER }}
+
             - name: Verify synchronized if release
               shell: bash
               run: |

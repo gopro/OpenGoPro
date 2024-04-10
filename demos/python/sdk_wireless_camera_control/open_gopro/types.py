@@ -36,3 +36,5 @@ JsonDict = dict[str, Any]
 
 UpdateType = Union[SettingId, StatusId, ActionId]
 UpdateCb = Callable[[UpdateType, Any], Coroutine[Any, Any, None]]
+
+IdType = Union[SettingId, StatusId, ActionId, CmdId, BleUUID, str]

@@ -1,0 +1,22 @@
+# publish_python_sdk.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:35 PM
+
+name: Publish the Python SDK to PyPi
+
+on:
+    workflow_dispatch:
+
+jobs:
+    build-and-publish:
+        name: Build and Publish
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Build and publish to pypi
+              uses: JRubics/poetry-publish@v2.0
+              with:
+                  package_directory: ./demos/python/sdk_wireless_camera_control/
+                  python_version: 3.11.4
+                  pypi_token: ${{ secrets.PYTHON_SDK_PYPI_TOKEN }}

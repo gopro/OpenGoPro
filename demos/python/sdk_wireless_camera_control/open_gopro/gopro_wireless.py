@@ -6,14 +6,12 @@
 from __future__ import annotations
 
 import asyncio
+import enum
 import logging
 import queue
 from collections import defaultdict
 from copy import deepcopy
-from pathlib import Path
-from typing import Any, Final, Pattern
-
-import wrapt
+from typing import Any, Callable, Final, Pattern
 
 import open_gopro.exceptions as GpException
 from open_gopro import proto, types
@@ -27,60 +25,28 @@ from open_gopro.api import (
     WirelessApi,
 )
 from open_gopro.ble import BleakWrapperController, BleUUID
-from open_gopro.communicator_interface import GoProWirelessInterface, MessageRules
+from open_gopro.communicator_interface import (
+    BleMessage,
+    GoProWirelessInterface,
+    HttpMessage,
+    Message,
+    MessageRules,
+)
 from open_gopro.constants import ActionId, GoProUUIDs, StatusId
-from open_gopro.gopro_base import GoProBase, GoProMessageInterface, MessageMethodType
+from open_gopro.gopro_base import (
+    GoProBase,
+    GoProMessageInterface,
+    enforce_message_rules,
+)
 from open_gopro.logger import Logger
 from open_gopro.models.general import CohnInfo
 from open_gopro.models.response import BleRespBuilder, GoProResp
-from open_gopro.parser_interface import Parser
-from open_gopro.util import SnapshotQueue, get_current_dst_aware_time
+from open_gopro.util import SnapshotQueue, get_current_dst_aware_time, pretty_print
 from open_gopro.wifi import WifiCli
 
 logger = logging.getLogger(__name__)
 
 KEEP_ALIVE_INTERVAL: Final = 28
-
-
-@wrapt.decorator
-async def enforce_message_rules(
-    wrapped: MessageMethodType, instance: WirelessGoPro, args: Any, kwargs: Any
-) -> GoProResp:
-    """Wrap the input message method, applying any message rules (MessageRules)
-
-    Args:
-        wrapped (MessageMethodType): Method that will be wrapped
-        instance (WirelessGoPro): owner of method
-        args (Any): positional arguments
-        kwargs (Any): keyword arguments
-
-    Returns:
-        GoProResp: forward response of message method
-    """
-    rules: list[MessageRules] = kwargs.pop("rules", [])
-
-    # Acquire ready lock unless we are initializing or this is a Set Shutter Off command
-    have_lock = False
-    if instance._should_maintain_state and instance.is_open and not MessageRules.FASTPASS in rules:
-        logger.trace(f"{wrapped.__name__} acquiring lock")  # type: ignore
-        await instance._ready_lock.acquire()
-        logger.trace(f"{wrapped.__name__} has the lock")  # type: ignore
-        have_lock = True
-        response = await wrapped(*args, **kwargs)
-    else:  # Either we're not maintaining state, we're not opened yet, or this is a fastpass message
-        response = await wrapped(*args, **kwargs)
-
-    # Release the lock if we acquired it
-    if instance._should_maintain_state:
-        if have_lock:
-            instance._ready_lock.release()
-            logger.trace(f"{wrapped.__name__} released the lock")  # type: ignore
-        # Is there any special handling required after receiving the response?
-        if MessageRules.WAIT_FOR_ENCODING_START in rules:
-            logger.trace("Waiting to receive encoding started.")  # type: ignore
-            await instance._encoding_started.wait()
-            instance._encoding_started.clear()
-    return response
 
 
 class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
@@ -145,6 +111,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
     WRITE_TIMEOUT: Final = 5
 
+    class _LockOwner(enum.Enum):
+        """Current owner of the communication lock"""
+
+        RULE_ENFORCER = enum.auto()
+        STATE_MANAGER = enum.auto()
+
     def __init__(
         self,
         target: Pattern | None = None,
@@ -193,6 +165,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self._ble_disconnect_event: asyncio.Event
 
         if self._should_maintain_state:
+            self._state_tasks: list[asyncio.Task] = []
+            self._lock_owner: WirelessGoPro._LockOwner | None = WirelessGoPro._LockOwner.STATE_MANAGER
             self._ready_lock: asyncio.Lock
             self._keep_alive_task: asyncio.Task
             self._encoding: bool
@@ -486,10 +460,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """
         return (await self.ble_command.cohn_get_status(register=False)).data.enabled
 
-    ##########################################################################################################
-    #                                 End Public API
-    ##########################################################################################################
-
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     async def keep_alive(self) -> bool:
         """Send a heartbeat to prevent the BLE connection from dropping.
@@ -557,6 +527,34 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     #                                 End Public API
     ##########################################################################################################
 
+    async def _enforce_message_rules(
+        self, wrapped: Callable, message: Message, rules: MessageRules = MessageRules(), **kwargs: Any
+    ) -> GoProResp:
+        # Acquire ready lock unless we are initializing or this is a Set Shutter Off command
+        response: GoProResp
+        if self._should_maintain_state and self.is_open and not rules.is_fastpass(**kwargs):
+            logger.trace(f"{wrapped.__name__} acquiring lock")  # type: ignore
+            await self._ready_lock.acquire()
+            logger.trace(f"{wrapped.__name__} has the lock")  # type: ignore
+            self._lock_owner = WirelessGoPro._LockOwner.RULE_ENFORCER
+            response = await wrapped(message, **kwargs)
+        else:  # Either we're not maintaining state, we're not opened yet, or this is a fastpass message
+            response = await wrapped(message, **kwargs)
+
+        # Release the lock if we acquired it
+        if self._should_maintain_state:
+            if self._lock_owner is WirelessGoPro._LockOwner.RULE_ENFORCER:
+                logger.trace(f"{wrapped.__name__} releasing the lock")  # type: ignore
+                self._lock_owner = None
+                self._ready_lock.release()
+                logger.trace(f"{wrapped.__name__} released the lock")  # type: ignore
+            # Is there any special handling required after receiving the response?
+            if rules.should_wait_for_encoding_start(**kwargs):
+                logger.trace("Waiting to receive encoding started.")  # type: ignore
+                await self._encoding_started.wait()
+                self._encoding_started.clear()
+        return response
+
     async def _notify_listeners(self, update: types.UpdateType, value: Any) -> None:
         """Notify all registered listeners of this update
 
@@ -595,13 +593,20 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     async def _update_internal_state(self, update: types.UpdateType, value: int) -> None:
         """Update the internal state based on a status update.
 
+        # Note!!! This needs to be reentrant-safe
+
         Used to update encoding and / or busy status
 
         Args:
             update (types.UpdateType): type of update (status ID)
             value (int): updated value
         """
-        have_lock = not await self.is_ready
+        # Cancel any currently pending state update tasks
+        for task in self._state_tasks:
+            logger.trace("Cancelling pending acquire task.")  # type: ignore
+            task.cancel()
+        self._state_tasks = []
+
         logger.trace(f"State update received {update.name} ==> {value}")  # type: ignore
         should_notify_encoding = False
         if update == StatusId.ENCODING:
@@ -612,29 +617,29 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._busy = bool(value)
         logger.trace(f"Current internal states: {self._encoding=} {self._busy=}")  # type: ignore
 
-        ready_now = await self.is_ready
-        if have_lock and ready_now:
+        if self._lock_owner is WirelessGoPro._LockOwner.STATE_MANAGER and await self.is_ready:
+            logger.trace("Control releasing lock")  # type: ignore
+            self._lock_owner = None
             self._ready_lock.release()
             logger.trace("Control released lock")  # type: ignore
-        elif not have_lock and not ready_now:
+        elif not (self._lock_owner is WirelessGoPro._LockOwner.STATE_MANAGER) and not await self.is_ready:
             logger.trace("Control acquiring lock")  # type: ignore
-            await self._ready_lock.acquire()
+            task = asyncio.create_task(self._ready_lock.acquire())
+            self._state_tasks.append(task)
+            await task
             logger.trace("Control has lock")  # type: ignore
+            self._lock_owner = WirelessGoPro._LockOwner.STATE_MANAGER
 
         if should_notify_encoding and self.is_open:
             logger.trace("Control setting encoded started")  # type: ignore
             self._encoding_started.set()
 
-    # TODO this needs unit testing
     async def _route_response(self, response: GoProResp) -> None:
         """After parsing response, route it to any stakeholders (such as registered listeners)
 
         Args:
-            response (GoProResp): parsed response
+            response (GoProResp): parsed response to route
         """
-        # Flatten data if possible
-        # from copy import copy
-
         original_response = deepcopy(response)
         if response._is_query and not response._is_push:
             response.data = list(response.data.values())[0]
@@ -675,22 +680,21 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             # Accumulate the packet
             self._active_builders[uuid].accumulate(data)
             if (builder := self._active_builders[uuid]).is_finished_accumulating:
-                response = builder.build()
-                # Perform response post-processing tasks
-                await self._route_response(response)
+                logger.trace(f"Finished accumulating on {uuid}")  # type: ignore
                 # Clear active response from response dict
                 del self._active_builders[uuid]
+                await self._route_response(builder.build())
 
         asyncio.run_coroutine_threadsafe(_async_notification_handler(), self._loop)
 
     async def _close_ble(self) -> None:
         """Terminate BLE connection if it is connected"""
         if self.is_ble_connected and self._ble is not None:
-            self._ble_disconnect_event.clear()
             if self._should_maintain_state:
                 self._keep_alive_task.cancel()
             await self._ble.close()
             await self._ble_disconnect_event.wait()
+            # TODO this event is never cleared since this object is not designed to be re-opened.
 
     def _disconnect_handler(self, _: Any) -> None:
         """Disconnect callback from BLE controller
@@ -705,29 +709,16 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     @enforce_message_rules
     async def _send_ble_message(
-        self, uuid: BleUUID, data: bytearray, response_id: types.ResponseType, **_: Any
+        self, message: BleMessage, rules: MessageRules = MessageRules(), **kwargs: Any
     ) -> GoProResp:
-        """Write a characteristic and block until its corresponding notification response is received.
-
-        Args:
-            uuid (BleUUID): characteristic to write to
-            data (bytearray): bytes to write
-            response_id (types.ResponseType): identifier to claim parsed response in notification handler
-            **_ (Any): not used
-
-        Raises:
-            ResponseTimeout: did not receive a response before timing out
-
-        Returns:
-            GoProResp: received response
-        """
         # Store information on the response we are expecting
-        await self._sync_resp_wait_q.put(response_id)
+        await self._sync_resp_wait_q.put(message._identifier)
+        logger.info(Logger.build_log_tx_str(pretty_print(message._as_dict(**kwargs))))
 
         # Fragment data and write it
-        for packet in self._fragment(data):
-            logger.debug(f"Writing to [{uuid.name}] UUID: {packet.hex(':')}")
-            await self._ble.write(uuid, packet)
+        for packet in self._fragment(message._build_data(**kwargs)):
+            logger.debug(f"Writing to [{message._uuid.name}] UUID: {packet.hex(':')}")
+            await self._ble.write(message._uuid, packet)
 
         # Wait to be notified that response was received
         try:
@@ -744,24 +735,42 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     @enforce_message_rules
-    async def _read_characteristic(self, uuid: BleUUID) -> GoProResp:
-        """Read a characteristic's data by GoProUUIDs.
-
-        There should hopefully not be a scenario where this needs to be called directly as it is generally
-        called from the instance's delegates (i.e. self.command, self.setting, self.ble_status)
-
-        Args:
-            uuid (BleUUID): characteristic data to read
-
-        Returns:
-            GoProResp: response from UUID read
-        """
-        received_data = await self._ble.read(uuid)
-        logger.debug(f"Reading from {uuid.name}")
+    async def _read_ble_characteristic(
+        self, message: BleMessage, rules: MessageRules = MessageRules(), **kwargs: Any
+    ) -> GoProResp:
+        received_data = await self._ble.read(message._uuid)
+        logger.debug(f"Reading from {message._uuid.name}")
         builder = BleRespBuilder()
-        builder.set_uuid(uuid)
+        builder.set_uuid(message._uuid)
         builder.set_packet(received_data)
         return builder.build()
+
+    # TODO make decorator?
+    def _handle_cohn(self, message: HttpMessage) -> HttpMessage:
+        """Prepend COHN headers if COHN is enabled
+
+        Args:
+            message (HttpMessage): HTTP message to append headers to
+
+        Returns:
+            HttpMessage: potentially modified HTTP message
+        """
+        if self._cohn:
+            message._headers["Authorization"] = self._cohn.auth_token
+            message._certificate = self._cohn.cert_path
+        return message
+
+    async def _get_json(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:
+        message = self._handle_cohn(message)
+        return await super()._get_json(*args, message=message, **kwargs)
+
+    async def _get_stream(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:
+        message = self._handle_cohn(message)
+        return await super()._get_stream(*args, message=message, **kwargs)
+
+    async def _put_json(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:
+        message = self._handle_cohn(message)
+        return await super()._put_json(*args, message=message, **kwargs)
 
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     async def _open_wifi(self, timeout: int = 10, retries: int = 5) -> None:
@@ -793,31 +802,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """Terminate the Wifi connection."""
         if hasattr(self, "_wifi"):  # Corner case where instantiation fails before superclass is initialized
             self._wifi.close()
-
-    @enforce_message_rules
-    async def _http_get(
-        self,
-        url: str,
-        parser: Parser | None = None,
-        headers: dict | None = None,
-        certificate: Path | None = None,
-        timeout: int = GoProBase.GET_TIMEOUT,
-        **kwargs: Any,
-    ) -> GoProResp:
-        if self._cohn:
-            return await super()._http_get(
-                url,
-                parser,
-                headers=headers or {"Authorization": self._cohn.auth_token},
-                certificate=certificate or self._cohn.cert_path,
-                timeout=timeout,
-                **kwargs,
-            )
-        return await super()._http_get(url, parser, **kwargs)
-
-    @enforce_message_rules
-    async def _stream_to_file(self, url: str, file: Path) -> GoProResp[Path]:
-        return await super()._stream_to_file(url, file)
 
     @property
     def _base_url(self) -> str:

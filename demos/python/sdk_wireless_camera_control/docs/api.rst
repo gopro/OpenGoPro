@@ -86,19 +86,19 @@ GoPro Enum
 BLE Setting
 ^^^^^^^^^^^
 
-.. inheritance-diagram:: open_gopro.api.builders.BleSetting
+.. inheritance-diagram:: open_gopro.api.builders.BleSettingFacade
    :parts: 1
 
-.. autoclass:: open_gopro.api.builders.BleSetting
+.. autoclass:: open_gopro.api.builders.BleSettingFacade
    :exclude-members: get_name, get_capabilities_names
 
 BLE Status
 ^^^^^^^^^^
 
-.. inheritance-diagram:: open_gopro.api.builders.BleStatus
+.. inheritance-diagram:: open_gopro.api.builders.BleStatusFacade
    :parts: 1
 
-.. autoclass:: open_gopro.api.builders.BleStatus
+.. autoclass:: open_gopro.api.builders.BleStatusFacade
 
 HTTP Setting
 ^^^^^^^^^^^^
@@ -107,6 +107,11 @@ HTTP Setting
    :parts: 1
 
 .. autoclass:: open_gopro.api.builders.HttpSetting
+
+Method Protocols
+^^^^^^^^^^^^^^^^
+
+.. autoclass:: open_gopro.api.builders.BuilderProtocol
 
 Message Bases
 ^^^^^^^^^^^^^
@@ -133,8 +138,6 @@ but the end user should never need to use these directly.
    :show-inheritance:
 
 .. autoclass:: open_gopro.communicator_interface.MessageRules
-
-.. autoclass:: open_gopro.communicator_interface.RuleSignature
 
 Parameters
 ----------

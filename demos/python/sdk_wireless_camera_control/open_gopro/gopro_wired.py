@@ -7,10 +7,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from pathlib import Path
-from typing import Any, Final
-
-import wrapt
+from typing import Any, Callable, Final
 
 import open_gopro.exceptions as GpException
 import open_gopro.wifi.mdns_scanner  # Imported this way for pytest monkeypatching
@@ -24,51 +21,15 @@ from open_gopro.api import (
     Params,
     WiredApi,
 )
-from open_gopro.communicator_interface import GoProWiredInterface, MessageRules
+from open_gopro.communicator_interface import GoProWiredInterface, Message, MessageRules
 from open_gopro.constants import StatusId
-from open_gopro.gopro_base import GoProBase, MessageMethodType
+from open_gopro.gopro_base import GoProBase
 from open_gopro.models import GoProResp
 
 logger = logging.getLogger(__name__)
 
 GET_TIMEOUT: Final = 5
 HTTP_GET_RETRIES: Final = 5
-
-
-@wrapt.decorator
-async def enforce_message_rules(wrapped: MessageMethodType, instance: WiredGoPro, args: Any, kwargs: Any) -> GoProResp:
-    """Wrap the input message method, applying any message rules (MessageRules)
-
-    Args:
-        wrapped (MessageMethodType): Method that will be wrapped
-        instance (WiredGoPro): owner of method
-        args (Any): positional arguments
-        kwargs (Any): keyword arguments
-
-    Returns:
-        GoProResp: forward response of message method
-    """
-    rules: list[MessageRules] = kwargs.pop("rules", [])
-
-    # Acquire ready lock unless we are initializing or this is a Set Shutter Off command
-    if instance._should_maintain_state and instance.is_open and not MessageRules.FASTPASS in rules:
-        # Wait for not encoding and not busy
-        logger.trace("Waiting for camera to be ready to receive messages.")  # type: ignore
-        await instance._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_BUSY: False})
-        logger.trace("Camera is ready to receive messages")  # type: ignore
-        response = await wrapped(*args, **kwargs)
-    else:  # Either we're not maintaining state, we're not opened yet, or this is a fastpass message
-        response = await wrapped(*args, **kwargs)
-
-    # Release the lock if we acquired it
-    if instance._should_maintain_state:
-        if response.ok:
-            # Is there any special handling required after receiving the response?
-            if MessageRules.WAIT_FOR_ENCODING_START in rules:
-                logger.trace("Waiting to receive encoding started.")  # type: ignore
-                # Wait for encoding to start
-                await instance._wait_for_state({StatusId.ENCODING: True})
-    return response
 
 
 class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
@@ -263,7 +224,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         Returns:
             bool: True if yes, False if no
         """
-        return True  # TODO find a better way to do this
+        return self.is_open
 
     def register_update(self, callback: types.UpdateCb, update: types.UpdateType) -> None:
         """Register for callbacks when an update occurs
@@ -325,6 +286,29 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
     #                                 End Public API
     ##########################################################################################################
 
+    async def _enforce_message_rules(
+        self, wrapped: Callable, message: Message, rules: MessageRules = MessageRules(), **kwargs: Any
+    ) -> GoProResp:
+        # Acquire ready lock unless we are initializing or this is a Set Shutter Off command
+        if self._should_maintain_state and self.is_open and not rules.is_fastpass(**kwargs):
+            # Wait for not encoding and not busy
+            logger.trace("Waiting for camera to be ready to receive messages.")  # type: ignore
+            await self._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_BUSY: False})
+            logger.trace("Camera is ready to receive messages")  # type: ignore
+            response = await wrapped(message, **kwargs)
+        else:  # Either we're not maintaining state, we're not opened yet, or this is a fastpass message
+            response = await wrapped(message, **kwargs)
+
+        # Release the lock if we acquired it
+        if self._should_maintain_state:
+            if response.ok:
+                # Is there any special handling required after receiving the response?
+                if rules.should_wait_for_encoding_start(**kwargs):
+                    logger.trace("Waiting to receive encoding started.")  # type: ignore
+                    # Wait for encoding to start
+                    await self._wait_for_state({StatusId.ENCODING: True})
+        return response
+
     async def _wait_for_state(self, check: types.CameraState) -> None:
         """Poll the current state until a variable amount of states are all equal to desired values
 
@@ -337,6 +321,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
             state = (await self.http_command.get_camera_state()).data
             for key, value in check.items():
                 if state.get(key) != value:
+                    logger.trace(f"Not ready ==> {key} != {value}")  # type: ignore
                     await asyncio.sleep(self._poll_period)
                     break  # Get new state and try again
             else:
@@ -359,7 +344,3 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         if not self._serial:
             raise GpException.GoProNotOpened("Serial / IP has not yet been discovered")
         return WiredGoPro._BASE_ENDPOINT.format(ip=WiredGoPro._BASE_IP.format(*self._serial[-3:]))
-
-    @enforce_message_rules
-    async def _stream_to_file(self, url: str, file: Path) -> GoProResp:
-        return await super()._stream_to_file(url, file)
