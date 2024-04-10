@@ -9,7 +9,32 @@ on:
     workflow_dispatch:
 
 jobs:
+    copyright:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  token: ${{ secrets.PUSH_FROM_WORKFLOW_TO_RETRIGGER }}
+
+            - name: Check for (and add) missing copyrights
+              shell: bash
+              run: |
+                  make copyright
+                  echo "NUM_MODIFIED=$(git diff --numstat | wc -l)" >> $GITHUB_ENV
+
+            - name: Push changes
+              if: env.NUM_MODIFIED != 0
+              shell: bash
+              run: |
+                  git config core.fileMode false
+                  git config user.name github-actions
+                  git config user.email github-actions@github.com
+                  git add .
+                  git commit -m "updating copyrights from pre merge check in github action"
+                  git push
+
     check:
+        needs: copyright
         name: Check modified files for Python SDK changes
         runs-on: ubuntu-latest
         outputs:
@@ -29,16 +54,16 @@ jobs:
                   git diff --name-only HEAD^ HEAD >files.txt
                   while IFS= read -r file; do
                       if [[ $file != demos/python/sdk_wireless_camera_control* ]]; then
-                          echo "::set-output name=run_job::false"
+                          echo "{run_job}={false}" >> $GITHUB_OUTPUT
                       else
                           echo "Found a Python SDK modified file"
-                          echo "::set-output name=run_job::true"
+                          echo "{run_job}={true}" >> $GITHUB_OUTPUT
                           break
                       fi
                   done <files.txt
 
     python_sdk:
-        name: Build and Deploy Python SDK
+        name: Build and Deploy Python SDK Documentation
         needs: check
         if: needs.check.outputs.run_job == 'true'
         runs-on: ${{ matrix.os }}
@@ -51,6 +76,7 @@ jobs:
 
         steps:
             - name: Checkout source branch (the PR branch)
+              if: always()
               uses: actions/checkout@v3
               with:
                   path: source
@@ -104,8 +130,7 @@ jobs:
 
     jekyll:
         name: Build and Deploy Jekyll Site
-        needs: [check, python_sdk]
-        if: always()
+        needs: [copyright, check, python_sdk]
         runs-on: ubuntu-latest
         steps:
             - name: Checkout source branch (the PR branch)
