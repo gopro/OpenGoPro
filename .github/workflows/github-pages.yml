@@ -76,6 +76,7 @@ jobs:
 
         steps:
             - name: Checkout source branch (the PR branch)
+              if: always()
               uses: actions/checkout@v3
               with:
                   path: source
