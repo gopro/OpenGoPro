@@ -24,7 +24,7 @@ jobs:
               with:
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   ref: ${{ steps.extract_branch.outputs.branch }}
-                  ssh-key: ${{ secrets.PUSH_FROM_WORKFLOW_TO_RETRIGGER }}
+                  persist-credentials: false
 
             - name: Check for (and add) missing copyrights
               shell: bash
