@@ -13,6 +13,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
+              with:
+                  token: ${{ secrets.PUSH_FROM_WORKFLOW_TO_RETRIGGER }}
 
             - name: Check for (and add) missing copyrights
               shell: bash
@@ -128,7 +130,6 @@ jobs:
     jekyll:
         name: Build and Deploy Jekyll Site
         needs: [copyright, check, python_sdk]
-        if: always()
         runs-on: ubuntu-latest
         steps:
             - name: Checkout source branch (the PR branch)
