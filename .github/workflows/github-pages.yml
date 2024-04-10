@@ -14,7 +14,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  token: ${{ secrets.PUSH_FROM_WORKFLOW_TO_RETRIGGER }}
+                  token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
 
             - name: Check for (and add) missing copyrights
               shell: bash
