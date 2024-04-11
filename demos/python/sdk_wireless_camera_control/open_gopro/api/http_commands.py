@@ -203,17 +203,20 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """
         return {"id": group}  # type: ignore
 
-    @http_get_json_command(endpoint="gopro/camera/stream", components=["mode"], identifier="Preview Stream")
-    async def set_preview_stream(self, *, mode: Params.Toggle) -> GoProResp[None]:
+    @http_get_json_command(
+        endpoint="gopro/camera/stream", arguments=["port"], components=["mode"], identifier="Preview Stream"
+    )
+    async def set_preview_stream(self, *, mode: Params.Toggle, port: int | None = None) -> GoProResp[None]:
         """Start or stop the preview stream
 
         Args:
             mode (open_gopro.api.params.Toggle): enable to start or disable to stop
+            port (int): Port to use for Preview Stream. Defaults to 8554 if None. Only relevant when starting the stream.
 
         Returns:
             GoProResp: command status
         """
-        return {"mode": "start" if mode is Params.Toggle.ENABLE else "stop"}  # type: ignore
+        return {"mode": "start" if mode is Params.Toggle.ENABLE else "stop", "port": port}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/analytics/set_client_info")
     async def set_third_party_client_info(self) -> GoProResp[None]:
