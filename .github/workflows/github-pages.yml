@@ -38,7 +38,7 @@ jobs:
         name: Check modified files for Python SDK changes
         runs-on: ubuntu-latest
         outputs:
-            run_job: ${{ steps.check_files.outputs.run_job }}
+            build_python_sdk: ${{ steps.check_files.outputs.found_modified_python_file }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
@@ -54,10 +54,10 @@ jobs:
                   git diff --name-only HEAD^ HEAD >files.txt
                   while IFS= read -r file; do
                       if [[ $file != demos/python/sdk_wireless_camera_control* ]]; then
-                          echo "{run_job}={false}" >> $GITHUB_OUTPUT
+                          echo "found_modified_python_file=false" >> "$GITHUB_OUTPUT"
                       else
                           echo "Found a Python SDK modified file"
-                          echo "{run_job}={true}" >> $GITHUB_OUTPUT
+                          echo "found_modified_python_file=true" >> "$GITHUB_OUTPUT"
                           break
                       fi
                   done <files.txt
@@ -65,7 +65,7 @@ jobs:
     python_sdk:
         name: Build and Deploy Python SDK Documentation
         needs: check
-        if: needs.check.outputs.run_job == 'true'
+        if: needs.check.outputs.build_python_sdk == 'true'
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
