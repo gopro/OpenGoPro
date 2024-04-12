@@ -1,5 +1,5 @@
 /* live_streaming.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue Apr  9 19:25:32 UTC 2024 */
+/* This copyright was auto-generated on Fri Apr 12 21:59:43 UTC 2024 */
 
 /***********************************************************************************************************************
  *
@@ -107,7 +107,7 @@ message RequestSetLiveStreamMode {
     /**
      * Resolution to use for live stream
      *
-     * The set of supported lenses is only available from the `live_stream_window_size_supported_array` in @ref NotifyLiveStreamStatus)
+     * The set of supported resolutions is only available from the `live_stream_window_size_supported_array` in @ref NotifyLiveStreamStatus)
      */
     optional EnumWindowSize window_size      = 3;
     optional bytes          cert             = 6; // Certificate for servers that require it in PEM format
