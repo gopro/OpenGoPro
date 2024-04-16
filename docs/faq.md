@@ -175,7 +175,16 @@ most interesting moments in the video.
 
 {% accordion Which cameras are supported by Open GoPro? %}
 The answer at a high level is >= Hero 9. However, there are also certain firmware requirements. For a complete
-answer, see the [Specification](/ble/index.html#supported-cameras).
+answer, see the [Specification]({{site.baseurl}}/#compatibility).
+{% endaccordion %}
+
+{% accordion How to get the remaining timelapse capability? %}
+First check the value of [Setting 128]({{site.baseurl}}/ble/features/settings.html#setting-128). Then depending on whether
+this is Photo or Video, use:
+
+-   [Status 34]({{site.baseurl}}/ble/features/statuses.html#status-34) (Remaining photos)
+-   [Status 35]({{site.baseurl}}/ble/features/statuses.html#status-35) (Remaining videos)
+
 {% endaccordion %}
 
 ## Camera Logic
@@ -202,7 +211,7 @@ you are already connected to it from a previous session. To be sure, power cycle
 
 {% accordion Workaround for intermittent Wifi AP Connection failure %}
 On >= Hero 11, try disabling and then re-enabling the camera's Wifi AP using the
-[AP Control BLE Command](/ble/index.html#commands)
+[AP Control BLE Command]({{site.baseurl}}/ble/features/control.html#set-ap-control)
 {% endaccordion %}
 
 # Known Issues
