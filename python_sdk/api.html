@@ -245,6 +245,9 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands"><code class="docutils literal notranslate"><span class="pre">HttpCommands</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.add_file_hilight"><code class="docutils literal notranslate"><span class="pre">HttpCommands.add_file_hilight()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.delete_all"><code class="docutils literal notranslate"><span class="pre">HttpCommands.delete_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.delete_file"><code class="docutils literal notranslate"><span class="pre">HttpCommands.delete_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.delete_group"><code class="docutils literal notranslate"><span class="pre">HttpCommands.delete_group()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.download_file"><code class="docutils literal notranslate"><span class="pre">HttpCommands.download_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_camera_info"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_camera_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_camera_state"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_camera_state()</span></code></a></li>
@@ -3082,6 +3085,54 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.http_commands.HttpCommands.delete_all">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.http_commands.HttpCommands.delete_all" title="Permalink to this definition"></a></dt>
+<dd><p>Delete all files on the SD card.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.http_commands.HttpCommands.delete_file">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.http_commands.HttpCommands.delete_file" title="Permalink to this definition"></a></dt>
+<dd><p>Delete a single file including single files that are part of a group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – path to file to delete</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.http_commands.HttpCommands.delete_group">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.http_commands.HttpCommands.delete_group" title="Permalink to this definition"></a></dt>
+<dd><p>Delete all contents of a group. Should not be used on non-group files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – path to first file in the group.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>command status</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[None]</p>
 </dd>
 </dl>
 </dd></dl>
