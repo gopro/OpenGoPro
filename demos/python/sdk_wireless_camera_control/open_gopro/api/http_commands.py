@@ -42,6 +42,37 @@ class HttpCommands(HttpMessages[HttpMessage]):
     To be used as a delegate for a GoProHttp to build commands
     """
 
+    @http_get_json_command(endpoint="/gp/gpControl/command/storage/delete/all")
+    async def delete_all(self) -> GoProResp[None]:
+        """Delete all files on the SD card.
+
+        Returns:
+            GoProResp[None]: command status
+        """
+
+    @http_get_json_command(endpoint="gopro/media/delete/file", arguments=["path"])
+    async def delete_file(self, *, path: str) -> GoProResp[None]:
+        """Delete a single file including single files that are part of a group.
+
+        Args:
+            path (str): path to file to delete
+
+        Returns:
+            GoProResp[None]: command status
+        """
+
+    @http_get_json_command(endpoint="/gp/gpControl/command/storage/delete/group", arguments=["p"])
+    async def delete_group(self, *, path: str) -> GoProResp[None]:
+        """Delete all contents of a group. Should not be used on non-group files.
+
+        Args:
+            path (str): path to first file in the group.
+
+        Returns:
+            GoProResp[None]: command status
+        """
+        return {"p": path}  # type: ignore
+
     @http_get_json_command(
         endpoint="gopro/media/last_captured",
         parser=Parser(json_parser=JsonParsers.PydanticAdapter(MediaPath)),

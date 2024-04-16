@@ -56,7 +56,7 @@ def tests(session) -> None:
         "coverage[toml]",
         "requests-mock",
     )
-    session.run("pytest", "tests", "--cov-fail-under=65")
+    session.run("pytest", "tests/unit", "--cov-fail-under=70")
 
 
 @session(python=SUPPORTED_VERSIONS[-1])

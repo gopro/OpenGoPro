@@ -84,7 +84,7 @@ isort = "*"
 types-protobuf = "^4"
 
 [tool.poe.tasks.tests]
-cmd = "pytest tests --cov-fail-under=70"
+cmd = "pytest tests/unit --cov-fail-under=70"
 help = "Run unit tests"
 
 [tool.poe.tasks._types]
@@ -121,7 +121,7 @@ help = "validate docstrings"
 
 [tool.poe.tasks.docstrings]
 sequence = ["_pydocstyle", "_darglint"]
-help = "Format, check types, lint, check docstrings, and run unit tests"
+help = "Analyze docstrings for consistency and errors"
 
 [tool.poe.tasks.sphinx]
 cmd = "sphinx-build -W --keep-going -a -E -b html docs docs/build"
