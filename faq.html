@@ -752,7 +752,23 @@ most interesting moments in the video.</p>
     <button class="accordion">Which cameras are supported by Open GoPro?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>The answer at a high level is &gt;= Hero 9. However, there are also certain firmware requirements. For a complete
-answer, see the <a href="/OpenGoPro/ble/#supported-cameras">Specification</a>.</p>
+answer, see the <a href="/OpenGoPro/#compatibility">Specification</a>.</p>
+</div>
+</div>
+
+<div class="accordion-container anchored">
+    <button class="accordion">How to get the remaining timelapse capability?<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>First check the value of <a href="/OpenGoPro/ble/features/settings.html#setting-128">Setting 128</a>. Then depending on whether
+this is Photo or Video, use:</p>
+
+<ul>
+  <li>
+<a href="/OpenGoPro/ble/features/statuses.html#status-34">Status 34</a> (Remaining photos)</li>
+  <li>
+<a href="/OpenGoPro/ble/features/statuses.html#status-35">Status 35</a> (Remaining videos)</li>
+</ul>
+
 </div>
 </div>
 
@@ -791,7 +807,7 @@ you are already connected to it from a previous session. To be sure, power cycle
     <button class="accordion">Workaround for intermittent Wifi AP Connection failure<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
 <p>On &gt;= Hero 11, try disabling and then re-enabling the camera’s Wifi AP using the
-<a href="/OpenGoPro/ble/#commands">AP Control BLE Command</a></p>
+<a href="/OpenGoPro/ble/features/control.html#set-ap-control">AP Control BLE Command</a></p>
 </div>
 </div>
 
