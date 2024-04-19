@@ -5,7 +5,7 @@ name: Jekyll Build and Deploy
 
 on:
     push:
-        branches: [main, develop]
+        branches: [main]
     workflow_dispatch:
 
 jobs:
@@ -125,48 +125,4 @@ jobs:
                   git config user.name github-actions
                   git config user.email github-actions@github.com
                   git commit --allow-empty -m "sphinx build from Action ${GITHUB_SHA}"
-                  git push
-
-    jekyll:
-        name: Build and Deploy Jekyll Site
-        needs: [copyright, check, python_sdk]
-        if: always()
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout source branch (the PR branch)
-              uses: actions/checkout@v3
-              with:
-                  path: source
-
-            - name: Checkout target branch (the gh-pages branch)
-              uses: actions/checkout@v3
-              with:
-                  ref: gh-pages
-                  path: target
-
-            - name: Log in to the Container registry
-              uses: docker/login-action@v1.10.0
-              with:
-                  registry: ghcr.io
-                  username: ${{ github.actor }}
-                  password: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Build Github Pages
-              shell: bash
-              working-directory: ./source
-              run: |
-                  if [[ ${{ github.repository }} == gopro/OpenGoPro ]]; then
-                    make build
-                  else
-                    make build BUILD_HOST_URL=${{ secrets.STAGING_GH_PAGES_SITE }} BUILD_BASE_URL="\'\'"
-                  fi
-
-            - name: Deploy to Github Pages
-              run: |
-                  cp -r ./source/docs/_site/* ./target
-                  cd  ./target
-                  git add .
-                  git config user.name github-actions
-                  git config user.email github-actions@github.com
-                  git commit --allow-empty -m "Github Pages build from Action ${GITHUB_SHA}"
                   git push
