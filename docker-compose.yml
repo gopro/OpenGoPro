@@ -3,8 +3,11 @@
 
 services:
     proto-build:
-        build: .
+        build:
+            context: tools/proto_build
         container_name: proto-build
+        profiles:
+            - ephemeral
         volumes:
             - ./protobuf:/proto_in
             - ./.build/protobuf/python:/proto_python_out

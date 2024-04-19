@@ -26,7 +26,9 @@ class _EnumProvisioning:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumProvisioningEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumProvisioning.ValueType],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
+        _EnumProvisioning.ValueType
+    ],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -43,7 +45,9 @@ class _EnumProvisioningEnumTypeWrapper(
     PROVISIONING_ERROR_NO_INTERNET: _EnumProvisioning.ValueType
     PROVISIONING_ERROR_UNSUPPORTED_TYPE: _EnumProvisioning.ValueType
 
-class EnumProvisioning(_EnumProvisioning, metaclass=_EnumProvisioningEnumTypeWrapper): ...
+class EnumProvisioning(
+    _EnumProvisioning, metaclass=_EnumProvisioningEnumTypeWrapper
+): ...
 
 PROVISIONING_UNKNOWN: EnumProvisioning.ValueType
 PROVISIONING_NEVER_STARTED: EnumProvisioning.ValueType
@@ -64,7 +68,9 @@ class _EnumScanning:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumScanningEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumScanning.ValueType],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
+        _EnumScanning.ValueType
+    ],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -90,7 +96,9 @@ class _EnumScanEntryFlags:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumScanEntryFlagsEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumScanEntryFlags.ValueType],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
+        _EnumScanEntryFlags.ValueType
+    ],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -105,7 +113,9 @@ class _EnumScanEntryFlagsEnumTypeWrapper(
     "Camera is connected to this AP"
     SCAN_FLAG_UNSUPPORTED_TYPE: _EnumScanEntryFlags.ValueType
 
-class EnumScanEntryFlags(_EnumScanEntryFlags, metaclass=_EnumScanEntryFlagsEnumTypeWrapper): ...
+class EnumScanEntryFlags(
+    _EnumScanEntryFlags, metaclass=_EnumScanEntryFlagsEnumTypeWrapper
+): ...
 
 SCAN_FLAG_OPEN: EnumScanEntryFlags.ValueType
 "This network does not require authentication"
@@ -132,14 +142,20 @@ class NotifProvisioningState(google.protobuf.message.Message):
     provisioning_state: global___EnumProvisioning.ValueType
     "Provisioning / connection state"
 
-    def __init__(self, *, provisioning_state: global___EnumProvisioning.ValueType | None = ...) -> None: ...
+    def __init__(
+        self, *, provisioning_state: global___EnumProvisioning.ValueType | None = ...
+    ) -> None: ...
     def HasField(
         self,
-        field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"],
+        field_name: typing_extensions.Literal[
+            "provisioning_state", b"provisioning_state"
+        ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
-        field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"],
+        field_name: typing_extensions.Literal[
+            "provisioning_state", b"provisioning_state"
+        ],
     ) -> None: ...
 
 global___NotifProvisioningState = NotifProvisioningState
@@ -221,8 +237,12 @@ class RequestConnect(google.protobuf.message.Message):
     "AP SSID"
 
     def __init__(self, *, ssid: builtins.str | None = ...) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["ssid", b"ssid"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["ssid", b"ssid"]) -> None: ...
+    def HasField(
+        self, field_name: typing_extensions.Literal["ssid", b"ssid"]
+    ) -> builtins.bool: ...
+    def ClearField(
+        self, field_name: typing_extensions.Literal["ssid", b"ssid"]
+    ) -> None: ...
 
 global___RequestConnect = RequestConnect
 
@@ -578,7 +598,9 @@ class ResponseGetApEntries(google.protobuf.message.Message):
     @property
     def entries(
         self,
-    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___ResponseGetApEntries.ScanEntry]:
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
+        global___ResponseGetApEntries.ScanEntry
+    ]:
         """Array containing details about discovered APs"""
 
     def __init__(
@@ -586,15 +608,21 @@ class ResponseGetApEntries(google.protobuf.message.Message):
         *,
         result: response_generic_pb2.EnumResultGeneric.ValueType | None = ...,
         scan_id: builtins.int | None = ...,
-        entries: collections.abc.Iterable[global___ResponseGetApEntries.ScanEntry] | None = ...
+        entries: (
+            collections.abc.Iterable[global___ResponseGetApEntries.ScanEntry] | None
+        ) = ...
     ) -> None: ...
     def HasField(
         self,
-        field_name: typing_extensions.Literal["result", b"result", "scan_id", b"scan_id"],
+        field_name: typing_extensions.Literal[
+            "result", b"result", "scan_id", b"scan_id"
+        ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
-        field_name: typing_extensions.Literal["entries", b"entries", "result", b"result", "scan_id", b"scan_id"],
+        field_name: typing_extensions.Literal[
+            "entries", b"entries", "result", b"result", "scan_id", b"scan_id"
+        ],
     ) -> None: ...
 
 global___ResponseGetApEntries = ResponseGetApEntries
@@ -623,11 +651,15 @@ class ResponseStartScanning(google.protobuf.message.Message):
     ) -> None: ...
     def HasField(
         self,
-        field_name: typing_extensions.Literal["result", b"result", "scanning_state", b"scanning_state"],
+        field_name: typing_extensions.Literal[
+            "result", b"result", "scanning_state", b"scanning_state"
+        ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
-        field_name: typing_extensions.Literal["result", b"result", "scanning_state", b"scanning_state"],
+        field_name: typing_extensions.Literal[
+            "result", b"result", "scanning_state", b"scanning_state"
+        ],
     ) -> None: ...
 
 global___ResponseStartScanning = ResponseStartScanning

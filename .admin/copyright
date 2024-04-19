@@ -1,0 +1,227 @@
+#!/usr/bin/env bash
+
+# copyright/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:06:27 PM
+
+COPYRIGHT="##FILE##/Open GoPro, Version ##VERSION## (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro)."
+TIME="This copyright was auto-generated on ##TIME##"
+
+INPUT=
+CHECK_ONLY=false
+
+num_wrong=0
+
+help() {
+    cat <<EOF
+
+Usage: copyright [OPTIONS] VERSION
+Check for or apply copyrights to source files.
+
+Required positional arguments:
+    VERSION          version to check for / apply in the copyright
+
+Optional arguments:
+    -i INPUT         INPUT is directory to analyze. By default if not passed, git changed / added files will be analyzed.
+    -h               Print this Help.
+    -c               Check only (and output problems). Do not apply changes. Returns 3 if any missing copyrights found
+
+EOF
+}
+
+# MacOS doesn't have realpath. This is taken from https://stackoverflow.com/questions/3572030/bash-script-absolute-path-with-os-x
+realpath_support_macos() {
+    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+}
+
+main() {
+    # Build array of input files
+    IFS=$'\n' # Change interframe separator to handle files with spaces
+    if [ -z "$INPUT" ]; then
+        echo "Analyzing added / modified files."
+        files=($(git diff --cached --name-only --diff-filter=ACM)) # Added / modified files
+    else
+        echo "Analyzing all files recursively at $(realpath_support_macos $INPUT)."
+        # All files except for those in .git and
+        # Lunr files which must contain front matter at first line
+        files=($(find $INPUT -type f ! -path "./.git/*" ! -path "./docs/assets/js/lunr/*"))
+    fi
+
+    # Ensure there are any files to analyze
+    if [[ "${#files[@]}" == 0 ]]; then
+        echo "No files to analyze."
+        exit 0
+    fi
+
+    FORMAT="%-120s | %-7s | %-7s | %-7s | %-7s |"
+    printf "\n$FORMAT\n" "FILE" "CORRECT" "WRONG" "MISSING" "N/A"
+    printf '=%.0s' {1..162}
+    echo
+
+    # Analyze each file for a copyright
+    for file in ${files[@]}; do
+        copyright=
+        line_start=
+        line_end=
+        found_version=
+        incorrect="MISSING"
+
+        # Is there a copyright?
+        # Note! We're only looking at the first 7 lines as an optimization to avoid reading large files.
+        # In actuality, there is no reason for it be after the 3rd line.
+        copyright=$(head -n 7 $file | cat -n | grep -m1 '(C) Copyright.*GoPro' | sed -e 's/^[[:space:]]*//') # Add line numbers when cat'ing, then trim leading whitespace.
+        generic_copyright=$(head -n 7 $file | cat -n | grep -i -m1 'copyright' | sed -e 's/^[[:space:]]*//')
+        if [[ "$copyright" ]]; then
+            # If this file explicitely does not get a copyright, continue
+            if  [[ $(echo "$copyright" | grep -c "No (C) Copyright") > 0 ]]; then
+                printf "$FORMAT\n" "$file" "" "" "" "*"
+                continue
+            fi
+            # Is this the correct version, continue
+            found_version=$(echo "$copyright" | sed 's/.*Version \(.*\) (C).*/\1/')
+            if [[ "$VERSION" == "$found_version" ]]; then
+                printf "$FORMAT\n" "$file" "*"
+                continue
+            fi
+            # The version is incorrect. If we are to make changes (i.e. we are not only checking)...
+            incorrect="WRONG_VERSION"
+            if [[ "$CHECK_ONLY" == false ]]; then
+                # Get line number where copyright starts
+                line_start=$(echo "$copyright" | cut -f1)
+                # And where it ends (line 1 = copyright, line 2 = timestamp, line 3 = newline)
+                line_end=$((line_start + 2))
+                # Strip the lines since we will add the correct copyright below
+                lines="$line_start,$line_end"
+                sed -i.bak "$lines"'d' $file && rm "$file".bak # The .bak is to appease MacOS
+            fi
+        elif [[ "$generic_copyright" ]]; then
+            #this file has a copyright that is potentially not our own
+            printf "$FORMAT\n" "$file" "" "" "" "*"
+            continue
+        fi
+
+        # The copyright was either missing or had an incorrect version. Now see if this file deserves a copyright.
+        # First check known filenames that don't have extensions
+        case $(basename "$file") in
+        Makefile | Dockerfile)
+            start="#"
+            stop=""
+            ;;
+        *)
+            # Now check file extensions
+            extension="${file##*.}"
+            case $extension in
+            py | yml | r | R | rb)
+                start="#"
+                stop=""
+                ;;
+            c | h | cpp | cxx | hpp | js | ts | swift | css | proto | java | cs | kt | kts | ktm | m | php | rs | go | dart)
+                start="/*"
+                stop=" */"
+                ;;
+            lua)
+                start="--"
+                stop=""
+                ;;
+            *)
+                # Special case for shell files. We use the file command since they might not have an extension
+                if [[ $(echo $(file $file) | grep -c "shell script") > 0 ]]; then
+                    start="#"
+                    stop=""
+                else
+                    printf "$FORMAT\n" "$file" "" "" "" "*"
+                    continue
+                fi
+                ;;
+            esac
+            ;;
+        esac
+
+        num_wrong=$((num_wrong + 1))
+        if [[ "$incorrect" == "MISSING" ]]; then
+            printf "$FORMAT" "$file" "" "" "X"
+        else
+            printf "$FORMAT" "$file" "" "X"
+        fi
+
+        # Build the copyright string if desired
+        if [[ "$CHECK_ONLY" == false ]]; then
+            # Replace template strings with actual values and make into comment
+            new_copyright="${COPYRIGHT/"##FILE##"/$(basename "$file")}"
+            new_copyright="${new_copyright/"##VERSION##"/$VERSION}"
+            new_copyright="$start $new_copyright$stop"
+            # Build the time string
+            time="${TIME/"##TIME##"/$(date)}"
+            time="$start $time$stop"
+
+            # Now write it. First we need to find where to put the copyright if there was not already one.
+            if [ -z "$line_start" ]; then
+                # If shebang exists, write on the line after the shebang. Shebang is always on the first line.
+                if [ "$(head -c 2 $file)" = "#!" ]; then
+                    line_start=2
+                # Otherwise, use the first line
+                else
+                    line_start=1
+                fi
+            fi
+
+            # Now build the new file
+            head -n $((line_start - 1)) $file >temp 2>/dev/null # Original file up until the line where the copyright was (or is to be)
+            # MacOS warns about 0 so pipe sdterr to null
+            echo "$new_copyright" >>temp      # Add copyright
+            echo "$time" >>temp               # Add timestamp
+            echo >>temp                       # Add new line
+            tail -n +$line_start $file >>temp # Lines after where the copyright was (or will be)
+            mv temp "$file"                   # Replace the original file
+            echo " --> Added copyright ✔️"
+        else
+            echo
+        fi
+    done
+
+    if [[ "$CHECK_ONLY" == true ]]; then
+        echo
+        echo "Total found $num_wrong missing or incorrect copyrights"
+        if [[ "$num_wrong" > 0 ]]; then
+            exit 3
+        fi
+    fi
+
+    exit 0
+}
+
+# Parse optional arguments
+while getopts "hci:" option; do
+    case ${option} in
+    h) #For option h
+        help
+        exit 0
+        ;;
+    c) #For option c
+        CHECK_ONLY=true
+        ;;
+    i) #For option i
+        INPUT=$OPTARG
+        ;;
+    \? | :)
+        help
+        exit 1
+        ;;
+    *)
+        echo "Unexpected error occurred." >&2
+        help
+        exit 1
+        ;;
+    esac
+done
+
+# Jump to positional arguments
+shift $((OPTIND - 1))
+if [[ $# < 1 ]]; then
+    echo "Missing VERSION parameter" >&2
+    help
+    exit 1
+fi
+
+VERSION=$1
+
+main
