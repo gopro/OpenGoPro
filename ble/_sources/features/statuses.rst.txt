@@ -1,7 +1,0 @@
-Statuses
-********
-
-This section will describe each status and its supported values. See the :doc:`Query<query>` section for operations to query
-status values.
-
-.. include:: status_ids.inc
