@@ -479,266 +479,6 @@ EnumPresetGroup
    * - name
      - value
      - summary
-   * - PRESET_GROUP_ID_VIDEO_SINGLE_LENS
-     - 0
-
-     - Single video
-
-   * - PRESET_GROUP_ID_PHOTO_SINGLE_LENS
-     - 1
-
-     - Single photo
-
-   * - PRESET_GROUP_ID_TIMELAPSE_SINGLE_LENS
-     - 2
-
-     - Single timelapse
-
-   * - PRESET_GROUP_ID_VIDEO_HEMI_LENS
-     - 3
-
-     - Spherical video hemi lens
-
-   * - PRESET_GROUP_ID_PHOTO_HEMI_LENS
-     - 4
-
-     - Spherical photo hemi lens
-
-   * - PRESET_GROUP_ID_TIMELAPSE_HEMI_LENS
-     - 5
-
-     - Spherical timelapse hemi lens
-
-   * - PRESET_GROUP_ID_SPECIAL_INTERNAL
-     - 6
-
-     - Special
-
-   * - PRESET_GROUP_ID_SPECIAL_HEMI
-     - 7
-
-     - Special hemi lens
-
-   * - PRESET_GROUP_ID_VIDEO_ENDURANCE_SINGLE_LENS
-     - 8
-
-     - Video battery endurance
-
-   * - PRESET_GROUP_ID_VIDEO_LONGEST_BATTERY_SINGLE_LENS
-     - 9
-
-     - Video longest battery
-
-   * - PRESET_GROUP_ID_EASY_VIDEO_SINGLE_LENS
-     - 10
-
-     - Easy single video
-
-   * - PRESET_GROUP_ID_EASY_VIDEO_ENDURANCE_SINGLE_LENS
-     - 11
-
-     - Easy video battery endurance
-
-   * - PRESET_GROUP_ID_EASY_PHOTO_SINGLE_LENS
-     - 12
-
-     - Easy single photo
-
-   * - PRESET_GROUP_ID_EASY_TIMELAPSE_SINGLE_LENS
-     - 13
-
-     - Easy single timelapse
-
-   * - PRESET_GROUP_ID_EASY_VIDEO_LONGEST_BATTERY_SINGLE_LENS
-     - 14
-
-     - Easy video longest battery
-
-   * - PRESET_GROUP_ID_VIDEO_HEMI_LENS_2
-     - 15
-
-     - Hemi Lens 2 video
-
-   * - PRESET_GROUP_ID_PHOTO_HEMI_LENS_2
-     - 16
-
-     - Hemi Lens 2 photo
-
-   * - PRESET_GROUP_ID_TIMELAPSE_HEMI_LENS_2
-     - 17
-
-     - Hemi Lens 2 timelapse
-
-   * - PRESET_GROUP_ID_SPECIAL_HEMI_LENS_2
-     - 18
-
-     - Hemi Lens 2 special
-
-   * - PRESET_GROUP_ID_EASY_VIDEO_HEMI_LENS
-     - 19
-
-     - Hemi Lens easy video
-
-   * - PRESET_GROUP_ID_EASY_PHOTO_HEMI_LENS
-     - 20
-
-     - Hemi Lens easy photo
-
-   * - PRESET_GROUP_ID_EASY_TIMELAPSE_HEMI_LENS
-     - 21
-
-     - Hemi Lens easy timelapse
-
-   * - PRESET_GROUP_ID_EASY_VIDEO_HEMI_LENS_2
-     - 22
-
-     - Hemi Lens 2 easy video
-
-   * - PRESET_GROUP_ID_EASY_PHOTO_HEMI_LENS_2
-     - 23
-
-     - Hemi Lens 2 easy photo
-
-   * - PRESET_GROUP_ID_EASY_TIMELAPSE_HEMI_LENS_2
-     - 24
-
-     - Hemi Lens 2 easy timelapse
-
-   * - PRESET_GROUP_ID_VIDEO_SINGLE_LENS_STANDARD
-     - 25
-
-     - Single video standard profile - for internal preset switch only
-
-   * - PRESET_GROUP_ID_VIDEO_SINGLE_LENS_HDR
-     - 26
-
-     - Single video hdr profile - for internal preset switch only
-
-   * - PRESET_GROUP_ID_VIDEO_SINGLE_LENS_LOG
-     - 27
-
-     - Single video log profile - for internal preset switch only
-
-   * - PRESET_GROUP_ID_VIDEO_SPHERICAL_LENS
-     - 28
-
-     - Spherical video mode
-
-   * - PRESET_GROUP_ID_PHOTO_SPHERICAL_LENS
-     - 29
-
-     - Spherical photo mode
-
-   * - PRESET_GROUP_ID_TIMELAPSE_SPHERICAL_LENS
-     - 30
-
-     - Spherical timelapse mode
-
-   * - PRESET_GROUP_ID_SPECIAL_SPHERICAL
-     - 31
-
-     - Special spherical lens
-
-   * - PRESET_GROUP_ID_VIDEO_SPHERICAL_LENS_STANDARD
-     - 32
-
-     - Spherical video standard profile - for internal preset switch only
-
-   * - PRESET_GROUP_ID_VIDEO_SPHERICAL_LENS_LOG
-     - 33
-
-     - Spherical video standard profile - for internal preset switch only
-
-   * - PRESET_GROUP_ID_VIDEO_HEMI_LENS_2_STANDARD
-     - 34
-
-     - Hemi Lens 2 video standard profile and Hemi Lens 2.5 video standard profile - for internal preset switch only
-
-   * - PRESET_GROUP_ID_VIDEO_HEMI_LENS_2_LOG
-     - 35
-
-     - Hemi Lens 2 video log profile and Hemi Lens 2.5 video log profile - for internal preset switch only
-
-   * - PRESET_GROUP_ID_VIDEO_MACRO_LENS
-     - 36
-
-     - Video macro lens
-
-   * - PRESET_GROUP_ID_PHOTO_MACRO_LENS
-     - 37
-
-     - Photo macro lens
-
-   * - PRESET_GROUP_ID_TIMELAPSE_MACRO_LENS
-     - 38
-
-     - Timelapse macro lens
-
-   * - PRESET_GROUP_ID_EASY_VIDEO_MACRO_LENS
-     - 39
-
-     - Easy Video macro lens
-
-   * - PRESET_GROUP_ID_EASY_PHOTO_MACRO_LENS
-     - 40
-
-     - Easy Photo macro lens
-
-   * - PRESET_GROUP_ID_EASY_TIMELAPSE_MACRO_LENS
-     - 41
-
-     - Easy Timelapse macro lens
-
-   * - PRESET_GROUP_ID_VIDEO_MACRO_LENS_STANDARD
-     - 42
-
-     - Macro lens video standard profile - for internal preset switch only
-
-   * - PRESET_GROUP_ID_VIDEO_MACRO_LENS_LOG
-     - 43
-
-     - Macro lens video log profile - for internal preset switch only
-
-   * - PRESET_GROUP_ID_VIDEO_ANAMORPHIC_LENS
-     - 44
-
-     - Video anamorphic lens
-
-   * - PRESET_GROUP_ID_PHOTO_ANAMORPHIC_LENS
-     - 45
-
-     - Photo anamorphic lens
-
-   * - PRESET_GROUP_ID_TIMELAPSE_ANAMORPHIC_LENS
-     - 46
-
-     - Timelapse anamorphic lens
-
-   * - PRESET_GROUP_ID_EASY_VIDEO_ANAMORPHIC_LENS
-     - 47
-
-     - Easy Video anamorphic lens
-
-   * - PRESET_GROUP_ID_EASY_PHOTO_ANAMORPHIC_LENS
-     - 48
-
-     - Easy Photo anamorphic lens
-
-   * - PRESET_GROUP_ID_EASY_TIMELAPSE_ANAMORPHIC_LENS
-     - 49
-
-     - Easy Timelapse anamorphic lens
-
-   * - PRESET_GROUP_ID_VIDEO_ANAMORPHIC_LENS_STANDARD
-     - 50
-
-     - Anamorphic lens video standard profile - for internal preset switch only
-
-   * - PRESET_GROUP_ID_VIDEO_ANAMORPHIC_LENS_LOG
-     - 51
-
-     - Anamorphic lens video log profile - for internal preset switch only
-
    * - PRESET_GROUP_ID_VIDEO
      - 1000
 
@@ -898,11 +638,6 @@ EnumPresetIcon
 
      - 
 
-   * - PRESET_ICON_360_VIDEO
-     - 12
-
-     - 
-
    * - PRESET_ICON_PHOTO_2
      - 13
 
@@ -1053,21 +788,6 @@ EnumPresetIcon
 
      - 
 
-   * - PRESET_ICON_MAX_VIDEO
-     - 55
-
-     - 
-
-   * - PRESET_ICON_MAX_PHOTO
-     - 56
-
-     - 
-
-   * - PRESET_ICON_MAX_TIMEWARP
-     - 57
-
-     - 
-
    * - PRESET_ICON_BASIC
      - 58
 
@@ -1163,106 +883,6 @@ EnumPresetIcon
 
      - 
 
-   * - PRESET_ICON_EASY_MAX_VIDEO
-     - 80
-
-     - 
-
-   * - PRESET_ICON_EASY_MAX_PHOTO
-     - 81
-
-     - 
-
-   * - PRESET_ICON_EASY_MAX_TIMEWARP
-     - 82
-
-     - 
-
-   * - PRESET_ICON_EASY_MAX_STAR_TRAIL
-     - 83
-
-     - 
-
-   * - PRESET_ICON_EASY_MAX_LIGHT_PAINTING
-     - 84
-
-     - 
-
-   * - PRESET_ICON_EASY_MAX_LIGHT_TRAIL
-     - 85
-
-     - 
-
-   * - PRESET_ICON_MAX_STAR_TRAIL
-     - 89
-
-     - 
-
-   * - PRESET_ICON_MAX_LIGHT_PAINTING
-     - 90
-
-     - 
-
-   * - PRESET_ICON_MAX_LIGHT_TRAIL
-     - 91
-
-     - 
-
-   * - PRESET_ICON_360_BURST
-     - 92
-
-     - 
-
-   * - PRESET_ICON_360_PHOTO_NIGHT
-     - 93
-
-     - 
-
-   * - PRESET_ICON_360_NIGHTLAPSE
-     - 94
-
-     - 
-
-   * - PRESET_ICON_360_TIMELAPSE_PHOTO
-     - 95
-
-     - 
-
-   * - PRESET_ICON_360_NIGHTLAPSE_PHOTO
-     - 96
-
-     - 
-
-   * - PRESET_ICON_360_PHOTO
-     - 97
-
-     - 
-
-   * - PRESET_ICON_360_TIMELAPSE
-     - 98
-
-     - 
-
-   * - PRESET_ICON_360_TIMEWARP
-     - 99
-
-     - 
-
-   * - PRESET_ICON_EASY_STANDARD_PROFILE
-     - 100
-
-     - 
-
-   * - PRESET_ICON_EASY_HDR_PROFILE
-     - 101
-
-     - 
-
-   * - PRESET_ICON_BURST_SLOMO
-     - 102
-
-     - 
-
    * - PRESET_ICON_TIMELAPSE_PHOTO
      - 1000
 
@@ -1270,11 +890,6 @@ EnumPresetIcon
 
    * - PRESET_ICON_NIGHTLAPSE_PHOTO
      - 1001
-
-     - 
-
-   * - PRESET_ICON_MAX
-     - 1002
 
      - 
 
@@ -1360,11 +975,6 @@ EnumPresetTitle
 
      - 
 
-   * - PRESET_TITLE_360_VIDEO
-     - 12
-
-     - 
-
    * - PRESET_TITLE_PHOTO_2
      - 13
 
@@ -1375,18 +985,8 @@ EnumPresetTitle
 
      - 
 
-   * - PRESET_TITLE_360_PHOTO
-     - 15
-
-     - 
-
    * - PRESET_TITLE_TIME_WARP_2
      - 16
-
-     - 
-
-   * - PRESET_TITLE_360_TIME_WARP
-     - 17
 
      - 
 
@@ -1515,81 +1115,6 @@ EnumPresetTitle
 
      - 
 
-   * - PRESET_TITLE_CUSTOM_CINEMATIC
-     - 43
-
-     - 
-
-   * - PRESET_TITLE_DIVE
-     - 44
-
-     - 
-
-   * - PRESET_TITLE_FPV
-     - 45
-
-     - 
-
-   * - PRESET_TITLE_HDR
-     - 46
-
-     - 
-
-   * - PRESET_TITLE_LANDSCAPE
-     - 47
-
-     - 
-
-   * - PRESET_TITLE_LOG
-     - 48
-
-     - 
-
-   * - PRESET_TITLE_CUSTOM_SLOMO
-     - 49
-
-     - 
-
-   * - PRESET_TITLE_TRIPOD
-     - 50
-
-     - 
-
-   * - PRESET_TITLE_360_TIMELAPSE
-     - 51
-
-     - 
-
-   * - PRESET_TITLE_360_NIGHT_LAPSE
-     - 52
-
-     - 
-
-   * - PRESET_TITLE_360_NIGHT_PHOTO
-     - 53
-
-     - 
-
-   * - PRESET_TITLE_PANO_TIME_LAPSE
-     - 54
-
-     - 
-
-   * - PRESET_TITLE_MAX_VIDEO
-     - 55
-
-     - 
-
-   * - PRESET_TITLE_MAX_PHOTO
-     - 56
-
-     - 
-
-   * - PRESET_TITLE_MAX_TIMEWARP
-     - 57
-
-     - 
-
    * - PRESET_TITLE_BASIC
      - 58
 
@@ -1700,16 +1225,6 @@ EnumPresetTitle
 
      - 
 
-   * - PRESET_TITLE_MAX_LENS_VIDEO
-     - 80
-
-     - 
-
-   * - PRESET_TITLE_MAX_LENS_TIMEWARP
-     - 81
-
-     - 
-
    * - PRESET_TITLE_STANDARD_QUALITY_VIDEO
      - 82
 
@@ -1720,51 +1235,6 @@ EnumPresetTitle
 
      - 
 
-   * - PRESET_TITLE_EASY_MAX_VIDEO
-     - 84
-
-     - 
-
-   * - PRESET_TITLE_EASY_MAX_PHOTO
-     - 85
-
-     - 
-
-   * - PRESET_TITLE_EASY_MAX_TIMEWARP
-     - 86
-
-     - 
-
-   * - PRESET_TITLE_EASY_MAX_STAR_TRAIL
-     - 87
-
-     - 
-
-   * - PRESET_TITLE_EASY_MAX_LIGHT_PAINTING
-     - 88
-
-     - 
-
-   * - PRESET_TITLE_EASY_MAX_LIGHT_TRAIL
-     - 89
-
-     - 
-
-   * - PRESET_TITLE_MAX_STAR_TRAIL
-     - 90
-
-     - 
-
-   * - PRESET_TITLE_MAX_LIGHT_PAINTING
-     - 91
-
-     - 
-
-   * - PRESET_TITLE_MAX_LIGHT_TRAIL
-     - 92
-
-     - 
-
    * - PRESET_TITLE_HIGHEST_QUALITY_VIDEO
      - 93
 
@@ -1772,76 +1242,6 @@ EnumPresetTitle
 
    * - PRESET_TITLE_USER_DEFINED_CUSTOM_NAME
      - 94
-
-     - 
-
-   * - PRESET_TITLE_360_DEG_BURST
-     - 95
-
-     - - FW_PRESET_TITLE_360_BURST
-
-   * - PRESET_TITLE_360_DEG_NIGHT_PHOTO
-     - 96
-
-     - - FW_PRESET_TITLE_360_NIGHT
-
-   * - PRESET_TITLE_360_DEG_TIME_LAPSE_PHOTO
-     - 97
-
-     - - FW_PRESET_TITLE_360_TIME_LAPSE_PHOTO
-
-   * - PRESET_TITLE_360_DEG_NIGHT_LAPSE_PHOTO
-     - 98
-
-     - - FW_PRESET_TITLE_360_NIGHT_LAPSE_PHOTO
-
-   * - PRESET_TITLE_EASY_STANDARD_PROFILE
-     - 99
-
-     - 
-
-   * - PRESET_TITLE_EASY_HDR_PROFILE
-     - 100
-
-     - 
-
-   * - PRESET_TITLE_360_DEG_TIME_LAPSE_VIDEO
-     - 101
-
-     - - FW_PRESET_TITLE_MAX_2_TIME_LAPSE
-
-   * - PRESET_TITLE_360_DEG_NIGHT_LAPSE_VIDEO
-     - 102
-
-     - - FW_PRESET_TITLE_MAX_2_NIGHT_LAPSE
-
-   * - PRESET_TITLE_360_DEG_PHOTO
-     - 103
-
-     - - FW_PRESET_TITLE_MAX_2_PHOTO
-
-   * - PRESET_TITLE_360_DEG_TIME_WARP
-     - 104
-
-     - - FW_PRESET_TITLE_MAX_2_TIME_WARP
-
-   * - PRESET_TITLE_360_DEG_VIDEO
-     - 105
-
-     - - FW_PRESET_TITLE_MAX_2_VIDEO
-
-   * - PRESET_TITLE_BURST_SLOMO
-     - 106
-
-     - 
-
-   * - PRESET_TITLE_VLOG
-     - 107
-
-     - 
-
-   * - PRESET_TITLE_MAX
-     - 108
 
      - 
 
@@ -2359,12 +1759,6 @@ EnumWindowSize
 
 
 
-
-
-
-
-
-
 .. _proto-media:
 
 Media
@@ -2701,20 +2095,6 @@ Sent either:
 
      - List of currently available Preset Groups
 
-   * - custom_icon_ids
-
-     - :ref:`proto-range`
-     - 2
-
-     - A list of ranges of icon ID's available for custom presets
-
-   * - custom_title_ids
-
-     - :ref:`proto-range`
-     - 3
-
-     - A list of ranges of title ID's available for custom presets
-
 
 
 
@@ -2901,44 +2281,6 @@ Setting representation that comprises a  :ref:`proto-preset`
      - 3
 
      - Does this setting appear on the Preset "pill" in the camera UI?
-
-
-
-
-
-
-.. _proto-range:
-
-Range
------
-
-
-.. seealso::
-
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto>`__
-
-
-A model used to represent a contiguous range of integer values.
-
-.. list-table::
-   :widths: 10 10 15 40
-   :header-rows: 1
-
-   * - field
-     - typespec
-     - value
-     - summary
-   * - start
-     - int32
-     - 1
-
-     - Start index of the range.
-
-   * - length
-     - int32
-     - 2
-
-     - Length of the range.
 
 
 
@@ -3200,25 +2542,6 @@ Returns a :ref:`proto-responsegeneric` with the status of the preset update requ
        | The range of acceptable custom icon ID's can be found in the initial :ref:`proto-notifypresetstatus` response to
        | :ref:`proto-requestgetpresetstatus`
 
-
-
-
-
-
-.. _proto-requestgetallpresetstatus:
-
-RequestGetAllPresetStatus
--------------------------
-
-
-.. seealso::
-
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto>`__
-
-
-Get the superset of all possible presets, regardless of the current camera state
-
-Response: :ref:`proto-notifypresetstatus` sent immediately
 
 
 
