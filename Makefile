@@ -5,6 +5,10 @@ PROTO_BUILD_DIR=.build/protobuf/python/*
 PYTHON_TUTORIAL_PROTO_DIR=demos/python/tutorial/tutorial_modules/tutorial_5_ble_protobuf/proto
 PYTHON_SDK_PROTO_DIR=demos/python/sdk_wireless_camera_control/open_gopro/proto
 
+.PHONY: help
+help: ## Display this help which is generated from Make goal comments
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
 .PHONY: protos
 protos: ## Build generated code from protobuf files
 	@docker compose run --build --rm proto-build
@@ -12,3 +16,8 @@ protos: ## Build generated code from protobuf files
 	@cp ${PROTO_BUILD_DIR} ${PYTHON_TUTORIAL_PROTO_DIR}
 	@rm -rf ${PYTHON_SDK_PROTO_DIR}/*pb2.py* && mkdir -p ${PYTHON_SDK_PROTO_DIR}
 	@cp ${PROTO_BUILD_DIR} ${PYTHON_SDK_PROTO_DIR}
+
+.PHONY: copyright
+copyright: ## Check for and add missing copyrights
+	@echo "©️ Verifying / adding copyrights..."
+	@.admin/copyright -i . $(ORIGINAL_VERSION)
