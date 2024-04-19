@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Tutorial 8: Camera Media List :  Open GoPro</title>
+<meta name="description" content="This document will provide a walk-through tutorial to send Open GoPro HTTP commands to the GoPro, specifically to get the media list and perform operations on it (downloading pictures, videos, etc.)">
+
+
+  <meta name="author" content="GoPro">
+  
+  <meta property="article:author" content="GoPro">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Tutorial 8: Camera Media List">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/tutorials/camera-media-list">
+
+
+  <meta property="og:description" content="This document will provide a walk-through tutorial to send Open GoPro HTTP commands to the GoPro, specifically to get the media list and perform operations on it (downloading pictures, videos, etc.)">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-04-19T12:03:54-07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/tutorials/camera-media-list">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "https://gopro.github.io/OpenGoPro/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+  
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
+
+    <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+<script>
+    // Add anchors on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function (event) {
+        var manualAnchors = new AnchorJS();
+        manualAnchors.options = {
+            titleText: 'Permalink',
+            placement: 'left'
+        };
+        manualAnchors.add('.anchored');
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/OpenGoPro/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/ble/">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/http">HTTP Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro/tree/main/demos">Demos</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="https://gopro.github.io/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/OpenGoPro/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
+          <meta itemprop="position" content="2">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Tutorial 8: Camera Media List</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">GoPro</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Be a <strong>hero</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox">
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/connect-ble"><span class="nav__sub-title">1: Connect BLE</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/send-ble-commands"><span class="nav__sub-title">2: Send BLE Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/parse-ble-responses"><span class="nav__sub-title">3: Parse BLE TLV Responses</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/ble-queries"><span class="nav__sub-title">4: BLE Queries</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/ble-protobuf"><span class="nav__sub-title">5: BLE Protobuf</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/connect-wifi"><span class="nav__sub-title">6: Connect WiFi</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/send-wifi-commands"><span class="nav__sub-title">7: Send WiFi Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/camera-media-list"><span class="nav__sub-title">8: Camera Media List</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/cohn"><span class="nav__sub-title">9: Camera on the Home Network</span></a>
+        
+
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Tutorial 8: Camera Media List">
+    <meta itemprop="description" content="This document will provide a walk-through tutorial to send Open GoPro HTTP commands to the GoPro,specifically to get the media list and perform operations on it (downloading pictures, videos, etc.)">
+    <meta itemprop="datePublished" content="2024-04-19T12:03:54-07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Tutorial 8: Camera Media List
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#just-show-me-the-demos">Just Show me the Demo(s)!!</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#get-media-list">Get Media List</a></li>
+<li>
+<a href="#media-list-operations">Media List Operations</a><ul>
+<li><a href="#download-media-file">Download Media File</a></li>
+<li><a href="#get-media-thumbnail">Get Media Thumbnail</a></li>
+</ul>
+</li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#good-job">Good Job!</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>This document will provide a walk-through tutorial to send Open GoPro <a href="/OpenGoPro/http">HTTP commands</a> to the GoPro,
+specifically to get the media list and perform operations on it (downloading pictures, videos, etc.)</p>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>It is suggested that you have first completed the
+<a href="/OpenGoPro/tutorials/connect-wifi">Connecting to Wifi</a>
+and <a href="/OpenGoPro/tutorials/send-wifi-commands">Sending WiFi Commands</a> tutorials.</span>
+</div>
+
+<p>This tutorial only considers sending these commands as one-off commands. That is, it does not consider state
+management / synchronization when sending multiple commands. This will be discussed in a future tutorial.</p>
+
+<h1 id="requirements">Requirements</h1>
+
+<p>It is assumed that the hardware and software requirements from the
+<a href="/OpenGoPro/tutorials/connect-ble#requirements">connecting BLE tutorial</a> are present and
+configured correctly.</p>
+
+<p>The scripts that will be used for this tutorial can be found in the
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_8_camera_media_list">Tutorial 8 Folder</a>.</p>
+
+<h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
+
+<div>
+    <ul class="tab tab-linked" data-tab="c9ee498d-4ca5-44e6-989a-22704b70ca5d">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="c9ee498d-4ca5-44e6-989a-22704b70ca5d">
+        
+            <li class="active tab-content-container">
+<p>Each of the scripts for this tutorial can be found in the Tutorial 8
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_8_camera_media_list/">directory</a>.</p>
+
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.9 and &lt; 3.12 must be used as specified in the requirements</span>
+</div>
+
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>You must be connected to the camera via WiFi in order to run these scripts. You can do this by manually to the SSID
+and password listed on your camera or by leaving the
+<code class="language-plaintext highlighter-rouge">Establish Connection to WiFi AP</code> script from
+<a href="/OpenGoPro/tutorials/connect-wifi#just-show-me-the-demos">Tutorial 5</a> running in the background.</span>
+</div>
+
+<div class="accordion-container anchored">
+    <button class="accordion">Download Media File<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can downloading a file from your camera with HTTP over WiFi using the following script:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_media_download_file.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_media_download_file.py <span class="nt">--help</span>
+<span class="go">usage: wifi_media_download_file.py [-h]
+
+Find a photo on the camera and download it to the computer.
+
+optional arguments:
+  -h, --help  show this help message and exit
+</span></code></pre></div></div>
+
+</div>
+</div>
+
+<div class="accordion-container anchored">
+    <button class="accordion">Get Media Thumbnail<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can downloading the thumbnail for a media file from your camera with HTTP over WiFi using the following script:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_media_get_thumbnail.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python wifi_media_get_thumbnail.py <span class="nt">--help</span>
+<span class="go">usage: wifi_media_get_thumbnail.py [-h]
+
+Get the thumbnail for a media file.
+
+optional arguments:
+  -h, --help  show this help message and exit
+</span></code></pre></div></div>
+
+</div>
+</div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>The Kotlin file for this tutorial can be found on
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/kotlin/tutorial/app/src/main/java/com/example/open_gopro_tutorial/tutorials/Tutorial7CameraMediaList.kt">Github</a>.</p>
+
+<p>To perform the tutorial, run the Android Studio project, select “Tutorial 8” from the dropdown and click on “Perform.”
+This requires:</p>
+
+<ul>
+  <li>a GoPro is already connected via BLE, i.e. that Tutorial 1 was already run.</li>
+  <li>a GoPro is already connected via Wifi, i.e. that Tutorial 5 was already run.</li>
+</ul>
+
+<p>You can check the BLE and Wifi statuses at the top of the app.</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/OpenGoPro/assets/images/tutorials/kotlin/tutorial_8.png" alt="kotlin_tutorial_8" style="
+            width: 40%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Perform Tutorial 8
+
+        </figcaption></figure>
+
+<p>This will start the tutorial and log to the screen as it executes. When the tutorial is complete, click
+“Exit Tutorial” to return to the Tutorial selection screen.</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<h1 id="setup">Setup</h1>
+
+<p>We must first connect to The GoPro’s WiFi Access Point (AP) as was discussed in the
+<a href="/OpenGoPro/tutorials/connect-wifi">Connecting to Wifi</a> tutorial.</p>
+
+<h1 id="get-media-list">Get Media List</h1>
+
+<p>Now that we are are connected via WiFi, we will get the media list using the same procedure
+to send HTTP commands as in the
+<a href="/OpenGoPro/tutorials/send-wifi-commands">previous tutorial</a>.</p>
+
+<p>We get the media list via <a href="/OpenGoPro/http#tag/Media/operation/OGP_MEDIA_LIST">Get Media List</a>.
+This will return a JSON structure of all of the media files (pictures, videos) on the camera with
+corresponding information about each media file.</p>
+
+<p>Let’s build the endpoint, send the GET request, and check the response for errors. Any errors will raise
+an exception.</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="43f47893-3c51-4034-815b-6144895b64a0">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="43f47893-3c51-4034-815b-6144895b64a0">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/gopro/media/list</span><span class="sh">"</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">response</span><span class="p">.</span><span class="nf">raise_for_status</span><span class="p">()</span>
+</code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">response</span> <span class="o">=</span> <span class="n">wifi</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sh">"</span><span class="s">gopro/media/list</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+</li>
+        
+    </ul>
+</div>
+
+<p>Lastly, we print the response’s JSON data:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="b47e9528-8dac-41f9-beff-3148f4e83b6e">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="b47e9528-8dac-41f9-beff-3148f4e83b6e">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Response: </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The response will log as such (abbreviated for brevity):</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:Getting the media list: sending http://10.5.5.9:8080/gopro/media/list
+INFO:root:Command sent successfully
+INFO:root:Response: {
+    "id": "2510746051348624995",
+    "media": [
+        {
+            "d": "100GOPRO",
+            "fs": [
+                {
+                    "n": "GOPR0987.JPG",
+                    "cre": "1618583762",
+                    "mod": "1618583762",
+                    "s": "5013927"
+                },
+                {
+                    "n": "GOPR0988.JPG",
+                    "cre": "1618583764",
+                    "mod": "1618583764",
+                    "s": "5009491"
+                },
+                {
+                    "n": "GOPR0989.JPG",
+                    "cre": "1618583766",
+                    "mod": "1618583766",
+                    "s": "5031861"
+                },
+                {
+                    "n": "GX010990.MP4",
+                    "cre": "1451608343",
+                    "mod": "1451608343",
+                    "glrv": "806586",
+                    "ls": "-1",
+                    "s": "10725219"
+                },
+</span></code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Timber</span><span class="p">.</span><span class="nf">i</span><span class="p">(</span><span class="s">"Files in media list: ${prettyJson.encodeToString(fileList)}"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The response will log as such (abbreviated for brevity):</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">GET request to: http://10.5.5.9:8080/gopro/media/list
+Complete media list: {
+    "id": "4386457835676877283",
+    "media": [
+        {
+            "d": "100GOPRO",
+            "fs": [
+                {
+                    "n": "GOPR0232.JPG",
+                    "cre": "1748997965",
+                    "mod": "1748997965",
+                    "s": "7618898"
+                },
+                {
+                    "n": "GOPR0233.JPG",
+                    "cre": "1748998273",
+                    "mod": "1748998273",
+                    "s": "7653472"
+                },
+</span><span class="c">                ...
+</span><span class="go">                {
+                    "n": "GX010259.MP4",
+                    "cre": "1677828860",
+                    "mod": "1677828860",
+                    "glrv": "943295",
+                    "ls": "-1",
+                    "s": "9788009"
+                }
+            ]
+        }
+    ]
+}
+</span></code></pre></div></div>
+
+</li>
+        
+    </ul>
+</div>
+
+<p>The media list format is defined in the <a href="/OpenGoPro/http#schema/MediaList">Media Model</a>.
+We won’t be rehashing that here but will provide examples below of using the media list.</p>
+
+<p>One common functionality is to get the list of media file names, which can be done as such:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="0221a904-c5aa-4d8f-ba66-73d12239e401">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="0221a904-c5aa-4d8f-ba66-73d12239e401">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="sh">"</span><span class="s">n</span><span class="sh">"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">[</span><span class="sh">"</span><span class="s">media</span><span class="sh">"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="sh">"</span><span class="s">fs</span><span class="sh">"</span><span class="p">]])</span>
+</code></pre></div></div>
+
+<p>That is, access the list at the <strong>fs</strong> tag at the first element of the <strong>media</strong> tag, then
+make a list
+of all of the names (<strong>n</strong> tag of each element) in the <strong>fs</strong> list.</p>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">fileList</span> <span class="p">=</span>
+    <span class="n">response</span><span class="p">[</span><span class="s">"media"</span><span class="p">]</span><span class="o">?.</span><span class="n">jsonArray</span><span class="o">?.</span><span class="nf">first</span><span class="p">()</span><span class="o">?.</span><span class="n">jsonObject</span><span class="o">?.</span><span class="k">get</span><span class="p">(</span><span class="s">"fs"</span><span class="p">)</span><span class="o">?.</span><span class="n">jsonArray</span><span class="o">?.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">mediaEntry</span> <span class="p">-&gt;</span>
+        <span class="n">mediaEntry</span><span class="p">.</span><span class="n">jsonObject</span><span class="p">[</span><span class="s">"n"</span><span class="p">]</span>
+    <span class="p">}</span><span class="o">?.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">().</span><span class="nf">replace</span><span class="p">(</span><span class="s">"\""</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p>That is:</p>
+
+<ol>
+  <li>Access the JSON array at the <strong>fs</strong> tag at the first element of the <strong>media</strong> tag</li>
+  <li>Make a list of all of the names (<strong>n</strong> tag of each element) in the <strong>fs</strong> list.</li>
+  <li>Map this list to string and remove backslashes</li>
+  <li>
+</li>
+</ol>
+</li>
+        
+    </ul>
+</div>
+
+<h1 id="media-list-operations">Media List Operations</h1>
+
+<p>Whereas all of the WiFi commands described until now have returned JSON responses, most of
+the media list operations return binary data. From an HTTP perspective, the behavior is the same. However,
+the GET response will contain a large binary chunk of information so we will loop through it with the
+<code class="language-plaintext highlighter-rouge">requests</code> library as such, writing up to 8 kB at a time:</p>
+
+<svg class="mermaid" id="mermaid-svg" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 751.5px;" viewbox="-50 -10 751.5 503" role="graphics-document document" aria-roledescription="sequence" xmlns:xlink="http://www.w3.org/1999/xlink"><g><rect x="501.5" y="417" fill="#eaeaea" stroke="#666" width="150" height="65" name="GoPro" rx="3" ry="3" class="actor actor-bottom"></rect><text x="576.5" y="449.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="576.5" dy="0">GoPro</tspan></text></g><g><rect x="200" y="417" fill="#eaeaea" stroke="#666" width="177" height="65" name="PC" rx="3" ry="3" class="actor actor-bottom"></rect><text x="288.5" y="449.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="288.5" dy="0">Open GoPro user device</tspan></text></g><g><rect x="0" y="417" fill="#eaeaea" stroke="#666" width="150" height="65" name="disk" rx="3" ry="3" class="actor actor-bottom"></rect><text x="75" y="449.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="75" dy="0">disk</tspan></text></g><g><line id="actor2" x1="576.5" y1="5" x2="576.5" y2="417" class="200" stroke-width="0.5px" stroke="#999"></line><g id="root-2"><rect x="501.5" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" name="GoPro" rx="3" ry="3" class="actor actor-top"></rect><text x="576.5" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="576.5" dy="0">GoPro</tspan></text></g></g><g><line id="actor1" x1="288.5" y1="5" x2="288.5" y2="417" class="200" stroke-width="0.5px" stroke="#999"></line><g id="root-1"><rect x="200" y="0" fill="#eaeaea" stroke="#666" width="177" height="65" name="PC" rx="3" ry="3" class="actor actor-top"></rect><text x="288.5" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="288.5" dy="0">Open GoPro user device</tspan></text></g></g><g><line id="actor0" x1="75" y1="5" x2="75" y2="417" class="200" stroke-width="0.5px" stroke="#999"></line><g id="root-0"><rect x="0" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" name="disk" rx="3" ry="3" class="actor actor-top"></rect><text x="75" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="75" dy="0">disk</tspan></text></g></g><style>#mermaid-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-svg .error-icon{fill:#552222;}#mermaid-svg .error-text{fill:#552222;stroke:#552222;}#mermaid-svg .edge-thickness-normal{stroke-width:2px;}#mermaid-svg .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg .marker{fill:#333333;stroke:#333333;}#mermaid-svg .marker.cross{stroke:#333333;}#mermaid-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg .actor{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg text.actor&gt;tspan{fill:black;stroke:none;}#mermaid-svg .actor-line{stroke:grey;}#mermaid-svg .messageLine0{stroke-width:1.5;stroke-dasharray:none;stroke:#333;}#mermaid-svg .messageLine1{stroke-width:1.5;stroke-dasharray:2,2;stroke:#333;}#mermaid-svg #arrowhead path{fill:#333;stroke:#333;}#mermaid-svg .sequenceNumber{fill:white;}#mermaid-svg #sequencenumber{fill:#333;}#mermaid-svg #crosshead path{fill:#333;stroke:#333;}#mermaid-svg .messageText{fill:#333;stroke:none;}#mermaid-svg .labelBox{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg .labelText,#mermaid-svg .labelText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .loopText,#mermaid-svg .loopText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .loopLine{stroke-width:2px;stroke-dasharray:2,2;stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);}#mermaid-svg .note{stroke:#aaaa33;fill:#fff5ad;}#mermaid-svg .noteText,#mermaid-svg .noteText&gt;tspan{fill:black;stroke:none;}#mermaid-svg .activation0{fill:#f4f4f4;stroke:#666;}#mermaid-svg .activation1{fill:#f4f4f4;stroke:#666;}#mermaid-svg .activation2{fill:#f4f4f4;stroke:#666;}#mermaid-svg .actorPopupMenu{position:absolute;}#mermaid-svg .actorPopupMenuPanel{position:absolute;fill:#ECECFF;box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);filter:drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));}#mermaid-svg .actor-man line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-svg .actor-man circle,#mermaid-svg line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;stroke-width:2px;}#mermaid-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
+<g></g><defs><symbol id="computer" width="24" height="24"><path transform="scale(.5)" d="M2 2v13h20v-13h-20zm18 11h-16v-9h16v9zm-10.228 6l.466-1h3.524l.467 1h-4.457zm14.228 3h-24l2-6h2.104l-1.33 4h18.45l-1.297-4h2.073l2 6zm-5-10h-14v-7h14v7z"></path></symbol></defs><defs><symbol id="database" fill-rule="evenodd" clip-rule="evenodd"><path transform="scale(.5)" d="M12.258.001l.256.004.255.005.253.008.251.01.249.012.247.015.246.016.242.019.241.02.239.023.236.024.233.027.231.028.229.031.225.032.223.034.22.036.217.038.214.04.211.041.208.043.205.045.201.046.198.048.194.05.191.051.187.053.183.054.18.056.175.057.172.059.168.06.163.061.16.063.155.064.15.066.074.033.073.033.071.034.07.034.069.035.068.035.067.035.066.035.064.036.064.036.062.036.06.036.06.037.058.037.058.037.055.038.055.038.053.038.052.038.051.039.05.039.048.039.047.039.045.04.044.04.043.04.041.04.04.041.039.041.037.041.036.041.034.041.033.042.032.042.03.042.029.042.027.042.026.043.024.043.023.043.021.043.02.043.018.044.017.043.015.044.013.044.012.044.011.045.009.044.007.045.006.045.004.045.002.045.001.045v17l-.001.045-.002.045-.004.045-.006.045-.007.045-.009.044-.011.045-.012.044-.013.044-.015.044-.017.043-.018.044-.02.043-.021.043-.023.043-.024.043-.026.043-.027.042-.029.042-.03.042-.032.042-.033.042-.034.041-.036.041-.037.041-.039.041-.04.041-.041.04-.043.04-.044.04-.045.04-.047.039-.048.039-.05.039-.051.039-.052.038-.053.038-.055.038-.055.038-.058.037-.058.037-.06.037-.06.036-.062.036-.064.036-.064.036-.066.035-.067.035-.068.035-.069.035-.07.034-.071.034-.073.033-.074.033-.15.066-.155.064-.16.063-.163.061-.168.06-.172.059-.175.057-.18.056-.183.054-.187.053-.191.051-.194.05-.198.048-.201.046-.205.045-.208.043-.211.041-.214.04-.217.038-.22.036-.223.034-.225.032-.229.031-.231.028-.233.027-.236.024-.239.023-.241.02-.242.019-.246.016-.247.015-.249.012-.251.01-.253.008-.255.005-.256.004-.258.001-.258-.001-.256-.004-.255-.005-.253-.008-.251-.01-.249-.012-.247-.015-.245-.016-.243-.019-.241-.02-.238-.023-.236-.024-.234-.027-.231-.028-.228-.031-.226-.032-.223-.034-.22-.036-.217-.038-.214-.04-.211-.041-.208-.043-.204-.045-.201-.046-.198-.048-.195-.05-.19-.051-.187-.053-.184-.054-.179-.056-.176-.057-.172-.059-.167-.06-.164-.061-.159-.063-.155-.064-.151-.066-.074-.033-.072-.033-.072-.034-.07-.034-.069-.035-.068-.035-.067-.035-.066-.035-.064-.036-.063-.036-.062-.036-.061-.036-.06-.037-.058-.037-.057-.037-.056-.038-.055-.038-.053-.038-.052-.038-.051-.039-.049-.039-.049-.039-.046-.039-.046-.04-.044-.04-.043-.04-.041-.04-.04-.041-.039-.041-.037-.041-.036-.041-.034-.041-.033-.042-.032-.042-.03-.042-.029-.042-.027-.042-.026-.043-.024-.043-.023-.043-.021-.043-.02-.043-.018-.044-.017-.043-.015-.044-.013-.044-.012-.044-.011-.045-.009-.044-.007-.045-.006-.045-.004-.045-.002-.045-.001-.045v-17l.001-.045.002-.045.004-.045.006-.045.007-.045.009-.044.011-.045.012-.044.013-.044.015-.044.017-.043.018-.044.02-.043.021-.043.023-.043.024-.043.026-.043.027-.042.029-.042.03-.042.032-.042.033-.042.034-.041.036-.041.037-.041.039-.041.04-.041.041-.04.043-.04.044-.04.046-.04.046-.039.049-.039.049-.039.051-.039.052-.038.053-.038.055-.038.056-.038.057-.037.058-.037.06-.037.061-.036.062-.036.063-.036.064-.036.066-.035.067-.035.068-.035.069-.035.07-.034.072-.034.072-.033.074-.033.151-.066.155-.064.159-.063.164-.061.167-.06.172-.059.176-.057.179-.056.184-.054.187-.053.19-.051.195-.05.198-.048.201-.046.204-.045.208-.043.211-.041.214-.04.217-.038.22-.036.223-.034.226-.032.228-.031.231-.028.234-.027.236-.024.238-.023.241-.02.243-.019.245-.016.247-.015.249-.012.251-.01.253-.008.255-.005.256-.004.258-.001.258.001zm-9.258 20.499v.01l.001.021.003.021.004.022.005.021.006.022.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.023.018.024.019.024.021.024.022.025.023.024.024.025.052.049.056.05.061.051.066.051.07.051.075.051.079.052.084.052.088.052.092.052.097.052.102.051.105.052.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.048.144.049.147.047.152.047.155.047.16.045.163.045.167.043.171.043.176.041.178.041.183.039.187.039.19.037.194.035.197.035.202.033.204.031.209.03.212.029.216.027.219.025.222.024.226.021.23.02.233.018.236.016.24.015.243.012.246.01.249.008.253.005.256.004.259.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.021.224-.024.22-.026.216-.027.212-.028.21-.031.205-.031.202-.034.198-.034.194-.036.191-.037.187-.039.183-.04.179-.04.175-.042.172-.043.168-.044.163-.045.16-.046.155-.046.152-.047.148-.048.143-.049.139-.049.136-.05.131-.05.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.053.083-.051.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.05.023-.024.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.023.01-.022.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.127l-.077.055-.08.053-.083.054-.085.053-.087.052-.09.052-.093.051-.095.05-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.045-.118.044-.12.043-.122.042-.124.042-.126.041-.128.04-.13.04-.132.038-.134.038-.135.037-.138.037-.139.035-.142.035-.143.034-.144.033-.147.032-.148.031-.15.03-.151.03-.153.029-.154.027-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.01-.179.008-.179.008-.181.006-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.006-.179-.008-.179-.008-.178-.01-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.027-.153-.029-.151-.03-.15-.03-.148-.031-.146-.032-.145-.033-.143-.034-.141-.035-.14-.035-.137-.037-.136-.037-.134-.038-.132-.038-.13-.04-.128-.04-.126-.041-.124-.042-.122-.042-.12-.044-.117-.043-.116-.045-.113-.045-.112-.046-.109-.047-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.05-.093-.052-.09-.051-.087-.052-.085-.053-.083-.054-.08-.054-.077-.054v4.127zm0-5.654v.011l.001.021.003.021.004.021.005.022.006.022.007.022.009.022.01.022.011.023.012.023.013.023.015.024.016.023.017.024.018.024.019.024.021.024.022.024.023.025.024.024.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.052.11.051.114.051.119.052.123.05.127.051.131.05.135.049.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.044.171.042.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.022.23.02.233.018.236.016.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.012.241-.015.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.048.139-.05.136-.049.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.051.051-.049.023-.025.023-.024.021-.025.02-.024.019-.024.018-.024.017-.024.015-.023.014-.023.013-.024.012-.022.01-.023.01-.023.008-.022.006-.022.006-.022.004-.021.004-.022.001-.021.001-.021v-4.139l-.077.054-.08.054-.083.054-.085.052-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.044-.118.044-.12.044-.122.042-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.035-.143.033-.144.033-.147.033-.148.031-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.009-.179.009-.179.007-.181.007-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.007-.179-.007-.179-.009-.178-.009-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.031-.146-.033-.145-.033-.143-.033-.141-.035-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.04-.126-.041-.124-.042-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.051-.093-.051-.09-.051-.087-.053-.085-.052-.083-.054-.08-.054-.077-.054v4.139zm0-5.666v.011l.001.02.003.022.004.021.005.022.006.021.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.024.018.023.019.024.021.025.022.024.023.024.024.025.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.051.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.043.171.043.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.021.23.02.233.018.236.017.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.013.241-.014.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.049.139-.049.136-.049.131-.051.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.049.023-.025.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.022.01-.023.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.153l-.077.054-.08.054-.083.053-.085.053-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.048-.105.048-.106.048-.109.046-.111.046-.114.046-.115.044-.118.044-.12.043-.122.043-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.034-.143.034-.144.033-.147.032-.148.032-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.024-.161.024-.162.023-.163.023-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.01-.178.01-.179.009-.179.007-.181.006-.182.006-.182.004-.184.003-.184.001-.185.001-.185-.001-.184-.001-.184-.003-.182-.004-.182-.006-.181-.006-.179-.007-.179-.009-.178-.01-.176-.01-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.023-.162-.023-.161-.024-.159-.024-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.032-.146-.032-.145-.033-.143-.034-.141-.034-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.041-.126-.041-.124-.041-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.048-.105-.048-.102-.048-.1-.05-.097-.049-.095-.051-.093-.051-.09-.052-.087-.052-.085-.053-.083-.053-.08-.054-.077-.054v4.153zm8.74-8.179l-.257.004-.254.005-.25.008-.247.011-.244.012-.241.014-.237.016-.233.018-.231.021-.226.022-.224.023-.22.026-.216.027-.212.028-.21.031-.205.032-.202.033-.198.034-.194.036-.191.038-.187.038-.183.04-.179.041-.175.042-.172.043-.168.043-.163.045-.16.046-.155.046-.152.048-.148.048-.143.048-.139.049-.136.05-.131.05-.126.051-.123.051-.118.051-.114.052-.11.052-.106.052-.101.052-.096.052-.092.052-.088.052-.083.052-.079.052-.074.051-.07.052-.065.051-.06.05-.056.05-.051.05-.023.025-.023.024-.021.024-.02.025-.019.024-.018.024-.017.023-.015.024-.014.023-.013.023-.012.023-.01.023-.01.022-.008.022-.006.023-.006.021-.004.022-.004.021-.001.021-.001.021.001.021.001.021.004.021.004.022.006.021.006.023.008.022.01.022.01.023.012.023.013.023.014.023.015.024.017.023.018.024.019.024.02.025.021.024.023.024.023.025.051.05.056.05.06.05.065.051.07.052.074.051.079.052.083.052.088.052.092.052.096.052.101.052.106.052.11.052.114.052.118.051.123.051.126.051.131.05.136.05.139.049.143.048.148.048.152.048.155.046.16.046.163.045.168.043.172.043.175.042.179.041.183.04.187.038.191.038.194.036.198.034.202.033.205.032.21.031.212.028.216.027.22.026.224.023.226.022.231.021.233.018.237.016.241.014.244.012.247.011.25.008.254.005.257.004.26.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.022.224-.023.22-.026.216-.027.212-.028.21-.031.205-.032.202-.033.198-.034.194-.036.191-.038.187-.038.183-.04.179-.041.175-.042.172-.043.168-.043.163-.045.16-.046.155-.046.152-.048.148-.048.143-.048.139-.049.136-.05.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.05.051-.05.023-.025.023-.024.021-.024.02-.025.019-.024.018-.024.017-.023.015-.024.014-.023.013-.023.012-.023.01-.023.01-.022.008-.022.006-.023.006-.021.004-.022.004-.021.001-.021.001-.021-.001-.021-.001-.021-.004-.021-.004-.022-.006-.021-.006-.023-.008-.022-.01-.022-.01-.023-.012-.023-.013-.023-.014-.023-.015-.024-.017-.023-.018-.024-.019-.024-.02-.025-.021-.024-.023-.024-.023-.025-.051-.05-.056-.05-.06-.05-.065-.051-.07-.052-.074-.051-.079-.052-.083-.052-.088-.052-.092-.052-.096-.052-.101-.052-.106-.052-.11-.052-.114-.052-.118-.051-.123-.051-.126-.051-.131-.05-.136-.05-.139-.049-.143-.048-.148-.048-.152-.048-.155-.046-.16-.046-.163-.045-.168-.043-.172-.043-.175-.042-.179-.041-.183-.04-.187-.038-.191-.038-.194-.036-.198-.034-.202-.033-.205-.032-.21-.031-.212-.028-.216-.027-.22-.026-.224-.023-.226-.022-.231-.021-.233-.018-.237-.016-.241-.014-.244-.012-.247-.011-.25-.008-.254-.005-.257-.004-.26-.001-.26.001z"></path></symbol></defs><defs><symbol id="clock" width="24" height="24"><path transform="scale(.5)" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z"></path></symbol></defs><defs><marker id="arrowhead" refx="7.9" refy="5" markerunits="userSpaceOnUse" markerwidth="12" markerheight="12" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs><defs><marker id="crosshead" markerwidth="15" markerheight="8" orient="auto" refx="4" refy="4.5"><path fill="none" stroke="#000000" stroke-width="1pt" d="M 1,2 L 6,7 M 6,2 L 1,7" style="stroke-dasharray: 0, 0;"></path></marker></defs><defs><marker id="filled-head" refx="15.5" refy="7" markerwidth="20" markerheight="28" orient="auto"><path d="M 18,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><defs><marker id="sequencenumber" refx="15" refy="15" markerwidth="60" markerheight="40" orient="auto"><circle cx="15" cy="15" r="6"></circle></marker></defs><g><rect x="263.5" y="75" fill="#EDF2AE" stroke="#666" width="338" height="39" rx="0" ry="0" class="note"></rect><text x="433" y="80" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="noteText" dy="1em" style="font-size: 16px; font-weight: 400;"><tspan x="433">PC connected to WiFi AP</tspan></text></g><g><rect x="571.5" y="252" fill="#EDF2AE" stroke="#666" width="10" height="46" rx="0" ry="0" class="activation0"></rect></g><g><rect x="283.5" y="300" fill="#EDF2AE" stroke="#666" width="10" height="97" rx="0" ry="0" class="activation0"></rect></g><g><line x1="64" y1="308" x2="303.5" y2="308" class="loopLine"></line><line x1="303.5" y1="308" x2="303.5" y2="397" class="loopLine"></line><line x1="64" y1="397" x2="303.5" y2="397" class="loopLine"></line><line x1="64" y1="308" x2="64" y2="397" class="loopLine"></line><polygon points="64,308 114,308 114,321 105.6,328 64,328" class="labelBox"></polygon><text x="89" y="321" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="labelText" style="font-size: 16px; font-weight: 400;">loop</text><text x="208.75" y="326" text-anchor="middle" class="loopText" style="font-size: 16px; font-weight: 400;"><tspan x="208.75">[write until complete]</tspan></text></g><text x="431" y="129" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-size: 16px; font-weight: 400;">Get Media List (GET)</text><line x1="289.5" y1="160" x2="572.5" y2="160" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><text x="434" y="175" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-size: 16px; font-weight: 400;">Media List (HTTP 200 OK)</text><line x1="575.5" y1="206" x2="292.5" y2="206" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><text x="431" y="221" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-size: 16px; font-weight: 400;">Command Request (GET)</text><line x1="289.5" y1="252" x2="572.5" y2="252" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><text x="432" y="267" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-size: 16px; font-weight: 400;">Binary Response (HTTP 200 OK)</text><line x1="571.5" y1="298" x2="292.5" y2="298" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><text x="181" y="358" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-size: 16px; font-weight: 400;">write &lt;= 8K</text><line x1="283.5" y1="387" x2="79" y2="387" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><style>@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");</style></svg>
+
+<h2 id="download-media-file">Download Media File</h2>
+
+<p>TODO Handle directory in media list.</p>
+
+<p>The next command we will be sending is
+<a href="/OpenGoPro/http#tag/Media/operation/OGP_DOWNLOAD_MEDIA">Download Media</a>. Specifically, we
+will be downloading a photo. The camera must have at least one photo in its media list in order for this to work.</p>
+
+<p>First, we get the media list as in
+<a href="/OpenGoPro/tutorials/camera-media-list#get-media-list">Get Media List</a> .
+Then we search through the list of file names in the media list looking for a photo (i.e. a file whose name
+ends in <strong>.jpg</strong>). Once we find a photo, we proceed:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="523a14d3-1444-4413-aee9-4dc9208eaed6">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="523a14d3-1444-4413-aee9-4dc9208eaed6">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">media_list</span> <span class="o">=</span> <span class="nf">get_media_list</span><span class="p">()</span>
+
+<span class="n">photo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="k">for</span> <span class="n">media_file</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="sh">"</span><span class="s">n</span><span class="sh">"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">[</span><span class="sh">"</span><span class="s">media</span><span class="sh">"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="sh">"</span><span class="s">fs</span><span class="sh">"</span><span class="p">]]:</span>
+    <span class="k">if</span> <span class="n">media_file</span><span class="p">.</span><span class="nf">lower</span><span class="p">().</span><span class="nf">endswith</span><span class="p">(</span><span class="sh">"</span><span class="s">.jpg</span><span class="sh">"</span><span class="p">):</span>
+        <span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">found a photo: </span><span class="si">{</span><span class="n">media_file</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">photo</span> <span class="o">=</span> <span class="n">media_file</span>
+        <span class="k">break</span>
+</code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">photo</span> <span class="p">=</span> <span class="n">fileList</span><span class="o">?.</span><span class="nf">firstOrNull</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="nf">endsWith</span><span class="p">(</span><span class="n">ignoreCase</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span> <span class="n">suffix</span> <span class="p">=</span> <span class="s">"jpg"</span><span class="p">)</span> <span class="p">}</span>
+    <span class="o">?:</span> <span class="k">throw</span> <span class="nc">Exception</span><span class="p">(</span><span class="s">"Not able to find a .jpg in the media list"</span><span class="p">)</span>
+<span class="nc">Timber</span><span class="p">.</span><span class="nf">i</span><span class="p">(</span><span class="s">"Found a photo: $photo"</span><span class="p">)</span>
+</code></pre></div></div>
+
+</li>
+        
+    </ul>
+</div>
+
+<p>Now let’s build the endpoint, send the GET request, and check the response for errors. Any errors will raise
+an exception.</p>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>The endpoint will start with “videos” for both photos and videos</span>
+</div>
+
+<div>
+    <ul class="tab tab-linked" data-tab="1fc98800-7161-43c6-899c-87bdd944ef1a">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="1fc98800-7161-43c6-899c-87bdd944ef1a">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="sh">"</span><span class="s">videos/DCIM/100GOPRO/</span><span class="si">{</span><span class="n">photo</span><span class="si">}</span><span class="sh">"</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">request</span><span class="p">:</span>
+    <span class="n">request</span><span class="p">.</span><span class="nf">raise_for_status</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Lastly, we iterate through the binary content in 8 kB chunks, writing to a local file:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">file</span> <span class="o">=</span> <span class="n">photo</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="sh">"</span><span class="s">.</span><span class="sh">"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="sh">"</span><span class="s">.jpg</span><span class="sh">"</span>
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="sh">"</span><span class="s">wb</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">receiving binary stream to </span><span class="si">{</span><span class="nb">file</span><span class="si">}</span><span class="s">...</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">request</span><span class="p">.</span><span class="nf">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">):</span>
+        <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+</code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="n">wifi</span><span class="p">.</span><span class="nf">getFile</span><span class="p">(</span>
+    <span class="nc">GOPRO_BASE_URL</span> <span class="p">+</span> <span class="s">"videos/DCIM/100GOPRO/$photo"</span><span class="p">,</span> <span class="n">appContainer</span><span class="p">.</span><span class="n">applicationContext</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>TODO FIX THIS</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<p>This will log as such:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="aef9d9b2-c0af-4125-9655-a671280a677f">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="aef9d9b2-c0af-4125-9655-a671280a677f">
+        
+            <li class="active tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:found a photo: GOPR0987.JPG
+INFO:root:Downloading GOPR0987.JPG
+INFO:root:Sending: http://10.5.5.9:8080/videos/DCIM/100GOPRO/GOPR0987.JPG
+INFO:root:receiving binary stream to GOPR0987.jpg...
+</span></code></pre></div></div>
+
+<p>Once complete, the <code class="language-plaintext highlighter-rouge">GOPR0987_thumbnail.jpg</code> file will be available from where the demo script was called.</p>
+</li>
+        
+            <li class="tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Found a photo: GOPR0232.JPG
+Downloading photo: GOPR0232.JPG...
+</span></code></pre></div></div>
+
+<p>Once complete, the photo will display in the tutorial window.</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<h2 id="get-media-thumbnail">Get Media Thumbnail</h2>
+
+<p>The next command we will be sending is <a href="/OpenGoPro/http#tag/Media/operation/OGP_MEDIA_THUMBNAIL">Get Media thumbnail </a>.
+Specifically, we will be getting the thumbnail for a photo. The camera must have at least one photo in its
+media list in order for this to work.</p>
+
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>There is a separate commandto get a media “screennail”</span>
+</div>
+
+<p>First, we get the media list as in
+<a href="/OpenGoPro/tutorials/camera-media-list#get-media-list">Get Media List</a> .
+Then we search through the list of file names in the media list looking for a photo (i.e. a file whose name
+ends in <strong>.jpg</strong>). Once we find a photo, we proceed:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="b15e3b27-721a-4f23-9fa5-2d7449885857">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="b15e3b27-721a-4f23-9fa5-2d7449885857">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">media_list</span> <span class="o">=</span> <span class="nf">get_media_list</span><span class="p">()</span>
+
+<span class="n">photo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="k">for</span> <span class="n">media_file</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="sh">"</span><span class="s">n</span><span class="sh">"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">media_list</span><span class="p">[</span><span class="sh">"</span><span class="s">media</span><span class="sh">"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="sh">"</span><span class="s">fs</span><span class="sh">"</span><span class="p">]]:</span>
+    <span class="k">if</span> <span class="n">media_file</span><span class="p">.</span><span class="nf">lower</span><span class="p">().</span><span class="nf">endswith</span><span class="p">(</span><span class="sh">"</span><span class="s">.jpg</span><span class="sh">"</span><span class="p">):</span>
+        <span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">found a photo: </span><span class="si">{</span><span class="n">media_file</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">photo</span> <span class="o">=</span> <span class="n">media_file</span>
+        <span class="k">break</span>
+</code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+</li>
+        
+    </ul>
+</div>
+
+<p>Now let’s build the endpoint, send the GET request, and check the response for errors. Any errors will raise
+an exception.</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="2d49bf21-7564-4035-9a0d-e85ede4c7ec9">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="2d49bf21-7564-4035-9a0d-e85ede4c7ec9">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="n">GOPRO_BASE_URL</span> <span class="o">+</span> <span class="sa">f</span><span class="sh">"</span><span class="s">/gopro/media/thumbnail?path=100GOPRO/</span><span class="si">{</span><span class="n">photo</span><span class="si">}</span><span class="sh">"</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">request</span><span class="p">:</span>
+    <span class="n">request</span><span class="p">.</span><span class="nf">raise_for_status</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Lastly, we iterate through the binary content in 8 kB chunks, writing to a local file:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">file</span> <span class="o">=</span> <span class="n">photo</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="sh">"</span><span class="s">.</span><span class="sh">"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="sh">"</span><span class="s">.jpg</span><span class="sh">"</span>
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="sh">"</span><span class="s">wb</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">receiving binary stream to </span><span class="si">{</span><span class="nb">file</span><span class="si">}</span><span class="s">...</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">request</span><span class="p">.</span><span class="nf">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">):</span>
+        <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+</code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+</li>
+        
+    </ul>
+</div>
+
+<p>This will log as such:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="0a35e544-04b0-4287-ba8a-dcd34211dea6">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="0a35e544-04b0-4287-ba8a-dcd34211dea6">
+        
+            <li class="active tab-content-container">
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">INFO:root:found a photo: GOPR0987.JPG
+INFO:root:Getting the thumbnail for GOPR0987.JPG
+INFO:root:Sending: http://10.5.5.9:8080/gopro/media/thumbnail?path=100GOPRO/GOPR0987.JPG
+INFO:root:receiving binary stream to GOPR0987_thumbnail.jpg...
+</span></code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+</li>
+        
+    </ul>
+</div>
+
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>See the previous tutorial’s
+<a href="/OpenGoPro/tutorials/send-wifi-commands#troubleshooting">troubleshooting section</a>.</p>
+
+<h1 id="good-job">Good Job!</h1>
+
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>Congratulations 🤙</span>
+</div>
+
+<p>You can now query the GoPro’s media list and retrieve binary information for media file. This is currently
+last tutorial. Stay tuned for more 👍</p>
+
+<p>At this point you should be able to start creating a useful example using the Open GoPro Interface. For some
+inspiration check out some of the <a href="https://github.com/gopro/OpenGoPro/tree/main/demos">demos</a>.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-19T12:03:54-07:00">April 19, 2024</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/OpenGoPro/tutorials/send-wifi-commands" class="pagination--pager" title="Tutorial 7: Send WiFi Commands
+">Previous</a>
+    
+    
+      <a href="/OpenGoPro/tutorials/cohn" class="pagination--pager" title="Tutorial 9: Camera on the Home Network
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+    <ul class="social-icons">
+        
+        <li><strong>Follow:</strong></li>
+           
+        <li>
+            <a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i>
+                Website</a>
+        </li>
+          
+        <li>
+            <a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i>
+                Twitter</a>
+        </li>
+          
+        <li>
+            <a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i>
+                Facebook</a>
+        </li>
+          
+        <li>
+            <a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i>
+                GitHub</a>
+        </li>
+          
+        <li>
+            <a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i>
+                Instagram</a>
+        </li>
+           
+    </ul>
+</div>
+
+<div class="page__footer-copyright">
+    © 2024 GoPro. Powered by
+    <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
+    <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
+    <p>
+        Can be used with GoPro® HERO9 and HERO10 cameras. You must include the following text on
+        every page where it can be seen by someone purchasing such an item: <em>"This product
+        and/or service is not affiliated with, endorsed by or in any way associated with
+        GoPro Inc. or its products and services. GoPro, HERO, and their respective logos
+        are trademarks or registered trademarks of GoPro, Inc."</em>
+    </p>
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/OpenGoPro/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/OpenGoPro/assets/js/lunr/lunr.min.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-store.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,270 @@
+/* custom.css/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
+/* This copyright was auto-generated on Wed, Sep  1, 2021  5:06:11 PM */
+
+/* Tabs */
+.tab {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -20px;
+    padding: 0;
+    list-style: none;
+    position: relative;
+}
+
+.tab > * {
+    flex: none;
+    padding-left: 20px;
+    position: relative;
+}
+
+.tab > * > a {
+    display: block;
+    text-align: center;
+    padding: 9px 20px;
+    color: #999;
+    border: 2px solid transparent;
+    border-color: transparent;
+    border-radius: 1em;
+    font-size: 12px;
+    text-transform: uppercase;
+    transition: color 0.1s ease-in-out;
+    line-height: 20px;
+}
+
+.tab > .active > a {
+    color: #222;
+    border-color: #1e87f0;
+}
+
+.tab li a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.tab-content {
+    padding: 0;
+}
+
+.tab-content li {
+    display: none;
+}
+
+.tab-content li.active {
+    display: initial;
+}
+
+/* To allow our own list items to show inside a tab */
+.tab-content li ul li {
+    display: list-item;
+}
+
+.tab-content li ol li {
+    display: list-item;
+}
+
+/* Quizzes */
+
+.quiz {
+    text-align: center;
+    margin: 0.5em;
+    min-width: 50%;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    padding: 1em;
+    line-height: 1.5em;
+    background: hsla(67, 95%, 95%, 1);
+    border: dashed 5px #38a;
+    color: black;
+}
+.quiz input[type='radio'] {
+    margin: 0.2em;
+}
+.quiz label {
+    display: inline-block;
+    cursor: pointer;
+    color: inherit;
+}
+.quiz button {
+    background-color: rgb(173, 173, 173);
+    border: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: black;
+}
+.quiz button:hover {
+    background-color: #38a;
+}
+
+.quiz__question {
+    font-style: italic;
+}
+
+/* Callouts */
+
+.callout {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    margin: 1em;
+    font-style: italic;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+}
+
+.callout.tip {
+    background-color: #fff1ba;
+    border-left: solid 8px #ebc21c;
+}
+
+.callout.note {
+    background-color: #c9e9ff;
+    border-left: solid 8px #3498db;
+}
+
+.callout.success {
+    background-color: #b4f3cb;
+    border-left: solid 8px #2dcb71;
+}
+.callout.warning {
+    background-color: #fbbeb8;
+    border-left: solid 8px #df5142;
+}
+
+/* Center diagrams */
+
+img.plantuml {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+img.mermaid {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Custom classes for additional markdown formatting */
+
+.md_column {
+    display: flex;
+
+    * {
+        max-width: none !important;
+    }
+}
+
+/* Github button for demo layout */
+
+.github-button {
+    box-sizing: border-box;
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #3498db;
+    border-radius: 0.6em;
+    cursor: pointer;
+    display: flex;
+    align-self: center;
+    font-size: 0.8em;
+    font-weight: 400;
+    line-height: 2em;
+    margin-bottom: 20px;
+    padding: 0.5em 1.2em;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: black;
+    box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+    transition: all 150ms ease-in-out;
+}
+.github-button:hover,
+.github-button:focus {
+    color: black;
+    outline: 0;
+    box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
+}
+.github-button i {
+    font-size: 2em;
+    margin-right: 0.25em;
+}
+
+/* Shields.io badges */
+.badge {
+    margin: 0;
+    margin-right: 0.5em;
+}
+
+.badges {
+    display: flex;
+}
+
+/* Special formatting for home page */
+.main__splash ul {
+    margin: 0.1em;
+}
+
+.main__splash li {
+    margin: 0;
+}
+
+.main__splash .grid a {
+    color: #029ad4;
+    text-decoration: none;
+}
+
+/* Formatting specific to the specs (i.e. ble and http) */
+
+.spec table {
+    width: fit-content;
+}
+
+/* Accordions */
+
+.accordion {
+    background-color: #e3f3ff;
+    margin: 0.4em 0 0.4em 0;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: 1px solid #1e87f0;
+    border-radius: 15px;
+    outline: none !important;
+}
+
+.accordion i {
+    float: right;
+}
+
+.accordion-active {
+    margin: 0.4em 0 0 0;
+    background-color: #ccc;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.accordion:hover {
+    background-color: #ccc;
+}
+
+.panel {
+    padding: 0 18px;
+    margin: 0;
+    display: none;
+    overflow: hidden;
+    border: 1px solid #1e87f0;
+    border-top: none;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.panel p {
+    margin: 0 0 0.2em !important;
+}
+
+/* https://www.bryanbraun.com/anchorjs/#pages-with-a-sticky-navbar */
+:target {
+    scroll-margin-top: 4em;
+}

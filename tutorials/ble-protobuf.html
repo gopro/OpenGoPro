@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Tutorial 5: BLE Protobuf Operations :  Open GoPro</title>
+<meta name="description" content="Tutorial 5: BLE Protobuf Operations">
+
+
+  <meta name="author" content="GoPro">
+  
+  <meta property="article:author" content="GoPro">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Tutorial 5: BLE Protobuf Operations">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/tutorials/ble-protobuf">
+
+
+  <meta property="og:description" content="Tutorial 5: BLE Protobuf Operations">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-04-19T12:03:54-07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/tutorials/ble-protobuf">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "https://gopro.github.io/OpenGoPro/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+  
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
+
+    <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+<script>
+    // Add anchors on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function (event) {
+        var manualAnchors = new AnchorJS();
+        manualAnchors.options = {
+            titleText: 'Permalink',
+            placement: 'left'
+        };
+        manualAnchors.add('.anchored');
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/OpenGoPro/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/ble/">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/http">HTTP Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro/tree/main/demos">Demos</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="https://gopro.github.io/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/OpenGoPro/tutorials" itemprop="item"><span itemprop="name">Tutorials</span></a>
+          <meta itemprop="position" content="2">
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Tutorial 5: BLE Protobuf Operations</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">GoPro</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Be a <strong>hero</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox">
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/connect-ble"><span class="nav__sub-title">1: Connect BLE</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/send-ble-commands"><span class="nav__sub-title">2: Send BLE Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/parse-ble-responses"><span class="nav__sub-title">3: Parse BLE TLV Responses</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/ble-queries"><span class="nav__sub-title">4: BLE Queries</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/ble-protobuf"><span class="nav__sub-title">5: BLE Protobuf</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/connect-wifi"><span class="nav__sub-title">6: Connect WiFi</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/send-wifi-commands"><span class="nav__sub-title">7: Send WiFi Commands</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/camera-media-list"><span class="nav__sub-title">8: Camera Media List</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          <a href="/OpenGoPro/tutorials/cohn"><span class="nav__sub-title">9: Camera on the Home Network</span></a>
+        
+
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Tutorial 5: BLE Protobuf Operations">
+    <meta itemprop="description" content="Tutorial 5: BLE Protobuf Operations">
+    <meta itemprop="datePublished" content="2024-04-19T12:03:54-07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Tutorial 5: BLE Protobuf Operations
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#just-show-me-the-demos">Just Show me the Demo(s)!!</a></li>
+<li><a href="#compiling-protobuf-files">Compiling Protobuf Files</a></li>
+<li>
+<a href="#working-with-protobuf-messages">Working with Protobuf Messages</a><ul><li><a href="#protobuf-message-example">Protobuf Message Example</a></li></ul>
+</li>
+<li>
+<a href="#performing-a-protobuf-operation">Performing a Protobuf Operation</a><ul>
+<li><a href="#protobuf-packet-format">Protobuf Packet Format</a></li>
+<li><a href="#protobuf-response-parser">Protobuf Response Parser</a></li>
+<li><a href="#set-turbo-transfer">Set Turbo Transfer</a></li>
+</ul>
+</li>
+<li>
+<a href="#deciphering-response-type">Deciphering Response Type</a><ul>
+<li><a href="#response-manager">Response Manager</a></li>
+<li><a href="#examples-of-each-response-type">Examples of Each Response Type</a></li>
+</ul>
+</li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#good-job">Good Job!</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>This document will provide a walk-through tutorial to use the Open GoPro Interface to send and receive BLE
+<a href="/OpenGoPro/ble/protocol/data_protocol.html#protobuf">Protobuf</a> Data.</p>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>Open GoPro uses <a href="https://protobuf.dev/reference/protobuf/proto2-spec/">Protocol Buffers Version 2</a></span>
+</div>
+
+<p>A list of Protobuf Operations can be found in the
+<a href="/OpenGoPro/ble/protocol/id_tables.html#protobuf-ids">Protobuf ID Table</a>.</p>
+
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>This tutorial only considers sending these as one-off operations. That is, it does not consider state
+management / synchronization when sending multiple operations. This will be discussed in a future lab.</span>
+</div>
+
+<h1 id="requirements">Requirements</h1>
+
+<p>It is assumed that the hardware and software requirements from the
+<a href="/OpenGoPro/tutorials/connect-ble">connecting BLE tutorial</a> are present and configured correctly.</p>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>It is suggested that you have first completed the
+<a href="/OpenGoPro/tutorials/connect-ble#requirements">connect</a>,
+<a href="/OpenGoPro/tutorials/send-ble-commands">sending commands</a>, and
+<a href="/OpenGoPro/tutorials/parse-ble-responses">parsing responses</a> tutorials before going
+through this tutorial.</span>
+</div>
+
+<h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
+
+<div>
+    <ul class="tab tab-linked" data-tab="335461c2-743a-4957-bfa0-3aaa033cfac5">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="335461c2-743a-4957-bfa0-3aaa033cfac5">
+        
+            <li class="active tab-content-container">
+<p>Each of the scripts for this tutorial can be found in the Tutorial 5
+<a href="https://github.com/gopro/OpenGoPro/tree/main/demos/python/tutorial/tutorial_modules/tutorial_2_send_ble_commands/">directory</a>.</p>
+
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Python &gt;= 3.9 and &lt; 3.12 must be used as specified in the requirements</span>
+</div>
+
+<div class="accordion-container anchored">
+    <button class="accordion">Protobuf Example<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can see some basic Protobuf usage, independent of a BLE connection, in the following script:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python protobuf_example.py
+</code></pre></div></div>
+
+</div>
+</div>
+
+<div class="accordion-container anchored">
+    <button class="accordion">Set Turbo Mode<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>You can test sending Set Turbo Mode to your camera through BLE using the following script:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python set_turbo_mode.py
+</code></pre></div></div>
+
+<p>See the help for parameter definitions:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python set_turbo_mode.py <span class="nt">--help</span>
+<span class="go">usage: set_turbo_mode.py [-h] [-i IDENTIFIER]
+
+Connect to a GoPro camera, send Set Turbo Mode and parse the response
+
+options:
+  -h, --help            show this help message and exit
+  -i IDENTIFIER, --identifier IDENTIFIER
+                        Last 4 digits of GoPro serial number, which is the last 4 digits of the default
+                        camera SSID. If not used, first discovered GoPro will be connected to
+</span></code></pre></div></div>
+
+</div>
+</div>
+
+<div class="accordion-container anchored">
+    <button class="accordion">Decipher Response Type<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>TODO</p>
+
+</div>
+</div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<h1 id="compiling-protobuf-files">Compiling Protobuf Files</h1>
+
+<p>The Protobuf files used to compile source code for the Open GoPro Interface exist in the top-level
+<a href="https://github.com/gopro/OpenGoPro/tree/main/protobuf">protobuf</a> directory of the Open GoPro repository.</p>
+
+<p>It is mostly out of the scope of these tutorials to describe how to compile these since this process is clearly defined
+in the per-language <a href="https://protobuf.dev/getting-started/">Protobuf Tutorial</a>. For the purposes of these tutorials
+(and shared with the <a href="https://gopro.github.io/OpenGoPro/python_sdk/">Python SDK</a>), the Protobuf files are compiled
+using the Docker image defined in <a href="https://github.com/gopro/OpenGoPro/tree/main/.admin/proto_build">.admin/proto_build</a>.
+This build process can be performed using <code class="language-plaintext highlighter-rouge">make protos</code> from the top level of this repo.</p>
+
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>This information is strictly explanatory. It is in no way necessary to (re)build the Protobuf files for these tutorials
+as the pre-compiled Protobuf source code already resides in the same directory as this tutorial’s example code.</span>
+</div>
+
+<h1 id="working-with-protobuf-messages">Working with Protobuf Messages</h1>
+
+<p>Let’s first perform some basic serialization and deserialization of a Protobuf message. For this example, we are going
+to use the <a href="/OpenGoPro/ble/features/control.html#set-turbo-transfer">Set Turbo Transfer</a> operation:</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/OpenGoPro/assets/images/tutorials/protobuf_doc.png" alt="protobuf_doc" style="
+            width: 40%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Set Turbo Mode Documentation
+
+        </figcaption></figure>
+
+<p>Per the documentation, this operation’s request payload should be serialized using the Protobuf message which can be found
+either in <a href="/OpenGoPro/ble/protocol/protobuf.html#proto-requestsetturboactive">Documentation</a>:</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/OpenGoPro/assets/images/tutorials/protobuf_message_doc.png" alt="protobuf_message_doc" style="
+            width: 40%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            RequestSetTurboActive documentation
+
+        </figcaption></figure>
+
+<p>or <a href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/turbo_transfer.proto">source code</a>:</p>
+
+<div class="language-proto highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Enable/disable display of "Transferring Media" UI
+ *
+ * Response: @ref ResponseGeneric
+ */</span>
+<span class="kd">message</span> <span class="nc">RequestSetTurboActive</span> <span class="p">{</span>
+    <span class="k">required</span> <span class="kt">bool</span> <span class="na">active</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// Enable or disable Turbo Transfer feature</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>This code can be found in <code class="language-plaintext highlighter-rouge">protobuf_example.py</code></span>
+</div>
+
+<h2 id="protobuf-message-example">Protobuf Message Example</h2>
+
+<p>First let’s instantiate the request message by setting the <code class="language-plaintext highlighter-rouge">active</code> parameter and log the serialized bytes:</p>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>Your IDE should show the Protobuf Message’s API signature since type stubs were generated when compiling the Protobuf files.</span>
+</div>
+
+<div>
+    <ul class="tab tab-linked" data-tab="d1f53a4d-42fb-4f28-bc39-c516cc8f6b7a">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="d1f53a4d-42fb-4f28-bc39-c516cc8f6b7a">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">tutorial_modules</span> <span class="kn">import</span> <span class="n">proto</span>
+
+<span class="n">request</span> <span class="o">=</span> <span class="n">proto</span><span class="p">.</span><span class="nc">RequestSetTurboActive</span><span class="p">(</span><span class="n">active</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Sending ==&gt; </span><span class="si">{</span><span class="n">request</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="nc">SerializeToString</span><span class="p">().</span><span class="nf">hex</span><span class="p">(</span><span class="sh">"</span><span class="s">:</span><span class="sh">"</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>which will log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">Sending ==&gt;</span><span class="w"> </span>active: <span class="nb">false</span>
+<span class="go">08:00
+</span></code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<p>We’re not going to analyze these bytes since it is the purpose of the Protobuf framework is to abstract this. However it is
+important to be able to generate the serialized bytes from the instantiated Protobuf Message object in order to send
+the bytes via BLE.</p>
+
+<p>Similarly, let’s now create a serialized response and show how to deserialize it into a
+<a href="/OpenGoPro/ble/protocol/protobuf.html#responsegeneric">ResponseGeneric</a> object.</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="08cdaf1b-d0ed-4f7b-814d-8b716ce163c4">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="08cdaf1b-d0ed-4f7b-814d-8b716ce163c4">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response_bytes</span> <span class="o">=</span> <span class="n">proto</span><span class="p">.</span><span class="nc">ResponseGeneric</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">proto</span><span class="p">.</span><span class="n">EnumResultGeneric</span><span class="p">.</span><span class="n">RESULT_SUCCESS</span><span class="p">).</span><span class="nc">SerializeToString</span><span class="p">()</span>
+<span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Received bytes ==&gt; </span><span class="si">{</span><span class="n">response_bytes</span><span class="p">.</span><span class="nb">hex</span><span class="p">(</span><span class="sh">'</span><span class="si">:</span><span class="sh">'</span><span class="s">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">proto</span><span class="p">.</span><span class="n">ResponseGeneric</span><span class="p">.</span><span class="nc">FromString</span><span class="p">(</span><span class="n">response_bytes</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Received ==&gt; </span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>which will log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">Received bytes ==&gt;</span><span class="w"> </span>08:01
+<span class="gp">Received ==&gt;</span><span class="w"> </span>result: RESULT_SUCCESS
+</code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>We’re not hard-coding serialized bytes here since it may not be constant across Protobuf versions</span>
+</div>
+
+<h1 id="performing-a-protobuf-operation">Performing a Protobuf Operation</h1>
+
+<p>Now let’s actually perform a Protobuf Operation via BLE. First we need to discuss additional non-Protobuf-defined
+header bytes that are required for Protobuf Operations in the Open GoPro Interface.</p>
+
+<h2 id="protobuf-packet-format">Protobuf Packet Format</h2>
+
+<p>Besides having a compressed payload as defined per the <a href="https://protobuf.dev/">Protobuf Specification</a>, Open GoPro
+Protobuf operations also are identified by “Feature” and “Action” IDs. The top level message format (not including
+the <a href="/OpenGoPro/tutorials/parse-ble-responses#accumulating-the-response">standard headers</a>)
+is as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature ID</th>
+      <th>Action ID</th>
+      <th>Serialized Protobuf Payload</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1 Byte</td>
+      <td>1 Byte</td>
+      <td>Variable Length</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This Feature / Action ID pair is used to identify the Protobuf Message that should be used to serialize / deserialize
+the payload. This mapping can be found in the
+<a href="/OpenGoPro/ble/protocol/id_tables.html#protobuf-ids">Protobuf ID Table</a>.</p>
+
+<h2 id="protobuf-response-parser">Protobuf Response Parser</h2>
+
+<p>Since the parsing of Protobuf messages is different than
+TLV Parsing, we need to create a
+<code class="language-plaintext highlighter-rouge">ProtobufResponse</code> class by extending the <code class="language-plaintext highlighter-rouge">Response</code> class from the
+<a href="/OpenGoPro/tutorials/parse-ble-responses">TLV Parsing Tutorial</a>. This <code class="language-plaintext highlighter-rouge">ProtobufResponse</code>
+<code class="language-plaintext highlighter-rouge">parse</code> method will:</p>
+
+<ol>
+  <li>Extract Feature and Action ID’s</li>
+  <li>Parse the Protobuf payload using the specified Protobuf Message</li>
+</ol>
+
+<div>
+    <ul class="tab tab-linked" data-tab="46e6830e-ef67-4f2d-b0d5-74fb2c142adf">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="46e6830e-ef67-4f2d-b0d5-74fb2c142adf">
+        
+            <li class="active tab-content-container">
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>This code can be found in <code class="language-plaintext highlighter-rouge">set_turbo_mode.py</code></span>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ProtobufResponse</span><span class="p">(</span><span class="n">Response</span><span class="p">):</span>
+    <span class="bp">...</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">ProtobufMessage</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">feature_id</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">raw_bytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">action_id</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">raw_bytes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">proto</span><span class="p">.</span><span class="nc">FromString</span><span class="p">(</span><span class="nf">bytes</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">raw_bytes</span><span class="p">[</span><span class="mi">2</span><span class="p">:]))</span>
+</code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<p>The accumulation process is the same for TLV and Protobuf responses so have not overridden the base <code class="language-plaintext highlighter-rouge">Response</code> class’s
+<code class="language-plaintext highlighter-rouge">accumulation</code> method and we are using the same notification handler as previous labs.</p>
+
+<h2 id="set-turbo-transfer">Set Turbo Transfer</h2>
+
+<p>Now let’s perform the <a href="/OpenGoPro/ble/features/control.html#set-turbo-transfer">Set Turbo Transfer</a> operation and
+receive the response. First, we build the serialized byte request in the same manner as
+<a href="/OpenGoPro/tutorials/ble-protobuf#working-with-protobuf-messages">above</a>), then prepend the
+Feature ID, Action ID, and length bytes:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="dbf1efff-fc1d-45c9-a62c-5a0a33f6e775">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="dbf1efff-fc1d-45c9-a62c-5a0a33f6e775">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">turbo_mode_request</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="mh">0xF1</span><span class="p">,</span>  <span class="c1"># Feature ID
+</span>        <span class="mh">0x6B</span><span class="p">,</span>  <span class="c1"># Action ID
+</span>        <span class="o">*</span><span class="n">proto</span><span class="p">.</span><span class="nc">RequestSetTurboActive</span><span class="p">(</span><span class="n">active</span><span class="o">=</span><span class="bp">False</span><span class="p">).</span><span class="nc">SerializeToString</span><span class="p">(),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">turbo_mode_request</span><span class="p">.</span><span class="nf">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">turbo_mode_request</span><span class="p">))</span>
+</code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<p>We then send the message, wait to receive the response, and parse the response using the Protobuf Message specified
+from the Set Turbo Mode Documentation: <a href="/OpenGoPro/ble/protocol/protobuf.html#responsegeneric">ResponseGeneric</a>.</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="fac1a0e5-0f38-42bf-8b46-b0229653e0cb">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="fac1a0e5-0f38-42bf-8b46-b0229653e0cb">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">write_gatt_char</span><span class="p">(</span><span class="n">request_uuid</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">turbo_mode_request</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">received_responses</span><span class="p">.</span><span class="nf">get</span><span class="p">()</span>
+<span class="n">response</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">proto</span><span class="p">.</span><span class="n">ResponseGeneric</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">response</span><span class="p">.</span><span class="n">feature_id</span> <span class="o">==</span> <span class="mh">0xF1</span>
+<span class="k">assert</span> <span class="n">response</span><span class="p">.</span><span class="n">action_id</span> <span class="o">==</span> <span class="mh">0xEB</span>
+<span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>which will log as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Setting Turbo Mode Off
+Writing 04:f1:6b:08:00 to GoProUuid.COMMAND_REQ_UUID
+Received response at UUID GoProUuid.COMMAND_RSP_UUID: 04:f1:eb:08:01
+Set Turbo Mode response complete received.
+Successfully set turbo mode
+result: RESULT_SUCCESS
+</span></code></pre></div></div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<h1 id="deciphering-response-type">Deciphering Response Type</h1>
+
+<p>This same procedure is used for all <a href="/OpenGoPro/ble/protocol/id_tables.html#protobuf-ids">Protobuf Operations</a>.
+Coupled with the information from previous tutorials, you are now capable of parsing any response received from the
+GoPro.</p>
+
+<p>However we have not yet covered how to decipher the response type: Command, Query, Protobuf, etc. The algorithm to do
+so is defined in the
+<a href="/OpenGoPro/ble/protocol/data_protocol.html#decipher-message-payload-type">GoPro BLE Spec</a> and reproduced here for reference:</p>
+
+<figure class="" style="
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    ">
+    <img src="/OpenGoPro/assets/images/plantuml_ble_tlv_vs_protobuf.png" alt="Message Deciphering" style="
+            width: 70%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        "><figcaption>
+            Message Deciphering Algorithm
+
+        </figcaption></figure>
+
+<h2 id="response-manager">Response Manager</h2>
+
+<p>We’re now going to create a monolithic <code class="language-plaintext highlighter-rouge">ResponseManager</code> class to implement this algorithm to perform (at least initial)
+parsing of all response types:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="340f1c11-4dda-4c7b-b418-35302712d8f8">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="340f1c11-4dda-4c7b-b418-35302712d8f8">
+        
+            <li class="active tab-content-container">
+<div class="callout note">
+<i class="fa fa-clipboard fa-2x" style="color: #3498db; margin: 0.25em;"></i><span>The sample code below is taken from <code class="language-plaintext highlighter-rouge">decipher_response.py</code></span>
+</div>
+
+<p>The <code class="language-plaintext highlighter-rouge">ResponseManager</code> is a wrapper around a <code class="language-plaintext highlighter-rouge">BleakClient</code> to manage accumulating, parsing, and retrieving responses.</p>
+
+<p>First, let’s create a non-initialized response manager, connect to get a <code class="language-plaintext highlighter-rouge">BleakClient</code> and initialize the manager by
+setting the client:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">manager</span> <span class="o">=</span> <span class="nc">ResponseManager</span><span class="p">()</span>
+<span class="n">manager</span><span class="p">.</span><span class="nf">set_client</span><span class="p">(</span><span class="k">await</span> <span class="nf">connect_ble</span><span class="p">(</span><span class="n">manager</span><span class="p">.</span><span class="n">notification_handler</span><span class="p">,</span> <span class="n">identifier</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Then, in the notification handler, we “decipher” the response before enqueueing it to the received response queue:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">notification_handler</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">characteristic</span><span class="p">:</span> <span class="n">BleakGATTCharacteristic</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">uuid</span> <span class="o">=</span> <span class="nc">GoProUuid</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="n">services</span><span class="p">.</span><span class="n">characteristics</span><span class="p">[</span><span class="n">characteristic</span><span class="p">.</span><span class="n">handle</span><span class="p">].</span><span class="n">uuid</span><span class="p">)</span>
+    <span class="n">logger</span><span class="p">.</span><span class="nf">debug</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Received response at </span><span class="si">{</span><span class="n">uuid</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">data</span><span class="p">.</span><span class="nb">hex</span><span class="p">(</span><span class="sh">"</span><span class="si">:</span><span class="sh">"</span><span class="s">)</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">_responses_by_uuid</span><span class="p">[</span><span class="n">uuid</span><span class="p">]</span>
+    <span class="n">response</span><span class="p">.</span><span class="nf">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># Enqueue if we have received the entire response
+</span>    <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">is_received</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">self</span><span class="p">.</span><span class="n">_q</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nf">decipher_response</span><span class="p">(</span><span class="n">response</span><span class="p">))</span>
+        <span class="c1"># Reset the accumulating response
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">_responses_by_uuid</span><span class="p">[</span><span class="n">uuid</span><span class="p">]</span> <span class="o">=</span> <span class="nc">Response</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>where “deciphering” is the implementation of the above algorithm:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">decipher_response</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">undeciphered_response</span><span class="p">:</span> <span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConcreteResponse</span><span class="p">:</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">undeciphered_response</span><span class="p">.</span><span class="n">raw_bytes</span>
+    <span class="c1"># Are the first two payload bytes a real Fetaure / Action ID pair?
+</span>    <span class="nf">if </span><span class="p">(</span><span class="n">index</span> <span class="p">:</span><span class="o">=</span> <span class="nc">ProtobufId</span><span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="ow">in</span> <span class="n">ProtobufIdToMessage</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">proto_message</span> <span class="p">:</span><span class="o">=</span> <span class="n">ProtobufIdToMessage</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">index</span><span class="p">)):</span>
+            <span class="c1"># We've only added protobuf messages for operations used in this tutorial.
+</span>            <span class="k">raise</span> <span class="nc">RuntimeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s"> is a valid Protobuf identifier but does not currently have a defined message.</span><span class="sh">"</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Now use the protobuf messaged identified by the Feature / Action ID pair to parse the remaining payload
+</span>            <span class="n">response</span> <span class="o">=</span> <span class="n">ProtobufResponse</span><span class="p">.</span><span class="nf">from_received_response</span><span class="p">(</span><span class="n">undeciphered_response</span><span class="p">)</span>
+            <span class="n">response</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">proto_message</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">response</span>
+    <span class="c1"># TLV. Should it be parsed as Command or Query?
+</span>    <span class="k">if</span> <span class="n">undeciphered_response</span><span class="p">.</span><span class="n">uuid</span> <span class="ow">is</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">QUERY_RSP_UUID</span><span class="p">:</span>
+        <span class="c1"># It's a TLV query
+</span>        <span class="n">response</span> <span class="o">=</span> <span class="n">QueryResponse</span><span class="p">.</span><span class="nf">from_received_response</span><span class="p">(</span><span class="n">undeciphered_response</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># It's a TLV command / setting.
+</span>        <span class="n">response</span> <span class="o">=</span> <span class="n">TlvResponse</span><span class="p">.</span><span class="nf">from_received_response</span><span class="p">(</span><span class="n">undeciphered_response</span><span class="p">)</span>
+    <span class="c1"># Parse the TLV payload (query, command, or setting)
+</span>    <span class="n">response</span><span class="p">.</span><span class="nf">parse</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">response</span>
+</code></pre></div></div>
+
+<div class="callout warning">
+<i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>Only the minimal functionality needed for these tutorials have been added. For example, many Protobuf Feature / Action ID
+pairs do not have corresponding Protobuf Messages defined.</span>
+</div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<p>After deciphering, the parsed method is placed in the response queue as a either a <code class="language-plaintext highlighter-rouge">TlvResponse</code>, <code class="language-plaintext highlighter-rouge">QueryResponse</code>, or
+<code class="language-plaintext highlighter-rouge">ProtobufResponse</code>.</p>
+
+<h2 id="examples-of-each-response-type">Examples of Each Response Type</h2>
+
+<p>Now let’s perform operations that will demonstrate each response type:</p>
+
+<div>
+    <ul class="tab tab-linked" data-tab="0ed50702-6f0b-4589-bf52-d58be73f0b9b">
+        
+            <li class="active">
+                <a href="">python </a>
+            </li>
+        
+            <li>
+                <a href="">kotlin </a>
+            </li>
+        
+        </ul>
+        <ul class="tab-content" id="0ed50702-6f0b-4589-bf52-d58be73f0b9b">
+        
+            <li class="active tab-content-container">
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># TLV Command (Setting)
+</span><span class="k">await</span> <span class="nf">set_resolution</span><span class="p">(</span><span class="n">manager</span><span class="p">)</span>
+<span class="c1"># TLV Command
+</span><span class="k">await</span> <span class="nf">get_resolution</span><span class="p">(</span><span class="n">manager</span><span class="p">)</span>
+<span class="c1"># TLV Query
+</span><span class="k">await</span> <span class="nf">set_shutter_off</span><span class="p">(</span><span class="n">manager</span><span class="p">)</span>
+<span class="c1"># Protobuf
+</span><span class="k">await</span> <span class="nf">set_turbo_mode</span><span class="p">(</span><span class="n">manager</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>These four methods will perform the same functionality we’ve demonstrated in previous tutorials, now using our
+<code class="language-plaintext highlighter-rouge">ResponseManager</code>.</p>
+
+<p>We’ll walk through the <code class="language-plaintext highlighter-rouge">get_resolution</code> method here. First build the request and send it:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">request</span> <span class="o">=</span> <span class="nf">bytes</span><span class="p">([</span><span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x09</span><span class="p">])</span>
+<span class="n">request_uuid</span> <span class="o">=</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">SETTINGS_REQ_UUID</span>
+<span class="k">await</span> <span class="n">manager</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="nf">write_gatt_char</span><span class="p">(</span><span class="n">request_uuid</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Then retrieve the response from the manager:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tlv_response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">manager</span><span class="p">.</span><span class="nf">get_next_response_as_tlv</span><span class="p">()</span>
+<span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Set resolution status: </span><span class="si">{</span><span class="n">tlv_response</span><span class="p">.</span><span class="n">status</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This logs as such:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Getting the current resolution
+Writing to GoProUuid.QUERY_REQ_UUID: 02:12:02
+Received response at GoProUuid.QUERY_RSP_UUID: 05:12:00:02:01:09
+Received current resolution: Resolution.RES_1080
+</span></code></pre></div></div>
+
+<p>Note that each example retrieves the parsed response from the manager via one of the following methods:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">get_next_response_as_tlv</code></li>
+  <li><code class="language-plaintext highlighter-rouge">get_next_response_as_query</code></li>
+  <li><code class="language-plaintext highlighter-rouge">get_next_response_as_response</code></li>
+</ul>
+
+<div class="callout tip">
+<i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>These are functionally the same as they just retrieve the next received response from the manager’s queue and only
+exist as helpers to simplify typing.</span>
+</div>
+
+</li>
+        
+            <li class="tab-content-container">
+<p>TODO</p>
+
+</li>
+        
+    </ul>
+</div>
+
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>See the first tutorial’s
+<a href="/OpenGoPro/tutorials/connect-ble#troubleshooting">troubleshooting section</a>.</p>
+
+<h1 id="good-job">Good Job!</h1>
+
+<div class="callout success">
+<i class="fa fa-check-circle fa-2x" style="color: #2dcb71; margin: 0.25em;"></i><span>Congratulations 🤙</span>
+</div>
+
+<p>You can now accumulate, decipher, and parse any BLE response received from the GoPro.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-19T12:03:54-07:00">April 19, 2024</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/OpenGoPro/tutorials/ble-queries" class="pagination--pager" title="Tutorial 4: BLE TLV Queries
+">Previous</a>
+    
+    
+      <a href="/OpenGoPro/tutorials/connect-wifi" class="pagination--pager" title="Tutorial 6: Connect WiFi
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+    <ul class="social-icons">
+        
+        <li><strong>Follow:</strong></li>
+           
+        <li>
+            <a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i>
+                Website</a>
+        </li>
+          
+        <li>
+            <a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i>
+                Twitter</a>
+        </li>
+          
+        <li>
+            <a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i>
+                Facebook</a>
+        </li>
+          
+        <li>
+            <a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i>
+                GitHub</a>
+        </li>
+          
+        <li>
+            <a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i>
+                Instagram</a>
+        </li>
+           
+    </ul>
+</div>
+
+<div class="page__footer-copyright">
+    © 2024 GoPro. Powered by
+    <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
+    <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
+    <p>
+        Can be used with GoPro® HERO9 and HERO10 cameras. You must include the following text on
+        every page where it can be seen by someone purchasing such an item: <em>"This product
+        and/or service is not affiliated with, endorsed by or in any way associated with
+        GoPro Inc. or its products and services. GoPro, HERO, and their respective logos
+        are trademarks or registered trademarks of GoPro, Inc."</em>
+    </p>
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/OpenGoPro/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/OpenGoPro/assets/js/lunr/lunr.min.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-store.js"></script>
+<script src="/OpenGoPro/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
