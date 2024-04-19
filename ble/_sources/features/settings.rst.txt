@@ -1,0 +1,68 @@
+Settings
+********
+
+Camera Capabilities
+===================
+
+Camera capabilities usually change from one camera to another and often change from one release to the next. Below are
+documents that detail whitelists for basic video settings for every supported camera release.
+
+These capability documents define supported camera states. Each state is comprised of a set of setting options that are
+presented in **dependency order**. This means each state is guaranteed to be attainable if and only if the setting options
+are set in the order presented. Failure to adhere to dependency ordering may result in the camera's blacklist rules
+rejecting a `Set Setting <settings.html#set_setting>`_ command.
+
+============= ========= =================== ========= ========= ================ =================
+Camera        Command 1 Command 2           Command 3 Command 4 Command 5        Guaranteed Valid?
+============= ========= =================== ========= ========= ================ =================
+Hero 10 Black Res: 1080 Anti-Flicker: 60 Hz FPS: 240  FOV: Wide Hypersmooth: Off ✔
+Hero 10 Black Res: 240  Anti-Flicker: 60 Hz RES: 1080 FOV: Wide Hypersmooth: off ❌
+============= ========= =================== ========= ========= ================ =================
+
+In the example above, the first set of commands will always work for basic video presets such as Standard.
+
+In the second example, suppose the camera's Video Resolution was previously set to 4K. If the user tries to set Video FPS
+to 240, it will fail because 4K/240fps is not supported.
+
+Capability documents for each camera / firmware version can be found in the following file formats:
+
+XLSX
+----
+
+An XLSX file can be found `here <https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx>`__.
+
+The capabilities spreadsheet contains worksheets for every supported release. Each row in a worksheet represents a
+whitelisted state and is presented in dependency order as outlined above.
+
+JSON
+----
+
+A JSON file can be found `here <https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json>`__.
+
+The capabilities JSON contains a set of whitelist states for every supported release. Each state is comprised of a list
+of objects that contain setting and option IDs necessary to construct
+`Set Setting <settings.html#set_setting>`_ commands and are given in dependency
+order as outlined above. For more information on the object format, see the JSON schema
+
+Operations
+==========
+
+.. operation:tlv-command:: Set Setting
+    :operation-id: GPCAMERA_CHANGE_SETTING
+    :external:
+    :id: SettingID
+
+    Set an individual :ref:`Setting ID<protocol/id_tables:setting ids>` to a given value.
+
+    The superset of per-setting values can be found in the :ref:`Setting ID<protocol/id_tables:setting ids>` documentation. Alternatively,
+    the currently supported setting values can be dynamically queried via :operation:ref:`Get Setting Capabilities`
+
+    .. operation:tlv-message:: Request
+        :uuid: Setting
+        :params:
+            - value_length (uint8): length of value
+            - value (variable length and type): value to set, of length value_length
+    .. operation:tlv-message:: Response
+        :uuid: Settings Response
+
+.. include:: setting_ids.inc

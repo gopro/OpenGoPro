@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Statuses &mdash; Open GoPro BLE API 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=d4d8e761" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Settings" href="settings.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Open GoPro BLE API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../protocol.html">Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#pairing-mode">Pairing Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#finish-pairing">Finish Pairing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#ble-characteristics">BLE Characteristics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#send-messages">Send Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../protocol/data_protocol.html">Data Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#packetization">Packetization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#packet-headers">Packet Headers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#decipher-message-payload-type">Decipher Message Payload Type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#message-payload">Message Payload</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#type-length-value">Type Length Value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#protobuf">Protobuf</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../protocol/state_management.html">State Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#camera-readiness">Camera Readiness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#keep-alive">Keep Alive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#camera-control">Camera Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../protocol/id_tables.html">ID Tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#command-ids">Command IDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#query-ids">Query IDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#protobuf-ids">Protobuf IDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#setting-ids">Setting IDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#status-ids">Status IDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../protocol/protobuf.html">Protobuf Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#enums">Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcohnnetworkstate">EnumCOHNNetworkState</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcohnstatus">EnumCOHNStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcameracontrolstatus">EnumCameraControlStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumflatmode">EnumFlatMode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumlens">EnumLens</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumlivestreamerror">EnumLiveStreamError</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumlivestreamstatus">EnumLiveStreamStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumpresetgroup">EnumPresetGroup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumpresetgroupicon">EnumPresetGroupIcon</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumpreseticon">EnumPresetIcon</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumpresettitle">EnumPresetTitle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumprovisioning">EnumProvisioning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumregisterlivestreamstatus">EnumRegisterLiveStreamStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumregisterpresetstatus">EnumRegisterPresetStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumresultgeneric">EnumResultGeneric</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumscanentryflags">EnumScanEntryFlags</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumscanning">EnumScanning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumwindowsize">EnumWindowSize</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#media">Media</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#notifprovisioningstate">NotifProvisioningState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#notifstartscanning">NotifStartScanning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#notifycohnstatus">NotifyCOHNStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#notifylivestreamstatus">NotifyLiveStreamStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#notifypresetstatus">NotifyPresetStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#preset">Preset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#presetgroup">PresetGroup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#presetsetting">PresetSetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#range">Range</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestcohncert">RequestCOHNCert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestclearcohncert">RequestClearCOHNCert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestconnect">RequestConnect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestconnectnew">RequestConnectNew</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestcreatecohncert">RequestCreateCOHNCert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestcustompresetupdate">RequestCustomPresetUpdate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetallpresetstatus">RequestGetAllPresetStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetapentries">RequestGetApEntries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetcohnstatus">RequestGetCOHNStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetlastcapturedmedia">RequestGetLastCapturedMedia</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetpresetstatus">RequestGetPresetStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestreleasenetwork">RequestReleaseNetwork</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcohnsetting">RequestSetCOHNSetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcameracontrolstatus">RequestSetCameraControlStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetlivestreammode">RequestSetLiveStreamMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetturboactive">RequestSetTurboActive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requeststartscan">RequestStartScan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responsecohncert">ResponseCOHNCert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responseconnect">ResponseConnect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responseconnectnew">ResponseConnectNew</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responsegeneric">ResponseGeneric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responsegetapentries">ResponseGetApEntries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responselastcapturedmedia">ResponseLastCapturedMedia</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responsestartscanning">ResponseStartScanning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#responsegetapentries-scanentry">ResponseGetApEntries::ScanEntry</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="control.html">Control</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="control.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="control.html#keep-alive"><code class="docutils literal notranslate"><span class="pre">Keep</span> <span class="pre">Alive</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set-camera-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set-local-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set-shutter"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Shutter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set-turbo-transfer"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Turbo</span> <span class="pre">Transfer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#sleep"><code class="docutils literal notranslate"><span class="pre">Sleep</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="query.html">Query</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="query.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="query.html#get-date-time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html#get-hardware-info"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Hardware</span> <span class="pre">Info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html#get-local-date-time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html#get-last-captured-media"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Last</span> <span class="pre">Captured</span> <span class="pre">Media</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html#get-open-gopro-version"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Open</span> <span class="pre">GoPro</span> <span class="pre">Version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html#get-setting-values"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Setting</span> <span class="pre">Values</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html#get-status-values"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Status</span> <span class="pre">Values</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html#get-setting-capabilities"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Setting</span> <span class="pre">Capabilities</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html#register-for-setting-value-updates"><code class="docutils literal notranslate"><span class="pre">Register</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Value</span> <span class="pre">Updates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html#register-for-status-value-updates"><code class="docutils literal notranslate"><span class="pre">Register</span> <span class="pre">for</span> <span class="pre">Status</span> <span class="pre">Value</span> <span class="pre">Updates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html#register-for-setting-capability-updates"><code class="docutils literal notranslate"><span class="pre">Register</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Capability</span> <span class="pre">Updates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html#unregister-for-setting-value-updates"><code class="docutils literal notranslate"><span class="pre">Unregister</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Value</span> <span class="pre">Updates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html#unregister-for-status-value-updates"><code class="docutils literal notranslate"><span class="pre">Unregister</span> <span class="pre">for</span> <span class="pre">Status</span> <span class="pre">Value</span> <span class="pre">Updates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html#unregister-for-setting-capability-updates"><code class="docutils literal notranslate"><span class="pre">Unregister</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Capability</span> <span class="pre">Updates</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="access_points.html">Access Point</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="access_points.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="access_points.html#scan-for-access-points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_points.html#get-ap-scan-results"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">AP</span> <span class="pre">Scan</span> <span class="pre">Results</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_points.html#connect-to-provisioned-access-point"><code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">Provisioned</span> <span class="pre">Access</span> <span class="pre">Point</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_points.html#connect-to-a-new-access-point"><code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">a</span> <span class="pre">New</span> <span class="pre">Access</span> <span class="pre">Point</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_points.html#disconnect-from-access-point">Disconnect from Access Point</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="live_streaming.html">Live Streaming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="live_streaming.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="live_streaming.html#set-livestream-mode"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="live_streaming.html#get-livestream-status"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Livestream</span> <span class="pre">Status</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cohn.html">Camera on the Home Network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cohn.html#certificates">Certificates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#verifying-certificate">Verifying Certificate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#view-certificate-details">View Certificate Details</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cohn.html#provisioning-procedure">Provisioning Procedure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cohn.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#clear-cohn-certificate"><code class="docutils literal notranslate"><span class="pre">Clear</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#create-cohn-certificate"><code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#get-cohn-certificate"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#get-cohn-status"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Status</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cohn.html#set-cohn-setting"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">COHN</span> <span class="pre">Setting</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hilights.html">Hilights</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hilights.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hilights.html#hilight-moment"><code class="docutils literal notranslate"><span class="pre">Hilight</span> <span class="pre">Moment</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="presets.html">Presets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#preset-groups">Preset Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#preset-modified-status">Preset Modified Status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="presets.html#get-available-presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="presets.html#load-preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="presets.html#load-preset-group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="presets.html#update-custom-preset"><code class="docutils literal notranslate"><span class="pre">Update</span> <span class="pre">Custom</span> <span class="pre">Preset</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#camera-capabilities">Camera Capabilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#xlsx">XLSX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#json">JSON</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#set-setting"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#setting-ids">Setting IDs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#resolution-2">Resolution (2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#frames-per-second-3">Frames Per Second (3)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#fov-43">FOV (43)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#auto-off-59">Auto Off (59)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#gps-83">GPS (83)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#aspect-ratio-108">Aspect Ratio (108)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#lens-121">Lens (121)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#lens-122">Lens (122)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#lens-123">Lens (123)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#format-128">Format (128)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#anti-flicker-134">Anti-Flicker (134)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#hypersmooth-135">Hypersmooth (135)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#horizon-leveling-150">Horizon Leveling (150)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#horizon-leveling-151">Horizon Leveling (151)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#max-lens-mod-enable-162">Max Lens Mod Enable (162)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#hindsight-167">HindSight (167)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#interval-171">Interval (171)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#duration-172">Duration (172)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#video-performance-modes-173">Video Performance Modes (173)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#controls-175">Controls (175)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#speed-176">Speed (176)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#night-photo-177">Night Photo (177)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#wi-fi-band-178">Wi-fi Band (178)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#trail-length-179">Trail Length (179)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#video-mode-180">Video Mode (180)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#bit-rate-182">Bit Rate (182)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#bit-depth-183">Bit Depth (183)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#profiles-184">Profiles (184)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#video-mode-186">Video Mode (186)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#lapse-mode-187">Lapse Mode (187)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#max-lens-mod-189">Max Lens Mod (189)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#max-lens-mod-enable-190">Max Lens Mod Enable (190)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#photo-mode-191">Photo Mode (191)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#aspect-ratio-192">Aspect Ratio (192)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#framing-193">Framing (193)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Statuses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#status-ids">Status IDs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#is-the-system-s-internal-battery-present-1">Is the system’s internal battery present? (1)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rough-approximation-of-internal-battery-level-in-bars-or-charging-2">Rough approximation of internal battery level in bars (or charging) (2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-the-system-currently-overheating-6">Is the system currently overheating? (6)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-the-camera-busy-8">Is the camera busy? (8)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-quick-capture-feature-enabled-9">Is Quick Capture feature enabled? (9)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-the-system-currently-encoding-10">Is the system currently encoding? (10)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-lcd-lock-active-11">Is LCD lock active? (11)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#when-encoding-video-this-is-the-duration-seconds-of-the-video-so-far-0-otherwise-13">When encoding video, this is the duration (seconds) of the video so far; 0 otherwise (13)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#are-wireless-connections-enabled-17">Are Wireless Connections enabled? (17)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-pairing-state-of-the-camera-19">The pairing state of the camera (19)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-last-type-of-pairing-in-which-the-camera-was-engaged-20">The last type of pairing in which the camera was engaged (20)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#time-since-boot-milliseconds-of-last-successful-pairing-complete-action-21">Time since boot (milliseconds) of last successful pairing complete action (21)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#state-of-current-scan-for-wifi-access-points-22">State of current scan for WiFi Access Points (22)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#time-since-boot-milliseconds-that-the-wifi-access-point-scan-completed-23">Time since boot (milliseconds) that the WiFi Access Point scan completed (23)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wifi-ap-provisioning-state-24">WiFi AP provisioning state (24)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wireless-remote-control-version-26">Wireless remote control version (26)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-a-wireless-remote-control-connected-27">Is a wireless remote control connected? (27)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wireless-pairing-state-each-bit-contains-state-information-see-wirelesspairingstateflags-28">Wireless Pairing State. Each bit contains state information (see WirelessPairingStateFlags) (28)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ssid-of-the-ap-the-camera-is-currently-connected-to-on-ble-connection-value-is-big-endian-byte-encoded-int32-29">SSID of the AP the camera is currently connected to. On BLE connection, value is big-endian byte-encoded int32 (29)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-camera-s-wifi-ssid-on-ble-connection-value-is-big-endian-byte-encoded-int32-30">The camera’s WiFi SSID. On BLE connection, value is big-endian byte-encoded int32 (30)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-number-of-wireless-devices-connected-to-the-camera-31">The number of wireless devices connected to the camera (31)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-preview-stream-enabled-32">Is Preview Stream enabled? (32)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#primary-storage-status-33">Primary Storage Status (33)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-many-photos-can-be-taken-with-current-settings-before-sdcard-is-full-34">How many photos can be taken with current settings before sdcard is full (34)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-many-minutes-of-video-can-be-captured-with-current-settings-before-sdcard-is-full-35">How many minutes of video can be captured with current settings before sdcard is full (35)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#total-number-of-photos-on-sdcard-38">Total number of photos on sdcard (38)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#total-number-of-videos-on-sdcard-39">Total number of videos on sdcard (39)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-current-status-of-over-the-air-ota-update-41">The current status of Over The Air (OTA) update (41)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-there-a-pending-request-to-cancel-a-firmware-update-download-42">Is there a pending request to cancel a firmware update download? (42)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-locate-camera-feature-active-45">Is locate camera feature active? (45)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-current-timelapse-interval-countdown-value-e-g-5-4-3-2-1-49">The current timelapse interval countdown value (e.g. 5…4…3…2…1…) (49)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#remaining-space-on-the-sdcard-in-kilobytes-54">Remaining space on the sdcard in Kilobytes (54)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-preview-stream-supported-in-current-recording-mode-secondary-stream-55">Is preview stream supported in current recording/mode/secondary-stream? (55)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wifi-signal-strength-in-bars-56">WiFi signal strength in bars (56)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-number-of-hilights-in-currently-encoding-video-value-is-set-to-0-when-encoding-stops-58">The number of hilights in currently-encoding video (value is set to 0 when encoding stops) (58)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#time-since-boot-milliseconds-of-most-recent-hilight-in-encoding-video-set-to-0-when-encoding-stops-59">Time since boot (milliseconds) of most recent hilight in encoding video (set to 0 when encoding stops) (59)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-minimum-time-between-camera-status-updates-milliseconds-best-practice-is-to-not-poll-for-status-more-often-than-this-60">The minimum time between camera status updates (milliseconds). Best practice is to not poll for status more often than this (60)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#liveview-exposure-select-mode-65">Liveview Exposure Select Mode (65)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#liveview-exposure-select-y-coordinate-percent-66">Liveview Exposure Select: y-coordinate (percent) (66)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#liveview-exposure-select-y-coordinate-percent-67">Liveview Exposure Select: y-coordinate (percent) (67)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#does-the-camera-currently-have-a-gps-lock-68">Does the camera currently have a GPS lock? (68)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-ap-mode-enabled-69">Is AP mode enabled? (69)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#internal-battery-level-percent-70">Internal battery level (percent) (70)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#microphone-accessory-status-74">Microphone Accessory status (74)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#digital-zoom-level-percent-75">Digital Zoom level (percent) (75)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wireless-band-76">Wireless Band (76)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-digital-zoom-feature-available-77">Is Digital Zoom feature available? (77)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#are-current-video-settings-mobile-friendly-related-to-video-compression-and-frame-rate-78">Are current video settings mobile friendly? (related to video compression and frame rate) (78)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-the-camera-currently-in-first-time-use-ftu-ui-flow-79">Is the camera currently in First Time Use (FTU) UI flow? (79)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-5ghz-wireless-band-available-81">Is 5GHz wireless band available? (81)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-the-system-fully-booted-and-ready-to-accept-commands-82">Is the system fully booted and ready to accept commands? (82)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-the-internal-battery-charged-sufficiently-to-start-over-the-air-ota-update-83">Is the internal battery charged sufficiently to start Over The Air (OTA) update? (83)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-the-camera-getting-too-cold-to-continue-recording-85">Is the camera getting too cold to continue recording? (85)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rotational-orientation-of-the-camera-86">Rotational orientation of the camera (86)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-this-camera-model-capable-of-zooming-while-encoding-88">Is this camera model capable of zooming while encoding? (88)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#current-flatmode-id-89">Current Flatmode ID (89)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#current-video-preset-id-93">Current Video Preset (ID) (93)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#current-photo-preset-id-94">Current Photo Preset (ID) (94)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#current-time-lapse-preset-id-95">Current Time Lapse Preset (ID) (95)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#current-preset-group-id-corresponds-to-ui-mode-groups-in-settings-json-96">Current Preset Group (ID) (corresponds to ui_mode_groups in settings.json) (96)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#current-preset-id-97">Current Preset (ID) (97)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preset-modified-status-which-contains-an-event-id-and-a-preset-group-id-98">Preset Modified Status, which contains an event ID and a Preset (Group) ID (98)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-number-of-live-bursts-can-be-captured-with-current-settings-before-sdcard-is-full-99">The number of Live Bursts can be captured with current settings before sdcard is full (99)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#total-number-of-live-bursts-on-sdcard-100">Total number of Live Bursts on sdcard (100)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-capture-delay-currently-active-i-e-counting-down-101">Is Capture Delay currently active (i.e. counting down)? (101)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#media-mod-state-102">Media Mod state (102)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#time-warp-speed-103">Time Warp Speed (103)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-the-system-s-linux-core-active-104">Is the system’s Linux core active? (104)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#camera-lens-type-reflects-changes-to-lens-settings-such-as-162-189-194-105">Camera lens type (reflects changes to lens settings such as 162, 189, 194, …) (105)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-video-hindsight-capture-active-106">Is Video Hindsight Capture Active? (106)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scheduled-capture-preset-id-107">Scheduled Capture Preset ID (107)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-scheduled-capture-set-108">Is Scheduled Capture set? (108)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#display-mod-status-bitmasked-110">Display Mod Status (bitmasked) (110)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#does-sdcard-meet-specified-minimum-write-speed-111">Does sdcard meet specified minimum write speed? (111)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#number-of-sdcard-write-speed-errors-since-device-booted-112">Number of sdcard write speed errors since device booted (112)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-turbo-transfer-active-113">Is Turbo Transfer active? (113)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#camera-control-status-id-114">Camera control status ID (114)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-the-camera-connected-to-a-pc-via-usb-115">Is the camera connected to a PC via USB? (115)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#camera-control-over-usb-state-116">Camera control over USB state (116)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#total-sd-card-capacity-in-kilobytes-117">Total SD card capacity in Kilobytes (117)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photo-interval-capture-count-118">Photo interval capture count (118)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Open GoPro BLE API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Statuses</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="statuses">
+<h1>Statuses<a class="headerlink" href="#statuses" title="Link to this heading"></a></h1>
+<p>This section will describe each status and its supported values. See the <a class="reference internal" href="query.html"><span class="doc">Query</span></a> section for operations to query
+status values.</p>
+<section id="status-ids">
+<h2>Status IDs<a class="headerlink" href="#status-ids" title="Link to this heading"></a></h2>
+<section id="is-the-system-s-internal-battery-present-1">
+<span id="status-1"></span><h3>Is the system’s internal battery present? (1)<a class="headerlink" href="#is-the-system-s-internal-battery-present-1" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rough-approximation-of-internal-battery-level-in-bars-or-charging-2">
+<span id="status-2"></span><h3>Rough approximation of internal battery level in bars (or charging) (2)<a class="headerlink" href="#rough-approximation-of-internal-battery-level-in-bars-or-charging-2" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Zero</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>One</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Two</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Three</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>Charging</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-the-system-currently-overheating-6">
+<span id="status-6"></span><h3>Is the system currently overheating? (6)<a class="headerlink" href="#is-the-system-currently-overheating-6" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-the-camera-busy-8">
+<span id="status-8"></span><h3>Is the camera busy? (8)<a class="headerlink" href="#is-the-camera-busy-8" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-quick-capture-feature-enabled-9">
+<span id="status-9"></span><h3>Is Quick Capture feature enabled? (9)<a class="headerlink" href="#is-quick-capture-feature-enabled-9" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-the-system-currently-encoding-10">
+<span id="status-10"></span><h3>Is the system currently encoding? (10)<a class="headerlink" href="#is-the-system-currently-encoding-10" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-lcd-lock-active-11">
+<span id="status-11"></span><h3>Is LCD lock active? (11)<a class="headerlink" href="#is-lcd-lock-active-11" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="when-encoding-video-this-is-the-duration-seconds-of-the-video-so-far-0-otherwise-13">
+<span id="status-13"></span><h3>When encoding video, this is the duration (seconds) of the video so far; 0 otherwise (13)<a class="headerlink" href="#when-encoding-video-this-is-the-duration-seconds-of-the-video-so-far-0-otherwise-13" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="are-wireless-connections-enabled-17">
+<span id="status-17"></span><h3>Are Wireless Connections enabled? (17)<a class="headerlink" href="#are-wireless-connections-enabled-17" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-pairing-state-of-the-camera-19">
+<span id="status-19"></span><h3>The pairing state of the camera (19)<a class="headerlink" href="#the-pairing-state-of-the-camera-19" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Never Started</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Started</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Aborted</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Cancelled</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>Completed</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-last-type-of-pairing-in-which-the-camera-was-engaged-20">
+<span id="status-20"></span><h3>The last type of pairing in which the camera was engaged (20)<a class="headerlink" href="#the-last-type-of-pairing-in-which-the-camera-was-engaged-20" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Not Pairing</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Pairing App</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Pairing Remote Control</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Pairing Bluetooth Device</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="time-since-boot-milliseconds-of-last-successful-pairing-complete-action-21">
+<span id="status-21"></span><h3>Time since boot (milliseconds) of last successful pairing complete action (21)<a class="headerlink" href="#time-since-boot-milliseconds-of-last-successful-pairing-complete-action-21" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="state-of-current-scan-for-wifi-access-points-22">
+<span id="status-22"></span><h3>State of current scan for WiFi Access Points (22)<a class="headerlink" href="#state-of-current-scan-for-wifi-access-points-22" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Never started</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Started</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Aborted</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Canceled</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>Completed</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="time-since-boot-milliseconds-that-the-wifi-access-point-scan-completed-23">
+<span id="status-23"></span><h3>Time since boot (milliseconds) that the WiFi Access Point scan completed (23)<a class="headerlink" href="#time-since-boot-milliseconds-that-the-wifi-access-point-scan-completed-23" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="wifi-ap-provisioning-state-24">
+<span id="status-24"></span><h3>WiFi AP provisioning state (24)<a class="headerlink" href="#wifi-ap-provisioning-state-24" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Never started</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Started</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Aborted</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Canceled</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>Completed</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="wireless-remote-control-version-26">
+<span id="status-26"></span><h3>Wireless remote control version (26)<a class="headerlink" href="#wireless-remote-control-version-26" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="is-a-wireless-remote-control-connected-27">
+<span id="status-27"></span><h3>Is a wireless remote control connected? (27)<a class="headerlink" href="#is-a-wireless-remote-control-connected-27" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="wireless-pairing-state-each-bit-contains-state-information-see-wirelesspairingstateflags-28">
+<span id="status-28"></span><h3>Wireless Pairing State. Each bit contains state information (see WirelessPairingStateFlags) (28)<a class="headerlink" href="#wireless-pairing-state-each-bit-contains-state-information-see-wirelesspairingstateflags-28" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="ssid-of-the-ap-the-camera-is-currently-connected-to-on-ble-connection-value-is-big-endian-byte-encoded-int32-29">
+<span id="status-29"></span><h3>SSID of the AP the camera is currently connected to. On BLE connection, value is big-endian byte-encoded int32 (29)<a class="headerlink" href="#ssid-of-the-ap-the-camera-is-currently-connected-to-on-ble-connection-value-is-big-endian-byte-encoded-int32-29" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<p>This is a string value.</p>
+</section>
+<section id="the-camera-s-wifi-ssid-on-ble-connection-value-is-big-endian-byte-encoded-int32-30">
+<span id="status-30"></span><h3>The camera’s WiFi SSID. On BLE connection, value is big-endian byte-encoded int32 (30)<a class="headerlink" href="#the-camera-s-wifi-ssid-on-ble-connection-value-is-big-endian-byte-encoded-int32-30" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<p>This is a string value.</p>
+</section>
+<section id="the-number-of-wireless-devices-connected-to-the-camera-31">
+<span id="status-31"></span><h3>The number of wireless devices connected to the camera (31)<a class="headerlink" href="#the-number-of-wireless-devices-connected-to-the-camera-31" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="is-preview-stream-enabled-32">
+<span id="status-32"></span><h3>Is Preview Stream enabled? (32)<a class="headerlink" href="#is-preview-stream-enabled-32" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="primary-storage-status-33">
+<span id="status-33"></span><h3>Primary Storage Status (33)<a class="headerlink" href="#primary-storage-status-33" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>-1</p></td>
+<td><p>Unknown</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>OK</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>SD Card Full</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>SD Card Removed</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>SD Card Format Error</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>SD Card Busy</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>SD Card Swapped</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="how-many-photos-can-be-taken-with-current-settings-before-sdcard-is-full-34">
+<span id="status-34"></span><h3>How many photos can be taken with current settings before sdcard is full (34)<a class="headerlink" href="#how-many-photos-can-be-taken-with-current-settings-before-sdcard-is-full-34" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="how-many-minutes-of-video-can-be-captured-with-current-settings-before-sdcard-is-full-35">
+<span id="status-35"></span><h3>How many minutes of video can be captured with current settings before sdcard is full (35)<a class="headerlink" href="#how-many-minutes-of-video-can-be-captured-with-current-settings-before-sdcard-is-full-35" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="total-number-of-photos-on-sdcard-38">
+<span id="status-38"></span><h3>Total number of photos on sdcard (38)<a class="headerlink" href="#total-number-of-photos-on-sdcard-38" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="total-number-of-videos-on-sdcard-39">
+<span id="status-39"></span><h3>Total number of videos on sdcard (39)<a class="headerlink" href="#total-number-of-videos-on-sdcard-39" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="the-current-status-of-over-the-air-ota-update-41">
+<span id="status-41"></span><h3>The current status of Over The Air (OTA) update (41)<a class="headerlink" href="#the-current-status-of-over-the-air-ota-update-41" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Idle</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Downloading</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Verifying</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Download Failed</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>Verify Failed</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>Ready</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>GoPro App: Downloading</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>GoPro App: Verifying</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>GoPro App: Download Failed</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>GoPro App: Verify Failed</p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>GoPro App: Ready</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-there-a-pending-request-to-cancel-a-firmware-update-download-42">
+<span id="status-42"></span><h3>Is there a pending request to cancel a firmware update download? (42)<a class="headerlink" href="#is-there-a-pending-request-to-cancel-a-firmware-update-download-42" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-locate-camera-feature-active-45">
+<span id="status-45"></span><h3>Is locate camera feature active? (45)<a class="headerlink" href="#is-locate-camera-feature-active-45" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-current-timelapse-interval-countdown-value-e-g-5-4-3-2-1-49">
+<span id="status-49"></span><h3>The current timelapse interval countdown value (e.g. 5…4…3…2…1…) (49)<a class="headerlink" href="#the-current-timelapse-interval-countdown-value-e-g-5-4-3-2-1-49" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="remaining-space-on-the-sdcard-in-kilobytes-54">
+<span id="status-54"></span><h3>Remaining space on the sdcard in Kilobytes (54)<a class="headerlink" href="#remaining-space-on-the-sdcard-in-kilobytes-54" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="is-preview-stream-supported-in-current-recording-mode-secondary-stream-55">
+<span id="status-55"></span><h3>Is preview stream supported in current recording/mode/secondary-stream? (55)<a class="headerlink" href="#is-preview-stream-supported-in-current-recording-mode-secondary-stream-55" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="wifi-signal-strength-in-bars-56">
+<span id="status-56"></span><h3>WiFi signal strength in bars (56)<a class="headerlink" href="#wifi-signal-strength-in-bars-56" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="the-number-of-hilights-in-currently-encoding-video-value-is-set-to-0-when-encoding-stops-58">
+<span id="status-58"></span><h3>The number of hilights in currently-encoding video (value is set to 0 when encoding stops) (58)<a class="headerlink" href="#the-number-of-hilights-in-currently-encoding-video-value-is-set-to-0-when-encoding-stops-58" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="time-since-boot-milliseconds-of-most-recent-hilight-in-encoding-video-set-to-0-when-encoding-stops-59">
+<span id="status-59"></span><h3>Time since boot (milliseconds) of most recent hilight in encoding video (set to 0 when encoding stops) (59)<a class="headerlink" href="#time-since-boot-milliseconds-of-most-recent-hilight-in-encoding-video-set-to-0-when-encoding-stops-59" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="the-minimum-time-between-camera-status-updates-milliseconds-best-practice-is-to-not-poll-for-status-more-often-than-this-60">
+<span id="status-60"></span><h3>The minimum time between camera status updates (milliseconds). Best practice is to not poll for status more often than this (60)<a class="headerlink" href="#the-minimum-time-between-camera-status-updates-milliseconds-best-practice-is-to-not-poll-for-status-more-often-than-this-60" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="liveview-exposure-select-mode-65">
+<span id="status-65"></span><h3>Liveview Exposure Select Mode (65)<a class="headerlink" href="#liveview-exposure-select-mode-65" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Disabled</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Auto</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>ISO Lock</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Hemisphere</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="liveview-exposure-select-y-coordinate-percent-66">
+<span id="status-66"></span><h3>Liveview Exposure Select: y-coordinate (percent) (66)<a class="headerlink" href="#liveview-exposure-select-y-coordinate-percent-66" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<p>This is a percent value from 0-100.</p>
+</section>
+<section id="liveview-exposure-select-y-coordinate-percent-67">
+<span id="status-67"></span><h3>Liveview Exposure Select: y-coordinate (percent) (67)<a class="headerlink" href="#liveview-exposure-select-y-coordinate-percent-67" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<p>This is a percent value from 0-100.</p>
+</section>
+<section id="does-the-camera-currently-have-a-gps-lock-68">
+<span id="status-68"></span><h3>Does the camera currently have a GPS lock? (68)<a class="headerlink" href="#does-the-camera-currently-have-a-gps-lock-68" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-ap-mode-enabled-69">
+<span id="status-69"></span><h3>Is AP mode enabled? (69)<a class="headerlink" href="#is-ap-mode-enabled-69" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="internal-battery-level-percent-70">
+<span id="status-70"></span><h3>Internal battery level (percent) (70)<a class="headerlink" href="#internal-battery-level-percent-70" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<p>This is a percent value from 0-100.</p>
+</section>
+<section id="microphone-accessory-status-74">
+<span id="status-74"></span><h3>Microphone Accessory status (74)<a class="headerlink" href="#microphone-accessory-status-74" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Accessory not connected</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Accessory connected</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Accessory connected and a microphone is plugged into the accessory</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="digital-zoom-level-percent-75">
+<span id="status-75"></span><h3>Digital Zoom level (percent) (75)<a class="headerlink" href="#digital-zoom-level-percent-75" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<p>This is a percent value from 0-100.</p>
+</section>
+<section id="wireless-band-76">
+<span id="status-76"></span><h3>Wireless Band (76)<a class="headerlink" href="#wireless-band-76" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>2.4 GHz</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>5 GHz</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-digital-zoom-feature-available-77">
+<span id="status-77"></span><h3>Is Digital Zoom feature available? (77)<a class="headerlink" href="#is-digital-zoom-feature-available-77" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="are-current-video-settings-mobile-friendly-related-to-video-compression-and-frame-rate-78">
+<span id="status-78"></span><h3>Are current video settings mobile friendly? (related to video compression and frame rate) (78)<a class="headerlink" href="#are-current-video-settings-mobile-friendly-related-to-video-compression-and-frame-rate-78" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-the-camera-currently-in-first-time-use-ftu-ui-flow-79">
+<span id="status-79"></span><h3>Is the camera currently in First Time Use (FTU) UI flow? (79)<a class="headerlink" href="#is-the-camera-currently-in-first-time-use-ftu-ui-flow-79" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-5ghz-wireless-band-available-81">
+<span id="status-81"></span><h3>Is 5GHz wireless band available? (81)<a class="headerlink" href="#is-5ghz-wireless-band-available-81" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-the-system-fully-booted-and-ready-to-accept-commands-82">
+<span id="status-82"></span><h3>Is the system fully booted and ready to accept commands? (82)<a class="headerlink" href="#is-the-system-fully-booted-and-ready-to-accept-commands-82" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-the-internal-battery-charged-sufficiently-to-start-over-the-air-ota-update-83">
+<span id="status-83"></span><h3>Is the internal battery charged sufficiently to start Over The Air (OTA) update? (83)<a class="headerlink" href="#is-the-internal-battery-charged-sufficiently-to-start-over-the-air-ota-update-83" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-the-camera-getting-too-cold-to-continue-recording-85">
+<span id="status-85"></span><h3>Is the camera getting too cold to continue recording? (85)<a class="headerlink" href="#is-the-camera-getting-too-cold-to-continue-recording-85" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rotational-orientation-of-the-camera-86">
+<span id="status-86"></span><h3>Rotational orientation of the camera (86)<a class="headerlink" href="#rotational-orientation-of-the-camera-86" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0 degrees (upright)</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>180 degrees (upside down)</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>90 degrees (laying on right side)</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>270 degrees (laying on left side)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-this-camera-model-capable-of-zooming-while-encoding-88">
+<span id="status-88"></span><h3>Is this camera model capable of zooming while encoding? (88)<a class="headerlink" href="#is-this-camera-model-capable-of-zooming-while-encoding-88" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="current-flatmode-id-89">
+<span id="status-89"></span><h3>Current Flatmode ID (89)<a class="headerlink" href="#current-flatmode-id-89" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="current-video-preset-id-93">
+<span id="status-93"></span><h3>Current Video Preset (ID) (93)<a class="headerlink" href="#current-video-preset-id-93" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="current-photo-preset-id-94">
+<span id="status-94"></span><h3>Current Photo Preset (ID) (94)<a class="headerlink" href="#current-photo-preset-id-94" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="current-time-lapse-preset-id-95">
+<span id="status-95"></span><h3>Current Time Lapse Preset (ID) (95)<a class="headerlink" href="#current-time-lapse-preset-id-95" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="current-preset-group-id-corresponds-to-ui-mode-groups-in-settings-json-96">
+<span id="status-96"></span><h3>Current Preset Group (ID) (corresponds to ui_mode_groups in settings.json) (96)<a class="headerlink" href="#current-preset-group-id-corresponds-to-ui-mode-groups-in-settings-json-96" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="current-preset-id-97">
+<span id="status-97"></span><h3>Current Preset (ID) (97)<a class="headerlink" href="#current-preset-id-97" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="preset-modified-status-which-contains-an-event-id-and-a-preset-group-id-98">
+<span id="status-98"></span><h3>Preset Modified Status, which contains an event ID and a Preset (Group) ID (98)<a class="headerlink" href="#preset-modified-status-which-contains-an-event-id-and-a-preset-group-id-98" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="the-number-of-live-bursts-can-be-captured-with-current-settings-before-sdcard-is-full-99">
+<span id="status-99"></span><h3>The number of Live Bursts can be captured with current settings before sdcard is full (99)<a class="headerlink" href="#the-number-of-live-bursts-can-be-captured-with-current-settings-before-sdcard-is-full-99" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="total-number-of-live-bursts-on-sdcard-100">
+<span id="status-100"></span><h3>Total number of Live Bursts on sdcard (100)<a class="headerlink" href="#total-number-of-live-bursts-on-sdcard-100" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="is-capture-delay-currently-active-i-e-counting-down-101">
+<span id="status-101"></span><h3>Is Capture Delay currently active (i.e. counting down)? (101)<a class="headerlink" href="#is-capture-delay-currently-active-i-e-counting-down-101" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="media-mod-state-102">
+<span id="status-102"></span><h3>Media Mod state (102)<a class="headerlink" href="#media-mod-state-102" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Media Mod microphone removed</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Media Mod microphone only</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Media Mod microphone with external microphone</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="time-warp-speed-103">
+<span id="status-103"></span><h3>Time Warp Speed (103)<a class="headerlink" href="#time-warp-speed-103" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>15x</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>30x</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>60x</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>150x</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>300x</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>900x</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>1800x</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>2x</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>5x</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>10x</p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>Auto</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>1x (realtime)</p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>1/2x (slow-motion)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-the-system-s-linux-core-active-104">
+<span id="status-104"></span><h3>Is the system’s Linux core active? (104)<a class="headerlink" href="#is-the-system-s-linux-core-active-104" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="camera-lens-type-reflects-changes-to-lens-settings-such-as-162-189-194-105">
+<span id="status-105"></span><h3>Camera lens type (reflects changes to lens settings such as 162, 189, 194, …) (105)<a class="headerlink" href="#camera-lens-type-reflects-changes-to-lens-settings-such-as-162-189-194-105" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Default</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Max Lens</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Max Lens 2.0</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-video-hindsight-capture-active-106">
+<span id="status-106"></span><h3>Is Video Hindsight Capture Active? (106)<a class="headerlink" href="#is-video-hindsight-capture-active-106" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="scheduled-capture-preset-id-107">
+<span id="status-107"></span><h3>Scheduled Capture Preset ID (107)<a class="headerlink" href="#scheduled-capture-preset-id-107" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+</section>
+<section id="is-scheduled-capture-set-108">
+<span id="status-108"></span><h3>Is Scheduled Capture set? (108)<a class="headerlink" href="#is-scheduled-capture-set-108" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="display-mod-status-bitmasked-110">
+<span id="status-110"></span><h3>Display Mod Status (bitmasked) (110)<a class="headerlink" href="#display-mod-status-bitmasked-110" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>000 = Display Mod: 0, HDMI: 0, Display Mod Connected: False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>001 = Display Mod: 0, HDMI: 0, Display Mod Connected: True</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>010 = Display Mod: 0, HDMI: 1, Display Mod Connected: False</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>011 = Display Mod: 0, HDMI: 1, Display Mod Connected: True</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>100 = Display Mod: 1, HDMI: 0, Display Mod Connected: False</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>101 = Display Mod: 1, HDMI: 0, Display Mod Connected: True</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>110 = Display Mod: 1, HDMI: 1, Display Mod Connected: False</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>111 = Display Mod: 1, HDMI: 1, Display Mod Connected: True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="does-sdcard-meet-specified-minimum-write-speed-111">
+<span id="status-111"></span><h3>Does sdcard meet specified minimum write speed? (111)<a class="headerlink" href="#does-sdcard-meet-specified-minimum-write-speed-111" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="number-of-sdcard-write-speed-errors-since-device-booted-112">
+<span id="status-112"></span><h3>Number of sdcard write speed errors since device booted (112)<a class="headerlink" href="#number-of-sdcard-write-speed-errors-since-device-booted-112" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+</section>
+<section id="is-turbo-transfer-active-113">
+<span id="status-113"></span><h3>Is Turbo Transfer active? (113)<a class="headerlink" href="#is-turbo-transfer-active-113" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<img alt="https://img.shields.io/badge/HERO9Black-e6194b" src="https://img.shields.io/badge/HERO9Black-e6194b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="camera-control-status-id-114">
+<span id="status-114"></span><h3>Camera control status ID (114)<a class="headerlink" href="#camera-control-status-id-114" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Camera Idle: No one is attempting to change camera settings</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Camera Control: Camera is in a menu or changing settings. To intervene, app must request control</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Camera External Control: An outside entity (app) has control and is in a menu or modifying settings</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="is-the-camera-connected-to-a-pc-via-usb-115">
+<span id="status-115"></span><h3>Is the camera connected to a PC via USB? (115)<a class="headerlink" href="#is-the-camera-connected-to-a-pc-via-usb-115" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="camera-control-over-usb-state-116">
+<span id="status-116"></span><h3>Camera control over USB state (116)<a class="headerlink" href="#camera-control-over-usb-state-116" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+<img alt="https://img.shields.io/badge/HERO10Black-3cb44b" src="https://img.shields.io/badge/HERO10Black-3cb44b" />
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Option Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Disabled</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Enabled</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="total-sd-card-capacity-in-kilobytes-117">
+<span id="status-117"></span><h3>Total SD card capacity in Kilobytes (117)<a class="headerlink" href="#total-sd-card-capacity-in-kilobytes-117" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+<img alt="https://img.shields.io/badge/HERO11BlackMini-f58231" src="https://img.shields.io/badge/HERO11BlackMini-f58231" />
+<img alt="https://img.shields.io/badge/HERO11Black-ffe119" src="https://img.shields.io/badge/HERO11Black-ffe119" />
+</section>
+<section id="photo-interval-capture-count-118">
+<span id="status-118"></span><h3>Photo interval capture count (118)<a class="headerlink" href="#photo-interval-capture-count-118" title="Link to this heading"></a></h3>
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4" />
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="settings.html" class="btn btn-neutral float-left" title="Settings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

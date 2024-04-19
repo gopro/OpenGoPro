@@ -1,0 +1,4016 @@
+
+Protobuf Documentation
+======================
+
+Enums
+-----
+
+
+
+.. _proto-enumcohnnetworkstate:
+
+EnumCOHNNetworkState
+^^^^^^^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - COHN_STATE_Init
+     - 0
+
+     - 
+
+   * - COHN_STATE_Error
+     - 1
+
+     - 
+
+   * - COHN_STATE_Exit
+     - 2
+
+     - 
+
+   * - COHN_STATE_Idle
+     - 5
+
+     - 
+
+   * - COHN_STATE_NetworkConnected
+     - 27
+
+     - 
+
+   * - COHN_STATE_NetworkDisconnected
+     - 28
+
+     - 
+
+   * - COHN_STATE_ConnectingToNetwork
+     - 29
+
+     - 
+
+   * - COHN_STATE_Invalid
+     - 30
+
+     - 
+
+
+
+
+
+.. _proto-enumcohnstatus:
+
+EnumCOHNStatus
+^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - COHN_UNPROVISIONED
+     - 0
+
+     - 
+
+   * - COHN_PROVISIONED
+     - 1
+
+     - 
+
+
+
+
+
+.. _proto-enumcameracontrolstatus:
+
+EnumCameraControlStatus
+^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/set_camera_control_status.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - CAMERA_IDLE
+     - 0
+
+     - 
+
+   * - CAMERA_CONTROL
+     - 1
+
+     - Can only be set by camera, not by app or third party
+
+   * - CAMERA_EXTERNAL_CONTROL
+     - 2
+
+     - 
+
+
+
+
+
+.. _proto-enumflatmode:
+
+EnumFlatMode
+^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - FLAT_MODE_UNKNOWN
+     - -1
+
+     - 
+
+   * - FLAT_MODE_PLAYBACK
+     - 4
+
+     - 
+
+   * - FLAT_MODE_SETUP
+     - 5
+
+     - 
+
+   * - FLAT_MODE_VIDEO
+     - 12
+
+     - 
+
+   * - FLAT_MODE_TIME_LAPSE_VIDEO
+     - 13
+
+     - 
+
+   * - FLAT_MODE_LOOPING
+     - 15
+
+     - 
+
+   * - FLAT_MODE_PHOTO_SINGLE
+     - 16
+
+     - 
+
+   * - FLAT_MODE_PHOTO
+     - 17
+
+     - 
+
+   * - FLAT_MODE_PHOTO_NIGHT
+     - 18
+
+     - 
+
+   * - FLAT_MODE_PHOTO_BURST
+     - 19
+
+     - 
+
+   * - FLAT_MODE_TIME_LAPSE_PHOTO
+     - 20
+
+     - 
+
+   * - FLAT_MODE_NIGHT_LAPSE_PHOTO
+     - 21
+
+     - 
+
+   * - FLAT_MODE_BROADCAST_RECORD
+     - 22
+
+     - 
+
+   * - FLAT_MODE_BROADCAST_BROADCAST
+     - 23
+
+     - 
+
+   * - FLAT_MODE_TIME_WARP_VIDEO
+     - 24
+
+     - 
+
+   * - FLAT_MODE_LIVE_BURST
+     - 25
+
+     - 
+
+   * - FLAT_MODE_NIGHT_LAPSE_VIDEO
+     - 26
+
+     - 
+
+   * - FLAT_MODE_SLOMO
+     - 27
+
+     - 
+
+   * - FLAT_MODE_IDLE
+     - 28
+
+     - 
+
+   * - FLAT_MODE_VIDEO_STAR_TRAIL
+     - 29
+
+     - 
+
+   * - FLAT_MODE_VIDEO_LIGHT_PAINTING
+     - 30
+
+     - 
+
+   * - FLAT_MODE_VIDEO_LIGHT_TRAIL
+     - 31
+
+     - 
+
+   * - FLAT_MODE_VIDEO_BURST_SLOMO
+     - 32
+
+     - 
+
+
+
+
+
+.. _proto-enumlens:
+
+EnumLens
+^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - LENS_WIDE
+     - 0
+
+     - 
+
+   * - LENS_SUPERVIEW
+     - 3
+
+     - 
+
+   * - LENS_LINEAR
+     - 4
+
+     - 
+
+
+
+
+
+.. _proto-enumlivestreamerror:
+
+EnumLiveStreamError
+^^^^^^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - LIVE_STREAM_ERROR_NONE
+     - 0
+
+     - No error (success)
+
+   * - LIVE_STREAM_ERROR_NETWORK
+     - 1
+
+     - General network error during the stream
+
+   * - LIVE_STREAM_ERROR_CREATESTREAM
+     - 2
+
+     - Startup error: bad URL or valid with live stream server
+
+   * - LIVE_STREAM_ERROR_OUTOFMEMORY
+     - 3
+
+     - Not enough memory on camera to complete task
+
+   * - LIVE_STREAM_ERROR_INPUTSTREAM
+     - 4
+
+     - Failed to get stream from low level camera system
+
+   * - LIVE_STREAM_ERROR_INTERNET
+     - 5
+
+     - No internet access detected on startup of streamer
+
+   * - LIVE_STREAM_ERROR_OSNETWORK
+     - 6
+
+     - Error occured in linux networking stack. Usually means the server closed the connection
+
+   * - LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT
+     - 7
+
+     - Timed out attemping to connect to the wifi network when attemping live stream
+
+   * - LIVE_STREAM_ERROR_SSL_HANDSHAKE
+     - 8
+
+     - SSL handshake failed (commonly caused due to incorrect time / time zone)
+
+   * - LIVE_STREAM_ERROR_CAMERA_BLOCKED
+     - 9
+
+     - Low level camera system rejected attempt to start live stream
+
+   * - LIVE_STREAM_ERROR_UNKNOWN
+     - 10
+
+     - Unknown
+
+   * - LIVE_STREAM_ERROR_SD_CARD_FULL
+     - 40
+
+     - Can not perform livestream because sd card is full
+
+   * - LIVE_STREAM_ERROR_SD_CARD_REMOVED
+     - 41
+
+     - Livestream stopped because sd card was removed
+
+
+
+
+
+.. _proto-enumlivestreamstatus:
+
+EnumLiveStreamStatus
+^^^^^^^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - LIVE_STREAM_STATE_IDLE
+     - 0
+
+     - Initial status. Livestream has not yet been configured
+
+   * - LIVE_STREAM_STATE_CONFIG
+     - 1
+
+     - Livestream is being configured
+
+   * - LIVE_STREAM_STATE_READY
+     - 2
+
+     - Livestream has finished configuration and is ready to start streaming
+
+   * - LIVE_STREAM_STATE_STREAMING
+     - 3
+
+     - Livestream is actively streaming
+
+   * - LIVE_STREAM_STATE_COMPLETE_STAY_ON
+     - 4
+
+     - Live stream is exiting. No errors occured.
+
+   * - LIVE_STREAM_STATE_FAILED_STAY_ON
+     - 5
+
+     - Live stream is exiting. An error occurred.
+
+   * - LIVE_STREAM_STATE_RECONNECTING
+     - 6
+
+     - An error occurred during livestream and stream is attempting to reconnect.
+
+   * - LIVE_STREAM_STATE_UNAVAILABLE
+     - 7
+
+     - Live stream setup is unavailable due to camera lens configuration
+
+
+
+
+
+.. _proto-enumpresetgroup:
+
+EnumPresetGroup
+^^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - PRESET_GROUP_ID_VIDEO_SINGLE_LENS
+     - 0
+
+     - Single video
+
+   * - PRESET_GROUP_ID_PHOTO_SINGLE_LENS
+     - 1
+
+     - Single photo
+
+   * - PRESET_GROUP_ID_TIMELAPSE_SINGLE_LENS
+     - 2
+
+     - Single timelapse
+
+   * - PRESET_GROUP_ID_VIDEO_HEMI_LENS
+     - 3
+
+     - Spherical video hemi lens
+
+   * - PRESET_GROUP_ID_PHOTO_HEMI_LENS
+     - 4
+
+     - Spherical photo hemi lens
+
+   * - PRESET_GROUP_ID_TIMELAPSE_HEMI_LENS
+     - 5
+
+     - Spherical timelapse hemi lens
+
+   * - PRESET_GROUP_ID_SPECIAL_INTERNAL
+     - 6
+
+     - Special
+
+   * - PRESET_GROUP_ID_SPECIAL_HEMI
+     - 7
+
+     - Special hemi lens
+
+   * - PRESET_GROUP_ID_VIDEO_ENDURANCE_SINGLE_LENS
+     - 8
+
+     - Video battery endurance
+
+   * - PRESET_GROUP_ID_VIDEO_LONGEST_BATTERY_SINGLE_LENS
+     - 9
+
+     - Video longest battery
+
+   * - PRESET_GROUP_ID_EASY_VIDEO_SINGLE_LENS
+     - 10
+
+     - Easy single video
+
+   * - PRESET_GROUP_ID_EASY_VIDEO_ENDURANCE_SINGLE_LENS
+     - 11
+
+     - Easy video battery endurance
+
+   * - PRESET_GROUP_ID_EASY_PHOTO_SINGLE_LENS
+     - 12
+
+     - Easy single photo
+
+   * - PRESET_GROUP_ID_EASY_TIMELAPSE_SINGLE_LENS
+     - 13
+
+     - Easy single timelapse
+
+   * - PRESET_GROUP_ID_EASY_VIDEO_LONGEST_BATTERY_SINGLE_LENS
+     - 14
+
+     - Easy video longest battery
+
+   * - PRESET_GROUP_ID_VIDEO_HEMI_LENS_2
+     - 15
+
+     - Hemi Lens 2 video
+
+   * - PRESET_GROUP_ID_PHOTO_HEMI_LENS_2
+     - 16
+
+     - Hemi Lens 2 photo
+
+   * - PRESET_GROUP_ID_TIMELAPSE_HEMI_LENS_2
+     - 17
+
+     - Hemi Lens 2 timelapse
+
+   * - PRESET_GROUP_ID_SPECIAL_HEMI_LENS_2
+     - 18
+
+     - Hemi Lens 2 special
+
+   * - PRESET_GROUP_ID_EASY_VIDEO_HEMI_LENS
+     - 19
+
+     - Hemi Lens easy video
+
+   * - PRESET_GROUP_ID_EASY_PHOTO_HEMI_LENS
+     - 20
+
+     - Hemi Lens easy photo
+
+   * - PRESET_GROUP_ID_EASY_TIMELAPSE_HEMI_LENS
+     - 21
+
+     - Hemi Lens easy timelapse
+
+   * - PRESET_GROUP_ID_EASY_VIDEO_HEMI_LENS_2
+     - 22
+
+     - Hemi Lens 2 easy video
+
+   * - PRESET_GROUP_ID_EASY_PHOTO_HEMI_LENS_2
+     - 23
+
+     - Hemi Lens 2 easy photo
+
+   * - PRESET_GROUP_ID_EASY_TIMELAPSE_HEMI_LENS_2
+     - 24
+
+     - Hemi Lens 2 easy timelapse
+
+   * - PRESET_GROUP_ID_VIDEO_SINGLE_LENS_STANDARD
+     - 25
+
+     - Single video standard profile - for internal preset switch only
+
+   * - PRESET_GROUP_ID_VIDEO_SINGLE_LENS_HDR
+     - 26
+
+     - Single video hdr profile - for internal preset switch only
+
+   * - PRESET_GROUP_ID_VIDEO_SINGLE_LENS_LOG
+     - 27
+
+     - Single video log profile - for internal preset switch only
+
+   * - PRESET_GROUP_ID_VIDEO_SPHERICAL_LENS
+     - 28
+
+     - Spherical video mode
+
+   * - PRESET_GROUP_ID_PHOTO_SPHERICAL_LENS
+     - 29
+
+     - Spherical photo mode
+
+   * - PRESET_GROUP_ID_TIMELAPSE_SPHERICAL_LENS
+     - 30
+
+     - Spherical timelapse mode
+
+   * - PRESET_GROUP_ID_SPECIAL_SPHERICAL
+     - 31
+
+     - Special spherical lens
+
+   * - PRESET_GROUP_ID_VIDEO_SPHERICAL_LENS_STANDARD
+     - 32
+
+     - Spherical video standard profile - for internal preset switch only
+
+   * - PRESET_GROUP_ID_VIDEO_SPHERICAL_LENS_LOG
+     - 33
+
+     - Spherical video standard profile - for internal preset switch only
+
+   * - PRESET_GROUP_ID_VIDEO_HEMI_LENS_2_STANDARD
+     - 34
+
+     - Hemi Lens 2 video standard profile and Hemi Lens 2.5 video standard profile - for internal preset switch only
+
+   * - PRESET_GROUP_ID_VIDEO_HEMI_LENS_2_LOG
+     - 35
+
+     - Hemi Lens 2 video log profile and Hemi Lens 2.5 video log profile - for internal preset switch only
+
+   * - PRESET_GROUP_ID_VIDEO_MACRO_LENS
+     - 36
+
+     - Video macro lens
+
+   * - PRESET_GROUP_ID_PHOTO_MACRO_LENS
+     - 37
+
+     - Photo macro lens
+
+   * - PRESET_GROUP_ID_TIMELAPSE_MACRO_LENS
+     - 38
+
+     - Timelapse macro lens
+
+   * - PRESET_GROUP_ID_EASY_VIDEO_MACRO_LENS
+     - 39
+
+     - Easy Video macro lens
+
+   * - PRESET_GROUP_ID_EASY_PHOTO_MACRO_LENS
+     - 40
+
+     - Easy Photo macro lens
+
+   * - PRESET_GROUP_ID_EASY_TIMELAPSE_MACRO_LENS
+     - 41
+
+     - Easy Timelapse macro lens
+
+   * - PRESET_GROUP_ID_VIDEO_MACRO_LENS_STANDARD
+     - 42
+
+     - Macro lens video standard profile - for internal preset switch only
+
+   * - PRESET_GROUP_ID_VIDEO_MACRO_LENS_LOG
+     - 43
+
+     - Macro lens video log profile - for internal preset switch only
+
+   * - PRESET_GROUP_ID_VIDEO_ANAMORPHIC_LENS
+     - 44
+
+     - Video anamorphic lens
+
+   * - PRESET_GROUP_ID_PHOTO_ANAMORPHIC_LENS
+     - 45
+
+     - Photo anamorphic lens
+
+   * - PRESET_GROUP_ID_TIMELAPSE_ANAMORPHIC_LENS
+     - 46
+
+     - Timelapse anamorphic lens
+
+   * - PRESET_GROUP_ID_EASY_VIDEO_ANAMORPHIC_LENS
+     - 47
+
+     - Easy Video anamorphic lens
+
+   * - PRESET_GROUP_ID_EASY_PHOTO_ANAMORPHIC_LENS
+     - 48
+
+     - Easy Photo anamorphic lens
+
+   * - PRESET_GROUP_ID_EASY_TIMELAPSE_ANAMORPHIC_LENS
+     - 49
+
+     - Easy Timelapse anamorphic lens
+
+   * - PRESET_GROUP_ID_VIDEO_ANAMORPHIC_LENS_STANDARD
+     - 50
+
+     - Anamorphic lens video standard profile - for internal preset switch only
+
+   * - PRESET_GROUP_ID_VIDEO_ANAMORPHIC_LENS_LOG
+     - 51
+
+     - Anamorphic lens video log profile - for internal preset switch only
+
+   * - PRESET_GROUP_ID_VIDEO
+     - 1000
+
+     - 
+
+   * - PRESET_GROUP_ID_PHOTO
+     - 1001
+
+     - 
+
+   * - PRESET_GROUP_ID_TIMELAPSE
+     - 1002
+
+     - 
+
+
+
+
+
+.. _proto-enumpresetgroupicon:
+
+EnumPresetGroupIcon
+^^^^^^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - PRESET_GROUP_VIDEO_ICON_ID
+     - 0
+
+     - 
+
+   * - PRESET_GROUP_PHOTO_ICON_ID
+     - 1
+
+     - 
+
+   * - PRESET_GROUP_TIMELAPSE_ICON_ID
+     - 2
+
+     - 
+
+   * - PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID
+     - 3
+
+     - 
+
+   * - PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID
+     - 4
+
+     - 
+
+   * - PRESET_GROUP_MAX_VIDEO_ICON_ID
+     - 5
+
+     - 
+
+   * - PRESET_GROUP_MAX_PHOTO_ICON_ID
+     - 6
+
+     - 
+
+   * - PRESET_GROUP_MAX_TIMELAPSE_ICON_ID
+     - 7
+
+     - 
+
+
+
+
+
+.. _proto-enumpreseticon:
+
+EnumPresetIcon
+^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - PRESET_ICON_VIDEO
+     - 0
+
+     - 
+
+   * - PRESET_ICON_ACTIVITY
+     - 1
+
+     - 
+
+   * - PRESET_ICON_CINEMATIC
+     - 2
+
+     - 
+
+   * - PRESET_ICON_PHOTO
+     - 3
+
+     - 
+
+   * - PRESET_ICON_LIVE_BURST
+     - 4
+
+     - 
+
+   * - PRESET_ICON_BURST
+     - 5
+
+     - 
+
+   * - PRESET_ICON_PHOTO_NIGHT
+     - 6
+
+     - 
+
+   * - PRESET_ICON_TIMEWARP
+     - 7
+
+     - 
+
+   * - PRESET_ICON_TIMELAPSE
+     - 8
+
+     - 
+
+   * - PRESET_ICON_NIGHTLAPSE
+     - 9
+
+     - 
+
+   * - PRESET_ICON_SNAIL
+     - 10
+
+     - 
+
+   * - PRESET_ICON_VIDEO_2
+     - 11
+
+     - 
+
+   * - PRESET_ICON_360_VIDEO
+     - 12
+
+     - 
+
+   * - PRESET_ICON_PHOTO_2
+     - 13
+
+     - 
+
+   * - PRESET_ICON_PANORAMA
+     - 14
+
+     - 
+
+   * - PRESET_ICON_BURST_2
+     - 15
+
+     - 
+
+   * - PRESET_ICON_TIMEWARP_2
+     - 16
+
+     - 
+
+   * - PRESET_ICON_TIMELAPSE_2
+     - 17
+
+     - 
+
+   * - PRESET_ICON_CUSTOM
+     - 18
+
+     - 
+
+   * - PRESET_ICON_AIR
+     - 19
+
+     - 
+
+   * - PRESET_ICON_BIKE
+     - 20
+
+     - 
+
+   * - PRESET_ICON_EPIC
+     - 21
+
+     - 
+
+   * - PRESET_ICON_INDOOR
+     - 22
+
+     - 
+
+   * - PRESET_ICON_MOTOR
+     - 23
+
+     - 
+
+   * - PRESET_ICON_MOUNTED
+     - 24
+
+     - 
+
+   * - PRESET_ICON_OUTDOOR
+     - 25
+
+     - 
+
+   * - PRESET_ICON_POV
+     - 26
+
+     - 
+
+   * - PRESET_ICON_SELFIE
+     - 27
+
+     - 
+
+   * - PRESET_ICON_SKATE
+     - 28
+
+     - 
+
+   * - PRESET_ICON_SNOW
+     - 29
+
+     - 
+
+   * - PRESET_ICON_TRAIL
+     - 30
+
+     - 
+
+   * - PRESET_ICON_TRAVEL
+     - 31
+
+     - 
+
+   * - PRESET_ICON_WATER
+     - 32
+
+     - 
+
+   * - PRESET_ICON_LOOPING
+     - 33
+
+     - 
+
+   * - PRESET_ICON_STARS
+     - 34
+
+     - 
+
+   * - PRESET_ICON_ACTION
+     - 35
+
+     - 
+
+   * - PRESET_ICON_FOLLOW_CAM
+     - 36
+
+     - 
+
+   * - PRESET_ICON_SURF
+     - 37
+
+     - 
+
+   * - PRESET_ICON_CITY
+     - 38
+
+     - 
+
+   * - PRESET_ICON_SHAKY
+     - 39
+
+     - 
+
+   * - PRESET_ICON_CHESTY
+     - 40
+
+     - 
+
+   * - PRESET_ICON_HELMET
+     - 41
+
+     - 
+
+   * - PRESET_ICON_BITE
+     - 42
+
+     - 
+
+   * - PRESET_ICON_MAX_VIDEO
+     - 55
+
+     - 
+
+   * - PRESET_ICON_MAX_PHOTO
+     - 56
+
+     - 
+
+   * - PRESET_ICON_MAX_TIMEWARP
+     - 57
+
+     - 
+
+   * - PRESET_ICON_BASIC
+     - 58
+
+     - 
+
+   * - PRESET_ICON_ULTRA_SLO_MO
+     - 59
+
+     - 
+
+   * - PRESET_ICON_STANDARD_ENDURANCE
+     - 60
+
+     - 
+
+   * - PRESET_ICON_ACTIVITY_ENDURANCE
+     - 61
+
+     - 
+
+   * - PRESET_ICON_CINEMATIC_ENDURANCE
+     - 62
+
+     - 
+
+   * - PRESET_ICON_SLOMO_ENDURANCE
+     - 63
+
+     - 
+
+   * - PRESET_ICON_STATIONARY_1
+     - 64
+
+     - 
+
+   * - PRESET_ICON_STATIONARY_2
+     - 65
+
+     - 
+
+   * - PRESET_ICON_STATIONARY_3
+     - 66
+
+     - 
+
+   * - PRESET_ICON_STATIONARY_4
+     - 67
+
+     - 
+
+   * - PRESET_ICON_SIMPLE_SUPER_PHOTO
+     - 70
+
+     - 
+
+   * - PRESET_ICON_SIMPLE_NIGHT_PHOTO
+     - 71
+
+     - 
+
+   * - PRESET_ICON_HIGHEST_QUALITY_VIDEO
+     - 73
+
+     - 
+
+   * - PRESET_ICON_STANDARD_QUALITY_VIDEO
+     - 74
+
+     - 
+
+   * - PRESET_ICON_BASIC_QUALITY_VIDEO
+     - 75
+
+     - 
+
+   * - PRESET_ICON_STAR_TRAIL
+     - 76
+
+     - 
+
+   * - PRESET_ICON_LIGHT_PAINTING
+     - 77
+
+     - 
+
+   * - PRESET_ICON_LIGHT_TRAIL
+     - 78
+
+     - 
+
+   * - PRESET_ICON_FULL_FRAME
+     - 79
+
+     - 
+
+   * - PRESET_ICON_EASY_MAX_VIDEO
+     - 80
+
+     - 
+
+   * - PRESET_ICON_EASY_MAX_PHOTO
+     - 81
+
+     - 
+
+   * - PRESET_ICON_EASY_MAX_TIMEWARP
+     - 82
+
+     - 
+
+   * - PRESET_ICON_EASY_MAX_STAR_TRAIL
+     - 83
+
+     - 
+
+   * - PRESET_ICON_EASY_MAX_LIGHT_PAINTING
+     - 84
+
+     - 
+
+   * - PRESET_ICON_EASY_MAX_LIGHT_TRAIL
+     - 85
+
+     - 
+
+   * - PRESET_ICON_MAX_STAR_TRAIL
+     - 89
+
+     - 
+
+   * - PRESET_ICON_MAX_LIGHT_PAINTING
+     - 90
+
+     - 
+
+   * - PRESET_ICON_MAX_LIGHT_TRAIL
+     - 91
+
+     - 
+
+   * - PRESET_ICON_360_BURST
+     - 92
+
+     - 
+
+   * - PRESET_ICON_360_PHOTO_NIGHT
+     - 93
+
+     - 
+
+   * - PRESET_ICON_360_NIGHTLAPSE
+     - 94
+
+     - 
+
+   * - PRESET_ICON_360_TIMELAPSE_PHOTO
+     - 95
+
+     - 
+
+   * - PRESET_ICON_360_NIGHTLAPSE_PHOTO
+     - 96
+
+     - 
+
+   * - PRESET_ICON_360_PHOTO
+     - 97
+
+     - 
+
+   * - PRESET_ICON_360_TIMELAPSE
+     - 98
+
+     - 
+
+   * - PRESET_ICON_360_TIMEWARP
+     - 99
+
+     - 
+
+   * - PRESET_ICON_EASY_STANDARD_PROFILE
+     - 100
+
+     - 
+
+   * - PRESET_ICON_EASY_HDR_PROFILE
+     - 101
+
+     - 
+
+   * - PRESET_ICON_BURST_SLOMO
+     - 102
+
+     - 
+
+   * - PRESET_ICON_TIMELAPSE_PHOTO
+     - 1000
+
+     - 
+
+   * - PRESET_ICON_NIGHTLAPSE_PHOTO
+     - 1001
+
+     - 
+
+   * - PRESET_ICON_MAX
+     - 1002
+
+     - 
+
+
+
+
+
+.. _proto-enumpresettitle:
+
+EnumPresetTitle
+^^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - PRESET_TITLE_ACTIVITY
+     - 0
+
+     - 
+
+   * - PRESET_TITLE_STANDARD
+     - 1
+
+     - 
+
+   * - PRESET_TITLE_CINEMATIC
+     - 2
+
+     - 
+
+   * - PRESET_TITLE_PHOTO
+     - 3
+
+     - 
+
+   * - PRESET_TITLE_LIVE_BURST
+     - 4
+
+     - 
+
+   * - PRESET_TITLE_BURST
+     - 5
+
+     - 
+
+   * - PRESET_TITLE_NIGHT
+     - 6
+
+     - 
+
+   * - PRESET_TITLE_TIME_WARP
+     - 7
+
+     - 
+
+   * - PRESET_TITLE_TIME_LAPSE
+     - 8
+
+     - 
+
+   * - PRESET_TITLE_NIGHT_LAPSE
+     - 9
+
+     - 
+
+   * - PRESET_TITLE_VIDEO
+     - 10
+
+     - 
+
+   * - PRESET_TITLE_SLOMO
+     - 11
+
+     - 
+
+   * - PRESET_TITLE_360_VIDEO
+     - 12
+
+     - 
+
+   * - PRESET_TITLE_PHOTO_2
+     - 13
+
+     - 
+
+   * - PRESET_TITLE_PANORAMA
+     - 14
+
+     - 
+
+   * - PRESET_TITLE_360_PHOTO
+     - 15
+
+     - 
+
+   * - PRESET_TITLE_TIME_WARP_2
+     - 16
+
+     - 
+
+   * - PRESET_TITLE_360_TIME_WARP
+     - 17
+
+     - 
+
+   * - PRESET_TITLE_CUSTOM
+     - 18
+
+     - 
+
+   * - PRESET_TITLE_AIR
+     - 19
+
+     - 
+
+   * - PRESET_TITLE_BIKE
+     - 20
+
+     - 
+
+   * - PRESET_TITLE_EPIC
+     - 21
+
+     - 
+
+   * - PRESET_TITLE_INDOOR
+     - 22
+
+     - 
+
+   * - PRESET_TITLE_MOTOR
+     - 23
+
+     - 
+
+   * - PRESET_TITLE_MOUNTED
+     - 24
+
+     - 
+
+   * - PRESET_TITLE_OUTDOOR
+     - 25
+
+     - 
+
+   * - PRESET_TITLE_POV
+     - 26
+
+     - 
+
+   * - PRESET_TITLE_SELFIE
+     - 27
+
+     - 
+
+   * - PRESET_TITLE_SKATE
+     - 28
+
+     - 
+
+   * - PRESET_TITLE_SNOW
+     - 29
+
+     - 
+
+   * - PRESET_TITLE_TRAIL
+     - 30
+
+     - 
+
+   * - PRESET_TITLE_TRAVEL
+     - 31
+
+     - 
+
+   * - PRESET_TITLE_WATER
+     - 32
+
+     - 
+
+   * - PRESET_TITLE_LOOPING
+     - 33
+
+     - 
+
+   * - PRESET_TITLE_STARS
+     - 34
+
+     - 
+
+   * - PRESET_TITLE_ACTION
+     - 35
+
+     - 
+
+   * - PRESET_TITLE_FOLLOW_CAM
+     - 36
+
+     - 
+
+   * - PRESET_TITLE_SURF
+     - 37
+
+     - 
+
+   * - PRESET_TITLE_CITY
+     - 38
+
+     - 
+
+   * - PRESET_TITLE_SHAKY
+     - 39
+
+     - 
+
+   * - PRESET_TITLE_CHESTY
+     - 40
+
+     - 
+
+   * - PRESET_TITLE_HELMET
+     - 41
+
+     - 
+
+   * - PRESET_TITLE_BITE
+     - 42
+
+     - 
+
+   * - PRESET_TITLE_CUSTOM_CINEMATIC
+     - 43
+
+     - 
+
+   * - PRESET_TITLE_DIVE
+     - 44
+
+     - 
+
+   * - PRESET_TITLE_FPV
+     - 45
+
+     - 
+
+   * - PRESET_TITLE_HDR
+     - 46
+
+     - 
+
+   * - PRESET_TITLE_LANDSCAPE
+     - 47
+
+     - 
+
+   * - PRESET_TITLE_LOG
+     - 48
+
+     - 
+
+   * - PRESET_TITLE_CUSTOM_SLOMO
+     - 49
+
+     - 
+
+   * - PRESET_TITLE_TRIPOD
+     - 50
+
+     - 
+
+   * - PRESET_TITLE_360_TIMELAPSE
+     - 51
+
+     - 
+
+   * - PRESET_TITLE_360_NIGHT_LAPSE
+     - 52
+
+     - 
+
+   * - PRESET_TITLE_360_NIGHT_PHOTO
+     - 53
+
+     - 
+
+   * - PRESET_TITLE_PANO_TIME_LAPSE
+     - 54
+
+     - 
+
+   * - PRESET_TITLE_MAX_VIDEO
+     - 55
+
+     - 
+
+   * - PRESET_TITLE_MAX_PHOTO
+     - 56
+
+     - 
+
+   * - PRESET_TITLE_MAX_TIMEWARP
+     - 57
+
+     - 
+
+   * - PRESET_TITLE_BASIC
+     - 58
+
+     - 
+
+   * - PRESET_TITLE_ULTRA_SLO_MO
+     - 59
+
+     - 
+
+   * - PRESET_TITLE_STANDARD_ENDURANCE
+     - 60
+
+     - 
+
+   * - PRESET_TITLE_ACTIVITY_ENDURANCE
+     - 61
+
+     - 
+
+   * - PRESET_TITLE_CINEMATIC_ENDURANCE
+     - 62
+
+     - 
+
+   * - PRESET_TITLE_SLOMO_ENDURANCE
+     - 63
+
+     - 
+
+   * - PRESET_TITLE_STATIONARY_1
+     - 64
+
+     - 
+
+   * - PRESET_TITLE_STATIONARY_2
+     - 65
+
+     - 
+
+   * - PRESET_TITLE_STATIONARY_3
+     - 66
+
+     - 
+
+   * - PRESET_TITLE_STATIONARY_4
+     - 67
+
+     - 
+
+   * - PRESET_TITLE_SIMPLE_VIDEO
+     - 68
+
+     - 
+
+   * - PRESET_TITLE_SIMPLE_TIME_WARP
+     - 69
+
+     - 
+
+   * - PRESET_TITLE_SIMPLE_SUPER_PHOTO
+     - 70
+
+     - 
+
+   * - PRESET_TITLE_SIMPLE_NIGHT_PHOTO
+     - 71
+
+     - 
+
+   * - PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE
+     - 72
+
+     - 
+
+   * - PRESET_TITLE_HIGHEST_QUALITY
+     - 73
+
+     - 
+
+   * - PRESET_TITLE_EXTENDED_BATTERY
+     - 74
+
+     - 
+
+   * - PRESET_TITLE_LONGEST_BATTERY
+     - 75
+
+     - 
+
+   * - PRESET_TITLE_STAR_TRAIL
+     - 76
+
+     - 
+
+   * - PRESET_TITLE_LIGHT_PAINTING
+     - 77
+
+     - 
+
+   * - PRESET_TITLE_LIGHT_TRAIL
+     - 78
+
+     - 
+
+   * - PRESET_TITLE_FULL_FRAME
+     - 79
+
+     - 
+
+   * - PRESET_TITLE_MAX_LENS_VIDEO
+     - 80
+
+     - 
+
+   * - PRESET_TITLE_MAX_LENS_TIMEWARP
+     - 81
+
+     - 
+
+   * - PRESET_TITLE_STANDARD_QUALITY_VIDEO
+     - 82
+
+     - 
+
+   * - PRESET_TITLE_BASIC_QUALITY_VIDEO
+     - 83
+
+     - 
+
+   * - PRESET_TITLE_EASY_MAX_VIDEO
+     - 84
+
+     - 
+
+   * - PRESET_TITLE_EASY_MAX_PHOTO
+     - 85
+
+     - 
+
+   * - PRESET_TITLE_EASY_MAX_TIMEWARP
+     - 86
+
+     - 
+
+   * - PRESET_TITLE_EASY_MAX_STAR_TRAIL
+     - 87
+
+     - 
+
+   * - PRESET_TITLE_EASY_MAX_LIGHT_PAINTING
+     - 88
+
+     - 
+
+   * - PRESET_TITLE_EASY_MAX_LIGHT_TRAIL
+     - 89
+
+     - 
+
+   * - PRESET_TITLE_MAX_STAR_TRAIL
+     - 90
+
+     - 
+
+   * - PRESET_TITLE_MAX_LIGHT_PAINTING
+     - 91
+
+     - 
+
+   * - PRESET_TITLE_MAX_LIGHT_TRAIL
+     - 92
+
+     - 
+
+   * - PRESET_TITLE_HIGHEST_QUALITY_VIDEO
+     - 93
+
+     - 
+
+   * - PRESET_TITLE_USER_DEFINED_CUSTOM_NAME
+     - 94
+
+     - 
+
+   * - PRESET_TITLE_360_DEG_BURST
+     - 95
+
+     - - FW_PRESET_TITLE_360_BURST
+
+   * - PRESET_TITLE_360_DEG_NIGHT_PHOTO
+     - 96
+
+     - - FW_PRESET_TITLE_360_NIGHT
+
+   * - PRESET_TITLE_360_DEG_TIME_LAPSE_PHOTO
+     - 97
+
+     - - FW_PRESET_TITLE_360_TIME_LAPSE_PHOTO
+
+   * - PRESET_TITLE_360_DEG_NIGHT_LAPSE_PHOTO
+     - 98
+
+     - - FW_PRESET_TITLE_360_NIGHT_LAPSE_PHOTO
+
+   * - PRESET_TITLE_EASY_STANDARD_PROFILE
+     - 99
+
+     - 
+
+   * - PRESET_TITLE_EASY_HDR_PROFILE
+     - 100
+
+     - 
+
+   * - PRESET_TITLE_360_DEG_TIME_LAPSE_VIDEO
+     - 101
+
+     - - FW_PRESET_TITLE_MAX_2_TIME_LAPSE
+
+   * - PRESET_TITLE_360_DEG_NIGHT_LAPSE_VIDEO
+     - 102
+
+     - - FW_PRESET_TITLE_MAX_2_NIGHT_LAPSE
+
+   * - PRESET_TITLE_360_DEG_PHOTO
+     - 103
+
+     - - FW_PRESET_TITLE_MAX_2_PHOTO
+
+   * - PRESET_TITLE_360_DEG_TIME_WARP
+     - 104
+
+     - - FW_PRESET_TITLE_MAX_2_TIME_WARP
+
+   * - PRESET_TITLE_360_DEG_VIDEO
+     - 105
+
+     - - FW_PRESET_TITLE_MAX_2_VIDEO
+
+   * - PRESET_TITLE_BURST_SLOMO
+     - 106
+
+     - 
+
+   * - PRESET_TITLE_VLOG
+     - 107
+
+     - 
+
+   * - PRESET_TITLE_MAX
+     - 108
+
+     - 
+
+
+
+
+
+.. _proto-enumprovisioning:
+
+EnumProvisioning
+^^^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - PROVISIONING_UNKNOWN
+     - 0
+
+     - 
+
+   * - PROVISIONING_NEVER_STARTED
+     - 1
+
+     - 
+
+   * - PROVISIONING_STARTED
+     - 2
+
+     - 
+
+   * - PROVISIONING_ABORTED_BY_SYSTEM
+     - 3
+
+     - 
+
+   * - PROVISIONING_CANCELLED_BY_USER
+     - 4
+
+     - 
+
+   * - PROVISIONING_SUCCESS_NEW_AP
+     - 5
+
+     - 
+
+   * - PROVISIONING_SUCCESS_OLD_AP
+     - 6
+
+     - 
+
+   * - PROVISIONING_ERROR_FAILED_TO_ASSOCIATE
+     - 7
+
+     - 
+
+   * - PROVISIONING_ERROR_PASSWORD_AUTH
+     - 8
+
+     - 
+
+   * - PROVISIONING_ERROR_EULA_BLOCKING
+     - 9
+
+     - 
+
+   * - PROVISIONING_ERROR_NO_INTERNET
+     - 10
+
+     - 
+
+   * - PROVISIONING_ERROR_UNSUPPORTED_TYPE
+     - 11
+
+     - 
+
+
+
+
+
+.. _proto-enumregisterlivestreamstatus:
+
+EnumRegisterLiveStreamStatus
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - REGISTER_LIVE_STREAM_STATUS_STATUS
+     - 1
+
+     - 
+
+   * - REGISTER_LIVE_STREAM_STATUS_ERROR
+     - 2
+
+     - 
+
+   * - REGISTER_LIVE_STREAM_STATUS_MODE
+     - 3
+
+     - 
+
+   * - REGISTER_LIVE_STREAM_STATUS_BITRATE
+     - 4
+
+     - 
+
+
+
+
+
+.. _proto-enumregisterpresetstatus:
+
+EnumRegisterPresetStatus
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - REGISTER_PRESET_STATUS_PRESET
+     - 1
+
+     - Send notification when properties of a preset change
+
+   * - REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY
+     - 2
+
+     - Send notification when properties of a preset group change
+
+
+
+
+
+.. _proto-enumresultgeneric:
+
+EnumResultGeneric
+^^^^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - RESULT_UNKNOWN
+     - 0
+
+     - 
+
+   * - RESULT_SUCCESS
+     - 1
+
+     - 
+
+   * - RESULT_ILL_FORMED
+     - 2
+
+     - 
+
+   * - RESULT_NOT_SUPPORTED
+     - 3
+
+     - 
+
+   * - RESULT_ARGUMENT_OUT_OF_BOUNDS
+     - 4
+
+     - 
+
+   * - RESULT_ARGUMENT_INVALID
+     - 5
+
+     - 
+
+   * - RESULT_RESOURCE_NOT_AVAILABLE
+     - 6
+
+     - 
+
+
+
+
+
+.. _proto-enumscanentryflags:
+
+EnumScanEntryFlags
+^^^^^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - SCAN_FLAG_OPEN
+     - 0
+
+     - This network does not require authentication
+
+   * - SCAN_FLAG_AUTHENTICATED
+     - 1
+
+     - This network requires authentication
+
+   * - SCAN_FLAG_CONFIGURED
+     - 2
+
+     - This network has been previously provisioned
+
+   * - SCAN_FLAG_BEST_SSID
+     - 4
+
+     - 
+
+   * - SCAN_FLAG_ASSOCIATED
+     - 8
+
+     - Camera is connected to this AP
+
+   * - SCAN_FLAG_UNSUPPORTED_TYPE
+     - 16
+
+     - 
+
+
+
+
+
+.. _proto-enumscanning:
+
+EnumScanning
+^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - SCANNING_UNKNOWN
+     - 0
+
+     - 
+
+   * - SCANNING_NEVER_STARTED
+     - 1
+
+     - 
+
+   * - SCANNING_STARTED
+     - 2
+
+     - 
+
+   * - SCANNING_ABORTED_BY_SYSTEM
+     - 3
+
+     - 
+
+   * - SCANNING_CANCELLED_BY_USER
+     - 4
+
+     - 
+
+   * - SCANNING_SUCCESS
+     - 5
+
+     - 
+
+
+
+
+
+.. _proto-enumwindowsize:
+
+EnumWindowSize
+^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - WINDOW_SIZE_480
+     - 4
+
+     - 
+
+   * - WINDOW_SIZE_720
+     - 7
+
+     - 
+
+   * - WINDOW_SIZE_1080
+     - 12
+
+     - 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. _proto-media:
+
+Media
+-----
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto>`__
+
+
+A common model to represent a media file
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - folder
+     - string
+     - 1
+
+     - Directory in which the media is contained
+
+   * - file
+     - string
+     - 2
+
+     - Filename of media
+
+
+
+
+
+
+.. _proto-notifprovisioningstate:
+
+NotifProvisioningState
+----------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+Provision state notification
+
+Sent during provisioning triggered via :ref:`proto-requestconnect` or :ref:`proto-requestconnectnew`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - provisioning_state
+
+     - :ref:`proto-enumprovisioning`
+     - 1
+
+     - Provisioning / connection state
+
+
+
+
+
+
+.. _proto-notifstartscanning:
+
+NotifStartScanning
+------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+Scanning state notification
+
+Triggered via :ref:`proto-requeststartscan`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - scanning_state
+
+     - :ref:`proto-enumscanning`
+     - 1
+
+     - Scanning state
+
+   * - scan_id
+     - int32
+     - 2
+
+     - ID associated with scan results (included if scan was successful)
+
+   * - total_entries
+     - int32
+     - 3
+
+     - Number of APs found during scan (included if scan was successful)
+
+   * - total_configured_ssid
+     - int32
+     - 4
+
+     - Total count of camera's provisioned SSIDs
+
+
+
+
+
+
+.. _proto-notifycohnstatus:
+
+NotifyCOHNStatus
+----------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+
+
+Current COHN status triggered by a :ref:`proto-requestgetcohnstatus`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - status
+
+     - :ref:`proto-enumcohnstatus`
+     - 1
+
+     - Current COHN status
+
+   * - state
+
+     - :ref:`proto-enumcohnnetworkstate`
+     - 2
+
+     - Current COHN network state
+
+   * - username
+     - string
+     - 3
+
+     - Username used for http basic auth header
+
+   * - password
+     - string
+     - 4
+
+     - Password used for http basic auth header
+
+   * - ipaddress
+     - string
+     - 5
+
+     - Camera's IP address on the local network
+
+   * - enabled
+     - bool
+     - 6
+
+     - Is COHN currently enabled?
+
+   * - ssid
+     - string
+     - 7
+
+     - Currently connected SSID
+
+   * - macaddress
+     - string
+     - 8
+
+     - MAC address of the wifi adapter
+
+
+
+
+
+
+.. _proto-notifylivestreamstatus:
+
+NotifyLiveStreamStatus
+----------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+
+
+Live Stream status
+
+Sent either:
+
+  - As a synchronous response to initial :ref:`proto-requestgetlivestreamstatus`
+  - As an asynchronous notifications registered for via :ref:`proto-requestgetlivestreamstatus`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - live_stream_status
+
+     - :ref:`proto-enumlivestreamstatus`
+     - 1
+
+     - Live stream status
+
+   * - live_stream_error
+
+     - :ref:`proto-enumlivestreamerror`
+     - 2
+
+     - Live stream error
+
+   * - live_stream_encode
+     - bool
+     - 3
+
+     - Is live stream encoding?
+
+   * - live_stream_bitrate
+     - int32
+     - 4
+
+     - Live stream bitrate (Kbps)
+
+   * - live_stream_window_size_supported_array
+
+     - :ref:`proto-enumwindowsize`
+     - 5
+
+     - Set of currently supported resolutions
+
+   * - live_stream_encode_supported
+     - bool
+     - 6
+
+     - Does the camera support encoding while live streaming?
+
+   * - live_stream_max_lens_unsupported
+     - bool
+     - 7
+
+     - Is the Max Lens feature NOT supported?
+
+   * - live_stream_minimum_stream_bitrate
+     - int32
+     - 8
+
+     - Camera-defined minimum bitrate (static) (Kbps)
+
+   * - live_stream_maximum_stream_bitrate
+     - int32
+     - 9
+
+     - Camera-defined maximum bitrate (static) (Kbps)
+
+   * - live_stream_lens_supported
+     - bool
+     - 10
+
+     - Does camera support setting lens for live streaming?
+
+   * - live_stream_lens_supported_array
+
+     - :ref:`proto-enumlens`
+     - 11
+
+     - Set of currently supported FOV options
+
+
+
+
+
+
+.. _proto-notifypresetstatus:
+
+NotifyPresetStatus
+------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+
+
+Current Preset status
+
+Sent either:
+
+- Synchronously via initial response to :ref:`proto-requestgetpresetstatus`
+- Asynchronously when Preset change if registered in :ref:`proto-requestgetpresetstatus`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - preset_group_array
+
+     - :ref:`proto-presetgroup`
+     - 1
+
+     - List of currently available Preset Groups
+
+   * - custom_icon_ids
+
+     - :ref:`proto-range`
+     - 2
+
+     - A list of ranges of icon ID's available for custom presets
+
+   * - custom_title_ids
+
+     - :ref:`proto-range`
+     - 3
+
+     - A list of ranges of title ID's available for custom presets
+
+
+
+
+
+
+.. _proto-preset:
+
+Preset
+------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+
+
+An individual preset.
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - id
+     - int32
+     - 1
+
+     - Preset ID
+
+   * - mode
+
+     - :ref:`proto-enumflatmode`
+     - 2
+
+     - Preset flatmode ID
+
+   * - title_id
+
+     - :ref:`proto-enumpresettitle`
+     - 3
+
+     - Preset Title ID
+
+   * - title_number
+     - int32
+     - 4
+
+     - Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
+
+   * - user_defined
+     - bool
+     - 5
+
+     - Is the Preset custom/user-defined?
+
+   * - icon
+
+     - :ref:`proto-enumpreseticon`
+     - 6
+
+     - Preset Icon ID
+
+   * - setting_array
+
+     - :ref:`proto-presetsetting`
+     - 7
+
+     - Array of settings associated with this Preset
+
+   * - is_modified
+     - bool
+     - 8
+
+     - Has Preset been modified from factory defaults? (False for user-defined Presets)
+
+   * - is_fixed
+     - bool
+     - 9
+
+     - Is this Preset mutable?
+
+   * - custom_name
+     - string
+     - 10
+
+     - Custom string name given to this preset via :ref:`proto-requestcustompresetupdate`
+
+
+
+
+
+
+.. _proto-presetgroup:
+
+PresetGroup
+-----------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+
+
+Preset Group meta information and contained Presets
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - id
+
+     - :ref:`proto-enumpresetgroup`
+     - 1
+
+     - Preset Group ID
+
+   * - preset_array
+
+     - :ref:`proto-preset`
+     - 2
+
+     - Array of Presets contained in this Preset Group
+
+   * - can_add_preset
+     - bool
+     - 3
+
+     - Is there room in the group to add additional Presets?
+
+   * - icon
+
+     - :ref:`proto-enumpresetgroupicon`
+     - 4
+
+     - The icon to display for this preset group
+
+
+
+
+
+
+.. _proto-presetsetting:
+
+PresetSetting
+-------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+
+
+Setting representation that comprises a  :ref:`proto-preset`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - id
+     - int32
+     - 1
+
+     - Setting ID
+
+   * - value
+     - int32
+     - 2
+
+     - Setting value
+
+   * - is_caption
+     - bool
+     - 3
+
+     - Does this setting appear on the Preset "pill" in the camera UI?
+
+
+
+
+
+
+.. _proto-range:
+
+Range
+-----
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto>`__
+
+
+A model used to represent a contiguous range of integer values.
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - start
+     - int32
+     - 1
+
+     - Start index of the range.
+
+   * - length
+     - int32
+     - 2
+
+     - Length of the range.
+
+
+
+
+
+
+.. _proto-requestcohncert:
+
+RequestCOHNCert
+---------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+
+
+Get the COHN certificate.
+
+Returns a :ref:`proto-responsecohncert`
+
+
+
+
+
+.. _proto-requestclearcohncert:
+
+RequestClearCOHNCert
+--------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+
+
+Clear the COHN certificate.
+
+Returns a :ref:`proto-responsegeneric` with the status of the clear
+
+
+
+
+
+.. _proto-requestconnect:
+
+RequestConnect
+--------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+Connect to (but do not authenticate with) an Access Point
+
+This is intended to be used to connect to a previously-connected Access Point
+
+Response: :ref:`proto-responseconnect`
+
+Notification: :ref:`proto-notifprovisioningstate` sent periodically as provisioning state changes
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - ssid
+     - string
+     - 1
+
+     - AP SSID
+
+
+
+
+
+
+.. _proto-requestconnectnew:
+
+RequestConnectNew
+-----------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+Connect to and authenticate with an Access Point
+
+This is only intended to be used if the AP is not previously provisioned.
+
+Response: :ref:`proto-responseconnectnew` sent immediately
+
+Notification: :ref:`proto-notifprovisioningstate` sent periodically as provisioning state changes
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - ssid
+     - string
+     - 1
+
+     - AP SSID
+
+   * - password
+     - string
+     - 2
+
+     - AP password
+
+   * - static_ip
+     - bytes
+     - 3
+
+     - Static IP address
+
+   * - gateway
+     - bytes
+     - 4
+
+     - Gateway IP address
+
+   * - subnet
+     - bytes
+     - 5
+
+     - Subnet mask
+
+   * - dns_primary
+     - bytes
+     - 6
+
+     - Primary DNS
+
+   * - dns_secondary
+     - bytes
+     - 7
+
+     - Secondary DNS
+
+
+
+
+
+
+.. _proto-requestcreatecohncert:
+
+RequestCreateCOHNCert
+---------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+
+
+Create the Camera On the Home Network SSL/TLS certificate.
+
+Returns a :ref:`proto-responsegeneric` with the status of the creation
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - override
+     - bool
+     - 1
+
+     - Override current provisioning and create new cert
+
+
+
+
+
+
+.. _proto-requestcustompresetupdate:
+
+RequestCustomPresetUpdate
+-------------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+
+
+Request to Update the Title and / or Icon of the Active Custom Preset
+
+This only operates on the currently active Preset and will fail  if the current
+Preset is not custom.
+
+The use cases are:
+
+1. Update the Custom Preset Icon
+
+    - `icon_id` is always optional and can always be passed
+
+and / or
+
+2. Update the Custom Preset Title to a...
+
+     - **Factory Preset Title**: Set `title_id` to a non-PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) value
+     - **Custom Preset Name**: Set `title_id` to PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) and specify a `custom_name`
+
+Returns a :ref:`proto-responsegeneric` with the status of the preset update request.
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - title_id
+
+     - :ref:`proto-enumpresettitle`
+     - 1
+
+     - | Preset Title ID
+       | 
+       | The range of acceptable custom title ID's can be found in the initial :ref:`proto-notifypresetstatus` response
+       | to :ref:`proto-requestgetpresetstatus`
+
+   * - custom_name
+     - string
+     - 2
+
+     - | UTF-8 encoded custom preset name
+       | 
+       | The name must obey the following:
+       | 
+       |   - Custom titles must be between 1 and 16 characters (inclusive)
+       |   - No special characters outside of the following languages: English, French, Italian, German,
+       |     Spanish, Portuguese, Swedish, Russian
+
+   * - icon_id
+
+     - :ref:`proto-enumpreseticon`
+     - 3
+
+     - | Preset Icon ID
+       | 
+       | The range of acceptable custom icon ID's can be found in the initial :ref:`proto-notifypresetstatus` response to
+       | :ref:`proto-requestgetpresetstatus`
+
+
+
+
+
+
+.. _proto-requestgetallpresetstatus:
+
+RequestGetAllPresetStatus
+-------------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto>`__
+
+
+Get the superset of all possible presets, regardless of the current camera state
+
+Response: :ref:`proto-notifypresetstatus` sent immediately
+
+
+
+
+
+.. _proto-requestgetapentries:
+
+RequestGetApEntries
+-------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+Get a list of Access Points found during a :ref:`proto-requeststartscan`
+
+Response: :ref:`proto-responsegetapentries`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - start_index
+     - int32
+     - 1
+
+     - Used for paging. 0 <= start_index < :ref:`proto-responsegetapentries` .total_entries
+
+   * - max_entries
+     - int32
+     - 2
+
+     - Used for paging. Value must be < :ref:`proto-responsegetapentries` .total_entries
+
+   * - scan_id
+     - int32
+     - 3
+
+     - ID corresponding to a set of scan results (i.e. :ref:`proto-responsegetapentries` .scan_id)
+
+
+
+
+
+
+.. _proto-requestgetcohnstatus:
+
+RequestGetCOHNStatus
+--------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+
+
+Get the current COHN status.
+
+Response: :ref:`proto-notifycohnstatus`
+
+Additionally, asynchronous updates can also be registered to return more :ref:`proto-notifycohnstatus` when a value
+changes.
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - register_cohn_status
+     - bool
+     - 1
+
+     - 1 to register, 0 to unregister
+
+
+
+
+
+
+.. _proto-requestgetlastcapturedmedia:
+
+RequestGetLastCapturedMedia
+---------------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/media.proto>`__
+
+
+Get the last captured media filename
+
+Returns a :ref:`proto-responselastcapturedmedia`
+
+
+
+
+
+.. _proto-requestgetlivestreamstatus:
+
+RequestGetLiveStreamStatus
+--------------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+
+
+Get the current livestream status (and optionally register for future status changes)
+
+Response: :ref:`proto-notifylivestreamstatus`
+
+Notification: :ref:`proto-notifylivestreamstatus`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - register_live_stream_status
+
+     - :ref:`proto-enumregisterlivestreamstatus`
+     - 1
+
+     - Array of live stream statuses to be notified about
+
+   * - unregister_live_stream_status
+
+     - :ref:`proto-enumregisterlivestreamstatus`
+     - 2
+
+     - Array of live stream statuses to stop being notified about
+
+
+
+
+
+
+.. _proto-requestgetpresetstatus:
+
+RequestGetPresetStatus
+----------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto>`__
+
+
+Get the set of currently available presets and optionally register to be notified when it changes.
+
+Response: :ref:`proto-notifypresetstatus` sent immediately
+
+Notification: :ref:`proto-notifypresetstatus` sent periodically as preset status changes, if registered.
+
+The preset status changes when:
+
+- A client changes one of a preset's captioned settings via the API
+- The user exits from a preset's settings UI on the camera (e.g. long-press the preset pill and then press the back arrow)
+- The user creates/deletes/reorders a preset within a group
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - register_preset_status
+
+     - :ref:`proto-enumregisterpresetstatus`
+     - 1
+
+     - Array of Preset statuses to be notified about
+
+   * - unregister_preset_status
+
+     - :ref:`proto-enumregisterpresetstatus`
+     - 2
+
+     - Array of Preset statuses to stop being notified about
+
+
+
+
+
+
+.. _proto-requestreleasenetwork:
+
+RequestReleaseNetwork
+---------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+Request to disconnect from currently-connected AP
+
+This drops the camera out of Station (STA) Mode and returns it to Access Point (AP) mode.
+
+Response: :ref:`proto-responsegeneric`
+
+
+
+
+
+.. _proto-requestsetcohnsetting:
+
+RequestSetCOHNSetting
+---------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+
+
+Configure a COHN Setting
+
+Returns a :ref:`proto-responsegeneric`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - cohn_active
+     - bool
+     - 1
+
+     - | 1 to enable COHN, 0 to disable COHN
+       | 
+       | When set to 1, STA Mode connection will be dropped and camera will not automatically re-connect for COHN.
+
+
+
+
+
+
+.. _proto-requestsetcameracontrolstatus:
+
+RequestSetCameraControlStatus
+-----------------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/set_camera_control_status.proto>`__
+
+
+Set Camera Control Status (as part of Global Behaviors feature)
+
+This command is used to tell the camera that the app (i.e. External Control) wishes to claim control of the camera.
+This causes the camera to immediately exit most contextual menus and return to the idle screen. Any interaction with
+the camera's physical buttons will cause the camera to reclaim control and update control status accordingly. If the
+user returns the camera UI to the idle screen, the camera updates control status to Idle.
+
+The entity currently claiming control of the camera is advertised in camera status 114. Information about whether the
+camera is in a contextual menu or not is advertised in camera status 63.
+
+Response: :ref:`proto-responsegeneric`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - camera_control_status
+
+     - :ref:`proto-enumcameracontrolstatus`
+     - 1
+
+     - Declare who is taking control of the camera
+
+
+
+
+
+
+.. _proto-requestsetlivestreammode:
+
+RequestSetLiveStreamMode
+------------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+
+
+Configure Live Streaming
+
+Response: :ref:`proto-responsegeneric`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - url
+     - string
+     - 1
+
+     - RTMP(S) URL used for live stream
+
+   * - encode
+     - bool
+     - 2
+
+     - Save media to sdcard while streaming?
+
+   * - window_size
+
+     - :ref:`proto-enumwindowsize`
+     - 3
+
+     - | Resolution to use for live stream
+       | 
+       | The set of supported resolutions is only available from the `live_stream_window_size_supported_array` in :ref:`proto-notifylivestreamstatus`)
+
+   * - cert
+     - bytes
+     - 6
+
+     - Certificate for servers that require it in PEM format
+
+   * - minimum_bitrate
+     - int32
+     - 7
+
+     - Minimum desired bitrate (may or may not be honored)
+
+   * - maximum_bitrate
+     - int32
+     - 8
+
+     - Maximum desired bitrate (may or may not be honored)
+
+   * - starting_bitrate
+     - int32
+     - 9
+
+     - Starting bitrate
+
+   * - lens
+
+     - :ref:`proto-enumlens`
+     - 10
+
+     - | Lens to use for live stream
+       | 
+       | The set of supported lenses is only available from the  `live_stream_lens_supported_array` in :ref:`proto-notifylivestreamstatus`)
+
+
+
+
+
+
+.. _proto-requestsetturboactive:
+
+RequestSetTurboActive
+---------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/turbo_transfer.proto>`__
+
+
+Enable/disable display of "Transferring Media" UI
+
+Response: :ref:`proto-responsegeneric`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - active
+     - bool
+     - 1
+
+     - Enable or disable Turbo Transfer feature
+
+
+
+
+
+
+.. _proto-requeststartscan:
+
+RequestStartScan
+----------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+Start scanning for Access Points
+
+.. note:: Serialization of this object is zero bytes.
+
+Response: :ref:`proto-responsestartscanning`  are sent immediately after the camera receives this command
+
+Notifications: :ref:`proto-notifstartscanning` are sent periodically as scanning state changes. Use to detect scan complete.
+
+
+
+
+
+.. _proto-responsecohncert:
+
+ResponseCOHNCert
+----------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+
+
+COHN Certificate response triggered by :ref:`proto-requestcohncert`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - result
+
+     - :ref:`proto-enumresultgeneric`
+     - 1
+
+     - Was request successful?
+
+   * - cert
+     - string
+     - 2
+
+     - Root CA cert (ASCII text)
+
+
+
+
+
+
+.. _proto-responseconnect:
+
+ResponseConnect
+---------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+The status of an attempt to connect to an Access Point
+
+Sent as the initial response to :ref:`proto-requestconnect`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - result
+
+     - :ref:`proto-enumresultgeneric`
+     - 1
+
+     - Generic pass/fail/error info
+
+   * - provisioning_state
+
+     - :ref:`proto-enumprovisioning`
+     - 2
+
+     - Provisioning/connection state
+
+   * - timeout_seconds
+     - int32
+     - 3
+
+     - Network connection timeout (seconds)
+
+
+
+
+
+
+.. _proto-responseconnectnew:
+
+ResponseConnectNew
+------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+The status of an attempt to connect to an Access Point
+
+Sent as the initial response to :ref:`proto-requestconnectnew`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - result
+
+     - :ref:`proto-enumresultgeneric`
+     - 1
+
+     - Status of Connect New request
+
+   * - provisioning_state
+
+     - :ref:`proto-enumprovisioning`
+     - 2
+
+     - Current provisioning state of the network
+
+   * - timeout_seconds
+     - int32
+     - 3
+
+     - | Number of seconds camera will wait before declaring a network connection attempt failed
+
+
+
+
+
+
+.. _proto-responsegeneric:
+
+ResponseGeneric
+---------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto>`__
+
+
+Generic Response used across many response / notification messages
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - result
+
+     - :ref:`proto-enumresultgeneric`
+     - 1
+
+     - Generic pass/fail/error info
+
+
+
+
+
+
+.. _proto-responsegetapentries:
+
+ResponseGetApEntries
+--------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+A list of scan entries describing a scanned Access Point
+
+This is sent in response to a :ref:`proto-requestgetapentries`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - result
+
+     - :ref:`proto-enumresultgeneric`
+     - 1
+
+     - Generic pass/fail/error info
+
+   * - scan_id
+     - int32
+     - 2
+
+     - ID associated with this batch of results
+
+   * - entries
+
+     - :ref:`proto-responsegetapentries_scanentry`
+     - 3
+
+     - Array containing details about discovered APs
+
+
+
+
+
+
+.. _proto-responselastcapturedmedia:
+
+ResponseLastCapturedMedia
+-------------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/media.proto>`__
+
+
+The Last Captured Media
+
+Message is sent in response to a :ref:`proto-requestgetlastcapturedmedia`.
+
+This contains the relative path of the last captured media starting from the `DCIM` directory on the SDCard. Depending
+on the type of media captured, it will return:
+
+- The single media path for single photo/video media
+- The path to the first captured media in the group for grouped media
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - result
+
+     - :ref:`proto-enumresultgeneric`
+     - 1
+
+     - Was the request successful?
+
+   * - media
+
+     - :ref:`proto-media`
+     - 2
+
+     - | Last captured media if result is RESULT_SUCCESS. Invalid if result is RESULT_RESOURCE_NOT_AVAILBLE.
+
+
+
+
+
+
+.. _proto-responsestartscanning:
+
+ResponseStartScanning
+---------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+The current scanning state.
+
+This is the initial response to a :ref:`proto-requeststartscan`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - result
+
+     - :ref:`proto-enumresultgeneric`
+     - 1
+
+     - Generic pass/fail/error info
+
+   * - scanning_state
+
+     - :ref:`proto-enumscanning`
+     - 2
+
+     - Scanning state
+
+
+
+
+
+
+.. _proto-responsegetapentries_scanentry:
+
+ResponseGetApEntries::ScanEntry
+-------------------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+
+
+An individual Scan Entry in a :ref:`proto-responsegetapentries` response
+
+.. note:: When `scan_entry_flags` contains `SCAN_FLAG_CONFIGURED`, it is an indication that this network has already been provisioned.
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - ssid
+     - string
+     - 1
+
+     - AP SSID
+
+   * - signal_strength_bars
+     - int32
+     - 2
+
+     - Signal strength (3 bars: >-70 dBm; 2 bars: >-85 dBm; 1 bar: <=-85 dBm)
+
+   * - signal_frequency_mhz
+     - int32
+     - 4
+
+     - Signal frequency (MHz)
+
+   * - scan_entry_flags
+     - int32
+     - 5
+
+     - Bitmasked value from :ref:`proto-enumscanentryflags`
+
+
+
