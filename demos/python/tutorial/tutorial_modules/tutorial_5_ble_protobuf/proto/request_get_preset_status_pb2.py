@@ -10,9 +10,7 @@ DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
     b'\n\x1frequest_get_preset_status.proto\x12\nopen_gopro"\xa6\x01\n\x16RequestGetPresetStatus\x12D\n\x16register_preset_status\x18\x01 \x03(\x0e2$.open_gopro.EnumRegisterPresetStatus\x12F\n\x18unregister_preset_status\x18\x02 \x03(\x0e2$.open_gopro.EnumRegisterPresetStatus*l\n\x18EnumRegisterPresetStatus\x12!\n\x1dREGISTER_PRESET_STATUS_PRESET\x10\x01\x12-\n)REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY\x10\x02'
 )
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
-_builder.BuildTopDescriptorsAndMessages(
-    DESCRIPTOR, "request_get_preset_status_pb2", globals()
-)
+_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, "request_get_preset_status_pb2", globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
     DESCRIPTOR._options = None
     _ENUMREGISTERPRESETSTATUS._serialized_start = 216

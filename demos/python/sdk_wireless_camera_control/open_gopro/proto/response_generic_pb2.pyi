@@ -23,9 +23,7 @@ class _EnumResultGeneric:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumResultGenericEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
-        _EnumResultGeneric.ValueType
-    ],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumResultGeneric.ValueType],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -37,9 +35,7 @@ class _EnumResultGenericEnumTypeWrapper(
     RESULT_ARGUMENT_INVALID: _EnumResultGeneric.ValueType
     RESULT_RESOURCE_NOT_AVAILABLE: _EnumResultGeneric.ValueType
 
-class EnumResultGeneric(
-    _EnumResultGeneric, metaclass=_EnumResultGenericEnumTypeWrapper
-): ...
+class EnumResultGeneric(_EnumResultGeneric, metaclass=_EnumResultGenericEnumTypeWrapper): ...
 
 RESULT_UNKNOWN: EnumResultGeneric.ValueType
 RESULT_SUCCESS: EnumResultGeneric.ValueType
@@ -61,15 +57,9 @@ class ResponseGeneric(google.protobuf.message.Message):
     result: global___EnumResultGeneric.ValueType
     "Generic pass/fail/error info"
 
-    def __init__(
-        self, *, result: global___EnumResultGeneric.ValueType | None = ...
-    ) -> None: ...
-    def HasField(
-        self, field_name: typing_extensions.Literal["result", b"result"]
-    ) -> builtins.bool: ...
-    def ClearField(
-        self, field_name: typing_extensions.Literal["result", b"result"]
-    ) -> None: ...
+    def __init__(self, *, result: global___EnumResultGeneric.ValueType | None = ...) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["result", b"result"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["result", b"result"]) -> None: ...
 
 global___ResponseGeneric = ResponseGeneric
 
@@ -87,9 +77,7 @@ class Media(google.protobuf.message.Message):
     file: builtins.str
     "Filename of media"
 
-    def __init__(
-        self, *, folder: builtins.str | None = ..., file: builtins.str | None = ...
-    ) -> None: ...
+    def __init__(self, *, folder: builtins.str | None = ..., file: builtins.str | None = ...) -> None: ...
     def HasField(
         self,
         field_name: typing_extensions.Literal["file", b"file", "folder", b"folder"],

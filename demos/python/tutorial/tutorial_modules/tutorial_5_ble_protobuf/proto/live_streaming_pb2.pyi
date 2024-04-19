@@ -45,9 +45,7 @@ class _EnumLiveStreamError:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumLiveStreamErrorEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
-        _EnumLiveStreamError.ValueType
-    ],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLiveStreamError.ValueType],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -78,9 +76,7 @@ class _EnumLiveStreamErrorEnumTypeWrapper(
     LIVE_STREAM_ERROR_SD_CARD_REMOVED: _EnumLiveStreamError.ValueType
     "Livestream stopped because sd card was removed"
 
-class EnumLiveStreamError(
-    _EnumLiveStreamError, metaclass=_EnumLiveStreamErrorEnumTypeWrapper
-): ...
+class EnumLiveStreamError(_EnumLiveStreamError, metaclass=_EnumLiveStreamErrorEnumTypeWrapper): ...
 
 LIVE_STREAM_ERROR_NONE: EnumLiveStreamError.ValueType
 "No error (success)"
@@ -115,9 +111,7 @@ class _EnumLiveStreamStatus:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumLiveStreamStatusEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
-        _EnumLiveStreamStatus.ValueType
-    ],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLiveStreamStatus.ValueType],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -138,9 +132,7 @@ class _EnumLiveStreamStatusEnumTypeWrapper(
     LIVE_STREAM_STATE_UNAVAILABLE: _EnumLiveStreamStatus.ValueType
     "Live stream setup is unavailable due to camera lens configuration"
 
-class EnumLiveStreamStatus(
-    _EnumLiveStreamStatus, metaclass=_EnumLiveStreamStatusEnumTypeWrapper
-): ...
+class EnumLiveStreamStatus(_EnumLiveStreamStatus, metaclass=_EnumLiveStreamStatusEnumTypeWrapper): ...
 
 LIVE_STREAM_STATE_IDLE: EnumLiveStreamStatus.ValueType
 "Initial status. Livestream has not yet been configured"
@@ -165,9 +157,7 @@ class _EnumRegisterLiveStreamStatus:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumRegisterLiveStreamStatusEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
-        _EnumRegisterLiveStreamStatus.ValueType
-    ],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumRegisterLiveStreamStatus.ValueType],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -192,9 +182,7 @@ class _EnumWindowSize:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumWindowSizeEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
-        _EnumWindowSize.ValueType
-    ],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumWindowSize.ValueType],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -244,9 +232,7 @@ class NotifyLiveStreamStatus(google.protobuf.message.Message):
     @property
     def live_stream_window_size_supported_array(
         self,
-    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[
-        global___EnumWindowSize.ValueType
-    ]:
+    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumWindowSize.ValueType]:
         """Set of currently supported resolutions"""
     live_stream_encode_supported: builtins.bool
     "Does the camera support encoding while live streaming?"
@@ -262,9 +248,7 @@ class NotifyLiveStreamStatus(google.protobuf.message.Message):
     @property
     def live_stream_lens_supported_array(
         self,
-    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[
-        global___EnumLens.ValueType
-    ]:
+    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumLens.ValueType]:
         """Set of currently supported FOV options"""
 
     def __init__(
@@ -282,9 +266,7 @@ class NotifyLiveStreamStatus(google.protobuf.message.Message):
         live_stream_minimum_stream_bitrate: builtins.int | None = ...,
         live_stream_maximum_stream_bitrate: builtins.int | None = ...,
         live_stream_lens_supported: builtins.bool | None = ...,
-        live_stream_lens_supported_array: (
-            collections.abc.Iterable[global___EnumLens.ValueType] | None
-        ) = ...
+        live_stream_lens_supported_array: collections.abc.Iterable[global___EnumLens.ValueType] | None = ...
     ) -> None: ...
     def HasField(
         self,
@@ -373,12 +355,10 @@ class RequestGetLiveStreamStatus(google.protobuf.message.Message):
         self,
         *,
         register_live_stream_status: (
-            collections.abc.Iterable[global___EnumRegisterLiveStreamStatus.ValueType]
-            | None
+            collections.abc.Iterable[global___EnumRegisterLiveStreamStatus.ValueType] | None
         ) = ...,
         unregister_live_stream_status: (
-            collections.abc.Iterable[global___EnumRegisterLiveStreamStatus.ValueType]
-            | None
+            collections.abc.Iterable[global___EnumRegisterLiveStreamStatus.ValueType] | None
         ) = ...
     ) -> None: ...
     def ClearField(

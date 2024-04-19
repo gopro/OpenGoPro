@@ -25,9 +25,7 @@ class _EnumFlatMode:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumFlatModeEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
-        _EnumFlatMode.ValueType
-    ],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumFlatMode.ValueType],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -87,9 +85,7 @@ class _EnumPresetGroup:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumPresetGroupEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
-        _EnumPresetGroup.ValueType
-    ],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetGroup.ValueType],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -109,9 +105,7 @@ class _EnumPresetGroupIcon:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumPresetGroupIconEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
-        _EnumPresetGroupIcon.ValueType
-    ],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetGroupIcon.ValueType],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -124,9 +118,7 @@ class _EnumPresetGroupIconEnumTypeWrapper(
     PRESET_GROUP_MAX_PHOTO_ICON_ID: _EnumPresetGroupIcon.ValueType
     PRESET_GROUP_MAX_TIMELAPSE_ICON_ID: _EnumPresetGroupIcon.ValueType
 
-class EnumPresetGroupIcon(
-    _EnumPresetGroupIcon, metaclass=_EnumPresetGroupIconEnumTypeWrapper
-): ...
+class EnumPresetGroupIcon(_EnumPresetGroupIcon, metaclass=_EnumPresetGroupIconEnumTypeWrapper): ...
 
 PRESET_GROUP_VIDEO_ICON_ID: EnumPresetGroupIcon.ValueType
 PRESET_GROUP_PHOTO_ICON_ID: EnumPresetGroupIcon.ValueType
@@ -143,9 +135,7 @@ class _EnumPresetIcon:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumPresetIconEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
-        _EnumPresetIcon.ValueType
-    ],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetIcon.ValueType],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -285,9 +275,7 @@ class _EnumPresetTitle:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumPresetTitleEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
-        _EnumPresetTitle.ValueType
-    ],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetTitle.ValueType],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -445,21 +433,12 @@ class NotifyPresetStatus(google.protobuf.message.Message):
     @property
     def preset_group_array(
         self,
-    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
-        global___PresetGroup
-    ]:
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___PresetGroup]:
         """List of currently available Preset Groups"""
-
-    def __init__(
-        self,
-        *,
-        preset_group_array: collections.abc.Iterable[global___PresetGroup] | None = ...
-    ) -> None: ...
+    def __init__(self, *, preset_group_array: collections.abc.Iterable[global___PresetGroup] | None = ...) -> None: ...
     def ClearField(
         self,
-        field_name: typing_extensions.Literal[
-            "preset_group_array", b"preset_group_array"
-        ],
+        field_name: typing_extensions.Literal["preset_group_array", b"preset_group_array"],
     ) -> None: ...
 
 global___NotifyPresetStatus = NotifyPresetStatus
@@ -497,9 +476,7 @@ class Preset(google.protobuf.message.Message):
     @property
     def setting_array(
         self,
-    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
-        global___PresetSetting
-    ]:
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___PresetSetting]:
         """Array of settings associated with this Preset"""
     is_modified: builtins.bool
     "Has Preset been modified from factory defaults? (False for user-defined Presets)"
@@ -657,9 +634,7 @@ class PresetGroup(google.protobuf.message.Message):
     @property
     def preset_array(
         self,
-    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
-        global___Preset
-    ]:
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Preset]:
         """Array of Presets contained in this Preset Group"""
     can_add_preset: builtins.bool
     "Is there room in the group to add additional Presets?"
@@ -676,9 +651,7 @@ class PresetGroup(google.protobuf.message.Message):
     ) -> None: ...
     def HasField(
         self,
-        field_name: typing_extensions.Literal[
-            "can_add_preset", b"can_add_preset", "icon", b"icon", "id", b"id"
-        ],
+        field_name: typing_extensions.Literal["can_add_preset", b"can_add_preset", "icon", b"icon", "id", b"id"],
     ) -> builtins.bool: ...
     def ClearField(
         self,
@@ -714,23 +687,15 @@ class PresetSetting(google.protobuf.message.Message):
     'Does this setting appear on the Preset "pill" in the camera UI?'
 
     def __init__(
-        self,
-        *,
-        id: builtins.int | None = ...,
-        value: builtins.int | None = ...,
-        is_caption: builtins.bool | None = ...
+        self, *, id: builtins.int | None = ..., value: builtins.int | None = ..., is_caption: builtins.bool | None = ...
     ) -> None: ...
     def HasField(
         self,
-        field_name: typing_extensions.Literal[
-            "id", b"id", "is_caption", b"is_caption", "value", b"value"
-        ],
+        field_name: typing_extensions.Literal["id", b"id", "is_caption", b"is_caption", "value", b"value"],
     ) -> builtins.bool: ...
     def ClearField(
         self,
-        field_name: typing_extensions.Literal[
-            "id", b"id", "is_caption", b"is_caption", "value", b"value"
-        ],
+        field_name: typing_extensions.Literal["id", b"id", "is_caption", b"is_caption", "value", b"value"],
     ) -> None: ...
 
 global___PresetSetting = PresetSetting
