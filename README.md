@@ -2,7 +2,7 @@
 
 Current Version: 2.0
 
-<img src="docs/assets/images/logos/logo.png" alt="GoPro Logo" style="width: 35%;"/>
+<img src="https://raw.githubusercontent.com/gopro/OpenGoPro/gh-pages/assets/images/logos/logo.png" alt="GoPro Logo" style="width: 35%;"/>
 
 This README is for a developer who wants to modify or contribute to this repo. If you are a user (i.e.
 you don't want to make changes to this repo), see the Open GoPro [Github Pages site](https://gopro.github.io/OpenGoPro/). If you

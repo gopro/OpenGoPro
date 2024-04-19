@@ -1,6 +1,6 @@
 # Open GoPro Python SDK
 
-<img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"/>
+<img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/gh-pages/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"/>
 
 [![Build and Test](https://img.shields.io/github/actions/workflow/status/gopro/OpenGoPro/python_sdk_test.yml)](https://github.com/gopro/OpenGoPro/actions/workflows/python_sdk_test.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
