@@ -1,5 +1,5 @@
 /* live_streaming.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue Apr 16 20:07:56 UTC 2024 */
+/* This copyright was auto-generated on Fri Apr 19 17:22:48 UTC 2024 */
 
 /***********************************************************************************************************************
  *
@@ -39,14 +39,12 @@ enum EnumLiveStreamError {
 enum EnumLiveStreamStatus {
     LIVE_STREAM_STATE_IDLE             = 0; // Initial status. Livestream has not yet been configured
     LIVE_STREAM_STATE_CONFIG           = 1; // Livestream is being configured
-    /*
-     * Livestream has finished configuration and is ready to start streaming
-     */
-    LIVE_STREAM_STATE_READY            = 2;
+    LIVE_STREAM_STATE_READY            = 2; // Livestream has finished configuration and is ready to start streaming
     LIVE_STREAM_STATE_STREAMING        = 3; // Livestream is actively streaming
     LIVE_STREAM_STATE_COMPLETE_STAY_ON = 4; // Live stream is exiting. No errors occured.
     LIVE_STREAM_STATE_FAILED_STAY_ON   = 5; // Live stream is exiting. An error occurred.
     LIVE_STREAM_STATE_RECONNECTING     = 6; // An error occurred during livestream and stream is attempting to reconnect.
+    LIVE_STREAM_STATE_UNAVAILABLE      = 7; // Live stream setup is unavailable due to camera lens configuration
 }
 
 enum EnumRegisterLiveStreamStatus {
