@@ -120,7 +120,7 @@ class _EnumLiveStreamStatusEnumTypeWrapper(
     LIVE_STREAM_STATE_CONFIG: _EnumLiveStreamStatus.ValueType
     "Livestream is being configured"
     LIVE_STREAM_STATE_READY: _EnumLiveStreamStatus.ValueType
-    "\n    Livestream has finished configuration and is ready to start streaming\n    "
+    "Livestream has finished configuration and is ready to start streaming"
     LIVE_STREAM_STATE_STREAMING: _EnumLiveStreamStatus.ValueType
     "Livestream is actively streaming"
     LIVE_STREAM_STATE_COMPLETE_STAY_ON: _EnumLiveStreamStatus.ValueType
@@ -129,6 +129,8 @@ class _EnumLiveStreamStatusEnumTypeWrapper(
     "Live stream is exiting. An error occurred."
     LIVE_STREAM_STATE_RECONNECTING: _EnumLiveStreamStatus.ValueType
     "An error occurred during livestream and stream is attempting to reconnect."
+    LIVE_STREAM_STATE_UNAVAILABLE: _EnumLiveStreamStatus.ValueType
+    "Live stream setup is unavailable due to camera lens configuration"
 
 class EnumLiveStreamStatus(_EnumLiveStreamStatus, metaclass=_EnumLiveStreamStatusEnumTypeWrapper): ...
 
@@ -137,7 +139,7 @@ LIVE_STREAM_STATE_IDLE: EnumLiveStreamStatus.ValueType
 LIVE_STREAM_STATE_CONFIG: EnumLiveStreamStatus.ValueType
 "Livestream is being configured"
 LIVE_STREAM_STATE_READY: EnumLiveStreamStatus.ValueType
-"\nLivestream has finished configuration and is ready to start streaming\n"
+"Livestream has finished configuration and is ready to start streaming"
 LIVE_STREAM_STATE_STREAMING: EnumLiveStreamStatus.ValueType
 "Livestream is actively streaming"
 LIVE_STREAM_STATE_COMPLETE_STAY_ON: EnumLiveStreamStatus.ValueType
@@ -146,6 +148,8 @@ LIVE_STREAM_STATE_FAILED_STAY_ON: EnumLiveStreamStatus.ValueType
 "Live stream is exiting. An error occurred."
 LIVE_STREAM_STATE_RECONNECTING: EnumLiveStreamStatus.ValueType
 "An error occurred during livestream and stream is attempting to reconnect."
+LIVE_STREAM_STATE_UNAVAILABLE: EnumLiveStreamStatus.ValueType
+"Live stream setup is unavailable due to camera lens configuration"
 global___EnumLiveStreamStatus = EnumLiveStreamStatus
 
 class _EnumRegisterLiveStreamStatus:
@@ -388,7 +392,7 @@ class RequestSetLiveStreamMode(google.protobuf.message.Message):
     encode: builtins.bool
     "Save media to sdcard while streaming?"
     window_size: global___EnumWindowSize.ValueType
-    "*\n    Resolution to use for live stream\n\n    The set of supported lenses is only available from the `live_stream_window_size_supported_array` in @ref NotifyLiveStreamStatus)\n    "
+    "*\n    Resolution to use for live stream\n\n    The set of supported resolutions is only available from the `live_stream_window_size_supported_array` in @ref NotifyLiveStreamStatus)\n    "
     cert: builtins.bytes
     "Certificate for servers that require it in PEM format"
     minimum_bitrate: builtins.int
