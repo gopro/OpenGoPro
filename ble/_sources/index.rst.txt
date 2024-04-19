@@ -20,7 +20,7 @@ Below is a table of cameras that support GoPro's public BLE API:
   55         HD9.01       HERO9 Black         `v01.70.00 <https://gopro.com/en/us/update/hero9-black>`__
  ========== ============ =================== ==========================
 
-.. warning:: While the version listed above are *mininum versions* needed to support the Open GoPro API, the documentation
+.. warning:: While the version listed above are *minimum versions* needed to support the Open GoPro API, the documentation
   assumes that the GoPro is always updated to the most recent version. This is relevant in cases where functionality
   changes between versions.
 
@@ -49,6 +49,7 @@ Then see any of the subsequent feature sections to perform desired functionality
   features/presets
   features/settings
   features/statuses
+  features/cah
 
 .. tip:: Additionally, there are walk-through
     `tutorials <https://gopro.github.io/OpenGoPro/tutorials/>`_  available to demonstrate basic BLE functionality

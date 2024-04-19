@@ -1,6 +1,3 @@
-/* sphinx_highlight.js/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Fri Apr 19 17:22:39 UTC 2024 */
-
 /* Highlighting utilities for Sphinx HTML documentation. */
 "use strict";
 

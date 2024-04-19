@@ -10,8 +10,8 @@ For additional details about getting started with RTMP, see
 Live streaming with camera is accomplished as follows:
 
 1. Put the camera into :doc:`Station Mode<access_points>` and connect it to an access point
-2. Set the `Livestream Mode <live_streaming.html#set_livestream_mode>`__
-3. Poll for `Livestream Status <live_streaming.html#get_livestream_status>`__ until the camera indicates it is ready
+2. Use :operation:ref:`Set Livestream Mode` to configure livestreaming.
+3. Poll for :operation:ref:`Livestream Status<Get Livestream Status>` until the camera indicates it is ready
 4. Set the shutter to begin live streaming
 5. Unset the shutter to stop live streaming
 
@@ -21,10 +21,10 @@ Operations
 ----------
 
 .. operation:protobuf:: Set Livestream Mode
+    :operation-id: GPCAMERA_LIVE_STREAM_SETUP
+    :external:
 
-    .. note:: The current Livestream Mode can be queried via
-        `Get Livestream Status <live_streaming.html#get_livestream_status>`__
-
+    .. note:: The current Livestream Mode can be queried via :operation:ref:`Get Livestream Status`
 
     .. operation:protobuf-message:: request
         :feature-id: 0xF1
@@ -39,6 +39,8 @@ Operations
         :message: ResponseGeneric
 
 .. operation:protobuf:: Get Livestream Status
+    :operation-id: OGP_LIVESTREAM_STATUS
+    :external:
 
     .. operation:protobuf-message:: request
         :feature-id: 0xF5

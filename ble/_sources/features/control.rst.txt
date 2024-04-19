@@ -6,13 +6,30 @@ This page will detail operations to command and control the GoPro.
 Operations
 ----------
 
+.. operation:protobuf:: Clear New Media Flag
+    :operation-id: GPCAMERA_MOBILE_OFFLOAD_NEW_MEDIA_FLAG_CLEAR
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0xF1
+        :action-id: 0x7C
+        :uuid: Command
+        :message: WSDK_RequestClearNewMediaFlag
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0xF1
+        :action-id: 0xFC
+        :uuid: Command Response
+        :message: ResponseGeneric
+
 .. operation:tlv-command:: Keep Alive
+    :operation-id: OGP_KEEP_ALIVE
+    :external:
     :id: 0x5B
 
     In order to maximize battery life, GoPro cameras automatically go to sleep after some time. This logic is handled by
-    a combination of the `Auto Power Down <../features/settings.html#setting_59>`_
-    setting which most (but not all) cameras support and a Keep Alive message that the user can regularly send to the
-    camera. The camera will automatically go to sleep if both timers reach zero.
+    a combination of the :operation:ref:`Auto Off<Setting 59>` setting which most (but not all) cameras support
+    and a Keep Alive message that the user can regularly send to the camera. The camera will automatically go to sleep
+    if both timers reach zero.
 
     The Auto Power Down timer is reset when the user taps the LCD screen, presses a button on the camera,
     programmatically (un)sets the shutter, sets a setting, or loads a Preset.
@@ -30,6 +47,8 @@ Operations
         :uuid: Settings Response
 
 .. operation:tlv-command:: Set Analytics
+    :operation-id: GPCAMERA_ANALYTICS_SET_CLIENT_INFO
+    :external:
     :id: 0x50
 
     Configure the client as third-party for analytic tracking.
@@ -40,6 +59,8 @@ Operations
         :uuid: Command Response
 
 .. operation:tlv-command:: Set AP Control
+    :operation-id: GPCAMERA_AP_CONTROL
+    :external:
     :id: 0x17
 
     Enable / disable the camera's WiFi access point.
@@ -52,7 +73,8 @@ Operations
         :uuid: Command Response
 
 .. operation:protobuf:: Set Camera Control
-    :unsupported: boilers
+    :operation-id: GPCAMERA_SET_CAMERA_CONTROL_STATUS
+    :external:
 
     .. image:: ../../assets/images/global_behaviors.png
 
@@ -69,6 +91,8 @@ Operations
         :message: ResponseGeneric
 
 .. operation:tlv-command:: Set Date Time
+    :operation-id: GPCAMERA_SET_DATE_AND_TIME_ID
+    :external:
     :id: 0x0D
 
     Set the camera's date and time (without timezone and daylight-savings information).
@@ -92,8 +116,9 @@ Operations
         :uuid: Command Response
 
 .. operation:tlv-command:: Set Local Date Time
+    :operation-id: GPCAMERA_SET_DATE_AND_TIME_DST_ID
+    :external:
     :id: 0x0F
-    :unsupported: boilers kongs
 
     Set the cameras date and time with timezone and daylight-savings information.
 
@@ -117,7 +142,24 @@ Operations
     .. operation:tlv-message:: Response
         :uuid: Command Response
 
+.. operation:protobuf:: Set Pairing State
+    :operation-id: GPCAMERA_WIRELESS_PAIRING_COMPLETE
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0x03
+        :action-id: 0x01
+        :uuid: Network Management Command
+        :message: RequestPairingFinish
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0x03
+        :action-id: 0x81
+        :uuid: Network Management Response
+        :message: ResponseGeneric
+
 .. operation:tlv-command:: Set Shutter
+    :operation-id: GPCAMERA_SHUTTER
+    :external:
     :id: 0x01
 
     Set Shutter On / Off
@@ -130,6 +172,8 @@ Operations
         :uuid: Command Response
 
 .. operation:protobuf:: Set Turbo Transfer
+    :operation-id: GPCAMERA_TURBO_MODE_ENABLE
+    :external:
 
     .. operation:protobuf-message:: request
         :feature-id: 0xF1
@@ -143,7 +187,24 @@ Operations
         :uuid: Command Response
         :message: ResponseGeneric
 
+.. operation:protobuf:: Set Wakeup Reason
+    :operation-id: OGP_SET_WAKEUP_REASON
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0xF1
+        :action-id: 0x7D
+        :uuid: Command
+        :message: WSDK_RequestSetSystemNotifyEvent
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0xF1
+        :action-id: 0xFD
+        :uuid: Command Response
+        :message: ResponseGeneric
+
 .. operation:tlv-command:: Sleep
+    :operation-id: GPCAMERA_POWER_ID
+    :external:
     :id: 0x05
 
     Put the camera to sleep.

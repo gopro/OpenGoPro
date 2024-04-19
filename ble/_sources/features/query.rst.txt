@@ -6,22 +6,9 @@ This section describes operations to query various GoPro state / information.
 Operations
 ----------
 
-.. operation:tlv-command:: Get Open GoPro Version
-    :id: 0x51
-
-    Get the current version of the Open GoPro API.
-
-    .. operation:tlv-message:: Request
-        :uuid: Command
-    .. operation:tlv-message:: Response
-        :uuid: Command Response
-        :params:
-            - major_length (uint8): length of major parameter
-            - major (unsigned major_length bytes) : major part of version number
-            - minor_length (uint8): length of minor parameter
-            - minor (unsigned minor_length bytes) : minor part of version number
-
 .. operation:tlv-command:: Get Date Time
+    :operation-id: OGP_GET_DATE_TIME
+    :external:
     :id: 0x0E
 
     Get the current date and time (without daylight savings times and timezone information).
@@ -41,6 +28,8 @@ Operations
             - weekday (uint8): Sunday = 0, Saturday = 6
 
 .. operation:tlv-command:: Get Hardware Info
+    :operation-id: GPCAMERA_INFO
+    :external:
     :id: 0x3C
 
     Get information about the camera and firmware.
@@ -69,8 +58,9 @@ Operations
             - reserved (11 bytes): reserved data not part of the payload
 
 .. operation:tlv-command:: Get Local Date Time
+    :operation-id: OGP_GET_DATE_AND_TIME_DST
+    :external:
     :id: 0x10
-    :unsupported: boilers kongs
 
     Get the current date and time with daylight savings and timezone information.
 
@@ -90,7 +80,8 @@ Operations
             - is_dst (uint8): Is daylight savings? 1 if yes, 0 if no
 
 .. operation:protobuf:: Get Last Captured Media
-    :unsupported: boilers kongs pismo sultans
+    :operation-id: OGP_GET_LAST_MEDIA
+    :external:
 
     .. operation:protobuf-message:: request
         :feature-id: 0xF5
@@ -104,7 +95,41 @@ Operations
         :uuid: Query Response
         :message: WSDK_ResponseLastCapturedMedia
 
+.. operation:protobuf:: Get Network Capabilities
+    :operation-id: GPCAMERA_NETWORK_GET_CAPABILITIES
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0x02
+        :action-id: 0x01
+        :uuid: Network Management Command
+        :message: RequestGetNetworkCapabilities
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0x02
+        :action-id: 0x81
+        :uuid: Network Management Response
+        :message: ResponseCapabilities
+
+.. operation:tlv-command:: Get Open GoPro Version
+    :operation-id: GPCAMERA_OPENGOPRO_VERSION
+    :external:
+    :id: 0x51
+
+    Get the current version of the Open GoPro API.
+
+    .. operation:tlv-message:: Request
+        :uuid: Command
+    .. operation:tlv-message:: Response
+        :uuid: Command Response
+        :params:
+            - major_length (uint8): length of major parameter
+            - major (unsigned major_length bytes) : major part of version number
+            - minor_length (uint8): length of minor parameter
+            - minor (unsigned minor_length bytes) : minor part of version number
+
 .. operation:tlv-query:: Get Setting Values
+    :operation-id: OGP_GET_SETTING_VALUE
+    :external:
 
     Get the current value associated with one or more settings.
 
@@ -126,6 +151,8 @@ Operations
         - **value**: Setting value defined via the individual :doc:`Setting<settings>` documentation
 
 .. operation:tlv-query:: Get Status Values
+    :operation-id: OGP_GET_STATUS_VALUE
+    :external:
 
     Get the current value of one or more camera statuses.
 
@@ -147,6 +174,8 @@ Operations
         - **value**: Status value defined via the individual :doc:`Status<statuses>` documentation
 
 .. operation:tlv-query:: Get Setting Capabilities
+    :operation-id: OGP_GET_SETTING_CAPABILITIES
+    :external:
 
     Get one or more setting value capabilities. The reported capabilities are only those setting options that are
     **currently** supported.
@@ -169,6 +198,8 @@ Operations
         - **value**: Setting value defined via the individual :doc:`Setting<settings>` documentation
 
 .. operation:tlv-query:: Register for Setting Value Updates
+    :operation-id: OGP_REGISTER_SETTING_VALUE_UPDATES
+    :external:
 
     Register to receive updates when one or more setting values change. The initial response contains the current
     setting values. Notifications will be sent whenever one of the requested setting's values change.
@@ -200,6 +231,8 @@ Operations
         - **value**: Setting value defined via the individual :doc:`Setting<settings>` documentation
 
 .. operation:tlv-query:: Register for Status Value Updates
+    :operation-id: OGP_REGISTER_STATUS_VALUE_UPDATES
+    :external:
 
     Register to receive updates when one or more status values change. The initial response contains the current
     status values. Notifications will be sent whenever one of the requested statuses' values change.
@@ -231,6 +264,8 @@ Operations
         - **value**: Status value defined via the individual :doc:`Status<statuses>` documentation
 
 .. operation:tlv-query:: Register for Setting Capability Updates
+    :operation-id: OGP_REGISTER_SETTING_CAPABILITY_UPDATES
+    :external:
 
     Register to receive updates when one or more setting capabilities change. The initial response contains the current
     setting capabilities. Notifications will be sent whenever one of the requested settings' capabilities change.
@@ -262,6 +297,8 @@ Operations
         - **value**: Setting value defined via the individual :doc:`Setting<settings>` documentation
 
 .. operation:tlv-query:: Unregister for Setting Value Updates
+    :operation-id: OGP_UNREGISTER_SETTING_VALUE_UPDATES
+    :external:
 
     Cancel ongoing setting value updates.
 
@@ -278,6 +315,8 @@ Operations
         :id: 0x72
 
 .. operation:tlv-query:: Unregister for Status Value Updates
+    :operation-id: OGP_UNREGISTER_STATUS_VALUE_UPDATES
+    :external:
 
     Cancel ongoing status value updates.
 
@@ -294,6 +333,8 @@ Operations
         :id: 0x73
 
 .. operation:tlv-query:: Unregister for Setting Capability Updates
+    :operation-id: OGP_UNREGISTER_SETTING_CAPABILITY_UPDATES
+    :external:
 
     Cancel ongoing setting capability updates.
 

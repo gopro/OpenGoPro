@@ -58,9 +58,9 @@ Provisioning Procedure
 In order to use the COHN capability, the camera must first be provisioned for COHN. At a high level, the provisioning process
 is as follows:
 
-1. Instruct the GoPro to `create <cohn.html#create_cohn_certificate>`__ the COHN certificate
-2. `Get <cohn.html#get_cohn_certificate>`__ the created COHN certificate
-3. `Get <cohn.html#get_cohn_status>`__  the Basic auth credentials
+1. Instruct the GoPro to :operation:ref:`Create COHN Certificate`
+2. Use :operation:ref:`Get COHN Certificate` to get the created COHN certificate
+3. Use :operation:ref:`Get COHN Status` to get the Basic auth credentials
 4. Connect the camera to an :doc:`access point<access_points>`
 
 .. tip:: Depending on the use case, some of these steps can be performed via `HTTP <https://gopro.github.io/OpenGoPro/http#tag/COHN>`_
@@ -75,7 +75,8 @@ Operations
 ==========
 
 .. operation:protobuf:: Clear COHN Certificate
-    :unsupported: boilers kongs pismo sultans
+    :operation-id: GPCAMERA_CLEAR_HOME_NETWORK_CERT
+    :external:
 
     .. operation:protobuf-message:: request
         :feature-id: 0xF1
@@ -86,11 +87,12 @@ Operations
     .. operation:protobuf-message:: response
         :feature-id: 0xF1
         :action-id: 0xE6
-        :uuid: Response
+        :uuid: Command Response
         :message: ResponseGeneric
 
 .. operation:protobuf:: Create COHN Certificate
-    :unsupported: boilers kongs pismo sultans
+    :operation-id: GPCAMERA_CREATE_HOME_NETWORK_CERT
+    :external:
 
     .. operation:protobuf-message:: request
         :feature-id: 0xF1
@@ -101,47 +103,50 @@ Operations
     .. operation:protobuf-message:: response
         :feature-id: 0xF1
         :action-id: 0xE7
-        :uuid: Response
+        :uuid: Command Response
         :message: ResponseGeneric
 
 .. operation:protobuf:: Get COHN Certificate
-    :unsupported: boilers kongs pismo sultans
+    :operation-id: GPCAMERA_GET_HOME_NETWORK_CERT
+    :external:
 
     .. operation:protobuf-message:: request
         :feature-id: 0xF5
         :action-id: 0x6E
-        :uuid: Command
+        :uuid: Query
         :message: WSDK_RequestCOHNCert
 
     .. operation:protobuf-message:: response
         :feature-id: 0xF5
         :action-id: 0xEE
-        :uuid: Response
+        :uuid: Query Response
         :message: WSDK_ResponseCOHNCert
 
 .. operation:protobuf:: Get COHN Status
-    :unsupported: boilers kongs pismo sultans
+    :operation-id: GPCAMERA_GET_HOME_NETWORK_STATUS
+    :external:
 
     .. operation:protobuf-message:: request
         :feature-id: 0xF5
         :action-id: 0x6F
-        :uuid: Command
+        :uuid: Query
         :message: WSDK_RequestGetCOHNStatus
 
     .. operation:protobuf-message:: response
         :feature-id: 0xF5
         :action-id: 0xEF
-        :uuid: Response
+        :uuid: Query Response
         :message: WSDK_NotifyCOHNStatus
 
     .. operation:protobuf-message:: notification
         :feature-id: 0xF5
         :action-id: 0xEF
-        :uuid: Response
+        :uuid: Query Response
         :message: WSDK_NotifyCOHNStatus
 
 .. operation:protobuf:: Set COHN Setting
-    :unsupported: boilers kongs pismo sultans
+    :operation-id: GPCAMERA_SET_HOME_NETWORK_SETTING
+    :external:
 
     .. operation:protobuf-message:: request
         :feature-id: 0xF1
@@ -152,5 +157,5 @@ Operations
     .. operation:protobuf-message:: response
         :feature-id: 0xF1
         :action-id: 0xE5
-        :uuid: Response
+        :uuid: Command Response
         :message: ResponseGeneric

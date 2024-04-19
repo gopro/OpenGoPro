@@ -5,8 +5,7 @@ Camera Readiness
 ================
 
 Depending on the camera's state, it may not be ready to accept specific commands. This ready state is dependent on the
-`System Busy <../features/statuses.html#status_8>`_
-and `Encoding Active <../features/statuses.html#status_10>`_ status flags. For example:
+:operation:ref:`System Busy<Status 8>` and :operation:ref:`Encoding Active<Status 10>` status flags. For example:
 
 - System Busy flag is set while loading presets, changing settings, formatting sdcard, ...
 - Encoding Active flag is set while capturing photo/video media
@@ -18,12 +17,11 @@ Keep Alive
 ==========
 
 Unless changed by the user, GoPro cameras will automatically power off after some time (e.g. 5min, 15min, 30min).
-Therefore, it is necessary to periodically send a `keep alive <../features/control.html#keep_alive>`_  signal to maintain the connection.
+Therefore, it is necessary to periodically send a :operation:ref:`Keep Alive` signal to maintain the connection.
 
 Camera Control
 ==============
 
 In order to prevent undefined behavior between the camera and a connected app, simultaneous use of the camera and a
-connected app is discouraged. A third party client should use
-`Set Camera Control <../features/control.html#set_camera_control>`_
-to tell the camera that the client wishes to claim control of the camera.
+connected app is discouraged. A third party client should use :operation:ref:`Set Camera Control` to tell the camera
+that the client wishes to claim control of the camera.

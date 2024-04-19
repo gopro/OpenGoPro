@@ -189,6 +189,17 @@ Type (Command / Setting ID) Command Status Optional Response
 1 Byte                      1 Byte         Variable Length
 =========================== ============== =================
 
+where the possible Command Statuses are:
+
+======= ==================
+Command Status Description
+======= ==================
+0       Success
+1       Error
+2       Invalid Parameter
+3-255   Reserved
+======= ==================
+
 The individual command documentation specified by the message's
 :ref:`Command ID<protocol/id_tables:command ids>` will define the response.
 

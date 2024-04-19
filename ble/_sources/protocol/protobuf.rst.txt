@@ -266,6 +266,11 @@ EnumFlatMode
 
      - 
 
+   * - FLAT_MODE_VIDEO_BURST_SLOMO
+     - 32
+
+     - 
+
 
 
 
@@ -425,7 +430,7 @@ EnumLiveStreamStatus
    * - LIVE_STREAM_STATE_READY
      - 2
 
-     - | Livestream has finished configuration and is ready to start streaming
+     - Livestream has finished configuration and is ready to start streaming
 
    * - LIVE_STREAM_STATE_STREAMING
      - 3
@@ -446,6 +451,11 @@ EnumLiveStreamStatus
      - 6
 
      - An error occurred during livestream and stream is attempting to reconnect.
+
+   * - LIVE_STREAM_STATE_UNAVAILABLE
+     - 7
+
+     - Live stream setup is unavailable due to camera lens configuration
 
 
 
@@ -2694,11 +2704,17 @@ RequestGetPresetStatus
    `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto>`__
 
 
-Get preset status (and optionally register to be notified when it changes)
+Get the set of currently available presets and optionally register to be notified when it changes.
 
 Response: :ref:`proto-notifypresetstatus` sent immediately
 
 Notification: :ref:`proto-notifypresetstatus` sent periodically as preset status changes, if registered.
+
+The preset status changes when:
+
+- A client changes one of a preset's captioned settings via the API
+- The user exits from a preset's settings UI on the camera (e.g. long-press the preset pill and then press the back arrow)
+- The user creates/deletes/reorders a preset within a group
 
 .. list-table::
    :widths: 10 10 15 40
@@ -2869,7 +2885,7 @@ Response: :ref:`proto-responsegeneric`
 
      - | Resolution to use for live stream
        | 
-       | The set of supported lenses is only available from the `live_stream_window_size_supported_array` in :ref:`proto-notifylivestreamstatus`)
+       | The set of supported resolutions is only available from the `live_stream_window_size_supported_array` in :ref:`proto-notifylivestreamstatus`)
 
    * - cert
      - bytes

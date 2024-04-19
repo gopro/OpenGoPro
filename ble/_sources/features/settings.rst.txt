@@ -48,23 +48,21 @@ Operations
 ==========
 
 .. operation:tlv-command:: Set Setting
+    :operation-id: GPCAMERA_CHANGE_SETTING
+    :external:
     :id: SettingID
 
     Set an individual :ref:`Setting ID<protocol/id_tables:setting ids>` to a given value.
 
-    The superset of per-setting values can be found in the `setting <settings.html#setting-ids>`__ documentation. Alternatively,
-    the currently supported setting values can be dynamically queried via
-    `Get Setting Capabilities <../features/query.html#get_setting_capabilities>`_
+    The superset of per-setting values can be found in the :ref:`Setting ID<protocol/id_tables:setting ids>` documentation. Alternatively,
+    the currently supported setting values can be dynamically queried via :operation:ref:`Get Setting Capabilities`
 
     .. operation:tlv-message:: Request
         :uuid: Setting
         :params:
-            - value_length (uint8): length of `value`
-            - value (variable length and type): value to set, of length `value_length`
+            - value_length (uint8): length of value
+            - value (variable length and type): value to set, of length value_length
     .. operation:tlv-message:: Response
         :uuid: Settings Response
 
-Setting IDs
-===========
-
-.. operation:setting-descriptions::
+.. include:: setting_ids.inc

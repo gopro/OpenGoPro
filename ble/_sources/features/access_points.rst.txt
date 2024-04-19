@@ -8,7 +8,40 @@ Internet connection. While in this mode, HTTP command and control of the camera 
 Operations
 ----------
 
+.. operation:protobuf:: Delete Stored Access Point
+    :operation-id: GPCAMERA_NETWORK_DELETE_AP
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0x02
+        :action-id: 0x06
+        :uuid: Network Management Command
+        :message: RequestDeleteSingleAp
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0x02
+        :action-id: 0x86
+        :uuid: Network Management Response
+        :message: ResponseGeneric
+
+
+.. operation:protobuf:: Delete All Stored Access Points
+    :operation-id: OGP_DELETE_ALL_ACCESS_POINTS
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0x02
+        :action-id: 0x07
+        :uuid: Network Management Command
+        :message: RequestDeleteAllAp
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0x02
+        :action-id: 0x87
+        :uuid: Network Management Response
+        :message: ResponseGeneric
+
 .. operation:protobuf:: Scan for Access Points
+    :operation-id: GPCAMERA_NETWORK_START_AP_SCAN
+    :external:
 
     .. image:: ../../assets/images/plantuml_ble_scan_for_ssids.png
 
@@ -31,20 +64,29 @@ Operations
         :message: NotifStartScanning
 
 .. operation:protobuf:: Get AP Scan Results
+    :operation-id: GPCAMERA_NETWORK_GET_AP_LIST
+    :external:
 
     .. operation:protobuf-message:: request
         :feature-id: 0x02
-        :action-id: 0x04
+        :action-id: 0x03
         :uuid: Network Management Command
         :message: RequestGetApEntries
 
     .. operation:protobuf-message:: response
         :feature-id: 0x02
-        :action-id: 0x84
+        :action-id: 0x83
         :uuid: Network Management Response
         :message: ResponseGetApEntries
 
 .. operation:protobuf:: Connect to Provisioned Access Point
+    :operation-id: GPCAMERA_NETWORK_CONNECT_EXISTING_AP
+    :external:
+
+    .. warning:: This operation can only be used on an Access Point that has been previously configured.  Therefore it is
+        first necessary to :operation:ref:`Scan for Access Points`, then :operation:ref:`Get AP Scan Results` to ensure
+        that the relevant :ref:`Scan Entry<proto-responsegetapentries_scanentry>` has the
+        :ref:`SCAN_FLAG_CONFIGURED<proto-enumscanentryflags>` bit set.
 
     .. image:: ../../assets/images/plantuml_ble_connect_ap.png
 
@@ -67,8 +109,13 @@ Operations
         :message: NotifProvisioningState
 
 .. operation:protobuf:: Connect to a New Access Point
+    :operation-id: GPCAMERA_NETWORK_CONNECT_NEW_AP
+    :external:
 
-    .. note:: This should only be done once to provision the AP; subsequent connections should use RequestConnect.
+    .. warning:: This operation can only be used on an Access Point that has not been previously configured.  Therefore it
+        is first necessary to :operation:ref:`Scan for Access Points`, then :operation:ref:`Get AP Scan Results` to
+        ensure that the relevant :ref:`Scan Entry<proto-responsegetapentries_scanentry>` does not have the
+        :ref:`SCAN_FLAG_CONFIGURED<proto-enumscanentryflags>` bit set.
 
     .. image:: ../../assets/images/plantuml_ble_connect_new_ap.png
 
@@ -93,8 +140,7 @@ Operations
 Disconnect from Access Point
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To disconnect from a connected Access Point and return the camera to AP mode, use
-`Set AP Control <../features/control.html#set_ap_control>`__
-to set AP Control: ON, which disables Station Mode.
+To disconnect from a connected Access Point and return the camera to AP mode, use :operation:ref:`Set AP Control`
+to set AP Control On, which disables Station Mode.
 
 .. image:: ../../assets/images/plantuml_ble_disconnect_ap.png
