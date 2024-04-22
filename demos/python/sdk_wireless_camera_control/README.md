@@ -19,7 +19,7 @@ interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and
 
 > Note! This README is only an overview of the package.
 
-Complete documentation can be found on [Open GoPro](https://gopro.github.io/OpenGoPro/python_sdk/)
+Complete documentation can be  found on [Open GoPro](https://gopro.github.io/OpenGoPro/python_sdk/)
 
 ## Features
 
