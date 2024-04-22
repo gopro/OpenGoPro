@@ -10,7 +10,7 @@ documents that detail whitelists for basic video settings for every supported ca
 These capability documents define supported camera states. Each state is comprised of a set of setting options that are
 presented in **dependency order**. This means each state is guaranteed to be attainable if and only if the setting options
 are set in the order presented. Failure to adhere to dependency ordering may result in the camera's blacklist rules
-rejecting a `Set Setting <settings.html#set_setting>`_ command.
+rejecting a :operation:ref:`Set Setting` command.
 
 ============= ========= =================== ========= ========= ================ =================
 Camera        Command 1 Command 2           Command 3 Command 4 Command 5        Guaranteed Valid?
@@ -41,7 +41,7 @@ A JSON file can be found `here <https://github.com/gopro/OpenGoPro/blob/main/doc
 
 The capabilities JSON contains a set of whitelist states for every supported release. Each state is comprised of a list
 of objects that contain setting and option IDs necessary to construct
-`Set Setting <settings.html#set_setting>`_ commands and are given in dependency
+:operation:ref:`Set Setting` commands and are given in dependency
 order as outlined above. For more information on the object format, see the JSON schema
 
 Operations

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
-  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Minimal Mistakes Jekyll Theme 4.25.0 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
 --><html lang="en" class="no-js">
@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2024-04-19T14:13:30-07:00">
+  <meta property="article:published_time" content="2024-04-22T16:03:00-07:00">
 
 
 
@@ -77,8 +77,8 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
 
 
   
@@ -122,10 +122,6 @@
     <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
   </ul>
 </nav>
-
-    <!--[if lt IE 9]>
-<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
-<![endif]-->
 
     
 
@@ -181,6 +177,8 @@
       
 
 
+
+
   
     
 
@@ -193,7 +191,8 @@
     
       
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="https://gopro.github.io/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+          <a href="/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+
           <meta itemprop="position" content="1">
         </li>
         <span class="sep">/</span>
@@ -224,22 +223,22 @@
   
 
 
-<div itemscope itemtype="https://schema.org/Person">
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
 
   
     <div class="author__avatar">
-      
-        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
-      
+      <a href="https://gopro.github.io/OpenGoPro/">
+        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image" class="u-photo">
+      </a>
     </div>
   
 
   <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://gopro.github.io/OpenGoPro/" itemprop="url">GoPro</a>
+    </h3>
     
-      <h3 class="author__name" itemprop="name">GoPro</h3>
-    
-    
-      <div class="author__bio" itemprop="description">
+      <div class="author__bio p-note" itemprop="description">
         <p>Be a <strong>hero</strong>.</p>
 
       </div>
@@ -251,30 +250,30 @@
     <ul class="author__urls social-icons">
       
         <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
-          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">US</span>
         </li>
       
 
       
         
           
-            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
           
         
           
-            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
           
         
           
-            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
           
         
           
-            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
           
         
           
-            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
           
         
       
@@ -329,7 +328,7 @@
 
       <!--
   <li>
-    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
       <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
     </a>
   </li>
@@ -435,17 +434,19 @@
 
 
 
-  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 6: Connect WiFi">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to use the Open GoPro Interface to connect the GoPro to a Wifinetwork either in Access Point (AP) mode or Station (STA) Mode.">
-    <meta itemprop="datePublished" content="2024-04-19T14:13:30-07:00">
+    <meta itemprop="datePublished" content="2024-04-22T16:03:00-07:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Tutorial 6: Connect WiFi
-</h1>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://gopro.github.io/OpenGoPro/tutorials/connect-wifi" class="u-url" itemprop="url">Tutorial 6: Connect WiFi
+</a>
+          </h1>
           
 
   <p class="page__meta">
@@ -470,7 +471,7 @@
         </header>
       
 
-      <section class="page__content" itemprop="text">
+      <section class="page__content e-content" itemprop="text">
         
           <aside class="sidebar__right sticky">
             <nav class="toc">
@@ -533,7 +534,7 @@ are present and configured correctly.</p>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="e5a99802-c822-4e5c-84ec-bf52fa4dcd78">
+    <ul class="tab tab-linked" data-tab="c5e65097-34a9-4ff6-a933-cdae40a56481">
         
             <li class="active">
                 <a href="">python </a>
@@ -544,7 +545,7 @@ are present and configured correctly.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="e5a99802-c822-4e5c-84ec-bf52fa4dcd78">
+        <ul class="tab-content" id="c5e65097-34a9-4ff6-a933-cdae40a56481">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 6
@@ -652,7 +653,7 @@ check the BLE status at the top of the app.</p>
 Open GoPro <a href="/OpenGoPro/http">HTTP API</a>. The HTTP API provides much of the same functionality as the BLE API as
 well as some additional functionality. For more information on the HTTP API, see the next 2 tutorials.</p>
 
-<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="110px" preserveaspectratio="none" style="width:401px;height:110px;background:#FFFFFF;" version="1.1" viewbox="0 0 401 110" width="401px" zoomandpan="magnify"><defs></defs><g><g id="cluster_AccessPoint"><rect fill="none" height="97" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="115" x="7" y="7"></rect><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthadjust="spacing" textlength="97" x="16" y="21.9951">AccessPoint</text></g><g id="elem_gopro"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83" x="23" y="42"></rect><path d="M50.6667,42 L50.6667,47 L43.6667,54 L23,54 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="43" x="38" y="74.9951">GoPro</text></g><g id="elem_client"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77" x="318" y="43"></rect><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="375" y="48"></rect><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="373" y="50"></rect><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="373" y="54"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="37" x="333" y="75.9951">client</text></g><g id="link_gopro_client"><path d="M112.18,65.16 C167.25,65.35 258.09,65.66 311.82,65.85 " fill="none" id="gopro-client" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"></path><polygon fill="#181818" points="107.43,65.14,116.4185,69.1657,112.43,65.1543,116.4414,61.1657,107.43,65.14" style="stroke:#181818;stroke-width:1.0;"></polygon><polygon fill="#181818" points="316.54,65.87,307.563,61.8186,311.5401,65.8414,307.5173,69.8185,316.54,65.87" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="24" x="201" y="62.0669">BLE</text></g><g id="link_gopro_client"><path d="M111.64,78.84 C143.6,86.86 187.22,94.71 226,91 C254.93,88.23 287,82.07 311.99,76.55 " fill="none" id="gopro-client-1" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="107.21,77.45,114.9332,83.5617,112.0531,78.6929,116.9218,75.8128,107.21,77.45" style="stroke:#181818;stroke-width:1.0;"></polygon><polygon fill="#181818" points="316.53,75.31,306.8766,73.3576,311.6491,76.3947,308.612,81.1671,316.53,75.31" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="24" x="201" y="87.0669">WiFi</text></g></g></svg>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="110px" preserveaspectratio="none" style="width:401px;height:110px;background:#FFFFFF;" version="1.1" viewbox="0 0 401 110" width="401px" zoomandpan="magnify"><defs></defs><g><g id="cluster_AccessPoint"><rect fill="none" height="97" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="115" x="7" y="7"></rect><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthadjust="spacing" textlength="97" x="16" y="21.9951">AccessPoint</text></g><g id="elem_gopro"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83" x="23" y="41.85"></rect><path d="M50.6667,41.85 L50.6667,46.85 L43.6667,53.85 L23,53.85 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="43" x="38" y="74.8451">GoPro</text></g><g id="elem_client"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77" x="318" y="42.85"></rect><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="375" y="47.85"></rect><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="373" y="49.85"></rect><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="373" y="53.85"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="37" x="333" y="75.8451">client</text></g><g id="link_gopro_client"><path d="M112.43,65.1603 C168.64,65.3503 256.94,65.6591 311.54,65.8491 " fill="none" id="gopro-client" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"></path><polygon fill="#181818" points="106.43,65.14,115.4164,69.1704,111.43,65.1569,115.4435,61.1704,106.43,65.14" style="stroke:#181818;stroke-width:1.0;"></polygon><polygon fill="#181818" points="317.54,65.87,308.554,61.8387,312.54,65.8526,308.5261,69.8387,317.54,65.87" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="24" x="201" y="62.0669">BLE</text></g><g id="link_gopro_client"><path d="M112.0141,78.9706 C144.3441,87.4406 184.97,94.92 226,91 C257.11,88.02 286.0075,82.4323 311.6775,76.6323 " fill="none" id="gopro-client-1" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="106.21,77.45,113.9024,83.6003,111.0468,78.7172,115.9299,75.8615,106.21,77.45" style="stroke:#181818;stroke-width:1.0;"></polygon><polygon fill="#181818" points="317.53,75.31,307.8697,73.3919,312.6529,76.4119,309.6328,81.1952,317.53,75.31" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="24" x="201" y="87.0669">WiFi</text></g></g></svg>
 
 <p>In order to connect to the camera in AP mode, after connecting via BLE, pairing, and enabling notifications, we must:</p>
 
@@ -688,7 +689,7 @@ WiFi Access Point service.</p>
 <p>Let’s send the read request to get the SSID and decode it into a string.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="88acac67-0664-4ee8-b6f5-496e2429d439">
+    <ul class="tab tab-linked" data-tab="1af2452a-1cac-4adf-8079-45661959fafa">
         
             <li class="active">
                 <a href="">python </a>
@@ -699,7 +700,7 @@ WiFi Access Point service.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="88acac67-0664-4ee8-b6f5-496e2429d439">
+        <ul class="tab-content" id="1af2452a-1cac-4adf-8079-45661959fafa">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssid_uuid</span> <span class="o">=</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">WIFI_AP_SSID_UUID</span>
@@ -747,7 +748,7 @@ WiFi Access Point service.</p>
 <p>Let’s send the read request to get the password and decode it into a string.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="dd9b1e81-d8bf-4200-bd78-dadf0fd019e4">
+    <ul class="tab tab-linked" data-tab="91c5d261-a869-4f24-af5e-da9fd968f8a2">
         
             <li class="active">
                 <a href="">python </a>
@@ -758,7 +759,7 @@ WiFi Access Point service.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="dd9b1e81-d8bf-4200-bd78-dadf0fd019e4">
+        <ul class="tab-content" id="91c5d261-a869-4f24-af5e-da9fd968f8a2">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">password_uuid</span> <span class="o">=</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">WIFI_AP_PASSWORD_UUID</span>
@@ -829,7 +830,7 @@ Password is z3y-DCX-Phj
 <p>Let’s write the bytes to the “Command Request UUID” to enable the WiFi AP!</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="11de1008-14f4-41f6-8180-3b9fd6ff3fa8">
+    <ul class="tab tab-linked" data-tab="90270e71-1cb6-48c9-80d1-1e2c882e446a">
         
             <li class="active">
                 <a href="">python </a>
@@ -840,7 +841,7 @@ Password is z3y-DCX-Phj
             </li>
         
         </ul>
-        <ul class="tab-content" id="11de1008-14f4-41f6-8180-3b9fd6ff3fa8">
+        <ul class="tab-content" id="90270e71-1cb6-48c9-80d1-1e2c882e446a">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
@@ -873,7 +874,7 @@ Command Response characteristic since we enabled it’s notifications in
 be seen in the demo log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="5347a88f-55e9-47c9-be3d-88d37caaee23">
+    <ul class="tab tab-linked" data-tab="3b100724-1141-43ee-a082-43333a12acf1">
         
             <li class="active">
                 <a href="">python </a>
@@ -884,7 +885,7 @@ be seen in the demo log:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="5347a88f-55e9-47c9-be3d-88d37caaee23">
+        <ul class="tab-content" id="3b100724-1141-43ee-a082-43333a12acf1">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Enabling the WiFi AP
@@ -915,7 +916,7 @@ Command sent successfully
 <h2 id="establish-connection-to-wifi-ap">Establish Connection to WiFi AP</h2>
 
 <div>
-    <ul class="tab tab-linked" data-tab="8dff0467-d92c-42ce-b532-69bd8e9345cd">
+    <ul class="tab tab-linked" data-tab="32fb0e7b-60ad-4caf-9346-e368f3644360">
         
             <li class="active">
                 <a href="">python </a>
@@ -926,7 +927,7 @@ Command sent successfully
             </li>
         
         </ul>
-        <ul class="tab-content" id="8dff0467-d92c-42ce-b532-69bd8e9345cd">
+        <ul class="tab-content" id="32fb0e7b-60ad-4caf-9346-e368f3644360">
         
             <li class="active tab-content-container">
 <p>If you have been following through the <code class="language-plaintext highlighter-rouge">ble_enable_wifi.py</code> script, you will notice that it ends here such that
@@ -960,10 +961,10 @@ connected.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_94459163-40eb-4a7c-b2d7-4dfab3f72d2b" class="quiz">
+<div id="quiz_7943e32a-c735-42f1-b107-7ba8d6b7eaba" class="quiz">
     <div>
-        <div id="question_94459163-40eb-4a7c-b2d7-4dfab3f72d2b" class="quiz__question">How is the WiFi password response received?</div>
-        <div id="answers_94459163-40eb-4a7c-b2d7-4dfab3f72d2b">
+        <div id="question_7943e32a-c735-42f1-b107-7ba8d6b7eaba" class="quiz__question">How is the WiFi password response received?</div>
+        <div id="answers_7943e32a-c735-42f1-b107-7ba8d6b7eaba">
         
             <input type="radio" name="question" value="A"><label>A: As a read response from the WiFi AP Password characteristic</label>
             <br>
@@ -976,10 +977,10 @@ connected.</p>
         
         </div>
     </div>
-    <button onclick="showResults('94459163-40eb-4a7c-b2d7-4dfab3f72d2b', 'A')">Submit Answer</button>
-    <div id="results_94459163-40eb-4a7c-b2d7-4dfab3f72d2b" style="display: none">
-        <span id="correct_94459163-40eb-4a7c-b2d7-4dfab3f72d2b" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_94459163-40eb-4a7c-b2d7-4dfab3f72d2b" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('7943e32a-c735-42f1-b107-7ba8d6b7eaba', 'A')">Submit Answer</button>
+    <div id="results_7943e32a-c735-42f1-b107-7ba8d6b7eaba" style="display: none">
+        <span id="correct_7943e32a-c735-42f1-b107-7ba8d6b7eaba" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_7943e32a-c735-42f1-b107-7ba8d6b7eaba" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         This (and WiFi AP SSID) is an exception to the rule. Usually responses
     are received as notifications to a response characteristic. However, in this case, it is
     received as a direct read response (since we are reading from the characteristic and not
@@ -987,10 +988,10 @@ connected.</p>
     </div>
 </div>
 
-<div id="quiz_c1c6bd70-382e-47c0-9344-8fb93ac20a00" class="quiz">
+<div id="quiz_a8c68e1a-6174-43ba-9cf5-70f30ea3ce0d" class="quiz">
     <div>
-        <div id="question_c1c6bd70-382e-47c0-9344-8fb93ac20a00" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
-        <div id="answers_c1c6bd70-382e-47c0-9344-8fb93ac20a00">
+        <div id="question_a8c68e1a-6174-43ba-9cf5-70f30ea3ce0d" class="quiz__question">Which of the following statements about the GoPro WiFi AP is true?</div>
+        <div id="answers_a8c68e1a-6174-43ba-9cf5-70f30ea3ce0d">
         
             <input type="radio" name="question" value="A"><label>A: It only needs to be enabled once and it will then always remain on</label>
             <br>
@@ -1006,10 +1007,10 @@ connected.</p>
         
         </div>
     </div>
-    <button onclick="showResults('c1c6bd70-382e-47c0-9344-8fb93ac20a00', 'D')">Submit Answer</button>
-    <div id="results_c1c6bd70-382e-47c0-9344-8fb93ac20a00" style="display: none">
-        <span id="correct_c1c6bd70-382e-47c0-9344-8fb93ac20a00" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_c1c6bd70-382e-47c0-9344-8fb93ac20a00" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('a8c68e1a-6174-43ba-9cf5-70f30ea3ce0d', 'D')">Submit Answer</button>
+    <div id="results_a8c68e1a-6174-43ba-9cf5-70f30ea3ce0d" style="display: none">
+        <span id="correct_a8c68e1a-6174-43ba-9cf5-70f30ea3ce0d" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_a8c68e1a-6174-43ba-9cf5-70f30ea3ce0d" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         While the WiFi AP will remain on for some time, it can and will eventually turn off so
     it is always recommended to first connect via BLE and ensure that it is enabled. The password
     and SSID will almost never change. However, they will change if the connections are reset via
@@ -1026,7 +1027,7 @@ connected.</p>
 the camera to connect to and communicate with an Access Point such as a switch or a router. This is used, for example,
 in the livestreaming and <a href="/OpenGoPro/tutorials/cohn">camera on the home network</a> (COHN) features.</p>
 
-<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="172px" preserveaspectratio="none" style="width:424px;height:172px;background:#FFFFFF;" version="1.1" viewbox="0 0 424 172" width="424px" zoomandpan="magnify"><defs></defs><g><g id="cluster_Station"><rect fill="none" height="97" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="115" x="7" y="14"></rect><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthadjust="spacing" textlength="55" x="37" y="28.9951">Station</text></g><g id="cluster_AccessPoint"><rect fill="none" height="97" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="114" x="304" y="69"></rect><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthadjust="spacing" textlength="97" x="312.5" y="83.9951">AccessPoint</text></g><g id="elem_gopro"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83" x="23" y="49"></rect><path d="M50.6667,49 L50.6667,54 L43.6667,61 L23,61 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="43" x="38" y="81.9951">GoPro</text></g><g id="elem_router"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="320" y="104"></rect><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="382" y="109"></rect><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="380" y="111"></rect><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="380" y="115"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="42" x="335" y="136.9951">router</text></g><g id="elem_client"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77" x="322.5" y="7"></rect><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="379.5" y="12"></rect><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="377.5" y="14"></rect><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="377.5" y="18"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="37" x="337.5" y="39.9951">client</text></g><g id="link_gopro_client"><path d="M112.3,65.33 C168.41,57.32 261.71,44.02 316.38,36.22 " fill="none" id="gopro-client" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"></path><polygon fill="#181818" points="107.45,66.16,116.9285,68.8355,112.3989,65.4469,115.7875,60.9173,107.45,66.16" style="stroke:#181818;stroke-width:1.0;"></polygon><polygon fill="#181818" points="321.2,35.39,311.7291,32.6877,316.2491,36.0891,312.8477,40.6091,321.2,35.39" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="24" x="201" y="46.0669">BLE</text></g><g id="link_gopro_router"><path d="M112.21,80.72 C167.52,91.05 259.02,108.14 314.01,118.41 " fill="none" id="gopro-router" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="107.45,79.65,115.5508,85.2515,112.3631,80.5783,117.0362,77.3906,107.45,79.65" style="stroke:#181818;stroke-width:1.0;"></polygon><polygon fill="#181818" points="318.87,119.51,310.7692,113.9085,313.9569,118.5817,309.2838,121.7694,318.87,119.51" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="21" x="202.5" y="94.0669">Wifi</text></g></g></svg>
+<svg class="plantuml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="172px" preserveaspectratio="none" style="width:424px;height:172px;background:#FFFFFF;" version="1.1" viewbox="0 0 424 172" width="424px" zoomandpan="magnify"><defs></defs><g><g id="cluster_Station"><rect fill="none" height="97" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="115" x="7" y="14.15"></rect><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthadjust="spacing" textlength="55" x="37" y="29.1451">Station</text></g><g id="cluster_AccessPoint"><rect fill="none" height="97" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="114" x="304" y="69.15"></rect><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthadjust="spacing" textlength="97" x="312.5" y="84.1451">AccessPoint</text></g><g id="elem_gopro"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83" x="23" y="49"></rect><path d="M50.6667,49 L50.6667,54 L43.6667,61 L23,61 " fill="none" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="43" x="38" y="81.9951">GoPro</text></g><g id="elem_router"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="320" y="104"></rect><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="382" y="109"></rect><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="380" y="111"></rect><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="380" y="115"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="42" x="335" y="136.9951">router</text></g><g id="elem_client"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77" x="322.5" y="7"></rect><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="379.5" y="12"></rect><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="377.5" y="14"></rect><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="377.5" y="18"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthadjust="spacing" textlength="37" x="337.5" y="39.9951">client</text></g><g id="link_gopro_client"><path d="M112.3899,65.4628 C169.5999,57.3028 260.7801,44.2969 316.2601,36.3869 " fill="none" id="gopro-client" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"></path><polygon fill="#181818" points="106.45,66.31,115.9246,68.9991,111.3999,65.604,114.795,61.0792,106.45,66.31" style="stroke:#181818;stroke-width:1.0;"></polygon><polygon fill="#181818" points="322.2,35.54,312.7255,32.8504,317.2501,36.2457,313.8547,40.7703,322.2,35.54" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="24" x="201" y="46.2169">BLE</text></g><g id="link_gopro_router"><path d="M112.3482,80.9008 C168.7682,91.4308 257.982,108.0981 313.972,118.5581 " fill="none" id="gopro-router" style="stroke:#181818;stroke-width:1.0;"></path><polygon fill="#181818" points="106.45,79.8,114.5634,85.3833,111.3651,80.7173,116.0311,77.5191,106.45,79.8" style="stroke:#181818;stroke-width:1.0;"></polygon><polygon fill="#181818" points="319.87,119.66,311.7576,114.0753,314.955,118.7418,310.2885,121.9392,319.87,119.66" style="stroke:#181818;stroke-width:1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthadjust="spacing" textlength="21" x="202.5" y="94.2169">Wifi</text></g></g></svg>
 
 <div class="callout tip">
 <i class="fa fa-tools fa-2x" style="color: #ebc21c; margin: 0.25em;"></i><span>When the GoPro is in Station Mode, there is no HTTP communication channel to the Open GoPro client. The GoPro can still
@@ -1072,7 +1073,7 @@ is available. Failure to do so follows an untested and unsupported path in the G
 <a href="/OpenGoPro/ble/features/access_points.html#scan-for-access-points">Scan For Access Points</a>:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="c5046518-9f1a-4826-9111-729ebb65ce75">
+    <ul class="tab tab-linked" data-tab="842ba9a0-2165-4f7b-a6b5-fec34d4b0f2c">
         
             <li class="active">
                 <a href="">python </a>
@@ -1083,7 +1084,7 @@ is available. Failure to do so follows an untested and unsupported path in the G
             </li>
         
         </ul>
-        <ul class="tab-content" id="c5046518-9f1a-4826-9111-729ebb65ce75">
+        <ul class="tab-content" id="842ba9a0-2165-4f7b-a6b5-fec34d4b0f2c">
         
             <li class="active tab-content-container">
 <div class="callout note">
@@ -1141,7 +1142,7 @@ Using the <code class="language-plaintext highlighter-rouge">scan_id</code> from
 retrieve and parse the response:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="3ef6b3fb-3d66-45fe-acd0-cd5adf974d17">
+    <ul class="tab tab-linked" data-tab="afefefeb-cd07-498b-940c-0d13cd812d34">
         
             <li class="active">
                 <a href="">python </a>
@@ -1152,7 +1153,7 @@ retrieve and parse the response:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="3ef6b3fb-3d66-45fe-acd0-cd5adf974d17">
+        <ul class="tab-content" id="afefefeb-cd07-498b-940c-0d13cd812d34">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">results_request</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span>
@@ -1234,7 +1235,7 @@ is essentially the inverse of the
 We accomplish this as follows:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="80a7e16b-c881-47f5-9b6f-b3a85ca904ce">
+    <ul class="tab tab-linked" data-tab="505cd1f0-e6c2-4875-be98-8b4f556a6dd2">
         
             <li class="active">
                 <a href="">python </a>
@@ -1245,7 +1246,7 @@ We accomplish this as follows:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="80a7e16b-c881-47f5-9b6f-b3a85ca904ce">
+        <ul class="tab-content" id="505cd1f0-e6c2-4875-be98-8b4f556a6dd2">
         
             <li class="active tab-content-container">
 <p>Let’s create a generator to yield fragmented packets (<code class="language-plaintext highlighter-rouge">yield_fragmented_packets</code>) from a monolithic payload. First,
@@ -1313,7 +1314,7 @@ bit is set (and thus we have already provisioned this network) then we must use
 <a href="/OpenGoPro/ble/features/access_points.html#connect-to-a-new-access-point">Connect New</a>:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="43c957e3-ee8f-4a0f-a740-f9813edf9c93">
+    <ul class="tab tab-linked" data-tab="363c9025-6506-427b-8907-dcdde8a72601">
         
             <li class="active">
                 <a href="">python </a>
@@ -1324,7 +1325,7 @@ bit is set (and thus we have already provisioned this network) then we must use
             </li>
         
         </ul>
-        <ul class="tab-content" id="43c957e3-ee8f-4a0f-a740-f9813edf9c93">
+        <ul class="tab-content" id="363c9025-6506-427b-8907-dcdde8a72601">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">entry</span><span class="p">.</span><span class="n">scan_entry_flags</span> <span class="o">&amp;</span> <span class="n">proto</span><span class="p">.</span><span class="n">EnumScanEntryFlags</span><span class="p">.</span><span class="n">SCAN_FLAG_CONFIGURED</span><span class="p">:</span>
@@ -1383,7 +1384,7 @@ Connect New use cases.</span>
         </figcaption></figure>
 
 <div>
-    <ul class="tab tab-linked" data-tab="5e368e4b-1e05-4cbe-9108-bb022ff8fd5d">
+    <ul class="tab tab-linked" data-tab="3665f12a-6980-46bf-bbf8-9d32d654bee4">
         
             <li class="active">
                 <a href="">python </a>
@@ -1394,7 +1395,7 @@ Connect New use cases.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="5e368e4b-1e05-4cbe-9108-bb022ff8fd5d">
+        <ul class="tab-content" id="3665f12a-6980-46bf-bbf8-9d32d654bee4">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">await</span> <span class="nf">fragment_and_write_gatt_char</span><span class="p">(</span><span class="n">manager</span><span class="p">.</span><span class="n">client</span><span class="p">,</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">NETWORK_MANAGEMENT_REQ_UUID</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">connect_request</span><span class="p">)</span>
@@ -1419,10 +1420,10 @@ Connect New use cases.</span>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_bd34acaf-37fa-4b47-8db6-c1daee7b73f6" class="quiz">
+<div id="quiz_0d520f13-5b52-454e-95e7-992fd326e583" class="quiz">
     <div>
-        <div id="question_bd34acaf-37fa-4b47-8db6-c1daee7b73f6" class="quiz__question">True or False: When the GoPro is in Station Mode, it can be communicated with via both BLE and HTTP.</div>
-        <div id="answers_bd34acaf-37fa-4b47-8db6-c1daee7b73f6">
+        <div id="question_0d520f13-5b52-454e-95e7-992fd326e583" class="quiz__question">True or False: When the GoPro is in Station Mode, it can be communicated with via both BLE and HTTP.</div>
+        <div id="answers_0d520f13-5b52-454e-95e7-992fd326e583">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1432,10 +1433,10 @@ Connect New use cases.</span>
         
         </div>
     </div>
-    <button onclick="showResults('bd34acaf-37fa-4b47-8db6-c1daee7b73f6', 'B')">Submit Answer</button>
-    <div id="results_bd34acaf-37fa-4b47-8db6-c1daee7b73f6" style="display: none">
-        <span id="correct_bd34acaf-37fa-4b47-8db6-c1daee7b73f6" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_bd34acaf-37fa-4b47-8db6-c1daee7b73f6" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('0d520f13-5b52-454e-95e7-992fd326e583', 'B')">Submit Answer</button>
+    <div id="results_0d520f13-5b52-454e-95e7-992fd326e583" style="display: none">
+        <span id="correct_0d520f13-5b52-454e-95e7-992fd326e583" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_0d520f13-5b52-454e-95e7-992fd326e583" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         When the GoPro is in station mode, it is connected via WiFi to another Access Point; not connected via Wifi
     to you (the client). However, it is possible to maintain the BLE connection in STA mode so that you can still control
     the GoPro.
@@ -1471,8 +1472,7 @@ BLE problems.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-19T14:13:30-07:00">April 19, 2024</time></p>
-
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2024-04-22T16:03:00-07:00">April 22, 2024</time></p>
 
       </footer>
 
@@ -1504,7 +1504,7 @@ BLE problems.</p>
     
       <div class="search-content">
         <div class="search-content__inner-wrap">
-<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
     <label class="sr-only" for="search">
       Enter your search term...
     </label>

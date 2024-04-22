@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
-  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Minimal Mistakes Jekyll Theme 4.25.0 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
 --><html lang="en" class="no-js">
@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2024-04-19T14:13:30-07:00">
+  <meta property="article:published_time" content="2024-04-22T16:03:00-07:00">
 
 
 
@@ -77,8 +77,8 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
 
 
   
@@ -122,10 +122,6 @@
     <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
   </ul>
 </nav>
-
-    <!--[if lt IE 9]>
-<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
-<![endif]-->
 
     
 
@@ -181,6 +177,8 @@
       
 
 
+
+
   
     
 
@@ -193,7 +191,8 @@
     
       
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="https://gopro.github.io/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+          <a href="/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+
           <meta itemprop="position" content="1">
         </li>
         <span class="sep">/</span>
@@ -224,22 +223,22 @@
   
 
 
-<div itemscope itemtype="https://schema.org/Person">
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
 
   
     <div class="author__avatar">
-      
-        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
-      
+      <a href="https://gopro.github.io/OpenGoPro/">
+        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image" class="u-photo">
+      </a>
     </div>
   
 
   <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://gopro.github.io/OpenGoPro/" itemprop="url">GoPro</a>
+    </h3>
     
-      <h3 class="author__name" itemprop="name">GoPro</h3>
-    
-    
-      <div class="author__bio" itemprop="description">
+      <div class="author__bio p-note" itemprop="description">
         <p>Be a <strong>hero</strong>.</p>
 
       </div>
@@ -251,30 +250,30 @@
     <ul class="author__urls social-icons">
       
         <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
-          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">US</span>
         </li>
       
 
       
         
           
-            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
           
         
           
-            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
           
         
           
-            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
           
         
           
-            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
           
         
           
-            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
           
         
       
@@ -329,7 +328,7 @@
 
       <!--
   <li>
-    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
       <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
     </a>
   </li>
@@ -435,17 +434,19 @@
 
 
 
-  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 1: Connect BLE">
     <meta itemprop="description" content="This tutorial will provide a walk-through to connect to the GoPro camera via Bluetooth Low Energy (BLE).">
-    <meta itemprop="datePublished" content="2024-04-19T14:13:30-07:00">
+    <meta itemprop="datePublished" content="2024-04-22T16:03:00-07:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Tutorial 1: Connect BLE
-</h1>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://gopro.github.io/OpenGoPro/tutorials/connect-ble" class="u-url" itemprop="url">Tutorial 1: Connect BLE
+</a>
+          </h1>
           
 
   <p class="page__meta">
@@ -470,7 +471,7 @@
         </header>
       
 
-      <section class="page__content" itemprop="text">
+      <section class="page__content e-content" itemprop="text">
         
           <aside class="sidebar__right sticky">
             <nav class="toc">
@@ -521,7 +522,7 @@
 </ul>
 
 <div>
-    <ul class="tab tab-linked" data-tab="27fb2b60-8dce-4353-99a1-f420f85268dc">
+    <ul class="tab tab-linked" data-tab="4ab2fc61-931f-42eb-9e39-631198b108c1">
         
             <li class="active">
                 <a href="">python </a>
@@ -532,7 +533,7 @@
             </li>
         
         </ul>
-        <ul class="tab-content" id="27fb2b60-8dce-4353-99a1-f420f85268dc">
+        <ul class="tab-content" id="4ab2fc61-931f-42eb-9e39-631198b108c1">
         
             <li class="active tab-content-container">
 <ul>
@@ -560,7 +561,7 @@
 <h2 id="software">Software</h2>
 
 <div>
-    <ul class="tab tab-linked" data-tab="cd1ac720-c593-4a5e-8f39-b508269b1f64">
+    <ul class="tab tab-linked" data-tab="bbcae26c-af14-4ccf-b002-9bf578efa76a">
         
             <li class="active">
                 <a href="">python </a>
@@ -571,7 +572,7 @@
             </li>
         
         </ul>
-        <ul class="tab-content" id="cd1ac720-c593-4a5e-8f39-b508269b1f64">
+        <ul class="tab-content" id="bbcae26c-af14-4ccf-b002-9bf578efa76a">
         
             <li class="active tab-content-container">
 <ul>
@@ -594,7 +595,7 @@
 <h1 id="overview--assumptions">Overview / Assumptions</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="36539ea2-6506-41be-8aa4-ba4ce22275bb">
+    <ul class="tab tab-linked" data-tab="cfc1a122-0bb2-4ce2-bb43-d4567dd05598">
         
             <li class="active">
                 <a href="">python </a>
@@ -605,15 +606,15 @@
             </li>
         
         </ul>
-        <ul class="tab-content" id="36539ea2-6506-41be-8aa4-ba4ce22275bb">
+        <ul class="tab-content" id="cfc1a122-0bb2-4ce2-bb43-d4567dd05598">
         
             <li class="active tab-content-container">
 <p>This tutorial will use <a href="https://pypi.org/project/bleak/">bleak</a> to control the OS’s Bluetooth Low Energy (BLE).</p>
 
 <div class="callout warning">
 <i class="fa fa-exclamation-triangle fa-2x" style="color: #df5142; margin: 0.25em;"></i><span>The Bleak BLE controller does not currently support autonomous pairing for the BlueZ backend. So if you are using
-BlueZ (i.e. Ubuntu, RaspberryPi, etc.), you need to first pair the camera from the command line as shown in the
-<a href="https://gopro.github.io/OpenGoPro/tutorials/bash/bluez">BlueZ tutorial</a>.</span>
+BlueZ (i.e. Ubuntu, RaspberryPi, etc.), you need to first pair the camera from the command line. One way to do this
+is to use <a href="https://ubuntu.com/core/docs/bluez/reference/pairing/introduction">bluetoothctl</a>.</span>
 </div>
 
 <p>The bleak module is based on asyncio which means that its awaitable functions need to
@@ -678,7 +679,7 @@ use a third-party library for this such as <a href="https://github.com/JuulLabs/
 <h1 id="setup">Setup</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="547f4c37-f352-459d-b892-b58c2eeec037">
+    <ul class="tab tab-linked" data-tab="5895076a-02c0-4fd0-bbcc-381b5bc14f15">
         
             <li class="active">
                 <a href="">python </a>
@@ -689,7 +690,7 @@ use a third-party library for this such as <a href="https://github.com/JuulLabs/
             </li>
         
         </ul>
-        <ul class="tab-content" id="547f4c37-f352-459d-b892-b58c2eeec037">
+        <ul class="tab-content" id="5895076a-02c0-4fd0-bbcc-381b5bc14f15">
         
             <li class="active tab-content-container">
 <p>This set of tutorials is accompanied by a Python package consisting of scripts separated by tutorial module.
@@ -748,7 +749,7 @@ Github repo has been cloned or downloaded to your local machine, open the projec
 <h2 id="just-show-me-the-demo">Just Show me the Demo!!</h2>
 
 <div>
-    <ul class="tab tab-linked" data-tab="7f8cc1c3-1b65-46b0-a905-6d04d7c44b0d">
+    <ul class="tab tab-linked" data-tab="c0530b36-a707-4f6f-8420-0faadf34c7dd">
         
             <li class="active">
                 <a href="">python </a>
@@ -759,7 +760,7 @@ Github repo has been cloned or downloaded to your local machine, open the projec
             </li>
         
         </ul>
-        <ul class="tab-content" id="7f8cc1c3-1b65-46b0-a905-6d04d7c44b0d">
+        <ul class="tab-content" id="c0530b36-a707-4f6f-8420-0faadf34c7dd">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 1
@@ -855,7 +856,7 @@ Follow the per-camera steps <a href="https://community.gopro.com/s/article/GoPro
 
 <p>Next, we must scan to discover the advertising GoPro Camera.</p>
 <div>
-    <ul class="tab tab-linked" data-tab="ff493aa5-0e63-4a0b-afb7-687c95c227d5">
+    <ul class="tab tab-linked" data-tab="e652331e-0008-4cf7-9983-03af14f1ad3a">
         
             <li class="active">
                 <a href="">python </a>
@@ -866,7 +867,7 @@ Follow the per-camera steps <a href="https://community.gopro.com/s/article/GoPro
             </li>
         
         </ul>
-        <ul class="tab-content" id="ff493aa5-0e63-4a0b-afb7-687c95c227d5">
+        <ul class="tab-content" id="e652331e-0008-4cf7-9983-03af14f1ad3a">
         
             <li class="active tab-content-container">
 <p>We will do this using bleak. Let’s initialize an empty dict that will store discovered devices, indexed by name:</p>
@@ -990,7 +991,7 @@ Found GoPro: GoPro 0992
 establish a BLE connection to the camera.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="7828ea4f-00fe-498e-9209-e351a2fa69ff">
+    <ul class="tab tab-linked" data-tab="05f6faf7-fad9-4a79-92b5-e9de81063652">
         
             <li class="active">
                 <a href="">python </a>
@@ -1001,7 +1002,7 @@ establish a BLE connection to the camera.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="7828ea4f-00fe-498e-9209-e351a2fa69ff">
+        <ul class="tab-content" id="05f6faf7-fad9-4a79-92b5-e9de81063652">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># We're just taking the first device if there are multiple.
@@ -1038,7 +1039,7 @@ communicate.</p>
 writing to them. Therefore now that we are connected, we need to attempt to pair.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="d1b2907c-aca6-43ef-adf8-ef1b438b94b6">
+    <ul class="tab tab-linked" data-tab="de41fd6e-d5d3-404a-8959-6aaf9573bb71">
         
             <li class="active">
                 <a href="">python </a>
@@ -1049,7 +1050,7 @@ writing to them. Therefore now that we are connected, we need to attempt to pair
             </li>
         
         </ul>
-        <ul class="tab-content" id="d1b2907c-aca6-43ef-adf8-ef1b438b94b6">
+        <ul class="tab-content" id="de41fd6e-d5d3-404a-8959-6aaf9573bb71">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
@@ -1067,7 +1068,7 @@ catching the exception when it fails.</p>
             <li class="tab-content-container">
 <p>Rather than explicitly request pairing, we rely on the fact that Android will automatically start the pairing
 process if you try to read a characteristic that requires encryption. To do this, we read the
-<a href="https://gopro.github.io/OpenGoPro/ble_2_0#services-and-characteristics">Wifi AP Password characteristic</a>.</p>
+<a href="/OpenGoPro/ble/protocol/ble_setup.html#ble-characteristics">Wifi AP Password characteristic</a>.</p>
 
 <p>First we discover all characteristics (this will also be needed later when enabling notifications):</p>
 
@@ -1134,7 +1135,7 @@ characteristic to receive responses from it.</p>
 for notification if it has <code class="language-plaintext highlighter-rouge">notify</code> properties:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="448bc7a7-76fd-43e8-a53c-e92b375aa39e">
+    <ul class="tab tab-linked" data-tab="1c825e3a-b332-436a-a96e-606679087bcc">
         
             <li class="active">
                 <a href="">python </a>
@@ -1145,7 +1146,7 @@ for notification if it has <code class="language-plaintext highlighter-rouge">no
             </li>
         
         </ul>
-        <ul class="tab-content" id="448bc7a7-76fd-43e8-a53c-e92b375aa39e">
+        <ul class="tab-content" id="1c825e3a-b332-436a-a96e-606679087bcc">
         
             <li class="active tab-content-container">
 <div class="callout note">
@@ -1229,10 +1230,10 @@ BLE.</p>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_2757c775-bc66-4de2-aed6-c141791102be" class="quiz">
+<div id="quiz_953c1479-0191-44f7-aa9a-9eedb7bd4720" class="quiz">
     <div>
-        <div id="question_2757c775-bc66-4de2-aed6-c141791102be" class="quiz__question">How often is it necessary to pair?</div>
-        <div id="answers_2757c775-bc66-4de2-aed6-c141791102be">
+        <div id="question_953c1479-0191-44f7-aa9a-9eedb7bd4720" class="quiz__question">How often is it necessary to pair?</div>
+        <div id="answers_953c1479-0191-44f7-aa9a-9eedb7bd4720">
         
             <input type="radio" name="question" value="A"><label>A: Pairing must occur every time to ensure safe BLE communication.</label>
             <br>
@@ -1245,10 +1246,10 @@ BLE.</p>
         
         </div>
     </div>
-    <button onclick="showResults('2757c775-bc66-4de2-aed6-c141791102be', 'C')">Submit Answer</button>
-    <div id="results_2757c775-bc66-4de2-aed6-c141791102be" style="display: none">
-        <span id="correct_2757c775-bc66-4de2-aed6-c141791102be" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_2757c775-bc66-4de2-aed6-c141791102be" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('953c1479-0191-44f7-aa9a-9eedb7bd4720', 'C')">Submit Answer</button>
+    <div id="results_953c1479-0191-44f7-aa9a-9eedb7bd4720" style="display: none">
+        <span id="correct_953c1479-0191-44f7-aa9a-9eedb7bd4720" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_953c1479-0191-44f7-aa9a-9eedb7bd4720" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Pairing is only needed once (assuming neither side deletes the keys). If the
     GoPro deletes the keys (via Connections-&gt;Reset Connections), the devices will need to re-pair.
     </div>
@@ -1281,7 +1282,7 @@ perform the following.</p>
 <h2 id="logs">Logs</h2>
 
 <div>
-    <ul class="tab tab-linked" data-tab="e88c89a5-b609-42c4-8a6c-e31273965b44">
+    <ul class="tab tab-linked" data-tab="9d5d9536-7218-4d28-af46-f9375f100d95">
         
             <li class="active">
                 <a href="">python </a>
@@ -1292,7 +1293,7 @@ perform the following.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="e88c89a5-b609-42c4-8a6c-e31273965b44">
+        <ul class="tab-content" id="9d5d9536-7218-4d28-af46-f9375f100d95">
         
             <li class="active tab-content-container">
 <p>The demo program has enabled bleak logs and is also using the default
@@ -1332,8 +1333,7 @@ to send commands, you should advance to the next tutorial.</p>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-19T14:13:30-07:00">April 19, 2024</time></p>
-
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2024-04-22T16:03:00-07:00">April 22, 2024</time></p>
 
       </footer>
 
@@ -1364,7 +1364,7 @@ to send commands, you should advance to the next tutorial.</p>
     
       <div class="search-content">
         <div class="search-content__inner-wrap">
-<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
     <label class="sr-only" for="search">
       Enter your search term...
     </label>

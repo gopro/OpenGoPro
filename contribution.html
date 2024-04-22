@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
-  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Minimal Mistakes Jekyll Theme 4.25.0 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
 --><html lang="en" class="no-js">
@@ -73,8 +73,8 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="/OpenGoPro/assets/css/main.css">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
 
 
   
@@ -118,10 +118,6 @@
     <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
   </ul>
 </nav>
-
-    <!--[if lt IE 9]>
-<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
-<![endif]-->
 
     
 
@@ -177,6 +173,8 @@
       
 
 
+
+
   
     
 
@@ -189,7 +187,8 @@
     
       
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="https://gopro.github.io/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+          <a href="/OpenGoPro/" itemprop="item"><span itemprop="name">Home</span></a>
+
           <meta itemprop="position" content="1">
         </li>
         <span class="sep">/</span>
@@ -210,22 +209,22 @@
   
 
 
-<div itemscope itemtype="https://schema.org/Person">
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
 
   
     <div class="author__avatar">
-      
-        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image">
-      
+      <a href="https://gopro.github.io/OpenGoPro/">
+        <img src="/OpenGoPro/assets/images/logos/logo_square.png" alt="GoPro" itemprop="image" class="u-photo">
+      </a>
     </div>
   
 
   <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://gopro.github.io/OpenGoPro/" itemprop="url">GoPro</a>
+    </h3>
     
-      <h3 class="author__name" itemprop="name">GoPro</h3>
-    
-    
-      <div class="author__bio" itemprop="description">
+      <div class="author__bio p-note" itemprop="description">
         <p>Be a <strong>hero</strong>.</p>
 
       </div>
@@ -237,30 +236,30 @@
     <ul class="author__urls social-icons">
       
         <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
-          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">US</span>
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">US</span>
         </li>
       
 
       
         
           
-            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+            <li><a href="https://www.gopro.com" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
           
         
           
-            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+            <li><a href="https://twitter.com/GoPro" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
           
         
           
-            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+            <li><a href="https://www.facebook.com/gopro/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
           
         
           
-            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+            <li><a href="https://github.com/gopro" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
           
         
           
-            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+            <li><a href="https://www.instagram.com/gopro/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
           
         
       
@@ -315,7 +314,7 @@
 
       <!--
   <li>
-    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
       <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
     </a>
   </li>
@@ -329,7 +328,7 @@
 
 
 
-  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Contribution">
     
     
@@ -338,8 +337,10 @@
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Contribution
-</h1>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://gopro.github.io/OpenGoPro/contribution.html" class="u-url" itemprop="url">Contribution
+</a>
+          </h1>
           
 
   <p class="page__meta">
@@ -364,7 +365,7 @@
         </header>
       
 
-      <section class="page__content" itemprop="text">
+      <section class="page__content e-content" itemprop="text">
         
           <aside class="sidebar__right sticky">
             <nav class="toc">
@@ -532,10 +533,10 @@ This is for tips.
 %}
 </code></pre></div></div>
 
-<div id="quiz_262b6597-65ba-4f63-8011-96f087668b57" class="quiz">
+<div id="quiz_94965801-81b5-448d-84cb-6a3063ebbe26" class="quiz">
     <div>
-        <div id="question_262b6597-65ba-4f63-8011-96f087668b57" class="quiz__question">What is the question?</div>
-        <div id="answers_262b6597-65ba-4f63-8011-96f087668b57">
+        <div id="question_94965801-81b5-448d-84cb-6a3063ebbe26" class="quiz__question">What is the question?</div>
+        <div id="answers_94965801-81b5-448d-84cb-6a3063ebbe26">
         
             <input type="radio" name="question" value="A"><label>A: Option 1 (this one is correct)</label>
             <br>
@@ -548,10 +549,10 @@ This is for tips.
         
         </div>
     </div>
-    <button onclick="showResults('262b6597-65ba-4f63-8011-96f087668b57', 'A')">Submit Answer</button>
-    <div id="results_262b6597-65ba-4f63-8011-96f087668b57" style="display: none">
-        <span id="correct_262b6597-65ba-4f63-8011-96f087668b57" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_262b6597-65ba-4f63-8011-96f087668b57" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('94965801-81b5-448d-84cb-6a3063ebbe26', 'A')">Submit Answer</button>
+    <div id="results_94965801-81b5-448d-84cb-6a3063ebbe26" style="display: none">
+        <span id="correct_94965801-81b5-448d-84cb-6a3063ebbe26" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_94965801-81b5-448d-84cb-6a3063ebbe26" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         And here is some more info
     </div>
 </div>
@@ -567,10 +568,10 @@ This is for tips.
 %}
 </code></pre></div></div>
 
-<div id="quiz_99477722-c75a-401d-a4eb-5b0cd6c2d76b" class="quiz">
+<div id="quiz_2c5ba234-4c71-478d-81b5-f9606744f6d1" class="quiz">
     <div>
-        <div id="question_99477722-c75a-401d-a4eb-5b0cd6c2d76b" class="quiz__question">True or False?</div>
-        <div id="answers_99477722-c75a-401d-a4eb-5b0cd6c2d76b">
+        <div id="question_2c5ba234-4c71-478d-81b5-f9606744f6d1" class="quiz__question">True or False?</div>
+        <div id="answers_2c5ba234-4c71-478d-81b5-f9606744f6d1">
         
             <input type="radio" name="question" value="True"><label>True: Option 1(this one is correct)</label>
             <br>
@@ -580,10 +581,10 @@ This is for tips.
         
         </div>
     </div>
-    <button onclick="showResults('99477722-c75a-401d-a4eb-5b0cd6c2d76b', 'True')">Submit Answer</button>
-    <div id="results_99477722-c75a-401d-a4eb-5b0cd6c2d76b" style="display: none">
-        <span id="correct_99477722-c75a-401d-a4eb-5b0cd6c2d76b" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_99477722-c75a-401d-a4eb-5b0cd6c2d76b" style="display: none"> Incorrect!! 😭 The correct answer is True.</span>
+    <button onclick="showResults('2c5ba234-4c71-478d-81b5-f9606744f6d1', 'True')">Submit Answer</button>
+    <div id="results_2c5ba234-4c71-478d-81b5-f9606744f6d1" style="display: none">
+        <span id="correct_2c5ba234-4c71-478d-81b5-f9606744f6d1" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_2c5ba234-4c71-478d-81b5-f9606744f6d1" style="display: none"> Incorrect!! 😭 The correct answer is True.</span>
         And here is some more info
     </div>
 </div>
@@ -606,7 +607,7 @@ This is the content of the third tab.
 </code></pre></div></div>
 
 <div>
-    <ul class="tab" data-tab="3df327a0-9025-477a-b703-d7af253a2242">
+    <ul class="tab" data-tab="75f92e59-934f-466c-bde6-5e8a0c2b66b3">
         
             <li class="active">
                 <a href="">tab1 </a>
@@ -621,7 +622,7 @@ This is the content of the third tab.
             </li>
         
         </ul>
-        <ul class="tab-content" id="3df327a0-9025-477a-b703-d7af253a2242">
+        <ul class="tab-content" id="75f92e59-934f-466c-bde6-5e8a0c2b66b3">
         
             <li class="active tab-content-container">
 <p>This is the content of the first tab.</p>
@@ -886,7 +887,6 @@ Orange</td>
 
         
 
-
       </footer>
 
       
@@ -906,7 +906,7 @@ Orange</td>
     
       <div class="search-content">
         <div class="search-content__inner-wrap">
-<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
     <label class="sr-only" for="search">
       Enter your search term...
     </label>

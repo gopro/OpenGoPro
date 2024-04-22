@@ -408,7 +408,7 @@ documents that detail whitelists for basic video settings for every supported ca
 <p>These capability documents define supported camera states. Each state is comprised of a set of setting options that are
 presented in <strong>dependency order</strong>. This means each state is guaranteed to be attainable if and only if the setting options
 are set in the order presented. Failure to adhere to dependency ordering may result in the camera’s blacklist rules
-rejecting a <a class="reference external" href="settings.html#set_setting">Set Setting</a> command.</p>
+rejecting a <a class="reference internal" href="#set-setting" title="set setting"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a> command.</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Camera</p></th>
@@ -454,7 +454,7 @@ whitelisted state and is presented in dependency order as outlined above.</p>
 <p>A JSON file can be found <a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">here</a>.</p>
 <p>The capabilities JSON contains a set of whitelist states for every supported release. Each state is comprised of a list
 of objects that contain setting and option IDs necessary to construct
-<a class="reference external" href="settings.html#set_setting">Set Setting</a> commands and are given in dependency
+<a class="reference internal" href="#set-setting" title="set setting"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a> commands and are given in dependency
 order as outlined above. For more information on the object format, see the JSON schema</p>
 </section>
 </section>
