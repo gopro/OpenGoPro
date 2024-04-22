@@ -3,7 +3,7 @@
 Open GoPro Python SDK
 =====================
 
-.. figure:: https://raw.githubusercontent.com/gopro/OpenGoPro/main/docs/assets/images/logos/logo.png
+.. figure:: https://raw.githubusercontent.com/gopro/OpenGoPro/gh-pages/assets/images/logos/logo.png
     :alt: GoPro Logo
     :width: 50%
 
