@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+> First ensure you are using a camera that is [currently supported](https://gopro.github.io/OpenGoPro/#compatibility) by Open GoPro. Any other tickets will be rejected.
+
 **Is your feature request related to a problem or use case? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 

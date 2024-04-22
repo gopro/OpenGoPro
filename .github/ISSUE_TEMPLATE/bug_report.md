@@ -7,12 +7,14 @@ assignees: ''
 
 ---
 
+> First ensure you are using a camera that is [currently supported](https://gopro.github.io/OpenGoPro/#compatibility) by Open GoPro. Any other tickets will be rejected.
+
 **Component**
 What is the bug in?
 - Demos (python sdk, etc)
 - Tutorials
 - Documentation
-- Specs (BLE , HTTP)
+- Specs (BLE, HTTP)
 
 **Describe the bug**
 A clear and concise description of what the bug is.
