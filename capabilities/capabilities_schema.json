@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "GoPro Settings Capabilities",
+    "type": "object",
+    "patternProperties": {
+        "^HERO": {
+            "title": "Camera (e.g. HERO10 Black)",
+            "type": "object",
+            "patternProperties": {
+                "^v": {
+                    "title": "Firmware Version (e.g. v01.30.00)",
+                    "type": "object",
+                    "properties": {
+                        "states": {
+                            "title": "Supported states",
+                            "type": "array",
+                            "items": {
+                                "title": "Dependency-ordered options comprising a state",
+                                "type": "array",
+                                "items": {
+                                    "title": "An individual setting",
+                                    "type": "object",
+                                    "properties": {
+                                        "setting_name": {
+                                            "title": "Name of setting",
+                                            "type": "string"
+                                        },
+                                        "setting_id": {
+                                            "title": "Setting ID",
+                                            "type": "integer"
+                                        },
+                                        "option_name": {
+                                            "title": "Option Name",
+                                            "type": "string"
+                                        },
+                                        "option_id": {
+                                            "title": "Option ID",
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
