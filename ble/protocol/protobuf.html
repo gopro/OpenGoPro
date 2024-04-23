@@ -1,13 +1,157 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<html class="writer-html5">
+    <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Protobuf Documentation &mdash; Open GoPro BLE API 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=d4d8e761" />
+<!-- begin _includes/seo.html --><title>Open GoPro</title>
+<meta name="description" content="Open Source GoPro Interface">
+
+
+  <meta name="author" content="GoPro">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Open GoPro">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/ble">
+
+
+  <meta property="og:description" content="Open Source GoPro Interface">
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/ble">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "GoPro",
+      "url": "https://gopro.github.io/OpenGoPro/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- TODO This is probably where our masthead highlighting is going wrong -->
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main_spec.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+  
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+<script>
+    // Add anchors on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function (event) {
+        var manualAnchors = new AnchorJS();
+        manualAnchors.options = {
+            titleText: 'Permalink',
+            placement: 'left'
+        };
+        manualAnchors.add('.anchored');
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+    </head>
+    <body>
+        
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/OpenGoPro/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/ble/">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/http">HTTP Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro/tree/main/demos">Demos</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
+</ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+        
+
+
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protobuf Documentation — Open GoPro BLE API 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1">
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094">
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=d4d8e761">
 
   
   <!--[if lt IE 9]>
@@ -20,17 +164,17 @@
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Control" href="../features/control.html" />
-    <link rel="prev" title="ID Tables" href="id_tables.html" /> 
-</head>
+    <link rel="index" title="Index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="next" title="Control" href="../features/control.html">
+    <link rel="prev" title="ID Tables" href="id_tables.html"> 
 
-<body class="wy-body-for-nav"> 
+
+ 
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
 
           
           
@@ -39,45 +183,54 @@
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+        </div>
+<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../protocol.html">Protocol</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="ble_setup.html">BLE Setup</a><ul>
+<li class="toctree-l1 current">
+<a class="reference internal" href="../protocol.html">Protocol</a><ul class="current">
+<li class="toctree-l2">
+<a class="reference internal" href="ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="ble_setup.html#pairing-mode">Pairing Mode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ble_setup.html#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ble_setup.html#finish-pairing">Finish Pairing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="ble_setup.html#ble-characteristics">BLE Characteristics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="ble_setup.html#send-messages">Send Messages</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="data_protocol.html">Data Protocol</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="data_protocol.html#packetization">Packetization</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="data_protocol.html">Data Protocol</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="data_protocol.html#packetization">Packetization</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="data_protocol.html#packet-headers">Packet Headers</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="data_protocol.html#decipher-message-payload-type">Decipher Message Payload Type</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_protocol.html#message-payload">Message Payload</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="data_protocol.html#message-payload">Message Payload</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="data_protocol.html#type-length-value">Type Length Value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="data_protocol.html#protobuf">Protobuf</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="state_management.html">State Management</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="state_management.html">State Management</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="state_management.html#camera-readiness">Camera Readiness</a></li>
 <li class="toctree-l3"><a class="reference internal" href="state_management.html#keep-alive">Keep Alive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="state_management.html#camera-control">Camera Control</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="id_tables.html">ID Tables</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="id_tables.html">ID Tables</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="id_tables.html#command-ids">Command IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="id_tables.html#query-ids">Query IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="id_tables.html#protobuf-ids">Protobuf IDs</a></li>
@@ -85,8 +238,10 @@
 <li class="toctree-l3"><a class="reference internal" href="id_tables.html#status-ids">Status IDs</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Protobuf Documentation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#enums">Enums</a><ul>
+<li class="toctree-l2 current">
+<a class="current reference internal" href="#">Protobuf Documentation</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="#enums">Enums</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#enumcohnnetworkstate">EnumCOHNNetworkState</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#enumcohnstatus">EnumCOHNStatus</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#enumcameracontrolstatus">EnumCameraControlStatus</a></li>
@@ -147,8 +302,10 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../features/control.html">Control</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/control.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/control.html">Control</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/control.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#keep-alive"><code class="docutils literal notranslate"><span class="pre">Keep</span> <span class="pre">Alive</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
@@ -162,8 +319,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/query.html">Query</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/query.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/query.html">Query</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/query.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/query.html#get-date-time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/query.html#get-hardware-info"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Hardware</span> <span class="pre">Info</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/query.html#get-local-date-time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
@@ -182,8 +341,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/access_points.html">Access Point</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/access_points.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/access_points.html">Access Point</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/access_points.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/access_points.html#scan-for-access-points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/access_points.html#get-ap-scan-results"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">AP</span> <span class="pre">Scan</span> <span class="pre">Results</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/access_points.html#connect-to-provisioned-access-point"><code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">Provisioned</span> <span class="pre">Access</span> <span class="pre">Point</span></code></a></li>
@@ -193,22 +354,27 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/live_streaming.html">Live Streaming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/live_streaming.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/live_streaming.html">Live Streaming</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/live_streaming.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/live_streaming.html#set-livestream-mode"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/live_streaming.html#get-livestream-status"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Livestream</span> <span class="pre">Status</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/cohn.html">Camera on the Home Network</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/cohn.html#certificates">Certificates</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/cohn.html">Camera on the Home Network</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/cohn.html#certificates">Certificates</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/cohn.html#verifying-certificate">Verifying Certificate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/cohn.html#view-certificate-details">View Certificate Details</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../features/cohn.html#provisioning-procedure">Provisioning Procedure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../features/cohn.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/cohn.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/cohn.html#clear-cohn-certificate"><code class="docutils literal notranslate"><span class="pre">Clear</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/cohn.html#create-cohn-certificate"><code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/cohn.html#get-cohn-certificate"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
@@ -218,17 +384,21 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/hilights.html">Hilights</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/hilights.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/hilights.html">Hilights</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/hilights.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/hilights.html#hilight-moment"><code class="docutils literal notranslate"><span class="pre">Hilight</span> <span class="pre">Moment</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/presets.html">Presets</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/presets.html">Presets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../features/presets.html#preset-groups">Preset Groups</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../features/presets.html#preset-modified-status">Preset Modified Status</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../features/presets.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/presets.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#get-available-presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#load-preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#load-preset-group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
@@ -237,17 +407,21 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/settings.html">Settings</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/settings.html#camera-capabilities">Camera Capabilities</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/settings.html">Settings</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/settings.html#camera-capabilities">Camera Capabilities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#xlsx">XLSX</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#json">JSON</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../features/settings.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/settings.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#set-setting"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../features/settings.html#setting-ids">Setting IDs</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/settings.html#setting-ids">Setting IDs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#resolution-2">Resolution (2)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#frames-per-second-3">Frames Per Second (3)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#fov-43">FOV (43)</a></li>
@@ -287,8 +461,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../features/statuses.html">Statuses</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/statuses.html#status-ids">Status IDs</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../features/statuses.html">Statuses</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../features/statuses.html#status-ids">Status IDs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#is-the-system-s-internal-battery-present-1">Is the system’s internal battery present? (1)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#rough-approximation-of-internal-battery-level-in-bars-or-charging-2">Rough approximation of internal battery level in bars (or charging) (2)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#is-the-system-currently-overheating-6">Is the system currently overheating? (6)</a></li>
@@ -380,7 +556,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Open GoPro BLE API</a>
       </nav>
@@ -395,1374 +571,1865 @@
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
-  <hr/>
+  <hr>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
   <section id="protobuf-documentation">
-<h1>Protobuf Documentation<a class="headerlink" href="#protobuf-documentation" title="Link to this heading"></a></h1>
+<h1>Protobuf Documentation<a class="headerlink" href="#protobuf-documentation" title="Link to this heading"></a>
+</h1>
 <section id="enums">
-<h2>Enums<a class="headerlink" href="#enums" title="Link to this heading"></a></h2>
+<h2>Enums<a class="headerlink" href="#enums" title="Link to this heading"></a>
+</h2>
 <section id="enumcohnnetworkstate">
-<span id="proto-enumcohnnetworkstate"></span><h3>EnumCOHNNetworkState<a class="headerlink" href="#enumcohnnetworkstate" title="Link to this heading"></a></h3>
+<span id="proto-enumcohnnetworkstate"></span><h3>EnumCOHNNetworkState<a class="headerlink" href="#enumcohnnetworkstate" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>COHN_STATE_Init</p></td>
-<td><p>0</p></td>
-<td></td>
+<tr class="row-even">
+<td>COHN_STATE_Init</td>
+<td>0</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>COHN_STATE_Error</p></td>
-<td><p>1</p></td>
-<td></td>
+<tr class="row-odd">
+<td>COHN_STATE_Error</td>
+<td>1</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>COHN_STATE_Exit</p></td>
-<td><p>2</p></td>
-<td></td>
+<tr class="row-even">
+<td>COHN_STATE_Exit</td>
+<td>2</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>COHN_STATE_Idle</p></td>
-<td><p>5</p></td>
-<td></td>
+<tr class="row-odd">
+<td>COHN_STATE_Idle</td>
+<td>5</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>COHN_STATE_NetworkConnected</p></td>
-<td><p>27</p></td>
-<td></td>
+<tr class="row-even">
+<td>COHN_STATE_NetworkConnected</td>
+<td>27</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>COHN_STATE_NetworkDisconnected</p></td>
-<td><p>28</p></td>
-<td></td>
+<tr class="row-odd">
+<td>COHN_STATE_NetworkDisconnected</td>
+<td>28</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>COHN_STATE_ConnectingToNetwork</p></td>
-<td><p>29</p></td>
-<td></td>
+<tr class="row-even">
+<td>COHN_STATE_ConnectingToNetwork</td>
+<td>29</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>COHN_STATE_Invalid</p></td>
-<td><p>30</p></td>
-<td></td>
+<tr class="row-odd">
+<td>COHN_STATE_Invalid</td>
+<td>30</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumcohnstatus">
-<span id="proto-enumcohnstatus"></span><h3>EnumCOHNStatus<a class="headerlink" href="#enumcohnstatus" title="Link to this heading"></a></h3>
+<span id="proto-enumcohnstatus"></span><h3>EnumCOHNStatus<a class="headerlink" href="#enumcohnstatus" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>COHN_UNPROVISIONED</p></td>
-<td><p>0</p></td>
-<td></td>
+<tr class="row-even">
+<td>COHN_UNPROVISIONED</td>
+<td>0</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>COHN_PROVISIONED</p></td>
-<td><p>1</p></td>
-<td></td>
+<tr class="row-odd">
+<td>COHN_PROVISIONED</td>
+<td>1</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumcameracontrolstatus">
-<span id="proto-enumcameracontrolstatus"></span><h3>EnumCameraControlStatus<a class="headerlink" href="#enumcameracontrolstatus" title="Link to this heading"></a></h3>
+<span id="proto-enumcameracontrolstatus"></span><h3>EnumCameraControlStatus<a class="headerlink" href="#enumcameracontrolstatus" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/set_camera_control_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>CAMERA_IDLE</p></td>
-<td><p>0</p></td>
-<td></td>
+<tr class="row-even">
+<td>CAMERA_IDLE</td>
+<td>0</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>CAMERA_CONTROL</p></td>
-<td><p>1</p></td>
-<td><p>Can only be set by camera, not by app or third party</p></td>
+<tr class="row-odd">
+<td>CAMERA_CONTROL</td>
+<td>1</td>
+<td>Can only be set by camera, not by app or third party</td>
 </tr>
-<tr class="row-even"><td><p>CAMERA_EXTERNAL_CONTROL</p></td>
-<td><p>2</p></td>
-<td></td>
+<tr class="row-even">
+<td>CAMERA_EXTERNAL_CONTROL</td>
+<td>2</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumflatmode">
-<span id="proto-enumflatmode"></span><h3>EnumFlatMode<a class="headerlink" href="#enumflatmode" title="Link to this heading"></a></h3>
+<span id="proto-enumflatmode"></span><h3>EnumFlatMode<a class="headerlink" href="#enumflatmode" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>FLAT_MODE_UNKNOWN</p></td>
-<td><p>-1</p></td>
-<td></td>
+<tr class="row-even">
+<td>FLAT_MODE_UNKNOWN</td>
+<td>-1</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>FLAT_MODE_PLAYBACK</p></td>
-<td><p>4</p></td>
-<td></td>
+<tr class="row-odd">
+<td>FLAT_MODE_PLAYBACK</td>
+<td>4</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>FLAT_MODE_SETUP</p></td>
-<td><p>5</p></td>
-<td></td>
+<tr class="row-even">
+<td>FLAT_MODE_SETUP</td>
+<td>5</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>FLAT_MODE_VIDEO</p></td>
-<td><p>12</p></td>
-<td></td>
+<tr class="row-odd">
+<td>FLAT_MODE_VIDEO</td>
+<td>12</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>FLAT_MODE_TIME_LAPSE_VIDEO</p></td>
-<td><p>13</p></td>
-<td></td>
+<tr class="row-even">
+<td>FLAT_MODE_TIME_LAPSE_VIDEO</td>
+<td>13</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>FLAT_MODE_LOOPING</p></td>
-<td><p>15</p></td>
-<td></td>
+<tr class="row-odd">
+<td>FLAT_MODE_LOOPING</td>
+<td>15</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>FLAT_MODE_PHOTO_SINGLE</p></td>
-<td><p>16</p></td>
-<td></td>
+<tr class="row-even">
+<td>FLAT_MODE_PHOTO_SINGLE</td>
+<td>16</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>FLAT_MODE_PHOTO</p></td>
-<td><p>17</p></td>
-<td></td>
+<tr class="row-odd">
+<td>FLAT_MODE_PHOTO</td>
+<td>17</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>FLAT_MODE_PHOTO_NIGHT</p></td>
-<td><p>18</p></td>
-<td></td>
+<tr class="row-even">
+<td>FLAT_MODE_PHOTO_NIGHT</td>
+<td>18</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>FLAT_MODE_PHOTO_BURST</p></td>
-<td><p>19</p></td>
-<td></td>
+<tr class="row-odd">
+<td>FLAT_MODE_PHOTO_BURST</td>
+<td>19</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>FLAT_MODE_TIME_LAPSE_PHOTO</p></td>
-<td><p>20</p></td>
-<td></td>
+<tr class="row-even">
+<td>FLAT_MODE_TIME_LAPSE_PHOTO</td>
+<td>20</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>FLAT_MODE_NIGHT_LAPSE_PHOTO</p></td>
-<td><p>21</p></td>
-<td></td>
+<tr class="row-odd">
+<td>FLAT_MODE_NIGHT_LAPSE_PHOTO</td>
+<td>21</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>FLAT_MODE_BROADCAST_RECORD</p></td>
-<td><p>22</p></td>
-<td></td>
+<tr class="row-even">
+<td>FLAT_MODE_BROADCAST_RECORD</td>
+<td>22</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>FLAT_MODE_BROADCAST_BROADCAST</p></td>
-<td><p>23</p></td>
-<td></td>
+<tr class="row-odd">
+<td>FLAT_MODE_BROADCAST_BROADCAST</td>
+<td>23</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>FLAT_MODE_TIME_WARP_VIDEO</p></td>
-<td><p>24</p></td>
-<td></td>
+<tr class="row-even">
+<td>FLAT_MODE_TIME_WARP_VIDEO</td>
+<td>24</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>FLAT_MODE_LIVE_BURST</p></td>
-<td><p>25</p></td>
-<td></td>
+<tr class="row-odd">
+<td>FLAT_MODE_LIVE_BURST</td>
+<td>25</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>FLAT_MODE_NIGHT_LAPSE_VIDEO</p></td>
-<td><p>26</p></td>
-<td></td>
+<tr class="row-even">
+<td>FLAT_MODE_NIGHT_LAPSE_VIDEO</td>
+<td>26</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>FLAT_MODE_SLOMO</p></td>
-<td><p>27</p></td>
-<td></td>
+<tr class="row-odd">
+<td>FLAT_MODE_SLOMO</td>
+<td>27</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>FLAT_MODE_IDLE</p></td>
-<td><p>28</p></td>
-<td></td>
+<tr class="row-even">
+<td>FLAT_MODE_IDLE</td>
+<td>28</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>FLAT_MODE_VIDEO_STAR_TRAIL</p></td>
-<td><p>29</p></td>
-<td></td>
+<tr class="row-odd">
+<td>FLAT_MODE_VIDEO_STAR_TRAIL</td>
+<td>29</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>FLAT_MODE_VIDEO_LIGHT_PAINTING</p></td>
-<td><p>30</p></td>
-<td></td>
+<tr class="row-even">
+<td>FLAT_MODE_VIDEO_LIGHT_PAINTING</td>
+<td>30</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>FLAT_MODE_VIDEO_LIGHT_TRAIL</p></td>
-<td><p>31</p></td>
-<td></td>
+<tr class="row-odd">
+<td>FLAT_MODE_VIDEO_LIGHT_TRAIL</td>
+<td>31</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>FLAT_MODE_VIDEO_BURST_SLOMO</p></td>
-<td><p>32</p></td>
-<td></td>
+<tr class="row-even">
+<td>FLAT_MODE_VIDEO_BURST_SLOMO</td>
+<td>32</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumlens">
-<span id="proto-enumlens"></span><h3>EnumLens<a class="headerlink" href="#enumlens" title="Link to this heading"></a></h3>
+<span id="proto-enumlens"></span><h3>EnumLens<a class="headerlink" href="#enumlens" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>LENS_WIDE</p></td>
-<td><p>0</p></td>
-<td></td>
+<tr class="row-even">
+<td>LENS_WIDE</td>
+<td>0</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>LENS_SUPERVIEW</p></td>
-<td><p>3</p></td>
-<td></td>
+<tr class="row-odd">
+<td>LENS_SUPERVIEW</td>
+<td>3</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>LENS_LINEAR</p></td>
-<td><p>4</p></td>
-<td></td>
+<tr class="row-even">
+<td>LENS_LINEAR</td>
+<td>4</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumlivestreamerror">
-<span id="proto-enumlivestreamerror"></span><h3>EnumLiveStreamError<a class="headerlink" href="#enumlivestreamerror" title="Link to this heading"></a></h3>
+<span id="proto-enumlivestreamerror"></span><h3>EnumLiveStreamError<a class="headerlink" href="#enumlivestreamerror" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>LIVE_STREAM_ERROR_NONE</p></td>
-<td><p>0</p></td>
-<td><p>No error (success)</p></td>
+<tr class="row-even">
+<td>LIVE_STREAM_ERROR_NONE</td>
+<td>0</td>
+<td>No error (success)</td>
 </tr>
-<tr class="row-odd"><td><p>LIVE_STREAM_ERROR_NETWORK</p></td>
-<td><p>1</p></td>
-<td><p>General network error during the stream</p></td>
+<tr class="row-odd">
+<td>LIVE_STREAM_ERROR_NETWORK</td>
+<td>1</td>
+<td>General network error during the stream</td>
 </tr>
-<tr class="row-even"><td><p>LIVE_STREAM_ERROR_CREATESTREAM</p></td>
-<td><p>2</p></td>
-<td><p>Startup error: bad URL or valid with live stream server</p></td>
+<tr class="row-even">
+<td>LIVE_STREAM_ERROR_CREATESTREAM</td>
+<td>2</td>
+<td>Startup error: bad URL or valid with live stream server</td>
 </tr>
-<tr class="row-odd"><td><p>LIVE_STREAM_ERROR_OUTOFMEMORY</p></td>
-<td><p>3</p></td>
-<td><p>Not enough memory on camera to complete task</p></td>
+<tr class="row-odd">
+<td>LIVE_STREAM_ERROR_OUTOFMEMORY</td>
+<td>3</td>
+<td>Not enough memory on camera to complete task</td>
 </tr>
-<tr class="row-even"><td><p>LIVE_STREAM_ERROR_INPUTSTREAM</p></td>
-<td><p>4</p></td>
-<td><p>Failed to get stream from low level camera system</p></td>
+<tr class="row-even">
+<td>LIVE_STREAM_ERROR_INPUTSTREAM</td>
+<td>4</td>
+<td>Failed to get stream from low level camera system</td>
 </tr>
-<tr class="row-odd"><td><p>LIVE_STREAM_ERROR_INTERNET</p></td>
-<td><p>5</p></td>
-<td><p>No internet access detected on startup of streamer</p></td>
+<tr class="row-odd">
+<td>LIVE_STREAM_ERROR_INTERNET</td>
+<td>5</td>
+<td>No internet access detected on startup of streamer</td>
 </tr>
-<tr class="row-even"><td><p>LIVE_STREAM_ERROR_OSNETWORK</p></td>
-<td><p>6</p></td>
-<td><p>Error occured in linux networking stack. Usually means the server closed the connection</p></td>
+<tr class="row-even">
+<td>LIVE_STREAM_ERROR_OSNETWORK</td>
+<td>6</td>
+<td>Error occured in linux networking stack. Usually means the server closed the connection</td>
 </tr>
-<tr class="row-odd"><td><p>LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT</p></td>
-<td><p>7</p></td>
-<td><p>Timed out attemping to connect to the wifi network when attemping live stream</p></td>
+<tr class="row-odd">
+<td>LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT</td>
+<td>7</td>
+<td>Timed out attemping to connect to the wifi network when attemping live stream</td>
 </tr>
-<tr class="row-even"><td><p>LIVE_STREAM_ERROR_SSL_HANDSHAKE</p></td>
-<td><p>8</p></td>
-<td><p>SSL handshake failed (commonly caused due to incorrect time / time zone)</p></td>
+<tr class="row-even">
+<td>LIVE_STREAM_ERROR_SSL_HANDSHAKE</td>
+<td>8</td>
+<td>SSL handshake failed (commonly caused due to incorrect time / time zone)</td>
 </tr>
-<tr class="row-odd"><td><p>LIVE_STREAM_ERROR_CAMERA_BLOCKED</p></td>
-<td><p>9</p></td>
-<td><p>Low level camera system rejected attempt to start live stream</p></td>
+<tr class="row-odd">
+<td>LIVE_STREAM_ERROR_CAMERA_BLOCKED</td>
+<td>9</td>
+<td>Low level camera system rejected attempt to start live stream</td>
 </tr>
-<tr class="row-even"><td><p>LIVE_STREAM_ERROR_UNKNOWN</p></td>
-<td><p>10</p></td>
-<td><p>Unknown</p></td>
+<tr class="row-even">
+<td>LIVE_STREAM_ERROR_UNKNOWN</td>
+<td>10</td>
+<td>Unknown</td>
 </tr>
-<tr class="row-odd"><td><p>LIVE_STREAM_ERROR_SD_CARD_FULL</p></td>
-<td><p>40</p></td>
-<td><p>Can not perform livestream because sd card is full</p></td>
+<tr class="row-odd">
+<td>LIVE_STREAM_ERROR_SD_CARD_FULL</td>
+<td>40</td>
+<td>Can not perform livestream because sd card is full</td>
 </tr>
-<tr class="row-even"><td><p>LIVE_STREAM_ERROR_SD_CARD_REMOVED</p></td>
-<td><p>41</p></td>
-<td><p>Livestream stopped because sd card was removed</p></td>
+<tr class="row-even">
+<td>LIVE_STREAM_ERROR_SD_CARD_REMOVED</td>
+<td>41</td>
+<td>Livestream stopped because sd card was removed</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumlivestreamstatus">
-<span id="proto-enumlivestreamstatus"></span><h3>EnumLiveStreamStatus<a class="headerlink" href="#enumlivestreamstatus" title="Link to this heading"></a></h3>
+<span id="proto-enumlivestreamstatus"></span><h3>EnumLiveStreamStatus<a class="headerlink" href="#enumlivestreamstatus" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>LIVE_STREAM_STATE_IDLE</p></td>
-<td><p>0</p></td>
-<td><p>Initial status. Livestream has not yet been configured</p></td>
+<tr class="row-even">
+<td>LIVE_STREAM_STATE_IDLE</td>
+<td>0</td>
+<td>Initial status. Livestream has not yet been configured</td>
 </tr>
-<tr class="row-odd"><td><p>LIVE_STREAM_STATE_CONFIG</p></td>
-<td><p>1</p></td>
-<td><p>Livestream is being configured</p></td>
+<tr class="row-odd">
+<td>LIVE_STREAM_STATE_CONFIG</td>
+<td>1</td>
+<td>Livestream is being configured</td>
 </tr>
-<tr class="row-even"><td><p>LIVE_STREAM_STATE_READY</p></td>
-<td><p>2</p></td>
-<td><p>Livestream has finished configuration and is ready to start streaming</p></td>
+<tr class="row-even">
+<td>LIVE_STREAM_STATE_READY</td>
+<td>2</td>
+<td>Livestream has finished configuration and is ready to start streaming</td>
 </tr>
-<tr class="row-odd"><td><p>LIVE_STREAM_STATE_STREAMING</p></td>
-<td><p>3</p></td>
-<td><p>Livestream is actively streaming</p></td>
+<tr class="row-odd">
+<td>LIVE_STREAM_STATE_STREAMING</td>
+<td>3</td>
+<td>Livestream is actively streaming</td>
 </tr>
-<tr class="row-even"><td><p>LIVE_STREAM_STATE_COMPLETE_STAY_ON</p></td>
-<td><p>4</p></td>
-<td><p>Live stream is exiting. No errors occured.</p></td>
+<tr class="row-even">
+<td>LIVE_STREAM_STATE_COMPLETE_STAY_ON</td>
+<td>4</td>
+<td>Live stream is exiting. No errors occured.</td>
 </tr>
-<tr class="row-odd"><td><p>LIVE_STREAM_STATE_FAILED_STAY_ON</p></td>
-<td><p>5</p></td>
-<td><p>Live stream is exiting. An error occurred.</p></td>
+<tr class="row-odd">
+<td>LIVE_STREAM_STATE_FAILED_STAY_ON</td>
+<td>5</td>
+<td>Live stream is exiting. An error occurred.</td>
 </tr>
-<tr class="row-even"><td><p>LIVE_STREAM_STATE_RECONNECTING</p></td>
-<td><p>6</p></td>
-<td><p>An error occurred during livestream and stream is attempting to reconnect.</p></td>
+<tr class="row-even">
+<td>LIVE_STREAM_STATE_RECONNECTING</td>
+<td>6</td>
+<td>An error occurred during livestream and stream is attempting to reconnect.</td>
 </tr>
-<tr class="row-odd"><td><p>LIVE_STREAM_STATE_UNAVAILABLE</p></td>
-<td><p>7</p></td>
-<td><p>Live stream setup is unavailable due to camera lens configuration</p></td>
+<tr class="row-odd">
+<td>LIVE_STREAM_STATE_UNAVAILABLE</td>
+<td>7</td>
+<td>Live stream setup is unavailable due to camera lens configuration</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumpresetgroup">
-<span id="proto-enumpresetgroup"></span><h3>EnumPresetGroup<a class="headerlink" href="#enumpresetgroup" title="Link to this heading"></a></h3>
+<span id="proto-enumpresetgroup"></span><h3>EnumPresetGroup<a class="headerlink" href="#enumpresetgroup" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>PRESET_GROUP_ID_VIDEO</p></td>
-<td><p>1000</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_GROUP_ID_VIDEO</td>
+<td>1000</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_GROUP_ID_PHOTO</p></td>
-<td><p>1001</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_GROUP_ID_PHOTO</td>
+<td>1001</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_GROUP_ID_TIMELAPSE</p></td>
-<td><p>1002</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_GROUP_ID_TIMELAPSE</td>
+<td>1002</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumpresetgroupicon">
-<span id="proto-enumpresetgroupicon"></span><h3>EnumPresetGroupIcon<a class="headerlink" href="#enumpresetgroupicon" title="Link to this heading"></a></h3>
+<span id="proto-enumpresetgroupicon"></span><h3>EnumPresetGroupIcon<a class="headerlink" href="#enumpresetgroupicon" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>PRESET_GROUP_VIDEO_ICON_ID</p></td>
-<td><p>0</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_GROUP_VIDEO_ICON_ID</td>
+<td>0</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_GROUP_PHOTO_ICON_ID</p></td>
-<td><p>1</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_GROUP_PHOTO_ICON_ID</td>
+<td>1</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_GROUP_TIMELAPSE_ICON_ID</p></td>
-<td><p>2</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_GROUP_TIMELAPSE_ICON_ID</td>
+<td>2</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID</p></td>
-<td><p>3</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID</td>
+<td>3</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID</p></td>
-<td><p>4</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID</td>
+<td>4</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_GROUP_MAX_VIDEO_ICON_ID</p></td>
-<td><p>5</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_GROUP_MAX_VIDEO_ICON_ID</td>
+<td>5</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_GROUP_MAX_PHOTO_ICON_ID</p></td>
-<td><p>6</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_GROUP_MAX_PHOTO_ICON_ID</td>
+<td>6</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_GROUP_MAX_TIMELAPSE_ICON_ID</p></td>
-<td><p>7</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_GROUP_MAX_TIMELAPSE_ICON_ID</td>
+<td>7</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumpreseticon">
-<span id="proto-enumpreseticon"></span><h3>EnumPresetIcon<a class="headerlink" href="#enumpreseticon" title="Link to this heading"></a></h3>
+<span id="proto-enumpreseticon"></span><h3>EnumPresetIcon<a class="headerlink" href="#enumpreseticon" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>PRESET_ICON_VIDEO</p></td>
-<td><p>0</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_VIDEO</td>
+<td>0</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_ACTIVITY</p></td>
-<td><p>1</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_ACTIVITY</td>
+<td>1</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_CINEMATIC</p></td>
-<td><p>2</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_CINEMATIC</td>
+<td>2</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_PHOTO</p></td>
-<td><p>3</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_PHOTO</td>
+<td>3</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_LIVE_BURST</p></td>
-<td><p>4</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_LIVE_BURST</td>
+<td>4</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_BURST</p></td>
-<td><p>5</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_BURST</td>
+<td>5</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_PHOTO_NIGHT</p></td>
-<td><p>6</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_PHOTO_NIGHT</td>
+<td>6</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_TIMEWARP</p></td>
-<td><p>7</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_TIMEWARP</td>
+<td>7</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_TIMELAPSE</p></td>
-<td><p>8</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_TIMELAPSE</td>
+<td>8</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_NIGHTLAPSE</p></td>
-<td><p>9</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_NIGHTLAPSE</td>
+<td>9</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_SNAIL</p></td>
-<td><p>10</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_SNAIL</td>
+<td>10</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_VIDEO_2</p></td>
-<td><p>11</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_VIDEO_2</td>
+<td>11</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_PHOTO_2</p></td>
-<td><p>13</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_PHOTO_2</td>
+<td>13</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_PANORAMA</p></td>
-<td><p>14</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_PANORAMA</td>
+<td>14</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_BURST_2</p></td>
-<td><p>15</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_BURST_2</td>
+<td>15</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_TIMEWARP_2</p></td>
-<td><p>16</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_TIMEWARP_2</td>
+<td>16</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_TIMELAPSE_2</p></td>
-<td><p>17</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_TIMELAPSE_2</td>
+<td>17</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_CUSTOM</p></td>
-<td><p>18</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_CUSTOM</td>
+<td>18</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_AIR</p></td>
-<td><p>19</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_AIR</td>
+<td>19</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_BIKE</p></td>
-<td><p>20</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_BIKE</td>
+<td>20</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_EPIC</p></td>
-<td><p>21</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_EPIC</td>
+<td>21</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_INDOOR</p></td>
-<td><p>22</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_INDOOR</td>
+<td>22</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_MOTOR</p></td>
-<td><p>23</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_MOTOR</td>
+<td>23</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_MOUNTED</p></td>
-<td><p>24</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_MOUNTED</td>
+<td>24</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_OUTDOOR</p></td>
-<td><p>25</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_OUTDOOR</td>
+<td>25</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_POV</p></td>
-<td><p>26</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_POV</td>
+<td>26</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_SELFIE</p></td>
-<td><p>27</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_SELFIE</td>
+<td>27</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_SKATE</p></td>
-<td><p>28</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_SKATE</td>
+<td>28</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_SNOW</p></td>
-<td><p>29</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_SNOW</td>
+<td>29</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_TRAIL</p></td>
-<td><p>30</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_TRAIL</td>
+<td>30</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_TRAVEL</p></td>
-<td><p>31</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_TRAVEL</td>
+<td>31</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_WATER</p></td>
-<td><p>32</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_WATER</td>
+<td>32</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_LOOPING</p></td>
-<td><p>33</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_LOOPING</td>
+<td>33</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_STARS</p></td>
-<td><p>34</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_STARS</td>
+<td>34</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_ACTION</p></td>
-<td><p>35</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_ACTION</td>
+<td>35</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_FOLLOW_CAM</p></td>
-<td><p>36</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_FOLLOW_CAM</td>
+<td>36</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_SURF</p></td>
-<td><p>37</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_SURF</td>
+<td>37</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_CITY</p></td>
-<td><p>38</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_CITY</td>
+<td>38</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_SHAKY</p></td>
-<td><p>39</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_SHAKY</td>
+<td>39</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_CHESTY</p></td>
-<td><p>40</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_CHESTY</td>
+<td>40</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_HELMET</p></td>
-<td><p>41</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_HELMET</td>
+<td>41</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_BITE</p></td>
-<td><p>42</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_BITE</td>
+<td>42</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_BASIC</p></td>
-<td><p>58</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_BASIC</td>
+<td>58</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_ULTRA_SLO_MO</p></td>
-<td><p>59</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_ULTRA_SLO_MO</td>
+<td>59</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_STANDARD_ENDURANCE</p></td>
-<td><p>60</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_STANDARD_ENDURANCE</td>
+<td>60</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_ACTIVITY_ENDURANCE</p></td>
-<td><p>61</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_ACTIVITY_ENDURANCE</td>
+<td>61</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_CINEMATIC_ENDURANCE</p></td>
-<td><p>62</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_CINEMATIC_ENDURANCE</td>
+<td>62</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_SLOMO_ENDURANCE</p></td>
-<td><p>63</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_SLOMO_ENDURANCE</td>
+<td>63</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_STATIONARY_1</p></td>
-<td><p>64</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_STATIONARY_1</td>
+<td>64</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_STATIONARY_2</p></td>
-<td><p>65</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_STATIONARY_2</td>
+<td>65</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_STATIONARY_3</p></td>
-<td><p>66</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_STATIONARY_3</td>
+<td>66</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_STATIONARY_4</p></td>
-<td><p>67</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_STATIONARY_4</td>
+<td>67</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_SIMPLE_SUPER_PHOTO</p></td>
-<td><p>70</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_SIMPLE_SUPER_PHOTO</td>
+<td>70</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_SIMPLE_NIGHT_PHOTO</p></td>
-<td><p>71</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_SIMPLE_NIGHT_PHOTO</td>
+<td>71</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_HIGHEST_QUALITY_VIDEO</p></td>
-<td><p>73</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_HIGHEST_QUALITY_VIDEO</td>
+<td>73</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_STANDARD_QUALITY_VIDEO</p></td>
-<td><p>74</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_STANDARD_QUALITY_VIDEO</td>
+<td>74</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_BASIC_QUALITY_VIDEO</p></td>
-<td><p>75</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_BASIC_QUALITY_VIDEO</td>
+<td>75</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_STAR_TRAIL</p></td>
-<td><p>76</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_STAR_TRAIL</td>
+<td>76</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_LIGHT_PAINTING</p></td>
-<td><p>77</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_LIGHT_PAINTING</td>
+<td>77</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_LIGHT_TRAIL</p></td>
-<td><p>78</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_LIGHT_TRAIL</td>
+<td>78</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_FULL_FRAME</p></td>
-<td><p>79</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_FULL_FRAME</td>
+<td>79</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PRESET_ICON_TIMELAPSE_PHOTO</p></td>
-<td><p>1000</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PRESET_ICON_TIMELAPSE_PHOTO</td>
+<td>1000</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PRESET_ICON_NIGHTLAPSE_PHOTO</p></td>
-<td><p>1001</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_ICON_NIGHTLAPSE_PHOTO</td>
+<td>1001</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumpresettitle">
-<span id="proto-enumpresettitle"></span><h3>EnumPresetTitle<a class="headerlink" href="#enumpresettitle" title="Link to this heading"></a></h3>
+<span id="proto-enumpresettitle"></span><h3>EnumPresetTitle<a class="headerlink" href="#enumpresettitle" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>PRESET_TITLE_ACTIVITY</p></td>
-<td><p>0</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_STANDARD</p></td>
-<td><p>1</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_CINEMATIC</p></td>
-<td><p>2</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_PHOTO</p></td>
-<td><p>3</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_LIVE_BURST</p></td>
-<td><p>4</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_BURST</p></td>
-<td><p>5</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_NIGHT</p></td>
-<td><p>6</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_TIME_WARP</p></td>
-<td><p>7</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_TIME_LAPSE</p></td>
-<td><p>8</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_NIGHT_LAPSE</p></td>
-<td><p>9</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_VIDEO</p></td>
-<td><p>10</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_SLOMO</p></td>
-<td><p>11</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_PHOTO_2</p></td>
-<td><p>13</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_PANORAMA</p></td>
-<td><p>14</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_TIME_WARP_2</p></td>
-<td><p>16</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_CUSTOM</p></td>
-<td><p>18</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_AIR</p></td>
-<td><p>19</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_BIKE</p></td>
-<td><p>20</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_EPIC</p></td>
-<td><p>21</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_INDOOR</p></td>
-<td><p>22</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_MOTOR</p></td>
-<td><p>23</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_MOUNTED</p></td>
-<td><p>24</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_OUTDOOR</p></td>
-<td><p>25</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_POV</p></td>
-<td><p>26</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_SELFIE</p></td>
-<td><p>27</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_SKATE</p></td>
-<td><p>28</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_SNOW</p></td>
-<td><p>29</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_TRAIL</p></td>
-<td><p>30</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_TRAVEL</p></td>
-<td><p>31</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_WATER</p></td>
-<td><p>32</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_LOOPING</p></td>
-<td><p>33</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_STARS</p></td>
-<td><p>34</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_ACTION</p></td>
-<td><p>35</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_FOLLOW_CAM</p></td>
-<td><p>36</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_SURF</p></td>
-<td><p>37</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_CITY</p></td>
-<td><p>38</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_SHAKY</p></td>
-<td><p>39</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_CHESTY</p></td>
-<td><p>40</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_HELMET</p></td>
-<td><p>41</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_BITE</p></td>
-<td><p>42</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_BASIC</p></td>
-<td><p>58</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_ULTRA_SLO_MO</p></td>
-<td><p>59</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_STANDARD_ENDURANCE</p></td>
-<td><p>60</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_ACTIVITY_ENDURANCE</p></td>
-<td><p>61</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_CINEMATIC_ENDURANCE</p></td>
-<td><p>62</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_SLOMO_ENDURANCE</p></td>
-<td><p>63</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_STATIONARY_1</p></td>
-<td><p>64</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_STATIONARY_2</p></td>
-<td><p>65</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_STATIONARY_3</p></td>
-<td><p>66</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_STATIONARY_4</p></td>
-<td><p>67</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_SIMPLE_VIDEO</p></td>
-<td><p>68</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_SIMPLE_TIME_WARP</p></td>
-<td><p>69</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_SIMPLE_SUPER_PHOTO</p></td>
-<td><p>70</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_SIMPLE_NIGHT_PHOTO</p></td>
-<td><p>71</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE</p></td>
-<td><p>72</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_HIGHEST_QUALITY</p></td>
-<td><p>73</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_EXTENDED_BATTERY</p></td>
-<td><p>74</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_LONGEST_BATTERY</p></td>
-<td><p>75</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_STAR_TRAIL</p></td>
-<td><p>76</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_LIGHT_PAINTING</p></td>
-<td><p>77</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_LIGHT_TRAIL</p></td>
-<td><p>78</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_FULL_FRAME</p></td>
-<td><p>79</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_STANDARD_QUALITY_VIDEO</p></td>
-<td><p>82</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_BASIC_QUALITY_VIDEO</p></td>
-<td><p>83</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>PRESET_TITLE_HIGHEST_QUALITY_VIDEO</p></td>
-<td><p>93</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>PRESET_TITLE_USER_DEFINED_CUSTOM_NAME</p></td>
-<td><p>94</p></td>
-<td></td>
+<tr class="row-even">
+<td>PRESET_TITLE_ACTIVITY</td>
+<td>0</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_STANDARD</td>
+<td>1</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_CINEMATIC</td>
+<td>2</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_PHOTO</td>
+<td>3</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_LIVE_BURST</td>
+<td>4</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_BURST</td>
+<td>5</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_NIGHT</td>
+<td>6</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_TIME_WARP</td>
+<td>7</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_TIME_LAPSE</td>
+<td>8</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_NIGHT_LAPSE</td>
+<td>9</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_VIDEO</td>
+<td>10</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_SLOMO</td>
+<td>11</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_PHOTO_2</td>
+<td>13</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_PANORAMA</td>
+<td>14</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_TIME_WARP_2</td>
+<td>16</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_CUSTOM</td>
+<td>18</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_AIR</td>
+<td>19</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_BIKE</td>
+<td>20</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_EPIC</td>
+<td>21</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_INDOOR</td>
+<td>22</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_MOTOR</td>
+<td>23</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_MOUNTED</td>
+<td>24</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_OUTDOOR</td>
+<td>25</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_POV</td>
+<td>26</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_SELFIE</td>
+<td>27</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_SKATE</td>
+<td>28</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_SNOW</td>
+<td>29</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_TRAIL</td>
+<td>30</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_TRAVEL</td>
+<td>31</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_WATER</td>
+<td>32</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_LOOPING</td>
+<td>33</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_STARS</td>
+<td>34</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_ACTION</td>
+<td>35</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_FOLLOW_CAM</td>
+<td>36</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_SURF</td>
+<td>37</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_CITY</td>
+<td>38</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_SHAKY</td>
+<td>39</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_CHESTY</td>
+<td>40</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_HELMET</td>
+<td>41</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_BITE</td>
+<td>42</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_BASIC</td>
+<td>58</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_ULTRA_SLO_MO</td>
+<td>59</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_STANDARD_ENDURANCE</td>
+<td>60</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_ACTIVITY_ENDURANCE</td>
+<td>61</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_CINEMATIC_ENDURANCE</td>
+<td>62</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_SLOMO_ENDURANCE</td>
+<td>63</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_STATIONARY_1</td>
+<td>64</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_STATIONARY_2</td>
+<td>65</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_STATIONARY_3</td>
+<td>66</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_STATIONARY_4</td>
+<td>67</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_SIMPLE_VIDEO</td>
+<td>68</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_SIMPLE_TIME_WARP</td>
+<td>69</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_SIMPLE_SUPER_PHOTO</td>
+<td>70</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_SIMPLE_NIGHT_PHOTO</td>
+<td>71</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE</td>
+<td>72</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_HIGHEST_QUALITY</td>
+<td>73</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_EXTENDED_BATTERY</td>
+<td>74</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_LONGEST_BATTERY</td>
+<td>75</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_STAR_TRAIL</td>
+<td>76</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_LIGHT_PAINTING</td>
+<td>77</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_LIGHT_TRAIL</td>
+<td>78</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_FULL_FRAME</td>
+<td>79</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_STANDARD_QUALITY_VIDEO</td>
+<td>82</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_BASIC_QUALITY_VIDEO</td>
+<td>83</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_HIGHEST_QUALITY_VIDEO</td>
+<td>93</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_USER_DEFINED_CUSTOM_NAME</td>
+<td>94</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumprovisioning">
-<span id="proto-enumprovisioning"></span><h3>EnumProvisioning<a class="headerlink" href="#enumprovisioning" title="Link to this heading"></a></h3>
+<span id="proto-enumprovisioning"></span><h3>EnumProvisioning<a class="headerlink" href="#enumprovisioning" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>PROVISIONING_UNKNOWN</p></td>
-<td><p>0</p></td>
-<td></td>
+<tr class="row-even">
+<td>PROVISIONING_UNKNOWN</td>
+<td>0</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PROVISIONING_NEVER_STARTED</p></td>
-<td><p>1</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PROVISIONING_NEVER_STARTED</td>
+<td>1</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PROVISIONING_STARTED</p></td>
-<td><p>2</p></td>
-<td></td>
+<tr class="row-even">
+<td>PROVISIONING_STARTED</td>
+<td>2</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PROVISIONING_ABORTED_BY_SYSTEM</p></td>
-<td><p>3</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PROVISIONING_ABORTED_BY_SYSTEM</td>
+<td>3</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PROVISIONING_CANCELLED_BY_USER</p></td>
-<td><p>4</p></td>
-<td></td>
+<tr class="row-even">
+<td>PROVISIONING_CANCELLED_BY_USER</td>
+<td>4</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PROVISIONING_SUCCESS_NEW_AP</p></td>
-<td><p>5</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PROVISIONING_SUCCESS_NEW_AP</td>
+<td>5</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PROVISIONING_SUCCESS_OLD_AP</p></td>
-<td><p>6</p></td>
-<td></td>
+<tr class="row-even">
+<td>PROVISIONING_SUCCESS_OLD_AP</td>
+<td>6</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PROVISIONING_ERROR_FAILED_TO_ASSOCIATE</p></td>
-<td><p>7</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PROVISIONING_ERROR_FAILED_TO_ASSOCIATE</td>
+<td>7</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PROVISIONING_ERROR_PASSWORD_AUTH</p></td>
-<td><p>8</p></td>
-<td></td>
+<tr class="row-even">
+<td>PROVISIONING_ERROR_PASSWORD_AUTH</td>
+<td>8</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PROVISIONING_ERROR_EULA_BLOCKING</p></td>
-<td><p>9</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PROVISIONING_ERROR_EULA_BLOCKING</td>
+<td>9</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>PROVISIONING_ERROR_NO_INTERNET</p></td>
-<td><p>10</p></td>
-<td></td>
+<tr class="row-even">
+<td>PROVISIONING_ERROR_NO_INTERNET</td>
+<td>10</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>PROVISIONING_ERROR_UNSUPPORTED_TYPE</p></td>
-<td><p>11</p></td>
-<td></td>
+<tr class="row-odd">
+<td>PROVISIONING_ERROR_UNSUPPORTED_TYPE</td>
+<td>11</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumregisterlivestreamstatus">
-<span id="proto-enumregisterlivestreamstatus"></span><h3>EnumRegisterLiveStreamStatus<a class="headerlink" href="#enumregisterlivestreamstatus" title="Link to this heading"></a></h3>
+<span id="proto-enumregisterlivestreamstatus"></span><h3>EnumRegisterLiveStreamStatus<a class="headerlink" href="#enumregisterlivestreamstatus" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>REGISTER_LIVE_STREAM_STATUS_STATUS</p></td>
-<td><p>1</p></td>
-<td></td>
+<tr class="row-even">
+<td>REGISTER_LIVE_STREAM_STATUS_STATUS</td>
+<td>1</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>REGISTER_LIVE_STREAM_STATUS_ERROR</p></td>
-<td><p>2</p></td>
-<td></td>
+<tr class="row-odd">
+<td>REGISTER_LIVE_STREAM_STATUS_ERROR</td>
+<td>2</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>REGISTER_LIVE_STREAM_STATUS_MODE</p></td>
-<td><p>3</p></td>
-<td></td>
+<tr class="row-even">
+<td>REGISTER_LIVE_STREAM_STATUS_MODE</td>
+<td>3</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>REGISTER_LIVE_STREAM_STATUS_BITRATE</p></td>
-<td><p>4</p></td>
-<td></td>
+<tr class="row-odd">
+<td>REGISTER_LIVE_STREAM_STATUS_BITRATE</td>
+<td>4</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumregisterpresetstatus">
-<span id="proto-enumregisterpresetstatus"></span><h3>EnumRegisterPresetStatus<a class="headerlink" href="#enumregisterpresetstatus" title="Link to this heading"></a></h3>
+<span id="proto-enumregisterpresetstatus"></span><h3>EnumRegisterPresetStatus<a class="headerlink" href="#enumregisterpresetstatus" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>REGISTER_PRESET_STATUS_PRESET</p></td>
-<td><p>1</p></td>
-<td><p>Send notification when properties of a preset change</p></td>
+<tr class="row-even">
+<td>REGISTER_PRESET_STATUS_PRESET</td>
+<td>1</td>
+<td>Send notification when properties of a preset change</td>
 </tr>
-<tr class="row-odd"><td><p>REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY</p></td>
-<td><p>2</p></td>
-<td><p>Send notification when properties of a preset group change</p></td>
+<tr class="row-odd">
+<td>REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY</td>
+<td>2</td>
+<td>Send notification when properties of a preset group change</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumresultgeneric">
-<span id="proto-enumresultgeneric"></span><h3>EnumResultGeneric<a class="headerlink" href="#enumresultgeneric" title="Link to this heading"></a></h3>
+<span id="proto-enumresultgeneric"></span><h3>EnumResultGeneric<a class="headerlink" href="#enumresultgeneric" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>RESULT_UNKNOWN</p></td>
-<td><p>0</p></td>
-<td></td>
+<tr class="row-even">
+<td>RESULT_UNKNOWN</td>
+<td>0</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>RESULT_SUCCESS</p></td>
-<td><p>1</p></td>
-<td></td>
+<tr class="row-odd">
+<td>RESULT_SUCCESS</td>
+<td>1</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>RESULT_ILL_FORMED</p></td>
-<td><p>2</p></td>
-<td></td>
+<tr class="row-even">
+<td>RESULT_ILL_FORMED</td>
+<td>2</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>RESULT_NOT_SUPPORTED</p></td>
-<td><p>3</p></td>
-<td></td>
+<tr class="row-odd">
+<td>RESULT_NOT_SUPPORTED</td>
+<td>3</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>RESULT_ARGUMENT_OUT_OF_BOUNDS</p></td>
-<td><p>4</p></td>
-<td></td>
+<tr class="row-even">
+<td>RESULT_ARGUMENT_OUT_OF_BOUNDS</td>
+<td>4</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>RESULT_ARGUMENT_INVALID</p></td>
-<td><p>5</p></td>
-<td></td>
+<tr class="row-odd">
+<td>RESULT_ARGUMENT_INVALID</td>
+<td>5</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>RESULT_RESOURCE_NOT_AVAILABLE</p></td>
-<td><p>6</p></td>
-<td></td>
+<tr class="row-even">
+<td>RESULT_RESOURCE_NOT_AVAILABLE</td>
+<td>6</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumscanentryflags">
-<span id="proto-enumscanentryflags"></span><h3>EnumScanEntryFlags<a class="headerlink" href="#enumscanentryflags" title="Link to this heading"></a></h3>
+<span id="proto-enumscanentryflags"></span><h3>EnumScanEntryFlags<a class="headerlink" href="#enumscanentryflags" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>SCAN_FLAG_OPEN</p></td>
-<td><p>0</p></td>
-<td><p>This network does not require authentication</p></td>
+<tr class="row-even">
+<td>SCAN_FLAG_OPEN</td>
+<td>0</td>
+<td>This network does not require authentication</td>
 </tr>
-<tr class="row-odd"><td><p>SCAN_FLAG_AUTHENTICATED</p></td>
-<td><p>1</p></td>
-<td><p>This network requires authentication</p></td>
+<tr class="row-odd">
+<td>SCAN_FLAG_AUTHENTICATED</td>
+<td>1</td>
+<td>This network requires authentication</td>
 </tr>
-<tr class="row-even"><td><p>SCAN_FLAG_CONFIGURED</p></td>
-<td><p>2</p></td>
-<td><p>This network has been previously provisioned</p></td>
+<tr class="row-even">
+<td>SCAN_FLAG_CONFIGURED</td>
+<td>2</td>
+<td>This network has been previously provisioned</td>
 </tr>
-<tr class="row-odd"><td><p>SCAN_FLAG_BEST_SSID</p></td>
-<td><p>4</p></td>
-<td></td>
+<tr class="row-odd">
+<td>SCAN_FLAG_BEST_SSID</td>
+<td>4</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>SCAN_FLAG_ASSOCIATED</p></td>
-<td><p>8</p></td>
-<td><p>Camera is connected to this AP</p></td>
+<tr class="row-even">
+<td>SCAN_FLAG_ASSOCIATED</td>
+<td>8</td>
+<td>Camera is connected to this AP</td>
 </tr>
-<tr class="row-odd"><td><p>SCAN_FLAG_UNSUPPORTED_TYPE</p></td>
-<td><p>16</p></td>
-<td></td>
+<tr class="row-odd">
+<td>SCAN_FLAG_UNSUPPORTED_TYPE</td>
+<td>16</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumscanning">
-<span id="proto-enumscanning"></span><h3>EnumScanning<a class="headerlink" href="#enumscanning" title="Link to this heading"></a></h3>
+<span id="proto-enumscanning"></span><h3>EnumScanning<a class="headerlink" href="#enumscanning" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>SCANNING_UNKNOWN</p></td>
-<td><p>0</p></td>
-<td></td>
+<tr class="row-even">
+<td>SCANNING_UNKNOWN</td>
+<td>0</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>SCANNING_NEVER_STARTED</p></td>
-<td><p>1</p></td>
-<td></td>
+<tr class="row-odd">
+<td>SCANNING_NEVER_STARTED</td>
+<td>1</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>SCANNING_STARTED</p></td>
-<td><p>2</p></td>
-<td></td>
+<tr class="row-even">
+<td>SCANNING_STARTED</td>
+<td>2</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>SCANNING_ABORTED_BY_SYSTEM</p></td>
-<td><p>3</p></td>
-<td></td>
+<tr class="row-odd">
+<td>SCANNING_ABORTED_BY_SYSTEM</td>
+<td>3</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>SCANNING_CANCELLED_BY_USER</p></td>
-<td><p>4</p></td>
-<td></td>
+<tr class="row-even">
+<td>SCANNING_CANCELLED_BY_USER</td>
+<td>4</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>SCANNING_SUCCESS</p></td>
-<td><p>5</p></td>
-<td></td>
+<tr class="row-odd">
+<td>SCANNING_SUCCESS</td>
+<td>5</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="enumwindowsize">
-<span id="proto-enumwindowsize"></span><h3>EnumWindowSize<a class="headerlink" href="#enumwindowsize" title="Link to this heading"></a></h3>
+<span id="proto-enumwindowsize"></span><h3>EnumWindowSize<a class="headerlink" href="#enumwindowsize" title="Link to this heading"></a>
+</h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-<col style="width: 66.7%" />
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>WINDOW_SIZE_480</p></td>
-<td><p>4</p></td>
-<td></td>
+<tr class="row-even">
+<td>WINDOW_SIZE_480</td>
+<td>4</td>
+<td>
+</td>
 </tr>
-<tr class="row-odd"><td><p>WINDOW_SIZE_720</p></td>
-<td><p>7</p></td>
-<td></td>
+<tr class="row-odd">
+<td>WINDOW_SIZE_720</td>
+<td>7</td>
+<td>
+</td>
 </tr>
-<tr class="row-even"><td><p>WINDOW_SIZE_1080</p></td>
-<td><p>12</p></td>
-<td></td>
+<tr class="row-even">
+<td>WINDOW_SIZE_1080</td>
+<td>12</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 </section>
 <section id="media">
-<span id="proto-media"></span><h2>Media<a class="headerlink" href="#media" title="Link to this heading"></a></h2>
+<span id="proto-media"></span><h2>Media<a class="headerlink" href="#media" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">Source Protobuf File</a></p>
@@ -1770,34 +2437,38 @@
 <p>A common model to represent a media file</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>folder</p></td>
-<td><p>string</p></td>
-<td><p>1</p></td>
-<td><p>Directory in which the media is contained</p></td>
+<tr class="row-even">
+<td>folder</td>
+<td>string</td>
+<td>1</td>
+<td>Directory in which the media is contained</td>
 </tr>
-<tr class="row-odd"><td><p>file</p></td>
-<td><p>string</p></td>
-<td><p>2</p></td>
-<td><p>Filename of media</p></td>
+<tr class="row-odd">
+<td>file</td>
+<td>string</td>
+<td>2</td>
+<td>Filename of media</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="notifprovisioningstate">
-<span id="proto-notifprovisioningstate"></span><h2>NotifProvisioningState<a class="headerlink" href="#notifprovisioningstate" title="Link to this heading"></a></h2>
+<span id="proto-notifprovisioningstate"></span><h2>NotifProvisioningState<a class="headerlink" href="#notifprovisioningstate" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
@@ -1806,29 +2477,32 @@
 <p>Sent during provisioning triggered via <a class="reference internal" href="#proto-requestconnect"><span class="std std-ref">RequestConnect</span></a> or <a class="reference internal" href="#proto-requestconnectnew"><span class="std std-ref">RequestConnectNew</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>provisioning_state</p></td>
-<td><p><a class="reference internal" href="#proto-enumprovisioning"><span class="std std-ref">EnumProvisioning</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Provisioning / connection state</p></td>
+<tr class="row-even">
+<td>provisioning_state</td>
+<td><a class="reference internal" href="#proto-enumprovisioning"><span class="std std-ref">EnumProvisioning</span></a></td>
+<td>1</td>
+<td>Provisioning / connection state</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="notifstartscanning">
-<span id="proto-notifstartscanning"></span><h2>NotifStartScanning<a class="headerlink" href="#notifstartscanning" title="Link to this heading"></a></h2>
+<span id="proto-notifstartscanning"></span><h2>NotifStartScanning<a class="headerlink" href="#notifstartscanning" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
@@ -1837,44 +2511,50 @@
 <p>Triggered via <a class="reference internal" href="#proto-requeststartscan"><span class="std std-ref">RequestStartScan</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>scanning_state</p></td>
-<td><p><a class="reference internal" href="#proto-enumscanning"><span class="std std-ref">EnumScanning</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Scanning state</p></td>
+<tr class="row-even">
+<td>scanning_state</td>
+<td><a class="reference internal" href="#proto-enumscanning"><span class="std std-ref">EnumScanning</span></a></td>
+<td>1</td>
+<td>Scanning state</td>
 </tr>
-<tr class="row-odd"><td><p>scan_id</p></td>
-<td><p>int32</p></td>
-<td><p>2</p></td>
-<td><p>ID associated with scan results (included if scan was successful)</p></td>
+<tr class="row-odd">
+<td>scan_id</td>
+<td>int32</td>
+<td>2</td>
+<td>ID associated with scan results (included if scan was successful)</td>
 </tr>
-<tr class="row-even"><td><p>total_entries</p></td>
-<td><p>int32</p></td>
-<td><p>3</p></td>
-<td><p>Number of APs found during scan (included if scan was successful)</p></td>
+<tr class="row-even">
+<td>total_entries</td>
+<td>int32</td>
+<td>3</td>
+<td>Number of APs found during scan (included if scan was successful)</td>
 </tr>
-<tr class="row-odd"><td><p>total_configured_ssid</p></td>
-<td><p>int32</p></td>
-<td><p>4</p></td>
-<td><p>Total count of camera’s provisioned SSIDs</p></td>
+<tr class="row-odd">
+<td>total_configured_ssid</td>
+<td>int32</td>
+<td>4</td>
+<td>Total count of camera’s provisioned SSIDs</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="notifycohnstatus">
-<span id="proto-notifycohnstatus"></span><h2>NotifyCOHNStatus<a class="headerlink" href="#notifycohnstatus" title="Link to this heading"></a></h2>
+<span id="proto-notifycohnstatus"></span><h2>NotifyCOHNStatus<a class="headerlink" href="#notifycohnstatus" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
@@ -1882,64 +2562,74 @@
 <p>Current COHN status triggered by a <a class="reference internal" href="#proto-requestgetcohnstatus"><span class="std std-ref">RequestGetCOHNStatus</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>status</p></td>
-<td><p><a class="reference internal" href="#proto-enumcohnstatus"><span class="std std-ref">EnumCOHNStatus</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Current COHN status</p></td>
+<tr class="row-even">
+<td>status</td>
+<td><a class="reference internal" href="#proto-enumcohnstatus"><span class="std std-ref">EnumCOHNStatus</span></a></td>
+<td>1</td>
+<td>Current COHN status</td>
 </tr>
-<tr class="row-odd"><td><p>state</p></td>
-<td><p><a class="reference internal" href="#proto-enumcohnnetworkstate"><span class="std std-ref">EnumCOHNNetworkState</span></a></p></td>
-<td><p>2</p></td>
-<td><p>Current COHN network state</p></td>
+<tr class="row-odd">
+<td>state</td>
+<td><a class="reference internal" href="#proto-enumcohnnetworkstate"><span class="std std-ref">EnumCOHNNetworkState</span></a></td>
+<td>2</td>
+<td>Current COHN network state</td>
 </tr>
-<tr class="row-even"><td><p>username</p></td>
-<td><p>string</p></td>
-<td><p>3</p></td>
-<td><p>Username used for http basic auth header</p></td>
+<tr class="row-even">
+<td>username</td>
+<td>string</td>
+<td>3</td>
+<td>Username used for http basic auth header</td>
 </tr>
-<tr class="row-odd"><td><p>password</p></td>
-<td><p>string</p></td>
-<td><p>4</p></td>
-<td><p>Password used for http basic auth header</p></td>
+<tr class="row-odd">
+<td>password</td>
+<td>string</td>
+<td>4</td>
+<td>Password used for http basic auth header</td>
 </tr>
-<tr class="row-even"><td><p>ipaddress</p></td>
-<td><p>string</p></td>
-<td><p>5</p></td>
-<td><p>Camera’s IP address on the local network</p></td>
+<tr class="row-even">
+<td>ipaddress</td>
+<td>string</td>
+<td>5</td>
+<td>Camera’s IP address on the local network</td>
 </tr>
-<tr class="row-odd"><td><p>enabled</p></td>
-<td><p>bool</p></td>
-<td><p>6</p></td>
-<td><p>Is COHN currently enabled?</p></td>
+<tr class="row-odd">
+<td>enabled</td>
+<td>bool</td>
+<td>6</td>
+<td>Is COHN currently enabled?</td>
 </tr>
-<tr class="row-even"><td><p>ssid</p></td>
-<td><p>string</p></td>
-<td><p>7</p></td>
-<td><p>Currently connected SSID</p></td>
+<tr class="row-even">
+<td>ssid</td>
+<td>string</td>
+<td>7</td>
+<td>Currently connected SSID</td>
 </tr>
-<tr class="row-odd"><td><p>macaddress</p></td>
-<td><p>string</p></td>
-<td><p>8</p></td>
-<td><p>MAC address of the wifi adapter</p></td>
+<tr class="row-odd">
+<td>macaddress</td>
+<td>string</td>
+<td>8</td>
+<td>MAC address of the wifi adapter</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="notifylivestreamstatus">
-<span id="proto-notifylivestreamstatus"></span><h2>NotifyLiveStreamStatus<a class="headerlink" href="#notifylivestreamstatus" title="Link to this heading"></a></h2>
+<span id="proto-notifylivestreamstatus"></span><h2>NotifyLiveStreamStatus<a class="headerlink" href="#notifylivestreamstatus" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
@@ -1947,86 +2637,101 @@
 <p>Live Stream status</p>
 <p>Sent either:</p>
 <blockquote>
-<div><ul class="simple">
+<div>
+<ul class="simple">
 <li><p>As a synchronous response to initial <a class="reference internal" href="#proto-requestgetlivestreamstatus"><span class="std std-ref">RequestGetLiveStreamStatus</span></a></p></li>
 <li><p>As an asynchronous notifications registered for via <a class="reference internal" href="#proto-requestgetlivestreamstatus"><span class="std std-ref">RequestGetLiveStreamStatus</span></a></p></li>
 </ul>
-</div></blockquote>
+</div>
+</blockquote>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>live_stream_status</p></td>
-<td><p><a class="reference internal" href="#proto-enumlivestreamstatus"><span class="std std-ref">EnumLiveStreamStatus</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Live stream status</p></td>
+<tr class="row-even">
+<td>live_stream_status</td>
+<td><a class="reference internal" href="#proto-enumlivestreamstatus"><span class="std std-ref">EnumLiveStreamStatus</span></a></td>
+<td>1</td>
+<td>Live stream status</td>
 </tr>
-<tr class="row-odd"><td><p>live_stream_error</p></td>
-<td><p><a class="reference internal" href="#proto-enumlivestreamerror"><span class="std std-ref">EnumLiveStreamError</span></a></p></td>
-<td><p>2</p></td>
-<td><p>Live stream error</p></td>
+<tr class="row-odd">
+<td>live_stream_error</td>
+<td><a class="reference internal" href="#proto-enumlivestreamerror"><span class="std std-ref">EnumLiveStreamError</span></a></td>
+<td>2</td>
+<td>Live stream error</td>
 </tr>
-<tr class="row-even"><td><p>live_stream_encode</p></td>
-<td><p>bool</p></td>
-<td><p>3</p></td>
-<td><p>Is live stream encoding?</p></td>
+<tr class="row-even">
+<td>live_stream_encode</td>
+<td>bool</td>
+<td>3</td>
+<td>Is live stream encoding?</td>
 </tr>
-<tr class="row-odd"><td><p>live_stream_bitrate</p></td>
-<td><p>int32</p></td>
-<td><p>4</p></td>
-<td><p>Live stream bitrate (Kbps)</p></td>
+<tr class="row-odd">
+<td>live_stream_bitrate</td>
+<td>int32</td>
+<td>4</td>
+<td>Live stream bitrate (Kbps)</td>
 </tr>
-<tr class="row-even"><td><p>live_stream_window_size_supported_array</p></td>
-<td><p><a class="reference internal" href="#proto-enumwindowsize"><span class="std std-ref">EnumWindowSize</span></a></p></td>
-<td><p>5</p></td>
-<td><p>Set of currently supported resolutions</p></td>
+<tr class="row-even">
+<td>live_stream_window_size_supported_array</td>
+<td><a class="reference internal" href="#proto-enumwindowsize"><span class="std std-ref">EnumWindowSize</span></a></td>
+<td>5</td>
+<td>Set of currently supported resolutions</td>
 </tr>
-<tr class="row-odd"><td><p>live_stream_encode_supported</p></td>
-<td><p>bool</p></td>
-<td><p>6</p></td>
-<td><p>Does the camera support encoding while live streaming?</p></td>
+<tr class="row-odd">
+<td>live_stream_encode_supported</td>
+<td>bool</td>
+<td>6</td>
+<td>Does the camera support encoding while live streaming?</td>
 </tr>
-<tr class="row-even"><td><p>live_stream_max_lens_unsupported</p></td>
-<td><p>bool</p></td>
-<td><p>7</p></td>
-<td><p>Is the Max Lens feature NOT supported?</p></td>
+<tr class="row-even">
+<td>live_stream_max_lens_unsupported</td>
+<td>bool</td>
+<td>7</td>
+<td>Is the Max Lens feature NOT supported?</td>
 </tr>
-<tr class="row-odd"><td><p>live_stream_minimum_stream_bitrate</p></td>
-<td><p>int32</p></td>
-<td><p>8</p></td>
-<td><p>Camera-defined minimum bitrate (static) (Kbps)</p></td>
+<tr class="row-odd">
+<td>live_stream_minimum_stream_bitrate</td>
+<td>int32</td>
+<td>8</td>
+<td>Camera-defined minimum bitrate (static) (Kbps)</td>
 </tr>
-<tr class="row-even"><td><p>live_stream_maximum_stream_bitrate</p></td>
-<td><p>int32</p></td>
-<td><p>9</p></td>
-<td><p>Camera-defined maximum bitrate (static) (Kbps)</p></td>
+<tr class="row-even">
+<td>live_stream_maximum_stream_bitrate</td>
+<td>int32</td>
+<td>9</td>
+<td>Camera-defined maximum bitrate (static) (Kbps)</td>
 </tr>
-<tr class="row-odd"><td><p>live_stream_lens_supported</p></td>
-<td><p>bool</p></td>
-<td><p>10</p></td>
-<td><p>Does camera support setting lens for live streaming?</p></td>
+<tr class="row-odd">
+<td>live_stream_lens_supported</td>
+<td>bool</td>
+<td>10</td>
+<td>Does camera support setting lens for live streaming?</td>
 </tr>
-<tr class="row-even"><td><p>live_stream_lens_supported_array</p></td>
-<td><p><a class="reference internal" href="#proto-enumlens"><span class="std std-ref">EnumLens</span></a></p></td>
-<td><p>11</p></td>
-<td><p>Set of currently supported FOV options</p></td>
+<tr class="row-even">
+<td>live_stream_lens_supported_array</td>
+<td><a class="reference internal" href="#proto-enumlens"><span class="std std-ref">EnumLens</span></a></td>
+<td>11</td>
+<td>Set of currently supported FOV options</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="notifypresetstatus">
-<span id="proto-notifypresetstatus"></span><h2>NotifyPresetStatus<a class="headerlink" href="#notifypresetstatus" title="Link to this heading"></a></h2>
+<span id="proto-notifypresetstatus"></span><h2>NotifyPresetStatus<a class="headerlink" href="#notifypresetstatus" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
@@ -2039,29 +2744,32 @@
 </ul>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>preset_group_array</p></td>
-<td><p><a class="reference internal" href="#proto-presetgroup"><span class="std std-ref">PresetGroup</span></a></p></td>
-<td><p>1</p></td>
-<td><p>List of currently available Preset Groups</p></td>
+<tr class="row-even">
+<td>preset_group_array</td>
+<td><a class="reference internal" href="#proto-presetgroup"><span class="std std-ref">PresetGroup</span></a></td>
+<td>1</td>
+<td>List of currently available Preset Groups</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="preset">
-<span id="proto-preset"></span><h2>Preset<a class="headerlink" href="#preset" title="Link to this heading"></a></h2>
+<span id="proto-preset"></span><h2>Preset<a class="headerlink" href="#preset" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
@@ -2069,74 +2777,87 @@
 <p>An individual preset.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>id</p></td>
-<td><p>int32</p></td>
-<td><p>1</p></td>
-<td><p>Preset ID</p></td>
+<tr class="row-even">
+<td>id</td>
+<td>int32</td>
+<td>1</td>
+<td>Preset ID</td>
 </tr>
-<tr class="row-odd"><td><p>mode</p></td>
-<td><p><a class="reference internal" href="#proto-enumflatmode"><span class="std std-ref">EnumFlatMode</span></a></p></td>
-<td><p>2</p></td>
-<td><p>Preset flatmode ID</p></td>
+<tr class="row-odd">
+<td>mode</td>
+<td><a class="reference internal" href="#proto-enumflatmode"><span class="std std-ref">EnumFlatMode</span></a></td>
+<td>2</td>
+<td>Preset flatmode ID</td>
 </tr>
-<tr class="row-even"><td><p>title_id</p></td>
-<td><p><a class="reference internal" href="#proto-enumpresettitle"><span class="std std-ref">EnumPresetTitle</span></a></p></td>
-<td><p>3</p></td>
-<td><p>Preset Title ID</p></td>
+<tr class="row-even">
+<td>title_id</td>
+<td><a class="reference internal" href="#proto-enumpresettitle"><span class="std std-ref">EnumPresetTitle</span></a></td>
+<td>3</td>
+<td>Preset Title ID</td>
 </tr>
-<tr class="row-odd"><td><p>title_number</p></td>
-<td><p>int32</p></td>
-<td><p>4</p></td>
-<td><p>Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)</p></td>
+<tr class="row-odd">
+<td>title_number</td>
+<td>int32</td>
+<td>4</td>
+<td>Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)</td>
 </tr>
-<tr class="row-even"><td><p>user_defined</p></td>
-<td><p>bool</p></td>
-<td><p>5</p></td>
-<td><p>Is the Preset custom/user-defined?</p></td>
+<tr class="row-even">
+<td>user_defined</td>
+<td>bool</td>
+<td>5</td>
+<td>Is the Preset custom/user-defined?</td>
 </tr>
-<tr class="row-odd"><td><p>icon</p></td>
-<td><p><a class="reference internal" href="#proto-enumpreseticon"><span class="std std-ref">EnumPresetIcon</span></a></p></td>
-<td><p>6</p></td>
-<td><p>Preset Icon ID</p></td>
+<tr class="row-odd">
+<td>icon</td>
+<td><a class="reference internal" href="#proto-enumpreseticon"><span class="std std-ref">EnumPresetIcon</span></a></td>
+<td>6</td>
+<td>Preset Icon ID</td>
 </tr>
-<tr class="row-even"><td><p>setting_array</p></td>
-<td><p><a class="reference internal" href="#proto-presetsetting"><span class="std std-ref">PresetSetting</span></a></p></td>
-<td><p>7</p></td>
-<td><p>Array of settings associated with this Preset</p></td>
+<tr class="row-even">
+<td>setting_array</td>
+<td><a class="reference internal" href="#proto-presetsetting"><span class="std std-ref">PresetSetting</span></a></td>
+<td>7</td>
+<td>Array of settings associated with this Preset</td>
 </tr>
-<tr class="row-odd"><td><p>is_modified</p></td>
-<td><p>bool</p></td>
-<td><p>8</p></td>
-<td><p>Has Preset been modified from factory defaults? (False for user-defined Presets)</p></td>
+<tr class="row-odd">
+<td>is_modified</td>
+<td>bool</td>
+<td>8</td>
+<td>Has Preset been modified from factory defaults? (False for user-defined Presets)</td>
 </tr>
-<tr class="row-even"><td><p>is_fixed</p></td>
-<td><p>bool</p></td>
-<td><p>9</p></td>
-<td><p>Is this Preset mutable?</p></td>
+<tr class="row-even">
+<td>is_fixed</td>
+<td>bool</td>
+<td>9</td>
+<td>Is this Preset mutable?</td>
 </tr>
-<tr class="row-odd"><td><p>custom_name</p></td>
-<td><p>string</p></td>
-<td><p>10</p></td>
-<td><p>Custom string name given to this preset via <a class="reference internal" href="#proto-requestcustompresetupdate"><span class="std std-ref">RequestCustomPresetUpdate</span></a></p></td>
+<tr class="row-odd">
+<td>custom_name</td>
+<td>string</td>
+<td>10</td>
+<td>Custom string name given to this preset via <a class="reference internal" href="#proto-requestcustompresetupdate"><span class="std std-ref">RequestCustomPresetUpdate</span></a>
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="presetgroup">
-<span id="proto-presetgroup"></span><h2>PresetGroup<a class="headerlink" href="#presetgroup" title="Link to this heading"></a></h2>
+<span id="proto-presetgroup"></span><h2>PresetGroup<a class="headerlink" href="#presetgroup" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
@@ -2144,44 +2865,50 @@
 <p>Preset Group meta information and contained Presets</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>id</p></td>
-<td><p><a class="reference internal" href="#proto-enumpresetgroup"><span class="std std-ref">EnumPresetGroup</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Preset Group ID</p></td>
+<tr class="row-even">
+<td>id</td>
+<td><a class="reference internal" href="#proto-enumpresetgroup"><span class="std std-ref">EnumPresetGroup</span></a></td>
+<td>1</td>
+<td>Preset Group ID</td>
 </tr>
-<tr class="row-odd"><td><p>preset_array</p></td>
-<td><p><a class="reference internal" href="#proto-preset"><span class="std std-ref">Preset</span></a></p></td>
-<td><p>2</p></td>
-<td><p>Array of Presets contained in this Preset Group</p></td>
+<tr class="row-odd">
+<td>preset_array</td>
+<td><a class="reference internal" href="#proto-preset"><span class="std std-ref">Preset</span></a></td>
+<td>2</td>
+<td>Array of Presets contained in this Preset Group</td>
 </tr>
-<tr class="row-even"><td><p>can_add_preset</p></td>
-<td><p>bool</p></td>
-<td><p>3</p></td>
-<td><p>Is there room in the group to add additional Presets?</p></td>
+<tr class="row-even">
+<td>can_add_preset</td>
+<td>bool</td>
+<td>3</td>
+<td>Is there room in the group to add additional Presets?</td>
 </tr>
-<tr class="row-odd"><td><p>icon</p></td>
-<td><p><a class="reference internal" href="#proto-enumpresetgroupicon"><span class="std std-ref">EnumPresetGroupIcon</span></a></p></td>
-<td><p>4</p></td>
-<td><p>The icon to display for this preset group</p></td>
+<tr class="row-odd">
+<td>icon</td>
+<td><a class="reference internal" href="#proto-enumpresetgroupicon"><span class="std std-ref">EnumPresetGroupIcon</span></a></td>
+<td>4</td>
+<td>The icon to display for this preset group</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="presetsetting">
-<span id="proto-presetsetting"></span><h2>PresetSetting<a class="headerlink" href="#presetsetting" title="Link to this heading"></a></h2>
+<span id="proto-presetsetting"></span><h2>PresetSetting<a class="headerlink" href="#presetsetting" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
@@ -2189,39 +2916,44 @@
 <p>Setting representation that comprises a  <a class="reference internal" href="#proto-preset"><span class="std std-ref">Preset</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>id</p></td>
-<td><p>int32</p></td>
-<td><p>1</p></td>
-<td><p>Setting ID</p></td>
+<tr class="row-even">
+<td>id</td>
+<td>int32</td>
+<td>1</td>
+<td>Setting ID</td>
 </tr>
-<tr class="row-odd"><td><p>value</p></td>
-<td><p>int32</p></td>
-<td><p>2</p></td>
-<td><p>Setting value</p></td>
+<tr class="row-odd">
+<td>value</td>
+<td>int32</td>
+<td>2</td>
+<td>Setting value</td>
 </tr>
-<tr class="row-even"><td><p>is_caption</p></td>
-<td><p>bool</p></td>
-<td><p>3</p></td>
-<td><p>Does this setting appear on the Preset “pill” in the camera UI?</p></td>
+<tr class="row-even">
+<td>is_caption</td>
+<td>bool</td>
+<td>3</td>
+<td>Does this setting appear on the Preset “pill” in the camera UI?</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="requestcohncert">
-<span id="proto-requestcohncert"></span><h2>RequestCOHNCert<a class="headerlink" href="#requestcohncert" title="Link to this heading"></a></h2>
+<span id="proto-requestcohncert"></span><h2>RequestCOHNCert<a class="headerlink" href="#requestcohncert" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
@@ -2230,7 +2962,8 @@
 <p>Returns a <a class="reference internal" href="#proto-responsecohncert"><span class="std std-ref">ResponseCOHNCert</span></a></p>
 </section>
 <section id="requestclearcohncert">
-<span id="proto-requestclearcohncert"></span><h2>RequestClearCOHNCert<a class="headerlink" href="#requestclearcohncert" title="Link to this heading"></a></h2>
+<span id="proto-requestclearcohncert"></span><h2>RequestClearCOHNCert<a class="headerlink" href="#requestclearcohncert" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
@@ -2239,7 +2972,8 @@
 <p>Returns a <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a> with the status of the clear</p>
 </section>
 <section id="requestconnect">
-<span id="proto-requestconnect"></span><h2>RequestConnect<a class="headerlink" href="#requestconnect" title="Link to this heading"></a></h2>
+<span id="proto-requestconnect"></span><h2>RequestConnect<a class="headerlink" href="#requestconnect" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
@@ -2250,29 +2984,32 @@
 <p>Notification: <a class="reference internal" href="#proto-notifprovisioningstate"><span class="std std-ref">NotifProvisioningState</span></a> sent periodically as provisioning state changes</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>ssid</p></td>
-<td><p>string</p></td>
-<td><p>1</p></td>
-<td><p>AP SSID</p></td>
+<tr class="row-even">
+<td>ssid</td>
+<td>string</td>
+<td>1</td>
+<td>AP SSID</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="requestconnectnew">
-<span id="proto-requestconnectnew"></span><h2>RequestConnectNew<a class="headerlink" href="#requestconnectnew" title="Link to this heading"></a></h2>
+<span id="proto-requestconnectnew"></span><h2>RequestConnectNew<a class="headerlink" href="#requestconnectnew" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
@@ -2283,59 +3020,68 @@
 <p>Notification: <a class="reference internal" href="#proto-notifprovisioningstate"><span class="std std-ref">NotifProvisioningState</span></a> sent periodically as provisioning state changes</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>ssid</p></td>
-<td><p>string</p></td>
-<td><p>1</p></td>
-<td><p>AP SSID</p></td>
+<tr class="row-even">
+<td>ssid</td>
+<td>string</td>
+<td>1</td>
+<td>AP SSID</td>
 </tr>
-<tr class="row-odd"><td><p>password</p></td>
-<td><p>string</p></td>
-<td><p>2</p></td>
-<td><p>AP password</p></td>
+<tr class="row-odd">
+<td>password</td>
+<td>string</td>
+<td>2</td>
+<td>AP password</td>
 </tr>
-<tr class="row-even"><td><p>static_ip</p></td>
-<td><p>bytes</p></td>
-<td><p>3</p></td>
-<td><p>Static IP address</p></td>
+<tr class="row-even">
+<td>static_ip</td>
+<td>bytes</td>
+<td>3</td>
+<td>Static IP address</td>
 </tr>
-<tr class="row-odd"><td><p>gateway</p></td>
-<td><p>bytes</p></td>
-<td><p>4</p></td>
-<td><p>Gateway IP address</p></td>
+<tr class="row-odd">
+<td>gateway</td>
+<td>bytes</td>
+<td>4</td>
+<td>Gateway IP address</td>
 </tr>
-<tr class="row-even"><td><p>subnet</p></td>
-<td><p>bytes</p></td>
-<td><p>5</p></td>
-<td><p>Subnet mask</p></td>
+<tr class="row-even">
+<td>subnet</td>
+<td>bytes</td>
+<td>5</td>
+<td>Subnet mask</td>
 </tr>
-<tr class="row-odd"><td><p>dns_primary</p></td>
-<td><p>bytes</p></td>
-<td><p>6</p></td>
-<td><p>Primary DNS</p></td>
+<tr class="row-odd">
+<td>dns_primary</td>
+<td>bytes</td>
+<td>6</td>
+<td>Primary DNS</td>
 </tr>
-<tr class="row-even"><td><p>dns_secondary</p></td>
-<td><p>bytes</p></td>
-<td><p>7</p></td>
-<td><p>Secondary DNS</p></td>
+<tr class="row-even">
+<td>dns_secondary</td>
+<td>bytes</td>
+<td>7</td>
+<td>Secondary DNS</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="requestcreatecohncert">
-<span id="proto-requestcreatecohncert"></span><h2>RequestCreateCOHNCert<a class="headerlink" href="#requestcreatecohncert" title="Link to this heading"></a></h2>
+<span id="proto-requestcreatecohncert"></span><h2>RequestCreateCOHNCert<a class="headerlink" href="#requestcreatecohncert" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
@@ -2344,29 +3090,32 @@
 <p>Returns a <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a> with the status of the creation</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>override</p></td>
-<td><p>bool</p></td>
-<td><p>1</p></td>
-<td><p>Override current provisioning and create new cert</p></td>
+<tr class="row-even">
+<td>override</td>
+<td>bool</td>
+<td>1</td>
+<td>Override current provisioning and create new cert</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="requestcustompresetupdate">
-<span id="proto-requestcustompresetupdate"></span><h2>RequestCustomPresetUpdate<a class="headerlink" href="#requestcustompresetupdate" title="Link to this heading"></a></h2>
+<span id="proto-requestcustompresetupdate"></span><h2>RequestCustomPresetUpdate<a class="headerlink" href="#requestcustompresetupdate" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
@@ -2376,76 +3125,79 @@
 Preset is not custom.</p>
 <p>The use cases are:</p>
 <ol class="arabic">
-<li><p>Update the Custom Preset Icon</p>
+<li>
+<p>Update the Custom Preset Icon</p>
 <blockquote>
-<div><ul class="simple">
+<div>
+<ul class="simple">
 <li><p><cite>icon_id</cite> is always optional and can always be passed</p></li>
 </ul>
-</div></blockquote>
+</div>
+</blockquote>
 </li>
 </ol>
 <p>and / or</p>
 <ol class="arabic" start="2">
-<li><p>Update the Custom Preset Title to a…</p>
+<li>
+<p>Update the Custom Preset Title to a…</p>
 <blockquote>
-<div><ul class="simple">
+<div>
+<ul class="simple">
 <li><p><strong>Factory Preset Title</strong>: Set <cite>title_id</cite> to a non-PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) value</p></li>
 <li><p><strong>Custom Preset Name</strong>: Set <cite>title_id</cite> to PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) and specify a <cite>custom_name</cite></p></li>
 </ul>
-</div></blockquote>
+</div>
+</blockquote>
 </li>
 </ol>
 <p>Returns a <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a> with the status of the preset update request.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>title_id</p></td>
-<td><p><a class="reference internal" href="#proto-enumpresettitle"><span class="std std-ref">EnumPresetTitle</span></a></p></td>
-<td><p>1</p></td>
-<td><div class="line-block">
+<tr class="row-even">
+<td>title_id</td>
+<td><a class="reference internal" href="#proto-enumpresettitle"><span class="std std-ref">EnumPresetTitle</span></a></td>
+<td>1</td>
+<td>
+<div class="line-block">
 <div class="line">Preset Title ID</div>
-<div class="line"><br /></div>
+<div class="line"><br></div>
 <div class="line">The range of acceptable custom title ID’s can be found in the initial <a class="reference internal" href="#proto-notifypresetstatus"><span class="std std-ref">NotifyPresetStatus</span></a> response</div>
-<div class="line">to <a class="reference internal" href="#proto-requestgetpresetstatus"><span class="std std-ref">RequestGetPresetStatus</span></a></div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><p>custom_name</p></td>
-<td><p>string</p></td>
-<td><p>2</p></td>
-<td><div class="line-block">
-<div class="line">UTF-8 encoded custom preset name</div>
-<div class="line"><br /></div>
-<div class="line">The name must obey the following:</div>
-<div class="line"><br /></div>
-<div class="line-block">
-<div class="line">- Custom titles must be between 1 and 16 characters (inclusive)</div>
-<div class="line">- No special characters outside of the following languages: English, French, Italian, German,</div>
-<div class="line-block">
-<div class="line">Spanish, Portuguese, Swedish, Russian</div>
-</div>
+<div class="line">to <a class="reference internal" href="#proto-requestgetpresetstatus"><span class="std std-ref">RequestGetPresetStatus</span></a>
 </div>
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><p>icon_id</p></td>
-<td><p><a class="reference internal" href="#proto-enumpreseticon"><span class="std std-ref">EnumPresetIcon</span></a></p></td>
-<td><p>3</p></td>
-<td><div class="line-block">
+<tr class="row-odd">
+<td>custom_name</td>
+<td>string</td>
+<td>2</td>
+<td style="text-align: right">UTF-8 encoded custom preset nameThe name must obey the following
+  <li>Custom titles must be between 1 and 16 characters (inclusive)</li>
+  <li>No special characters outside of the following languages: English, French, Italian, German,Spanish, Portuguese, Swedish, Russian</li>
+</td>
+</tr>
+<tr class="row-even">
+<td>icon_id</td>
+<td><a class="reference internal" href="#proto-enumpreseticon"><span class="std std-ref">EnumPresetIcon</span></a></td>
+<td>3</td>
+<td>
+<div class="line-block">
 <div class="line">Preset Icon ID</div>
-<div class="line"><br /></div>
+<div class="line"><br></div>
 <div class="line">The range of acceptable custom icon ID’s can be found in the initial <a class="reference internal" href="#proto-notifypresetstatus"><span class="std std-ref">NotifyPresetStatus</span></a> response to</div>
 <div class="line"><a class="reference internal" href="#proto-requestgetpresetstatus"><span class="std std-ref">RequestGetPresetStatus</span></a></div>
 </div>
@@ -2455,7 +3207,8 @@ Preset is not custom.</p>
 </table>
 </section>
 <section id="requestgetapentries">
-<span id="proto-requestgetapentries"></span><h2>RequestGetApEntries<a class="headerlink" href="#requestgetapentries" title="Link to this heading"></a></h2>
+<span id="proto-requestgetapentries"></span><h2>RequestGetApEntries<a class="headerlink" href="#requestgetapentries" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
@@ -2464,39 +3217,44 @@ Preset is not custom.</p>
 <p>Response: <a class="reference internal" href="#proto-responsegetapentries"><span class="std std-ref">ResponseGetApEntries</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>start_index</p></td>
-<td><p>int32</p></td>
-<td><p>1</p></td>
-<td><p>Used for paging. 0 &lt;= start_index &lt; <a class="reference internal" href="#proto-responsegetapentries"><span class="std std-ref">ResponseGetApEntries</span></a> .total_entries</p></td>
+<tr class="row-even">
+<td>start_index</td>
+<td>int32</td>
+<td>1</td>
+<td>Used for paging. 0 &lt;= start_index &lt; <a class="reference internal" href="#proto-responsegetapentries"><span class="std std-ref">ResponseGetApEntries</span></a> .total_entries</td>
 </tr>
-<tr class="row-odd"><td><p>max_entries</p></td>
-<td><p>int32</p></td>
-<td><p>2</p></td>
-<td><p>Used for paging. Value must be &lt; <a class="reference internal" href="#proto-responsegetapentries"><span class="std std-ref">ResponseGetApEntries</span></a> .total_entries</p></td>
+<tr class="row-odd">
+<td>max_entries</td>
+<td>int32</td>
+<td>2</td>
+<td>Used for paging. Value must be &lt; <a class="reference internal" href="#proto-responsegetapentries"><span class="std std-ref">ResponseGetApEntries</span></a> .total_entries</td>
 </tr>
-<tr class="row-even"><td><p>scan_id</p></td>
-<td><p>int32</p></td>
-<td><p>3</p></td>
-<td><p>ID corresponding to a set of scan results (i.e. <a class="reference internal" href="#proto-responsegetapentries"><span class="std std-ref">ResponseGetApEntries</span></a> .scan_id)</p></td>
+<tr class="row-even">
+<td>scan_id</td>
+<td>int32</td>
+<td>3</td>
+<td>ID corresponding to a set of scan results (i.e. <a class="reference internal" href="#proto-responsegetapentries"><span class="std std-ref">ResponseGetApEntries</span></a> .scan_id)</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="requestgetcohnstatus">
-<span id="proto-requestgetcohnstatus"></span><h2>RequestGetCOHNStatus<a class="headerlink" href="#requestgetcohnstatus" title="Link to this heading"></a></h2>
+<span id="proto-requestgetcohnstatus"></span><h2>RequestGetCOHNStatus<a class="headerlink" href="#requestgetcohnstatus" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
@@ -2507,29 +3265,32 @@ Preset is not custom.</p>
 changes.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>register_cohn_status</p></td>
-<td><p>bool</p></td>
-<td><p>1</p></td>
-<td><p>1 to register, 0 to unregister</p></td>
+<tr class="row-even">
+<td>register_cohn_status</td>
+<td>bool</td>
+<td>1</td>
+<td>1 to register, 0 to unregister</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="requestgetlastcapturedmedia">
-<span id="proto-requestgetlastcapturedmedia"></span><h2>RequestGetLastCapturedMedia<a class="headerlink" href="#requestgetlastcapturedmedia" title="Link to this heading"></a></h2>
+<span id="proto-requestgetlastcapturedmedia"></span><h2>RequestGetLastCapturedMedia<a class="headerlink" href="#requestgetlastcapturedmedia" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/media.proto">Source Protobuf File</a></p>
@@ -2538,7 +3299,8 @@ changes.</p>
 <p>Returns a <a class="reference internal" href="#proto-responselastcapturedmedia"><span class="std std-ref">ResponseLastCapturedMedia</span></a></p>
 </section>
 <section id="requestgetlivestreamstatus">
-<span id="proto-requestgetlivestreamstatus"></span><h2>RequestGetLiveStreamStatus<a class="headerlink" href="#requestgetlivestreamstatus" title="Link to this heading"></a></h2>
+<span id="proto-requestgetlivestreamstatus"></span><h2>RequestGetLiveStreamStatus<a class="headerlink" href="#requestgetlivestreamstatus" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
@@ -2548,34 +3310,38 @@ changes.</p>
 <p>Notification: <a class="reference internal" href="#proto-notifylivestreamstatus"><span class="std std-ref">NotifyLiveStreamStatus</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>register_live_stream_status</p></td>
-<td><p><a class="reference internal" href="#proto-enumregisterlivestreamstatus"><span class="std std-ref">EnumRegisterLiveStreamStatus</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Array of live stream statuses to be notified about</p></td>
+<tr class="row-even">
+<td>register_live_stream_status</td>
+<td><a class="reference internal" href="#proto-enumregisterlivestreamstatus"><span class="std std-ref">EnumRegisterLiveStreamStatus</span></a></td>
+<td>1</td>
+<td>Array of live stream statuses to be notified about</td>
 </tr>
-<tr class="row-odd"><td><p>unregister_live_stream_status</p></td>
-<td><p><a class="reference internal" href="#proto-enumregisterlivestreamstatus"><span class="std std-ref">EnumRegisterLiveStreamStatus</span></a></p></td>
-<td><p>2</p></td>
-<td><p>Array of live stream statuses to stop being notified about</p></td>
+<tr class="row-odd">
+<td>unregister_live_stream_status</td>
+<td><a class="reference internal" href="#proto-enumregisterlivestreamstatus"><span class="std std-ref">EnumRegisterLiveStreamStatus</span></a></td>
+<td>2</td>
+<td>Array of live stream statuses to stop being notified about</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="requestgetpresetstatus">
-<span id="proto-requestgetpresetstatus"></span><h2>RequestGetPresetStatus<a class="headerlink" href="#requestgetpresetstatus" title="Link to this heading"></a></h2>
+<span id="proto-requestgetpresetstatus"></span><h2>RequestGetPresetStatus<a class="headerlink" href="#requestgetpresetstatus" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto">Source Protobuf File</a></p>
@@ -2591,34 +3357,38 @@ changes.</p>
 </ul>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>register_preset_status</p></td>
-<td><p><a class="reference internal" href="#proto-enumregisterpresetstatus"><span class="std std-ref">EnumRegisterPresetStatus</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Array of Preset statuses to be notified about</p></td>
+<tr class="row-even">
+<td>register_preset_status</td>
+<td><a class="reference internal" href="#proto-enumregisterpresetstatus"><span class="std std-ref">EnumRegisterPresetStatus</span></a></td>
+<td>1</td>
+<td>Array of Preset statuses to be notified about</td>
 </tr>
-<tr class="row-odd"><td><p>unregister_preset_status</p></td>
-<td><p><a class="reference internal" href="#proto-enumregisterpresetstatus"><span class="std std-ref">EnumRegisterPresetStatus</span></a></p></td>
-<td><p>2</p></td>
-<td><p>Array of Preset statuses to stop being notified about</p></td>
+<tr class="row-odd">
+<td>unregister_preset_status</td>
+<td><a class="reference internal" href="#proto-enumregisterpresetstatus"><span class="std std-ref">EnumRegisterPresetStatus</span></a></td>
+<td>2</td>
+<td>Array of Preset statuses to stop being notified about</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="requestreleasenetwork">
-<span id="proto-requestreleasenetwork"></span><h2>RequestReleaseNetwork<a class="headerlink" href="#requestreleasenetwork" title="Link to this heading"></a></h2>
+<span id="proto-requestreleasenetwork"></span><h2>RequestReleaseNetwork<a class="headerlink" href="#requestreleasenetwork" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
@@ -2628,7 +3398,8 @@ changes.</p>
 <p>Response: <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
 </section>
 <section id="requestsetcohnsetting">
-<span id="proto-requestsetcohnsetting"></span><h2>RequestSetCOHNSetting<a class="headerlink" href="#requestsetcohnsetting" title="Link to this heading"></a></h2>
+<span id="proto-requestsetcohnsetting"></span><h2>RequestSetCOHNSetting<a class="headerlink" href="#requestsetcohnsetting" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
@@ -2637,25 +3408,28 @@ changes.</p>
 <p>Returns a <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>cohn_active</p></td>
-<td><p>bool</p></td>
-<td><p>1</p></td>
-<td><div class="line-block">
+<tr class="row-even">
+<td>cohn_active</td>
+<td>bool</td>
+<td>1</td>
+<td>
+<div class="line-block">
 <div class="line">1 to enable COHN, 0 to disable COHN</div>
-<div class="line"><br /></div>
+<div class="line"><br></div>
 <div class="line">When set to 1, STA Mode connection will be dropped and camera will not automatically re-connect for COHN.</div>
 </div>
 </td>
@@ -2664,7 +3438,8 @@ changes.</p>
 </table>
 </section>
 <section id="requestsetcameracontrolstatus">
-<span id="proto-requestsetcameracontrolstatus"></span><h2>RequestSetCameraControlStatus<a class="headerlink" href="#requestsetcameracontrolstatus" title="Link to this heading"></a></h2>
+<span id="proto-requestsetcameracontrolstatus"></span><h2>RequestSetCameraControlStatus<a class="headerlink" href="#requestsetcameracontrolstatus" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/set_camera_control_status.proto">Source Protobuf File</a></p>
@@ -2679,29 +3454,32 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p>Response: <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>camera_control_status</p></td>
-<td><p><a class="reference internal" href="#proto-enumcameracontrolstatus"><span class="std std-ref">EnumCameraControlStatus</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Declare who is taking control of the camera</p></td>
+<tr class="row-even">
+<td>camera_control_status</td>
+<td><a class="reference internal" href="#proto-enumcameracontrolstatus"><span class="std std-ref">EnumCameraControlStatus</span></a></td>
+<td>1</td>
+<td>Declare who is taking control of the camera</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="requestsetlivestreammode">
-<span id="proto-requestsetlivestreammode"></span><h2>RequestSetLiveStreamMode<a class="headerlink" href="#requestsetlivestreammode" title="Link to this heading"></a></h2>
+<span id="proto-requestsetlivestreammode"></span><h2>RequestSetLiveStreamMode<a class="headerlink" href="#requestsetlivestreammode" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
@@ -2710,65 +3488,76 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p>Response: <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>url</p></td>
-<td><p>string</p></td>
-<td><p>1</p></td>
-<td><p>RTMP(S) URL used for live stream</p></td>
+<tr class="row-even">
+<td>url</td>
+<td>string</td>
+<td>1</td>
+<td>RTMP(S) URL used for live stream</td>
 </tr>
-<tr class="row-odd"><td><p>encode</p></td>
-<td><p>bool</p></td>
-<td><p>2</p></td>
-<td><p>Save media to sdcard while streaming?</p></td>
+<tr class="row-odd">
+<td>encode</td>
+<td>bool</td>
+<td>2</td>
+<td>Save media to sdcard while streaming?</td>
 </tr>
-<tr class="row-even"><td><p>window_size</p></td>
-<td><p><a class="reference internal" href="#proto-enumwindowsize"><span class="std std-ref">EnumWindowSize</span></a></p></td>
-<td><p>3</p></td>
-<td><div class="line-block">
+<tr class="row-even">
+<td>window_size</td>
+<td><a class="reference internal" href="#proto-enumwindowsize"><span class="std std-ref">EnumWindowSize</span></a></td>
+<td>3</td>
+<td>
+<div class="line-block">
 <div class="line">Resolution to use for live stream</div>
-<div class="line"><br /></div>
+<div class="line"><br></div>
 <div class="line">The set of supported resolutions is only available from the <cite>live_stream_window_size_supported_array</cite> in <a class="reference internal" href="#proto-notifylivestreamstatus"><span class="std std-ref">NotifyLiveStreamStatus</span></a>)</div>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><p>cert</p></td>
-<td><p>bytes</p></td>
-<td><p>6</p></td>
-<td><p>Certificate for servers that require it in PEM format</p></td>
+<tr class="row-odd">
+<td>cert</td>
+<td>bytes</td>
+<td>6</td>
+<td>Certificate for servers that require it in PEM format</td>
 </tr>
-<tr class="row-even"><td><p>minimum_bitrate</p></td>
-<td><p>int32</p></td>
-<td><p>7</p></td>
-<td><p>Minimum desired bitrate (may or may not be honored)</p></td>
+<tr class="row-even">
+<td>minimum_bitrate</td>
+<td>int32</td>
+<td>7</td>
+<td>Minimum desired bitrate (may or may not be honored)</td>
 </tr>
-<tr class="row-odd"><td><p>maximum_bitrate</p></td>
-<td><p>int32</p></td>
-<td><p>8</p></td>
-<td><p>Maximum desired bitrate (may or may not be honored)</p></td>
+<tr class="row-odd">
+<td>maximum_bitrate</td>
+<td>int32</td>
+<td>8</td>
+<td>Maximum desired bitrate (may or may not be honored)</td>
 </tr>
-<tr class="row-even"><td><p>starting_bitrate</p></td>
-<td><p>int32</p></td>
-<td><p>9</p></td>
-<td><p>Starting bitrate</p></td>
+<tr class="row-even">
+<td>starting_bitrate</td>
+<td>int32</td>
+<td>9</td>
+<td>Starting bitrate</td>
 </tr>
-<tr class="row-odd"><td><p>lens</p></td>
-<td><p><a class="reference internal" href="#proto-enumlens"><span class="std std-ref">EnumLens</span></a></p></td>
-<td><p>10</p></td>
-<td><div class="line-block">
+<tr class="row-odd">
+<td>lens</td>
+<td><a class="reference internal" href="#proto-enumlens"><span class="std std-ref">EnumLens</span></a></td>
+<td>10</td>
+<td>
+<div class="line-block">
 <div class="line">Lens to use for live stream</div>
-<div class="line"><br /></div>
+<div class="line"><br></div>
 <div class="line">The set of supported lenses is only available from the  <cite>live_stream_lens_supported_array</cite> in <a class="reference internal" href="#proto-notifylivestreamstatus"><span class="std std-ref">NotifyLiveStreamStatus</span></a>)</div>
 </div>
 </td>
@@ -2777,7 +3566,8 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </table>
 </section>
 <section id="requestsetturboactive">
-<span id="proto-requestsetturboactive"></span><h2>RequestSetTurboActive<a class="headerlink" href="#requestsetturboactive" title="Link to this heading"></a></h2>
+<span id="proto-requestsetturboactive"></span><h2>RequestSetTurboActive<a class="headerlink" href="#requestsetturboactive" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/turbo_transfer.proto">Source Protobuf File</a></p>
@@ -2786,29 +3576,32 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p>Response: <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>active</p></td>
-<td><p>bool</p></td>
-<td><p>1</p></td>
-<td><p>Enable or disable Turbo Transfer feature</p></td>
+<tr class="row-even">
+<td>active</td>
+<td>bool</td>
+<td>1</td>
+<td>Enable or disable Turbo Transfer feature</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="requeststartscan">
-<span id="proto-requeststartscan"></span><h2>RequestStartScan<a class="headerlink" href="#requeststartscan" title="Link to this heading"></a></h2>
+<span id="proto-requeststartscan"></span><h2>RequestStartScan<a class="headerlink" href="#requeststartscan" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
@@ -2822,7 +3615,8 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p>Notifications: <a class="reference internal" href="#proto-notifstartscanning"><span class="std std-ref">NotifStartScanning</span></a> are sent periodically as scanning state changes. Use to detect scan complete.</p>
 </section>
 <section id="responsecohncert">
-<span id="proto-responsecohncert"></span><h2>ResponseCOHNCert<a class="headerlink" href="#responsecohncert" title="Link to this heading"></a></h2>
+<span id="proto-responsecohncert"></span><h2>ResponseCOHNCert<a class="headerlink" href="#responsecohncert" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
@@ -2830,34 +3624,38 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p>COHN Certificate response triggered by <a class="reference internal" href="#proto-requestcohncert"><span class="std std-ref">RequestCOHNCert</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>result</p></td>
-<td><p><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Was request successful?</p></td>
+<tr class="row-even">
+<td>result</td>
+<td><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></td>
+<td>1</td>
+<td>Was request successful?</td>
 </tr>
-<tr class="row-odd"><td><p>cert</p></td>
-<td><p>string</p></td>
-<td><p>2</p></td>
-<td><p>Root CA cert (ASCII text)</p></td>
+<tr class="row-odd">
+<td>cert</td>
+<td>string</td>
+<td>2</td>
+<td>Root CA cert (ASCII text)</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="responseconnect">
-<span id="proto-responseconnect"></span><h2>ResponseConnect<a class="headerlink" href="#responseconnect" title="Link to this heading"></a></h2>
+<span id="proto-responseconnect"></span><h2>ResponseConnect<a class="headerlink" href="#responseconnect" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
@@ -2866,39 +3664,44 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p>Sent as the initial response to <a class="reference internal" href="#proto-requestconnect"><span class="std std-ref">RequestConnect</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>result</p></td>
-<td><p><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Generic pass/fail/error info</p></td>
+<tr class="row-even">
+<td>result</td>
+<td><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></td>
+<td>1</td>
+<td>Generic pass/fail/error info</td>
 </tr>
-<tr class="row-odd"><td><p>provisioning_state</p></td>
-<td><p><a class="reference internal" href="#proto-enumprovisioning"><span class="std std-ref">EnumProvisioning</span></a></p></td>
-<td><p>2</p></td>
-<td><p>Provisioning/connection state</p></td>
+<tr class="row-odd">
+<td>provisioning_state</td>
+<td><a class="reference internal" href="#proto-enumprovisioning"><span class="std std-ref">EnumProvisioning</span></a></td>
+<td>2</td>
+<td>Provisioning/connection state</td>
 </tr>
-<tr class="row-even"><td><p>timeout_seconds</p></td>
-<td><p>int32</p></td>
-<td><p>3</p></td>
-<td><p>Network connection timeout (seconds)</p></td>
+<tr class="row-even">
+<td>timeout_seconds</td>
+<td>int32</td>
+<td>3</td>
+<td>Network connection timeout (seconds)</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="responseconnectnew">
-<span id="proto-responseconnectnew"></span><h2>ResponseConnectNew<a class="headerlink" href="#responseconnectnew" title="Link to this heading"></a></h2>
+<span id="proto-responseconnectnew"></span><h2>ResponseConnectNew<a class="headerlink" href="#responseconnectnew" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
@@ -2907,33 +3710,38 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p>Sent as the initial response to <a class="reference internal" href="#proto-requestconnectnew"><span class="std std-ref">RequestConnectNew</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>result</p></td>
-<td><p><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Status of Connect New request</p></td>
+<tr class="row-even">
+<td>result</td>
+<td><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></td>
+<td>1</td>
+<td>Status of Connect New request</td>
 </tr>
-<tr class="row-odd"><td><p>provisioning_state</p></td>
-<td><p><a class="reference internal" href="#proto-enumprovisioning"><span class="std std-ref">EnumProvisioning</span></a></p></td>
-<td><p>2</p></td>
-<td><p>Current provisioning state of the network</p></td>
+<tr class="row-odd">
+<td>provisioning_state</td>
+<td><a class="reference internal" href="#proto-enumprovisioning"><span class="std std-ref">EnumProvisioning</span></a></td>
+<td>2</td>
+<td>Current provisioning state of the network</td>
 </tr>
-<tr class="row-even"><td><p>timeout_seconds</p></td>
-<td><p>int32</p></td>
-<td><p>3</p></td>
-<td><div class="line-block">
+<tr class="row-even">
+<td>timeout_seconds</td>
+<td>int32</td>
+<td>3</td>
+<td>
+<div class="line-block">
 <div class="line">Number of seconds camera will wait before declaring a network connection attempt failed</div>
 </div>
 </td>
@@ -2942,7 +3750,8 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </table>
 </section>
 <section id="responsegeneric">
-<span id="proto-responsegeneric"></span><h2>ResponseGeneric<a class="headerlink" href="#responsegeneric" title="Link to this heading"></a></h2>
+<span id="proto-responsegeneric"></span><h2>ResponseGeneric<a class="headerlink" href="#responsegeneric" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">Source Protobuf File</a></p>
@@ -2950,29 +3759,32 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p>Generic Response used across many response / notification messages</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>result</p></td>
-<td><p><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Generic pass/fail/error info</p></td>
+<tr class="row-even">
+<td>result</td>
+<td><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></td>
+<td>1</td>
+<td>Generic pass/fail/error info</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="responsegetapentries">
-<span id="proto-responsegetapentries"></span><h2>ResponseGetApEntries<a class="headerlink" href="#responsegetapentries" title="Link to this heading"></a></h2>
+<span id="proto-responsegetapentries"></span><h2>ResponseGetApEntries<a class="headerlink" href="#responsegetapentries" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
@@ -2981,39 +3793,44 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p>This is sent in response to a <a class="reference internal" href="#proto-requestgetapentries"><span class="std std-ref">RequestGetApEntries</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>result</p></td>
-<td><p><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Generic pass/fail/error info</p></td>
+<tr class="row-even">
+<td>result</td>
+<td><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></td>
+<td>1</td>
+<td>Generic pass/fail/error info</td>
 </tr>
-<tr class="row-odd"><td><p>scan_id</p></td>
-<td><p>int32</p></td>
-<td><p>2</p></td>
-<td><p>ID associated with this batch of results</p></td>
+<tr class="row-odd">
+<td>scan_id</td>
+<td>int32</td>
+<td>2</td>
+<td>ID associated with this batch of results</td>
 </tr>
-<tr class="row-even"><td><p>entries</p></td>
-<td><p><a class="reference internal" href="#proto-responsegetapentries-scanentry"><span class="std std-ref">ResponseGetApEntries::ScanEntry</span></a></p></td>
-<td><p>3</p></td>
-<td><p>Array containing details about discovered APs</p></td>
+<tr class="row-even">
+<td>entries</td>
+<td><a class="reference internal" href="#proto-responsegetapentries-scanentry"><span class="std std-ref">ResponseGetApEntries::ScanEntry</span></a></td>
+<td>3</td>
+<td>Array containing details about discovered APs</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="responselastcapturedmedia">
-<span id="proto-responselastcapturedmedia"></span><h2>ResponseLastCapturedMedia<a class="headerlink" href="#responselastcapturedmedia" title="Link to this heading"></a></h2>
+<span id="proto-responselastcapturedmedia"></span><h2>ResponseLastCapturedMedia<a class="headerlink" href="#responselastcapturedmedia" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/media.proto">Source Protobuf File</a></p>
@@ -3028,28 +3845,32 @@ on the type of media captured, it will return:</p>
 </ul>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>result</p></td>
-<td><p><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Was the request successful?</p></td>
+<tr class="row-even">
+<td>result</td>
+<td><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></td>
+<td>1</td>
+<td>Was the request successful?</td>
 </tr>
-<tr class="row-odd"><td><p>media</p></td>
-<td><p><a class="reference internal" href="#proto-media"><span class="std std-ref">Media</span></a></p></td>
-<td><p>2</p></td>
-<td><div class="line-block">
+<tr class="row-odd">
+<td>media</td>
+<td><a class="reference internal" href="#proto-media"><span class="std std-ref">Media</span></a></td>
+<td>2</td>
+<td>
+<div class="line-block">
 <div class="line">Last captured media if result is RESULT_SUCCESS. Invalid if result is RESULT_RESOURCE_NOT_AVAILBLE.</div>
 </div>
 </td>
@@ -3058,7 +3879,8 @@ on the type of media captured, it will return:</p>
 </table>
 </section>
 <section id="responsestartscanning">
-<span id="proto-responsestartscanning"></span><h2>ResponseStartScanning<a class="headerlink" href="#responsestartscanning" title="Link to this heading"></a></h2>
+<span id="proto-responsestartscanning"></span><h2>ResponseStartScanning<a class="headerlink" href="#responsestartscanning" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
@@ -3067,34 +3889,38 @@ on the type of media captured, it will return:</p>
 <p>This is the initial response to a <a class="reference internal" href="#proto-requeststartscan"><span class="std std-ref">RequestStartScan</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>result</p></td>
-<td><p><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></p></td>
-<td><p>1</p></td>
-<td><p>Generic pass/fail/error info</p></td>
+<tr class="row-even">
+<td>result</td>
+<td><a class="reference internal" href="#proto-enumresultgeneric"><span class="std std-ref">EnumResultGeneric</span></a></td>
+<td>1</td>
+<td>Generic pass/fail/error info</td>
 </tr>
-<tr class="row-odd"><td><p>scanning_state</p></td>
-<td><p><a class="reference internal" href="#proto-enumscanning"><span class="std std-ref">EnumScanning</span></a></p></td>
-<td><p>2</p></td>
-<td><p>Scanning state</p></td>
+<tr class="row-odd">
+<td>scanning_state</td>
+<td><a class="reference internal" href="#proto-enumscanning"><span class="std std-ref">EnumScanning</span></a></td>
+<td>2</td>
+<td>Scanning state</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="responsegetapentries-scanentry">
-<span id="proto-responsegetapentries-scanentry"></span><h2>ResponseGetApEntries::ScanEntry<a class="headerlink" href="#responsegetapentries-scanentry" title="Link to this heading"></a></h2>
+<span id="proto-responsegetapentries-scanentry"></span><h2>ResponseGetApEntries::ScanEntry<a class="headerlink" href="#responsegetapentries-scanentry" title="Link to this heading"></a>
+</h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
@@ -3106,38 +3932,44 @@ on the type of media captured, it will return:</p>
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13.3%" />
-<col style="width: 13.3%" />
-<col style="width: 20.0%" />
-<col style="width: 53.3%" />
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>field</p></th>
-<th class="head"><p>typespec</p></th>
-<th class="head"><p>value</p></th>
-<th class="head"><p>summary</p></th>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>ssid</p></td>
-<td><p>string</p></td>
-<td><p>1</p></td>
-<td><p>AP SSID</p></td>
+<tr class="row-even">
+<td>ssid</td>
+<td>string</td>
+<td>1</td>
+<td>AP SSID</td>
 </tr>
-<tr class="row-odd"><td><p>signal_strength_bars</p></td>
-<td><p>int32</p></td>
-<td><p>2</p></td>
-<td><p>Signal strength (3 bars: &gt;-70 dBm; 2 bars: &gt;-85 dBm; 1 bar: &lt;=-85 dBm)</p></td>
+<tr class="row-odd">
+<td>signal_strength_bars</td>
+<td>int32</td>
+<td>2</td>
+<td>Signal strength (3 bars: &gt;-70 dBm; 2 bars: &gt;-85 dBm; 1 bar: &lt;=-85 dBm)</td>
 </tr>
-<tr class="row-even"><td><p>signal_frequency_mhz</p></td>
-<td><p>int32</p></td>
-<td><p>4</p></td>
-<td><p>Signal frequency (MHz)</p></td>
+<tr class="row-even">
+<td>signal_frequency_mhz</td>
+<td>int32</td>
+<td>4</td>
+<td>Signal frequency (MHz)</td>
 </tr>
-<tr class="row-odd"><td><p>scan_entry_flags</p></td>
-<td><p>int32</p></td>
-<td><p>5</p></td>
-<td><p>Bitmasked value from <a class="reference internal" href="#proto-enumscanentryflags"><span class="std std-ref">EnumScanEntryFlags</span></a></p></td>
+<tr class="row-odd">
+<td>scan_entry_flags</td>
+<td>int32</td>
+<td>5</td>
+<td>Bitmasked value from <a class="reference internal" href="#proto-enumscanentryflags"><span class="std std-ref">EnumScanEntryFlags</span></a>
+</td>
 </tr>
 </tbody>
 </table>
@@ -3152,10 +3984,10 @@ on the type of media captured, it will return:</p>
         <a href="../features/control.html" class="btn btn-neutral float-right" title="Control" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
-  <hr/>
+  <hr>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023.</p>
+    <p>© Copyright 2023.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
@@ -3174,5 +4006,7 @@ on the type of media captured, it will return:</p>
       });
   </script> 
 
-</body>
+
+
+    </body>
 </html>
