@@ -89,13 +89,13 @@ class BleakWrapperController(BLEController[BleakDevice, bleak.BleakClient], Sing
         logger.debug(f'Received response on BleUUID [{uuid}]: {response.hex( ":")}')
         return response
 
-    async def write(self, handle: bleak.BleakClient, uuid: BleUUID, data: bytearray) -> None:
+    async def write(self, handle: bleak.BleakClient, uuid: BleUUID, data: bytes) -> None:
         """Write data to a BleUUID.
 
         Args:
             handle (bleak.BleakClient): Device to write to
             uuid (BleUUID): characteristic BleUUID to write to
-            data (bytearray): data to write
+            data (bytes): data to write
         """
         logger.debug(f"Writing to {uuid}: {uuid.hex}")
         await handle.write_gatt_char(uuid2bleak_string(uuid), data, response=True)

@@ -85,7 +85,7 @@ jobs:
               run: sudo apt-get update && sudo apt install -y graphviz
 
             - name: Set up Python 3.11.4
-              uses: actions/setup-python@v2
+              uses: actions/setup-python@v5
               with:
                   python-version: 3.11.4
 
