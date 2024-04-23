@@ -133,23 +133,23 @@ class BleClient(Generic[BleHandle, BleDevice]):
         else:
             logger.debug("BLE already disconnected")
 
-    async def read(self, uuid: BleUUID) -> bytearray:
+    async def read(self, uuid: BleUUID) -> bytes:
         """Read byte data from a characteristic (identified by BleUUID)
 
         Args:
             uuid (BleUUID): characteristic to read
 
         Returns:
-            bytearray: byte data that was read
+            bytes: byte data that was read
         """
         return await self._controller.read(self._handle, uuid)
 
-    async def write(self, uuid: BleUUID, data: bytearray) -> None:
+    async def write(self, uuid: BleUUID, data: bytes) -> None:
         """Write byte data to a characteristic (identified by BleUUID)
 
         Args:
             uuid (BleUUID): characteristic to write to
-            data (bytearray): byte data to write
+            data (bytes): byte data to write
         """
         await self._controller.write(self._handle, uuid, data)
 

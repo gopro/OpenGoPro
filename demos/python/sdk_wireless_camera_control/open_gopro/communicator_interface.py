@@ -262,24 +262,19 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
 
     # TODO this should be somewhere else
     @classmethod
-    def _fragment(cls, data: bytearray) -> Generator[bytearray, None, None]:
+    def _fragment(cls, data: bytes) -> Generator[bytes, None, None]:
         """Fragment data in to MAX_BLE_PKT_LEN length packets
 
         Args:
-            data (bytearray): data to fragment
+            data (bytes): data to fragment
 
         Raises:
             ValueError: data is too long
 
         Yields:
-            Generator[bytearray, None, None]: Generator of packets as bytearrays
+            Generator[bytes, None, None]: Generator of packets as bytes
         """
         MAX_BLE_PKT_LEN = 20
-        general_header = BitStruct(
-            "continuation" / Const(0, Bit),
-            "header" / Const(Header.GENERAL.value, BitsInteger(2)),
-            "length" / BitsInteger(5),
-        )
 
         extended_13_header = BitStruct(
             "continuation" / Const(0, Bit),
@@ -300,9 +295,7 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
         )
 
         header: Construct
-        if (data_len := len(data)) < (2**5 - 1):
-            header = general_header
-        elif data_len < (2**13 - 1):
+        if (data_len := len(data)) < (2**13 - 1):
             header = extended_13_header
         elif data_len < (2**16 - 1):
             header = extended_16_header

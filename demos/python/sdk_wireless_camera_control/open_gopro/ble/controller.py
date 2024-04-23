@@ -24,7 +24,7 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
         self._exception_handler = exception_handler
 
     @abstractmethod
-    async def read(self, handle: BleHandle, uuid: BleUUID) -> bytearray:
+    async def read(self, handle: BleHandle, uuid: BleUUID) -> bytes:
         """Read a bytestream response from a BleUUID.
 
         Args:
@@ -32,21 +32,21 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
             uuid (BleUUID): BleUUID to read from
 
         Returns:
-            bytearray: response
+            bytes: response
         """
         raise NotImplementedError
 
     @abstractmethod
-    async def write(self, handle: BleHandle, uuid: BleUUID, data: bytearray) -> None:
+    async def write(self, handle: BleHandle, uuid: BleUUID, data: bytes) -> None:
         """Write a bytestream to a BleUUID.
 
         Args:
             handle (BleHandle): handle to pair to
             uuid (BleUUID): BleUUID to write to
-            data (bytearray): bytestream to write
+            data (bytes): bytestream to write
 
         Returns:
-            bytearray: response
+            bytes: response
         """
         raise NotImplementedError
 

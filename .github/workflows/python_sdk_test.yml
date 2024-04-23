@@ -16,12 +16,12 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                os: [windows-latest, macos-latest, ubuntu-latest]
+                os: [windows-latest, macos-12, ubuntu-latest]
                 python-version: ['3.9', '3.10', '3.11']
                 include:
                     - os: ubuntu-latest
                       path: ~/.cache/pip
-                    - os: macos-latest
+                    - os: macos-12
                       path: ~/Library/Caches/pip
                     - os: windows-latest
                       path: ~\AppData\Local\pip\Cache
@@ -30,7 +30,7 @@ jobs:
               uses: actions/checkout@v3
 
             - name: Set up Python ${{ matrix.python-version }}
-              uses: actions/setup-python@v2
+              uses: actions/setup-python@v5
               with:
                   python-version: ${{ matrix.python-version }}
 
