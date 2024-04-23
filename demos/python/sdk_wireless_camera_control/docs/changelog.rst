@@ -9,9 +9,10 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
-Unreleased
-----------
+0.16.1 (April-23-2024)
+----------------------
 
+* Always use extended headers
 * Add Delete Media HTTP API's
 * Add port argument to Preview Stream HTTP API
 * Only ask for sudo password when required

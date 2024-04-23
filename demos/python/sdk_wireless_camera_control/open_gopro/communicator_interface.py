@@ -275,11 +275,6 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
             Generator[bytes, None, None]: Generator of packets as bytes
         """
         MAX_BLE_PKT_LEN = 20
-        general_header = BitStruct(
-            "continuation" / Const(0, Bit),
-            "header" / Const(Header.GENERAL.value, BitsInteger(2)),
-            "length" / BitsInteger(5),
-        )
 
         extended_13_header = BitStruct(
             "continuation" / Const(0, Bit),
