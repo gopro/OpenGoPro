@@ -38,7 +38,7 @@
             Open GoPro Python SDK
           </a>
               <div class="version">
-                0.16.0
+                0.16.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -9587,7 +9587,7 @@ is received.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.ble.controller.BLEController.read">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BleHandle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.ble.services.BleUUID" title="open_gopro.ble.services.BleUUID"><span class="pre">BleUUID</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytearray</span></span></span><a class="headerlink" href="#open_gopro.ble.controller.BLEController.read" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BleHandle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.ble.services.BleUUID" title="open_gopro.ble.services.BleUUID"><span class="pre">BleUUID</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#open_gopro.ble.controller.BLEController.read" title="Permalink to this definition"></a></dt>
 <dd><p>Read a bytestream response from a BleUUID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -9600,7 +9600,7 @@ is received.</p>
 <dd class="field-even"><p>response</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bytearray</p>
+<dd class="field-odd"><p>bytes</p>
 </dd>
 </dl>
 </dd></dl>
@@ -9628,21 +9628,21 @@ is received.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.ble.controller.BLEController.write">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BleHandle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.ble.services.BleUUID" title="open_gopro.ble.services.BleUUID"><span class="pre">BleUUID</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytearray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#open_gopro.ble.controller.BLEController.write" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BleHandle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.ble.services.BleUUID" title="open_gopro.ble.services.BleUUID"><span class="pre">BleUUID</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#open_gopro.ble.controller.BLEController.write" title="Permalink to this definition"></a></dt>
 <dd><p>Write a bytestream to a BleUUID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>handle</strong> (<em>BleHandle</em>) – handle to pair to</p></li>
 <li><p><strong>uuid</strong> (<a class="reference internal" href="#open_gopro.ble.services.BleUUID" title="open_gopro.ble.services.BleUUID"><em>BleUUID</em></a>) – BleUUID to write to</p></li>
-<li><p><strong>data</strong> (<em>bytearray</em>) – bytestream to write</p></li>
+<li><p><strong>data</strong> (<em>bytes</em>) – bytestream to write</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>response</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bytearray</p>
+<dd class="field-odd"><p>bytes</p>
 </dd>
 </dl>
 </dd></dl>
@@ -9739,7 +9739,7 @@ is received.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.ble.client.BleClient.read">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.ble.services.BleUUID" title="open_gopro.ble.services.BleUUID"><span class="pre">BleUUID</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytearray</span></span></span><a class="headerlink" href="#open_gopro.ble.client.BleClient.read" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.ble.services.BleUUID" title="open_gopro.ble.services.BleUUID"><span class="pre">BleUUID</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#open_gopro.ble.client.BleClient.read" title="Permalink to this definition"></a></dt>
 <dd><p>Read byte data from a characteristic (identified by BleUUID)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -9749,7 +9749,7 @@ is received.</p>
 <dd class="field-even"><p>byte data that was read</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bytearray</p>
+<dd class="field-odd"><p>bytes</p>
 </dd>
 </dl>
 </dd></dl>
@@ -9767,13 +9767,13 @@ is received.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.ble.client.BleClient.write">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.ble.services.BleUUID" title="open_gopro.ble.services.BleUUID"><span class="pre">BleUUID</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytearray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#open_gopro.ble.client.BleClient.write" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#open_gopro.ble.services.BleUUID" title="open_gopro.ble.services.BleUUID"><span class="pre">BleUUID</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#open_gopro.ble.client.BleClient.write" title="Permalink to this definition"></a></dt>
 <dd><p>Write byte data to a characteristic (identified by BleUUID)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>uuid</strong> (<a class="reference internal" href="#open_gopro.ble.services.BleUUID" title="open_gopro.ble.services.BleUUID"><em>BleUUID</em></a>) – characteristic to write to</p></li>
-<li><p><strong>data</strong> (<em>bytearray</em>) – byte data to write</p></li>
+<li><p><strong>data</strong> (<em>bytes</em>) – byte data to write</p></li>
 </ul>
 </dd>
 </dl>
