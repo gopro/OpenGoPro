@@ -1,2 +1,0 @@
-capabilties/*.json filter=lfs diff=lfs merge=lfs -text
-capabilties/*.xlsx filter=lfs diff=lfs merge=lfs -text
