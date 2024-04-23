@@ -37,7 +37,7 @@ Message sending and receiving is accomplished by prepending **General (5-bit)**,
 General (5-bit) Packets
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Messages that are 31 bytes or fewer can be sent or received using the following format:
+Messages that are 20 bytes or fewer can be sent or received using the following format:
 
 +-----------+---+----------+---+---+---+---+------+
 | Byte 0                                          |

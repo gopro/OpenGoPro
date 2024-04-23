@@ -445,17 +445,18 @@ to 240, it will fail because 4K/240fps is not supported.</p>
 <p>Capability documents for each camera / firmware version can be found in the following file formats:</p>
 <section id="xlsx">
 <h3>XLSX<a class="headerlink" href="#xlsx" title="Link to this heading"></a></h3>
-<p>An XLSX file can be found <a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.xlsx">here</a>.</p>
+<p>An XLSX file can be found <a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/capabilities/capabilities.xlsx">here</a>.</p>
 <p>The capabilities spreadsheet contains worksheets for every supported release. Each row in a worksheet represents a
 whitelisted state and is presented in dependency order as outlined above.</p>
 </section>
 <section id="json">
 <h3>JSON<a class="headerlink" href="#json" title="Link to this heading"></a></h3>
-<p>A JSON file can be found <a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/docs/specs/capabilities.json">here</a>.</p>
+<p>A JSON file can be found <a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/capabilities/capabilities.json">here</a>.</p>
 <p>The capabilities JSON contains a set of whitelist states for every supported release. Each state is comprised of a list
 of objects that contain setting and option IDs necessary to construct
 <a class="reference internal" href="#set-setting" title="set setting"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a> commands and are given in dependency
-order as outlined above. For more information on the object format, see the JSON schema</p>
+order as outlined above. For more information on the object format, see the
+<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/capabilities/capabilities_schema.json">JSON schema</a>.</p>
 </section>
 </section>
 <section id="operations">
