@@ -7,7 +7,7 @@ import nox
 from nox_poetry import session
 
 # Don't run docs by default since it needs graphviz.
-nox.options.sessions = "format", "lint", "tests", "docstrings"
+nox.options.sessions = "format", "lint", "tests", "docstrings", "docs"
 
 SUPPORTED_VERSIONS = [
     "3.9",

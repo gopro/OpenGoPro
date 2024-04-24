@@ -27,7 +27,7 @@ jobs:
                       path: ~\AppData\Local\pip\Cache
         steps:
             - name: Checkout source branch
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Set up Python ${{ matrix.python-version }}
               uses: actions/setup-python@v5
@@ -35,7 +35,7 @@ jobs:
                   python-version: ${{ matrix.python-version }}
 
             - name: Check for cached pip environment
-              uses: actions/cache@v2
+              uses: actions/cache@v4
               with:
                   path: ${{ matrix.path }}
                   key: ${{ runner.os }}-${{ matrix.python-version }}-pip-${{ hashFiles('demos/python/sdk_wireless_camera_control/poetry.lock') }}
@@ -53,15 +53,15 @@ jobs:
                   pip install nox-poetry==1.0.3
                   pip install poetry
 
-            - name: Perform checks (format, types, lint, docstrings, unit tests)
+            - name: Unit Testing for all cases
               working-directory: ./demos/python/sdk_wireless_camera_control/
-              run: nox -p ${{ matrix.python-version }}
+              run: nox -p ${{ matrix.python-version }} -s tests
 
             # Only test docs with latest Python on ubuntu since we need graphviz
-            - name: Test docs build
+            - name: Full linting only on ubuntu with latest python
               if: matrix.os == 'ubuntu-latest' &&  matrix.python-version == '3.11'
               working-directory: ./demos/python/sdk_wireless_camera_control/
-              run: nox -s docs
+              run: nox -p 3.11 -s format lint docstrings docs
 
             - name: Archive test report on failure
               uses: actions/upload-artifact@v2
