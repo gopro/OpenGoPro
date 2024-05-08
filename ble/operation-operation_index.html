@@ -1,12 +1,146 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>operation index &mdash; Open GoPro BLE API 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="_static/style.css?v=d4d8e761" />
+<html class="writer-html5">
+    <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Open GoPro :  Open GoPro</title>
+<meta name="description" content="Open Source GoPro Interface">
+
+
+  <meta name="author" content="GoPro">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Open GoPro">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/ble">
+
+
+  <meta property="og:description" content="Open Source GoPro Interface">
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/ble">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- TODO This is probably where our masthead highlighting is going wrong -->
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main_spec.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+  
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+<script>
+    // Add anchors on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function (event) {
+        var manualAnchors = new AnchorJS();
+        manualAnchors.options = {
+            titleText: 'Permalink',
+            placement: 'left'
+        };
+        manualAnchors.add('.anchored');
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+    </head>
+    <body>
+        
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/OpenGoPro/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/ble/">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/http">HTTP Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro/tree/main/demos">Demos</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
+</ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+        
+
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>operation index — Open GoPro BLE API 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1">
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094">
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=d4d8e761">
 
   
   <!--[if lt IE 9]>
@@ -19,8 +153,8 @@
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
+    <link rel="index" title="Index" href="genindex.html">
+    <link rel="search" title="Search" href="search.html">
  
 
     <script>
@@ -28,13 +162,13 @@
     </script>
 
 
-</head>
 
-<body class="wy-body-for-nav"> 
+
+ 
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
 
           
           
@@ -43,45 +177,54 @@
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+        </div>
+<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protocol</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="protocol/ble_setup.html">BLE Setup</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="protocol.html">Protocol</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="protocol/ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="protocol/ble_setup.html#pairing-mode">Pairing Mode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/ble_setup.html#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/ble_setup.html#finish-pairing">Finish Pairing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="protocol/ble_setup.html#ble-characteristics">BLE Characteristics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="protocol/ble_setup.html#send-messages">Send Messages</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="protocol/data_protocol.html">Data Protocol</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="protocol/data_protocol.html#packetization">Packetization</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="protocol/data_protocol.html">Data Protocol</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="protocol/data_protocol.html#packetization">Packetization</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="protocol/data_protocol.html#packet-headers">Packet Headers</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/data_protocol.html#decipher-message-payload-type">Decipher Message Payload Type</a></li>
-<li class="toctree-l3"><a class="reference internal" href="protocol/data_protocol.html#message-payload">Message Payload</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="protocol/data_protocol.html#message-payload">Message Payload</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="protocol/data_protocol.html#type-length-value">Type Length Value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="protocol/data_protocol.html#protobuf">Protobuf</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="protocol/state_management.html">State Management</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="protocol/state_management.html">State Management</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="protocol/state_management.html#camera-readiness">Camera Readiness</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/state_management.html#keep-alive">Keep Alive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/state_management.html#camera-control">Camera Control</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="protocol/id_tables.html">ID Tables</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="protocol/id_tables.html">ID Tables</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="protocol/id_tables.html#command-ids">Command IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/id_tables.html#query-ids">Query IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/id_tables.html#protobuf-ids">Protobuf IDs</a></li>
@@ -89,8 +232,10 @@
 <li class="toctree-l3"><a class="reference internal" href="protocol/id_tables.html#status-ids">Status IDs</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="protocol/protobuf.html">Protobuf Documentation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#enums">Enums</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="protocol/protobuf.html">Protobuf Documentation</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="protocol/protobuf.html#enums">Enums</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="protocol/protobuf.html#enumcohnnetworkstate">EnumCOHNNetworkState</a></li>
 <li class="toctree-l4"><a class="reference internal" href="protocol/protobuf.html#enumcohnstatus">EnumCOHNStatus</a></li>
 <li class="toctree-l4"><a class="reference internal" href="protocol/protobuf.html#enumcameracontrolstatus">EnumCameraControlStatus</a></li>
@@ -151,8 +296,10 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="features/control.html">Control</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features/control.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="features/control.html">Control</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="features/control.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#keep-alive"><code class="docutils literal notranslate"><span class="pre">Keep</span> <span class="pre">Alive</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
@@ -166,8 +313,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="features/query.html">Query</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features/query.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="features/query.html">Query</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="features/query.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/query.html#get-date-time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/query.html#get-hardware-info"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Hardware</span> <span class="pre">Info</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/query.html#get-local-date-time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
@@ -186,8 +335,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="features/access_points.html">Access Point</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features/access_points.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="features/access_points.html">Access Point</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="features/access_points.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/access_points.html#scan-for-access-points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/access_points.html#get-ap-scan-results"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">AP</span> <span class="pre">Scan</span> <span class="pre">Results</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/access_points.html#connect-to-provisioned-access-point"><code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">Provisioned</span> <span class="pre">Access</span> <span class="pre">Point</span></code></a></li>
@@ -197,22 +348,27 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="features/live_streaming.html">Live Streaming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features/live_streaming.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="features/live_streaming.html">Live Streaming</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="features/live_streaming.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/live_streaming.html#set-livestream-mode"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/live_streaming.html#get-livestream-status"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Livestream</span> <span class="pre">Status</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="features/cohn.html">Camera on the Home Network</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features/cohn.html#certificates">Certificates</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="features/cohn.html">Camera on the Home Network</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="features/cohn.html#certificates">Certificates</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/cohn.html#verifying-certificate">Verifying Certificate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/cohn.html#view-certificate-details">View Certificate Details</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="features/cohn.html#provisioning-procedure">Provisioning Procedure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="features/cohn.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="features/cohn.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/cohn.html#clear-cohn-certificate"><code class="docutils literal notranslate"><span class="pre">Clear</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/cohn.html#create-cohn-certificate"><code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/cohn.html#get-cohn-certificate"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
@@ -222,17 +378,21 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="features/hilights.html">Hilights</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features/hilights.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="features/hilights.html">Hilights</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="features/hilights.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/hilights.html#hilight-moment"><code class="docutils literal notranslate"><span class="pre">Hilight</span> <span class="pre">Moment</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="features/presets.html">Presets</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="features/presets.html">Presets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="features/presets.html#preset-groups">Preset Groups</a></li>
 <li class="toctree-l2"><a class="reference internal" href="features/presets.html#preset-modified-status">Preset Modified Status</a></li>
-<li class="toctree-l2"><a class="reference internal" href="features/presets.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="features/presets.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/presets.html#get-available-presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/presets.html#load-preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/presets.html#load-preset-group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
@@ -241,17 +401,21 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="features/settings.html">Settings</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features/settings.html#camera-capabilities">Camera Capabilities</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="features/settings.html">Settings</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="features/settings.html#camera-capabilities">Camera Capabilities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#xlsx">XLSX</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#json">JSON</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="features/settings.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="features/settings.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#set-setting"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="features/settings.html#setting-ids">Setting IDs</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="features/settings.html#setting-ids">Setting IDs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#video-resolution-2">Video Resolution (2)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#frames-per-second-3">Frames Per Second (3)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#webcam-digital-lenses-43">Webcam Digital Lenses (43)</a></li>
@@ -291,8 +455,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="features/statuses.html">Statuses</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features/statuses.html#status-ids">Status IDs</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="features/statuses.html">Statuses</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="features/statuses.html#status-ids">Status IDs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/statuses.html#battery-present-1">Battery Present (1)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/statuses.html#internal-battery-bars-2">Internal Battery Bars (2)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/statuses.html#overheating-6">Overheating (6)</a></li>
@@ -384,7 +550,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Open GoPro BLE API</a>
       </nav>
@@ -398,7 +564,7 @@
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
-  <hr/>
+  <hr>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
@@ -422,1084 +588,1840 @@
    </div>
 
    <table class="indextable modindextable">
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-c"><td></td><td>
-       <strong>c</strong></td><td></td></tr>
+     <tr class="pcap">
+<td>
+</td>
+<td> </td>
+<td>
+</td>
+</tr>
+     <tr class="cap" id="cap-c">
+<td>
+</td>
+<td><strong>c</strong></td>
+<td>
+</td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/access_points.html#connect-to-provisioned-access-point"><code class="xref">connect to provisioned access point</code></a> <em>(features/access_points)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/access_points.html#connect-to-provisioned-access-point"><code class="xref">connect to provisioned access point</code></a> <em>(features/access_points)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/access_points.html#connect-to-a-new-access-point"><code class="xref">connect to a new access point</code></a> <em>(features/access_points)</em></td><td>
-       <em>Operation</em></td></tr>
+<a href="features/access_points.html#connect-to-a-new-access-point"><code class="xref">connect to a new access point</code></a> <em>(features/access_points)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/cohn.html#clear-cohn-certificate"><code class="xref">clear cohn certificate</code></a> <em>(features/cohn)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/cohn.html#clear-cohn-certificate"><code class="xref">clear cohn certificate</code></a> <em>(features/cohn)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/cohn.html#create-cohn-certificate"><code class="xref">create cohn certificate</code></a> <em>(features/cohn)</em></td><td>
-       <em>Operation</em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-e"><td></td><td>
-       <strong>e</strong></td><td></td></tr>
+<a href="features/cohn.html#create-cohn-certificate"><code class="xref">create cohn certificate</code></a> <em>(features/cohn)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
+     <tr class="pcap">
+<td>
+</td>
+<td> </td>
+<td>
+</td>
+</tr>
+     <tr class="cap" id="cap-e">
+<td>
+</td>
+<td><strong>e</strong></td>
+<td>
+</td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#enumlens"><code class="xref">EnumLens</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumlens"><code class="xref">EnumLens</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#enumlivestreamerror"><code class="xref">EnumLiveStreamError</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#enumlivestreamerror"><code class="xref">EnumLiveStreamError</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#enumlivestreamstatus"><code class="xref">EnumLiveStreamStatus</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumlivestreamstatus"><code class="xref">EnumLiveStreamStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#enumregisterlivestreamstatus"><code class="xref">EnumRegisterLiveStreamStatus</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumregisterlivestreamstatus"><code class="xref">EnumRegisterLiveStreamStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#enumwindowsize"><code class="xref">EnumWindowSize</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#enumwindowsize"><code class="xref">EnumWindowSize</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#enumregisterpresetstatus"><code class="xref">EnumRegisterPresetStatus</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumregisterpresetstatus"><code class="xref">EnumRegisterPresetStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#enumprovisioning"><code class="xref">EnumProvisioning</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#enumprovisioning"><code class="xref">EnumProvisioning</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#enumscanning"><code class="xref">EnumScanning</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumscanning"><code class="xref">EnumScanning</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#enumscanentryflags"><code class="xref">EnumScanEntryFlags</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#enumscanentryflags"><code class="xref">EnumScanEntryFlags</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#enumcohnstatus"><code class="xref">EnumCOHNStatus</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumcohnstatus"><code class="xref">EnumCOHNStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#enumcohnnetworkstate"><code class="xref">EnumCOHNNetworkState</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#enumcohnnetworkstate"><code class="xref">EnumCOHNNetworkState</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#enumcameracontrolstatus"><code class="xref">EnumCameraControlStatus</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumcameracontrolstatus"><code class="xref">EnumCameraControlStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#enumflatmode"><code class="xref">EnumFlatMode</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumflatmode"><code class="xref">EnumFlatMode</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#enumpresetgroup"><code class="xref">EnumPresetGroup</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#enumpresetgroup"><code class="xref">EnumPresetGroup</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#enumpresetgroupicon"><code class="xref">EnumPresetGroupIcon</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumpresetgroupicon"><code class="xref">EnumPresetGroupIcon</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#enumpreseticon"><code class="xref">EnumPresetIcon</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#enumpreseticon"><code class="xref">EnumPresetIcon</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#enumpresettitle"><code class="xref">EnumPresetTitle</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumpresettitle"><code class="xref">EnumPresetTitle</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#enumresultgeneric"><code class="xref">EnumResultGeneric</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-g"><td></td><td>
-       <strong>g</strong></td><td></td></tr>
+<a href="protocol/protobuf.html#enumresultgeneric"><code class="xref">EnumResultGeneric</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr class="pcap">
+<td>
+</td>
+<td> </td>
+<td>
+</td>
+</tr>
+     <tr class="cap" id="cap-g">
+<td>
+</td>
+<td><strong>g</strong></td>
+<td>
+</td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/access_points.html#get-ap-scan-results"><code class="xref">get ap scan results</code></a> <em>(features/access_points)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/access_points.html#get-ap-scan-results"><code class="xref">get ap scan results</code></a> <em>(features/access_points)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/cohn.html#get-cohn-certificate"><code class="xref">get cohn certificate</code></a> <em>(features/cohn)</em></td><td>
-       <em>Operation</em></td></tr>
+<a href="features/cohn.html#get-cohn-certificate"><code class="xref">get cohn certificate</code></a> <em>(features/cohn)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/cohn.html#get-cohn-status"><code class="xref">get cohn status</code></a> <em>(features/cohn)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/cohn.html#get-cohn-status"><code class="xref">get cohn status</code></a> <em>(features/cohn)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/live_streaming.html#get-livestream-status"><code class="xref">get livestream status</code></a> <em>(features/live_streaming)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/live_streaming.html#get-livestream-status"><code class="xref">get livestream status</code></a> <em>(features/live_streaming)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/presets.html#get-available-presets"><code class="xref">get available presets</code></a> <em>(features/presets)</em></td><td>
-       <em>Operation</em></td></tr>
+<a href="features/presets.html#get-available-presets"><code class="xref">get available presets</code></a> <em>(features/presets)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/query.html#get-date-time"><code class="xref">get date time</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/query.html#get-date-time"><code class="xref">get date time</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/query.html#get-hardware-info"><code class="xref">get hardware info</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
+<a href="features/query.html#get-hardware-info"><code class="xref">get hardware info</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/query.html#get-local-date-time"><code class="xref">get local date time</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/query.html#get-local-date-time"><code class="xref">get local date time</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/query.html#get-last-captured-media"><code class="xref">get last captured media</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
+<a href="features/query.html#get-last-captured-media"><code class="xref">get last captured media</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/query.html#get-open-gopro-version"><code class="xref">get open gopro version</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/query.html#get-open-gopro-version"><code class="xref">get open gopro version</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/query.html#get-setting-values"><code class="xref">get setting values</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
+<a href="features/query.html#get-setting-values"><code class="xref">get setting values</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/query.html#get-status-values"><code class="xref">get status values</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/query.html#get-status-values"><code class="xref">get status values</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/query.html#get-setting-capabilities"><code class="xref">get setting capabilities</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-h"><td></td><td>
-       <strong>h</strong></td><td></td></tr>
+</td>
+       <td>
+<a href="features/query.html#get-setting-capabilities"><code class="xref">get setting capabilities</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
+     <tr class="pcap">
+<td>
+</td>
+<td> </td>
+<td>
+</td>
+</tr>
+     <tr class="cap" id="cap-h">
+<td>
+</td>
+<td><strong>h</strong></td>
+<td>
+</td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/hilights.html#hilight-moment"><code class="xref">hilight moment</code></a> <em>(features/hilights)</em></td><td>
-       <em>Operation</em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-k"><td></td><td>
-       <strong>k</strong></td><td></td></tr>
+<a href="features/hilights.html#hilight-moment"><code class="xref">hilight moment</code></a> <em>(features/hilights)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
+     <tr class="pcap">
+<td>
+</td>
+<td> </td>
+<td>
+</td>
+</tr>
+     <tr class="cap" id="cap-k">
+<td>
+</td>
+<td><strong>k</strong></td>
+<td>
+</td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/control.html#keep-alive"><code class="xref">keep alive</code></a> <em>(features/control)</em></td><td>
-       <em>Operation</em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-l"><td></td><td>
-       <strong>l</strong></td><td></td></tr>
+</td>
+       <td>
+<a href="features/control.html#keep-alive"><code class="xref">keep alive</code></a> <em>(features/control)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
+     <tr class="pcap">
+<td>
+</td>
+<td> </td>
+<td>
+</td>
+</tr>
+     <tr class="cap" id="cap-l">
+<td>
+</td>
+<td><strong>l</strong></td>
+<td>
+</td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/presets.html#load-preset"><code class="xref">load preset</code></a> <em>(features/presets)</em></td><td>
-       <em>Operation</em></td></tr>
+<a href="features/presets.html#load-preset"><code class="xref">load preset</code></a> <em>(features/presets)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/presets.html#load-preset-group"><code class="xref">load preset group</code></a> <em>(features/presets)</em></td><td>
-       <em>Operation</em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-m"><td></td><td>
-       <strong>m</strong></td><td></td></tr>
+</td>
+       <td>
+<a href="features/presets.html#load-preset-group"><code class="xref">load preset group</code></a> <em>(features/presets)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
+     <tr class="pcap">
+<td>
+</td>
+<td> </td>
+<td>
+</td>
+</tr>
+     <tr class="cap" id="cap-m">
+<td>
+</td>
+<td><strong>m</strong></td>
+<td>
+</td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#media"><code class="xref">Media</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-n"><td></td><td>
-       <strong>n</strong></td><td></td></tr>
+<a href="protocol/protobuf.html#media"><code class="xref">Media</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr class="pcap">
+<td>
+</td>
+<td> </td>
+<td>
+</td>
+</tr>
+     <tr class="cap" id="cap-n">
+<td>
+</td>
+<td><strong>n</strong></td>
+<td>
+</td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#notifylivestreamstatus"><code class="xref">NotifyLiveStreamStatus</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#notifylivestreamstatus"><code class="xref">NotifyLiveStreamStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#notifprovisioningstate"><code class="xref">NotifProvisioningState</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#notifprovisioningstate"><code class="xref">NotifProvisioningState</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#notifstartscanning"><code class="xref">NotifStartScanning</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#notifstartscanning"><code class="xref">NotifStartScanning</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#notifycohnstatus"><code class="xref">NotifyCOHNStatus</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#notifycohnstatus"><code class="xref">NotifyCOHNStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#notifypresetstatus"><code class="xref">NotifyPresetStatus</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-p"><td></td><td>
-       <strong>p</strong></td><td></td></tr>
+<a href="protocol/protobuf.html#notifypresetstatus"><code class="xref">NotifyPresetStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr class="pcap">
+<td>
+</td>
+<td> </td>
+<td>
+</td>
+</tr>
+     <tr class="cap" id="cap-p">
+<td>
+</td>
+<td><strong>p</strong></td>
+<td>
+</td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#preset"><code class="xref">Preset</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#preset"><code class="xref">Preset</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#presetgroup"><code class="xref">PresetGroup</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#presetgroup"><code class="xref">PresetGroup</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#presetsetting"><code class="xref">PresetSetting</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-r"><td></td><td>
-       <strong>r</strong></td><td></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#presetsetting"><code class="xref">PresetSetting</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr class="pcap">
+<td>
+</td>
+<td> </td>
+<td>
+</td>
+</tr>
+     <tr class="cap" id="cap-r">
+<td>
+</td>
+<td><strong>r</strong></td>
+<td>
+</td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/query.html#register-for-setting-value-updates"><code class="xref">register for setting value updates</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
+<a href="features/query.html#register-for-setting-value-updates"><code class="xref">register for setting value updates</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/query.html#register-for-status-value-updates"><code class="xref">register for status value updates</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/query.html#register-for-status-value-updates"><code class="xref">register for status value updates</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/query.html#register-for-setting-capability-updates"><code class="xref">register for setting capability updates</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
+<a href="features/query.html#register-for-setting-capability-updates"><code class="xref">register for setting capability updates</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#requestgetlastcapturedmedia"><code class="xref">RequestGetLastCapturedMedia</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestgetlastcapturedmedia"><code class="xref">RequestGetLastCapturedMedia</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#responselastcapturedmedia"><code class="xref">ResponseLastCapturedMedia</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#responselastcapturedmedia"><code class="xref">ResponseLastCapturedMedia</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#requestgetlivestreamstatus"><code class="xref">RequestGetLiveStreamStatus</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#requestgetlivestreamstatus"><code class="xref">RequestGetLiveStreamStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#requestsetlivestreammode"><code class="xref">RequestSetLiveStreamMode</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestsetlivestreammode"><code class="xref">RequestSetLiveStreamMode</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#requestgetpresetstatus"><code class="xref">RequestGetPresetStatus</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#requestgetpresetstatus"><code class="xref">RequestGetPresetStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#requestconnect"><code class="xref">RequestConnect</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestconnect"><code class="xref">RequestConnect</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#requestconnectnew"><code class="xref">RequestConnectNew</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#requestconnectnew"><code class="xref">RequestConnectNew</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#requestgetapentries"><code class="xref">RequestGetApEntries</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestgetapentries"><code class="xref">RequestGetApEntries</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#requestreleasenetwork"><code class="xref">RequestReleaseNetwork</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#requestreleasenetwork"><code class="xref">RequestReleaseNetwork</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#requeststartscan"><code class="xref">RequestStartScan</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requeststartscan"><code class="xref">RequestStartScan</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#responseconnect"><code class="xref">ResponseConnect</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#responseconnect"><code class="xref">ResponseConnect</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#responseconnectnew"><code class="xref">ResponseConnectNew</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#responseconnectnew"><code class="xref">ResponseConnectNew</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#responsegetapentries"><code class="xref">ResponseGetApEntries</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#responsegetapentries"><code class="xref">ResponseGetApEntries</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#responsestartscanning"><code class="xref">ResponseStartScanning</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#responsestartscanning"><code class="xref">ResponseStartScanning</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#requestsetturboactive"><code class="xref">RequestSetTurboActive</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestsetturboactive"><code class="xref">RequestSetTurboActive</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#requestgetcohnstatus"><code class="xref">RequestGetCOHNStatus</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestgetcohnstatus"><code class="xref">RequestGetCOHNStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#requestcreatecohncert"><code class="xref">RequestCreateCOHNCert</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#requestcreatecohncert"><code class="xref">RequestCreateCOHNCert</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#requestclearcohncert"><code class="xref">RequestClearCOHNCert</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestclearcohncert"><code class="xref">RequestClearCOHNCert</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#requestcohncert"><code class="xref">RequestCOHNCert</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#requestcohncert"><code class="xref">RequestCOHNCert</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#responsecohncert"><code class="xref">ResponseCOHNCert</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#responsecohncert"><code class="xref">ResponseCOHNCert</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#requestsetcohnsetting"><code class="xref">RequestSetCOHNSetting</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestsetcohnsetting"><code class="xref">RequestSetCOHNSetting</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#requestsetcameracontrolstatus"><code class="xref">RequestSetCameraControlStatus</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+<a href="protocol/protobuf.html#requestsetcameracontrolstatus"><code class="xref">RequestSetCameraControlStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#requestcustompresetupdate"><code class="xref">RequestCustomPresetUpdate</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestcustompresetupdate"><code class="xref">RequestCustomPresetUpdate</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="protocol/protobuf.html#responsegeneric"><code class="xref">ResponseGeneric</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-s"><td></td><td>
-       <strong>s</strong></td><td></td></tr>
+<a href="protocol/protobuf.html#responsegeneric"><code class="xref">ResponseGeneric</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr class="pcap">
+<td>
+</td>
+<td> </td>
+<td>
+</td>
+</tr>
+     <tr class="cap" id="cap-s">
+<td>
+</td>
+<td><strong>s</strong></td>
+<td>
+</td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-128"><code class="xref">Setting 128 (Media Format)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-128"><code class="xref">Setting 128 (Media Format)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-2"><code class="xref">Setting 2 (Video Resolution)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-2"><code class="xref">Setting 2 (Video Resolution)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-3"><code class="xref">Setting 3 (Frames Per Second)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-3"><code class="xref">Setting 3 (Frames Per Second)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-134"><code class="xref">Setting 134 (Setup Anti-Flicker)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-134"><code class="xref">Setting 134 (Setup Anti-Flicker)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-135"><code class="xref">Setting 135 (Hypersmooth)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-135"><code class="xref">Setting 135 (Hypersmooth)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-150"><code class="xref">Setting 150 (Video Horizon Leveling)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-150"><code class="xref">Setting 150 (Video Horizon Leveling)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-151"><code class="xref">Setting 151 (Photo Horizon Leveling)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-151"><code class="xref">Setting 151 (Photo Horizon Leveling)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-162"><code class="xref">Setting 162 (Max Lens)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-162"><code class="xref">Setting 162 (Max Lens)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-167"><code class="xref">Setting 167 (HindSight)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-167"><code class="xref">Setting 167 (HindSight)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-43"><code class="xref">Setting 43 (Webcam Digital Lenses)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-43"><code class="xref">Setting 43 (Webcam Digital Lenses)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-171"><code class="xref">Setting 171 (Photo Single Interval)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-171"><code class="xref">Setting 171 (Photo Single Interval)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-172"><code class="xref">Setting 172 (Photo Interval Duration)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-172"><code class="xref">Setting 172 (Photo Interval Duration)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-173"><code class="xref">Setting 173 (Video Performance Mode)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-173"><code class="xref">Setting 173 (Video Performance Mode)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-175"><code class="xref">Setting 175 (Controls)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-175"><code class="xref">Setting 175 (Controls)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-176"><code class="xref">Setting 176 (Easy Mode Speed)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-176"><code class="xref">Setting 176 (Easy Mode Speed)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-177"><code class="xref">Setting 177 (Enable Night Photo)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-177"><code class="xref">Setting 177 (Enable Night Photo)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-178"><code class="xref">Setting 178 (Wireless Band)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-178"><code class="xref">Setting 178 (Wireless Band)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-179"><code class="xref">Setting 179 (Trail Length)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-179"><code class="xref">Setting 179 (Trail Length)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-180"><code class="xref">Setting 180 (System Video Mode)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-180"><code class="xref">Setting 180 (System Video Mode)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-182"><code class="xref">Setting 182 (Video Bit Rate)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-182"><code class="xref">Setting 182 (Video Bit Rate)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-183"><code class="xref">Setting 183 (Bit Depth)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-183"><code class="xref">Setting 183 (Bit Depth)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-184"><code class="xref">Setting 184 (Profiles)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-184"><code class="xref">Setting 184 (Profiles)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-186"><code class="xref">Setting 186 (Video Easy Mode)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-186"><code class="xref">Setting 186 (Video Easy Mode)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-59"><code class="xref">Setting 59 (Auto Power Down)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-59"><code class="xref">Setting 59 (Auto Power Down)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-187"><code class="xref">Setting 187 (Lapse Mode)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-187"><code class="xref">Setting 187 (Lapse Mode)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-189"><code class="xref">Setting 189 (Max Lens Mod)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-189"><code class="xref">Setting 189 (Max Lens Mod)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-190"><code class="xref">Setting 190 (Max Lens Mod Enable)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-190"><code class="xref">Setting 190 (Max Lens Mod Enable)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-191"><code class="xref">Setting 191 (Photo Mode)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-191"><code class="xref">Setting 191 (Photo Mode)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-192"><code class="xref">Setting 192 (Multi Shot Aspect Ratio)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-192"><code class="xref">Setting 192 (Multi Shot Aspect Ratio)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-193"><code class="xref">Setting 193 (Framing)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-193"><code class="xref">Setting 193 (Framing)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-83"><code class="xref">Setting 83 (GPS)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-83"><code class="xref">Setting 83 (GPS)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-108"><code class="xref">Setting 108 (Video Aspect Ratio)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-108"><code class="xref">Setting 108 (Video Aspect Ratio)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-121"><code class="xref">Setting 121 (Video Lens)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-121"><code class="xref">Setting 121 (Video Lens)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#setting-122"><code class="xref">Setting 122 (Photo Lens)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#setting-122"><code class="xref">Setting 122 (Photo Lens)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/settings.html#setting-123"><code class="xref">Setting 123 (Time Lapse Digital Lenses)</code></a> <em>(features/settings)</em></td><td>
-       <em>Setting</em></td></tr>
+<a href="features/settings.html#setting-123"><code class="xref">Setting 123 (Time Lapse Digital Lenses)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-1"><code class="xref">Status 1 (Is the system&#39;s internal battery present?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-1"><code class="xref">Status 1 (Is the system's internal battery present?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-2"><code class="xref">Status 2 (Rough approximation of internal battery level in bars (or charging))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-2"><code class="xref">Status 2 (Rough approximation of internal battery level in bars (or charging))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-6"><code class="xref">Status 6 (Is the system currently overheating?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-6"><code class="xref">Status 6 (Is the system currently overheating?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-8"><code class="xref">Status 8 (Is the camera busy?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-8"><code class="xref">Status 8 (Is the camera busy?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-9"><code class="xref">Status 9 (Is Quick Capture feature enabled?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-9"><code class="xref">Status 9 (Is Quick Capture feature enabled?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-10"><code class="xref">Status 10 (Is the system currently encoding?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-10"><code class="xref">Status 10 (Is the system currently encoding?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-11"><code class="xref">Status 11 (Is LCD lock active?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-11"><code class="xref">Status 11 (Is LCD lock active?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-13"><code class="xref">Status 13 (When encoding video, this is the duration (seconds) of the video so far; 0 otherwise)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-13"><code class="xref">Status 13 (When encoding video, this is the duration (seconds) of the video so far; 0 otherwise)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-17"><code class="xref">Status 17 (Are Wireless Connections enabled?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-17"><code class="xref">Status 17 (Are Wireless Connections enabled?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-19"><code class="xref">Status 19 (None)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-19"><code class="xref">Status 19 (None)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-20"><code class="xref">Status 20 (The last type of pairing in which the camera was engaged)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-20"><code class="xref">Status 20 (The last type of pairing in which the camera was engaged)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-21"><code class="xref">Status 21 (Time since boot (milliseconds) of last successful pairing complete action)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-21"><code class="xref">Status 21 (Time since boot (milliseconds) of last successful pairing complete action)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-22"><code class="xref">Status 22 (State of current scan for WiFi Access Points)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-22"><code class="xref">Status 22 (State of current scan for WiFi Access Points)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-23"><code class="xref">Status 23 (Time since boot (milliseconds) that the WiFi Access Point scan completed)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-23"><code class="xref">Status 23 (Time since boot (milliseconds) that the WiFi Access Point scan completed)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-24"><code class="xref">Status 24 (WiFi AP provisioning state)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-24"><code class="xref">Status 24 (WiFi AP provisioning state)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-26"><code class="xref">Status 26 (Wireless remote control version)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-26"><code class="xref">Status 26 (Wireless remote control version)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-27"><code class="xref">Status 27 (Is a wireless remote control connected?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-27"><code class="xref">Status 27 (Is a wireless remote control connected?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-28"><code class="xref">Status 28 (Wireless Pairing State. Each bit contains state information (see WirelessPairingStateFlags))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-28"><code class="xref">Status 28 (Wireless Pairing State. Each bit contains state information (see WirelessPairingStateFlags))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-29"><code class="xref">Status 29 (SSID of the AP the camera is currently connected to. On BLE connection, value is big-endian byte-encoded int32)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-29"><code class="xref">Status 29 (SSID of the AP the camera is currently connected to. On BLE connection, value is big-endian byte-encoded int32)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-30"><code class="xref">Status 30 (The camera&#39;s WiFi SSID. On BLE connection, value is big-endian byte-encoded int32)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-30"><code class="xref">Status 30 (The camera's WiFi SSID. On BLE connection, value is big-endian byte-encoded int32)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-31"><code class="xref">Status 31 (The number of wireless devices connected to the camera)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-31"><code class="xref">Status 31 (The number of wireless devices connected to the camera)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-32"><code class="xref">Status 32 (Is Preview Stream enabled?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-32"><code class="xref">Status 32 (Is Preview Stream enabled?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-33"><code class="xref">Status 33 (None)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-33"><code class="xref">Status 33 (None)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-34"><code class="xref">Status 34 (How many photos can be taken with current settings before sdcard is full)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-34"><code class="xref">Status 34 (How many photos can be taken with current settings before sdcard is full)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-35"><code class="xref">Status 35 (How many minutes of video can be captured with current settings before sdcard is full)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-35"><code class="xref">Status 35 (How many minutes of video can be captured with current settings before sdcard is full)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-38"><code class="xref">Status 38 (Total number of photos on sdcard)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-38"><code class="xref">Status 38 (Total number of photos on sdcard)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-39"><code class="xref">Status 39 (Total number of videos on sdcard)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-39"><code class="xref">Status 39 (Total number of videos on sdcard)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-41"><code class="xref">Status 41 (The current status of Over The Air (OTA) update)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-41"><code class="xref">Status 41 (The current status of Over The Air (OTA) update)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-42"><code class="xref">Status 42 (Is there a pending request to cancel a firmware update download?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-42"><code class="xref">Status 42 (Is there a pending request to cancel a firmware update download?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-45"><code class="xref">Status 45 (Is locate camera feature active?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-45"><code class="xref">Status 45 (Is locate camera feature active?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-49"><code class="xref">Status 49 (The current timelapse interval countdown value (e.g. 5...4...3...2...1...))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-49"><code class="xref">Status 49 (The current timelapse interval countdown value (e.g. 5...4...3...2...1...))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-54"><code class="xref">Status 54 (Remaining space on the sdcard in Kilobytes)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-54"><code class="xref">Status 54 (Remaining space on the sdcard in Kilobytes)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-55"><code class="xref">Status 55 (Is preview stream supported in current recording/mode/secondary-stream?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-55"><code class="xref">Status 55 (Is preview stream supported in current recording/mode/secondary-stream?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-56"><code class="xref">Status 56 (WiFi signal strength in bars)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+<a href="features/statuses.html#status-56"><code class="xref">Status 56 (WiFi signal strength in bars)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-58"><code class="xref">Status 58 (The number of hilights in currently-encoding video (value is set to 0 when encoding stops))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-58"><code class="xref">Status 58 (The number of hilights in currently-encoding video (value is set to 0 when encoding stops))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-59"><code class="xref">Status 59 (Time since boot (milliseconds) of most recent hilight in encoding video (set to 0 when encoding stops))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-59"><code class="xref">Status 59 (Time since boot (milliseconds) of most recent hilight in encoding video (set to 0 when encoding stops))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
+       <td>
+</td>
        <td>
-       <a href="features/statuses.html#status-60"><code class="xref">Status 60 (The minimum time between camera status updates (milliseconds). Best practice is to not poll for status more
+<a href="features/statuses.html#status-60"><code class="xref">Status 60 (The minimum time between camera status updates (milliseconds). Best practice is to not poll for status more
 often than this
-)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-65"><code class="xref">Status 65 (None)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-65"><code class="xref">Status 65 (None)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-66"><code class="xref">Status 66 (Liveview Exposure Select: y-coordinate (percent))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-66"><code class="xref">Status 66 (Liveview Exposure Select: y-coordinate (percent))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-67"><code class="xref">Status 67 (Liveview Exposure Select: y-coordinate (percent))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-67"><code class="xref">Status 67 (Liveview Exposure Select: y-coordinate (percent))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-68"><code class="xref">Status 68 (Does the camera currently have a GPS lock?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-68"><code class="xref">Status 68 (Does the camera currently have a GPS lock?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-69"><code class="xref">Status 69 (Is AP mode enabled?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-69"><code class="xref">Status 69 (Is AP mode enabled?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-70"><code class="xref">Status 70 (Internal battery level (percent))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-70"><code class="xref">Status 70 (Internal battery level (percent))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-74"><code class="xref">Status 74 (None)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-74"><code class="xref">Status 74 (None)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-75"><code class="xref">Status 75 (Digital Zoom level (percent))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-75"><code class="xref">Status 75 (Digital Zoom level (percent))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-76"><code class="xref">Status 76 (None)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-76"><code class="xref">Status 76 (None)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-77"><code class="xref">Status 77 (Is Digital Zoom feature available?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-77"><code class="xref">Status 77 (Is Digital Zoom feature available?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-78"><code class="xref">Status 78 (Are current video settings mobile friendly? (related to video compression and frame rate))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-78"><code class="xref">Status 78 (Are current video settings mobile friendly? (related to video compression and frame rate))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-79"><code class="xref">Status 79 (Is the camera currently in First Time Use (FTU) UI flow?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-79"><code class="xref">Status 79 (Is the camera currently in First Time Use (FTU) UI flow?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-81"><code class="xref">Status 81 (Is 5GHz wireless band available?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-81"><code class="xref">Status 81 (Is 5GHz wireless band available?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-82"><code class="xref">Status 82 (Is the system fully booted and ready to accept commands?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-82"><code class="xref">Status 82 (Is the system fully booted and ready to accept commands?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-83"><code class="xref">Status 83 (Is the internal battery charged sufficiently to start Over The Air (OTA) update?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-83"><code class="xref">Status 83 (Is the internal battery charged sufficiently to start Over The Air (OTA) update?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-85"><code class="xref">Status 85 (Is the camera getting too cold to continue recording?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-85"><code class="xref">Status 85 (Is the camera getting too cold to continue recording?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-86"><code class="xref">Status 86 (Rotational orientation of the camera)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-86"><code class="xref">Status 86 (Rotational orientation of the camera)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-88"><code class="xref">Status 88 (Is this camera model capable of zooming while encoding?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-88"><code class="xref">Status 88 (Is this camera model capable of zooming while encoding?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-89"><code class="xref">Status 89 (Current Flatmode ID)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-89"><code class="xref">Status 89 (Current Flatmode ID)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-93"><code class="xref">Status 93 (Current Video Preset (ID))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-93"><code class="xref">Status 93 (Current Video Preset (ID))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-94"><code class="xref">Status 94 (Current Photo Preset (ID))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-94"><code class="xref">Status 94 (Current Photo Preset (ID))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-95"><code class="xref">Status 95 (Current Time Lapse Preset (ID))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-95"><code class="xref">Status 95 (Current Time Lapse Preset (ID))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-96"><code class="xref">Status 96 (Current Preset Group (ID) (corresponds to ui_mode_groups in settings.json))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-96"><code class="xref">Status 96 (Current Preset Group (ID) (corresponds to ui_mode_groups in settings.json))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-97"><code class="xref">Status 97 (Current Preset (ID))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-97"><code class="xref">Status 97 (Current Preset (ID))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-98"><code class="xref">Status 98 (Preset Modified Status, which contains an event ID and a Preset (Group) ID)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-98"><code class="xref">Status 98 (Preset Modified Status, which contains an event ID and a Preset (Group) ID)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-99"><code class="xref">Status 99 (The number of Live Bursts can be captured with current settings before sdcard is full)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-99"><code class="xref">Status 99 (The number of Live Bursts can be captured with current settings before sdcard is full)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-100"><code class="xref">Status 100 (Total number of Live Bursts on sdcard)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-100"><code class="xref">Status 100 (Total number of Live Bursts on sdcard)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-101"><code class="xref">Status 101 (Is Capture Delay currently active (i.e. counting down)?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-101"><code class="xref">Status 101 (Is Capture Delay currently active (i.e. counting down)?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-102"><code class="xref">Status 102 (None)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-102"><code class="xref">Status 102 (None)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-103"><code class="xref">Status 103 (None)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-103"><code class="xref">Status 103 (None)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-104"><code class="xref">Status 104 (Is the system&#39;s Linux core active?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-104"><code class="xref">Status 104 (Is the system's Linux core active?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-105"><code class="xref">Status 105 (Camera lens type (reflects changes to lens settings such as 162, 189, 194, ...))</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-105"><code class="xref">Status 105 (Camera lens type (reflects changes to lens settings such as 162, 189, 194, ...))</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-106"><code class="xref">Status 106 (Is Video Hindsight Capture Active?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-106"><code class="xref">Status 106 (Is Video Hindsight Capture Active?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-107"><code class="xref">Status 107 (None)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-107"><code class="xref">Status 107 (None)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-108"><code class="xref">Status 108 (Is Scheduled Capture set?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-108"><code class="xref">Status 108 (Is Scheduled Capture set?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-110"><code class="xref">Status 110 (Note that this is a bitmasked value.)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-110"><code class="xref">Status 110 (Note that this is a bitmasked value.)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-111"><code class="xref">Status 111 (Does sdcard meet specified minimum write speed?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-111"><code class="xref">Status 111 (Does sdcard meet specified minimum write speed?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-112"><code class="xref">Status 112 (Number of sdcard write speed errors since device booted)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-112"><code class="xref">Status 112 (Number of sdcard write speed errors since device booted)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-113"><code class="xref">Status 113 (Is Turbo Transfer active?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-113"><code class="xref">Status 113 (Is Turbo Transfer active?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-114"><code class="xref">Status 114 (Camera control status ID)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-114"><code class="xref">Status 114 (Camera control status ID)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-115"><code class="xref">Status 115 (Is the camera connected to a PC via USB?)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-115"><code class="xref">Status 115 (Is the camera connected to a PC via USB?)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-116"><code class="xref">Status 116 (Camera control over USB state)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-116"><code class="xref">Status 116 (Camera control over USB state)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-117"><code class="xref">Status 117 (Total SD card capacity in Kilobytes)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-117"><code class="xref">Status 117 (Total SD card capacity in Kilobytes)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/statuses.html#status-118"><code class="xref">Status 118 (None)</code></a> <em>(features/statuses)</em></td><td>
-       <em>Status</em></td></tr>
+</td>
+       <td>
+<a href="features/statuses.html#status-118"><code class="xref">Status 118 (None)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/access_points.html#scan-for-access-points"><code class="xref">scan for access points</code></a> <em>(features/access_points)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/access_points.html#scan-for-access-points"><code class="xref">scan for access points</code></a> <em>(features/access_points)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/cohn.html#set-cohn-setting"><code class="xref">set cohn setting</code></a> <em>(features/cohn)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/cohn.html#set-cohn-setting"><code class="xref">set cohn setting</code></a> <em>(features/cohn)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/control.html#set-analytics"><code class="xref">set analytics</code></a> <em>(features/control)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/control.html#set-analytics"><code class="xref">set analytics</code></a> <em>(features/control)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/control.html#set-ap-control"><code class="xref">set ap control</code></a> <em>(features/control)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/control.html#set-ap-control"><code class="xref">set ap control</code></a> <em>(features/control)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/control.html#set-camera-control"><code class="xref">set camera control</code></a> <em>(features/control)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/control.html#set-camera-control"><code class="xref">set camera control</code></a> <em>(features/control)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/control.html#set-date-time"><code class="xref">set date time</code></a> <em>(features/control)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/control.html#set-date-time"><code class="xref">set date time</code></a> <em>(features/control)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/control.html#set-local-date-time"><code class="xref">set local date time</code></a> <em>(features/control)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/control.html#set-local-date-time"><code class="xref">set local date time</code></a> <em>(features/control)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/control.html#set-shutter"><code class="xref">set shutter</code></a> <em>(features/control)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/control.html#set-shutter"><code class="xref">set shutter</code></a> <em>(features/control)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/control.html#set-turbo-transfer"><code class="xref">set turbo transfer</code></a> <em>(features/control)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/control.html#set-turbo-transfer"><code class="xref">set turbo transfer</code></a> <em>(features/control)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/control.html#sleep"><code class="xref">sleep</code></a> <em>(features/control)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/control.html#sleep"><code class="xref">sleep</code></a> <em>(features/control)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/live_streaming.html#set-livestream-mode"><code class="xref">set livestream mode</code></a> <em>(features/live_streaming)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/live_streaming.html#set-livestream-mode"><code class="xref">set livestream mode</code></a> <em>(features/live_streaming)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/settings.html#set-setting"><code class="xref">set setting</code></a> <em>(features/settings)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/settings.html#set-setting"><code class="xref">set setting</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="protocol/protobuf.html#scanentry"><code class="xref">ScanEntry</code></a> <em>(protocol/protobuf)</em></td><td>
-       <em>Proto</em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-u"><td></td><td>
-       <strong>u</strong></td><td></td></tr>
+</td>
+       <td>
+<a href="protocol/protobuf.html#scanentry"><code class="xref">ScanEntry</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr class="pcap">
+<td>
+</td>
+<td> </td>
+<td>
+</td>
+</tr>
+     <tr class="cap" id="cap-u">
+<td>
+</td>
+<td><strong>u</strong></td>
+<td>
+</td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/presets.html#update-custom-preset"><code class="xref">update custom preset</code></a> <em>(features/presets)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/presets.html#update-custom-preset"><code class="xref">update custom preset</code></a> <em>(features/presets)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/query.html#unregister-for-setting-value-updates"><code class="xref">unregister for setting value updates</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/query.html#unregister-for-setting-value-updates"><code class="xref">unregister for setting value updates</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/query.html#unregister-for-status-value-updates"><code class="xref">unregister for status value updates</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/query.html#unregister-for-status-value-updates"><code class="xref">unregister for status value updates</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
      <tr>
-       <td></td>
        <td>
-       <a href="features/query.html#unregister-for-setting-capability-updates"><code class="xref">unregister for setting capability updates</code></a> <em>(features/query)</em></td><td>
-       <em>Operation</em></td></tr>
+</td>
+       <td>
+<a href="features/query.html#unregister-for-setting-capability-updates"><code class="xref">unregister for setting capability updates</code></a> <em>(features/query)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
    </table>
 
 
@@ -1507,10 +2429,10 @@ often than this
           </div>
           <footer>
 
-  <hr/>
+  <hr>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023.</p>
+    <p>© Copyright 2023.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
@@ -1529,5 +2451,7 @@ often than this
       });
   </script> 
 
-</body>
+
+
+    </body>
 </html>

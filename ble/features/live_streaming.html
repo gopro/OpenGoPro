@@ -1,13 +1,148 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<html class="writer-html5">
+    <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Live Streaming &mdash; Open GoPro BLE API 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=d4d8e761" />
+<!-- begin _includes/seo.html --><title>Open GoPro :  Open GoPro</title>
+<meta name="description" content="Open Source GoPro Interface">
+
+
+  <meta name="author" content="GoPro">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Open GoPro">
+<meta property="og:title" content="Open GoPro">
+<meta property="og:url" content="https://gopro.github.io/OpenGoPro/ble">
+
+
+  <meta property="og:description" content="Open Source GoPro Interface">
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://gopro.github.io/OpenGoPro/ble">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- TODO This is probably where our masthead highlighting is going wrong -->
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/OpenGoPro/assets/css/main_spec.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+  
+    <script src="/OpenGoPro/assets/js/tabs.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/quiz.js"></script>
+  
+    <script src="/OpenGoPro/assets/js/accordion.js"></script>
+  
+
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+<script>
+    // Add anchors on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function (event) {
+        var manualAnchors = new AnchorJS();
+        manualAnchors.options = {
+            titleText: 'Permalink',
+            placement: 'left'
+        };
+        manualAnchors.add('.anchored');
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/OpenGoPro/assets/images/logos/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/OpenGoPro/assets/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/OpenGoPro/assets/images/logos/favicon-16x16.png">
+<link rel="manifest" href="/OpenGoPro/assets/images/logos/site.webmanifest">
+<link rel="mask-icon" href="/OpenGoPro/assets/images/logos/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/OpenGoPro/assets/images/logos/favicon.ico">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="msapplication-config" content="/assets/images/logos/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+    </head>
+    <body>
+        
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
+        
+        <a class="site-title" href="/OpenGoPro/">
+          Open GoPro
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/ble/">BLE Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/http">HTTP Spec</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/tutorials">Tutorials</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="https://github.com/gopro/OpenGoPro/tree/main/demos">Demos</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/OpenGoPro/faq">FAQ</a>
+            </li>
+</ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+        
+
+
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Streaming — Open GoPro BLE API 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1">
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094">
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=d4d8e761">
 
   
   <!--[if lt IE 9]>
@@ -20,17 +155,17 @@
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Camera on the Home Network" href="cohn.html" />
-    <link rel="prev" title="Access Point" href="access_points.html" /> 
-</head>
+    <link rel="index" title="Index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="next" title="Camera on the Home Network" href="cohn.html">
+    <link rel="prev" title="Access Point" href="access_points.html"> 
 
-<body class="wy-body-for-nav"> 
+
+ 
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
 
           
           
@@ -39,45 +174,54 @@
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+        </div>
+<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../protocol.html">Protocol</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="../protocol.html">Protocol</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#pairing-mode">Pairing Mode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#finish-pairing">Finish Pairing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#ble-characteristics">BLE Characteristics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#send-messages">Send Messages</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/data_protocol.html">Data Protocol</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#packetization">Packetization</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/data_protocol.html">Data Protocol</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/data_protocol.html#packetization">Packetization</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#packet-headers">Packet Headers</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#decipher-message-payload-type">Decipher Message Payload Type</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/data_protocol.html#message-payload">Message Payload</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/data_protocol.html#message-payload">Message Payload</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#type-length-value">Type Length Value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/data_protocol.html#protobuf">Protobuf</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/state_management.html">State Management</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/state_management.html">State Management</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#camera-readiness">Camera Readiness</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#keep-alive">Keep Alive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/state_management.html#camera-control">Camera Control</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/id_tables.html">ID Tables</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/id_tables.html">ID Tables</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#command-ids">Command IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#query-ids">Query IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#protobuf-ids">Protobuf IDs</a></li>
@@ -85,8 +229,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../protocol/id_tables.html#status-ids">Status IDs</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../protocol/protobuf.html">Protobuf Documentation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#enums">Enums</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../protocol/protobuf.html">Protobuf Documentation</a><ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../protocol/protobuf.html#enums">Enums</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcohnnetworkstate">EnumCOHNNetworkState</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcohnstatus">EnumCOHNStatus</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumcameracontrolstatus">EnumCameraControlStatus</a></li>
@@ -147,8 +293,10 @@
 </li>
 </ul>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="control.html">Control</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="control.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="control.html">Control</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="control.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="control.html#keep-alive"><code class="docutils literal notranslate"><span class="pre">Keep</span> <span class="pre">Alive</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
@@ -162,8 +310,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="query.html">Query</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="query.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="query.html">Query</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="query.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="query.html#get-date-time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="query.html#get-hardware-info"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Hardware</span> <span class="pre">Info</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="query.html#get-local-date-time"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
@@ -182,8 +332,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="access_points.html">Access Point</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="access_points.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="access_points.html">Access Point</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="access_points.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#scan-for-access-points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#get-ap-scan-results"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">AP</span> <span class="pre">Scan</span> <span class="pre">Results</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#connect-to-provisioned-access-point"><code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">Provisioned</span> <span class="pre">Access</span> <span class="pre">Point</span></code></a></li>
@@ -193,22 +345,27 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Live Streaming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#operations">Operations</a><ul>
+<li class="toctree-l1 current">
+<a class="current reference internal" href="#">Live Streaming</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#set-livestream-mode"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#get-livestream-status"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Livestream</span> <span class="pre">Status</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cohn.html">Camera on the Home Network</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cohn.html#certificates">Certificates</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="cohn.html">Camera on the Home Network</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="cohn.html#certificates">Certificates</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#verifying-certificate">Verifying Certificate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#view-certificate-details">View Certificate Details</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="cohn.html#provisioning-procedure">Provisioning Procedure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cohn.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="cohn.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#clear-cohn-certificate"><code class="docutils literal notranslate"><span class="pre">Clear</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#create-cohn-certificate"><code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cohn.html#get-cohn-certificate"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">COHN</span> <span class="pre">Certificate</span></code></a></li>
@@ -218,17 +375,21 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="hilights.html">Hilights</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hilights.html#operations">Operations</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="hilights.html">Hilights</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="hilights.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="hilights.html#hilight-moment"><code class="docutils literal notranslate"><span class="pre">Hilight</span> <span class="pre">Moment</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="presets.html">Presets</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="presets.html">Presets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="presets.html#preset-groups">Preset Groups</a></li>
 <li class="toctree-l2"><a class="reference internal" href="presets.html#preset-modified-status">Preset Modified Status</a></li>
-<li class="toctree-l2"><a class="reference internal" href="presets.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="presets.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#get-available-presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load-preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load-preset-group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
@@ -237,17 +398,21 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="settings.html#camera-capabilities">Camera Capabilities</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="settings.html">Settings</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="settings.html#camera-capabilities">Camera Capabilities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#xlsx">XLSX</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#json">JSON</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="settings.html#operations">Operations</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="settings.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#set-setting"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="settings.html#setting-ids">Setting IDs</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="settings.html#setting-ids">Setting IDs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#video-resolution-2">Video Resolution (2)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#frames-per-second-3">Frames Per Second (3)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#webcam-digital-lenses-43">Webcam Digital Lenses (43)</a></li>
@@ -287,8 +452,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="statuses.html">Statuses</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="statuses.html#status-ids">Status IDs</a><ul>
+<li class="toctree-l1">
+<a class="reference internal" href="statuses.html">Statuses</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="statuses.html#status-ids">Status IDs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="statuses.html#battery-present-1">Battery Present (1)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statuses.html#internal-battery-bars-2">Internal Battery Bars (2)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statuses.html#overheating-6">Overheating (6)</a></li>
@@ -380,7 +547,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Open GoPro BLE API</a>
       </nav>
@@ -394,13 +561,14 @@
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
-  <hr/>
+  <hr>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
   <section id="live-streaming">
-<h1>Live Streaming<a class="headerlink" href="#live-streaming" title="Link to this heading"></a></h1>
+<h1>Live Streaming<a class="headerlink" href="#live-streaming" title="Link to this heading"></a>
+</h1>
 <p>The camera supports the ability to stream to social media platforms such as Twitch, YouTube, Facebook or any other site
 that accepts RTMP(S) URLs.</p>
 <p>For additional details about getting started with RTMP, see
@@ -413,20 +581,25 @@ that accepts RTMP(S) URLs.</p>
 <li><p>Set the shutter to begin live streaming</p></li>
 <li><p>Unset the shutter to stop live streaming</p></li>
 </ol>
-<img alt="../_images/plantuml_ble_live_streaming.png" src="../_images/plantuml_ble_live_streaming.png" />
+<img alt="../_images/plantuml_ble_live_streaming.png" src="../_images/plantuml_ble_live_streaming.png">
 <section id="operations">
-<h2>Operations<a class="headerlink" href="#operations" title="Link to this heading"></a></h2>
+<h2>Operations<a class="headerlink" href="#operations" title="Link to this heading"></a>
+</h2>
 <dl class="operation protobuf">
 <dt class="sig sig-object operation" id="set-livestream-mode">
-<span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></span><a class="headerlink" href="#set-livestream-mode" title="Link to this definition"></a></dt>
-<dd><img alt="https://img.shields.io/badge/HERO12 Black-f58231" src="https://img.shields.io/badge/HERO12 Black-f58231" />
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-911eb4" src="https://img.shields.io/badge/HERO11 Black Mini-911eb4" />
-<img alt="https://img.shields.io/badge/HERO11 Black-f032e6" src="https://img.shields.io/badge/HERO11 Black-f032e6" />
-<img alt="https://img.shields.io/badge/HERO10 Black-bcf60c" src="https://img.shields.io/badge/HERO10 Black-bcf60c" />
-<img alt="https://img.shields.io/badge/HERO9 Black-fabebe" src="https://img.shields.io/badge/HERO9 Black-fabebe" />
+<span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></span><a class="headerlink" href="#set-livestream-mode" title="Link to this definition"></a>
+</dt>
+<dd>
+<img alt="https://img.shields.io/badge/HERO12 Black-f58231" src="https://img.shields.io/badge/HERO12%20Black-f58231">
+<img alt="https://img.shields.io/badge/HERO11 Black Mini-911eb4" src="https://img.shields.io/badge/HERO11%20Black%20Mini-911eb4">
+<img alt="https://img.shields.io/badge/HERO11 Black-f032e6" src="https://img.shields.io/badge/HERO11%20Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10 Black-bcf60c" src="https://img.shields.io/badge/HERO10%20Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9 Black-fabebe" src="https://img.shields.io/badge/HERO9%20Black-fabebe">
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
 </dd>
 </dl>
 <div class="admonition note">
@@ -435,122 +608,177 @@ that accepts RTMP(S) URLs.</p>
 </div>
 <dl class="operation protobuf-message" id="protobuf-message-0">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Request</span></span></dt>
-<dd><p>Configure Live Streaming</p>
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd>
+<p>Configure Live Streaming</p>
 <p>Response: <a class="reference internal" href="../protocol/protobuf.html#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
-</dd></dl>
+</dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
 </dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0xF1</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
 <dd class="field-odd">0x79</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>RequestSetLiveStreamMode (<a class="reference external" href="../protocol/protobuf.html#requestsetlivestreammode"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto"><em>source</em></a>)</p>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>RequestSetLiveStreamMode (<a class="reference external" href="../protocol/protobuf.html#requestsetlivestreammode"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
 <dl class="operation protobuf-message" id="protobuf-message-1">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Response</span></span></dt>
-<dd><p>Generic Response used across many response / notification messages</p>
-</dd></dl>
-
-<dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
-</dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
-<dd class="field-even">0xF1</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
-<dd class="field-odd">0xF9</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>ResponseGeneric (<a class="reference external" href="../protocol/protobuf.html#responsegeneric"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto"><em>source</em></a>)</p>
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd>
+<p>Generic Response used across many response / notification messages</p>
 </dd>
 </dl>
-</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0xF1</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">0xF9</dd>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>ResponseGeneric (<a class="reference external" href="../protocol/protobuf.html#responsegeneric"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+</dd>
+</dl>
 
 <dl class="operation protobuf">
 <dt class="sig sig-object operation" id="get-livestream-status">
-<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Livestream</span> <span class="pre">Status</span></span><a class="headerlink" href="#get-livestream-status" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
+<span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Livestream</span> <span class="pre">Status</span></span><a class="headerlink" href="#get-livestream-status" title="Link to this definition"></a>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
 </dd>
 </dl>
 <dl class="operation protobuf-message" id="protobuf-message-2">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Request</span></span></dt>
-<dd><p>Get the current livestream status (and optionally register for future status changes)</p>
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd>
+<p>Get the current livestream status (and optionally register for future status changes)</p>
 <p>Response: <a class="reference internal" href="../protocol/protobuf.html#proto-notifylivestreamstatus"><span class="std std-ref">NotifyLiveStreamStatus</span></a></p>
 <p>Notification: <a class="reference internal" href="../protocol/protobuf.html#proto-notifylivestreamstatus"><span class="std std-ref">NotifyLiveStreamStatus</span></a></p>
-</dd></dl>
+</dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
 </dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0xF5</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
 <dd class="field-odd">0x74</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>RequestGetLiveStreamStatus (<a class="reference external" href="../protocol/protobuf.html#requestgetlivestreamstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto"><em>source</em></a>)</p>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>RequestGetLiveStreamStatus (<a class="reference external" href="../protocol/protobuf.html#requestgetlivestreamstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
 <dl class="operation protobuf-message" id="protobuf-message-3">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Response</span></span></dt>
-<dd><p>Live Stream status</p>
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd>
+<p>Live Stream status</p>
 <p>Sent either:</p>
 <blockquote>
-<div><ul class="simple">
+<div>
+<ul class="simple">
 <li><p>As a synchronous response to initial <a class="reference internal" href="../protocol/protobuf.html#proto-requestgetlivestreamstatus"><span class="std std-ref">RequestGetLiveStreamStatus</span></a></p></li>
 <li><p>As an asynchronous notifications registered for via <a class="reference internal" href="../protocol/protobuf.html#proto-requestgetlivestreamstatus"><span class="std std-ref">RequestGetLiveStreamStatus</span></a></p></li>
 </ul>
-</div></blockquote>
-</dd></dl>
+</div>
+</blockquote>
+</dd>
+</dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
 </dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
 <dd class="field-even">0xF5</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
 <dd class="field-odd">0xF4</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>NotifyLiveStreamStatus (<a class="reference external" href="../protocol/protobuf.html#notifylivestreamstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto"><em>source</em></a>)</p>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>NotifyLiveStreamStatus (<a class="reference external" href="../protocol/protobuf.html#notifylivestreamstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
 <dl class="operation protobuf-message" id="protobuf-message-4">
 <dt class="sig sig-object operation">
-<span class="sig-name descname"><span class="pre">Notification</span></span></dt>
-<dd><p>Live Stream status</p>
+<span class="sig-name descname"><span class="pre">Notification</span></span>
+</dt>
+<dd>
+<p>Live Stream status</p>
 <p>Sent either:</p>
 <blockquote>
-<div><ul class="simple">
+<div>
+<ul class="simple">
 <li><p>As a synchronous response to initial <a class="reference internal" href="../protocol/protobuf.html#proto-requestgetlivestreamstatus"><span class="std std-ref">RequestGetLiveStreamStatus</span></a></p></li>
 <li><p>As an asynchronous notifications registered for via <a class="reference internal" href="../protocol/protobuf.html#proto-requestgetlivestreamstatus"><span class="std std-ref">RequestGetLiveStreamStatus</span></a></p></li>
 </ul>
-</div></blockquote>
-</dd></dl>
-
-<dl class="field-list simple">
-<dt class="field-odd">UUID<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
-</dd>
-<dt class="field-even">Feature ID<span class="colon">:</span></dt>
-<dd class="field-even">0xF5</dd>
-<dt class="field-odd">Action ID<span class="colon">:</span></dt>
-<dd class="field-odd">0xF5</dd>
-<dt class="field-even">Message<span class="colon">:</span></dt>
-<dd class="field-even"><p>NotifyLiveStreamStatus (<a class="reference external" href="../protocol/protobuf.html#notifylivestreamstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto"><em>source</em></a>)</p>
+</div>
+</blockquote>
 </dd>
 </dl>
-</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0xF5</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">0xF5</dd>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>NotifyLiveStreamStatus (<a class="reference external" href="../protocol/protobuf.html#notifylivestreamstatus"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+</dd>
+</dl>
 
 </section>
 </section>
@@ -563,10 +791,10 @@ that accepts RTMP(S) URLs.</p>
         <a href="cohn.html" class="btn btn-neutral float-right" title="Camera on the Home Network" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
-  <hr/>
+  <hr>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023.</p>
+    <p>© Copyright 2023.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
@@ -585,5 +813,7 @@ that accepts RTMP(S) URLs.</p>
       });
   </script> 
 
-</body>
+
+
+    </body>
 </html>
