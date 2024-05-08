@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2024-05-06T18:28:17-07:00">
+  <meta property="article:published_time" content="2024-05-08T13:55:14-07:00">
 
 
 
@@ -427,7 +427,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 4: BLE TLV Queries">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to use the Open GoPro Interface to query the camera’s settingand status information via BLE.">
-    <meta itemprop="datePublished" content="2024-05-06T18:28:17-07:00">
+    <meta itemprop="datePublished" content="2024-05-08T13:55:14-07:00">
     
 
     <div class="page__inner-wrap">
@@ -521,7 +521,7 @@ through this tutorial.</span>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="87cc24ff-8736-4e59-8a21-339eec40bc21">
+    <ul class="tab tab-linked" data-tab="af0c2a34-034f-4de7-81e9-055e0d722cf8">
         
             <li class="active">
                 <a href="">python </a>
@@ -532,7 +532,7 @@ through this tutorial.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="87cc24ff-8736-4e59-8a21-339eec40bc21">
+        <ul class="tab-content" id="af0c2a34-034f-4de7-81e9-055e0d722cf8">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 4
@@ -658,7 +658,7 @@ check the BLE status at the top of the app.</p>
 <a href="/OpenGoPro/tutorials/connect-ble">connecting BLE tutorial</a>.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="c811f339-a962-4b21-8043-e77388156f24">
+    <ul class="tab tab-linked" data-tab="33c37da1-9293-4dcc-9ca3-9037c64b7768">
         
             <li class="active">
                 <a href="">python </a>
@@ -669,7 +669,7 @@ check the BLE status at the top of the app.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="c811f339-a962-4b21-8043-e77388156f24">
+        <ul class="tab-content" id="33c37da1-9293-4dcc-9ca3-9037c64b7768">
         
             <li class="active tab-content-container">
 <p>We have slightly updated the notification handler from the previous tutorial to handle a <code class="language-plaintext highlighter-rouge">QueryResponse</code> instead of
@@ -820,7 +820,7 @@ The next step is to parse the payload.</p>
 storing each value in a hash map indexed by ID for later access.</p>
 
     <div>
-    <ul class="tab tab-linked" data-tab="e28fc9ef-60be-485f-9ae1-82f9cc8631f1">
+    <ul class="tab tab-linked" data-tab="1bcb332f-98e1-4479-aa02-874d95aa1c1c">
         
             <li class="active">
                 <a href="">python </a>
@@ -831,7 +831,7 @@ storing each value in a hash map indexed by ID for later access.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="e28fc9ef-60be-485f-9ae1-82f9cc8631f1">
+        <ul class="tab-content" id="1bcb332f-98e1-4479-aa02-874d95aa1c1c">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">QueryResponse</span><span class="p">(</span><span class="n">TlvResponse</span><span class="p">):</span>
@@ -888,10 +888,10 @@ storing each value in a hash map indexed by ID for later access.</p>
   </div>
 </div>
 
-<div id="quiz_0d90f8d7-7179-4508-b6b9-03d1a2952802" class="quiz">
+<div id="quiz_d2c1457a-6417-4268-a7c2-066c32b38632" class="quiz">
     <div>
-        <div id="question_0d90f8d7-7179-4508-b6b9-03d1a2952802" class="quiz__question">How many packets are query responses?</div>
-        <div id="answers_0d90f8d7-7179-4508-b6b9-03d1a2952802">
+        <div id="question_d2c1457a-6417-4268-a7c2-066c32b38632" class="quiz__question">How many packets are query responses?</div>
+        <div id="answers_d2c1457a-6417-4268-a7c2-066c32b38632">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -904,19 +904,19 @@ storing each value in a hash map indexed by ID for later access.</p>
         
         </div>
     </div>
-    <button onclick="showResults('0d90f8d7-7179-4508-b6b9-03d1a2952802', 'C')">Submit Answer</button>
-    <div id="results_0d90f8d7-7179-4508-b6b9-03d1a2952802" style="display: none">
-        <span id="correct_0d90f8d7-7179-4508-b6b9-03d1a2952802" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_0d90f8d7-7179-4508-b6b9-03d1a2952802" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('d2c1457a-6417-4268-a7c2-066c32b38632', 'C')">Submit Answer</button>
+    <div id="results_d2c1457a-6417-4268-a7c2-066c32b38632" style="display: none">
+        <span id="correct_d2c1457a-6417-4268-a7c2-066c32b38632" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_d2c1457a-6417-4268-a7c2-066c32b38632" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Query responses can be one packet (if for example querying a specific
 setting) or multiple packets (when querying many or all settings as in the example here).
     </div>
 </div>
 
-<div id="quiz_81a7d056-b31e-4c13-a88d-b4630f36db4d" class="quiz">
+<div id="quiz_b16ee8a2-30f0-4cb5-95c4-c0503628b336" class="quiz">
     <div>
-        <div id="question_81a7d056-b31e-4c13-a88d-b4630f36db4d" class="quiz__question">Which field is not common to all TLV responses?</div>
-        <div id="answers_81a7d056-b31e-4c13-a88d-b4630f36db4d">
+        <div id="question_b16ee8a2-30f0-4cb5-95c4-c0503628b336" class="quiz__question">Which field is not common to all TLV responses?</div>
+        <div id="answers_b16ee8a2-30f0-4cb5-95c4-c0503628b336">
         
             <input type="radio" name="question" value="A"><label>A: length</label>
             <br>
@@ -932,10 +932,10 @@ setting) or multiple packets (when querying many or all settings as in the examp
         
         </div>
     </div>
-    <button onclick="showResults('81a7d056-b31e-4c13-a88d-b4630f36db4d', 'D')">Submit Answer</button>
-    <div id="results_81a7d056-b31e-4c13-a88d-b4630f36db4d" style="display: none">
-        <span id="correct_81a7d056-b31e-4c13-a88d-b4630f36db4d" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_81a7d056-b31e-4c13-a88d-b4630f36db4d" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
+    <button onclick="showResults('b16ee8a2-30f0-4cb5-95c4-c0503628b336', 'D')">Submit Answer</button>
+    <div id="results_b16ee8a2-30f0-4cb5-95c4-c0503628b336" style="display: none">
+        <span id="correct_b16ee8a2-30f0-4cb5-95c4-c0503628b336" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_b16ee8a2-30f0-4cb5-95c4-c0503628b336" style="display: none"> Incorrect!! 😭 The correct answer is D.</span>
         All Commands and Query responses have a length, ID, and status.
     </div>
 </div>
@@ -992,7 +992,7 @@ parse these responses as was described in
 <p>First we send the query:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="ba8c971f-0c1d-47a8-9505-0b2943e3046c">
+    <ul class="tab tab-linked" data-tab="09cea859-a501-405f-b849-5b21e02fea6e">
         
             <li class="active">
                 <a href="">python </a>
@@ -1003,7 +1003,7 @@ parse these responses as was described in
             </li>
         
         </ul>
-        <ul class="tab-content" id="ba8c971f-0c1d-47a8-9505-0b2943e3046c">
+        <ul class="tab-content" id="09cea859-a501-405f-b849-5b21e02fea6e">
         
             <li class="active tab-content-container">
 <div class="callout note">
@@ -1031,7 +1031,7 @@ parse these responses as was described in
 <code class="language-plaintext highlighter-rouge">QueryResponse</code> class and extract the new resolution value.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="df395354-e30b-4eca-b2ab-d60bb02cec75">
+    <ul class="tab tab-linked" data-tab="d8fcefb2-5d01-4a64-8a8c-7bec3c5c169e">
         
             <li class="active">
                 <a href="">python </a>
@@ -1042,7 +1042,7 @@ parse these responses as was described in
             </li>
         
         </ul>
-        <ul class="tab-content" id="df395354-e30b-4eca-b2ab-d60bb02cec75">
+        <ul class="tab-content" id="d8fcefb2-5d01-4a64-8a8c-7bec3c5c169e">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Wait to receive the notification response
@@ -1089,7 +1089,7 @@ Camera resolution is RES_1080
 has changed:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="f7c042bd-aed4-46f3-8ffe-eea7d3db07f5">
+    <ul class="tab tab-linked" data-tab="850a00ca-6c1e-40d8-aaf0-3990f84c623b">
         
             <li class="active">
                 <a href="">python </a>
@@ -1100,7 +1100,7 @@ has changed:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="f7c042bd-aed4-46f3-8ffe-eea7d3db07f5">
+        <ul class="tab-content" id="850a00ca-6c1e-40d8-aaf0-3990f84c623b">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="n">resolution</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">target_resolution</span><span class="p">:</span>
@@ -1170,7 +1170,7 @@ below. It is very similar to the previous example except that the query now incl
 and <a href="/OpenGoPro/ble/features/settings.html#setting-121">FOV</a>.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="80b5ed59-2316-49c4-8b07-d539bec9a28e">
+    <ul class="tab tab-linked" data-tab="f07852d0-bc88-4f23-81f5-e2b81d5952ee">
         
             <li class="active">
                 <a href="">python </a>
@@ -1181,7 +1181,7 @@ and <a href="/OpenGoPro/ble/features/settings.html#setting-121">FOV</a>.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="80b5ed59-2316-49c4-8b07-d539bec9a28e">
+        <ul class="tab-content" id="f07852d0-bc88-4f23-81f5-e2b81d5952ee">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RESOLUTION_ID</span> <span class="o">=</span> <span class="mi">2</span>
@@ -1209,7 +1209,7 @@ and <a href="/OpenGoPro/ble/features/settings.html#setting-121">FOV</a>.</p>
 <p>We are also parsing the response to get all 3 values:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="e8ef5b4f-d3d1-4d75-bcea-8901f359110b">
+    <ul class="tab tab-linked" data-tab="bad6424e-8e7e-4e30-a0d7-a09cda3f3d19">
         
             <li class="active">
                 <a href="">python </a>
@@ -1220,7 +1220,7 @@ and <a href="/OpenGoPro/ble/features/settings.html#setting-121">FOV</a>.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="e8ef5b4f-d3d1-4d75-bcea-8901f359110b">
+        <ul class="tab-content" id="bad6424e-8e7e-4e30-a0d7-a09cda3f3d19">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span><span class="p">.</span><span class="nf">parse</span><span class="p">()</span>
@@ -1247,7 +1247,7 @@ sometimes settings / statuses are bytes, words, strings, etc.</span>
 <p>They are then printed to the log which will look like the following:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="f419f94d-d1a7-4b9d-a2c9-b5b962bcc97b">
+    <ul class="tab tab-linked" data-tab="e9b0cb74-c378-4dd5-94ab-261961ad7e2a">
         
             <li class="active">
                 <a href="">python </a>
@@ -1258,7 +1258,7 @@ sometimes settings / statuses are bytes, words, strings, etc.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="f419f94d-d1a7-4b9d-a2c9-b5b962bcc97b">
+        <ul class="tab-content" id="e9b0cb74-c378-4dd5-94ab-261961ad7e2a">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Getting the current resolution, fps, and fov.
@@ -1318,10 +1318,10 @@ FPS is currently FPS.FPS_240
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_f3b54eab-5803-43c5-862e-4aecf4be45f1" class="quiz">
+<div id="quiz_bafa2164-8ef9-4221-b2fa-cdd8cb30cc9e" class="quiz">
     <div>
-        <div id="question_f3b54eab-5803-43c5-862e-4aecf4be45f1" class="quiz__question">How can we poll the encoding status and the resolution setting using one query?</div>
-        <div id="answers_f3b54eab-5803-43c5-862e-4aecf4be45f1">
+        <div id="question_bafa2164-8ef9-4221-b2fa-cdd8cb30cc9e" class="quiz__question">How can we poll the encoding status and the resolution setting using one query?</div>
+        <div id="answers_bafa2164-8ef9-4221-b2fa-cdd8cb30cc9e">
         
             <input type="radio" name="question" value="A"><label>A: Concatenate a ‘Get Setting Value’ query and a ‘Get Status’ query with the relevant ID’s</label>
             <br>
@@ -1334,10 +1334,10 @@ FPS is currently FPS.FPS_240
         
         </div>
     </div>
-    <button onclick="showResults('f3b54eab-5803-43c5-862e-4aecf4be45f1', 'C')">Submit Answer</button>
-    <div id="results_f3b54eab-5803-43c5-862e-4aecf4be45f1" style="display: none">
-        <span id="correct_f3b54eab-5803-43c5-862e-4aecf4be45f1" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_f3b54eab-5803-43c5-862e-4aecf4be45f1" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('bafa2164-8ef9-4221-b2fa-cdd8cb30cc9e', 'C')">Submit Answer</button>
+    <div id="results_bafa2164-8ef9-4221-b2fa-cdd8cb30cc9e" style="display: none">
+        <span id="correct_bafa2164-8ef9-4221-b2fa-cdd8cb30cc9e" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_bafa2164-8ef9-4221-b2fa-cdd8cb30cc9e" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         It is not possible to concatenate queries. This would result in an unknown sequence of bytes
         from the camera’s perspective. So it is not possible to get a setting value and a status value in one
         query. The Get Setting Query (with resolution ID) and Get Status Query (with encoding ID) must be
@@ -1425,7 +1425,7 @@ be sent whenever the query changes until the client unregisters for push notific
 <p>First, let’s register for updates when the resolution setting changes:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="ed7ecbf9-fbf9-4233-843d-aa43f1d67f57">
+    <ul class="tab tab-linked" data-tab="a82f6e36-c95b-4d34-9e10-215c04b0d2c2">
         
             <li class="active">
                 <a href="">python </a>
@@ -1436,7 +1436,7 @@ be sent whenever the query changes until the client unregisters for push notific
             </li>
         
         </ul>
-        <ul class="tab-content" id="ed7ecbf9-fbf9-4233-843d-aa43f1d67f57">
+        <ul class="tab-content" id="a82f6e36-c95b-4d34-9e10-215c04b0d2c2">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">query_request_uuid</span> <span class="o">=</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">QUERY_REQ_UUID</span>
@@ -1464,7 +1464,7 @@ example with the exception that the Query ID is now 0x52
 This can be seen in the raw byte data as well as by inspecting the response’s <code class="language-plaintext highlighter-rouge">id</code> property.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="08f23e89-0e1a-456b-b1b9-6191385729e5">
+    <ul class="tab tab-linked" data-tab="5eef9756-e455-4578-b91c-9471fb8358de">
         
             <li class="active">
                 <a href="">python </a>
@@ -1475,7 +1475,7 @@ This can be seen in the raw byte data as well as by inspecting the response’s 
             </li>
         
         </ul>
-        <ul class="tab-content" id="08f23e89-0e1a-456b-b1b9-6191385729e5">
+        <ul class="tab-content" id="5eef9756-e455-4578-b91c-9471fb8358de">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span><span class="p">.</span><span class="nf">parse</span><span class="p">()</span>
@@ -1522,7 +1522,7 @@ the resolution changes. We verify this in the demo by then changing the resoluti
 notification..</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="ca014966-d8ae-4bda-8aa6-ca481583ac22">
+    <ul class="tab tab-linked" data-tab="a5a337c5-45d1-460c-9a19-b50141a49a52">
         
             <li class="active">
                 <a href="">python </a>
@@ -1533,7 +1533,7 @@ notification..</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="ca014966-d8ae-4bda-8aa6-ca481583ac22">
+        <ul class="tab-content" id="a5a337c5-45d1-460c-9a19-b50141a49a52">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">target_resolution</span> <span class="o">=</span> <span class="n">Resolution</span><span class="p">.</span><span class="n">RES_2_7K</span> <span class="k">if</span> <span class="n">resolution</span> <span class="ow">is</span> <span class="n">Resolution</span><span class="p">.</span><span class="n">RES_1080</span> <span class="k">else</span> <span class="n">Resolution</span><span class="p">.</span><span class="n">RES_1080</span>
@@ -1607,11 +1607,11 @@ polled above</span>
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_0ca86fb5-2c84-4197-b3f9-998a8179997f" class="quiz">
+<div id="quiz_1046119b-8e67-4010-a0c8-0842dd546b0b" class="quiz">
     <div>
-        <div id="question_0ca86fb5-2c84-4197-b3f9-998a8179997f" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
+        <div id="question_1046119b-8e67-4010-a0c8-0842dd546b0b" class="quiz__question">True or False: We can still poll a given query value while we are currently registered to
     receive push notifications for it.</div>
-        <div id="answers_0ca86fb5-2c84-4197-b3f9-998a8179997f">
+        <div id="answers_1046119b-8e67-4010-a0c8-0842dd546b0b">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1621,20 +1621,20 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('0ca86fb5-2c84-4197-b3f9-998a8179997f', 'A')">Submit Answer</button>
-    <div id="results_0ca86fb5-2c84-4197-b3f9-998a8179997f" style="display: none">
-        <span id="correct_0ca86fb5-2c84-4197-b3f9-998a8179997f" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_0ca86fb5-2c84-4197-b3f9-998a8179997f" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('1046119b-8e67-4010-a0c8-0842dd546b0b', 'A')">Submit Answer</button>
+    <div id="results_1046119b-8e67-4010-a0c8-0842dd546b0b" style="display: none">
+        <span id="correct_1046119b-8e67-4010-a0c8-0842dd546b0b" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_1046119b-8e67-4010-a0c8-0842dd546b0b" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         While there is probably not a good reason to do so, there is nothing preventing polling
         in this manner.
     </div>
 </div>
 
-<div id="quiz_d5d24bcf-03ae-48c3-bcf0-10de19f6e7d7" class="quiz">
+<div id="quiz_1f5bf0ad-fff3-48db-9890-2a708fa8fbf0" class="quiz">
     <div>
-        <div id="question_d5d24bcf-03ae-48c3-bcf0-10de19f6e7d7" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
+        <div id="question_1f5bf0ad-fff3-48db-9890-2a708fa8fbf0" class="quiz__question">True or False: A push notification for a registered setting will only ever contain query information
     about one setting ID.</div>
-        <div id="answers_d5d24bcf-03ae-48c3-bcf0-10de19f6e7d7">
+        <div id="answers_1f5bf0ad-fff3-48db-9890-2a708fa8fbf0">
         
             <input type="radio" name="question" value="A"><label>A: True</label>
             <br>
@@ -1644,10 +1644,10 @@ polled above</span>
         
         </div>
     </div>
-    <button onclick="showResults('d5d24bcf-03ae-48c3-bcf0-10de19f6e7d7', 'B')">Submit Answer</button>
-    <div id="results_d5d24bcf-03ae-48c3-bcf0-10de19f6e7d7" style="display: none">
-        <span id="correct_d5d24bcf-03ae-48c3-bcf0-10de19f6e7d7" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_d5d24bcf-03ae-48c3-bcf0-10de19f6e7d7" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('1f5bf0ad-fff3-48db-9890-2a708fa8fbf0', 'B')">Submit Answer</button>
+    <div id="results_1f5bf0ad-fff3-48db-9890-2a708fa8fbf0" style="display: none">
+        <span id="correct_1f5bf0ad-fff3-48db-9890-2a708fa8fbf0" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_1f5bf0ad-fff3-48db-9890-2a708fa8fbf0" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         It is possible for push notifications to contain multiple setting ID’s if both setting ID’s have
     push notifications registered and both settings change at the same time.
     </div>
@@ -1676,7 +1676,7 @@ polled above</span>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2024-05-06T18:28:17-07:00">May 6, 2024</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2024-05-08T13:55:14-07:00">May 8, 2024</time></p>
 
       </footer>
 

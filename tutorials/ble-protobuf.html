@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2024-05-06T18:28:17-07:00">
+  <meta property="article:published_time" content="2024-05-08T13:55:14-07:00">
 
 
 
@@ -427,7 +427,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 5: BLE Protobuf Operations">
     <meta itemprop="description" content="Tutorial 5: BLE Protobuf Operations">
-    <meta itemprop="datePublished" content="2024-05-06T18:28:17-07:00">
+    <meta itemprop="datePublished" content="2024-05-08T13:55:14-07:00">
     
 
     <div class="page__inner-wrap">
@@ -524,7 +524,7 @@ through this tutorial.</span>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="fe1e0df2-0120-4a76-bb90-a8a5fa425f23">
+    <ul class="tab tab-linked" data-tab="3a2ba4b5-5946-420a-abc6-2cb9db311138">
         
             <li class="active">
                 <a href="">python </a>
@@ -535,7 +535,7 @@ through this tutorial.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="fe1e0df2-0120-4a76-bb90-a8a5fa425f23">
+        <ul class="tab-content" id="3a2ba4b5-5946-420a-abc6-2cb9db311138">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 5
@@ -678,7 +678,7 @@ either in <a href="/OpenGoPro/ble/protocol/protobuf.html#proto-requestsetturboac
 </div>
 
 <div>
-    <ul class="tab tab-linked" data-tab="e5656540-4042-4e86-808b-50b7d35fb55b">
+    <ul class="tab tab-linked" data-tab="bee954cd-898e-4e06-a8ee-9c3d11faae39">
         
             <li class="active">
                 <a href="">python </a>
@@ -689,7 +689,7 @@ either in <a href="/OpenGoPro/ble/protocol/protobuf.html#proto-requestsetturboac
             </li>
         
         </ul>
-        <ul class="tab-content" id="e5656540-4042-4e86-808b-50b7d35fb55b">
+        <ul class="tab-content" id="bee954cd-898e-4e06-a8ee-9c3d11faae39">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">tutorial_modules</span> <span class="kn">import</span> <span class="n">proto</span>
@@ -723,7 +723,7 @@ the bytes via BLE.</p>
 <a href="/OpenGoPro/ble/protocol/protobuf.html#responsegeneric">ResponseGeneric</a> object.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="c6ea29df-a893-4f63-a507-c6ab6a2e9106">
+    <ul class="tab tab-linked" data-tab="47d8d191-6304-4004-92ba-1c332b1a7b33">
         
             <li class="active">
                 <a href="">python </a>
@@ -734,7 +734,7 @@ the bytes via BLE.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="c6ea29df-a893-4f63-a507-c6ab6a2e9106">
+        <ul class="tab-content" id="47d8d191-6304-4004-92ba-1c332b1a7b33">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response_bytes</span> <span class="o">=</span> <span class="n">proto</span><span class="p">.</span><span class="nc">ResponseGeneric</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">proto</span><span class="p">.</span><span class="n">EnumResultGeneric</span><span class="p">.</span><span class="n">RESULT_SUCCESS</span><span class="p">).</span><span class="nc">SerializeToString</span><span class="p">()</span>
@@ -810,7 +810,7 @@ TLV Parsing, we need to create a
 </ol>
 
 <div>
-    <ul class="tab tab-linked" data-tab="232baa89-2a25-4d0e-81e5-5cdb85595ba9">
+    <ul class="tab tab-linked" data-tab="7ee8b1d8-d3ab-4422-9021-b78c60fe112e">
         
             <li class="active">
                 <a href="">python </a>
@@ -821,7 +821,7 @@ TLV Parsing, we need to create a
             </li>
         
         </ul>
-        <ul class="tab-content" id="232baa89-2a25-4d0e-81e5-5cdb85595ba9">
+        <ul class="tab-content" id="7ee8b1d8-d3ab-4422-9021-b78c60fe112e">
         
             <li class="active tab-content-container">
 <div class="callout note">
@@ -858,7 +858,7 @@ receive the response. First, we build the serialized byte request in the same ma
 Feature ID, Action ID, and length bytes:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="54c8b5b3-a664-4df3-8961-fa389123d0a2">
+    <ul class="tab tab-linked" data-tab="98f02187-2008-42b2-a4fb-77feee09817f">
         
             <li class="active">
                 <a href="">python </a>
@@ -869,7 +869,7 @@ Feature ID, Action ID, and length bytes:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="54c8b5b3-a664-4df3-8961-fa389123d0a2">
+        <ul class="tab-content" id="98f02187-2008-42b2-a4fb-77feee09817f">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">turbo_mode_request</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span>
@@ -896,7 +896,7 @@ Feature ID, Action ID, and length bytes:</p>
 from the Set Turbo Mode Documentation: <a href="/OpenGoPro/ble/protocol/protobuf.html#responsegeneric">ResponseGeneric</a>.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="cdbfbe2f-9202-4983-bf8f-2be970e151d1">
+    <ul class="tab tab-linked" data-tab="19a2cf5e-4b5a-437e-8111-78f1ce577338">
         
             <li class="active">
                 <a href="">python </a>
@@ -907,7 +907,7 @@ from the Set Turbo Mode Documentation: <a href="/OpenGoPro/ble/protocol/protobuf
             </li>
         
         </ul>
-        <ul class="tab-content" id="cdbfbe2f-9202-4983-bf8f-2be970e151d1">
+        <ul class="tab-content" id="19a2cf5e-4b5a-437e-8111-78f1ce577338">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">write_gatt_char</span><span class="p">(</span><span class="n">request_uuid</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">turbo_mode_request</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -969,7 +969,7 @@ so is defined in the
 parsing of all response types:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="006b98ba-a292-48a1-85d2-0ab40b25f324">
+    <ul class="tab tab-linked" data-tab="19e9b3ce-54ee-4302-bf2e-496162a3f0ef">
         
             <li class="active">
                 <a href="">python </a>
@@ -980,7 +980,7 @@ parsing of all response types:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="006b98ba-a292-48a1-85d2-0ab40b25f324">
+        <ul class="tab-content" id="19e9b3ce-54ee-4302-bf2e-496162a3f0ef">
         
             <li class="active tab-content-container">
 <div class="callout note">
@@ -1063,7 +1063,7 @@ pairs do not have corresponding Protobuf Messages defined.</span>
 <p>Now let’s perform operations that will demonstrate each response type:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="a0457b5f-ccf9-40bd-9085-faf772ae7510">
+    <ul class="tab tab-linked" data-tab="db0f709b-3314-4d56-a881-79ab4e3bb69a">
         
             <li class="active">
                 <a href="">python </a>
@@ -1074,7 +1074,7 @@ pairs do not have corresponding Protobuf Messages defined.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="a0457b5f-ccf9-40bd-9085-faf772ae7510">
+        <ul class="tab-content" id="db0f709b-3314-4d56-a881-79ab4e3bb69a">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># TLV Command (Setting)
@@ -1157,7 +1157,7 @@ exist as helpers to simplify typing.</span>
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2024-05-06T18:28:17-07:00">May 6, 2024</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2024-05-08T13:55:14-07:00">May 8, 2024</time></p>
 
       </footer>
 
