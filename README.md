@@ -4,16 +4,18 @@ Current Version: 2.0
 
 <img src="https://raw.githubusercontent.com/gopro/OpenGoPro/gh-pages/assets/images/logos/logo.png" alt="GoPro Logo" style="width: 35%;"/>
 
-This README is for a developer who wants to modify or contribute to this repo. If you are a user (i.e.
-you don't want to make changes to this repo), see the Open GoPro [Github Pages site](https://gopro.github.io/OpenGoPro/). If you
-are just looking for demos, you can browse the `demos` folder here.
+This README is only for a developer who wants to modify or contribute to this repo. If you are a user (i.e.
+you don't want to make changes to this repo), see the Open GoPro [Github Pages site](https://gopro.github.io/OpenGoPro/)
+for specs and getting started with Open GoPro.
+
+If you are just looking for demos, you can browse the `demos` folder here.
+
+If you are looking for the [Python SDK](https://pypi.org/project/open_gopro/),
+see its [documentation](https://gopro.github.io/OpenGoPro/python_sdk/).
 
 ## Overview
 
-This repo consists of three types of content:
-
--   demos
--   documentation
+This repo consists of the following types of content:
 
 ## Demos
 
@@ -21,12 +23,16 @@ Demos are runnable examples in various languages / frameworks and can be found i
 from their own perspective, independent to the Jekyll-based documentation described below. To create a demo,
 follow the "Contributing" section of the [README](demos/README.md) in the `demos` folder.
 
-## Documentation
+## Capabilities
 
-The documentation can be found in the `docs` directory in markdown files. It is built as a [Jekyll](https://jekyllrb.com/)
-static site and hosted via [Github Pages](https://pages.github.com/). For local deployment and other usage information,
-see the `docs` folder [README](docs/README.md).
+These are various specifications to describe specific camera / firmware version capabilities. For more information,
+see the [BLE](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-capabilities) or
+[HTTP](https://gopro.github.io/OpenGoPro/http#tag/settings) spec.
 
+## Tools
+
+These are utilities to perform various functionality needed by demos or tutorials. See the README of each tool
+directory for more information.
 
 ## Copyright
 
