@@ -3,16 +3,14 @@
 
 """USB / wireless webcam demo"""
 
-import sys
 import argparse
 import asyncio
-import logging
+import sys
 from typing import Final
 
 from rich.console import Console
 
 from open_gopro import Params, WiredGoPro, WirelessGoPro
-from open_gopro.api.params import WebcamFOV, WebcamResolution
 from open_gopro.constants import WebcamError, WebcamStatus
 from open_gopro.demos.gui.components.util import display_video_blocking
 from open_gopro.gopro_base import GoProBase
