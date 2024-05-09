@@ -29,9 +29,7 @@ def yield_fragmented_packets(payload: bytes) -> Generator[bytes, None, None]:
     is_first_packet = True
 
     # Build initial length header
-    if length < (2**5 - 1):
-        header = bytearray([length])
-    elif length < (2**13 - 1):
+    if length < (2**13 - 1):
         header = bytearray((length | 0x2000).to_bytes(2, "big", signed=False))
     elif length < (2**16 - 1):
         header = bytearray((length | 0x6400).to_bytes(2, "big", signed=False))

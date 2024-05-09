@@ -5,6 +5,7 @@
 
 import argparse
 import asyncio
+import sys
 from typing import Final
 
 from rich.console import Console
@@ -39,6 +40,7 @@ async def wait_for_webcam_status(gopro: GoProBase, statuses: set[WebcamStatus], 
             response = (await gopro.http_command.webcam_status()).data
             if response.error != WebcamError.SUCCESS:
                 # Something bad happened
+                console.print(f"[yellow]Received webcam error: {response.error}")
                 return False
             if response.status in statuses:
                 # We found the desired status
@@ -51,7 +53,7 @@ async def wait_for_webcam_status(gopro: GoProBase, statuses: set[WebcamStatus], 
         return False
 
 
-async def main(args: argparse.Namespace) -> None:
+async def main(args: argparse.Namespace) -> int:
     logger = setup_logging(__name__, args.log)
     gopro: GoProBase | None = None
 
@@ -79,7 +81,9 @@ async def main(args: argparse.Namespace) -> None:
                 await wait_for_webcam_status(gopro, {WebcamStatus.OFF})
 
             console.print("[blue]Starting webcam...")
-            await gopro.http_command.webcam_start()
+            if (status := (await gopro.http_command.webcam_start()).data.error) != WebcamError.SUCCESS:
+                console.print(f"[red]Couldn't start webcam: {status}")
+                return -1
             await wait_for_webcam_status(gopro, {WebcamStatus.HIGH_POWER_PREVIEW})
 
             # Start player
@@ -96,6 +100,8 @@ async def main(args: argparse.Namespace) -> None:
 
     if gopro:
         await gopro.close()
+
+    return 0
 
 
 def parse_arguments() -> argparse.Namespace:
@@ -117,7 +123,7 @@ def parse_arguments() -> argparse.Namespace:
 
 # Needed for poetry scripts defined in pyproject.toml
 def entrypoint() -> None:
-    asyncio.run(main(parse_arguments()))
+    sys.exit(asyncio.run(main(parse_arguments())))
 
 
 if __name__ == "__main__":
