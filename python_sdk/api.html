@@ -135,6 +135,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleSettings.photo_horizon_leveling"><code class="docutils literal notranslate"><span class="pre">BleSettings.photo_horizon_leveling</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleSettings.photo_interval"><code class="docutils literal notranslate"><span class="pre">BleSettings.photo_interval</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleSettings.photo_mode"><code class="docutils literal notranslate"><span class="pre">BleSettings.photo_mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleSettings.photo_output"><code class="docutils literal notranslate"><span class="pre">BleSettings.photo_output</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleSettings.resolution"><code class="docutils literal notranslate"><span class="pre">BleSettings.resolution</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleSettings.star_trail_length"><code class="docutils literal notranslate"><span class="pre">BleSettings.star_trail_length</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleSettings.system_video_mode"><code class="docutils literal notranslate"><span class="pre">BleSettings.system_video_mode</span></code></a></li>
@@ -305,6 +306,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpSettings.photo_horizon_leveling"><code class="docutils literal notranslate"><span class="pre">HttpSettings.photo_horizon_leveling</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpSettings.photo_interval"><code class="docutils literal notranslate"><span class="pre">HttpSettings.photo_interval</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpSettings.photo_mode"><code class="docutils literal notranslate"><span class="pre">HttpSettings.photo_mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpSettings.photo_output"><code class="docutils literal notranslate"><span class="pre">HttpSettings.photo_output</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpSettings.resolution"><code class="docutils literal notranslate"><span class="pre">HttpSettings.resolution</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpSettings.star_trail_length"><code class="docutils literal notranslate"><span class="pre">HttpSettings.star_trail_length</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpSettings.system_video_mode"><code class="docutils literal notranslate"><span class="pre">HttpSettings.system_video_mode</span></code></a></li>
@@ -364,6 +366,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.PhotoFOV"><code class="docutils literal notranslate"><span class="pre">PhotoFOV</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.PhotoInterval"><code class="docutils literal notranslate"><span class="pre">PhotoInterval</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.PhotoMode"><code class="docutils literal notranslate"><span class="pre">PhotoMode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.PhotoOutput"><code class="docutils literal notranslate"><span class="pre">PhotoOutput</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.PresetGroup"><code class="docutils literal notranslate"><span class="pre">PresetGroup</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.Resolution"><code class="docutils literal notranslate"><span class="pre">Resolution</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.params.SDStatus"><code class="docutils literal notranslate"><span class="pre">SDStatus</span></code></a></li>
@@ -560,6 +563,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.SettingId.PHOTO_INTERVAL"><code class="docutils literal notranslate"><span class="pre">SettingId.PHOTO_INTERVAL</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.SettingId.PHOTO_INTERVAL_DURATION"><code class="docutils literal notranslate"><span class="pre">SettingId.PHOTO_INTERVAL_DURATION</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.SettingId.PHOTO_MODE"><code class="docutils literal notranslate"><span class="pre">SettingId.PHOTO_MODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.SettingId.PHOTO_OUTPUT"><code class="docutils literal notranslate"><span class="pre">SettingId.PHOTO_OUTPUT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.SettingId.PROTOBUF_SETTING"><code class="docutils literal notranslate"><span class="pre">SettingId.PROTOBUF_SETTING</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.SettingId.RESOLUTION"><code class="docutils literal notranslate"><span class="pre">SettingId.RESOLUTION</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.SettingId.STAR_TRAIL_LENGTH"><code class="docutils literal notranslate"><span class="pre">SettingId.STAR_TRAIL_LENGTH</span></code></a></li>
@@ -2428,6 +2432,12 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleSettings.photo_output">
+<span class="sig-name descname"><span class="pre">photo_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.BleSettingFacade" title="open_gopro.api.builders.BleSettingFacade"><span class="pre">BleSettingFacade</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.api.params.PhotoOutput" title="open_gopro.api.params.PhotoOutput"><span class="pre">PhotoOutput</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.ble_commands.BleSettings.photo_output" title="Permalink to this definition"></a></dt>
+<dd><p>File type of photo output</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleSettings.resolution">
 <span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.BleSettingFacade" title="open_gopro.api.builders.BleSettingFacade"><span class="pre">BleSettingFacade</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.api.params.Resolution" title="open_gopro.api.params.Resolution"><span class="pre">Resolution</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.ble_commands.BleSettings.resolution" title="Permalink to this definition"></a></dt>
 <dd><p>Resolution.</p>
@@ -3826,6 +3836,12 @@ default of TS will be used.</p></li>
 <dt class="sig sig-object py" id="open_gopro.api.http_commands.HttpSettings.photo_mode">
 <span class="sig-name descname"><span class="pre">photo_mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.HttpSetting" title="open_gopro.api.builders.HttpSetting"><span class="pre">HttpSetting</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.api.params.PhotoMode" title="open_gopro.api.params.PhotoMode"><span class="pre">PhotoMode</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.http_commands.HttpSettings.photo_mode" title="Permalink to this definition"></a></dt>
 <dd><p>Photo Mode</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.http_commands.HttpSettings.photo_output">
+<span class="sig-name descname"><span class="pre">photo_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.HttpSetting" title="open_gopro.api.builders.HttpSetting"><span class="pre">HttpSetting</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.api.params.PhotoOutput" title="open_gopro.api.params.PhotoOutput"><span class="pre">PhotoOutput</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.http_commands.HttpSettings.photo_output" title="Permalink to this definition"></a></dt>
+<dd><p>File type of photo output</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -5364,6 +5380,31 @@ instantiation</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.params.PhotoMode.SUPER">
 <span class="sig-name descname"><span class="pre">SUPER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.params.PhotoMode.SUPER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="open_gopro.api.params.PhotoOutput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PhotoOutput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.api.params.PhotoOutput" title="Permalink to this definition"></a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.PhotoOutput.HDR">
+<span class="sig-name descname"><span class="pre">HDR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#open_gopro.api.params.PhotoOutput.HDR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.PhotoOutput.RAW">
+<span class="sig-name descname"><span class="pre">RAW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#open_gopro.api.params.PhotoOutput.RAW" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.PhotoOutput.STANDARD">
+<span class="sig-name descname"><span class="pre">STANDARD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#open_gopro.api.params.PhotoOutput.STANDARD" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.params.PhotoOutput.SUPERPHOTO">
+<span class="sig-name descname"><span class="pre">SUPERPHOTO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#open_gopro.api.params.PhotoOutput.SUPERPHOTO" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -8474,6 +8515,11 @@ instantiation</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.SettingId.PHOTO_MODE">
 <span class="sig-name descname"><span class="pre">PHOTO_MODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">191</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.PHOTO_MODE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.SettingId.PHOTO_OUTPUT">
+<span class="sig-name descname"><span class="pre">PHOTO_OUTPUT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">125</span></em><a class="headerlink" href="#open_gopro.constants.SettingId.PHOTO_OUTPUT" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
