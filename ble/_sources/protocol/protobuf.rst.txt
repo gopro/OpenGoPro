@@ -134,6 +134,11 @@ EnumCameraControlStatus
 
      - 
 
+   * - CAMERA_COF_SETUP
+     - 3
+
+     - Set by the camera when it is on the CAH (Camera As a Hub) / COF (Cloud OFfload) setup screen
+
 
 
 
@@ -2056,6 +2061,12 @@ Sent either:
      - 11
 
      - Set of currently supported FOV options
+
+   * - live_stream_protune_supported
+     - bool
+     - 13
+
+     - Does the camera support live stream protune settings
 
 
 

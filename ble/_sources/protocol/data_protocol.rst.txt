@@ -73,7 +73,7 @@ If a message is 8192 bytes or longer, the camera will respond using the format b
 +===========+===+==================+===+===+===+===+======+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+
 | 7         | 6 | 5                | 4 | 3 | 2 | 1 | 0    | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
 +-----------+---+------------------+---+---+---+---+------+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
-| Start (0) | 13-bit Extended (10) | Reserved             | 16-bit Message Length                                         |
+| Start (0) | 16-bit Extended (10) | Reserved             | 16-bit Message Length                                         |
 +-----------+---+------------------+---+---+---+---+------+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
 
 .. warning:: This format can not be used for sending messages to the camera. It is only used to receive messages.
