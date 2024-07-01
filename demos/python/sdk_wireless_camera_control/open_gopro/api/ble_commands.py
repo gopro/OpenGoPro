@@ -1073,6 +1073,15 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
 
         super().__init__(communicator)
 
+        self.photo_output: BleSetting[Params.PhotoOutput] = BleSetting[Params.PhotoOutput](
+            communicator,
+            SettingId.PHOTO_OUTPUT,
+            Params.PhotoOutput,
+        )
+        """File type of photo output"""
+
+        super().__init__(communicator)
+
 
 class BleAsyncResponses:
     """These are responses whose ID's are not associated with any messages"""

@@ -423,6 +423,13 @@ class PhotoDuration(GoProIntEnum):
     HOUR_3 = 9
 
 
+class PhotoOutput(GoProIntEnum):
+    STANDARD = 0
+    RAW = 1
+    HDR = 2
+    SUPERPHOTO = 3
+
+
 class PresetGroup(GoProIntEnum):
     VIDEO = 1000
     PHOTO = 1001

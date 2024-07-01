@@ -727,4 +727,10 @@ class HttpSettings(HttpMessages[HttpSetting]):
         )
         """Interval between photo captures"""
 
+        self.photo_output: HttpSetting[Params.PhotoOutput] = HttpSetting[Params.PhotoOutput](
+            communicator,
+            SettingId.PHOTO_OUTPUT,
+        )
+        """File type of photo output"""
+
         super().__init__(communicator)
