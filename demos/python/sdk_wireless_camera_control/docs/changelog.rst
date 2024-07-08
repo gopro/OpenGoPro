@@ -13,6 +13,7 @@ Unreleased
 ----------
 
 * Add Setting 125
+* Don't default to hardcoded parameters for set livestream mode
 
 0.16.1 (April-23-2024)
 ----------------------
