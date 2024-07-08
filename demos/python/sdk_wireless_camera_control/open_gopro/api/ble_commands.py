@@ -660,22 +660,22 @@ class BleCommands(BleMessages[BleMessage]):
         self,
         *,
         url: str,
-        window_size: proto.EnumWindowSize.ValueType,
         minimum_bitrate: int,
         maximum_bitrate: int,
         starting_bitrate: int,
-        lens: proto.EnumLens.ValueType,
+        window_size: proto.EnumWindowSize.ValueType | None = None,
+        lens: proto.EnumLens.ValueType | None = None,
         certs: list[Path] | None = None,
     ) -> GoProResp[None]:
         """Initiate livestream to any site that accepts an RTMP URL and simultaneously encode to camera.
 
         Args:
             url (str): url used to stream. Set to empty string to invalidate/cancel stream
-            window_size (open_gopro.api.proto.EnumWindowSize): Streaming video resolution
             minimum_bitrate (int): Desired minimum streaming bitrate (>= 800)
             maximum_bitrate (int): Desired maximum streaming bitrate (<= 8000)
             starting_bitrate (int): Initial streaming bitrate (honored if 800 <= value <= 8000)
-            lens (open_gopro.api.proto.EnumLens): Streaming Field of View
+            window_size (open_gopro.api.proto.EnumWindowSize | None): Streaming video resolution. Defaults to None (use camera default).
+            lens (open_gopro.api.proto.EnumLens): Streaming Field of View. Defaults to None (use camera default).
             certs (list[Path] | None): list of certificates to use. Defaults to None.
 
         Returns:
@@ -684,11 +684,9 @@ class BleCommands(BleMessages[BleMessage]):
         d = {
             "url": url,
             "encode": True,
-            "window_size": window_size,
             "minimum_bitrate": minimum_bitrate,
             "maximum_bitrate": maximum_bitrate,
             "starting_bitrate": starting_bitrate,
-            "lens": lens,
         }
         if certs:
             cert_buf = bytearray()
@@ -698,6 +696,10 @@ class BleCommands(BleMessages[BleMessage]):
 
             cert_buf.pop()
             d["cert"] = bytes(cert_buf)
+        if lens:
+            d["lens"] = lens
+        if window_size:
+            d["window_size"] = window_size
         return d  # type: ignore
 
     @ble_proto_command(
