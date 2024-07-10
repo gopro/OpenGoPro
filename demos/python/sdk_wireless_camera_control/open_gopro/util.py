@@ -231,6 +231,14 @@ class SnapshotQueue(asyncio.Queue, Generic[T]):
         self._lock = asyncio.Lock()
         super().__init__(maxsize)
 
+    async def get(self) -> T:
+        """Wrapper for passing generic type through to subclass
+
+        Returns:
+            T: type of this Snapshot queue
+        """
+        return await super().get()
+
     async def peek_front(self) -> T | None:
         """Get the first element without dequeueing it
 

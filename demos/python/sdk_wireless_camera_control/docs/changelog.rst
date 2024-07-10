@@ -14,6 +14,7 @@ Unreleased
 
 * Add Setting 125
 * Don't default to hardcoded parameters for set livestream mode
+* Fix routing for Get All Setting / Status commands
 
 0.16.1 (April-23-2024)
 ----------------------

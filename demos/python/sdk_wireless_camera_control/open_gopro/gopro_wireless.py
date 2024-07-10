@@ -155,7 +155,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Responses that we are waiting for.
         self._sync_resp_wait_q: SnapshotQueue[types.ResponseType] = SnapshotQueue()
         # Synchronous response that has been parsed and are ready for their sender to receive as the response.
-        self._sync_resp_ready_q: SnapshotQueue[types.ResponseType] = SnapshotQueue()
+        self._sync_resp_ready_q: SnapshotQueue[GoProResp] = SnapshotQueue()
 
         self._listeners: dict[types.UpdateType, set[types.UpdateCb]] = defaultdict(set)
 
@@ -531,7 +531,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self, wrapped: Callable, message: Message, rules: MessageRules = MessageRules(), **kwargs: Any
     ) -> GoProResp:
         # Acquire ready lock unless we are initializing or this is a Set Shutter Off command
-        response: GoProResp
         if self._should_maintain_state and self.is_open and not rules.is_fastpass(**kwargs):
             logger.trace(f"{wrapped.__name__} acquiring lock")  # type: ignore
             await self._ready_lock.acquire()
@@ -641,7 +640,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             response (GoProResp): parsed response to route
         """
         original_response = deepcopy(response)
-        if response._is_query and not response._is_push:
+        # We only support queries for either one ID or all ID's. If this is an individual query, extract the value
+        # for cleaner response data
+        if response._is_query and not response._is_push and len(response.data) == 1:
             response.data = list(response.data.values())[0]
 
         # Check if this is the awaited synchronous response (id matches). Note! these have to come in order.
@@ -722,7 +723,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         # Wait to be notified that response was received
         try:
-            response: GoProResp = await asyncio.wait_for(self._sync_resp_ready_q.get(), WirelessGoPro.WRITE_TIMEOUT)
+            response = await asyncio.wait_for(self._sync_resp_ready_q.get(), WirelessGoPro.WRITE_TIMEOUT)
         except queue.Empty as e:
             logger.error(f"Response timeout of {WirelessGoPro.WRITE_TIMEOUT} seconds!")
             raise GpException.ResponseTimeout(WirelessGoPro.WRITE_TIMEOUT) from e

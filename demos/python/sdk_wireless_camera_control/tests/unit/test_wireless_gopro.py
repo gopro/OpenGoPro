@@ -14,10 +14,10 @@ import requests
 import requests_mock
 
 from open_gopro.communicator_interface import HttpMessage
-from open_gopro.constants import SettingId, StatusId
+from open_gopro.constants import ErrorCode, QueryCmdId, SettingId, StatusId
 from open_gopro.exceptions import GoProNotOpened, ResponseTimeout
 from open_gopro.gopro_wireless import Params, WirelessGoPro, types
-from open_gopro.models.response import GlobalParsers
+from open_gopro.models.response import GlobalParsers, GoProResp
 from tests import mock_good_response
 
 
@@ -143,6 +143,56 @@ async def test_get_update(mock_wireless_gopro_basic: WirelessGoPro):
     mock_wireless_gopro_basic._notification_handler(0xFF, not_encoding)
     with pytest.raises(asyncio.TimeoutError):
         await asyncio.wait_for(event.wait(), 1)
+
+
+@pytest.mark.asyncio
+async def test_route_all_data(mock_wireless_gopro_basic: WirelessGoPro):
+    mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
+
+    # GIVEN
+    mock_data = {"one": 1, "two": 2}
+    mock_response = GoProResp(
+        protocol=GoProResp.Protocol.BLE,
+        status=ErrorCode.SUCCESS,
+        data=mock_data,
+        identifier=QueryCmdId.GET_SETTING_VAL,
+    )
+
+    # WHEN
+    # Make it appear to be the synchronous response
+    await mock_wireless_gopro_basic._sync_resp_wait_q.put(mock_response)
+    # Route the mock response
+    await mock_wireless_gopro_basic._route_response(mock_response)
+    # Get the routed response
+    routed_response = await mock_wireless_gopro_basic._sync_resp_ready_q.get()
+
+    # THEN
+    assert routed_response.data == mock_data
+
+
+@pytest.mark.asyncio
+async def test_route_individual_data(mock_wireless_gopro_basic: WirelessGoPro):
+    mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
+
+    # GIVEN
+    mock_data = {"one": 1}
+    mock_response = GoProResp(
+        protocol=GoProResp.Protocol.BLE,
+        status=ErrorCode.SUCCESS,
+        data=mock_data,
+        identifier=QueryCmdId.GET_SETTING_VAL,
+    )
+
+    # WHEN
+    # Make it appear to be the synchronous response
+    await mock_wireless_gopro_basic._sync_resp_wait_q.put(mock_response)
+    # Route the mock response
+    await mock_wireless_gopro_basic._route_response(mock_response)
+    # Get the routed response
+    routed_response = await mock_wireless_gopro_basic._sync_resp_ready_q.get()
+
+    # THEN
+    assert routed_response.data == 1
 
 
 @pytest.mark.asyncio
