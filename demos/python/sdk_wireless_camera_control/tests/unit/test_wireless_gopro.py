@@ -12,14 +12,12 @@ from pathlib import Path
 import pytest
 import requests
 import requests_mock
-from numpy import byte
 
 from open_gopro.communicator_interface import HttpMessage
 from open_gopro.constants import ErrorCode, QueryCmdId, SettingId, StatusId
 from open_gopro.exceptions import GoProNotOpened, ResponseTimeout
 from open_gopro.gopro_wireless import Params, WirelessGoPro, types
 from open_gopro.models.response import GlobalParsers, GoProResp
-from open_gopro.types import ResponseType
 from tests import mock_good_response
 
 
