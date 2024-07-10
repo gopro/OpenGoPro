@@ -394,7 +394,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         url = self._base_url + message.build_url(**kwargs)
         logger.debug(f"Sending:  {url}")
         logger.info(Logger.build_log_tx_str(pretty_print(message._as_dict(**kwargs))))
-        response: GoProResp | None = None
         for retry in range(1, GoProBase.HTTP_GET_RETRIES + 1):
             try:
                 http_response = requests.get(url, timeout=timeout, **self._build_http_request_args(message))
@@ -414,7 +413,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         else:
             raise GpException.ResponseTimeout(GoProBase.HTTP_GET_RETRIES)
 
-        assert response is not None
         logger.info(Logger.build_log_rx_str(pretty_print(response._as_dict())))
         return response
 
@@ -441,7 +439,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         url = self._base_url + message.build_url(**kwargs)
         body = message.build_body(**kwargs)
         logger.debug(f"Sending:  {url} with body: {json.dumps(body, indent=4)}")
-        response: GoProResp | None = None
         for retry in range(1, GoProBase.HTTP_GET_RETRIES + 1):
             try:
                 http_response = requests.put(url, timeout=timeout, json=body, **self._build_http_request_args(message))
@@ -461,5 +458,4 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         else:
             raise GpException.ResponseTimeout(GoProBase.HTTP_GET_RETRIES)
 
-        assert response is not None
         return response
