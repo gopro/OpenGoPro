@@ -481,7 +481,6 @@ class BleRespBuilder(RespBuilder[bytearray]):
                         camera_state[param_id] = []
                         continue
                     param_val = buf[:param_len]
-                    logger.critical(f"ID {param_id} has length {param_len}")
                     buf = buf[param_len:]
 
                     # Add parsed value to response's data dict
