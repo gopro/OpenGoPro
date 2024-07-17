@@ -6,7 +6,7 @@
 import logging
 import re
 from pathlib import Path
-from typing import Generic, Optional, Pattern, Union
+from typing import Generic, Optional, Pattern
 
 from open_gopro.ble import BleUUID
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice

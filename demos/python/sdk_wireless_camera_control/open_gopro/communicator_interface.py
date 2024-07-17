@@ -11,7 +11,7 @@ import logging
 import re
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Any, Generator, Generic, Pattern, Protocol, TypeVar
+from typing import Any, Generic, Iterator, Pattern, Protocol, TypeVar
 from urllib.parse import urlencode
 
 from construct import Bit, BitsInteger, BitStruct, Const, Construct, Padding
@@ -261,7 +261,7 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
 
     # TODO this should be somewhere else
     @classmethod
-    def _fragment(cls, data: bytes) -> Generator[bytes]:
+    def _fragment(cls, data: bytes) -> Iterator[bytes]:
         """Fragment data in to MAX_BLE_PKT_LEN length packets
 
         Args:
@@ -271,7 +271,7 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
             ValueError: data is too long
 
         Yields:
-            Generator[bytes]: Generator of packets as bytes
+            bytes: packet as bytes
         """
         MAX_BLE_PKT_LEN = 20
 

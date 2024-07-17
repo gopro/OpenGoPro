@@ -344,7 +344,7 @@ def ble_proto_command(
         request_proto (type[types.Protobuf]): the action ID that will be in the response
         response_proto (type[types.Protobuf]): protobuf used to parse received bytestream
         parser (Parser | None): Response parser to transform received Protobuf bytes. Defaults to None.
-        additional_matching_ids ( set[ActionId | CmdId] | None): Other action ID's to share this parser. This is used,
+        additional_matching_ids (set[ActionId | CmdId] | None): Other action ID's to share this parser. This is used,
             for example, if a notification shares the same ID as the synchronous response. Defaults to None.
 
     Returns:
