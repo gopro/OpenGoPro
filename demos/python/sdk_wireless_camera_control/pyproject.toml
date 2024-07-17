@@ -57,6 +57,7 @@ tzlocal = "*"
 gui = ["opencv-python", "pillow"]
 
 [tool.poetry.group.dev.dependencies]
+pydoclint = "^0.4.1"
 pydocstyle = { extras = ["toml"], version = "^6" }
 pytest = "^7"
 pytest-cov = "^3"
@@ -76,7 +77,6 @@ sphinx = "^5"
 sphinx-rtd-theme = "^1"
 sphinxemoji = "^0"
 coverage-badge = "=1.1.0"
-darglint = "^1"
 poethepoet = "^0"
 autodoc-pydantic = "^2"
 pytest-timeout = "^2"
@@ -115,12 +115,12 @@ help = "Perform all static code analysis"
 cmd = "pydocstyle --config pyproject.toml -v open_gopro"
 help = "check docstrings style"
 
-[tool.poe.tasks._darglint]
-cmd = "darglint -v 2 open_gopro"
+[tool.poe.tasks._doclint]
+cmd = "pydoclint open_gopro"
 help = "validate docstrings"
 
 [tool.poe.tasks.docstrings]
-sequence = ["_pydocstyle", "_darglint"]
+sequence = ["_pydocstyle", "_doclint"]
 help = "Analyze docstrings for consistency and errors"
 
 [tool.poe.tasks.sphinx]
@@ -264,3 +264,8 @@ match-dir = '(?!.*demos).*'
 
 [tool.isort]
 profile = "black"
+
+[tool.pydoclint]
+style = 'google'
+exclude = 'schemas/'
+require-return-section-when-returning-nothing = false
