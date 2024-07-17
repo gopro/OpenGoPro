@@ -104,7 +104,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
                 `proto.EnumPresetTitle.PRESET_TITLE_USER_DEFINED_CUSTOM_NAME`. Defaults to None.
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
 
     @http_get_json_command(endpoint="gopro/camera/digital_zoom", arguments=["percent"])
@@ -115,7 +115,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
             percent (int): Desired zoom as a percentage
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
 
     @http_get_json_command(
@@ -127,7 +127,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Get all camera statuses and settings
 
         Returns:
-            GoProResp: status and settings as JSON
+            GoProResp[types.CameraState]: status and settings as JSON
         """
 
     @http_get_json_command(
@@ -137,7 +137,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Get general information about the camera such as firmware version
 
         Returns:
-            GoProResp: status and settings as JSON
+            GoProResp[CameraInfo]: status and settings as JSON
         """
 
     @http_get_json_command(endpoint="gopro/camera/keep_alive")
@@ -145,7 +145,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Send the keep alive signal to maintain the connection.
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
 
     @http_get_json_command(
@@ -160,7 +160,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
             path (str): Path on camera of media file to get metadata for
 
         Returns:
-            GoProResp: Media metadata JSON structure
+            GoProResp[MediaMetadata]: Media metadata JSON structure
         """
 
     @http_get_json_command(
@@ -171,7 +171,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Get a list of media on the camera.
 
         Returns:
-            GoProResp: Media list JSON structure
+            GoProResp[MediaList]: Media list JSON structure
         """
 
     @http_get_json_command(endpoint="gopro/media/turbo_transfer", arguments=["p"])
@@ -179,10 +179,10 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Enable or disable Turbo transfer mode.
 
         Args:
-            mode (open_gopro.api.params.Toggle): enable / disable turbo mode
+            mode (Params.Toggle): enable / disable turbo mode
 
         Returns:
-            GoProResp: Status
+            GoProResp[None]: Status
         """
         return {"p": mode}  # type: ignore
 
@@ -194,7 +194,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Get Open GoPro API version
 
         Returns:
-            GoProResp: Open GoPro Version
+            GoProResp[str]: Open GoPro Version
         """
 
     # TODO make pydantic model of preset status
@@ -203,7 +203,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Get status of current presets
 
         Returns:
-            GoProResp: JSON describing currently available presets and preset groups
+            GoProResp[types.JsonDict]: JSON describing currently available presets and preset groups
         """
 
     @http_get_json_command(endpoint="gopro/camera/presets/load", arguments=["id"])
@@ -216,7 +216,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
             preset (int): preset to load
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
         return {"id": preset}  # type: ignore
 
@@ -227,10 +227,10 @@ class HttpCommands(HttpMessages[HttpMessage]):
         The most recently used Preset in this group will be set.
 
         Args:
-            group (open_gopro.proto.EnumPresetGroup): desired Preset Group
+            group (proto.EnumPresetGroup.ValueType): desired Preset Group
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
         return {"id": group}  # type: ignore
 
@@ -241,11 +241,12 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Start or stop the preview stream
 
         Args:
-            mode (open_gopro.api.params.Toggle): enable to start or disable to stop
-            port (int): Port to use for Preview Stream. Defaults to 8554 if None. Only relevant when starting the stream.
+            mode (Params.Toggle): enable to start or disable to stop
+            port (int | None): Port to use for Preview Stream. Defaults to 8554 if None.
+                Only relevant when starting the stream.
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
         return {"mode": "start" if mode is Params.Toggle.ENABLE else "stop", "port": port}  # type: ignore
 
@@ -254,7 +255,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Flag as third party app
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
 
     @http_get_json_command(
@@ -269,10 +270,10 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Set the shutter on or off
 
         Args:
-            shutter (open_gopro.api.params.Toggle): on or off (i.e. start or stop encoding)
+            shutter (Params.Toggle): on or off (i.e. start or stop encoding)
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
         return {"mode": "start" if shutter is Params.Toggle.ENABLE else "stop"}  # type: ignore
 
@@ -281,10 +282,10 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Configure global behaviors by setting camera control (to i.e. Idle, External)
 
         Args:
-            mode (open_gopro.api.params.CameraControl): desired camera control value
+            mode (Params.CameraControl): desired camera control value
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
         return {"p": mode}  # type: ignore
 
@@ -304,7 +305,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
             is_dst (bool): is daylight savings time?. Defaults to False.
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
         return {  # type: ignore
             "date": f"{date_time.year}_{date_time.month}_{date_time.day}",
@@ -318,7 +319,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Get the date and time of the camera (Non timezone / DST aware)
 
         Returns:
-            GoProResp: current date and time on camera
+            GoProResp[datetime.datetime]: current date and time on camera
         """
 
     @http_get_json_command(endpoint="gopro/webcam/version")
@@ -326,7 +327,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Get the version of the webcam implementation
 
         Returns:
-            GoProResp: version
+            GoProResp[str]: version
         """
 
     @http_get_json_command(
@@ -346,7 +347,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
             offset (int | None): offset in ms from start of media
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
         return {"path": file, "ms": offset or None}  # type: ignore
 
@@ -367,7 +368,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
             offset (int | None): offset in ms from start of media
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
         return {"path": file, "ms": offset}  # type: ignore
 
@@ -380,7 +381,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Exit the webcam.
 
         Returns:
-            GoProResp: command status
+            GoProResp[WebcamResponse]: command status
         """
 
     @http_get_json_command(
@@ -392,7 +393,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Start the webcam preview.
 
         Returns:
-            GoProResp: command status
+            GoProResp[WebcamResponse]: command status
         """
 
     @http_get_json_command(
@@ -412,16 +413,14 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Start the webcam.
 
         Args:
-            resolution (Optional[open_gopro.api.params.WebcamResolution]): resolution to use. If not set,
-                camera default will be used.
-            fov (Optional[open_gopro.api.params.WebcamFOV]): field of view to use. If not set, camera
-                default will be used.
-            port (Optional[int]): port to use for streaming. If not set, camera default of 8554 will be used.
-            protocol (Optional[open_gopro.api.params.WebcamProtocol]): streaming protocol to use. If not set, camera
-                default of TS will be used.
+            resolution ( Params.WebcamResolution | None): resolution to use. If not set, camera default will be used.
+            fov (Params.WebcamFOV | None): field of view to use. If not set, camera default will be used.
+            port (int | None): port to use for streaming. If not set, camera default of 8554 will be used.
+            protocol (Params.WebcamProtocol | None): streaming protocol to use. If not set, camera default of TS will
+                be used.
 
         Returns:
-            GoProResp: command status
+            GoProResp[WebcamResponse]: command status
         """
         return {"res": resolution, "fov": fov, "port": port, "protocol": protocol}  # type: ignore
 
@@ -434,7 +433,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Stop the webcam.
 
         Returns:
-            GoProResp: command status
+            GoProResp[WebcamResponse]: command status
         """
 
     @http_get_json_command(
@@ -446,7 +445,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Get the current status of the webcam
 
         Returns:
-            GoProResp: command status including the webcam status
+            GoProResp[WebcamResponse]: command status including the webcam status
         """
 
     @http_get_json_command(
@@ -457,10 +456,10 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Enable / disable wired usb control
 
         Args:
-            control (params.Toggle): enable or disable
+            control (Params.Toggle): enable or disable
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
         return {"p": control}  # type: ignore
 
@@ -475,7 +474,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
             local_file (Path | None): Location on computer to write output. Defaults to None.
 
         Returns:
-            Path: Path to local_file that output was written to
+            GoProResp[Path]: Path to local_file that output was written to
         """
 
     @http_get_binary_command(endpoint="gopro/media/screennail", arguments=["path"])
@@ -489,7 +488,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
             local_file (Path | None): Location on computer to write output. Defaults to None.
 
         Returns:
-            Path: Path to local_file that output was written to
+            GoProResp[Path]: Path to local_file that output was written to
         """
 
     @http_get_binary_command(endpoint="gopro/media/thumbnail", arguments=["path"])
@@ -503,7 +502,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
             local_file (Path | None): Location on computer to write output. Defaults to None.
 
         Returns:
-            Path: Path to local_file that output was written to
+            GoProResp[Path]: Path to local_file that output was written to
         """
 
     @http_get_binary_command(endpoint="gopro/media/telemetry", arguments=["path"])
@@ -517,7 +516,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
             local_file (Path | None): Location on computer to write output. Defaults to None.
 
         Returns:
-            Path: Path to local_file that output was written to
+            GoProResp[Path]: Path to local_file that output was written to
         """
 
     @http_get_binary_command(endpoint="videos/DCIM", components=["path"], identifier="Download File")
@@ -531,7 +530,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
             local_file (Path | None): Location on computer to write output. Defaults to None.
 
         Returns:
-            Path: Path to local_file that output was written to
+            GoProResp[Path]: Path to local_file that output was written to
         """
 
 

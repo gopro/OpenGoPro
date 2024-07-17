@@ -70,21 +70,17 @@ class WifiCli(WifiController):
 
     If interface is not specified (i.e. it is None), we will attempt to automatically
     discover a suitable interface
+
+    This will raise a RunTimeError if either:
+        - The system is using any language other then en_US
+        - We weren't able to find a suitable driver or auto-detect an interface after detecting driver
+
+    Args:
+        interface (str | None): Interface. Defaults to None.
+        password (str | None): User Password for sudo. Defaults to None.
     """
 
-    def __init__(self, interface: Optional[str] = None, password: Optional[str] = None) -> None:
-        """Constructor
-
-        Args:
-            interface (str, Optional): Interface. Defaults to None.
-            password (str, Optional): User Password for sudo. Defaults to None.
-
-        #noqa: DAR402
-
-        Raises:
-            RuntimeError: The system is using any language other then en_US
-            RuntimeError: We weren't able to find a suitable driver or auto-detect an interface after detecting driver
-        """
+    def __init__(self, interface: str | None = None, password: str | None = None) -> None:  # noqa: DOC502
         ensure_us_english()
         WifiController.__init__(self, interface, password)
 

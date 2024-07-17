@@ -86,10 +86,10 @@ class BleCommands(BleMessages[BleMessage]):
         """Set the Shutter to start / stop encoding
 
         Args:
-            shutter (open_gopro.api.params.Toggle): on or off
+            shutter (Params.Toggle): on or off
 
         Returns:
-            GoProResp: status of command
+            GoProResp[None]: status of command
         """
 
     @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.TAG_HILIGHT)
@@ -97,7 +97,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Tag a highlight during encoding
 
         Returns:
-            GoProResp: status of command
+            GoProResp[None]: status of command
         """
 
     @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.POWER_DOWN)
@@ -105,7 +105,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Power Down the camera
 
         Returns:
-            GoProResp: status of command
+            GoProResp[None]: status of command
         """
 
     @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SLEEP)
@@ -113,7 +113,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Put the camera in standby
 
         Returns:
-            GoProResp: status of command
+            GoProResp[None]: status of command
         """
 
     @ble_write_command(
@@ -145,7 +145,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Get the model number, board, type, firmware version, serial number, and AP info
 
         Returns:
-            GoProResp: response as JSON
+            GoProResp[CameraInfo]: response as JSON
         """
 
     @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SET_WIFI, Int8ub)
@@ -156,7 +156,7 @@ class BleCommands(BleMessages[BleMessage]):
             enable (bool): True to enable, False to disable
 
         Returns:
-            GoProResp: response as JSON
+            GoProResp[None]: response as JSON
         """
 
     @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.LOAD_PRESET_GROUP, Int16ub)
@@ -166,10 +166,10 @@ class BleCommands(BleMessages[BleMessage]):
         Once complete, the most recently used preset in this group will be active.
 
         Args:
-            group (open_gopro.api.proto.EnumPresetGroup): preset group to load
+            group (proto.EnumPresetGroup.ValueType): preset group to load
 
         Returns:
-            GoProResp: response as JSON
+            GoProResp[None]: response as JSON
         """
 
     @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.LOAD_PRESET, Int32ub)
@@ -182,7 +182,7 @@ class BleCommands(BleMessages[BleMessage]):
             preset (int): preset ID to load
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
 
     @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SET_THIRD_PARTY_CLIENT_INFO)
@@ -190,7 +190,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Flag as third party app
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
 
     @ble_write_command(
@@ -207,7 +207,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Get Open GoPro API Version
 
         Returns:
-            GoProResp: response as JSON
+            GoProResp[str]: response as JSON
         """
 
     @ble_write_command(
@@ -219,7 +219,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Get all of the camera's statuses
 
         Returns:
-            GoProResp: response as JSON
+            GoProResp[CameraState]: response as JSON
         """
 
     @ble_write_command(
@@ -231,7 +231,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Get all of the camera's settings
 
         Returns:
-            GoProResp: response as JSON
+            GoProResp[CameraState]: response as JSON
         """
 
     @ble_write_command(
@@ -243,7 +243,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Get the current capabilities of each camera setting
 
         Returns:
-            GoProResp: response as JSON
+            GoProResp[CameraState]: response as JSON
         """
 
     @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SET_DATE_TIME, param_builder=ByteParserBuilders.DateTime())
@@ -254,7 +254,7 @@ class BleCommands(BleMessages[BleMessage]):
             date_time (datetime.datetime): Date and time to set (Timezone will be ignored)
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
 
     @ble_write_command(
@@ -269,7 +269,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Get the camera's date and time (non timezone / DST version)
 
         Returns:
-            GoProResp: response as JSON
+            GoProResp[datetime.datetime]: response as JSON
         """
 
     @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SET_DATE_TIME_DST, param_builder=ByteParserBuilders.DateTime())
@@ -284,7 +284,7 @@ class BleCommands(BleMessages[BleMessage]):
             is_dst (bool): is daylight savings time?
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
 
     @ble_write_command(
@@ -299,7 +299,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Get the camera's date and time with timezone / DST
 
         Returns:
-            GoProResp: response as JSON
+            GoProResp[TzDstDateTime]: response as JSON
         """
 
     ######################################################################################################
@@ -317,7 +317,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Get the Wifi SSID.
 
         Returns:
-            GoProResp: command status and SSID
+            GoProResp[str]: command status and SSID
         """
 
     @ble_read_command(
@@ -331,7 +331,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Get the Wifi password.
 
         Returns:
-            GoProResp: command status and password
+            GoProResp[str]: command status and password
         """
 
     ######################################################################################################
@@ -351,7 +351,7 @@ class BleCommands(BleMessages[BleMessage]):
             callback (types.UpdateCb): callback to be notified with
 
         Returns:
-            GoProResp: command status and current value of all statuses
+            GoProResp[None]: command status and current value of all statuses
         """
 
     @ble_register_command(
@@ -367,7 +367,7 @@ class BleCommands(BleMessages[BleMessage]):
             callback (types.UpdateCb): callback to be notified with
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
 
     @ble_register_command(
@@ -383,7 +383,7 @@ class BleCommands(BleMessages[BleMessage]):
             callback (types.UpdateCb): callback to be notified with
 
         Returns:
-            GoProResp: command status and current value of all settings
+            GoProResp[None]: command status and current value of all settings
         """
 
     @ble_register_command(
@@ -399,7 +399,7 @@ class BleCommands(BleMessages[BleMessage]):
             callback (types.UpdateCb): callback to be notified with
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
 
     @ble_register_command(
@@ -415,7 +415,7 @@ class BleCommands(BleMessages[BleMessage]):
             callback (types.UpdateCb): callback to be notified with
 
         Returns:
-            GoProResp: command status and current value of all capabilities
+            GoProResp[None]: command status and current value of all capabilities
         """
 
     @ble_register_command(
@@ -431,7 +431,7 @@ class BleCommands(BleMessages[BleMessage]):
             callback (types.UpdateCb): callback to be notified with
 
         Returns:
-            GoProResp: command status
+            GoProResp[None]: command status
         """
 
     ######################################################################################################
@@ -452,10 +452,10 @@ class BleCommands(BleMessages[BleMessage]):
         """Tell the camera that the app (i.e. External Control) wishes to claim control of the camera.
 
         Args:
-            camera_control_status (open_gopro.api.proto.EnumCameraControlStatus): Desired camera control.
+            camera_control_status (proto.EnumCameraControlStatus.ValueType): Desired camera control.
 
         Returns:
-            GoProResp: command status of request
+            GoProResp[None]: command status of request
         """
 
     @ble_proto_command(
@@ -470,10 +470,10 @@ class BleCommands(BleMessages[BleMessage]):
         """Enable / disable turbo mode.
 
         Args:
-            mode (open_gopro.api.params.Toggle): True to enable, False to disable.
+            mode (Params.Toggle): True to enable, False to disable.
 
         Returns:
-            GoProResp: command status of request
+            GoProResp[None]: command status of request
         """
         return {"active": mode}  # type: ignore
 
@@ -498,13 +498,13 @@ class BleCommands(BleMessages[BleMessage]):
         sent asynchronously as :py:attr:`open_gopro.constants.ActionId.PRESET_MODIFIED_NOTIFICATION`
 
         Args:
-            register (list[open_gopro.api.proto.EnumRegisterPresetStatus], Optional): Types of preset modified
+            register (list[proto.EnumRegisterPresetStatus.ValueType] | None): Types of preset modified
                 updates to register for. Defaults to None.
-            unregister (list[open_gopro.api.proto.EnumRegisterPresetStatus], Optional): Types of preset modified
+            unregister (list[proto.EnumRegisterPresetStatus.ValueType] | None): Types of preset modified
                 updates to unregister for. Defaults to None.
 
         Returns:
-            GoProResp: JSON data describing all currently available presets
+            GoProResp[proto.NotifyPresetStatus]: JSON data describing all currently available presets
         """
         return {  # type: ignore
             "register_preset_status": register or [],
@@ -579,7 +579,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Scan for Wifi networks
 
         Returns:
-            GoProResp: Command status of request
+            GoProResp[proto.ResponseStartScanning]: Command status of request
         """
 
     @ble_proto_command(
@@ -601,7 +601,7 @@ class BleCommands(BleMessages[BleMessage]):
             max_entries (int): Used for paging. Value must be < NotifStartScanning.total_entries. Defaults to 100.
 
         Returns:
-            GoProResp: result of scan with entries for WiFi networks
+            GoProResp[proto.ResponseGetApEntries]: result of scan with entries for WiFi networks
         """
         return {"scan_id": scan_id, "start_index": start_index, "max_entries": max_entries}  # type: ignore
 
@@ -623,7 +623,7 @@ class BleCommands(BleMessages[BleMessage]):
             ssid (str): SSID to connect to
 
         Returns:
-            GoProResp: Command status of request
+            GoProResp[proto.ResponseConnect]: Command status of request
         """
 
     @ble_proto_command(
@@ -645,7 +645,7 @@ class BleCommands(BleMessages[BleMessage]):
             password (str): password of WiFi network
 
         Returns:
-            GoProResp: Command status of request
+            GoProResp[proto.ResponseConnectNew]: Command status of request
         """
 
     @ble_proto_command(
@@ -674,12 +674,12 @@ class BleCommands(BleMessages[BleMessage]):
             minimum_bitrate (int): Desired minimum streaming bitrate (>= 800)
             maximum_bitrate (int): Desired maximum streaming bitrate (<= 8000)
             starting_bitrate (int): Initial streaming bitrate (honored if 800 <= value <= 8000)
-            window_size (open_gopro.api.proto.EnumWindowSize | None): Streaming video resolution. Defaults to None (use camera default).
-            lens (open_gopro.api.proto.EnumLens): Streaming Field of View. Defaults to None (use camera default).
+            window_size (proto.EnumWindowSize.ValueType | None): Streaming video resolution. Defaults to None (use camera default).
+            lens (proto.EnumLens.ValueType | None): Streaming Field of View. Defaults to None (use camera default).
             certs (list[Path] | None): list of certificates to use. Defaults to None.
 
         Returns:
-            GoProResp: command status of request
+            GoProResp[None]: command status of request
         """
         d = {
             "url": url,
@@ -720,13 +720,13 @@ class BleCommands(BleMessages[BleMessage]):
         """Register / unregister to receive asynchronous livestream statuses
 
         Args:
-            register (Optional[list[open_gopro.api.proto.EnumRegisterLiveStreamStatus]]): Statuses to register
+            register (list[proto.EnumRegisterLiveStreamStatus.ValueType] | None): Statuses to register
                 for. Defaults to None (don't register for any).
-            unregister (Optional[list[open_gopro.api.proto.EnumRegisterLiveStreamStatus]]): Statues to
+            unregister (list[proto.EnumRegisterLiveStreamStatus.ValueType] | None): Statuses to
                 unregister for. Defaults to None (don't unregister for any).
 
         Returns:
-            GoProResp: current livestream status
+            GoProResp[proto.NotifyLiveStreamStatus]: current livestream status
         """
         return {"register_live_stream_status": register or [], "unregister_live_stream_status": unregister or []}  # type: ignore
 
@@ -742,7 +742,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Disconnect the camera Wifi network in STA mode so that it returns to AP mode.
 
         Returns:
-            GoProResp: status of release request
+            GoProResp[None]: status of release request
         """
 
     @ble_proto_command(
@@ -825,7 +825,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Set a COHN specific setting.
 
         Args:
-            mode (open_gopro.api.params.Toggle): should camera auto connect to home network?
+            mode (Params.Toggle): should camera auto connect to home network?
 
         Returns:
             GoProResp[None]: status of set
@@ -841,7 +841,6 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
 
     Args:
         communicator (GoProBle): Adapter to read / write settings
-        params: (type[Params]): the set of parameters to use to build the settings
     """
 
     def __init__(self, communicator: GoProBle):
@@ -1125,7 +1124,6 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
 
     Args:
         communicator (GoProBle): Adapter to read / write settings
-        params: (type[Params]): the set of parameters to use to build the statuses
     """
 
     def __init__(self, communicator: GoProBle) -> None:

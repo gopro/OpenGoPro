@@ -12,16 +12,15 @@ from .http_commands import HttpCommands, HttpSettings
 
 
 class WirelessApi:
-    """Implementation of Open GoPro API version 2.0 for Wireless interface (Wifi and BLE)"""
+    """Implementation of Open GoPro API version 2.0 for Wireless interface (Wifi and BLE)
+
+    Args:
+        communicator (GoProWirelessInterface): used to communicate via BLE and Wifi
+    """
 
     version: Final = "2.0"
 
     def __init__(self, communicator: GoProWirelessInterface) -> None:
-        """Constructor
-
-        Args:
-            communicator (GoProWirelessInterface): used to communicate via BLE and Wifi
-        """
         self._communicator = communicator
         self.ble_command = BleCommands(communicator)
         self.ble_setting = BleSettings(communicator)
@@ -32,16 +31,15 @@ class WirelessApi:
 
 
 class WiredApi:
-    """Implementation of Open GoPro API version 2.0 for Wired interface (USB)"""
+    """Implementation of Open GoPro API version 2.0 for Wired interface (USB)
+
+    Args:
+        communicator (GoProHttp): used to communicate via BLE and Wifi
+    """
 
     version: Final = "2.0"
 
     def __init__(self, communicator: GoProHttp) -> None:
-        """Constructor
-
-        Args:
-            communicator (GoProHttp): used to communicate via BLE and Wifi
-        """
         self._communicator = communicator
         self.http_command = HttpCommands(communicator)
         self.http_setting = HttpSettings(communicator)

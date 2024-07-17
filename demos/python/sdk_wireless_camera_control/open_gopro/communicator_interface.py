@@ -45,8 +45,9 @@ class MessageRules:
     """Message Rules Manager
 
     Args:
-        fastpass_analyzer (Analyzer): used to check if message is fastpass. Defaults to always_false.
-        wait_for_encoding_analyer (Analyzer): Used to check if message should wait for encoding. Defaults to always_false.
+        fastpass_analyzer (Analyzer): Analyzer to decide if the message is fastpass. Defaults to always_false.
+        wait_for_encoding_analyzer (Analyzer): Analyzer to decide if the message should wait for encoding.
+            Defaults to always_false.
     """
 
     class Analyzer(Protocol):
@@ -56,7 +57,7 @@ class MessageRules:
             """Analyze the current inputs to see if the rule should be applied
 
             Args:
-                kwargs (Any): input arguments
+                **kwargs (Any): input arguments
 
             Returns:
                 bool: Should the rule be applied?
@@ -75,7 +76,7 @@ class MessageRules:
         """Is this command fastpass?
 
         Args:
-            kwargs (Any) : Arguments passed into the message
+            **kwargs (Any) : Arguments passed into the message
 
         Returns:
             bool: result of rule check
@@ -86,7 +87,7 @@ class MessageRules:
         """Should this message wait for encoding to start?
 
         Args:
-            kwargs (Any) : Arguments passed into the message
+            **kwargs (Any) : Arguments passed into the message
 
         Returns:
             bool: result of rule check
@@ -110,7 +111,6 @@ class BaseGoProCommunicator(ABC):
             callback (types.UpdateCb): callback to be notified in
             update (types.UpdateType): update to register for
         """
-        raise NotImplementedError
 
     @abstractmethod
     def unregister_update(self, callback: types.UpdateCb, update: types.UpdateType | None = None) -> None:
@@ -121,7 +121,6 @@ class BaseGoProCommunicator(ABC):
             update (types.UpdateType | None): updates to unsubscribe for. Defaults to None (all
                 updates that use this callback will be unsubscribed).
         """
-        raise NotImplementedError
 
 
 class GoProHttp(BaseGoProCommunicator):
@@ -137,7 +136,7 @@ class GoProHttp(BaseGoProCommunicator):
             message (HttpMessage): operation description
             timeout (int): time (in seconds) to wait to receive response before returning error. Defaults to 0.
             rules (MessageRules | None): message rules that this operation will obey. Defaults to MessageRules().
-            kwargs (Any) : any run-time arguments to apply to the operation
+            **kwargs (Any) : any run-time arguments to apply to the operation
 
         Returns:
             GoProResp: response parsed from received JSON
@@ -153,7 +152,7 @@ class GoProHttp(BaseGoProCommunicator):
             message (HttpMessage): operation description
             timeout (int): time (in seconds) to wait to receive response before returning error. Defaults to 0.
             rules (MessageRules | None): message rules that this operation will obey. Defaults to MessageRules().
-            kwargs (Any) : any run-time arguments to apply to the operation
+            **kwargs (Any) : any run-time arguments to apply to the operation
 
         Returns:
             GoProResp: response wrapper around downloaded binary
@@ -169,7 +168,7 @@ class GoProHttp(BaseGoProCommunicator):
             message (HttpMessage): operation description
             timeout (int): time (in seconds) to wait to receive response before returning error. Defaults to 0.
             rules (MessageRules | None): message rules that this operation will obey. Defaults to MessageRules().
-            kwargs (Any) : any run-time arguments to apply to the operation
+            **kwargs (Any) : any run-time arguments to apply to the operation
 
         Returns:
             GoProResp: response parsed from received JSON
@@ -239,7 +238,7 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
         Args:
             message (BleMessage): BLE operation description
             rules (MessageRules): message rules that this operation will obey. Defaults to MessageRules().
-            kwargs (Any) : any run-time arguments to apply to the operation
+            **kwargs (Any) : any run-time arguments to apply to the operation
 
         Returns:
             GoProResp: response parsed from accumulated BLE notifications
@@ -254,7 +253,7 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
         Args:
             message (BleMessage): BLE operation description
             rules (MessageRules): message rules that this operation will obey. Defaults to MessageRules().
-            kwargs (Any) : any run-time arguments to apply to the operation
+            **kwargs (Any) : any run-time arguments to apply to the operation
 
         Returns:
             GoProResp: response parsed from bytes read from characteristic
@@ -262,7 +261,7 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
 
     # TODO this should be somewhere else
     @classmethod
-    def _fragment(cls, data: bytes) -> Generator[bytes, None, None]:
+    def _fragment(cls, data: bytes) -> Generator[bytes]:
         """Fragment data in to MAX_BLE_PKT_LEN length packets
 
         Args:
@@ -272,7 +271,7 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
             ValueError: data is too long
 
         Yields:
-            Generator[bytes, None, None]: Generator of packets as bytes
+            Generator[bytes]: Generator of packets as bytes
         """
         MAX_BLE_PKT_LEN = 20
 
@@ -313,7 +312,7 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
             bytes_remaining = MAX_BLE_PKT_LEN - len(packet)
             current, data = (data[:bytes_remaining], data[bytes_remaining:])
             packet.extend(current)
-            yield packet
+            yield bytes(packet)
 
 
 class GoProWiredInterface(BaseGoProCommunicator):
@@ -324,6 +323,13 @@ class GoProWirelessInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle])
     """The top-level interface for a Wireless Open GoPro controller
 
     This always supports BLE and can optionally support Wifi
+
+    Args:
+        ble_controller (BLEController): BLE controller instance
+        wifi_controller (WifiController | None): Wifi controller instance
+        disconnected_cb (DisconnectHandlerType): callback for BLE disconnects
+        notification_cb (NotiHandlerType): callback for BLE received notifications
+        target (Pattern | BleDevice): BLE device to search for
     """
 
     def __init__(
@@ -334,15 +340,6 @@ class GoProWirelessInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle])
         notification_cb: NotiHandlerType,
         target: Pattern | BleDevice,
     ) -> None:
-        """Constructor
-
-        Args:
-            ble_controller (BLEController): BLE controller instance
-            wifi_controller (Optional[WifiController]): Wifi controller instance
-            disconnected_cb (DisconnectHandlerType): callback for BLE disconnects
-            notification_cb (NotiHandlerType): callback for BLE received notifications
-            target (Pattern | BleDevice): BLE device to search for
-        """
         # Initialize GoPro Communication Client
         GoProBle.__init__(self, ble_controller, disconnected_cb, notification_cb, target)
         if wifi_controller:
@@ -379,15 +376,15 @@ class Message(ABC):
         Returns:
             types.JsonDict: message as dict
         """
-        raise NotImplementedError
 
 
 class BleMessage(Message):
     """The base class for all BLE messages to store common info
 
     Args:
-        communicator (GoProBle): BLE client to read / write
-        uuid (BleUUID): BleUUID to read / write to
+        uuid (BleUUID): BLE client to read / write
+        identifier (types.IdType): BleUUID to read / write to
+        parser (Parser | None): parser to interpret message
     """
 
     def __init__(
@@ -408,7 +405,7 @@ class BleMessage(Message):
         """Build the raw write request from operation description and run-time arguments
 
         Args:
-            kwargs (Any) : run-time arguments
+            **kwargs (Any) : run-time arguments
 
         Returns:
             bytearray: raw bytes request
@@ -529,14 +526,12 @@ class Messages(ABC, dict, Generic[MessageType, CommunicatorType]):
 
     Instance attributes that are an instance (or subclass) of Message are automatically accumulated during
     instantiation
+
+    Args:
+        communicator (CommunicatorType): communicator that will send messages
     """
 
     def __init__(self, communicator: CommunicatorType) -> None:
-        """Constructor
-
-        Args:
-            communicator (CommunicatorType): communicator that will send messages
-        """
         self._communicator = communicator
         # Append any automatically discovered instance attributes (i.e. for settings and statuses)
         message_map: dict[types.IdType, MessageType] = {}
