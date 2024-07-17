@@ -413,7 +413,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """Start the webcam.
 
         Args:
-            resolution ( Params.WebcamResolution | None): resolution to use. If not set, camera default will be used.
+            resolution (Params.WebcamResolution | None): resolution to use. If not set, camera default will be used.
             fov (Params.WebcamFOV | None): field of view to use. If not set, camera default will be used.
             port (int | None): port to use for streaming. If not set, camera default of 8554 will be used.
             protocol (Params.WebcamProtocol | None): streaming protocol to use. If not set, camera default of TS will
