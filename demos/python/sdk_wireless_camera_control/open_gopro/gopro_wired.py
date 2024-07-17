@@ -57,9 +57,9 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
     >>> # Send some messages now
 
     Args:
-        serial (Optional[str]): (at least) last 3 digits of GoPro Serial number. If not set, first GoPro
+        serial (str | None): (at least) last 3 digits of GoPro Serial number. If not set, first GoPro
             discovered from mDNS will be used. Defaults to None
-        kwargs (Any): additional keyword arguments to pass to base class
+        **kwargs (Any): additional keyword arguments to pass to base class
     """
 
     _BASE_IP: Final[str] = "172.2{}.1{}{}.51"
@@ -313,9 +313,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         """Poll the current state until a variable amount of states are all equal to desired values
 
         Args:
-            check (dict[Union[StatusId, SettingId], Any]): dict{setting / status: value} of settings / statuses
-                and values to wait for
-
+            check (types.CameraState): dict{setting / status: value} of settings / statuses and values to wait for
         """
         while True:
             state = (await self.http_command.get_camera_state()).data

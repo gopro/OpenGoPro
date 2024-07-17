@@ -91,14 +91,14 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     >>> # Send some messages now
 
     Args:
-        target (Pattern, Optional): A regex to search for the target GoPro's name. For example, "GoPro 0456").
+        target (Pattern | None): A regex to search for the target GoPro's name. For example, "GoPro 0456").
             Defaults to None (i.e. connect to first discovered GoPro)
-        wifi_interface (str, Optional): Set to specify the wifi interface the local machine will use to connect
+        wifi_interface (str | None): Set to specify the wifi interface the local machine will use to connect
             to the GoPro. If None (or not set), first discovered interface will be used.
-        sudo_password (str, Optional): User password for sudo. If not passed, you will be prompted if a password
+        sudo_password (str | None): User password for sudo. If not passed, you will be prompted if a password
             is needed which should only happen on Nix systems.
         enable_wifi (bool): Optionally do not enable Wifi if set to False. Defaults to True.
-        kwargs (Dict): additional parameters for internal use / testing
+        **kwargs (Any): additional parameters for internal use / testing
 
     # noqa: DAR401
 

@@ -63,6 +63,18 @@ class BleUUID(uuid.UUID):
     """An extension of the standard UUID to associate a string name with the UUID and allow 8-bit UUID input
 
     Can only be initialized with one of [hex, bytes, bytes_le, int]
+
+    Args:
+        name (str): human readable name
+        format (BleUUID.Format): 16 or 128 bit format. Defaults to BleUUID.Format.BIT_128.
+        hex (str | None): build from hex string. Defaults to None.
+        bytes (bytes | None): build from big-endian bytes. Defaults to None.
+        bytes_le (bytes | None): build from little-endian bytes. Defaults to None.
+        int (int | None): build from int. Defaults to None.
+
+    Raises:
+        ValueError: Attempt to initialize with more than one option
+        ValueError: Badly formed input
     """
 
     class Format(IntEnum):
@@ -76,25 +88,11 @@ class BleUUID(uuid.UUID):
         self,
         name: str,
         format: BleUUID.Format = Format.BIT_128,
-        hex: Optional[str] = None,
-        bytes: Optional[bytes] = None,
-        bytes_le: Optional[bytes] = None,
-        int: Optional[int] = None,
+        hex: str | None = None,
+        bytes: bytes | None = None,
+        bytes_le: bytes | None = None,
+        int: int | None = None,
     ) -> None:
-        """Constructor
-
-        Args:
-            name (str): human readable name
-            format (BleUUID.Format, Optional): 16 or 128 bit format. Defaults to BleUUID.Format.BIT_128.
-            hex (str, Optional): build from hex string. Defaults to None.
-            bytes (bytes, Optional): build from big-endian bytes. Defaults to None.
-            bytes_le (bytes, Optional): build from little-endian bytes. Defaults to None.
-            int (int, Optional): build from int. Defaults to None.
-
-        Raises:
-            ValueError: Attempt to initialize with more than one option
-            ValueError: Badly formed input
-        """
         self.name: str
         if format is BleUUID.Format.BIT_16:
             if [hex, bytes, bytes_le, int].count(None) != 3:

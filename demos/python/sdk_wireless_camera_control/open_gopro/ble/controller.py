@@ -34,7 +34,6 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
         Returns:
             bytes: response
         """
-        raise NotImplementedError
 
     @abstractmethod
     async def write(self, handle: BleHandle, uuid: BleUUID, data: bytes) -> None:
@@ -44,25 +43,20 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
             handle (BleHandle): handle to pair to
             uuid (BleUUID): BleUUID to write to
             data (bytes): bytestream to write
-
-        Returns:
-            bytes: response
         """
-        raise NotImplementedError
 
     @abstractmethod
-    async def scan(self, token: Pattern, timeout: int = 5, service_uuids: Optional[list[BleUUID]] = None) -> BleDevice:
+    async def scan(self, token: Pattern, timeout: int = 5, service_uuids: list[BleUUID] | None = None) -> BleDevice:
         """Scan BLE device with a regex in it's device name.
 
         Args:
             token (Pattern): Regex to scan for
             timeout (int): Time to scan (in seconds) before considering scanning as failed. Defaults to 5.
-            service_uuids (list[BleUUID], Optional): The list of BleUUID's to filter on. Defaults to None.
+            service_uuids (list[BleUUID] | None): The list of BleUUID's to filter on. Defaults to None.
 
         Returns:
             BleDevice: discovered device (shall not be multiple devices)
         """
-        raise NotImplementedError
 
     @abstractmethod
     async def connect(self, disconnect_cb: DisconnectHandlerType, device: BleDevice, timeout: int = 15) -> BleHandle:
@@ -76,7 +70,6 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
         Returns:
             BleHandle: handle that has been connected to
         """
-        raise NotImplementedError
 
     @abstractmethod
     async def pair(self, handle: BleHandle) -> None:
@@ -85,7 +78,6 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
         Args:
             handle (BleHandle): handle to pair to
         """
-        raise NotImplementedError
 
     @abstractmethod
     async def enable_notifications(self, handle: BleHandle, handler: NotiHandlerType) -> None:
@@ -98,10 +90,9 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
             handle (BleHandle): handle to enable notifications on
             handler (NotiHandlerType): notification handler
         """
-        raise NotImplementedError
 
     @abstractmethod
-    async def discover_chars(self, handle: BleHandle, uuids: Optional[type[UUIDs]] = None) -> GattDB:
+    async def discover_chars(self, handle: BleHandle, uuids: type[UUIDs] | None = None) -> GattDB:
         """Discover all characteristics for a connected handle.
 
         By default, the BLE controller only knows Spec-Defined BleUUID's so any additional BleUUID's should
@@ -109,13 +100,12 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
 
         Args:
             handle (BleHandle): BLE handle to discover for
-            uuids (type[UUIDs], Optional): Additional BleUUID information to use when building the
-                Gatt Database. Defaults to None.
+            uuids (type[UUIDs] | None): Additional BleUUID information to use when building the Gatt Database.
+                Defaults to None.
 
         Returns:
             GattDB: Gatt Database
         """
-        raise NotImplementedError
 
     @abstractmethod
     async def disconnect(self, handle: BleHandle) -> None:
@@ -124,4 +114,3 @@ class BLEController(ABC, Generic[BleDevice, BleHandle]):
         Args:
             handle (BleHandle): handle to disconnect from
         """
-        raise NotImplementedError

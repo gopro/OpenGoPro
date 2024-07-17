@@ -53,7 +53,7 @@ class JsonParsers:
             """Parse json dict into model
 
             Args:
-                data (dict): data to parse
+                data (types.JsonDict): data to parse
 
             Returns:
                 BaseModel: parsed model
@@ -64,7 +64,7 @@ class JsonParsers:
         """Helper class to allow parser definition using a lambda
 
         Args:
-            parser (Callable[[dict], dict]): lambda to parse input
+            parser (Callable[[types.JsonDict], T]): lambda to parse input
         """
 
         def __init__(self, parser: Callable[[types.JsonDict], T]) -> None:
@@ -74,7 +74,7 @@ class JsonParsers:
             """Use stored lambda parse for parsing
 
             Args:
-                data (dict): input dict to parse
+                data (types.JsonDict): input dict to parse
 
             Returns:
                 T: parsed output
@@ -88,10 +88,10 @@ class JsonParsers:
             """Parse dict of integer values into human readable (i.e. enum'ed) setting / status map
 
             Args:
-                data (dict): input dict to parse
+                data (types.JsonDict): input dict to parse
 
             Returns:
-                dict: output human readable dict
+                types.CameraState: output human readable dict
             """
             parsed: dict = {}
             # Parse status and settings values into nice human readable things
@@ -179,7 +179,7 @@ class ByteParserBuilders:
         """Parse into a GoProEnum
 
         Args:
-            target (type[GoProEnum]): enum type to parse into
+            target (type[GoProIntEnum]): enum type to parse into
         """
 
         def __init__(self, target: type[GoProIntEnum]) -> None:

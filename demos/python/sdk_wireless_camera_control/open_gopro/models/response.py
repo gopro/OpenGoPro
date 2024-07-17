@@ -184,13 +184,12 @@ class RespBuilder(ABC, Generic[T]):
         self._parser: Parser | None = None
 
     @abstractmethod
-    def build(self) -> GoProResp:
+    def build(self) -> GoProResp[T]:
         """Build a response
 
         Returns:
-            GoProResp: built response
+            GoProResp[T]: built response
         """
-        raise NotImplementedError
 
 
 class HttpRespBuilder(RespBuilder[types.JsonDict]):

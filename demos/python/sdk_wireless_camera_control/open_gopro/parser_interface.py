@@ -39,7 +39,6 @@ class BaseTransformer(ABC, Generic[T]):
         Returns:
             T: transformed data
         """
-        raise NotImplementedError
 
 
 class BytesTransformer(BaseTransformer[bytes]):
@@ -71,7 +70,6 @@ class BaseParser(ABC, Generic[T, T_co]):
         Returns:
             T_co: parsed output
         """
-        raise NotImplementedError
 
 
 class JsonParser(BaseParser[types.JsonDict, T_co]):
@@ -176,7 +174,6 @@ class BytesParserBuilder(BytesParser[T_co], BytesBuilder):
         Returns:
             T_co: parsed output
         """
-        raise NotImplementedError
 
     @abstractmethod
     def build(self, obj: Any) -> bytes:
@@ -233,10 +230,10 @@ class GlobalParsers:
         Note! Not all ID's are currently parsed so None will be returned if the container does not exist
 
         Args:
-            identifier (Union[SettingId, StatusId]): identifier to find container for
+            identifier (types.ResponseType): identifier to find container for
 
         Returns:
-            Callable: container if found else None
+            Callable | None: container if found else None
         """
         try:
             parser_builder = cast(BytesParserBuilder, cls._global_parsers[identifier].byte_json_adapter)
@@ -254,6 +251,6 @@ class GlobalParsers:
             identifier (types.ResponseType): ID to get parser for
 
         Returns:
-            Optional[Parser]: parser if found, else None
+            Parser | None: parser if found, else None
         """
         return cls._global_parsers.get(identifier)
