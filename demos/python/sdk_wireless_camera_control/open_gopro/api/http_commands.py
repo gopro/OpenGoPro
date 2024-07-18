@@ -11,7 +11,7 @@ import datetime
 import logging
 from pathlib import Path
 
-from open_gopro import proto, types
+from open_gopro import proto
 from open_gopro.api.builders import (
     HttpSetting,
     http_get_binary_command,
@@ -30,6 +30,7 @@ from open_gopro.models import CameraInfo, MediaList, MediaMetadata, MediaPath
 from open_gopro.models.general import WebcamResponse
 from open_gopro.models.response import GoProResp
 from open_gopro.parser_interface import Parser
+from open_gopro.types import CameraState, JsonDict
 
 from . import params as Params
 
@@ -123,11 +124,11 @@ class HttpCommands(HttpMessages[HttpMessage]):
         parser=Parser(json_parser=JsonParsers.CameraStateParser()),
         rules=MessageRules(fastpass_analyzer=MessageRules.always_true),
     )
-    async def get_camera_state(self) -> GoProResp[types.CameraState]:
+    async def get_camera_state(self) -> GoProResp[CameraState]:
         """Get all camera statuses and settings
 
         Returns:
-            GoProResp[types.CameraState]: status and settings as JSON
+            GoProResp[CameraState]: status and settings as JSON
         """
 
     @http_get_json_command(
@@ -199,11 +200,11 @@ class HttpCommands(HttpMessages[HttpMessage]):
 
     # TODO make pydantic model of preset status
     @http_get_json_command(endpoint="gopro/camera/presets/get")
-    async def get_preset_status(self) -> GoProResp[types.JsonDict]:
+    async def get_preset_status(self) -> GoProResp[JsonDict]:
         """Get status of current presets
 
         Returns:
-            GoProResp[types.JsonDict]: JSON describing currently available presets and preset groups
+            GoProResp[JsonDict]: JSON describing currently available presets and preset groups
         """
 
     @http_get_json_command(endpoint="gopro/camera/presets/load", arguments=["id"])

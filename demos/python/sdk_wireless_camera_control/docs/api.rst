@@ -76,6 +76,8 @@ These should not be imported directly and instead should be accessed using the r
 Base Types
 ----------
 
+.. automodule:: open_gopro.types
+
 GoPro Enum
 ^^^^^^^^^^
 
@@ -173,6 +175,8 @@ These are the various models that are returned in responses, used in commands, e
 
    from open_gopro.models import ***
 
+.. autopydantic_model:: open_gopro.models.media_list.MediaPath
+
 .. autopydantic_model:: open_gopro.models.media_list.MediaMetadata
 
 .. autopydantic_model:: open_gopro.models.media_list.PhotoMetadata
@@ -220,6 +224,8 @@ Exceptions
 
 Common Interface
 ================
+
+.. automodule:: open_gopro.parser_interface
 
 .. autoclass:: open_gopro.gopro_base.GoProBase
 

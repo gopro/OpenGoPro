@@ -11,7 +11,6 @@ from typing import Any, Callable, Final
 
 import open_gopro.exceptions as GpException
 import open_gopro.wifi.mdns_scanner  # Imported this way for pytest monkeypatching
-from open_gopro import types
 from open_gopro.api import (
     BleCommands,
     BleSettings,
@@ -25,6 +24,7 @@ from open_gopro.communicator_interface import GoProWiredInterface, Message, Mess
 from open_gopro.constants import StatusId
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models import GoProResp
+from open_gopro.types import CameraState, UpdateCb, UpdateType
 
 logger = logging.getLogger(__name__)
 
@@ -226,24 +226,24 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         """
         return self.is_open
 
-    def register_update(self, callback: types.UpdateCb, update: types.UpdateType) -> None:
+    def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
         """Register for callbacks when an update occurs
 
         Args:
-            callback (types.UpdateCb): callback to be notified in
-            update (types.UpdateType): update to register for
+            callback (UpdateCb): callback to be notified in
+            update (UpdateType): update to register for
 
         Raises:
             NotImplementedError: not yet possible
         """
         raise NotImplementedError
 
-    def unregister_update(self, callback: types.UpdateCb, update: types.UpdateType | None = None) -> None:
+    def unregister_update(self, callback: UpdateCb, update: UpdateType | None = None) -> None:
         """Unregister for asynchronous update(s)
 
         Args:
-            callback (types.UpdateCb): callback to stop receiving update(s) on
-            update (types.UpdateType | None): updates to unsubscribe for. Defaults to None (all
+            callback (UpdateCb): callback to stop receiving update(s) on
+            update (UpdateType | None): updates to unsubscribe for. Defaults to None (all
                 updates that use this callback will be unsubscribed).
 
         Raises:
@@ -309,11 +309,11 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
                     await self._wait_for_state({StatusId.ENCODING: True})
         return response
 
-    async def _wait_for_state(self, check: types.CameraState) -> None:
+    async def _wait_for_state(self, check: CameraState) -> None:
         """Poll the current state until a variable amount of states are all equal to desired values
 
         Args:
-            check (types.CameraState): dict{setting / status: value} of settings / statuses and values to wait for
+            check (CameraState): dict{setting / status: value} of settings / statuses and values to wait for
         """
         while True:
             state = (await self.http_command.get_camera_state()).data

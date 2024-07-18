@@ -27,7 +27,7 @@ from construct import (
     this,
 )
 
-from open_gopro import proto, types
+from open_gopro import proto
 from open_gopro.api.builders import BleAsyncResponse
 from open_gopro.api.builders import BleSettingFacade as BleSetting
 from open_gopro.api.builders import BleStatusFacade as BleStatus
@@ -56,7 +56,7 @@ from open_gopro.constants import (
 from open_gopro.models import CameraInfo, TzDstDateTime
 from open_gopro.models.response import GlobalParsers, GoProResp
 from open_gopro.parser_interface import Parser
-from open_gopro.types import CameraState
+from open_gopro.types import CameraState, UpdateCb
 
 from . import params as Params
 
@@ -344,11 +344,11 @@ class BleCommands(BleMessages[BleMessage]):
         update_set=StatusId,
         action=RegisterUnregisterAll.Action.REGISTER,
     )
-    async def register_for_all_statuses(self, callback: types.UpdateCb) -> GoProResp[None]:
+    async def register_for_all_statuses(self, callback: UpdateCb) -> GoProResp[None]:
         """Register push notifications for all statuses
 
         Args:
-            callback (types.UpdateCb): callback to be notified with
+            callback (UpdateCb): callback to be notified with
 
         Returns:
             GoProResp[None]: command status and current value of all statuses
@@ -360,11 +360,11 @@ class BleCommands(BleMessages[BleMessage]):
         update_set=StatusId,
         action=RegisterUnregisterAll.Action.UNREGISTER,
     )
-    async def unregister_for_all_statuses(self, callback: types.UpdateCb) -> GoProResp[None]:
+    async def unregister_for_all_statuses(self, callback: UpdateCb) -> GoProResp[None]:
         """Unregister push notifications for all statuses
 
         Args:
-            callback (types.UpdateCb): callback to be notified with
+            callback (UpdateCb): callback to be notified with
 
         Returns:
             GoProResp[None]: command status
@@ -376,11 +376,11 @@ class BleCommands(BleMessages[BleMessage]):
         update_set=SettingId,
         action=RegisterUnregisterAll.Action.REGISTER,
     )
-    async def register_for_all_settings(self, callback: types.UpdateCb) -> GoProResp[None]:
+    async def register_for_all_settings(self, callback: UpdateCb) -> GoProResp[None]:
         """Register push notifications for all settings
 
         Args:
-            callback (types.UpdateCb): callback to be notified with
+            callback (UpdateCb): callback to be notified with
 
         Returns:
             GoProResp[None]: command status and current value of all settings
@@ -392,11 +392,11 @@ class BleCommands(BleMessages[BleMessage]):
         update_set=SettingId,
         action=RegisterUnregisterAll.Action.UNREGISTER,
     )
-    async def unregister_for_all_settings(self, callback: types.UpdateCb) -> GoProResp[None]:
+    async def unregister_for_all_settings(self, callback: UpdateCb) -> GoProResp[None]:
         """Unregister push notifications for all settings
 
         Args:
-            callback (types.UpdateCb): callback to be notified with
+            callback (UpdateCb): callback to be notified with
 
         Returns:
             GoProResp[None]: command status
@@ -408,11 +408,11 @@ class BleCommands(BleMessages[BleMessage]):
         update_set=SettingId,
         action=RegisterUnregisterAll.Action.REGISTER,
     )
-    async def register_for_all_capabilities(self, callback: types.UpdateCb) -> GoProResp[None]:
+    async def register_for_all_capabilities(self, callback: UpdateCb) -> GoProResp[None]:
         """Register push notifications for all capabilities
 
         Args:
-            callback (types.UpdateCb): callback to be notified with
+            callback (UpdateCb): callback to be notified with
 
         Returns:
             GoProResp[None]: command status and current value of all capabilities
@@ -424,11 +424,11 @@ class BleCommands(BleMessages[BleMessage]):
         update_set=SettingId,
         action=RegisterUnregisterAll.Action.UNREGISTER,
     )
-    async def unregister_for_all_capabilities(self, callback: types.UpdateCb) -> GoProResp[None]:
+    async def unregister_for_all_capabilities(self, callback: UpdateCb) -> GoProResp[None]:
         """Unregister push notifications for all capabilities
 
         Args:
-            callback (types.UpdateCb): callback to be notified with
+            callback (UpdateCb): callback to be notified with
 
         Returns:
             GoProResp[None]: command status

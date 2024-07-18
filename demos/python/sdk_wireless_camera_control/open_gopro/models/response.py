@@ -14,7 +14,6 @@ from typing import Any, Final, Generic, TypeVar
 
 import requests
 
-from open_gopro import types
 from open_gopro.api.parsers import JsonParsers
 from open_gopro.ble import BleUUID
 from open_gopro.constants import (
@@ -31,6 +30,7 @@ from open_gopro.constants import (
 from open_gopro.exceptions import ResponseParseError
 from open_gopro.parser_interface import GlobalParsers, Parser
 from open_gopro.proto import EnumResultGeneric
+from open_gopro.types import CameraState, JsonDict, ResponseType
 from open_gopro.util import pretty_print
 
 logger = logging.getLogger(__name__)
@@ -92,7 +92,7 @@ class GoProResp(Generic[T]):
         protocol (GoProResp.Protocol): protocol response was received on
         status (ErrorCode): status of response
         data (T): parsed response data
-        identifier (types.ResponseType): response identifier, the type of which will vary depending on the response
+        identifier (ResponseType): response identifier, the type of which will vary depending on the response
     """
 
     class Protocol(enum.Enum):
@@ -104,7 +104,7 @@ class GoProResp(Generic[T]):
     protocol: GoProResp.Protocol
     status: ErrorCode
     data: T
-    identifier: types.ResponseType
+    identifier: ResponseType
 
     def _as_dict(self) -> dict:
         """Represent the response as dictionary, merging it's data and meta information
@@ -126,7 +126,7 @@ class GoProResp(Generic[T]):
             return self.identifier == obj
         if isinstance(obj, GoProResp):
             return self.identifier == obj.identifier
-        raise TypeError("Equal can only compare GoProResp and types.ResponseType")
+        raise TypeError("Equal can only compare GoProResp and ResponseType")
 
     def __str__(self) -> str:
         return pretty_print(self._as_dict())
@@ -192,7 +192,7 @@ class RespBuilder(ABC, Generic[T]):
         """
 
 
-class HttpRespBuilder(RespBuilder[types.JsonDict]):
+class HttpRespBuilder(RespBuilder[JsonDict]):
     """HTTP Response Builder
 
     This is not intended to be fool proof to use as the user must understand which fields are needed.
@@ -202,13 +202,13 @@ class HttpRespBuilder(RespBuilder[types.JsonDict]):
     def __init__(self) -> None:
         super().__init__()
         self._endpoint: str
-        self._response: types.JsonDict
+        self._response: JsonDict
 
-    def set_response(self, response: types.JsonDict) -> None:
+    def set_response(self, response: JsonDict) -> None:
         """Store the JSON data. This is mandatory.
 
         Args:
-            response (types.JsonDict): json data_
+            response (JsonDict): json data_
         """
         self._response = response
 
@@ -289,7 +289,7 @@ class BleRespBuilder(RespBuilder[bytearray]):
     def __init__(self) -> None:
         self._bytes_remaining = 0
         self._uuid: BleUUID
-        self._identifier: types.ResponseType
+        self._identifier: ResponseType
         self._feature_id: FeatureId | None = None
         self._action_id: ActionId | None = None
         super().__init__()
@@ -304,7 +304,7 @@ class BleRespBuilder(RespBuilder[bytearray]):
         return isinstance(self._identifier, (ActionId, FeatureId))
 
     @classmethod
-    def get_response_identifier(cls, uuid: BleUUID, packet: bytearray) -> types.ResponseType:
+    def get_response_identifier(cls, uuid: BleUUID, packet: bytearray) -> ResponseType:
         """Get the identifier based on what is currently known about the packet
 
         Args:
@@ -312,7 +312,7 @@ class BleRespBuilder(RespBuilder[bytearray]):
             packet (bytearray): raw bytes contained in packet
 
         Returns:
-            types.ResponseType: identifier of this response
+            ResponseType: identifier of this response
         """
         # If it's a protobuf command
         identifier = packet[0]
@@ -466,7 +466,7 @@ class BleRespBuilder(RespBuilder[bytearray]):
 
             # Query (setting get value, status get value, etc.)
             if query_type:
-                camera_state: types.CameraState = defaultdict(list)
+                camera_state: CameraState = defaultdict(list)
                 self._status = ErrorCode(buf[0])
                 buf = buf[1:]
                 # Parse all parameters

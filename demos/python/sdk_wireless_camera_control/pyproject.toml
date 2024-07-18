@@ -66,22 +66,21 @@ pytest-html = "^3"
 coverage = { extras = ["toml"], version = "^6" }
 requests-mock = "^1"
 black = "*"
-pylint = "^2"
+pylint = "*"
 mypy = "*"
 types-requests = "*"
 types-attrs = "*"
 types-pytz = "*"
 types-tzlocal = "*"
 construct-typing = "*"
-sphinx = "^5"
-sphinx-rtd-theme = "^1"
-sphinxemoji = "^0"
+sphinx = "^7"
+sphinx-rtd-theme = "^2"
 coverage-badge = "=1.1.0"
 poethepoet = "^0"
 autodoc-pydantic = "^2"
 pytest-timeout = "^2"
 isort = "*"
-types-protobuf = "^4"
+types-protobuf = "*"
 
 [tool.poe.tasks.tests]
 cmd = "pytest tests/unit --cov-fail-under=70"
@@ -124,7 +123,7 @@ sequence = ["_pydocstyle", "_doclint"]
 help = "Analyze docstrings for consistency and errors"
 
 [tool.poe.tasks.sphinx]
-cmd = "sphinx-build -W --keep-going -a -E -b html docs docs/build"
+cmd = "sphinx-build -W --keep-going -a -n -E -b html docs docs/build"
 help = "Build sphinx documentation."
 
 [tool.poe.tasks._coverage]
