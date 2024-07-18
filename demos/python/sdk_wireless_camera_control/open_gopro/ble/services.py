@@ -164,19 +164,19 @@ class Characteristic:
         handle (int) : the handle of the attribute table that the characteristic resides at
         uuid (BleUUID) : the BleUUID of the characteristic
         props (CharProps) : the characteristic's properties (READ, WRITE, NOTIFY, etc)
-        value (bytes) : the current byte stream value of the characteristic value
-        init_descriptors (Optional[list[Descriptor]]) : Descriptors known at initialization (can also be
+        value (bytes | None) : the current byte stream value of the characteristic value
+        init_descriptors (list[Descriptor] | None) : Descriptors known at initialization (can also be
             set later using the descriptors property)
-        descriptor_handle (Optional[int]) : handle of this characteristic's declaration descriptor. If not
+        descriptor_handle (int | None) : handle of this characteristic's declaration descriptor. If not
             passed, defaults to handle + 1
     """
 
     handle: int
     uuid: BleUUID
     props: CharProps
-    value: Optional[bytes] = None
-    init_descriptors: InitVar[Optional[list[Descriptor]]] = None
-    descriptor_handle: Optional[int] = None
+    value: bytes | None = None
+    init_descriptors: InitVar[list[Descriptor] | None] = None
+    descriptor_handle: int | None = None
 
     def __post_init__(self, init_descriptors: Optional[list[Descriptor]]) -> None:
         self._descriptors: dict[BleUUID, Descriptor] = {}
@@ -371,8 +371,7 @@ class GattDB:
 
             def iter_keys():
                 for service in self._db.services.values():
-                    for ble_uuid in service.characteristics.keys():
-                        yield ble_uuid
+                    yield from service.characteristics.keys()
 
             return iter_keys()
 
@@ -386,8 +385,7 @@ class GattDB:
 
             def iter_values():
                 for service in self._db.services.values():
-                    for char in service.characteristics.values():
-                        yield char
+                    yield from service.characteristics.values()
 
             return iter_values()
 
@@ -529,8 +527,7 @@ class UUIDsMeta(type):
 
     @no_type_check
     def __iter__(cls):
-        for item in cls._int2uuid.items():
-            yield item
+        yield from cls._int2uuid.items()
 
 
 @dataclass(frozen=True)

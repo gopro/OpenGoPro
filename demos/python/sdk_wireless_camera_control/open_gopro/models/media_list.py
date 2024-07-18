@@ -10,8 +10,8 @@ from typing import Any, Optional
 
 from pydantic import Field, PrivateAttr, validator
 
-from open_gopro import types
 from open_gopro.models.bases import CustomBaseModel
+from open_gopro.types import JsonDict
 
 ##############################################################################################################
 # Generic
@@ -64,11 +64,11 @@ class MediaMetadata(ABC, CustomBaseModel):
     lens_projection: Optional[str] = Field(alias="prjn", default=None)  #: Lens projection
 
     @classmethod
-    def from_json(cls, json_str: types.JsonDict) -> MediaMetadata:
+    def from_json(cls, json_str: JsonDict) -> MediaMetadata:
         """Build a metadata object given JSON input
 
         Args:
-            json_str (types.JsonDict): raw JSON
+            json_str (JsonDict): raw JSON
 
         Returns:
             MediaMetadata: parsed metadata
@@ -144,13 +144,13 @@ class MediaFileSystem(CustomBaseModel):
 
     @validator("file_system", pre=True, each_item=True)
     @classmethod
-    def identify_item(cls, item: types.JsonDict) -> MediaItem:
+    def identify_item(cls, item: JsonDict) -> MediaItem:
         """Extent item into GroupedMediaItem if it such an item
 
         A group item is identified by the presence of a "g" field
 
         Args:
-            item (types.JsonDict): input JSON
+            item (JsonDict): input JSON
 
         Returns:
             MediaItem: parsed media item

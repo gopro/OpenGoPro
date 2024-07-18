@@ -18,7 +18,6 @@ import requests
 import wrapt
 
 import open_gopro.exceptions as GpException
-from open_gopro import types
 from open_gopro.api import (
     BleCommands,
     BleSettings,
@@ -37,6 +36,7 @@ from open_gopro.communicator_interface import (
 from open_gopro.constants import ErrorCode
 from open_gopro.logger import Logger
 from open_gopro.models.response import GoProResp, RequestsHttpRespBuilderDirector
+from open_gopro.types import JsonDict
 from open_gopro.util import pretty_print
 
 logger = logging.getLogger(__name__)
@@ -286,14 +286,14 @@ class GoProBase(GoProHttp, Generic[ApiType]):
             GoProResp: Operation response
         """
 
-    def _handle_exception(self, source: Any, context: types.JsonDict) -> None:
+    def _handle_exception(self, source: Any, context: JsonDict) -> None:
         """Gather exceptions from module threads and send through callback if registered.
 
         Note that this function signature matches asyncio's exception callback requirement.
 
         Args:
             source (Any): Where did the exception come from?
-            context (types.JsonDict): Access exception via context["exception"]
+            context (JsonDict): Access exception via context["exception"]
         """
         # context["message"] will always be there; but context["exception"] may not
         if exception := context.get("exception", False):

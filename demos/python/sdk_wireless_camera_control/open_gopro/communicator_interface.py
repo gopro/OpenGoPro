@@ -16,7 +16,6 @@ from urllib.parse import urlencode
 
 from construct import Bit, BitsInteger, BitStruct, Const, Construct, Padding
 
-from open_gopro import types
 from open_gopro.ble import (
     BleClient,
     BLEController,
@@ -36,6 +35,7 @@ from open_gopro.parser_interface import (
     JsonTransformer,
     Parser,
 )
+from open_gopro.types import IdType, JsonDict, UpdateCb, UpdateType
 from open_gopro.wifi import WifiClient, WifiController
 
 logger = logging.getLogger(__name__)
@@ -104,21 +104,21 @@ class BaseGoProCommunicator(ABC):
     """Common Communicator interface"""
 
     @abstractmethod
-    def register_update(self, callback: types.UpdateCb, update: types.UpdateType) -> None:
+    def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
         """Register for callbacks when an update occurs
 
         Args:
-            callback (types.UpdateCb): callback to be notified in
-            update (types.UpdateType): update to register for
+            callback (UpdateCb): callback to be notified in
+            update (UpdateType): update to register for
         """
 
     @abstractmethod
-    def unregister_update(self, callback: types.UpdateCb, update: types.UpdateType | None = None) -> None:
+    def unregister_update(self, callback: UpdateCb, update: UpdateType | None = None) -> None:
         """Unregister for asynchronous update(s)
 
         Args:
-            callback (types.UpdateCb): callback to stop receiving update(s) on
-            update (types.UpdateType | None): updates to unsubscribe for. Defaults to None (all
+            callback (UpdateCb): callback to stop receiving update(s) on
+            update (UpdateType | None): updates to unsubscribe for. Defaults to None (all
                 updates that use this callback will be unsubscribed).
         """
 
@@ -360,21 +360,21 @@ class Message(ABC):
 
     def __init__(
         self,
-        identifier: types.IdType,
+        identifier: IdType,
         parser: Parser | None = None,
     ) -> None:
-        self._identifier: types.IdType = identifier
+        self._identifier: IdType = identifier
         self._parser = parser
 
     @abstractmethod
-    def _as_dict(self, **kwargs: Any) -> types.JsonDict:
+    def _as_dict(self, **kwargs: Any) -> JsonDict:
         """Return the attributes of the message as a dict
 
         Args:
             **kwargs (Any): additional entries for the dict
 
         Returns:
-            types.JsonDict: message as dict
+            JsonDict: message as dict
         """
 
 
@@ -383,14 +383,14 @@ class BleMessage(Message):
 
     Args:
         uuid (BleUUID): BLE client to read / write
-        identifier (types.IdType): BleUUID to read / write to
+        identifier (IdType): BleUUID to read / write to
         parser (Parser | None): parser to interpret message
     """
 
     def __init__(
         self,
         uuid: BleUUID,
-        identifier: types.IdType,
+        identifier: IdType,
         parser: Parser | None,
     ) -> None:
         Message.__init__(self, identifier, parser)
@@ -417,7 +417,7 @@ class HttpMessage(Message):
 
     Args:
         endpoint (str): base endpoint
-        identifier (types.IdType | None): explicit message identifier. If None, will be generated from endpoint.
+        identifier (IdType | None): explicit message identifier. If None, will be generated from endpoint.
         components (list[str] | None): Additional path components (i.e. endpoint/{COMPONENT}). Defaults to None.
         arguments (list[str] | None): Any arguments to be appended after endpoint (i.e. endpoint?{ARGUMENT}). Defaults to None.
         body_args (list[str] | None): Arguments to be added to the body JSON. Defaults to None.
@@ -429,7 +429,7 @@ class HttpMessage(Message):
     def __init__(
         self,
         endpoint: str,
-        identifier: types.IdType | None,
+        identifier: IdType | None,
         components: list[str] | None = None,
         arguments: list[str] | None = None,
         body_args: list[str] | None = None,
@@ -452,7 +452,7 @@ class HttpMessage(Message):
         self._body_args = body_args or []
         self._certificate = certificate
         Message.__init__(self, identifier, parser)
-        self._base_dict: types.JsonDict = {
+        self._base_dict: JsonDict = {
             "id": self._identifier,
             "protocol": GoProResp.Protocol.HTTP,
             "endpoint": self._endpoint,
@@ -461,14 +461,14 @@ class HttpMessage(Message):
     def __str__(self) -> str:
         return str(self._identifier).title()
 
-    def _as_dict(self, **kwargs: Any) -> types.JsonDict:
+    def _as_dict(self, **kwargs: Any) -> JsonDict:
         """Return the attributes of the message as a dict
 
         Args:
             **kwargs (Any): additional entries for the dict
 
         Returns:
-            types.JsonDict: message as dict
+            JsonDict: message as dict
         """
         # If any kwargs keys were to conflict with base dict, append underscore
         return self._base_dict | {f"{'_' if k in ['id', 'protocol'] else ''}{k}": v for k, v in kwargs.items()}
@@ -516,8 +516,8 @@ class HttpMessage(Message):
 
 
 MessageType = TypeVar("MessageType", bound=Message)
-CommunicatorType = TypeVar("CommunicatorType", bound=BaseGoProCommunicator)
 
+CommunicatorType = TypeVar("CommunicatorType", bound=BaseGoProCommunicator)
 
 class Messages(ABC, dict, Generic[MessageType, CommunicatorType]):
     """Base class for setting and status containers
@@ -534,7 +534,7 @@ class Messages(ABC, dict, Generic[MessageType, CommunicatorType]):
     def __init__(self, communicator: CommunicatorType) -> None:
         self._communicator = communicator
         # Append any automatically discovered instance attributes (i.e. for settings and statuses)
-        message_map: dict[types.IdType, MessageType] = {}
+        message_map: dict[IdType, MessageType] = {}
         for message in self.__dict__.values():
             if hasattr(message, "_identifier"):
                 message_map[message._identifier] = message

@@ -14,7 +14,7 @@ from copy import deepcopy
 from typing import Any, Callable, Final, Pattern
 
 import open_gopro.exceptions as GpException
-from open_gopro import proto, types
+from open_gopro import proto
 from open_gopro.api import (
     BleCommands,
     BleSettings,
@@ -41,6 +41,7 @@ from open_gopro.gopro_base import (
 from open_gopro.logger import Logger
 from open_gopro.models.general import CohnInfo
 from open_gopro.models.response import BleRespBuilder, GoProResp
+from open_gopro.types import ResponseType, UpdateCb, UpdateType
 from open_gopro.util import SnapshotQueue, get_current_dst_aware_time, pretty_print
 from open_gopro.wifi import WifiCli
 
@@ -153,11 +154,11 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # can only be one active response per BleUUID
         self._active_builders: dict[BleUUID, BleRespBuilder] = {}
         # Responses that we are waiting for.
-        self._sync_resp_wait_q: SnapshotQueue[types.ResponseType] = SnapshotQueue()
+        self._sync_resp_wait_q: SnapshotQueue[ResponseType] = SnapshotQueue()
         # Synchronous response that has been parsed and are ready for their sender to receive as the response.
         self._sync_resp_ready_q: SnapshotQueue[GoProResp] = SnapshotQueue()
 
-        self._listeners: dict[types.UpdateType, set[types.UpdateCb]] = defaultdict(set)
+        self._listeners: dict[UpdateType, set[UpdateCb]] = defaultdict(set)
 
         # TO be set up when opening in async context
         self._loop: asyncio.AbstractEventLoop
@@ -329,21 +330,21 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         await self._close_ble()
         self._open = False
 
-    def register_update(self, callback: types.UpdateCb, update: types.UpdateType) -> None:
+    def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
         """Register for callbacks when an update occurs
 
         Args:
-            callback (types.UpdateCb): callback to be notified in
-            update (types.UpdateType): update to register for
+            callback (UpdateCb): callback to be notified in
+            update (UpdateType): update to register for
         """
         self._listeners[update].add(callback)
 
-    def unregister_update(self, callback: types.UpdateCb, update: types.UpdateType | None = None) -> None:
+    def unregister_update(self, callback: UpdateCb, update: UpdateType | None = None) -> None:
         """Unregister for asynchronous update(s)
 
         Args:
-            callback (types.UpdateCb): callback to stop receiving update(s) on
-            update (types.UpdateType | None): updates to unsubscribe for. Defaults to None (all
+            callback (UpdateCb): callback to stop receiving update(s) on
+            update (UpdateType | None): updates to unsubscribe for. Defaults to None (all
                 updates that use this callback will be unsubscribed).
         """
         if update:
@@ -554,11 +555,11 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 self._encoding_started.clear()
         return response
 
-    async def _notify_listeners(self, update: types.UpdateType, value: Any) -> None:
+    async def _notify_listeners(self, update: UpdateType, value: Any) -> None:
         """Notify all registered listeners of this update
 
         Args:
-            update (types.UpdateType): update to notify
+            update (UpdateType): update to notify
             value (Any): value to notify
         """
         for listener in self._listeners.get(update, []):
@@ -589,7 +590,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             await self._update_internal_state(StatusId.SYSTEM_BUSY, busy)
         logger.info("BLE is ready!")
 
-    async def _update_internal_state(self, update: types.UpdateType, value: int) -> None:
+    async def _update_internal_state(self, update: UpdateType, value: int) -> None:
         """Update the internal state based on a status update.
 
         # Note!!! This needs to be reentrant-safe
@@ -597,7 +598,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Used to update encoding and / or busy status
 
         Args:
-            update (types.UpdateType): type of update (status ID)
+            update (UpdateType): type of update (status ID)
             value (int): updated value
         """
         # Cancel any currently pending state update tasks
