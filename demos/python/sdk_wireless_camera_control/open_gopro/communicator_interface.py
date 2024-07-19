@@ -542,7 +542,7 @@ class Messages(ABC, dict, Generic[MessageType, CommunicatorType]):
         # Append any automatically discovered methods (i.e. for commands)
         for name, method in inspect.getmembers(self, predicate=inspect.ismethod):
             if not name.startswith("_"):
-                message_map[name.replace("_", " ").title()] = method  # type: ignore
+                message_map[name.replace("_", " ").title()] = method
         dict.__init__(self, message_map)
 
 
