@@ -67,6 +67,12 @@ TYPE_ALIASES = {
     "ResponseType": "open_gopro.types.ResponseType",
     "Protobuf": "open_gopro.types.Protobuf",
     "IdType": "open_gopro.types.IdType",
+    # TODO there must be a better way of doing this...
+    "Params.Toggle": "open_gopro.api.params.Toggle",
+    "Params.CameraControl": "open_gopro.api.params.CameraControl",
+    "Params.WebcamProtocol": "open_gopro.api.params.WebcamProtocol",
+    "Params.WebcamResolution": "open_gopro.api.params.WebcamResolution",
+    "Params.WebcamFOV": "open_gopro.api.params.WebcamFOV",
 }
 
 # This is very broken.
@@ -82,9 +88,13 @@ nitpick_ignore = [
     ("py:class", "T_co"),
     ("py:class", "ExceptionHandler"),
     ("py:class", "abc.ABC"),
+    # TODO need to fix these
+    ("py:class", "Path"),
+    ("py:class", "JsonDict"),
+    ("py:class", "ValueType"),
 ]
 nitpick_ignore_regex = [
-    (r"py:class", r".*proto\..+"),  # TODO how should / can we handle protobuf documenting?
+    (r"py:class", r".*proto\..+"),
     (r"py:class", r".*_pb2\..+"),
     (r".*", r".*construct.*"),
     # Generic Types that are pointless to document
@@ -94,8 +104,12 @@ nitpick_ignore_regex = [
     (r"py:class", r".*BleDevice"),
     (r"py:class", r".*CommunicatorType"),
     (r"py:class", r".*NotiHandlerType"),
+    (r"py:class", r".*DisconnectHandlerType"),
     (r"py:obj", r".*CommunicatorType"),
-    (r"py:obj", r".*MessageType"),
+    (r"py:class", r".*QueryParserType"),
+    (r"py:class", r".*ValueType"),
+    (r"py:obj", r".*communicator_interface.MessageType"),
+    (r"py:class", r".*dataclasses.*"),
 ]
 
 
@@ -109,19 +123,12 @@ def resolve_type_aliases(app, env, node, contnode):
     """Resolve :class: references to our type aliases as :attr: instead."""
     try:
         if node["refdomain"] == "py" and (target := TYPE_ALIASES.get(node["reftarget"])):
-            print(f"updating {node['reftarget']}")
-            return app.env.get_domain("py").resolve_any_xref(
-                env,
-                node["refdoc"],
-                app.builder,
-                target,
-                node,
-                contnode,
-            )[
+            # print(f"updating {node['reftarget']}")
+            return app.env.get_domain("py").resolve_any_xref(env, node["refdoc"], app.builder, target, node, contnode,)[
                 0
             ][1]
     except IndexError:
-        print("uhoh")
+        # print("Error")
         return None
 
 

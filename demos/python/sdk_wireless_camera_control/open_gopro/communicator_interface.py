@@ -519,6 +519,7 @@ MessageType = TypeVar("MessageType", bound=Message)
 
 CommunicatorType = TypeVar("CommunicatorType", bound=BaseGoProCommunicator)
 
+
 class Messages(ABC, dict, Generic[MessageType, CommunicatorType]):
     """Base class for setting and status containers
 

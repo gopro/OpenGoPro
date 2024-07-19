@@ -49,7 +49,7 @@ from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
 from open_gopro.gopro_base import GoProBase
 from open_gopro.logger import set_logging_level, setup_logging
 from open_gopro.models.response import GoProResp
-from open_gopro.types import UpdateCb, UpdateType, CameraState
+from open_gopro.types import CameraState, UpdateCb, UpdateType
 from open_gopro.wifi import SsidState, WifiClient, WifiController
 from tests import mock_good_response, versions
 
