@@ -5,7 +5,12 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable, Coroutine, TypeAlias, Union
+from typing import Any, Callable, Coroutine, Union
+
+try:
+    from typing import TypeAlias
+except ImportError:
+    from typing_extensions import TypeAlias
 
 import construct
 from google.protobuf.message import Message
