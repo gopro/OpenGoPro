@@ -3,6 +3,8 @@
 
 """Manage a Bluetooth connection using bleak."""
 
+from __future__ import annotations
+
 import asyncio
 import logging
 import platform
