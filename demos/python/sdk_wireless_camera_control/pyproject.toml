@@ -52,6 +52,7 @@ opencv-python = { version = "^4", optional = true }
 Pillow = {version= "^9", optional = true}
 pytz = "*"
 tzlocal = "*"
+typing-extensions = "^4.12.2"
 
 [tool.poetry.extras]
 gui = ["opencv-python", "pillow"]
