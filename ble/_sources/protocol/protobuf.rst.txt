@@ -2249,6 +2249,13 @@ Preset Group meta information and contained Presets
 
      - The icon to display for this preset group
 
+   * - mode_array
+
+     - :ref:`proto-enumflatmode`
+     - 5
+
+     - A list of flatmodes available for this preset group
+
 
 
 
@@ -2535,7 +2542,7 @@ Returns a :ref:`proto-responsegeneric` with the status of the preset update requ
      - string
      - 2
 
-     - | UTF-8 encoded custom preset name
+     - | UTF-8 encoded custom preset name to be used if `title_id` is set to 94 (PRESET_TITLE_USER_DEFINED_CUSTOM_NAME)
        | 
        | The name must obey the following:
        | 
@@ -2896,7 +2903,8 @@ Response: :ref:`proto-responsegeneric`
 
      - | Resolution to use for live stream
        | 
-       | The set of supported resolutions is only available from the `live_stream_window_size_supported_array` in :ref:`proto-notifylivestreamstatus`)
+       | The set of supported resolutions is only available from the `live_stream_window_size_supported_array`
+       | in :ref:`proto-notifylivestreamstatus`.
 
    * - cert
      - bytes
@@ -2929,7 +2937,8 @@ Response: :ref:`proto-responsegeneric`
 
      - | Lens to use for live stream
        | 
-       | The set of supported lenses is only available from the  `live_stream_lens_supported_array` in :ref:`proto-notifylivestreamstatus`)
+       | The set of supported lenses is only available from the  `live_stream_lens_supported_array`
+       | in :ref:`proto-notifylivestreamstatus`.
 
 
 

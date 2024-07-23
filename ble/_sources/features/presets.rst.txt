@@ -47,6 +47,21 @@ The value of this status is set to a non-zero value when:
 Operations
 ----------
 
+.. operation:protobuf:: Create Custom Preset
+    :operation-id: GPCAMERA_CREATE_PRESET_V2
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0xF1
+        :action-id: 0x76
+        :uuid: Command
+        :message: WSDK_RequestCreateCustomPreset
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0xF1
+        :action-id: 0xF6
+        :uuid: Command Response
+        :message: WSDK_ResponseCreateCustomPreset
+
 .. operation:protobuf:: Get Available Presets
     :operation-id: OGP_PRESETS_GET
     :external:
