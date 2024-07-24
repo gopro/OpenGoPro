@@ -1,6 +1,3 @@
-# See .admin/XXX/README.md for more information on these containers
-
-version: '3.8'
 services:
     cors_proxy:
         container_name: cors_proxy
