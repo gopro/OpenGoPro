@@ -1,0 +1,7 @@
+services:
+    cors_proxy:
+        container_name: cors_proxy
+        build:
+            context: .
+        image: tcamise/gopro-cors-proxy
+        ports: ['8082:80']
