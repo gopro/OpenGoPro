@@ -12,7 +12,7 @@ from typing import Any, Generic, Optional, Pattern
 
 import pytest
 
-from open_gopro import WiredGoPro, WirelessGoPro, types
+from open_gopro import WiredGoPro, WirelessGoPro
 from open_gopro.api import (
     BleCommands,
     BleSettings,
@@ -49,6 +49,7 @@ from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
 from open_gopro.gopro_base import GoProBase
 from open_gopro.logger import set_logging_level, setup_logging
 from open_gopro.models.response import GoProResp
+from open_gopro.types import CameraState, UpdateCb, UpdateType
 from open_gopro.wifi import SsidState, WifiClient, WifiController
 from tests import mock_good_response, versions
 
@@ -221,10 +222,10 @@ class MockBleCommunicator(GoProBle):
         super().__init__(MockBleController(), disconnection_handler, notification_handler, re.compile("target"))
         self._api = api_versions[test_version](self)
 
-    def register_update(self, callback: types.UpdateCb, update: types.UpdateType) -> None:
+    def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
         return
 
-    def unregister_update(self, callback: types.UpdateCb, update: types.UpdateType = None) -> None:
+    def unregister_update(self, callback: UpdateCb, update: UpdateType = None) -> None:
         return
 
     async def _send_ble_message(
@@ -323,10 +324,10 @@ class MockWifiCommunicator(GoProWifi):
     async def _stream_to_file(self, url: str, file: Path):
         return url, file
 
-    def register_update(self, callback: types.UpdateCb, update: types.UpdateType) -> None:
+    def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
         return
 
-    def unregister_update(self, callback: types.UpdateCb, update: types.UpdateType = None) -> None:
+    def unregister_update(self, callback: UpdateCb, update: UpdateType = None) -> None:
         return
 
     @property
@@ -364,12 +365,12 @@ class MockWiredGoPro(WiredGoPro):
         self.http_command.wired_usb_control = self._mock_wired_usb_control
         self.http_command.get_open_gopro_api_version = self._mock_get_version
         self.http_command.get_camera_state = self._mock_get_state
-        self.state_response: types.CameraState = {}
+        self.state_response: CameraState = {}
 
     async def _mock_get_state(self, *args, **kwargs):
         return DataPatch(self.state_response)
 
-    def set_state_response(self, response: types.CameraState):
+    def set_state_response(self, response: CameraState):
         self.state_response = response
 
     async def _mock_wired_usb_control(self, *args, **kwargs):

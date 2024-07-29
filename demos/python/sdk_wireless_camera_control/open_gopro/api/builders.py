@@ -15,7 +15,6 @@ from typing import Any, Callable, Final, Generic, Protocol, TypeVar, Union
 import construct
 import wrapt
 
-from open_gopro import types
 from open_gopro.api.parsers import ByteParserBuilders
 from open_gopro.ble import BleUUID
 from open_gopro.communicator_interface import (
@@ -40,6 +39,7 @@ from open_gopro.enum import GoProIntEnum
 from open_gopro.logger import Logger
 from open_gopro.models.response import GlobalParsers, GoProResp
 from open_gopro.parser_interface import BytesBuilder, BytesParserBuilder, Parser
+from open_gopro.types import CameraState, JsonDict, Protobuf, UpdateCb
 
 logger = logging.getLogger(__name__)
 
@@ -54,15 +54,14 @@ T = TypeVar("T")
 
 
 class BleReadCommand(BleMessage):
-    """A BLE command that reads data from a BleUUID"""
+    """A BLE command that reads data from a BleUUID
+
+    Args:
+        uuid (BleUUID):  BleUUID to read from
+        parser (Parser): the parser that will parse the received bytestream into a JSON dict
+    """
 
     def __init__(self, uuid: BleUUID, parser: Parser) -> None:
-        """Constructor
-
-        Args:
-            uuid (BleUUID):  BleUUID to read from
-            parser (Parser): the parser that will parse the received bytestream into a JSON dict
-        """
         super().__init__(uuid=uuid, parser=parser, identifier=uuid)
 
     def _build_data(self, **kwargs: Any) -> bytearray:
@@ -72,14 +71,14 @@ class BleReadCommand(BleMessage):
     def __str__(self) -> str:
         return f"Read {self._uuid.name.lower().replace('_', ' ').title()}"
 
-    def _as_dict(self, **kwargs: Any) -> types.JsonDict:
+    def _as_dict(self, **kwargs: Any) -> JsonDict:
         """Return the attributes of the command as a dict
 
         Args:
             **kwargs (Any): additional entries for the dict
 
         Returns:
-            types.JsonDict: command as dict
+            JsonDict: command as dict
         """
         return {"id": self._uuid, **self._base_dict} | kwargs
 
@@ -124,14 +123,14 @@ class BleWriteCommand(BleMessage):
     def __str__(self) -> str:
         return self.cmd.name.lower().replace("_", " ").removeprefix("cmdid").title()
 
-    def _as_dict(self, **kwargs: Any) -> types.JsonDict:
+    def _as_dict(self, **kwargs: Any) -> JsonDict:
         """Return the attributes of the command as a dict
 
         Args:
             **kwargs (Any): additional entries for the dict
 
         Returns:
-            types.JsonDict: command as dict
+            JsonDict: command as dict
         """
         return {"id": self.cmd, **self._base_dict} | kwargs
 
@@ -142,6 +141,13 @@ class RegisterUnregisterAll(BleWriteCommand):
     This will loop over all of the elements (i.e. settings / statuses found from the element_set entry of the
     producer tuple parameter) and individually register / unregister (depending on the action parameter) each
     element in the set
+
+    Args:
+        uuid (BleUUID): UUID to write to
+        cmd (CmdId): Command ID that is being sent
+        update_set (type[SettingId] | type[StatusId]): what are registering / unregistering for?
+        action (Action): whether to register or unregister
+        parser (Parser | None): Optional response parser. Defaults to None.
     """
 
     class Action(enum.Enum):
@@ -158,22 +164,25 @@ class RegisterUnregisterAll(BleWriteCommand):
         action: Action,
         parser: Parser | None = None,
     ) -> None:
-        """Constructor
-
-        Args:
-            uuid (BleUUID): UUID to write to
-            cmd (CmdId): Command ID that is being sent
-            update_set (type[SettingId] | type[StatusId]): what are registering / unregistering for?
-            action (Action): whether to register or unregister
-            parser (Optional[BytesParser], optional): Optional response parser. Defaults to None.
-        """
         self.action = action
         self.update_set = update_set
         super().__init__(uuid=uuid, cmd=cmd, parser=parser)
 
 
 class BleProtoCommand(BleMessage):
-    """A BLE command that is sent and received as using the Protobuf protocol"""
+    """A BLE command that is sent and received as using the Protobuf protocol
+
+    Args:
+        uuid (BleUUID): BleUUID to write to
+        feature_id (FeatureId): Feature ID that is being executed
+        action_id (ActionId): protobuf specific action ID that is being executed
+        response_action_id (ActionId): the action ID that will be in the response to this command
+        request_proto (type[Protobuf]): the action ID that will be in the response
+        response_proto (type[Protobuf]): protobuf used to parse received bytestream
+        parser (Parser | None): Optional response parser. Defaults to None.
+        additional_matching_ids (set[ActionId | CmdId] | None): Other action ID's to share this parser. This is used, for
+            example, if a notification shares the same ID as the synchronous response. Defaults to None. Defaults to None.
+    """
 
     def __init__(
         self,
@@ -181,25 +190,11 @@ class BleProtoCommand(BleMessage):
         feature_id: FeatureId,
         action_id: ActionId,
         response_action_id: ActionId,
-        request_proto: type[types.Protobuf],
-        response_proto: type[types.Protobuf],
+        request_proto: type[Protobuf],
+        response_proto: type[Protobuf],
         parser: Parser | None,
         additional_matching_ids: set[ActionId | CmdId] | None = None,
     ) -> None:
-        """Constructor
-
-        Args:
-            uuid (BleUUID): BleUUID to write to
-            feature_id (FeatureId): Feature ID that is being executed
-            action_id (ActionId): protobuf specific action ID that is being executed
-            response_action_id (ActionId): the action ID that will be in the response to this command
-            request_proto (type[types.Protobuf]): the action ID that will be in the response
-            response_proto (type[types.Protobuf]): protobuf used to parse received bytestream
-            parser (Optional[BytesParser], optional): Optional response parser. Defaults to None.
-            additional_matching_ids (Optional[set[Union[ActionId, CmdId]]], optional): Other action ID's to share
-                this parser. This is used, for example, if a notification shares the same ID as the
-                synchronous response. Defaults to None.. Defaults to None.
-        """
         p = parser or Parser()
         p.byte_json_adapter = ByteParserBuilders.Protobuf(response_proto)
         super().__init__(uuid=uuid, parser=p, identifier=response_action_id)
@@ -242,14 +237,14 @@ class BleProtoCommand(BleMessage):
     def __str__(self) -> str:
         return self.action_id.name.lower().replace("_", " ").removeprefix("actionid").title()
 
-    def _as_dict(self, **kwargs: Any) -> types.JsonDict:
+    def _as_dict(self, **kwargs: Any) -> JsonDict:
         """Return the attributes of the command as a dict
 
         Args:
             **kwargs (Any): additional entries for the dict
 
         Returns:
-            types.JsonDict: command as dict
+            JsonDict: command as dict
         """
         return {"id": self.action_id, "feature_id": self.feature_id, **self._base_dict} | kwargs
 
@@ -314,8 +309,8 @@ def ble_register_command(
         uuid (BleUUID): UUID to write to
         cmd (CmdId): Command ID that is being sent
         update_set (type[SettingId] | type[StatusId]): set of ID's being registered for
-        action (Action): whether to register or unregister
-        parser (Parser, optional): Optional response parser. Defaults to None.
+        action (RegisterUnregisterAll.Action): whether to register or unregister
+        parser (Parser | None): Optional response parser. Defaults to None.
 
     Returns:
         Callable: Generated method to perform command
@@ -334,8 +329,8 @@ def ble_proto_command(
     feature_id: FeatureId,
     action_id: ActionId,
     response_action_id: ActionId,
-    request_proto: type[types.Protobuf],
-    response_proto: type[types.Protobuf],
+    request_proto: type[Protobuf],
+    response_proto: type[Protobuf],
     parser: Parser | None = None,
     additional_matching_ids: set[ActionId | CmdId] | None = None,
 ) -> Callable:
@@ -346,12 +341,11 @@ def ble_proto_command(
         feature_id (FeatureId): Feature ID that is being executed
         action_id (ActionId): protobuf specific action ID that is being executed
         response_action_id (ActionId): the action ID that will be in the response to this command
-        request_proto (type[types.Protobuf]): the action ID that will be in the response
-        response_proto (type[types.Protobuf]): protobuf used to parse received bytestream
-        parser (Parser | None, optional): Response parser to transform received Protobuf bytes. Defaults to None.
-        additional_matching_ids (Optional[set[Union[ActionId, CmdId]]], optional): Other action ID's to share
-            this parser. This is used, for example, if a notification shares the same ID as the
-            synchronous response. Defaults to None.
+        request_proto (type[Protobuf]): the action ID that will be in the response
+        response_proto (type[Protobuf]): protobuf used to parse received bytestream
+        parser (Parser | None): Response parser to transform received Protobuf bytes. Defaults to None.
+        additional_matching_ids (set[ActionId | CmdId] | None): Other action ID's to share this parser. This is used,
+            for example, if a notification shares the same ID as the synchronous response. Defaults to None.
 
     Returns:
         Callable: Generated method to perform command
@@ -401,6 +395,9 @@ class BuilderProtocol(Protocol):
 class BleSettingFacade(Generic[ValueType]):
     """Wrapper around BleSetting since a BleSetting's message definition changes based on how it is being operated on.
 
+    Raises:
+        TypeError: Parser builder is not a valid type
+
     Args:
         communicator (GoProBle): BLE communicator that will operate on this object.
         identifier (SettingId): Setting Identifier
@@ -416,12 +413,16 @@ class BleSettingFacade(Generic[ValueType]):
         Args:
             uuid (BleUUID): UUID to access this setting.
             identifier (SettingId | QueryCmdId): How responses to operations on this message will be identified.
-            setting_id: (SettingId): Setting identifier. May match identifier in some cases.
+            setting_id (SettingId): Setting identifier. May match identifier in some cases.
             builder (BuilderProtocol): Build request bytes from the current message.
         """
 
         def __init__(
-            self, uuid: BleUUID, identifier: SettingId | QueryCmdId, setting_id: SettingId, builder: BuilderProtocol
+            self,
+            uuid: BleUUID,
+            identifier: SettingId | QueryCmdId,
+            setting_id: SettingId,
+            builder: BuilderProtocol,
         ) -> None:
             self._build = builder
             self._setting_id = setting_id
@@ -430,13 +431,13 @@ class BleSettingFacade(Generic[ValueType]):
         def _build_data(self, **kwargs: Any) -> bytearray:
             return self._build(**kwargs)
 
-        def _as_dict(self, **kwargs: Any) -> types.JsonDict:
+        def _as_dict(self, **kwargs: Any) -> JsonDict:
             d = {"id": self._identifier, "setting_id": self._setting_id, **self._base_dict} | kwargs
             return d
 
     def __init__(self, communicator: GoProBle, identifier: SettingId, parser_builder: QueryParserType) -> None:
         # TODO abstract this
-        parser = Parser[types.CameraState]()
+        parser = Parser[CameraState]()
         if isinstance(parser_builder, construct.Construct):
             parser.byte_json_adapter = ByteParserBuilders.Construct(parser_builder)
         elif isinstance(parser_builder, BytesParserBuilder):
@@ -469,7 +470,7 @@ class BleSettingFacade(Generic[ValueType]):
             value (ValueType): The argument to use to set the setting value.
 
         Returns:
-            GoProResp: Status of set
+            GoProResp[None]: Status of set
         """
 
         def _build_data(**kwargs: Any) -> bytearray:
@@ -494,7 +495,7 @@ class BleSettingFacade(Generic[ValueType]):
         """Get the settings value.
 
         Returns:
-            GoProResp: settings value
+            GoProResp[ValueType]: settings value
         """
         message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
@@ -509,6 +510,9 @@ class BleSettingFacade(Generic[ValueType]):
 
         Raises:
             NotImplementedError: This isn't implemented on the camera
+
+        Returns:
+            GoProResp[str]: setting name as string
         """
         raise NotImplementedError("Not implemented on camera!")
 
@@ -516,7 +520,7 @@ class BleSettingFacade(Generic[ValueType]):
         """Get currently supported settings capabilities values.
 
         Returns:
-            GoProResp: settings capabilities values
+            GoProResp[list[ValueType]]: settings capabilities values
         """
         message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
@@ -531,17 +535,20 @@ class BleSettingFacade(Generic[ValueType]):
 
         Raises:
             NotImplementedError: This isn't implemented on the camera
+
+        Returns:
+            GoProResp[list[str]]: list of capability names as strings
         """
         raise NotImplementedError("Not implemented on camera!")
 
-    async def register_value_update(self, callback: types.UpdateCb) -> GoProResp[None]:
+    async def register_value_update(self, callback: UpdateCb) -> GoProResp[None]:
         """Register for asynchronous notifications when a given setting ID's value updates.
 
         Args:
-            callback (types.UpdateCb): callback to be notified with
+            callback (UpdateCb): callback to be notified with
 
         Returns:
-            GoProResp: Current value of respective setting ID
+            GoProResp[None]: Current value of respective setting ID
         """
         message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
@@ -553,14 +560,14 @@ class BleSettingFacade(Generic[ValueType]):
             self._communicator.register_update(callback, self._identifier)
         return response
 
-    async def unregister_value_update(self, callback: types.UpdateCb) -> GoProResp[None]:
+    async def unregister_value_update(self, callback: UpdateCb) -> GoProResp[None]:
         """Stop receiving notifications when a given setting ID's value updates.
 
         Args:
-            callback (types.UpdateCb): callback to be notified with
+            callback (UpdateCb): callback to be notified with
 
         Returns:
-            GoProResp: Status of unregister
+            GoProResp[None]: Status of unregister
         """
         message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
@@ -572,14 +579,14 @@ class BleSettingFacade(Generic[ValueType]):
             self._communicator.unregister_update(callback, self._identifier)
         return response
 
-    async def register_capability_update(self, callback: types.UpdateCb) -> GoProResp[None]:
+    async def register_capability_update(self, callback: UpdateCb) -> GoProResp[None]:
         """Register for asynchronous notifications when a given setting ID's capabilities update.
 
         Args:
-            callback (types.UpdateCb): callback to be notified with
+            callback (UpdateCb): callback to be notified with
 
         Returns:
-            GoProResp: Current capabilities of respective setting ID
+            GoProResp[None]: Current capabilities of respective setting ID
         """
         message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
@@ -591,14 +598,14 @@ class BleSettingFacade(Generic[ValueType]):
             self._communicator.unregister_update(callback, self._identifier)
         return response
 
-    async def unregister_capability_update(self, callback: types.UpdateCb) -> GoProResp[None]:
+    async def unregister_capability_update(self, callback: UpdateCb) -> GoProResp[None]:
         """Stop receiving notifications when a given setting ID's capabilities change.
 
         Args:
-            callback (types.UpdateCb): callback to be notified with
+            callback (UpdateCb): callback to be notified with
 
         Returns:
-            GoProResp: Status of unregister
+            GoProResp[None]: Status of unregister
         """
         message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
@@ -652,12 +659,12 @@ class BleStatusFacade(Generic[ValueType]):
         def _build_data(self, **kwargs: Any) -> bytearray:
             return self._build(self, **kwargs)
 
-        def _as_dict(self, **kwargs: Any) -> types.JsonDict:
+        def _as_dict(self, **kwargs: Any) -> JsonDict:
             return {"id": self._identifier, "status_id": self._status_id, **self._base_dict} | kwargs
 
     def __init__(self, communicator: GoProBle, identifier: StatusId, parser: QueryParserType) -> None:
         # TODO abstract this
-        parser_builder = Parser[types.CameraState]()
+        parser_builder = Parser[CameraState]()
         # Is it a protobuf enum?
         if isinstance(parser, construct.Construct):
             parser_builder.byte_json_adapter = ByteParserBuilders.Construct(parser)
@@ -679,7 +686,7 @@ class BleStatusFacade(Generic[ValueType]):
         """Get the current value of a status.
 
         Returns:
-            GoProResp: current status value
+            GoProResp[ValueType]: current status value
         """
         message = BleStatusFacade.BleStatusMessageBase(
             BleStatusFacade.UUID,
@@ -689,14 +696,14 @@ class BleStatusFacade(Generic[ValueType]):
         )
         return await self._communicator._send_ble_message(message)
 
-    async def register_value_update(self, callback: types.UpdateCb) -> GoProResp[ValueType]:
+    async def register_value_update(self, callback: UpdateCb) -> GoProResp[ValueType]:
         """Register for asynchronous notifications when a status changes.
 
         Args:
-            callback (types.UpdateCb): callback to be notified with
+            callback (UpdateCb): callback to be notified with
 
         Returns:
-            GoProResp: current status value
+            GoProResp[ValueType]: current status value
         """
         message = BleStatusFacade.BleStatusMessageBase(
             BleStatusFacade.UUID,
@@ -708,14 +715,14 @@ class BleStatusFacade(Generic[ValueType]):
             self._communicator.register_update(callback, self._identifier)
         return response
 
-    async def unregister_value_update(self, callback: types.UpdateCb) -> GoProResp:
+    async def unregister_value_update(self, callback: UpdateCb) -> GoProResp[None]:
         """Stop receiving notifications when status changes.
 
         Args:
-            callback (types.UpdateCb): callback to be notified with
+            callback (UpdateCb): callback to be notified with
 
         Returns:
-            GoProResp: Status of unregister
+            GoProResp[None]: Status of unregister
         """
         message = BleStatusFacade.BleStatusMessageBase(
             BleStatusFacade.UUID,
@@ -756,8 +763,8 @@ def http_get_json_command(
         endpoint (str): base endpoint
         components (list[str] | None): Additional path components (i.e. endpoint/{COMPONENT}). Defaults to None.
         arguments (list[str] | None): Any arguments to be appended after endpoint (i.e. endpoint?{ARGUMENT}). Defaults to None.
-        parser (Parser | None, optional): Parser to handle received JSON. Defaults to None.
-        identifier (types.IdType | None): explicit message identifier. If None, will be generated from endpoint.
+        parser (Parser | None): Parser to handle received JSON. Defaults to None.
+        identifier (str | None): explicit message identifier. If None, will be generated from endpoint.
         rules (MessageRules): rules this Message must obey. Defaults to MessageRules().
 
     Returns:
@@ -788,8 +795,8 @@ def http_get_binary_command(
         endpoint (str): base endpoint
         components (list[str] | None): Additional path components (i.e. endpoint/{COMPONENT}). Defaults to None.
         arguments (list[str] | None): Any arguments to be appended after endpoint (i.e. endpoint?{ARGUMENT}). Defaults to None.
-        parser (Parser | None, optional): Parser to handle received JSON. Defaults to None.
-        identifier (types.IdType | None): explicit message identifier. If None, will be generated from endpoint.
+        parser (Parser | None): Parser to handle received JSON. Defaults to None.
+        identifier (str | None): explicit message identifier. If None, will be generated from endpoint.
         rules (MessageRules): rules this Message must obey. Defaults to MessageRules().
 
     Returns:
@@ -827,8 +834,8 @@ def http_put_json_command(
         components (list[str] | None): Additional path components (i.e. endpoint/{COMPONENT}). Defaults to None.
         arguments (list[str] | None): Any arguments to be appended after endpoint (i.e. endpoint?{ARGUMENT}). Defaults to None.
         body_args (list[str] | None, optional): Arguments to be added to the body JSON. Defaults to None.
-        parser (Parser | None, optional): Parser to handle received JSON. Defaults to None.
-        identifier (types.IdType | None): explicit message identifier. If None, will be generated from endpoint.
+        parser (Parser | None): Parser to handle received JSON. Defaults to None.
+        identifier (str | None): explicit message identifier. If None, will be generated from endpoint.
         rules (MessageRules): rules this Message must obey. Defaults to MessageRules().
 
     Returns:
@@ -866,7 +873,7 @@ class HttpSetting(HttpMessage, Generic[ValueType]):
         """Build the endpoint from the current arguments
 
         Args:
-            kwargs (Any): run-time arguments
+            **kwargs (Any): run-time arguments
 
         Returns:
             str: built URL

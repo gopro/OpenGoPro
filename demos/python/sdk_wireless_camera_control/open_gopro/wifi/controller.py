@@ -3,6 +3,8 @@
 
 """Wifi Controller Interface Definition."""
 
+from __future__ import annotations
+
 import logging
 from abc import ABC, abstractmethod
 from enum import IntEnum, auto
@@ -22,15 +24,14 @@ class SsidState(IntEnum):
 
 
 class WifiController(ABC):
-    """Interface definition for a Wifi driver to be used by GoPro."""
+    """Interface definition for a Wifi driver to be used by GoPro.
 
-    def __init__(self, interface: Optional[str] = None, password: Optional[str] = None) -> None:
-        """Constructor
+    Args:
+        interface (str | None): Wifi interface to use. Defaults to None (auto-detect).
+        password (str | None): user password to use for sudo. Defaults to None.
+    """
 
-        Args:
-            interface (str, Optional): Wifi interface to use. Defaults to None (auto-detect).
-            password (str, Optional): user password to use for sudo. Defaults to None.
-        """
+    def __init__(self, interface: str | None = None, password: str | None = None) -> None:
         self._target_interface = interface
         self._interface: str
         self._password = password
@@ -47,7 +48,6 @@ class WifiController(ABC):
         Returns:
             bool: True if successful, False otherwise
         """
-        raise NotImplementedError
 
     @abstractmethod
     def disconnect(self) -> bool:
@@ -56,7 +56,6 @@ class WifiController(ABC):
         Returns:
             bool: True if successful, False otherwise
         """
-        raise NotImplementedError
 
     @abstractmethod
     def current(self) -> tuple[Optional[str], SsidState]:
@@ -66,7 +65,6 @@ class WifiController(ABC):
             tuple[Optional[str], SsidState]: Tuple of SSID str and state. If SSID is None,
             there is no current connection.
         """
-        raise NotImplementedError
 
     @abstractmethod
     def available_interfaces(self) -> list[str]:
@@ -75,7 +73,6 @@ class WifiController(ABC):
         Returns:
             list[str]: list of interfaces
         """
-        raise NotImplementedError
 
     @property
     def interface(self) -> str:
@@ -126,8 +123,10 @@ Is there an available Wifi interface on this computer? To verify this, try:
 
         Args:
             power (bool): Enable if True. Disable if False.
+
+        Returns:
+            bool: was the power request successful?
         """
-        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -137,7 +136,6 @@ Is there an available Wifi interface on this computer? To verify this, try:
         Returns:
             bool: True if yes. False if no.
         """
-        raise NotImplementedError
 
     @property
     def sudo(self) -> str:

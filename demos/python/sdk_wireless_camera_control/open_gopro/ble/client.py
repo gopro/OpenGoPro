@@ -3,10 +3,12 @@
 
 """Generic BLE Client definition that is composed of a BLE Controller."""
 
+from __future__ import annotations
+
 import logging
 import re
 from pathlib import Path
-from typing import Generic, Optional, Pattern, Union
+from typing import Generic, Optional, Pattern
 
 from open_gopro.ble import BleUUID
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
@@ -24,31 +26,30 @@ logger = logging.getLogger(__name__)
 
 
 class BleClient(Generic[BleHandle, BleDevice]):
-    """A BLE device that is to be connected to."""
+    """A BLE device that is to be connected to.
+
+    Args:
+        controller (BLEController): controller implementation to use for this client
+        disconnected_cb (DisconnectHandlerType): disconnected callback
+        notification_cb (NotiHandlerType): notification callback
+        target (tuple[Pattern | BleDevice, list[BleUUID] | None]): Tuple of:
+            (device, service_uuids) where device is the BLE device (or regex) to connect to and
+            service_uuids is a list of service uuid's to filter for
+        uuids (type[UUIDs] | None): Additional UUIDs that will be used when discovering characteristic.
+            Defaults to None in which case any unknown UUIDs will be set to "unknown".
+
+    Raises:
+        ValueError: Must pass a valid target
+    """
 
     def __init__(
         self,
         controller: BLEController,
         disconnected_cb: DisconnectHandlerType,
         notification_cb: NotiHandlerType,
-        target: tuple[Union[Pattern, BleDevice], Optional[list[BleUUID]]],
-        uuids: Optional[type[UUIDs]] = None,
+        target: tuple[Pattern | BleDevice, list[BleUUID] | None],
+        uuids: type[UUIDs] | None = None,
     ) -> None:
-        """Constructor
-
-        Args:
-            controller (BLEController): controller implementation to use for this client
-            disconnected_cb (DisconnectHandlerType): disconnected callback
-            notification_cb (NotiHandlerType): notification callback
-            target (tuple[Union[Pattern, BleDevice], Optional[list[BleUUID]]]): Tuple
-                of (device, service_uuids) where device is the BLE device (or regex) to connect to and
-                service_uuids is a list of service uuid's to filter for
-            uuids (type[UUIDs], Optional): Additional UUIDs that will be used when discovering characteristic.
-                Defaults to None in which case any unknown UUIDs will be set to "unknown".
-
-        Raises:
-            ValueError: Must pass a valid target
-        """
         if target is None:
             raise ValueError("Target can not be None!")
         if isinstance(target[0], str):

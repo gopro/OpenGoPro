@@ -33,13 +33,13 @@ class Singleton:
         return cls._instances[cls]
 
 
-def map_keys(obj: Any, key: str, func: Callable[[Any], Any]) -> None:
+def map_keys(obj: Any, key: str, func: Callable) -> None:
     """Map all matching keys (deeply searched) using the input function
 
     Args:
         obj (Any): object to modify in place
         key (str): key to search for to modify
-        func (Callable[[Any], Any]): mapping function
+        func (Callable): mapping function
     """
     if isinstance(obj, dict):
         for k in obj.keys():
@@ -265,7 +265,7 @@ def add_cli_args_and_parse(
         wifi (bool): Add WiFi args?. Defaults to True.
 
     Returns:
-        argparse.ArgumentParser: modified argument parser
+        argparse.Namespace: modified argument parser
     """
     # Common args
     parser.add_argument("--log", type=Path, help="Location to store detailed log", default="gopro_demo.log")

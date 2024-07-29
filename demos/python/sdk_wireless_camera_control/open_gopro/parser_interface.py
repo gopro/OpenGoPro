@@ -10,8 +10,8 @@ from abc import ABC, abstractmethod
 from collections import defaultdict
 from typing import Any, Callable, ClassVar, Generic, Protocol, TypeVar, cast
 
-from open_gopro import types
 from open_gopro.constants import ActionId, FeatureId
+from open_gopro.types import JsonDict, ResponseType
 
 logger = logging.getLogger(__name__)
 
@@ -39,14 +39,13 @@ class BaseTransformer(ABC, Generic[T]):
         Returns:
             T: transformed data
         """
-        raise NotImplementedError
 
 
 class BytesTransformer(BaseTransformer[bytes]):
     """Bytes to Bytes transformer interface"""
 
 
-class JsonTransformer(BaseTransformer[types.JsonDict]):
+class JsonTransformer(BaseTransformer[JsonDict]):
     """Json to json transformer interface"""
 
 
@@ -71,10 +70,9 @@ class BaseParser(ABC, Generic[T, T_co]):
         Returns:
             T_co: parsed output
         """
-        raise NotImplementedError
 
 
-class JsonParser(BaseParser[types.JsonDict, T_co]):
+class JsonParser(BaseParser[JsonDict, T_co]):
     """Json to Target Type Parser Interface"""
 
 
@@ -92,16 +90,16 @@ class Parser(ABC, Generic[T]):
         4. One JSON parser (json -> Any)
 
     Args:
-        byte_transformers (list[BytesTransformer] | None, optional): bytes --> bytes. Defaults to None.
-        byte_json_adapter (BytesParser[types.JsonDict] | None, optional): bytes --> json. Defaults to None.
-        json_transformers (list[JsonTransformer] | None, optional): json --> json. Defaults to None.
-        json_parser (JsonParser[T] | None, optional): json --> T. Defaults to None.
+        byte_transformers (list[BytesTransformer] | None): bytes --> bytes. Defaults to None.
+        byte_json_adapter (BytesParser[JsonDict] | None): bytes --> json. Defaults to None.
+        json_transformers (list[JsonTransformer] | None): json --> json. Defaults to None.
+        json_parser (JsonParser[T] | None): json --> T. Defaults to None.
     """
 
     def __init__(
         self,
         byte_transformers: list[BytesTransformer] | None = None,
-        byte_json_adapter: BytesParser[types.JsonDict] | None = None,
+        byte_json_adapter: BytesParser[JsonDict] | None = None,
         json_transformers: list[JsonTransformer] | None = None,
         json_parser: JsonParser[T] | None = None,
     ) -> None:
@@ -110,11 +108,11 @@ class Parser(ABC, Generic[T]):
         self.json_transformers = json_transformers or []
         self.json_parser = json_parser
 
-    def parse(self, data: bytes | bytearray | types.JsonDict) -> T:
+    def parse(self, data: bytes | bytearray | JsonDict) -> T:
         """Perform the parsing using the stored transformers and parsers
 
         Args:
-            data (bytes | bytearray | types.JsonDict): input bytes or json to parse
+            data (bytes | bytearray | JsonDict): input bytes or json to parse
 
         Raises:
             RuntimeError: attempted to parse bytes when a byte-json adapter does not exist
@@ -122,7 +120,7 @@ class Parser(ABC, Generic[T]):
         Returns:
             T: final parsed output
         """
-        parsed_json: types.JsonDict
+        parsed_json: JsonDict
         if isinstance(data, (bytes, bytearray)):
             data = bytes(data)
             if not self.byte_json_adapter:
@@ -176,7 +174,6 @@ class BytesParserBuilder(BytesParser[T_co], BytesBuilder):
         Returns:
             T_co: parsed output
         """
-        raise NotImplementedError
 
     @abstractmethod
     def build(self, obj: Any) -> bytes:
@@ -199,7 +196,7 @@ class GlobalParsers:
     """
 
     _feature_action_id_map: ClassVar[dict[FeatureId, list[ActionId]]] = defaultdict(list)
-    _global_parsers: ClassVar[dict[types.ResponseType, Parser]] = {}
+    _global_parsers: ClassVar[dict[ResponseType, Parser]] = {}
 
     @classmethod
     def add_feature_action_id_mapping(cls, feature_id: FeatureId, action_id: ActionId) -> None:
@@ -212,17 +209,17 @@ class GlobalParsers:
         cls._feature_action_id_map[feature_id].append(action_id)
 
     @classmethod
-    def add(cls, identifier: types.ResponseType, parser: Parser) -> None:
+    def add(cls, identifier: ResponseType, parser: Parser) -> None:
         """Add a global parser that can be accessed by this class's class methods
 
         Args:
-            identifier (types.ResponseType): identifier to add parser for
+            identifier (ResponseType): identifier to add parser for
             parser (Parser): parser to add
         """
         cls._global_parsers[identifier] = parser
 
     @classmethod
-    def get_query_container(cls, identifier: types.ResponseType) -> Callable | None:
+    def get_query_container(cls, identifier: ResponseType) -> Callable | None:
         """Attempt to get a callable that will translate an input value to the ID-appropriate value.
 
         For example, _get_query_container(SettingId.RESOLUTION) will return
@@ -233,10 +230,10 @@ class GlobalParsers:
         Note! Not all ID's are currently parsed so None will be returned if the container does not exist
 
         Args:
-            identifier (Union[SettingId, StatusId]): identifier to find container for
+            identifier (ResponseType): identifier to find container for
 
         Returns:
-            Callable: container if found else None
+            Callable | None: container if found else None
         """
         try:
             parser_builder = cast(BytesParserBuilder, cls._global_parsers[identifier].byte_json_adapter)
@@ -245,15 +242,15 @@ class GlobalParsers:
             return None
 
     @classmethod
-    def get_parser(cls, identifier: types.ResponseType) -> Parser | None:
+    def get_parser(cls, identifier: ResponseType) -> Parser | None:
         """Get a globally defined parser for the given ID.
 
         Currently, only BLE uses globally defined parsers
 
         Args:
-            identifier (types.ResponseType): ID to get parser for
+            identifier (ResponseType): ID to get parser for
 
         Returns:
-            Optional[Parser]: parser if found, else None
+            Parser | None: parser if found, else None
         """
         return cls._global_parsers.get(identifier)
