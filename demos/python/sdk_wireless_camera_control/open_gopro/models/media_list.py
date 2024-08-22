@@ -119,6 +119,7 @@ class MediaItem(CustomBaseModel):
     low_res_video_size: Optional[str] = Field(alias="glrv", default=None)  #: Low resolution video size
     lrv_file_size: Optional[str] = Field(alias="ls", default=None)  #: Low resolution file size
     session_id: Optional[str] = Field(alias="id", default=None)  # Media list session identifier
+    raw: Optional[str] = Field(default=None)  #: 1 if photo has raw version, 0 (or omitted) otherwise
 
 
 class GroupedMediaItem(MediaItem):
