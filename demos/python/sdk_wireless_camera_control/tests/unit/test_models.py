@@ -116,6 +116,7 @@ MEDIA_LIST: Final = {
                     "ls": "-1",
                     "s": "25086075",
                 },
+                {"n": "GOPR0039.JPG", "cre": "1724339068", "mod": "1724339068", "raw": "1", "s": "783927"},
             ],
         }
     ],
@@ -134,9 +135,10 @@ def test_media_list():
     media_list = MediaList(**MEDIA_LIST)
     assert media_list
     items = media_list.files
-    assert len(items) == 12
+    assert len(items) == 13
     assert len([item for item in items if isinstance(item, GroupedMediaItem)]) == 2
     assert media_list.files[0].filename == "100GOPRO/GX010001.MP4"
+    assert media_list.files[-1].raw == "1"
 
 
 VIDEO_METADATA: Final = {
