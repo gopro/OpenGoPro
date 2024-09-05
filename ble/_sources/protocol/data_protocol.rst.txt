@@ -267,3 +267,14 @@ Feature ID   Action ID  Serialized Protobuf Message
 
 The individual Protobuf object specified by the message's
 :ref:`action / feature id<protocol/id_tables:protobuf ids>` is used to serialize / deserialize the payload.
+
+Backwards Compatibility
+^^^^^^^^^^^^^^^^^^^^^^^
+
+It is possible that some Protobuf message fields can be individually deprecated in which case they will be removed
+from the Message definition in the `.proto` file. The best solution to handle this is to use the newest `.proto` files.
+
+Even when using the old `.proto` files there should be no problem serializing / deserializing. However, ensure
+to set the `ignore_unknown_fields` argument to True when relevant for
+`Json-Protobuf conversion <https://googleapis.dev/python/protobuf/latest/google/protobuf/json_format.html>`_
+functions.

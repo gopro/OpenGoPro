@@ -452,6 +452,20 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#easy-night-photo-191">Easy Night Photo (191)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#multi-shot-aspect-ratio-192">Multi Shot Aspect Ratio (192)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#framing-193">Framing (193)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#regional-format-195">Regional Format (195)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#quality-control-201">Quality Control (201)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#camera-volume-216">Camera Volume (216)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#lens-attachment-217">Lens Attachment (217)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#setup-screen-saver-219">Setup Screen Saver (219)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#setup-language-223">Setup Language (223)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#auto-power-off-225">Auto Power Off (225)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-mode-227">Photo Mode (227)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-digital-lenses-v2-229">Video Digital Lenses V2 (229)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-digital-lenses-v2-230">Photo Digital Lenses V2 (230)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#time-lapse-digital-lenses-v2-231">Time Lapse Digital Lenses V2 (231)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-framing-232">Video Framing (232)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#multi-shot-framing-233">Multi Shot Framing (233)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#frame-rate-234">Frame Rate (234)</a></li>
 </ul>
 </li>
 </ul>
@@ -1008,6 +1022,16 @@ The top level message format for a Protobuf message is as follows:</p>
 </table>
 <p>The individual Protobuf object specified by the message’s
 <a class="reference internal" href="id_tables.html#protobuf-ids"><span class="std std-ref">action / feature id</span></a> is used to serialize / deserialize the payload.</p>
+<section id="backwards-compatibility">
+<h4>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Link to this heading"></a>
+</h4>
+<p>It is possible that some Protobuf message fields can be individually deprecated in which case they will be removed
+from the Message definition in the <cite>.proto</cite> file. The best solution to handle this is to use the newest <cite>.proto</cite> files.</p>
+<p>Even when using the old <cite>.proto</cite> files there should be no problem serializing / deserializing. However, ensure
+to set the <cite>ignore_unknown_fields</cite> argument to True when relevant for
+<a class="reference external" href="https://googleapis.dev/python/protobuf/latest/google/protobuf/json_format.html">Json-Protobuf conversion</a>
+functions.</p>
+</section>
 </section>
 </section>
 </section>

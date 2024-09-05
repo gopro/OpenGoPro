@@ -10,19 +10,7 @@ Supported Cameras
 
 Below is a table of cameras that support GoPro's public BLE API:
 
- ========== ============ =================== ==========================
-  Model ID   Model Code   Marketing Name      Minimal Firmware Version
- ========== ============ =================== ==========================
-  62         H23.01       HERO12 Black        `v01.10.00 <https://gopro.com/en/us/update/hero12-black>`__
-  60         H22.03       HERO11 Black Mini   `v01.10.00 <https://gopro.com/en/us/update/hero11-black-mini>`__
-  58         H22.01       HERO11 Black        `v01.10.00 <https://gopro.com/en/us/update/hero11-black>`__
-  57         H21.01       HERO10 Black        `v01.10.00 <https://gopro.com/en/us/update/hero10-black>`__
-  55         HD9.01       HERO9 Black         `v01.70.00 <https://gopro.com/en/us/update/hero9-black>`__
- ========== ============ =================== ==========================
-
-.. warning:: While the version listed above are *minimum versions* needed to support the Open GoPro API, the documentation
-  assumes that the GoPro is always updated to the most recent version. This is relevant in cases where functionality
-  changes between versions.
+.. include:: included_cameras.inc
 
 Getting Started
 ===============

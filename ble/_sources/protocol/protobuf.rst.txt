@@ -561,6 +561,21 @@ EnumPresetGroupIcon
 
      - 
 
+   * - PRESET_GROUP_ND_MOD_VIDEO_ICON_ID
+     - 8
+
+     - 
+
+   * - PRESET_GROUP_ND_MOD_PHOTO_ICON_ID
+     - 9
+
+     - 
+
+   * - PRESET_GROUP_ND_MOD_TIMELAPSE_ICON_ID
+     - 10
+
+     - 
+
 
 
 
@@ -793,6 +808,61 @@ EnumPresetIcon
 
      - 
 
+   * - PRESET_ICON_CUSTOM_CINEMATIC
+     - 43
+
+     - 
+
+   * - PRESET_ICON_VLOG
+     - 44
+
+     - 
+
+   * - PRESET_ICON_FPV
+     - 45
+
+     - 
+
+   * - PRESET_ICON_HDR
+     - 46
+
+     - 
+
+   * - PRESET_ICON_LANDSCAPE
+     - 47
+
+     - 
+
+   * - PRESET_ICON_LOG
+     - 48
+
+     - 
+
+   * - PRESET_ICON_CUSTOM_SLOMO
+     - 49
+
+     - 
+
+   * - PRESET_ICON_TRIPOD
+     - 50
+
+     - 
+
+   * - PRESET_ICON_MAX_VIDEO
+     - 55
+
+     - 
+
+   * - PRESET_ICON_MAX_PHOTO
+     - 56
+
+     - 
+
+   * - PRESET_ICON_MAX_TIMEWARP
+     - 57
+
+     - 
+
    * - PRESET_ICON_BASIC
      - 58
 
@@ -885,6 +955,66 @@ EnumPresetIcon
 
    * - PRESET_ICON_FULL_FRAME
      - 79
+
+     - 
+
+   * - PRESET_ICON_EASY_MAX_VIDEO
+     - 80
+
+     - 
+
+   * - PRESET_ICON_EASY_MAX_PHOTO
+     - 81
+
+     - 
+
+   * - PRESET_ICON_EASY_MAX_TIMEWARP
+     - 82
+
+     - 
+
+   * - PRESET_ICON_EASY_MAX_STAR_TRAIL
+     - 83
+
+     - 
+
+   * - PRESET_ICON_EASY_MAX_LIGHT_PAINTING
+     - 84
+
+     - 
+
+   * - PRESET_ICON_EASY_MAX_LIGHT_TRAIL
+     - 85
+
+     - 
+
+   * - PRESET_ICON_MAX_STAR_TRAIL
+     - 89
+
+     - 
+
+   * - PRESET_ICON_MAX_LIGHT_PAINTING
+     - 90
+
+     - 
+
+   * - PRESET_ICON_MAX_LIGHT_TRAIL
+     - 91
+
+     - 
+
+   * - PRESET_ICON_EASY_STANDARD_PROFILE
+     - 100
+
+     - 
+
+   * - PRESET_ICON_EASY_HDR_PROFILE
+     - 101
+
+     - 
+
+   * - PRESET_ICON_BURST_SLOMO
+     - 102
 
      - 
 
@@ -1120,6 +1250,46 @@ EnumPresetTitle
 
      - 
 
+   * - PRESET_TITLE_CUSTOM_CINEMATIC
+     - 43
+
+     - 
+
+   * - PRESET_TITLE_VLOG
+     - 44
+
+     - 
+
+   * - PRESET_TITLE_FPV
+     - 45
+
+     - 
+
+   * - PRESET_TITLE_HDR
+     - 46
+
+     - 
+
+   * - PRESET_TITLE_LANDSCAPE
+     - 47
+
+     - 
+
+   * - PRESET_TITLE_LOG
+     - 48
+
+     - 
+
+   * - PRESET_TITLE_CUSTOM_SLOMO
+     - 49
+
+     - 
+
+   * - PRESET_TITLE_TRIPOD
+     - 50
+
+     - 
+
    * - PRESET_TITLE_BASIC
      - 58
 
@@ -1247,6 +1417,21 @@ EnumPresetTitle
 
    * - PRESET_TITLE_USER_DEFINED_CUSTOM_NAME
      - 94
+
+     - 
+
+   * - PRESET_TITLE_EASY_STANDARD_PROFILE
+     - 99
+
+     - 
+
+   * - PRESET_TITLE_EASY_HDR_PROFILE
+     - 100
+
+     - 
+
+   * - PRESET_TITLE_BURST_SLOMO
+     - 106
 
      - 
 

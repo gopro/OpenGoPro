@@ -5,16 +5,6 @@ Some cameras support Camera On the Home Network (COHN). This capability allows t
 with the camera indirectly through an access point such as a router at home. For security purposes, all communications
 are performed over HTTPS.
 
-================= =========
-Camera            Supported
-================= =========
-Hero12 Black      ✔
-Hero11 Black Mini ❌
-Hero11 Black      ❌
-Hero10 Black      ❌
-Hero9 Black       ❌
-================= =========
-
 Certificates
 ============
 
@@ -63,13 +53,13 @@ is as follows:
 3. Use :operation:ref:`Get COHN Status` to get the Basic auth credentials
 4. Connect the camera to an :doc:`access point<access_points>`
 
-.. tip:: Depending on the use case, some of these steps can be performed via `HTTP <https://gopro.github.io/OpenGoPro/http#tag/COHN>`_
+.. tip:: Depending on the use case, some of these steps can be performed via `HTTP <../../http#tag/COHN>`_
 
 .. image:: ../../assets/images/plantuml_ble_cohn_provision.png
 
 Once the camera is provisioned, the client can communicate with the camera via HTTPS. The camera supports nearly all
 functionality over HTTPS that it does over HTTP. For more details about HTTP/HTTPS, see the
-Open GoPro `HTTP specification <https://gopro.github.io/OpenGoPro/http>`_.
+Open GoPro `HTTP specification <../../http>`_.
 
 Operations
 ==========
