@@ -1072,8 +1072,6 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
         )
         """Interval between photo captures"""
 
-        super().__init__(communicator)
-
         self.photo_output: BleSetting[Params.PhotoOutput] = BleSetting[Params.PhotoOutput](
             communicator,
             SettingId.PHOTO_OUTPUT,
@@ -1085,6 +1083,62 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
             communicator, SettingId.VIDEO_DURATION, Params.VideoDuration
         )
         """If set, a video will automatically be stopped after recording for this long."""
+
+        self.regional_format: BleSetting[Params.RegionalFormat] = BleSetting[Params.RegionalFormat](
+            communicator, SettingId.REGIONAL_FORMAT, Params.RegionalFormat
+        )
+
+        self.quality_control: BleSetting[Params.QualityControl] = BleSetting[Params.QualityControl](
+            communicator, SettingId.QUALITY_CONTROL, Params.QualityControl
+        )
+
+        self.camera_volume: BleSetting[Params.Volume] = BleSetting[Params.Volume](
+            communicator, SettingId.CAMERA_VOLUME, Params.Volume
+        )
+
+        self.lens_attachment: BleSetting[Params.LensAttachment] = BleSetting[Params.LensAttachment](
+            communicator, SettingId.LENS_ATTACHMENT, Params.LensAttachment
+        )
+
+        self.setup_screensaver: BleSetting[Params.ScreenSaverTimeout] = BleSetting[Params.ScreenSaverTimeout](
+            communicator, SettingId.SETUP_SCREEN_SAVER, Params.ScreenSaverTimeout
+        )
+
+        self.setup_language: BleSetting[Params.SetupLanguage] = BleSetting[Params.SetupLanguage](
+            communicator, SettingId.SETUP_LANGUAGE, Params.SetupLanguage
+        )
+
+        self.auto_power_off: BleSetting[Params.AutoPowerOff] = BleSetting[Params.AutoPowerOff](
+            communicator, SettingId.AUTO_POWER_OFF, Params.AutoPowerOff
+        )
+
+        self.photo_mode_v2: BleSetting[Params.PhotoModeV2] = BleSetting[Params.PhotoModeV2](
+            communicator, SettingId.PHOTO_MODE_V2, Params.PhotoModeV2
+        )
+
+        self.video_digital_lens_v2: BleSetting[Params.VideoLensV2] = BleSetting[Params.VideoLensV2](
+            communicator, SettingId.VIDEO_DIGITAL_LENSES_V2, Params.VideoLensV2
+        )
+
+        self.photo_digital_lens_v2: BleSetting[Params.PhotoLensV2] = BleSetting[Params.PhotoLensV2](
+            communicator, SettingId.PHOTO_DIGITAL_LENSES_V2, Params.PhotoLensV2
+        )
+
+        self.timelapse_digital_lens_v2: BleSetting[Params.TimelapseLensV2] = BleSetting[Params.TimelapseLensV2](
+            communicator, SettingId.TIMELAPSE_DIGITAL_LENSES_V2, Params.TimelapseLensV2
+        )
+
+        self.video_framing: BleSetting[Params.VideoFraming] = BleSetting[Params.VideoFraming](
+            communicator, SettingId.VIDEO_FRAMING, Params.VideoFraming
+        )
+
+        self.multi_shot_framing: BleSetting[Params.MultishotFraming] = BleSetting[Params.MultishotFraming](
+            communicator, SettingId.MULTI_SHOT_FRAMING, Params.MultishotFraming
+        )
+
+        self.frame_rate: BleSetting[Params.FrameRate] = BleSetting[Params.FrameRate](
+            communicator, SettingId.FRAME_RATE, Params.FrameRate
+        )
 
         super().__init__(communicator)
 
@@ -1454,5 +1508,15 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
 
         self.total_sd_space_kb: BleStatus[int] = BleStatus(communicator, StatusId.TOTAL_SD_SPACE_KB, Int32ub)
         """Total space taken up on the SD card in kilobytes"""
+
+        self.photo_interval_capture_count: BleStatus[int] = BleStatus(
+            communicator, StatusId.PHOTO_INTERVAL_CAPTURE_COUNT, Int32ub
+        )
+        """Photo interval capture count"""
+
+        self.camera_lens_mod: BleStatus[Params.LensModStatus] = BleStatus(
+            communicator, StatusId.CAMERA_LENS_MOD, Params.LensModStatus
+        )
+        """Current camera lens mod"""
 
         super().__init__(communicator)
