@@ -569,6 +569,19 @@ class Nmcli0990Wireless(WifiController):
 
         return True
 
+def scan_for_ssid(ssid: str, timeout_sec: float = 30.0, invert: bool = False) -> bool:
+    while time.time() - start_time <= timeout_sec:
+        output: bytes = subprocess.check_output([str(path_system_profiler), 'SPAirPortDataType'])
+        text: str = output.decode()
+        regex = re.compile(r'\n\s+([\x20-\x7E]{1,32}):\n\s+PHY Mode:') # 0x20...0x7E --> ASCII for printable characters
+        for _ssid in sorted(list(set(regex.findall(text)))):
+            if _ssid not in ssids:
+                ssids.append(_ssid)
+            if not invert and ssid in ssids:
+                return True
+        #print(f'Scanning... ssids found: {sorted(ssids)}')  # debug
+
+    return invert
 
 class WpasupplicantWireless(WifiController):
     """Linux wpa_supplicant Driver."""
@@ -712,23 +725,9 @@ class NetworksetupWireless(WifiController):
         discovered = False
         while not discovered and (time.time() - start) <= timeout:
             # Scan for network
-            # Surprisingly, yes this is the industry standard location for this and no, there's no shortcut for it
-            response = cmd(
-                r"/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --scan"
-            )
-            # TODO Sometimes the response is blank?
-            if not response:
-                logger.warning("MacOS did not return a response to SSID scanning.")
-                continue
-            lines = response.splitlines()
-            ssid_end_index = lines[0].index("SSID") + 4  # Find where the SSID column ends
-
-            for result in lines[1:]:  # Skip title row
-                current_ssid = result[:ssid_end_index].strip()
-                if current_ssid == ssid.strip():
-                    discovered = True
-                    break
-            if discovered:
+            response = cmd(r"/usr/sbin/system_profiler SPAirPortDataType")
+            regex = re.compile(r'\n\s+([\x20-\x7E]{1,32}):\n\s+PHY Mode:') # 0x20...0x7E --> ASCII for printable characters
+            if ssid in sorted(regex.findall(response)):
                 break
             time.sleep(1)
         else:
