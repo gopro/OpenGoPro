@@ -419,6 +419,7 @@ class PhotoDuration(GoProIntEnum):
     MIN_15 = 5
     MIN_30 = 6
     HOUR_1 = 7
+
     HOUR_2 = 8
     HOUR_3 = 9
 
@@ -434,3 +435,17 @@ class PresetGroup(GoProIntEnum):
     VIDEO = 1000
     PHOTO = 1001
     TIMELAPSE = 1002
+
+
+class VideoDuration(GoProIntEnum):
+    DUR_15_SECONDS = 1
+    DUR_30_SECONDS = 2
+    DUR_1_MINUTE = 3
+    DUR_5_MINUTES = 4
+    DUR_15_MINUTES = 5
+    DUR_30_MINUTES = 6
+    DUR_1_HOUR = 7
+    DUR_2_HOURS = 8
+    DUR_3_HOURS = 9
+    DUR_5_SECONDS = 10
+    DUR_NO_LIMIT = 100

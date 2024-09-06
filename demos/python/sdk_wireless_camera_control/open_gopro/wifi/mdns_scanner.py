@@ -3,6 +3,8 @@
 
 """MDNS utility functions"""
 
+from __future__ import annotations
+
 import asyncio
 import logging
 from typing import Any
@@ -27,7 +29,7 @@ class ZeroconfListener(zeroconf.ServiceListener):
         """Callback called by ServiceBrowser when a new service is discovered
 
         Args:
-            zc (Zeroconf): instantiated zeroconf object that owns the search
+            zc (zeroconf.Zeroconf): instantiated zeroconf object that owns the search
             type_ (str): name of mDNS service that search is occurring on
             name (str): discovered device
         """
@@ -83,6 +85,6 @@ async def get_all_services() -> list[str]:
     """Get all service names
 
     Returns:
-        tuple[str, ...]: tuple of service names
+        list[str]: list of service names
     """
     return list(await zeroconf.asyncio.AsyncZeroconfServiceTypes.async_find())

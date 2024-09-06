@@ -133,7 +133,7 @@ def enum_factory(proto_enum: ProtobufDescriptor) -> type[GoProIntEnum]:
         proto_enum (ProtobufDescriptor): input protobuf enum descriptor
 
     Returns:
-        GoProEnum: generated GoProEnum
+        type[GoProIntEnum]: generated GoProEnum
     """
     keys = proto_enum.values_by_name.keys()
     values = list(proto_enum.values_by_number.keys())

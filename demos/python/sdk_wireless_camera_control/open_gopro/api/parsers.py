@@ -15,7 +15,6 @@ from google.protobuf import descriptor
 from google.protobuf.json_format import MessageToDict as ProtobufToDict
 from pydantic import BaseModel
 
-from open_gopro import types
 from open_gopro.constants import SettingId, StatusId
 from open_gopro.enum import GoProIntEnum, enum_factory
 from open_gopro.parser_interface import (
@@ -26,6 +25,7 @@ from open_gopro.parser_interface import (
     JsonParser,
     JsonTransformer,
 )
+from open_gopro.types import CameraState, JsonDict, Protobuf, ResponseType
 from open_gopro.util import map_keys, pretty_print
 
 logger = logging.getLogger(__name__)
@@ -49,11 +49,11 @@ class JsonParsers:
         def __init__(self, model: type[BaseModel]) -> None:
             self.model = model
 
-        def parse(self, data: types.JsonDict) -> BaseModel:
+        def parse(self, data: JsonDict) -> BaseModel:
             """Parse json dict into model
 
             Args:
-                data (dict): data to parse
+                data (JsonDict): data to parse
 
             Returns:
                 BaseModel: parsed model
@@ -64,17 +64,17 @@ class JsonParsers:
         """Helper class to allow parser definition using a lambda
 
         Args:
-            parser (Callable[[dict], dict]): lambda to parse input
+            parser (Callable[[JsonDict], T]): lambda to parse input
         """
 
-        def __init__(self, parser: Callable[[types.JsonDict], T]) -> None:
+        def __init__(self, parser: Callable[[JsonDict], T]) -> None:
             self._parser = parser
 
-        def parse(self, data: types.JsonDict) -> T:
+        def parse(self, data: JsonDict) -> T:
             """Use stored lambda parse for parsing
 
             Args:
-                data (dict): input dict to parse
+                data (JsonDict): input dict to parse
 
             Returns:
                 T: parsed output
@@ -84,20 +84,20 @@ class JsonParsers:
     class CameraStateParser(JsonParser):
         """Parse integer numbers into Enums"""
 
-        def parse(self, data: types.JsonDict) -> types.CameraState:
+        def parse(self, data: JsonDict) -> CameraState:
             """Parse dict of integer values into human readable (i.e. enum'ed) setting / status map
 
             Args:
-                data (dict): input dict to parse
+                data (JsonDict): input dict to parse
 
             Returns:
-                dict: output human readable dict
+                CameraState: output human readable dict
             """
             parsed: dict = {}
             # Parse status and settings values into nice human readable things
             for name, id_map in [("status", StatusId), ("settings", SettingId)]:
                 for k, v in data[name].items():
-                    identifier = cast(types.ResponseType, id_map(int(k)))
+                    identifier = cast(ResponseType, id_map(int(k)))
                     try:
                         if not (parser_builder := GlobalParsers.get_query_container(identifier)):
                             parsed[identifier] = v
@@ -123,14 +123,14 @@ class JsonTransformers:
             self.func = func
             super().__init__()
 
-        def transform(self, data: types.JsonDict) -> types.JsonDict:
+        def transform(self, data: JsonDict) -> JsonDict:
             """Transform json, mapping keys
 
             Args:
-                data (types.JsonDict): json data to transform
+                data (JsonDict): json data to transform
 
             Returns:
-                types.JsonDict: transformed json data
+                JsonDict: transformed json data
             """
             map_keys(data, self.key, self.func)
             return data
@@ -179,7 +179,7 @@ class ByteParserBuilders:
         """Parse into a GoProEnum
 
         Args:
-            target (type[GoProEnum]): enum type to parse into
+            target (type[GoProIntEnum]): enum type to parse into
         """
 
         def __init__(self, target: type[GoProIntEnum]) -> None:
@@ -215,10 +215,10 @@ class ByteParserBuilders:
         using the protobuf definition
 
         Args:
-            proto (type[types.Protobuf]): protobuf definition to parse (a proxy) into
+            proto (type[Protobuf]): protobuf definition to parse (a proxy) into
         """
 
-        def __init__(self, proto: type[types.Protobuf]) -> None:
+        def __init__(self, proto: type[Protobuf]) -> None:
             class ProtobufByteParser(BytesParser[dict]):
                 """Parse bytes into a dict using the protobuf"""
 
@@ -226,7 +226,7 @@ class ByteParserBuilders:
 
                 # pylint: disable=not-callable
                 def parse(self, data: bytes) -> Any:
-                    response: types.Protobuf = self.protobuf().FromString(bytes(data))
+                    response: Protobuf = self.protobuf().FromString(bytes(data))
 
                     # TODO can translate from Protobuf enums without relying on Protobuf internal implementation?
                     # Monkey patch the field-to-json function to use our enum translation
@@ -235,9 +235,7 @@ class ByteParserBuilders:
                         if field.cpp_type == descriptor.FieldDescriptor.CPPTYPE_ENUM
                         else original_field_to_json(self, field, value)
                     )
-                    as_dict = ProtobufToDict(
-                        response, including_default_value_fields=False, preserving_proto_field_name=True
-                    )
+                    as_dict = ProtobufToDict(response, preserving_proto_field_name=True)
                     # For any unset fields, use None
                     for key in response.DESCRIPTOR.fields_by_name:
                         if key not in as_dict:

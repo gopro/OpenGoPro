@@ -38,7 +38,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
-bleak = "=0.21.1"
+bleak = "=0.22.2"
 construct = "^2"
 wrapt = "^1"
 requests = "^2"
@@ -52,11 +52,13 @@ opencv-python = { version = "^4", optional = true }
 Pillow = {version= "^9", optional = true}
 pytz = "*"
 tzlocal = "*"
+typing-extensions = "^4"
 
 [tool.poetry.extras]
 gui = ["opencv-python", "pillow"]
 
 [tool.poetry.group.dev.dependencies]
+pydoclint = "^0.4.1"
 pydocstyle = { extras = ["toml"], version = "^6" }
 pytest = "^7"
 pytest-cov = "^3"
@@ -65,23 +67,21 @@ pytest-html = "^3"
 coverage = { extras = ["toml"], version = "^6" }
 requests-mock = "^1"
 black = "*"
-pylint = "^2"
+pylint = "*"
 mypy = "*"
 types-requests = "*"
 types-attrs = "*"
 types-pytz = "*"
 types-tzlocal = "*"
 construct-typing = "*"
-sphinx = "^5"
-sphinx-rtd-theme = "^1"
-sphinxemoji = "^0"
-coverage-badge = "=1.1.0"
-darglint = "^1"
+sphinx = "^7"
+sphinx-rtd-theme = "^2"
+coverage-badge = "^1"
 poethepoet = "^0"
 autodoc-pydantic = "^2"
 pytest-timeout = "^2"
 isort = "*"
-types-protobuf = "^4"
+types-protobuf = "*"
 
 [tool.poe.tasks.tests]
 cmd = "pytest tests/unit --cov-fail-under=70"
@@ -115,16 +115,16 @@ help = "Perform all static code analysis"
 cmd = "pydocstyle --config pyproject.toml -v open_gopro"
 help = "check docstrings style"
 
-[tool.poe.tasks._darglint]
-cmd = "darglint -v 2 open_gopro"
+[tool.poe.tasks._doclint]
+cmd = "pydoclint open_gopro"
 help = "validate docstrings"
 
 [tool.poe.tasks.docstrings]
-sequence = ["_pydocstyle", "_darglint"]
+sequence = ["_pydocstyle", "_doclint"]
 help = "Analyze docstrings for consistency and errors"
 
 [tool.poe.tasks.sphinx]
-cmd = "sphinx-build -W --keep-going -a -E -b html docs docs/build"
+cmd = "sphinx-build -W --keep-going -a -n -E -b html docs docs/build"
 help = "Build sphinx documentation."
 
 [tool.poe.tasks._coverage]
@@ -264,3 +264,8 @@ match-dir = '(?!.*demos).*'
 
 [tool.isort]
 profile = "black"
+
+[tool.pydoclint]
+style = 'google'
+exclude = 'schemas/'
+require-return-section-when-returning-nothing = false

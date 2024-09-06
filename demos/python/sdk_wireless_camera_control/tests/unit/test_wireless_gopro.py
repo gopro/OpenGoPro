@@ -16,8 +16,9 @@ import requests_mock
 from open_gopro.communicator_interface import HttpMessage
 from open_gopro.constants import ErrorCode, QueryCmdId, SettingId, StatusId
 from open_gopro.exceptions import GoProNotOpened, ResponseTimeout
-from open_gopro.gopro_wireless import Params, WirelessGoPro, types
+from open_gopro.gopro_wireless import Params, WirelessGoPro
 from open_gopro.models.response import GlobalParsers, GoProResp
+from open_gopro.types import UpdateType
 from tests import mock_good_response
 
 
@@ -128,7 +129,7 @@ async def test_get_update(mock_wireless_gopro_basic: WirelessGoPro):
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
     event = asyncio.Event()
 
-    async def receive_encoding_status(id: types.UpdateType, value: bool):
+    async def receive_encoding_status(id: UpdateType, value: bool):
         event.set()
 
     mock_wireless_gopro_basic.register_update(receive_encoding_status, StatusId.ENCODING)
@@ -200,7 +201,7 @@ async def test_get_update_unregister_all(mock_wireless_gopro_basic: WirelessGoPr
     event = asyncio.Event()
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
 
-    async def receive_encoding_status(id: types.UpdateType, value: bool):
+    async def receive_encoding_status(id: UpdateType, value: bool):
         event.set()
 
     mock_wireless_gopro_basic.register_update(receive_encoding_status, StatusId.ENCODING)

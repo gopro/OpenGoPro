@@ -29,15 +29,13 @@ class BufferlessVideoCapture(threading.Thread):
     """Buffer-less video capture to only display the most recent frame
 
     Open a video source to display it, and block until the user stops it by sending 'q'
+
+    Args:
+        source (str): video source to display
+        printer (Callable): used to display output message. Defaults to print.
     """
 
     def __init__(self, source: str, printer: Callable = print) -> None:
-        """Constructor
-
-        Args:
-            source (str): video source to display
-            printer (Callable): used to display output message. Defaults to print.
-        """
         self.printer = printer
         self.printer("Starting viewer...")
         self.cap = cv2.VideoCapture(source + "?overrun_nonfatal=1&fifo_size=50000000", cv2.CAP_FFMPEG)

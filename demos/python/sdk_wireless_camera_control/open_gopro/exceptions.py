@@ -3,6 +3,8 @@
 
 """Exceptions that pertain to Gopro-level functionality."""
 
+from __future__ import annotations
+
 from typing import Callable
 
 
@@ -50,8 +52,8 @@ class ConnectFailed(GoProError):
 
     Args:
         connection (str): type of connection that failed
+        timeout (float): the timeout used for each attempt
         retries (int): how many retries were attempted
-        timeout (int): the timeout used for each attempt
     """
 
     def __init__(self, connection: str, timeout: float, retries: int):

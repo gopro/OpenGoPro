@@ -6,6 +6,10 @@ from datetime import date
 
 from open_gopro import WirelessGoPro
 
+from sphinx.ext.intersphinx import missing_reference
+
+import open_gopro.models
+
 gopro = WirelessGoPro(enable_wifi=False)
 
 project = "Open GoPro Python SDK"
@@ -23,8 +27,8 @@ extensions = [
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.graphviz",
     "sphinx.ext.inheritance_diagram",
-    # "sphinxemoji.sphinxemoji", # https://github.com/sphinx-contrib/emojicodes/issues/42
     "sphinxcontrib.autodoc_pydantic",
+    "sphinx.ext.intersphinx",
 ]
 html_theme = "sphinx_rtd_theme"
 html_context = {
@@ -36,9 +40,12 @@ inheritance_node_attrs = dict(color="dodgerblue1", style="filled")
 autodoc_default_options = {
     "members": True,
 }
-# https://autodoc-pydantic.readthedocs.io/en/stable/users/installation.html#configuration
-autodoc_pydantic_model_show_json = True
+# https://autodoc-pydantic.readthedocs.io/en/stable/users/configuration.html
+autodoc_pydantic_model_show_json = False
 autodoc_pydantic_settings_show_json = False
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+}
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -51,52 +58,79 @@ version = importlib_metadata.version("open_gopro")
 
 nitpicky = True
 
+TYPE_ALIASES = {
+    "CameraState": "open_gopro.types.CameraState",
+    "UpdateCb": "open_gopro.types.UpdateCb",
+    "UpdateType": "open_gopro.types.UpdateType",
+    "JsonDict": "open_gopro.JsonDict",
+    "ResponseType": "open_gopro.types.ResponseType",
+    "Protobuf": "open_gopro.types.Protobuf",
+    "IdType": "open_gopro.types.IdType",
+    # TODO there must be a better way of doing this...
+    "Params.Toggle": "open_gopro.api.params.Toggle",
+    "Params.CameraControl": "open_gopro.api.params.CameraControl",
+    "Params.WebcamProtocol": "open_gopro.api.params.WebcamProtocol",
+    "Params.WebcamResolution": "open_gopro.api.params.WebcamResolution",
+    "Params.WebcamFOV": "open_gopro.api.params.WebcamFOV",
+}
+
+# This is very broken.
+# https://github.com/sphinx-doc/sphinx/issues/10455
+# https://github.com/sphinx-doc/sphinx/issues/10785
 # autodoc_type_aliases = {
-#     "IdType": "open_gopro.interface.IdType",
-#     "CommunicatorType": "open_gopro.interface.CommunicatorType",
-#     "ParserType": "open_gopro.interface.ParserType",
-#     "DisconnectHandlerType": "open_gopro.ble.controller.DisconnectHandlerType",
-#     "NotiHandlerType": "open_gopro.ble.controller.NotiHandlerType",
-#     "ValueType": "open_gopro.api.builders.ValueType",
-#     "BleDevice": "open_gopro.ble.controller.BleDevice",
-#     "BleHandle": "open_gopro.ble.controller.BleHandle",
-#     "CmdType": "open_gopro.constants.CmdType",
-#     "ResponseType": "open_gopro.constants.ResponseType",
+# "CameraState": "open_gopro.types.CameraState",
+# "Path": "pathlib.Path",
 # }
 
 nitpick_ignore = [
     ("py:class", "T"),
     ("py:class", "T_co"),
     ("py:class", "ExceptionHandler"),
-    ("py:class", "datetime.datetime"),
-    ("py:class", "open_gopro.models.parsers.Parser"),
     ("py:class", "abc.ABC"),
-    ("py:class", "collections.abc.Iterable"),
+    # TODO need to fix these
+    ("py:class", "Path"),
+    ("py:class", "JsonDict"),
+    ("py:class", "ValueType"),
 ]
 nitpick_ignore_regex = [
-    (r"py:class", r".*proto\..+"),  # TODO how should / can we handle protobuf documenting?
+    (r"py:class", r".*proto\..+"),
     (r"py:class", r".*_pb2\..+"),
-    (r"py:class", r".+Type"),
-    (r"py:obj", r".+Type"),
-    (r"py:class", r".*Path"),
-    (r"py:class", r".*InitVar"),
-    (r"py:class", r".*UpdateCb"),
-    (r"py:class", r".*JsonDict"),
-    (r"py:class", r".*BleDevice"),
-    (r"py:class", r".*BleHandle"),
-    (r"py:class", r".*Parser"),
-    (r"py:class", r".*Builder"),
     (r".*", r".*construct.*"),
-    (r".*", r".*response.T*"),
+    # Generic Types that are pointless to document
+    (r"py:class", r".*\.T"),
+    (r"py:class", r".*\.T_co"),
+    (r"py:class", r".*BleHandle"),
+    (r"py:class", r".*BleDevice"),
+    (r"py:class", r".*CommunicatorType"),
+    (r"py:class", r".*NotiHandlerType"),
+    (r"py:class", r".*DisconnectHandlerType"),
+    (r"py:obj", r".*CommunicatorType"),
+    (r"py:class", r".*QueryParserType"),
+    (r"py:class", r".*ValueType"),
+    (r"py:obj", r".*communicator_interface.MessageType"),
+    (r"py:class", r".*dataclasses.*"),
 ]
 
 
-# This is the expected signature of the handler for this event, cf doc
 def autodoc_skip_member_handler(app, what, name, *_):
     for skip in ("internal", "deprecated"):
         if skip in name.lower():
             return name
 
 
+def resolve_type_aliases(app, env, node, contnode):
+    """Resolve :class: references to our type aliases as :attr: instead."""
+    try:
+        if node["refdomain"] == "py" and (target := TYPE_ALIASES.get(node["reftarget"])):
+            # print(f"updating {node['reftarget']}")
+            return app.env.get_domain("py").resolve_any_xref(env, node["refdoc"], app.builder, target, node, contnode,)[
+                0
+            ][1]
+    except IndexError:
+        # print("Error")
+        return None
+
+
 def setup(app):
     app.connect("autodoc-skip-member", autodoc_skip_member_handler)
+    app.connect("missing-reference", resolve_type_aliases)
