@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QuickStart Guide &mdash; Open GoPro Python SDK  documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -101,7 +102,7 @@
            <div itemprop="articleBody">
              
   <section id="quickstart-guide">
-<h1>QuickStart Guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this heading"></a></h1>
+<h1>QuickStart Guide<a class="headerlink" href="#quickstart-guide" title="Link to this heading"></a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This section assumes you have successfully <a class="reference internal" href="installation.html#installation"><span class="std std-ref">installed</span></a> the package.</p>
@@ -115,12 +116,12 @@ or locally in <cite>$INSTALL/open_gopro/demos</cite> where $INSTALL can be found
 <p>Note that the GUI demos will only be available if OpenGoPro was installed with the additional GUI option.
 See the  <a class="reference internal" href="installation.html#installation"><span class="std std-ref">installation</span></a> steps for more informatoin.</p>
 <section id="command-line-interface-cli-demos">
-<h2>Command Line Interface (CLI) Demos<a class="headerlink" href="#command-line-interface-cli-demos" title="Permalink to this heading"></a></h2>
+<h2>Command Line Interface (CLI) Demos<a class="headerlink" href="#command-line-interface-cli-demos" title="Link to this heading"></a></h2>
 <p>All of the CLI demos have command-line help via the <cite>–help</cite> parameter. All demos will log to the console as well
 as write a more detailed log to a file (this file can be set with the <cite>–log</cite> parameter). The detailed log
 is very helpful for diagnosing BLE / WiFi inconsistencies.</p>
 <section id="photo-demo">
-<h3>Photo Demo<a class="headerlink" href="#photo-demo" title="Permalink to this heading"></a></h3>
+<h3>Photo Demo<a class="headerlink" href="#photo-demo" title="Link to this heading"></a></h3>
 <p>The <cite>photo</cite> demo will discover a GoPro camera, connect to it, take a photo, and then download the
 photo to your local machine. It defaults to connecting to a wireless camera but can connect to a wired camera
 by setting the <cite>wired</cite> option. To run, do:</p>
@@ -148,7 +149,7 @@ by setting the <cite>wired</cite> option. To run, do:</p>
 </div>
 </section>
 <section id="video-demo">
-<h3>Video Demo<a class="headerlink" href="#video-demo" title="Permalink to this heading"></a></h3>
+<h3>Video Demo<a class="headerlink" href="#video-demo" title="Link to this heading"></a></h3>
 <p>The video demo will discover a GoPro camera, connect to it, take a video for a given amount of time, and then
 download the photo to your local machine.  It defaults to connecting to a wireless camera but can connect to a
 wired camera by setting the <cite>wired</cite> option.To run and capture a 2 second video, do:</p>
@@ -181,7 +182,7 @@ wired camera by setting the <cite>wired</cite> option.To run and capture a 2 sec
 </div>
 </section>
 <section id="wifi-demo">
-<h3>WiFi Demo<a class="headerlink" href="#wifi-demo" title="Permalink to this heading"></a></h3>
+<h3>WiFi Demo<a class="headerlink" href="#wifi-demo" title="Link to this heading"></a></h3>
 <p>The <cite>wifi</cite> demo will discover a GoPro camera, connect to it, enable the camera’a WiFi AP, and then connect
 to it via WiFi. This is useful if you want to send HTTP commands to it from some external source such as curl.</p>
 <p>Note that this demo will run, thus maintaining the WiFi connection, until exited by pressing enter.</p>
@@ -210,7 +211,7 @@ to it via WiFi. This is useful if you want to send HTTP commands to it from some
 </div>
 </section>
 <section id="battery-demo">
-<h3>Battery Demo<a class="headerlink" href="#battery-demo" title="Permalink to this heading"></a></h3>
+<h3>Battery Demo<a class="headerlink" href="#battery-demo" title="Link to this heading"></a></h3>
 <p>This demo will continuously read the battery level (either via polling or registering fro notifications as
 configured per the command line argument) and write
 the results to a .csv file. To run, do:</p>
@@ -238,9 +239,9 @@ the results to a .csv file. To run, do:</p>
 </section>
 </section>
 <section id="graphical-user-interface-gui-demos">
-<h2>Graphical User Interface (GUI) Demos<a class="headerlink" href="#graphical-user-interface-gui-demos" title="Permalink to this heading"></a></h2>
+<h2>Graphical User Interface (GUI) Demos<a class="headerlink" href="#graphical-user-interface-gui-demos" title="Link to this heading"></a></h2>
 <section id="wired-webcam-demo">
-<h3>Wired Webcam Demo<a class="headerlink" href="#wired-webcam-demo" title="Permalink to this heading"></a></h3>
+<h3>Wired Webcam Demo<a class="headerlink" href="#wired-webcam-demo" title="Link to this heading"></a></h3>
 <p>The <cite>webcam</cite> demo will configure a GoPro (identified via serial number) as a webcam, start the webcam, and use
 <a class="reference external" href="https://pypi.org/project/opencv-python/">OpenCV</a>  to start a viewer to display the stream.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-webcam
@@ -262,7 +263,7 @@ the results to a .csv file. To run, do:</p>
 </div>
 </section>
 <section id="livestream-demo">
-<h3>Livestream Demo<a class="headerlink" href="#livestream-demo" title="Permalink to this heading"></a></h3>
+<h3>Livestream Demo<a class="headerlink" href="#livestream-demo" title="Link to this heading"></a></h3>
 <p>The <cite>livestream</cite> demo will connect via BLE to the camera, connect the camera to a Wifi AP, configure / start
 livestream, then use <a class="reference external" href="https://pypi.org/project/opencv-python/">OpenCV</a>  to start a viewer to display the stream.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gopro-webcam

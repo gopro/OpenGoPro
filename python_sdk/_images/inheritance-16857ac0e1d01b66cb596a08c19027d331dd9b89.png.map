@@ -1,7 +1,7 @@
 <map id="inheritancef99e758f3f" name="inheritancef99e758f3f">
-<area shape="rect" id="node1" title="Helper class that provides a standard way to create an ABC using" alt="" coords="23,225,95,251"/>
+<area shape="rect" id="node1" href="https://docs.python.org/3/library/abc.html#abc.ABC" target="_top" title="Helper class that provides a standard way to create an ABC using" alt="" coords="23,225,95,251"/>
 <area shape="rect" id="node4" href="#open_gopro.communicator_interface.Message" target="_top" title="Base class for all messages that will be contained in a Messages class" alt="" coords="19,152,99,177"/>
-<area shape="rect" id="node2" title="Abstract base class for generic types." alt="" coords="138,79,210,104"/>
+<area shape="rect" id="node2" href="https://docs.python.org/3/library/typing.html#typing.Generic" target="_top" title="Abstract base class for generic types." alt="" coords="138,79,210,104"/>
 <area shape="rect" id="node5" href="#open_gopro.api.builders.HttpSetting" target="_top" title="An individual camera setting that is interacted with via Wifi." alt="" coords="69,5,165,31"/>
 <area shape="rect" id="node3" href="#open_gopro.communicator_interface.HttpMessage" target="_top" title="The base class for all HTTP messages. Stores common information." alt="" coords="5,79,113,104"/>
 </map>
