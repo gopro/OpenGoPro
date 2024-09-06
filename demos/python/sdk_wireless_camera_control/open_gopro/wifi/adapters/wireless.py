@@ -569,19 +569,6 @@ class Nmcli0990Wireless(WifiController):
 
         return True
 
-def scan_for_ssid(ssid: str, timeout_sec: float = 30.0, invert: bool = False) -> bool:
-    while time.time() - start_time <= timeout_sec:
-        output: bytes = subprocess.check_output([str(path_system_profiler), 'SPAirPortDataType'])
-        text: str = output.decode()
-        regex = re.compile(r'\n\s+([\x20-\x7E]{1,32}):\n\s+PHY Mode:') # 0x20...0x7E --> ASCII for printable characters
-        for _ssid in sorted(list(set(regex.findall(text)))):
-            if _ssid not in ssids:
-                ssids.append(_ssid)
-            if not invert and ssid in ssids:
-                return True
-        #print(f'Scanning... ssids found: {sorted(ssids)}')  # debug
-
-    return invert
 
 class WpasupplicantWireless(WifiController):
     """Linux wpa_supplicant Driver."""
@@ -726,7 +713,9 @@ class NetworksetupWireless(WifiController):
         while not discovered and (time.time() - start) <= timeout:
             # Scan for network
             response = cmd(r"/usr/sbin/system_profiler SPAirPortDataType")
-            regex = re.compile(r'\n\s+([\x20-\x7E]{1,32}):\n\s+PHY Mode:') # 0x20...0x7E --> ASCII for printable characters
+            regex = re.compile(
+                r"\n\s+([\x20-\x7E]{1,32}):\n\s+PHY Mode:"
+            )  # 0x20...0x7E --> ASCII for printable characters
             if ssid in sorted(regex.findall(response)):
                 break
             time.sleep(1)
