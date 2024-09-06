@@ -1,5 +1,5 @@
-# params.py/Open GoPro, Version 2_0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue Sep  7 21:35:52 UTC 2021
+# params.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Fri Sep  6 19:25:51 UTC 2024
 
 # pylint: disable=missing-class-docstring, no-member
 
