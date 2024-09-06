@@ -738,4 +738,60 @@ class HttpSettings(HttpMessages[HttpSetting]):
         )
         """If set, a video will automatically be stopped after recording for this long."""
 
+        self.regional_format: HttpSetting[Params.RegionalFormat] = HttpSetting[Params.RegionalFormat](
+            communicator, SettingId.REGIONAL_FORMAT
+        )
+
+        self.quality_control: HttpSetting[Params.QualityControl] = HttpSetting[Params.QualityControl](
+            communicator, SettingId.QUALITY_CONTROL
+        )
+
+        self.camera_volume: HttpSetting[Params.Volume] = HttpSetting[Params.Volume](
+            communicator, SettingId.CAMERA_VOLUME
+        )
+
+        self.lens_attachment: HttpSetting[Params.LensAttachment] = HttpSetting[Params.LensAttachment](
+            communicator, SettingId.LENS_ATTACHMENT
+        )
+
+        self.setup_screensaver: HttpSetting[Params.ScreenSaverTimeout] = HttpSetting[Params.ScreenSaverTimeout](
+            communicator, SettingId.SETUP_SCREEN_SAVER
+        )
+
+        self.setup_language: HttpSetting[Params.SetupLanguage] = HttpSetting[Params.SetupLanguage](
+            communicator, SettingId.SETUP_LANGUAGE
+        )
+
+        self.auto_power_off: HttpSetting[Params.AutoPowerOff] = HttpSetting[Params.AutoPowerOff](
+            communicator, SettingId.AUTO_POWER_OFF
+        )
+
+        self.photo_mode_v2: HttpSetting[Params.PhotoModeV2] = HttpSetting[Params.PhotoModeV2](
+            communicator, SettingId.PHOTO_MODE_V2
+        )
+
+        self.video_digital_lens_v2: HttpSetting[Params.VideoLensV2] = HttpSetting[Params.VideoLensV2](
+            communicator, SettingId.VIDEO_DIGITAL_LENSES_V2
+        )
+
+        self.photo_digital_lens_v2: HttpSetting[Params.PhotoLensV2] = HttpSetting[Params.PhotoLensV2](
+            communicator, SettingId.PHOTO_DIGITAL_LENSES_V2
+        )
+
+        self.timelapse_digital_lens_v2: HttpSetting[Params.TimelapseLensV2] = HttpSetting[Params.TimelapseLensV2](
+            communicator, SettingId.TIMELAPSE_DIGITAL_LENSES_V2
+        )
+
+        self.video_framing: HttpSetting[Params.VideoFraming] = HttpSetting[Params.VideoFraming](
+            communicator, SettingId.VIDEO_FRAMING
+        )
+
+        self.multi_shot_framing: HttpSetting[Params.MultishotFraming] = HttpSetting[Params.MultishotFraming](
+            communicator, SettingId.MULTI_SHOT_FRAMING
+        )
+
+        self.frame_rate: HttpSetting[Params.FrameRate] = HttpSetting[Params.FrameRate](
+            communicator, SettingId.FRAME_RATE
+        )
+
         super().__init__(communicator)

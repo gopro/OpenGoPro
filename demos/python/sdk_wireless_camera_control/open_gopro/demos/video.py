@@ -33,11 +33,9 @@ async def main(args: argparse.Namespace) -> None:
             media_set_before = set((await gopro.http_command.get_media_list()).data.files)
             # Take a video
             console.print("Capturing a video...")
-            # assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
-            # await asyncio.sleep(args.record_time)
-            # assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE)).ok
-            assert await gopro.http_setting.video_duration.set(Params.VideoDuration.DUR_15_SECONDS)
             assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
+            await asyncio.sleep(args.record_time)
+            assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE)).ok
 
             # Get the media list after
             media_set_after = set((await gopro.http_command.get_media_list()).data.files)
