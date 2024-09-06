@@ -6,8 +6,6 @@
 import sys
 
 try:
-    import tkinter
-
     import cv2
     import PIL
 
