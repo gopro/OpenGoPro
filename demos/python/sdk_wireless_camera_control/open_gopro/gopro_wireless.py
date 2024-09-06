@@ -261,7 +261,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """
         return self._api.http_setting
 
-    async def open(self, timeout: int = 10, retries: int = 5) -> None:
+    async def open(self, timeout: int = 15, retries: int = 5) -> None:
         """Perform all initialization commands for ble and wifi
 
         For BLE: scan and find device, establish connection, discover characteristics, configure queries
@@ -775,12 +775,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         return await super()._put_json(*args, message=message, **kwargs)
 
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
-    async def _open_wifi(self, timeout: int = 10, retries: int = 5) -> None:
+    async def _open_wifi(self, timeout: int = 30, retries: int = 5) -> None:
         """Connect to a GoPro device via Wifi.
 
         Args:
-            timeout (int): Time before considering establishment failed. Defaults to 15 seconds.
-            retries (int): How many tries to reconnect after failures. Defaults to 10.
+            timeout (int): Time before considering establishment failed. Defaults to 10 seconds.
+            retries (int): How many tries to reconnect after failures. Defaults to 5.
 
         Raises:
             ConnectFailed: Was not able to establish the Wifi Connection

@@ -910,23 +910,26 @@ class NetshWireless(WifiController):
             raise RuntimeError(response)
         os.remove(filename)
 
-        # Try to connect
-        response = cmd(f'netsh wlan connect ssid="{ssid}" name="{ssid}" interface="{self.interface}"')
-        if "was completed successfully" not in response:
-            raise RuntimeError(response)
-        # Wait for connection to establish
-        DELAY = 1
-        while (current := self.current()) != (ssid, SsidState.CONNECTED):
-            logger.debug(f"Waiting {DELAY} second for Wi-Fi connection to establish...")
-            time.sleep(DELAY)
-            timeout -= DELAY
-            if timeout <= 0 or current[1] is SsidState.DISCONNECTED:
-                return False
+        for _ in range(5):
+            # Try to connect
+            response = cmd(f'netsh wlan connect ssid="{ssid}" name="{ssid}" interface="{self.interface}"')
+            if "was completed successfully" not in response:
+                raise RuntimeError(response)
+            # Wait for connection to establish
+            DELAY = 1
+            while current := self.current():
+                if current == (ssid, SsidState.CONNECTED):
+                    logger.info("Wifi connection established!")
+                    self.ssid = ssid
+                    return True
+                logger.debug(f"Waiting {DELAY} second for Wi-Fi connection to establish...")
+                time.sleep(DELAY)
+                timeout -= DELAY
+                if timeout <= 0 or current[1] is SsidState.DISCONNECTED:
+                    logger.debug("Wifi driver detected disconnect. Attempting retry...")
+                    break
 
-        logger.info("Wifi connection established!")
-        self.ssid = ssid
-
-        return True
+        return False
 
     def disconnect(self) -> bool:
         """Terminate the Wifi connection.
@@ -1021,7 +1024,7 @@ class NetshWireless(WifiController):
         return True
 
     def power(self, power: bool) -> bool:
-        """Enable or disbale the Wifi controller
+        """Enable or disable the Wifi controller
 
         Args:
             power (bool): True to enable, False to Disable
