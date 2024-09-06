@@ -1082,9 +1082,7 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
         """File type of photo output"""
 
         self.video_duration: BleSetting[Params.VideoDuration] = BleSetting[Params.VideoDuration](
-            communicator,
-            SettingId.VIDEO_DURATION,
-            Params.VideoDuration
+            communicator, SettingId.VIDEO_DURATION, Params.VideoDuration
         )
         """If set, a video will automatically be stopped after recording for this long."""
 

@@ -711,7 +711,6 @@ class HttpSettings(HttpMessages[HttpSetting]):
 
         self.hindsight: HttpSetting[Params.Hindsight] = HttpSetting[Params.Hindsight](
             communicator,
-
             SettingId.HINDSIGHT,
         )
         """Hindsight time / disable"""
@@ -735,8 +734,7 @@ class HttpSettings(HttpMessages[HttpSetting]):
         """File type of photo output"""
 
         self.video_duration: HttpSetting[Params.VideoDuration] = HttpSetting[Params.VideoDuration](
-            communicator,
-            SettingId.VIDEO_DURATION
+            communicator, SettingId.VIDEO_DURATION
         )
         """If set, a video will automatically be stopped after recording for this long."""
 

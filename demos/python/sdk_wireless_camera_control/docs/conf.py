@@ -8,7 +8,6 @@ from open_gopro import WirelessGoPro
 
 from sphinx.ext.intersphinx import missing_reference
 
-import open_gopro
 import open_gopro.models
 
 gopro = WirelessGoPro(enable_wifi=False)
@@ -41,8 +40,8 @@ inheritance_node_attrs = dict(color="dodgerblue1", style="filled")
 autodoc_default_options = {
     "members": True,
 }
-# https://autodoc-pydantic.readthedocs.io/en/stable/users/installation.html#configuration
-autodoc_pydantic_model_show_json = True
+# https://autodoc-pydantic.readthedocs.io/en/stable/users/configuration.html
+autodoc_pydantic_model_show_json = False
 autodoc_pydantic_settings_show_json = False
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),

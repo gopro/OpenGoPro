@@ -36,7 +36,7 @@ async def main(args: argparse.Namespace) -> None:
             # assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
             # await asyncio.sleep(args.record_time)
             # assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE)).ok
-            assert (await gopro.http_setting.video_duration.set(Params.VideoDuration.DUR_15_SECONDS))
+            assert await gopro.http_setting.video_duration.set(Params.VideoDuration.DUR_15_SECONDS)
             assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
 
             # Get the media list after
@@ -58,13 +58,7 @@ async def main(args: argparse.Namespace) -> None:
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Connect to a GoPro camera, take a video, then download it.")
-    parser.add_argument(
-        "-r",
-        "--record_time",
-        type=float,
-        help="How long to record for",
-        default=2.0
-    )
+    parser.add_argument("-r", "--record_time", type=float, help="How long to record for", default=2.0)
     parser.add_argument(
         "-o",
         "--output",
