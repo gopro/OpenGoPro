@@ -220,6 +220,7 @@ class NotifyLiveStreamStatus(google.protobuf.message.Message):
     LIVE_STREAM_MAXIMUM_STREAM_BITRATE_FIELD_NUMBER: builtins.int
     LIVE_STREAM_LENS_SUPPORTED_FIELD_NUMBER: builtins.int
     LIVE_STREAM_LENS_SUPPORTED_ARRAY_FIELD_NUMBER: builtins.int
+    LIVE_STREAM_PROTUNE_SUPPORTED_FIELD_NUMBER: builtins.int
     live_stream_status: global___EnumLiveStreamStatus.ValueType
     "Live stream status"
     live_stream_error: global___EnumLiveStreamError.ValueType
@@ -250,6 +251,9 @@ class NotifyLiveStreamStatus(google.protobuf.message.Message):
         self,
     ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumLens.ValueType]:
         """Set of currently supported FOV options"""
+    live_stream_protune_supported: builtins.bool
+    "Does the camera support live stream protune settings"
+
     def __init__(
         self,
         *,
@@ -265,7 +269,8 @@ class NotifyLiveStreamStatus(google.protobuf.message.Message):
         live_stream_minimum_stream_bitrate: builtins.int | None = ...,
         live_stream_maximum_stream_bitrate: builtins.int | None = ...,
         live_stream_lens_supported: builtins.bool | None = ...,
-        live_stream_lens_supported_array: (collections.abc.Iterable[global___EnumLens.ValueType] | None) = ...
+        live_stream_lens_supported_array: (collections.abc.Iterable[global___EnumLens.ValueType] | None) = ...,
+        live_stream_protune_supported: builtins.bool | None = ...
     ) -> None: ...
     def HasField(
         self,
@@ -286,6 +291,8 @@ class NotifyLiveStreamStatus(google.protobuf.message.Message):
             b"live_stream_maximum_stream_bitrate",
             "live_stream_minimum_stream_bitrate",
             b"live_stream_minimum_stream_bitrate",
+            "live_stream_protune_supported",
+            b"live_stream_protune_supported",
             "live_stream_status",
             b"live_stream_status",
         ],
@@ -311,6 +318,8 @@ class NotifyLiveStreamStatus(google.protobuf.message.Message):
             b"live_stream_maximum_stream_bitrate",
             "live_stream_minimum_stream_bitrate",
             b"live_stream_minimum_stream_bitrate",
+            "live_stream_protune_supported",
+            b"live_stream_protune_supported",
             "live_stream_status",
             b"live_stream_status",
             "live_stream_window_size_supported_array",
@@ -392,7 +401,7 @@ class RequestSetLiveStreamMode(google.protobuf.message.Message):
     encode: builtins.bool
     "Save media to sdcard while streaming?"
     window_size: global___EnumWindowSize.ValueType
-    "*\n    Resolution to use for live stream\n\n    The set of supported resolutions is only available from the `live_stream_window_size_supported_array` in @ref NotifyLiveStreamStatus)\n    "
+    "*\n    Resolution to use for live stream\n\n    The set of supported resolutions is only available from the `live_stream_window_size_supported_array`\n    in @ref NotifyLiveStreamStatus.\n    "
     cert: builtins.bytes
     "Certificate for servers that require it in PEM format"
     minimum_bitrate: builtins.int
@@ -402,7 +411,7 @@ class RequestSetLiveStreamMode(google.protobuf.message.Message):
     starting_bitrate: builtins.int
     "Starting bitrate"
     lens: global___EnumLens.ValueType
-    "*\n    Lens to use for live stream\n\n    The set of supported lenses is only available from the  `live_stream_lens_supported_array` in @ref NotifyLiveStreamStatus)\n    "
+    "*\n    Lens to use for live stream\n\n    The set of supported lenses is only available from the  `live_stream_lens_supported_array`\n    in @ref NotifyLiveStreamStatus.\n    "
 
     def __init__(
         self,

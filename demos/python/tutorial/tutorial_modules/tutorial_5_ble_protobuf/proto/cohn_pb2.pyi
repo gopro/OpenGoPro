@@ -24,7 +24,9 @@ class _EnumCOHNStatus:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumCOHNStatusEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumCOHNStatus.ValueType],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
+        _EnumCOHNStatus.ValueType
+    ],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -42,7 +44,9 @@ class _EnumCOHNNetworkState:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumCOHNNetworkStateEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumCOHNNetworkState.ValueType],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
+        _EnumCOHNNetworkState.ValueType
+    ],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -55,7 +59,9 @@ class _EnumCOHNNetworkStateEnumTypeWrapper(
     COHN_STATE_ConnectingToNetwork: _EnumCOHNNetworkState.ValueType
     COHN_STATE_Invalid: _EnumCOHNNetworkState.ValueType
 
-class EnumCOHNNetworkState(_EnumCOHNNetworkState, metaclass=_EnumCOHNNetworkStateEnumTypeWrapper): ...
+class EnumCOHNNetworkState(
+    _EnumCOHNNetworkState, metaclass=_EnumCOHNNetworkStateEnumTypeWrapper
+): ...
 
 COHN_STATE_Init: EnumCOHNNetworkState.ValueType
 COHN_STATE_Error: EnumCOHNNetworkState.ValueType
@@ -86,11 +92,15 @@ class RequestGetCOHNStatus(google.protobuf.message.Message):
     def __init__(self, *, register_cohn_status: builtins.bool | None = ...) -> None: ...
     def HasField(
         self,
-        field_name: typing_extensions.Literal["register_cohn_status", b"register_cohn_status"],
+        field_name: typing_extensions.Literal[
+            "register_cohn_status", b"register_cohn_status"
+        ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
-        field_name: typing_extensions.Literal["register_cohn_status", b"register_cohn_status"],
+        field_name: typing_extensions.Literal[
+            "register_cohn_status", b"register_cohn_status"
+        ],
     ) -> None: ...
 
 global___RequestGetCOHNStatus = RequestGetCOHNStatus
@@ -198,8 +208,12 @@ class RequestCreateCOHNCert(google.protobuf.message.Message):
     "Override current provisioning and create new cert"
 
     def __init__(self, *, override: builtins.bool | None = ...) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["override", b"override"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["override", b"override"]) -> None: ...
+    def HasField(
+        self, field_name: typing_extensions.Literal["override", b"override"]
+    ) -> builtins.bool: ...
+    def ClearField(
+        self, field_name: typing_extensions.Literal["override", b"override"]
+    ) -> None: ...
 
 global___RequestCreateCOHNCert = RequestCreateCOHNCert
 
@@ -246,7 +260,10 @@ class ResponseCOHNCert(google.protobuf.message.Message):
     "Root CA cert (ASCII text)"
 
     def __init__(
-        self, *, result: response_generic_pb2.EnumResultGeneric.ValueType | None = ..., cert: builtins.str | None = ...
+        self,
+        *,
+        result: response_generic_pb2.EnumResultGeneric.ValueType | None = ...,
+        cert: builtins.str | None = ...
     ) -> None: ...
     def HasField(
         self,
@@ -273,7 +290,11 @@ class RequestSetCOHNSetting(google.protobuf.message.Message):
     "*\n    1 to enable COHN, 0 to disable COHN\n\n    When set to 1, STA Mode connection will be dropped and camera will not automatically re-connect for COHN.\n    "
 
     def __init__(self, *, cohn_active: builtins.bool | None = ...) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["cohn_active", b"cohn_active"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["cohn_active", b"cohn_active"]) -> None: ...
+    def HasField(
+        self, field_name: typing_extensions.Literal["cohn_active", b"cohn_active"]
+    ) -> builtins.bool: ...
+    def ClearField(
+        self, field_name: typing_extensions.Literal["cohn_active", b"cohn_active"]
+    ) -> None: ...
 
 global___RequestSetCOHNSetting = RequestSetCOHNSetting

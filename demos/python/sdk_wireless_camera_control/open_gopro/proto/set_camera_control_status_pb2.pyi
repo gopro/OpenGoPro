@@ -31,6 +31,8 @@ class _EnumCameraControlStatusEnumTypeWrapper(
     CAMERA_CONTROL: _EnumCameraControlStatus.ValueType
     "Can only be set by camera, not by app or third party"
     CAMERA_EXTERNAL_CONTROL: _EnumCameraControlStatus.ValueType
+    CAMERA_COF_SETUP: _EnumCameraControlStatus.ValueType
+    "Set by the camera when it is on the CAH (Camera As a Hub) / COF (Cloud OFfload) setup screen"
 
 class EnumCameraControlStatus(_EnumCameraControlStatus, metaclass=_EnumCameraControlStatusEnumTypeWrapper): ...
 
@@ -38,6 +40,8 @@ CAMERA_IDLE: EnumCameraControlStatus.ValueType
 CAMERA_CONTROL: EnumCameraControlStatus.ValueType
 "Can only be set by camera, not by app or third party"
 CAMERA_EXTERNAL_CONTROL: EnumCameraControlStatus.ValueType
+CAMERA_COF_SETUP: EnumCameraControlStatus.ValueType
+"Set by the camera when it is on the CAH (Camera As a Hub) / COF (Cloud OFfload) setup screen"
 global___EnumCameraControlStatus = EnumCameraControlStatus
 
 @typing_extensions.final
