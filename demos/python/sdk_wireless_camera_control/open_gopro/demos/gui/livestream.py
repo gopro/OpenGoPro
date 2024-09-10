@@ -73,8 +73,12 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--min_bit", type=int, help="Minimum bitrate.", default=1000)
     parser.add_argument("--max_bit", type=int, help="Maximum bitrate.", default=1000)
     parser.add_argument("--start_bit", type=int, help="Starting bitrate.", default=1000)
-    parser.add_argument("--resolution", help="Resolution.", choices=list(proto.EnumWindowSize.values()), default=None)
-    parser.add_argument("--fov", help="Field of View.", choices=list(proto.EnumLens.values()), default=None)
+    parser.add_argument(
+        "--resolution", help="Resolution.", choices=list(proto.EnumWindowSize.values()), default=None, type=int  # type: ignore
+    )
+    parser.add_argument(
+        "--fov", help="Field of View.", choices=list(proto.EnumLens.values()), default=None, type=int  # type: ignore
+    )
     return add_cli_args_and_parse(parser, wifi=False)
 
 
