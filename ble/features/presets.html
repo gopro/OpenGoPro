@@ -401,12 +401,6 @@
 <li class="toctree-l1">
 <a class="reference internal" href="settings.html">Settings</a><ul>
 <li class="toctree-l2">
-<a class="reference internal" href="settings.html#camera-capabilities">Camera Capabilities</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="settings.html#xlsx">XLSX</a></li>
-<li class="toctree-l3"><a class="reference internal" href="settings.html#json">JSON</a></li>
-</ul>
-</li>
-<li class="toctree-l2">
 <a class="reference internal" href="settings.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#set-setting"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a></li>
 </ul>
@@ -588,58 +582,7 @@
 <h1>Presets<a class="headerlink" href="#presets" title="Link to this heading"></a>
 </h1>
 <p>The camera organizes many modes of operation into Presets.</p>
-<p>Depending on the camera’s state, different collections of presets will be available for immediate loading and use.
-Below is a table of settings that affect the current preset collection and thereby which presets can be loaded</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd">
-<th class="head">ID</th>
-<th class="head">Setting</th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even">
-<td>162</td>
-<td><a class="reference internal" href="settings.html#setting-162" title="Setting 162 (Max Lens)"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Max</span> <span class="pre">Lens</span></code></a></td>
-</tr>
-<tr class="row-odd">
-<td>173</td>
-<td><a class="reference internal" href="settings.html#setting-173" title="Setting 173 (Video Performance Mode)"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Video</span> <span class="pre">Performance</span> <span class="pre">Mode</span></code></a></td>
-</tr>
-<tr class="row-even">
-<td>175</td>
-<td><a class="reference internal" href="settings.html#setting-175" title="Setting 175 (Controls)"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Controls</span></code></a></td>
-</tr>
-<tr class="row-odd">
-<td>177</td>
-<td><a class="reference internal" href="settings.html#setting-177" title="Setting 177 (Enable Night Photo)"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Enable</span> <span class="pre">Night</span> <span class="pre">Photo</span></code></a></td>
-</tr>
-<tr class="row-even">
-<td>180</td>
-<td><a class="reference internal" href="settings.html#setting-180" title="Setting 180 (System Video Mode)"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Video</span> <span class="pre">Mode</span></code></a></td>
-</tr>
-<tr class="row-odd">
-<td>186</td>
-<td><a class="reference internal" href="settings.html#setting-186" title="Setting 186 (Video Easy Mode)"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Video</span> <span class="pre">Mode</span></code></a></td>
-</tr>
-<tr class="row-even">
-<td>187</td>
-<td><a class="reference internal" href="settings.html#setting-187" title="Setting 187 (Lapse Mode)"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Lapse</span> <span class="pre">Mode</span></code></a></td>
-</tr>
-<tr class="row-odd">
-<td>189</td>
-<td><a class="reference internal" href="settings.html#setting-189" title="Setting 189 (Max Lens Mod)"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Max</span> <span class="pre">Lens</span> <span class="pre">Mod</span></code></a></td>
-</tr>
-<tr class="row-even">
-<td>190</td>
-<td><a class="reference internal" href="settings.html#setting-190" title="Setting 190 (Max Lens Mod Enable)"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Max</span> <span class="pre">Lens</span> <span class="pre">Mod</span> <span class="pre">Enable</span></code></a></td>
-</tr>
-<tr class="row-odd">
-<td>191</td>
-<td><a class="reference internal" href="settings.html#setting-191" title="Setting 191 (Easy Night Photo)"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Photo</span> <span class="pre">Mode</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<p>Depending on the camera’s state, different collections of presets will be available for immediate loading and use.</p>
 <section id="preset-groups">
 <h2>Preset Groups<a class="headerlink" href="#preset-groups" title="Link to this heading"></a>
 </h2>
@@ -804,7 +747,9 @@ Below is a table of settings that affect the current preset collection and there
 </dt>
 <dd class="field-even">0x40</dd>
 </dl>
-<p>Load preset by ID. The ID must be found from <a class="reference internal" href="#get-available-presets" title="get available presets"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></p>
+<p>Load preset by ID.</p>
+<p>A preset can only be loaded if it is currently available where available preset IDs can be
+found from <a class="reference internal" href="#get-available-presets" title="get available presets"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></p>
 <dl class="operation tlv-message">
 <dt class="sig sig-object operation">
 <span class="sig-name descname"><span class="pre">Request</span></span>

@@ -401,12 +401,6 @@
 <li class="toctree-l1 current">
 <a class="current reference internal" href="#">Settings</a><ul>
 <li class="toctree-l2">
-<a class="reference internal" href="#camera-capabilities">Camera Capabilities</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#xlsx">XLSX</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#json">JSON</a></li>
-</ul>
-</li>
-<li class="toctree-l2">
 <a class="reference internal" href="#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#set-setting"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a></li>
 </ul>
@@ -587,70 +581,13 @@
   <section id="settings">
 <h1>Settings<a class="headerlink" href="#settings" title="Link to this heading"></a>
 </h1>
-<section id="camera-capabilities">
-<h2>Camera Capabilities<a class="headerlink" href="#camera-capabilities" title="Link to this heading"></a>
-</h2>
-<p>Camera capabilities usually change from one camera to another and often change from one release to the next. Below are
-documents that detail whitelists for basic video settings for every supported camera release.</p>
-<p>These capability documents define supported camera states. Each state is comprised of a set of setting options that are
-presented in <strong>dependency order</strong>. This means each state is guaranteed to be attainable if and only if the setting options
-are set in the order presented. Failure to adhere to dependency ordering may result in the camera’s blacklist rules
-rejecting a <a class="reference internal" href="#set-setting" title="set setting"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a> command.</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd">
-<th class="head">Camera</th>
-<th class="head">Command 1</th>
-<th class="head">Command 2</th>
-<th class="head">Command 3</th>
-<th class="head">Command 4</th>
-<th class="head">Command 5</th>
-<th class="head">Guaranteed Valid?</th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even">
-<td>Hero 10 Black</td>
-<td>Res: 1080</td>
-<td>Anti-Flicker: 60 Hz</td>
-<td>FPS: 240</td>
-<td>FOV: Wide</td>
-<td>Hypersmooth: Off</td>
-<td>✔</td>
-</tr>
-<tr class="row-odd">
-<td>Hero 10 Black</td>
-<td>Res: 240</td>
-<td>Anti-Flicker: 60 Hz</td>
-<td>RES: 1080</td>
-<td>FOV: Wide</td>
-<td>Hypersmooth: off</td>
-<td>❌</td>
-</tr>
-</tbody>
-</table>
-<p>In the example above, the first set of commands will always work for basic video presets such as Standard.</p>
-<p>In the second example, suppose the camera’s Video Resolution was previously set to 4K. If the user tries to set Video FPS
-to 240, it will fail because 4K/240fps is not supported.</p>
-<p>Capability documents for each camera / firmware version can be found in the following file formats:</p>
-<section id="xlsx">
-<h3>XLSX<a class="headerlink" href="#xlsx" title="Link to this heading"></a>
-</h3>
-<p>An XLSX file can be found <a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/capabilities/capabilities.xlsx">here</a>.</p>
-<p>The capabilities spreadsheet contains worksheets for every supported release. Each row in a worksheet represents a
-whitelisted state and is presented in dependency order as outlined above.</p>
-</section>
-<section id="json">
-<h3>JSON<a class="headerlink" href="#json" title="Link to this heading"></a>
-</h3>
-<p>A JSON file can be found <a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/capabilities/capabilities.json">here</a>.</p>
-<p>The capabilities JSON contains a set of whitelist states for every supported release. Each state is comprised of a list
-of objects that contain setting and option IDs necessary to construct
-<a class="reference internal" href="#set-setting" title="set setting"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Setting</span></code></a> commands and are given in dependency
-order as outlined above. For more information on the object format, see the
-<a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/capabilities/capabilities_schema.json">JSON schema</a>.</p>
-</section>
-</section>
+<p>GoPro cameras have hundreds of setting options to choose from. Since these options have a complex tree of dependencies
+on camera state, current Preset, etc, there is no mechanism to set a desired setting option from any camera state.</p>
+<p>To find the currently available options for a given setting, use the capability querying operations:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="query.html#get-setting-capabilities" title="get setting capabilities"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Setting</span> <span class="pre">Capabilities</span></code></a></p></li>
+<li><p><a class="reference internal" href="query.html#register-for-setting-capability-updates" title="register for setting capability updates"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Register</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Capability</span> <span class="pre">Updates</span></code></a></p></li>
+</ul>
 <section id="operations">
 <h2>Operations<a class="headerlink" href="#operations" title="Link to this heading"></a>
 </h2>

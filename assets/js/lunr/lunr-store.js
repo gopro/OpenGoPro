@@ -934,24 +934,6 @@ let specStore = [
         "tags": []
     },
     {
-        "title": "Camera Capabilities (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-capabilities",
-        "tags": []
-    },
-    {
-        "title": "Xlsx (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#xlsx",
-        "tags": []
-    },
-    {
-        "title": "Json (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#json",
-        "tags": []
-    },
-    {
         "title": "Operations (BLE Spec)",
         "excerpt": "",
         "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#operations",
@@ -1959,7 +1941,7 @@ let specStore = [
     },
     {
         "title": "Presets (HTTP Section)",
-        "excerpt": "## Presets\n\nThe camera organizes many modes of operation into [Presets](#schema/Preset).\n\n> Note: The Preset ID is required to load a Preset via  [Load Preset](#operation/OGP_PRESET_LOAD).\n\nDepending on the camera's state, different collections of presets will be available for immediate loading and use.\nBelow is a table of settings that affect the current preset collection and thereby which presets can be loaded:\n\n<!-- AUTOGEN_PRESET_STATUS_IDS -->\n\n| ID  | Setting                |\n| --- | ---------------------- |\n| 162 | Max Lens               |\n| 173 | Video Performance Mode |\n| 175 | Controls               |\n| 177 | Enable Night Photo     |\n| 180 | Video Mode             |\n| 186 | Video Mode             |\n| 187 | Lapse Mode             |\n| 189 | Max Lens Mod           |\n| 190 | Max Lens Mod Enable    |\n| 191 | Photo Mode             |\n\n## Preset Groups\n\nPresets are organized into [Preset Groups](#schema/PresetGroup).\n\nTo find the currently available Presets / Preset Groups, use [Get Preset Status](#operation/OGP_PRESETS_GET).\n",
+        "excerpt": "## Presets\n\nThe camera organizes modes of operation into [Presets](#schema/Preset).\n\nDepending on the camera's state, different collections of presets will be available for immediate loading and use.\n\nTo find the currently available Presets, use [Get Preset Status](#operation/OGP_PRESETS_GET).\n\n## Preset Groups\n\nPresets are organized into [Preset Groups](#schema/PresetGroup).\n\nTo find the currently available Preset Groups, use [Get Preset Status](#operation/OGP_PRESETS_GET).\n",
         "url": "https://gopro.github.io/OpenGoPro/http#tag/Presets",
         "tags": [
             "httpOperation"
@@ -1967,7 +1949,7 @@ let specStore = [
     },
     {
         "title": "Settings (HTTP Section)",
-        "excerpt": "GoPro cameras have hundreds of setting options to choose from, all of which can be set using a single endpoint. The endpoint is configured with a setting id and an option value. Note that setting option values are not globally unique. While most option values are enumerated values, some are complex bit-masked values.\n\n## Capabilities\n\nCamera capabilities usually change from one camera to another and often change from one release to the next.\nBelow are documents that detail whitelists for basic video settings for every supported camera release.\n\nThese Capability documents define supported camera states.\nEach state is comprised of a set of setting options that are presented in **dependency order**.\nThis means each state is guaranteed to be attainable if and only if the setting options are set in the order presented.\nFailure to adhere to dependency ordering may result in the camera's blacklist rules rejecting a set-setting command.\n\n| Camera       | Command 1 | Command 2                 | Command 3 | Command 4 | Command 5        | Guaranteed Valid? |\n| ------------ | --------- | ------------------------- | --------- | --------- | ---------------- | ----------------- |\n| HERO10 Black | Res: 1080 | Anti-Flicker: 60Hz (NTSC) | FPS: 240  | FOV: Wide | Hypersmooth: OFF | ✔                 |\n| HERO10 Black | FPS: 240  | Anti-Flicker: 60Hz (NTSC) | Res: 1080 | FOV: Wide | Hypersmooth: OFF | ❌                |\n\nIn the example above, the first set of commands will always work for basic video presets such as Standard.\n\nIn the second example, suppose the camera's Video Resolution was previously set to 4K.\nIf the user tries to set Video FPS to 240, it will fail because 4K/240fps is not supported.\n\nCapability documents for each camera / firmware version can be found in the following file formats:\n\n### XLSX\n\nAn XLSX file can be found [here](https://github.com/gopro/OpenGoPro/blob/main/capabilities/capabilities.xlsx).\n\nThe capabilities spreadsheet contains worksheets for every supported release. Each row in a worksheet represents\na whitelisted state and is presented in dependency order as outlined above.\n\n### JSON\n\nA JSON file can be found [here](https://github.com/gopro/OpenGoPro/blob/main/capabilities/capabilities.json).\n\nThe capabilities JSON contains a set of whitelist states for every supported release. Each state is comprised of a\nlist of objects that contain setting and option IDs necessary to construct set-setting commands and are given in\ndependency order as outlined above. For more information on the object format, see the JSON\n[schema](https://github.com/gopro/OpenGoPro/blob/main/capabilities/capabilities_schema.json)\n",
+        "excerpt": "GoPro cameras have hundreds of setting options to choose from. Since these options have a complex tree of dependencies\non camera state, current Preset, etc, there is no mechanism to set a desired setting option from any camera state.\n\nTo find the currently available options for a given setting, attempt to set it to an invalid option using its relevant\noperation below and view the [currently available options](#schema/SettingCapabilities) returned in the 403 error response.\n",
         "url": "https://gopro.github.io/OpenGoPro/http#tag/settings",
         "tags": [
             "httpOperation"
@@ -2041,6 +2023,14 @@ let specStore = [
         "title": "Presetsetting (HTTP Schema)",
         "excerpt": "An individual preset setting that forms the preset's setting array",
         "url": "https://gopro.github.io/OpenGoPro/http#schema/PresetSetting",
+        "tags": [
+            "httpOperation"
+        ]
+    },
+    {
+        "title": "Settingcapabilities (HTTP Schema)",
+        "excerpt": "The currently available options for the requested setting.",
+        "url": "https://gopro.github.io/OpenGoPro/http#schema/SettingCapabilities",
         "tags": [
             "httpOperation"
         ]
@@ -2207,7 +2197,7 @@ let specStore = [
     },
     {
         "title": "Load Preset By Id (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-ffe119)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-f58231)\n ![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-911eb4)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-f032e6)\n ![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-bcf60c)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-fabebe)\n \n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nPreset ID's are not constant and must be retrieved via [Get Preset Status](#operation/OGP_PRESETS_GET)",
+        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-ffe119)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-f58231)\n ![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-911eb4)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-f032e6)\n ![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-bcf60c)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-fabebe)\n \n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nA preset can only be loaded if it is currently available where available preset IDs can be found\nfrom  [Get Preset Status](#operation/OGP_PRESETS_GET)\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_PRESET_LOAD",
         "tags": [
             "httpOperation"

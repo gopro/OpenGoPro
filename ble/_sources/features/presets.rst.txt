@@ -4,22 +4,6 @@ Presets
 The camera organizes many modes of operation into Presets.
 
 Depending on the camera's state, different collections of presets will be available for immediate loading and use.
-Below is a table of settings that affect the current preset collection and thereby which presets can be loaded
-
-=== ====================================================
-ID  Setting
-=== ====================================================
-162 :operation:ref:`Max Lens<Setting 162>`
-173 :operation:ref:`Video Performance Mode<Setting 173>`
-175 :operation:ref:`Controls<Setting 175>`
-177 :operation:ref:`Enable Night Photo<Setting 177>`
-180 :operation:ref:`Video Mode<Setting 180>`
-186 :operation:ref:`Video Mode<Setting 186>`
-187 :operation:ref:`Lapse Mode<Setting 187>`
-189 :operation:ref:`Max Lens Mod<Setting 189>`
-190 :operation:ref:`Max Lens Mod Enable<Setting 190>`
-191 :operation:ref:`Photo Mode<Setting 191>`
-=== ====================================================
 
 Preset Groups
 -------------
@@ -89,7 +73,10 @@ Operations
    :external:
    :id: 0x40
 
-   Load preset by ID. The ID must be found from :operation:ref:`Get Available Presets`
+   Load preset by ID.
+
+   A preset can only be loaded if it is currently available where available preset IDs can be
+   found from :operation:ref:`Get Available Presets`
 
    .. operation:tlv-message:: Request
       :uuid: Command
