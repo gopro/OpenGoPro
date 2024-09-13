@@ -10,7 +10,7 @@ import asyncio
 
 from rich.console import Console
 
-from open_gopro import WirelessGoPro, Params
+from open_gopro import WirelessGoPro
 from open_gopro.logger import setup_logging
 from open_gopro.util import add_cli_args_and_parse
 
