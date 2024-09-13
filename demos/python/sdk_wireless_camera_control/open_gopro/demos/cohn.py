@@ -26,8 +26,6 @@ async def main(args: argparse.Namespace) -> None:
     try:
         # Start with Wifi Disabled (i.e. don't allow camera in AP mode).
         async with WirelessGoPro(args.identifier, enable_wifi=False) as gopro:
-            await gopro.ble_command.cohn_clear_certificate()
-
             if await gopro.is_cohn_provisioned:
                 console.print("[yellow]COHN is already provisioned")
             else:
