@@ -10,7 +10,7 @@ import asyncio
 
 from rich.console import Console
 
-from open_gopro import WirelessGoPro
+from open_gopro import WirelessGoPro, Params
 from open_gopro.logger import setup_logging
 from open_gopro.util import add_cli_args_and_parse
 
@@ -26,8 +26,6 @@ async def main(args: argparse.Namespace) -> None:
     try:
         # Start with Wifi Disabled (i.e. don't allow camera in AP mode).
         async with WirelessGoPro(args.identifier, enable_wifi=False) as gopro:
-            await gopro.ble_command.cohn_clear_certificate()
-
             if await gopro.is_cohn_provisioned:
                 console.print("[yellow]COHN is already provisioned")
             else:
