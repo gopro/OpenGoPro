@@ -43,6 +43,7 @@ async def main(args: argparse.Namespace) -> None:
             minimum_bitrate=args.min_bit,
             maximum_bitrate=args.max_bit,
             starting_bitrate=args.start_bit,
+            encode=args.encode,
             lens=args.fov,
         )
 
@@ -79,6 +80,8 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--fov", help="Field of View.", choices=list(proto.EnumLens.values()), default=None, type=int  # type: ignore
     )
+    parser.add_argument("--encode", help="Save video to sdcard.", action=argparse.BooleanOptionalAction)
+    parser.set_defaults(encode=True)
     return add_cli_args_and_parse(parser, wifi=False)
 
 

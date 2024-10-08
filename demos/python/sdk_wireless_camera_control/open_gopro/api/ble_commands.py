@@ -663,6 +663,7 @@ class BleCommands(BleMessages[BleMessage]):
         minimum_bitrate: int,
         maximum_bitrate: int,
         starting_bitrate: int,
+        encode: bool,
         window_size: proto.EnumWindowSize.ValueType | None = None,
         lens: proto.EnumLens.ValueType | None = None,
         certs: list[Path] | None = None,
@@ -674,6 +675,7 @@ class BleCommands(BleMessages[BleMessage]):
             minimum_bitrate (int): Desired minimum streaming bitrate (>= 800)
             maximum_bitrate (int): Desired maximum streaming bitrate (<= 8000)
             starting_bitrate (int): Initial streaming bitrate (honored if 800 <= value <= 8000)
+            encode (bool): Whether to save media to sdcard while streaming.
             window_size (proto.EnumWindowSize.ValueType | None): Streaming video resolution. Defaults to None (use camera default).
             lens (proto.EnumLens.ValueType | None): Streaming Field of View. Defaults to None (use camera default).
             certs (list[Path] | None): list of certificates to use. Defaults to None.
@@ -683,7 +685,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
         d = {
             "url": url,
-            "encode": True,
+            "encode": encode,
             "minimum_bitrate": minimum_bitrate,
             "maximum_bitrate": maximum_bitrate,
             "starting_bitrate": starting_bitrate,
