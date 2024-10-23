@@ -86,9 +86,153 @@ var jekyllStore = [
 
 let specStore = [
     {
-        "title": "Set Setting (BLE Operation)",
+        "title": "Keep Alive (BLE Operation)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#set-setting",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#keep-alive",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Analytics (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-analytics",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Ap Control (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-ap-control",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Camera Control (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-camera-control",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Date Time (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-date-time",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Local Date Time (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-local-date-time",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Shutter (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-shutter",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Turbo Transfer (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-turbo-transfer",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Sleep (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#sleep",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Scan For Access Points (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#scan-for-access-points",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Get Ap Scan Results (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#get-ap-scan-results",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Connect To Provisioned Access Point (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#connect-to-provisioned-access-point",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Connect To A New Access Point (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#connect-to-a-new-access-point",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Clear Cohn Certificate (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#clear-cohn-certificate",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Create Cohn Certificate (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#create-cohn-certificate",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Get Cohn Certificate (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-certificate",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Get Cohn Status (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-status",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Cohn Setting (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#set-cohn-setting",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Hilight Moment (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/hilights.html#hilight-moment",
         "tags": [
             "bleOperation"
         ]
@@ -238,153 +382,9 @@ let specStore = [
         ]
     },
     {
-        "title": "Scan For Access Points (BLE Operation)",
+        "title": "Set Setting (BLE Operation)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#scan-for-access-points",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Get Ap Scan Results (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#get-ap-scan-results",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Connect To Provisioned Access Point (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#connect-to-provisioned-access-point",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Connect To A New Access Point (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#connect-to-a-new-access-point",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Keep Alive (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#keep-alive",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Analytics (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-analytics",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Ap Control (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-ap-control",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Camera Control (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-camera-control",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Date Time (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-date-time",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Local Date Time (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-local-date-time",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Shutter (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-shutter",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Turbo Transfer (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-turbo-transfer",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Sleep (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#sleep",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Hilight Moment (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/hilights.html#hilight-moment",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Clear Cohn Certificate (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#clear-cohn-certificate",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Create Cohn Certificate (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#create-cohn-certificate",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Get Cohn Certificate (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-certificate",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Get Cohn Status (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-status",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Cohn Setting (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#set-cohn-setting",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#set-setting",
         "tags": [
             "bleOperation"
         ]
@@ -404,6 +404,30 @@ let specStore = [
         "tags": [
             "bleOperation"
         ]
+    },
+    {
+        "title": "State Management (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#state-management",
+        "tags": []
+    },
+    {
+        "title": "Camera Readiness (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#camera-readiness",
+        "tags": []
+    },
+    {
+        "title": "Keep Alive (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#keep-alive",
+        "tags": []
+    },
+    {
+        "title": "Camera Control (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#camera-control",
+        "tags": []
     },
     {
         "title": "Id Tables (BLE Spec)",
@@ -808,30 +832,6 @@ let specStore = [
         "tags": []
     },
     {
-        "title": "State Management (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#state-management",
-        "tags": []
-    },
-    {
-        "title": "Camera Readiness (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#camera-readiness",
-        "tags": []
-    },
-    {
-        "title": "Keep Alive (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#keep-alive",
-        "tags": []
-    },
-    {
-        "title": "Camera Control (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#camera-control",
-        "tags": []
-    },
-    {
         "title": "Data Protocol (BLE Spec)",
         "excerpt": "",
         "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#data-protocol",
@@ -916,339 +916,117 @@ let specStore = [
         "tags": []
     },
     {
-        "title": "Settings (BLE Spec)",
+        "title": "Control (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#settings",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#control",
         "tags": []
     },
     {
         "title": "Operations (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#operations",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#operations",
         "tags": []
     },
     {
-        "title": "Setting Ids (BLE Spec)",
+        "title": "Access Point (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setting-ids",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#access-point",
         "tags": []
     },
     {
-        "title": "Video Resolution 2 (BLE Spec)",
+        "title": "Operations (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-resolution-2",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#operations",
         "tags": []
     },
     {
-        "title": "Frames Per Second 3 (BLE Spec)",
+        "title": "Disconnect From Access Point (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#frames-per-second-3",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#disconnect-from-access-point",
         "tags": []
     },
     {
-        "title": "Video Timelapse Rate 5 (BLE Spec)",
+        "title": "Camera On The Home Network (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-timelapse-rate-5",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#camera-on-the-home-network",
         "tags": []
     },
     {
-        "title": "Photo Timelapse Rate 30 (BLE Spec)",
+        "title": "Certificates (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-timelapse-rate-30",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#certificates",
         "tags": []
     },
     {
-        "title": "Nightlapse Rate 32 (BLE Spec)",
+        "title": "Verifying Certificate (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#verifying-certificate",
         "tags": []
     },
     {
-        "title": "Webcam Digital Lenses 43 (BLE Spec)",
+        "title": "View Certificate Details (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#webcam-digital-lenses-43",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#view-certificate-details",
         "tags": []
     },
     {
-        "title": "Auto Power Down 59 (BLE Spec)",
+        "title": "Provisioning Procedure (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#provisioning-procedure",
         "tags": []
     },
     {
-        "title": "Gps 83 (BLE Spec)",
+        "title": "Operations (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#gps-83",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#operations",
         "tags": []
     },
     {
-        "title": "Video Aspect Ratio 108 (BLE Spec)",
+        "title": "Hilights (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-aspect-ratio-108",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/hilights.html#hilights",
         "tags": []
     },
     {
-        "title": "Video Lens 121 (BLE Spec)",
+        "title": "Operations (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/hilights.html#operations",
         "tags": []
     },
     {
-        "title": "Photo Lens 122 (BLE Spec)",
+        "title": "Query (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-lens-122",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/query.html#query",
         "tags": []
     },
     {
-        "title": "Time Lapse Digital Lenses 123 (BLE Spec)",
+        "title": "Operations (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#time-lapse-digital-lenses-123",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/query.html#operations",
         "tags": []
     },
     {
-        "title": "Photo Output 125 (BLE Spec)",
+        "title": "Presets (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-output-125",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#presets",
         "tags": []
     },
     {
-        "title": "Media Format 128 (BLE Spec)",
+        "title": "Preset Groups (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#media-format-128",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#preset-groups",
         "tags": []
     },
     {
-        "title": "Anti Flicker 134 (BLE Spec)",
+        "title": "Preset Modified Status (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#anti-flicker-134",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#preset-modified-status",
         "tags": []
     },
     {
-        "title": "Hypersmooth 135 (BLE Spec)",
+        "title": "Operations (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#hypersmooth-135",
-        "tags": []
-    },
-    {
-        "title": "Video Horizon Leveling 150 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-horizon-leveling-150",
-        "tags": []
-    },
-    {
-        "title": "Photo Horizon Leveling 151 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-horizon-leveling-151",
-        "tags": []
-    },
-    {
-        "title": "Max Lens 162 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-162",
-        "tags": []
-    },
-    {
-        "title": "Hindsight 167 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167",
-        "tags": []
-    },
-    {
-        "title": "Photo Single Interval 171 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-single-interval-171",
-        "tags": []
-    },
-    {
-        "title": "Photo Interval Duration 172 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-interval-duration-172",
-        "tags": []
-    },
-    {
-        "title": "Video Performance Mode 173 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-performance-mode-173",
-        "tags": []
-    },
-    {
-        "title": "Controls 175 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#controls-175",
-        "tags": []
-    },
-    {
-        "title": "Easy Mode Speed 176 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-mode-speed-176",
-        "tags": []
-    },
-    {
-        "title": "Enable Night Photo 177 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#enable-night-photo-177",
-        "tags": []
-    },
-    {
-        "title": "Wireless Band 178 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#wireless-band-178",
-        "tags": []
-    },
-    {
-        "title": "Star Trails Length 179 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#star-trails-length-179",
-        "tags": []
-    },
-    {
-        "title": "System Video Mode 180 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#system-video-mode-180",
-        "tags": []
-    },
-    {
-        "title": "Video Bit Rate 182 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-bit-rate-182",
-        "tags": []
-    },
-    {
-        "title": "Bit Depth 183 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#bit-depth-183",
-        "tags": []
-    },
-    {
-        "title": "Profiles 184 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#profiles-184",
-        "tags": []
-    },
-    {
-        "title": "Video Easy Mode 186 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-easy-mode-186",
-        "tags": []
-    },
-    {
-        "title": "Lapse Mode 187 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#lapse-mode-187",
-        "tags": []
-    },
-    {
-        "title": "Max Lens Mod 189 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-189",
-        "tags": []
-    },
-    {
-        "title": "Max Lens Mod Enable 190 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-enable-190",
-        "tags": []
-    },
-    {
-        "title": "Easy Night Photo 191 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-night-photo-191",
-        "tags": []
-    },
-    {
-        "title": "Multi Shot Aspect Ratio 192 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-aspect-ratio-192",
-        "tags": []
-    },
-    {
-        "title": "Framing 193 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#framing-193",
-        "tags": []
-    },
-    {
-        "title": "Regional Format 195 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#regional-format-195",
-        "tags": []
-    },
-    {
-        "title": "Quality Control 201 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#quality-control-201",
-        "tags": []
-    },
-    {
-        "title": "Camera Volume 216 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216",
-        "tags": []
-    },
-    {
-        "title": "Lens Attachment 217 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#lens-attachment-217",
-        "tags": []
-    },
-    {
-        "title": "Setup Screen Saver 219 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-screen-saver-219",
-        "tags": []
-    },
-    {
-        "title": "Setup Language 223 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-language-223",
-        "tags": []
-    },
-    {
-        "title": "Auto Power Off 225 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-off-225",
-        "tags": []
-    },
-    {
-        "title": "Photo Mode 227 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-mode-227",
-        "tags": []
-    },
-    {
-        "title": "Video Digital Lenses V2 229 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-digital-lenses-v2-229",
-        "tags": []
-    },
-    {
-        "title": "Photo Digital Lenses V2 230 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-digital-lenses-v2-230",
-        "tags": []
-    },
-    {
-        "title": "Time Lapse Digital Lenses V2 231 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#time-lapse-digital-lenses-v2-231",
-        "tags": []
-    },
-    {
-        "title": "Video Framing 232 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-framing-232",
-        "tags": []
-    },
-    {
-        "title": "Multi Shot Framing 233 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-framing-233",
-        "tags": []
-    },
-    {
-        "title": "Frame Rate 234 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#operations",
         "tags": []
     },
     {
@@ -1750,117 +1528,297 @@ let specStore = [
         "tags": []
     },
     {
-        "title": "Query (BLE Spec)",
+        "title": "Settings (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/query.html#query",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#settings",
         "tags": []
     },
     {
         "title": "Operations (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/query.html#operations",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#operations",
         "tags": []
     },
     {
-        "title": "Presets (BLE Spec)",
+        "title": "Setting Ids (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#presets",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setting-ids",
         "tags": []
     },
     {
-        "title": "Preset Groups (BLE Spec)",
+        "title": "Video Resolution 2 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#preset-groups",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-resolution-2",
         "tags": []
     },
     {
-        "title": "Preset Modified Status (BLE Spec)",
+        "title": "Frames Per Second 3 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#preset-modified-status",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#frames-per-second-3",
         "tags": []
     },
     {
-        "title": "Operations (BLE Spec)",
+        "title": "Video Timelapse Rate 5 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#operations",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-timelapse-rate-5",
         "tags": []
     },
     {
-        "title": "Access Point (BLE Spec)",
+        "title": "Photo Timelapse Rate 30 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#access-point",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-timelapse-rate-30",
         "tags": []
     },
     {
-        "title": "Operations (BLE Spec)",
+        "title": "Nightlapse Rate 32 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#operations",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32",
         "tags": []
     },
     {
-        "title": "Disconnect From Access Point (BLE Spec)",
+        "title": "Webcam Digital Lenses 43 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#disconnect-from-access-point",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#webcam-digital-lenses-43",
         "tags": []
     },
     {
-        "title": "Control (BLE Spec)",
+        "title": "Auto Power Down 59 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#control",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59",
         "tags": []
     },
     {
-        "title": "Operations (BLE Spec)",
+        "title": "Gps 83 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#operations",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#gps-83",
         "tags": []
     },
     {
-        "title": "Hilights (BLE Spec)",
+        "title": "Video Aspect Ratio 108 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/hilights.html#hilights",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-aspect-ratio-108",
         "tags": []
     },
     {
-        "title": "Operations (BLE Spec)",
+        "title": "Video Lens 121 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/hilights.html#operations",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121",
         "tags": []
     },
     {
-        "title": "Camera On The Home Network (BLE Spec)",
+        "title": "Photo Lens 122 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#camera-on-the-home-network",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-lens-122",
         "tags": []
     },
     {
-        "title": "Certificates (BLE Spec)",
+        "title": "Time Lapse Digital Lenses 123 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#certificates",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#time-lapse-digital-lenses-123",
         "tags": []
     },
     {
-        "title": "Verifying Certificate (BLE Spec)",
+        "title": "Photo Output 125 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#verifying-certificate",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-output-125",
         "tags": []
     },
     {
-        "title": "View Certificate Details (BLE Spec)",
+        "title": "Media Format 128 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#view-certificate-details",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#media-format-128",
         "tags": []
     },
     {
-        "title": "Provisioning Procedure (BLE Spec)",
+        "title": "Anti Flicker 134 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#provisioning-procedure",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#anti-flicker-134",
         "tags": []
     },
     {
-        "title": "Operations (BLE Spec)",
+        "title": "Hypersmooth 135 (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#operations",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#hypersmooth-135",
+        "tags": []
+    },
+    {
+        "title": "Video Horizon Leveling 150 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-horizon-leveling-150",
+        "tags": []
+    },
+    {
+        "title": "Photo Horizon Leveling 151 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-horizon-leveling-151",
+        "tags": []
+    },
+    {
+        "title": "Max Lens 162 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-162",
+        "tags": []
+    },
+    {
+        "title": "Hindsight 167 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167",
+        "tags": []
+    },
+    {
+        "title": "Photo Single Interval 171 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-single-interval-171",
+        "tags": []
+    },
+    {
+        "title": "Photo Interval Duration 172 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-interval-duration-172",
+        "tags": []
+    },
+    {
+        "title": "Video Performance Mode 173 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-performance-mode-173",
+        "tags": []
+    },
+    {
+        "title": "Controls 175 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#controls-175",
+        "tags": []
+    },
+    {
+        "title": "Easy Mode Speed 176 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-mode-speed-176",
+        "tags": []
+    },
+    {
+        "title": "Enable Night Photo 177 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#enable-night-photo-177",
+        "tags": []
+    },
+    {
+        "title": "Wireless Band 178 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#wireless-band-178",
+        "tags": []
+    },
+    {
+        "title": "Star Trails Length 179 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#star-trails-length-179",
+        "tags": []
+    },
+    {
+        "title": "System Video Mode 180 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#system-video-mode-180",
+        "tags": []
+    },
+    {
+        "title": "Video Bit Rate 182 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-bit-rate-182",
+        "tags": []
+    },
+    {
+        "title": "Bit Depth 183 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#bit-depth-183",
+        "tags": []
+    },
+    {
+        "title": "Profiles 184 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#profiles-184",
+        "tags": []
+    },
+    {
+        "title": "Video Easy Mode 186 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-easy-mode-186",
+        "tags": []
+    },
+    {
+        "title": "Lapse Mode 187 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#lapse-mode-187",
+        "tags": []
+    },
+    {
+        "title": "Max Lens Mod 189 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-189",
+        "tags": []
+    },
+    {
+        "title": "Max Lens Mod Enable 190 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-enable-190",
+        "tags": []
+    },
+    {
+        "title": "Easy Night Photo 191 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-night-photo-191",
+        "tags": []
+    },
+    {
+        "title": "Multi Shot Aspect Ratio 192 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-aspect-ratio-192",
+        "tags": []
+    },
+    {
+        "title": "Framing 193 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#framing-193",
+        "tags": []
+    },
+    {
+        "title": "Camera Volume 216 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216",
+        "tags": []
+    },
+    {
+        "title": "Setup Screen Saver 219 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-screen-saver-219",
+        "tags": []
+    },
+    {
+        "title": "Setup Language 223 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-language-223",
+        "tags": []
+    },
+    {
+        "title": "Photo Mode 227 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-mode-227",
+        "tags": []
+    },
+    {
+        "title": "Video Framing 232 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-framing-232",
+        "tags": []
+    },
+    {
+        "title": "Multi Shot Framing 233 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-framing-233",
+        "tags": []
+    },
+    {
+        "title": "Frame Rate 234 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234",
         "tags": []
     },
     {
@@ -2061,7 +2019,7 @@ let specStore = [
     },
     {
         "title": "Enumcameracontrolstatus (HTTP Schema)",
-        "excerpt": "\n\n| ID | Name | Summary |\n| -- | ---- | ------- |\n| 0 | CAMERA_IDLE |  |\n| 1 | CAMERA_CONTROL | Can only be set by camera, not by app or third party |\n| 2 | CAMERA_EXTERNAL_CONTROL |  |\n| 3 | CAMERA_COF_SETUP | Set by the camera when it is on the CAH (Camera As a Hub) / COF (Cloud OFfload) setup screen |\n",
+        "excerpt": "\n\n| ID | Name | Summary |\n| -- | ---- | ------- |\n| 0 | CAMERA_IDLE |  |\n| 1 | CAMERA_CONTROL | Can only be set by camera, not by app or third party |\n| 2 | CAMERA_EXTERNAL_CONTROL |  |\n| 3 | CAMERA_COF_SETUP | Set by the camera when it is on the CAH (Camera As a Hub) / COF (Cloud Offload) setup screen |\n",
         "url": "https://gopro.github.io/OpenGoPro/http#schema/EnumCameraControlStatus",
         "tags": [
             "httpOperation"
@@ -2476,14 +2434,6 @@ let specStore = [
         ]
     },
     {
-        "title": "Regional Format (195) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-ffe119)\n\n",
-        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::195",
-        "tags": [
-            "httpOperation"
-        ]
-    },
-    {
         "title": "Video Resolution (2) (HTTP Operation)",
         "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-ffe119)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-f58231)\n ![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-911eb4)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-f032e6)\n ![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-bcf60c)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-fabebe)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::2",
@@ -2492,25 +2442,9 @@ let specStore = [
         ]
     },
     {
-        "title": "Quality Control (201) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-ffe119)\n\n",
-        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::201",
-        "tags": [
-            "httpOperation"
-        ]
-    },
-    {
         "title": "Camera Volume (216) (HTTP Operation)",
         "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-ffe119)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::216",
-        "tags": [
-            "httpOperation"
-        ]
-    },
-    {
-        "title": "Lens Attachment (217) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-ffe119)\n\n",
-        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::217",
         "tags": [
             "httpOperation"
         ]
@@ -2532,41 +2466,9 @@ let specStore = [
         ]
     },
     {
-        "title": "Auto Power Off (225) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-ffe119)\n\n",
-        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::225",
-        "tags": [
-            "httpOperation"
-        ]
-    },
-    {
         "title": "Photo Mode (227) (HTTP Operation)",
         "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-ffe119)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::227",
-        "tags": [
-            "httpOperation"
-        ]
-    },
-    {
-        "title": "Video Digital Lenses V2 (229) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-ffe119)\n\n",
-        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::229",
-        "tags": [
-            "httpOperation"
-        ]
-    },
-    {
-        "title": "Photo Digital Lenses V2 (230) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-ffe119)\n\n",
-        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::230",
-        "tags": [
-            "httpOperation"
-        ]
-    },
-    {
-        "title": "Time Lapse Digital Lenses V2 (231) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-ffe119)\n\n",
-        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::231",
         "tags": [
             "httpOperation"
         ]

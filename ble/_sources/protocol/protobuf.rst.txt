@@ -137,7 +137,7 @@ EnumCameraControlStatus
    * - CAMERA_COF_SETUP
      - 3
 
-     - Set by the camera when it is on the CAH (Camera As a Hub) / COF (Cloud OFfload) setup screen
+     - Set by the camera when it is on the CAH (Camera As a Hub) / COF (Cloud Offload) setup screen
 
 
 
