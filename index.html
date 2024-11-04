@@ -318,6 +318,8 @@ MIT license, and publicly available online on GitHub.</p>
   </tbody>
 </table>
 
+<!-- NOTE!!! Autoformatting adds a newline between the "for" and "endfor" above which causes table formatting errors. -->
+
 <p>While we strive to provide the same API functionality and logic for all newly launched cameras, minor changes
 are sometimes necessary. These are typically a consequence of HW component upgrades or improving or optimizing
 FW architecture. Therefore support for some functions and commands might be model-specific. This is
@@ -337,9 +339,11 @@ enabled upon each connection via BLE.</p>
 
 <h2 id="wifi">WiFi</h2>
 
-<p>WiFi needs to be switched on by a BLE command. Besides command &amp; control, Wi-Fi also allows for video streaming and media
-manipulation. With the exception of live-streaming, the camera always acts as an Wi-Fi access point that other devices
-need to connect to. For more information, see the <a href="/OpenGoPro/http">HTTP Specification</a>.</p>
+<p>Wi-Fi needs to be switched on by a BLE command. Thanks to bigger data throughput than BLE, Wi-Fi allows not only for
+command &amp; control, but also for video streaming and media manipulation. Our newest cameras can act either as a Wi-Fi
+Access Point (creating its own Wi-fi network to which other devices connect) or as a Station (connecting as IP endpoint
+to any existing Wi-Fi network, similar to any other IP camera). API users can choose which mode to use. For more
+information, see the <a href="/OpenGoPro/http">HTTP Specification</a>.</p>
 
 <h2 id="usb">USB</h2>
 
@@ -426,11 +430,13 @@ directly from the cameras, either via USB or wireless connection.</p>
 <table>
   <thead>
     <tr>
-      <th>Stream Type</th>
+      <th style="text-align: center">Stream Type</th>
       <th>Description</th>
       <th style="text-align: center">WiFi</th>
       <th style="text-align: center">USB</th>
       <th style="text-align: center">Record while Streaming</th>
+      <th style="text-align: center">Stream Initiation</th>
+      <th style="text-align: center">Wi-Fi Mode(s)</th>
     </tr>
   </thead>
   <tbody>
@@ -455,9 +461,20 @@ Low power consumption</td>
 ✔️
 <br>
  </td>
+      <td style="text-align: center"> 
+<br>
+Hero 12
+<br>
+and later</td>
+      <td style="text-align: center"> 
+<br>
+<a href="https://gopro.github.io/OpenGoPro/http#tag/Preview-Stream">HTTP</a>
+<br>
+ </td>
       <td style="text-align: center">
-<code class="language-plaintext highlighter-rouge">&gt;=</code> Hero 12
-<br><br>
+<br>
+AP, STA
+<br>
  </td>
     </tr>
     
@@ -475,7 +492,14 @@ Optional low latency stabilization</td>
       <td style="text-align: center"> 
 <br>
 ✔️</td>
-      <td style="text-align: center">
+      <td style="text-align: center"> 
+<br>
+ </td>
+      <td style="text-align: center"> 
+<br>
+<a href="https://gopro.github.io/OpenGoPro/http#tag/Webcam">HTTP</a>
+</td>
+      <td style="text-align: center">AP, STA
 <br>
  </td>
     </tr>
@@ -493,9 +517,16 @@ Optional hypersmooth stabilization</td>
       <td style="text-align: center"> 
 <br>
  </td>
-      <td style="text-align: center">
+      <td style="text-align: center"> 
 <br>
 ✔️</td>
+      <td style="text-align: center"> 
+<br>
+<a href="https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html">BLE Protobuf</a>
+</td>
+      <td style="text-align: center">STA
+<br>
+ </td>
     </tr>
     
   </tbody>
