@@ -1,5 +1,5 @@
 /* preset_status.proto/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue Jul 23 21:13:32 UTC 2024 */
+/* This copyright was auto-generated on Mon Nov  4 18:00:55 UTC 2024 */
 
 /***********************************************************************************************************************
  *
@@ -49,80 +49,106 @@ enum EnumPresetGroup {
 }
 
 enum EnumPresetGroupIcon {
-    PRESET_GROUP_VIDEO_ICON_ID           = 0;
-    PRESET_GROUP_PHOTO_ICON_ID           = 1;
-    PRESET_GROUP_TIMELAPSE_ICON_ID       = 2;
-    PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID  = 3;
-    PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID = 4;
-    PRESET_GROUP_MAX_VIDEO_ICON_ID       = 5;
-    PRESET_GROUP_MAX_PHOTO_ICON_ID       = 6;
-    PRESET_GROUP_MAX_TIMELAPSE_ICON_ID   = 7;
+    PRESET_GROUP_VIDEO_ICON_ID            = 0;
+    PRESET_GROUP_PHOTO_ICON_ID            = 1;
+    PRESET_GROUP_TIMELAPSE_ICON_ID        = 2;
+    PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID   = 3;
+    PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID  = 4;
+    PRESET_GROUP_MAX_VIDEO_ICON_ID        = 5;
+    PRESET_GROUP_MAX_PHOTO_ICON_ID        = 6;
+    PRESET_GROUP_MAX_TIMELAPSE_ICON_ID    = 7;
+    PRESET_GROUP_ND_MOD_VIDEO_ICON_ID     = 8;
+    PRESET_GROUP_ND_MOD_PHOTO_ICON_ID     = 9;
+    PRESET_GROUP_ND_MOD_TIMELAPSE_ICON_ID = 10;
 }
 
 enum EnumPresetIcon {
-    PRESET_ICON_VIDEO                  = 0;
-    PRESET_ICON_ACTIVITY               = 1;
-    PRESET_ICON_CINEMATIC              = 2;
-    PRESET_ICON_PHOTO                  = 3;
-    PRESET_ICON_LIVE_BURST             = 4;
-    PRESET_ICON_BURST                  = 5;
-    PRESET_ICON_PHOTO_NIGHT            = 6;
-    PRESET_ICON_TIMEWARP               = 7;
-    PRESET_ICON_TIMELAPSE              = 8;
-    PRESET_ICON_NIGHTLAPSE             = 9;
-    PRESET_ICON_SNAIL                  = 10;
-    PRESET_ICON_VIDEO_2                = 11;
-    PRESET_ICON_PHOTO_2                = 13;
-    PRESET_ICON_PANORAMA               = 14;
-    PRESET_ICON_BURST_2                = 15;
-    PRESET_ICON_TIMEWARP_2             = 16;
-    PRESET_ICON_TIMELAPSE_2            = 17;
-    PRESET_ICON_CUSTOM                 = 18;
-    PRESET_ICON_AIR                    = 19;
-    PRESET_ICON_BIKE                   = 20;
-    PRESET_ICON_EPIC                   = 21;
-    PRESET_ICON_INDOOR                 = 22;
-    PRESET_ICON_MOTOR                  = 23;
-    PRESET_ICON_MOUNTED                = 24;
-    PRESET_ICON_OUTDOOR                = 25;
-    PRESET_ICON_POV                    = 26;
-    PRESET_ICON_SELFIE                 = 27;
-    PRESET_ICON_SKATE                  = 28;
-    PRESET_ICON_SNOW                   = 29;
-    PRESET_ICON_TRAIL                  = 30;
-    PRESET_ICON_TRAVEL                 = 31;
-    PRESET_ICON_WATER                  = 32;
-    PRESET_ICON_LOOPING                = 33;
-    PRESET_ICON_STARS                  = 34;
-    PRESET_ICON_ACTION                 = 35;
-    PRESET_ICON_FOLLOW_CAM             = 36;
-    PRESET_ICON_SURF                   = 37;
-    PRESET_ICON_CITY                   = 38;
-    PRESET_ICON_SHAKY                  = 39;
-    PRESET_ICON_CHESTY                 = 40;
-    PRESET_ICON_HELMET                 = 41;
-    PRESET_ICON_BITE                   = 42;
-    PRESET_ICON_BASIC                  = 58;
-    PRESET_ICON_ULTRA_SLO_MO           = 59;
-    PRESET_ICON_STANDARD_ENDURANCE     = 60;
-    PRESET_ICON_ACTIVITY_ENDURANCE     = 61;
-    PRESET_ICON_CINEMATIC_ENDURANCE    = 62;
-    PRESET_ICON_SLOMO_ENDURANCE        = 63;
-    PRESET_ICON_STATIONARY_1           = 64;
-    PRESET_ICON_STATIONARY_2           = 65;
-    PRESET_ICON_STATIONARY_3           = 66;
-    PRESET_ICON_STATIONARY_4           = 67;
-    PRESET_ICON_SIMPLE_SUPER_PHOTO     = 70;
-    PRESET_ICON_SIMPLE_NIGHT_PHOTO     = 71;
-    PRESET_ICON_HIGHEST_QUALITY_VIDEO  = 73;
-    PRESET_ICON_STANDARD_QUALITY_VIDEO = 74;
-    PRESET_ICON_BASIC_QUALITY_VIDEO    = 75;
-    PRESET_ICON_STAR_TRAIL             = 76;
-    PRESET_ICON_LIGHT_PAINTING         = 77;
-    PRESET_ICON_LIGHT_TRAIL            = 78;
-    PRESET_ICON_FULL_FRAME             = 79;
-    PRESET_ICON_TIMELAPSE_PHOTO        = 1000;
-    PRESET_ICON_NIGHTLAPSE_PHOTO       = 1001;
+    PRESET_ICON_VIDEO                   = 0;
+    PRESET_ICON_ACTIVITY                = 1;
+    PRESET_ICON_CINEMATIC               = 2;
+    PRESET_ICON_PHOTO                   = 3;
+    PRESET_ICON_LIVE_BURST              = 4;
+    PRESET_ICON_BURST                   = 5;
+    PRESET_ICON_PHOTO_NIGHT             = 6;
+    PRESET_ICON_TIMEWARP                = 7;
+    PRESET_ICON_TIMELAPSE               = 8;
+    PRESET_ICON_NIGHTLAPSE              = 9;
+    PRESET_ICON_SNAIL                   = 10;
+    PRESET_ICON_VIDEO_2                 = 11;
+    PRESET_ICON_PHOTO_2                 = 13;
+    PRESET_ICON_PANORAMA                = 14;
+    PRESET_ICON_BURST_2                 = 15;
+    PRESET_ICON_TIMEWARP_2              = 16;
+    PRESET_ICON_TIMELAPSE_2             = 17;
+    PRESET_ICON_CUSTOM                  = 18;
+    PRESET_ICON_AIR                     = 19;
+    PRESET_ICON_BIKE                    = 20;
+    PRESET_ICON_EPIC                    = 21;
+    PRESET_ICON_INDOOR                  = 22;
+    PRESET_ICON_MOTOR                   = 23;
+    PRESET_ICON_MOUNTED                 = 24;
+    PRESET_ICON_OUTDOOR                 = 25;
+    PRESET_ICON_POV                     = 26;
+    PRESET_ICON_SELFIE                  = 27;
+    PRESET_ICON_SKATE                   = 28;
+    PRESET_ICON_SNOW                    = 29;
+    PRESET_ICON_TRAIL                   = 30;
+    PRESET_ICON_TRAVEL                  = 31;
+    PRESET_ICON_WATER                   = 32;
+    PRESET_ICON_LOOPING                 = 33;
+    PRESET_ICON_STARS                   = 34;
+    PRESET_ICON_ACTION                  = 35;
+    PRESET_ICON_FOLLOW_CAM              = 36;
+    PRESET_ICON_SURF                    = 37;
+    PRESET_ICON_CITY                    = 38;
+    PRESET_ICON_SHAKY                   = 39;
+    PRESET_ICON_CHESTY                  = 40;
+    PRESET_ICON_HELMET                  = 41;
+    PRESET_ICON_BITE                    = 42;
+    PRESET_ICON_CUSTOM_CINEMATIC        = 43;
+    PRESET_ICON_VLOG                    = 44;
+    PRESET_ICON_FPV                     = 45;
+    PRESET_ICON_HDR                     = 46;
+    PRESET_ICON_LANDSCAPE               = 47;
+    PRESET_ICON_LOG                     = 48;
+    PRESET_ICON_CUSTOM_SLOMO            = 49;
+    PRESET_ICON_TRIPOD                  = 50;
+    PRESET_ICON_MAX_VIDEO               = 55;
+    PRESET_ICON_MAX_PHOTO               = 56;
+    PRESET_ICON_MAX_TIMEWARP            = 57;
+    PRESET_ICON_BASIC                   = 58;
+    PRESET_ICON_ULTRA_SLO_MO            = 59;
+    PRESET_ICON_STANDARD_ENDURANCE      = 60;
+    PRESET_ICON_ACTIVITY_ENDURANCE      = 61;
+    PRESET_ICON_CINEMATIC_ENDURANCE     = 62;
+    PRESET_ICON_SLOMO_ENDURANCE         = 63;
+    PRESET_ICON_STATIONARY_1            = 64;
+    PRESET_ICON_STATIONARY_2            = 65;
+    PRESET_ICON_STATIONARY_3            = 66;
+    PRESET_ICON_STATIONARY_4            = 67;
+    PRESET_ICON_SIMPLE_SUPER_PHOTO      = 70;
+    PRESET_ICON_SIMPLE_NIGHT_PHOTO      = 71;
+    PRESET_ICON_HIGHEST_QUALITY_VIDEO   = 73;
+    PRESET_ICON_STANDARD_QUALITY_VIDEO  = 74;
+    PRESET_ICON_BASIC_QUALITY_VIDEO     = 75;
+    PRESET_ICON_STAR_TRAIL              = 76;
+    PRESET_ICON_LIGHT_PAINTING          = 77;
+    PRESET_ICON_LIGHT_TRAIL             = 78;
+    PRESET_ICON_FULL_FRAME              = 79;
+    PRESET_ICON_EASY_MAX_VIDEO          = 80;
+    PRESET_ICON_EASY_MAX_PHOTO          = 81;
+    PRESET_ICON_EASY_MAX_TIMEWARP       = 82;
+    PRESET_ICON_EASY_MAX_STAR_TRAIL     = 83;
+    PRESET_ICON_EASY_MAX_LIGHT_PAINTING = 84;
+    PRESET_ICON_EASY_MAX_LIGHT_TRAIL    = 85;
+    PRESET_ICON_MAX_STAR_TRAIL          = 89;
+    PRESET_ICON_MAX_LIGHT_PAINTING      = 90;
+    PRESET_ICON_MAX_LIGHT_TRAIL         = 91;
+    PRESET_ICON_EASY_STANDARD_PROFILE   = 100;
+    PRESET_ICON_EASY_HDR_PROFILE        = 101;
+    PRESET_ICON_BURST_SLOMO             = 102;
+    PRESET_ICON_TIMELAPSE_PHOTO         = 1000;
+    PRESET_ICON_NIGHTLAPSE_PHOTO        = 1001;
 }
 
 enum EnumPresetTitle {
@@ -166,6 +192,14 @@ enum EnumPresetTitle {
     PRESET_TITLE_CHESTY                   = 40;
     PRESET_TITLE_HELMET                   = 41;
     PRESET_TITLE_BITE                     = 42;
+    PRESET_TITLE_CUSTOM_CINEMATIC         = 43;
+    PRESET_TITLE_VLOG                     = 44;
+    PRESET_TITLE_FPV                      = 45;
+    PRESET_TITLE_HDR                      = 46;
+    PRESET_TITLE_LANDSCAPE                = 47;
+    PRESET_TITLE_LOG                      = 48;
+    PRESET_TITLE_CUSTOM_SLOMO             = 49;
+    PRESET_TITLE_TRIPOD                   = 50;
     PRESET_TITLE_BASIC                    = 58;
     PRESET_TITLE_ULTRA_SLO_MO             = 59;
     PRESET_TITLE_STANDARD_ENDURANCE       = 60;
@@ -192,6 +226,9 @@ enum EnumPresetTitle {
     PRESET_TITLE_BASIC_QUALITY_VIDEO      = 83;
     PRESET_TITLE_HIGHEST_QUALITY_VIDEO    = 93;
     PRESET_TITLE_USER_DEFINED_CUSTOM_NAME = 94;
+    PRESET_TITLE_EASY_STANDARD_PROFILE    = 99;
+    PRESET_TITLE_EASY_HDR_PROFILE         = 100;
+    PRESET_TITLE_BURST_SLOMO              = 106;
 }
 
 /**

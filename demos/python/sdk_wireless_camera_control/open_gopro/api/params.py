@@ -1,9 +1,9 @@
 # params.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue Sep  7 21:35:52 UTC 2021
+# This copyright was auto-generated on Fri Sep  6 19:25:51 UTC 2024
 
 # pylint: disable=missing-class-docstring, no-member
 
-"""Parameter definitions for GoPro BLE and WiFi commands for Open GoPro version 2.0"""
+"""Parameter definitions for GoPro BLE and WiFi commands for Open GoPro version 2_0"""
 
 from __future__ import annotations
 
@@ -419,6 +419,7 @@ class PhotoDuration(GoProIntEnum):
     MIN_15 = 5
     MIN_30 = 6
     HOUR_1 = 7
+
     HOUR_2 = 8
     HOUR_3 = 9
 
@@ -434,3 +435,166 @@ class PresetGroup(GoProIntEnum):
     VIDEO = 1000
     PHOTO = 1001
     TIMELAPSE = 1002
+
+
+class VideoDuration(GoProIntEnum):
+    DUR_15_SECONDS = 1
+    DUR_30_SECONDS = 2
+    DUR_1_MINUTE = 3
+    DUR_5_MINUTES = 4
+    DUR_15_MINUTES = 5
+    DUR_30_MINUTES = 6
+    DUR_1_HOUR = 7
+    DUR_2_HOURS = 8
+    DUR_3_HOURS = 9
+    DUR_5_SECONDS = 10
+    DUR_NO_LIMIT = 100
+
+
+class AutoPowerOff(GoProIntEnum):
+    NEVER = 0
+    MIN_1 = 1
+    MIN_5 = 4
+    MIN_15 = 6
+    MIN_30 = 7
+
+
+class RegionalFormat(GoProIntEnum):
+    HZ_60 = 0
+    HZ_50 = 1
+
+
+class QualityControl(GoProIntEnum):
+    HIGHEST = 0
+    STANDARD = 1
+    BASIC = 2
+
+
+class Volume(GoProIntEnum):
+    LOW = 70
+    MEDIUM = 85
+    HIGH = 100
+
+
+class LensModStatus(GoProIntEnum):
+    INVALID = -1
+    DEFAULT = 0
+    MAX_LENS = 1
+    MAX_LENS_2_0 = 2
+    MAX_LENS_2_5 = 3
+    MACRO = 4
+    ANAMORPHIC = 5
+    ND_4 = 6
+    ND_8 = 7
+    ND_16 = 8
+    ND_32 = 9
+    NONE = 10
+
+
+class LensAttachment(GoProIntEnum):
+    MAX_LENS_2_0 = 2
+    MAX_LENS_2_5 = 3
+    MACRO = 4
+    ND_4 = 6
+    ND_8 = 7
+    ND_16 = 8
+    ND_32 = 9
+    STANDARD_LENS = 10
+    AUTO_DETECT = 100
+
+
+class ScreenSaverTimeout(GoProIntEnum):
+    NEVER = 0
+    MIN_1 = 1
+    MIN_2 = 2
+    MIN_3 = 3
+    MIN_5 = 4
+
+
+class SetupLanguage(GoProIntEnum):
+    ENGLISH_US = 0
+    ENGLISH_UK = 1
+    ENGLISH_AUS = 2
+    GERMAN = 3
+    FRENCH = 4
+    ITALIAN = 5
+    SPANISH = 6
+    SPANISH_NA = 7
+    CHINESE = 8
+    JAPANESE = 9
+    KOREAN = 10
+    PORTUGUESE = 11
+    RUSSIAN = 12
+    ENGLISH_IND = 13
+    SWEDISH = 14
+
+
+class PhotoModeV2(GoProIntEnum):
+    SUPER = 0
+    NIGHT = 1
+    BURST = 2
+
+
+class VideoLensV2(GoProIntEnum):
+    WIDE = 0
+    NARROW = 2
+    SUPERVIEW = 3
+    LINEAR = 4
+    LINEAR_HORIZON_LEVELING = 8
+    HYPERVIEW = 9
+    LINEAR_HORIZON_LOCK = 10
+    MAX_HYPERVIEW = 11
+    ULTRA_SUPERVIEW = 12
+    ULTRA_WIDE = 13
+    ULTRA_HYPERVIEW = 100
+
+
+class PhotoLensV2(GoProIntEnum):
+    MP_12_WIDE = 0
+    MP_12_LINEAR = 10
+    MP_9_WIDE = 15
+    MP_23_WIDE = 27
+    MP_23_LINEAR = 28
+    MP_27_WIDE = 31
+    MP_27_LINEAR = 32
+    MP_9_LINEAR = 37
+    MP_13_LINEAR = 38
+    MP_13_WIDE = 39
+    MP_13_ULTRA_WIDE = 40
+    MP_12_ULTRA_WIDE = 41
+
+
+class TimelapseLensV2(GoProIntEnum):
+    MP_27_WIDE = 31
+    MP_27_LINEAR = 32
+
+
+class VideoFraming(GoProIntEnum):
+    FRAMING_4_3 = 0
+    FRAMING_16_9 = 1
+    FRAMING_8_7 = 3
+    FRAMING_9_16 = 4
+    FRAMING_1_1 = 6
+
+
+class MultishotFraming(GoProIntEnum):
+    FRAMING_4_3 = 0
+    FRAMING_16_9 = 1
+    FRAMING_8_7 = 3
+    FRAMING_9_16 = 4
+
+
+class FrameRate(GoProIntEnum):
+    FRAME_RATE_240_0 = 0
+    FRAME_RATE_120_0 = 1
+    FRAME_RATE_100_0 = 2
+    FRAME_RATE_90_0 = 3
+    FRAME_RATE_60_0 = 5
+    FRAME_RATE_50_0 = 6
+    FRAME_RATE_30_0 = 8
+    FRAME_RATE_25_0 = 9
+    FRAME_RATE_24_0 = 10
+    FRAME_RATE_200_0 = 13
+    FRAME_RATE_400_0 = 15
+    FRAME_RATE_360_0 = 16
+    FRAME_RATE_300_0 = 17

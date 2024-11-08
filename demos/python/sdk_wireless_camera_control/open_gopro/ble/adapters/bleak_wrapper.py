@@ -3,6 +3,8 @@
 
 """Manage a Bluetooth connection using bleak."""
 
+from __future__ import annotations
+
 import asyncio
 import logging
 import platform
@@ -62,16 +64,15 @@ def uuid2bleak_string(uuid: BleUUID) -> str:
 
 
 class BleakWrapperController(BLEController[BleakDevice, bleak.BleakClient], Singleton):
-    """Wrapper around bleak to manage a Bluetooth connection."""
+    """Wrapper around bleak to manage a Bluetooth connection.
 
-    def __init__(self, exception_handler: Optional[Callable] = None) -> None:
-        """Constructor
+    Note, this is a singleton.
 
-        Note, this is a singleton.
+    Args:
+        exception_handler (Callable | None): Used to catch asyncio exceptions from other tasks. Defaults to None.
+    """
 
-        Args:
-            exception_handler (Callable, Optional): Used to catch asyncio exceptions from other tasks. Defaults to None.
-        """
+    def __init__(self, exception_handler: Callable | None = None) -> None:
         BLEController.__init__(self, exception_handler)
 
     async def read(self, handle: bleak.BleakClient, uuid: BleUUID) -> bytearray:
@@ -326,7 +327,7 @@ class BleakWrapperController(BLEController[BleakDevice, bleak.BleakClient], Sing
                     await handle.start_notify(char, bleak_notification_cb_adapter)
         logger.info("Done enabling notifications")
 
-    async def discover_chars(self, handle: bleak.BleakClient, uuids: Optional[type[UUIDs]] = None) -> GattDB:
+    async def discover_chars(self, handle: bleak.BleakClient, uuids: type[UUIDs] | None = None) -> GattDB:
         """Discover all characteristics for a connected handle.
 
         By default, the BLE controller only knows Spec-Defined BleUUID's so any additional BleUUID's should
@@ -334,7 +335,7 @@ class BleakWrapperController(BLEController[BleakDevice, bleak.BleakClient], Sing
 
         Args:
             handle (bleak.BleakClient): BLE handle to discover for
-            uuids (type[UUIDs], Optional): Additional BleUUID information to use when building the
+            uuids (type[UUIDs] | None): Additional BleUUID information to use when building the
                 Gatt Database. Defaults to None.
 
         Returns:

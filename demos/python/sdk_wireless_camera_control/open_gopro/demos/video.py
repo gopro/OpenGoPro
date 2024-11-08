@@ -56,11 +56,7 @@ async def main(args: argparse.Namespace) -> None:
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Connect to a GoPro camera, take a video, then download it.")
-    parser.add_argument(
-        "record_time",
-        type=float,
-        help="How long to record for",
-    )
+    parser.add_argument("-r", "--record_time", type=float, help="How long to record for", default=2.0)
     parser.add_argument(
         "-o",
         "--output",

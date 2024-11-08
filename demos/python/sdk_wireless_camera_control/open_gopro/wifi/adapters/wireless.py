@@ -70,21 +70,17 @@ class WifiCli(WifiController):
 
     If interface is not specified (i.e. it is None), we will attempt to automatically
     discover a suitable interface
+
+    This will raise a RunTimeError if either:
+        - The system is using any language other then en_US
+        - We weren't able to find a suitable driver or auto-detect an interface after detecting driver
+
+    Args:
+        interface (str | None): Interface. Defaults to None.
+        password (str | None): User Password for sudo. Defaults to None.
     """
 
-    def __init__(self, interface: Optional[str] = None, password: Optional[str] = None) -> None:
-        """Constructor
-
-        Args:
-            interface (str, Optional): Interface. Defaults to None.
-            password (str, Optional): User Password for sudo. Defaults to None.
-
-        #noqa: DAR402
-
-        Raises:
-            RuntimeError: The system is using any language other then en_US
-            RuntimeError: We weren't able to find a suitable driver or auto-detect an interface after detecting driver
-        """
+    def __init__(self, interface: str | None = None, password: str | None = None) -> None:  # noqa: DOC502
         ensure_us_english()
         WifiController.__init__(self, interface, password)
 
@@ -716,23 +712,11 @@ class NetworksetupWireless(WifiController):
         discovered = False
         while not discovered and (time.time() - start) <= timeout:
             # Scan for network
-            # Surprisingly, yes this is the industry standard location for this and no, there's no shortcut for it
-            response = cmd(
-                r"/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --scan"
-            )
-            # TODO Sometimes the response is blank?
-            if not response:
-                logger.warning("MacOS did not return a response to SSID scanning.")
-                continue
-            lines = response.splitlines()
-            ssid_end_index = lines[0].index("SSID") + 4  # Find where the SSID column ends
-
-            for result in lines[1:]:  # Skip title row
-                current_ssid = result[:ssid_end_index].strip()
-                if current_ssid == ssid.strip():
-                    discovered = True
-                    break
-            if discovered:
+            response = cmd(r"/usr/sbin/system_profiler SPAirPortDataType")
+            regex = re.compile(
+                r"\n\s+([\x20-\x7E]{1,32}):\n\s+PHY Mode:"
+            )  # 0x20...0x7E --> ASCII for printable characters
+            if ssid in sorted(regex.findall(response)):
                 break
             time.sleep(1)
         else:
@@ -914,23 +898,26 @@ class NetshWireless(WifiController):
             raise RuntimeError(response)
         os.remove(filename)
 
-        # Try to connect
-        response = cmd(f'netsh wlan connect ssid="{ssid}" name="{ssid}" interface="{self.interface}"')
-        if "was completed successfully" not in response:
-            raise RuntimeError(response)
-        # Wait for connection to establish
-        DELAY = 1
-        while (current := self.current()) != (ssid, SsidState.CONNECTED):
-            logger.debug(f"Waiting {DELAY} second for Wi-Fi connection to establish...")
-            time.sleep(DELAY)
-            timeout -= DELAY
-            if timeout <= 0 or current[1] is SsidState.DISCONNECTED:
-                return False
+        for _ in range(5):
+            # Try to connect
+            response = cmd(f'netsh wlan connect ssid="{ssid}" name="{ssid}" interface="{self.interface}"')
+            if "was completed successfully" not in response:
+                raise RuntimeError(response)
+            # Wait for connection to establish
+            DELAY = 1
+            while current := self.current():
+                if current == (ssid, SsidState.CONNECTED):
+                    logger.info("Wifi connection established!")
+                    self.ssid = ssid
+                    return True
+                logger.debug(f"Waiting {DELAY} second for Wi-Fi connection to establish...")
+                time.sleep(DELAY)
+                timeout -= DELAY
+                if timeout <= 0 or current[1] is SsidState.DISCONNECTED:
+                    logger.debug("Wifi driver detected disconnect. Attempting retry...")
+                    break
 
-        logger.info("Wifi connection established!")
-        self.ssid = ssid
-
-        return True
+        return False
 
     def disconnect(self) -> bool:
         """Terminate the Wifi connection.
@@ -1025,7 +1012,7 @@ class NetshWireless(WifiController):
         return True
 
     def power(self, power: bool) -> bool:
-        """Enable or disbale the Wifi controller
+        """Enable or disable the Wifi controller
 
         Args:
             power (bool): True to enable, False to Disable

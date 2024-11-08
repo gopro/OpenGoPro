@@ -1,5 +1,5 @@
 # turbo_transfer_pb2.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Fri Apr 19 21:27:08 UTC 2024
+# This copyright was auto-generated on Mon Sep  9 19:50:27 UTC 2024
 
 """Generated protocol buffer code."""
 

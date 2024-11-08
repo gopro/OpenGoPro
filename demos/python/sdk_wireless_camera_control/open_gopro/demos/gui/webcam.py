@@ -12,7 +12,7 @@ from rich.console import Console
 
 from open_gopro import Params, WiredGoPro, WirelessGoPro
 from open_gopro.constants import WebcamError, WebcamStatus
-from open_gopro.demos.gui.components.util import display_video_blocking
+from open_gopro.demos.gui.util import display_video_blocking
 from open_gopro.gopro_base import GoProBase
 from open_gopro.logger import setup_logging
 from open_gopro.util import add_cli_args_and_parse

@@ -19,9 +19,8 @@ class Logger:
 
     Args:
         logger (logging.Logger): input logger that will be modified and then returned
-        output (Path, Optional): Path of log file for file stream handler. If not set, will not log to file.
-        modules (dict[str, int], Optional): Optional override of modules / levels. Will be merged into default
-            modules.
+        output (Path | None): Path of log file for file stream handler. If not set, will not log to file.
+        modules (list[str] | None): Optional override of modules / levels. Will be merged into default modules.
     """
 
     _instances: dict[type[Logger], Logger] = {}
@@ -37,7 +36,7 @@ class Logger:
 
     def __init__(
         self,
-        logger: Any,
+        logger: logging.Logger,
         output: Path | None = None,
         modules: list[str] | None = None,
     ) -> None:
@@ -205,17 +204,18 @@ class Logger:
 
 
 def setup_logging(
-    base: logging.Logger | str, output: Path | None = None, modules: list[str] | None = None
+    base: logging.Logger | str,
+    output: Path | None = None,
+    modules: list[str] | None = None,
 ) -> logging.Logger:
     """Configure the GoPro modules for logging and get a logger that can be used by the application
 
     This can only be called once and should be done at the top level of the application.
 
     Args:
-        base (Union[logging.Logger, str]): Name of application (i.e. __name__) or preconfigured logger to use as base
-        output (Path, Optional): Path of log file for file stream handler. If not set, will not log to file.
-        modules (dict[str, int], Optional): Optional override of modules / levels. Will be merged into default
-            modules.
+        base (logging.Logger | str): Name of application (i.e. __name__) or preconfigured logger to use as base
+        output (Path | None): Path of log file for file stream handler. If not set, will not log to file.
+        modules (list[str] | None): Optional override of modules / levels. Will be merged into default modules.
 
     Raises:
         TypeError: Base logger is not of correct type

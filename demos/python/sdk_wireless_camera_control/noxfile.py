@@ -62,10 +62,10 @@ def tests(session) -> None:
 @session(python=SUPPORTED_VERSIONS[-1])
 def docstrings(session) -> None:
     """Validate docstrings."""
-    session.install("darglint")
+    session.install("pydoclint")
     session.install("pydocstyle[toml]")
     session.run("pydocstyle", "open_gopro")
-    session.run("darglint", "open_gopro")
+    session.run("pydoclint", "open_gopro")
 
 
 @session(python=SUPPORTED_VERSIONS[-1])
@@ -78,7 +78,7 @@ def docs(session) -> None:
         "sphinx-rtd-theme",
         "sphinxcontrib-napoleon",
         "autodoc-pydantic",
-        "darglint",
+        "pydoclint",
     )
     session.run("sphinx-build", "-W", "docs", "docs/build")
     # Clean up for Jekyll consumption

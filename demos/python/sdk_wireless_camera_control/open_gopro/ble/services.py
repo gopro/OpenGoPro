@@ -63,6 +63,18 @@ class BleUUID(uuid.UUID):
     """An extension of the standard UUID to associate a string name with the UUID and allow 8-bit UUID input
 
     Can only be initialized with one of [hex, bytes, bytes_le, int]
+
+    Args:
+        name (str): human readable name
+        format (BleUUID.Format): 16 or 128 bit format. Defaults to BleUUID.Format.BIT_128.
+        hex (str | None): build from hex string. Defaults to None.
+        bytes (bytes | None): build from big-endian bytes. Defaults to None.
+        bytes_le (bytes | None): build from little-endian bytes. Defaults to None.
+        int (int | None): build from int. Defaults to None.
+
+    Raises:
+        ValueError: Attempt to initialize with more than one option
+        ValueError: Badly formed input
     """
 
     class Format(IntEnum):
@@ -76,25 +88,11 @@ class BleUUID(uuid.UUID):
         self,
         name: str,
         format: BleUUID.Format = Format.BIT_128,
-        hex: Optional[str] = None,
-        bytes: Optional[bytes] = None,
-        bytes_le: Optional[bytes] = None,
-        int: Optional[int] = None,
+        hex: str | None = None,
+        bytes: bytes | None = None,
+        bytes_le: bytes | None = None,
+        int: int | None = None,
     ) -> None:
-        """Constructor
-
-        Args:
-            name (str): human readable name
-            format (BleUUID.Format, Optional): 16 or 128 bit format. Defaults to BleUUID.Format.BIT_128.
-            hex (str, Optional): build from hex string. Defaults to None.
-            bytes (bytes, Optional): build from big-endian bytes. Defaults to None.
-            bytes_le (bytes, Optional): build from little-endian bytes. Defaults to None.
-            int (int, Optional): build from int. Defaults to None.
-
-        Raises:
-            ValueError: Attempt to initialize with more than one option
-            ValueError: Badly formed input
-        """
         self.name: str
         if format is BleUUID.Format.BIT_16:
             if [hex, bytes, bytes_le, int].count(None) != 3:
@@ -166,19 +164,19 @@ class Characteristic:
         handle (int) : the handle of the attribute table that the characteristic resides at
         uuid (BleUUID) : the BleUUID of the characteristic
         props (CharProps) : the characteristic's properties (READ, WRITE, NOTIFY, etc)
-        value (bytes) : the current byte stream value of the characteristic value
-        init_descriptors (Optional[list[Descriptor]]) : Descriptors known at initialization (can also be
+        value (bytes | None) : the current byte stream value of the characteristic value
+        init_descriptors (list[Descriptor] | None) : Descriptors known at initialization (can also be
             set later using the descriptors property)
-        descriptor_handle (Optional[int]) : handle of this characteristic's declaration descriptor. If not
+        descriptor_handle (int | None) : handle of this characteristic's declaration descriptor. If not
             passed, defaults to handle + 1
     """
 
     handle: int
     uuid: BleUUID
     props: CharProps
-    value: Optional[bytes] = None
-    init_descriptors: InitVar[Optional[list[Descriptor]]] = None
-    descriptor_handle: Optional[int] = None
+    value: bytes | None = None
+    init_descriptors: InitVar[list[Descriptor] | None] = None
+    descriptor_handle: int | None = None
 
     def __post_init__(self, init_descriptors: Optional[list[Descriptor]]) -> None:
         self._descriptors: dict[BleUUID, Descriptor] = {}
@@ -373,8 +371,7 @@ class GattDB:
 
             def iter_keys():
                 for service in self._db.services.values():
-                    for ble_uuid in service.characteristics.keys():
-                        yield ble_uuid
+                    yield from service.characteristics.keys()
 
             return iter_keys()
 
@@ -388,8 +385,7 @@ class GattDB:
 
             def iter_values():
                 for service in self._db.services.values():
-                    for char in service.characteristics.values():
-                        yield char
+                    yield from service.characteristics.values()
 
             return iter_values()
 
@@ -531,8 +527,7 @@ class UUIDsMeta(type):
 
     @no_type_check
     def __iter__(cls):
-        for item in cls._int2uuid.items():
-            yield item
+        yield from cls._int2uuid.items()
 
 
 @dataclass(frozen=True)

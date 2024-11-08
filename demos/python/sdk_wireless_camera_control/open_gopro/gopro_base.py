@@ -18,7 +18,6 @@ import requests
 import wrapt
 
 import open_gopro.exceptions as GpException
-from open_gopro import types
 from open_gopro.api import (
     BleCommands,
     BleSettings,
@@ -37,6 +36,7 @@ from open_gopro.communicator_interface import (
 from open_gopro.constants import ErrorCode
 from open_gopro.logger import Logger
 from open_gopro.models.response import GoProResp, RequestsHttpRespBuilderDirector
+from open_gopro.types import JsonDict
 from open_gopro.util import pretty_print
 
 logger = logging.getLogger(__name__)
@@ -64,7 +64,7 @@ def catch_thread_exception(wrapped: Callable, instance: GoProBase, args: Any, kw
         kwargs (Any): keyword args
 
     Returns:
-        Optional[Callable]: forwarded return of wrapped method or None if exception occurs
+        Callable | None: forwarded return of wrapped method or None if exception occurs
     """
     try:
         return wrapped(*args, **kwargs)
@@ -77,7 +77,7 @@ def ensure_opened(interface: tuple[GoProMessageInterface]) -> Callable:
     """Raise exception if relevant interface is not currently opened
 
     Args:
-        interface (Interface): wireless interface to verify
+        interface (tuple[GoProMessageInterface]): wireless interface to verify
 
     Returns:
         Callable: Direct pass-through of callable after verification
@@ -135,12 +135,10 @@ class GoProBase(GoProHttp, Generic[ApiType]):
             timeout (int): time before considering connection a failure. Defaults to 10.
             retries (int): number of connection retries. Defaults to 5.
         """
-        raise NotImplementedError
 
     @abstractmethod
     async def close(self) -> None:
         """Gracefully close the GoPro Client connection"""
-        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -150,7 +148,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         Returns:
             bool: yes if ready, no otherwise
         """
-        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -160,7 +157,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         Returns:
             str: identifier
         """
-        raise NotImplementedError
 
     @property
     def version(self) -> str:
@@ -181,7 +177,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         Returns:
             HttpCommands: the commands
         """
-        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -191,7 +186,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         Returns:
             HttpSettings: the settings
         """
-        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -201,7 +195,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         Returns:
             BleCommands: the commands
         """
-        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -211,7 +204,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         Returns:
             BleSettings: the settings
         """
-        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -221,7 +213,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         Returns:
             BleStatuses: the statuses
         """
-        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -231,7 +222,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         Returns:
             bool: True if yes, False if no
         """
-        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -241,7 +231,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         Returns:
             bool: True if yes, False if no
         """
-        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -251,7 +240,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         Returns:
             bool: True if yes, False if no
         """
-        raise NotImplementedError
 
     @abstractmethod
     async def configure_cohn(self, timeout: int = 60) -> bool:
@@ -266,7 +254,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         Returns:
             bool: True if success, False otherwise
         """
-        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -278,7 +265,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         Returns:
             bool: True if COHN is provisioned, False otherwise
         """
-        raise NotImplementedError
 
     ##########################################################################################################
     #                                 End Public API
@@ -294,20 +280,20 @@ class GoProBase(GoProHttp, Generic[ApiType]):
             wrapped (Callable): operation to enforce
             message (Message): message passed to operation
             rules (MessageRules): rules to enforce
-            kwargs (Any) : arguments passed to operation
+            **kwargs (Any) : arguments passed to operation
 
         Returns:
             GoProResp: Operation response
         """
 
-    def _handle_exception(self, source: Any, context: types.JsonDict) -> None:
+    def _handle_exception(self, source: Any, context: JsonDict) -> None:
         """Gather exceptions from module threads and send through callback if registered.
 
         Note that this function signature matches asyncio's exception callback requirement.
 
         Args:
             source (Any): Where did the exception come from?
-            context (Dict): Access exception via context["exception"]
+            context (JsonDict): Access exception via context["exception"]
         """
         # context["message"] will always be there; but context["exception"] may not
         if exception := context.get("exception", False):
@@ -333,7 +319,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         Returns:
             str: base endpoint with URL from serial number
         """
-        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -341,16 +326,15 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         """Unique identifier for the connected GoPro Client
 
         Returns:
-            str: identifier
+            ApiType: identifier
         """
-        raise NotImplementedError
 
     @staticmethod
     def _ensure_opened(interface: tuple[GoProMessageInterface]) -> Callable:
         """Raise exception if relevant interface is not currently opened
 
         Args:
-            interface (Interface): wireless interface to verify
+            interface (tuple[GoProMessageInterface]): wireless interface to verify
 
         Returns:
             Callable: Direct pass-through of callable after verification
@@ -362,11 +346,11 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         """Catch any exceptions from this method and pass them to the exception handler identifier by thread name
 
         Args:
-            args (Any): positional args
-            kwargs (Any): keyword args
+            *args (Any): positional args
+            **kwargs (Any): keyword args
 
         Returns:
-            Optional[Callable]: forwarded return of wrapped method or None if exception occurs
+            Callable | None: forwarded return of wrapped method or None if exception occurs
         """
         return catch_thread_exception(*args, **kwargs)
 
