@@ -1,0 +1,8 @@
+services:
+    proto-build:
+        build:
+            context: tools/proto_build
+        container_name: proto-build
+        volumes:
+            - ./protobuf:/proto_in
+            - ./domain/src/commonMain/kotlin/proto:/proto_output/kotlin
