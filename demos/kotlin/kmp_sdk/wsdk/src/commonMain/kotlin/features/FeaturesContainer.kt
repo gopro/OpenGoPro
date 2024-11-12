@@ -5,11 +5,10 @@ import domain.data.ICameraRepository
 import domain.gopro.GpDescriptorManager
 import domain.gopro.IGpDescriptor
 import entity.connector.ICameraConnector
-import gopro.CameraConnector
 import gopro.GoProFacadeFactory
-import operation.CommandsContainer
-import operation.SettingsContainer
-import operation.StatusesContainer
+import gopro.CommandsContainer
+import gopro.SettingsContainer
+import gopro.StatusesContainer
 
 // TODO let's see how these evolve. It might make more sense to just put them in the
 // commands container.

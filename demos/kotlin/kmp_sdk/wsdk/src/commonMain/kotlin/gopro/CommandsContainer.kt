@@ -1,4 +1,4 @@
-package operation
+package gopro
 
 import domain.api.IOperationMarshaller
 import entity.communicator.CommunicationType
@@ -31,10 +31,12 @@ import operation.commands.WebcamGetState
 import operation.commands.WebcamStart
 import operation.commands.WebcamStop
 
-// TODO strategy needs to be cleaned up. We need a different enum because it doesn't make sense
-// to pick HTTP vs HTTPS. Also there should be a "first available" option.
-
 class CommandsContainer(private val marshaller: IOperationMarshaller) {
+    /**
+     * Enable / disable the shutter to start / stop encoding
+     *
+     * @param value true to enable, false to disable
+     */
     suspend fun setShutter(value: Boolean) =
         marshaller.marshal(SetShutter(value)) {
             isFastpass { operation, _ -> operation.shutter }

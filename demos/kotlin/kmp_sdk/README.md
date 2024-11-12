@@ -17,3 +17,7 @@ Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-mu
 
 https://github.com/streem/pbandk?tab=readme-ov-file#generating-code
 https://github.com/google/protobuf-gradle-plugin
+
+## API documentation
+
+via Dokka: https://github.com/Kotlin/dokka

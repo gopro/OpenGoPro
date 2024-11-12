@@ -2,7 +2,7 @@ package fakes
 
 import entity.network.BleNotification
 import kotlinx.coroutines.CoroutineDispatcher
-import operation.SettingsContainer
+import gopro.SettingsContainer
 
 class FakeSettingsContainer(
     val settingsContainer: SettingsContainer,

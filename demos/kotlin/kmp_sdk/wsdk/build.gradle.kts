@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.serialization)
-
+    alias(libs.plugins.dokka)
 }
 
 val pbandkVersion by extra("0.16.0")

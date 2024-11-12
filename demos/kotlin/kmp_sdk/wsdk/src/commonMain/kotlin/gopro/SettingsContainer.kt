@@ -1,4 +1,4 @@
-package operation
+package gopro
 
 import domain.api.IOperationMarshaller
 import entity.constants.Fps

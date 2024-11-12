@@ -57,6 +57,8 @@ androidx-room = "2.7.0-alpha07"
 coreKtx = "1.6.1" # This was breaking room gradle task on newer versions.
 # https://mvnrepository.com/artifact/org.videolan.android/libvlc-all
 vlc = "3.1.12"
+# https://github.com/Kotlin/dokka/releases/tag/v1.9.20
+dokka = "1.9.20"
 
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
@@ -143,3 +145,4 @@ serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref 
 protobuf = { id = "com.google.protobuf", version.ref = "googleProtobuf" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "androidx-room" }
+dokka = { id= "org.jetbrains.dokka", version.ref = "dokka"}
