@@ -6,7 +6,7 @@ import co.touchlab.kermit.Logger
 import data.IAppPreferences
 import entity.operation.AccessPointState
 import gopro.GoProFacade
-import gopro.GoProFacadeFactory
+import gopro.IGoProFacadeFactory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +23,7 @@ sealed class ApUiState(val name: String) {
 
 class AccessPointViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFacadeFactory: GoProFacadeFactory,
+    private val goProFacadeFactory: IGoProFacadeFactory,
 ) : ViewModel() {
     private val logger = Logger.withTag("AccessPointViewModel")
 

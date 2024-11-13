@@ -8,7 +8,7 @@ import io.ktor.client.statement.readBytes
 import io.ktor.http.appendEncodedPathSegments
 import io.ktor.http.path
 
-class MediaDownload(val file: MediaId) : BaseOperation<ByteArray>("Download Media File") {
+internal class MediaDownload(val file: MediaId) : BaseOperation<ByteArray>("Download Media File") {
 
     override suspend fun execute(communicator: HttpCommunicator): Result<ByteArray> =
         communicator.get {

@@ -11,7 +11,7 @@ import io.ktor.client.call.body
 import io.ktor.http.path
 
 @OptIn(ExperimentalUnsignedTypes::class)
-class GetHardwareInfo : BaseOperation<HardwareInfo>("Get Hardware Info") {
+internal class GetHardwareInfo : BaseOperation<HardwareInfo>("Get Hardware Info") {
     override suspend fun execute(communicator: BleCommunicator): Result<HardwareInfo> =
         communicator.executeTlvCommand(
             CommandId.GET_HARDWARE_INFO,
@@ -23,7 +23,7 @@ class GetHardwareInfo : BaseOperation<HardwareInfo>("Get Hardware Info") {
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun parseBleCommunicatorResponse(response: UByteArray): HardwareInfo {
+internal fun parseBleCommunicatorResponse(response: UByteArray): HardwareInfo {
     var buf = response.toList()
 
     val modelNumberLen = buf.first().toInt()

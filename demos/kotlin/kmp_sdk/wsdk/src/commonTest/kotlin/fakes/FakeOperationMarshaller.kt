@@ -11,7 +11,7 @@ import entity.network.BleDevice
 import entity.network.BleNotification
 import kotlinx.coroutines.CoroutineDispatcher
 
-class FakeOperationMarshaller(
+internal class FakeOperationMarshaller(
     responses: List<List<BleNotification>> = listOf(),
     dispatcher: CoroutineDispatcher,
 ) :

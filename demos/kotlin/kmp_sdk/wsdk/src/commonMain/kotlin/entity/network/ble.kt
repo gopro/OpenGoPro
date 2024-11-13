@@ -6,7 +6,7 @@ import com.benasher44.uuid.uuidFrom
 private fun String.asGoProUuid(): Uuid =
     uuidFrom("b5f9${this.lowercase()}-aa8d-11e3-9046-0002a5d5c51b")
 
-enum class GpUuid(private val base: String) {
+internal enum class GpUuid(private val base: String) {
     // GoPro Wifi Access Point Service
     S_WIFI_ACCESS_POINT("0001"),
     WAP_SSID("0002"),
@@ -52,7 +52,7 @@ data class BleNotification(val uuid: Uuid, val data: UByteArray)
 
 // TODO we don't need these (yet) but they will likely be useful at some point.
 @OptIn(ExperimentalUnsignedTypes::class)
-data class GpBleAdvertisement(
+internal data class GpBleAdvertisement(
     val flags: List<Int>,
     val uuids: List<Uuid>,
     val manufacturingType: UByteArray,
@@ -69,7 +69,7 @@ data class GpBleAdvertisement(
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-data class GpScanResponse(
+internal data class GpScanResponse(
     val name: String,
     val serviceUuid: Uuid,
     val macAddress: String,

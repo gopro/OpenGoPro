@@ -35,7 +35,7 @@ private val logger = Logger.withTag("AndroidWifiApi")
 
 // TODO handle trySend failures?
 
-class AndroidWifiApi(
+internal class AndroidWifiApi(
     private val context: Context,
     private val wifiManager: WifiManager,
     override val dispatcher: CoroutineDispatcher,

@@ -14,7 +14,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-actual val wsdkPlatformModule = object : WsdkPlatformModule {
+internal actual val wsdkPlatformModule = object : WsdkPlatformModule {
     override val module = module {
         single<WifiManager> {
             androidContext().getSystemService(Context.WIFI_SERVICE) as WifiManager

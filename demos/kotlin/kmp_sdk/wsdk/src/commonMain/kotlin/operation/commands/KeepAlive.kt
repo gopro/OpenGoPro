@@ -4,7 +4,7 @@ import domain.api.BaseOperation
 import domain.communicator.BleCommunicator
 import entity.constants.SettingId
 
-class KeepAlive : BaseOperation<Unit>("Keep Alive") {
+internal class KeepAlive : BaseOperation<Unit>("Keep Alive") {
 
     @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun execute(communicator: BleCommunicator): Result<Unit> =

@@ -8,7 +8,7 @@ import entity.communicator.CommandId
 import io.ktor.client.call.body
 import io.ktor.http.path
 
-class PresetLoad(private val preset: Int) : BaseOperation<Unit>("Load Preset") {
+internal class PresetLoad(private val preset: Int) : BaseOperation<Unit>("Load Preset") {
     @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
         communicator.executeTlvCommand(

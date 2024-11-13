@@ -7,7 +7,7 @@ import entity.media.MediaId
 import io.ktor.client.call.body
 import io.ktor.http.path
 
-class MediaGetMetadata(val file: MediaId) : BaseOperation<MediaMetadata>("Get Media File Metadata") {
+internal class MediaGetMetadata(val file: MediaId) : BaseOperation<MediaMetadata>("Get Media File Metadata") {
 
     override suspend fun execute(communicator: HttpCommunicator): Result<MediaMetadata> =
         communicator.get {

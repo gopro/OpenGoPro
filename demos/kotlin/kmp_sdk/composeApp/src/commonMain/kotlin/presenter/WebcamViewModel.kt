@@ -8,7 +8,7 @@ import entity.operation.WebcamError
 import entity.operation.WebcamProtocol
 import entity.operation.WebcamStatus
 import gopro.GoProFacade
-import gopro.GoProFacadeFactory
+import gopro.IGoProFacadeFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ private val logger = Logger.withTag("WebcamViewModel")
 
 class WebcamViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFacadeFactory: GoProFacadeFactory,
+    private val goProFacadeFactory: IGoProFacadeFactory,
 ) : ViewModel() {
     private lateinit var gopro: GoProFacade
 

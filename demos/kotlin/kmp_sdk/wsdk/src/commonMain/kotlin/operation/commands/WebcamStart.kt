@@ -8,7 +8,7 @@ import entity.operation.WebcamResolution
 import io.ktor.client.call.body
 import io.ktor.http.path
 
-class WebcamStart(
+internal class WebcamStart(
     val resolution: WebcamResolution? = null,
     val fov: WebcamFov? = null,
     val port: Int? = null,

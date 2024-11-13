@@ -9,7 +9,7 @@ import entity.operation.LivestreamConfigurationRequest
 import entity.operation.LivestreamState
 import entity.operation.LivestreamStatus
 import gopro.GoProFacade
-import gopro.GoProFacadeFactory
+import gopro.IGoProFacadeFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -27,7 +27,7 @@ sealed class LivestreamUiState(val name: String) {
 
 class LivestreamViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFacadeFactory: GoProFacadeFactory
+    private val goProFacadeFactory: IGoProFacadeFactory
 ) : ViewModel() {
     private val logger = Logger.withTag("LivestreamViewModel")
 

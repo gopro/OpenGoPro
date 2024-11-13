@@ -12,11 +12,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-interface WsdkPlatformModule {
+internal interface WsdkPlatformModule {
     val module: Module
 }
 
-expect val wsdkPlatformModule: WsdkPlatformModule
+internal expect val wsdkPlatformModule: WsdkPlatformModule
 
 private fun getRoomDatabase(
     provider: IDatabaseProvider,
@@ -26,7 +26,7 @@ private fun getRoomDatabase(
     .setQueryCoroutineContext(dispatcher)
     .build()
 
-fun buildWsdkPlatformModules() = module {
+internal fun buildWsdkPlatformModules() = module {
     includes(wsdkPlatformModule.module)
 
     // Note! We can't create HTTP engine / client singletons because they can be created dynamically

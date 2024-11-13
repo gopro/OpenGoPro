@@ -5,11 +5,11 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.statement.HttpResponse
 
-interface IHttpClientProvider {
+internal interface IHttpClientProvider {
     fun provideBaseClient(credentials: IHttpsCredentials?): HttpClient
 }
 
-interface IHttpApi {
+internal interface IHttpApi {
     suspend fun get(client: HttpClient, requestBuilder: HttpRequestBuilder.() -> Unit): HttpResponse
     suspend fun post(
         client: HttpClient,

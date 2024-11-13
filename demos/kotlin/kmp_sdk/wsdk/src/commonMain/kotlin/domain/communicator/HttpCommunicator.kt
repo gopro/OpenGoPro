@@ -23,7 +23,7 @@ import kotlinx.serialization.SerializationException
 
 private val logger = Logger.withTag("HttpCommunicator")
 
-class HttpCommunicator(
+internal class HttpCommunicator(
     private val httpApi: IHttpApi,
     override val connection: ConnectionDescriptor.Http,
     httpClientProvider: IHttpClientProvider,

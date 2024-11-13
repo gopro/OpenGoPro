@@ -45,7 +45,7 @@ sealed interface ConnectionDescriptor {
 
     data class Ble(
         override val serialId: String,
-        val device: BleDevice
+        val device: BleDevice // TODO can we remove this?
     ) : ConnectionDescriptor
 
     data class Http(

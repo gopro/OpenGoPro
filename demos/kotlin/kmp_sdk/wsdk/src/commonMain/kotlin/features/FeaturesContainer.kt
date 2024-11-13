@@ -3,44 +3,27 @@ package features
 import domain.api.IOperationMarshaller
 import domain.data.ICameraRepository
 import domain.gopro.GpDescriptorManager
-import domain.gopro.IGpDescriptor
 import entity.connector.ICameraConnector
-import gopro.GoProFacadeFactory
-import gopro.CommandsContainer
-import gopro.SettingsContainer
-import gopro.StatusesContainer
-
-// TODO let's see how these evolve. It might make more sense to just put them in the
-// commands container.
+import gopro.GoProFacade
+import gopro.IGoProFacadeFactory
 
 interface IFeatureContext {
-    val serialId: String
-    val marshaller: IOperationMarshaller
-    val commands: CommandsContainer
-    val settings: SettingsContainer
-    val statuses: StatusesContainer
-    val descriptor: IGpDescriptor
+    val gopro: GoProFacade
     val gpDescriptorManager: GpDescriptorManager
     val cameraRepo: ICameraRepository
     val connector: ICameraConnector
-    val facadeFactory: GoProFacadeFactory
+    val facadeFactory: IGoProFacadeFactory
 }
 
-data class FeatureContext(
-    override val marshaller: IOperationMarshaller,
-    override val commands: CommandsContainer,
-    override val settings: SettingsContainer,
-    override val statuses: StatusesContainer,
+internal data class FeatureContext(
+    override val gopro: GoProFacade,
     override val gpDescriptorManager: GpDescriptorManager,
     override val cameraRepo: ICameraRepository,
     override val connector: ICameraConnector,
-    override val facadeFactory: GoProFacadeFactory
-) : IFeatureContext {
-    override val descriptor: IGpDescriptor get() = gpDescriptorManager.getDescriptor()
-    override val serialId get() = descriptor.serialId
-}
+    override val facadeFactory: IGoProFacadeFactory
+) : IFeatureContext
 
-class FeaturesContainer(featureContext: FeatureContext) {
+class FeaturesContainer(featureContext: IFeatureContext) {
     val accessPoint = AccessPointFeature(featureContext)
     val cohn = CohnFeature(featureContext)
     val connectWifi = ConnectWifiFeature(featureContext)

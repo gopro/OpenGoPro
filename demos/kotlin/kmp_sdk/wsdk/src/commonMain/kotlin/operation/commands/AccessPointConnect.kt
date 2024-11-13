@@ -66,7 +66,7 @@ private fun createConnectionFlow(
                 }
         }
 
-class ConnectNewAccessPoint(val ssid: String, val password: String) :
+internal class ConnectNewAccessPoint(val ssid: String, val password: String) :
     BaseOperation<Flow<AccessPointState>>("Connect to New Access Point") {
 
     override suspend fun execute(communicator: BleCommunicator): Result<Flow<AccessPointState>> {
@@ -96,7 +96,7 @@ class ConnectNewAccessPoint(val ssid: String, val password: String) :
     }
 }
 
-class ConnectProvisionedAccessPoint(val ssid: String) :
+internal class ConnectProvisionedAccessPoint(val ssid: String) :
     BaseOperation<Flow<AccessPointState>>("Connect to Provisioned Access Point") {
 
     override suspend fun execute(communicator: BleCommunicator): Result<Flow<AccessPointState>> {

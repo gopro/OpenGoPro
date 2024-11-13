@@ -9,6 +9,7 @@ import domain.network.IHttpClientProvider
 import entity.connector.ICameraConnector
 import gopro.CameraConnector
 import gopro.GoProFacadeFactory
+import gopro.IGoProFacadeFactory
 import io.ktor.client.HttpClient
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -17,8 +18,8 @@ import network.KableBle
 import network.KtorHttp
 import org.koin.dsl.module
 
-val packageModule = module {
-    // TODO is this correct? Should it be named?
+internal val packageModule = module {
+    // TODO should this be configurable by the client?
     single<CoroutineDispatcher> { Dispatchers.IO }
 
     includes(buildWsdkPlatformModules())
@@ -36,5 +37,5 @@ val packageModule = module {
         )
     }
     // Top level facade
-    single<GoProFacadeFactory> { GoProFacadeFactory(get(), get(), get(), get(), get(), get(), get()) }
+    single<IGoProFacadeFactory> { GoProFacadeFactory(get(), get(), get(), get(), get(), get(), get()) }
 }

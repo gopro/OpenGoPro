@@ -6,7 +6,7 @@ import entity.media.MediaId
 import io.ktor.client.call.body
 import io.ktor.http.path
 
-class HilightFile(val file: MediaId, val offsetMs: Int? = null) :
+internal class HilightFile(val file: MediaId, val offsetMs: Int? = null) :
     BaseOperation<Unit>("Hilight Media File") {
 
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =

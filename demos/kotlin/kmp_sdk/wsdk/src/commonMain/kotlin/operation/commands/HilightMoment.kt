@@ -9,7 +9,7 @@ import io.ktor.client.call.body
 import io.ktor.http.path
 
 @OptIn(ExperimentalUnsignedTypes::class)
-class HilightMoment : BaseOperation<Unit>("Hilight Moment") {
+internal class HilightMoment : BaseOperation<Unit>("Hilight Moment") {
 
     override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
         communicator.executeTlvCommand(

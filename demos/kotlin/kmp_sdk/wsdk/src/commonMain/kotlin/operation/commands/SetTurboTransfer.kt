@@ -14,7 +14,7 @@ import io.ktor.http.path
 import open_gopro.RequestSetTurboActive
 import pbandk.encodeToByteArray
 
-class SetTurboTransfer(val enable: Boolean) : BaseOperation<Unit>("Set Turbo Transfer") {
+internal class SetTurboTransfer(val enable: Boolean) : BaseOperation<Unit>("Set Turbo Transfer") {
 
     override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
         communicator.executeProtobufCommand(

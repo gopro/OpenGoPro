@@ -28,7 +28,7 @@ import pbandk.json.encodeToJsonString
 private fun NotifyPresetStatus.toPresetInfo(): PresetInfo =
     jsonFromProto.decodeFromString(this.encodeToJsonString())
 
-class PresetGetInfo : BaseOperation<Flow<PresetInfo>>("Get Preset Info") {
+internal class PresetGetInfo : BaseOperation<Flow<PresetInfo>>("Get Preset Info") {
 
     @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun execute(communicator: BleCommunicator): Result<Flow<PresetInfo>> {

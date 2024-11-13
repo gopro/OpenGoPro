@@ -16,7 +16,7 @@ import kotlinx.datetime.number
 
 
 @OptIn(ExperimentalUnsignedTypes::class)
-class DatetimeSet(
+internal class DatetimeSet(
     val datetime: LocalDateTime,
     val utcOffset: UtcOffset,
     val isDaylightSavings: Boolean

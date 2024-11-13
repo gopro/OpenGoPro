@@ -6,7 +6,7 @@ import entity.media.MediaId
 import io.ktor.client.call.body
 import io.ktor.http.path
 
-class HilightRemove(val file: MediaId, val offsetMs: Int? = null) :
+internal class HilightRemove(val file: MediaId, val offsetMs: Int? = null) :
     BaseOperation<Unit>("Remove Hilight") {
 
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =

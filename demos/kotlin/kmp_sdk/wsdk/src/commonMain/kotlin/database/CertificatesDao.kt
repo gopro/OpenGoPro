@@ -12,19 +12,19 @@ import kotlinx.serialization.Serializable
 // TODO this should be a one-to-many. I'm using this JSON serialization hack since I don't know anything about databases
 
 @Serializable
-data class CertificatesForDb(
+internal data class CertificatesForDb(
     val certificates: List<String>
 )
 
 
 @Entity
-data class CertificatesDbEntry(
+internal data class CertificatesDbEntry(
     @PrimaryKey(autoGenerate = false) val serialId: String,
     val certificates: String
 )
 
 @Dao
-interface CertificatesDao {
+internal interface CertificatesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(credentials: CertificatesDbEntry)
 

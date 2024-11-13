@@ -26,7 +26,7 @@ internal enum class GpBleMessageHeader(val value: UByte) {
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-sealed interface GpBleMessageState {
+internal sealed interface GpBleMessageState {
     fun accumulate(data: UByteArray)
 
     data class Idle(private val message: AccumulatedGpBleResponse) : GpBleMessageState {
@@ -104,14 +104,14 @@ sealed interface GpBleMessageState {
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-interface IGpBleResponse {
+internal interface IGpBleResponse {
     val uuid: GpUuid
     val payload: UByteArray
     val id: ResponseId
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-class AccumulatedGpBleResponse(override val uuid: GpUuid) : IGpBleResponse{
+internal class AccumulatedGpBleResponse(override val uuid: GpUuid) : IGpBleResponse{
     private var state: GpBleMessageState = GpBleMessageState.Idle(this)
     internal fun changeState(state: GpBleMessageState) {
         this.state = state
@@ -147,7 +147,7 @@ class AccumulatedGpBleResponse(override val uuid: GpUuid) : IGpBleResponse{
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun UByteArray.bleFragment(packetSize: Int): Iterator<UByteArray> {
+internal fun UByteArray.bleFragment(packetSize: Int): Iterator<UByteArray> {
     val data = this
     return iterator {
         var header: UByteArray =

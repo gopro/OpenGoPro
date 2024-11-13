@@ -11,7 +11,7 @@ import io.ktor.http.appendPathSegments
 import io.ktor.http.path
 
 @OptIn(ExperimentalUnsignedTypes::class)
-class SetShutter(val shutter: Boolean) : BaseOperation<Unit>("Set Shutter") {
+internal class SetShutter(val shutter: Boolean) : BaseOperation<Unit>("Set Shutter") {
     override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
         communicator.executeTlvCommand(
             CommandId.SET_SHUTTER,

@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 
-class KableAdvertisement(val platformAdvertisement: PlatformAdvertisement) : BleAdvertisement {
+internal class KableAdvertisement(val platformAdvertisement: PlatformAdvertisement) : BleAdvertisement {
     override val name = platformAdvertisement.name
     override val id = platformAdvertisement.identifier.toString()
 }
@@ -139,7 +139,7 @@ private class KableDevice(
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
+internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
     // Map domain objects to Kable specific objects
     private val deviceMap = mutableMapOf<String, KableDevice>()
     private val nameAdvMap = mutableMapOf<String, KableAdvertisement>()

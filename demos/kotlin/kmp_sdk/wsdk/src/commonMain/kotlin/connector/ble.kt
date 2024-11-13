@@ -24,7 +24,7 @@ private val notifiableUuids = listOf(
 ).map { it.toUuid() }.toSet()
 
 
-class GpBleConnector(private val bleApi: IBleApi, override val cameraRepo: ICameraRepository) :
+internal class GpBleConnector(private val bleApi: IBleApi, override val cameraRepo: ICameraRepository) :
     IConnector<ScanResult.Ble, ConnectionDescriptor.Ble>, KoinComponent {
     override val networkType = NetworkType.BLE
 

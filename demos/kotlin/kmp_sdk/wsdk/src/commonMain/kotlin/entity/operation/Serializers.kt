@@ -124,7 +124,7 @@ private abstract class EnumProtoSerializerByName<T : pbandk.Message.Enum>(
         )
 }
 
-val jsonDefault = Json {
+internal val jsonDefault = Json {
     serializersModule = SerializersModule {
         contextual(EnumPresetGroupSerializerByValue)
         contextual(EnumPresetTitleSerializerByValue)
@@ -166,7 +166,7 @@ private object EnumCohnNetworkStateSerializerByName :
 private object EnumFlatmodeSerializerByName :
     EnumProtoSerializerByName<EnumFlatMode>(EnumFlatMode::class, EnumFlatMode.Companion)
 
-val jsonFromProto = Json {
+internal val jsonFromProto = Json {
     serializersModule = SerializersModule {
         contextual(EnumPresetGroupSerializerByName)
         contextual(EnumPresetTitleSerializerByName)
@@ -179,10 +179,10 @@ val jsonFromProto = Json {
 }
 
 @OptIn(ExperimentalProtoJson::class)
-inline fun <reified O> serializeAsDefaultFromProto(proto: pbandk.Message): String =
+internal inline fun <reified O> serializeAsDefaultFromProto(proto: pbandk.Message): String =
     jsonDefault.encodeToString(jsonFromProto.decodeFromString<O>(proto.encodeToJsonString()))
 
-object StringAsBooleanSerializer : KSerializer<Boolean> {
+internal object StringAsBooleanSerializer : KSerializer<Boolean> {
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("StringAsBoolean", PrimitiveKind.STRING)
 
@@ -198,7 +198,7 @@ object StringAsBooleanSerializer : KSerializer<Boolean> {
 }
 
 // https://medium.com/livefront/intro-to-polymorphism-with-kotlinx-serialization-b8f5f1cedc99
-object MediaMetadataSerializer : JsonContentPolymorphicSerializer<MediaMetadata>(
+internal object MediaMetadataSerializer : JsonContentPolymorphicSerializer<MediaMetadata>(
     MediaMetadata::class,
 ) {
     override fun selectDeserializer(
@@ -212,7 +212,7 @@ object MediaMetadataSerializer : JsonContentPolymorphicSerializer<MediaMetadata>
     }
 }
 
-object MediaListItemSerializer : JsonContentPolymorphicSerializer<MediaListItem>(
+internal object MediaListItemSerializer : JsonContentPolymorphicSerializer<MediaListItem>(
     MediaListItem::class,
 ) {
     override fun selectDeserializer(

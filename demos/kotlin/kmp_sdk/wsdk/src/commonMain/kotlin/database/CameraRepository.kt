@@ -10,7 +10,7 @@ import kotlinx.serialization.encodeToString
 
 private val logger = Logger.withTag("CameraRepository")
 
-class CameraRepository(appDatabase: AppDatabase) : ICameraRepository {
+internal class CameraRepository(appDatabase: AppDatabase) : ICameraRepository {
     private val certificatesDao = appDatabase.certificatesDao()
     private val httpsCredentialsDao = appDatabase.httpsCredentialsDao()
     private val ssidDao = appDatabase.ssidDao()

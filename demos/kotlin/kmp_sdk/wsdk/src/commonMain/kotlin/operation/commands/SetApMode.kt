@@ -7,7 +7,7 @@ import entity.communicator.CommandId
 import extensions.toUByte
 import extensions.toUByteArray
 
-class SetApMode(val enable: Boolean) : BaseOperation<Unit>("Set AP Mode") {
+internal class SetApMode(val enable: Boolean) : BaseOperation<Unit>("Set AP Mode") {
 
     @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun execute(communicator: BleCommunicator): Result<Unit> =

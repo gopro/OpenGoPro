@@ -2,7 +2,7 @@ package extensions
 
 // It's not really an extension...
 @OptIn(ExperimentalUnsignedTypes::class)
-fun prettyPrintResult(result: Result<Any>): String {
+internal fun prettyPrintResult(result: Result<Any>): String {
     if (result.isFailure) return result.exceptionOrNull().toString()
 
     return "Success: " + result.getOrThrow().let { value ->

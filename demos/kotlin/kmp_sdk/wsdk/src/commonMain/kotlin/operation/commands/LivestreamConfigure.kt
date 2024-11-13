@@ -20,7 +20,7 @@ import open_gopro.RequestSetLiveStreamMode
 import pbandk.ByteArr
 import pbandk.encodeToByteArray
 
-class LivestreamConfigure(val request: LivestreamConfigurationRequest) :
+internal class LivestreamConfigure(val request: LivestreamConfigurationRequest) :
     BaseOperation<Unit>("Configure Livestream") {
 
     override suspend fun execute(communicator: BleCommunicator): Result<Unit> {

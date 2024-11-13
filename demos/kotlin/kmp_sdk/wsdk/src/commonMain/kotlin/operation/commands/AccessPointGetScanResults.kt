@@ -20,7 +20,7 @@ private const val IS_CONF_MASK = 1.shl(1)
 private const val IS_BEST_SSID_MASK = 1.shl(2)
 private const val IS_ASSOC_MASK = 1.shl(3)
 
-class AccessPointGetScanResults(val scanId: Int, val totalEntries: Int) :
+internal class AccessPointGetScanResults(val scanId: Int, val totalEntries: Int) :
     BaseOperation<List<ApScanEntry>>("Get AP Scan Results") {
 
     override suspend fun execute(communicator: BleCommunicator): Result<List<ApScanEntry>> =

@@ -6,7 +6,7 @@ import entity.media.MediaId
 import io.ktor.client.statement.readBytes
 import io.ktor.http.path
 
-class MediaGetThumbnail(val file: MediaId) : BaseOperation<ByteArray>("Get Media File Thumbnail") {
+internal class MediaGetThumbnail(val file: MediaId) : BaseOperation<ByteArray>("Get Media File Thumbnail") {
 
     override suspend fun execute(communicator: HttpCommunicator): Result<ByteArray> =
         communicator.get {

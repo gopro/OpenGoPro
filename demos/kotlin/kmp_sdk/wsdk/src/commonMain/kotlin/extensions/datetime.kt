@@ -7,7 +7,7 @@ import kotlinx.datetime.number
 
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun LocalDateTime.toUByteArray(): UByteArray =
+internal fun LocalDateTime.toUByteArray(): UByteArray =
     ubyteArrayOf(
         this.year.and(0xFF00).shr(8).toUByte(), // year msb
         this.year.and(0xFF).toUByte(), // year lsb
@@ -19,7 +19,7 @@ fun LocalDateTime.toUByteArray(): UByteArray =
     )
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun UByteArray.toLocalDateTime(): LocalDateTime =
+internal fun UByteArray.toLocalDateTime(): LocalDateTime =
     LocalDateTime(
         hour = this[4].toInt(),
         minute = this[5].toInt(),
@@ -30,7 +30,7 @@ fun UByteArray.toLocalDateTime(): LocalDateTime =
     )
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun UtcOffset.toUByteArray(): UByteArray =
+internal fun UtcOffset.toUByteArray(): UByteArray =
     (this.totalSeconds / 60).let {
         ubyteArrayOf(
             it.and(0xFF00).shr(8).toUByte(),
@@ -39,6 +39,6 @@ fun UtcOffset.toUByteArray(): UByteArray =
     }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun UByteArray.toUtcOffset(): UtcOffset =
+internal fun UByteArray.toUtcOffset(): UtcOffset =
     // Use short to get 2's complement version
     UtcOffset(minutes = this[0].toInt().shl(8).or(this[1].toInt()).toShort().toInt())

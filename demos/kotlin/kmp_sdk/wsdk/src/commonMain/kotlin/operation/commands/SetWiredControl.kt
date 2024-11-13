@@ -6,7 +6,7 @@ import extensions.toInt
 import io.ktor.client.call.body
 import io.ktor.http.path
 
-class SetWiredControl(val enable: Boolean) :
+internal class SetWiredControl(val enable: Boolean) :
     BaseOperation<Unit>("Set Wired Control") {
 
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =

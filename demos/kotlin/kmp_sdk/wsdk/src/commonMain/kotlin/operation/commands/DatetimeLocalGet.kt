@@ -10,7 +10,7 @@ import kotlinx.datetime.LocalDateTime
 
 @Deprecated("Prefer to use DatetimeGet if supported on camera.")
 @OptIn(ExperimentalUnsignedTypes::class)
-class DatetimeLocalGet : BaseOperation<LocalDateTime>("Get Local Datetime") {
+internal class DatetimeLocalGet : BaseOperation<LocalDateTime>("Get Local Datetime") {
     override suspend fun execute(communicator: BleCommunicator): Result<LocalDateTime> =
         communicator.executeTlvCommand(
             CommandId.GET_DATE_TIME,

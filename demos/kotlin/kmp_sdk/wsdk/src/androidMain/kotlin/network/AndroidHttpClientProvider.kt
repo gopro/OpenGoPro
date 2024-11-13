@@ -14,7 +14,7 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
-object AndroidHttpClientProvider : IHttpClientProvider {
+internal object AndroidHttpClientProvider : IHttpClientProvider {
     override fun provideBaseClient(credentials: IHttpsCredentials?): HttpClient =
         credentials?.let {
             // Build X509 certificates from string certificates

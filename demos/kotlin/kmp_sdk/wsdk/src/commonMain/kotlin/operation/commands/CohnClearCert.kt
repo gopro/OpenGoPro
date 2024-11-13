@@ -15,7 +15,7 @@ import open_gopro.EnumCameraControlStatus
 import open_gopro.RequestSetCameraControlStatus
 import pbandk.encodeToByteArray
 
-class CohnClearCert:
+internal class CohnClearCert:
     BaseOperation<Unit>("Clear COHN Cert") {
 
     override suspend fun execute(communicator: BleCommunicator): Result<Unit>

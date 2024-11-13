@@ -40,7 +40,7 @@ private fun isScanResultSuccess(scanResult: NotifStartScanning): Boolean =
 private fun isScanResultSuccess(scanResult: ResponseStartScanning): Boolean =
     isScanningStateSuccess(scanResult.scanningState) && scanResult.result.isOk()
 
-class AccessPointScan : BaseOperation<Flow<ApScanResult>>("Scan for Access Points") {
+internal class AccessPointScan : BaseOperation<Flow<ApScanResult>>("Scan for Access Points") {
 
     @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun execute(communicator: BleCommunicator): Result<Flow<ApScanResult>> {

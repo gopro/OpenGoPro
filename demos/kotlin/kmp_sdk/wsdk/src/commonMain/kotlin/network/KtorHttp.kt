@@ -11,7 +11,7 @@ import io.ktor.http.HttpMethod
 
 private val logger = Logger.withTag("KtorHttp")
 
-class KtorHttp : IHttpApi {
+internal class KtorHttp : IHttpApi {
     private suspend fun robustlyPerformHttpOperation(operation: suspend () -> HttpResponse): HttpResponse {
         for (retry in (1..HTTP_RETRIES)) {
             try {

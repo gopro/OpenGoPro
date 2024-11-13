@@ -18,7 +18,7 @@ import kotlinx.datetime.UtcOffset
 
 
 @OptIn(ExperimentalUnsignedTypes::class)
-class DatetimeGet : BaseOperation<GpDatetime>("Get Datetime") {
+internal class DatetimeGet : BaseOperation<GpDatetime>("Get Datetime") {
     override suspend fun execute(communicator: BleCommunicator): Result<GpDatetime> =
         communicator.executeTlvCommand(
             CommandId.GET_DATE_TIME,

@@ -14,7 +14,7 @@ import operation.commands.CohnGetStatus
 
 private val logger = Logger.withTag("CohnFeature")
 
-class CohnFeature(private val featureContext: FeatureContext) {
+class CohnFeature(featureContext: IFeatureContext): IFeatureContext by featureContext {
     private var ssid: String? = null
     private var password: String? = null
     private var username: String? = null
@@ -22,7 +22,7 @@ class CohnFeature(private val featureContext: FeatureContext) {
     private var certificate: String? = null
 
     suspend fun getCohnStatus(): Flow<CohnState> =
-        featureContext.marshaller.marshal(CohnGetStatus()).getOrThrow().transform { update ->
+        gopro.commands.getCohnStatus().getOrThrow().transform { update ->
             update.password?.let { password = it }
             update.ssid?.let { ssid = it }
             update.ipAddress?.let { ipAddress = it }
@@ -30,7 +30,7 @@ class CohnFeature(private val featureContext: FeatureContext) {
             logger.i("Received COHN status: $update")
             if ((update.state == EnumCOHNNetworkState.COHN_STATE_NETWORK_CONNECTED) && (update.status == EnumCOHNStatus.COHN_PROVISIONED)) {
                 logger.i("COHN provisioned. Getting certificate.")
-                certificate = featureContext.marshaller.marshal(CohnGetCert()).getOrThrow()
+                certificate = gopro.commands.getCohnCertificate().getOrThrow()
                 emit(
                     CohnState.Provisioned(
                         username = username!!,
@@ -48,11 +48,11 @@ class CohnFeature(private val featureContext: FeatureContext) {
     suspend fun provisionCohn(): Result<CohnState.Provisioned> {
         // Start fresh by clearing cert
         logger.i("Clearing COHN Certificate for new provision")
-        featureContext.marshaller.marshal(CohnClearCert()).onFailure { return Result.failure(it) }
+        gopro.commands.clearCohnCertificate().onFailure { return Result.failure(it) }
 
         // Provision
         logger.i("Requesting new COHN cert creation to provision COHN")
-        featureContext.marshaller.marshal(CohnCreateCert(override = true))
+        gopro.commands.createCohnCertificate(true)
 
         // Wait for provisioning to be complete and results to accumulate
         // TODO timeout here?
@@ -60,7 +60,7 @@ class CohnFeature(private val featureContext: FeatureContext) {
         val provisionedState =
             getCohnStatus().first { it is CohnState.Provisioned } as CohnState.Provisioned
         logger.i("Storing COHN credentials to disk")
-        featureContext.cameraRepo.addHttpsCredentials(featureContext.serialId, provisionedState)
+        cameraRepo.addHttpsCredentials(gopro.serialId, provisionedState)
         return Result.success(provisionedState)
     }
 }

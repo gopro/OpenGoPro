@@ -9,7 +9,7 @@ interface IHttpsCredentials {
 }
 
 @Serializable
-data class HttpsCredentials(
+internal data class HttpsCredentials(
     override val username: String,
     override val password: String,
     override val certificates: List<String>

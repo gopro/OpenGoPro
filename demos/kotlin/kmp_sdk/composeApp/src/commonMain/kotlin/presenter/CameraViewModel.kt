@@ -7,7 +7,7 @@ import data.IAppPreferences
 import domain.gopro.CohnState
 import entity.constants.Resolution
 import gopro.GoProFacade
-import gopro.GoProFacadeFactory
+import gopro.IGoProFacadeFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -23,7 +23,7 @@ sealed class CameraUiState {
 
 class CameraViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFacadeFactory: GoProFacadeFactory,
+    private val goProFacadeFactory: IGoProFacadeFactory,
 ) : ViewModel() {
     private lateinit var gopro: GoProFacade
     private var _state = MutableStateFlow<CameraUiState>(CameraUiState.Idle)

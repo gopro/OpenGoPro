@@ -1,29 +1,29 @@
 package extensions
 
-fun Byte.toBoolean(): Boolean = this.toInt() != 0
-fun UByte.toBoolean(): Boolean = this.toByte().toBoolean()
-fun Boolean.toUByte(): UByte = if (this) 1U else 0U
+internal fun Byte.toBoolean(): Boolean = this.toInt() != 0
+internal fun UByte.toBoolean(): Boolean = this.toByte().toBoolean()
+internal fun Boolean.toUByte(): UByte = if (this) 1U else 0U
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun UByteArray.decodeToString(): String = this.toByteArray().decodeToString()
+internal fun UByteArray.decodeToString(): String = this.toByteArray().decodeToString()
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun String.encodeToUByteArray(): UByteArray = this.encodeToByteArray().toUByteArray()
+internal fun String.encodeToUByteArray(): UByteArray = this.encodeToByteArray().toUByteArray()
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun UByte.toUByteArray(): UByteArray = ubyteArrayOf(this)
+internal fun UByte.toUByteArray(): UByteArray = ubyteArrayOf(this)
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun List<Int>.toUByteArray(): UByteArray = this.map { it.toUByte() }.toUByteArray()
+internal fun List<Int>.toUByteArray(): UByteArray = this.map { it.toUByte() }.toUByteArray()
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun UInt.toUByteArray(): UByteArray =
+internal fun UInt.toUByteArray(): UByteArray =
     (3 downTo 0).map {
         (this shr (it * Byte.SIZE_BITS)).toUByte()
     }.toUByteArray()
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun UByteArray.toTlvMap(): Map<UByte, UByteArray> {
+internal fun UByteArray.toTlvMap(): Map<UByte, UByteArray> {
     var buf = this.toList()
     val map = mutableMapOf<UByte, UByteArray>()
     while (buf.isNotEmpty()) {
@@ -39,16 +39,16 @@ fun UByteArray.toTlvMap(): Map<UByte, UByteArray> {
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun List<UByte>.toTlvMap(): Map<UByte, UByteArray> = this.toUByteArray().toTlvMap()
+internal fun List<UByte>.toTlvMap(): Map<UByte, UByteArray> = this.toUByteArray().toTlvMap()
 
 @OptIn(ExperimentalStdlibApi::class, ExperimentalUnsignedTypes::class)
-fun UByteArray.toPrettyHexString(): String =
+internal fun UByteArray.toPrettyHexString(): String =
     this.joinToString(separator = " ") {
         it.toHexString()
     }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun ByteArray.toPrettyHexString(): String = this.toUByteArray().toPrettyHexString()
+internal fun ByteArray.toPrettyHexString(): String = this.toUByteArray().toPrettyHexString()
 
-fun Boolean.toInt(): Int = if (this) 1 else 0
-fun Int.toBoolean(): Boolean = this != 0
+internal fun Boolean.toInt(): Int = if (this) 1 else 0
+internal fun Int.toBoolean(): Boolean = this != 0

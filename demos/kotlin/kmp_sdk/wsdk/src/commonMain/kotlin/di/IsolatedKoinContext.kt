@@ -5,7 +5,7 @@ import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.koinApplication
 
 // Get a Context for your Koin instance
-object WsdkIsolatedKoinContext {
+internal object WsdkIsolatedKoinContext {
 
     private val koinApp = koinApplication {
         modules(packageModule)

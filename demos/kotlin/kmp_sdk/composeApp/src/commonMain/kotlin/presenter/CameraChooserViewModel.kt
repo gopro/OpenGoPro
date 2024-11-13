@@ -8,8 +8,7 @@ import domain.connector.ConnectionRequestContext
 import entity.connector.ICameraConnector
 import entity.connector.NetworkType
 import entity.connector.ScanResult
-import gopro.CameraConnector
-import gopro.GoProFacadeFactory
+import gopro.IGoProFacadeFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -43,7 +42,7 @@ sealed class CameraChooserUiState(val name: String) {
 
 class CameraChooserViewModel(
     private val connector: ICameraConnector,
-    private val goProFacadeFactory: GoProFacadeFactory,
+    private val goProFacadeFactory: IGoProFacadeFactory,
     private val appPreferences: IAppPreferences,
 ) : ViewModel() {
     private val found = hashMapOf<String, ScanResult>() // Used to prevent duplicates

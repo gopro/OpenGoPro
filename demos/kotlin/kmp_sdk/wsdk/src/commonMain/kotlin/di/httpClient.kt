@@ -10,7 +10,7 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 
 
-fun createHttpClient(
+internal fun createHttpClient(
     engine: HttpClientEngine,
 ): HttpClient {
     val kermit = co.touchlab.kermit.Logger.withTag("Ktor")

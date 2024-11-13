@@ -17,7 +17,7 @@ import open_gopro.ResponseLastCapturedMedia
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray
 
-class MediaGetLastCaptured : BaseOperation<MediaId>("Get Last Captured MediaId") {
+internal class MediaGetLastCaptured : BaseOperation<MediaId>("Get Last Captured MediaId") {
 
     override suspend fun execute(communicator: BleCommunicator): Result<MediaId> =
         communicator.executeProtobufCommand(

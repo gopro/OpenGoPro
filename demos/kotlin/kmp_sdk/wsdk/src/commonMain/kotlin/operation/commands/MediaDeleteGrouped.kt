@@ -6,7 +6,7 @@ import entity.media.MediaId
 import io.ktor.client.call.body
 import io.ktor.http.path
 
-class MediaDeleteGrouped(val group: MediaId) : BaseOperation<Unit>("Delete Media Group") {
+internal class MediaDeleteGrouped(val group: MediaId) : BaseOperation<Unit>("Delete Media Group") {
 
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {

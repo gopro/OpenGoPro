@@ -7,12 +7,11 @@ import data.IAppPreferences
 import domain.gopro.CohnState
 import entity.operation.AccessPointState
 import gopro.GoProFacade
-import gopro.GoProFacadeFactory
+import gopro.IGoProFacadeFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ui.common.Screen
 
 private val logger = Logger.withTag("CohnViewModel")
 
@@ -25,7 +24,7 @@ sealed class CohnUiState(val name: String) {
 
 class CohnViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFacadeFactory: GoProFacadeFactory,
+    private val goProFacadeFactory: IGoProFacadeFactory,
 ) : ViewModel() {
     private lateinit var gopro: GoProFacade
 

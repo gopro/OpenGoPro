@@ -1,6 +1,6 @@
 package entity.communicator
 
-enum class CommandId(val value: UByte) {
+internal enum class CommandId(val value: UByte) {
     SET_SHUTTER(0x01U),
     SLEEP(0x05U),
     SET_LOCAL_DATE_TIME(0x0DU),
@@ -20,7 +20,7 @@ enum class CommandId(val value: UByte) {
 }
 
 
-enum class QueryId(val value: UByte) {
+internal enum class QueryId(val value: UByte) {
     GET_SETTING_VALUES(0X12U),
     GET_STATUS_VALUES(0X13U),
     GET_SETTING_CAPABILITIES(0X32U),
@@ -39,7 +39,7 @@ enum class QueryId(val value: UByte) {
     }
 }
 
-enum class ActionId(val value: UByte) {
+internal enum class ActionId(val value: UByte) {
     SCAN_WIFI_NETWORKS(0x02U),
     GET_AP_ENTRIES(0x03U),
     REQUEST_WIFI_CONNECT(0x04U),
@@ -87,7 +87,7 @@ enum class ActionId(val value: UByte) {
     }
 }
 
-enum class FeatureId(val value: UByte) {
+internal enum class FeatureId(val value: UByte) {
     NETWORK_MANAGEMENT(0x02U),
     COMMAND(0xF1U),
     SETTING(0xF3U),
@@ -99,7 +99,7 @@ enum class FeatureId(val value: UByte) {
 }
 
 // TODO should we dynamically create this from operations? It's a pretty nasty foot gun currently
-val responseProtobufIds: Set<Pair<FeatureId, ActionId>> = setOf(
+internal val responseProtobufIds: Set<Pair<FeatureId, ActionId>> = setOf(
     FeatureId.COMMAND to ActionId.SET_CAMERA_CONTROL_RSP,
     FeatureId.COMMAND to ActionId.SET_LIVESTREAM_MODE_RSP,
     FeatureId.COMMAND to ActionId.RESPONSE_PRESET_UPDATE_CUSTOM,
@@ -120,7 +120,7 @@ val responseProtobufIds: Set<Pair<FeatureId, ActionId>> = setOf(
     FeatureId.QUERY to ActionId.RESPONSE_GET_COHN_CERT,
 )
 
-enum class GpStatus(val value: UByte) {
+internal enum class GpStatus(val value: UByte) {
     SUCCESS(0U);
 
     companion object {

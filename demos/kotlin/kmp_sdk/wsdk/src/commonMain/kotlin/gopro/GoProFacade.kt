@@ -44,7 +44,7 @@ class GoProFacade(
     dispatcher: CoroutineDispatcher,
     cameraRepository: ICameraRepository,
     cameraConnector: ICameraConnector,
-    facadeFactory: GoProFacadeFactory
+    facadeFactory: IGoProFacadeFactory
 ) : IGpDescriptor {
     private val operationMarshaller = GpMarshaller(this)
 
@@ -73,10 +73,7 @@ class GoProFacade(
     val statuses = StatusesContainer(operationMarshaller)
     val features = FeaturesContainer(
         FeatureContext(
-            operationMarshaller,
-            commands,
-            settings,
-            statuses,
+           this,
             this.gpDescriptorManager,
             cameraRepository,
             cameraConnector,

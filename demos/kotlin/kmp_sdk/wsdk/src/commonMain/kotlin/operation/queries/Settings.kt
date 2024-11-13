@@ -14,7 +14,7 @@ import extensions.toUByteArray
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class UByteEnumTransformer<T>(
+internal class UByteEnumTransformer<T>(
     private val companion: IUByteEnumCompanion<T>,
     private val settingId: SettingId
 ) where T : Enum<T>, T : UByteEnum {

@@ -20,7 +20,7 @@ private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
 }
 
 // TODO how to inject default strategy since lambdas can't have generic types
-class GpMarshaller(private val gopro: IGpDescriptor) : IOperationMarshaller {
+internal class GpMarshaller(private val gopro: IGpDescriptor) : IOperationMarshaller {
     private val communicatorMap = mutableMapOf<CommunicationType, ICommunicator<*>>()
 
     override val communicators: List<CommunicationType>

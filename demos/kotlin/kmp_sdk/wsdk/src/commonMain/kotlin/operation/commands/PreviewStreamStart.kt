@@ -5,7 +5,7 @@ import domain.communicator.HttpCommunicator
 import io.ktor.client.call.body
 import io.ktor.http.path
 
-class PreviewStreamStart(val port: Int? = null) :
+internal class PreviewStreamStart(val port: Int? = null) :
     BaseOperation<Unit>("Start Preview Stream") {
 
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =

@@ -17,10 +17,10 @@ import kotlinx.coroutines.launch
 
 private val logger = Logger.withTag("AndroidDnsApi")
 
-class AndroidDnsApi(
+internal class AndroidDnsApi(
     context: Context,
     dispatcher: CoroutineDispatcher
-) : domain.network.IDnsApi {
+) : IDnsApi {
     // TODO how to cancel immediately when exception is found?
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         logger.e("Caught exception in coroutine:", throwable)

@@ -19,7 +19,7 @@ import open_gopro.EnumPresetTitle
 import open_gopro.RequestCustomPresetUpdate
 import pbandk.encodeToByteArray
 
-class UpdateCustomPresetIcon(val icon: EnumPresetIcon) :
+internal class UpdateCustomPresetIcon(val icon: EnumPresetIcon) :
     BaseOperation<Unit>("Update Custom Preset Icon") {
 
     override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
@@ -39,7 +39,7 @@ class UpdateCustomPresetIcon(val icon: EnumPresetIcon) :
         }.map { it.body() }
 }
 
-class UpdateCustomPresetTitle(val titleId: EnumPresetTitle) :
+internal class UpdateCustomPresetTitle(val titleId: EnumPresetTitle) :
     BaseOperation<Unit>("Update Custom Preset Title") {
 
     private var customTitle: String? = null

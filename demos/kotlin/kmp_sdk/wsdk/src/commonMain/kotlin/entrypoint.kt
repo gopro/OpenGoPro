@@ -2,6 +2,7 @@ import di.WsdkIsolatedKoinContext
 import entity.connector.ICameraConnector
 import gopro.CameraConnector
 import gopro.GoProFacadeFactory
+import gopro.IGoProFacadeFactory
 import org.koin.dsl.KoinAppDeclaration
 
 object Wsdk {
@@ -9,6 +10,6 @@ object Wsdk {
     fun getCameraConnector(config: KoinAppDeclaration? = null): ICameraConnector =
         WsdkIsolatedKoinContext.getWsdkKoinApp(config).koin.get()
 
-    fun getGoProFacadeFactory(config: KoinAppDeclaration? = null): GoProFacadeFactory =
+    fun getGoProFacadeFactory(config: KoinAppDeclaration? = null): IGoProFacadeFactory =
         WsdkIsolatedKoinContext.getWsdkKoinApp(config).koin.get()
 }

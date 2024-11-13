@@ -10,6 +10,14 @@ import entity.operation.WebcamProtocol
 import entity.operation.WebcamResolution
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.UtcOffset
+import operation.commands.AccessPointGetScanResults
+import operation.commands.AccessPointScan
+import operation.commands.CohnClearCert
+import operation.commands.CohnCreateCert
+import operation.commands.CohnGetCert
+import operation.commands.CohnGetStatus
+import operation.commands.ConnectNewAccessPoint
+import operation.commands.ConnectProvisionedAccessPoint
 import operation.commands.DatetimeSet
 import operation.commands.GetHardwareInfo
 import operation.commands.KeepAlive
@@ -103,6 +111,26 @@ class CommandsContainer(private val marshaller: IOperationMarshaller) {
     suspend fun getWebcamState() = marshaller.marshal(WebcamGetState()) {
         useCommunicator { _, _ -> CommunicationType.HTTP }
     }
+
+    suspend fun scanAccessPoint() = marshaller.marshal(AccessPointScan())
+
+    suspend fun getAccessPointScanResults(scanId: Int, totalEntries: Int) =
+        marshaller.marshal(AccessPointGetScanResults(scanId, totalEntries))
+
+    suspend fun connectAccessPoint(ssid: String) =
+        marshaller.marshal(ConnectProvisionedAccessPoint(ssid))
+
+    suspend fun connectAccessPoint(ssid: String, password: String) =
+        marshaller.marshal(ConnectNewAccessPoint(ssid, password))
+
+    suspend fun getCohnStatus() = marshaller.marshal(CohnGetStatus())
+
+    suspend fun getCohnCertificate() = marshaller.marshal(CohnGetCert())
+
+    suspend fun clearCohnCertificate() = marshaller.marshal(CohnClearCert())
+
+    suspend fun createCohnCertificate(override: Boolean) =
+        marshaller.marshal(CohnCreateCert(override))
 
     suspend fun setDateTime(
         datetime: LocalDateTime,

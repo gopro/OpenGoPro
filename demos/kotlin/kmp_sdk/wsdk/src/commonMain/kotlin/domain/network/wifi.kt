@@ -3,7 +3,7 @@ package domain.network
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 
-interface IWifiApi {
+internal interface IWifiApi {
     val dispatcher: CoroutineDispatcher
     suspend fun setup()
     suspend fun scanForSsid(): Result<Flow<String>>

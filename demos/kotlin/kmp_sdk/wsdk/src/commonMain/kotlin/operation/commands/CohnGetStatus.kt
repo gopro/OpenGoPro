@@ -30,7 +30,7 @@ private fun NotifyCOHNStatus.toCohnStatus(): CohnStatus =
         isEnabled = this.enabled
     )
 
-class CohnGetStatus :
+internal class CohnGetStatus :
     BaseOperation<Flow<CohnStatus>>("Get COHN Status") {
 
     @OptIn(ExperimentalUnsignedTypes::class)

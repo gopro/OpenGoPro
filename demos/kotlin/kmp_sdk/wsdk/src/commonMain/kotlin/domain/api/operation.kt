@@ -15,7 +15,7 @@ interface IOperation<T : Any> {
     suspend fun execute(communicator: ICommunicator<*>): Result<T>
 }
 
-abstract class BaseOperation<T : Any>(final override val debugId: String) : IOperation<T> {
+internal abstract class BaseOperation<T : Any>(final override val debugId: String) : IOperation<T> {
     protected val logger = Logger.withTag(debugId)
 
     open suspend fun execute(communicator: BleCommunicator): Result<T> =
@@ -92,6 +92,6 @@ class StrategyBuilder<T : Any, O : IOperation<T>> {
     }
 }
 
-fun <T : Any, O : IOperation<T>> operationStrategy(initializer: StrategyBuilder<T, O>.() -> Unit): IOperationStrategy<T, O> {
+internal fun <T : Any, O : IOperation<T>> operationStrategy(initializer: StrategyBuilder<T, O>.() -> Unit): IOperationStrategy<T, O> {
     return StrategyBuilder<T, O>().apply(initializer).build()
 }

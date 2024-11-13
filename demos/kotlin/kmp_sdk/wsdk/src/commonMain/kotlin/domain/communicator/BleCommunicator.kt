@@ -51,7 +51,7 @@ private data class ResponseFlowElement(
 )
 
 @OptIn(ExperimentalUnsignedTypes::class)
-class BleCommunicator(
+internal class BleCommunicator(
     private val bleApi: IBleApi,
     override val connection: ConnectionDescriptor.Ble,
     dispatcher: CoroutineDispatcher

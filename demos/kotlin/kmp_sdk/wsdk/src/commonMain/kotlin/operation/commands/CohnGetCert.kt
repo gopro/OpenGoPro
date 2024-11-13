@@ -19,7 +19,7 @@ import open_gopro.ResponseCOHNCert
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray
 
-class CohnGetCert :
+internal class CohnGetCert :
     BaseOperation<String>("Get COHN Cert") {
 
     override suspend fun execute(communicator: BleCommunicator): Result<String> =

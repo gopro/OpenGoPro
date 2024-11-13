@@ -28,7 +28,7 @@ import vectors.mockOgpVersion
 import vectors.photoMetadataJson
 import vectors.webcamStatusResponseJson
 
-data class FakeBleCommunicator(
+internal data class FakeBleCommunicator(
     val communicator: BleCommunicator,
     val api: FakeBleApi,
     val connection: ConnectionDescriptor.Ble
@@ -37,7 +37,7 @@ data class FakeBleCommunicator(
     suspend fun sendNextBleMessage() = api.sendNextMessage()
 }
 
-fun buildFakeBleCommunicator(
+internal fun buildFakeBleCommunicator(
     responses: List<List<BleNotification>>,
     dispatcher: CoroutineDispatcher
 ): FakeBleCommunicator {
@@ -50,7 +50,7 @@ fun buildFakeBleCommunicator(
     return FakeBleCommunicator(communicator, api, communicator.connection)
 }
 
-data class FakeHttpCommunicator(
+internal data class FakeHttpCommunicator(
     val communicator: HttpCommunicator,
     val api: FakeHttpApi,
     val connection: ConnectionDescriptor
@@ -131,7 +131,7 @@ object FakeHttpClientProvider : IHttpClientProvider {
 
 }
 
-fun buildFakeHttpCommunicator(dispatcher: CoroutineDispatcher): FakeHttpCommunicator {
+internal fun buildFakeHttpCommunicator(dispatcher: CoroutineDispatcher): FakeHttpCommunicator {
     val api = FakeHttpApi()
     val communicator =
         HttpCommunicator(

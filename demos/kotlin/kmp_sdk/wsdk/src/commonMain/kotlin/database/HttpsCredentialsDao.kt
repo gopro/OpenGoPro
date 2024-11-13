@@ -9,14 +9,14 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 
 @Entity
-data class HttpsCredentialsDbEntry(
+internal data class HttpsCredentialsDbEntry(
     @PrimaryKey(autoGenerate = false) val serialId: String,
     val username: String,
     val password: String,
 )
 
 @Dao
-interface HttpsCredentialsDao {
+internal interface HttpsCredentialsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(credentials: HttpsCredentialsDbEntry)
 

@@ -11,7 +11,7 @@ import io.ktor.client.call.body
 import io.ktor.http.path
 
 @OptIn(ExperimentalUnsignedTypes::class)
-class GetOpenGoProVersion : BaseOperation<Version>("Get Open GoPro Version") {
+internal class GetOpenGoProVersion : BaseOperation<Version>("Get Open GoPro Version") {
     override suspend fun execute(communicator: BleCommunicator): Result<Version> =
         communicator.executeTlvCommand(
             CommandId.GET_OGP_VERSION,

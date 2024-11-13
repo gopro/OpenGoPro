@@ -7,7 +7,7 @@ import database.AppDatabase
 import database.IDatabaseProvider
 
 // https://developer.android.com/kotlin/multiplatform/room
-class AndroidDatabaseProvider(private val context: Context) : IDatabaseProvider {
+internal class AndroidDatabaseProvider(private val context: Context) : IDatabaseProvider {
     override fun provideDatabase(): RoomDatabase.Builder<AppDatabase> {
         val appContext = context.applicationContext
         val dbFile = appContext.getDatabasePath("my_room.db")

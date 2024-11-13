@@ -46,7 +46,7 @@ private fun NotifyLiveStreamStatus.toLivestreamStatus(): LivestreamStatus =
     )
 
 
-class LivestreamGetStatus : BaseOperation<Flow<LivestreamStatus>>("Get Livestream Status") {
+internal class LivestreamGetStatus : BaseOperation<Flow<LivestreamStatus>>("Get Livestream Status") {
 
     @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun execute(communicator: BleCommunicator): Result<Flow<LivestreamStatus>> {

@@ -1,17 +1,20 @@
 package fakes
 
 import entity.network.BleNotification
-import kotlinx.coroutines.CoroutineDispatcher
 import gopro.SettingsContainer
+import kotlinx.coroutines.CoroutineDispatcher
 
-class FakeSettingsContainer(
+internal class FakeSettingsContainer(
     val settingsContainer: SettingsContainer,
     private val marshaller: FakeOperationMarshaller
 ) {
     suspend fun sendNextBleMessage() = marshaller.sendNextBleMessage()
 }
 
-fun buildFakeSettingsContainer(responses: List<List<BleNotification>> = listOf(), dispatcher: CoroutineDispatcher): FakeSettingsContainer =
+internal fun buildFakeSettingsContainer(
+    responses: List<List<BleNotification>> = listOf(),
+    dispatcher: CoroutineDispatcher
+): FakeSettingsContainer =
     FakeOperationMarshaller(responses, dispatcher).let { marshaller ->
         FakeSettingsContainer(
             SettingsContainer(marshaller),

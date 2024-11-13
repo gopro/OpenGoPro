@@ -5,7 +5,7 @@ import domain.communicator.HttpCommunicator
 import io.ktor.client.call.body
 import io.ktor.http.path
 
-class SetDigitalZoom(val zoom: Int) :
+internal class SetDigitalZoom(val zoom: Int) :
     BaseOperation<Unit>("Set Digital Zoom") {
 
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =

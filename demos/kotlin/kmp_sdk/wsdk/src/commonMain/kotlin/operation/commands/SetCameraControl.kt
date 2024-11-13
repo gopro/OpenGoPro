@@ -15,7 +15,7 @@ import open_gopro.EnumCameraControlStatus
 import open_gopro.RequestSetCameraControlStatus
 import pbandk.encodeToByteArray
 
-class SetCameraControl(val status: CameraControlStatus) :
+internal class SetCameraControl(val status: CameraControlStatus) :
     BaseOperation<Unit>("Set Camera Control") {
 
     override suspend fun execute(communicator: BleCommunicator): Result<Unit> {

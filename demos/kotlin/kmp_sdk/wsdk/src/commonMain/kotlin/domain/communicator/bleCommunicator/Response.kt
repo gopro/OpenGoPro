@@ -10,7 +10,7 @@ import entity.constants.StatusId
 import entity.network.GpUuid
 
 
-sealed interface ResponseId {
+internal sealed interface ResponseId {
     // TODO review this. it's messy.
     fun shouldBeMatchedAsSynchronousResponse(): Boolean
     fun shouldBeForwardedAsNotification(): Boolean
@@ -77,9 +77,8 @@ sealed interface ResponseId {
     }
 }
 
-// TODO How to make these internal but accessible in test?
 @OptIn(ExperimentalUnsignedTypes::class)
-fun decipherResponse(message: IGpBleResponse): ResponseId {
+internal fun decipherResponse(message: IGpBleResponse): ResponseId {
     // Is it a Protobuf message?
     FeatureId.fromUByte(message.payload[0])?.let { featureId ->
         ActionId.fromUByte(message.payload[1])?.let { actionId ->

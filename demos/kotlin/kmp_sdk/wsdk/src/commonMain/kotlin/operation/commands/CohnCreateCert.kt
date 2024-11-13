@@ -16,7 +16,7 @@ import open_gopro.RequestCreateCOHNCert
 import open_gopro.RequestSetCameraControlStatus
 import pbandk.encodeToByteArray
 
-class CohnCreateCert(val override: Boolean):
+internal class CohnCreateCert(val override: Boolean):
     BaseOperation<Unit>("Create COHN Cert") {
 
     override suspend fun execute(communicator: BleCommunicator): Result<Unit>

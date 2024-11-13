@@ -14,7 +14,7 @@ import io.ktor.http.path
 import open_gopro.RequestSetCOHNSetting
 import pbandk.encodeToByteArray
 
-class CohnSetSetting(val disableCohn: Boolean) :
+internal class CohnSetSetting(val disableCohn: Boolean) :
     BaseOperation<Unit>("Set COHN Setting") {
 
     override suspend fun execute(communicator: BleCommunicator): Result<Unit> =

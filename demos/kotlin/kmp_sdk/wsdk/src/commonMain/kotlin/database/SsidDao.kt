@@ -9,14 +9,14 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 
 @Entity
-data class SsidDbEntry(
+internal data class SsidDbEntry(
     @PrimaryKey(autoGenerate = false) val serialId: String,
     val ssid: String,
     val password: String
 )
 
 @Dao
-interface SsidDao {
+internal interface SsidDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(credentials: SsidDbEntry)
 

@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun UByteArray.toBleNotificationList(uuid: GpUuid): List<BleNotification> =
+internal fun UByteArray.toBleNotificationList(uuid: GpUuid): List<BleNotification> =
     this.bleFragment(BleCommunicator.MAX_PACKET_LENGTH)
         .asSequence()
         .map { BleNotification(uuid.toUuid(), it) }
@@ -80,7 +80,7 @@ sealed class BleApiSpy {
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-class FakeBleApi(
+internal class FakeBleApi(
     responses: List<List<BleNotification>> = listOf(),
     dispatcher: CoroutineDispatcher
 ) : IBleApi {

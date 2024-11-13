@@ -15,10 +15,17 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 private val logger = Logger.withTag("GoProFacadeFactory")
 
-class GoProFacadeFactory(
+interface IGoProFacadeFactory {
+    suspend fun getGoProFacade(serialId: String): GoProFacade
+    suspend fun storeConnection(connection: ConnectionDescriptor)
+}
+
+internal class GoProFacadeFactory(
     private val bleApi: IBleApi,
     private val httpApi: IHttpApi,
     private val wifiApi: IWifiApi,
@@ -26,7 +33,7 @@ class GoProFacadeFactory(
     private val cameraConnector: ICameraConnector,
     private val httpClientProvider: IHttpClientProvider,
     private val dispatcher: CoroutineDispatcher
-) {
+): IGoProFacadeFactory {
     private val facadesById = mutableMapOf<String, GoProFacade>()
     private val communicatorsByConnection = mutableMapOf<ConnectionDescriptor, ICommunicator<*>>()
 
@@ -75,7 +82,7 @@ class GoProFacadeFactory(
         }
     }
 
-    suspend fun getGoProFacade(serialId: String): GoProFacade {
+    override suspend fun getGoProFacade(serialId: String): GoProFacade {
         val gopro =
             facadesById.getOrPut(serialId) {
                 GoProFacade(
@@ -93,7 +100,7 @@ class GoProFacadeFactory(
         return gopro
     }
 
-    suspend fun storeConnection(connection: ConnectionDescriptor) {
+    override suspend fun storeConnection(connection: ConnectionDescriptor) {
         val communicator = communicatorsByConnection.getOrPut(connection) {
             when (connection) {
                 is ConnectionDescriptor.Ble -> BleCommunicator(bleApi, connection, dispatcher)

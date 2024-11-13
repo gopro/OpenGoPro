@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
  * This is the GoPro-independent BLE interface
  */
 @OptIn(ExperimentalUnsignedTypes::class)
-interface IBleApi {
+internal interface IBleApi {
     fun scan(serviceUUIDs: Set<Uuid>? = null): Result<Flow<BleAdvertisement>>
 
     suspend fun connect(advertisement: BleAdvertisement): Result<BleDevice>
