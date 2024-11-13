@@ -1,10 +1,6 @@
 package gopro
 
-import KoinTestRule
-import connector.AndroidDnsApi
-import connector.AndroidWifiApi
-import domain.network.IDnsApi
-import domain.network.IWifiApi
+import AndroidInstrumentedKoinTest
 import entity.network.BleNotification
 import entity.network.GpUuid
 import fakes.FakeGoProFacadeProvider
@@ -14,13 +10,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.Rule
-import org.koin.dsl.bind
-import org.koin.dsl.module
-import org.koin.test.KoinTest
-import org.koin.test.mock.MockProviderRule
-import org.koin.test.mock.declareMock
-import org.mockito.Mockito
 import vectors.isBusyNotificationMessage
 import vectors.isEncodingNotificationMessage
 import vectors.isNotBusyNotificationMessage
@@ -32,20 +21,7 @@ import kotlin.test.assertEquals
 
 
 @OptIn(ExperimentalUnsignedTypes::class, ExperimentalCoroutinesApi::class)
-class TestGoProFacade : KoinTest {
-    @get:Rule
-    val mockProvider = MockProviderRule.create { clazz ->
-        Mockito.mock(clazz.java)
-    }
-
-    @get:Rule
-    val koinTestRule = KoinTestRule(listOf(module {
-        single<IWifiApi> { declareMock() }.bind(IWifiApi::class)
-        single<AndroidWifiApi> { declareMock() }
-        single<IDnsApi> { declareMock() }.bind(IDnsApi::class)
-        single<AndroidDnsApi> { declareMock() }
-    }))
-
+class TestGoProFacade : AndroidInstrumentedKoinTest() {
     @Test
     fun `maintain ready state`() = runTest {
         // GIVEN
@@ -89,7 +65,6 @@ class TestGoProFacade : KoinTest {
 
         println("Test binding communicator")
         gopro.bindCommunicator(fakeCommunicator.communicator)
-        println("Did I get here?")
 
         launch {
             fakeCommunicator.sendNextBleMessage()
@@ -110,6 +85,7 @@ class TestGoProFacade : KoinTest {
         // Wait to be ready
         println("Test waiting for gopro to be ready.")
         gopro.isReady.first { it }
+        println("Test gopro is ready")
         checkBusyJob.cancel()
         checkEncodingJob.cancel()
 

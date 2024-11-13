@@ -139,7 +139,7 @@ kotlin {
 }
 
 android {
-    namespace = "gopro.open_gopro"
+    namespace = "gopro.open_gopro.wsdk"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()

@@ -63,6 +63,7 @@ vlc = "3.1.12"
 dokka = "1.9.20"
 # https://central.sonatype.com/artifact/org.mockito/mockito-core
 mockito = "5.14.2"
+activityKtx = "1.9.3"
 
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
@@ -141,6 +142,7 @@ sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sql
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtx" }
 # VLC
 libvlc-all = { module = "org.videolan.android:libvlc-all", version.ref = "vlc" }
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
