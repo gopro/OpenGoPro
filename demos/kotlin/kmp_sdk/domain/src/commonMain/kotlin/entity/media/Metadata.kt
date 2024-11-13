@@ -1,3 +1,5 @@
+package entity.media
+
 import entity.operation.MediaMetadataSerializer
 import entity.operation.StringAsBooleanSerializer
 import kotlinx.serialization.SerialName

@@ -1,6 +1,6 @@
 package operation.commands
 
-import OgpVersionHttpResponse
+import entity.operation.OgpVersionHttpResponse
 import domain.api.BaseOperation
 import domain.communicator.BleCommunicator
 import domain.communicator.HttpCommunicator

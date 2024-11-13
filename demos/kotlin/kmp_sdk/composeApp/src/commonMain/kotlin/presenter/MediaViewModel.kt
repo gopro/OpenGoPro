@@ -1,6 +1,6 @@
 package presenter
 
-import MediaMetadata
+import entity.media.MediaMetadata
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger

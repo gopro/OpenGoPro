@@ -1,6 +1,6 @@
 package operation.commands
 
-import MediaMetadata
+import entity.media.MediaMetadata
 import domain.api.BaseOperation
 import domain.communicator.HttpCommunicator
 import entity.media.MediaId

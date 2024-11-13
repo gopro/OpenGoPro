@@ -1,6 +1,6 @@
 package vectors
 
-import OgpVersionHttpResponse
+import entity.operation.OgpVersionHttpResponse
 import entity.media.MediaId
 import entity.operation.DateTimeHttpResponse
 import entity.operation.HardwareInfo

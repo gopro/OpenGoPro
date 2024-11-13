@@ -1,3 +1,5 @@
+package entity.operation
+
 import kotlinx.serialization.Serializable
 
 @Serializable

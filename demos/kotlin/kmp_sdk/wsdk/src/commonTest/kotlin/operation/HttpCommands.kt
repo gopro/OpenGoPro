@@ -2,7 +2,7 @@
 
 package operation
 
-import PhotoMediaMetadata
+import entity.media.PhotoMediaMetadata
 import entity.media.GroupMediaItemType
 import entity.media.GroupedMediaListItem
 import entity.media.MediaId

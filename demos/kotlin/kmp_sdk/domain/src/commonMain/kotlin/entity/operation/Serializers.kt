@@ -1,8 +1,8 @@
 package entity.operation
 
-import MediaMetadata
-import PhotoMediaMetadata
-import VideoMediaMetadata
+import entity.media.MediaMetadata
+import entity.media.PhotoMediaMetadata
+import entity.media.VideoMediaMetadata
 import entity.media.GroupedMediaListItem
 import entity.media.MediaListItem
 import entity.media.SingleMediaListItem

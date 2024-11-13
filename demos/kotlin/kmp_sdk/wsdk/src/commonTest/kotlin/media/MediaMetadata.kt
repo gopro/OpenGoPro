@@ -1,12 +1,12 @@
 package media
 
-import AudioOption
-import LensConfig
-import LensProjection
-import MediaContentType
-import MediaMetadata
-import PhotoMediaMetadata
-import VideoMediaMetadata
+import entity.media.AudioOption
+import entity.media.LensConfig
+import entity.media.LensProjection
+import entity.media.MediaContentType
+import entity.media.MediaMetadata
+import entity.media.PhotoMediaMetadata
+import entity.media.VideoMediaMetadata
 import entity.operation.jsonDefault
 import vectors.photoMetadataJson
 import vectors.videoMetadataJson
