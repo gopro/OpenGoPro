@@ -1,3 +1,4 @@
+import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -126,4 +127,13 @@ dependencies {
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)
     add("kspIosX64", libs.androidx.room.compiler)
     add("kspIosArm64", libs.androidx.room.compiler)
+}
+
+
+tasks.withType<DokkaTaskPartial>().configureEach {
+    dokkaSourceSets {
+        configureEach {
+            includes.from("ModuleDocumentation.md")
+        }
+    }
 }

@@ -1,3 +1,8 @@
+import org.jetbrains.dokka.DokkaConfiguration
+import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.dokka.gradle.DokkaTaskPartial
+import java.net.URL
+
 plugins {
     // this is necessary to avoid the plugins to be loaded multiple times
     // in each subproject's classloader
@@ -12,4 +17,33 @@ plugins {
     alias(libs.plugins.room) apply false
 
     alias(libs.plugins.dokka)
+}
+
+tasks.withType<DokkaTaskPartial>().configureEach {
+    dokkaSourceSets.configureEach {
+        documentedVisibilities.set(
+            setOf(
+                DokkaConfiguration.Visibility.PUBLIC,
+                DokkaConfiguration.Visibility.PROTECTED
+            )
+        )
+
+        // TODO what is this?
+        // Read docs for more details: https://kotlinlang.org/docs/dokka-gradle.html#source-link-configuration
+        sourceLink {
+            val exampleDir =
+                "https://github.com/Kotlin/dokka/tree/master/examples/gradle/dokka-multimodule-example"
+
+            localDirectory.set(rootProject.projectDir)
+            remoteUrl.set(URL(exampleDir))
+            remoteLineSuffix.set("#L")
+        }
+    }
+}
+
+// Configures only the parent MultiModule task,
+// this will not affect subprojects
+tasks.dokkaHtmlMultiModule {
+    moduleName.set("Open GoPro")
+    includes.from("TopLevelDocumentation.md")
 }

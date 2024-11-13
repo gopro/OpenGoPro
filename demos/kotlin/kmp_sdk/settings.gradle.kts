@@ -1,8 +1,6 @@
 rootProject.name = "OpenGoPro"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-// https://proandroiddev.com/coil-for-compose-multiplatform-5745ea76356f
-
 pluginManagement {
     repositories {
         google {
@@ -38,4 +36,6 @@ dependencyResolutionManagement {
     }
 }
 
-include(":composeApp", ":domain", ":wsdk")
+include(":composeApp")
+include(":domain")
+include(":wsdk")
