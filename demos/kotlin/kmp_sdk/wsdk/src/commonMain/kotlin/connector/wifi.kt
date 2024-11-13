@@ -10,7 +10,7 @@ import entity.connector.ScanResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class GpWifiConnector(private val wifiApi: IWifiApi, override val cameraRepo: ICameraRepository) :
+internal class GpWifiConnector(private val wifiApi: IWifiApi) :
     IConnector<ScanResult.Wifi, ConnectionDescriptor.Http> {
     override val networkType = NetworkType.WIFI_AP
 

@@ -1,6 +1,7 @@
 package features
 
 import co.touchlab.kermit.Logger
+import domain.data.ICameraRepository
 import domain.gopro.CohnState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -11,15 +12,19 @@ import operation.commands.CohnClearCert
 import operation.commands.CohnCreateCert
 import operation.commands.CohnGetCert
 import operation.commands.CohnGetStatus
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 private val logger = Logger.withTag("CohnFeature")
 
-class CohnFeature(featureContext: IFeatureContext): IFeatureContext by featureContext {
+class CohnFeature(featureContext: IFeatureContext): KoinComponent, IFeatureContext by featureContext {
     private var ssid: String? = null
     private var password: String? = null
     private var username: String? = null
     private var ipAddress: String? = null
     private var certificate: String? = null
+
+    private val cameraRepo: ICameraRepository by inject()
 
     suspend fun getCohnStatus(): Flow<CohnState> =
         gopro.commands.getCohnStatus().getOrThrow().transform { update ->

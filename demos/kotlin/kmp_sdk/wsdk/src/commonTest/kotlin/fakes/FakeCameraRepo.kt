@@ -5,7 +5,7 @@ import domain.data.WifiCredentials
 import entity.network.HttpsCredentials
 import entity.network.IHttpsCredentials
 
-class FakeCameraRepo : ICameraRepository {
+internal class FakeCameraRepo : ICameraRepository {
     override suspend fun addHttpsCredentials(serialId: String, credentials: IHttpsCredentials) {
 
     }

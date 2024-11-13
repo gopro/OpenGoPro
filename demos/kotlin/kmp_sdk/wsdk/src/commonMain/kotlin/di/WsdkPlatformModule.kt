@@ -1,5 +1,7 @@
 package di
 
+import AppContext
+import Wsdk
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import database.AppDatabase
 import database.CameraRepository
@@ -16,7 +18,7 @@ internal interface WsdkPlatformModule {
     val module: Module
 }
 
-internal expect val wsdkPlatformModule: WsdkPlatformModule
+internal expect fun buildWsdkPlatformModule(appContext: AppContext): WsdkPlatformModule
 
 private fun getRoomDatabase(
     provider: IDatabaseProvider,
@@ -26,8 +28,8 @@ private fun getRoomDatabase(
     .setQueryCoroutineContext(dispatcher)
     .build()
 
-internal fun buildWsdkPlatformModules() = module {
-    includes(wsdkPlatformModule.module)
+internal fun buildWsdkPlatformModules(appContext: AppContext) = module {
+    includes(buildWsdkPlatformModule(appContext).module)
 
     // Note! We can't create HTTP engine / client singletons because they can be created dynamically
     // for various https credentials at run-time.

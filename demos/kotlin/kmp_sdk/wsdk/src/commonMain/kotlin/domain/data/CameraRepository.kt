@@ -2,12 +2,12 @@ package domain.data
 
 import entity.network.IHttpsCredentials
 
-data class WifiCredentials(
+internal data class WifiCredentials(
     val ssid: String,
     val password: String
 )
 
-interface ICameraRepository {
+internal interface ICameraRepository {
     suspend fun addHttpsCredentials(serialId: String, credentials: IHttpsCredentials)
     suspend fun getHttpsCredentials(serialId: String): Result<IHttpsCredentials>
     suspend fun removeHttpsCredentials(serialId: String)

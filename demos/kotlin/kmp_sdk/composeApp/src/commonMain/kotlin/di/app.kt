@@ -1,13 +1,13 @@
 package di
 
-import org.koin.dsl.KoinAppDeclaration
+import AppContext
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
-fun buildAppModule(config: KoinAppDeclaration? = null) =
+fun buildAppModule(appContext: AppContext): Module =
     module {
         includes(dataModule)
-        includes(buildPlatformModules())
+        includes(buildPlatformModules(appContext))
         includes(screenModules)
-//        includes(uiModules)
-        includes(buildWsdkModule(config))
+        includes(buildWsdkModule(appContext))
     }

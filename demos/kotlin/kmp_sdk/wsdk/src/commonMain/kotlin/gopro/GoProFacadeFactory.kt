@@ -15,8 +15,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 private val logger = Logger.withTag("GoProFacadeFactory")
 
@@ -33,7 +31,7 @@ internal class GoProFacadeFactory(
     private val cameraConnector: ICameraConnector,
     private val httpClientProvider: IHttpClientProvider,
     private val dispatcher: CoroutineDispatcher
-): IGoProFacadeFactory {
+) : IGoProFacadeFactory {
     private val facadesById = mutableMapOf<String, GoProFacade>()
     private val communicatorsByConnection = mutableMapOf<ConnectionDescriptor, ICommunicator<*>>()
 
@@ -83,16 +81,7 @@ internal class GoProFacadeFactory(
     }
 
     override suspend fun getGoProFacade(serialId: String): GoProFacade {
-        val gopro =
-            facadesById.getOrPut(serialId) {
-                GoProFacade(
-                    serialId,
-                    dispatcher,
-                    cameraRepository,
-                    cameraConnector,
-                    this
-                )
-            }
+        val gopro = facadesById.getOrPut(serialId) { GoProFacade(serialId) }
         communicatorsByConnection.filterKeys { it.serialId == serialId }.values.forEach { communicator ->
             gopro.bindCommunicator(communicator)
         }

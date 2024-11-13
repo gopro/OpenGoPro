@@ -10,6 +10,8 @@ androidx-lifecycle = "2.8.0"
 androidx-material = "1.12.0"
 compose-plugin = "1.6.11"
 junit = "4.13.2"
+# https://central.sonatype.com/artifact/io.insert-koin/koin-test-junit4/versions
+koinTestJunit4 = "4.0.0"
 kotlin = "2.0.10"
 # https://touchlab.co/understanding-and-configuring-your-kmm-test-suite
 androidx-core-ktx = "1.13.1"
@@ -59,6 +61,8 @@ coreKtx = "1.6.1" # This was breaking room gradle task on newer versions.
 vlc = "3.1.12"
 # https://github.com/Kotlin/dokka/releases/tag/v1.9.20
 dokka = "1.9.20"
+# https://central.sonatype.com/artifact/org.mockito/mockito-core
+mockito = "5.14.2"
 
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
@@ -69,13 +73,16 @@ androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", nam
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 # Common unit testing
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 # Android instrumented testing
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 androidx-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "junitKtx" }
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
+mockito-android = { module = "org.mockito:mockito-android", version.ref = "mockito" }
+koin-test-junit4 = { module = "io.insert-koin:koin-test-junit4", version.ref = "koinTestJunit4" }
 # JSON Serialization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 # Logging

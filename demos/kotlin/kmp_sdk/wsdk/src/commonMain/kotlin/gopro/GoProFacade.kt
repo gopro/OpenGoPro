@@ -4,7 +4,6 @@ import co.touchlab.kermit.Logger
 import domain.communicator.BleCommunicator
 import domain.communicator.HttpCommunicator
 import domain.communicator.ICommunicator
-import domain.data.ICameraRepository
 import domain.gopro.CohnState
 import domain.gopro.GpDescriptorManager
 import domain.gopro.IGpDescriptor
@@ -29,6 +28,8 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.offsetAt
 import kotlinx.datetime.toLocalDateTime
 import operation.GpMarshaller
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -39,13 +40,11 @@ private const val TRACE_LOG = false
 private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
 }
 
-class GoProFacade(
-    override val serialId: String,
-    dispatcher: CoroutineDispatcher,
-    cameraRepository: ICameraRepository,
-    cameraConnector: ICameraConnector,
-    facadeFactory: IGoProFacadeFactory
-) : IGpDescriptor {
+class GoProFacade(override val serialId: String) : IGpDescriptor, KoinComponent {
+    private val cameraConnector: ICameraConnector by inject()
+    private val dispatcher: CoroutineDispatcher by inject()
+    private val facadeFactory: IGoProFacadeFactory by inject()
+
     private val operationMarshaller = GpMarshaller(this)
 
     // TODO get the correct scope
@@ -73,9 +72,8 @@ class GoProFacade(
     val statuses = StatusesContainer(operationMarshaller)
     val features = FeaturesContainer(
         FeatureContext(
-           this,
+            this,
             this.gpDescriptorManager,
-            cameraRepository,
             cameraConnector,
             facadeFactory
         )

@@ -1,37 +1,43 @@
 package features
 
 import domain.connector.ConnectionRequestContext
+import domain.data.ICameraRepository
 import entity.connector.ScanResult
 import kotlinx.coroutines.delay
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class ConnectWifiFeature(private val featureContext: IFeatureContext) {
+class ConnectWifiFeature(featureContext: IFeatureContext) : IFeatureContext by featureContext,
+    KoinComponent {
+    private val cameraRepo: ICameraRepository by inject()
+
     suspend fun connect() {
         // Get Wifi info and enable Access Point via BLE
-        featureContext.gopro.commands.setApMode(true).getOrThrow()
-        val ssid = featureContext.gopro.commands.readWifiSsid().getOrThrow()
-        val password = featureContext.gopro.commands.readWifiPassword().getOrThrow()
+        gopro.commands.setApMode(true).getOrThrow()
+        val ssid = gopro.commands.readWifiSsid().getOrThrow()
+        val password = gopro.commands.readWifiPassword().getOrThrow()
 
         // Connect Wifi
         // TODO finite amount of retries?
         while (true) {
-            featureContext.connector.connect(
-                ScanResult.Wifi(featureContext.gopro.serialId, ssid),
+            connector.connect(
+                ScanResult.Wifi(gopro.serialId, ssid),
                 ConnectionRequestContext.Wifi(password)
             ).onSuccess {
-                featureContext.cameraRepo.addWifiCredentials(
-                    featureContext.gopro.serialId,
+                cameraRepo.addWifiCredentials(
+                    gopro.serialId,
                     ssid,
                     password
                 )
-                featureContext.facadeFactory.storeConnection(it)
+                facadeFactory.storeConnection(it)
                 return
             }
             // Toggle AP mode to try to recover
-            featureContext.gopro.commands.setApMode(false)
+            gopro.commands.setApMode(false)
             delay(2.toDuration(DurationUnit.SECONDS))
-            featureContext.gopro.commands.setApMode(true)
+            gopro.commands.setApMode(true)
             delay(2.toDuration(DurationUnit.SECONDS))
         }
     }

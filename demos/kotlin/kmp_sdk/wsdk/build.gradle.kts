@@ -62,6 +62,15 @@ kotlin {
     sourceSets {
         val desktopMain by getting
 
+        // https://kotlinlang.org/docs/multiplatform-android-layout.html#move-source-files
+        val commonTest by getting
+        val androidInstrumentedTest by getting {
+            dependsOn(commonTest)
+        }
+        // https://slack-chats.kotlinlang.org/t/16139070/i-havee-to-admin-it-s-very-frustrating-that-there-is-no-stan
+        // THis is not used currently
+        val androidUnitTest by getting
+
         commonMain.dependencies {
             // DI
             api(libs.koin.core)
@@ -130,7 +139,7 @@ kotlin {
 }
 
 android {
-    namespace = "gopro.open_gopro.network"
+    namespace = "gopro.open_gopro"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -155,6 +164,8 @@ dependencies {
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.mockito.android)
+    androidTestImplementation(libs.koin.test.junit4)
 
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)
