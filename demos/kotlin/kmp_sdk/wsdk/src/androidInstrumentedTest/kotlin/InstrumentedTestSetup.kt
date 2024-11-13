@@ -1,6 +1,4 @@
 import androidx.test.platform.app.InstrumentationRegistry
-import connector.AndroidDnsApi
-import connector.AndroidWifiApi
 import domain.network.IDnsApi
 import domain.network.IWifiApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,14 +11,13 @@ import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import org.koin.core.context.unloadKoinModules
 import org.koin.core.module.Module
-import org.koin.dsl.bind
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.mock.MockProviderRule
 import org.koin.test.mock.declareMock
 import org.mockito.Mockito
 
-open class AndroidInstrumentedKoinTest: KoinTest {
+open class AndroidInstrumentedKoinTest : KoinTest {
     @get:Rule
     val mockProvider = MockProviderRule.create { clazz ->
         Mockito.mock(clazz.java)
@@ -38,8 +35,11 @@ class KoinTestRule(private val additionalModules: List<Module>? = null) : TestWa
     private val testModule: Module
 
     init {
-        AppContext.set(InstrumentationRegistry.getInstrumentation().targetContext.applicationContext)
-        Wsdk.init(UnconfinedTestDispatcher(), AppContext)
+        Wsdk.init(
+            dispatcher = UnconfinedTestDispatcher(),
+            appContext = WsdkAppContext().apply {
+                set(InstrumentationRegistry.getInstrumentation().targetContext.applicationContext)
+            })
         testModule = WsdkIsolatedKoinContext.koinModules!!
     }
 

@@ -1,5 +1,6 @@
 package gopro
 
+import WsdkIsolatedKoinContext
 import co.touchlab.kermit.Logger
 import domain.communicator.BleCommunicator
 import domain.communicator.HttpCommunicator
@@ -28,8 +29,6 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.offsetAt
 import kotlinx.datetime.toLocalDateTime
 import operation.GpMarshaller
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -40,16 +39,17 @@ private const val TRACE_LOG = false
 private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
 }
 
-class GoProFacade(override val serialId: String) : IGpDescriptor, KoinComponent {
-    private val cameraConnector: ICameraConnector by inject()
-    private val dispatcher: CoroutineDispatcher by inject()
-    private val facadeFactory: IGoProFacadeFactory by inject()
+class GoProFacade(override val serialId: String) : IGpDescriptor {
+    private val cameraConnector: ICameraConnector = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
+    private val dispatcher: CoroutineDispatcher = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
+    private val facadeFactory: IGoProFacadeFactory =
+        WsdkIsolatedKoinContext.getWsdkKoinApp().get()
 
     private val operationMarshaller = GpMarshaller(this)
 
     // TODO get the correct scope
     // TODO how to cancel immediately when exception is found?
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { context, throwable ->
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         logger.e("Caught exception in coroutine:", throwable)
     }
 
@@ -184,7 +184,6 @@ class GoProFacade(override val serialId: String) : IGpDescriptor, KoinComponent 
             setDateTime()
             isInitialized = true
         }
-        logger.d("TODO remove me")
     }
 
     companion object {

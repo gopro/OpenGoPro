@@ -23,19 +23,17 @@
 
     <application
         android:networkSecurityConfig="@xml/network_security_config"
-        android:name=".MyApplication"
+        android:name=".SimplifiedApplication"
         android:allowBackup="true"
         android:enableOnBackInvokedCallback="true"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.Material.Light.NoActionBar"
-        tools:targetApi="tiramisu">
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
         <activity
-            android:name=".MainActivity"
+            android:name=".SimplifiedActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|mnc|colorMode|density|fontScale|fontWeightAdjustment|keyboard|layoutDirection|locale|mcc|navigation|smallestScreenSize|touchscreen|uiMode"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -1,5 +1,6 @@
 package gopro.open_gopro
 
+import WsdkAppContext
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.Manifest.permission.ACCESS_WIFI_STATE
@@ -13,7 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import app
 
-class MainActivity : ComponentActivity() {
+class SimplifiedActivity : ComponentActivity() {
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { isGranted ->
@@ -44,7 +45,8 @@ class MainActivity : ComponentActivity() {
 
 
     private fun startApp() {
-        app()
+        val appContext = WsdkAppContext().apply { set(applicationContext) }
+        app(appContext)
     }
 
 

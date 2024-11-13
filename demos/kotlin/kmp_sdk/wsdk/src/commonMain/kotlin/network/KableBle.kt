@@ -24,13 +24,13 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.takeWhile
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 
-internal class KableAdvertisement(val platformAdvertisement: PlatformAdvertisement) : BleAdvertisement {
+internal class KableAdvertisement(val platformAdvertisement: PlatformAdvertisement) :
+    BleAdvertisement {
     override val name = platformAdvertisement.name
     override val id = platformAdvertisement.identifier.toString()
 }
@@ -176,13 +176,13 @@ internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
         }
         return Result.success(
             scanner.advertisements
+                .onStart { nameAdvMap.clear() }
                 .filter { it.name != null }
                 .onEach {
                     logger.d("Received advertisement: ${it.identifier} ==> ${it.name!!}")
                     nameAdvMap[it.name!!] = KableAdvertisement(it)
                 }
                 .map { KableAdvertisement(it) }
-                .onCompletion { nameAdvMap.clear() }
         )
     }
 
@@ -193,7 +193,7 @@ internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
             device.connect() // TODO how to wait for connect
             deviceMap[device.serialId] = device
             Result.success(device)
-        } ?: Result.failure(Exception("Failed to connect."))
+        } ?: Result.failure(Exception("advertisement ${advertisement.id} not found"))
 
     override suspend fun enableNotifications(
         device: BleDevice,

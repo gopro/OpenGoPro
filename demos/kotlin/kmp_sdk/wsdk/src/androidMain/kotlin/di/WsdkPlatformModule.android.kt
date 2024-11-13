@@ -1,6 +1,6 @@
 package di
 
-import AppContext
+import WsdkAppContext
 import android.content.Context
 import android.net.wifi.WifiManager
 import connector.AndroidDnsApi
@@ -14,7 +14,7 @@ import network.AndroidHttpClientProvider
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-internal actual fun buildWsdkPlatformModule(appContext: AppContext): WsdkPlatformModule {
+internal actual fun buildWsdkPlatformModule(appContext: WsdkAppContext): WsdkPlatformModule {
     return object : WsdkPlatformModule {
         val context = appContext.get()
         override val module = module {

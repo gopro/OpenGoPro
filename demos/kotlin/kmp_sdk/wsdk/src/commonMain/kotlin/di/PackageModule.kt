@@ -1,6 +1,6 @@
 package di
 
-import AppContext
+import WsdkAppContext
 import connector.GpBleConnector
 import connector.GpDnsConnector
 import connector.GpWifiConnector
@@ -15,10 +15,10 @@ import network.KableBle
 import network.KtorHttp
 import org.koin.dsl.module
 
-fun buildPackageModules(dispatcher: CoroutineDispatcher, appContext: AppContext) = module {
-    includes(buildWsdkPlatformModules(appContext))
-
+fun buildPackageModules(dispatcher: CoroutineDispatcher, appContext: WsdkAppContext) = module {
     single<CoroutineDispatcher> { dispatcher }
+
+    includes(buildWsdkPlatformModules(appContext))
 
     // Network ConnectorFactory and communicator APIs
     single<IBleApi> { KableBle(get()) }

@@ -1,8 +1,10 @@
 package gopro.open_gopro
 
-import AppContext
+import Wsdk
+import WsdkAppContext
 import android.app.Application
 import di.buildAppModule
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
@@ -12,11 +14,11 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        AppContext.set(applicationContext)
+        val appContext = WsdkAppContext().apply { set(applicationContext) }
+        Wsdk.init(Dispatchers.IO, appContext)
         startKoin {
             androidLogger(Level.DEBUG)
-            modules(buildAppModule(AppContext))
-//            androidContext(this@MyApplication) // Set by our app context
+            modules(buildAppModule(appContext = appContext))
         }
     }
 }

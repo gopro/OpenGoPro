@@ -1,15 +1,11 @@
 package di
 
-import AppContext
-import Wsdk
+import WsdkAppContext
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import database.AppDatabase
 import database.CameraRepository
 import database.IDatabaseProvider
 import domain.data.ICameraRepository
-import entity.network.IHttpsCredentials
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.HttpClientEngine
 import kotlinx.coroutines.CoroutineDispatcher
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -18,7 +14,7 @@ internal interface WsdkPlatformModule {
     val module: Module
 }
 
-internal expect fun buildWsdkPlatformModule(appContext: AppContext): WsdkPlatformModule
+internal expect fun buildWsdkPlatformModule(appContext: WsdkAppContext): WsdkPlatformModule
 
 private fun getRoomDatabase(
     provider: IDatabaseProvider,
@@ -28,7 +24,7 @@ private fun getRoomDatabase(
     .setQueryCoroutineContext(dispatcher)
     .build()
 
-internal fun buildWsdkPlatformModules(appContext: AppContext) = module {
+internal fun buildWsdkPlatformModules(appContext: WsdkAppContext) = module {
     includes(buildWsdkPlatformModule(appContext).module)
 
     // Note! We can't create HTTP engine / client singletons because they can be created dynamically

@@ -1,17 +1,15 @@
 package features
 
+import WsdkIsolatedKoinContext
 import domain.connector.ConnectionRequestContext
 import domain.data.ICameraRepository
 import entity.connector.ScanResult
 import kotlinx.coroutines.delay
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class ConnectWifiFeature(featureContext: IFeatureContext) : IFeatureContext by featureContext,
-    KoinComponent {
-    private val cameraRepo: ICameraRepository by inject()
+class ConnectWifiFeature(featureContext: IFeatureContext) : IFeatureContext by featureContext {
+    private val cameraRepo: ICameraRepository = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
 
     suspend fun connect() {
         // Get Wifi info and enable Access Point via BLE

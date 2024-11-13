@@ -7,7 +7,7 @@ import org.koin.core.KoinApplication
 import org.koin.core.module.Module
 import org.koin.dsl.koinApplication
 
-expect object AppContext
+expect class WsdkAppContext
 
 // https://insert-koin.io/docs/reference/koin-core/context-isolation
 internal object WsdkIsolatedKoinContext {
@@ -15,30 +15,25 @@ internal object WsdkIsolatedKoinContext {
     private var koinApp: KoinApplication? = null
     internal var koinModules: Module? = null
 
-    fun init(dispatcher: CoroutineDispatcher, appContext: AppContext) {
+    fun init(dispatcher: CoroutineDispatcher, appContext: WsdkAppContext) {
         // TODO handle multiple inits
-
-        koinModules = buildPackageModules(dispatcher, appContext).also { modules ->
-            koinApp = koinApplication {
-                modules(modules)
-            }
-        }
+        koinModules = buildPackageModules(dispatcher, appContext)
+        koinApp = koinApplication { modules(koinModules!!) }
     }
 
-    fun getWsdkKoinApp(): Koin? = koinApp?.koin
+    fun getWsdkKoinApp(): Koin =
+        koinApp?.koin ?: throw Exception("WSDK has not yet been initialized")
 }
 
 object Wsdk {
     // https://medium.com/@gusakov.giorgi/using-koin-dependency-injection-in-library-sdk-7be76291ecad
 
-    fun init(dispatcher: CoroutineDispatcher, appContext: AppContext) =
+    fun init(dispatcher: CoroutineDispatcher, appContext: WsdkAppContext) =
         WsdkIsolatedKoinContext.init(dispatcher, appContext)
 
-    fun getCameraConnector(): ICameraConnector =
-        WsdkIsolatedKoinContext.getWsdkKoinApp()?.get()
-            ?: throw Exception("Wsdk has not yet been initialized")
+
+    fun getCameraConnector(): ICameraConnector = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
 
     fun getGoProFacadeFactory(): IGoProFacadeFactory =
-        WsdkIsolatedKoinContext.getWsdkKoinApp()?.get()
-            ?: throw Exception("Wsdk has not yet been initialized")
+        WsdkIsolatedKoinContext.getWsdkKoinApp().get()
 }
