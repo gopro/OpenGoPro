@@ -10,5 +10,5 @@ data class DnsScanResult(
 )
 
 interface IDnsApi {
-    suspend fun scan(serviceType: String): Result<Flow<DnsScanResult>>
+    suspend fun scan(serviceType: String): Result<Flow<domain.network.DnsScanResult>>
 }

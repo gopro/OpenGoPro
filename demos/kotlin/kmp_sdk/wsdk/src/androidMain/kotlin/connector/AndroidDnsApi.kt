@@ -20,7 +20,7 @@ private val logger = Logger.withTag("AndroidDnsApi")
 class AndroidDnsApi(
     context: Context,
     dispatcher: CoroutineDispatcher
-) : IDnsApi {
+) : domain.network.IDnsApi {
     // TODO how to cancel immediately when exception is found?
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         logger.e("Caught exception in coroutine:", throwable)
@@ -48,7 +48,7 @@ class AndroidDnsApi(
     }
 
 
-    override suspend fun scan(serviceType: String): Result<Flow<DnsScanResult>> {
+    override suspend fun scan(serviceType: String): Result<Flow<domain.network.DnsScanResult>> {
         val discoveryListener = DiscoveryListener(serviceType, nsdManager, nsdResolveListener)
 
         nsdManager.discoverServices(
@@ -58,7 +58,12 @@ class AndroidDnsApi(
         )
         return Result.success(mdnsScanResults
             .filter { it.hostAddresses.first().hostAddress != null }
-            .map { DnsScanResult(it.hostAddresses.first().hostAddress!!, it.serviceName) })
+            .map {
+                domain.network.DnsScanResult(
+                    it.hostAddresses.first().hostAddress!!,
+                    it.serviceName
+                )
+            })
     }
 
     private class DiscoveryListener(

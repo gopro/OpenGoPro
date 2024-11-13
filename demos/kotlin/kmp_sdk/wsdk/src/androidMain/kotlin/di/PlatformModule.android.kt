@@ -23,7 +23,7 @@ actual val wsdkPlatformModule = object : WsdkPlatformModule {
         // This is instead of an expect / actual classes. It seemed a good pattern to conditionally pass context.
         // TODO can we make this an interface somehow? There is no compile-time enforcement of their existence.
         single { AndroidWifiApi(androidContext(), get(), get()) }.bind(IWifiApi::class)
-        single { AndroidDnsApi(androidContext(), get()) }.bind(IDnsApi::class)
+        single { AndroidDnsApi(androidContext(), get()) }.bind(domain.network.IDnsApi::class)
         single { AndroidDatabaseProvider(androidContext()) }.bind(IDatabaseProvider::class)
         single { AndroidHttpClientProvider }.bind(IHttpClientProvider::class)
     }

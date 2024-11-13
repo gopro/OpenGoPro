@@ -35,7 +35,6 @@ kotlin {
         val androidUnitTest by getting
 
         commonMain.dependencies {
-            implementation(projects.domain)
             implementation(projects.wsdk)
 
             // UI
@@ -63,9 +62,6 @@ kotlin {
             // Datastore
             implementation(libs.datastore)
             implementation(libs.datastore.preferences)
-
-            // UUID
-            implementation(libs.uuid)
 
             // Coil
             implementation(libs.coil.compose.core)

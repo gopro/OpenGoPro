@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class GpDnsConnector(
-    private val dnsApi: IDnsApi,
+    private val dnsApi: domain.network.IDnsApi,
     override val cameraRepo: ICameraRepository
 ) : IConnector<ScanResult.Dns, ConnectionDescriptor.Http> {
     // TODO how to choose USB / WIFI here? Does it even matter?

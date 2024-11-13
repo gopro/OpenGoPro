@@ -37,5 +37,4 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
-include(":domain")
 include(":wsdk")

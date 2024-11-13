@@ -11,7 +11,39 @@ plugins {
     alias(libs.plugins.dokka)
 }
 
+// TODO how to to move to libs.versions.toml
+// https://mvnrepository.com/artifact/com.google.protobuf/protoc
+val protocVersion by extra("4.26.1")
+// https://github.com/streem/pbandk/releases/tag/v0.16.0
 val pbandkVersion by extra("0.16.0")
+
+//dependencies {
+//    implementation("pro.streem.pbandk:pbandk-runtime:$pbandkVersion")
+//}
+
+//protobuf {
+//    generatedFilesBaseDir = "src"
+//    protoc {
+//        artifact = "com.google.protobuf:protoc:$protocVersion"
+//    }
+//    plugins {
+//        id("pbandk") {
+//            artifact = "pro.streem.pbandk:protoc-gen-pbandk-jvm:$pbandkVersion:jvm8@jar"
+//        }
+//    }
+//    generateProtoTasks {
+//        all().configureEach {
+//            builtins {
+//                java { }
+//            }
+//            plugins {
+//                id("pbandk") {
+//                    option("kotlin_package=ogp.pb")
+//                }
+//            }
+//        }
+//    }
+//}
 
 kotlin {
     androidTarget {
@@ -31,8 +63,6 @@ kotlin {
         val desktopMain by getting
 
         commonMain.dependencies {
-            implementation(projects.domain)
-
             // DI
             api(libs.koin.core)
             implementation(libs.koin.compose) // TODO do we need this
@@ -40,6 +70,9 @@ kotlin {
 
             // Logging
             implementation(libs.kermit)
+
+            // Dates
+            api(libs.kotlinx.datetime)
 
             // Concurrency / Streams
             implementation(libs.kotlinx.coroutines)
