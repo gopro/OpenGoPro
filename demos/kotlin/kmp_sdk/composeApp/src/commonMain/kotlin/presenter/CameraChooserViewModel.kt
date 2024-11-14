@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import domain.connector.ConnectionRequestContext
-import entity.connector.ICameraConnector
+import domain.connector.ICameraConnector
+import domain.gopro.IGoProFactory
+import entity.connector.ConnectionRequestContext
 import entity.connector.NetworkType
 import entity.connector.ScanResult
-import gopro.IGoProFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -42,7 +42,6 @@ sealed class CameraChooserUiState(val name: String) {
 
 class CameraChooserViewModel(
     private val connector: ICameraConnector,
-    private val goProFactory: IGoProFactory,
     private val appPreferences: IAppPreferences,
 ) : ViewModel() {
     private val found = hashMapOf<String, ScanResult>() // Used to prevent duplicates
@@ -106,10 +105,9 @@ class CameraChooserViewModel(
             connector.connect(target, requestContext)
                 .fold(
                     onSuccess = {
-                        logger.d { "Connected to ${it.serialId}." }
-                        goProFactory.storeConnection(it)
-                        appPreferences.setConnectedDevice(it.serialId)
-                        logger.d { "Stored ${it.serialId} connection to data store." }
+                        logger.d { "Connected to ${it}." }
+                        appPreferences.setConnectedDevice(it)
+                        logger.d { "Stored $it connection to data store." }
                         _state.update { CameraChooserUiState.Connected }
                     },
                     onFailure = {

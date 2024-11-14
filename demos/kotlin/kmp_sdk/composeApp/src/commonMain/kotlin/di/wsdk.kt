@@ -1,8 +1,8 @@
 package di
 
 import Wsdk
-import entity.connector.ICameraConnector
-import gopro.IGoProFactory
+import domain.connector.ICameraConnector
+import domain.gopro.IGoProFactory
 import org.koin.core.module.Module
 import org.koin.dsl.module
 

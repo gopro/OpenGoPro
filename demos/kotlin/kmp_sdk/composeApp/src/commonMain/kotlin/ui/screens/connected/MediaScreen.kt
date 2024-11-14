@@ -1,6 +1,5 @@
 package ui.screens.connected
 
-import entity.media.MediaMetadata
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import entity.operation.MediaId
+import entity.operation.MediaMetadata
 import presenter.MediaUiState
 import presenter.MediaViewModel
 import ui.common.Screen

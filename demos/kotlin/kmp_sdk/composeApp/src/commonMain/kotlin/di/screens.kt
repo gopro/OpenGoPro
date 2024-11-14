@@ -17,7 +17,7 @@ val cameraScreenModule = module {
 }
 
 val cameraChooserScreenModule = module {
-    viewModel { CameraChooserViewModel(get(), get(), get()) }
+    viewModel { CameraChooserViewModel(get(), get()) }
 }
 
 val mediaScreenModule = module {

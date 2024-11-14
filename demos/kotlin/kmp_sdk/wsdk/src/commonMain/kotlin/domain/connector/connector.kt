@@ -11,7 +11,7 @@ interface ICameraConnector {
     suspend fun connect(
         target: ScanResult,
         connectionRequestContext: ConnectionRequestContext? = null
-    ): Result<ConnectionDescriptor>
+    ): Result<String>
 }
 
 

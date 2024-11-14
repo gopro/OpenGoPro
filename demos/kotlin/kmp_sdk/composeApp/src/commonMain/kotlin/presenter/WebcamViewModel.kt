@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
+import domain.gopro.IGoProFactory
 import entity.operation.WebcamError
 import entity.operation.WebcamProtocol
 import entity.operation.WebcamStatus
 import gopro.GoPro
-import gopro.IGoProFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

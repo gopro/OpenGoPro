@@ -23,11 +23,11 @@ fun app(appContext: WsdkAppContext) {
         // Discover and take the first device we find
         val target = connector.discover(NetworkType.BLE).first()
 
-        // Connect and store it
-        val connection = connector.connect(target).getOrThrow()
-        // TODO can we move this into the connector
-        goproFactory.storeConnection(connection)
-        val gopro = goproFactory.getGoPro(connection.serialId)
+        // Connect
+        val goproId = connector.connect(target).getOrThrow()
+
+        // Now retrieve the gopro
+        val gopro = goproFactory.getGoPro(goproId)
 
         // Set the shutter
         gopro.commands.setShutter(true)

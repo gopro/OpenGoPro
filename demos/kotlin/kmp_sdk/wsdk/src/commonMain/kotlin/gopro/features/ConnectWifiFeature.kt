@@ -30,7 +30,6 @@ class ConnectWifiFeature internal constructor(private val context: IFeatureConte
                     ssid,
                     password
                 )
-                context.facadeFactory.storeConnection(it)
                 return
             }
             // Toggle AP mode to try to recover

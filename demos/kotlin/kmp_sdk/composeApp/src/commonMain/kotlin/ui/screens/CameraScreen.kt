@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import co.touchlab.kermit.Logger
-import domain.gopro.CohnState
+import entity.operation.CohnState
 import entity.queries.Resolution
 import presenter.CameraUiState
 import presenter.CameraViewModel

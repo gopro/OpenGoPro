@@ -1,7 +1,6 @@
 package fakes
 
 import domain.connector.ICameraConnector
-import entity.connector.ConnectionDescriptor
 import entity.connector.ConnectionRequestContext
 import entity.connector.NetworkType
 import entity.connector.ScanResult
@@ -15,7 +14,7 @@ class FakeCameraConnector : ICameraConnector {
     override suspend fun connect(
         target: ScanResult,
         connectionRequestContext: ConnectionRequestContext?
-    ): Result<ConnectionDescriptor> {
+    ): Result<String> {
         TODO("Not yet implemented")
     }
 }

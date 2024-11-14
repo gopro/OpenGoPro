@@ -2,10 +2,25 @@
 
 This is the top level WSDK module documentation.
 
-## Stuff
+## Usage
 
-here's some stuff
+```kotlin
+// Initialize WSDK and get the top level objects
+Wsdk.init(dispatcher, appContext)
+val connector = Wsdk.getCameraConnector()
+val goproFactory = Wsdk.getGoProFactory()
 
-### More Stuff
+coroutineScope.launch {
+    // Discover and take the first device we find
+    val target = connector.discover(NetworkType.BLE).first()
 
-Here's even more stuff.
+    // Connect
+    val goproId = connector.connect(target).getOrThrow()
+
+    // Now retrieve the gopro
+    val gopro = goproFactory.getGoPro(goproId)
+
+    // Set the shutter
+    gopro.commands.setShutter(true)
+}
+```

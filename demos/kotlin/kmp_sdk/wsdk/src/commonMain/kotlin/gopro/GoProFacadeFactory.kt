@@ -23,8 +23,6 @@ internal class GoProFactory(
     private val bleApi: IBleApi,
     private val httpApi: IHttpApi,
     private val wifiApi: IWifiApi,
-    private val cameraRepository: ICameraRepository,
-    private val cameraConnector: ICameraConnector,
     private val httpClientProvider: IHttpClientProvider,
     private val dispatcher: CoroutineDispatcher
 ) : IGoProFactory {

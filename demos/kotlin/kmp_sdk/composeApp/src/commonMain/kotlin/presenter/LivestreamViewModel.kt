@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
+import domain.gopro.IGoProFactory
 import entity.operation.AccessPointState
 import entity.operation.LivestreamConfigurationRequest
 import entity.operation.LivestreamState
 import entity.operation.LivestreamStatus
 import gopro.GoPro
-import gopro.IGoProFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
