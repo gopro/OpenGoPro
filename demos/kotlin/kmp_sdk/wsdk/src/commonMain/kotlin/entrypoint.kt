@@ -1,6 +1,6 @@
 import di.buildPackageModules
-import entity.connector.ICameraConnector
-import gopro.IGoProFacadeFactory
+import domain.connector.ICameraConnector
+import domain.gopro.IGoProFacadeFactory
 import kotlinx.coroutines.CoroutineDispatcher
 import org.koin.core.Koin
 import org.koin.core.KoinApplication

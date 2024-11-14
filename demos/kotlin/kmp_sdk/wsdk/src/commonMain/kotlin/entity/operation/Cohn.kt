@@ -1,10 +1,27 @@
 package entity.operation
 
+import entity.network.IHttpsCredentials
 import entity.operation.proto.EnumCOHNNetworkState
 import entity.operation.proto.EnumCOHNStatus
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+
+sealed class CohnState {
+
+    data object Unprovisioned : CohnState() {
+        override fun toString(): String = "Unprovisioned"
+    }
+
+    data class Provisioned(
+        override val username: String,
+        override val password: String,
+        val ipAddress: String,
+        override val certificates: List<String>
+    ) : CohnState(), IHttpsCredentials {
+        override fun toString(): String = "Provisioned"
+    }
+}
 
 @Serializable
 data class CohnStatus(

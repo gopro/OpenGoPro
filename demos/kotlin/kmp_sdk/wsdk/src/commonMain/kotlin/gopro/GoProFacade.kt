@@ -5,14 +5,13 @@ import co.touchlab.kermit.Logger
 import domain.communicator.BleCommunicator
 import domain.communicator.HttpCommunicator
 import domain.communicator.ICommunicator
-import domain.gopro.CohnState
+import domain.connector.ICameraConnector
 import domain.gopro.GpDescriptorManager
+import domain.gopro.IGoProFacadeFactory
 import domain.gopro.IGpDescriptor
 import entity.communicator.CommunicationType
-import entity.connector.ICameraConnector
 import entity.operation.AccessPointState
-import features.FeatureContext
-import features.FeaturesContainer
+import entity.operation.CohnState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope

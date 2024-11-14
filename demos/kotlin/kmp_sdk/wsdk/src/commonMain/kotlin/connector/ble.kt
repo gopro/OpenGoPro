@@ -1,10 +1,9 @@
 package connector
 
-import co.touchlab.kermit.Logger
-import domain.connector.ConnectionRequestContext
 import domain.connector.IConnector
 import domain.network.IBleApi
 import entity.connector.ConnectionDescriptor
+import entity.connector.ConnectionRequestContext
 import entity.connector.NetworkType
 import entity.connector.ScanResult
 import entity.network.BleAdvertisement

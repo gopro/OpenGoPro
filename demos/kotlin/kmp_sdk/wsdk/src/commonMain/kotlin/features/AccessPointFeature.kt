@@ -3,6 +3,7 @@ package features
 import co.touchlab.kermit.Logger
 import entity.operation.AccessPointState
 import entity.operation.ApScanEntry
+import gopro.IFeatureContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.onEach

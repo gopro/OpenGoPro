@@ -1,13 +1,19 @@
 package domain.connector
 
 import entity.connector.ConnectionDescriptor
+import entity.connector.ConnectionRequestContext
 import entity.connector.NetworkType
 import entity.connector.ScanResult
 import kotlinx.coroutines.flow.Flow
 
-sealed interface ConnectionRequestContext {
-    data class Wifi(val password: String) : ConnectionRequestContext
+interface ICameraConnector {
+    suspend fun discover(vararg networkTypes: NetworkType): Flow<ScanResult>
+    suspend fun connect(
+        target: ScanResult,
+        connectionRequestContext: ConnectionRequestContext? = null
+    ): Result<ConnectionDescriptor>
 }
+
 
 internal interface IConnector<S : ScanResult, C : ConnectionDescriptor> {
     val networkType: NetworkType

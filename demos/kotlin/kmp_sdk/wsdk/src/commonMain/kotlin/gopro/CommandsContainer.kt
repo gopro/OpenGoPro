@@ -40,61 +40,60 @@ import operation.commands.WebcamGetState
 import operation.commands.WebcamStart
 import operation.commands.WebcamStop
 
-class CommandsContainer internal constructor(marshaller: IOperationMarshaller) :
-    IOperationMarshaller by marshaller {
+class CommandsContainer internal constructor(private val marshaller: IOperationMarshaller) {
     /**
      * Enable / disable the shutter to start / stop encoding
      *
      * @param value true to enable, false to disable
      */
     suspend fun setShutter(value: Boolean) =
-        marshal(SetShutter(value)) {
+        marshaller.marshal(SetShutter(value)) {
             isFastpass { operation, _ -> operation.shutter }
         }
 
     suspend fun readWifiSsid() =
-        marshal(ReadWifiSsid())
+        marshaller.marshal(ReadWifiSsid())
 
     suspend fun readWifiPassword() =
-        marshal(ReadWifiPassword())
+        marshaller.marshal(ReadWifiPassword())
 
     suspend fun setApMode(enable: Boolean) =
-        marshal(SetApMode(enable))
+        marshaller.marshal(SetApMode(enable))
 
     suspend fun getMediaList() =
-        marshal(MediaGetList()) { useCommunicator { _, _ -> CommunicationType.HTTP } }
+        marshaller.marshal(MediaGetList()) { useCommunicator { _, _ -> CommunicationType.HTTP } }
 
     suspend fun getMediaMetadata(file: MediaId) =
-        marshal(MediaGetMetadata(file)) { useCommunicator { _, _ -> CommunicationType.HTTP } }
+        marshaller.marshal(MediaGetMetadata(file)) { useCommunicator { _, _ -> CommunicationType.HTTP } }
 
     suspend fun downloadMedia(file: MediaId) =
-        marshal(MediaDownload(file)) { useCommunicator { _, _ -> CommunicationType.HTTP } }
+        marshaller.marshal(MediaDownload(file)) { useCommunicator { _, _ -> CommunicationType.HTTP } }
 
     suspend fun getScreenNail(file: MediaId) =
-        marshal(MediaGetScreennail(file)) { useCommunicator { _, _ -> CommunicationType.HTTP } }
+        marshaller.marshal(MediaGetScreennail(file)) { useCommunicator { _, _ -> CommunicationType.HTTP } }
 
     suspend fun getThumbNail(file: MediaId) =
-        marshal(MediaGetThumbnail(file)) { useCommunicator { _, _ -> CommunicationType.HTTP } }
+        marshaller.marshal(MediaGetThumbnail(file)) { useCommunicator { _, _ -> CommunicationType.HTTP } }
 
     suspend fun sendKeepAlive() =
-        marshal(KeepAlive()) { useCommunicator { _, _ -> CommunicationType.BLE } }
+        marshaller.marshal(KeepAlive()) { useCommunicator { _, _ -> CommunicationType.BLE } }
 
     suspend fun getHardwareInfo() =
-        marshal(GetHardwareInfo())
+        marshaller.marshal(GetHardwareInfo())
 
     suspend fun setCameraControl(status: CameraControlStatus) =
-        marshal(SetCameraControl(status))
+        marshaller.marshal(SetCameraControl(status))
 
     suspend fun configureLivestream(request: LivestreamConfigurationRequest) =
-        marshal(LivestreamConfigure(request))
+        marshaller.marshal(LivestreamConfigure(request))
 
     suspend fun startPreviewStream() =
-        marshal(PreviewStreamStart()) {
+        marshaller.marshal(PreviewStreamStart()) {
             useCommunicator { _, _ -> CommunicationType.HTTP }
         }
 
     suspend fun stopPreviewStream() =
-        marshal(PreviewStreamStop()) {
+        marshaller.marshal(PreviewStreamStop()) {
             useCommunicator { _, _ -> CommunicationType.HTTP }
         }
 
@@ -104,58 +103,58 @@ class CommandsContainer internal constructor(marshaller: IOperationMarshaller) :
         port: Int? = null,
         protocol: WebcamProtocol? = null
     ) =
-        marshal(WebcamStart(resolution, fov, port, protocol)) {
+        marshaller.marshal(WebcamStart(resolution, fov, port, protocol)) {
             useCommunicator { _, _ -> CommunicationType.HTTP }
         }
 
     suspend fun startLivestream(request: LivestreamConfigurationRequest) =
-        marshal(LivestreamConfigure(request))
+        marshaller.marshal(LivestreamConfigure(request))
 
     suspend fun getLivestreamState() =
-        marshal(LivestreamGetStatus())
+        marshaller.marshal(LivestreamGetStatus())
 
     suspend fun stopWebcam() =
-        marshal(WebcamStop()) {
+        marshaller.marshal(WebcamStop()) {
             useCommunicator { _, _ -> CommunicationType.HTTP }
         }
 
     suspend fun getWebcamState() =
-        marshal(WebcamGetState()) {
+        marshaller.marshal(WebcamGetState()) {
             useCommunicator { _, _ -> CommunicationType.HTTP }
         }
 
     suspend fun scanAccessPoint() =
-        marshal(AccessPointScan())
+        marshaller.marshal(AccessPointScan())
 
     suspend fun getAccessPointScanResults(scanId: Int, totalEntries: Int) =
-        marshal(AccessPointGetScanResults(scanId, totalEntries))
+        marshaller.marshal(AccessPointGetScanResults(scanId, totalEntries))
 
     suspend fun connectAccessPoint(ssid: String) =
-        marshal(ConnectProvisionedAccessPoint(ssid))
+        marshaller.marshal(ConnectProvisionedAccessPoint(ssid))
 
     suspend fun connectAccessPoint(ssid: String, password: String) =
-        marshal(ConnectNewAccessPoint(ssid, password))
+        marshaller.marshal(ConnectNewAccessPoint(ssid, password))
 
     suspend fun getPresetInfo() =
-        marshal(PresetGetInfo())
+        marshaller.marshal(PresetGetInfo())
 
     suspend fun getCohnStatus() =
-        marshal(CohnGetStatus())
+        marshaller.marshal(CohnGetStatus())
 
 
     suspend fun getCohnCertificate() =
-        marshal(CohnGetCert())
+        marshaller.marshal(CohnGetCert())
 
     suspend fun clearCohnCertificate() =
-        marshal(CohnClearCert())
+        marshaller.marshal(CohnClearCert())
 
     suspend fun createCohnCertificate(override: Boolean) =
-        marshal(CohnCreateCert(override))
+        marshaller.marshal(CohnCreateCert(override))
 
     suspend fun setDateTime(
         datetime: LocalDateTime,
         utcOffset: UtcOffset,
         isDaylightSavings: Boolean
     ) =
-        marshal(DatetimeSet(datetime, utcOffset, isDaylightSavings))
+        marshaller.marshal(DatetimeSet(datetime, utcOffset, isDaylightSavings))
 }

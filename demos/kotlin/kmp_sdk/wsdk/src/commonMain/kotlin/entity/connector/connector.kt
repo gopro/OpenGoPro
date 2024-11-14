@@ -1,10 +1,7 @@
 package entity.connector
 
-import domain.connector.ConnectionRequestContext
-import entity.network.BleAdvertisement
 import entity.network.BleDevice
 import entity.network.IHttpsCredentials
-import kotlinx.coroutines.flow.Flow
 
 enum class NetworkType {
     BLE,
@@ -13,12 +10,8 @@ enum class NetworkType {
     USB
 }
 
-interface ICameraConnector {
-    suspend fun discover(vararg networkTypes: NetworkType): Flow<ScanResult>
-    suspend fun connect(
-        target: ScanResult,
-        connectionRequestContext: ConnectionRequestContext? = null
-    ): Result<ConnectionDescriptor>
+sealed interface ConnectionRequestContext {
+    data class Wifi(val password: String) : ConnectionRequestContext
 }
 
 sealed interface ScanResult {

@@ -4,24 +4,20 @@ import co.touchlab.kermit.Logger
 import domain.communicator.BleCommunicator
 import domain.communicator.HttpCommunicator
 import domain.communicator.ICommunicator
+import domain.connector.ICameraConnector
 import domain.data.ICameraRepository
+import domain.gopro.IGoProFacadeFactory
 import domain.network.IBleApi
 import domain.network.IHttpApi
 import domain.network.IHttpClientProvider
 import domain.network.IWifiApi
 import entity.connector.ConnectionDescriptor
-import entity.connector.ICameraConnector
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 private val logger = Logger.withTag("GoProFacadeFactory")
-
-interface IGoProFacadeFactory {
-    suspend fun getGoProFacade(serialId: String): GoProFacade
-    suspend fun storeConnection(connection: ConnectionDescriptor)
-}
 
 internal class GoProFacadeFactory(
     private val bleApi: IBleApi,

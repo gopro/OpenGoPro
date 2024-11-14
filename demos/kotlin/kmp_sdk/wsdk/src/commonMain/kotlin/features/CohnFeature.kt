@@ -2,9 +2,10 @@ package features
 
 import co.touchlab.kermit.Logger
 import domain.data.ICameraRepository
-import domain.gopro.CohnState
+import entity.operation.CohnState
 import entity.operation.proto.EnumCOHNNetworkState
 import entity.operation.proto.EnumCOHNStatus
+import gopro.IFeatureContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.transform

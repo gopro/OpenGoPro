@@ -1,9 +1,9 @@
-package gopro
+package connector
 
-import domain.connector.ConnectionRequestContext
+import domain.connector.ICameraConnector
 import domain.connector.IConnector
 import entity.connector.ConnectionDescriptor
-import entity.connector.ICameraConnector
+import entity.connector.ConnectionRequestContext
 import entity.connector.NetworkType
 import entity.connector.ScanResult
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +13,7 @@ class CameraConnector internal constructor(
     private val bleConnector: IConnector<ScanResult.Ble, ConnectionDescriptor.Ble>,
     private val wifiConnector: IConnector<ScanResult.Wifi, ConnectionDescriptor.Http>,
     private val dnsConnector: IConnector<ScanResult.Dns, ConnectionDescriptor.Http>,
-): ICameraConnector {
+) : ICameraConnector {
     override suspend fun discover(vararg networkTypes: NetworkType): Flow<ScanResult> =
         networkTypes.map { networkType ->
             when (networkType) {

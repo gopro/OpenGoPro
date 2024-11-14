@@ -1,9 +1,10 @@
 package features
 
 import WsdkIsolatedKoinContext
-import domain.connector.ConnectionRequestContext
 import domain.data.ICameraRepository
+import entity.connector.ConnectionRequestContext
 import entity.connector.ScanResult
+import gopro.IFeatureContext
 import kotlinx.coroutines.delay
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration

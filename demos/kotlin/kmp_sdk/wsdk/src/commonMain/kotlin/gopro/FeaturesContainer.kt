@@ -1,9 +1,11 @@
-package features
+package gopro
 
+import domain.connector.ICameraConnector
 import domain.gopro.GpDescriptorManager
-import entity.connector.ICameraConnector
-import gopro.GoProFacade
-import gopro.IGoProFacadeFactory
+import domain.gopro.IGoProFacadeFactory
+import features.AccessPointFeature
+import features.CohnFeature
+import features.ConnectWifiFeature
 
 internal interface IFeatureContext {
     val gopro: GoProFacade
