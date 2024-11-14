@@ -3,9 +3,9 @@ package gopro
 import domain.connector.ICameraConnector
 import domain.gopro.GpDescriptorManager
 import domain.gopro.IGoProFactory
-import features.AccessPointFeature
-import features.CohnFeature
-import features.ConnectWifiFeature
+import gopro.features.AccessPointFeature
+import gopro.features.CohnFeature
+import gopro.features.ConnectWifiFeature
 
 internal interface IFeatureContext {
     val gopro: GoPro

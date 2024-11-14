@@ -2,9 +2,8 @@ package operation.commands
 
 import domain.api.BaseOperation
 import domain.communicator.HttpCommunicator
-import entity.media.MediaList
+import entity.operation.MediaList
 import io.ktor.client.call.body
-import io.ktor.client.statement.readBytes
 import io.ktor.http.path
 
 internal class MediaGetList : BaseOperation<MediaList>("Get Media List") {

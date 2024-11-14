@@ -5,8 +5,8 @@ import entity.communicator.CommandId
 import entity.communicator.FeatureId
 import entity.communicator.QueryId
 import entity.communicator.responseProtobufIds
-import entity.constants.SettingId
-import entity.constants.StatusId
+import entity.queries.SettingId
+import entity.queries.StatusId
 import entity.network.GpUuid
 
 

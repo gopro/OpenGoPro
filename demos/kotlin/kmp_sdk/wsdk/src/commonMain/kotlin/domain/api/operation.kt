@@ -6,7 +6,7 @@ import domain.communicator.HttpCommunicator
 import domain.communicator.ICommunicator
 import domain.gopro.IGpDescriptor
 import entity.communicator.CommunicationType
-import entity.exceptions.OperationUnsupportedForCommunicator
+import exceptions.OperationUnsupportedForCommunicator
 import extensions.bleIfAvailable
 import extensions.prettyPrintResult
 

@@ -1,9 +1,9 @@
 package gopro
 
 import domain.api.IOperationMarshaller
-import entity.constants.StatusId
+import entity.queries.StatusId
 import extensions.toBoolean
-import operation.queries.Status
+import domain.queries.Status
 
 @OptIn(ExperimentalUnsignedTypes::class)
 class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {

@@ -1,4 +1,4 @@
-package entity.exceptions
+package exceptions
 
 import entity.communicator.CommunicationType
 

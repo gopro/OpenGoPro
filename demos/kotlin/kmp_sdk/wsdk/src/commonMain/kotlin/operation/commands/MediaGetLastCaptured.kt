@@ -6,8 +6,8 @@ import domain.communicator.HttpCommunicator
 import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.ActionId
 import entity.communicator.FeatureId
-import entity.exceptions.CameraInternalError
-import entity.media.MediaId
+import exceptions.CameraInternalError
+import entity.operation.MediaId
 import entity.network.GpUuid
 import extensions.isOk
 import io.ktor.client.call.body

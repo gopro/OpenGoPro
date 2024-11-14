@@ -8,7 +8,7 @@ import domain.api.operationStrategy
 import domain.communicator.ICommunicator
 import domain.gopro.IGpDescriptor
 import entity.communicator.CommunicationType
-import entity.exceptions.OperationUnsupportedForCommunicator
+import exceptions.OperationUnsupportedForCommunicator
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 

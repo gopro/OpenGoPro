@@ -1,7 +1,7 @@
 package vectors
 
 import entity.operation.OgpVersionHttpResponse
-import entity.media.MediaId
+import entity.operation.MediaId
 import entity.operation.DateTimeHttpResponse
 import entity.operation.HardwareInfo
 import entity.operation.LivestreamConfigurationRequest

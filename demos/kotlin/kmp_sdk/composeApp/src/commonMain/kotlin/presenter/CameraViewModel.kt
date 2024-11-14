@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
 import domain.gopro.CohnState
-import entity.constants.Resolution
+import entity.queries.Resolution
 import gopro.GoPro
 import gopro.IGoProFactory
 import kotlinx.coroutines.flow.MutableStateFlow

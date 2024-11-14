@@ -2,8 +2,7 @@ package operation.commands
 
 import domain.api.BaseOperation
 import domain.communicator.HttpCommunicator
-import entity.media.MediaId
-import io.ktor.client.call.body
+import entity.operation.MediaId
 import io.ktor.client.statement.readBytes
 import io.ktor.http.appendEncodedPathSegments
 import io.ktor.http.path

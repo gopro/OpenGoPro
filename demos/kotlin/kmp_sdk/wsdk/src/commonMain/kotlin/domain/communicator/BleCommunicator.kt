@@ -14,9 +14,9 @@ import entity.communicator.FeatureId
 import entity.communicator.GpStatus
 import entity.communicator.QueryId
 import entity.connector.ConnectionDescriptor
-import entity.constants.SettingId
-import entity.constants.StatusId
-import entity.exceptions.BleError
+import entity.queries.SettingId
+import entity.queries.StatusId
+import exceptions.BleError
 import entity.network.BleNotification
 import entity.network.GpUuid
 import extensions.toPrettyHexString

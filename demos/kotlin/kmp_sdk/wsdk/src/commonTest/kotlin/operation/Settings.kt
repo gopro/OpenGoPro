@@ -1,6 +1,6 @@
 import domain.communicator.BleCommunicator
 import domain.communicator.bleCommunicator.bleFragment
-import entity.constants.Resolution
+import entity.queries.Resolution
 import entity.network.BleNotification
 import entity.network.GpUuid
 import extensions.toTlvMap

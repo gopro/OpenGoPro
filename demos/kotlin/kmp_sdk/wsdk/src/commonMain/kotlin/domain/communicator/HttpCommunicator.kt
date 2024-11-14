@@ -5,9 +5,9 @@ import domain.network.IHttpApi
 import domain.network.IHttpClientProvider
 import entity.communicator.CommunicationType
 import entity.connector.ConnectionDescriptor
-import entity.exceptions.HttpError
-import entity.exceptions.NetworkError
-import entity.exceptions.SerializationError
+import exceptions.HttpError
+import exceptions.NetworkError
+import exceptions.SerializationError
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.plugins.defaultRequest

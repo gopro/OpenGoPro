@@ -1,4 +1,4 @@
-package entity.constants
+package entity.queries
 
 interface UByteEnum {
     val value: UByte
@@ -87,17 +87,5 @@ enum class StatusId(override val value: UByte) : UByteEnum {
 
     companion object : IUByteEnumCompanion<StatusId> {
         override fun fromUByte(value: UByte) = entries.first { it.value == value }
-    }
-}
-
-// TODO do we need to make the types of these enums generic?
-
-enum class PresetGroup(val value: UInt) {
-    VIDEO(1000U),
-    PHOTO(1001U),
-    TIMELAPSE(1002U);
-
-    companion object {
-        fun fromUInt(value: UInt) = entries.first { it.value == value }
     }
 }

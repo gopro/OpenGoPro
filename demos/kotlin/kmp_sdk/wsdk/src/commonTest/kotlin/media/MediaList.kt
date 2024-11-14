@@ -1,9 +1,9 @@
 package media
 
-import entity.media.GroupMediaItemType
-import entity.media.GroupedMediaListItem
-import entity.media.MediaList
-import entity.media.MediaListItem
+import entity.operation.GroupMediaItemType
+import entity.operation.GroupedMediaListItem
+import entity.operation.MediaList
+import entity.operation.MediaListItem
 import entity.operation.jsonDefault
 import vectors.groupedMediaListItemJson
 import vectors.mediaListJson2

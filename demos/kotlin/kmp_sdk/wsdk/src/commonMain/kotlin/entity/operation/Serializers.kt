@@ -1,11 +1,5 @@
 package entity.operation
 
-import entity.media.MediaMetadata
-import entity.media.PhotoMediaMetadata
-import entity.media.VideoMediaMetadata
-import entity.media.GroupedMediaListItem
-import entity.media.MediaListItem
-import entity.media.SingleMediaListItem
 import entity.operation.proto.EnumCOHNNetworkState
 import entity.operation.proto.EnumCOHNStatus
 import entity.operation.proto.EnumFlatMode

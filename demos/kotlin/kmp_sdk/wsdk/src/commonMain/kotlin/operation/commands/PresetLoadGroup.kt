@@ -5,12 +5,12 @@ import domain.communicator.BleCommunicator
 import domain.communicator.HttpCommunicator
 import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.CommandId
-import entity.constants.PresetGroup
+import entity.operation.PresetGroupId
 import extensions.toUByteArray
 import io.ktor.client.call.body
 import io.ktor.http.path
 
-internal class PresetLoadGroup(private val group: PresetGroup) : BaseOperation<Unit>("Load Preset Group") {
+internal class PresetLoadGroup(private val group: PresetGroupId) : BaseOperation<Unit>("Load Preset Group") {
     @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
         communicator.executeTlvCommand(

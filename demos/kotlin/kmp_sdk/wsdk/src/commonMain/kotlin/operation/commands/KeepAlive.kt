@@ -2,7 +2,7 @@ package operation.commands
 
 import domain.api.BaseOperation
 import domain.communicator.BleCommunicator
-import entity.constants.SettingId
+import entity.queries.SettingId
 
 internal class KeepAlive : BaseOperation<Unit>("Keep Alive") {
 

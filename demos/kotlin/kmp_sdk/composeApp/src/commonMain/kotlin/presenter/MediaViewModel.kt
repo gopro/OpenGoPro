@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import entity.media.MediaId
+import entity.operation.MediaId
 import entity.media.MediaMetadata
 import gopro.GoPro
 import gopro.IGoProFactory

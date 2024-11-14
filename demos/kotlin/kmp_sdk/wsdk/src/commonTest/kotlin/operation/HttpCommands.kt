@@ -2,17 +2,17 @@
 
 package operation
 
-import entity.media.PhotoMediaMetadata
-import entity.media.GroupMediaItemType
-import entity.media.GroupedMediaListItem
-import entity.media.MediaId
+import entity.operation.MediaId
 import entity.operation.CameraControlStatus
+import entity.operation.GroupMediaItemType
+import entity.operation.GroupedMediaListItem
 import entity.operation.HardwareInfo
 import entity.operation.Preset
 import entity.operation.PresetInfo
 import entity.operation.UpdateCustomPresetRequest
 import entity.operation.WebcamError
 import entity.operation.WebcamStatus
+import entity.operation.PhotoMediaMetadata
 import entity.operation.jsonDefault
 import fakes.buildFakeHttpCommunicator
 import io.ktor.client.utils.EmptyContent

@@ -16,7 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import entity.media.MediaId
+import entity.operation.MediaId
 import presenter.MediaUiState
 import presenter.MediaViewModel
 import ui.common.Screen

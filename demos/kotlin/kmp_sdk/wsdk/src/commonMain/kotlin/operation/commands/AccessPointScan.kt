@@ -6,7 +6,7 @@ import domain.communicator.BleCommunicator
 import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.ActionId
 import entity.communicator.FeatureId
-import entity.exceptions.CameraInternalError
+import exceptions.CameraInternalError
 import entity.network.GpUuid
 import entity.operation.ApScanResult
 import extensions.isOk

@@ -1,4 +1,4 @@
-package operation.queries
+package domain.queries
 
 import domain.api.BaseOperation
 import domain.api.IOperationMarshaller
@@ -7,9 +7,9 @@ import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.CommunicationType
 import entity.communicator.GpStatus
 import entity.communicator.QueryId
-import entity.constants.IUByteEnumCompanion
-import entity.constants.SettingId
-import entity.constants.UByteEnum
+import entity.queries.IUByteEnumCompanion
+import entity.queries.SettingId
+import entity.queries.UByteEnum
 import extensions.toUByteArray
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

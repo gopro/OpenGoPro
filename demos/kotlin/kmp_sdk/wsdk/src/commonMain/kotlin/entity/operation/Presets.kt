@@ -9,6 +9,16 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+enum class PresetGroupId(val value: UInt) {
+    VIDEO(1000U),
+    PHOTO(1001U),
+    TIMELAPSE(1002U);
+
+    companion object {
+        fun fromUInt(value: UInt) = entries.first { it.value == value }
+    }
+}
+
 @Serializable
 data class UpdateCustomPresetRequest(
     @SerialName("custom_name") val name: String? = null,

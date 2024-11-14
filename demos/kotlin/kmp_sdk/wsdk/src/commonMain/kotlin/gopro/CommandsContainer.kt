@@ -2,7 +2,7 @@ package gopro
 
 import domain.api.IOperationMarshaller
 import entity.communicator.CommunicationType
-import entity.media.MediaId
+import entity.operation.MediaId
 import entity.operation.CameraControlStatus
 import entity.operation.LivestreamConfigurationRequest
 import entity.operation.WebcamFov

@@ -1,4 +1,4 @@
-package features
+package gopro.features
 
 import WsdkIsolatedKoinContext
 import domain.data.ICameraRepository
@@ -9,35 +9,34 @@ import kotlinx.coroutines.delay
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class ConnectWifiFeature internal constructor(featureContext: IFeatureContext) :
-    IFeatureContext by featureContext {
+class ConnectWifiFeature internal constructor(private val context: IFeatureContext) {
     private val cameraRepo: ICameraRepository = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
 
     suspend fun connect() {
         // Get Wifi info and enable Access Point via BLE
-        gopro.commands.setApMode(true).getOrThrow()
-        val ssid = gopro.commands.readWifiSsid().getOrThrow()
-        val password = gopro.commands.readWifiPassword().getOrThrow()
+        context.gopro.commands.setApMode(true).getOrThrow()
+        val ssid = context.gopro.commands.readWifiSsid().getOrThrow()
+        val password = context.gopro.commands.readWifiPassword().getOrThrow()
 
         // Connect Wifi
         // TODO finite amount of retries?
         while (true) {
-            connector.connect(
-                ScanResult.Wifi(gopro.serialId, ssid),
+            context.connector.connect(
+                ScanResult.Wifi(context.gopro.serialId, ssid),
                 ConnectionRequestContext.Wifi(password)
             ).onSuccess {
                 cameraRepo.addWifiCredentials(
-                    gopro.serialId,
+                    context.gopro.serialId,
                     ssid,
                     password
                 )
-                facadeFactory.storeConnection(it)
+                context.facadeFactory.storeConnection(it)
                 return
             }
             // Toggle AP mode to try to recover
-            gopro.commands.setApMode(false)
+            context.gopro.commands.setApMode(false)
             delay(2.toDuration(DurationUnit.SECONDS))
-            gopro.commands.setApMode(true)
+            context.gopro.commands.setApMode(true)
             delay(2.toDuration(DurationUnit.SECONDS))
         }
     }

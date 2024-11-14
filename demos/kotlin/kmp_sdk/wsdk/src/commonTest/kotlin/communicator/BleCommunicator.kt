@@ -6,8 +6,8 @@ import entity.communicator.ActionId
 import entity.communicator.CommandId
 import entity.communicator.FeatureId
 import entity.communicator.QueryId
-import entity.constants.SettingId
-import entity.exceptions.BleError
+import entity.queries.SettingId
+import exceptions.BleError
 import entity.network.BleNotification
 import entity.network.GpUuid
 import fakes.BleApiSpy

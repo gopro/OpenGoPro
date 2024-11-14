@@ -1,11 +1,11 @@
-package operation.queries
+package domain.queries
 
 import domain.api.BaseOperation
 import domain.api.IOperationMarshaller
 import domain.communicator.BleCommunicator
 import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.QueryId
-import entity.constants.StatusId
+import entity.queries.StatusId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

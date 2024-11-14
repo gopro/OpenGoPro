@@ -1,6 +1,6 @@
 package extensions
 
-import entity.exceptions.CameraInternalError
+import exceptions.CameraInternalError
 import entity.operation.proto.EnumResultGeneric
 import entity.operation.proto.ResponseGeneric
 import pbandk.decodeFromByteArray
