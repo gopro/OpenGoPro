@@ -6,8 +6,8 @@ import co.touchlab.kermit.Logger
 import data.IAppPreferences
 import entity.media.MediaId
 import entity.media.MediaMetadata
-import gopro.GoProFacade
-import gopro.IGoProFacadeFactory
+import gopro.GoPro
+import gopro.IGoProFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -25,11 +25,11 @@ sealed class MediaUiState(val name: String) {
 
 class MediaViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFacadeFactory: IGoProFacadeFactory,
+    private val goProFactory: IGoProFactory,
 ) : ViewModel() {
     private val logger = Logger.withTag("MediaViewModel")
 
-    private lateinit var gopro: GoProFacade
+    private lateinit var gopro: GoPro
 
     private val _state = MutableStateFlow<MediaUiState>(MediaUiState.Idle)
     val state = _state.asStateFlow()
@@ -75,7 +75,7 @@ class MediaViewModel(
     fun start() {
         viewModelScope.launch {
             appPreferences.getConnectedDevice()?.let {
-                gopro = goProFacadeFactory.getGoProFacade(it)
+                gopro = goProFactory.getGoPro(it)
             } ?: throw Exception("No connected device found.")
         }
     }

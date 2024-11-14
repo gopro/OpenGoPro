@@ -8,8 +8,8 @@ import entity.operation.AccessPointState
 import entity.operation.LivestreamConfigurationRequest
 import entity.operation.LivestreamState
 import entity.operation.LivestreamStatus
-import gopro.GoProFacade
-import gopro.IGoProFacadeFactory
+import gopro.GoPro
+import gopro.IGoProFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -27,11 +27,11 @@ sealed class LivestreamUiState(val name: String) {
 
 class LivestreamViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFacadeFactory: IGoProFacadeFactory
+    private val goProFactory: IGoProFactory
 ) : ViewModel() {
     private val logger = Logger.withTag("LivestreamViewModel")
 
-    private lateinit var gopro: GoProFacade
+    private lateinit var gopro: GoPro
 
     private var _state = MutableStateFlow<LivestreamUiState>(LivestreamUiState.ApNotConnected)
     val state = _state.asStateFlow()
@@ -57,7 +57,7 @@ class LivestreamViewModel(
     fun start() {
         viewModelScope.launch {
             appPreferences.getConnectedDevice()?.let {
-                gopro = goProFacadeFactory.getGoProFacade(it)
+                gopro = goProFactory.getGoPro(it)
             } ?: throw Exception("No connected device found.")
 
             if (gopro.accessPointState.value is AccessPointState.Connected) {

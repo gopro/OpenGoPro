@@ -6,7 +6,7 @@ package di
 //    fun `verify koin modules`() {
 //        initTestWsdk().verify(
 //            extraTypes = listOf(
-//                GoProFacadeFactory::class,
+//                GoProFactory::class,
 //                CameraConnector::class,
 //            )
 //        )

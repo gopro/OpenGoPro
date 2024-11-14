@@ -7,8 +7,8 @@ import data.IAppPreferences
 import entity.operation.WebcamError
 import entity.operation.WebcamProtocol
 import entity.operation.WebcamStatus
-import gopro.GoProFacade
-import gopro.IGoProFacadeFactory
+import gopro.GoPro
+import gopro.IGoProFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,9 +20,9 @@ private val logger = Logger.withTag("WebcamViewModel")
 
 class WebcamViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFacadeFactory: IGoProFacadeFactory,
+    private val goProFactory: IGoProFactory,
 ) : ViewModel() {
-    private lateinit var gopro: GoProFacade
+    private lateinit var gopro: GoPro
 
     private var _status = MutableStateFlow(WebcamStatus.OFF)
     val status = _status.asStateFlow()
@@ -54,7 +54,7 @@ class WebcamViewModel(
         viewModelScope.launch {
             viewModelScope.launch {
                 appPreferences.getConnectedDevice()?.let {
-                    gopro = goProFacadeFactory.getGoProFacade(it)
+                    gopro = goProFactory.getGoPro(it)
                 } ?: throw Exception("No connected device found.")
             }.join()
 

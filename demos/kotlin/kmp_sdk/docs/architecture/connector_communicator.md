@@ -201,4 +201,4 @@ scanResults = connector.discover(NetworkType.BLE, NetworkType.MDNS)
 communicator = connector.connect(scanResult[0], CommunicationType.BLE)
 ```
 
-Once we have a communicator it is bound to a `GoProFacade`
+Once we have a communicator it is bound to a `GoPro`

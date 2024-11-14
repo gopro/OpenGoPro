@@ -2,7 +2,7 @@
 
 This describes the components used to perform GoPro BLE and HTTP operations.
 The operations are not exposed to the user and are instead abstracted through the various containers which are accessed
-via a `GoProFacade`.
+via a `GoPro`.
 
 This consists of the following components:
 - `Operation`: The base operation which accepts parameters and passes / receives data to / from a communicator.

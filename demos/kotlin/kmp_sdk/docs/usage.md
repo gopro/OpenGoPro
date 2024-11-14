@@ -10,7 +10,7 @@ TODO we should review the naming and grouping below. Maybe "cameraConnector" sho
 
 TODO should we remove the "facade" naming
 
-TODO abstract away communicator? Pass in connection to GoProFacadeFactory and handle communictors there
+TODO abstract away communicator? Pass in connection to GoProFactory and handle communictors there
 
 ## Initial Connection
 
@@ -18,7 +18,7 @@ TODO abstract away communicator? Pass in connection to GoProFacadeFactory and ha
     ```kotlin
         module {
             single<CameraConnector> { Wsdk.getCameraConnector(config) }
-            single<GoProFacadeFactory> { Wsdk.getGoProFacade(config) }
+            single<GoProFactory> { Wsdk.getGoPro(config) }
         }
     ```
 
@@ -35,8 +35,8 @@ TODO abstract away communicator? Pass in connection to GoProFacadeFactory and ha
 1. Store the connection and retrieve the gopro
    ```kotlin
    val serialId = connection.serialId
-   goproFacadeFactory.storeConnection(connection)
-   val gopro = goproFacadeFactory.getGoProFacade(serialId)
+   goproFactory.storeConnection(connection)
+   val gopro = goproFactory.getGoPro(serialId)
    ```
 
 1. Start operating on the GoPro
@@ -48,11 +48,11 @@ TODO abstract away communicator? Pass in connection to GoProFacadeFactory and ha
 
 1. Get an already connected GoPro
    ```kotlin
-   val gopro = goproFacadeFactory.getGoProFacade(serialId)
+   val gopro = goproFactory.getGoPro(serialId)
    ```
 
 1. Bind a new connection
     ```kotlin
     val newConnection = cameraConnector.connect(newTargetDeice)
-    goproFacadeFactory.storeConnection(newConnection)
+    goproFactory.storeConnection(newConnection)
     ```

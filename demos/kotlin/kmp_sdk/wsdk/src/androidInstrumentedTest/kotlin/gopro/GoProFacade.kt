@@ -3,7 +3,7 @@ package gopro
 import AndroidInstrumentedKoinTest
 import entity.network.BleNotification
 import entity.network.GpUuid
-import fakes.FakeGoProFacadeProvider
+import fakes.FakeGoProProvider
 import fakes.buildFakeBleCommunicator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -21,7 +21,7 @@ import kotlin.test.assertEquals
 
 
 @OptIn(ExperimentalUnsignedTypes::class, ExperimentalCoroutinesApi::class)
-class TestGoProFacade : AndroidInstrumentedKoinTest() {
+class TestGoPro : AndroidInstrumentedKoinTest() {
     @Test
     fun `maintain ready state`() = runTest {
         // GIVEN
@@ -44,7 +44,7 @@ class TestGoProFacade : AndroidInstrumentedKoinTest() {
             listOf(BleNotification(GpUuid.CQ_QUERY_RESP.toUuid(), isNotBusyNotificationMessage)),
         )
         val fakeCommunicator = buildFakeBleCommunicator(responses, UnconfinedTestDispatcher())
-        val gopro = FakeGoProFacadeProvider().getGoProFacade("1234", UnconfinedTestDispatcher())
+        val gopro = FakeGoProProvider().getGoPro("1234", UnconfinedTestDispatcher())
 
         val busyStates = mutableListOf<Boolean>()
         val encodingStates = mutableListOf<Boolean>()

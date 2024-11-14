@@ -1,6 +1,6 @@
 import di.buildPackageModules
 import domain.connector.ICameraConnector
-import domain.gopro.IGoProFacadeFactory
+import domain.gopro.IGoProFactory
 import kotlinx.coroutines.CoroutineDispatcher
 import org.koin.core.Koin
 import org.koin.core.KoinApplication
@@ -34,6 +34,6 @@ object Wsdk {
 
     fun getCameraConnector(): ICameraConnector = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
 
-    fun getGoProFacadeFactory(): IGoProFacadeFactory =
+    fun getGoProFactory(): IGoProFactory =
         WsdkIsolatedKoinContext.getWsdkKoinApp().get()
 }

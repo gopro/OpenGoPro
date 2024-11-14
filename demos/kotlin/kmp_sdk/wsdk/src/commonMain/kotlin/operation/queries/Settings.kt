@@ -23,7 +23,7 @@ internal class UByteEnumTransformer<T>(
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-class SettingFacade<T> internal constructor(
+class Setting<T> internal constructor(
     private val settingId: SettingId,
     enum: IUByteEnumCompanion<T>,
     private val marshaller: IOperationMarshaller,

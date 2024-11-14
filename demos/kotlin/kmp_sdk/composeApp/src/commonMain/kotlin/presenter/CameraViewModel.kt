@@ -6,8 +6,8 @@ import co.touchlab.kermit.Logger
 import data.IAppPreferences
 import domain.gopro.CohnState
 import entity.constants.Resolution
-import gopro.GoProFacade
-import gopro.IGoProFacadeFactory
+import gopro.GoPro
+import gopro.IGoProFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -23,9 +23,9 @@ sealed class CameraUiState {
 
 class CameraViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFacadeFactory: IGoProFacadeFactory,
+    private val goProFactory: IGoProFactory,
 ) : ViewModel() {
-    private lateinit var gopro: GoProFacade
+    private lateinit var gopro: GoPro
     private var _state = MutableStateFlow<CameraUiState>(CameraUiState.Idle)
     val state = _state.asStateFlow()
 
@@ -46,7 +46,7 @@ class CameraViewModel(
         viewModelScope.launch {
             _state.update { CameraUiState.Initializing }
             appPreferences.getConnectedDevice()?.let {
-                gopro = goProFacadeFactory.getGoProFacade(it)
+                gopro = goProFactory.getGoPro(it)
             } ?: throw Exception("No connected device found.")
             _state.update { CameraUiState.Ready }
         }

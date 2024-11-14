@@ -2,23 +2,23 @@ package gopro
 
 import domain.connector.ICameraConnector
 import domain.gopro.GpDescriptorManager
-import domain.gopro.IGoProFacadeFactory
+import domain.gopro.IGoProFactory
 import features.AccessPointFeature
 import features.CohnFeature
 import features.ConnectWifiFeature
 
 internal interface IFeatureContext {
-    val gopro: GoProFacade
+    val gopro: GoPro
     val gpDescriptorManager: GpDescriptorManager
     val connector: ICameraConnector
-    val facadeFactory: IGoProFacadeFactory
+    val facadeFactory: IGoProFactory
 }
 
 internal data class FeatureContext(
-    override val gopro: GoProFacade,
+    override val gopro: GoPro,
     override val gpDescriptorManager: GpDescriptorManager,
     override val connector: ICameraConnector,
-    override val facadeFactory: IGoProFacadeFactory
+    override val facadeFactory: IGoProFactory
 ) : IFeatureContext
 
 class FeaturesContainer internal constructor(featureContext: IFeatureContext) {

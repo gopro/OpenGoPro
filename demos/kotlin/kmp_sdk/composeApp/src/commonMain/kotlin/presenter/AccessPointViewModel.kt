@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
 import entity.operation.AccessPointState
-import gopro.GoProFacade
-import gopro.IGoProFacadeFactory
+import gopro.GoPro
+import gopro.IGoProFactory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,11 +23,11 @@ sealed class ApUiState(val name: String) {
 
 class AccessPointViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFacadeFactory: IGoProFacadeFactory,
+    private val goProFactory: IGoProFactory,
 ) : ViewModel() {
     private val logger = Logger.withTag("AccessPointViewModel")
 
-    private lateinit var gopro: GoProFacade
+    private lateinit var gopro: GoPro
 
     private var _state = MutableStateFlow<ApUiState>(ApUiState.Idle)
     val state = _state.asStateFlow()
@@ -91,7 +91,7 @@ class AccessPointViewModel(
     fun start() {
         viewModelScope.launch {
             appPreferences.getConnectedDevice()?.let {
-                gopro = goProFacadeFactory.getGoProFacade(it)
+                gopro = goProFactory.getGoPro(it)
             } ?: throw Exception("No connected device found.")
         }
     }

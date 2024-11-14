@@ -5,11 +5,11 @@ import connector.GpBleConnector
 import connector.GpDnsConnector
 import connector.GpWifiConnector
 import domain.connector.ICameraConnector
-import domain.gopro.IGoProFacadeFactory
+import domain.gopro.IGoProFactory
 import domain.network.IBleApi
 import domain.network.IHttpApi
 import connector.CameraConnector
-import gopro.GoProFacadeFactory
+import gopro.GoProFactory
 import kotlinx.coroutines.CoroutineDispatcher
 import network.KableBle
 import network.KtorHttp
@@ -33,8 +33,8 @@ internal fun buildPackageModules(dispatcher: CoroutineDispatcher, appContext: Ws
         )
     }
     // Top level facade
-    single<IGoProFacadeFactory> {
-        GoProFacadeFactory(
+    single<IGoProFactory> {
+        GoProFactory(
             get(),
             get(),
             get(),

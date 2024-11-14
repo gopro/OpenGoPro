@@ -1,10 +1,10 @@
 package domain.gopro
 
 import entity.connector.ConnectionDescriptor
-import gopro.GoProFacade
+import gopro.GoPro
 
 
-interface IGoProFacadeFactory {
-    suspend fun getGoProFacade(serialId: String): GoProFacade
+interface IGoProFactory {
+    suspend fun getGoPro(serialId: String): GoPro
     suspend fun storeConnection(connection: ConnectionDescriptor)
 }

@@ -1,7 +1,7 @@
-# GoProFacade
+# GoPro
 
 This is the top-level object that users will use to communicate with a GoPro camera.
-It can be retrieved via the `GoProFacadeFactory`
+It can be retrieved via the `GoProFactory`
 
 ## ID
 
@@ -26,11 +26,11 @@ via BLE) in this database.
 classDiagram
     direction TB
 
-    class GoProFacadeFactory {
-        getGoProFacade(String id) GoProFacade
+    class GoProFactory {
+        getGoPro(String id) GoPro
     }
 
-    class GoProFacade {
+    class GoPro {
         <<interface>>
         +String ID
         +CommandsContainer commands
@@ -40,12 +40,12 @@ classDiagram
         bindCommunicator(ICommunicator communicator)*
     }
 
-    GoProFacade ..|> GpDescriptor
-    GoProFacadeFactory --> GoProFacade
-    GoProFacade --> CommandsContainer
-    GoProFacade --> SettingsContainer
-    GoProFacade --> StatusesContainer
-    GoProFacade --> ICommunicator
+    GoPro ..|> GpDescriptor
+    GoProFactory --> GoPro
+    GoPro --> CommandsContainer
+    GoPro --> SettingsContainer
+    GoPro --> StatusesContainer
+    GoPro --> ICommunicator
 ```
 
 ## Usage
@@ -54,10 +54,10 @@ classDiagram
 // We already have a communicator. Bind it to a facade
 communicator = "See connector_communicator.md"
 // Factory is singleton initialized via DI
-factory = GoProFacadeFactory()
+factory = GoProFactory()
 // Get the facade whose ID matches the communicator
 // If it doesn't exist, the factory will create it
-facade = factory.getGoProFacade(communicator.id)
+facade = factory.getGoPro(communicator.id)
 // Now configure the facade
 facade.bindCommunicator(communicator)
 ```

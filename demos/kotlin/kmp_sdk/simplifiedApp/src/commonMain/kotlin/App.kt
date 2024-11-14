@@ -17,7 +17,7 @@ fun app(appContext: WsdkAppContext) {
     // Initialize WSDK and get the top level objects
     Wsdk.init(dispatcher, appContext)
     val connector = Wsdk.getCameraConnector()
-    val goproFactory = Wsdk.getGoProFacadeFactory()
+    val goproFactory = Wsdk.getGoProFactory()
 
     coroutineScope.launch {
         // Discover and take the first device we find
@@ -27,7 +27,7 @@ fun app(appContext: WsdkAppContext) {
         val connection = connector.connect(target).getOrThrow()
         // TODO can we move this into the connector
         goproFactory.storeConnection(connection)
-        val gopro = goproFactory.getGoProFacade(connection.serialId)
+        val gopro = goproFactory.getGoPro(connection.serialId)
 
         // Set the shutter
         gopro.commands.setShutter(true)

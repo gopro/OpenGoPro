@@ -6,7 +6,7 @@ import domain.communicator.HttpCommunicator
 import domain.communicator.ICommunicator
 import domain.connector.ICameraConnector
 import domain.data.ICameraRepository
-import domain.gopro.IGoProFacadeFactory
+import domain.gopro.IGoProFactory
 import domain.network.IBleApi
 import domain.network.IHttpApi
 import domain.network.IHttpClientProvider
@@ -17,9 +17,9 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-private val logger = Logger.withTag("GoProFacadeFactory")
+private val logger = Logger.withTag("GoProFactory")
 
-internal class GoProFacadeFactory(
+internal class GoProFactory(
     private val bleApi: IBleApi,
     private val httpApi: IHttpApi,
     private val wifiApi: IWifiApi,
@@ -27,8 +27,8 @@ internal class GoProFacadeFactory(
     private val cameraConnector: ICameraConnector,
     private val httpClientProvider: IHttpClientProvider,
     private val dispatcher: CoroutineDispatcher
-) : IGoProFacadeFactory {
-    private val facadesById = mutableMapOf<String, GoProFacade>()
+) : IGoProFactory {
+    private val facadesById = mutableMapOf<String, GoPro>()
     private val communicatorsByConnection = mutableMapOf<ConnectionDescriptor, ICommunicator<*>>()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -76,8 +76,8 @@ internal class GoProFacadeFactory(
         }
     }
 
-    override suspend fun getGoProFacade(serialId: String): GoProFacade {
-        val gopro = facadesById.getOrPut(serialId) { GoProFacade(serialId) }
+    override suspend fun getGoPro(serialId: String): GoPro {
+        val gopro = facadesById.getOrPut(serialId) { GoPro(serialId) }
         communicatorsByConnection.filterKeys { it.serialId == serialId }.values.forEach { communicator ->
             gopro.bindCommunicator(communicator)
         }
@@ -97,7 +97,7 @@ internal class GoProFacadeFactory(
                 )
             }
         }
-        val gopro = getGoProFacade(connection.serialId)
+        val gopro = getGoPro(connection.serialId)
         gopro.bindCommunicator(communicator)
     }
 }

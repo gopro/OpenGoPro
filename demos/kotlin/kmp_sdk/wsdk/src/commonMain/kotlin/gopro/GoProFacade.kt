@@ -7,7 +7,7 @@ import domain.communicator.HttpCommunicator
 import domain.communicator.ICommunicator
 import domain.connector.ICameraConnector
 import domain.gopro.GpDescriptorManager
-import domain.gopro.IGoProFacadeFactory
+import domain.gopro.IGoProFactory
 import domain.gopro.IGpDescriptor
 import entity.communicator.CommunicationType
 import entity.operation.AccessPointState
@@ -31,17 +31,17 @@ import operation.GpMarshaller
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-private val logger = Logger.withTag("GoProFacade")
+private val logger = Logger.withTag("GoPro")
 private const val TRACE_LOG = false
 
 // TODO configure and inject
 private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
 }
 
-class GoProFacade(override val serialId: String) : IGpDescriptor {
+class GoPro(override val serialId: String) : IGpDescriptor {
     private val cameraConnector: ICameraConnector = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
     private val dispatcher: CoroutineDispatcher = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
-    private val facadeFactory: IGoProFacadeFactory =
+    private val facadeFactory: IGoProFactory =
         WsdkIsolatedKoinContext.getWsdkKoinApp().get()
 
     private val operationMarshaller = GpMarshaller(this)
@@ -55,7 +55,7 @@ class GoProFacade(override val serialId: String) : IGpDescriptor {
     private val scope = CoroutineScope(dispatcher + coroutineExceptionHandler)
 
     private val gpDescriptorManager = object : GpDescriptorManager {
-        override fun getDescriptor(): IGpDescriptor = this@GoProFacade
+        override fun getDescriptor(): IGpDescriptor = this@GoPro
 
         override fun setAccessPointState(state: AccessPointState) =
             _accessPointState.update { state }
@@ -138,7 +138,7 @@ class GoProFacade(override val serialId: String) : IGpDescriptor {
                 }
                 // Send keep alive
                 scope.launch {
-                    // TODO ensure this stops on GoProFacade exiting
+                    // TODO ensure this stops on GoPro exiting
                     while (true) {
                         delay(KEEP_ALIVE_INTERVAL)
                         commands.sendKeepAlive().onFailure {
