@@ -10,6 +10,7 @@ import com.juul.kable.logs.Logging
 import com.juul.kable.logs.SystemLogEngine
 import com.juul.kable.peripheral
 import domain.network.IBleApi
+import entity.connector.GoProId
 import entity.network.BleAdvertisement
 import entity.network.BleDevice
 import entity.network.BleNotification
@@ -45,7 +46,7 @@ private class KableDevice(
     dispatcher: CoroutineDispatcher
 ) : BleDevice {
     // Last 4 of serial number.
-    override val serialId = adv.name?.takeLast(4)
+    override val id = adv.name?.let { GoProId(it.takeLast(4)) }
         ?: throw Exception("Can not create Kable device with an advertisement that does not contain a deviec name.")
     val notifications = MutableSharedFlow<BleNotification>()
 
@@ -88,7 +89,7 @@ private class KableDevice(
 
     // TODO We should timeout here.
     suspend fun connect() {
-        logger.d("Establishing BLE connection to $serialId")
+        logger.d("Establishing BLE connection to $id")
         peripheral.connect()
         logger.d("BLE connection established. Waiting for services to be discovered")
         onServicesDiscoveredEvent.receive()
@@ -142,11 +143,11 @@ private class KableDevice(
 @OptIn(ExperimentalUnsignedTypes::class)
 internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
     // Map domain objects to Kable specific objects
-    private val deviceMap = mutableMapOf<String, KableDevice>()
+    private val deviceMap = mutableMapOf<GoProId, KableDevice>()
     private val nameAdvMap = mutableMapOf<String, KableAdvertisement>()
 
     override fun notificationsForConnection(device: BleDevice): Result<Flow<BleNotification>> =
-        deviceMap[device.serialId]?.notifications?.let { Result.success(it) }
+        deviceMap[device.id]?.notifications?.let { Result.success(it) }
             ?: Result.failure(Exception("Could not find device"))
 
     override fun receiveDisconnects(): Flow<BleDevice> =
@@ -155,7 +156,7 @@ internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
                 .filter { it is com.juul.kable.State.Disconnected }
                 .map {
                     object : BleDevice {
-                        override val serialId = device.serialId
+                        override val id = device.id
                     }
                 }
         }.merge()
@@ -192,7 +193,7 @@ internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
             KableDevice(adv.platformAdvertisement, dispatcher)
         }?.let { device ->
             device.connect() // TODO how to wait for connect
-            deviceMap[device.serialId] = device
+            deviceMap[device.id] = device
             Result.success(device)
         } ?: Result.failure(Exception("advertisement ${advertisement.id} not found"))
 
@@ -200,13 +201,13 @@ internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
         device: BleDevice,
         uuids: Set<Uuid>
     ): Result<Unit> =
-        deviceMap[device.serialId]?.enableNotifications(uuids)?.let { Result.success(Unit) }
+        deviceMap[device.id]?.enableNotifications(uuids)?.let { Result.success(Unit) }
             ?: Result.failure(
                 Exception("connected $device does not exist")
             )
 
     override suspend fun readCharacteristic(device: BleDevice, uuid: Uuid): Result<UByteArray> =
-        deviceMap[device.serialId]?.readCharacteristic(uuid)?.let { Result.success(it) }
+        deviceMap[device.id]?.readCharacteristic(uuid)?.let { Result.success(it) }
             ?: Result.failure(
                 Exception("connected $device does not exist")
             )
@@ -216,13 +217,13 @@ internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
         uuid: Uuid,
         data: UByteArray
     ): Result<Unit> =
-        deviceMap[device.serialId]?.writeCharacteristic(uuid, data)?.let { Result.success(Unit) }
+        deviceMap[device.id]?.writeCharacteristic(uuid, data)?.let { Result.success(Unit) }
             ?: Result.failure(
                 Exception("connected $device does not exist")
             )
 
     override suspend fun disconnect(device: BleDevice): Result<Unit> =
-        deviceMap[device.serialId]?.disconnect()?.let { Result.success(Unit) }
+        deviceMap[device.id]?.disconnect()?.let { Result.success(Unit) }
             ?: Result.failure(
                 Exception("connected $device does not exist")
             )

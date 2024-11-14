@@ -5,6 +5,7 @@ import domain.communicator.BleCommunicator
 import domain.communicator.HttpCommunicator
 import domain.network.IHttpClientProvider
 import entity.connector.ConnectionDescriptor
+import entity.connector.GoProId
 import entity.network.BleDevice
 import entity.network.BleNotification
 import entity.network.IHttpsCredentials
@@ -43,10 +44,10 @@ internal fun buildFakeBleCommunicator(
 ): FakeBleCommunicator {
     val api = FakeBleApi(responses, dispatcher)
     val device = object : BleDevice {
-        override val serialId = "bleDeviceId"
+        override val id = GoProId("bleDeviceId")
     }
     val communicator =
-        BleCommunicator(api, ConnectionDescriptor.Ble("serialId", device), dispatcher)
+        BleCommunicator(api, ConnectionDescriptor.Ble(GoProId("serialId"), device), dispatcher)
     return FakeBleCommunicator(communicator, api, communicator.connection)
 }
 
@@ -125,7 +126,7 @@ private val mockEngine = MockEngine { request ->
     }
 }
 
-object FakeHttpClientProvider : IHttpClientProvider {
+internal object FakeHttpClientProvider : IHttpClientProvider {
     override fun provideBaseClient(credentials: IHttpsCredentials?): HttpClient =
         createHttpClient(mockEngine)
 
@@ -136,7 +137,7 @@ internal fun buildFakeHttpCommunicator(dispatcher: CoroutineDispatcher): FakeHtt
     val communicator =
         HttpCommunicator(
             api,
-            ConnectionDescriptor.Http(serialId = "serialId", "ipAddress"),
+            ConnectionDescriptor.Http(id = GoProId("serialId"), "ipAddress"),
             FakeHttpClientProvider,
             dispatcher
         )

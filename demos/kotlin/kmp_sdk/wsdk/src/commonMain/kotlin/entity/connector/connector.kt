@@ -3,6 +3,10 @@ package entity.connector
 import entity.network.BleDevice
 import entity.network.IHttpsCredentials
 
+data class GoProId(val partialSerial: String) {
+    override fun toString() = "GoPro $partialSerial"
+}
+
 enum class NetworkType {
     BLE,
     WIFI_WLAN,
@@ -15,34 +19,34 @@ sealed interface ConnectionRequestContext {
 }
 
 sealed interface ScanResult {
-    val serialId: String // Last 4 digits of serial number
+    val id: GoProId
     val networkType: NetworkType
 
-    data class Ble(override val serialId: String, val id: String, val name: String) :
+    data class Ble(override val id: GoProId, val bleId: String, val name: String) :
         ScanResult {
         override val networkType = NetworkType.BLE
     }
 
-    data class Wifi(override val serialId: String, val ssid: String) : ScanResult {
+    data class Wifi(override val id: GoProId, val ssid: String) : ScanResult {
         override val networkType = NetworkType.WIFI_AP
     }
 
     data class Dns(
-        override val serialId: String, val ipAddress: String,
+        override val id: GoProId, val ipAddress: String,
         override val networkType: NetworkType
     ) : ScanResult
 }
 
-sealed interface ConnectionDescriptor {
-    val serialId: String // Last 4 digits of serial number
+internal sealed interface ConnectionDescriptor {
+    val id: GoProId
 
     data class Ble(
-        override val serialId: String,
+        override val id: GoProId,
         val device: BleDevice
     ) : ConnectionDescriptor
 
     data class Http(
-        override val serialId: String,
+        override val id: GoProId,
         val ipAddress: String,
         val ssid: String? = null,
         val port: Int? = null,

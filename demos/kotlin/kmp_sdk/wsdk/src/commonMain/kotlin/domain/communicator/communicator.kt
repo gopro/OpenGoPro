@@ -13,5 +13,5 @@ internal abstract class ICommunicator<T : ConnectionDescriptor> {
     abstract val connection: T
     abstract val communicationType: CommunicationType
     abstract suspend fun setup(): Boolean
-    val serialId get() = connection.serialId
+    val id get() = connection.id
 }

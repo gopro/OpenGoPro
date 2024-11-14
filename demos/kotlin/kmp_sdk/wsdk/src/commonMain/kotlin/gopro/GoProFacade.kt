@@ -10,6 +10,7 @@ import domain.gopro.GpDescriptorManager
 import domain.gopro.IGoProFactory
 import domain.gopro.IGpDescriptor
 import entity.communicator.CommunicationType
+import entity.connector.GoProId
 import entity.operation.AccessPointState
 import entity.operation.CohnState
 import kotlinx.coroutines.CoroutineDispatcher
@@ -38,7 +39,7 @@ private const val TRACE_LOG = false
 private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
 }
 
-class GoPro(override val serialId: String) : IGpDescriptor {
+class GoPro(override val id: GoProId) : IGpDescriptor {
     private val cameraConnector: ICameraConnector = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
     private val dispatcher: CoroutineDispatcher = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
     private val facadeFactory: IGoProFactory =

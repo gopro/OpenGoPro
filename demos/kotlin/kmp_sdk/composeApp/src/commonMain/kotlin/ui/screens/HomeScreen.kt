@@ -95,7 +95,7 @@ fun ScanResultList(
         items(devices) { device ->
             Row(Modifier.clickable(onClick = { onDeviceSelect(device) })) {
                 Column {
-                    Text("GoPro ${device.serialId}")
+                    Text("GoPro ${device.id}")
                     Text(device.networkType.name)
                     HorizontalDivider()
                 }

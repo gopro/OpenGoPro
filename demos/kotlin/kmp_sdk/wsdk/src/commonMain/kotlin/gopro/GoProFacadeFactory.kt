@@ -4,14 +4,13 @@ import co.touchlab.kermit.Logger
 import domain.communicator.BleCommunicator
 import domain.communicator.HttpCommunicator
 import domain.communicator.ICommunicator
-import domain.connector.ICameraConnector
-import domain.data.ICameraRepository
 import domain.gopro.IGoProFactory
 import domain.network.IBleApi
 import domain.network.IHttpApi
 import domain.network.IHttpClientProvider
 import domain.network.IWifiApi
 import entity.connector.ConnectionDescriptor
+import entity.connector.GoProId
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -26,7 +25,7 @@ internal class GoProFactory(
     private val httpClientProvider: IHttpClientProvider,
     private val dispatcher: CoroutineDispatcher
 ) : IGoProFactory {
-    private val facadesById = mutableMapOf<String, GoPro>()
+    private val facadesById = mutableMapOf<GoProId, GoPro>()
     private val communicatorsByConnection = mutableMapOf<ConnectionDescriptor, ICommunicator<*>>()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -44,9 +43,9 @@ internal class GoProFactory(
             }
         }.values.map { it as HttpCommunicator }
 
-    private fun bleCommunicatorsById(serialId: String): List<BleCommunicator> =
+    private fun bleCommunicatorsById(id: GoProId): List<BleCommunicator> =
         communicatorsByConnection.filterKeys { connection ->
-            connection.serialId == serialId
+            connection.id == id
         }.values.map { it as BleCommunicator }
 
     init {
@@ -64,9 +63,9 @@ internal class GoProFactory(
         // Manage BLE disconnects
         scope.launch {
             bleApi.receiveDisconnects().collect { device ->
-                logger.d("Propagating BLE Disconnect from GoPro ${device.serialId}")
+                logger.d("Propagating BLE Disconnect from GoPro ${device.id}")
                 // Find affected communicators (those whose ssid match the disconnected ssid)
-                bleCommunicatorsById(device.serialId).forEach { communicator ->
+                bleCommunicatorsById(device.id).forEach { communicator ->
                     // Remove the affected communicator from any facade which uses it as a communicator
                     facadesById.values.forEach { it.unbindCommunicator(communicator) }
                 }
@@ -74,12 +73,12 @@ internal class GoProFactory(
         }
     }
 
-    override suspend fun getGoPro(serialId: String): GoPro {
-        val gopro = facadesById.getOrPut(serialId) { GoPro(serialId) }
-        communicatorsByConnection.filterKeys { it.serialId == serialId }.values.forEach { communicator ->
+    override suspend fun getGoPro(id: GoProId): GoPro {
+        val gopro = facadesById.getOrPut(id) { GoPro(id) }
+        communicatorsByConnection.filterKeys { it.id == id }.values.forEach { communicator ->
             gopro.bindCommunicator(communicator)
         }
-        logger.i("Gopro $serialId communication is ready.")
+        logger.i("Gopro $id communication is ready.")
         return gopro
     }
 
@@ -95,7 +94,7 @@ internal class GoProFactory(
                 )
             }
         }
-        val gopro = getGoPro(connection.serialId)
+        val gopro = getGoPro(connection.id)
         gopro.bindCommunicator(communicator)
     }
 }

@@ -1,14 +1,14 @@
 package di
 
 import Wsdk
-import domain.connector.ICameraConnector
-import domain.gopro.IGoProFactory
+import WsdkAppContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-fun buildWsdkModule(): Module {
+fun buildWsdkModule(appContext: WsdkAppContext): Module {
     return module {
-        single<ICameraConnector> { Wsdk.getCameraConnector() }
-        single<IGoProFactory> { Wsdk.getGoProFactory() }
+        single<Wsdk> { Wsdk(Dispatchers.IO, appContext) }
     }
 }

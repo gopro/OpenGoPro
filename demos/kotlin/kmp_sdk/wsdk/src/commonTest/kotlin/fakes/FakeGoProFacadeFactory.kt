@@ -5,7 +5,7 @@ import domain.gopro.IGoProFactory
 import gopro.GoProFactory
 import kotlinx.coroutines.CoroutineDispatcher
 
-fun buildFakeGoPro(dispatcher: CoroutineDispatcher): IGoProFactory =
+internal fun buildFakeGoPro(dispatcher: CoroutineDispatcher): IGoProFactory =
     GoProFactory(
         dispatcher = dispatcher,
         bleApi = FakeBleApi(listOf(), dispatcher),

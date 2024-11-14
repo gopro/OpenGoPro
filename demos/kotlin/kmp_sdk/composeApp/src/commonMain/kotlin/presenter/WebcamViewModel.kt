@@ -1,10 +1,10 @@
 package presenter
 
+import Wsdk
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import domain.gopro.IGoProFactory
 import entity.operation.WebcamError
 import entity.operation.WebcamProtocol
 import entity.operation.WebcamStatus
@@ -20,7 +20,7 @@ private val logger = Logger.withTag("WebcamViewModel")
 
 class WebcamViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFactory: IGoProFactory,
+    private val wsdk: Wsdk
 ) : ViewModel() {
     private lateinit var gopro: GoPro
 
@@ -54,7 +54,7 @@ class WebcamViewModel(
         viewModelScope.launch {
             viewModelScope.launch {
                 appPreferences.getConnectedDevice()?.let {
-                    gopro = goProFactory.getGoPro(it)
+                    gopro = wsdk.getGoPro(it)
                 } ?: throw Exception("No connected device found.")
             }.join()
 

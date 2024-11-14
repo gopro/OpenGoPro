@@ -4,12 +4,13 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import entity.connector.GoProId
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 interface IAppPreferences {
-    suspend fun getConnectedDevice(): String?
-    suspend fun setConnectedDevice(deviceId: String): Preferences
+    suspend fun getConnectedDevice(): GoProId?
+    suspend fun setConnectedDevice(id: GoProId): Preferences
 }
 
 class IAppPreferencesImpl(
@@ -23,9 +24,9 @@ class IAppPreferencesImpl(
 
     private val connectedDeviceKey = stringPreferencesKey("$PREFS_TAG_KEY$CONNECTED_DEVICE")
 
-    override suspend fun getConnectedDevice() =
-        dataStore.data.map { it[connectedDeviceKey] }.first()
+    override suspend fun getConnectedDevice(): GoProId? =
+        dataStore.data.map { it[connectedDeviceKey] }.first()?.let { id -> GoProId(id) }
 
-    override suspend fun setConnectedDevice(deviceId: String) =
-        dataStore.edit { it[connectedDeviceKey] = deviceId }
+    override suspend fun setConnectedDevice(id: GoProId) =
+        dataStore.edit { it[connectedDeviceKey] = id.partialSerial }
 }

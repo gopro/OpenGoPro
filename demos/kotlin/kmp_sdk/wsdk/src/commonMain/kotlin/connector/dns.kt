@@ -5,6 +5,7 @@ import domain.data.ICameraRepository
 import domain.network.IDnsApi
 import entity.connector.ConnectionDescriptor
 import entity.connector.ConnectionRequestContext
+import entity.connector.GoProId
 import entity.connector.NetworkType
 import entity.connector.ScanResult
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +22,7 @@ internal class GpDnsConnector(
         dnsApi.scan(NSD_GP_SERVICE_TYPE).map { flow ->
             flow.map { scanResult ->
                 ScanResult.Dns(
-                    scanResult.serviceName.takeLast(4),
+                    GoProId(scanResult.serviceName.takeLast(4)),
                     scanResult.ipAddress,
                     NetworkType.WIFI_WLAN // TODO can we select between usb and wifi here?
                 )
@@ -32,9 +33,9 @@ internal class GpDnsConnector(
         target: ScanResult.Dns,
         request: ConnectionRequestContext?
     ): Result<ConnectionDescriptor.Http> =
-        cameraRepo.getHttpsCredentials(target.serialId).map { credentials ->
+        cameraRepo.getHttpsCredentials(target.id).map { credentials ->
             ConnectionDescriptor.Http(
-                serialId = target.serialId,
+                id = target.id,
                 ipAddress = target.ipAddress,
                 port = null, // TODO can we get this?
                 credentials = credentials

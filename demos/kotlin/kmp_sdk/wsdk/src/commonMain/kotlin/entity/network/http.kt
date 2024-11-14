@@ -2,7 +2,7 @@ package entity.network
 
 import kotlinx.serialization.Serializable
 
-interface IHttpsCredentials {
+internal interface IHttpsCredentials {
     val username: String
     val password: String
     val certificates: List<String>

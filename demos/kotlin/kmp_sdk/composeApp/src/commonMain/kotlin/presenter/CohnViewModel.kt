@@ -1,10 +1,10 @@
 package presenter
 
+import Wsdk
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import domain.gopro.IGoProFactory
 import entity.operation.AccessPointState
 import entity.operation.CohnState
 import gopro.GoPro
@@ -24,7 +24,7 @@ sealed class CohnUiState(val name: String) {
 
 class CohnViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFactory: IGoProFactory,
+    private val wsdk: Wsdk
 ) : ViewModel() {
     private lateinit var gopro: GoPro
 
@@ -47,7 +47,7 @@ class CohnViewModel(
     fun start() {
         viewModelScope.launch {
             appPreferences.getConnectedDevice()?.let {
-                gopro = goProFactory.getGoPro(it)
+                gopro = wsdk.getGoPro(it)
             } ?: throw Exception("No connected device found.")
 
             when (gopro.cohnState.value) {

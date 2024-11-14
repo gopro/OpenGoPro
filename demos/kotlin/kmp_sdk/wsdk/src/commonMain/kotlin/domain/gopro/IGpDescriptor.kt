@@ -1,13 +1,13 @@
 package domain.gopro
 
 import entity.communicator.CommunicationType
-import entity.network.IHttpsCredentials
+import entity.connector.GoProId
 import entity.operation.AccessPointState
 import entity.operation.CohnState
 import kotlinx.coroutines.flow.StateFlow
 
 interface IGpDescriptor {
-    val serialId: String
+    val id: GoProId
 
     val isBusy: StateFlow<Boolean>
     val isEncoding: StateFlow<Boolean>

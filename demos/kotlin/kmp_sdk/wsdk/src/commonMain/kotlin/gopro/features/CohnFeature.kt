@@ -62,7 +62,7 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
         val provisionedState =
             getCohnStatus().first { it is CohnState.Provisioned } as CohnState.Provisioned
         logger.i("Storing COHN credentials to disk")
-        cameraRepo.addHttpsCredentials(context.gopro.serialId, provisionedState)
+        cameraRepo.addHttpsCredentials(context.gopro.id, provisionedState)
         return Result.success(provisionedState)
     }
 }

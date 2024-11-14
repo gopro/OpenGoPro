@@ -1,10 +1,11 @@
 package presenter
 
+import Wsdk
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import domain.gopro.IGoProFactory
+import entity.connector.GoProId
 import entity.operation.AccessPointState
 import gopro.GoPro
 import kotlinx.coroutines.flow.Flow
@@ -23,7 +24,7 @@ sealed class ApUiState(val name: String) {
 
 class AccessPointViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFactory: IGoProFactory,
+    private val wsdk: Wsdk,
 ) : ViewModel() {
     private val logger = Logger.withTag("AccessPointViewModel")
 
@@ -91,7 +92,7 @@ class AccessPointViewModel(
     fun start() {
         viewModelScope.launch {
             appPreferences.getConnectedDevice()?.let {
-                gopro = goProFactory.getGoPro(it)
+                gopro = wsdk.getGoPro(it)
             } ?: throw Exception("No connected device found.")
         }
     }

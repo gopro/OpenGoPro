@@ -25,7 +25,7 @@ internal fun UByteArray.toBleNotificationList(uuid: GpUuid): List<BleNotificatio
         .toList()
 
 @OptIn(ExperimentalUnsignedTypes::class)
-sealed class BleApiSpy {
+internal sealed class BleApiSpy {
     data class Write(
         val device: BleDevice,
         val uuid: Uuid,

@@ -1,10 +1,10 @@
 package presenter
 
+import Wsdk
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import domain.gopro.IGoProFactory
 import entity.operation.AccessPointState
 import entity.operation.LivestreamConfigurationRequest
 import entity.operation.LivestreamState
@@ -27,7 +27,7 @@ sealed class LivestreamUiState(val name: String) {
 
 class LivestreamViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFactory: IGoProFactory
+    private val wsdk: Wsdk
 ) : ViewModel() {
     private val logger = Logger.withTag("LivestreamViewModel")
 
@@ -57,7 +57,7 @@ class LivestreamViewModel(
     fun start() {
         viewModelScope.launch {
             appPreferences.getConnectedDevice()?.let {
-                gopro = goProFactory.getGoPro(it)
+                gopro = wsdk.getGoPro(it)
             } ?: throw Exception("No connected device found.")
 
             if (gopro.accessPointState.value is AccessPointState.Connected) {

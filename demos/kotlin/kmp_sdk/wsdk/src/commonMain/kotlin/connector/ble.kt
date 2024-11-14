@@ -4,6 +4,7 @@ import domain.connector.IConnector
 import domain.network.IBleApi
 import entity.connector.ConnectionDescriptor
 import entity.connector.ConnectionRequestContext
+import entity.connector.GoProId
 import entity.connector.NetworkType
 import entity.connector.ScanResult
 import entity.network.BleAdvertisement
@@ -26,14 +27,14 @@ internal class GpBleConnector(private val bleApi: IBleApi) :
     IConnector<ScanResult.Ble, ConnectionDescriptor.Ble>, KoinComponent {
     override val networkType = NetworkType.BLE
 
-    private val idAdvMap = mutableMapOf<String, BleAdvertisement>()
+    private val idAdvMap = mutableMapOf<GoProId, BleAdvertisement>()
 
     override suspend fun scan(): Result<Flow<ScanResult.Ble>> =
         bleApi.scan(setOf(GpUuid.S_CONTROL_QUERY.toUuid())).map { flow ->
             flow.filter { it.name != null }
                 .onStart { idAdvMap.clear() }
-                .onEach { idAdvMap[it.name!!.takeLast(4)] = it }
-                .map { ScanResult.Ble(it.name!!.takeLast(4), it.id, it.name ?: "") }
+                .onEach { idAdvMap[GoProId(it.name!!.takeLast(4))] = it }
+                .map { ScanResult.Ble(GoProId(it.name!!.takeLast(4)), it.id, it.name ?: "") }
         }
 
 
@@ -41,11 +42,11 @@ internal class GpBleConnector(private val bleApi: IBleApi) :
         target: ScanResult.Ble,
         request: ConnectionRequestContext?
     ): Result<ConnectionDescriptor.Ble> =
-        bleApi.connect(idAdvMap.getValue(target.serialId)).fold(
+        bleApi.connect(idAdvMap.getValue(target.id)).fold(
             onFailure = { return Result.failure(it) },
             onSuccess = { device ->
                 bleApi.enableNotifications(device, notifiableUuids)
-                    .map { ConnectionDescriptor.Ble(target.serialId, device) }
+                    .map { ConnectionDescriptor.Ble(target.id, device) }
             }
         )
 

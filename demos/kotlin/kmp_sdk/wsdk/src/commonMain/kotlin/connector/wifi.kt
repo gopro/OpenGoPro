@@ -5,6 +5,7 @@ import domain.connector.IConnector
 import domain.network.IWifiApi
 import entity.connector.ConnectionDescriptor
 import entity.connector.ConnectionRequestContext
+import entity.connector.GoProId
 import entity.connector.NetworkType
 import entity.connector.ScanResult
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +17,7 @@ internal class GpWifiConnector(private val wifiApi: IWifiApi) :
 
     override suspend fun scan(): Result<Flow<ScanResult.Wifi>> =
         wifiApi.scanForSsid().map {
-            it.map { flow -> ScanResult.Wifi(flow, "NAME_TODO") }
+            it.map { id -> ScanResult.Wifi(GoProId(id), "NAME_TODO") }
         }
 
     override suspend fun connect(
@@ -29,7 +30,7 @@ internal class GpWifiConnector(private val wifiApi: IWifiApi) :
                 ConnectionDescriptor.Http(
                     ipAddress = GP_WIFI_AP_IP_ADDRESS,
                     port = GP_WIFI_AP_PORT,
-                    serialId = target.serialId
+                    id = target.id
                 )
             }
 

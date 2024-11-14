@@ -1,5 +1,6 @@
 package domain.data
 
+import entity.connector.GoProId
 import entity.network.IHttpsCredentials
 
 internal data class WifiCredentials(
@@ -8,11 +9,11 @@ internal data class WifiCredentials(
 )
 
 internal interface ICameraRepository {
-    suspend fun addHttpsCredentials(serialId: String, credentials: IHttpsCredentials)
-    suspend fun getHttpsCredentials(serialId: String): Result<IHttpsCredentials>
-    suspend fun removeHttpsCredentials(serialId: String)
+    suspend fun addHttpsCredentials(id: GoProId, credentials: IHttpsCredentials)
+    suspend fun getHttpsCredentials(id: GoProId): Result<IHttpsCredentials>
+    suspend fun removeHttpsCredentials(id: GoProId)
 
-    suspend fun addWifiCredentials(serialId: String, ssid: String, password: String)
-    suspend fun getWifiCredentials(serialId: String): Result<WifiCredentials>
-    suspend fun removeWifiCredentials(serialId: String)
+    suspend fun addWifiCredentials(id: GoProId, ssid: String, password: String)
+    suspend fun getWifiCredentials(id: GoProId): Result<WifiCredentials>
+    suspend fun removeWifiCredentials(id: GoProId)
 }

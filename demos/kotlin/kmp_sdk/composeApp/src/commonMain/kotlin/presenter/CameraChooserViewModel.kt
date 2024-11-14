@@ -1,12 +1,12 @@
 package presenter
 
+import Wsdk
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import domain.connector.ICameraConnector
-import domain.gopro.IGoProFactory
 import entity.connector.ConnectionRequestContext
+import entity.connector.GoProId
 import entity.connector.NetworkType
 import entity.connector.ScanResult
 import kotlinx.coroutines.Job
@@ -41,10 +41,10 @@ sealed class CameraChooserUiState(val name: String) {
 }
 
 class CameraChooserViewModel(
-    private val connector: ICameraConnector,
+    private val wsdk: Wsdk,
     private val appPreferences: IAppPreferences,
 ) : ViewModel() {
-    private val found = hashMapOf<String, ScanResult>() // Used to prevent duplicates
+    private val found = hashMapOf<GoProId, ScanResult>() // Used to prevent duplicates
     private val _devices = MutableStateFlow<List<ScanResult>>(listOf())
     val devices = _devices.asStateFlow()
 
@@ -57,12 +57,12 @@ class CameraChooserViewModel(
         if (_state.value == CameraChooserUiState.Idle) {
             discoverJob = viewModelScope.launch {
                 // TODO fix network types here. It doesn't make sense.
-                connector.discover(*networks.map(::scanNetworkToNetwork).toTypedArray())
+                wsdk.discover(*networks.map(::scanNetworkToNetwork).toTypedArray())
                     .onStart {
                         _state.update { CameraChooserUiState.Discovering }
                     }
                     .onEach {
-                        found[it.serialId] = it
+                        found[it.id] = it
                     }.onCompletion {
                         _devices.update { mutableListOf() }
                     }
@@ -102,7 +102,7 @@ class CameraChooserViewModel(
         viewModelScope.launch {
             cancelDiscovery()
             _state.update { CameraChooserUiState.Connecting }
-            connector.connect(target, requestContext)
+            wsdk.connect(target, requestContext)
                 .fold(
                     onSuccess = {
                         logger.d { "Connected to ${it}." }
@@ -111,7 +111,7 @@ class CameraChooserViewModel(
                         _state.update { CameraChooserUiState.Connected }
                     },
                     onFailure = {
-                        logger.w { "Failed to connect to ${target.serialId}" }
+                        logger.w { "Failed to connect to ${target.id}" }
                         _state.update { CameraChooserUiState.Idle }
                     }
                 )

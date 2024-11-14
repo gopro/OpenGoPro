@@ -2,6 +2,7 @@ package entity.network
 
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuidFrom
+import entity.connector.GoProId
 
 private fun String.asGoProUuid(): Uuid =
     uuidFrom("b5f9${this.lowercase()}-aa8d-11e3-9046-0002a5d5c51b")
@@ -43,8 +44,8 @@ internal interface BleAdvertisement {
     val name: String? // BLE Device name (i.e GP 1234). Global ID will come from the 4 digits.
 }
 
-interface BleDevice {
-    val serialId: String
+internal interface BleDevice {
+    val id: GoProId
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)

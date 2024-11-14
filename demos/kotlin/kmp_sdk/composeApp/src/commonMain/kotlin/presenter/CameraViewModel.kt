@@ -1,10 +1,10 @@
 package presenter
 
+import Wsdk
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import domain.gopro.IGoProFactory
 import entity.operation.CohnState
 import entity.queries.Resolution
 import gopro.GoPro
@@ -23,7 +23,7 @@ sealed class CameraUiState {
 
 class CameraViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFactory: IGoProFactory,
+    private val wsdk: Wsdk,
 ) : ViewModel() {
     private lateinit var gopro: GoPro
     private var _state = MutableStateFlow<CameraUiState>(CameraUiState.Idle)
@@ -46,7 +46,7 @@ class CameraViewModel(
         viewModelScope.launch {
             _state.update { CameraUiState.Initializing }
             appPreferences.getConnectedDevice()?.let {
-                gopro = goProFactory.getGoPro(it)
+                gopro = wsdk.getGoPro(it)
             } ?: throw Exception("No connected device found.")
             _state.update { CameraUiState.Ready }
         }

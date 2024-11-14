@@ -22,11 +22,11 @@ class ConnectWifiFeature internal constructor(private val context: IFeatureConte
         // TODO finite amount of retries?
         while (true) {
             context.connector.connect(
-                ScanResult.Wifi(context.gopro.serialId, ssid),
+                ScanResult.Wifi(context.gopro.id, ssid),
                 ConnectionRequestContext.Wifi(password)
             ).onSuccess {
                 cameraRepo.addWifiCredentials(
-                    context.gopro.serialId,
+                    context.gopro.id,
                     ssid,
                     password
                 )

@@ -38,7 +38,7 @@ internal class GpMarshaller(private val gopro: IGpDescriptor) : IOperationMarsha
         // This will need to be investigated when testing reconnections.
         if (communicatorMap.containsKey(communicator.communicationType)) return false
 
-        logger.i("Setting up GoPro ${gopro.serialId} communicator: ${communicator.communicationType}")
+        logger.i("Setting up GoPro ${gopro.id} communicator: ${communicator.communicationType}")
         communicator.setup()
 
         logger.d("Binding communicator: ${communicator.communicationType}")

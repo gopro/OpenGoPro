@@ -3,6 +3,7 @@ package database
 import co.touchlab.kermit.Logger
 import domain.data.ICameraRepository
 import domain.data.WifiCredentials
+import entity.connector.GoProId
 import entity.network.HttpsCredentials
 import entity.network.IHttpsCredentials
 import entity.operation.jsonDefault
@@ -15,28 +16,28 @@ internal class CameraRepository(appDatabase: AppDatabase) : ICameraRepository {
     private val httpsCredentialsDao = appDatabase.httpsCredentialsDao()
     private val ssidDao = appDatabase.ssidDao()
 
-    override suspend fun addHttpsCredentials(serialId: String, credentials: IHttpsCredentials) {
+    override suspend fun addHttpsCredentials(id: GoProId, credentials: IHttpsCredentials) {
         certificatesDao.insert(
             CertificatesDbEntry(
-                serialId = serialId,
+                serialId = id.partialSerial,
                 certificates = jsonDefault.encodeToString(CertificatesForDb(credentials.certificates))
             )
         )
         httpsCredentialsDao.insert(
             HttpsCredentialsDbEntry(
-                serialId = serialId,
+                serialId = id.partialSerial,
                 username = credentials.username,
                 password = credentials.password
             )
         )
     }
 
-    override suspend fun getHttpsCredentials(serialId: String): Result<IHttpsCredentials> {
+    override suspend fun getHttpsCredentials(id: GoProId): Result<IHttpsCredentials> {
         // TODO handle errors
         val certificates = jsonDefault.decodeFromString<CertificatesForDb>(
-            certificatesDao.loadAll(serialId).first().certificates
+            certificatesDao.loadAll(id.partialSerial).first().certificates
         ).certificates.onEach { logger.d(it) }
-        val credentials = httpsCredentialsDao.loadAll(serialId).first().also {
+        val credentials = httpsCredentialsDao.loadAll(id.partialSerial).first().also {
             logger.d(it.toString())
         }
         return Result.success(
@@ -48,23 +49,23 @@ internal class CameraRepository(appDatabase: AppDatabase) : ICameraRepository {
         )
     }
 
-    override suspend fun removeHttpsCredentials(serialId: String) {
-        certificatesDao.delete(SerialIdDb(serialId))
-        httpsCredentialsDao.delete(SerialIdDb(serialId))
+    override suspend fun removeHttpsCredentials(id: GoProId) {
+        certificatesDao.delete(SerialIdDb(id.partialSerial))
+        httpsCredentialsDao.delete(SerialIdDb(id.partialSerial))
     }
 
-    override suspend fun addWifiCredentials(serialId: String, ssid: String, password: String) {
-        ssidDao.insert(SsidDbEntry(serialId, ssid, password))
+    override suspend fun addWifiCredentials(id: GoProId, ssid: String, password: String) {
+        ssidDao.insert(SsidDbEntry(id.partialSerial, ssid, password))
     }
 
-    override suspend fun getWifiCredentials(serialId: String): Result<WifiCredentials> =
-        ssidDao.loadAll(serialId).first().let {
+    override suspend fun getWifiCredentials(id: GoProId): Result<WifiCredentials> =
+        ssidDao.loadAll(id.partialSerial).first().let {
             Result.success(
                 WifiCredentials(it.ssid, it.password)
             )
         }
 
-    override suspend fun removeWifiCredentials(serialId: String) {
-        ssidDao.delete(SerialIdDb(serialId))
+    override suspend fun removeWifiCredentials(id: GoProId) {
+        ssidDao.delete(SerialIdDb(id.partialSerial))
     }
 }

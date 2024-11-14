@@ -1,10 +1,10 @@
 package presenter
 
+import Wsdk
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import domain.gopro.IGoProFactory
 import entity.operation.MediaId
 import entity.operation.MediaMetadata
 import gopro.GoPro
@@ -25,7 +25,7 @@ sealed class MediaUiState(val name: String) {
 
 class MediaViewModel(
     private val appPreferences: IAppPreferences,
-    private val goProFactory: IGoProFactory,
+    private val wsdk: Wsdk,
 ) : ViewModel() {
     private val logger = Logger.withTag("MediaViewModel")
 
@@ -75,7 +75,7 @@ class MediaViewModel(
     fun start() {
         viewModelScope.launch {
             appPreferences.getConnectedDevice()?.let {
-                gopro = goProFactory.getGoPro(it)
+                gopro = wsdk.getGoPro(it)
             } ?: throw Exception("No connected device found.")
         }
     }

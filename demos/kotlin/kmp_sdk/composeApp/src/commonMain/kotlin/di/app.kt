@@ -9,5 +9,5 @@ fun buildAppModule(appContext: WsdkAppContext): Module =
         includes(dataModule)
         includes(buildPlatformModules(appContext))
         includes(screenModules)
-        includes(buildWsdkModule())
+        includes(buildWsdkModule(appContext))
     }
