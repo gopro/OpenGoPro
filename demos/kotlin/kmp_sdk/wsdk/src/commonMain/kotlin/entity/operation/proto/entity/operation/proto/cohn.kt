@@ -1,62 +1,62 @@
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
-package open_gopro
+package entity.operation.proto
 
 @pbandk.Export
-public sealed class EnumCOHNStatus(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is open_gopro.EnumCOHNStatus && other.value == value
+sealed class EnumCOHNStatus(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+    override fun equals(other: kotlin.Any?): Boolean = other is entity.operation.proto.EnumCOHNStatus && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumCOHNStatus.${name ?: "UNRECOGNIZED"}(value=$value)"
 
-    public object COHN_UNPROVISIONED : EnumCOHNStatus(0, "COHN_UNPROVISIONED")
-    public object COHN_PROVISIONED : EnumCOHNStatus(1, "COHN_PROVISIONED")
-    public class UNRECOGNIZED(value: Int) : EnumCOHNStatus(value)
+    object COHN_UNPROVISIONED : EnumCOHNStatus(0, "COHN_UNPROVISIONED")
+    object COHN_PROVISIONED : EnumCOHNStatus(1, "COHN_PROVISIONED")
+    class UNRECOGNIZED(value: Int) : EnumCOHNStatus(value)
 
-    public companion object : pbandk.Message.Enum.Companion<open_gopro.EnumCOHNStatus> {
-        public val values: List<open_gopro.EnumCOHNStatus> by lazy { listOf(COHN_UNPROVISIONED, COHN_PROVISIONED) }
-        override fun fromValue(value: Int): open_gopro.EnumCOHNStatus = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): open_gopro.EnumCOHNStatus = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumCOHNStatus with name: $name")
+    companion object : pbandk.Message.Enum.Companion<entity.operation.proto.EnumCOHNStatus> {
+        internal val values: List<entity.operation.proto.EnumCOHNStatus> by lazy { listOf(COHN_UNPROVISIONED, COHN_PROVISIONED) }
+        override fun fromValue(value: Int): entity.operation.proto.EnumCOHNStatus = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): entity.operation.proto.EnumCOHNStatus = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumCOHNStatus with name: $name")
     }
 }
 
 @pbandk.Export
-public sealed class EnumCOHNNetworkState(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is open_gopro.EnumCOHNNetworkState && other.value == value
+sealed class EnumCOHNNetworkState(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+    override fun equals(other: kotlin.Any?): Boolean = other is entity.operation.proto.EnumCOHNNetworkState && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumCOHNNetworkState.${name ?: "UNRECOGNIZED"}(value=$value)"
 
-    public object COHN_STATE_INIT : EnumCOHNNetworkState(0, "COHN_STATE_Init")
-    public object COHN_STATE_ERROR : EnumCOHNNetworkState(1, "COHN_STATE_Error")
-    public object COHN_STATE_EXIT : EnumCOHNNetworkState(2, "COHN_STATE_Exit")
-    public object COHN_STATE_IDLE : EnumCOHNNetworkState(5, "COHN_STATE_Idle")
-    public object COHN_STATE_NETWORK_CONNECTED : EnumCOHNNetworkState(27, "COHN_STATE_NetworkConnected")
-    public object COHN_STATE_NETWORK_DISCONNECTED : EnumCOHNNetworkState(28, "COHN_STATE_NetworkDisconnected")
-    public object COHN_STATE_CONNECTING_TO_NETWORK : EnumCOHNNetworkState(29, "COHN_STATE_ConnectingToNetwork")
-    public object COHN_STATE_INVALID : EnumCOHNNetworkState(30, "COHN_STATE_Invalid")
-    public class UNRECOGNIZED(value: Int) : EnumCOHNNetworkState(value)
+    object COHN_STATE_INIT : EnumCOHNNetworkState(0, "COHN_STATE_Init")
+    object COHN_STATE_ERROR : EnumCOHNNetworkState(1, "COHN_STATE_Error")
+    object COHN_STATE_EXIT : EnumCOHNNetworkState(2, "COHN_STATE_Exit")
+    object COHN_STATE_IDLE : EnumCOHNNetworkState(5, "COHN_STATE_Idle")
+    object COHN_STATE_NETWORK_CONNECTED : EnumCOHNNetworkState(27, "COHN_STATE_NetworkConnected")
+    object COHN_STATE_NETWORK_DISCONNECTED : EnumCOHNNetworkState(28, "COHN_STATE_NetworkDisconnected")
+    object COHN_STATE_CONNECTING_TO_NETWORK : EnumCOHNNetworkState(29, "COHN_STATE_ConnectingToNetwork")
+    object COHN_STATE_INVALID : EnumCOHNNetworkState(30, "COHN_STATE_Invalid")
+    class UNRECOGNIZED(value: Int) : EnumCOHNNetworkState(value)
 
-    public companion object : pbandk.Message.Enum.Companion<open_gopro.EnumCOHNNetworkState> {
-        public val values: List<open_gopro.EnumCOHNNetworkState> by lazy { listOf(COHN_STATE_INIT, COHN_STATE_ERROR, COHN_STATE_EXIT, COHN_STATE_IDLE, COHN_STATE_NETWORK_CONNECTED, COHN_STATE_NETWORK_DISCONNECTED, COHN_STATE_CONNECTING_TO_NETWORK, COHN_STATE_INVALID) }
-        override fun fromValue(value: Int): open_gopro.EnumCOHNNetworkState = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): open_gopro.EnumCOHNNetworkState = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumCOHNNetworkState with name: $name")
+    companion object : pbandk.Message.Enum.Companion<entity.operation.proto.EnumCOHNNetworkState> {
+        val values: List<entity.operation.proto.EnumCOHNNetworkState> by lazy { listOf(COHN_STATE_INIT, COHN_STATE_ERROR, COHN_STATE_EXIT, COHN_STATE_IDLE, COHN_STATE_NETWORK_CONNECTED, COHN_STATE_NETWORK_DISCONNECTED, COHN_STATE_CONNECTING_TO_NETWORK, COHN_STATE_INVALID) }
+        override fun fromValue(value: Int): entity.operation.proto.EnumCOHNNetworkState = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): entity.operation.proto.EnumCOHNNetworkState = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumCOHNNetworkState with name: $name")
     }
 }
 
 @pbandk.Export
-public data class RequestGetCOHNStatus(
+data class RequestGetCOHNStatus(
     val registerCohnStatus: Boolean? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): open_gopro.RequestGetCOHNStatus = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<open_gopro.RequestGetCOHNStatus> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): entity.operation.proto.RequestGetCOHNStatus = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.RequestGetCOHNStatus> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    public companion object : pbandk.Message.Companion<open_gopro.RequestGetCOHNStatus> {
-        public val defaultInstance: open_gopro.RequestGetCOHNStatus by lazy { open_gopro.RequestGetCOHNStatus() }
-        override fun decodeWith(u: pbandk.MessageDecoder): open_gopro.RequestGetCOHNStatus = open_gopro.RequestGetCOHNStatus.decodeWithImpl(u)
+    companion object : pbandk.Message.Companion<entity.operation.proto.RequestGetCOHNStatus> {
+        val defaultInstance: entity.operation.proto.RequestGetCOHNStatus by lazy { entity.operation.proto.RequestGetCOHNStatus() }
+        override fun decodeWith(u: pbandk.MessageDecoder): entity.operation.proto.RequestGetCOHNStatus = entity.operation.proto.RequestGetCOHNStatus.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<open_gopro.RequestGetCOHNStatus> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.RequestGetCOHNStatus> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestGetCOHNStatus",
-            messageClass = open_gopro.RequestGetCOHNStatus::class,
+            messageClass = entity.operation.proto.RequestGetCOHNStatus::class,
             messageCompanion = this,
             fields = buildList(1) {
                 add(
@@ -66,7 +66,7 @@ public data class RequestGetCOHNStatus(
                         number = 1,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "registerCohnStatus",
-                        value = open_gopro.RequestGetCOHNStatus::registerCohnStatus
+                        value = entity.operation.proto.RequestGetCOHNStatus::registerCohnStatus
                     )
                 )
             }
@@ -75,9 +75,9 @@ public data class RequestGetCOHNStatus(
 }
 
 @pbandk.Export
-public data class NotifyCOHNStatus(
-    val status: open_gopro.EnumCOHNStatus? = null,
-    val state: open_gopro.EnumCOHNNetworkState? = null,
+internal data class NotifyCOHNStatus(
+    val status: entity.operation.proto.EnumCOHNStatus? = null,
+    val state: entity.operation.proto.EnumCOHNNetworkState? = null,
     val username: String? = null,
     val password: String? = null,
     val ipaddress: String? = null,
@@ -86,16 +86,16 @@ public data class NotifyCOHNStatus(
     val macaddress: String? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): open_gopro.NotifyCOHNStatus = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<open_gopro.NotifyCOHNStatus> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): entity.operation.proto.NotifyCOHNStatus = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.NotifyCOHNStatus> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    public companion object : pbandk.Message.Companion<open_gopro.NotifyCOHNStatus> {
-        public val defaultInstance: open_gopro.NotifyCOHNStatus by lazy { open_gopro.NotifyCOHNStatus() }
-        override fun decodeWith(u: pbandk.MessageDecoder): open_gopro.NotifyCOHNStatus = open_gopro.NotifyCOHNStatus.decodeWithImpl(u)
+    companion object : pbandk.Message.Companion<entity.operation.proto.NotifyCOHNStatus> {
+        val defaultInstance: entity.operation.proto.NotifyCOHNStatus by lazy { entity.operation.proto.NotifyCOHNStatus() }
+        override fun decodeWith(u: pbandk.MessageDecoder): entity.operation.proto.NotifyCOHNStatus = entity.operation.proto.NotifyCOHNStatus.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<open_gopro.NotifyCOHNStatus> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.NotifyCOHNStatus> = pbandk.MessageDescriptor(
             fullName = "open_gopro.NotifyCOHNStatus",
-            messageClass = open_gopro.NotifyCOHNStatus::class,
+            messageClass = entity.operation.proto.NotifyCOHNStatus::class,
             messageCompanion = this,
             fields = buildList(8) {
                 add(
@@ -103,9 +103,9 @@ public data class NotifyCOHNStatus(
                         messageDescriptor = this@Companion::descriptor,
                         name = "status",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = open_gopro.EnumCOHNStatus.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = entity.operation.proto.EnumCOHNStatus.Companion, hasPresence = true),
                         jsonName = "status",
-                        value = open_gopro.NotifyCOHNStatus::status
+                        value = entity.operation.proto.NotifyCOHNStatus::status
                     )
                 )
                 add(
@@ -113,9 +113,9 @@ public data class NotifyCOHNStatus(
                         messageDescriptor = this@Companion::descriptor,
                         name = "state",
                         number = 2,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = open_gopro.EnumCOHNNetworkState.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = entity.operation.proto.EnumCOHNNetworkState.Companion, hasPresence = true),
                         jsonName = "state",
-                        value = open_gopro.NotifyCOHNStatus::state
+                        value = entity.operation.proto.NotifyCOHNStatus::state
                     )
                 )
                 add(
@@ -125,7 +125,7 @@ public data class NotifyCOHNStatus(
                         number = 3,
                         type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                         jsonName = "username",
-                        value = open_gopro.NotifyCOHNStatus::username
+                        value = entity.operation.proto.NotifyCOHNStatus::username
                     )
                 )
                 add(
@@ -135,7 +135,7 @@ public data class NotifyCOHNStatus(
                         number = 4,
                         type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                         jsonName = "password",
-                        value = open_gopro.NotifyCOHNStatus::password
+                        value = entity.operation.proto.NotifyCOHNStatus::password
                     )
                 )
                 add(
@@ -145,7 +145,7 @@ public data class NotifyCOHNStatus(
                         number = 5,
                         type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                         jsonName = "ipaddress",
-                        value = open_gopro.NotifyCOHNStatus::ipaddress
+                        value = entity.operation.proto.NotifyCOHNStatus::ipaddress
                     )
                 )
                 add(
@@ -155,7 +155,7 @@ public data class NotifyCOHNStatus(
                         number = 6,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "enabled",
-                        value = open_gopro.NotifyCOHNStatus::enabled
+                        value = entity.operation.proto.NotifyCOHNStatus::enabled
                     )
                 )
                 add(
@@ -165,7 +165,7 @@ public data class NotifyCOHNStatus(
                         number = 7,
                         type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                         jsonName = "ssid",
-                        value = open_gopro.NotifyCOHNStatus::ssid
+                        value = entity.operation.proto.NotifyCOHNStatus::ssid
                     )
                 )
                 add(
@@ -175,7 +175,7 @@ public data class NotifyCOHNStatus(
                         number = 8,
                         type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                         jsonName = "macaddress",
-                        value = open_gopro.NotifyCOHNStatus::macaddress
+                        value = entity.operation.proto.NotifyCOHNStatus::macaddress
                     )
                 )
             }
@@ -184,20 +184,20 @@ public data class NotifyCOHNStatus(
 }
 
 @pbandk.Export
-public data class RequestCreateCOHNCert(
+internal data class RequestCreateCOHNCert(
     val override: Boolean? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): open_gopro.RequestCreateCOHNCert = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<open_gopro.RequestCreateCOHNCert> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): entity.operation.proto.RequestCreateCOHNCert = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.RequestCreateCOHNCert> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    public companion object : pbandk.Message.Companion<open_gopro.RequestCreateCOHNCert> {
-        public val defaultInstance: open_gopro.RequestCreateCOHNCert by lazy { open_gopro.RequestCreateCOHNCert() }
-        override fun decodeWith(u: pbandk.MessageDecoder): open_gopro.RequestCreateCOHNCert = open_gopro.RequestCreateCOHNCert.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<entity.operation.proto.RequestCreateCOHNCert> {
+        internal val defaultInstance: entity.operation.proto.RequestCreateCOHNCert by lazy { entity.operation.proto.RequestCreateCOHNCert() }
+        override fun decodeWith(u: pbandk.MessageDecoder): entity.operation.proto.RequestCreateCOHNCert = entity.operation.proto.RequestCreateCOHNCert.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<open_gopro.RequestCreateCOHNCert> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.RequestCreateCOHNCert> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestCreateCOHNCert",
-            messageClass = open_gopro.RequestCreateCOHNCert::class,
+            messageClass = entity.operation.proto.RequestCreateCOHNCert::class,
             messageCompanion = this,
             fields = buildList(1) {
                 add(
@@ -207,7 +207,7 @@ public data class RequestCreateCOHNCert(
                         number = 1,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "override",
-                        value = open_gopro.RequestCreateCOHNCert::override
+                        value = entity.operation.proto.RequestCreateCOHNCert::override
                     )
                 )
             }
@@ -216,19 +216,19 @@ public data class RequestCreateCOHNCert(
 }
 
 @pbandk.Export
-public data class RequestClearCOHNCert(
+internal data class RequestClearCOHNCert(
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): open_gopro.RequestClearCOHNCert = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<open_gopro.RequestClearCOHNCert> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): entity.operation.proto.RequestClearCOHNCert = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.RequestClearCOHNCert> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    public companion object : pbandk.Message.Companion<open_gopro.RequestClearCOHNCert> {
-        public val defaultInstance: open_gopro.RequestClearCOHNCert by lazy { open_gopro.RequestClearCOHNCert() }
-        override fun decodeWith(u: pbandk.MessageDecoder): open_gopro.RequestClearCOHNCert = open_gopro.RequestClearCOHNCert.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<entity.operation.proto.RequestClearCOHNCert> {
+        internal val defaultInstance: entity.operation.proto.RequestClearCOHNCert by lazy { entity.operation.proto.RequestClearCOHNCert() }
+        override fun decodeWith(u: pbandk.MessageDecoder): entity.operation.proto.RequestClearCOHNCert = entity.operation.proto.RequestClearCOHNCert.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<open_gopro.RequestClearCOHNCert> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.RequestClearCOHNCert> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestClearCOHNCert",
-            messageClass = open_gopro.RequestClearCOHNCert::class,
+            messageClass = entity.operation.proto.RequestClearCOHNCert::class,
             messageCompanion = this,
             fields = buildList(0) {
             }
@@ -237,19 +237,19 @@ public data class RequestClearCOHNCert(
 }
 
 @pbandk.Export
-public data class RequestCOHNCert(
+internal data class RequestCOHNCert(
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): open_gopro.RequestCOHNCert = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<open_gopro.RequestCOHNCert> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): entity.operation.proto.RequestCOHNCert = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.RequestCOHNCert> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    public companion object : pbandk.Message.Companion<open_gopro.RequestCOHNCert> {
-        public val defaultInstance: open_gopro.RequestCOHNCert by lazy { open_gopro.RequestCOHNCert() }
-        override fun decodeWith(u: pbandk.MessageDecoder): open_gopro.RequestCOHNCert = open_gopro.RequestCOHNCert.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<entity.operation.proto.RequestCOHNCert> {
+        internal val defaultInstance: entity.operation.proto.RequestCOHNCert by lazy { entity.operation.proto.RequestCOHNCert() }
+        override fun decodeWith(u: pbandk.MessageDecoder): entity.operation.proto.RequestCOHNCert = entity.operation.proto.RequestCOHNCert.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<open_gopro.RequestCOHNCert> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.RequestCOHNCert> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestCOHNCert",
-            messageClass = open_gopro.RequestCOHNCert::class,
+            messageClass = entity.operation.proto.RequestCOHNCert::class,
             messageCompanion = this,
             fields = buildList(0) {
             }
@@ -258,21 +258,21 @@ public data class RequestCOHNCert(
 }
 
 @pbandk.Export
-public data class ResponseCOHNCert(
-    val result: open_gopro.EnumResultGeneric? = null,
+internal data class ResponseCOHNCert(
+    val result: entity.operation.proto.EnumResultGeneric? = null,
     val cert: String? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): open_gopro.ResponseCOHNCert = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<open_gopro.ResponseCOHNCert> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): entity.operation.proto.ResponseCOHNCert = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.ResponseCOHNCert> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    public companion object : pbandk.Message.Companion<open_gopro.ResponseCOHNCert> {
-        public val defaultInstance: open_gopro.ResponseCOHNCert by lazy { open_gopro.ResponseCOHNCert() }
-        override fun decodeWith(u: pbandk.MessageDecoder): open_gopro.ResponseCOHNCert = open_gopro.ResponseCOHNCert.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<entity.operation.proto.ResponseCOHNCert> {
+        internal val defaultInstance: entity.operation.proto.ResponseCOHNCert by lazy { entity.operation.proto.ResponseCOHNCert() }
+        override fun decodeWith(u: pbandk.MessageDecoder): entity.operation.proto.ResponseCOHNCert = entity.operation.proto.ResponseCOHNCert.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<open_gopro.ResponseCOHNCert> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.ResponseCOHNCert> = pbandk.MessageDescriptor(
             fullName = "open_gopro.ResponseCOHNCert",
-            messageClass = open_gopro.ResponseCOHNCert::class,
+            messageClass = entity.operation.proto.ResponseCOHNCert::class,
             messageCompanion = this,
             fields = buildList(2) {
                 add(
@@ -280,9 +280,9 @@ public data class ResponseCOHNCert(
                         messageDescriptor = this@Companion::descriptor,
                         name = "result",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = open_gopro.EnumResultGeneric.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = entity.operation.proto.EnumResultGeneric.Companion, hasPresence = true),
                         jsonName = "result",
-                        value = open_gopro.ResponseCOHNCert::result
+                        value = entity.operation.proto.ResponseCOHNCert::result
                     )
                 )
                 add(
@@ -292,7 +292,7 @@ public data class ResponseCOHNCert(
                         number = 2,
                         type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                         jsonName = "cert",
-                        value = open_gopro.ResponseCOHNCert::cert
+                        value = entity.operation.proto.ResponseCOHNCert::cert
                     )
                 )
             }
@@ -301,20 +301,20 @@ public data class ResponseCOHNCert(
 }
 
 @pbandk.Export
-public data class RequestSetCOHNSetting(
+internal data class RequestSetCOHNSetting(
     val cohnActive: Boolean? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): open_gopro.RequestSetCOHNSetting = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<open_gopro.RequestSetCOHNSetting> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): entity.operation.proto.RequestSetCOHNSetting = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.RequestSetCOHNSetting> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    public companion object : pbandk.Message.Companion<open_gopro.RequestSetCOHNSetting> {
-        public val defaultInstance: open_gopro.RequestSetCOHNSetting by lazy { open_gopro.RequestSetCOHNSetting() }
-        override fun decodeWith(u: pbandk.MessageDecoder): open_gopro.RequestSetCOHNSetting = open_gopro.RequestSetCOHNSetting.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<entity.operation.proto.RequestSetCOHNSetting> {
+        internal val defaultInstance: entity.operation.proto.RequestSetCOHNSetting by lazy { entity.operation.proto.RequestSetCOHNSetting() }
+        override fun decodeWith(u: pbandk.MessageDecoder): entity.operation.proto.RequestSetCOHNSetting = entity.operation.proto.RequestSetCOHNSetting.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<open_gopro.RequestSetCOHNSetting> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.RequestSetCOHNSetting> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestSetCOHNSetting",
-            messageClass = open_gopro.RequestSetCOHNSetting::class,
+            messageClass = entity.operation.proto.RequestSetCOHNSetting::class,
             messageCompanion = this,
             fields = buildList(1) {
                 add(
@@ -324,7 +324,7 @@ public data class RequestSetCOHNSetting(
                         number = 1,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "cohnActive",
-                        value = open_gopro.RequestSetCOHNSetting::cohnActive
+                        value = entity.operation.proto.RequestSetCOHNSetting::cohnActive
                     )
                 )
             }
@@ -334,7 +334,7 @@ public data class RequestSetCOHNSetting(
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForRequestGetCOHNStatus")
-public fun RequestGetCOHNStatus?.orDefault(): open_gopro.RequestGetCOHNStatus = this ?: RequestGetCOHNStatus.defaultInstance
+internal fun RequestGetCOHNStatus?.orDefault(): entity.operation.proto.RequestGetCOHNStatus = this ?: RequestGetCOHNStatus.defaultInstance
 
 private fun RequestGetCOHNStatus.protoMergeImpl(plus: pbandk.Message?): RequestGetCOHNStatus = (plus as? RequestGetCOHNStatus)?.let {
     it.copy(
@@ -358,7 +358,7 @@ private fun RequestGetCOHNStatus.Companion.decodeWithImpl(u: pbandk.MessageDecod
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForNotifyCOHNStatus")
-public fun NotifyCOHNStatus?.orDefault(): open_gopro.NotifyCOHNStatus = this ?: NotifyCOHNStatus.defaultInstance
+internal fun NotifyCOHNStatus?.orDefault(): entity.operation.proto.NotifyCOHNStatus = this ?: NotifyCOHNStatus.defaultInstance
 
 private fun NotifyCOHNStatus.protoMergeImpl(plus: pbandk.Message?): NotifyCOHNStatus = (plus as? NotifyCOHNStatus)?.let {
     it.copy(
@@ -376,8 +376,8 @@ private fun NotifyCOHNStatus.protoMergeImpl(plus: pbandk.Message?): NotifyCOHNSt
 
 @Suppress("UNCHECKED_CAST")
 private fun NotifyCOHNStatus.Companion.decodeWithImpl(u: pbandk.MessageDecoder): NotifyCOHNStatus {
-    var status: open_gopro.EnumCOHNStatus? = null
-    var state: open_gopro.EnumCOHNNetworkState? = null
+    var status: entity.operation.proto.EnumCOHNStatus? = null
+    var state: entity.operation.proto.EnumCOHNNetworkState? = null
     var username: String? = null
     var password: String? = null
     var ipaddress: String? = null
@@ -387,8 +387,8 @@ private fun NotifyCOHNStatus.Companion.decodeWithImpl(u: pbandk.MessageDecoder):
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> status = _fieldValue as open_gopro.EnumCOHNStatus
-            2 -> state = _fieldValue as open_gopro.EnumCOHNNetworkState
+            1 -> status = _fieldValue as entity.operation.proto.EnumCOHNStatus
+            2 -> state = _fieldValue as entity.operation.proto.EnumCOHNNetworkState
             3 -> username = _fieldValue as String
             4 -> password = _fieldValue as String
             5 -> ipaddress = _fieldValue as String
@@ -404,7 +404,7 @@ private fun NotifyCOHNStatus.Companion.decodeWithImpl(u: pbandk.MessageDecoder):
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForRequestCreateCOHNCert")
-public fun RequestCreateCOHNCert?.orDefault(): open_gopro.RequestCreateCOHNCert = this ?: RequestCreateCOHNCert.defaultInstance
+internal fun RequestCreateCOHNCert?.orDefault(): entity.operation.proto.RequestCreateCOHNCert = this ?: RequestCreateCOHNCert.defaultInstance
 
 private fun RequestCreateCOHNCert.protoMergeImpl(plus: pbandk.Message?): RequestCreateCOHNCert = (plus as? RequestCreateCOHNCert)?.let {
     it.copy(
@@ -428,7 +428,7 @@ private fun RequestCreateCOHNCert.Companion.decodeWithImpl(u: pbandk.MessageDeco
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForRequestClearCOHNCert")
-public fun RequestClearCOHNCert?.orDefault(): open_gopro.RequestClearCOHNCert = this ?: RequestClearCOHNCert.defaultInstance
+internal fun RequestClearCOHNCert?.orDefault(): entity.operation.proto.RequestClearCOHNCert = this ?: RequestClearCOHNCert.defaultInstance
 
 private fun RequestClearCOHNCert.protoMergeImpl(plus: pbandk.Message?): RequestClearCOHNCert = (plus as? RequestClearCOHNCert)?.let {
     it.copy(
@@ -446,7 +446,7 @@ private fun RequestClearCOHNCert.Companion.decodeWithImpl(u: pbandk.MessageDecod
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForRequestCOHNCert")
-public fun RequestCOHNCert?.orDefault(): open_gopro.RequestCOHNCert = this ?: RequestCOHNCert.defaultInstance
+internal fun RequestCOHNCert?.orDefault(): entity.operation.proto.RequestCOHNCert = this ?: RequestCOHNCert.defaultInstance
 
 private fun RequestCOHNCert.protoMergeImpl(plus: pbandk.Message?): RequestCOHNCert = (plus as? RequestCOHNCert)?.let {
     it.copy(
@@ -464,7 +464,7 @@ private fun RequestCOHNCert.Companion.decodeWithImpl(u: pbandk.MessageDecoder): 
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForResponseCOHNCert")
-public fun ResponseCOHNCert?.orDefault(): open_gopro.ResponseCOHNCert = this ?: ResponseCOHNCert.defaultInstance
+internal fun ResponseCOHNCert?.orDefault(): entity.operation.proto.ResponseCOHNCert = this ?: ResponseCOHNCert.defaultInstance
 
 private fun ResponseCOHNCert.protoMergeImpl(plus: pbandk.Message?): ResponseCOHNCert = (plus as? ResponseCOHNCert)?.let {
     it.copy(
@@ -476,12 +476,12 @@ private fun ResponseCOHNCert.protoMergeImpl(plus: pbandk.Message?): ResponseCOHN
 
 @Suppress("UNCHECKED_CAST")
 private fun ResponseCOHNCert.Companion.decodeWithImpl(u: pbandk.MessageDecoder): ResponseCOHNCert {
-    var result: open_gopro.EnumResultGeneric? = null
+    var result: entity.operation.proto.EnumResultGeneric? = null
     var cert: String? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> result = _fieldValue as open_gopro.EnumResultGeneric
+            1 -> result = _fieldValue as entity.operation.proto.EnumResultGeneric
             2 -> cert = _fieldValue as String
         }
     }
@@ -491,7 +491,7 @@ private fun ResponseCOHNCert.Companion.decodeWithImpl(u: pbandk.MessageDecoder):
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForRequestSetCOHNSetting")
-public fun RequestSetCOHNSetting?.orDefault(): open_gopro.RequestSetCOHNSetting = this ?: RequestSetCOHNSetting.defaultInstance
+internal fun RequestSetCOHNSetting?.orDefault(): entity.operation.proto.RequestSetCOHNSetting = this ?: RequestSetCOHNSetting.defaultInstance
 
 private fun RequestSetCOHNSetting.protoMergeImpl(plus: pbandk.Message?): RequestSetCOHNSetting = (plus as? RequestSetCOHNSetting)?.let {
     it.copy(

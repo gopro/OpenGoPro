@@ -10,7 +10,7 @@ import entity.exceptions.OperationUnsupportedForCommunicator
 import extensions.bleIfAvailable
 import extensions.prettyPrintResult
 
-interface IOperation<T : Any> {
+internal interface IOperation<T : Any> {
     val debugId: String
     suspend fun execute(communicator: ICommunicator<*>): Result<T>
 }
@@ -38,7 +38,7 @@ internal abstract class BaseOperation<T : Any>(final override val debugId: Strin
     }
 }
 
-interface IOperationMarshaller {
+internal interface IOperationMarshaller {
     suspend fun <T : Any, O : IOperation<T>> marshal(
         operation: O, strategy: (StrategyBuilder<T, O>.() -> Unit)? = null
     ): Result<T>
@@ -48,17 +48,17 @@ interface IOperationMarshaller {
     val communicators: List<CommunicationType>
 }
 
-interface IOperationStrategy<T : Any, O : IOperation<T>> {
+internal interface IOperationStrategy<T : Any, O : IOperation<T>> {
     fun isFastpass(operation: O, device: IGpDescriptor): Boolean
     fun useCommunicator(operation: O, device: IGpDescriptor): CommunicationType
     fun shouldWaitForEncodingStop(operation: O, device: IGpDescriptor): Boolean
 }
 
 @DslMarker
-annotation class StrategyDsl
+internal annotation class StrategyDsl
 
 @StrategyDsl
-class StrategyBuilder<T : Any, O : IOperation<T>> {
+internal class StrategyBuilder<T : Any, O : IOperation<T>> {
     private var communicatorStrategy: (O, IGpDescriptor) -> CommunicationType =
         { _, device -> device.communicators.run { bleIfAvailable() ?: first() } }
     private var fastpassStrategy: (O, IGpDescriptor) -> Boolean = { _, _ -> false }

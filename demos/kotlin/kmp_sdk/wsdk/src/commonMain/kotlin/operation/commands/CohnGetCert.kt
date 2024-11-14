@@ -13,9 +13,9 @@ import extensions.isOk
 import extensions.mapFromGenericProtoResponseToResult
 import io.ktor.client.call.body
 import io.ktor.http.path
-import open_gopro.EnumCameraControlStatus
-import open_gopro.RequestSetCameraControlStatus
-import open_gopro.ResponseCOHNCert
+import entity.operation.proto.EnumCameraControlStatus
+import entity.operation.proto.RequestSetCameraControlStatus
+import entity.operation.proto.ResponseCOHNCert
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray
 

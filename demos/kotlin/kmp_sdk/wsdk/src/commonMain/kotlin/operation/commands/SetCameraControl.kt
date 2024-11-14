@@ -11,8 +11,8 @@ import entity.operation.CameraControlStatus
 import extensions.mapFromGenericProtoResponseToResult
 import io.ktor.client.call.body
 import io.ktor.http.path
-import open_gopro.EnumCameraControlStatus
-import open_gopro.RequestSetCameraControlStatus
+import entity.operation.proto.EnumCameraControlStatus
+import entity.operation.proto.RequestSetCameraControlStatus
 import pbandk.encodeToByteArray
 
 internal class SetCameraControl(val status: CameraControlStatus) :

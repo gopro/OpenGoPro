@@ -14,8 +14,6 @@
 syntax = "proto2";
 package open_gopro;
 
-import "response_generic.proto";
-
 enum EnumFlatMode {
     FLAT_MODE_UNKNOWN              = -1;
     FLAT_MODE_PLAYBACK             = 4;

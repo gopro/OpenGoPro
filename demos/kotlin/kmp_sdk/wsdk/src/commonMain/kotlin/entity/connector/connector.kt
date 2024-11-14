@@ -25,7 +25,7 @@ sealed interface ScanResult {
     val serialId: String // Last 4 digits of serial number
     val networkType: NetworkType
 
-    data class Ble(override val serialId: String, val advertisement: BleAdvertisement) :
+    data class Ble(override val serialId: String, val id: String, val name: String) :
         ScanResult {
         override val networkType = NetworkType.BLE
     }
@@ -45,7 +45,7 @@ sealed interface ConnectionDescriptor {
 
     data class Ble(
         override val serialId: String,
-        val device: BleDevice // TODO can we remove this?
+        val device: BleDevice
     ) : ConnectionDescriptor
 
     data class Http(

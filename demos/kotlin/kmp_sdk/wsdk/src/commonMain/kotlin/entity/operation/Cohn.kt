@@ -1,10 +1,10 @@
 package entity.operation
 
+import entity.operation.proto.EnumCOHNNetworkState
+import entity.operation.proto.EnumCOHNStatus
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import open_gopro.EnumCOHNNetworkState
-import open_gopro.EnumCOHNStatus
 
 @Serializable
 data class CohnStatus(
@@ -19,6 +19,6 @@ data class CohnStatus(
 )
 
 @Serializable
-data class CohnSettingRequest(
+class CohnSettingRequest(
     @SerialName("cohn_active") val disableCohn: Boolean
 )

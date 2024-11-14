@@ -1,8 +1,8 @@
 package extensions
 
 import entity.exceptions.CameraInternalError
-import open_gopro.EnumResultGeneric
-import open_gopro.ResponseGeneric
+import entity.operation.proto.EnumResultGeneric
+import entity.operation.proto.ResponseGeneric
 import pbandk.decodeFromByteArray
 
 internal fun Result<ByteArray>.mapFromGenericProtoResponseToResult(): Result<Unit> =

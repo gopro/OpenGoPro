@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.onEach
 
 private val logger = Logger.withTag("AccessPointFeature")
 
-class AccessPointFeature(feature: IFeatureContext) : IFeatureContext by feature {
+class AccessPointFeature internal constructor(feature: IFeatureContext) :
+    IFeatureContext by feature {
     suspend fun scanForAccessPoints(): Result<List<ApScanEntry>> {
         logger.i("Scanning for access points")
         // First perform scan and store scan result

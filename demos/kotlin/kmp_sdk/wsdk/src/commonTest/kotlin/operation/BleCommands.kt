@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.UtcOffset
-import open_gopro.EnumPresetGroupIcon
+import entity.operation.proto.EnumPresetGroupIcon
 import operation.commands.AccessPointGetScanResults
 import operation.commands.AccessPointScan
 import operation.commands.ConnectNewAccessPoint

@@ -2,6 +2,7 @@ package network
 
 import co.touchlab.kermit.Logger
 import com.benasher44.uuid.Uuid
+import com.juul.kable.Characteristic
 import com.juul.kable.PlatformAdvertisement
 import com.juul.kable.Scanner
 import com.juul.kable.WriteType
@@ -66,7 +67,7 @@ private class KableDevice(
     }
     private val onServicesDiscoveredEvent = Channel<Unit>()
 
-    private fun characteristicFromUuid(uuid: Uuid): com.juul.kable.Characteristic? {
+    private fun characteristicFromUuid(uuid: Uuid): Characteristic? {
         // TODO this is extremely inefficient. Should do this once to create a map of UUID's to characteristics. We need to do this anyway to
         // translate to a services domain model
         peripheral.services?.let { services ->

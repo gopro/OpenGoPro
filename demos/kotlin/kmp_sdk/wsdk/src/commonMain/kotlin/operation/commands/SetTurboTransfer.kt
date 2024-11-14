@@ -11,7 +11,7 @@ import extensions.mapFromGenericProtoResponseToResult
 import extensions.toInt
 import io.ktor.client.call.body
 import io.ktor.http.path
-import open_gopro.RequestSetTurboActive
+import entity.operation.proto.RequestSetTurboActive
 import pbandk.encodeToByteArray
 
 internal class SetTurboTransfer(val enable: Boolean) : BaseOperation<Unit>("Set Turbo Transfer") {

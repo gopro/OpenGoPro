@@ -9,7 +9,7 @@ sealed interface ConnectionRequestContext {
     data class Wifi(val password: String) : ConnectionRequestContext
 }
 
-interface IConnector<S : ScanResult, C : ConnectionDescriptor> {
+internal interface IConnector<S : ScanResult, C : ConnectionDescriptor> {
     val networkType: NetworkType
     suspend fun scan(): Result<Flow<S>>
     suspend fun connect(target: S, request: ConnectionRequestContext? = null): Result<C>

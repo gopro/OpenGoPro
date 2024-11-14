@@ -9,16 +9,16 @@ import entity.exceptions.CameraInternalError
 import entity.network.GpUuid
 import entity.operation.AccessPointState
 import entity.operation.isFinished
+import entity.operation.proto.EnumProvisioning
+import entity.operation.proto.NotifProvisioningState
+import entity.operation.proto.RequestConnect
+import entity.operation.proto.RequestConnectNew
+import entity.operation.proto.ResponseConnect
+import entity.operation.proto.ResponseConnectNew
 import extensions.isOk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.transformWhile
-import open_gopro.EnumProvisioning
-import open_gopro.NotifProvisioningState
-import open_gopro.RequestConnect
-import open_gopro.RequestConnectNew
-import open_gopro.ResponseConnect
-import open_gopro.ResponseConnectNew
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray
 
@@ -39,6 +39,8 @@ private fun EnumProvisioning.toConnectState(ssid: String): AccessPointState =
 
         is EnumProvisioning.PROVISIONING_SUCCESS_NEW_AP,
         is EnumProvisioning.PROVISIONING_SUCCESS_OLD_AP -> AccessPointState.Connected(ssid)
+
+        else -> throw Exception("Received unknown Enum Provision state: $this")
     }
 
 @OptIn(ExperimentalUnsignedTypes::class)

@@ -6,6 +6,13 @@ import entity.media.VideoMediaMetadata
 import entity.media.GroupedMediaListItem
 import entity.media.MediaListItem
 import entity.media.SingleMediaListItem
+import entity.operation.proto.EnumCOHNNetworkState
+import entity.operation.proto.EnumCOHNStatus
+import entity.operation.proto.EnumFlatMode
+import entity.operation.proto.EnumPresetGroup
+import entity.operation.proto.EnumPresetGroupIcon
+import entity.operation.proto.EnumPresetIcon
+import entity.operation.proto.EnumPresetTitle
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -20,13 +27,6 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.contextual
-import open_gopro.EnumCOHNNetworkState
-import open_gopro.EnumCOHNStatus
-import open_gopro.EnumFlatMode
-import open_gopro.EnumPresetGroup
-import open_gopro.EnumPresetGroupIcon
-import open_gopro.EnumPresetIcon
-import open_gopro.EnumPresetTitle
 import pbandk.ExperimentalProtoJson
 import pbandk.json.encodeToJsonString
 import kotlin.reflect.KClass

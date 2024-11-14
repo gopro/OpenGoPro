@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalUnsignedTypes::class)
-class StatusFacade<T : Any>(
+class StatusFacade<T : Any> internal constructor(
     private val statusId: StatusId,
     private val marshaller: IOperationMarshaller,
     private val fromUByteArray: (UByteArray) -> T

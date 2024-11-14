@@ -13,11 +13,11 @@ import extensions.isOk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transformWhile
-import open_gopro.EnumCameraControlStatus
-import open_gopro.EnumScanning
-import open_gopro.NotifStartScanning
-import open_gopro.RequestSetCameraControlStatus
-import open_gopro.ResponseStartScanning
+import entity.operation.proto.EnumCameraControlStatus
+import entity.operation.proto.EnumScanning
+import entity.operation.proto.NotifStartScanning
+import entity.operation.proto.RequestSetCameraControlStatus
+import entity.operation.proto.ResponseStartScanning
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray
 

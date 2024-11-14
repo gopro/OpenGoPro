@@ -3,21 +3,18 @@ package features
 import co.touchlab.kermit.Logger
 import domain.data.ICameraRepository
 import domain.gopro.CohnState
+import entity.operation.proto.EnumCOHNNetworkState
+import entity.operation.proto.EnumCOHNStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.transform
-import open_gopro.EnumCOHNNetworkState
-import open_gopro.EnumCOHNStatus
-import operation.commands.CohnClearCert
-import operation.commands.CohnCreateCert
-import operation.commands.CohnGetCert
-import operation.commands.CohnGetStatus
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 private val logger = Logger.withTag("CohnFeature")
 
-class CohnFeature(featureContext: IFeatureContext): KoinComponent, IFeatureContext by featureContext {
+class CohnFeature internal constructor(featureContext: IFeatureContext) : KoinComponent,
+    IFeatureContext by featureContext {
     private var ssid: String? = null
     private var password: String? = null
     private var username: String? = null

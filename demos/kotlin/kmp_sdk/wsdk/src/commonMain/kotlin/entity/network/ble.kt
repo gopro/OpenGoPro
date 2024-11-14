@@ -38,7 +38,7 @@ internal enum class GpUuid(private val base: String) {
     }
 }
 
-interface BleAdvertisement {
+internal interface BleAdvertisement {
     val id: String // ID used to establish BLE connection from the advertisement.
     val name: String? // BLE Device name (i.e GP 1234). Global ID will come from the 4 digits.
 }
@@ -48,7 +48,7 @@ interface BleDevice {
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-data class BleNotification(val uuid: Uuid, val data: UByteArray)
+internal data class BleNotification(val uuid: Uuid, val data: UByteArray)
 
 // TODO we don't need these (yet) but they will likely be useful at some point.
 @OptIn(ExperimentalUnsignedTypes::class)

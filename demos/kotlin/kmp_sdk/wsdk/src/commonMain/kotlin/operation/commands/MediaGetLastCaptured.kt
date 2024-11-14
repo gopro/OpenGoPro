@@ -12,8 +12,8 @@ import entity.network.GpUuid
 import extensions.isOk
 import io.ktor.client.call.body
 import io.ktor.http.path
-import open_gopro.RequestGetLastCapturedMedia
-import open_gopro.ResponseLastCapturedMedia
+import entity.operation.proto.RequestGetLastCapturedMedia
+import entity.operation.proto.ResponseLastCapturedMedia
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray
 

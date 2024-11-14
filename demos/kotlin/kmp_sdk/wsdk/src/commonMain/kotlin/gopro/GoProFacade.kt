@@ -96,7 +96,7 @@ class GoProFacade(override val serialId: String) : IGpDescriptor {
 
     private var isInitialized = false
 
-    fun unbindCommunicator(communicator: ICommunicator<*>) {
+    internal fun unbindCommunicator(communicator: ICommunicator<*>) {
         operationMarshaller.removeCommunicator(communicator)
         if (communicator.communicationType == CommunicationType.BLE) {
             // Clear this so we restart state management if / when BLE connects again.
@@ -175,7 +175,7 @@ class GoProFacade(override val serialId: String) : IGpDescriptor {
         }
     }
 
-    suspend fun bindCommunicator(communicator: ICommunicator<*>) {
+    internal suspend fun bindCommunicator(communicator: ICommunicator<*>) {
         // If the communicator was already bound, we don't need to do any configuration.
         if (!(operationMarshaller.bindCommunicator(communicator))) return
 

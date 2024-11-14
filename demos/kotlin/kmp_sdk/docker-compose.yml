@@ -5,4 +5,4 @@ services:
         container_name: proto-build
         volumes:
             - ./protobuf:/proto_in
-            - ./domain/src/commonMain/kotlin/proto:/proto_output/kotlin
+            - ./wsdk/src/commonMain/kotlin/entity/operation/proto:/proto_output/kotlin

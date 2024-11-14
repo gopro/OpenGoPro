@@ -16,3 +16,8 @@
 - [ ] Handle WiFi disconnects. How to get the SSID?
 - [ ] Handle BLE disconnects. It seems I'm not getting the events from Kable?
 - [ ] Reconnect after BLE / WIFI disconnects
+
+# Documentation
+
+- [ ] Move to Dokka 2
+- [ ] Create devops task to selectively uninternalize protobuf enums

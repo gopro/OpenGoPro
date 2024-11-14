@@ -8,10 +8,10 @@ import entity.communicator.FeatureId
 import entity.exceptions.CameraInternalError
 import entity.network.GpUuid
 import entity.operation.ApScanEntry
+import entity.operation.proto.RequestGetApEntries
+import entity.operation.proto.ResponseGetApEntries
 import extensions.isOk
 import extensions.toBoolean
-import open_gopro.RequestGetApEntries
-import open_gopro.ResponseGetApEntries
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray
 

@@ -14,9 +14,9 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.path
-import open_gopro.EnumPresetIcon
-import open_gopro.EnumPresetTitle
-import open_gopro.RequestCustomPresetUpdate
+import entity.operation.proto.EnumPresetIcon
+import entity.operation.proto.EnumPresetTitle
+import entity.operation.proto.RequestCustomPresetUpdate
 import pbandk.encodeToByteArray
 
 internal class UpdateCustomPresetIcon(val icon: EnumPresetIcon) :

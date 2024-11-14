@@ -23,9 +23,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.encodeToString
-import open_gopro.EnumFlatMode
-import open_gopro.EnumPresetIcon
-import open_gopro.EnumPresetTitle
+import entity.operation.proto.EnumFlatMode
+import entity.operation.proto.EnumPresetIcon
+import entity.operation.proto.EnumPresetTitle
 import operation.commands.DatetimeGet
 import operation.commands.DatetimeSet
 import operation.commands.GetOpenGoProVersion

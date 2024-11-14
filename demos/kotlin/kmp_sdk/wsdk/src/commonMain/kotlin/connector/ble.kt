@@ -16,8 +16,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import org.koin.core.component.KoinComponent
 
-private val logger = Logger.withTag("GpBleConnector")
-
 private val notifiableUuids = listOf(
     GpUuid.CQ_COMMAND_RESP,
     GpUuid.CQ_QUERY_RESP,
@@ -36,7 +34,7 @@ internal class GpBleConnector(private val bleApi: IBleApi) :
             flow.filter { it.name != null }
                 .onStart { idAdvMap.clear() }
                 .onEach { idAdvMap[it.name!!.takeLast(4)] = it }
-                .map { ScanResult.Ble(it.name!!.takeLast(4), it) }
+                .map { ScanResult.Ble(it.name!!.takeLast(4), it.id, it.name ?: "") }
         }
 
 

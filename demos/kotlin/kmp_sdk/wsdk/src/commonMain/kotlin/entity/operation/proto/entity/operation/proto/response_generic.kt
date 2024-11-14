@@ -1,0 +1,148 @@
+@file:OptIn(pbandk.PublicForGeneratedCode::class)
+
+package entity.operation.proto
+
+@pbandk.Export
+internal sealed class EnumResultGeneric(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+    override fun equals(other: kotlin.Any?): Boolean = other is entity.operation.proto.EnumResultGeneric && other.value == value
+    override fun hashCode(): Int = value.hashCode()
+    override fun toString(): String = "EnumResultGeneric.${name ?: "UNRECOGNIZED"}(value=$value)"
+
+    internal object RESULT_UNKNOWN : EnumResultGeneric(0, "RESULT_UNKNOWN")
+    internal object RESULT_SUCCESS : EnumResultGeneric(1, "RESULT_SUCCESS")
+    internal object RESULT_ILL_FORMED : EnumResultGeneric(2, "RESULT_ILL_FORMED")
+    internal object RESULT_NOT_SUPPORTED : EnumResultGeneric(3, "RESULT_NOT_SUPPORTED")
+    internal object RESULT_ARGUMENT_OUT_OF_BOUNDS : EnumResultGeneric(4, "RESULT_ARGUMENT_OUT_OF_BOUNDS")
+    internal object RESULT_ARGUMENT_INVALID : EnumResultGeneric(5, "RESULT_ARGUMENT_INVALID")
+    internal object RESULT_RESOURCE_NOT_AVAILABLE : EnumResultGeneric(6, "RESULT_RESOURCE_NOT_AVAILABLE")
+    internal class UNRECOGNIZED(value: Int) : EnumResultGeneric(value)
+
+    internal companion object : pbandk.Message.Enum.Companion<entity.operation.proto.EnumResultGeneric> {
+        internal val values: List<entity.operation.proto.EnumResultGeneric> by lazy { listOf(RESULT_UNKNOWN, RESULT_SUCCESS, RESULT_ILL_FORMED, RESULT_NOT_SUPPORTED, RESULT_ARGUMENT_OUT_OF_BOUNDS, RESULT_ARGUMENT_INVALID, RESULT_RESOURCE_NOT_AVAILABLE) }
+        override fun fromValue(value: Int): entity.operation.proto.EnumResultGeneric = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): entity.operation.proto.EnumResultGeneric = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumResultGeneric with name: $name")
+    }
+}
+
+@pbandk.Export
+internal data class ResponseGeneric(
+    val result: entity.operation.proto.EnumResultGeneric,
+    override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
+) : pbandk.Message {
+    override operator fun plus(other: pbandk.Message?): entity.operation.proto.ResponseGeneric = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.ResponseGeneric> get() = Companion.descriptor
+    override val protoSize: Int by lazy { super.protoSize }
+    internal companion object : pbandk.Message.Companion<entity.operation.proto.ResponseGeneric> {
+        override fun decodeWith(u: pbandk.MessageDecoder): entity.operation.proto.ResponseGeneric = entity.operation.proto.ResponseGeneric.decodeWithImpl(u)
+
+        override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.ResponseGeneric> = pbandk.MessageDescriptor(
+            fullName = "open_gopro.ResponseGeneric",
+            messageClass = entity.operation.proto.ResponseGeneric::class,
+            messageCompanion = this,
+            fields = buildList(1) {
+                add(
+                    pbandk.FieldDescriptor(
+                        messageDescriptor = this@Companion::descriptor,
+                        name = "result",
+                        number = 1,
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = entity.operation.proto.EnumResultGeneric.Companion, hasPresence = true),
+                        jsonName = "result",
+                        value = entity.operation.proto.ResponseGeneric::result
+                    )
+                )
+            }
+        )
+    }
+}
+
+@pbandk.Export
+internal data class Media(
+    val folder: String? = null,
+    val file: String? = null,
+    override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
+) : pbandk.Message {
+    override operator fun plus(other: pbandk.Message?): entity.operation.proto.Media = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.Media> get() = Companion.descriptor
+    override val protoSize: Int by lazy { super.protoSize }
+    internal companion object : pbandk.Message.Companion<entity.operation.proto.Media> {
+        internal val defaultInstance: entity.operation.proto.Media by lazy { entity.operation.proto.Media() }
+        override fun decodeWith(u: pbandk.MessageDecoder): entity.operation.proto.Media = entity.operation.proto.Media.decodeWithImpl(u)
+
+        override val descriptor: pbandk.MessageDescriptor<entity.operation.proto.Media> = pbandk.MessageDescriptor(
+            fullName = "open_gopro.Media",
+            messageClass = entity.operation.proto.Media::class,
+            messageCompanion = this,
+            fields = buildList(2) {
+                add(
+                    pbandk.FieldDescriptor(
+                        messageDescriptor = this@Companion::descriptor,
+                        name = "folder",
+                        number = 1,
+                        type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
+                        jsonName = "folder",
+                        value = entity.operation.proto.Media::folder
+                    )
+                )
+                add(
+                    pbandk.FieldDescriptor(
+                        messageDescriptor = this@Companion::descriptor,
+                        name = "file",
+                        number = 2,
+                        type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
+                        jsonName = "file",
+                        value = entity.operation.proto.Media::file
+                    )
+                )
+            }
+        )
+    }
+}
+
+private fun ResponseGeneric.protoMergeImpl(plus: pbandk.Message?): ResponseGeneric = (plus as? ResponseGeneric)?.let {
+    it.copy(
+        unknownFields = unknownFields + plus.unknownFields
+    )
+} ?: this
+
+@Suppress("UNCHECKED_CAST")
+private fun ResponseGeneric.Companion.decodeWithImpl(u: pbandk.MessageDecoder): ResponseGeneric {
+    var result: entity.operation.proto.EnumResultGeneric? = null
+
+    val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
+        when (_fieldNumber) {
+            1 -> result = _fieldValue as entity.operation.proto.EnumResultGeneric
+        }
+    }
+
+    if (result == null) {
+        throw pbandk.InvalidProtocolBufferException.missingRequiredField("result")
+    }
+    return ResponseGeneric(result!!, unknownFields)
+}
+
+@pbandk.Export
+@pbandk.JsName("orDefaultForMedia")
+internal fun Media?.orDefault(): entity.operation.proto.Media = this ?: Media.defaultInstance
+
+private fun Media.protoMergeImpl(plus: pbandk.Message?): Media = (plus as? Media)?.let {
+    it.copy(
+        folder = plus.folder ?: folder,
+        file = plus.file ?: file,
+        unknownFields = unknownFields + plus.unknownFields
+    )
+} ?: this
+
+@Suppress("UNCHECKED_CAST")
+private fun Media.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Media {
+    var folder: String? = null
+    var file: String? = null
+
+    val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
+        when (_fieldNumber) {
+            1 -> folder = _fieldValue as String
+            2 -> file = _fieldValue as String
+        }
+    }
+
+    return Media(folder, file, unknownFields)
+}

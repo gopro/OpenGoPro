@@ -1,13 +1,13 @@
 package entity.operation
 
+import entity.operation.proto.EnumFlatMode
+import entity.operation.proto.EnumPresetGroup
+import entity.operation.proto.EnumPresetGroupIcon
+import entity.operation.proto.EnumPresetIcon
+import entity.operation.proto.EnumPresetTitle
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import open_gopro.EnumFlatMode
-import open_gopro.EnumPresetGroup
-import open_gopro.EnumPresetGroupIcon
-import open_gopro.EnumPresetIcon
-import open_gopro.EnumPresetTitle
 
 @Serializable
 data class UpdateCustomPresetRequest(

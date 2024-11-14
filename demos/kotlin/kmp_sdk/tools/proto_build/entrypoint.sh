@@ -32,9 +32,7 @@ function build_kotlin()
     export PATH=$PATH:/
     rm -rf $PROTO_KOTLIN_OUT_DIR/*
     # We can't run as root because pbank can't handle it: https://github.com/streem/pbandk/issues/73
-    # TODO do we want these to be internal or public?
-    # gosu user:user protoc --pbandk_out=visibility=internal:$PROTO_KOTLIN_OUT_DIR -I $PROTO_SRC_DIR $PROTO_SRC_DIR/*
-    gosu user:user protoc --pbandk_out=$PROTO_KOTLIN_OUT_DIR -I $PROTO_SRC_DIR $PROTO_SRC_DIR/*
+    gosu user:user protoc --pbandk_out=kotlin_package=entity.operation.proto,visibility=internal:$PROTO_KOTLIN_OUT_DIR -I $PROTO_SRC_DIR $PROTO_SRC_DIR/*
 }
 
 # build_python

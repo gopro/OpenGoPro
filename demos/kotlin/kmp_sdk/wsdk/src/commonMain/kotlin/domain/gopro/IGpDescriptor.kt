@@ -34,7 +34,7 @@ interface IGpDescriptor {
     val communicators: List<CommunicationType>
 }
 
-interface GpDescriptorManager {
+internal interface GpDescriptorManager {
     fun getDescriptor(): IGpDescriptor
     fun setAccessPointState(state: AccessPointState)
     fun setCohnState(state: CohnState)

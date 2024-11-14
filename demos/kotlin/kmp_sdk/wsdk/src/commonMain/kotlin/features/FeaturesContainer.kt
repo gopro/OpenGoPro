@@ -5,7 +5,7 @@ import entity.connector.ICameraConnector
 import gopro.GoProFacade
 import gopro.IGoProFacadeFactory
 
-interface IFeatureContext {
+internal interface IFeatureContext {
     val gopro: GoProFacade
     val gpDescriptorManager: GpDescriptorManager
     val connector: ICameraConnector
@@ -19,7 +19,7 @@ internal data class FeatureContext(
     override val facadeFactory: IGoProFacadeFactory
 ) : IFeatureContext
 
-class FeaturesContainer(featureContext: IFeatureContext) {
+class FeaturesContainer internal constructor(featureContext: IFeatureContext) {
     val accessPoint = AccessPointFeature(featureContext)
     val cohn = CohnFeature(featureContext)
     val connectWifi = ConnectWifiFeature(featureContext)

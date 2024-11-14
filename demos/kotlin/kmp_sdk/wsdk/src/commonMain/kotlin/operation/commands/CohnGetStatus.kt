@@ -13,8 +13,8 @@ import io.ktor.http.path
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import open_gopro.NotifyCOHNStatus
-import open_gopro.RequestGetCOHNStatus
+import entity.operation.proto.NotifyCOHNStatus
+import entity.operation.proto.RequestGetCOHNStatus
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray
 

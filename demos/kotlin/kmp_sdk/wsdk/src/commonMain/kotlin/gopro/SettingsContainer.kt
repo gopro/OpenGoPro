@@ -6,7 +6,7 @@ import entity.constants.Resolution
 import entity.constants.SettingId
 import operation.queries.SettingFacade
 
-class SettingsContainer(marshaller: IOperationMarshaller) {
+class SettingsContainer internal constructor (marshaller: IOperationMarshaller) {
     val resolution = SettingFacade(SettingId.RESOLUTION, Resolution, marshaller)
     val fps = SettingFacade(SettingId.FPS, Fps, marshaller)
 }

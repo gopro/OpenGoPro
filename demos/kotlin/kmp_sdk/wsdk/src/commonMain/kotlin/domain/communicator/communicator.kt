@@ -9,7 +9,7 @@ import entity.connector.ConnectionDescriptor
 // of operations.
 // Also these can't be injected (at least not usefully) since they are too different
 
-abstract class ICommunicator<T : ConnectionDescriptor> {
+internal abstract class ICommunicator<T : ConnectionDescriptor> {
     abstract val connection: T
     abstract val communicationType: CommunicationType
     abstract suspend fun setup(): Boolean

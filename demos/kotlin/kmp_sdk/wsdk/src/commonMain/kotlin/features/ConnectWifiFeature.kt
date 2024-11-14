@@ -8,7 +8,8 @@ import kotlinx.coroutines.delay
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class ConnectWifiFeature(featureContext: IFeatureContext) : IFeatureContext by featureContext {
+class ConnectWifiFeature internal constructor(featureContext: IFeatureContext) :
+    IFeatureContext by featureContext {
     private val cameraRepo: ICameraRepository = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
 
     suspend fun connect() {

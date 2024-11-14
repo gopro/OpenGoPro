@@ -11,7 +11,7 @@ import entity.network.GpUuid
 import io.ktor.client.call.body
 import io.ktor.client.request.setBody
 import io.ktor.http.path
-import open_gopro.RequestSetCOHNSetting
+import entity.operation.proto.RequestSetCOHNSetting
 import pbandk.encodeToByteArray
 
 internal class CohnSetSetting(val disableCohn: Boolean) :

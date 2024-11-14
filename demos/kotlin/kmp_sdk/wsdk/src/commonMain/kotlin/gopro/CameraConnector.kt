@@ -9,7 +9,7 @@ import entity.connector.ScanResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.merge
 
-class CameraConnector(
+class CameraConnector internal constructor(
     private val bleConnector: IConnector<ScanResult.Ble, ConnectionDescriptor.Ble>,
     private val wifiConnector: IConnector<ScanResult.Wifi, ConnectionDescriptor.Http>,
     private val dnsConnector: IConnector<ScanResult.Dns, ConnectionDescriptor.Http>,
