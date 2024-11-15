@@ -30,8 +30,6 @@ class Setting<T> internal constructor(
 ) where T : Enum<T>, T : UByteEnum {
     private val byteTransformer = UByteEnumTransformer(enum, settingId)
 
-    // TODO lazy init these classes
-
     private inner class SetSettingValue(private val value: T) :
         BaseOperation<Boolean>("Set Setting Value::${settingId.name}") {
         override suspend fun execute(communicator: BleCommunicator): Result<Boolean> =

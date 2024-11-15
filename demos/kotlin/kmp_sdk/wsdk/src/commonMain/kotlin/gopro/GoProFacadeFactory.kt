@@ -32,7 +32,6 @@ internal class GoProFactory(
         logger.e("Caught exception in coroutine:", throwable)
     }
 
-    // TODO is this correct? Do we need supervisorJob?
     private val scope = CoroutineScope(dispatcher + coroutineExceptionHandler)
 
     private fun httpCommunicatorsFromSsid(ssid: String): List<HttpCommunicator> =

@@ -44,7 +44,6 @@ fun HomeScreen(
         title = Screen.CameraChooser.route,
     ) { paddingValues ->
         if (state == CameraChooserUiState.Connected) {
-            // TODO state is not correct here. use something else.
             LaunchedEffect(state) {
                 navController.navigate(Screen.Camera.route)
             }
@@ -95,7 +94,7 @@ fun ScanResultList(
         items(devices) { device ->
             Row(Modifier.clickable(onClick = { onDeviceSelect(device) })) {
                 Column {
-                    Text("GoPro ${device.id}")
+                    Text(device.id.toString())
                     Text(device.networkType.name)
                     HorizontalDivider()
                 }

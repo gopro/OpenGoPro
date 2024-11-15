@@ -22,7 +22,6 @@ internal object WsdkIsolatedKoinContext {
     internal var koinModules: Module? = null
 
     fun init(dispatcher: CoroutineDispatcher, appContext: WsdkAppContext) {
-        // TODO handle multiple inits
         koinModules = buildPackageModules(dispatcher, appContext)
         koinApp = koinApplication { modules(koinModules!!) }
     }
@@ -46,7 +45,10 @@ class Wsdk(dispatcher: CoroutineDispatcher, appContext: WsdkAppContext) {
     suspend fun connect(
         target: ScanResult,
         connectionRequestContext: ConnectionRequestContext? = null
-    ): Result<GoProId> = cameraConnector.connect(target, connectionRequestContext)
+    ): Result<GoProId> = cameraConnector.connect(target, connectionRequestContext).map {
+        goProFactory.storeConnection(it)
+        it.id
+    }
 
     suspend fun getGoPro(id: GoProId) = goProFactory.getGoPro(id)
 }

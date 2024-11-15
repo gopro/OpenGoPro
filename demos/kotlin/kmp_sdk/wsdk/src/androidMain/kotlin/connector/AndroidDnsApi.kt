@@ -21,12 +21,10 @@ internal class AndroidDnsApi(
     context: Context,
     dispatcher: CoroutineDispatcher
 ) : IDnsApi {
-    // TODO how to cancel immediately when exception is found?
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         logger.e("Caught exception in coroutine:", throwable)
     }
 
-    // TODO is this correct? Do we need supervisorJob?
     private val scope = CoroutineScope(dispatcher + coroutineExceptionHandler)
 
     private val nsdManager: NsdManager =

@@ -1,12 +1,9 @@
 package connector
 
-import WsdkIsolatedKoinContext
 import domain.connector.ICameraConnector
 import domain.connector.IConnector
-import domain.gopro.IGoProFactory
 import entity.connector.ConnectionDescriptor
 import entity.connector.ConnectionRequestContext
-import entity.connector.GoProId
 import entity.connector.NetworkType
 import entity.connector.ScanResult
 import kotlinx.coroutines.flow.Flow
@@ -18,9 +15,6 @@ internal class CameraConnector internal constructor(
     private val wifiConnector: IConnector<ScanResult.Wifi, ConnectionDescriptor.Http>,
     private val dnsConnector: IConnector<ScanResult.Dns, ConnectionDescriptor.Http>,
 ) : ICameraConnector, KoinComponent {
-    // TODO here to prevent circular dependency. We should probably combine CameraConnector and Factory
-    private val goProFactory: IGoProFactory = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
-
     override suspend fun discover(vararg networkTypes: NetworkType): Flow<ScanResult> =
         networkTypes.map { networkType ->
             when (networkType) {
@@ -37,13 +31,10 @@ internal class CameraConnector internal constructor(
     override suspend fun connect(
         target: ScanResult,
         connectionRequestContext: ConnectionRequestContext?
-    ): Result<GoProId> =
+    ): Result<ConnectionDescriptor> =
         when (target) {
             is ScanResult.Ble -> bleConnector.connect(target, connectionRequestContext)
             is ScanResult.Dns -> dnsConnector.connect(target, connectionRequestContext)
             is ScanResult.Wifi -> wifiConnector.connect(target, connectionRequestContext)
-        }.map {
-            goProFactory.storeConnection(it)
-            it.id
         }
 }

@@ -61,12 +61,10 @@ internal class BleCommunicator(
     private val notifications: Flow<BleNotification>
         get() = bleApi.notificationsForConnection(device).getOrThrow()
 
-    // TODO how to cancel immediately when exception is found?
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         logger.e("Caught exception in coroutine:", throwable)
     }
 
-    // TODO is this correct? Do we need supervisorJob?
     private val scope = CoroutineScope(dispatcher + coroutineExceptionHandler)
 
     private val accumulatingRespMap: MutableMap<GpUuid, AccumulatedGpBleResponse> = mutableMapOf()
@@ -99,8 +97,6 @@ internal class BleCommunicator(
             // responses here.
             is ResponseId.Query -> {
                 if (responseId.isSetting()) {
-                    // TODO should the payload have headers stripped before getting here? I.e. after accumulation?
-                    // TODO handle status.
                     response.payload.drop(2).toTlvMap().forEach { (settingId, settingValue) ->
                         traceLog("4. Emitting accumulated response $responseId")
                         val responseIdAsSetting = ResponseId.QuerySetting(
@@ -148,9 +144,6 @@ internal class BleCommunicator(
             }
         }
     }
-
-
-    override suspend fun setup(): Boolean = true // TODO
 
     /**
      * Fragment data into BLE writes and wait to receive notification identified by response ID
@@ -206,15 +199,6 @@ internal class BleCommunicator(
                 response.payload
             }
 
-
-    /**
-     * Execute a TLV Command (any non-Protobuf operation that uses the Command UUID)
-     *
-     * @param id Command ID
-     * @param responseId identifier to match response
-     * @param arguments TODO
-     * @return payload with leading length and status stripped. Status will be encapsulated in Result
-     */
     suspend fun executeTlvCommand(
         id: CommandId,
         responseId: ResponseId,

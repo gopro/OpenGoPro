@@ -98,7 +98,7 @@ private class KableDevice(
 
 
     @OptIn(ExperimentalUnsignedTypes::class)
-    suspend fun enableNotifications(uuids: Set<Uuid>): Boolean {
+    fun enableNotifications(uuids: Set<Uuid>): Boolean {
         uuids.forEach { uuid ->
             characteristicFromUuid(uuid)?.let { characteristic ->
                 logger.d("Enabling notifications for ${characteristic.characteristicUuid}")
@@ -192,7 +192,7 @@ internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
         nameAdvMap[advertisement.name]?.let { adv ->
             KableDevice(adv.platformAdvertisement, dispatcher)
         }?.let { device ->
-            device.connect() // TODO how to wait for connect
+            device.connect()
             deviceMap[device.id] = device
             Result.success(device)
         } ?: Result.failure(Exception("advertisement ${advertisement.id} not found"))

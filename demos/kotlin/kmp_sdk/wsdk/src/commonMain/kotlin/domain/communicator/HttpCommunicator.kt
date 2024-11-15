@@ -42,19 +42,7 @@ internal class HttpCommunicator(
         }
     }
 
-
-    // TODO how to cancel immediately when exception is found?
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        logger.e("Caught exception in coroutine:", throwable)
-    }
-
-    // TODO is this correct? Do we need supervisorJob?
-    val scope = CoroutineScope(dispatcher + coroutineExceptionHandler)
-
     override val communicationType = CommunicationType.HTTP
-
-    // TODO
-    override suspend fun setup() = true
 
     suspend fun get(requestBuilder: HttpRequestBuilder.() -> Unit): Result<HttpResponse> =
         try {

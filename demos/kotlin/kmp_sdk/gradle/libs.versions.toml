@@ -31,7 +31,6 @@ uuid = "0.8.4"
 ktor = "2.3.12"
 # https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html
 navigationCompose = "2.8.0-alpha02"
-# TODO
 lifecycleViewModel = "2.8.4"
 # https://insert-koin.io/docs/setup/koin/
 koin = "3.6.0-Beta4"

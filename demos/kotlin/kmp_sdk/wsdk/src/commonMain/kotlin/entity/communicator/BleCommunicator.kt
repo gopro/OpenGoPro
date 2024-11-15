@@ -80,8 +80,6 @@ internal enum class ActionId(val value: UByte) {
     SET_LIVESTREAM_MODE_RSP(0xF9U),
     INTERNAL_FF(0xFFU);
 
-
-    // TODO can we inherit companions in a way that actually helps prevent this boiler plate code?
     companion object {
         fun fromUByte(value: UByte) = entries.firstOrNull { it.value == value }
     }

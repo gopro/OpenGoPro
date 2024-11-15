@@ -111,21 +111,21 @@ internal interface IGpBleResponse {
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-internal class AccumulatedGpBleResponse(override val uuid: GpUuid) : IGpBleResponse{
+internal class AccumulatedGpBleResponse(override val uuid: GpUuid) : IGpBleResponse {
     private var state: GpBleMessageState = GpBleMessageState.Idle(this)
     internal fun changeState(state: GpBleMessageState) {
         this.state = state
     }
 
     val isReceived get() = state is GpBleMessageState.Received
-    override val id: ResponseId
-        get() = state.let {
+    override val id: ResponseId by lazy {
+        state.let {
             when (it) {
-                // TODO make this lazy?
                 is GpBleMessageState.Received -> decipherResponse(this)
                 else -> throw Exception("Message is not yet received.")
             }
         }
+    }
     val rawBytes: UByteArray
         get() = state.let {
             when (it) {

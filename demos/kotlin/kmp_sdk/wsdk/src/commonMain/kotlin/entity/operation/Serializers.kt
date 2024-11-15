@@ -56,7 +56,7 @@ private object WebcamStatusIntEnumSerializer :
  *
  * Therefore we need 2 custom JSON serializers.
  *
- * TODO Please let this kclass / reflect stuff work on iOS...
+ * TODO Verify that this kclass / reflect stuff works on iOS...
  */
 
 private abstract class EnumProtoSerializerByValue<T : pbandk.Message.Enum>(

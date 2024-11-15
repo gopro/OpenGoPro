@@ -39,7 +39,6 @@ internal class GpMarshaller(private val gopro: IGpDescriptor) : IOperationMarsha
         if (communicatorMap.containsKey(communicator.communicationType)) return false
 
         logger.i("Setting up GoPro ${gopro.id} communicator: ${communicator.communicationType}")
-        communicator.setup()
 
         logger.d("Binding communicator: ${communicator.communicationType}")
         communicatorMap[communicator.communicationType] = communicator

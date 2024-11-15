@@ -88,9 +88,6 @@ internal class FakeBleApi(
     private val notificationChannel = Channel<BleNotification>()
     private val notificationIterator = responses.listIterator()
 
-    // TODO get correct scope
-    private val scope = CoroutineScope(dispatcher)
-
     private var messageCounter = 0
 
     var shouldWriteSucceed = true

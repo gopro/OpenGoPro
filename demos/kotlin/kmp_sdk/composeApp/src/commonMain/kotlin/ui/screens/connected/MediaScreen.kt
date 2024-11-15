@@ -38,7 +38,6 @@ fun MediaScreen(
     ) { paddingValues ->
         Column(modifier.padding(paddingValues)) {
             DisposableEffect(viewModel) {
-                // TODO is viewModel correct lifecycle owner?
                 viewModel.start()
                 onDispose { viewModel.stop() }
             }

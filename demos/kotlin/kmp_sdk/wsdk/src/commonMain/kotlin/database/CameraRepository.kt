@@ -33,7 +33,6 @@ internal class CameraRepository(appDatabase: AppDatabase) : ICameraRepository {
     }
 
     override suspend fun getHttpsCredentials(id: GoProId): Result<IHttpsCredentials> {
-        // TODO handle errors
         val certificates = jsonDefault.decodeFromString<CertificatesForDb>(
             certificatesDao.loadAll(id.partialSerial).first().certificates
         ).certificates.onEach { logger.d(it) }

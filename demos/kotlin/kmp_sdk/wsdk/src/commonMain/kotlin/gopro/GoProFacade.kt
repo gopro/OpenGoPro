@@ -35,7 +35,6 @@ import kotlin.time.toDuration
 private val logger = Logger.withTag("GoPro")
 private const val TRACE_LOG = false
 
-// TODO configure and inject
 private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
 }
 
@@ -47,8 +46,6 @@ class GoPro(override val id: GoProId) : IGpDescriptor {
 
     private val operationMarshaller = GpMarshaller(this)
 
-    // TODO get the correct scope
-    // TODO how to cancel immediately when exception is found?
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         logger.e("Caught exception in coroutine:", throwable)
     }
@@ -139,7 +136,6 @@ class GoPro(override val id: GoProId) : IGpDescriptor {
                 }
                 // Send keep alive
                 scope.launch {
-                    // TODO ensure this stops on GoPro exiting
                     while (true) {
                         delay(KEEP_ALIVE_INTERVAL)
                         commands.sendKeepAlive().onFailure {

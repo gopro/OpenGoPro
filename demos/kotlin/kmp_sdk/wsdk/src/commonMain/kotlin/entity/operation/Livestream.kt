@@ -118,5 +118,4 @@ data class LivestreamStatus(
     @SerialName("liveStreamProtuneSupported") val isProtuneSupported: Boolean?
 )
 
-// TODO is it really ok if we don't have status or error?
 fun LivestreamStatus.isOk(): Boolean = (this.status?.isOk() ?: true) && (this.error?.isOk() ?: true)

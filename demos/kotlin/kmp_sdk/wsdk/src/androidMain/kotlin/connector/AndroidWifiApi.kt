@@ -33,8 +33,6 @@ import kotlin.time.toDuration
 
 private val logger = Logger.withTag("AndroidWifiApi")
 
-// TODO handle trySend failures?
-
 internal class AndroidWifiApi(
     private val context: Context,
     private val wifiManager: WifiManager,
@@ -44,7 +42,6 @@ internal class AndroidWifiApi(
         logger.e("Caught exception in coroutine:", throwable)
     }
 
-    // TODO is this correct? Do we need supervisorJob?
     private val scope = CoroutineScope(dispatcher + coroutineExceptionHandler)
 
     private val disconnects = MutableSharedFlow<String>(0)

@@ -39,7 +39,6 @@ fun WebcamScreen(
         title = Screen.Webcam.route,
     ) { paddingValues ->
         DisposableEffect(viewModel) {
-            // TODO is viewModel correct lifecycle owner?
             viewModel.start()
             onDispose { viewModel.stop() }
         }

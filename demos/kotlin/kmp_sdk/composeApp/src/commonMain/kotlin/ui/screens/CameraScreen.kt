@@ -42,7 +42,6 @@ fun CameraScreen(
                 is CameraUiState.Idle ->
                     // https://developer.android.com/develop/ui/compose/side-effects
                     DisposableEffect(viewModel) {
-                        // TODO is viewModel correct lifecycle owner?
                         viewModel.start()
                         onDispose { viewModel.stop() }
                     }
@@ -79,7 +78,6 @@ fun ReadyScreen(
     onSelectScreen: (Screen) -> Unit,
     onConnectWifi: (() -> Unit)
 ) {
-    // TODO remove this. Just for initial testing.
     Text("Current Resolution: $resolution")
     Text("COHN state: $cohnState")
     Button(onToggleShutter) { Text("Toggle shutter") }

@@ -12,6 +12,5 @@ import entity.connector.ConnectionDescriptor
 internal abstract class ICommunicator<T : ConnectionDescriptor> {
     abstract val connection: T
     abstract val communicationType: CommunicationType
-    abstract suspend fun setup(): Boolean
     val id get() = connection.id
 }

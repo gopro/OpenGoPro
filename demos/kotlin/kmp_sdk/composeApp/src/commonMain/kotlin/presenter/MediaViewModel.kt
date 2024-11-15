@@ -40,7 +40,6 @@ class MediaViewModel(
 
     fun getMediaList() {
         viewModelScope.launch {
-            // TODO there's probably some functional operator for this
             val mediaFileList = mutableListOf<MediaId>()
             gopro.commands.getMediaList().getOrThrow().run {
                 this.media.forEach { mediaDirectory ->
@@ -62,7 +61,7 @@ class MediaViewModel(
                 _state.update { MediaUiState.ActivePhoto(item, metaData, binary) }
             } else if (item.isVideo) {
                 // TODO display from bytearray isn't working because we're having allocation failures.
-                // TODO probably need to write to disk. For now just show thumbnail
+                // probably need to write to disk. For now just show thumbnail
                 // val binary = gopro.commands.downloadMedia(item).getOrThrow()
                 val binary = gopro.commands.getThumbNail(item).getOrThrow()
                 _state.update { MediaUiState.ActiveVideo(item, metaData, binary) }

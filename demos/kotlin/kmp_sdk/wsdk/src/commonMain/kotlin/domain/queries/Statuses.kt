@@ -15,8 +15,6 @@ class Status<T : Any> internal constructor(
     private val marshaller: IOperationMarshaller,
     private val fromUByteArray: (UByteArray) -> T
 ) {
-    // TODO lazy init these classes
-
     private inner class GetStatusValue : BaseOperation<T>("Get Status Value::${statusId.name}") {
         override suspend fun execute(communicator: BleCommunicator): Result<T> =
             communicator.executeQuery(QueryId.GET_STATUS_VALUES, statusId)
@@ -47,8 +45,6 @@ class Status<T : Any> internal constructor(
             ).map { flow -> currentValue to flow.map { fromUByteArray(it.payload) } }
         }
     }
-
-// TODO strategies here?
 
     suspend fun getValue(): Result<T> = marshaller.marshal(GetStatusValue())
 

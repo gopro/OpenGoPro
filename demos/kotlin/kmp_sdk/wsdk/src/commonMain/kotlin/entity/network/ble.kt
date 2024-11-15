@@ -58,11 +58,11 @@ internal data class GpBleAdvertisement(
     val uuids: List<Uuid>,
     val manufacturingType: UByteArray,
     val companyId: Int,
-    val cameraStatus: Int, // TODO parse this
-    val cameraId: Int, // TODO parse this
-    val cameraCapability: Int, // TODO parse this
+    val cameraStatus: Int,
+    val cameraId: Int,
+    val cameraCapability: Int,
     val idHash: UByteArray,
-    val softtubesStatus: Int, // TODO parse this
+    val softtubesStatus: Int,
 ) {
     companion object {
         fun fromUByteArray(bytes: UByteArray): GpBleAdvertisement = TODO()

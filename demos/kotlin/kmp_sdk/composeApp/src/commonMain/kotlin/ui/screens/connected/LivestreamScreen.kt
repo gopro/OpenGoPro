@@ -32,7 +32,6 @@ fun LivestreamScreen(
         title = Screen.Livestream.route,
     ) { paddingValues ->
         DisposableEffect(viewModel) {
-            // TODO is viewModel correct lifecycle owner?
             viewModel.start()
             onDispose { viewModel.stop() }
         }

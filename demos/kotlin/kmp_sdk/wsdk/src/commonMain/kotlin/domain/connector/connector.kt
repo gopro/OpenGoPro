@@ -12,7 +12,7 @@ internal interface ICameraConnector {
     suspend fun connect(
         target: ScanResult,
         connectionRequestContext: ConnectionRequestContext? = null
-    ): Result<GoProId>
+    ): Result<ConnectionDescriptor>
 }
 
 

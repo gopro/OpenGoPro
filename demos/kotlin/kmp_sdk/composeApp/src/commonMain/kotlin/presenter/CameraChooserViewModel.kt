@@ -78,7 +78,6 @@ class CameraChooserViewModel(
     fun cancelDiscovery() {
         if (_state.value == CameraChooserUiState.Discovering) {
             discoverJob?.cancel()
-            // TODO Should we join? Where?
             discoverJob = null
             _state.update { CameraChooserUiState.Idle }
         } else {

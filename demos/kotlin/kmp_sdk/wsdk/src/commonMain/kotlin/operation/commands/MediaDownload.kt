@@ -16,7 +16,5 @@ internal class MediaDownload(val file: MediaId) : BaseOperation<ByteArray>("Down
                 appendEncodedPathSegments(file.folder)
                 appendEncodedPathSegments(file.filename)
             }
-        }
-            // TODO wrap bytes somehow.
-            .map { it.readBytes() }
+        }.map { it.readBytes() }
 }

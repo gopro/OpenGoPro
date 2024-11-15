@@ -33,7 +33,6 @@ internal sealed interface ResponseId {
         override fun toString(): String = "Set Setting Response: $id"
     }
 
-    // TODO this seems odd. It's currently just a temporary response type before setting / status
     open class Query(val id: QueryId) : ResponseId {
         override fun toString(): String = "Query Response: $id"
 
