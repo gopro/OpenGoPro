@@ -18,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import co.touchlab.kermit.Logger
 import entity.connector.ScanResult
 import presenter.CameraChooserUiState
 import presenter.CameraChooserViewModel
@@ -26,8 +25,6 @@ import presenter.ScanNetworkType
 import ui.common.Screen
 import ui.components.CommonTopBar
 import ui.components.IndeterminateCircularProgressIndicator
-
-private val logger = Logger.withTag("HomeScreen")
 
 @Composable
 fun HomeScreen(

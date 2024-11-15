@@ -9,7 +9,6 @@ import presenter.CameraViewModel
 import presenter.CohnViewModel
 import presenter.LivestreamViewModel
 import presenter.MediaViewModel
-import presenter.NetworkBrowserViewModel
 import presenter.WebcamViewModel
 
 val cameraScreenModule = module {
