@@ -1,11 +1,11 @@
+# General
+- [ ] Abstract more commands into features
+- [ ] Generate setting / status code
+
 # Platform support
 
 - [ ] iOS not tested. Need Wifi "driver"
 - [ ] desktop hasn't even been considered yet.
-
-# UI
-
-- [ ]  Stream viewer not working. Needs massive exoplayer investigation.
 
 # Database
 
@@ -16,6 +16,7 @@
 - [ ] Handle WiFi disconnects. How to get the SSID?
 - [ ] Handle BLE disconnects. It seems I'm not getting the events from Kable?
 - [ ] Reconnect after BLE / WIFI disconnects
+- [ ] Check statuses and retry in BLE code
 
 # Documentation
 

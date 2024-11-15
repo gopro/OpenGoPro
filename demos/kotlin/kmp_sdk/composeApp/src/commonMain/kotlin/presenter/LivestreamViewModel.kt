@@ -45,7 +45,7 @@ class LivestreamViewModel(
             _state.update { LivestreamUiState.Configuring(rtmpUrl) }
             logger.i("Configuring livestream.")
             gopro.commands.startLivestream(LivestreamConfigurationRequest(url = rtmpUrl))
-            gopro.commands.getLivestreamState().getOrThrow().collect { livestreamState ->
+            gopro.commands.getLivestreamStatuses().getOrThrow().collect { livestreamState ->
                 _state.update { LivestreamUiState.Streaming(livestreamState) }
                 if (livestreamState.status == LivestreamState.READY) {
                     logger.i("Livestream has been configured. Starting streaming.")
