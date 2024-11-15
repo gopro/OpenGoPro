@@ -60,6 +60,11 @@ import operation.commands.WebcamGetState
 import operation.commands.WebcamStart
 import operation.commands.WebcamStop
 
+/**
+ * Wrapper to access operations exposed as methods.
+ *
+ * @property marshaller operation marshaller to marshal wrapped operations.
+ */
 class CommandsContainer internal constructor(private val marshaller: IOperationMarshaller) {
     /**
      * Enable / disable the shutter to start / stop encoding

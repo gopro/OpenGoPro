@@ -1,5 +1,6 @@
 package gopro
 
+import Wsdk
 import WsdkIsolatedKoinContext
 import co.touchlab.kermit.Logger
 import domain.communicator.BleCommunicator
@@ -38,7 +39,14 @@ private const val TRACE_LOG = false
 private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
 }
 
-class GoPro(override val id: GoProId) : IGpDescriptor {
+/**
+ * Top level interface to communicate with a connected GoPro.
+ *
+ * Should be retrieved from [Wsdk.getGoPro]
+ *
+ * @property id identifier of connected GoPro
+ */
+class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
     private val cameraConnector: ICameraConnector = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
     private val dispatcher: CoroutineDispatcher = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
     private val facadeFactory: IGoProFactory =
@@ -64,9 +72,24 @@ class GoPro(override val id: GoProId) : IGpDescriptor {
     override val communicators: List<CommunicationType>
         get() = operationMarshaller.communicators
 
+    /**
+     * Container delegate to access all camera commands
+     */
     val commands = CommandsContainer(operationMarshaller)
+
+    /**
+     * Container delegate to access all camera settings
+     */
     val settings = SettingsContainer(operationMarshaller)
+
+    /**
+     * Container delegate to access all camera statuses
+     */
     val statuses = StatusesContainer(operationMarshaller)
+
+    /**
+     * Container delegate to access all camera features
+     */
     val features = FeaturesContainer(
         FeatureContext(
             this,
@@ -182,7 +205,7 @@ class GoPro(override val id: GoProId) : IGpDescriptor {
         }
     }
 
-    companion object {
+    internal companion object {
         val KEEP_ALIVE_INTERVAL = 28.toDuration(DurationUnit.SECONDS)
     }
 }

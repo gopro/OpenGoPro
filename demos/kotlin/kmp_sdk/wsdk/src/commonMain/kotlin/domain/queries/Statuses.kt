@@ -8,7 +8,18 @@ import entity.communicator.QueryId
 import entity.queries.StatusId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 
+/**
+ * A per-status ID wrapper to perform all status queries
+ *
+ * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html)
+ *
+ * @param T Status data type
+ * @property statusId Status ID
+ * @property marshaller operation marshaller to marshal the queries
+ * @property fromUByteArray status value-from-UByte transformer
+ */
 @OptIn(ExperimentalUnsignedTypes::class)
 class Status<T : Any> internal constructor(
     private val statusId: StatusId,
@@ -22,9 +33,9 @@ class Status<T : Any> internal constructor(
     }
 
     private inner class RegisterForStatusValueUpdates :
-        BaseOperation<Pair<T, Flow<T>>>("Register Status Value Updates::${statusId.name}") {
+        BaseOperation<Flow<T>>("Register Status Value Updates::${statusId.name}") {
 
-        override suspend fun execute(communicator: BleCommunicator): Result<Pair<T, Flow<T>>> {
+        override suspend fun execute(communicator: BleCommunicator): Result<Flow<T>> {
             // Send initial query OTA to register and store current value for later returning
             val currentValue =
                 communicator.executeQuery(
@@ -42,19 +53,35 @@ class Status<T : Any> internal constructor(
                     QueryId.ASYNC_STATUS_VALUE_NOTIFICATION,
                     statusId
                 )
-            ).map { flow -> currentValue to flow.map { fromUByteArray(it.payload) } }
+            ).map { flow ->
+                flow
+                    .map { fromUByteArray(it.payload) }
+                    .onStart { emit(currentValue) }
+            }
         }
     }
 
+    /**
+     * Get the current status value
+     *
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#get-status-values)
+     *
+     * @return current status value
+     */
     suspend fun getValue(): Result<T> = marshaller.marshal(GetStatusValue())
 
-    // TODO | can we always allow fastpass here? It's needed to set up initial state querying.
-    // TODO | If not, need to add initializing in descriptor.
-    suspend fun registerValueUpdate(): Result<Pair<T, Flow<T>>> =
+    /**
+     * Register for status value updates
+     *
+     * @return continuous flow of status value updates
+     */
+    suspend fun registerValueUpdate(): Result<Flow<T>> =
+    // TODO Can we always allow fastpass here? It's needed to set up initial state querying.
+        // If not, need to add initializing in descriptor.
         marshaller.marshal(RegisterForStatusValueUpdates()) {
             isFastpass { _, _ -> true }
             useCommunicator { _, _ -> entity.communicator.CommunicationType.BLE }
         }
 
-    suspend fun registerCapabilityUpdates(): Result<Flow<T>> = TODO()
+    // TODO other queries
 }

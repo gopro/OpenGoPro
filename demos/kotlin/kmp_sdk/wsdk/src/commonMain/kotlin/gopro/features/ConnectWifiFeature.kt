@@ -9,9 +9,21 @@ import kotlinx.coroutines.delay
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
+/**
+ * Establish a Wi-Fi connection where the camera is an Access Point
+ *
+ * Note! BLE must already be connected before using this feature.
+ *
+ * @see [Access Points](https://gopro.github.io/OpenGoPro/tutorials/connect-wifi#access-point-mode-ap)
+ *
+ * @property context
+ */
 class ConnectWifiFeature internal constructor(private val context: IFeatureContext) {
     private val cameraRepo: ICameraRepository = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
 
+    /**
+     * Establish a Wi-Fi connection where the camera is an Access Point
+     */
     suspend fun connect() {
         // Get Wifi info and enable Access Point via BLE
         context.gopro.commands.setApMode(true).getOrThrow()

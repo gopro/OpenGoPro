@@ -178,6 +178,7 @@ tasks.withType<DokkaTaskPartial>().configureEach {
     dokkaSourceSets {
         configureEach {
             includes.from("ModuleDocumentation.md")
+            suppressInheritedMembers = true
         }
     }
 }

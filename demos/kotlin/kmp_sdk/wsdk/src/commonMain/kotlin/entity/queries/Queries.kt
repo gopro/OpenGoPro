@@ -8,7 +8,7 @@ interface IUByteEnumCompanion<T> where T : Enum<T>, T : UByteEnum {
     fun fromUByte(value: UByte): T
 }
 
-enum class BooleanEnum(override val value: UByte): UByteEnum {
+enum class BooleanEnum(override val value: UByte) : UByteEnum {
     FALSE(0U),
     TRUE(1U);
 
@@ -19,6 +19,15 @@ enum class BooleanEnum(override val value: UByte): UByteEnum {
     }
 }
 
+// TODO these need to be automatically generated
+
+/**
+ * Video Resolution
+ *
+ * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-resolution-2)
+ *
+ * @property value
+ */
 enum class Resolution(override val value: UByte) : UByteEnum {
     RES_4K(1U),
     RES_2_7K(4U),

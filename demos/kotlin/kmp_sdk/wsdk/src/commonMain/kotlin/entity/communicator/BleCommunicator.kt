@@ -122,7 +122,7 @@ internal enum class GpStatus(val value: UByte) {
     SUCCESS(0U);
 
     companion object {
-        fun fromUByte(value: UByte) = entries.firstOrNull { it.value == value }
+        fun fromUByte(value: UByte) = entries.first { it.value == value }
         fun isSuccess(value: UByte) = fromUByte(value) == SUCCESS
     }
 }

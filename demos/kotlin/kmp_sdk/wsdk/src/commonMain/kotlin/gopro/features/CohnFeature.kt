@@ -14,7 +14,14 @@ import org.koin.core.component.inject
 
 private val logger = Logger.withTag("CohnFeature")
 
-class CohnFeature internal constructor(private val context: IFeatureContext) : KoinComponent{
+/**
+ * Camera-on-the-home-network (COHN) provisioning and querying
+ *
+ * @see [Camera on the Home Network](https://gopro.github.io/OpenGoPro/ble/features/cohn.html)
+ *
+ * @property context feature context
+ */
+class CohnFeature internal constructor(private val context: IFeatureContext) : KoinComponent {
     private var ssid: String? = null
     private var password: String? = null
     private var username: String? = null
@@ -23,6 +30,13 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
 
     private val cameraRepo: ICameraRepository by inject()
 
+    /**
+     * Get the continuous COHN State
+     *
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-status)
+     *
+     * @return flow of COHN States
+     */
     suspend fun getCohnStatus(): Flow<CohnState> =
         context.gopro.commands.getCohnStatus().getOrThrow().transform { update ->
             update.password?.let { password = it }
@@ -47,6 +61,13 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
             }
         }
 
+    /**
+     * Provision camera for COHN
+     *
+     * This will clear any existing COHN credentials, (re)provision, then return the credentials
+     *
+     * @return provisioning credentials
+     */
     suspend fun provisionCohn(): Result<CohnState.Provisioned> {
         // Start fresh by clearing cert
         logger.i("Clearing COHN Certificate for new provision")

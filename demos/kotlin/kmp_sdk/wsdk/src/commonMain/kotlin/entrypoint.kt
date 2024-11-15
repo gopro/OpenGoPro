@@ -6,6 +6,7 @@ import entity.connector.ConnectionRequestContext
 import entity.connector.GoProId
 import entity.connector.NetworkType
 import entity.connector.ScanResult
+import gopro.GoPro
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.Koin
@@ -51,8 +52,37 @@ internal object WsdkIsolatedKoinContext {
     fun getWsdkKoinApp(): Koin = koinApp.koin
 }
 
-// TODO how / should we handle multiple SDK's
+/**
+ * The top level SDK interface
+ *
+ * The client should use this class to discover, connect, and retrieve [GoPro] objects
+ *
+ * TODO currently multiple instances of WSDK are not supported and have not been tested.
+ *
+ * ```
+ * // Initialize WSDK
+ * val wsdk = Wsdk(dispatcher, appContext)
+ *
+ * coroutineScope.launch {
+ *     // Discover and take the first device we find
+ *     val target = wsdk.discover(NetworkType.BLE).first()
+ *
+ *     // Connect
+ *     val goproId = wsdk.connect(target).getOrThrow()
+ *
+ *     // Now retrieve the gopro
+ *     val gopro = wsdk.getGoPro(goproId)
+ *
+ *     // Set the shutter
+ *     gopro.commands.setShutter(true)
+ * }
+ * ```
+ *
+ * @param dispatcher dispatcher that WSDK should use for coroutine scopes
+ * @param appContext platform-specific application context
+ */
 class Wsdk(dispatcher: CoroutineDispatcher, appContext: WsdkAppContext) {
+    // TODO how / should we handle multiple SDK's
     init {
         WsdkIsolatedKoinContext.init(dispatcher, appContext)
     }
@@ -60,9 +90,22 @@ class Wsdk(dispatcher: CoroutineDispatcher, appContext: WsdkAppContext) {
     private val goProFactory: IGoProFactory = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
     private val cameraConnector: ICameraConnector = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
 
+    /**
+     * Scan for available GoPro's on one or more network types
+     *
+     * @param networkTypes network types to scan on
+     * @return flow of GoPro's discovered per-network
+     */
     suspend fun discover(vararg networkTypes: NetworkType): Flow<ScanResult> =
         cameraConnector.discover(*networkTypes)
 
+    /**
+     * Establish a connection to a discovered GoPro
+     *
+     * @param target discovered GoPro to connect to
+     * @param connectionRequestContext additional per-network-type connection request information
+     * @return ID of connected GoPro
+     */
     suspend fun connect(
         target: ScanResult, connectionRequestContext: ConnectionRequestContext? = null
     ): Result<GoProId> = cameraConnector.connect(target, connectionRequestContext).map {
@@ -70,5 +113,12 @@ class Wsdk(dispatcher: CoroutineDispatcher, appContext: WsdkAppContext) {
         it.id
     }
 
+    /**
+     * Retrieve a connected GoPro instance
+     *
+     * The GoPro referenced by [id] must have first been connected with [connect]
+     *
+     * @param id
+     */
     suspend fun getGoPro(id: GoProId) = goProFactory.getGoPro(id)
 }
