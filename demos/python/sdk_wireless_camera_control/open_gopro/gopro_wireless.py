@@ -443,8 +443,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             logger.info("Waiting for COHN to be connected")
             await self.ble_command.cohn_get_status(register=True)
             ip_address, password = await asyncio.wait_for(credentials.get(), timeout)
+            hardware_info = await self.ble_command.get_hardware_info()
+            serial_number = hardware_info.data.serial_number
             cert = (await self.ble_command.cohn_get_certificate()).data.cert
-            self._cohn = CohnInfo(ip_address, "gopro", password, cert)
+            self._cohn = CohnInfo(ip_address, "gopro", password, cert,f"cohn_{serial_number}.crt")
             logger.info(f"Using COHN Credentials: {self._cohn}")
             return True
         except TimeoutError:
