@@ -23,7 +23,7 @@ private val logger = Logger.withTag("LibVlcStreamPlayer")
 // https://stackoverflow.com/questions/76938888/handling-buffering-or-error-events-in-libvlc-when-video-data-is-incomplete
 // https://tehleelmir.medium.com/how-to-integrate-vlc-or-vlclib-in-android-kotlin-798686844394
 
-class LibVlcStreamPlayer(private val context: Context) : IStreamPlayer {
+class `LibVlcStreamPlayer.android.kt`(private val context: Context) : IStreamPlayer {
     private fun MediaPlayer.playMediaSource(vlcLib: LibVLC, source: Uri) {
         stop()
         Media(vlcLib, source).apply {

@@ -58,8 +58,7 @@ class CameraViewModel(
 
     fun registerResolutionValueUpdates() {
         viewModelScope.launch {
-            gopro.settings.resolution.registerValueUpdate().onSuccess { (currentValue, flow) ->
-                _resolution.update { currentValue }
+            gopro.settings.resolution.registerValueUpdate().onSuccess { flow ->
                 flow.collect { resolutionUpdate ->
                     logger.d("ViewModel updating resolution to $resolutionUpdate")
                     _resolution.update { resolutionUpdate }

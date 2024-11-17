@@ -64,9 +64,9 @@ kotlin {
 
         // https://kotlinlang.org/docs/multiplatform-android-layout.html#move-source-files
         val commonTest by getting
-        val androidInstrumentedTest by getting {
-            dependsOn(commonTest)
-        }
+
+        val androidInstrumentedTest by getting
+
         // https://slack-chats.kotlinlang.org/t/16139070/i-havee-to-admin-it-s-very-frustrating-that-there-is-no-stan
         // THis is not used currently
         val androidUnitTest by getting
@@ -129,7 +129,7 @@ kotlin {
             implementation(libs.koin.androidx.compose)
             api(libs.ktor.client.okhttp)
         }
-        iosMain.dependencies {
+        appleMain.dependencies {
             api(libs.ktor.client.darwin)
         }
         desktopMain.dependencies {

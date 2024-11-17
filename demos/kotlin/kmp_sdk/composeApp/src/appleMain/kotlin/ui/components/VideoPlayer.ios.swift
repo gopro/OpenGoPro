@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 // https://medium.com/@adman.shadman/creating-a-cross-platform-video-player-component-in-kotlin-multiplatform-android-ios-9d79174aa2ca
 
 @Composable
-actual fun VideoPlayer(
+actual fun IosVideoPlayer(
     modifier: Modifier,
     url: String,
     isLandscape: Boolean,
