@@ -46,7 +46,6 @@ class TestSettings {
 
         // THEN
         assertTrue { result.isSuccess }
-        assertTrue { result.getOrThrow() }
     }
 
     @Test
@@ -165,17 +164,14 @@ class TestSettings {
         )
         val fakeSettingsContainer = buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
         val setting = fakeSettingsContainer.settingsContainer.resolution
-        var initialValue: Resolution? = null
-
         var messageCount = 0
 
         // WHEN
         val settingUpdates = mutableListOf<Resolution>()
         setting.registerValueUpdate()
-            .onSuccess { (currentValue, flow) ->
-                initialValue = currentValue
+            .onSuccess { flow ->
                 flow
-                    .take(3)
+                    .take(4)
                     .onStart {
                         launch {
                             fakeSettingsContainer.sendNextBleMessage()
@@ -200,10 +196,10 @@ class TestSettings {
             .onFailure { assertTrue { false } }
 
         // THEN
-        assertEquals(initialValue, Resolution.RES_1080)
-        assertEquals(settingUpdates.size, 3)
+        assertEquals(settingUpdates.size, 4)
         assertEquals(settingUpdates[0], Resolution.RES_1080)
         assertEquals(settingUpdates[1], Resolution.RES_1080)
-        assertEquals(settingUpdates[2], Resolution.RES_720)
+        assertEquals(settingUpdates[2], Resolution.RES_1080)
+        assertEquals(settingUpdates[3], Resolution.RES_720)
     }
 }

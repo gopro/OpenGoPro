@@ -79,10 +79,6 @@ kotlin {
             // DI
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
-            // Exoplayer
-            implementation(libs.exoplayer.base)
-            implementation(libs.exoplayer.ui)
-            implementation(libs.exoplayer.rtsp)
             // VLC
             implementation(libs.libvlc.all)
         }

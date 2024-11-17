@@ -131,8 +131,7 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
                 logger.d("Setting up BLE state management")
                 // Start collecting read statuses
                 scope.launch {
-                    statuses.isBusy.registerValueUpdate().onSuccess { (currentValue, flow) ->
-                        _isBusy.update { currentValue }
+                    statuses.isBusy.registerValueUpdate().onSuccess { flow ->
                         flow.collect { isBusy ->
                             traceLog("isBusy update: $isBusy")
                             _isBusy.update { isBusy }
@@ -140,8 +139,7 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
                     }
                 }
                 scope.launch {
-                    statuses.isEncoding.registerValueUpdate().onSuccess { (currentValue, flow) ->
-                        _isEncoding.update { currentValue }
+                    statuses.isEncoding.registerValueUpdate().onSuccess { flow ->
                         flow.collect { isEncoding ->
                             traceLog("isEncoding update: $isEncoding")
                             _isEncoding.update { isEncoding }
