@@ -8,5 +8,4 @@ internal class AppleHttpClientProvider: IHttpClientProvider {
     override fun provideBaseClient(credentials: IHttpsCredentials?): HttpClient {
         TODO("Not yet implemented")
     }
-
 }

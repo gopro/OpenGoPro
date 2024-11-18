@@ -74,8 +74,8 @@ kotlin {
         commonMain.dependencies {
             // DI
             api(libs.koin.core)
-            implementation(libs.koin.compose) // TODO do we need this
-            implementation(libs.koin.compose.viewmodel) // TODO do we need this?
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
 
             // Logging
             implementation(libs.kermit)

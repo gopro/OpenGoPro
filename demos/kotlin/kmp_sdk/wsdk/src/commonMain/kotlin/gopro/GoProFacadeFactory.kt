@@ -28,7 +28,7 @@ internal class GoProFactory(
     private val facadesById = mutableMapOf<GoProId, GoPro>()
     private val communicatorsByConnection = mutableMapOf<ConnectionDescriptor, ICommunicator<*>>()
 
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { context, throwable ->
         logger.e("Caught exception in coroutine:", throwable)
     }
 
