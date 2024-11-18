@@ -81,6 +81,10 @@ kotlin {
             implementation(libs.koin.androidx.compose)
             // VLC
             implementation(libs.libvlc.all)
+            // Exoplayer
+            implementation(libs.exoplayer.base)
+            implementation(libs.exoplayer.ui)
+            implementation(libs.exoplayer.rtsp)
         }
         androidUnitTest.dependencies {
             implementation(libs.junit)

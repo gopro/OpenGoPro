@@ -11,13 +11,13 @@ import ui.components.AndroidVideoPlayer
 import ui.components.IImageRequestBuilder
 import ui.components.IStreamPlayer
 import ui.components.IVideoPlayer
-import ui.components.`LibVlcStreamPlayer.android.kt`
+import ui.components.LibVlcStreamPlayer
 
 actual fun buildPlatformModules(appContext: WsdkAppContext): Module = module {
     single<DataStore<Preferences>> { dataStore(appContext.get()) }
     factory<IImageRequestBuilder> { AndroidImageRequestBuilder(appContext.get()) }
 //        factory<IStreamPlayer> { ExoplayerStreamPlayer(appContext.get()) }
-    factory<IStreamPlayer> { `LibVlcStreamPlayer.android.kt`(appContext.get()) }
+    factory<IStreamPlayer> { LibVlcStreamPlayer(appContext.get()) }
     factory<IVideoPlayer> { AndroidVideoPlayer(appContext.get()) }
 }
 

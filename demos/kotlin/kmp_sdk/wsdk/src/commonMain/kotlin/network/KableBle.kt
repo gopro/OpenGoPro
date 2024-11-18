@@ -3,7 +3,6 @@ package network
 import co.touchlab.kermit.Logger
 import com.benasher44.uuid.Uuid
 import com.juul.kable.Characteristic
-import com.juul.kable.PlatformAdvertisement
 import com.juul.kable.Scanner
 import com.juul.kable.WriteType
 import com.juul.kable.logs.Logging
@@ -14,6 +13,7 @@ import entity.connector.GoProId
 import entity.network.BleAdvertisement
 import entity.network.BleDevice
 import entity.network.BleNotification
+import entity.network.GpUuid
 import extensions.toPrettyHexString
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -30,19 +30,21 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
+import com.juul.kable.Advertisement as KableAdvertisement
 
-internal class KableAdvertisement(val platformAdvertisement: PlatformAdvertisement) :
-    BleAdvertisement {
-    override val name = platformAdvertisement.name
-    override val id = platformAdvertisement.identifier.toString()
-}
+// https://github.com/JuulLabs/kable/blob/5cb15670216a4566d5ace188f0e2b87b1ed70c50/kable-core/src/commonMain/kotlin/Advertisement.kt#L4
 
 private val logger = Logger.withTag("KableBle")
+private const val TRACE_LOG = true
+
+// TODO configure and inject
+private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
+}
 
 // TODO use Result for return values here.
 @OptIn(ExperimentalUnsignedTypes::class)
 private class KableDevice(
-    adv: PlatformAdvertisement,
+    adv: KableAdvertisement,
     dispatcher: CoroutineDispatcher
 ) : BleDevice {
     // Last 4 of serial number.
@@ -50,7 +52,7 @@ private class KableDevice(
         ?: throw Exception("Can not create Kable device with an advertisement that does not contain a deviec name.")
     val notifications = MutableSharedFlow<BleNotification>()
 
-    // TODO this has been fixed. Update Kable and rmeove.
+    // TODO this has been fixed. Update Kable and remove.
     // Intermediary scope needed until https://github.com/JuulLabs/kable/issues/577 is resolved.
     private val peripheralScope = CoroutineScope(Job())
     private val scope =
@@ -182,20 +184,36 @@ internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
                 .filter { it.name != null }
                 .onEach {
                     logger.d("Received advertisement: ${it.identifier} ==> ${it.name!!}")
-                    nameAdvMap[it.name!!] = KableAdvertisement(it)
+                    traceLog(
+                        "Manufacturing data: ${
+                            it.manufacturerData?.let { data ->
+                                data.data.toPrettyHexString()
+                            } ?: "not provided :("
+                        }")
+                    traceLog(
+                        "Service data: ${
+                            it.serviceData(GpUuid.S_CONTROL_QUERY.toUuid())
+                                ?.toPrettyHexString() ?: "not provided :("
+                        }"
+                    )
+                    nameAdvMap[it.name!!] = it
                 }
-                .map { KableAdvertisement(it) }
+                .map {
+                    object : BleAdvertisement {
+                        override val id = it.identifier.toString()
+                        override val name = it.name!!
+                    }
+                }
         )
     }
 
     override suspend fun connect(advertisement: BleAdvertisement): Result<BleDevice> =
-        nameAdvMap[advertisement.name]?.let { adv ->
-            KableDevice(adv.platformAdvertisement, dispatcher)
-        }?.let { device ->
-            device.connect()
-            deviceMap[device.id] = device
-            Result.success(device)
-        } ?: Result.failure(Exception("advertisement ${advertisement.id} not found"))
+        nameAdvMap[advertisement.name]?.let { KableDevice(it, dispatcher) }
+            ?.let { device ->
+                device.connect()
+                deviceMap[device.id] = device
+                Result.success(device)
+            } ?: Result.failure(Exception("advertisement ${advertisement.id} not found"))
 
     override suspend fun enableNotifications(
         device: BleDevice,

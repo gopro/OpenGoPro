@@ -13,7 +13,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.util.EventLogger
 import androidx.media3.ui.PlayerView
 
-class `ExoplayerStreamPlayer.android.kt`(private val context: Context) : IStreamPlayer {
+class ExoplayerStreamPlayer(private val context: Context) : IStreamPlayer {
     @Composable
     override fun PlayStream(modifier: Modifier, url: String) {
         val exoPlayer = remember {
