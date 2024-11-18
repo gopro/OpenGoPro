@@ -330,3 +330,21 @@ def get_current_dst_aware_time() -> tuple[datetime, int, bool]:
     if is_dst:
         offset += 60
     return (now, int(offset), is_dst)
+
+
+def deeply_update_dict(d: dict, u: dict) -> dict:
+    """Recursively update a dict
+
+    Args:
+        d (dict): original dict
+        u (dict): dict to apply updates from
+
+    Returns:
+        dict: updated original dict
+    """
+    for k, v in u.items():
+        if isinstance(v, dict):
+            d[k] = deeply_update_dict(d.get(k, {}), v)
+        else:
+            d[k] = v
+    return d
