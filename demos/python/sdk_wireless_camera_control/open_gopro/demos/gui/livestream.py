@@ -70,6 +70,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("ssid", type=str, help="WiFi SSID to connect to.")
     parser.add_argument("password", type=str, help="Password of WiFi SSID.")
     parser.add_argument("url", type=str, help="RTMP server URL to stream to.")
+    parser.add_argument("identifier", type=str, help="GoPro identifier.")
     parser.add_argument("--min_bit", type=int, help="Minimum bitrate.", default=1000)
     parser.add_argument("--max_bit", type=int, help="Maximum bitrate.", default=1000)
     parser.add_argument("--start_bit", type=int, help="Starting bitrate.", default=1000)
