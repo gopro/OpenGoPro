@@ -178,10 +178,6 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
                 // TODO this needs to be handled differently depending on whether or not there is a BLE communicator
                 _isReady.update { true }
             }
-
-            else -> {
-                logger.w("Can not manage GoPro state on non-BLE communicator.")
-            }
         }
     }
 

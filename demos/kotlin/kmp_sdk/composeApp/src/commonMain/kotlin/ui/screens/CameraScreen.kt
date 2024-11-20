@@ -78,7 +78,7 @@ fun ReadyScreen(
     onConnectWifi: (() -> Unit)
 ) {
     Text("Current Resolution: $resolution")
-    Text("COHN state: $cohnState")
+//    Text("COHN state: $cohnState")
     Button(onToggleShutter) { Text("Toggle shutter") }
     Button(onRegisterResolutionValueUpdates) { Text("Register for Resolution Value Updates") }
     Button(onConnectWifi) { Text("Connect Wi-Fi") }
