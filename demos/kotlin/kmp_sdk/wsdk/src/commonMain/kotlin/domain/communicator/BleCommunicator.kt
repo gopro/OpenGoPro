@@ -14,13 +14,11 @@ import entity.communicator.FeatureId
 import entity.communicator.GpStatus
 import entity.communicator.QueryId
 import entity.connector.ConnectionDescriptor
+import entity.network.ble.BleNotification
+import entity.network.ble.GpUuid
 import entity.queries.SettingId
 import entity.queries.StatusId
 import exceptions.BleError
-import entity.network.ble.BleNotification
-import entity.network.ble.GpUuid
-import util.extensions.toPrettyHexString
-import util.extensions.toTlvMap
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -35,6 +33,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onSubscription
 import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.launch
+import util.extensions.toPrettyHexString
+import util.extensions.toTlvMap
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -159,45 +159,53 @@ internal class BleCommunicator(
         uuid: GpUuid,
         data: UByteArray,
         responseId: ResponseId
-    ): Result<UByteArray> =
-        receivedResponses
-            .onSubscription {
-                // Do this here to avoid potential race condition of SharedFlow emitting before
-                // we started collecting.
-                data.bleFragment(MAX_PACKET_LENGTH).forEach {
-                    traceLog("1. Writing to $uuid ==> ${data.toPrettyHexString()}")
-                    bleApi.writeCharacteristic(device, uuid.toUuid(), it).onFailure {
-                        emit(
-                            ResponseFlowElement(
-                                responseId,
-                                Result.failure(BleError("BLE write failed"))
-                            )
-                        )
+    ): Result<UByteArray> {
+        for (retry in 1..WRITE_RETRIES) {
+            try {
+                return receivedResponses
+                    .onSubscription {
+                        // Do this here to avoid potential race condition of SharedFlow emitting before
+                        // we started collecting.
+                        data.bleFragment(MAX_PACKET_LENGTH).forEach {
+                            traceLog("1. Writing to $uuid ==> ${data.toPrettyHexString()}")
+                            bleApi.writeCharacteristic(device, uuid.toUuid(), it).onFailure {
+                                emit(
+                                    ResponseFlowElement(
+                                        responseId,
+                                        Result.failure(BleError("BLE write failed"))
+                                    )
+                                )
+                            }
+                        }
+                        traceLog("2. Waiting to receive response $responseId")
                     }
-                }
-                traceLog("2. Waiting to receive response $responseId")
-            }
-            .timeout(WRITE_TIMEOUT)
-            .catch { exception ->
-                if (exception is TimeoutCancellationException) {
-                    "BLE Write / Receive Notification timeout of $WRITE_TIMEOUT".let {
-                        logger.e(it)
-                        emit(ResponseFlowElement(responseId, Result.failure(BleError(it))))
+                    .timeout(WRITE_TIMEOUT)
+                    .catch { exception ->
+                        if (exception is TimeoutCancellationException) {
+                            "BLE Write / Receive Notification timeout of $WRITE_TIMEOUT".let {
+                                logger.e(it)
+                                emit(ResponseFlowElement(responseId, Result.failure(BleError(it))))
+                            }
+                        } else {
+                            "Unexpected failure in BLE Write Char Receive Notification".let {
+                                logger.e(it)
+                                emit(ResponseFlowElement(responseId, Result.failure(BleError(it))))
+                            }
+                        }
                     }
-                } else {
-                    "Unexpected failure in BLE Write Char Receive Notification".let {
-                        logger.e(it)
-                        emit(ResponseFlowElement(responseId, Result.failure(BleError(it))))
+                    .first { response ->
+                        traceLog("5. Checking received response ${response.id} vs expected $responseId")
+                        (response.id == responseId) && response.id.shouldBeMatchedAsSynchronousResponse()
+                    }.result.map { response ->
+                        traceLog("6. Returning accumulated response $responseId")
+                        response.payload
                     }
-                }
+            } catch (e: Exception) {
+                logger.w("Retrying $retry")
             }
-            .first { response ->
-                traceLog("5. Checking received response ${response.id} vs expected $responseId")
-                (response.id == responseId) && response.id.shouldBeMatchedAsSynchronousResponse()
-            }.result.map { response ->
-                traceLog("6. Returning accumulated response $responseId")
-                response.payload
-            }
+        }
+        return Result.failure(BleError("Write tried after $WRITE_RETRIES retries"))
+    }
 
     suspend fun executeTlvCommand(
         id: CommandId,
@@ -294,7 +302,8 @@ internal class BleCommunicator(
 
     companion object {
         const val MAX_PACKET_LENGTH = 20
-        val WRITE_TIMEOUT = 10.toDuration(DurationUnit.SECONDS)
+        const val WRITE_RETRIES = 5
+        val WRITE_TIMEOUT = 15.toDuration(DurationUnit.SECONDS)
     }
 }
 

@@ -42,7 +42,7 @@ internal class FakeOperationMarshaller(
                 ConnectionDescriptor.Ble(
                     GoProId("serialId"),
                     object : BleDevice {
-                        override val id = GoProId("bleDeviceId")
+                        override val id = "bleDeviceId"
                     }),
                 dispatcher
             )

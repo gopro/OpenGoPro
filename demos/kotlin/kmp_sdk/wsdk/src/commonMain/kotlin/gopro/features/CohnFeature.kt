@@ -1,5 +1,6 @@
 package gopro.features
 
+import WsdkIsolatedKoinContext
 import co.touchlab.kermit.Logger
 import domain.data.ICameraRepository
 import entity.operation.CohnState
@@ -10,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.transform
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 private val logger = Logger.withTag("CohnFeature")
 
@@ -28,7 +28,7 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
     private var ipAddress: String? = null
     private var certificate: String? = null
 
-    private val cameraRepo: ICameraRepository by inject()
+    private val cameraRepo: ICameraRepository = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
 
     /**
      * Get the continuous COHN State
@@ -37,7 +37,7 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
      *
      * @return flow of COHN States
      */
-    suspend fun getCohnStatus(): Flow<CohnState> =
+    suspend fun getStatus(): Flow<CohnState> =
         context.gopro.commands.getCohnStatus().getOrThrow().transform { update ->
             update.password?.let { password = it }
             update.ssid?.let { ssid = it }
@@ -61,6 +61,12 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
             }
         }
 
+    suspend fun unprovision(): Result<Unit> = context.gopro.commands.clearCohnCertificate().map { }
+
+    suspend fun enable(): Result<Unit> = context.gopro.commands.setCohnSetting(disableCohn = false)
+
+    suspend fun disable(): Result<Unit> = context.gopro.commands.setCohnSetting(disableCohn = true)
+
     /**
      * Provision camera for COHN
      *
@@ -68,10 +74,8 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
      *
      * @return provisioning credentials
      */
-    suspend fun provisionCohn(): Result<CohnState.Provisioned> {
-        // Start fresh by clearing cert
-        logger.i("Clearing COHN Certificate for new provision")
-        context.gopro.commands.clearCohnCertificate().onFailure { return Result.failure(it) }
+    suspend fun provision(): Result<CohnState.Provisioned> {
+        unprovision().onFailure { return Result.failure(it) }
 
         // Provision
         logger.i("Requesting new COHN cert creation to provision COHN")
@@ -81,7 +85,7 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
         // TODO timeout here?
         logger.i("Waiting for COHN provisioning to complete...")
         val provisionedState =
-            getCohnStatus().first { it is CohnState.Provisioned } as CohnState.Provisioned
+            getStatus().first { it is CohnState.Provisioned } as CohnState.Provisioned
         logger.i("Storing COHN credentials to disk")
         cameraRepo.addHttpsCredentials(context.gopro.id, provisionedState)
         return Result.success(provisionedState)

@@ -168,10 +168,10 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
                         }
                     }
                 }
-                // Register for COHN status updates
-                scope.launch {
-                    features.cohn.getCohnStatus().collect { gpDescriptorManager.setCohnState(it) }
-                }
+//                // Register for COHN status updates
+//                scope.launch {
+//                    features.cohn.getCohnStatus().collect { gpDescriptorManager.setCohnState(it) }
+//                }
             }
 
             is HttpCommunicator -> {

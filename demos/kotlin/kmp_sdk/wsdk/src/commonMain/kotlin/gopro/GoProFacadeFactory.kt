@@ -1,6 +1,5 @@
 package gopro
 
-import co.touchlab.kermit.Logger
 import domain.communicator.BleCommunicator
 import domain.communicator.HttpCommunicator
 import domain.communicator.ICommunicator
@@ -13,11 +12,9 @@ import entity.connector.ConnectionDescriptor
 import entity.connector.GoProId
 import entity.network.ble.BleDevice
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-
-private val logger = Logger.withTag("GoProFactory")
+import util.GpCommonBase
+import util.IGpCommonBase
 
 internal class GoProFactory(
     private val bleApi: IBleApi,
@@ -25,15 +22,9 @@ internal class GoProFactory(
     private val wifiApi: IWifiApi,
     private val httpClientProvider: IHttpClientProvider,
     private val dispatcher: CoroutineDispatcher
-) : IGoProFactory {
+) : IGoProFactory, IGpCommonBase by GpCommonBase("GoProFactory", dispatcher) {
     private val facadesById = mutableMapOf<GoProId, GoPro>()
     private val communicatorsByConnection = mutableMapOf<ConnectionDescriptor, ICommunicator<*>>()
-
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { context, throwable ->
-        logger.e("Caught exception in coroutine:", throwable)
-    }
-
-    private val scope = CoroutineScope(dispatcher + coroutineExceptionHandler)
 
     private fun httpCommunicatorsFromSsid(ssid: String): List<HttpCommunicator> =
         communicatorsByConnection.filterKeys { connection ->
@@ -78,8 +69,8 @@ internal class GoProFactory(
         // TODO this doesn't feel like the best place. But it is currently the only location that knows
         // about the facades. So regardless if this is done somewhere else it will need to be bubbled
         // up to here.
-        scope.launch { monitorBleConnections() }
-        scope.launch { monitorWifiConnections() }
+        scope?.launch { monitorBleConnections() }
+        scope?.launch { monitorWifiConnections() }
     }
 
     override suspend fun getGoPro(id: GoProId): GoPro {

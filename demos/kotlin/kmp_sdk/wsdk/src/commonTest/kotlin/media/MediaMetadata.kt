@@ -4,11 +4,12 @@ import entity.operation.AudioOption
 import entity.operation.LensConfig
 import entity.operation.LensProjection
 import entity.operation.MediaContentType
-import entity.operation.VideoMediaMetadata
 import entity.operation.MediaMetadata
 import entity.operation.PhotoMediaMetadata
+import entity.operation.VideoMediaMetadata
 import entity.operation.jsonDefault
 import vectors.photoMetadataJson
+import vectors.problematicMetadataJson
 import vectors.videoMetadataJson
 import vectors.videoMetadataJson2
 import kotlin.test.Test
@@ -89,6 +90,15 @@ class TestMediaMetadata {
     fun `parse a different video media metadata`() {
         // WHEN
         val metadata = jsonDefault.decodeFromString<VideoMediaMetadata>(videoMetadataJson2)
+
+        // THEN
+        assertFalse { metadata.isSubsampled }
+    }
+
+    @Test
+    fun `parse problematic media metadata`() {
+        // WHEN
+        val metadata = jsonDefault.decodeFromString<VideoMediaMetadata>(problematicMetadataJson)
 
         // THEN
         assertFalse { metadata.isSubsampled }

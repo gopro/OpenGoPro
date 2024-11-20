@@ -25,6 +25,7 @@ import operation.commands.CohnClearCert
 import operation.commands.CohnCreateCert
 import operation.commands.CohnGetCert
 import operation.commands.CohnGetStatus
+import operation.commands.CohnSetSetting
 import operation.commands.ConnectNewAccessPoint
 import operation.commands.ConnectProvisionedAccessPoint
 import operation.commands.DatetimeGet
@@ -208,6 +209,7 @@ class CommandsContainer internal constructor(private val marshaller: IOperationM
      */
     suspend fun stopWebcam() =
         marshaller.marshal(WebcamStop()) {
+            isFastpass { _, _ -> true }
             useCommunicator { _, _ -> CommunicationType.HTTP }
         }
 
@@ -223,6 +225,7 @@ class CommandsContainer internal constructor(private val marshaller: IOperationM
     suspend fun getWebcamState(): Result<WebcamState> =
         marshaller.marshal(WebcamGetState()) {
             useCommunicator { _, _ -> CommunicationType.HTTP }
+            isFastpass { _, _ -> true }
         }
 
     /**
@@ -395,6 +398,9 @@ class CommandsContainer internal constructor(private val marshaller: IOperationM
 
     internal suspend fun connectAccessPoint(ssid: String, password: String) =
         marshaller.marshal(ConnectNewAccessPoint(ssid, password))
+
+    internal suspend fun setCohnSetting(disableCohn: Boolean) =
+        marshaller.marshal(CohnSetSetting(disableCohn))
 
     internal suspend fun getCohnStatus() =
         marshaller.marshal(CohnGetStatus())

@@ -6,9 +6,9 @@ import domain.communicator.HttpCommunicator
 import domain.network.IHttpClientProvider
 import entity.connector.ConnectionDescriptor
 import entity.connector.GoProId
+import entity.network.IHttpsCredentials
 import entity.network.ble.BleDevice
 import entity.network.ble.BleNotification
-import entity.network.IHttpsCredentials
 import entity.operation.PresetInfo
 import entity.operation.jsonDefault
 import entity.operation.serializeAsDefaultFromProto
@@ -44,7 +44,7 @@ internal fun buildFakeBleCommunicator(
 ): FakeBleCommunicator {
     val api = FakeBleApi(responses, dispatcher)
     val device = object : BleDevice {
-        override val id = GoProId("bleDeviceId")
+        override val id = "bleDeviceId"
     }
     val communicator =
         BleCommunicator(api, ConnectionDescriptor.Ble(GoProId("serialId"), device), dispatcher)

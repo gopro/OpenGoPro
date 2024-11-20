@@ -58,6 +58,7 @@ class WebcamViewModel(
 
     override fun stop() {
         statusPollJob?.cancel()
+        stopStream()
         super.stop()
     }
 }

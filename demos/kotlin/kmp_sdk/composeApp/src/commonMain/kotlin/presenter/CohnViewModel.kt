@@ -29,12 +29,24 @@ class CohnViewModel(
             is CohnUiState.Idle ->
                 viewModelScope.launch {
                     _state.update { CohnUiState.Provisioning }
-                    gopro.features.cohn.provisionCohn().getOrThrow()
+                    gopro.features.cohn.provision().getOrThrow()
                     _state.update { CohnUiState.ProvisionedAndReady }
                 }
 
             else -> logger.e("Can only provision COHN from Idle state.")
         }
+    }
+
+    fun enable() {
+        viewModelScope.launch { gopro.features.cohn.enable() }
+    }
+
+    fun disable() {
+        viewModelScope.launch { gopro.features.cohn.disable() }
+    }
+
+    fun unprovision() {
+        viewModelScope.launch { gopro.features.cohn.unprovision() }
     }
 
     override fun onStart() {

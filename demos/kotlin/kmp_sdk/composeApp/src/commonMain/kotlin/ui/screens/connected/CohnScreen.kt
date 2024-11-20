@@ -2,16 +2,12 @@ package ui.screens.connected
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import presenter.CohnUiState
@@ -38,7 +34,10 @@ fun CohnScreen(
         }
         Column(modifier.padding(paddingValues)) {
             Text("COHN state: ${state.name}")
+            Button({ viewModel.enable() }) { Text("Enable") }
+            Button({ viewModel.disable() }) { Text("Disable") }
             Button({ viewModel.provision() }) { Text("Provision") }
+            Button({ viewModel.unprovision() }) { Text("Unprovision") }
             if (state == CohnUiState.Provisioning) {
                 IndeterminateCircularProgressIndicator()
             }

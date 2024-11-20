@@ -21,6 +21,8 @@ import ui.components.CommonTopBar
 import ui.components.IndeterminateCircularProgressIndicator
 import ui.components.MenuListItem
 
+private val logger = Logger.withTag("CameraScreen")
+
 @Composable
 fun CameraScreen(
     navController: NavController,
@@ -84,7 +86,7 @@ fun ReadyScreen(
     LazyColumn {
         items(subRoutes) { screen ->
             MenuListItem(screen.route) {
-                Logger.d("Navigate to ${screen.route}")
+                logger.d("Navigating to ${screen.route}")
                 onSelectScreen(screen)
             }
         }

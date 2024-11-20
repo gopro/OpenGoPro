@@ -49,9 +49,9 @@ internal class GpMarshaller(private val gopro: IGpDescriptor) : IOperationMarsha
             strategy?.let { operationStrategy(it) } ?: StrategyBuilder<T, O>().build()
         // If not ready and not fastpass, wait for busy
         if ((!gopro.isReady.value) && !(normalizedStrategy.isFastpass(operation, gopro))) {
-            traceLog("Waiting for camera to be ready before executing ${operation.debugId}.")
+            logger.d("Waiting for camera to be ready before executing ${operation.debugId}.")
             gopro.isReady.filter { it }.first()
-            traceLog("Camera is ready. Executing ${operation.debugId}")
+            logger.d("Camera is ready. Executing ${operation.debugId}")
         }
         // Ready to go, now perform the operation
         val targetCommunicator = normalizedStrategy.useCommunicator(
@@ -65,9 +65,9 @@ internal class GpMarshaller(private val gopro: IGpDescriptor) : IOperationMarsha
         if ((gopro.isEncoding.value) &&
             (normalizedStrategy.shouldWaitForEncodingStop(operation, gopro))
         ) {
-            traceLog("Waiting for encoding to stop before completing ${operation.debugId}.")
+            logger.d("Waiting for encoding to stop before completing ${operation.debugId}.")
             gopro.isEncoding.filter { !it }.first()
-            traceLog("Encoding has stopped. Completing ${operation.debugId}.")
+            logger.d("Encoding has stopped. Completing ${operation.debugId}.")
         }
         return response
     }

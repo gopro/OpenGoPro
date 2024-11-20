@@ -208,7 +208,7 @@ sealed class MediaMetadata {
     abstract val contentType: MediaContentType
 
     @SerialName("cre")
-    abstract val creationTime: Int
+    abstract val creationTime: Long
 
     @SerialName("s")
     abstract val fileSize: Int
@@ -266,7 +266,7 @@ sealed class MediaMetadata {
 @Serializable
 data class VideoMediaMetadata(
     @SerialName("ct") override val contentType: MediaContentType,
-    @SerialName("cre") override val creationTime: Int,
+    @SerialName("cre") override val creationTime: Long,
     @SerialName("s") override val fileSize: Int,
     @SerialName("gumi") override val id: String,
     @SerialName("h") override val height: Int,
@@ -301,7 +301,7 @@ data class VideoMediaMetadata(
 @Serializable
 data class PhotoMediaMetadata(
     @SerialName("ct") override val contentType: MediaContentType,
-    @SerialName("cre") override val creationTime: Int,
+    @SerialName("cre") override val creationTime: Long,
     @SerialName("s") override val fileSize: Int,
     @SerialName("gumi") override val id: String,
     @SerialName("h") override val height: Int,

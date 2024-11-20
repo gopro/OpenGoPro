@@ -120,6 +120,38 @@ val videoMetadataJson2 = """
 }    
 """.trimIndent()
 
+val problematicMetadataJson = """
+{
+    "cre": "3668857923",
+    "s": "104378731",
+    "us": "0",
+    "mos": [],
+    "eis": "1",
+    "pta": "0",
+    "ao": "auto",
+    "tr": "0",
+    "mp": "0",
+    "ct": "0",
+    "rot": "0",
+    "lc": "0",
+    "prjn": "9",
+    "gumi": "d1708b90ca32d4cbe6988d8fdb0fda86",
+    "ls": "5052423",
+    "cl": "0",
+    "avc_profile": "1",
+    "profile": "150",
+    "hc": "0",
+    "hi": [],
+    "dur": "35",
+    "w": "1920",
+    "h": "1080",
+    "fps": "60000",
+    "fps_denom": "1001",
+    "prog": "1",
+    "subsample": "0"
+}
+""".trimIndent()
+
 val singleMediaListItemJson: String = """
 {
     "n": "GX017060.MP4",

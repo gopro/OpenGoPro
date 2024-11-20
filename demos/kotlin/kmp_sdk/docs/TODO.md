@@ -1,25 +1,32 @@
 # General
+- 
 - [ ] Abstract more commands into features
 - [ ] Generate setting / status code
 
 # Platform support
 
-- [ ] iOS not tested. Need Wifi "driver"
+- [ ] iOS not tested beyond minimal BLE testing. Need Wifi "driver"
 - [ ] desktop hasn't even been considered yet.
 
 # Database
 
-- [ ] User real one-to-many instead of certificate serialization hack
+- [ ] Use real one-to-many instead of certificate serialization hack
 
 # Robustness 
 
+- [ ] Wifi Connections are taking a long time
 - [ ] Keep alive not working?
 - [ ] BLE can not communicate after waking up GoPro
 - [ ] Handle WiFi disconnects. How to get the SSID?
 - [ ] Reconnect after BLE / WIFI disconnects
 - [ ] Check statuses and retry in BLE code
+- [ ] COHN querying and access point overlap might be messing up the camera
 
 # Documentation
 
 - [ ] Move to Dokka 2
 - [ ] Create devops task to selectively uninternalize protobuf enums
+
+# Demo App
+
+- [ ] 10.5.5.9 RTSP stream viewer not working
