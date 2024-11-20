@@ -1,7 +1,7 @@
 package domain.communicator.bleCommunicator
 
-import entity.network.GpUuid
-import extensions.pow
+import entity.network.ble.GpUuid
+import util.extensions.pow
 
 internal enum class GpBleMessageHeaderMask(val value: UByte) {
     Header(0b01100000U),

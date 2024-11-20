@@ -6,7 +6,7 @@ import domain.communicator.HttpCommunicator
 import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.CommandId
 import entity.operation.HardwareInfo
-import extensions.decodeToString
+import util.extensions.decodeToString
 import io.ktor.client.call.body
 import io.ktor.http.path
 

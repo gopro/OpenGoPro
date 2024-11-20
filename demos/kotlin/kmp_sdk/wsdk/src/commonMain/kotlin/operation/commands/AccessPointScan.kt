@@ -7,19 +7,16 @@ import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.ActionId
 import entity.communicator.FeatureId
 import exceptions.CameraInternalError
-import entity.network.GpUuid
+import entity.network.ble.GpUuid
 import entity.operation.ApScanResult
-import extensions.isOk
+import util.extensions.isOk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transformWhile
-import entity.operation.proto.EnumCameraControlStatus
 import entity.operation.proto.EnumScanning
 import entity.operation.proto.NotifStartScanning
-import entity.operation.proto.RequestSetCameraControlStatus
 import entity.operation.proto.ResponseStartScanning
 import pbandk.decodeFromByteArray
-import pbandk.encodeToByteArray
 
 private val logger = Logger.withTag("Access Point Scan Operation")
 

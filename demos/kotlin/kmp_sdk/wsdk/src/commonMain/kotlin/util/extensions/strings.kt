@@ -1,4 +1,4 @@
-package extensions
+package util.extensions
 
 // It's not really an extension...
 @OptIn(ExperimentalUnsignedTypes::class)

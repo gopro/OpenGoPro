@@ -6,12 +6,12 @@ import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.ActionId
 import entity.communicator.FeatureId
 import exceptions.CameraInternalError
-import entity.network.GpUuid
+import entity.network.ble.GpUuid
 import entity.operation.ApScanEntry
 import entity.operation.proto.RequestGetApEntries
 import entity.operation.proto.ResponseGetApEntries
-import extensions.isOk
-import extensions.toBoolean
+import util.extensions.isOk
+import util.extensions.toBoolean
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray
 

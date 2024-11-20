@@ -11,7 +11,7 @@ import platform.UIKit.UIViewController
 
 fun MainViewController(): UIViewController {
     startKoin {
-        PrintLogger(Level.DEBUG)
+        PrintLogger(Level.WARNING)
         modules(buildAppModule(appContext = WsdkAppContext()))
     }
     return ComposeUIViewController { App() }

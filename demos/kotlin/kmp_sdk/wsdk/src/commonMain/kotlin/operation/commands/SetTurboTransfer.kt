@@ -6,9 +6,9 @@ import domain.communicator.HttpCommunicator
 import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.ActionId
 import entity.communicator.FeatureId
-import entity.network.GpUuid
-import extensions.mapFromGenericProtoResponseToResult
-import extensions.toInt
+import entity.network.ble.GpUuid
+import util.extensions.mapFromGenericProtoResponseToResult
+import util.extensions.toInt
 import io.ktor.client.call.body
 import io.ktor.http.path
 import entity.operation.proto.RequestSetTurboActive

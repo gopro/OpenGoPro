@@ -7,7 +7,7 @@ import entity.communicator.QueryId
 import entity.communicator.responseProtobufIds
 import entity.queries.SettingId
 import entity.queries.StatusId
-import entity.network.GpUuid
+import entity.network.ble.GpUuid
 
 
 internal sealed interface ResponseId {

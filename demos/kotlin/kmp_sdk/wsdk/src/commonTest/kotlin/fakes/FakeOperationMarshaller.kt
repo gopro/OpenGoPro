@@ -8,8 +8,8 @@ import domain.communicator.ICommunicator
 import entity.communicator.CommunicationType
 import entity.connector.ConnectionDescriptor
 import entity.connector.GoProId
-import entity.network.BleDevice
-import entity.network.BleNotification
+import entity.network.ble.BleDevice
+import entity.network.ble.BleNotification
 import kotlinx.coroutines.CoroutineDispatcher
 
 internal class FakeOperationMarshaller(

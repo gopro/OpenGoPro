@@ -6,7 +6,7 @@ import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.ActionId
 import entity.communicator.FeatureId
 import exceptions.CameraInternalError
-import entity.network.GpUuid
+import entity.network.ble.GpUuid
 import entity.operation.AccessPointState
 import entity.operation.isFinished
 import entity.operation.proto.EnumProvisioning
@@ -15,7 +15,7 @@ import entity.operation.proto.RequestConnect
 import entity.operation.proto.RequestConnectNew
 import entity.operation.proto.ResponseConnect
 import entity.operation.proto.ResponseConnectNew
-import extensions.isOk
+import util.extensions.isOk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.transformWhile

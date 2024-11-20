@@ -14,7 +14,7 @@ class MyApplication : Application() {
         super.onCreate()
         val appContext = WsdkAppContext().apply { set(applicationContext) }
         startKoin {
-            androidLogger(Level.DEBUG)
+            androidLogger(Level.WARNING)
             modules(buildAppModule(appContext = appContext))
         }
     }

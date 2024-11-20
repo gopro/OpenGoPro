@@ -6,7 +6,7 @@ import domain.communicator.BleCommunicator
 import domain.communicator.bleCommunicator.bleFragment
 import entity.communicator.ActionId
 import entity.communicator.FeatureId
-import entity.network.GpUuid
+import entity.network.ble.GpUuid
 import entity.operation.AccessPointState
 import entity.operation.ApScanResult
 import entity.operation.CameraControlStatus
@@ -16,9 +16,9 @@ import entity.operation.LivestreamResolution
 import entity.operation.LivestreamStatus
 import entity.operation.PresetInfo
 import entity.operation.jsonFromProto
-import extensions.toLocalDateTime
-import extensions.toUByteArray
-import extensions.toUtcOffset
+import util.extensions.toLocalDateTime
+import util.extensions.toUByteArray
+import util.extensions.toUtcOffset
 import fakes.BleApiSpy
 import fakes.buildFakeBleCommunicator
 import fakes.toBleNotificationList

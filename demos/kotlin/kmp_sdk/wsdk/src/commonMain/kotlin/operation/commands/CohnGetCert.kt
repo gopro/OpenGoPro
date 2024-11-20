@@ -7,17 +7,12 @@ import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.ActionId
 import entity.communicator.FeatureId
 import exceptions.CameraInternalError
-import entity.network.GpUuid
-import entity.operation.CameraControlStatus
-import extensions.isOk
-import extensions.mapFromGenericProtoResponseToResult
+import entity.network.ble.GpUuid
+import util.extensions.isOk
 import io.ktor.client.call.body
 import io.ktor.http.path
-import entity.operation.proto.EnumCameraControlStatus
-import entity.operation.proto.RequestSetCameraControlStatus
 import entity.operation.proto.ResponseCOHNCert
 import pbandk.decodeFromByteArray
-import pbandk.encodeToByteArray
 
 internal class CohnGetCert :
     BaseOperation<String>("Get COHN Cert") {

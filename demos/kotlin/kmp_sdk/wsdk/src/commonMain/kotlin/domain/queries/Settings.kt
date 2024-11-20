@@ -10,7 +10,7 @@ import entity.communicator.QueryId
 import entity.queries.IUByteEnumCompanion
 import entity.queries.SettingId
 import entity.queries.UByteEnum
-import extensions.toUByteArray
+import util.extensions.toUByteArray
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart

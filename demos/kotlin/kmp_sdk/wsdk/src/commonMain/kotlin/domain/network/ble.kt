@@ -1,9 +1,10 @@
 package domain.network
 
 import com.benasher44.uuid.Uuid
-import entity.network.BleAdvertisement
-import entity.network.BleDevice
-import entity.network.BleNotification
+import entity.network.ble.BleAdvertisement
+import entity.network.ble.BleDevice
+import entity.network.ble.BleNotification
+import domain.communicator.bleCommunicator.GpBleAdvertisement
 import kotlinx.coroutines.flow.Flow
 
 /**

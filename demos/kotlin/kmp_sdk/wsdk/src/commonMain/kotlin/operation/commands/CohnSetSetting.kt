@@ -7,7 +7,7 @@ import domain.communicator.HttpCommunicator
 import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.ActionId
 import entity.communicator.FeatureId
-import entity.network.GpUuid
+import entity.network.ble.GpUuid
 import io.ktor.client.call.body
 import io.ktor.client.request.setBody
 import io.ktor.http.path

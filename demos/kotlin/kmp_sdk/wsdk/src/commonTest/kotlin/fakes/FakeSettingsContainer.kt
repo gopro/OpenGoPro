@@ -1,6 +1,6 @@
 package fakes
 
-import entity.network.BleNotification
+import entity.network.ble.BleNotification
 import gopro.SettingsContainer
 import kotlinx.coroutines.CoroutineDispatcher
 

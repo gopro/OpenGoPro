@@ -4,8 +4,8 @@ import domain.api.BaseOperation
 import domain.communicator.BleCommunicator
 import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.CommandId
-import extensions.toUByte
-import extensions.toUByteArray
+import util.extensions.toUByte
+import util.extensions.toUByteArray
 
 internal class SetApMode(val enable: Boolean) : BaseOperation<Unit>("Set AP Mode") {
 

@@ -4,7 +4,7 @@ import domain.api.BaseOperation
 import domain.communicator.BleCommunicator
 import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.CommandId
-import extensions.toLocalDateTime
+import util.extensions.toLocalDateTime
 import kotlinx.datetime.LocalDateTime
 
 

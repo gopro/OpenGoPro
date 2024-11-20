@@ -8,8 +8,8 @@ import entity.communicator.ActionId
 import entity.communicator.FeatureId
 import exceptions.CameraInternalError
 import entity.operation.MediaId
-import entity.network.GpUuid
-import extensions.isOk
+import entity.network.ble.GpUuid
+import util.extensions.isOk
 import io.ktor.client.call.body
 import io.ktor.http.path
 import entity.operation.proto.RequestGetLastCapturedMedia

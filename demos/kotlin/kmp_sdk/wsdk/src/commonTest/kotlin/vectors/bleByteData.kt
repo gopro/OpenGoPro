@@ -6,10 +6,6 @@ import entity.communicator.ActionId
 import entity.communicator.CommandId
 import entity.communicator.FeatureId
 import entity.communicator.GpStatus
-import extensions.encodeToUByteArray
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.Month
-import kotlinx.datetime.UtcOffset
 import entity.operation.proto.EnumFlatMode
 import entity.operation.proto.EnumLens
 import entity.operation.proto.EnumLiveStreamError
@@ -37,6 +33,10 @@ import entity.operation.proto.ResponseConnectNew
 import entity.operation.proto.ResponseGeneric
 import entity.operation.proto.ResponseGetApEntries
 import entity.operation.proto.ResponseStartScanning
+import util.extensions.encodeToUByteArray
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.Month
+import kotlinx.datetime.UtcOffset
 import pbandk.encodeToByteArray
 
 val utcOffsetVector = UtcOffset(hours = -2)
@@ -784,3 +784,20 @@ val scanResponseData = ubyteArrayOf(
     0x35U,
     0x38U
 )
+
+val scanResponseFea6ServiceData =
+    ubyteArrayOf(0x47U, 0x3BU, 0x28U, 0x2DU, 0x30U, 0x30U, 0x35U, 0x33U).toByteArray()
+val scanResponseManufData = ubyteArrayOf(
+    0x02U,
+    0x01U,
+    0x41U,
+    0x23U,
+    0x00U,
+    0x99U,
+    0x64U,
+    0x26U,
+    0x61U,
+    0x21U,
+    0xE0U,
+    0x0FU
+).toByteArray()

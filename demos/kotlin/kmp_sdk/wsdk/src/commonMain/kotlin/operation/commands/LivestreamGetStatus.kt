@@ -7,7 +7,7 @@ import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.ActionId
 import entity.communicator.FeatureId
 import exceptions.CameraInternalError
-import entity.network.GpUuid
+import entity.network.ble.GpUuid
 import entity.operation.LivestreamError
 import entity.operation.LivestreamFov
 import entity.operation.LivestreamResolution

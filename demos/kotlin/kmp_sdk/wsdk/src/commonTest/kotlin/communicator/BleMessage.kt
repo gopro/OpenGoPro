@@ -3,8 +3,8 @@ package communicator
 import domain.communicator.BleCommunicator
 import domain.communicator.bleCommunicator.AccumulatedGpBleResponse
 import domain.communicator.bleCommunicator.bleFragment
-import entity.network.GpUuid
-import extensions.toUByteArray
+import entity.network.ble.GpUuid
+import util.extensions.toUByteArray
 import vectors.complexBleWriteResponse
 import vectors.hardwareInfoResponsePayload
 import vectors.setShutterRequestMessage

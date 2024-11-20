@@ -1,9 +1,9 @@
 import domain.communicator.BleCommunicator
 import domain.communicator.bleCommunicator.bleFragment
 import entity.queries.Resolution
-import entity.network.BleNotification
-import entity.network.GpUuid
-import extensions.toTlvMap
+import entity.network.ble.BleNotification
+import entity.network.ble.GpUuid
+import util.extensions.toTlvMap
 import fakes.buildFakeSettingsContainer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.onEach

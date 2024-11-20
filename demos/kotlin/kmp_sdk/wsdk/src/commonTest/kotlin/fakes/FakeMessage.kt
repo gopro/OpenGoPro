@@ -3,7 +3,7 @@ package fakes
 import domain.communicator.BleCommunicator
 import domain.communicator.bleCommunicator.AccumulatedGpBleResponse
 import domain.communicator.bleCommunicator.bleFragment
-import entity.network.GpUuid
+import entity.network.ble.GpUuid
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalUnsignedTypes::class)

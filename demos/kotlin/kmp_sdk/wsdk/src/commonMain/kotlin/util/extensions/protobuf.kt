@@ -1,4 +1,4 @@
-package extensions
+package util.extensions
 
 import exceptions.CameraInternalError
 import entity.operation.proto.EnumResultGeneric

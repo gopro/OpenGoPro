@@ -1,4 +1,4 @@
-package extensions
+package util.extensions
 
 import kotlin.math.pow
 

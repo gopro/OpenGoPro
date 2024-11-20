@@ -7,8 +7,8 @@ import entity.connector.ConnectionRequestContext
 import entity.connector.GoProId
 import entity.connector.NetworkType
 import entity.connector.ScanResult
-import entity.network.BleAdvertisement
-import entity.network.GpUuid
+import entity.network.ble.BleAdvertisement
+import entity.network.ble.GpUuid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
@@ -36,7 +36,6 @@ internal class GpBleConnector(private val bleApi: IBleApi) :
                 .onEach { idAdvMap[GoProId(it.name!!.takeLast(4))] = it }
                 .map { ScanResult.Ble(GoProId(it.name!!.takeLast(4)), it.id, it.name ?: "") }
         }
-
 
     override suspend fun connect(
         target: ScanResult.Ble,

@@ -1,4 +1,4 @@
-package extensions
+package util.extensions
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.Month

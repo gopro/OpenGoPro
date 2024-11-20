@@ -5,7 +5,7 @@ import domain.communicator.BleCommunicator
 import domain.communicator.HttpCommunicator
 import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.CommandId
-import extensions.toUByte
+import util.extensions.toUByte
 import io.ktor.client.call.body
 import io.ktor.http.appendPathSegments
 import io.ktor.http.path

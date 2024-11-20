@@ -1,4 +1,4 @@
-package entity.network
+package entity.network.ble
 
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuidFrom
@@ -42,41 +42,13 @@ internal enum class GpUuid(private val base: String) {
 internal interface BleAdvertisement {
     val id: String // ID used to establish BLE connection from the advertisement.
     val name: String? // BLE Device name (i.e GP 1234). Global ID will come from the 4 digits.
+    val manufacturerData: ByteArray?
+    val service: Map<Uuid, ByteArray?>?
 }
 
 internal interface BleDevice {
-    val id: GoProId
+    val id: String
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
 internal data class BleNotification(val uuid: Uuid, val data: UByteArray)
-
-// TODO we don't need these (yet) but they will likely be useful at some point.
-@OptIn(ExperimentalUnsignedTypes::class)
-internal data class GpBleAdvertisement(
-    val flags: List<Int>,
-    val uuids: List<Uuid>,
-    val manufacturingType: UByteArray,
-    val companyId: Int,
-    val cameraStatus: Int,
-    val cameraId: Int,
-    val cameraCapability: Int,
-    val idHash: UByteArray,
-    val softtubesStatus: Int,
-) {
-    companion object {
-        fun fromUByteArray(bytes: UByteArray): GpBleAdvertisement = TODO()
-    }
-}
-
-@OptIn(ExperimentalUnsignedTypes::class)
-internal data class GpScanResponse(
-    val name: String,
-    val serviceUuid: Uuid,
-    val macAddress: String,
-    val serialNumber: String,
-) {
-    companion object {
-        fun fromUByteArray(bytes: UByteArray): GpScanResponse = TODO()
-    }
-}

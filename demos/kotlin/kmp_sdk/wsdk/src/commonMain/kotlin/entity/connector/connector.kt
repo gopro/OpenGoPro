@@ -1,6 +1,6 @@
 package entity.connector
 
-import entity.network.BleDevice
+import entity.network.ble.BleDevice
 import entity.network.IHttpsCredentials
 
 /**

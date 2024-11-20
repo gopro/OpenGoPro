@@ -1,8 +1,8 @@
 package gopro
 
 import AndroidInstrumentedKoinTest
-import entity.network.BleNotification
-import entity.network.GpUuid
+import entity.network.ble.BleNotification
+import entity.network.ble.GpUuid
 import fakes.FakeGoProProvider
 import fakes.buildFakeBleCommunicator
 import kotlinx.coroutines.ExperimentalCoroutinesApi

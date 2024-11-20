@@ -7,9 +7,9 @@ import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.CommandId
 import entity.operation.DateTimeHttpResponse
 import entity.operation.GpDatetime
-import extensions.toBoolean
-import extensions.toLocalDateTime
-import extensions.toUtcOffset
+import util.extensions.toBoolean
+import util.extensions.toLocalDateTime
+import util.extensions.toUtcOffset
 import io.ktor.client.call.body
 import io.ktor.http.path
 import kotlinx.datetime.LocalDateTime

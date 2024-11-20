@@ -1,23 +1,21 @@
 package network
 
-import co.touchlab.kermit.Logger
 import com.benasher44.uuid.Uuid
 import com.juul.kable.Characteristic
+import com.juul.kable.Peripheral
 import com.juul.kable.Scanner
 import com.juul.kable.WriteType
 import com.juul.kable.logs.Logging
 import com.juul.kable.logs.SystemLogEngine
 import com.juul.kable.peripheral
 import domain.network.IBleApi
-import entity.connector.GoProId
-import entity.network.BleAdvertisement
-import entity.network.BleDevice
-import entity.network.BleNotification
-import entity.network.GpUuid
-import extensions.toPrettyHexString
+import entity.network.ble.BleAdvertisement
+import entity.network.ble.BleDevice
+import entity.network.ble.BleNotification
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -25,90 +23,86 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
+import util.GpGenericBase
+import util.IGpGenericBase
+import util.extensions.toPrettyHexString
 import com.juul.kable.Advertisement as KableAdvertisement
+import com.juul.kable.State as KableState
 
 // https://github.com/JuulLabs/kable/blob/5cb15670216a4566d5ace188f0e2b87b1ed70c50/kable-core/src/commonMain/kotlin/Advertisement.kt#L4
 
-private val logger = Logger.withTag("KableBle")
-private const val TRACE_LOG = true
 
-// TODO configure and inject
-private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
-}
+private const val CONNECTION_TIMEOUT_MS = 30000L
 
-// TODO use Result for return values here.
 @OptIn(ExperimentalUnsignedTypes::class)
 private class KableDevice(
-    adv: KableAdvertisement,
+    private val adv: KableAdvertisement,
     dispatcher: CoroutineDispatcher
-) : BleDevice {
-    // Last 4 of serial number.
-    override val id = adv.name?.let { GoProId(it.takeLast(4)) }
-        ?: throw Exception("Can not create Kable device with an advertisement that does not contain a deviec name.")
-    val notifications = MutableSharedFlow<BleNotification>()
-
+) : BleDevice, IGpGenericBase by GpGenericBase("KableDevice", dispatcher) {
     // TODO this has been fixed. Update Kable and remove.
     // Intermediary scope needed until https://github.com/JuulLabs/kable/issues/577 is resolved.
     private val peripheralScope = CoroutineScope(Job())
-    private val scope =
+    override val scope =
         CoroutineScope(dispatcher + peripheralScope.coroutineContext + Job(peripheralScope.coroutineContext.job))
-    val peripheral = scope.peripheral(adv) {
-        logging {
-            level = Logging.Level.Warnings // TODO this doesn't appear to be working.
-        }
-        onServicesDiscovered {
-            // TODO this seems hacky. There must a better way.
-            scope.launch {
-                onServicesDiscoveredEvent.send(Unit)
-            }
-        }
-    }
-    private val onServicesDiscoveredEvent = Channel<Unit>()
 
-    private fun characteristicFromUuid(uuid: Uuid): Characteristic? {
-        // TODO this is extremely inefficient. Should do this once to create a map of UUID's to characteristics. We need to do this anyway to
-        // translate to a services domain model
+    val notifications = MutableSharedFlow<BleNotification>()
+    lateinit var peripheral: Peripheral
+
+    // Platform specific ID
+    override val id get() = peripheral.identifier.toString()
+
+    private val characteristicByUuid: Map<Uuid, Characteristic> by lazy {
+        // TODO there is almost certainly a clean functional way to do this
+        val map = mutableMapOf<Uuid, Characteristic>()
         peripheral.services?.let { services ->
             for (service in services) {
-                try {
-                    service.characteristics.first { it.characteristicUuid == uuid }
-                        .let { return it }
-                } catch (exc: NoSuchElementException) {
-                    // The characteristic wasn't found in this service. Go to the next
-                    continue
+                for (char in service.characteristics) {
+                    map[char.characteristicUuid] = char
                 }
             }
-        } ?: run {
-            logger.w("Services have not yet been discovered")
-        }
-        return null
+        } ?: throw Exception("Services have not yet been discovered")
+        map
     }
 
-    // TODO We should timeout here.
-    suspend fun connect() {
-        logger.d("Establishing BLE connection to $id")
-        peripheral.connect()
-        logger.d("BLE connection established. Waiting for services to be discovered")
-        onServicesDiscoveredEvent.receive()
-        logger.d("Services discovered.")
-    }
+    suspend fun connect(): Result<Unit> =
+        try {
+            withTimeout(CONNECTION_TIMEOUT_MS) {
+                logger.d("Establishing BLE connection to ${adv.identifier}")
+                // We tried this as a callback flow but onServicesDiscovered sometimes comes before peripheral.connect
+                // Channel will handle both of these cases
+                val servicesDiscovered = Channel<Unit>(1)
+                peripheral = scope.peripheral(adv) {
+                    logging { level = Logging.Level.Warnings }
+                    // Send the channel when the services have been discovered
+                    onServicesDiscovered { servicesDiscovered.send(Unit) }
+                }
+                peripheral.connect()
+                logger.d("BLE connection established. Waiting for services to be discovered")
+                servicesDiscovered.receive()
+                logger.d("Services discovered.")
+                Result.success(Unit)
+            }
+        } catch (exc: TimeoutCancellationException) {
+            logger.e("Connection establishment timed out")
+            Result.failure(exc)
+        }
 
 
     @OptIn(ExperimentalUnsignedTypes::class)
     fun enableNotifications(uuids: Set<Uuid>): Boolean {
         uuids.forEach { uuid ->
-            characteristicFromUuid(uuid)?.let { characteristic ->
+            characteristicByUuid[uuid]?.let { characteristic ->
                 logger.d("Enabling notifications for ${characteristic.characteristicUuid}")
                 scope.launch {
                     peripheral.observe(characteristic).catch { exc ->
                         logger.e(exc.toString())
                     }.onEach {
-                        logger.d("Received ${it.toPrettyHexString()} on ${characteristic.characteristicUuid}")
+                        logger.d("Received notification ${it.toPrettyHexString()} on ${characteristic.characteristicUuid}")
                     }.collect { data ->
                         // Forward to our observers.
                         notifications.emit(BleNotification(uuid, data.toUByteArray()))
@@ -123,10 +117,10 @@ private class KableDevice(
     }
 
     suspend fun readCharacteristic(uuid: Uuid): UByteArray? =
-        characteristicFromUuid(uuid)?.let { peripheral.read(it) }?.toUByteArray()
+        characteristicByUuid[uuid]?.let { peripheral.read(it) }?.toUByteArray()
 
     suspend fun writeCharacteristic(uuid: Uuid, data: UByteArray): Boolean =
-        characteristicFromUuid(uuid)?.let {
+        characteristicByUuid[uuid]?.let {
             peripheral.write(
                 it,
                 data.toByteArray(),
@@ -143,28 +137,42 @@ private class KableDevice(
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
-    // Map domain objects to Kable specific objects
-    private val deviceMap = mutableMapOf<GoProId, KableDevice>()
-    private val nameAdvMap = mutableMapOf<String, KableAdvertisement>()
+internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi,
+    IGpGenericBase by GpGenericBase("KableBle", dispatcher) {
+
+    // TODO instead can we just return the Kable Device and cast Ble Devices to Kable devices when
+    // we receive them
+    // Kable devices by peripheral's platform-specific identifier converted to string
+    private val deviceMap = mutableMapOf<String, KableDevice>()
+
+    // Kable advertisements by advertisement's platform-specific identifier converted to string
+    private val advMap = mutableMapOf<String, KableAdvertisement>()
+
+    private val deviceStateChanges = MutableSharedFlow<Pair<KableDevice, KableState>>()
+
+    private suspend fun monitorConnections() =
+        deviceStateChanges
+            .onEach { (device, state) -> logger.d("Device ${device.id} state change: $state") }
+            // We currently only care about disconnects
+            .filter { (_, state) -> state is KableState.Disconnected }
+            // Remove the now disconnected device from the map
+            .collect { (device, _) -> deviceMap.remove(device.id) }
+
+    init {
+        scope?.launch { monitorConnections() }
+    }
 
     override fun notificationsForConnection(device: BleDevice): Result<Flow<BleNotification>> =
         deviceMap[device.id]?.notifications?.let { Result.success(it) }
             ?: Result.failure(Exception("Could not find device"))
 
     override fun receiveDisconnects(): Flow<BleDevice> =
-        deviceMap.values.map { device ->
-            device.peripheral.state
-                .filter { it is com.juul.kable.State.Disconnected }
-                .map {
-                    object : BleDevice {
-                        override val id = device.id
-                    }
-                }
-        }.merge()
+        deviceStateChanges
+            .filter { (_, state) -> state is KableState.Disconnected }
+            .map { (device, _) -> device }
 
-    override fun scan(serviceUUIDs: Set<Uuid>?): Result<Flow<BleAdvertisement>> {
-        val scanner = Scanner {
+    override fun scan(serviceUUIDs: Set<Uuid>?): Result<Flow<BleAdvertisement>> = Result.success(
+        Scanner {
             filters {
                 match {
                     serviceUUIDs?.let {
@@ -174,61 +182,56 @@ internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
             }
             logging {
                 engine = SystemLogEngine
-                level = Logging.Level.Events
+                level = Logging.Level.Warnings
                 format = Logging.Format.Multiline
             }
-        }
-        return Result.success(
-            scanner.advertisements
-                .onStart { nameAdvMap.clear() }
-                .filter { it.name != null }
-                .onEach {
-                    logger.d("Received advertisement: ${it.identifier} ==> ${it.name!!}")
-                    traceLog(
-                        "Manufacturing data: ${
-                            it.manufacturerData?.let { data ->
-                                data.data.toPrettyHexString()
-                            } ?: "not provided :("
-                        }")
-                    traceLog(
-                        "Service data: ${
-                            it.serviceData(GpUuid.S_CONTROL_QUERY.toUuid())
-                                ?.toPrettyHexString() ?: "not provided :("
-                        }"
-                    )
-                    nameAdvMap[it.name!!] = it
-                }
-                .map {
-                    object : BleAdvertisement {
-                        override val id = it.identifier.toString()
-                        override val name = it.name!!
-                    }
-                }
-        )
-    }
+        }.advertisements
+            .onStart { advMap.clear() }
+            .filter { it.name != null }
+            .onEach {
+                logger.d("Received advertisement: ${it.identifier} ==> ${it.name!!}")
+                advMap[it.identifier.toString()] = it
+            }
+            .map { adv ->
+                object : BleAdvertisement {
+                    override val id = adv.identifier.toString()
+                    override val name: String = adv.name!!
+                    override val manufacturerData = adv.manufacturerData?.data
+                    override val service: Map<Uuid, ByteArray?>? =
+                        serviceUUIDs?.associateWith { adv.serviceData(it) }
 
-    override suspend fun connect(advertisement: BleAdvertisement): Result<BleDevice> =
-        nameAdvMap[advertisement.name]?.let { KableDevice(it, dispatcher) }
-            ?.let { device ->
-                device.connect()
-                deviceMap[device.id] = device
-                Result.success(device)
-            } ?: Result.failure(Exception("advertisement ${advertisement.id} not found"))
+                }
+            }
+    )
+
+    override suspend fun connect(advertisement: BleAdvertisement): Result<BleDevice> {
+        val kableAdv = advMap[advertisement.id]
+            ?: return Result.failure(Exception("advertisement ${advertisement.id} not found"))
+        val kableDevice = KableDevice(kableAdv, dispatcher)
+        return kableDevice.connect().map {
+            // Forward any connection state updates
+            scope?.launch {
+                kableDevice.peripheral.state.collect {
+                    deviceStateChanges.emit(Pair(kableDevice, it))
+                }
+            }
+            // Add our device to the map
+            deviceMap[kableDevice.id] = kableDevice
+            // Return the device
+            kableDevice
+        }
+    }
 
     override suspend fun enableNotifications(
         device: BleDevice,
         uuids: Set<Uuid>
     ): Result<Unit> =
         deviceMap[device.id]?.enableNotifications(uuids)?.let { Result.success(Unit) }
-            ?: Result.failure(
-                Exception("connected $device does not exist")
-            )
+            ?: Result.failure(Exception("connected $device does not exist"))
 
     override suspend fun readCharacteristic(device: BleDevice, uuid: Uuid): Result<UByteArray> =
         deviceMap[device.id]?.readCharacteristic(uuid)?.let { Result.success(it) }
-            ?: Result.failure(
-                Exception("connected $device does not exist")
-            )
+            ?: Result.failure(Exception("connected $device does not exist"))
 
     override suspend fun writeCharacteristic(
         device: BleDevice,
@@ -236,13 +239,9 @@ internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi {
         data: UByteArray
     ): Result<Unit> =
         deviceMap[device.id]?.writeCharacteristic(uuid, data)?.let { Result.success(Unit) }
-            ?: Result.failure(
-                Exception("connected $device does not exist")
-            )
+            ?: Result.failure(Exception("connected $device does not exist"))
 
     override suspend fun disconnect(device: BleDevice): Result<Unit> =
         deviceMap[device.id]?.disconnect()?.let { Result.success(Unit) }
-            ?: Result.failure(
-                Exception("connected $device does not exist")
-            )
+            ?: Result.failure(Exception("connected $device does not exist"))
 }

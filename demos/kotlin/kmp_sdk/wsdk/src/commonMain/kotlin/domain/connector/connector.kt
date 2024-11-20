@@ -21,5 +21,4 @@ internal interface IConnector<S : ScanResult, C : ConnectionDescriptor> {
     suspend fun scan(): Result<Flow<S>>
     suspend fun connect(target: S, request: ConnectionRequestContext? = null): Result<C>
     suspend fun disconnect(connection: C): Result<Unit>
-    // TODO register listeners here?
 }

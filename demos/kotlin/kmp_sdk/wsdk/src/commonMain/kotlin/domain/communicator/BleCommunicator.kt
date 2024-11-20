@@ -17,10 +17,10 @@ import entity.connector.ConnectionDescriptor
 import entity.queries.SettingId
 import entity.queries.StatusId
 import exceptions.BleError
-import entity.network.BleNotification
-import entity.network.GpUuid
-import extensions.toPrettyHexString
-import extensions.toTlvMap
+import entity.network.ble.BleNotification
+import entity.network.ble.GpUuid
+import util.extensions.toPrettyHexString
+import util.extensions.toTlvMap
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope

@@ -6,8 +6,8 @@ import domain.communicator.HttpCommunicator
 import domain.network.IHttpClientProvider
 import entity.connector.ConnectionDescriptor
 import entity.connector.GoProId
-import entity.network.BleDevice
-import entity.network.BleNotification
+import entity.network.ble.BleDevice
+import entity.network.ble.BleNotification
 import entity.network.IHttpsCredentials
 import entity.operation.PresetInfo
 import entity.operation.jsonDefault

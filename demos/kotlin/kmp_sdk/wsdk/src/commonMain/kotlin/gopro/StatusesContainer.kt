@@ -3,7 +3,7 @@ package gopro
 import domain.api.IOperationMarshaller
 import domain.queries.Status
 import entity.queries.StatusId
-import extensions.toBoolean
+import util.extensions.toBoolean
 
 @OptIn(ExperimentalUnsignedTypes::class)
 private fun toBoolean(data: UByteArray): Boolean = data.last().toBoolean()

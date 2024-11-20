@@ -1,4 +1,4 @@
-package extensions
+package util.extensions
 
 internal fun Byte.toBoolean(): Boolean = this.toInt() != 0
 internal fun UByte.toBoolean(): Boolean = this.toByte().toBoolean()

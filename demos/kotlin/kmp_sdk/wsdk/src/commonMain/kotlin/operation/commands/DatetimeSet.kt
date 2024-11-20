@@ -5,9 +5,9 @@ import domain.communicator.BleCommunicator
 import domain.communicator.HttpCommunicator
 import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.CommandId
-import extensions.toInt
-import extensions.toUByte
-import extensions.toUByteArray
+import util.extensions.toInt
+import util.extensions.toUByte
+import util.extensions.toUByteArray
 import io.ktor.client.call.body
 import io.ktor.http.path
 import kotlinx.datetime.LocalDateTime

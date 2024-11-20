@@ -7,8 +7,8 @@ import domain.communicator.ICommunicator
 import domain.gopro.IGpDescriptor
 import entity.communicator.CommunicationType
 import exceptions.OperationUnsupportedForCommunicator
-import extensions.bleIfAvailable
-import extensions.prettyPrintResult
+import util.extensions.bleIfAvailable
+import util.extensions.prettyPrintResult
 
 internal interface IOperation<T : Any> {
     val debugId: String

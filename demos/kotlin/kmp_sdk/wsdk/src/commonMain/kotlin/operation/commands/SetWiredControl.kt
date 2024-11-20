@@ -2,7 +2,7 @@ package operation.commands
 
 import domain.api.BaseOperation
 import domain.communicator.HttpCommunicator
-import extensions.toInt
+import util.extensions.toInt
 import io.ktor.client.call.body
 import io.ktor.http.path
 

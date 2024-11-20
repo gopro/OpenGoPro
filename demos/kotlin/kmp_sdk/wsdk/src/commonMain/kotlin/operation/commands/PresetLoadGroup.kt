@@ -6,7 +6,7 @@ import domain.communicator.HttpCommunicator
 import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.CommandId
 import entity.operation.PresetGroupId
-import extensions.toUByteArray
+import util.extensions.toUByteArray
 import io.ktor.client.call.body
 import io.ktor.http.path
 

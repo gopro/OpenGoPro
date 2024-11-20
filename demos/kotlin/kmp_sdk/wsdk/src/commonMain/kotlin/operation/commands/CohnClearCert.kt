@@ -6,14 +6,10 @@ import domain.communicator.HttpCommunicator
 import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.ActionId
 import entity.communicator.FeatureId
-import entity.network.GpUuid
-import entity.operation.CameraControlStatus
-import extensions.mapFromGenericProtoResponseToResult
+import entity.network.ble.GpUuid
+import util.extensions.mapFromGenericProtoResponseToResult
 import io.ktor.client.call.body
 import io.ktor.http.path
-import entity.operation.proto.EnumCameraControlStatus
-import entity.operation.proto.RequestSetCameraControlStatus
-import pbandk.encodeToByteArray
 
 internal class CohnClearCert:
     BaseOperation<Unit>("Clear COHN Cert") {

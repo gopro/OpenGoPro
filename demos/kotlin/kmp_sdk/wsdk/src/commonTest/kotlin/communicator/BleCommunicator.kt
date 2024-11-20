@@ -8,8 +8,8 @@ import entity.communicator.FeatureId
 import entity.communicator.QueryId
 import entity.queries.SettingId
 import exceptions.BleError
-import entity.network.BleNotification
-import entity.network.GpUuid
+import entity.network.ble.BleNotification
+import entity.network.ble.GpUuid
 import fakes.BleApiSpy
 import fakes.buildFakeBleCommunicator
 import fakes.buildResponse
