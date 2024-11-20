@@ -1,13 +1,10 @@
 package presenter
 
 import Wsdk
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.touchlab.kermit.Logger
 import data.IAppPreferences
 import entity.operation.MediaId
 import entity.operation.MediaMetadata
-import gopro.GoPro
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -24,13 +21,9 @@ sealed class MediaUiState(val name: String) {
 }
 
 class MediaViewModel(
-    private val appPreferences: IAppPreferences,
-    private val wsdk: Wsdk,
-) : ViewModel() {
-    private val logger = Logger.withTag("MediaViewModel")
-
-    private lateinit var gopro: GoPro
-
+    appPreferences: IAppPreferences,
+    wsdk: Wsdk,
+) : BaseConnectedViewModel(appPreferences, wsdk, "MediaViewModel") {
     private val _state = MutableStateFlow<MediaUiState>(MediaUiState.Idle)
     val state = _state.asStateFlow()
 
@@ -69,17 +62,5 @@ class MediaViewModel(
                 throw Exception("${item.asPath} is not photo or video. Not currently handled.")
             }
         }
-    }
-
-    fun start() {
-        viewModelScope.launch {
-            appPreferences.getConnectedDevice()?.let {
-                gopro = wsdk.getGoPro(it)
-            } ?: throw Exception("No connected device found.")
-        }
-    }
-
-    fun stop() {
-
     }
 }

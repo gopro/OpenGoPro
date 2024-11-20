@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,6 +30,7 @@ fun LivestreamScreen(
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    var url: String by remember { mutableStateOf("") }
 
     CommonTopBar(
         navController = navController,
@@ -38,10 +43,15 @@ fun LivestreamScreen(
         Column(modifier.padding(paddingValues)) {
             Text("State: ${state.name}")
             if (state is LivestreamUiState.Ready)
-                Button({ viewModel.startStream() }) { Text("Start Stream") }
+                TextField(
+                    value = url,
+                    onValueChange = { url = it },
+                    label = { Text("Livestream Server URL") }
+                )
+            Button({ viewModel.startStream(url) }) { Text("Start Stream") }
             if (state is LivestreamUiState.Streaming) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    StreamPlayerWrapper.player.PlayStream(modifier, viewModel.hlsUrl)
+                    StreamPlayerWrapper.player.PlayStream(modifier, url)
                 }
             }
         }

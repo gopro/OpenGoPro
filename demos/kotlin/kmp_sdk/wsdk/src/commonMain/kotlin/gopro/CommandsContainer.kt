@@ -73,7 +73,10 @@ class CommandsContainer internal constructor(private val marshaller: IOperationM
      */
     suspend fun setShutter(value: Boolean): Result<Unit> =
         marshaller.marshal(SetShutter(value)) {
-            isFastpass { operation, _ -> operation.shutter }
+            // It's always fastpass
+            isFastpass { _, _ -> true }
+            // We can't complete the command until encoding has completed
+            waitForEncodingStop { operation, _ -> !operation.shutter }
         }
 
     /**

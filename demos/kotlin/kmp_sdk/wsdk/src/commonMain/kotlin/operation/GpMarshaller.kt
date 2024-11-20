@@ -1,6 +1,5 @@
 package operation
 
-import co.touchlab.kermit.Logger
 import domain.api.IOperation
 import domain.api.IOperationMarshaller
 import domain.api.StrategyBuilder
@@ -11,16 +10,12 @@ import entity.communicator.CommunicationType
 import exceptions.OperationUnsupportedForCommunicator
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import util.GpCommonBase
+import util.IGpCommonBase
 
-private val logger = Logger.withTag("GpMarshaller")
-private const val TRACE_LOG = true
+internal class GpMarshaller(private val gopro: IGpDescriptor) : IOperationMarshaller,
+    IGpCommonBase by GpCommonBase("GpMarshaller") {
 
-// TODO configure and inject
-private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
-}
-
-// TODO how to inject default strategy since lambdas can't have generic types
-internal class GpMarshaller(private val gopro: IGpDescriptor) : IOperationMarshaller {
     private val communicatorMap = mutableMapOf<CommunicationType, ICommunicator<*>>()
 
     override val communicators: List<CommunicationType>

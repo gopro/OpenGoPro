@@ -1,59 +1,59 @@
 package presenter
 
 import Wsdk
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.touchlab.kermit.Logger
 import data.IAppPreferences
+import entity.communicator.CommunicationType
 import entity.operation.CohnState
 import entity.queries.Resolution
-import gopro.GoPro
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-private val logger = Logger.withTag("CameraChooserViewModel")
-
-sealed class CameraUiState {
-    data object Idle : CameraUiState()
-    data object Initializing : CameraUiState()
-    data object Ready : CameraUiState()
-}
+data class Busy(val text: String)
 
 class CameraViewModel(
-    private val appPreferences: IAppPreferences,
-    private val wsdk: Wsdk,
-) : ViewModel() {
-    private lateinit var gopro: GoPro
-    private var _state = MutableStateFlow<CameraUiState>(CameraUiState.Idle)
-    val state = _state.asStateFlow()
-
+    appPreferences: IAppPreferences,
+    wsdk: Wsdk,
+) : BaseConnectedViewModel(appPreferences, wsdk, "CameraChooserViewModel") {
     private var _resolution = MutableStateFlow(Resolution.RES_1080)
     val resolution = _resolution.asStateFlow()
 
     private var _cohnState = MutableStateFlow(CohnState.Unprovisioned)
     val cohnState = _cohnState.asStateFlow()
 
+    private var _isBusy = MutableStateFlow<Busy?>(null)
+    val isBusy = _isBusy.asStateFlow()
+
+    private var _isBleConnected = MutableStateFlow(false)
+    val isBleConnected = _isBleConnected.asStateFlow()
+
+    private var _isHttpConnected = MutableStateFlow(false)
+    val isHttpConnected = _isHttpConnected.asStateFlow()
+
+    private var shutter = false
+
+    override fun onStart() {
+        if (CommunicationType.BLE in gopro.communicators) {
+            _isBleConnected.update { true }
+        }
+        if (CommunicationType.HTTP in gopro.communicators) {
+            _isHttpConnected.update { true }
+        }
+    }
+
+    // TODO need to catch disconnects
+
     // Initial wifi connection needs to be done here because it relies on BLE.
     fun connectWifi() {
         viewModelScope.launch {
-            gopro.features.connectWifi.connect()
-        }
-    }
+            _isBusy.update { Busy("Connecting Wifi...") }
+            // TODO need to make this a callback from the GoPro for all connection types
+            gopro.features.connectWifi.connect().onSuccess { _isHttpConnected.update { true } }
+            _isBusy.update { null }
 
-    fun start() {
-        viewModelScope.launch {
-            _state.update { CameraUiState.Initializing }
-            appPreferences.getConnectedDevice()?.let {
-                gopro = wsdk.getGoPro(it)
-            } ?: throw Exception("No connected device found.")
-            _state.update { CameraUiState.Ready }
         }
-    }
-
-    fun stop() {
-        // TODO disconnect?
     }
 
     fun registerResolutionValueUpdates() {
@@ -70,12 +70,10 @@ class CameraViewModel(
         }
     }
 
-    private val _shutter = MutableStateFlow(false)
-
     fun toggleShutter() {
         viewModelScope.launch {
-            gopro.commands.setShutter(_shutter.value)
-            _shutter.update { !_shutter.value }
+            gopro.commands.setShutter(shutter)
+            shutter = !shutter
         }
     }
 }

@@ -2,7 +2,9 @@ package gopro.features
 
 import WsdkIsolatedKoinContext
 import domain.data.ICameraRepository
+import entity.connector.ConnectionDescriptor
 import entity.connector.ConnectionRequestContext
+import entity.connector.GoProId
 import entity.connector.ScanResult
 import gopro.IFeatureContext
 import kotlinx.coroutines.delay
@@ -24,14 +26,13 @@ class ConnectWifiFeature internal constructor(private val context: IFeatureConte
     /**
      * Establish a Wi-Fi connection where the camera is an Access Point
      */
-    suspend fun connect() {
+    suspend fun connect(): Result<Unit> {
         // Get Wifi info and enable Access Point via BLE
         context.gopro.commands.setApMode(true).getOrThrow()
         val ssid = context.gopro.commands.readWifiSsid().getOrThrow()
         val password = context.gopro.commands.readWifiPassword().getOrThrow()
 
         // Connect Wifi
-        // TODO finite amount of retries?
         while (true) {
             context.connector.connect(
                 ScanResult.Wifi(context.gopro.id, ssid),
@@ -42,7 +43,14 @@ class ConnectWifiFeature internal constructor(private val context: IFeatureConte
                     ssid,
                     password
                 )
-                return
+                val connection = ConnectionDescriptor.Http(
+                    id = context.gopro.id,
+                    ipAddress = "10.5.5.9",
+                    ssid = ssid,
+                    port = 8080,
+                )
+                context.facadeFactory.storeConnection(connection)
+                return Result.success(Unit)
             }
             // Toggle AP mode to try to recover
             context.gopro.commands.setApMode(false)

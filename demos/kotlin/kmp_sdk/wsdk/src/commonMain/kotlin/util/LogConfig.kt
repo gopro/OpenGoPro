@@ -12,6 +12,7 @@ internal enum class LogVerbosity {
 }
 
 // Get this from a .yml, etc.
+// TODO we need to figure out how to set per-tag log levels
 internal object LogConfig {
 
 }

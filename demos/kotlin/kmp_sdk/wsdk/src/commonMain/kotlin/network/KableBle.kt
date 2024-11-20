@@ -28,8 +28,8 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
-import util.GpGenericBase
-import util.IGpGenericBase
+import util.GpCommonBase
+import util.IGpCommonBase
 import util.extensions.toPrettyHexString
 import com.juul.kable.Advertisement as KableAdvertisement
 import com.juul.kable.State as KableState
@@ -43,7 +43,7 @@ private const val CONNECTION_TIMEOUT_MS = 30000L
 private class KableDevice(
     private val adv: KableAdvertisement,
     dispatcher: CoroutineDispatcher
-) : BleDevice, IGpGenericBase by GpGenericBase("KableDevice", dispatcher) {
+) : BleDevice, IGpCommonBase by GpCommonBase("KableDevice", dispatcher) {
     // TODO this has been fixed. Update Kable and remove.
     // Intermediary scope needed until https://github.com/JuulLabs/kable/issues/577 is resolved.
     private val peripheralScope = CoroutineScope(Job())
@@ -138,7 +138,7 @@ private class KableDevice(
 
 @OptIn(ExperimentalUnsignedTypes::class)
 internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi,
-    IGpGenericBase by GpGenericBase("KableBle", dispatcher) {
+    IGpCommonBase by GpCommonBase("KableBle", dispatcher) {
 
     // TODO instead can we just return the Kable Device and cast Ble Devices to Kable devices when
     // we receive them

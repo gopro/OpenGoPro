@@ -13,8 +13,9 @@
 
 # Robustness 
 
+- [ ] Keep alive not working?
+- [ ] BLE can not communicate after waking up GoPro
 - [ ] Handle WiFi disconnects. How to get the SSID?
-- [ ] Handle BLE disconnects. It seems I'm not getting the events from Kable?
 - [ ] Reconnect after BLE / WIFI disconnects
 - [ ] Check statuses and retry in BLE code
 

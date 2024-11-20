@@ -60,6 +60,7 @@ internal class GoProFactory(
                 facadesById.values.forEach { it.unbindCommunicator(communicator) }
             }
             // TODO reconnect
+
         }
 
     private suspend fun monitorWifiConnections() =
@@ -86,7 +87,7 @@ internal class GoProFactory(
         communicatorsByConnection.filterKeys { it.id == id }.values.forEach { communicator ->
             gopro.bindCommunicator(communicator)
         }
-        logger.i("Gopro $id communication is ready.")
+        logger.i("$id communication is ready.")
         return gopro
     }
 

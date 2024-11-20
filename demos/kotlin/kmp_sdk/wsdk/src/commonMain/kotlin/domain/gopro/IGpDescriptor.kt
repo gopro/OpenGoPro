@@ -58,6 +58,11 @@ interface IGpDescriptor {
      * List of currently available communicators by [CommunicationType]
      */
     val communicators: List<CommunicationType>
+
+    /**
+     * IP Address of connected device. Null if not HTTP connection is available.
+     */
+    val ipAddress: String?
 }
 
 internal interface GpDescriptorManager {

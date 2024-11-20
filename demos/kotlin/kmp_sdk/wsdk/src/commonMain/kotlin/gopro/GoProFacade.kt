@@ -33,11 +33,7 @@ import operation.GpMarshaller
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-private val logger = Logger.withTag("GoPro")
-private const val TRACE_LOG = false
-
-private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
-}
+private const val TRACE_LOG = true
 
 /**
  * Top level interface to communicate with a connected GoPro.
@@ -47,6 +43,11 @@ private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
  * @property id identifier of connected GoPro
  */
 class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
+    private val logger = Logger.withTag(id.toString())
+
+    private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
+    }
+
     private val cameraConnector: ICameraConnector = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
     private val dispatcher: CoroutineDispatcher = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
     private val facadeFactory: IGoProFactory =
@@ -98,6 +99,9 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
             facadeFactory
         )
     )
+
+    private var _ipAddress: String? = null
+    override val ipAddress: String? get() = _ipAddress
 
     private val _isBusy: MutableStateFlow<Boolean> = MutableStateFlow(true)
     override val isBusy: StateFlow<Boolean> get() = _isBusy
@@ -200,6 +204,12 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
             initializeStateManagement(communicator)
             setDateTime()
             isInitialized = true
+        }
+        // Update the IP address if relevant
+        // TODO how to handle when there are multiple?
+        when (communicator) {
+            is HttpCommunicator -> _ipAddress = communicator.connection.ipAddress
+            else -> {}
         }
     }
 

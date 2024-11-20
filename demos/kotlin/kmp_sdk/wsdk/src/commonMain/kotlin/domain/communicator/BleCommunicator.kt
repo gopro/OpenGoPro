@@ -278,7 +278,6 @@ internal class BleCommunicator(
             .map {
                 it.result.getOrThrow().let { notification ->
                     // Special protobuf handling to extract the payload.
-                    // TODO this should be done somewhere more central.
                     if (notification.id is ResponseId.Protobuf) {
                         object : IGpBleResponse {
                             override val uuid = notification.uuid

@@ -1,13 +1,9 @@
 package presenter
 
 import Wsdk
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import entity.connector.GoProId
 import entity.operation.AccessPointState
-import gopro.GoPro
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,13 +19,9 @@ sealed class ApUiState(val name: String) {
 }
 
 class AccessPointViewModel(
-    private val appPreferences: IAppPreferences,
-    private val wsdk: Wsdk,
-) : ViewModel() {
-    private val logger = Logger.withTag("AccessPointViewModel")
-
-    private lateinit var gopro: GoPro
-
+    appPreferences: IAppPreferences,
+    wsdk: Wsdk,
+) : BaseConnectedViewModel(appPreferences, wsdk, "AccessPointViewModel") {
     private var _state = MutableStateFlow<ApUiState>(ApUiState.Idle)
     val state = _state.asStateFlow()
 
@@ -87,17 +79,5 @@ class AccessPointViewModel(
         } else {
             logger.w("Can only connect after scanning.")
         }
-    }
-
-    fun start() {
-        viewModelScope.launch {
-            appPreferences.getConnectedDevice()?.let {
-                gopro = wsdk.getGoPro(it)
-            } ?: throw Exception("No connected device found.")
-        }
-    }
-
-    fun stop() {
-
     }
 }

@@ -5,18 +5,18 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 
-internal interface IGpGenericBase {
+internal interface IGpCommonBase {
     val logger: Logger
     val scope: CoroutineScope?
     fun traceLog(message: String)
 }
 
 // TODO configure and inject logger
-internal class GpGenericBase(
+internal class GpCommonBase(
     debugName: String,
     dispatcher: CoroutineDispatcher? = null,
     private val shouldEnableTraceLog: Boolean = false,
-) : IGpGenericBase {
+) : IGpCommonBase {
     override val logger = Logger.withTag(debugName)
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->

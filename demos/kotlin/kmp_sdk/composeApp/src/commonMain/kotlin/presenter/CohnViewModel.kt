@@ -1,19 +1,14 @@
 package presenter
 
 import Wsdk
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.touchlab.kermit.Logger
 import data.IAppPreferences
 import entity.operation.AccessPointState
 import entity.operation.CohnState
-import gopro.GoPro
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-private val logger = Logger.withTag("CohnViewModel")
 
 sealed class CohnUiState(val name: String) {
     data object ApNotConnected : CohnUiState("Not connected to Access Point")
@@ -23,11 +18,9 @@ sealed class CohnUiState(val name: String) {
 }
 
 class CohnViewModel(
-    private val appPreferences: IAppPreferences,
-    private val wsdk: Wsdk
-) : ViewModel() {
-    private lateinit var gopro: GoPro
-
+    appPreferences: IAppPreferences,
+    wsdk: Wsdk
+) : BaseConnectedViewModel(appPreferences, wsdk, "CohnViewModel") {
     private var _state = MutableStateFlow<CohnUiState>(CohnUiState.Idle)
     val state = _state.asStateFlow()
 
@@ -44,26 +37,16 @@ class CohnViewModel(
         }
     }
 
-    fun start() {
-        viewModelScope.launch {
-            appPreferences.getConnectedDevice()?.let {
-                gopro = wsdk.getGoPro(it)
-            } ?: throw Exception("No connected device found.")
-
-            when (gopro.cohnState.value) {
-                is CohnState.Provisioned -> _state.update { CohnUiState.ProvisionedAndReady }
-                else -> _state.update {
-                    if (gopro.accessPointState.value is AccessPointState.Connected) {
-                        CohnUiState.Idle
-                    } else {
-                        CohnUiState.ApNotConnected
-                    }
+    override fun onStart() {
+        when (gopro.cohnState.value) {
+            is CohnState.Provisioned -> _state.update { CohnUiState.ProvisionedAndReady }
+            else -> _state.update {
+                if (gopro.accessPointState.value is AccessPointState.Connected) {
+                    CohnUiState.Idle
+                } else {
+                    CohnUiState.ApNotConnected
                 }
             }
         }
-    }
-
-    fun stop() {
-
     }
 }

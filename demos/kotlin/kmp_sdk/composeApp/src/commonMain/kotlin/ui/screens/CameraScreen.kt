@@ -15,7 +15,6 @@ import androidx.navigation.NavController
 import co.touchlab.kermit.Logger
 import entity.operation.CohnState
 import entity.queries.Resolution
-import presenter.CameraUiState
 import presenter.CameraViewModel
 import ui.common.Screen
 import ui.components.CommonTopBar
@@ -29,44 +28,42 @@ fun CameraScreen(
     viewModel: CameraViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val uiState by viewModel.state.collectAsStateWithLifecycle()
     val resolution by viewModel.resolution.collectAsStateWithLifecycle()
     val cohnState by viewModel.cohnState.collectAsStateWithLifecycle()
+    val isBusy by viewModel.isBusy.collectAsStateWithLifecycle()
+    val isBleConnected by viewModel.isBleConnected.collectAsStateWithLifecycle()
+    val isHttpConnected by viewModel.isHttpConnected.collectAsStateWithLifecycle()
 
     CommonTopBar(
         navController = navController,
         title = Screen.Camera.route,
     ) { paddingValues ->
         Column(modifier.padding(paddingValues)) {
-            when (uiState) {
-                is CameraUiState.Idle ->
-                    // https://developer.android.com/develop/ui/compose/side-effects
-                    DisposableEffect(viewModel) {
-                        viewModel.start()
-                        onDispose { viewModel.stop() }
-                    }
-
-                is CameraUiState.Initializing -> ConnectingScreen()
-                is CameraUiState.Ready ->
-                    ReadyScreen(
-                        resolution,
-                        cohnState,
-                        subRoutes,
-                        viewModel::toggleShutter,
-                        viewModel::registerResolutionValueUpdates,
-                        { navController.navigate(it.route) },
-                        viewModel::connectWifi
-                    )
+            // https://developer.android.com/develop/ui/compose/side-effects
+            DisposableEffect(viewModel) {
+                viewModel.start()
+                onDispose { viewModel.stop() }
             }
+            if (isBleConnected) Text("BLE Connected")
+            if (isHttpConnected) Text("HTTP Connected")
+            isBusy?.let { busy ->
+                IndeterminateCircularProgressIndicator()
+                Text(busy.text)
+            } ?: ReadyScreen(
+                resolution,
+                cohnState,
+                subRoutes,
+                viewModel::toggleShutter,
+                viewModel::registerResolutionValueUpdates,
+                { navController.navigate(it.route) },
+                viewModel::connectWifi
+            )
+
         }
     }
 }
 
-@Composable
-fun ConnectingScreen() {
-    Text("Connecting BLE...")
-    IndeterminateCircularProgressIndicator()
-}
+// TODO show connections
 
 @Composable
 fun ReadyScreen(

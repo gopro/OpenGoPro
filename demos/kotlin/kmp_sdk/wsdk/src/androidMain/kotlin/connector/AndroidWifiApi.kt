@@ -130,14 +130,11 @@ internal class AndroidWifiApi(
                     connectivityManager.unregisterNetworkCallback(this)
                 }
             }
-            logger.e("Here 1: requesting wifi connection")
             connectivityManager.requestNetwork(networkRequest, callback)
-            logger.e("Here 2: requested wifi connection")
             awaitClose {
                 logger.d("Wifi connection request finished.")
             }
         }
-            .onEach { logger.e("Here 3: $it") }
             .timeout(CONNECTION_TIMEOUT)
             .catch { exception ->
                 if (exception is TimeoutCancellationException) {
@@ -149,7 +146,7 @@ internal class AndroidWifiApi(
                     logger.e("Wifi connect failed due to unexpected ${exception.message}")
                 }
             }
-            .onEach { logger.e("Here 4: $it") }
+            .onEach { it.onFailure { error -> logger.e("$error") } }
             .first()
     }
 
