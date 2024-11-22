@@ -47,13 +47,10 @@ fun CameraScreen(
         title = Screen.Camera.route,
     ) { paddingValues ->
         Column(modifier.padding(paddingValues)) {
-            // https://developer.android.com/develop/ui/compose/side-effects
             DisposableEffect(viewModel) {
                 viewModel.start()
                 onDispose { viewModel.stop() }
             }
-
-//            Button({ snackbarController.showMessage("cheese") }) { Text("Snackbar") }
 
             if (isBleConnected) Text("BLE Connected")
             if (isHttpConnected) Text("HTTP Connected")
