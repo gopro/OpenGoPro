@@ -183,3 +183,24 @@ tasks.withType<DokkaTaskPartial>().configureEach {
         }
     }
 }
+
+licenseReport {
+    // Generate reports
+    generateCsvReport = true
+    generateHtmlReport = true
+    generateJsonReport = false
+    generateTextReport = true
+
+    // Copy reports - These options are ignored for Java projects
+    copyCsvReportToAssets = false
+    copyHtmlReportToAssets = false
+    copyJsonReportToAssets = false
+    copyTextReportToAssets = false
+    useVariantSpecificAssetDirs = false
+
+    // Ignore licenses for certain artifact patterns
+//    ignoredPatterns = []
+
+    // Show versions in the report - default is false
+    showVersions = true
+}
