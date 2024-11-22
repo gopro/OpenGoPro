@@ -56,6 +56,7 @@ class ResponseLastCapturedMedia(google.protobuf.message.Message):
         """*
         Last captured media if result is RESULT_SUCCESS. Invalid if result is RESULT_RESOURCE_NOT_AVAILBLE.
         """
+
     def __init__(
         self,
         *,

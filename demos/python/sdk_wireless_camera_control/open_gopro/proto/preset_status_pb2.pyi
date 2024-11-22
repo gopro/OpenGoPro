@@ -509,6 +509,7 @@ class NotifyPresetStatus(google.protobuf.message.Message):
         self,
     ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___PresetGroup]:
         """List of currently available Preset Groups"""
+
     def __init__(self, *, preset_group_array: collections.abc.Iterable[global___PresetGroup] | None = ...) -> None: ...
     def ClearField(
         self,
@@ -721,6 +722,7 @@ class PresetGroup(google.protobuf.message.Message):
         self,
     ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumFlatMode.ValueType]:
         """A list of flatmodes available for this preset group"""
+
     def __init__(
         self,
         *,
@@ -728,7 +730,7 @@ class PresetGroup(google.protobuf.message.Message):
         preset_array: collections.abc.Iterable[global___Preset] | None = ...,
         can_add_preset: builtins.bool | None = ...,
         icon: global___EnumPresetGroupIcon.ValueType | None = ...,
-        mode_array: (collections.abc.Iterable[global___EnumFlatMode.ValueType] | None) = ...
+        mode_array: collections.abc.Iterable[global___EnumFlatMode.ValueType] | None = ...
     ) -> None: ...
     def HasField(
         self,

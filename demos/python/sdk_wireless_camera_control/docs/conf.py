@@ -123,7 +123,14 @@ def resolve_type_aliases(app, env, node, contnode):
     try:
         if node["refdomain"] == "py" and (target := TYPE_ALIASES.get(node["reftarget"])):
             # print(f"updating {node['reftarget']}")
-            return app.env.get_domain("py").resolve_any_xref(env, node["refdoc"], app.builder, target, node, contnode,)[
+            return app.env.get_domain("py").resolve_any_xref(
+                env,
+                node["refdoc"],
+                app.builder,
+                target,
+                node,
+                contnode,
+            )[
                 0
             ][1]
     except IndexError:

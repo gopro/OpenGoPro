@@ -103,8 +103,7 @@ async def test_scan_wrong_devices_found(mock_bleak_wrapper: BleakWrapperControll
 @pytest.mark.asyncio
 async def test_scan_timeout(mock_bleak_wrapper: BleakWrapperController, monkeypatch):
     class MockBleakScanner:
-        def __init__(self, *args, **kwargs) -> None:
-            ...
+        def __init__(self, *args, **kwargs) -> None: ...
 
         async def __aenter__(self, *args, **kwargs):
             return self

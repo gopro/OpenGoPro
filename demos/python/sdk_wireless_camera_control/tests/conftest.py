@@ -265,8 +265,7 @@ async def mock_ble_communicator(request):
 class MockWifiController(WifiController):
     # pylint: disable=signature-differs
 
-    def __init__(self, interface: Optional[str] = None, password: Optional[str] = None) -> None:
-        ...
+    def __init__(self, interface: Optional[str] = None, password: Optional[str] = None) -> None: ...
 
     def connect(self, ssid: str, password: str, timeout: float) -> bool:
         return True if password == "password" else False

@@ -67,16 +67,18 @@ class RequestGetPresetStatus(google.protobuf.message.Message):
         self,
     ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumRegisterPresetStatus.ValueType]:
         """Array of Preset statuses to be notified about"""
+
     @property
     def unregister_preset_status(
         self,
     ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumRegisterPresetStatus.ValueType]:
         """Array of Preset statuses to stop being notified about"""
+
     def __init__(
         self,
         *,
-        register_preset_status: (collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None) = ...,
-        unregister_preset_status: (collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None) = ...
+        register_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...,
+        unregister_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...
     ) -> None: ...
     def ClearField(
         self,

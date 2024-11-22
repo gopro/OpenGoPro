@@ -136,7 +136,6 @@ def test_ble_scan_response_parsing():
 
     # WHEN
     scan_response = scan_response_struct.parse(scan_response_data)
-    print(scan_response)
 
     # THEN
     assert scan_response.name == "GoPro 1058"
