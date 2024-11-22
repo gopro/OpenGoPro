@@ -1,6 +1,9 @@
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil3.annotation.ExperimentalCoilApi
@@ -9,6 +12,7 @@ import navigation.RootNavGraph
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
 import ui.common.getAsyncImageLoader
+import ui.components.ProvideSnackbarController
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
@@ -17,9 +21,14 @@ fun App() {
     MaterialTheme {
         KoinContext {
             setSingletonImageLoaderFactory { getAsyncImageLoader(it) }
-            RootNavGraph(
-                modifier = Modifier.padding(20.dp),
-            )
+
+            val snackbarHostState = remember { SnackbarHostState() }
+            val coroutineScope = rememberCoroutineScope()
+            ProvideSnackbarController(snackbarHostState, coroutineScope) {
+                RootNavGraph(
+                    modifier = Modifier.padding(20.dp),
+                )
+            }
         }
     }
 }

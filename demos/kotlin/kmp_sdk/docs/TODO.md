@@ -14,7 +14,7 @@
 # Robustness 
 
 - Wifi Connections are taking a long time
-- BLE can not communicate after waking up GoPro
+- BLE can not communicate after waking up GoPro. Seems to be Hero13 only.
 - Handle WiFi disconnects. How to get the SSID?
 - Reconnect after BLE / WIFI disconnects
 - Check statuses and retry in BLE code

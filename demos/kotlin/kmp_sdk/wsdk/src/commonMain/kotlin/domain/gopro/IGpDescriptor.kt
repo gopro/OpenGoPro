@@ -4,6 +4,7 @@ import entity.communicator.CommunicationType
 import entity.connector.GoProId
 import entity.operation.AccessPointState
 import entity.operation.CohnState
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 /**
@@ -63,6 +64,11 @@ interface IGpDescriptor {
      * IP Address of connected device. Null if not HTTP connection is available.
      */
     val ipAddress: String?
+
+    /**
+     * Disconnect notifications by [CommunicationType]
+     */
+    val disconnects: Flow<CommunicationType>
 }
 
 internal interface GpDescriptorManager {

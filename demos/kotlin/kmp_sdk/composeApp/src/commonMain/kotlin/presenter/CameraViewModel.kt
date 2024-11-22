@@ -34,12 +34,18 @@ class CameraViewModel(
 
     private var shutter = false
 
+    private var _disconnects = MutableStateFlow<CommunicationType?>(null)
+    val disconnects = _disconnects.asStateFlow()
+
     override fun onStart() {
         if (CommunicationType.BLE in gopro.communicators) {
             _isBleConnected.update { true }
         }
         if (CommunicationType.HTTP in gopro.communicators) {
             _isHttpConnected.update { true }
+        }
+        viewModelScope.launch {
+            gopro.disconnects.collect { disconnect -> _disconnects.update { disconnect } }
         }
     }
 
@@ -76,4 +82,6 @@ class CameraViewModel(
             shutter = !shutter
         }
     }
+
+    fun sleep() = viewModelScope.launch { gopro.commands.sleep() }
 }

@@ -18,9 +18,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -116,7 +118,11 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
     override val accessPointState: StateFlow<AccessPointState> get() = _accessPointState
 
     private val _cohnState: MutableStateFlow<CohnState> = MutableStateFlow(CohnState.Unprovisioned)
-    override val cohnState: StateFlow<CohnState> = _cohnState
+    override val cohnState: StateFlow<CohnState> get() = _cohnState
+
+    // TODO do we need network type instead of communication type?
+    private val _disconnects = MutableStateFlow<CommunicationType?>(null)
+    override val disconnects: Flow<CommunicationType> get() = _disconnects.mapNotNull { it }
 
     private var isInitialized = false
 
@@ -126,6 +132,7 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
             // Clear this so we restart state management if / when BLE connects again.
             isInitialized = false
         }
+        scope.launch { _disconnects.emit(communicator.communicationType) }
     }
 
     private fun initializeStateManagement(communicator: ICommunicator<*>) {

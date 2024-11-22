@@ -57,6 +57,7 @@ import operation.commands.SetApMode
 import operation.commands.SetCameraControl
 import operation.commands.SetDigitalZoom
 import operation.commands.SetShutter
+import operation.commands.Sleep
 import operation.commands.WebcamGetState
 import operation.commands.WebcamStart
 import operation.commands.WebcamStop
@@ -79,6 +80,12 @@ class CommandsContainer internal constructor(private val marshaller: IOperationM
             // We can't complete the command until encoding has completed
             waitForEncodingStop { operation, _ -> !operation.shutter }
         }
+
+    /**
+     * Put the camera to sleep
+     */
+    suspend fun sleep(): Result<Unit> =
+        marshaller.marshal(Sleep())
 
     /**
      * Get the Media List

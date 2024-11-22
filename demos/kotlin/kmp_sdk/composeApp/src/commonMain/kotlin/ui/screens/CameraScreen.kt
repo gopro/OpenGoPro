@@ -5,11 +5,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import co.touchlab.kermit.Logger
@@ -20,6 +22,7 @@ import ui.common.Screen
 import ui.components.CommonTopBar
 import ui.components.IndeterminateCircularProgressIndicator
 import ui.components.MenuListItem
+import ui.components.SnackbarMessageHandler
 
 private val logger = Logger.withTag("CameraScreen")
 
@@ -35,6 +38,9 @@ fun CameraScreen(
     val isBusy by viewModel.isBusy.collectAsStateWithLifecycle()
     val isBleConnected by viewModel.isBleConnected.collectAsStateWithLifecycle()
     val isHttpConnected by viewModel.isHttpConnected.collectAsStateWithLifecycle()
+    val disconnect by viewModel.disconnects.collectAsStateWithLifecycle()
+
+    disconnect?.let { SnackbarMessageHandler("$it disconnected!!") }
 
     CommonTopBar(
         navController = navController,
@@ -46,6 +52,9 @@ fun CameraScreen(
                 viewModel.start()
                 onDispose { viewModel.stop() }
             }
+
+//            Button({ snackbarController.showMessage("cheese") }) { Text("Snackbar") }
+
             if (isBleConnected) Text("BLE Connected")
             if (isHttpConnected) Text("HTTP Connected")
             isBusy?.let { busy ->
@@ -58,14 +67,13 @@ fun CameraScreen(
                 viewModel::toggleShutter,
                 viewModel::registerResolutionValueUpdates,
                 { navController.navigate(it.route) },
-                viewModel::connectWifi
+                viewModel::connectWifi,
+                viewModel::sleep
             )
 
         }
     }
 }
-
-// TODO show connections
 
 @Composable
 fun ReadyScreen(
@@ -75,13 +83,16 @@ fun ReadyScreen(
     onToggleShutter: () -> Unit,
     onRegisterResolutionValueUpdates: () -> Unit,
     onSelectScreen: (Screen) -> Unit,
-    onConnectWifi: (() -> Unit)
+    onConnectWifi: (() -> Unit),
+    onSleep: (() -> Unit)
 ) {
     Text("Current Resolution: $resolution")
 //    Text("COHN state: $cohnState")
     Button(onToggleShutter) { Text("Toggle shutter") }
     Button(onRegisterResolutionValueUpdates) { Text("Register for Resolution Value Updates") }
     Button(onConnectWifi) { Text("Connect Wi-Fi") }
+    Button(onSleep) { Text("Sleep") }
+    HorizontalDivider(thickness = 8.dp)
 
     LazyColumn {
         items(subRoutes) { screen ->
