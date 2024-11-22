@@ -138,7 +138,7 @@ def pretty_print(obj: Any, stringify_all: bool = True, should_quote: bool = True
         if isinstance(elem, enum.Enum) and isinstance(elem, int):
             ret = quote(str(elem) if not stringify_all else sanitize(elem))
         if isinstance(elem, (bool, int, float)):
-            ret = quote(elem) if stringify_all else elem
+            ret = quote(elem) if stringify_all else elem  # type: ignore
         ret = str(elem)
         return quote(ret)
 

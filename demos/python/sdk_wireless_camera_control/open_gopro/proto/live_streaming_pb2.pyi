@@ -269,7 +269,7 @@ class NotifyLiveStreamStatus(google.protobuf.message.Message):
         live_stream_minimum_stream_bitrate: builtins.int | None = ...,
         live_stream_maximum_stream_bitrate: builtins.int | None = ...,
         live_stream_lens_supported: builtins.bool | None = ...,
-        live_stream_lens_supported_array: (collections.abc.Iterable[global___EnumLens.ValueType] | None) = ...,
+        live_stream_lens_supported_array: collections.abc.Iterable[global___EnumLens.ValueType] | None = ...,
         live_stream_protune_supported: builtins.bool | None = ...
     ) -> None: ...
     def HasField(
@@ -350,6 +350,7 @@ class RequestGetLiveStreamStatus(google.protobuf.message.Message):
         global___EnumRegisterLiveStreamStatus.ValueType
     ]:
         """Array of live stream statuses to be notified about"""
+
     @property
     def unregister_live_stream_status(
         self,
@@ -357,6 +358,7 @@ class RequestGetLiveStreamStatus(google.protobuf.message.Message):
         global___EnumRegisterLiveStreamStatus.ValueType
     ]:
         """Array of live stream statuses to stop being notified about"""
+
     def __init__(
         self,
         *,

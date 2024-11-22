@@ -59,7 +59,7 @@ async def main(args: argparse.Namespace) -> int:
 
     try:
         async with (
-            WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface, enable_wifi=not args.cohn)  # type: ignore
+            WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface, enable_wifi=not args.cohn)
             if bool(args.cohn or args.wireless)
             else WiredGoPro(args.identifier)
         ) as gopro:

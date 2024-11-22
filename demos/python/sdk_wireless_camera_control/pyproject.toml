@@ -251,6 +251,7 @@ disable = [
     "protected-access",
     "invalid-name",
     "unsubscriptable-object",
+    "too-many-positional-arguments",
     "no-member", # This is bad. We need to make stub files since mypy and pylint do not follow decorators well
 ]
 
