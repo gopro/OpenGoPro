@@ -9,6 +9,7 @@ import presenter.CameraViewModel
 import presenter.CohnViewModel
 import presenter.LivestreamViewModel
 import presenter.MediaViewModel
+import presenter.SettingsViewModel
 import presenter.WebcamViewModel
 
 val cameraScreenModule = module {
@@ -39,6 +40,10 @@ val cohnModule = module {
     viewModel { CohnViewModel(get(), get()) }
 }
 
+val settingsModule = module {
+    viewModel { SettingsViewModel(get(), get()) }
+}
+
 val screenModules = listOf(
     cameraScreenModule,
     mediaScreenModule,
@@ -46,5 +51,6 @@ val screenModules = listOf(
     webcamScreenModule,
     accessPointModule,
     livestreamScreenModule,
-    cohnModule
+    cohnModule,
+    settingsModule
 )

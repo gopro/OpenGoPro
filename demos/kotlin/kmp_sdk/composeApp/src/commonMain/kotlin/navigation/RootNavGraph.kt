@@ -14,6 +14,7 @@ import presenter.CameraViewModel
 import presenter.CohnViewModel
 import presenter.LivestreamViewModel
 import presenter.MediaViewModel
+import presenter.SettingsViewModel
 import presenter.WebcamViewModel
 import ui.common.Screen
 import ui.screens.CameraScreen
@@ -22,6 +23,7 @@ import ui.screens.connected.AccessPointScreen
 import ui.screens.connected.CohnScreen
 import ui.screens.connected.LivestreamScreen
 import ui.screens.connected.MediaScreen
+import ui.screens.connected.SettingsScreen
 import ui.screens.connected.WebcamScreen
 
 @Composable
@@ -46,6 +48,7 @@ fun RootNavGraph(
             CameraScreen(
                 navController,
                 listOf(
+                    Screen.Settings,
                     Screen.Media,
                     Screen.Webcam,
                     Screen.AccessPoint,
@@ -57,6 +60,13 @@ fun RootNavGraph(
             )
         }
         // Connected Camera sub-routes
+        composable(route = Screen.Settings.route) {
+            SettingsScreen(
+                navController,
+                koinInject<SettingsViewModel>(),
+                modifier,
+            )
+        }
         composable(route = Screen.Media.route) {
             MediaScreen(
                 navController,

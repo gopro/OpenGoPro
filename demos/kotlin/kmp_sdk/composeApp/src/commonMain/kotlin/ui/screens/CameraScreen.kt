@@ -16,7 +16,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import co.touchlab.kermit.Logger
 import entity.operation.CohnState
-import entity.queries.Resolution
 import presenter.CameraViewModel
 import ui.common.Screen
 import ui.components.CommonTopBar
@@ -33,7 +32,6 @@ fun CameraScreen(
     viewModel: CameraViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val resolution by viewModel.resolution.collectAsStateWithLifecycle()
     val cohnState by viewModel.cohnState.collectAsStateWithLifecycle()
     val isBusy by viewModel.isBusy.collectAsStateWithLifecycle()
     val isBleConnected by viewModel.isBleConnected.collectAsStateWithLifecycle()
@@ -58,11 +56,9 @@ fun CameraScreen(
                 IndeterminateCircularProgressIndicator()
                 Text(busy.text)
             } ?: ReadyScreen(
-                resolution,
                 cohnState,
                 subRoutes,
                 viewModel::toggleShutter,
-                viewModel::registerResolutionValueUpdates,
                 { navController.navigate(it.route) },
                 viewModel::connectWifi,
                 viewModel::sleep
@@ -74,19 +70,15 @@ fun CameraScreen(
 
 @Composable
 fun ReadyScreen(
-    resolution: Resolution,
     cohnState: CohnState,
     subRoutes: List<Screen>,
     onToggleShutter: () -> Unit,
-    onRegisterResolutionValueUpdates: () -> Unit,
     onSelectScreen: (Screen) -> Unit,
     onConnectWifi: (() -> Unit),
     onSleep: (() -> Unit)
 ) {
-    Text("Current Resolution: $resolution")
 //    Text("COHN state: $cohnState")
     Button(onToggleShutter) { Text("Toggle shutter") }
-    Button(onRegisterResolutionValueUpdates) { Text("Register for Resolution Value Updates") }
     Button(onConnectWifi) { Text("Connect Wi-Fi") }
     Button(onSleep) { Text("Sleep") }
     HorizontalDivider(thickness = 8.dp)

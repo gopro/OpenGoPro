@@ -17,9 +17,6 @@ class CameraViewModel(
     appPreferences: IAppPreferences,
     wsdk: Wsdk,
 ) : BaseConnectedViewModel(appPreferences, wsdk, "CameraChooserViewModel") {
-    private var _resolution = MutableStateFlow(Resolution.RES_1080)
-    val resolution = _resolution.asStateFlow()
-
     private var _cohnState = MutableStateFlow(CohnState.Unprovisioned)
     val cohnState = _cohnState.asStateFlow()
 
@@ -66,20 +63,6 @@ class CameraViewModel(
             gopro.features.connectWifi.connect().onSuccess { _isHttpConnected.update { true } }
             _isBusy.update { null }
 
-        }
-    }
-
-    fun registerResolutionValueUpdates() {
-        viewModelScope.launch {
-            gopro.settings.resolution.registerValueUpdate().onSuccess { flow ->
-                flow.collect { resolutionUpdate ->
-                    logger.d("ViewModel updating resolution to $resolutionUpdate")
-                    _resolution.update { resolutionUpdate }
-                }
-            }
-            gopro.cohnState.collect {
-                _cohnState.update { it }
-            }
         }
     }
 
