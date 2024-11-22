@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.2"
+activityKtx = "1.9.3"
 android-compileSdk = "34"
 android-minSdk = "34"
 android-targetSdk = "34"
@@ -62,9 +63,11 @@ vlc = "3.1.12"
 dokka = "1.9.20"
 # https://central.sonatype.com/artifact/org.mockito/mockito-core
 mockito = "5.14.2"
-activityKtx = "1.9.3"
+# https://github.com/jaredsburrows/gradle-license-plugin/releases/tag/0.9.8
+license = '0.9.8'
 
 [libraries]
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
@@ -141,7 +144,6 @@ sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sql
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtx" }
 # VLC
 libvlc-all = { module = "org.videolan.android:libvlc-all", version.ref = "vlc" }
-androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -154,3 +156,4 @@ protobuf = { id = "com.google.protobuf", version.ref = "googleProtobuf" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "androidx-room" }
 dokka = { id= "org.jetbrains.dokka", version.ref = "dokka"}
+license = { id = "com.jaredsburrows.license", version.ref= "license"}

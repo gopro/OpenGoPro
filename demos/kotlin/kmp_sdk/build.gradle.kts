@@ -16,7 +16,9 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.room) apply false
 
+    alias(libs.plugins.license) apply false
     alias(libs.plugins.dokka)
+
 }
 
 tasks.withType<DokkaTaskPartial>().configureEach {

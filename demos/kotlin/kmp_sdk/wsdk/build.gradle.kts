@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.room)
     alias(libs.plugins.serialization)
     alias(libs.plugins.dokka)
+    alias(libs.plugins.license)
 }
 
 // TODO how to to move to libs.versions.toml
