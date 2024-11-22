@@ -1,6 +1,5 @@
 package domain.communicator
 
-import co.touchlab.kermit.Logger
 import com.benasher44.uuid.Uuid
 import domain.communicator.bleCommunicator.AccumulatedGpBleResponse
 import domain.communicator.bleCommunicator.IGpBleResponse
@@ -18,10 +17,9 @@ import entity.network.ble.BleNotification
 import entity.network.ble.GpUuid
 import entity.queries.SettingId
 import entity.queries.StatusId
+import exceptions.ApiError
 import exceptions.BleError
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.flow.Flow
@@ -33,17 +31,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onSubscription
 import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.launch
+import util.GpCommonBase
+import util.IGpCommonBase
 import util.extensions.toPrettyHexString
 import util.extensions.toTlvMap
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
-
-private val logger = Logger.withTag("BleCommunicator")
-private const val TRACE_LOG = false
-
-// TODO configure and inject
-private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
-}
 
 private data class ResponseFlowElement(
     val id: ResponseId,
@@ -55,25 +48,19 @@ internal class BleCommunicator(
     private val bleApi: IBleApi,
     override val connection: ConnectionDescriptor.Ble,
     dispatcher: CoroutineDispatcher
-) : ICommunicator<ConnectionDescriptor.Ble>() {
-    private val device = connection.device
+) : ICommunicator<ConnectionDescriptor.Ble>(),
+    IGpCommonBase by GpCommonBase("BleCommunicator", dispatcher) {
     override val communicationType = CommunicationType.BLE
+
+    private val device = connection.device
     private val notifications: Flow<BleNotification>
         get() = bleApi.notificationsForConnection(device).getOrThrow()
-
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        logger.e("Caught exception in coroutine:", throwable)
-    }
-
-    private val scope = CoroutineScope(dispatcher + coroutineExceptionHandler)
-
     private val accumulatingRespMap: MutableMap<GpUuid, AccumulatedGpBleResponse> = mutableMapOf()
-
     private val receivedResponses: MutableSharedFlow<ResponseFlowElement> =
         MutableSharedFlow(replay = 0)
 
     init {
-        scope.launch {
+        scope?.launch {
             notifications.collect { notification ->
                 // Ignore any non-GoPro UUID's
                 GpUuid.fromUuid(notification.uuid)?.let { uuid ->
@@ -253,11 +240,22 @@ internal class BleCommunicator(
         }
 
     suspend fun executeSetting(id: SettingId, data: UByteArray): Result<UByteArray> =
-        // TODO check and extract status
         writeCharacteristicReceiveNotification(
             GpUuid.CQ_SETTINGS,
-            ubyteArrayOf(id.value) + data,
+            ubyteArrayOf(id.value, data.size.toUByte()) + data,
             ResponseId.Setting(id)
+        ).fold(
+            onSuccess = {
+                if (GpStatus.isSuccess(it.last())) {
+                    Result.success(it)
+                } else {
+                    "Set setting failed with status: ${it.last()}".let { message ->
+                        logger.e(message)
+                        Result.failure(ApiError(message))
+                    }
+                }
+            },
+            onFailure = { Result.failure(it) }
         )
 
     suspend fun executeQuery(queryId: QueryId, settingId: SettingId): Result<UByteArray> =

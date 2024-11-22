@@ -12,7 +12,8 @@ internal enum class CommandId(val value: UByte) {
     LOAD_PRESET_GROUP(0x3EU),
     LOAD_PRESET(0x40U),
     HILGIHT_MOMENT(0x18U),
-    GET_OGP_VERSION(0x51U);
+    GET_OGP_VERSION(0x51U),
+    KEEP_ALIVE(0x5BU);
 
     companion object {
         fun fromUByte(value: UByte) = entries.firstOrNull { it.value == value }
@@ -122,7 +123,7 @@ internal enum class GpStatus(val value: UByte) {
     SUCCESS(0U);
 
     companion object {
-        fun fromUByte(value: UByte) = entries.first { it.value == value }
+        fun fromUByte(value: UByte) = entries.firstOrNull() { it.value == value }
         fun isSuccess(value: UByte) = fromUByte(value) == SUCCESS
     }
 }

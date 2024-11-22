@@ -8,6 +8,7 @@ internal class FakeSettingsContainer(
     val settingsContainer: SettingsContainer,
     private val marshaller: FakeOperationMarshaller
 ) {
+    val spies = marshaller.fakeBleApi.spies
     suspend fun sendNextBleMessage() = marshaller.sendNextBleMessage()
 }
 

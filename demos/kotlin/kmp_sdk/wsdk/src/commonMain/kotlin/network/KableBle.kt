@@ -77,7 +77,7 @@ private class KableDevice(
                 // Channel will handle both of these cases
                 val servicesDiscovered = Channel<Unit>(1)
                 peripheral = scope.peripheral(adv) {
-                    logging { level = Logging.Level.Warnings }
+                    logging { level = Logging.Level.Data }
                     // Send the channel when the services have been discovered
                     onServicesDiscovered { servicesDiscovered.send(Unit) }
                 }
@@ -182,7 +182,7 @@ internal class KableBle(private val dispatcher: CoroutineDispatcher) : IBleApi,
             }
             logging {
                 engine = SystemLogEngine
-                level = Logging.Level.Warnings
+                level = Logging.Level.Data
                 format = Logging.Format.Multiline
             }
         }.advertisements

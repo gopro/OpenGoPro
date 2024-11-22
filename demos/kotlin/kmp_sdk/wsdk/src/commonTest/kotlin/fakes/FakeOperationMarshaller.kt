@@ -23,7 +23,7 @@ internal class FakeOperationMarshaller(
     ): Result<T> =
         operation.execute(communicatorMap.values.first())
 
-    private val fakeBleApi = FakeBleApi(responses, dispatcher)
+    val fakeBleApi = FakeBleApi(responses, dispatcher)
 
     suspend fun sendNextBleMessage() = fakeBleApi.sendNextMessage()
 

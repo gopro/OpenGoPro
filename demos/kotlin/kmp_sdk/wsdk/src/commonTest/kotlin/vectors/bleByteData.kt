@@ -55,6 +55,7 @@ val setShutterRequestPayload = ubyteArrayOf(0x01U, 0x01U, 0x01U)
 val setShutterRequestMessage = ubyteArrayOf(0x20U, 0x03U, 0x01U, 0x01U, 0x01U)
 val setShutterResponsePayload = ubyteArrayOf(1U, 0U)
 val setShutterResponseMessage = ubyteArrayOf(2U, 1U, 0U)
+val keepAliveResponsePayload = ubyteArrayOf(0x5BU, 0x00U)
 val dateTimeResponsePayload =
     ubyteArrayOf(
         // command ID
@@ -67,6 +68,8 @@ val dateTimeResponsePayload =
 val setSettingRequestPayload = ubyteArrayOf(2U, 1U, 9U)
 val setSettingResponsePayload = ubyteArrayOf(2U, 0U)
 val setSettingResponseMessage = ubyteArrayOf(2U, 2U, 0U)
+val setSettingResponseMessageFailure = ubyteArrayOf(2U, 2U, 2U)
+val setSettingsRequestPayload = ubyteArrayOf(32U, 3U, 2U, 1U, 9U)
 val getSettingResponsePayload = ubyteArrayOf(0x12U, 0x00U, 0x02U, 0x01U, 0x09U)
 val getSettingResponseMessage = ubyteArrayOf(0x05U, 0x12U, 0x00U, 0x02U, 0x01U, 0x09U)
 val getSettingResponseMessage2 = ubyteArrayOf(0x05U, 0x12U, 0x00U, 0x02U, 0x01U, 12U)

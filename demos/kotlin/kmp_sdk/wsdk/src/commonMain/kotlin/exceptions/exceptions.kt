@@ -8,14 +8,18 @@ class OperationUnsupportedForCommunicator(operation: String, communicationType: 
 class DeviceNotFound(deviceId: String) :
     Exception("$deviceId not found")
 
-class BleError(errorMessage: String): Exception(errorMessage)
+class ApiError(message: String) : Exception(message)
 
-class CameraInternalError(errorMessage: String): Exception("Camera replied with error: $errorMessage")
+class BleError(errorMessage: String) : Exception(errorMessage)
+
+class CameraInternalError(errorMessage: String) :
+    Exception("Camera replied with error: $errorMessage")
 
 /**
  * Represents server (50x) and client (40x) errors.
  */
-class HttpError(code: Int, errorMessage: String) : Exception("HTTP failed with status $code: $errorMessage")
+class HttpError(code: Int, errorMessage: String) :
+    Exception("HTTP failed with status $code: $errorMessage")
 
 /**
  * Represent IOExceptions and connectivity issues.

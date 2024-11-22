@@ -3,6 +3,7 @@ import domain.communicator.bleCommunicator.bleFragment
 import entity.queries.Resolution
 import entity.network.ble.BleNotification
 import entity.network.ble.GpUuid
+import fakes.BleApiSpy
 import util.extensions.toTlvMap
 import fakes.buildFakeSettingsContainer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,7 +22,10 @@ import vectors.getSettingResponseMessage3
 import vectors.getSettingResponsePayload
 import vectors.registerSettingValueResponseMessage
 import vectors.setSettingResponseMessage
+import vectors.setSettingResponseMessageFailure
+import vectors.setSettingsRequestPayload
 import kotlin.test.Test
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -31,7 +35,7 @@ import kotlin.test.assertTrue
 class TestSettings {
 
     @Test
-    fun `set resolution`() = runTest {
+    fun `set resolution success`() = runTest {
         // GIVEN
         val responses = listOf(
             listOf(
@@ -46,6 +50,40 @@ class TestSettings {
 
         // THEN
         assertTrue { result.isSuccess }
+        assertEquals(1, fakeSettingsContainer.spies.size)
+        when (val spy = fakeSettingsContainer.spies.first()) {
+            is BleApiSpy.Write -> {
+                assertEquals(GpUuid.CQ_SETTINGS.toUuid(), spy.uuid)
+                assertContentEquals(setSettingsRequestPayload, spy.requestData)
+            }
+            else -> assertTrue { false }
+        }
+    }
+
+    @Test
+    fun `set resolution failure`() = runTest {
+        // GIVEN
+        val responses = listOf(
+            listOf(
+                BleNotification(GpUuid.CQ_SETTINGS_RESP.toUuid(), setSettingResponseMessageFailure)
+            )
+        )
+        val fakeSettingsContainer = buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
+        val setting = fakeSettingsContainer.settingsContainer.resolution
+
+        // WHEN
+        val result = setting.setValue(Resolution.RES_1080)
+
+        // THEN
+        assertTrue { result.isFailure }
+        assertEquals(1, fakeSettingsContainer.spies.size)
+        when (val spy = fakeSettingsContainer.spies.first()) {
+            is BleApiSpy.Write -> {
+                assertEquals(GpUuid.CQ_SETTINGS.toUuid(), spy.uuid)
+                assertContentEquals(setSettingsRequestPayload, spy.requestData)
+            }
+            else -> assertTrue { false }
+        }
     }
 
     @Test

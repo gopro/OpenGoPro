@@ -16,9 +16,7 @@ import entity.operation.LivestreamResolution
 import entity.operation.LivestreamStatus
 import entity.operation.PresetInfo
 import entity.operation.jsonFromProto
-import util.extensions.toLocalDateTime
-import util.extensions.toUByteArray
-import util.extensions.toUtcOffset
+import entity.operation.proto.EnumPresetGroupIcon
 import fakes.BleApiSpy
 import fakes.buildFakeBleCommunicator
 import fakes.toBleNotificationList
@@ -28,13 +26,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.UtcOffset
-import entity.operation.proto.EnumPresetGroupIcon
 import operation.commands.AccessPointGetScanResults
 import operation.commands.AccessPointScan
 import operation.commands.ConnectNewAccessPoint
 import operation.commands.ConnectProvisionedAccessPoint
 import operation.commands.DatetimeGet
 import operation.commands.GetHardwareInfo
+import operation.commands.KeepAlive
 import operation.commands.LivestreamConfigure
 import operation.commands.LivestreamGetStatus
 import operation.commands.PresetGetInfo
@@ -42,6 +40,9 @@ import operation.commands.SetCameraControl
 import operation.commands.SetShutter
 import pbandk.ExperimentalProtoJson
 import pbandk.json.encodeToJsonString
+import util.extensions.toLocalDateTime
+import util.extensions.toUByteArray
+import util.extensions.toUtcOffset
 import vectors.completeNotifyPresetStatus
 import vectors.connectAccessPointComplete
 import vectors.connectAccessPointFailureSuccess
@@ -62,6 +63,7 @@ import vectors.hardwareInfoResponsePayload
 import vectors.initialApScanResponse
 import vectors.initialApScanResponseFailure
 import vectors.intermediateApScanNotification
+import vectors.keepAliveResponsePayload
 import vectors.localDateTimeBytes
 import vectors.localDateTimeVector
 import vectors.mockHardwareInfo
@@ -79,6 +81,34 @@ import kotlin.test.assertTrue
 
 @OptIn(ExperimentalUnsignedTypes::class)
 class TestBleCommands {
+
+    @Test
+    fun `keep alive`() = runTest {
+        // GIVEN
+        val operation = KeepAlive()
+        val fakeCommunicator = buildFakeBleCommunicator(
+            listOf(keepAliveResponsePayload.toBleNotificationList(GpUuid.CQ_SETTINGS_RESP)),
+            UnconfinedTestDispatcher()
+        )
+
+        // WHEN
+        val result = operation.execute(fakeCommunicator.communicator)
+
+        // THEN
+        assertTrue { result.isSuccess }
+        assertEquals(1, fakeCommunicator.spies.size)
+        when (val spy = fakeCommunicator.spies.first()) {
+            is BleApiSpy.Write -> {
+                assertEquals(GpUuid.CQ_SETTINGS.toUuid(), spy.uuid)
+                assertContentEquals(
+                    ubyteArrayOf(32U, 0x03U, 0x5bU, 0x01U, 0x42U),
+                    spy.requestData
+                )
+            }
+
+            else -> assertTrue { false }
+        }
+    }
 
     @Test
     fun `set shutter`() = runTest {
