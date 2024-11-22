@@ -161,8 +161,10 @@ sequence = ["format", "lint", "tests", "docs"]
 help = "Format, check types, lint, check docstrings, and run unit tests"
 
 [tool.poe.tasks.licenses]
-# cmd = "licensecheck -u poetry:dev"
-cmd = "licensecheck"
+# shell = """
+#   licensecheck -u poetry:dev > licenses.csv
+# """
+shell = """licensecheck > licenses.csv"""
 help = "Analyze dependency licenses"
 
 [tool.mypy]
@@ -278,3 +280,4 @@ require-return-section-when-returning-nothing = false
 
 [tool.licensecheck]
 using = "PEP631"
+format = 'csv'
