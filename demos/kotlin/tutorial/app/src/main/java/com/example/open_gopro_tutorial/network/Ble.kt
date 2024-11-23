@@ -4,11 +4,13 @@
 package com.example.open_gopro_tutorial.network
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.bluetooth.*
 import android.bluetooth.le.*
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.os.Build
 import androidx.annotation.RequiresPermission
 import com.example.open_gopro_tutorial.*
 import com.example.open_gopro_tutorial.util.*
@@ -170,6 +172,33 @@ class Bluetooth private constructor(private val context: Context) {
         gatt: BluetoothGatt, characteristic: UUID
     ): BluetoothGattCharacteristic? = gatt.findCharacteristic(characteristic)
 
+    @SuppressLint("NewApi")
+    @RequiresPermission(value = "android.permission.BLUETOOTH_CONNECT")
+    fun writeCharacteristic(gatt: BluetoothGatt, char: BluetoothGattCharacteristic, payload: ByteArray, writeType: Int): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            gatt.writeCharacteristic(char, payload, writeType) == BluetoothStatusCodes.SUCCESS
+        } else {
+            @Suppress("DEPRECATION")
+            char.value = payload
+            char.writeType = writeType
+            @Suppress("DEPRECATION")
+            gatt.writeCharacteristic(char)
+        }
+    }
+
+    @SuppressLint("NewApi")
+    @RequiresPermission(value = "android.permission.BLUETOOTH_CONNECT")
+    fun writeDescriptor(gatt: BluetoothGatt, descriptor: BluetoothGattDescriptor, payload: ByteArray): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            gatt.writeDescriptor(descriptor, payload) == BluetoothStatusCodes.SUCCESS
+        } else {
+            @Suppress("DEPRECATION")
+            descriptor.value = payload
+            @Suppress("DEPRECATION")
+            gatt.writeDescriptor(descriptor)
+        }
+    }
+
     /**
      * Callbacks
      */
@@ -228,6 +257,18 @@ class Bluetooth private constructor(private val context: Context) {
             }
         }
 
+        @Deprecated("Deprecated for Android 13+",
+            ReplaceWith("onCharacteristicRead(gatt, characteristic, characteristic.value, status)")
+        )
+        @Suppress("DEPRECATION")
+        override fun onCharacteristicRead(
+            gatt: BluetoothGatt,
+            characteristic: BluetoothGattCharacteristic,
+            status: Int,
+        ) {
+            onCharacteristicRead(gatt, characteristic, characteristic.value, status)
+        }
+
         override fun onCharacteristicRead(
             gatt: BluetoothGatt,
             characteristic: BluetoothGattCharacteristic,
@@ -271,6 +312,17 @@ class Bluetooth private constructor(private val context: Context) {
                     BleJob.EnableNotification.resumeWithError("Descriptor write failed for ${descriptor.uuid}, error: $status")
                 }
             }
+        }
+
+        @Deprecated("Deprecated for Android 13+",
+            ReplaceWith("onCharacteristicChanged(gatt, characteristic, characteristic.value)")
+        )
+        @Suppress("DEPRECATION")
+        override fun onCharacteristicChanged(
+            gatt: BluetoothGatt,
+            characteristic: BluetoothGattCharacteristic,
+        ) {
+            onCharacteristicChanged(gatt, characteristic, characteristic.value)
         }
 
         override fun onCharacteristicChanged(
@@ -417,10 +469,7 @@ class Bluetooth private constructor(private val context: Context) {
         }
         char.getDescriptor(CoreUUID.CCC_DESCRIPTOR.uuid)?.let { descriptor ->
             return BleJob.EnableNotification.suspendWithTimeout(10000) {
-                if (gatt.writeDescriptor(
-                        descriptor, payload
-                    ) != BluetoothStatusCodes.SUCCESS
-                ) {
+                if (!writeDescriptor(gatt, descriptor, payload)) {
                     BleJob.EnableNotification.resumeWithError("writeDescriptor failed for ${descriptor.uuid}")
                 }
             }
@@ -463,10 +512,7 @@ class Bluetooth private constructor(private val context: Context) {
         }
         return BleJob.Write.suspendWithTimeout(5000) {
             Timber.d("Writing characteristic $characteristic ==> ${payload.toHexString()}")
-            if (gatt.writeCharacteristic(
-                    char, payload.toByteArray(), writeType
-                ) != BluetoothStatusCodes.SUCCESS
-            ) {
+            if (!writeCharacteristic(gatt, char, payload.toByteArray(), writeType)) {
                 BleJob.Write.resumeWithError("Write of $characteristic failed")
             }
         }
