@@ -37,7 +37,7 @@ fun SettingsScreen(
     val fovCaps by viewModel.fovCaps.collectAsStateWithLifecycle()
     val battery by viewModel.currentBattery.collectAsStateWithLifecycle()
     val isBusy by viewModel.isBusy.collectAsStateWithLifecycle()
-    val isReady by viewModel.isReady.collectAsStateWithLifecycle()
+    val isEncoding by viewModel.isEncoding.collectAsStateWithLifecycle()
 
     CommonTopBar(
         navController = navController,
@@ -59,7 +59,7 @@ fun SettingsScreen(
             Text("Statuses")
             Text("Battery: $battery")
             Text("isBusy: $isBusy")
-            Text("isReady: $isReady")
+            Text("isEncoding: $isEncoding")
         }
     }
 }

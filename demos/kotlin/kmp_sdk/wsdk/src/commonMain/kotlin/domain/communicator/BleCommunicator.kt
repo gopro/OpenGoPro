@@ -81,61 +81,55 @@ internal class BleCommunicator(
     private suspend fun routeResponse(response: IGpBleResponse) {
         when (val responseId = response.id) {
             is ResponseId.Query -> {
-                // Setting and Status queries may contain multiple responses so need to be sliced into those
-                // responses here.
-                if (responseId.shouldBeSliced) {
-                    response.payload.drop(2).toTlvMap().forEach { (id, value) ->
-                        val slicedResponseId = if (responseId.isSetting) {
-                            ResponseId.QuerySetting(
-                                responseId.id,
-                                SettingId.fromUByte(id)
-                            )
-                        } else {
-                            ResponseId.QueryStatus(
-                                responseId.id,
-                                StatusId.fromUByte(id)
-                            )
-                        }
-                        traceLog("4. Emitting accumulated response $slicedResponseId")
-                        receivedResponses.emit(
-                            ResponseFlowElement(
-                                slicedResponseId,
-                                Result.success(object : IGpBleResponse {
-                                    override val uuid = response.uuid
-                                    override val payload = value
-                                    override val id = slicedResponseId
-                                })
-                            )
-                        )
-                    }
-                }
-                // Others aren't sliced. But still need to be adapted to setting / status.
-                else {
-                    val adaptedResponseId = response.payload[2].let { id ->
+                // Setting and Status queries may contain multiple responses.
+                // First slice response into map of setting / status
+                response.payload.drop(2).toTlvMap()
+                    // Map keys to setting / status ID
+                    .mapKeys { (key, _) ->
                         if (responseId.isSetting) {
                             ResponseId.QuerySetting(
                                 responseId.id,
-                                SettingId.fromUByte(id),
+                                SettingId.fromUByte(key)
                             )
                         } else {
                             ResponseId.QueryStatus(
                                 responseId.id,
-                                StatusId.fromUByte(id)
+                                StatusId.fromUByte(key)
                             )
                         }
                     }
-                    traceLog("4. Emitting accumulated response $adaptedResponseId")
-                    receivedResponses.emit(
-                        ResponseFlowElement(
-                            adaptedResponseId,
-                            Result.success(object : IGpBleResponse {
-                                override val uuid = response.uuid
-                                override val payload = response.payload.drop(2).toUByteArray()
-                                override val id = adaptedResponseId
-                            })
-                        )
-                    )
-                }
+                    // At this point IDs are adapted to Setting or Status IDs
+                    .forEach { (adaptedId, values) ->
+                        // If it should be sliced, emit each value individually
+                        if (adaptedId.shouldBeSliced) {
+                            values.forEach { value ->
+                                traceLog("4. Emitting accumulated response $adaptedId")
+                                receivedResponses.emit(
+                                    ResponseFlowElement(
+                                        adaptedId,
+                                        Result.success(object : IGpBleResponse {
+                                            override val uuid = response.uuid
+                                            override val payload = value
+                                            override val id = adaptedId
+                                        })
+                                    )
+                                )
+                            }
+                            // Otherwise emit values together
+                        } else {
+                            traceLog("4. Emitting accumulated response $adaptedId")
+                            receivedResponses.emit(
+                                ResponseFlowElement(
+                                    adaptedId,
+                                    Result.success(object : IGpBleResponse {
+                                        override val uuid = response.uuid
+                                        override val payload = values.flatten().toUByteArray()
+                                        override val id = adaptedId
+                                    })
+                                )
+                            )
+                        }
+                    }
             }
 
             // Everything else just gets forwarded

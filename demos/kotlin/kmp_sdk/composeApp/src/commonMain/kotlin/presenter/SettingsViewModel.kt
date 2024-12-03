@@ -36,8 +36,8 @@ class SettingsViewModel(
     private var _currentBattery = MutableStateFlow(0)
     val currentBattery = _currentBattery.asStateFlow()
 
-    private var _isReady = MutableStateFlow(false)
-    val isReady = _isReady.asStateFlow()
+    private var _isEncoding = MutableStateFlow(false)
+    val isEncoding = _isEncoding.asStateFlow()
 
     private var _isBusy = MutableStateFlow(false)
     val isBusy = _isBusy.asStateFlow()
@@ -102,7 +102,7 @@ class SettingsViewModel(
             gopro.isBusy.collect { isBusy -> _isBusy.update { isBusy } }
         }
         viewModelScope.launch {
-            gopro.isReady.collect { isReady -> _isReady.update { isReady } }
+            gopro.isEncoding.collect { isEncoding -> _isEncoding.update { isEncoding } }
         }
     }
 }

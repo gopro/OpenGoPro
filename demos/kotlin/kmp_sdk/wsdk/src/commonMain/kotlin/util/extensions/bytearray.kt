@@ -23,23 +23,23 @@ internal fun UInt.toUByteArray(): UByteArray =
     }.toUByteArray()
 
 @OptIn(ExperimentalUnsignedTypes::class)
-internal fun UByteArray.toTlvMap(): Map<UByte, UByteArray> {
+internal fun UByteArray.toTlvMap(): Map<UByte, List<UByteArray>> {
     var buf = this.toList()
-    val map = mutableMapOf<UByte, UByteArray>()
+    val map = mutableMapOf<UByte, MutableList<UByteArray>>()
     while (buf.isNotEmpty()) {
         val t = buf.first()
         buf = buf.drop(1)
         val l = buf.first().toInt()
         buf = buf.drop(1)
         val v = buf.slice(0..<l).toUByteArray()
-        map[t] = v
+        map.getOrPut(t) { mutableListOf() } += v
         buf = buf.drop(l)
     }
     return map
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-internal fun List<UByte>.toTlvMap(): Map<UByte, UByteArray> = this.toUByteArray().toTlvMap()
+internal fun List<UByte>.toTlvMap(): Map<UByte, List<UByteArray>> = this.toUByteArray().toTlvMap()
 
 @OptIn(ExperimentalStdlibApi::class, ExperimentalUnsignedTypes::class)
 internal fun UByteArray.toPrettyHexString(): String =

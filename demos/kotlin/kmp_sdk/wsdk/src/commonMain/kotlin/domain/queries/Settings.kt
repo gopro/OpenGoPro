@@ -100,10 +100,7 @@ class Setting<T> internal constructor(
             val initialCapabilities = communicator.executeQuery(
                 QueryId.REGISTER_SETTING_CAPABILITY_UPDATES, settingId
             ).fold(
-                onSuccess = {
-                    it.drop(2).filterIndexed { index, _ -> index % 3 == 0 }
-                        .map { byte -> byteTransformer.fromUByte(byte) }
-                },
+                onSuccess = { it.map { byte -> byteTransformer.fromUByte(byte) } },
                 onFailure = { return Result.failure(it) },
             )
 
