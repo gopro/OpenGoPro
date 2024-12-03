@@ -49,7 +49,7 @@ internal class BleCommunicator(
     override val connection: ConnectionDescriptor.Ble,
     dispatcher: CoroutineDispatcher
 ) : ICommunicator<ConnectionDescriptor.Ble>(),
-    IGpCommonBase by GpCommonBase("BleCommunicator", dispatcher, shouldEnableTraceLog = true) {
+    IGpCommonBase by GpCommonBase("BleCommunicator", dispatcher, shouldEnableTraceLog = false) {
     override val communicationType = CommunicationType.BLE
 
     private val device = connection.device

@@ -4,7 +4,6 @@ import WsdkIsolatedKoinContext
 import domain.data.ICameraRepository
 import entity.connector.ConnectionDescriptor
 import entity.connector.ConnectionRequestContext
-import entity.connector.GoProId
 import entity.connector.ScanResult
 import gopro.IFeatureContext
 import kotlinx.coroutines.delay
@@ -28,9 +27,14 @@ class ConnectWifiFeature internal constructor(private val context: IFeatureConte
      */
     suspend fun connect(): Result<Unit> {
         // Get Wifi info and enable Access Point via BLE
-        context.gopro.commands.setApMode(true).getOrThrow()
         val ssid = context.gopro.commands.readWifiSsid().getOrThrow()
         val password = context.gopro.commands.readWifiPassword().getOrThrow()
+        context.gopro.commands.setApMode(true).getOrThrow()
+
+        // TODO. Trying to brute force fix wifi connection delays. It seems to be working...
+        // SO presumably there is some comeup period where the GoPro can not connect and does
+        // not gracefully disconnect.
+        delay(2000)
 
         // Connect Wifi
         while (true) {

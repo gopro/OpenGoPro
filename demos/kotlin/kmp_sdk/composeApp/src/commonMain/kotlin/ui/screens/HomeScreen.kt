@@ -57,8 +57,9 @@ fun HomeScreen(
             )
             HorizontalDivider()
             ScanResultList(devices) { viewModel.connect(it) }
-            if (state is CameraChooserUiState.Discovering) {
-                IndeterminateCircularProgressIndicator()
+            when (state) {
+                is CameraChooserUiState.Discovering, is CameraChooserUiState.Connecting -> IndeterminateCircularProgressIndicator()
+                else -> {}
             }
         }
     }
@@ -67,8 +68,7 @@ fun HomeScreen(
 
 @Composable
 fun DiscoverButton(
-    state: CameraChooserUiState, onDiscover: (() -> Unit),
-    onCancel: (() -> Unit)
+    state: CameraChooserUiState, onDiscover: (() -> Unit), onCancel: (() -> Unit)
 ) {
     Column {
         Button({
@@ -77,15 +77,13 @@ fun DiscoverButton(
                 CameraChooserUiState.Discovering -> onCancel()
                 else -> {} // TODO
             }
-        }
-        ) { Text(state.name) }
+        }) { Text(state.name) }
     }
 }
 
 @Composable
 fun ScanResultList(
-    devices: List<ScanResult>,
-    onDeviceSelect: (ScanResult) -> Unit
+    devices: List<ScanResult>, onDeviceSelect: (ScanResult) -> Unit
 ) {
     LazyColumn {
         items(devices) { device ->
@@ -103,14 +101,12 @@ fun ScanResultList(
 
 @Composable
 fun NetworkTypeSelection(
-    networks: List<ScanNetworkType>,
-    onCheck: (ScanNetworkType, Boolean) -> Unit
+    networks: List<ScanNetworkType>, onCheck: (ScanNetworkType, Boolean) -> Unit
 ) {
     LazyColumn {
         items(ScanNetworkType.entries.toTypedArray()) { networkType ->
             Row {
-                Checkbox(
-                    checked = networks.contains(networkType),
+                Checkbox(checked = networks.contains(networkType),
                     onCheckedChange = { onCheck(networkType, it) })
                 Text(networkType.name)
             }

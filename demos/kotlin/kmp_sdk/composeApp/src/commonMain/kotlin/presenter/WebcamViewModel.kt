@@ -13,46 +13,58 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+sealed class WebcamUiState(val message: String) {
+    data class Error(val error: String) : WebcamUiState("Error: $error")
+    data object Ready : WebcamUiState("Ready to start Webcam")
+    data class Starting(val status: WebcamStatus) : WebcamUiState("Webcam Starting: ${status.name}")
+    data class Streaming(val error: WebcamError) : WebcamUiState("Webcam Streaming: ${error.name}")
+}
+
 class WebcamViewModel(
-    appPreferences: IAppPreferences,
-    wsdk: Wsdk
+    appPreferences: IAppPreferences, wsdk: Wsdk
 ) : BaseConnectedViewModel(appPreferences, wsdk, "WebcamViewModel") {
-    private var _status = MutableStateFlow(WebcamStatus.OFF)
-    val status = _status.asStateFlow()
-    private var _error = MutableStateFlow(WebcamError.NONE)
-    val error = _error.asStateFlow()
-    private var _protocol = MutableStateFlow(WebcamProtocol.RTSP)
-    private val protocol = _protocol.asStateFlow()
+    private var _state = MutableStateFlow<WebcamUiState>(WebcamUiState.Error("not yet initialized"))
+    val state = _state.asStateFlow()
 
     private var statusPollJob: Job? = null
 
-    val streamUrl: String
-        get() = gopro.ipAddress?.let { cameraIp ->
-            if (protocol.value == WebcamProtocol.RTSP) "rtsp://$cameraIp:554/live" else "udp://@:8554"
-        } ?: throw Exception("Camera has no IP address")
+    fun streamUrl(protocol: WebcamProtocol): String = gopro.ipAddress?.let { cameraIp ->
+        if (protocol == WebcamProtocol.RTSP) "rtsp://$cameraIp:554/live" else "udp://@:8554"
+    } ?: throw Exception("Camera has no IP address")
 
 
-    fun startStream(protocol: WebcamProtocol) =
-        viewModelScope.launch {
-            _protocol.update { protocol }
-            logger.i("Starting webcam stream with $protocol")
-            gopro.commands.startWebcam(protocol = protocol)
-        }
-
-    fun stopStream() =
-        viewModelScope.launch {
-            gopro.commands.stopWebcam()
-        }
-
-    override fun onStart() {
+    fun startStream(protocol: WebcamProtocol) = viewModelScope.launch {
         statusPollJob = viewModelScope.launch {
             while (true) {
                 gopro.commands.getWebcamState().getOrThrow().let { state ->
-                    _status.update { state.status }
-                    _error.update { state.error }
+                    when (state.status) {
+                        WebcamStatus.HIGH_POWER_PREVIEW -> {
+                            _state.update {
+                                WebcamUiState.Streaming(state.error)
+                            }
+                        }
+
+                        else -> _state.update { WebcamUiState.Starting(state.status) }
+                    }
                 }
                 delay(2000)
             }
+        }
+        logger.i("Starting webcam stream with $protocol")
+        gopro.commands.startWebcam(protocol = protocol)
+    }
+
+    fun stopStream() = viewModelScope.launch {
+        gopro.commands.stopWebcam()
+        statusPollJob?.cancel()
+        _state.update { WebcamUiState.Ready }
+    }
+
+    override fun onStart() {
+        if (gopro.isBleAvailable) {
+            _state.update { WebcamUiState.Ready }
+        } else {
+            _state.update { WebcamUiState.Error("BLE not available.") }
         }
     }
 

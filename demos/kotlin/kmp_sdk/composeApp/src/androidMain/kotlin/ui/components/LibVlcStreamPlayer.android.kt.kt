@@ -35,6 +35,8 @@ class LibVlcStreamPlayer(private val context: Context) : IStreamPlayer {
 
     @Composable
     override fun PlayStream(modifier: Modifier, url: String) {
+        logger.i("Playing stream from $url")
+
         val libVlc = remember {
             LibVLC(context, ArrayList<String>().apply {
 //            add("--no-drop-late-frames")

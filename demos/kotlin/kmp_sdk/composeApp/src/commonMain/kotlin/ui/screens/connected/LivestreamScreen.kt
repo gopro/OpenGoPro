@@ -21,6 +21,7 @@ import presenter.LivestreamUiState
 import presenter.LivestreamViewModel
 import ui.common.Screen
 import ui.components.CommonTopBar
+import ui.components.IndeterminateCircularProgressIndicator
 import ui.components.StreamPlayerWrapper
 
 @Composable
@@ -42,17 +43,26 @@ fun LivestreamScreen(
         }
         Column(modifier.padding(paddingValues)) {
             Text("State: ${state.name}")
-            if (state is LivestreamUiState.Ready)
-                TextField(
-                    value = url,
-                    onValueChange = { url = it },
-                    label = { Text("Livestream Server URL") }
-                )
-            Button({ viewModel.startStream(url) }) { Text("Start Stream") }
-            if (state is LivestreamUiState.Streaming) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    StreamPlayerWrapper.player.PlayStream(modifier, url)
+            when (state) {
+                is LivestreamUiState.Ready -> {
+                    Button({ viewModel.startStream(url) }) { Text("Start Stream") }
+                    TextField(
+                        value = url,
+                        onValueChange = { url = it },
+                        label = { Text("Livestream Server URL") }
+                    )
                 }
+
+                is LivestreamUiState.Configuring -> IndeterminateCircularProgressIndicator()
+
+                is LivestreamUiState.Streaming -> {
+                    Button({ viewModel.stopStream() }) { Text("Stop Stream") }
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        StreamPlayerWrapper.player.PlayStream(modifier, url)
+                    }
+                }
+
+                else -> {}
             }
         }
     }

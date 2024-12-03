@@ -69,6 +69,9 @@ interface IGpDescriptor {
      * Disconnect notifications by [CommunicationType]
      */
     val disconnects: Flow<CommunicationType>
+
+    val isBleAvailable: Boolean
+    val isHttpAvailable: Boolean
 }
 
 internal interface GpDescriptorManager {

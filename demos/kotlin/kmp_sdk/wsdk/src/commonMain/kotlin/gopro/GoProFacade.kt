@@ -126,6 +126,12 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
 
     private var isInitialized = false
 
+    override val isBleAvailable: Boolean
+        get() = CommunicationType.BLE in communicators
+
+    override val isHttpAvailable: Boolean
+        get() = CommunicationType.HTTP in communicators
+
     internal fun unbindCommunicator(communicator: ICommunicator<*>) {
         operationMarshaller.removeCommunicator(communicator)
         if (communicator.communicationType == CommunicationType.BLE) {
@@ -208,11 +214,16 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
             setDateTime()
             isInitialized = true
         }
-        // Update the IP address if relevant
-        // TODO how to handle when there are multiple?
+
+        // Per communicator initialization
         when (communicator) {
-            is HttpCommunicator -> _ipAddress = communicator.connection.ipAddress
-            else -> {}
+            is HttpCommunicator -> {
+                // Update the IP address if relevant
+                // TODO how to handle when there are multiple?
+                _ipAddress = communicator.connection.ipAddress
+            }
+
+            is BleCommunicator -> {}
         }
     }
 

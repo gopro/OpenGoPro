@@ -22,14 +22,15 @@ private val logger = Logger.withTag("CameraChooserViewModel")
 
 enum class ScanNetworkType {
     BLE,
-    WIFI,
+
+    //    WIFI,
     DNS
 }
 
 private fun scanNetworkToNetwork(scanNetworkType: ScanNetworkType): NetworkType =
     when (scanNetworkType) {
         ScanNetworkType.BLE -> NetworkType.BLE
-        ScanNetworkType.WIFI -> NetworkType.WIFI_AP
+//        ScanNetworkType.WIFI -> NetworkType.WIFI_AP
         ScanNetworkType.DNS -> NetworkType.WIFI_WLAN
     }
 
@@ -44,7 +45,8 @@ class CameraChooserViewModel(
     private val wsdk: Wsdk,
     private val appPreferences: IAppPreferences,
 ) : ViewModel() {
-    private val found = hashMapOf<GoProId, ScanResult>() // Used to prevent duplicates
+    private val found =
+        hashMapOf<Pair<GoProId, NetworkType>, ScanResult>() // Used to prevent duplicates
     private val _devices = MutableStateFlow<List<ScanResult>>(listOf())
     val devices = _devices.asStateFlow()
 
@@ -52,23 +54,14 @@ class CameraChooserViewModel(
     private var _state = MutableStateFlow<CameraChooserUiState>(CameraChooserUiState.Idle)
     val state = _state.asStateFlow()
 
-
     fun discover(networks: Set<ScanNetworkType>) {
         if (_state.value == CameraChooserUiState.Idle) {
             discoverJob = viewModelScope.launch {
-                // TODO fix network types here. It doesn't make sense.
                 wsdk.discover(*networks.map(::scanNetworkToNetwork).toTypedArray())
-                    .onStart {
-                        _state.update { CameraChooserUiState.Discovering }
-                    }
-                    .onEach {
-                        found[it.id] = it
-                    }.onCompletion {
-                        _devices.update { mutableListOf() }
-                    }
-                    .collect {
-                        _devices.update { found.values.toList() }
-                    }
+                    .onStart { _state.update { CameraChooserUiState.Discovering } }
+                    .onEach { found[Pair(it.id, it.networkType)] = it }
+                    .onCompletion { _devices.update { mutableListOf() } }
+                    .collect { _devices.update { found.values.toList() } }
             }
         } else {
             logger.w { "Already discovering" }

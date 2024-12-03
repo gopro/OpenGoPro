@@ -20,7 +20,7 @@ docker compose up
 | RTSP (UDP/RTP)  | rtsp://<IP_ADDR>:8000/test              |             |
 | RTSP (UDP/RTCP) | rtsp://<IP_ADDR>:8001/test              |             |
 | HLS             | http://localhost:8888/test              | Chrome      |
-| RTMP            | rtmp://localhost/test               | VLC         |
+| RTMP            | rtmp://localhost/test                   | VLC         |
 | SRT             | srt://localhost:8890?streamid=read:test |             |
 
 ### Stream published from FFMPEG as RTMP (test2)
@@ -31,7 +31,7 @@ docker compose up
 | RTSP (UDP/RTP)  | rtsp://<IP_ADDR>:8000/test2              |             |
 | RTSP (UDP/RTCP) | rtsp://<IP_ADDR>:8001/test2              |             |
 | HLS             | http://localhost:8888/test2              | Chrome      |
-| RTMP            | rtmp://localhost/test2                | VLC         |
+| RTMP            | rtmp://localhost/test2                   | VLC         |
 | SRT             | srt://localhost:8890?streamid=read:test2 |             |
 
 ## Notes

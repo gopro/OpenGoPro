@@ -19,9 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import entity.operation.WebcamProtocol
+import presenter.WebcamUiState
 import presenter.WebcamViewModel
 import ui.common.Screen
 import ui.components.CommonTopBar
+import ui.components.IndeterminateCircularProgressIndicator
 import ui.components.StreamPlayerWrapper
 
 @Composable
@@ -30,9 +32,8 @@ fun WebcamScreen(
     viewModel: WebcamViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val status by viewModel.status.collectAsStateWithLifecycle()
-    val error by viewModel.error.collectAsStateWithLifecycle()
-    var protocol by remember { mutableStateOf(WebcamProtocol.RTSP) }
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    var protocol by remember { mutableStateOf(WebcamProtocol.TS) }
 
     CommonTopBar(
         navController = navController,
@@ -43,17 +44,27 @@ fun WebcamScreen(
             onDispose { viewModel.stop() }
         }
         Column(modifier.padding(paddingValues)) {
-            Text("Wireless Webcam Stream")
-            Text("Status: ${status.name}")
-            Text("Error: ${error.name}")
-            Button({ viewModel.startStream(protocol) }) { Text("Start Stream") }
-            Button({ viewModel.stopStream() }) { Text("Stop Stream") }
-            if (status.isStreaming()) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    StreamPlayerWrapper.player.PlayStream(modifier, viewModel.streamUrl)
+            Text("State: $state")
+            when (state) {
+                WebcamUiState.Ready -> {
+                    Button({ viewModel.startStream(protocol) }) { Text("Start Stream") }
+//                    ProtocolSelectionDropDown { protocol = it }
                 }
+
+                is WebcamUiState.Starting -> IndeterminateCircularProgressIndicator()
+
+                is WebcamUiState.Streaming -> {
+                    Button({ viewModel.stopStream() }) { Text("Stop Stream") }
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        StreamPlayerWrapper.player.PlayStream(
+                            modifier,
+                            viewModel.streamUrl(protocol)
+                        )
+                    }
+                }
+
+                else -> {}
             }
-            ProtocolSelectionDropDown { protocol = it }
         }
     }
 }
