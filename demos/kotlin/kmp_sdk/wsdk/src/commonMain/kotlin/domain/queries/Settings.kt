@@ -10,10 +10,10 @@ import entity.communicator.QueryId
 import entity.queries.IUByteEnumCompanion
 import entity.queries.SettingId
 import entity.queries.UByteEnum
-import util.extensions.toUByteArray
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import util.extensions.toUByteArray
 
 internal class UByteEnumTransformer<T>(
     private val companion: IUByteEnumCompanion<T>
@@ -45,8 +45,7 @@ class Setting<T> internal constructor(
         BaseOperation<Unit>("Set Setting Value::${settingId.name}") {
         override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
             communicator.executeSetting(
-                settingId,
-                byteTransformer.toUByte(value).toUByteArray()
+                settingId, byteTransformer.toUByte(value).toUByteArray()
             ).map {
                 GpStatus.fromUByte(it.last()).let { status ->
                     if (status == GpStatus.SUCCESS) {
@@ -79,19 +78,39 @@ class Setting<T> internal constructor(
         override suspend fun execute(communicator: BleCommunicator): Result<Flow<T>> {
             // Send initial query OTA to register and store current value for later returning
             val currentValue =
-                communicator.executeQuery(QueryId.REGISTER_SETTING_VALUE_UPDATES, settingId)
-                    .fold(
-                        onFailure = { return Result.failure(it) },
-                        onSuccess = { byteTransformer.fromUByte(it.first()) },
-                    )
+                communicator.executeQuery(QueryId.REGISTER_SETTING_VALUE_UPDATES, settingId).fold(
+                    onFailure = { return Result.failure(it) },
+                    onSuccess = { byteTransformer.fromUByte(it.first()) },
+                )
 
             // Now actually register to receive notifications
             return communicator.registerUpdate(
                 ResponseId.QuerySetting(QueryId.ASYNC_SETTING_VALUE_NOTIFICATION, settingId)
             ).map { flow ->
-                flow
-                    .map { byteTransformer.fromUByte(it.payload.last()) }
+                flow.map { byteTransformer.fromUByte(it.payload.last()) }
                     .onStart { emit(currentValue) }
+            }
+        }
+    }
+
+    private inner class RegisterForSettingCapabilityUpdates :
+        BaseOperation<Flow<List<T>>>("Register Setting Capability Updates::${settingId.name}") {
+
+        // TODO where to slice?
+        override suspend fun execute(communicator: BleCommunicator): Result<Flow<List<T>>> {
+            // We only get the current value on the initial query. So don't emit it as capabilities.
+            communicator.executeQuery(
+                QueryId.REGISTER_SETTING_CAPABILITY_UPDATES,
+                settingId
+            ).onFailure { return Result.failure(it) }
+
+            // Now actually register to receive notifications
+            return communicator.registerUpdate(
+                ResponseId.QuerySetting(QueryId.ASYNC_SETTING_CAPABILITY_NOTIFICATION, settingId)
+            ).map { flow ->
+                flow.map {
+                    it.payload.map { byte -> byteTransformer.fromUByte(byte) }
+                }
             }
         }
     }
@@ -136,5 +155,13 @@ class Setting<T> internal constructor(
     suspend fun registerValueUpdate(): Result<Flow<T>> =
         marshaller.marshal(RegisterForSettingValueUpdates()) { useCommunicator { _, _ -> CommunicationType.BLE } }
 
-    // TODO Other queries here
+    /**
+     * Register for setting capability updates
+     *
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#register-for-setting-capability-updates)
+     *
+     * @return list of currently available setting options
+     */
+    suspend fun registerCapabilityUpdates(): Result<Flow<List<T>>> =
+        marshaller.marshal(RegisterForSettingCapabilityUpdates()) { useCommunicator { _, _ -> CommunicationType.BLE } }
 }

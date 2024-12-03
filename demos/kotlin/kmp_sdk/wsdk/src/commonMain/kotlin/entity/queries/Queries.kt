@@ -62,19 +62,37 @@ enum class Resolution(override val value: UByte) : UByteEnum {
 }
 
 enum class Fps(override val value: UByte) : UByteEnum {
-    FPS_30(0U),
-    FPS_90(1U);
+    FPS_240(0U),
+    FPS_120(1U),
+    FPS_100(2U),
+    FPS_60(5U),
+    FPS_50(6U),
+    FPS_30(8U),
+    FPS_25(9U),
+    FPS_24(10U),
+    FPS_200(13U);
 
     companion object : IUByteEnumCompanion<Fps> {
         override fun fromUByte(value: UByte): Fps = entries.first { it.value == value }
     }
 }
 
-enum class VideoLens(override val value: UByte) : UByteEnum {
-    WIDE(0U);
+enum class VideoFov(override val value: UByte) : UByteEnum {
+    WIDE(0U),
+    NARROW(2U),
+    SUPERVIEW(3U),
+    LINEAR(4U),
+    MAX_SUPERVIEW(7U),
+    LINEAR_HORIZON_LEVELING(8U),
+    HYPERVIEW(9U),
+    LINEAR_HORIZON_LOCK(10U),
+    MAX_HYPERVIEW(11U),
+    ULTRA_SUPERVIEW(12U),
+    ULTRA_WIDE(13U),
+    ULTRA_HYPERVIEW(104U);
 
-    companion object : IUByteEnumCompanion<VideoLens> {
-        override fun fromUByte(value: UByte): VideoLens = entries.first { it.value == value }
+    companion object : IUByteEnumCompanion<VideoFov> {
+        override fun fromUByte(value: UByte): VideoFov = entries.first { it.value == value }
     }
 }
 
@@ -83,7 +101,7 @@ enum class SettingId(override val value: UByte) : UByteEnum {
     RESOLUTION(2U),
     FPS(3U),
     LED(91U),
-    VIDEO_LENS(121U);
+    VIDEO_FOV(121U);
 
     companion object : IUByteEnumCompanion<SettingId> {
         override fun fromUByte(value: UByte) = entries.first { it.value == value }
@@ -92,7 +110,8 @@ enum class SettingId(override val value: UByte) : UByteEnum {
 
 enum class StatusId(override val value: UByte) : UByteEnum {
     IS_BUSY(8U),
-    IS_ENCODING(10U);
+    IS_ENCODING(10U),
+    BATTERY_LEVEL(70U);
 
     companion object : IUByteEnumCompanion<StatusId> {
         override fun fromUByte(value: UByte) = entries.first { it.value == value }

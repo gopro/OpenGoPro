@@ -8,6 +8,9 @@ import util.extensions.toBoolean
 @OptIn(ExperimentalUnsignedTypes::class)
 private fun toBoolean(data: UByteArray): Boolean = data.last().toBoolean()
 
+@OptIn(ExperimentalUnsignedTypes::class)
+private fun toInt8(data: UByteArray): Int = data.last().toInt()
+
 /**
  * Container for all per-status-ID wrappers
  *
@@ -33,4 +36,11 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#encoding-10)
      */
     val isEncoding = Status(StatusId.IS_ENCODING, marshaller, ::toBoolean)
+
+    /**
+     * Battery level in percentage
+     *
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#internal-battery-percentage-70)
+     */
+    val batteryLevel = Status(StatusId.BATTERY_LEVEL, marshaller, ::toInt8)
 }

@@ -5,6 +5,7 @@ import domain.queries.Setting
 import entity.queries.Fps
 import entity.queries.Resolution
 import entity.queries.SettingId
+import entity.queries.VideoFov
 
 /**
  * Container for all per-setting-ID wrappers
@@ -30,4 +31,11 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
      * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#frames-per-second-3)
      */
     val fps = Setting(SettingId.FPS, Fps, marshaller)
+
+    /**
+     * Field of view
+     *
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121)
+     */
+    val fov = Setting(SettingId.VIDEO_FOV, VideoFov, marshaller)
 }
