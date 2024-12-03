@@ -5,46 +5,46 @@ import entity.communicator.CommandId
 import entity.communicator.FeatureId
 import entity.communicator.QueryId
 import entity.communicator.responseProtobufIds
+import entity.network.ble.GpUuid
 import entity.queries.SettingId
 import entity.queries.StatusId
-import entity.network.ble.GpUuid
 
 
 internal sealed interface ResponseId {
-    // TODO review this. it's messy.
-    fun shouldBeMatchedAsSynchronousResponse(): Boolean
-    fun shouldBeForwardedAsNotification(): Boolean
+    val shouldBeMatchedAsSynchronousResponse: Boolean
+    val shouldBeForwardedAsNotification: Boolean
 
     data class Protobuf(val featureId: FeatureId, val actionId: ActionId) : ResponseId {
-        override fun shouldBeMatchedAsSynchronousResponse() = true
-        override fun shouldBeForwardedAsNotification() = true
+        override val shouldBeMatchedAsSynchronousResponse = true
+        override val shouldBeForwardedAsNotification = true
         override fun toString() = "Protobuf Response: $featureId::$actionId"
     }
 
     data class Command(val id: CommandId) : ResponseId {
-        override fun shouldBeMatchedAsSynchronousResponse() = true
-        override fun shouldBeForwardedAsNotification() = true
+        override val shouldBeMatchedAsSynchronousResponse = true
+        override val shouldBeForwardedAsNotification = true
         override fun toString(): String = "Command Response: $id"
     }
 
     data class Setting(val id: SettingId) : ResponseId {
-        override fun shouldBeMatchedAsSynchronousResponse() = true
-        override fun shouldBeForwardedAsNotification() = true
+        override val shouldBeMatchedAsSynchronousResponse = true
+        override val shouldBeForwardedAsNotification = true
         override fun toString(): String = "Set Setting Response: $id"
     }
 
     open class Query(val id: QueryId) : ResponseId {
         override fun toString(): String = "Query Response: $id"
 
-        override fun shouldBeMatchedAsSynchronousResponse() = !shouldBeForwardedAsNotification()
-        override fun shouldBeForwardedAsNotification(): Boolean = when(id) {
+        final override val shouldBeForwardedAsNotification = when (id) {
             QueryId.ASYNC_SETTING_VALUE_NOTIFICATION,
             QueryId.ASYNC_STATUS_VALUE_NOTIFICATION,
             QueryId.ASYNC_SETTING_CAPABILITY_NOTIFICATION -> true
+
             else -> false
         }
+        override val shouldBeMatchedAsSynchronousResponse = !shouldBeForwardedAsNotification
 
-        fun isSetting(): Boolean = when (id) {
+        val isSetting = when (id) {
             QueryId.GET_SETTING_VALUES,
             QueryId.GET_SETTING_CAPABILITIES,
             QueryId.ASYNC_SETTING_CAPABILITY_NOTIFICATION,
@@ -57,13 +57,21 @@ internal sealed interface ResponseId {
             else -> false
         }
 
-        fun isStatus(): Boolean = when (id) {
+        val isStatus = when (id) {
             QueryId.GET_STATUS_VALUES,
             QueryId.ASYNC_STATUS_VALUE_NOTIFICATION,
             QueryId.UNREGISTER_STATUS_VALUE_UPDATES,
             QueryId.REGISTER_STATUS_VALUE_UPDATES -> true
 
             else -> false
+        }
+
+        val shouldBeSliced = when (id) {
+            QueryId.GET_SETTING_CAPABILITIES,
+            QueryId.ASYNC_SETTING_CAPABILITY_NOTIFICATION,
+            QueryId.REGISTER_SETTING_CAPABILITY_UPDATES -> false
+
+            else -> true
         }
     }
 

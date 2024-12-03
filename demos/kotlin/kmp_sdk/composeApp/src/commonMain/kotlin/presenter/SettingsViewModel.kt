@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class SettingsViewModel(
     appPreferences: IAppPreferences,
     wsdk: Wsdk,
-) : BaseConnectedViewModel(appPreferences, wsdk, "AccessPointViewModel") {
+) : BaseConnectedViewModel(appPreferences, wsdk, "SettingsViewModel") {
     private var _currentResolution = MutableStateFlow(Resolution.RES_1080)
     val currentResolution = _currentResolution.asStateFlow()
 
@@ -62,6 +62,7 @@ class SettingsViewModel(
 
     override fun onStart() {
         viewModelScope.launch {
+
             gopro.settings.resolution.registerValueUpdate().getOrThrow().let {
                 it.collect { resolution -> _currentResolution.update { resolution } }
             }

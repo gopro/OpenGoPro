@@ -49,7 +49,7 @@ internal class BleCommunicator(
     override val connection: ConnectionDescriptor.Ble,
     dispatcher: CoroutineDispatcher
 ) : ICommunicator<ConnectionDescriptor.Ble>(),
-    IGpCommonBase by GpCommonBase("BleCommunicator", dispatcher) {
+    IGpCommonBase by GpCommonBase("BleCommunicator", dispatcher, shouldEnableTraceLog = true) {
     override val communicationType = CommunicationType.BLE
 
     private val device = connection.device
@@ -80,54 +80,73 @@ internal class BleCommunicator(
 
     private suspend fun routeResponse(response: IGpBleResponse) {
         when (val responseId = response.id) {
-            // Setting and Status queries may contain multiple responses so need to be muxed into those
-            // responses here.
             is ResponseId.Query -> {
-                if (responseId.isSetting()) {
-                    response.payload.drop(2).toTlvMap().forEach { (settingId, settingValue) ->
-                        traceLog("4. Emitting accumulated response $responseId")
-                        val responseIdAsSetting = ResponseId.QuerySetting(
-                            responseId.id,
-                            SettingId.fromUByte(settingId)
-                        )
+                // Setting and Status queries may contain multiple responses so need to be sliced into those
+                // responses here.
+                if (responseId.shouldBeSliced) {
+                    response.payload.drop(2).toTlvMap().forEach { (id, value) ->
+                        val slicedResponseId = if (responseId.isSetting) {
+                            ResponseId.QuerySetting(
+                                responseId.id,
+                                SettingId.fromUByte(id)
+                            )
+                        } else {
+                            ResponseId.QueryStatus(
+                                responseId.id,
+                                StatusId.fromUByte(id)
+                            )
+                        }
+                        traceLog("4. Emitting accumulated response $slicedResponseId")
                         receivedResponses.emit(
                             ResponseFlowElement(
-                                responseIdAsSetting,
+                                slicedResponseId,
                                 Result.success(object : IGpBleResponse {
                                     override val uuid = response.uuid
-                                    override val payload = settingValue
-                                    override val id = responseIdAsSetting
+                                    override val payload = value
+                                    override val id = slicedResponseId
                                 })
                             )
                         )
                     }
-                } else if (responseId.isStatus()) {
-                    response.payload.drop(2).toTlvMap().forEach { (statusId, statusValue) ->
-                        traceLog("4. Emitting accumulated response $responseId")
-                        val responseIdAsStatus = ResponseId.QueryStatus(
-                            responseId.id,
-                            StatusId.fromUByte(statusId)
-                        )
-                        receivedResponses.emit(
-                            ResponseFlowElement(
-                                responseIdAsStatus,
-                                Result.success(object : IGpBleResponse {
-                                    override val uuid = response.uuid
-                                    override val payload = statusValue
-                                    override val id = responseIdAsStatus
-                                })
+                }
+                // Others aren't sliced. But still need to be adapted to setting / status.
+                else {
+                    val adaptedResponseId = response.payload[2].let { id ->
+                        if (responseId.isSetting) {
+                            ResponseId.QuerySetting(
+                                responseId.id,
+                                SettingId.fromUByte(id),
                             )
-                        )
+                        } else {
+                            ResponseId.QueryStatus(
+                                responseId.id,
+                                StatusId.fromUByte(id)
+                            )
+                        }
                     }
-                } else {
-                    throw Exception("It should be impossible for a query responseID to not be a setting or status.")
+                    traceLog("4. Emitting accumulated response $adaptedResponseId")
+                    receivedResponses.emit(
+                        ResponseFlowElement(
+                            adaptedResponseId,
+                            Result.success(object : IGpBleResponse {
+                                override val uuid = response.uuid
+                                override val payload = response.payload.drop(2).toUByteArray()
+                                override val id = adaptedResponseId
+                            })
+                        )
+                    )
                 }
             }
 
             // Everything else just gets forwarded
             else -> {
-                traceLog("4. Emitting accumulated response $responseId")
-                receivedResponses.emit(ResponseFlowElement(responseId, Result.success(response)))
+                traceLog("4. Emitting accumulated response ${response.id}")
+                receivedResponses.emit(
+                    ResponseFlowElement(
+                        response.id,
+                        Result.success(response)
+                    )
+                )
             }
         }
     }
@@ -182,7 +201,7 @@ internal class BleCommunicator(
                     }
                     .first { response ->
                         traceLog("5. Checking received response ${response.id} vs expected $responseId")
-                        (response.id == responseId) && response.id.shouldBeMatchedAsSynchronousResponse()
+                        (response.id == responseId) && response.id.shouldBeMatchedAsSynchronousResponse
                     }.result.map { response ->
                         traceLog("6. Returning accumulated response $responseId")
                         response.payload
@@ -279,7 +298,7 @@ internal class BleCommunicator(
         logger.d("Registering to receive updates for $id")
         return Result.success(receivedResponses
             .filter {
-                (it.result.isSuccess) && (it.id == id) && (it.id.shouldBeForwardedAsNotification())
+                (it.result.isSuccess) && (it.id == id) && (it.id.shouldBeForwardedAsNotification)
             }
             .map {
                 it.result.getOrThrow().let { notification ->

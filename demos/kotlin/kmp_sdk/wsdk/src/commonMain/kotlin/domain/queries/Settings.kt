@@ -96,13 +96,16 @@ class Setting<T> internal constructor(
     private inner class RegisterForSettingCapabilityUpdates :
         BaseOperation<Flow<List<T>>>("Register Setting Capability Updates::${settingId.name}") {
 
-        // TODO where to slice?
         override suspend fun execute(communicator: BleCommunicator): Result<Flow<List<T>>> {
-            // We only get the current value on the initial query. So don't emit it as capabilities.
-            communicator.executeQuery(
-                QueryId.REGISTER_SETTING_CAPABILITY_UPDATES,
-                settingId
-            ).onFailure { return Result.failure(it) }
+            val initialCapabilities = communicator.executeQuery(
+                QueryId.REGISTER_SETTING_CAPABILITY_UPDATES, settingId
+            ).fold(
+                onSuccess = {
+                    it.drop(2).filterIndexed { index, _ -> index % 3 == 0 }
+                        .map { byte -> byteTransformer.fromUByte(byte) }
+                },
+                onFailure = { return Result.failure(it) },
+            )
 
             // Now actually register to receive notifications
             return communicator.registerUpdate(
@@ -110,7 +113,7 @@ class Setting<T> internal constructor(
             ).map { flow ->
                 flow.map {
                     it.payload.map { byte -> byteTransformer.fromUByte(byte) }
-                }
+                }.onStart { emit(initialCapabilities) }
             }
         }
     }

@@ -70,7 +70,10 @@ enum class Fps(override val value: UByte) : UByteEnum {
     FPS_30(8U),
     FPS_25(9U),
     FPS_24(10U),
-    FPS_200(13U);
+    FPS_200(13U),
+    FPS_400(15U),
+    FPS_360(16U),
+    FPS_300(17U);
 
     companion object : IUByteEnumCompanion<Fps> {
         override fun fromUByte(value: UByte): Fps = entries.first { it.value == value }
