@@ -35,7 +35,7 @@ fun MediaScreen(
 
     CommonTopBar(
         navController = navController,
-        title = Screen.Camera.route,
+        title = Screen.Media.route,
     ) { paddingValues ->
         Column(modifier.padding(paddingValues)) {
             DisposableEffect(viewModel) {

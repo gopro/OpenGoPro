@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 import presenter.AccessPointViewModel
 import presenter.CameraChooserViewModel
 import presenter.CameraViewModel
@@ -26,6 +27,7 @@ import ui.screens.connected.MediaScreen
 import ui.screens.connected.SettingsScreen
 import ui.screens.connected.WebcamScreen
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun RootNavGraph(
     navController: NavHostController = rememberNavController(),

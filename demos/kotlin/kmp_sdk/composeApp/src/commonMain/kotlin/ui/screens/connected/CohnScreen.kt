@@ -26,7 +26,7 @@ fun CohnScreen(
 
     CommonTopBar(
         navController = navController,
-        title = Screen.AccessPoint.route,
+        title = Screen.Cohn.route,
     ) { paddingValues ->
         DisposableEffect(viewModel) {
             viewModel.start()

@@ -41,7 +41,7 @@ fun SettingsScreen(
 
     CommonTopBar(
         navController = navController,
-        title = Screen.AccessPoint.route,
+        title = Screen.Settings.route,
     ) { paddingValues ->
         DisposableEffect(viewModel) {
             viewModel.start()
