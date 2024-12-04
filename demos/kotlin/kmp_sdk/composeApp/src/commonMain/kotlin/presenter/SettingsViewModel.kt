@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class SettingsViewModel(
     appPreferences: IAppPreferences,
@@ -62,8 +63,7 @@ class SettingsViewModel(
 
     override fun onStart() {
         viewModelScope.launch {
-
-            gopro.settings.resolution.registerValueUpdate().getOrThrow().let {
+            gopro.settings.resolution.registerValueUpdates().getOrThrow().let {
                 it.collect { resolution -> _currentResolution.update { resolution } }
             }
         }
@@ -73,7 +73,7 @@ class SettingsViewModel(
             }
         }
         viewModelScope.launch {
-            gopro.settings.fps.registerValueUpdate().getOrThrow().let {
+            gopro.settings.fps.registerValueUpdates().getOrThrow().let {
                 it.collect { fps -> _currentFps.update { fps } }
             }
         }
@@ -83,7 +83,7 @@ class SettingsViewModel(
             }
         }
         viewModelScope.launch {
-            gopro.settings.fov.registerValueUpdate().getOrThrow().let {
+            gopro.settings.fov.registerValueUpdates().getOrThrow().let {
                 it.collect { fov -> _currentFov.update { fov } }
             }
         }
@@ -97,12 +97,26 @@ class SettingsViewModel(
                 it.collect { battery -> _currentBattery.update { battery } }
             }
         }
-        // Just reuse the gopro's busy and ready
+        // Just reuse the gopro's busy and ready. In fact we can't unregister these because the
+        // facade relies on the. TODO need a layer above this to prevent this.
         viewModelScope.launch {
             gopro.isBusy.collect { isBusy -> _isBusy.update { isBusy } }
         }
         viewModelScope.launch {
             gopro.isEncoding.collect { isEncoding -> _isEncoding.update { isEncoding } }
+        }
+    }
+
+    override fun stop() {
+        runBlocking {
+            // TODO the response to these are not routed correctly
+//            gopro.settings.fov.unregisterValueUpdates()
+//            gopro.settings.fps.unregisterValueUpdates()
+//            gopro.settings.resolution.unregisterValueUpdates()
+//            gopro.settings.resolution.unregisterCapabilityUpdates()
+//            gopro.settings.fps.unregisterCapabilityUpdates()
+//            gopro.settings.fov.unregisterCapabilityUpdates()
+            super.stop()
         }
     }
 }

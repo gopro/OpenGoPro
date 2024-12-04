@@ -61,16 +61,18 @@ class WebcamViewModel(
     }
 
     override fun onStart() {
-        if (gopro.isBleAvailable) {
+        if (gopro.isHttpAvailable) {
             _state.update { WebcamUiState.Ready }
         } else {
-            _state.update { WebcamUiState.Error("BLE not available.") }
+            _state.update { WebcamUiState.Error("HTTP not available.") }
         }
     }
 
     override fun stop() {
-        statusPollJob?.cancel()
-        stopStream()
+        if (_state.value is WebcamUiState.Streaming) {
+            statusPollJob?.cancel()
+            stopStream()
+        }
         super.stop()
     }
 }

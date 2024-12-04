@@ -10,9 +10,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-sealed class MediaUiState(val name: String) {
-    data object Idle : MediaUiState("idle")
-    data object WaitingMediaSelection : MediaUiState("waiting media selection")
+sealed class MediaUiState(val message: String) {
+    data class Error(val error: String): MediaUiState("Error: $error")
+    data object Ready : MediaUiState("Waiting for user interaction")
+    data class RetrievingMedia(val media: MediaId): MediaUiState("Retrieving ${media.asPath}")
     data class ActivePhoto(val photo: MediaId, val metadata: MediaMetadata, val data: ByteArray) :
         MediaUiState("selected photo: ${photo.asPath}")
 
@@ -24,7 +25,7 @@ class MediaViewModel(
     appPreferences: IAppPreferences,
     wsdk: Wsdk,
 ) : BaseConnectedViewModel(appPreferences, wsdk, "MediaViewModel") {
-    private val _state = MutableStateFlow<MediaUiState>(MediaUiState.Idle)
+    private val _state = MutableStateFlow<MediaUiState>(MediaUiState.Error("not yet initialized"))
     val state = _state.asStateFlow()
 
     private val _mediaList = MutableStateFlow<List<MediaId>>(listOf())
@@ -42,12 +43,13 @@ class MediaViewModel(
                 }
             }
             _mediaList.update { mediaFileList }
-            _state.update { MediaUiState.WaitingMediaSelection }
+            _state.update { MediaUiState.Ready }
         }
     }
 
     fun getMedia(item: MediaId) {
         viewModelScope.launch {
+            _state.update { MediaUiState.RetrievingMedia(item) }
             val metaData = gopro.commands.getMediaMetadata(item).getOrThrow()
             if (item.isPhoto) {
                 val binary = gopro.commands.downloadMedia(item).getOrThrow()
@@ -61,6 +63,14 @@ class MediaViewModel(
             } else {
                 throw Exception("${item.asPath} is not photo or video. Not currently handled.")
             }
+        }
+    }
+
+    override fun onStart() {
+        if (gopro.isHttpAvailable) {
+            _state.update { MediaUiState.Ready }
+        } else {
+            _state.update { MediaUiState.Error("HTTP not available.") }
         }
     }
 }

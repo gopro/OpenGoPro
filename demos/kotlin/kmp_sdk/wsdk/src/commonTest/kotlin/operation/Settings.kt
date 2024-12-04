@@ -206,7 +206,7 @@ class TestSettings {
 
         // WHEN
         val settingUpdates = mutableListOf<Resolution>()
-        setting.registerValueUpdate()
+        setting.registerValueUpdates()
             .onSuccess { flow ->
                 flow
                     .take(4)

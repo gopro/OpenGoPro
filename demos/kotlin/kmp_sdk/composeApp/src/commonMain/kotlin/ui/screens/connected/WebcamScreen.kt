@@ -44,7 +44,7 @@ fun WebcamScreen(
             onDispose { viewModel.stop() }
         }
         Column(modifier.padding(paddingValues)) {
-            Text("State: $state")
+            Text("State: ${state.message}")
             when (state) {
                 WebcamUiState.Ready -> {
                     Button({ viewModel.startStream(protocol) }) { Text("Start Stream") }

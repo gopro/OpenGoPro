@@ -93,6 +93,13 @@ class Setting<T> internal constructor(
         }
     }
 
+    private inner class UnregisterForSettingValueUpdates :
+        BaseOperation<Unit>("Unregister Setting Value Updates::${settingId.name}") {
+
+        override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
+            communicator.executeQuery(QueryId.UNREGISTER_SETTING_VALUE_UPDATES, settingId).map { }
+    }
+
     private inner class RegisterForSettingCapabilityUpdates :
         BaseOperation<Flow<List<T>>>("Register Setting Capability Updates::${settingId.name}") {
 
@@ -113,6 +120,14 @@ class Setting<T> internal constructor(
                 }.onStart { emit(initialCapabilities) }
             }
         }
+    }
+
+    private inner class UnregisterForSettingCapabilityUpdates :
+        BaseOperation<Unit>("Unregister Setting Capability Updates::${settingId.name}") {
+
+        override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
+            communicator.executeQuery(QueryId.UNREGISTER_SETTING_CAPABILITY_UPDATES, settingId)
+                .map { }
     }
 
     /**
@@ -152,8 +167,11 @@ class Setting<T> internal constructor(
      *
      * @return continuous setting value updates
      */
-    suspend fun registerValueUpdate(): Result<Flow<T>> =
+    suspend fun registerValueUpdates(): Result<Flow<T>> =
         marshaller.marshal(RegisterForSettingValueUpdates()) { useCommunicator { _, _ -> CommunicationType.BLE } }
+
+    suspend fun unregisterValueUpdates(): Result<Unit> =
+        marshaller.marshal(UnregisterForSettingValueUpdates()) { useCommunicator { _, _ -> CommunicationType.BLE } }
 
     /**
      * Register for setting capability updates
@@ -164,4 +182,7 @@ class Setting<T> internal constructor(
      */
     suspend fun registerCapabilityUpdates(): Result<Flow<List<T>>> =
         marshaller.marshal(RegisterForSettingCapabilityUpdates()) { useCommunicator { _, _ -> CommunicationType.BLE } }
+
+    suspend fun unregisterCapabilityUpdates(): Result<Unit> =
+        marshaller.marshal(UnregisterForSettingCapabilityUpdates()) { useCommunicator { _, _ -> CommunicationType.BLE } }
 }

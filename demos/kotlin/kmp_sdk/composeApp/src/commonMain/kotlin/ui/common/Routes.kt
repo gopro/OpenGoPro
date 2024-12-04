@@ -12,6 +12,6 @@ sealed class Screen(val route: String) {
     data object Webcam: Screen("Webcam Streaming"), ConnectedScreen
     data object AccessPoint: Screen("Access Point"), ConnectedScreen
     data object Livestream: Screen("Livestreaming"), ConnectedScreen
-    data object Cohn: Screen("Cohn"), ConnectedScreen
+    data object Cohn: Screen("Camera on the Home Network"), ConnectedScreen
     data object Settings: Screen("Settings"), ConnectedScreen
 }

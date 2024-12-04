@@ -21,6 +21,7 @@ import presenter.MediaUiState
 import presenter.MediaViewModel
 import ui.common.Screen
 import ui.components.CommonTopBar
+import ui.components.IndeterminateCircularProgressIndicator
 import ui.components.PhotoDisplay
 
 @Composable
@@ -41,11 +42,21 @@ fun MediaScreen(
                 viewModel.start()
                 onDispose { viewModel.stop() }
             }
-            MediaListQueryButton { viewModel.getMediaList() }
-            MediaGrid(mediaList) { viewModel.getMedia(it) }
-            HorizontalDivider()
+            Text("State: ${state.message}")
+
+            // Always display user controls if not in error state
+            if (state !is MediaUiState.Error) {
+                MediaListQueryButton { viewModel.getMediaList() }
+                MediaGrid(mediaList) { viewModel.getMedia(it) }
+                HorizontalDivider()
+            }
+            // Display progress indicator if accessing media
+            if (state is MediaUiState.RetrievingMedia) {
+                IndeterminateCircularProgressIndicator()
+            }
+
+            // Display video / photo
             when (val s = state) {
-                is MediaUiState.Idle, MediaUiState.WaitingMediaSelection -> {}
                 is MediaUiState.ActivePhoto -> {
                     MediaMetadata(s.photo, s.metadata)
                     PhotoDisplay.FromBinary(modifier, s.data)
@@ -53,10 +64,11 @@ fun MediaScreen(
 
                 is MediaUiState.ActiveVideo -> {
                     MediaMetadata(s.video, s.metadata)
-                    // TODO put this back if / when we fix video display
+                    // TODO download and store videos to disk.
 //                    VideoPlayerWrapper.player.FromBinary(modifier, s.data)
                     PhotoDisplay.FromBinary(modifier, s.data)
                 }
+                else -> {}
             }
         }
     }

@@ -32,9 +32,9 @@ class ConnectWifiFeature internal constructor(private val context: IFeatureConte
         context.gopro.commands.setApMode(true).getOrThrow()
 
         // TODO. Trying to brute force fix wifi connection delays. It seems to be working...
-        // SO presumably there is some comeup period where the GoPro can not connect and does
+        // So presumably there is some come-up period where the GoPro can not connect and does
         // not gracefully disconnect.
-        delay(2000)
+        delay(5000)
 
         // Connect Wifi
         while (true) {
@@ -58,9 +58,9 @@ class ConnectWifiFeature internal constructor(private val context: IFeatureConte
             }
             // Toggle AP mode to try to recover
             context.gopro.commands.setApMode(false)
-            delay(2.toDuration(DurationUnit.SECONDS))
+            delay(2000)
             context.gopro.commands.setApMode(true)
-            delay(2.toDuration(DurationUnit.SECONDS))
+            delay(2000)
         }
     }
 }
