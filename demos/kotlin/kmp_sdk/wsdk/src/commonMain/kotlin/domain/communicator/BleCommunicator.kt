@@ -89,12 +89,12 @@ internal class BleCommunicator(
                         if (responseId.isSetting) {
                             ResponseId.QuerySetting(
                                 responseId.id,
-                                SettingId.fromUByte(key)
+                                SettingId.fromUByteArray(ubyteArrayOf(key))
                             )
                         } else {
                             ResponseId.QueryStatus(
                                 responseId.id,
-                                StatusId.fromUByte(key)
+                                StatusId.fromUByteArray(ubyteArrayOf(key))
                             )
                         }
                     }

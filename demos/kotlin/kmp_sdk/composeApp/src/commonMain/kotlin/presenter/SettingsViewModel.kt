@@ -3,9 +3,9 @@ package presenter
 import Wsdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
-import entity.queries.Fps
-import entity.queries.Resolution
-import entity.queries.VideoFov
+import entity.queries.FramesPerSecond
+import entity.queries.VideoResolution
+import entity.queries.VideoLens
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -16,22 +16,22 @@ class SettingsViewModel(
     appPreferences: IAppPreferences,
     wsdk: Wsdk,
 ) : BaseConnectedViewModel(appPreferences, wsdk, "SettingsViewModel") {
-    private var _currentResolution = MutableStateFlow(Resolution.RES_1080)
+    private var _currentResolution = MutableStateFlow(VideoResolution.NUM_1080)
     val currentResolution = _currentResolution.asStateFlow()
 
-    private var _resolutionCaps = MutableStateFlow<List<Resolution>>(listOf())
+    private var _resolutionCaps = MutableStateFlow<List<VideoResolution>>(listOf())
     val resolutionCaps = _resolutionCaps.asStateFlow()
 
-    private var _currentFps = MutableStateFlow(Fps.FPS_30)
+    private var _currentFps = MutableStateFlow(FramesPerSecond.NUM_30_0)
     val currentFps = _currentFps.asStateFlow()
 
-    private var _fpsCaps = MutableStateFlow<List<Fps>>(listOf())
+    private var _fpsCaps = MutableStateFlow<List<FramesPerSecond>>(listOf())
     val fpsCaps = _fpsCaps.asStateFlow()
 
-    private var _currentFov = MutableStateFlow(VideoFov.WIDE)
+    private var _currentFov = MutableStateFlow(VideoLens.WIDE)
     val currentFov = _currentFov.asStateFlow()
 
-    private var _fovCaps = MutableStateFlow<List<VideoFov>>(listOf())
+    private var _fovCaps = MutableStateFlow<List<VideoLens>>(listOf())
     val fovCaps = _fovCaps.asStateFlow()
 
     private var _currentBattery = MutableStateFlow(0)
@@ -43,52 +43,52 @@ class SettingsViewModel(
     private var _isBusy = MutableStateFlow(false)
     val isBusy = _isBusy.asStateFlow()
 
-    fun setResolution(resolution: Resolution) {
+    fun setResolution(resolution: VideoResolution) {
         viewModelScope.launch {
-            gopro.settings.resolution.setValue(resolution)
+            gopro.settings.videoResolution.setValue(resolution)
         }
     }
 
-    fun setFps(fps: Fps) {
+    fun setFps(fps: FramesPerSecond) {
         viewModelScope.launch {
-            gopro.settings.fps.setValue(fps)
+            gopro.settings.framesPerSecond.setValue(fps)
         }
     }
 
-    fun setFov(fov: VideoFov) {
+    fun setFov(fov: VideoLens) {
         viewModelScope.launch {
-            gopro.settings.fov.setValue(fov)
+            gopro.settings.videoLens.setValue(fov)
         }
     }
 
     override fun onStart() {
         viewModelScope.launch {
-            gopro.settings.resolution.registerValueUpdates().getOrThrow().let {
+            gopro.settings.videoResolution.registerValueUpdates().getOrThrow().let {
                 it.collect { resolution -> _currentResolution.update { resolution } }
             }
         }
         viewModelScope.launch {
-            gopro.settings.resolution.registerCapabilityUpdates().getOrThrow().let {
+            gopro.settings.videoResolution.registerCapabilityUpdates().getOrThrow().let {
                 it.collect { resolutions -> _resolutionCaps.update { resolutions } }
             }
         }
         viewModelScope.launch {
-            gopro.settings.fps.registerValueUpdates().getOrThrow().let {
+            gopro.settings.framesPerSecond.registerValueUpdates().getOrThrow().let {
                 it.collect { fps -> _currentFps.update { fps } }
             }
         }
         viewModelScope.launch {
-            gopro.settings.fps.registerCapabilityUpdates().getOrThrow().let {
+            gopro.settings.framesPerSecond.registerCapabilityUpdates().getOrThrow().let {
                 it.collect { fpses -> _fpsCaps.update { fpses } }
             }
         }
         viewModelScope.launch {
-            gopro.settings.fov.registerValueUpdates().getOrThrow().let {
+            gopro.settings.videoLens.registerValueUpdates().getOrThrow().let {
                 it.collect { fov -> _currentFov.update { fov } }
             }
         }
         viewModelScope.launch {
-            gopro.settings.fov.registerCapabilityUpdates().getOrThrow().let {
+            gopro.settings.videoLens.registerCapabilityUpdates().getOrThrow().let {
                 it.collect { fovs -> _fovCaps.update { fovs } }
             }
         }

@@ -7,19 +7,28 @@ import domain.communicator.bleCommunicator.ResponseId
 import entity.communicator.CommunicationType
 import entity.communicator.GpStatus
 import entity.communicator.QueryId
-import entity.queries.IUByteEnumCompanion
+import entity.queries.IUByteArrayCompanion
+import entity.queries.IValuedEnum
 import entity.queries.SettingId
-import entity.queries.UByteEnum
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import util.extensions.toUByteArray
 
-internal class UByteEnumTransformer<T>(
-    private val companion: IUByteEnumCompanion<T>
-) where T : Enum<T>, T : UByteEnum {
-    fun toUByte(value: T): UByte = value.value
-    fun fromUByte(data: UByte): T = companion.fromUByte(data)
+@OptIn(ExperimentalUnsignedTypes::class)
+internal class UByteArrayEnumTransformer<T>(
+    private val companion: IUByteArrayCompanion<T>
+) where T : Enum<T>, T : IValuedEnum<*> {
+    fun toUByteArray(value: T): UByteArray =
+        if (value.value is UByte) {
+            ubyteArrayOf(value.value as UByte)
+        } else if (value.value is ULong) {
+            (value.value as ULong).toUByteArray()
+        } else {
+            throw Exception("Only Enums of value type UByte and ULong can be converted to UByteArray")
+        }
+
+    fun fromUByteArray(data: UByteArray): T = companion.fromUByteArray(data)
 }
 
 /**
@@ -36,16 +45,16 @@ internal class UByteEnumTransformer<T>(
 @OptIn(ExperimentalUnsignedTypes::class)
 class Setting<T> internal constructor(
     private val settingId: SettingId,
-    enum: IUByteEnumCompanion<T>,
+    enum: IUByteArrayCompanion<T>,
     private val marshaller: IOperationMarshaller,
-) where T : Enum<T>, T : UByteEnum {
-    private val byteTransformer = UByteEnumTransformer(enum)
+) where T : Enum<T>, T : IValuedEnum<*> {
+    private val byteTransformer = UByteArrayEnumTransformer(enum)
 
     private inner class SetSettingValue(private val value: T) :
         BaseOperation<Unit>("Set Setting Value::${settingId.name}") {
         override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
             communicator.executeSetting(
-                settingId, byteTransformer.toUByte(value).toUByteArray()
+                settingId, byteTransformer.toUByteArray(value)
             ).map {
                 GpStatus.fromUByte(it.last()).let { status ->
                     if (status == GpStatus.SUCCESS) {
@@ -61,7 +70,7 @@ class Setting<T> internal constructor(
     private inner class GetSettingValue : BaseOperation<T>("Get Setting Value::${settingId.name}") {
         override suspend fun execute(communicator: BleCommunicator): Result<T> =
             communicator.executeQuery(QueryId.GET_SETTING_VALUES, settingId)
-                .map { byteTransformer.fromUByte(it.first()) }
+                .map { byteTransformer.fromUByteArray(it) }
     }
 
     private inner class GetSettingCapabilities :
@@ -69,7 +78,7 @@ class Setting<T> internal constructor(
 
         override suspend fun execute(communicator: BleCommunicator): Result<List<T>> =
             communicator.executeQuery(QueryId.GET_SETTING_CAPABILITIES, settingId)
-                .map { listOf(byteTransformer.fromUByte(TODO())) }
+                .map { listOf(byteTransformer.fromUByteArray(TODO())) }
     }
 
     private inner class RegisterForSettingValueUpdates :
@@ -80,14 +89,14 @@ class Setting<T> internal constructor(
             val currentValue =
                 communicator.executeQuery(QueryId.REGISTER_SETTING_VALUE_UPDATES, settingId).fold(
                     onFailure = { return Result.failure(it) },
-                    onSuccess = { byteTransformer.fromUByte(it.first()) },
+                    onSuccess = { byteTransformer.fromUByteArray(it) },
                 )
 
             // Now actually register to receive notifications
             return communicator.registerUpdate(
                 ResponseId.QuerySetting(QueryId.ASYNC_SETTING_VALUE_NOTIFICATION, settingId)
             ).map { flow ->
-                flow.map { byteTransformer.fromUByte(it.payload.last()) }
+                flow.map { byteTransformer.fromUByteArray(it.payload) }
                     .onStart { emit(currentValue) }
             }
         }
@@ -107,7 +116,7 @@ class Setting<T> internal constructor(
             val initialCapabilities = communicator.executeQuery(
                 QueryId.REGISTER_SETTING_CAPABILITY_UPDATES, settingId
             ).fold(
-                onSuccess = { it.map { byte -> byteTransformer.fromUByte(byte) } },
+                onSuccess = { it.map { byte -> byteTransformer.fromUByteArray(ubyteArrayOf(byte)) } },
                 onFailure = { return Result.failure(it) },
             )
 
@@ -116,7 +125,7 @@ class Setting<T> internal constructor(
                 ResponseId.QuerySetting(QueryId.ASYNC_SETTING_CAPABILITY_NOTIFICATION, settingId)
             ).map { flow ->
                 flow.map {
-                    it.payload.map { byte -> byteTransformer.fromUByte(byte) }
+                    it.payload.map { byte -> byteTransformer.fromUByteArray(ubyteArrayOf(byte)) }
                 }.onStart { emit(initialCapabilities) }
             }
         }

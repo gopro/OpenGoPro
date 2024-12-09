@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
 import entity.communicator.CommunicationType
 import entity.operation.CohnState
-import entity.queries.Resolution
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

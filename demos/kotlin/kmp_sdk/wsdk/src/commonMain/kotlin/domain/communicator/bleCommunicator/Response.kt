@@ -101,7 +101,7 @@ internal fun decipherResponse(message: IGpBleResponse): ResponseId {
                 ?: throw Exception("Unexpected command ID ${message.payload[0]}")
         )
 
-        GpUuid.CQ_SETTINGS_RESP -> ResponseId.Setting(SettingId.fromUByte(message.payload[0]))
+        GpUuid.CQ_SETTINGS_RESP -> ResponseId.Setting(SettingId.fromUByteArray(message.payload))
 
         GpUuid.CQ_QUERY_RESP -> ResponseId.Query(QueryId.fromUByte(message.payload[0]))
 

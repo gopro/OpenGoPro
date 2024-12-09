@@ -1,10 +1,9 @@
 import domain.communicator.BleCommunicator
 import domain.communicator.bleCommunicator.bleFragment
-import entity.queries.Resolution
 import entity.network.ble.BleNotification
 import entity.network.ble.GpUuid
+import entity.queries.VideoResolution
 import fakes.BleApiSpy
-import util.extensions.toTlvMap
 import fakes.buildFakeSettingsContainer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.onEach
@@ -13,6 +12,7 @@ import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import util.extensions.toTlvMap
 import vectors.asynchronousSettingValueUpdateMessage1
 import vectors.asynchronousSettingValueUpdateMessage2
 import vectors.getMultipleSettingsResponsePayload
@@ -42,11 +42,12 @@ class TestSettings {
                 BleNotification(GpUuid.CQ_SETTINGS_RESP.toUuid(), setSettingResponseMessage)
             )
         )
-        val fakeSettingsContainer = buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
-        val setting = fakeSettingsContainer.settingsContainer.resolution
+        val fakeSettingsContainer =
+            buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
+        val setting = fakeSettingsContainer.settingsContainer.videoResolution
 
         // WHEN
-        val result = setting.setValue(Resolution.RES_1080)
+        val result = setting.setValue(VideoResolution.NUM_1080)
 
         // THEN
         assertTrue { result.isSuccess }
@@ -56,6 +57,7 @@ class TestSettings {
                 assertEquals(GpUuid.CQ_SETTINGS.toUuid(), spy.uuid)
                 assertContentEquals(setSettingsRequestPayload, spy.requestData)
             }
+
             else -> assertTrue { false }
         }
     }
@@ -68,11 +70,12 @@ class TestSettings {
                 BleNotification(GpUuid.CQ_SETTINGS_RESP.toUuid(), setSettingResponseMessageFailure)
             )
         )
-        val fakeSettingsContainer = buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
-        val setting = fakeSettingsContainer.settingsContainer.resolution
+        val fakeSettingsContainer =
+            buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
+        val setting = fakeSettingsContainer.settingsContainer.videoResolution
 
         // WHEN
-        val result = setting.setValue(Resolution.RES_1080)
+        val result = setting.setValue(VideoResolution.NUM_1080)
 
         // THEN
         assertTrue { result.isFailure }
@@ -82,6 +85,7 @@ class TestSettings {
                 assertEquals(GpUuid.CQ_SETTINGS.toUuid(), spy.uuid)
                 assertContentEquals(setSettingsRequestPayload, spy.requestData)
             }
+
             else -> assertTrue { false }
         }
     }
@@ -96,7 +100,7 @@ class TestSettings {
 
         // THEN
         assertEquals(tlvMap.size, 1)
-        assertEquals(tlvMap.getValue(2U).first(), 9U.toUByte())
+        assertContentEquals(tlvMap.getValue(2U).first(), ubyteArrayOf(9U))
     }
 
     @Test
@@ -111,15 +115,16 @@ class TestSettings {
                     )
                 )
             )
-        val fakeSettingsContainer = buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
-        val setting = fakeSettingsContainer.settingsContainer.resolution
+        val fakeSettingsContainer =
+            buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
+        val setting = fakeSettingsContainer.settingsContainer.videoResolution
 
         // WHEN
         val result = setting.getValue()
 
         // THEN
         assertTrue { result.isSuccess }
-        assertEquals(result.getOrThrow(), Resolution.RES_1080)
+        assertEquals(result.getOrThrow(), VideoResolution.NUM_1080)
     }
 
     @Test
@@ -135,14 +140,15 @@ class TestSettings {
                         )
                     }.toList()
             )
-        val fakeSettingsContainer = buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
-        val setting = fakeSettingsContainer.settingsContainer.resolution
+        val fakeSettingsContainer =
+            buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
+        val setting = fakeSettingsContainer.settingsContainer.videoResolution
 
         // WHEN
         val result = setting.getValue()
         // THEN
         assertTrue { result.isSuccess }
-        assertEquals(result.getOrThrow(), Resolution.RES_1080)
+        assertEquals(result.getOrThrow(), VideoResolution.NUM_1080)
     }
 
     @Test
@@ -154,21 +160,22 @@ class TestSettings {
                 listOf(BleNotification(GpUuid.CQ_QUERY_RESP.toUuid(), getSettingResponseMessage2)),
                 listOf(BleNotification(GpUuid.CQ_QUERY_RESP.toUuid(), getSettingResponseMessage3)),
             )
-        val fakeSettingsContainer = buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
-        val setting = fakeSettingsContainer.settingsContainer.resolution
+        val fakeSettingsContainer =
+            buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
+        val setting = fakeSettingsContainer.settingsContainer.videoResolution
 
         // WHEN / THEN
         var result = setting.getValue()
         assertTrue { result.isSuccess }
-        assertEquals(result.getOrThrow(), Resolution.RES_1080)
+        assertEquals(result.getOrThrow(), VideoResolution.NUM_1080)
 
         result = setting.getValue()
         assertTrue { result.isSuccess }
-        assertEquals(result.getOrThrow(), Resolution.RES_720)
+        assertEquals(result.getOrThrow(), VideoResolution.NUM_720)
 
         result = setting.getValue()
         assertTrue { result.isSuccess }
-        assertEquals(result.getOrThrow(), Resolution.RES_4K_4_3)
+        assertEquals(result.getOrThrow(), VideoResolution.NUM_4K_4_3)
     }
 
     @Test
@@ -200,12 +207,13 @@ class TestSettings {
                 )
             ),
         )
-        val fakeSettingsContainer = buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
-        val setting = fakeSettingsContainer.settingsContainer.resolution
+        val fakeSettingsContainer =
+            buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
+        val setting = fakeSettingsContainer.settingsContainer.videoResolution
         var messageCount = 0
 
         // WHEN
-        val settingUpdates = mutableListOf<Resolution>()
+        val settingUpdates = mutableListOf<VideoResolution>()
         setting.registerValueUpdates()
             .onSuccess { flow ->
                 flow
@@ -235,9 +243,9 @@ class TestSettings {
 
         // THEN
         assertEquals(settingUpdates.size, 4)
-        assertEquals(settingUpdates[0], Resolution.RES_1080)
-        assertEquals(settingUpdates[1], Resolution.RES_1080)
-        assertEquals(settingUpdates[2], Resolution.RES_1080)
-        assertEquals(settingUpdates[3], Resolution.RES_720)
+        assertEquals(settingUpdates[0], VideoResolution.NUM_1080)
+        assertEquals(settingUpdates[1], VideoResolution.NUM_1080)
+        assertEquals(settingUpdates[2], VideoResolution.NUM_1080)
+        assertEquals(settingUpdates[3], VideoResolution.NUM_720)
     }
 }

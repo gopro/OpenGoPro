@@ -52,3 +52,27 @@ internal fun ByteArray.toPrettyHexString(): String = this.toUByteArray().toPrett
 
 internal fun Boolean.toInt(): Int = if (this) 1 else 0
 internal fun Int.toBoolean(): Boolean = this != 0
+
+@OptIn(ExperimentalUnsignedTypes::class)
+internal fun UByteArray.asInt64UB(): ULong {
+    if (this.size != 4) {
+        throw Exception("Array must be exactly 4 bytes to convert to Int64UB")
+    }
+    var value = 0UL
+    value += this[0].toULong()
+    value += this[1].toULong().shl(8)
+    value += this[2].toULong().shl(16)
+    value += this[3].toULong().shl(24)
+    return value
+}
+
+@OptIn(ExperimentalUnsignedTypes::class)
+internal fun ULong.toUByteArray(): UByteArray {
+    val mask = 0xFFUL
+    var value = ubyteArrayOf()
+    value += this.and(mask).toUByte()
+    value += this.and(mask.shl(8)).shr(8).toUByte()
+    value += this.and(mask.shl(16)).shr(16).toUByte()
+    value += this.and(mask.shl(24)).shr(24).toUByte()
+    return value
+}

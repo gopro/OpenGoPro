@@ -64,7 +64,7 @@ class TestBleCommunicator {
     @Test
     fun `decipher set setting response`() {
         // WHEN
-        val settingId = SettingId.RESOLUTION
+        val settingId = SettingId.VIDEO_RESOLUTION
         val response = buildResponse(GpUuid.CQ_SETTINGS_RESP, setSettingResponsePayload)
 
         // GIVEN
