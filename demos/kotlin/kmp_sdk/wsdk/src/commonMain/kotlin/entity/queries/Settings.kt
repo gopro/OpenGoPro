@@ -205,8 +205,6 @@ enum class VideoResolution(override val value: UByte) : IValuedEnum<UByte> {
     NUM_5_3K_8_7_V2(107U),
     NUM_4K_8_7_V2(108U),
     NUM_2_7K_4_3_V2(111U),
-    NUM_5_3K_21_9(35U),
-    NUM_4K_21_9(36U),
     NUM_4K_1_1(37U),
     NUM_900(38U),
     NUM_720(12U);
@@ -235,11 +233,7 @@ enum class FramesPerSecond(override val value: UByte) : IValuedEnum<UByte> {
     NUM_50_0(6U),
     NUM_30_0(8U),
     NUM_25_0(9U),
-    NUM_24_0(10U),
-    NUM_90_0(3U),
-    NUM_400_0(15U),
-    NUM_360_0(16U),
-    NUM_300_0(17U);
+    NUM_24_0(10U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<FramesPerSecond> {
@@ -292,11 +286,7 @@ enum class VideoLoopingInterval(override val value: UByte) : IValuedEnum<UByte> 
     NUM_120_MINUTES(4U),
     NUM_60_MINUTES(3U),
     NUM_20_MINUTES(2U),
-    NUM_5_MINUTES(1U),
-    NUM_30_MINUTES(9U),
-    NUM_10_MINUTES(7U),
-    NUM_3_MINUTES(6U),
-    NUM_1_MINUTE(5U);
+    NUM_5_MINUTES(1U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<VideoLoopingInterval> {
@@ -1213,9 +1203,7 @@ enum class VideoAspectRatio(override val value: UByte) : IValuedEnum<UByte> {
     NUM_4_3(0U),
     NUM_16_9(1U),
     NUM_9_16(4U),
-    NUM_8_7(3U),
-    NUM_21_9(5U),
-    NUM_1_1(6U);
+    NUM_8_7(3U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<VideoAspectRatio> {
@@ -1402,11 +1390,10 @@ enum class VideoLens(override val value: UByte) : IValuedEnum<UByte> {
     LINEAR(4U),
     LINEAR_HORIZON_LEVELING(8U),
     NARROW(2U),
-    ULTRA_WIDE(13U),
-    MAX_HYPERVIEW(11U),
     HYPERVIEW(9U),
     LINEAR_HORIZON_LOCK(10U),
-    ULTRA_LINEAR(14U),
+    MAX_HYPERVIEW(11U),
+    ULTRA_WIDE(13U),
     ULTRA_SUPERVIEW(12U),
     ULTRA_HYPERVIEW(104U);
 
@@ -1431,16 +1418,10 @@ enum class PhotoLens(override val value: UByte) : IValuedEnum<UByte> {
     LINEAR(102U),
     NARROW(19U),
     ULTRA_WIDE_12_MP(41U),
-    NUM_9MP_WIDE(15U),
-    NUM_9MP_LINEAR(37U),
-    NUM_17MP_ULTRA_LINEAR(48U),
-    NUM_17MP_ULTRA_WIDE(47U),
     WIDE_12_MP(0U),
-    NUM_17MP_WIDE(46U),
     WIDE_23_MP(27U),
     WIDE_27_MP(31U),
     LINEAR_27_MP(32U),
-    NUM_17MP_LINEAR(45U),
     LINEAR_23_MP(28U),
     LINEAR_12_MP(10U);
 
@@ -1991,8 +1972,6 @@ enum class Mode(override val value: UByte) : IValuedEnum<UByte> {
     STAR_TRAIL(29U),
     LIGHT_PAINTING(30U),
     VEHICLE_LIGHTS(31U),
-    POV(33U),
-    SELFIE(34U),
     BURST_SLO_MO(32U);
 
     @ExperimentalUnsignedTypes
@@ -2095,8 +2074,7 @@ enum class PhotoShutter(override val value: UByte) : IValuedEnum<UByte> {
     NUM_1_250(2U),
     NUM_1_500(3U),
     NUM_1_1000(4U),
-    NUM_1_2000(5U),
-    AUTO_CINEMATIC(6U);
+    NUM_1_2000(5U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<PhotoShutter> {
@@ -2740,16 +2718,6 @@ enum class EasyModeSpeed(override val value: UByte) : IValuedEnum<UByte> {
     NUM_1X_NORMAL_SPEED_1_1_25_FPS_4K_V2_(139U),
     NUM_2X_SLO_MO_SPEED_1_1_4K_60_FPS_V2_(140U),
     NUM_2X_SLO_MO_SPEED_1_1_4K_50_FPS_V2_(141U),
-    NUM_1X_NORMAL_SPEED_21_9_30_FPS_5_3K_V2_(142U),
-    NUM_1X_NORMAL_SPEED_21_9_25_FPS_5_3K_V2_(143U),
-    NUM_1X_NORMAL_SPEED_21_9_30_FPS_4K_V2_(146U),
-    NUM_1X_NORMAL_SPEED_21_9_25_FPS_4K_V2_(147U),
-    NUM_2X_SLO_MO_SPEED_21_9_5_3K_60_FPS_V2_(144U),
-    NUM_2X_SLO_MO_SPEED_21_9_5_3K_50_FPS_V2_(145U),
-    NUM_2X_SLO_MO_SPEED_21_9_4K_60_FPS_V2_(148U),
-    NUM_2X_SLO_MO_SPEED_21_9_4K_50_FPS_V2_(149U),
-    NUM_120_4X_SUPER_SLO_MO_SPEED_21_9_4K_V2_(150U),
-    NUM_100_4X_SUPER_SLO_MO_SPEED_21_9_4K_V2_(151U),
     NUM_1X_NORMAL_SPEED_30_FPS_4_3_5_3K_V2_(152U),
     NUM_1X_NORMAL_SPEED_25_FPS_4_3_5_3K_V2_(153U),
     NUM_1X_NORMAL_SPEED_30_FPS_4_3_4K_V2_(154U),
@@ -3020,8 +2988,7 @@ enum class MaxLensMod(override val value: UByte) : IValuedEnum<UByte> {
     STANDARD_LENS(10U),
     AUTO_DETECT(100U),
     MAX_LENS_2_5(3U),
-    MACRO(4U),
-    ANAMORPHIC(5U);
+    MACRO(4U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<MaxLensMod> {
@@ -3059,8 +3026,7 @@ enum class MaxLensModEnable(override val value: UByte) : IValuedEnum<UByte> {
  */
 enum class EasyNightPhoto(override val value: UByte) : IValuedEnum<UByte> {
     SUPER_PHOTO(0U),
-    NIGHT_PHOTO(1U),
-    BURST(2U);
+    NIGHT_PHOTO(1U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<EasyNightPhoto> {
@@ -3080,8 +3046,7 @@ enum class EasyNightPhoto(override val value: UByte) : IValuedEnum<UByte> {
 enum class MultiShotAspectRatio(override val value: UByte) : IValuedEnum<UByte> {
     NUM_4_3(0U),
     NUM_16_9(1U),
-    NUM_8_7(3U),
-    NUM_9_16(4U);
+    NUM_8_7(3U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<MultiShotAspectRatio> {
@@ -3106,7 +3071,6 @@ enum class Framing(override val value: UByte) : IValuedEnum<UByte> {
     VERTICAL_9_16_V2(104U),
     FULL_FRAME_8_7_V2(103U),
     FULL_FRAME_1_1_V2(106U),
-    ULTRA_WIDESCREEN_21_9_V2(105U),
     TRADITIONAL_4_3_V2(100U);
 
     @ExperimentalUnsignedTypes
@@ -3613,8 +3577,7 @@ enum class LensAttachment(override val value: UByte) : IValuedEnum<UByte> {
     AUTO_DETECT(100U),
     MAX_LENS_2_0(2U),
     MAX_LENS_2_5(3U),
-    MACRO(4U),
-    ANAMORPHIC(5U);
+    MACRO(4U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<LensAttachment> {
@@ -3881,7 +3844,6 @@ enum class VideoDigitalLensesV2(override val value: UByte) : IValuedEnum<UByte> 
     MAX_HYPERVIEW(11U),
     LINEAR_HORIZON_LOCK(10U),
     LINEAR_HORIZON_LEVELING(8U),
-    ULTRA_LINEAR(14U),
     SUPERVIEW(3U),
     HYPERVIEW(9U),
     NARROW(2U),
@@ -3910,15 +3872,11 @@ enum class PhotoDigitalLensesV2(override val value: UByte) : IValuedEnum<UByte> 
     NUM_9MP_WIDE(15U),
     NUM_9MP_LINEAR(37U),
     NUM_27MP_LINEAR(32U),
-    NUM_17MP_LINEAR(45U),
     NUM_23MP_LINEAR(28U),
     NUM_12MP_LINEAR(10U),
     NUM_12MP_WIDE(0U),
-    NUM_17MP_ULTRA_LINEAR(48U),
-    NUM_17MP_WIDE(46U),
     NUM_23MP_WIDE(27U),
-    NUM_27MP_WIDE(31U),
-    NUM_17MP_ULTRA_WIDE(47U);
+    NUM_27MP_WIDE(31U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<PhotoDigitalLensesV2> {
@@ -3961,7 +3919,6 @@ enum class VideoFraming(override val value: UByte) : IValuedEnum<UByte> {
     NUM_16_9(1U),
     NUM_8_7(3U),
     NUM_9_16(4U),
-    NUM_21_9(5U),
     NUM_1_1(6U);
 
     @ExperimentalUnsignedTypes
