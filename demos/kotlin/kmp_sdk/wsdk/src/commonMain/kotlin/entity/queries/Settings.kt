@@ -1,5 +1,13 @@
 package entity.queries
 
+/************************************************************************************************************
+ *
+ *
+ * WARNING!!! This file is auto-generated. Do not modify it manually
+ *
+ *
+ */
+
 import util.extensions.asInt64UB
 
 enum class SettingId(override val value: UByte) : IValuedEnum<UByte> {
@@ -163,7 +171,7 @@ enum class SettingId(override val value: UByte) : IValuedEnum<UByte> {
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<SettingId> {
-        override fun fromUByteArray(value: UByteArray) = entries.first { it.value == value.first() }
+        override fun fromUByteArray(value: UByteArray) = entries.first { it.value == value.last() }
     }
 }
 

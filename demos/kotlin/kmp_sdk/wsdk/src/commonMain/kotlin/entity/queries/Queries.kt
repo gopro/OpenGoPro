@@ -21,13 +21,3 @@ enum class BooleanEnum(override val value: UByte) : IValuedEnum<UByte> {
     }
 }
 
-enum class StatusId(override val value: UByte) : IValuedEnum<UByte> {
-    IS_BUSY(8U),
-    IS_ENCODING(10U),
-    BATTERY_LEVEL(70U);
-
-    @OptIn(ExperimentalUnsignedTypes::class)
-    companion object : IUByteArrayCompanion<StatusId> {
-        override fun fromUByteArray(value: UByteArray) = entries.first { it.value == value.last() }
-    }
-}

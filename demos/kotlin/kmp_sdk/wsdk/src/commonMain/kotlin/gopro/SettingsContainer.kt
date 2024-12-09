@@ -1,5 +1,13 @@
 package gopro
 
+/************************************************************************************************************
+ *
+ *
+ * WARNING!!! This file is auto-generated. Do not modify it manually
+ *
+ *
+ */
+
 import domain.api.IOperationMarshaller
 import domain.queries.Setting
 import entity.queries.*

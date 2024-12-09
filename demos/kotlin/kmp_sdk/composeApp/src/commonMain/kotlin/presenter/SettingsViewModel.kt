@@ -93,7 +93,7 @@ class SettingsViewModel(
             }
         }
         viewModelScope.launch {
-            gopro.statuses.batteryLevel.registerValueUpdate().getOrThrow().let {
+            gopro.statuses.internalBatteryPercentage.registerValueUpdate().getOrThrow().let {
                 it.collect { battery -> _currentBattery.update { battery } }
             }
         }
