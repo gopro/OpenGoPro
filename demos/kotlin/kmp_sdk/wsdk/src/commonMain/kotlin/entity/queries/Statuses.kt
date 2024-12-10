@@ -11,15 +11,12 @@ package entity.queries
 enum class StatusId(override val value: UByte) : IValuedEnum<UByte> {
     BATTERY_PRESENT(1U),
     INTERNAL_BATTERY_BARS(2U),
-    EXTERNAL_BATTERY(3U),
-    EXTERNAL_BATTERY_PERCENTAGE(4U),
     OVERHEATING(6U),
     BUSY(8U),
     QUICK_CAPTURE(9U),
     ENCODING(10U),
     LCD_LOCK(11U),
     VIDEO_ENCODING_DURATION(13U),
-    BROADCAST_DURATION(14U),
     WIRELESS_CONNECTIONS_ENABLED(17U),
     PAIRING_STATE(19U),
     LAST_PAIRING_TYPE(20U),
@@ -37,8 +34,6 @@ enum class StatusId(override val value: UByte) : IValuedEnum<UByte> {
     PRIMARY_STORAGE(33U),
     REMAINING_PHOTOS(34U),
     REMAINING_VIDEO_TIME(35U),
-    GROUP_PHOTOS(36U),
-    CHAPTERED_VIDEOS(37U),
     PHOTOS(38U),
     VIDEOS(39U),
     OTA(41U),
@@ -51,10 +46,6 @@ enum class StatusId(override val value: UByte) : IValuedEnum<UByte> {
     ACTIVE_HILIGHTS(58U),
     TIME_SINCE_LAST_HILIGHT(59U),
     MINIMUM_STATUS_POLL_PERIOD(60U),
-    ANALYTICS(61U),
-    ANALYTICS_SIZE(62U),
-    IN_CONTEXTUAL_MENU(63U),
-    REMAINING_TIMELAPSE(64U),
     LIVEVIEW_EXPOSURE_SELECT_MODE(65U),
     LIVEVIEW_Y(66U),
     LIVEVIEW_X(67U),
@@ -74,8 +65,6 @@ enum class StatusId(override val value: UByte) : IValuedEnum<UByte> {
     ROTATION(86U),
     ZOOM_WHILE_ENCODING(88U),
     FLATMODE(89U),
-    DEFAULT_PROTUNE(90U),
-    LOGS_READY(91U),
     VIDEO_PRESET(93U),
     PHOTO_PRESET(94U),
     TIMELAPSE_PRESET(95U),
@@ -92,7 +81,6 @@ enum class StatusId(override val value: UByte) : IValuedEnum<UByte> {
     HINDSIGHT(106U),
     SCHEDULED_CAPTURE_PRESET_ID(107U),
     SCHEDULED_CAPTURE(108U),
-    CUSTOM_PRESET(109U),
     DISPLAY_MOD_STATUS(110U),
     SD_CARD_WRITE_SPEED_ERROR(111U),
     SD_CARD_ERRORS(112U),
@@ -101,8 +89,7 @@ enum class StatusId(override val value: UByte) : IValuedEnum<UByte> {
     USB_CONNECTED(115U),
     USB_CONTROLLED(116U),
     SD_CARD_CAPACITY(117U),
-    PHOTO_INTERVAL_CAPTURE_COUNT(118U),
-    CAMERA_LENS_MOD(119U);
+    PHOTO_INTERVAL_CAPTURE_COUNT(118U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<StatusId> {

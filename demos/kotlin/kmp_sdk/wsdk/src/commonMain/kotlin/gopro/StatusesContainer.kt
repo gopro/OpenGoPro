@@ -41,7 +41,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is the system's internal battery present?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Battery-Present-1)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#battery-present-1)
      */
     val batteryPresent = Status(StatusId.BATTERY_PRESENT, marshaller,::toBoolean)
 
@@ -50,34 +50,16 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Rough approximation of internal battery level in bars (or charging)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Internal-Battery-Bars-2)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#internal-battery-bars-2)
      */
     val internalBatteryBars = Status(StatusId.INTERNAL_BATTERY_BARS, marshaller,::toInt8)
-
-    /**
-     * External Battery
-     *
-     * Is an external battery connected?
-     *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#External-Battery-3)
-     */
-    val externalBattery = Status(StatusId.EXTERNAL_BATTERY, marshaller,::toBoolean)
-
-    /**
-     * External Battery Percentage
-     *
-     * External battery power level as percentage
-     *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#External-Battery-Percentage-4)
-     */
-    val externalBatteryPercentage = Status(StatusId.EXTERNAL_BATTERY_PERCENTAGE, marshaller,::toInt8)
 
     /**
      * Overheating
      *
      * Is the system currently overheating?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Overheating-6)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#overheating-6)
      */
     val overheating = Status(StatusId.OVERHEATING, marshaller,::toBoolean)
 
@@ -86,7 +68,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is the camera busy?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Busy-8)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#busy-8)
      */
     val busy = Status(StatusId.BUSY, marshaller,::toBoolean)
 
@@ -95,7 +77,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is Quick Capture feature enabled?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Quick-Capture-9)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#quick-capture-9)
      */
     val quickCapture = Status(StatusId.QUICK_CAPTURE, marshaller,::toBoolean)
 
@@ -104,7 +86,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is the system currently encoding?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Encoding-10)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#encoding-10)
      */
     val encoding = Status(StatusId.ENCODING, marshaller,::toBoolean)
 
@@ -113,7 +95,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is LCD lock active?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#LCD-Lock-11)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#lcd-lock-11)
      */
     val lcdLock = Status(StatusId.LCD_LOCK, marshaller,::toBoolean)
 
@@ -122,32 +104,23 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * When encoding video, this is the duration (seconds) of the video so far; 0 otherwise
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Video-Encoding-Duration-13)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#video-encoding-duration-13)
      */
     val videoEncodingDuration = Status(StatusId.VIDEO_ENCODING_DURATION, marshaller,::toInt8)
-
-    /**
-     * Broadcast Duration
-     *
-     * When broadcasting (Live Stream), this is the broadcast duration (seconds) so far; 0 otherwise
-     *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Broadcast-Duration-14)
-     */
-    val broadcastDuration = Status(StatusId.BROADCAST_DURATION, marshaller,::toInt8)
 
     /**
      * Wireless Connections Enabled
      *
      * Are Wireless Connections enabled?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Wireless-Connections-Enabled-17)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#wireless-connections-enabled-17)
      */
     val wirelessConnectionsEnabled = Status(StatusId.WIRELESS_CONNECTIONS_ENABLED, marshaller,::toBoolean)
 
     /**
      * Pairing State
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Pairing-State-19)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#pairing-state-19)
      */
     val pairingState = Status(StatusId.PAIRING_STATE, marshaller,::toInt8)
 
@@ -156,7 +129,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * The last type of pairing in which the camera was engaged
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Last-Pairing-Type-20)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#last-pairing-type-20)
      */
     val lastPairingType = Status(StatusId.LAST_PAIRING_TYPE, marshaller,::toInt8)
 
@@ -165,7 +138,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Time since boot (milliseconds) of last successful pairing complete action
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Last-Pairing-Success-21)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#last-pairing-success-21)
      */
     val lastPairingSuccess = Status(StatusId.LAST_PAIRING_SUCCESS, marshaller,::toInt8)
 
@@ -174,7 +147,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * State of current scan for WiFi Access Points
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Wifi-Scan-State-22)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#wifi-scan-state-22)
      */
     val wifiScanState = Status(StatusId.WIFI_SCAN_STATE, marshaller,::toInt8)
 
@@ -183,7 +156,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Time since boot (milliseconds) that the WiFi Access Point scan completed
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Last-Wifi-Scan-Success-23)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#last-wifi-scan-success-23)
      */
     val lastWifiScanSuccess = Status(StatusId.LAST_WIFI_SCAN_SUCCESS, marshaller,::toInt8)
 
@@ -192,7 +165,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * WiFi AP provisioning state
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Wifi-Provisioning-State-24)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#wifi-provisioning-state-24)
      */
     val wifiProvisioningState = Status(StatusId.WIFI_PROVISIONING_STATE, marshaller,::toInt8)
 
@@ -201,7 +174,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Wireless remote control version
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Remote-Version-26)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#remote-version-26)
      */
     val remoteVersion = Status(StatusId.REMOTE_VERSION, marshaller,::toInt8)
 
@@ -210,7 +183,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is a wireless remote control connected?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Remote-Connected-27)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#remote-connected-27)
      */
     val remoteConnected = Status(StatusId.REMOTE_CONNECTED, marshaller,::toBoolean)
 
@@ -219,7 +192,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Wireless Pairing State. Each bit contains state information (see WirelessPairingStateFlags)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Pairing-State-(Legacy)-28)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#pairing-state-(legacy)-28)
      */
     val pairingState_Legacy_ = Status(StatusId.PAIRING_STATE_LEGACY_, marshaller,::toInt8)
 
@@ -229,7 +202,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      * SSID of the AP the camera is currently connected to when the camera is connected as a STA. When read via BLE,
      * value is big-endian byte-encoded int32.
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#AP-SSID-29)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#ap-ssid-29)
      */
     val apSsid = Status(StatusId.AP_SSID, marshaller,::toString
     )
@@ -239,7 +212,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * The camera's WiFi SSID. On BLE connection, value is big-endian byte-encoded int32
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#WiFi-SSID-30)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#wifi-ssid-30)
      */
     val wifiSsid = Status(StatusId.WIFI_SSID, marshaller,::toString
     )
@@ -249,7 +222,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * The number of wireless devices connected to the camera
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Connected-Devices-31)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#connected-devices-31)
      */
     val connectedDevices = Status(StatusId.CONNECTED_DEVICES, marshaller,::toInt8)
 
@@ -258,14 +231,14 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is Preview Stream enabled?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Preview-Stream-32)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#preview-stream-32)
      */
     val previewStream = Status(StatusId.PREVIEW_STREAM, marshaller,::toBoolean)
 
     /**
      * Primary Storage
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Primary-Storage-33)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#primary-storage-33)
      */
     val primaryStorage = Status(StatusId.PRIMARY_STORAGE, marshaller,::toInt8)
 
@@ -279,7 +252,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      * - the remaining timelapse capability if Setting 128 is set to Timelapse Photo
      * - the remaining nightlapse capability if Setting 128 is set to Nightlapse Photo
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Remaining-Photos-34)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#remaining-photos-34)
      */
     val remainingPhotos = Status(StatusId.REMAINING_PHOTOS, marshaller,::toInt8)
 
@@ -293,34 +266,16 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      * - the remaining timelapse capability if Setting 128 is set to Timelapse Video
      * - the remaining nightlapse capability if Setting 128 is set to Nightlapse Video
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Remaining-Video-Time-35)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#remaining-video-time-35)
      */
     val remainingVideoTime = Status(StatusId.REMAINING_VIDEO_TIME, marshaller,::toInt8)
-
-    /**
-     * Group Photos
-     *
-     * Total number of group photos on sdcard
-     *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Group-Photos-36)
-     */
-    val groupPhotos = Status(StatusId.GROUP_PHOTOS, marshaller,::toInt8)
-
-    /**
-     * Chaptered Videos
-     *
-     * Total number of chaptered videos on sdcard
-     *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Chaptered-Videos-37)
-     */
-    val chapteredVideos = Status(StatusId.CHAPTERED_VIDEOS, marshaller,::toInt8)
 
     /**
      * Photos
      *
      * Total number of photos on sdcard
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Photos-38)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#photos-38)
      */
     val photos = Status(StatusId.PHOTOS, marshaller,::toInt8)
 
@@ -329,7 +284,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Total number of videos on sdcard
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Videos-39)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#videos-39)
      */
     val videos = Status(StatusId.VIDEOS, marshaller,::toInt8)
 
@@ -338,7 +293,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * The current status of Over The Air (OTA) update
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#OTA-41)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#ota-41)
      */
     val ota = Status(StatusId.OTA, marshaller,::toInt8)
 
@@ -347,7 +302,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is there a pending request to cancel a firmware update download?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Pending-FW-Update-Cancel-42)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#pending-fw-update-cancel-42)
      */
     val pendingFwUpdateCancel = Status(StatusId.PENDING_FW_UPDATE_CANCEL, marshaller,::toBoolean)
 
@@ -356,7 +311,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is locate camera feature active?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Locate-45)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#locate-45)
      */
     val locate = Status(StatusId.LOCATE, marshaller,::toBoolean)
 
@@ -365,7 +320,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * The current timelapse interval countdown value (e.g. 5...4...3...2...1...)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Timelapse-Interval-Countdown-49)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#timelapse-interval-countdown-49)
      */
     val timelapseIntervalCountdown = Status(StatusId.TIMELAPSE_INTERVAL_COUNTDOWN, marshaller,::toInt8)
 
@@ -374,7 +329,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Remaining space on the sdcard in Kilobytes
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#SD-Card-Remaining-54)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#sd-card-remaining-54)
      */
     val sdCardRemaining = Status(StatusId.SD_CARD_REMAINING, marshaller,::toInt8)
 
@@ -383,7 +338,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is preview stream supported in current recording/mode/secondary-stream?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Preview-Stream-Available-55)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#preview-stream-available-55)
      */
     val previewStreamAvailable = Status(StatusId.PREVIEW_STREAM_AVAILABLE, marshaller,::toBoolean)
 
@@ -392,7 +347,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * WiFi signal strength in bars
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Wifi-Bars-56)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#wifi-bars-56)
      */
     val wifiBars = Status(StatusId.WIFI_BARS, marshaller,::toInt8)
 
@@ -401,7 +356,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * The number of hilights in currently-encoding video (value is set to 0 when encoding stops)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Active-Hilights-58)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#active-hilights-58)
      */
     val activeHilights = Status(StatusId.ACTIVE_HILIGHTS, marshaller,::toInt8)
 
@@ -410,7 +365,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Time since boot (milliseconds) of most recent hilight in encoding video (set to 0 when encoding stops)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Time-Since-Last-Hilight-59)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#time-since-last-hilight-59)
      */
     val timeSinceLastHilight = Status(StatusId.TIME_SINCE_LAST_HILIGHT, marshaller,::toInt8)
 
@@ -420,50 +375,14 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      * The minimum time between camera status updates (milliseconds). Best practice is to not poll for status more
      * often than this
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Minimum-Status-Poll-Period-60)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#minimum-status-poll-period-60)
      */
     val minimumStatusPollPeriod = Status(StatusId.MINIMUM_STATUS_POLL_PERIOD, marshaller,::toInt8)
 
     /**
-     * Analytics
-     *
-     * The current state of camera analytics
-     *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Analytics-61)
-     */
-    val analytics = Status(StatusId.ANALYTICS, marshaller,::toInt8)
-
-    /**
-     * Analytics Size
-     *
-     * The size (units??) of the analytics file
-     *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Analytics-Size-62)
-     */
-    val analyticsSize = Status(StatusId.ANALYTICS_SIZE, marshaller,::toInt8)
-
-    /**
-     * In Contextual Menu
-     *
-     * Is the camera currently in a contextual menu (e.g. Preferences)?
-     *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#In-Contextual-Menu-63)
-     */
-    val inContextualMenu = Status(StatusId.IN_CONTEXTUAL_MENU, marshaller,::toBoolean)
-
-    /**
-     * Remaining Timelapse
-     *
-     * How many seconds of Time Lapse Video can be captured with current settings before sdcard is full
-     *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Remaining-Timelapse-64)
-     */
-    val remainingTimelapse = Status(StatusId.REMAINING_TIMELAPSE, marshaller,::toInt8)
-
-    /**
      * Liveview Exposure Select Mode
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Liveview-Exposure-Select-Mode-65)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#liveview-exposure-select-mode-65)
      */
     val liveviewExposureSelectMode = Status(StatusId.LIVEVIEW_EXPOSURE_SELECT_MODE, marshaller,::toInt8)
 
@@ -472,7 +391,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Liveview Exposure Select: y-coordinate (percent)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Liveview-Y-66)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#liveview-y-66)
      */
     val liveviewY = Status(StatusId.LIVEVIEW_Y, marshaller,::toInt8)
 
@@ -481,7 +400,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Liveview Exposure Select: y-coordinate (percent)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Liveview-X-67)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#liveview-x-67)
      */
     val liveviewX = Status(StatusId.LIVEVIEW_X, marshaller,::toInt8)
 
@@ -490,7 +409,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Does the camera currently have a GPS lock?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#GPS-Lock-68)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#gps-lock-68)
      */
     val gpsLock = Status(StatusId.GPS_LOCK, marshaller,::toBoolean)
 
@@ -499,7 +418,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is AP mode enabled?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#AP-Mode-69)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#ap-mode-69)
      */
     val apMode = Status(StatusId.AP_MODE, marshaller,::toBoolean)
 
@@ -508,14 +427,14 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Internal battery level as percentage
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Internal-Battery-Percentage-70)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#internal-battery-percentage-70)
      */
     val internalBatteryPercentage = Status(StatusId.INTERNAL_BATTERY_PERCENTAGE, marshaller,::toInt8)
 
     /**
      * Microphone Accessory
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Microphone-Accessory-74)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#microphone-accessory-74)
      */
     val microphoneAccessory = Status(StatusId.MICROPHONE_ACCESSORY, marshaller,::toInt8)
 
@@ -524,14 +443,14 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Digital Zoom level as percentage
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Zoom-Level-75)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#zoom-level-75)
      */
     val zoomLevel = Status(StatusId.ZOOM_LEVEL, marshaller,::toInt8)
 
     /**
      * Wireless Band
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Wireless-Band-76)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#wireless-band-76)
      */
     val wirelessBand = Status(StatusId.WIRELESS_BAND, marshaller,::toInt8)
 
@@ -540,7 +459,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is Digital Zoom feature available?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Zoom-Available-77)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#zoom-available-77)
      */
     val zoomAvailable = Status(StatusId.ZOOM_AVAILABLE, marshaller,::toBoolean)
 
@@ -549,7 +468,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Are current video settings mobile friendly? (related to video compression and frame rate)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Mobile-Friendly-78)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#mobile-friendly-78)
      */
     val mobileFriendly = Status(StatusId.MOBILE_FRIENDLY, marshaller,::toBoolean)
 
@@ -558,7 +477,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is the camera currently in First Time Use (FTU) UI flow?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#FTU-79)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#ftu-79)
      */
     val ftu = Status(StatusId.FTU, marshaller,::toBoolean)
 
@@ -567,7 +486,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is 5GHz wireless band available?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#5GHZ-Available-81)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#5ghz-available-81)
      */
     val nUM5GhzAvailable = Status(StatusId.NUM_5GHZ_AVAILABLE, marshaller,::toBoolean)
 
@@ -576,7 +495,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is the system fully booted and ready to accept commands?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Ready-82)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#ready-82)
      */
     val ready = Status(StatusId.READY, marshaller,::toBoolean)
 
@@ -585,7 +504,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is the internal battery charged sufficiently to start Over The Air (OTA) update?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#OTA-Charged-83)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#ota-charged-83)
      */
     val otaCharged = Status(StatusId.OTA_CHARGED, marshaller,::toBoolean)
 
@@ -594,7 +513,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is the camera getting too cold to continue recording?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Cold-85)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#cold-85)
      */
     val cold = Status(StatusId.COLD, marshaller,::toBoolean)
 
@@ -603,7 +522,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Rotational orientation of the camera
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Rotation-86)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#rotation-86)
      */
     val rotation = Status(StatusId.ROTATION, marshaller,::toInt8)
 
@@ -612,7 +531,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is this camera model capable of zooming while encoding?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Zoom-while-Encoding-88)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#zoom-while-encoding-88)
      */
     val zoomWhileEncoding = Status(StatusId.ZOOM_WHILE_ENCODING, marshaller,::toBoolean)
 
@@ -621,34 +540,16 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Current Flatmode ID
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Flatmode-89)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#flatmode-89)
      */
     val flatmode = Status(StatusId.FLATMODE, marshaller,::toInt8)
-
-    /**
-     * Default Protune
-     *
-     * Are current flatmode's Protune settings factory default?
-     *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Default-Protune-90)
-     */
-    val defaultProtune = Status(StatusId.DEFAULT_PROTUNE, marshaller,::toBoolean)
-
-    /**
-     * Logs Ready
-     *
-     * Are system logs ready to be downloaded?
-     *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Logs-Ready-91)
-     */
-    val logsReady = Status(StatusId.LOGS_READY, marshaller,::toBoolean)
 
     /**
      * Video Preset
      *
      * Current Video Preset (ID)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Video-Preset-93)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#video-preset-93)
      */
     val videoPreset = Status(StatusId.VIDEO_PRESET, marshaller,::toInt8)
 
@@ -657,7 +558,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Current Photo Preset (ID)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Photo-Preset-94)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#photo-preset-94)
      */
     val photoPreset = Status(StatusId.PHOTO_PRESET, marshaller,::toInt8)
 
@@ -666,7 +567,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Current Time Lapse Preset (ID)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Timelapse-Preset-95)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#timelapse-preset-95)
      */
     val timelapsePreset = Status(StatusId.TIMELAPSE_PRESET, marshaller,::toInt8)
 
@@ -675,7 +576,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Current Preset Group (ID) (corresponds to ui_mode_groups in settings.json)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Preset-Group-96)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#preset-group-96)
      */
     val presetGroup = Status(StatusId.PRESET_GROUP, marshaller,::toInt8)
 
@@ -684,7 +585,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Current Preset (ID)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Preset-97)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#preset-97)
      */
     val preset = Status(StatusId.PRESET, marshaller,::toInt8)
 
@@ -693,7 +594,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Preset Modified Status, which contains an event ID and a Preset (Group) ID
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Preset-Modified-98)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#preset-modified-98)
      */
     val presetModified = Status(StatusId.PRESET_MODIFIED, marshaller,::toInt8)
 
@@ -702,7 +603,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * The number of Live Bursts can be captured with current settings before sdcard is full
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Remaining-Live-Bursts-99)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#remaining-live-bursts-99)
      */
     val remainingLiveBursts = Status(StatusId.REMAINING_LIVE_BURSTS, marshaller,::toInt8)
 
@@ -711,7 +612,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Total number of Live Bursts on sdcard
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Live-Bursts-100)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#live-bursts-100)
      */
     val liveBursts = Status(StatusId.LIVE_BURSTS, marshaller,::toInt8)
 
@@ -720,21 +621,21 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is Capture Delay currently active (i.e. counting down)?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Capture-Delay-Active-101)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#capture-delay-active-101)
      */
     val captureDelayActive = Status(StatusId.CAPTURE_DELAY_ACTIVE, marshaller,::toBoolean)
 
     /**
      * Media Mod State
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Media-Mod-State-102)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#media-mod-state-102)
      */
     val mediaModState = Status(StatusId.MEDIA_MOD_STATE, marshaller,::toInt8)
 
     /**
      * Time Warp Speed
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Time-Warp-Speed-103)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#time-warp-speed-103)
      */
     val timeWarpSpeed = Status(StatusId.TIME_WARP_SPEED, marshaller,::toInt8)
 
@@ -743,7 +644,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is the system's Linux core active?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Linux-Core-104)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#linux-core-104)
      */
     val linuxCore = Status(StatusId.LINUX_CORE, marshaller,::toBoolean)
 
@@ -752,7 +653,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Camera lens type (reflects changes to lens settings such as 162, 189, 194, ...)
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Lens-Type-105)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#lens-type-105)
      */
     val lensType = Status(StatusId.LENS_TYPE, marshaller,::toInt8)
 
@@ -761,14 +662,14 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is Video Hindsight Capture Active?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Hindsight-106)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#hindsight-106)
      */
     val hindsight = Status(StatusId.HINDSIGHT, marshaller,::toBoolean)
 
     /**
      * Scheduled Capture Preset ID
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Scheduled-Capture-Preset-ID-107)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#scheduled-capture-preset-id-107)
      */
     val scheduledCapturePresetId = Status(StatusId.SCHEDULED_CAPTURE_PRESET_ID, marshaller,::toInt8)
 
@@ -777,25 +678,16 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is Scheduled Capture set?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Scheduled-Capture-108)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#scheduled-capture-108)
      */
     val scheduledCapture = Status(StatusId.SCHEDULED_CAPTURE, marshaller,::toBoolean)
-
-    /**
-     * Custom Preset
-     *
-     * Is the camera in the process of creating a custom preset?
-     *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Custom-Preset-109)
-     */
-    val customPreset = Status(StatusId.CUSTOM_PRESET, marshaller,::toBoolean)
 
     /**
      * Display Mod Status
      *
      * Note that this is a bitmasked value.
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Display-Mod-Status-110)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#display-mod-status-110)
      */
     val displayModStatus = Status(StatusId.DISPLAY_MOD_STATUS, marshaller,::toInt8)
 
@@ -804,7 +696,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is there an SD Card minimum write speed error?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#SD-Card-Write-Speed-Error-111)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#sd-card-write-speed-error-111)
      */
     val sdCardWriteSpeedError = Status(StatusId.SD_CARD_WRITE_SPEED_ERROR, marshaller,::toBoolean)
 
@@ -813,7 +705,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Number of sdcard write speed errors since device booted
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#SD-Card-Errors-112)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#sd-card-errors-112)
      */
     val sdCardErrors = Status(StatusId.SD_CARD_ERRORS, marshaller,::toInt8)
 
@@ -822,7 +714,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is Turbo Transfer active?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Turbo-Transfer-113)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#turbo-transfer-113)
      */
     val turboTransfer = Status(StatusId.TURBO_TRANSFER, marshaller,::toBoolean)
 
@@ -831,7 +723,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Camera control status ID
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Camera-Control-ID-114)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#camera-control-id-114)
      */
     val cameraControlId = Status(StatusId.CAMERA_CONTROL_ID, marshaller,::toInt8)
 
@@ -840,7 +732,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Is the camera connected to a PC via USB?
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#USB-Connected-115)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#usb-connected-115)
      */
     val usbConnected = Status(StatusId.USB_CONNECTED, marshaller,::toBoolean)
 
@@ -849,7 +741,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Camera control over USB state
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#USB-Controlled-116)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#usb-controlled-116)
      */
     val usbControlled = Status(StatusId.USB_CONTROLLED, marshaller,::toInt8)
 
@@ -858,23 +750,14 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * Total SD card capacity in Kilobytes
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#SD-Card-Capacity-117)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#sd-card-capacity-117)
      */
     val sdCardCapacity = Status(StatusId.SD_CARD_CAPACITY, marshaller,::toInt8)
 
     /**
      * Photo Interval Capture Count
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Photo-Interval-Capture-Count-118)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#photo-interval-capture-count-118)
      */
-    val photoIntervalCaptureCount = Status(StatusId.PHOTO_INTERVAL_CAPTURE_COUNT, marshaller,::toInt8)
-
-    /**
-     * Camera Lens Mod
-     *
-     * Camera lens mod (reflects changes to lens settings such as 162, 189, 194, ...)
-     *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#Camera-Lens-Mod-119)
-     */
-    val cameraLensMod = Status(StatusId.CAMERA_LENS_MOD, marshaller,::toInt8);
+    val photoIntervalCaptureCount = Status(StatusId.PHOTO_INTERVAL_CAPTURE_COUNT, marshaller,::toInt8);
 }
