@@ -1,11 +1,6 @@
 import com.vanniktech.maven.publish.SonatypeHost
-import org.jetbrains.dokka.DokkaConfiguration
-import org.jetbrains.dokka.base.DokkaBase
-import org.jetbrains.dokka.base.DokkaBaseConfiguration
-import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.net.URL
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -159,39 +154,24 @@ buildscript {
 // Configures only the parent MultiModule task,
 // this will not affect subprojects
 tasks.dokkaHtml {
-    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-        customAssets = listOf(
-            file("../docs/assets/logo-icon.svg"),
-//            file("../docs/assets/my-style.css")
-        )
-    }
-    moduleName.set("Open GoPro SDK")
-//    includes.from("README.md")
-}
-
-tasks.withType<DokkaTaskPartial>().configureEach {
+//    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+//        customAssets = listOf(
+//            file("../docs/assets/logo-icon.svg"),
+////            file("../docs/assets/my-style.css")
+//        )
+//    }
     dokkaSourceSets {
         configureEach {
-            includes.from("README.md")
-            suppressInheritedMembers = true
+            moduleName.set("Open GoPro SDK")
+            includes.from("package.md")
 
-            documentedVisibilities.set(
-                setOf(
-                    DokkaConfiguration.Visibility.PUBLIC,
-                    DokkaConfiguration.Visibility.PROTECTED
-                )
-            )
-
-            // TODO what is this?
-            // Read docs for more details: https://kotlinlang.org/docs/dokka-gradle.html#source-link-configuration
-            sourceLink {
-                val exampleDir =
-                    "https://github.com/Kotlin/dokka/tree/master/examples/gradle/dokka-multimodule-example"
-
-                localDirectory.set(rootProject.projectDir)
-                remoteUrl.set(URL(exampleDir))
-                remoteLineSuffix.set("#L")
-            }
+//            suppressInheritedMembers = true
+//            documentedVisibilities.set(
+//                setOf(
+//                    DokkaConfiguration.Visibility.PUBLIC,
+//                    DokkaConfiguration.Visibility.PROTECTED
+//                )
+//            )
         }
     }
 }

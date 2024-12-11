@@ -65,3 +65,5 @@ coroutineScope.launch {
 ```
 
 ## Development
+
+# Package com.gopro.open_gopro
