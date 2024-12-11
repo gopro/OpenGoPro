@@ -1,10 +1,10 @@
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
-package com.gopro.open_gopro.entity.operation.proto
+package com.gopro.open_gopro.operations
 
 @pbandk.Export
 internal sealed class EnumProvisioning(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumProvisioning && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumProvisioning && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumProvisioning.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -22,16 +22,16 @@ internal sealed class EnumProvisioning(override val value: Int, override val nam
     internal object PROVISIONING_ERROR_UNSUPPORTED_TYPE : EnumProvisioning(11, "PROVISIONING_ERROR_UNSUPPORTED_TYPE")
     internal class UNRECOGNIZED(value: Int) : EnumProvisioning(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumProvisioning> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumProvisioning> by lazy { listOf(PROVISIONING_UNKNOWN, PROVISIONING_NEVER_STARTED, PROVISIONING_STARTED, PROVISIONING_ABORTED_BY_SYSTEM, PROVISIONING_CANCELLED_BY_USER, PROVISIONING_SUCCESS_NEW_AP, PROVISIONING_SUCCESS_OLD_AP, PROVISIONING_ERROR_FAILED_TO_ASSOCIATE, PROVISIONING_ERROR_PASSWORD_AUTH, PROVISIONING_ERROR_EULA_BLOCKING, PROVISIONING_ERROR_NO_INTERNET, PROVISIONING_ERROR_UNSUPPORTED_TYPE) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumProvisioning = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumProvisioning = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumProvisioning with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumProvisioning> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumProvisioning> by lazy { listOf(PROVISIONING_UNKNOWN, PROVISIONING_NEVER_STARTED, PROVISIONING_STARTED, PROVISIONING_ABORTED_BY_SYSTEM, PROVISIONING_CANCELLED_BY_USER, PROVISIONING_SUCCESS_NEW_AP, PROVISIONING_SUCCESS_OLD_AP, PROVISIONING_ERROR_FAILED_TO_ASSOCIATE, PROVISIONING_ERROR_PASSWORD_AUTH, PROVISIONING_ERROR_EULA_BLOCKING, PROVISIONING_ERROR_NO_INTERNET, PROVISIONING_ERROR_UNSUPPORTED_TYPE) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumProvisioning = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumProvisioning = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumProvisioning with name: $name")
     }
 }
 
 @pbandk.Export
 internal sealed class EnumScanning(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumScanning && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumScanning && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumScanning.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -43,16 +43,16 @@ internal sealed class EnumScanning(override val value: Int, override val name: S
     internal object SCANNING_SUCCESS : EnumScanning(5, "SCANNING_SUCCESS")
     internal class UNRECOGNIZED(value: Int) : EnumScanning(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumScanning> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumScanning> by lazy { listOf(SCANNING_UNKNOWN, SCANNING_NEVER_STARTED, SCANNING_STARTED, SCANNING_ABORTED_BY_SYSTEM, SCANNING_CANCELLED_BY_USER, SCANNING_SUCCESS) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumScanning = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumScanning = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumScanning with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumScanning> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumScanning> by lazy { listOf(SCANNING_UNKNOWN, SCANNING_NEVER_STARTED, SCANNING_STARTED, SCANNING_ABORTED_BY_SYSTEM, SCANNING_CANCELLED_BY_USER, SCANNING_SUCCESS) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumScanning = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumScanning = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumScanning with name: $name")
     }
 }
 
 @pbandk.Export
 internal sealed class EnumScanEntryFlags(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumScanEntryFlags && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumScanEntryFlags && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumScanEntryFlags.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -64,27 +64,27 @@ internal sealed class EnumScanEntryFlags(override val value: Int, override val n
     internal object SCAN_FLAG_UNSUPPORTED_TYPE : EnumScanEntryFlags(16, "SCAN_FLAG_UNSUPPORTED_TYPE")
     internal class UNRECOGNIZED(value: Int) : EnumScanEntryFlags(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumScanEntryFlags> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumScanEntryFlags> by lazy { listOf(SCAN_FLAG_OPEN, SCAN_FLAG_AUTHENTICATED, SCAN_FLAG_CONFIGURED, SCAN_FLAG_BEST_SSID, SCAN_FLAG_ASSOCIATED, SCAN_FLAG_UNSUPPORTED_TYPE) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumScanEntryFlags = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumScanEntryFlags = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumScanEntryFlags with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumScanEntryFlags> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumScanEntryFlags> by lazy { listOf(SCAN_FLAG_OPEN, SCAN_FLAG_AUTHENTICATED, SCAN_FLAG_CONFIGURED, SCAN_FLAG_BEST_SSID, SCAN_FLAG_ASSOCIATED, SCAN_FLAG_UNSUPPORTED_TYPE) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumScanEntryFlags = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumScanEntryFlags = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumScanEntryFlags with name: $name")
     }
 }
 
 @pbandk.Export
 internal data class NotifProvisioningState(
-    val provisioningState: com.gopro.open_gopro.entity.operation.proto.EnumProvisioning,
+    val provisioningState: com.gopro.open_gopro.operations.EnumProvisioning,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.NotifProvisioningState = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.NotifProvisioningState> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.NotifProvisioningState = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.NotifProvisioningState> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.NotifProvisioningState> {
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.NotifProvisioningState = com.gopro.open_gopro.entity.operation.proto.NotifProvisioningState.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.NotifProvisioningState> {
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.NotifProvisioningState = com.gopro.open_gopro.operations.NotifProvisioningState.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.NotifProvisioningState> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.NotifProvisioningState> = pbandk.MessageDescriptor(
             fullName = "open_gopro.NotifProvisioningState",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.NotifProvisioningState::class,
+            messageClass = com.gopro.open_gopro.operations.NotifProvisioningState::class,
             messageCompanion = this,
             fields = buildList(1) {
                 add(
@@ -92,9 +92,9 @@ internal data class NotifProvisioningState(
                         messageDescriptor = this@Companion::descriptor,
                         name = "provisioning_state",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumProvisioning.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumProvisioning.Companion, hasPresence = true),
                         jsonName = "provisioningState",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifProvisioningState::provisioningState
+                        value = com.gopro.open_gopro.operations.NotifProvisioningState::provisioningState
                     )
                 )
             }
@@ -104,21 +104,21 @@ internal data class NotifProvisioningState(
 
 @pbandk.Export
 internal data class NotifStartScanning(
-    val scanningState: com.gopro.open_gopro.entity.operation.proto.EnumScanning,
+    val scanningState: com.gopro.open_gopro.operations.EnumScanning,
     val scanId: Int? = null,
     val totalEntries: Int? = null,
     val totalConfiguredSsid: Int,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.NotifStartScanning = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.NotifStartScanning> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.NotifStartScanning = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.NotifStartScanning> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.NotifStartScanning> {
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.NotifStartScanning = com.gopro.open_gopro.entity.operation.proto.NotifStartScanning.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.NotifStartScanning> {
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.NotifStartScanning = com.gopro.open_gopro.operations.NotifStartScanning.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.NotifStartScanning> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.NotifStartScanning> = pbandk.MessageDescriptor(
             fullName = "open_gopro.NotifStartScanning",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.NotifStartScanning::class,
+            messageClass = com.gopro.open_gopro.operations.NotifStartScanning::class,
             messageCompanion = this,
             fields = buildList(4) {
                 add(
@@ -126,9 +126,9 @@ internal data class NotifStartScanning(
                         messageDescriptor = this@Companion::descriptor,
                         name = "scanning_state",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumScanning.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumScanning.Companion, hasPresence = true),
                         jsonName = "scanningState",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifStartScanning::scanningState
+                        value = com.gopro.open_gopro.operations.NotifStartScanning::scanningState
                     )
                 )
                 add(
@@ -138,7 +138,7 @@ internal data class NotifStartScanning(
                         number = 2,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "scanId",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifStartScanning::scanId
+                        value = com.gopro.open_gopro.operations.NotifStartScanning::scanId
                     )
                 )
                 add(
@@ -148,7 +148,7 @@ internal data class NotifStartScanning(
                         number = 3,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "totalEntries",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifStartScanning::totalEntries
+                        value = com.gopro.open_gopro.operations.NotifStartScanning::totalEntries
                     )
                 )
                 add(
@@ -158,7 +158,7 @@ internal data class NotifStartScanning(
                         number = 4,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "totalConfiguredSsid",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifStartScanning::totalConfiguredSsid
+                        value = com.gopro.open_gopro.operations.NotifStartScanning::totalConfiguredSsid
                     )
                 )
             }
@@ -171,15 +171,15 @@ internal data class RequestConnect(
     val ssid: String,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.RequestConnect = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestConnect> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.RequestConnect = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestConnect> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.RequestConnect> {
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.RequestConnect = com.gopro.open_gopro.entity.operation.proto.RequestConnect.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.RequestConnect> {
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.RequestConnect = com.gopro.open_gopro.operations.RequestConnect.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestConnect> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestConnect> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestConnect",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.RequestConnect::class,
+            messageClass = com.gopro.open_gopro.operations.RequestConnect::class,
             messageCompanion = this,
             fields = buildList(1) {
                 add(
@@ -189,7 +189,7 @@ internal data class RequestConnect(
                         number = 1,
                         type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                         jsonName = "ssid",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestConnect::ssid
+                        value = com.gopro.open_gopro.operations.RequestConnect::ssid
                     )
                 )
             }
@@ -208,15 +208,15 @@ internal data class RequestConnectNew(
     val dnsSecondary: pbandk.ByteArr? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.RequestConnectNew = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestConnectNew> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.RequestConnectNew = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestConnectNew> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.RequestConnectNew> {
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.RequestConnectNew = com.gopro.open_gopro.entity.operation.proto.RequestConnectNew.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.RequestConnectNew> {
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.RequestConnectNew = com.gopro.open_gopro.operations.RequestConnectNew.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestConnectNew> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestConnectNew> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestConnectNew",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.RequestConnectNew::class,
+            messageClass = com.gopro.open_gopro.operations.RequestConnectNew::class,
             messageCompanion = this,
             fields = buildList(7) {
                 add(
@@ -226,7 +226,7 @@ internal data class RequestConnectNew(
                         number = 1,
                         type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                         jsonName = "ssid",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestConnectNew::ssid
+                        value = com.gopro.open_gopro.operations.RequestConnectNew::ssid
                     )
                 )
                 add(
@@ -236,7 +236,7 @@ internal data class RequestConnectNew(
                         number = 2,
                         type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                         jsonName = "password",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestConnectNew::password
+                        value = com.gopro.open_gopro.operations.RequestConnectNew::password
                     )
                 )
                 add(
@@ -246,7 +246,7 @@ internal data class RequestConnectNew(
                         number = 3,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bytes(hasPresence = true),
                         jsonName = "staticIp",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestConnectNew::staticIp
+                        value = com.gopro.open_gopro.operations.RequestConnectNew::staticIp
                     )
                 )
                 add(
@@ -256,7 +256,7 @@ internal data class RequestConnectNew(
                         number = 4,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bytes(hasPresence = true),
                         jsonName = "gateway",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestConnectNew::gateway
+                        value = com.gopro.open_gopro.operations.RequestConnectNew::gateway
                     )
                 )
                 add(
@@ -266,7 +266,7 @@ internal data class RequestConnectNew(
                         number = 5,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bytes(hasPresence = true),
                         jsonName = "subnet",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestConnectNew::subnet
+                        value = com.gopro.open_gopro.operations.RequestConnectNew::subnet
                     )
                 )
                 add(
@@ -276,7 +276,7 @@ internal data class RequestConnectNew(
                         number = 6,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bytes(hasPresence = true),
                         jsonName = "dnsPrimary",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestConnectNew::dnsPrimary
+                        value = com.gopro.open_gopro.operations.RequestConnectNew::dnsPrimary
                     )
                 )
                 add(
@@ -286,7 +286,7 @@ internal data class RequestConnectNew(
                         number = 7,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bytes(hasPresence = true),
                         jsonName = "dnsSecondary",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestConnectNew::dnsSecondary
+                        value = com.gopro.open_gopro.operations.RequestConnectNew::dnsSecondary
                     )
                 )
             }
@@ -301,15 +301,15 @@ internal data class RequestGetApEntries(
     val scanId: Int,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.RequestGetApEntries = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestGetApEntries> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.RequestGetApEntries = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestGetApEntries> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.RequestGetApEntries> {
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.RequestGetApEntries = com.gopro.open_gopro.entity.operation.proto.RequestGetApEntries.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.RequestGetApEntries> {
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.RequestGetApEntries = com.gopro.open_gopro.operations.RequestGetApEntries.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestGetApEntries> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestGetApEntries> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestGetApEntries",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.RequestGetApEntries::class,
+            messageClass = com.gopro.open_gopro.operations.RequestGetApEntries::class,
             messageCompanion = this,
             fields = buildList(3) {
                 add(
@@ -319,7 +319,7 @@ internal data class RequestGetApEntries(
                         number = 1,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "startIndex",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestGetApEntries::startIndex
+                        value = com.gopro.open_gopro.operations.RequestGetApEntries::startIndex
                     )
                 )
                 add(
@@ -329,7 +329,7 @@ internal data class RequestGetApEntries(
                         number = 2,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "maxEntries",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestGetApEntries::maxEntries
+                        value = com.gopro.open_gopro.operations.RequestGetApEntries::maxEntries
                     )
                 )
                 add(
@@ -339,7 +339,7 @@ internal data class RequestGetApEntries(
                         number = 3,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "scanId",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestGetApEntries::scanId
+                        value = com.gopro.open_gopro.operations.RequestGetApEntries::scanId
                     )
                 )
             }
@@ -351,16 +351,16 @@ internal data class RequestGetApEntries(
 internal data class RequestReleaseNetwork(
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.RequestReleaseNetwork = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestReleaseNetwork> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.RequestReleaseNetwork = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestReleaseNetwork> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.RequestReleaseNetwork> {
-        internal val defaultInstance: com.gopro.open_gopro.entity.operation.proto.RequestReleaseNetwork by lazy { com.gopro.open_gopro.entity.operation.proto.RequestReleaseNetwork() }
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.RequestReleaseNetwork = com.gopro.open_gopro.entity.operation.proto.RequestReleaseNetwork.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.RequestReleaseNetwork> {
+        internal val defaultInstance: com.gopro.open_gopro.operations.RequestReleaseNetwork by lazy { com.gopro.open_gopro.operations.RequestReleaseNetwork() }
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.RequestReleaseNetwork = com.gopro.open_gopro.operations.RequestReleaseNetwork.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestReleaseNetwork> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestReleaseNetwork> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestReleaseNetwork",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.RequestReleaseNetwork::class,
+            messageClass = com.gopro.open_gopro.operations.RequestReleaseNetwork::class,
             messageCompanion = this,
             fields = buildList(0) {
             }
@@ -372,16 +372,16 @@ internal data class RequestReleaseNetwork(
 internal data class RequestStartScan(
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.RequestStartScan = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestStartScan> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.RequestStartScan = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestStartScan> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.RequestStartScan> {
-        internal val defaultInstance: com.gopro.open_gopro.entity.operation.proto.RequestStartScan by lazy { com.gopro.open_gopro.entity.operation.proto.RequestStartScan() }
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.RequestStartScan = com.gopro.open_gopro.entity.operation.proto.RequestStartScan.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.RequestStartScan> {
+        internal val defaultInstance: com.gopro.open_gopro.operations.RequestStartScan by lazy { com.gopro.open_gopro.operations.RequestStartScan() }
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.RequestStartScan = com.gopro.open_gopro.operations.RequestStartScan.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestStartScan> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestStartScan> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestStartScan",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.RequestStartScan::class,
+            messageClass = com.gopro.open_gopro.operations.RequestStartScan::class,
             messageCompanion = this,
             fields = buildList(0) {
             }
@@ -391,20 +391,20 @@ internal data class RequestStartScan(
 
 @pbandk.Export
 internal data class ResponseConnect(
-    val result: com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric,
-    val provisioningState: com.gopro.open_gopro.entity.operation.proto.EnumProvisioning,
+    val result: com.gopro.open_gopro.operations.EnumResultGeneric,
+    val provisioningState: com.gopro.open_gopro.operations.EnumProvisioning,
     val timeoutSeconds: Int,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.ResponseConnect = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.ResponseConnect> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.ResponseConnect = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.ResponseConnect> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.ResponseConnect> {
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.ResponseConnect = com.gopro.open_gopro.entity.operation.proto.ResponseConnect.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.ResponseConnect> {
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.ResponseConnect = com.gopro.open_gopro.operations.ResponseConnect.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.ResponseConnect> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.ResponseConnect> = pbandk.MessageDescriptor(
             fullName = "open_gopro.ResponseConnect",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.ResponseConnect::class,
+            messageClass = com.gopro.open_gopro.operations.ResponseConnect::class,
             messageCompanion = this,
             fields = buildList(3) {
                 add(
@@ -412,9 +412,9 @@ internal data class ResponseConnect(
                         messageDescriptor = this@Companion::descriptor,
                         name = "result",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumResultGeneric.Companion, hasPresence = true),
                         jsonName = "result",
-                        value = com.gopro.open_gopro.entity.operation.proto.ResponseConnect::result
+                        value = com.gopro.open_gopro.operations.ResponseConnect::result
                     )
                 )
                 add(
@@ -422,9 +422,9 @@ internal data class ResponseConnect(
                         messageDescriptor = this@Companion::descriptor,
                         name = "provisioning_state",
                         number = 2,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumProvisioning.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumProvisioning.Companion, hasPresence = true),
                         jsonName = "provisioningState",
-                        value = com.gopro.open_gopro.entity.operation.proto.ResponseConnect::provisioningState
+                        value = com.gopro.open_gopro.operations.ResponseConnect::provisioningState
                     )
                 )
                 add(
@@ -434,7 +434,7 @@ internal data class ResponseConnect(
                         number = 3,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "timeoutSeconds",
-                        value = com.gopro.open_gopro.entity.operation.proto.ResponseConnect::timeoutSeconds
+                        value = com.gopro.open_gopro.operations.ResponseConnect::timeoutSeconds
                     )
                 )
             }
@@ -444,20 +444,20 @@ internal data class ResponseConnect(
 
 @pbandk.Export
 internal data class ResponseConnectNew(
-    val result: com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric,
-    val provisioningState: com.gopro.open_gopro.entity.operation.proto.EnumProvisioning,
+    val result: com.gopro.open_gopro.operations.EnumResultGeneric,
+    val provisioningState: com.gopro.open_gopro.operations.EnumProvisioning,
     val timeoutSeconds: Int,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.ResponseConnectNew = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.ResponseConnectNew> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.ResponseConnectNew = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.ResponseConnectNew> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.ResponseConnectNew> {
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.ResponseConnectNew = com.gopro.open_gopro.entity.operation.proto.ResponseConnectNew.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.ResponseConnectNew> {
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.ResponseConnectNew = com.gopro.open_gopro.operations.ResponseConnectNew.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.ResponseConnectNew> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.ResponseConnectNew> = pbandk.MessageDescriptor(
             fullName = "open_gopro.ResponseConnectNew",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.ResponseConnectNew::class,
+            messageClass = com.gopro.open_gopro.operations.ResponseConnectNew::class,
             messageCompanion = this,
             fields = buildList(3) {
                 add(
@@ -465,9 +465,9 @@ internal data class ResponseConnectNew(
                         messageDescriptor = this@Companion::descriptor,
                         name = "result",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumResultGeneric.Companion, hasPresence = true),
                         jsonName = "result",
-                        value = com.gopro.open_gopro.entity.operation.proto.ResponseConnectNew::result
+                        value = com.gopro.open_gopro.operations.ResponseConnectNew::result
                     )
                 )
                 add(
@@ -475,9 +475,9 @@ internal data class ResponseConnectNew(
                         messageDescriptor = this@Companion::descriptor,
                         name = "provisioning_state",
                         number = 2,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumProvisioning.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumProvisioning.Companion, hasPresence = true),
                         jsonName = "provisioningState",
-                        value = com.gopro.open_gopro.entity.operation.proto.ResponseConnectNew::provisioningState
+                        value = com.gopro.open_gopro.operations.ResponseConnectNew::provisioningState
                     )
                 )
                 add(
@@ -487,7 +487,7 @@ internal data class ResponseConnectNew(
                         number = 3,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "timeoutSeconds",
-                        value = com.gopro.open_gopro.entity.operation.proto.ResponseConnectNew::timeoutSeconds
+                        value = com.gopro.open_gopro.operations.ResponseConnectNew::timeoutSeconds
                     )
                 )
             }
@@ -497,20 +497,20 @@ internal data class ResponseConnectNew(
 
 @pbandk.Export
 internal data class ResponseGetApEntries(
-    val result: com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric,
+    val result: com.gopro.open_gopro.operations.EnumResultGeneric,
     val scanId: Int,
-    val entries: List<com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry> = emptyList(),
+    val entries: List<com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry> = emptyList(),
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.ResponseGetApEntries = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.ResponseGetApEntries> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries> {
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries = com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.ResponseGetApEntries> {
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.ResponseGetApEntries = com.gopro.open_gopro.operations.ResponseGetApEntries.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.ResponseGetApEntries> = pbandk.MessageDescriptor(
             fullName = "open_gopro.ResponseGetApEntries",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries::class,
+            messageClass = com.gopro.open_gopro.operations.ResponseGetApEntries::class,
             messageCompanion = this,
             fields = buildList(3) {
                 add(
@@ -518,9 +518,9 @@ internal data class ResponseGetApEntries(
                         messageDescriptor = this@Companion::descriptor,
                         name = "result",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumResultGeneric.Companion, hasPresence = true),
                         jsonName = "result",
-                        value = com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries::result
+                        value = com.gopro.open_gopro.operations.ResponseGetApEntries::result
                     )
                 )
                 add(
@@ -530,7 +530,7 @@ internal data class ResponseGetApEntries(
                         number = 2,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "scanId",
-                        value = com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries::scanId
+                        value = com.gopro.open_gopro.operations.ResponseGetApEntries::scanId
                     )
                 )
                 add(
@@ -538,9 +538,9 @@ internal data class ResponseGetApEntries(
                         messageDescriptor = this@Companion::descriptor,
                         name = "entries",
                         number = 3,
-                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry>(valueType = pbandk.FieldDescriptor.Type.Message(messageCompanion = com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry.Companion)),
+                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry>(valueType = pbandk.FieldDescriptor.Type.Message(messageCompanion = com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry.Companion)),
                         jsonName = "entries",
-                        value = com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries::entries
+                        value = com.gopro.open_gopro.operations.ResponseGetApEntries::entries
                     )
                 )
             }
@@ -554,15 +554,15 @@ internal data class ResponseGetApEntries(
         val scanEntryFlags: Int,
         override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
     ) : pbandk.Message {
-        override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry = protoMergeImpl(other)
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry> get() = Companion.descriptor
+        override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry = protoMergeImpl(other)
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry> get() = Companion.descriptor
         override val protoSize: Int by lazy { super.protoSize }
-        internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry> {
-            override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry = com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry.decodeWithImpl(u)
+        internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry> {
+            override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry = com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry.decodeWithImpl(u)
 
-            override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry> = pbandk.MessageDescriptor(
+            override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry> = pbandk.MessageDescriptor(
                 fullName = "open_gopro.ResponseGetApEntries.ScanEntry",
-                messageClass = com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry::class,
+                messageClass = com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry::class,
                 messageCompanion = this,
                 fields = buildList(4) {
                     add(
@@ -572,7 +572,7 @@ internal data class ResponseGetApEntries(
                             number = 1,
                             type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                             jsonName = "ssid",
-                            value = com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry::ssid
+                            value = com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry::ssid
                         )
                     )
                     add(
@@ -582,7 +582,7 @@ internal data class ResponseGetApEntries(
                             number = 2,
                             type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                             jsonName = "signalStrengthBars",
-                            value = com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry::signalStrengthBars
+                            value = com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry::signalStrengthBars
                         )
                     )
                     add(
@@ -592,7 +592,7 @@ internal data class ResponseGetApEntries(
                             number = 4,
                             type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                             jsonName = "signalFrequencyMhz",
-                            value = com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry::signalFrequencyMhz
+                            value = com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry::signalFrequencyMhz
                         )
                     )
                     add(
@@ -602,7 +602,7 @@ internal data class ResponseGetApEntries(
                             number = 5,
                             type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                             jsonName = "scanEntryFlags",
-                            value = com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry::scanEntryFlags
+                            value = com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry::scanEntryFlags
                         )
                     )
                 }
@@ -613,19 +613,19 @@ internal data class ResponseGetApEntries(
 
 @pbandk.Export
 internal data class ResponseStartScanning(
-    val result: com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric,
-    val scanningState: com.gopro.open_gopro.entity.operation.proto.EnumScanning,
+    val result: com.gopro.open_gopro.operations.EnumResultGeneric,
+    val scanningState: com.gopro.open_gopro.operations.EnumScanning,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.ResponseStartScanning = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.ResponseStartScanning> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.ResponseStartScanning = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.ResponseStartScanning> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.ResponseStartScanning> {
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.ResponseStartScanning = com.gopro.open_gopro.entity.operation.proto.ResponseStartScanning.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.ResponseStartScanning> {
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.ResponseStartScanning = com.gopro.open_gopro.operations.ResponseStartScanning.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.ResponseStartScanning> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.ResponseStartScanning> = pbandk.MessageDescriptor(
             fullName = "open_gopro.ResponseStartScanning",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.ResponseStartScanning::class,
+            messageClass = com.gopro.open_gopro.operations.ResponseStartScanning::class,
             messageCompanion = this,
             fields = buildList(2) {
                 add(
@@ -633,9 +633,9 @@ internal data class ResponseStartScanning(
                         messageDescriptor = this@Companion::descriptor,
                         name = "result",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumResultGeneric.Companion, hasPresence = true),
                         jsonName = "result",
-                        value = com.gopro.open_gopro.entity.operation.proto.ResponseStartScanning::result
+                        value = com.gopro.open_gopro.operations.ResponseStartScanning::result
                     )
                 )
                 add(
@@ -643,9 +643,9 @@ internal data class ResponseStartScanning(
                         messageDescriptor = this@Companion::descriptor,
                         name = "scanning_state",
                         number = 2,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumScanning.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumScanning.Companion, hasPresence = true),
                         jsonName = "scanningState",
-                        value = com.gopro.open_gopro.entity.operation.proto.ResponseStartScanning::scanningState
+                        value = com.gopro.open_gopro.operations.ResponseStartScanning::scanningState
                     )
                 )
             }
@@ -661,11 +661,11 @@ private fun NotifProvisioningState.protoMergeImpl(plus: pbandk.Message?): NotifP
 
 @Suppress("UNCHECKED_CAST")
 private fun NotifProvisioningState.Companion.decodeWithImpl(u: pbandk.MessageDecoder): NotifProvisioningState {
-    var provisioningState: com.gopro.open_gopro.entity.operation.proto.EnumProvisioning? = null
+    var provisioningState: com.gopro.open_gopro.operations.EnumProvisioning? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> provisioningState = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumProvisioning
+            1 -> provisioningState = _fieldValue as com.gopro.open_gopro.operations.EnumProvisioning
         }
     }
 
@@ -685,14 +685,14 @@ private fun NotifStartScanning.protoMergeImpl(plus: pbandk.Message?): NotifStart
 
 @Suppress("UNCHECKED_CAST")
 private fun NotifStartScanning.Companion.decodeWithImpl(u: pbandk.MessageDecoder): NotifStartScanning {
-    var scanningState: com.gopro.open_gopro.entity.operation.proto.EnumScanning? = null
+    var scanningState: com.gopro.open_gopro.operations.EnumScanning? = null
     var scanId: Int? = null
     var totalEntries: Int? = null
     var totalConfiguredSsid: Int? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> scanningState = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumScanning
+            1 -> scanningState = _fieldValue as com.gopro.open_gopro.operations.EnumScanning
             2 -> scanId = _fieldValue as Int
             3 -> totalEntries = _fieldValue as Int
             4 -> totalConfiguredSsid = _fieldValue as Int
@@ -807,7 +807,7 @@ private fun RequestGetApEntries.Companion.decodeWithImpl(u: pbandk.MessageDecode
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForRequestReleaseNetwork")
-internal fun RequestReleaseNetwork?.orDefault(): com.gopro.open_gopro.entity.operation.proto.RequestReleaseNetwork = this ?: RequestReleaseNetwork.defaultInstance
+internal fun RequestReleaseNetwork?.orDefault(): com.gopro.open_gopro.operations.RequestReleaseNetwork = this ?: RequestReleaseNetwork.defaultInstance
 
 private fun RequestReleaseNetwork.protoMergeImpl(plus: pbandk.Message?): RequestReleaseNetwork = (plus as? RequestReleaseNetwork)?.let {
     it.copy(
@@ -825,7 +825,7 @@ private fun RequestReleaseNetwork.Companion.decodeWithImpl(u: pbandk.MessageDeco
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForRequestStartScan")
-internal fun RequestStartScan?.orDefault(): com.gopro.open_gopro.entity.operation.proto.RequestStartScan = this ?: RequestStartScan.defaultInstance
+internal fun RequestStartScan?.orDefault(): com.gopro.open_gopro.operations.RequestStartScan = this ?: RequestStartScan.defaultInstance
 
 private fun RequestStartScan.protoMergeImpl(plus: pbandk.Message?): RequestStartScan = (plus as? RequestStartScan)?.let {
     it.copy(
@@ -849,14 +849,14 @@ private fun ResponseConnect.protoMergeImpl(plus: pbandk.Message?): ResponseConne
 
 @Suppress("UNCHECKED_CAST")
 private fun ResponseConnect.Companion.decodeWithImpl(u: pbandk.MessageDecoder): ResponseConnect {
-    var result: com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric? = null
-    var provisioningState: com.gopro.open_gopro.entity.operation.proto.EnumProvisioning? = null
+    var result: com.gopro.open_gopro.operations.EnumResultGeneric? = null
+    var provisioningState: com.gopro.open_gopro.operations.EnumProvisioning? = null
     var timeoutSeconds: Int? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> result = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric
-            2 -> provisioningState = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumProvisioning
+            1 -> result = _fieldValue as com.gopro.open_gopro.operations.EnumResultGeneric
+            2 -> provisioningState = _fieldValue as com.gopro.open_gopro.operations.EnumProvisioning
             3 -> timeoutSeconds = _fieldValue as Int
         }
     }
@@ -881,14 +881,14 @@ private fun ResponseConnectNew.protoMergeImpl(plus: pbandk.Message?): ResponseCo
 
 @Suppress("UNCHECKED_CAST")
 private fun ResponseConnectNew.Companion.decodeWithImpl(u: pbandk.MessageDecoder): ResponseConnectNew {
-    var result: com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric? = null
-    var provisioningState: com.gopro.open_gopro.entity.operation.proto.EnumProvisioning? = null
+    var result: com.gopro.open_gopro.operations.EnumResultGeneric? = null
+    var provisioningState: com.gopro.open_gopro.operations.EnumProvisioning? = null
     var timeoutSeconds: Int? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> result = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric
-            2 -> provisioningState = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumProvisioning
+            1 -> result = _fieldValue as com.gopro.open_gopro.operations.EnumResultGeneric
+            2 -> provisioningState = _fieldValue as com.gopro.open_gopro.operations.EnumProvisioning
             3 -> timeoutSeconds = _fieldValue as Int
         }
     }
@@ -914,15 +914,15 @@ private fun ResponseGetApEntries.protoMergeImpl(plus: pbandk.Message?): Response
 
 @Suppress("UNCHECKED_CAST")
 private fun ResponseGetApEntries.Companion.decodeWithImpl(u: pbandk.MessageDecoder): ResponseGetApEntries {
-    var result: com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric? = null
+    var result: com.gopro.open_gopro.operations.EnumResultGeneric? = null
     var scanId: Int? = null
-    var entries: pbandk.ListWithSize.Builder<com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry>? = null
+    var entries: pbandk.ListWithSize.Builder<com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry>? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> result = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric
+            1 -> result = _fieldValue as com.gopro.open_gopro.operations.EnumResultGeneric
             2 -> scanId = _fieldValue as Int
-            3 -> entries = (entries ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries.ScanEntry> }
+            3 -> entries = (entries ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.operations.ResponseGetApEntries.ScanEntry> }
         }
     }
 
@@ -980,13 +980,13 @@ private fun ResponseStartScanning.protoMergeImpl(plus: pbandk.Message?): Respons
 
 @Suppress("UNCHECKED_CAST")
 private fun ResponseStartScanning.Companion.decodeWithImpl(u: pbandk.MessageDecoder): ResponseStartScanning {
-    var result: com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric? = null
-    var scanningState: com.gopro.open_gopro.entity.operation.proto.EnumScanning? = null
+    var result: com.gopro.open_gopro.operations.EnumResultGeneric? = null
+    var scanningState: com.gopro.open_gopro.operations.EnumScanning? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> result = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumResultGeneric
-            2 -> scanningState = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumScanning
+            1 -> result = _fieldValue as com.gopro.open_gopro.operations.EnumResultGeneric
+            2 -> scanningState = _fieldValue as com.gopro.open_gopro.operations.EnumScanning
         }
     }
 

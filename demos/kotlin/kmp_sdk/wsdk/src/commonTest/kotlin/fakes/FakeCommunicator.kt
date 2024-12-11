@@ -9,9 +9,9 @@ import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.entity.network.IHttpsCredentials
 import com.gopro.open_gopro.entity.network.ble.BleDevice
 import com.gopro.open_gopro.entity.network.ble.BleNotification
-import com.gopro.open_gopro.entity.operation.PresetInfo
-import com.gopro.open_gopro.entity.operation.jsonDefault
-import com.gopro.open_gopro.entity.operation.serializeAsDefaultFromProto
+import com.gopro.open_gopro.operations.PresetInfo
+import com.gopro.open_gopro.operations.jsonDefault
+import com.gopro.open_gopro.operations.serializeAsDefaultFromProto
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond

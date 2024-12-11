@@ -15,10 +15,10 @@ import com.gopro.open_gopro.entity.communicator.GpStatus
 import com.gopro.open_gopro.entity.communicator.QueryId
 import com.gopro.open_gopro.entity.network.ble.BleNotification
 import com.gopro.open_gopro.entity.network.ble.GpUuid
-import com.gopro.open_gopro.entity.queries.SettingId
-import com.gopro.open_gopro.entity.queries.StatusId
 import com.gopro.open_gopro.exceptions.ApiError
 import com.gopro.open_gopro.exceptions.BleError
+import com.gopro.open_gopro.operations.SettingId
+import com.gopro.open_gopro.operations.StatusId
 import com.gopro.open_gopro.util.GpCommonBase
 import com.gopro.open_gopro.util.IGpCommonBase
 import com.gopro.open_gopro.util.extensions.toPrettyHexString

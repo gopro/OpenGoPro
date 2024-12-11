@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.operation.commands
+package com.gopro.open_gopro.operations.commands
 
 import com.gopro.open_gopro.domain.api.BaseOperation
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
@@ -7,9 +7,9 @@ import com.gopro.open_gopro.entity.communicator.ActionId
 import com.gopro.open_gopro.entity.communicator.FeatureId
 import com.gopro.open_gopro.exceptions.CameraInternalError
 import com.gopro.open_gopro.entity.network.ble.GpUuid
-import com.gopro.open_gopro.entity.operation.ApScanEntry
-import com.gopro.open_gopro.entity.operation.proto.RequestGetApEntries
-import com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries
+import com.gopro.open_gopro.operations.ApScanEntry
+import com.gopro.open_gopro.operations.RequestGetApEntries
+import com.gopro.open_gopro.operations.ResponseGetApEntries
 import com.gopro.open_gopro.util.extensions.isOk
 import com.gopro.open_gopro.util.extensions.toBoolean
 import pbandk.decodeFromByteArray

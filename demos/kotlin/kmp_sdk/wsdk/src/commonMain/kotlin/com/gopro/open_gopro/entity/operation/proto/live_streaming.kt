@@ -1,10 +1,10 @@
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
-package com.gopro.open_gopro.entity.operation.proto
+package com.gopro.open_gopro.operations
 
 @pbandk.Export
 internal sealed class EnumLens(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumLens && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumLens && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumLens.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -13,16 +13,16 @@ internal sealed class EnumLens(override val value: Int, override val name: Strin
     internal object LENS_SUPERVIEW : EnumLens(3, "LENS_SUPERVIEW")
     internal class UNRECOGNIZED(value: Int) : EnumLens(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumLens> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumLens> by lazy { listOf(LENS_WIDE, LENS_LINEAR, LENS_SUPERVIEW) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumLens = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumLens = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumLens with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumLens> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumLens> by lazy { listOf(LENS_WIDE, LENS_LINEAR, LENS_SUPERVIEW) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumLens = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumLens = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumLens with name: $name")
     }
 }
 
 @pbandk.Export
 internal sealed class EnumLiveStreamError(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamError && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumLiveStreamError && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumLiveStreamError.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -41,16 +41,16 @@ internal sealed class EnumLiveStreamError(override val value: Int, override val 
     internal object LIVE_STREAM_ERROR_SD_CARD_REMOVED : EnumLiveStreamError(41, "LIVE_STREAM_ERROR_SD_CARD_REMOVED")
     internal class UNRECOGNIZED(value: Int) : EnumLiveStreamError(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamError> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamError> by lazy { listOf(LIVE_STREAM_ERROR_NONE, LIVE_STREAM_ERROR_NETWORK, LIVE_STREAM_ERROR_CREATESTREAM, LIVE_STREAM_ERROR_OUTOFMEMORY, LIVE_STREAM_ERROR_INPUTSTREAM, LIVE_STREAM_ERROR_INTERNET, LIVE_STREAM_ERROR_OSNETWORK, LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT, LIVE_STREAM_ERROR_SSL_HANDSHAKE, LIVE_STREAM_ERROR_CAMERA_BLOCKED, LIVE_STREAM_ERROR_UNKNOWN, LIVE_STREAM_ERROR_SD_CARD_FULL, LIVE_STREAM_ERROR_SD_CARD_REMOVED) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamError = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamError = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumLiveStreamError with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumLiveStreamError> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumLiveStreamError> by lazy { listOf(LIVE_STREAM_ERROR_NONE, LIVE_STREAM_ERROR_NETWORK, LIVE_STREAM_ERROR_CREATESTREAM, LIVE_STREAM_ERROR_OUTOFMEMORY, LIVE_STREAM_ERROR_INPUTSTREAM, LIVE_STREAM_ERROR_INTERNET, LIVE_STREAM_ERROR_OSNETWORK, LIVE_STREAM_ERROR_SELECTEDNETWORKTIMEOUT, LIVE_STREAM_ERROR_SSL_HANDSHAKE, LIVE_STREAM_ERROR_CAMERA_BLOCKED, LIVE_STREAM_ERROR_UNKNOWN, LIVE_STREAM_ERROR_SD_CARD_FULL, LIVE_STREAM_ERROR_SD_CARD_REMOVED) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumLiveStreamError = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumLiveStreamError = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumLiveStreamError with name: $name")
     }
 }
 
 @pbandk.Export
 internal sealed class EnumLiveStreamStatus(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamStatus && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumLiveStreamStatus && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumLiveStreamStatus.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -64,16 +64,16 @@ internal sealed class EnumLiveStreamStatus(override val value: Int, override val
     internal object LIVE_STREAM_STATE_UNAVAILABLE : EnumLiveStreamStatus(7, "LIVE_STREAM_STATE_UNAVAILABLE")
     internal class UNRECOGNIZED(value: Int) : EnumLiveStreamStatus(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamStatus> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamStatus> by lazy { listOf(LIVE_STREAM_STATE_IDLE, LIVE_STREAM_STATE_CONFIG, LIVE_STREAM_STATE_READY, LIVE_STREAM_STATE_STREAMING, LIVE_STREAM_STATE_COMPLETE_STAY_ON, LIVE_STREAM_STATE_FAILED_STAY_ON, LIVE_STREAM_STATE_RECONNECTING, LIVE_STREAM_STATE_UNAVAILABLE) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamStatus = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamStatus = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumLiveStreamStatus with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumLiveStreamStatus> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumLiveStreamStatus> by lazy { listOf(LIVE_STREAM_STATE_IDLE, LIVE_STREAM_STATE_CONFIG, LIVE_STREAM_STATE_READY, LIVE_STREAM_STATE_STREAMING, LIVE_STREAM_STATE_COMPLETE_STAY_ON, LIVE_STREAM_STATE_FAILED_STAY_ON, LIVE_STREAM_STATE_RECONNECTING, LIVE_STREAM_STATE_UNAVAILABLE) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumLiveStreamStatus = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumLiveStreamStatus = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumLiveStreamStatus with name: $name")
     }
 }
 
 @pbandk.Export
 internal sealed class EnumRegisterLiveStreamStatus(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumRegisterLiveStreamStatus.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -83,16 +83,16 @@ internal sealed class EnumRegisterLiveStreamStatus(override val value: Int, over
     internal object REGISTER_LIVE_STREAM_STATUS_BITRATE : EnumRegisterLiveStreamStatus(4, "REGISTER_LIVE_STREAM_STATUS_BITRATE")
     internal class UNRECOGNIZED(value: Int) : EnumRegisterLiveStreamStatus(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus> by lazy { listOf(REGISTER_LIVE_STREAM_STATUS_STATUS, REGISTER_LIVE_STREAM_STATUS_ERROR, REGISTER_LIVE_STREAM_STATUS_MODE, REGISTER_LIVE_STREAM_STATUS_BITRATE) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumRegisterLiveStreamStatus with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus> by lazy { listOf(REGISTER_LIVE_STREAM_STATUS_STATUS, REGISTER_LIVE_STREAM_STATUS_ERROR, REGISTER_LIVE_STREAM_STATUS_MODE, REGISTER_LIVE_STREAM_STATUS_BITRATE) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumRegisterLiveStreamStatus with name: $name")
     }
 }
 
 @pbandk.Export
 internal sealed class EnumWindowSize(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumWindowSize && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumWindowSize && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumWindowSize.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -101,39 +101,39 @@ internal sealed class EnumWindowSize(override val value: Int, override val name:
     internal object WINDOW_SIZE_1080 : EnumWindowSize(12, "WINDOW_SIZE_1080")
     internal class UNRECOGNIZED(value: Int) : EnumWindowSize(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumWindowSize> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumWindowSize> by lazy { listOf(WINDOW_SIZE_480, WINDOW_SIZE_720, WINDOW_SIZE_1080) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumWindowSize = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumWindowSize = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumWindowSize with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumWindowSize> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumWindowSize> by lazy { listOf(WINDOW_SIZE_480, WINDOW_SIZE_720, WINDOW_SIZE_1080) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumWindowSize = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumWindowSize = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumWindowSize with name: $name")
     }
 }
 
 @pbandk.Export
 internal data class NotifyLiveStreamStatus(
-    val liveStreamStatus: com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamStatus? = null,
-    val liveStreamError: com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamError? = null,
+    val liveStreamStatus: com.gopro.open_gopro.operations.EnumLiveStreamStatus? = null,
+    val liveStreamError: com.gopro.open_gopro.operations.EnumLiveStreamError? = null,
     val liveStreamEncode: Boolean? = null,
     val liveStreamBitrate: Int? = null,
-    val liveStreamWindowSizeSupportedArray: List<com.gopro.open_gopro.entity.operation.proto.EnumWindowSize> = emptyList(),
+    val liveStreamWindowSizeSupportedArray: List<com.gopro.open_gopro.operations.EnumWindowSize> = emptyList(),
     val liveStreamEncodeSupported: Boolean? = null,
     val liveStreamMaxLensUnsupported: Boolean? = null,
     val liveStreamMinimumStreamBitrate: Int? = null,
     val liveStreamMaximumStreamBitrate: Int? = null,
     val liveStreamLensSupported: Boolean? = null,
-    val liveStreamLensSupportedArray: List<com.gopro.open_gopro.entity.operation.proto.EnumLens> = emptyList(),
+    val liveStreamLensSupportedArray: List<com.gopro.open_gopro.operations.EnumLens> = emptyList(),
     val liveStreamProtuneSupported: Boolean? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.NotifyLiveStreamStatus = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.NotifyLiveStreamStatus> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus> {
-        internal val defaultInstance: com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus by lazy { com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus() }
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.NotifyLiveStreamStatus> {
+        internal val defaultInstance: com.gopro.open_gopro.operations.NotifyLiveStreamStatus by lazy { com.gopro.open_gopro.operations.NotifyLiveStreamStatus() }
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.NotifyLiveStreamStatus = com.gopro.open_gopro.operations.NotifyLiveStreamStatus.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.NotifyLiveStreamStatus> = pbandk.MessageDescriptor(
             fullName = "open_gopro.NotifyLiveStreamStatus",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus::class,
+            messageClass = com.gopro.open_gopro.operations.NotifyLiveStreamStatus::class,
             messageCompanion = this,
             fields = buildList(12) {
                 add(
@@ -141,9 +141,9 @@ internal data class NotifyLiveStreamStatus(
                         messageDescriptor = this@Companion::descriptor,
                         name = "live_stream_status",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamStatus.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumLiveStreamStatus.Companion, hasPresence = true),
                         jsonName = "liveStreamStatus",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus::liveStreamStatus
+                        value = com.gopro.open_gopro.operations.NotifyLiveStreamStatus::liveStreamStatus
                     )
                 )
                 add(
@@ -151,9 +151,9 @@ internal data class NotifyLiveStreamStatus(
                         messageDescriptor = this@Companion::descriptor,
                         name = "live_stream_error",
                         number = 2,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamError.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumLiveStreamError.Companion, hasPresence = true),
                         jsonName = "liveStreamError",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus::liveStreamError
+                        value = com.gopro.open_gopro.operations.NotifyLiveStreamStatus::liveStreamError
                     )
                 )
                 add(
@@ -163,7 +163,7 @@ internal data class NotifyLiveStreamStatus(
                         number = 3,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "liveStreamEncode",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus::liveStreamEncode
+                        value = com.gopro.open_gopro.operations.NotifyLiveStreamStatus::liveStreamEncode
                     )
                 )
                 add(
@@ -173,7 +173,7 @@ internal data class NotifyLiveStreamStatus(
                         number = 4,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "liveStreamBitrate",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus::liveStreamBitrate
+                        value = com.gopro.open_gopro.operations.NotifyLiveStreamStatus::liveStreamBitrate
                     )
                 )
                 add(
@@ -181,9 +181,9 @@ internal data class NotifyLiveStreamStatus(
                         messageDescriptor = this@Companion::descriptor,
                         name = "live_stream_window_size_supported_array",
                         number = 5,
-                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.entity.operation.proto.EnumWindowSize>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumWindowSize.Companion)),
+                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.operations.EnumWindowSize>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumWindowSize.Companion)),
                         jsonName = "liveStreamWindowSizeSupportedArray",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus::liveStreamWindowSizeSupportedArray
+                        value = com.gopro.open_gopro.operations.NotifyLiveStreamStatus::liveStreamWindowSizeSupportedArray
                     )
                 )
                 add(
@@ -193,7 +193,7 @@ internal data class NotifyLiveStreamStatus(
                         number = 6,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "liveStreamEncodeSupported",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus::liveStreamEncodeSupported
+                        value = com.gopro.open_gopro.operations.NotifyLiveStreamStatus::liveStreamEncodeSupported
                     )
                 )
                 add(
@@ -203,7 +203,7 @@ internal data class NotifyLiveStreamStatus(
                         number = 7,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "liveStreamMaxLensUnsupported",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus::liveStreamMaxLensUnsupported
+                        value = com.gopro.open_gopro.operations.NotifyLiveStreamStatus::liveStreamMaxLensUnsupported
                     )
                 )
                 add(
@@ -213,7 +213,7 @@ internal data class NotifyLiveStreamStatus(
                         number = 8,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "liveStreamMinimumStreamBitrate",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus::liveStreamMinimumStreamBitrate
+                        value = com.gopro.open_gopro.operations.NotifyLiveStreamStatus::liveStreamMinimumStreamBitrate
                     )
                 )
                 add(
@@ -223,7 +223,7 @@ internal data class NotifyLiveStreamStatus(
                         number = 9,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "liveStreamMaximumStreamBitrate",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus::liveStreamMaximumStreamBitrate
+                        value = com.gopro.open_gopro.operations.NotifyLiveStreamStatus::liveStreamMaximumStreamBitrate
                     )
                 )
                 add(
@@ -233,7 +233,7 @@ internal data class NotifyLiveStreamStatus(
                         number = 10,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "liveStreamLensSupported",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus::liveStreamLensSupported
+                        value = com.gopro.open_gopro.operations.NotifyLiveStreamStatus::liveStreamLensSupported
                     )
                 )
                 add(
@@ -241,9 +241,9 @@ internal data class NotifyLiveStreamStatus(
                         messageDescriptor = this@Companion::descriptor,
                         name = "live_stream_lens_supported_array",
                         number = 11,
-                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.entity.operation.proto.EnumLens>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumLens.Companion)),
+                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.operations.EnumLens>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumLens.Companion)),
                         jsonName = "liveStreamLensSupportedArray",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus::liveStreamLensSupportedArray
+                        value = com.gopro.open_gopro.operations.NotifyLiveStreamStatus::liveStreamLensSupportedArray
                     )
                 )
                 add(
@@ -253,7 +253,7 @@ internal data class NotifyLiveStreamStatus(
                         number = 13,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "liveStreamProtuneSupported",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus::liveStreamProtuneSupported
+                        value = com.gopro.open_gopro.operations.NotifyLiveStreamStatus::liveStreamProtuneSupported
                     )
                 )
             }
@@ -263,20 +263,20 @@ internal data class NotifyLiveStreamStatus(
 
 @pbandk.Export
 internal data class RequestGetLiveStreamStatus(
-    val registerLiveStreamStatus: List<com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus> = emptyList(),
-    val unregisterLiveStreamStatus: List<com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus> = emptyList(),
+    val registerLiveStreamStatus: List<com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus> = emptyList(),
+    val unregisterLiveStreamStatus: List<com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus> = emptyList(),
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.RequestGetLiveStreamStatus = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestGetLiveStreamStatus> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus> {
-        internal val defaultInstance: com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus by lazy { com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus() }
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus = com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.RequestGetLiveStreamStatus> {
+        internal val defaultInstance: com.gopro.open_gopro.operations.RequestGetLiveStreamStatus by lazy { com.gopro.open_gopro.operations.RequestGetLiveStreamStatus() }
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.RequestGetLiveStreamStatus = com.gopro.open_gopro.operations.RequestGetLiveStreamStatus.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestGetLiveStreamStatus> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestGetLiveStreamStatus",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus::class,
+            messageClass = com.gopro.open_gopro.operations.RequestGetLiveStreamStatus::class,
             messageCompanion = this,
             fields = buildList(2) {
                 add(
@@ -284,9 +284,9 @@ internal data class RequestGetLiveStreamStatus(
                         messageDescriptor = this@Companion::descriptor,
                         name = "register_live_stream_status",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus.Companion)),
+                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus.Companion)),
                         jsonName = "registerLiveStreamStatus",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus::registerLiveStreamStatus
+                        value = com.gopro.open_gopro.operations.RequestGetLiveStreamStatus::registerLiveStreamStatus
                     )
                 )
                 add(
@@ -294,9 +294,9 @@ internal data class RequestGetLiveStreamStatus(
                         messageDescriptor = this@Companion::descriptor,
                         name = "unregister_live_stream_status",
                         number = 2,
-                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus.Companion)),
+                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus.Companion)),
                         jsonName = "unregisterLiveStreamStatus",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus::unregisterLiveStreamStatus
+                        value = com.gopro.open_gopro.operations.RequestGetLiveStreamStatus::unregisterLiveStreamStatus
                     )
                 )
             }
@@ -308,24 +308,24 @@ internal data class RequestGetLiveStreamStatus(
 internal data class RequestSetLiveStreamMode(
     val url: String? = null,
     val encode: Boolean? = null,
-    val windowSize: com.gopro.open_gopro.entity.operation.proto.EnumWindowSize? = null,
+    val windowSize: com.gopro.open_gopro.operations.EnumWindowSize? = null,
     val cert: pbandk.ByteArr? = null,
     val minimumBitrate: Int? = null,
     val maximumBitrate: Int? = null,
     val startingBitrate: Int? = null,
-    val lens: com.gopro.open_gopro.entity.operation.proto.EnumLens? = null,
+    val lens: com.gopro.open_gopro.operations.EnumLens? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.RequestSetLiveStreamMode = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestSetLiveStreamMode> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode> {
-        internal val defaultInstance: com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode by lazy { com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode() }
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode = com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.RequestSetLiveStreamMode> {
+        internal val defaultInstance: com.gopro.open_gopro.operations.RequestSetLiveStreamMode by lazy { com.gopro.open_gopro.operations.RequestSetLiveStreamMode() }
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.RequestSetLiveStreamMode = com.gopro.open_gopro.operations.RequestSetLiveStreamMode.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestSetLiveStreamMode> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestSetLiveStreamMode",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode::class,
+            messageClass = com.gopro.open_gopro.operations.RequestSetLiveStreamMode::class,
             messageCompanion = this,
             fields = buildList(8) {
                 add(
@@ -335,7 +335,7 @@ internal data class RequestSetLiveStreamMode(
                         number = 1,
                         type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                         jsonName = "url",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode::url
+                        value = com.gopro.open_gopro.operations.RequestSetLiveStreamMode::url
                     )
                 )
                 add(
@@ -345,7 +345,7 @@ internal data class RequestSetLiveStreamMode(
                         number = 2,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "encode",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode::encode
+                        value = com.gopro.open_gopro.operations.RequestSetLiveStreamMode::encode
                     )
                 )
                 add(
@@ -353,9 +353,9 @@ internal data class RequestSetLiveStreamMode(
                         messageDescriptor = this@Companion::descriptor,
                         name = "window_size",
                         number = 3,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumWindowSize.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumWindowSize.Companion, hasPresence = true),
                         jsonName = "windowSize",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode::windowSize
+                        value = com.gopro.open_gopro.operations.RequestSetLiveStreamMode::windowSize
                     )
                 )
                 add(
@@ -365,7 +365,7 @@ internal data class RequestSetLiveStreamMode(
                         number = 6,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bytes(hasPresence = true),
                         jsonName = "cert",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode::cert
+                        value = com.gopro.open_gopro.operations.RequestSetLiveStreamMode::cert
                     )
                 )
                 add(
@@ -375,7 +375,7 @@ internal data class RequestSetLiveStreamMode(
                         number = 7,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "minimumBitrate",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode::minimumBitrate
+                        value = com.gopro.open_gopro.operations.RequestSetLiveStreamMode::minimumBitrate
                     )
                 )
                 add(
@@ -385,7 +385,7 @@ internal data class RequestSetLiveStreamMode(
                         number = 8,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "maximumBitrate",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode::maximumBitrate
+                        value = com.gopro.open_gopro.operations.RequestSetLiveStreamMode::maximumBitrate
                     )
                 )
                 add(
@@ -395,7 +395,7 @@ internal data class RequestSetLiveStreamMode(
                         number = 9,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "startingBitrate",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode::startingBitrate
+                        value = com.gopro.open_gopro.operations.RequestSetLiveStreamMode::startingBitrate
                     )
                 )
                 add(
@@ -403,9 +403,9 @@ internal data class RequestSetLiveStreamMode(
                         messageDescriptor = this@Companion::descriptor,
                         name = "lens",
                         number = 10,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumLens.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumLens.Companion, hasPresence = true),
                         jsonName = "lens",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode::lens
+                        value = com.gopro.open_gopro.operations.RequestSetLiveStreamMode::lens
                     )
                 )
             }
@@ -415,7 +415,7 @@ internal data class RequestSetLiveStreamMode(
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForNotifyLiveStreamStatus")
-internal fun NotifyLiveStreamStatus?.orDefault(): com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus = this ?: NotifyLiveStreamStatus.defaultInstance
+internal fun NotifyLiveStreamStatus?.orDefault(): com.gopro.open_gopro.operations.NotifyLiveStreamStatus = this ?: NotifyLiveStreamStatus.defaultInstance
 
 private fun NotifyLiveStreamStatus.protoMergeImpl(plus: pbandk.Message?): NotifyLiveStreamStatus = (plus as? NotifyLiveStreamStatus)?.let {
     it.copy(
@@ -437,32 +437,32 @@ private fun NotifyLiveStreamStatus.protoMergeImpl(plus: pbandk.Message?): Notify
 
 @Suppress("UNCHECKED_CAST")
 private fun NotifyLiveStreamStatus.Companion.decodeWithImpl(u: pbandk.MessageDecoder): NotifyLiveStreamStatus {
-    var liveStreamStatus: com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamStatus? = null
-    var liveStreamError: com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamError? = null
+    var liveStreamStatus: com.gopro.open_gopro.operations.EnumLiveStreamStatus? = null
+    var liveStreamError: com.gopro.open_gopro.operations.EnumLiveStreamError? = null
     var liveStreamEncode: Boolean? = null
     var liveStreamBitrate: Int? = null
-    var liveStreamWindowSizeSupportedArray: pbandk.ListWithSize.Builder<com.gopro.open_gopro.entity.operation.proto.EnumWindowSize>? = null
+    var liveStreamWindowSizeSupportedArray: pbandk.ListWithSize.Builder<com.gopro.open_gopro.operations.EnumWindowSize>? = null
     var liveStreamEncodeSupported: Boolean? = null
     var liveStreamMaxLensUnsupported: Boolean? = null
     var liveStreamMinimumStreamBitrate: Int? = null
     var liveStreamMaximumStreamBitrate: Int? = null
     var liveStreamLensSupported: Boolean? = null
-    var liveStreamLensSupportedArray: pbandk.ListWithSize.Builder<com.gopro.open_gopro.entity.operation.proto.EnumLens>? = null
+    var liveStreamLensSupportedArray: pbandk.ListWithSize.Builder<com.gopro.open_gopro.operations.EnumLens>? = null
     var liveStreamProtuneSupported: Boolean? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> liveStreamStatus = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamStatus
-            2 -> liveStreamError = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumLiveStreamError
+            1 -> liveStreamStatus = _fieldValue as com.gopro.open_gopro.operations.EnumLiveStreamStatus
+            2 -> liveStreamError = _fieldValue as com.gopro.open_gopro.operations.EnumLiveStreamError
             3 -> liveStreamEncode = _fieldValue as Boolean
             4 -> liveStreamBitrate = _fieldValue as Int
-            5 -> liveStreamWindowSizeSupportedArray = (liveStreamWindowSizeSupportedArray ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.entity.operation.proto.EnumWindowSize> }
+            5 -> liveStreamWindowSizeSupportedArray = (liveStreamWindowSizeSupportedArray ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.operations.EnumWindowSize> }
             6 -> liveStreamEncodeSupported = _fieldValue as Boolean
             7 -> liveStreamMaxLensUnsupported = _fieldValue as Boolean
             8 -> liveStreamMinimumStreamBitrate = _fieldValue as Int
             9 -> liveStreamMaximumStreamBitrate = _fieldValue as Int
             10 -> liveStreamLensSupported = _fieldValue as Boolean
-            11 -> liveStreamLensSupportedArray = (liveStreamLensSupportedArray ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.entity.operation.proto.EnumLens> }
+            11 -> liveStreamLensSupportedArray = (liveStreamLensSupportedArray ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.operations.EnumLens> }
             13 -> liveStreamProtuneSupported = _fieldValue as Boolean
         }
     }
@@ -474,7 +474,7 @@ private fun NotifyLiveStreamStatus.Companion.decodeWithImpl(u: pbandk.MessageDec
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForRequestGetLiveStreamStatus")
-internal fun RequestGetLiveStreamStatus?.orDefault(): com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus = this ?: RequestGetLiveStreamStatus.defaultInstance
+internal fun RequestGetLiveStreamStatus?.orDefault(): com.gopro.open_gopro.operations.RequestGetLiveStreamStatus = this ?: RequestGetLiveStreamStatus.defaultInstance
 
 private fun RequestGetLiveStreamStatus.protoMergeImpl(plus: pbandk.Message?): RequestGetLiveStreamStatus = (plus as? RequestGetLiveStreamStatus)?.let {
     it.copy(
@@ -486,13 +486,13 @@ private fun RequestGetLiveStreamStatus.protoMergeImpl(plus: pbandk.Message?): Re
 
 @Suppress("UNCHECKED_CAST")
 private fun RequestGetLiveStreamStatus.Companion.decodeWithImpl(u: pbandk.MessageDecoder): RequestGetLiveStreamStatus {
-    var registerLiveStreamStatus: pbandk.ListWithSize.Builder<com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus>? = null
-    var unregisterLiveStreamStatus: pbandk.ListWithSize.Builder<com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus>? = null
+    var registerLiveStreamStatus: pbandk.ListWithSize.Builder<com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus>? = null
+    var unregisterLiveStreamStatus: pbandk.ListWithSize.Builder<com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus>? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> registerLiveStreamStatus = (registerLiveStreamStatus ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus> }
-            2 -> unregisterLiveStreamStatus = (unregisterLiveStreamStatus ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus> }
+            1 -> registerLiveStreamStatus = (registerLiveStreamStatus ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus> }
+            2 -> unregisterLiveStreamStatus = (unregisterLiveStreamStatus ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus> }
         }
     }
 
@@ -501,7 +501,7 @@ private fun RequestGetLiveStreamStatus.Companion.decodeWithImpl(u: pbandk.Messag
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForRequestSetLiveStreamMode")
-internal fun RequestSetLiveStreamMode?.orDefault(): com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode = this ?: RequestSetLiveStreamMode.defaultInstance
+internal fun RequestSetLiveStreamMode?.orDefault(): com.gopro.open_gopro.operations.RequestSetLiveStreamMode = this ?: RequestSetLiveStreamMode.defaultInstance
 
 private fun RequestSetLiveStreamMode.protoMergeImpl(plus: pbandk.Message?): RequestSetLiveStreamMode = (plus as? RequestSetLiveStreamMode)?.let {
     it.copy(
@@ -521,23 +521,23 @@ private fun RequestSetLiveStreamMode.protoMergeImpl(plus: pbandk.Message?): Requ
 private fun RequestSetLiveStreamMode.Companion.decodeWithImpl(u: pbandk.MessageDecoder): RequestSetLiveStreamMode {
     var url: String? = null
     var encode: Boolean? = null
-    var windowSize: com.gopro.open_gopro.entity.operation.proto.EnumWindowSize? = null
+    var windowSize: com.gopro.open_gopro.operations.EnumWindowSize? = null
     var cert: pbandk.ByteArr? = null
     var minimumBitrate: Int? = null
     var maximumBitrate: Int? = null
     var startingBitrate: Int? = null
-    var lens: com.gopro.open_gopro.entity.operation.proto.EnumLens? = null
+    var lens: com.gopro.open_gopro.operations.EnumLens? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
             1 -> url = _fieldValue as String
             2 -> encode = _fieldValue as Boolean
-            3 -> windowSize = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumWindowSize
+            3 -> windowSize = _fieldValue as com.gopro.open_gopro.operations.EnumWindowSize
             6 -> cert = _fieldValue as pbandk.ByteArr
             7 -> minimumBitrate = _fieldValue as Int
             8 -> maximumBitrate = _fieldValue as Int
             9 -> startingBitrate = _fieldValue as Int
-            10 -> lens = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumLens
+            10 -> lens = _fieldValue as com.gopro.open_gopro.operations.EnumLens
         }
     }
 

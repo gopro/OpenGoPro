@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.operation.commands
+package com.gopro.open_gopro.operations.commands
 
 import com.gopro.open_gopro.domain.api.BaseOperation
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
@@ -8,12 +8,12 @@ import com.gopro.open_gopro.entity.communicator.ActionId
 import com.gopro.open_gopro.entity.communicator.FeatureId
 import com.gopro.open_gopro.exceptions.CameraInternalError
 import com.gopro.open_gopro.entity.network.ble.GpUuid
-import com.gopro.open_gopro.entity.operation.LivestreamError
-import com.gopro.open_gopro.entity.operation.LivestreamFov
-import com.gopro.open_gopro.entity.operation.LivestreamResolution
-import com.gopro.open_gopro.entity.operation.LivestreamState
-import com.gopro.open_gopro.entity.operation.LivestreamStatus
-import com.gopro.open_gopro.entity.operation.isOk
+import com.gopro.open_gopro.operations.LivestreamError
+import com.gopro.open_gopro.operations.LivestreamFov
+import com.gopro.open_gopro.operations.LivestreamResolution
+import com.gopro.open_gopro.operations.LivestreamState
+import com.gopro.open_gopro.operations.LivestreamStatus
+import com.gopro.open_gopro.operations.isOk
 import io.ktor.client.call.body
 import io.ktor.http.path
 import kotlinx.coroutines.flow.Flow
@@ -21,9 +21,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
-import com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus
-import com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus
-import com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus
+import com.gopro.open_gopro.operations.EnumRegisterLiveStreamStatus
+import com.gopro.open_gopro.operations.NotifyLiveStreamStatus
+import com.gopro.open_gopro.operations.RequestGetLiveStreamStatus
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray
 

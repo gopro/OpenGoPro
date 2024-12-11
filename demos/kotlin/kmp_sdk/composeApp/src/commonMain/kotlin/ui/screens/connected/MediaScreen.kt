@@ -15,8 +15,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.gopro.open_gopro.entity.operation.MediaId
-import com.gopro.open_gopro.entity.operation.MediaMetadata
+import com.gopro.open_gopro.operations.MediaId
+import com.gopro.open_gopro.operations.MediaMetadata
 import presenter.MediaUiState
 import presenter.MediaViewModel
 import ui.common.Screen

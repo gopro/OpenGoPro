@@ -10,8 +10,8 @@ import com.gopro.open_gopro.domain.connector.ICameraConnector
 import com.gopro.open_gopro.domain.gopro.IGoProFactory
 import com.gopro.open_gopro.CommunicationType
 import com.gopro.open_gopro.GoProId
-import com.gopro.open_gopro.entity.operation.AccessPointState
-import com.gopro.open_gopro.entity.operation.CohnState
+import com.gopro.open_gopro.operations.AccessPointState
+import com.gopro.open_gopro.operations.CohnState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -29,7 +29,7 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.offsetAt
 import kotlinx.datetime.toLocalDateTime
-import com.gopro.open_gopro.operation.GpMarshaller
+import com.gopro.open_gopro.operations.GpMarshaller
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 

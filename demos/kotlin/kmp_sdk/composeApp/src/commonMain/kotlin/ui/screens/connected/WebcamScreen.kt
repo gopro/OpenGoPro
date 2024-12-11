@@ -18,7 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.gopro.open_gopro.entity.operation.WebcamProtocol
+import com.gopro.open_gopro.operations.WebcamProtocol
 import presenter.WebcamUiState
 import presenter.WebcamViewModel
 import ui.common.Screen

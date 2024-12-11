@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.operation.commands
+package com.gopro.open_gopro.operations.commands
 
 import com.gopro.open_gopro.domain.api.BaseOperation
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
@@ -7,16 +7,16 @@ import com.gopro.open_gopro.domain.communicator.bleCommunicator.ResponseId
 import com.gopro.open_gopro.entity.communicator.ActionId
 import com.gopro.open_gopro.entity.communicator.FeatureId
 import com.gopro.open_gopro.entity.network.ble.GpUuid
-import com.gopro.open_gopro.entity.operation.LivestreamConfigurationRequest
+import com.gopro.open_gopro.operations.LivestreamConfigurationRequest
 import com.gopro.open_gopro.util.extensions.mapFromGenericProtoResponseToResult
 import io.ktor.client.call.body
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.path
-import com.gopro.open_gopro.entity.operation.proto.EnumLens
-import com.gopro.open_gopro.entity.operation.proto.EnumWindowSize
-import com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode
+import com.gopro.open_gopro.operations.EnumLens
+import com.gopro.open_gopro.operations.EnumWindowSize
+import com.gopro.open_gopro.operations.RequestSetLiveStreamMode
 import pbandk.ByteArr
 import pbandk.encodeToByteArray
 

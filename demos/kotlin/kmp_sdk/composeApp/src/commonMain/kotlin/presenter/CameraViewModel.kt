@@ -4,7 +4,7 @@ import com.gopro.open_gopro.Wsdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
 import com.gopro.open_gopro.entity.communicator.CommunicationType
-import com.gopro.open_gopro.entity.operation.CohnState
+import com.gopro.open_gopro.operations.CohnState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

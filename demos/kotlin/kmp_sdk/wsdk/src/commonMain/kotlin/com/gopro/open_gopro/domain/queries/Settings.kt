@@ -7,9 +7,9 @@ import com.gopro.open_gopro.domain.communicator.bleCommunicator.ResponseId
 import com.gopro.open_gopro.CommunicationType
 import com.gopro.open_gopro.entity.communicator.GpStatus
 import com.gopro.open_gopro.entity.communicator.QueryId
-import com.gopro.open_gopro.entity.queries.IUByteArrayCompanion
-import com.gopro.open_gopro.entity.queries.IValuedEnum
-import com.gopro.open_gopro.entity.queries.SettingId
+import com.gopro.open_gopro.operations.IUByteArrayCompanion
+import com.gopro.open_gopro.operations.IValuedEnum
+import com.gopro.open_gopro.operations.SettingId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart

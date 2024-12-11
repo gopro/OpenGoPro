@@ -9,54 +9,7 @@ package com.gopro.open_gopro.gopro
  */
 
 import com.gopro.open_gopro.domain.api.IOperationMarshaller
-import com.gopro.open_gopro.entity.queries.Anti_Flicker
-import com.gopro.open_gopro.entity.queries.AutoPowerDown
-import com.gopro.open_gopro.entity.queries.BitDepth
-import com.gopro.open_gopro.entity.queries.CameraVolume
-import com.gopro.open_gopro.entity.queries.Controls
-import com.gopro.open_gopro.entity.queries.EasyModeSpeed
-import com.gopro.open_gopro.entity.queries.EasyNightPhoto
-import com.gopro.open_gopro.entity.queries.EnableNightPhoto
-import com.gopro.open_gopro.entity.queries.FrameRate
-import com.gopro.open_gopro.entity.queries.FramesPerSecond
-import com.gopro.open_gopro.entity.queries.Framing
-import com.gopro.open_gopro.entity.queries.Gps
-import com.gopro.open_gopro.entity.queries.Hindsight
-import com.gopro.open_gopro.entity.queries.Hypersmooth
-import com.gopro.open_gopro.entity.queries.LapseMode
-import com.gopro.open_gopro.entity.queries.Led
-import com.gopro.open_gopro.entity.queries.MaxLens
-import com.gopro.open_gopro.entity.queries.MaxLensMod
-import com.gopro.open_gopro.entity.queries.MaxLensModEnable
-import com.gopro.open_gopro.entity.queries.MediaFormat
-import com.gopro.open_gopro.entity.queries.MultiShotAspectRatio
-import com.gopro.open_gopro.entity.queries.MultiShotFraming
-import com.gopro.open_gopro.entity.queries.NightlapseRate
-import com.gopro.open_gopro.entity.queries.PhotoHorizonLeveling
-import com.gopro.open_gopro.entity.queries.PhotoIntervalDuration
-import com.gopro.open_gopro.entity.queries.PhotoLens
-import com.gopro.open_gopro.entity.queries.PhotoMode
-import com.gopro.open_gopro.entity.queries.PhotoOutput
-import com.gopro.open_gopro.entity.queries.PhotoSingleInterval
-import com.gopro.open_gopro.entity.queries.PhotoTimelapseRate
-import com.gopro.open_gopro.entity.queries.Profiles
-import com.gopro.open_gopro.entity.queries.SettingId
-import com.gopro.open_gopro.entity.queries.SetupLanguage
-import com.gopro.open_gopro.entity.queries.SetupScreenSaver
-import com.gopro.open_gopro.entity.queries.StarTrailsLength
-import com.gopro.open_gopro.entity.queries.SystemVideoMode
-import com.gopro.open_gopro.entity.queries.TimeLapseDigitalLenses
-import com.gopro.open_gopro.entity.queries.VideoAspectRatio
-import com.gopro.open_gopro.entity.queries.VideoBitRate
-import com.gopro.open_gopro.entity.queries.VideoEasyMode
-import com.gopro.open_gopro.entity.queries.VideoFraming
-import com.gopro.open_gopro.entity.queries.VideoHorizonLeveling
-import com.gopro.open_gopro.entity.queries.VideoLens
-import com.gopro.open_gopro.entity.queries.VideoPerformanceMode
-import com.gopro.open_gopro.entity.queries.VideoResolution
-import com.gopro.open_gopro.entity.queries.VideoTimelapseRate
-import com.gopro.open_gopro.entity.queries.WebcamDigitalLenses
-import com.gopro.open_gopro.entity.queries.WirelessBand
+import com.gopro.open_gopro.operations.*
 
 /**
  * Container for all per-setting-ID wrappers

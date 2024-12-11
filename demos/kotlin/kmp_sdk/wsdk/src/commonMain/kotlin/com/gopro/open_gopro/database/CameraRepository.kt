@@ -6,7 +6,7 @@ import com.gopro.open_gopro.domain.data.WifiCredentials
 import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.entity.network.HttpsCredentials
 import com.gopro.open_gopro.entity.network.IHttpsCredentials
-import com.gopro.open_gopro.entity.operation.jsonDefault
+import com.gopro.open_gopro.operations.jsonDefault
 import kotlinx.serialization.encodeToString
 
 private val logger = Logger.withTag("CameraRepository")

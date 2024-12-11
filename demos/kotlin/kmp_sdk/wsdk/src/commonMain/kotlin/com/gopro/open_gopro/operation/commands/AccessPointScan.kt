@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.operation.commands
+package com.gopro.open_gopro.operations.commands
 
 import co.touchlab.kermit.Logger
 import com.gopro.open_gopro.domain.api.BaseOperation
@@ -8,14 +8,14 @@ import com.gopro.open_gopro.entity.communicator.ActionId
 import com.gopro.open_gopro.entity.communicator.FeatureId
 import com.gopro.open_gopro.exceptions.CameraInternalError
 import com.gopro.open_gopro.entity.network.ble.GpUuid
-import com.gopro.open_gopro.entity.operation.ApScanResult
+import com.gopro.open_gopro.operations.ApScanResult
 import com.gopro.open_gopro.util.extensions.isOk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transformWhile
-import com.gopro.open_gopro.entity.operation.proto.EnumScanning
-import com.gopro.open_gopro.entity.operation.proto.NotifStartScanning
-import com.gopro.open_gopro.entity.operation.proto.ResponseStartScanning
+import com.gopro.open_gopro.operations.EnumScanning
+import com.gopro.open_gopro.operations.NotifStartScanning
+import com.gopro.open_gopro.operations.ResponseStartScanning
 import pbandk.decodeFromByteArray
 
 private val logger = Logger.withTag("Access Point Scan Operation")

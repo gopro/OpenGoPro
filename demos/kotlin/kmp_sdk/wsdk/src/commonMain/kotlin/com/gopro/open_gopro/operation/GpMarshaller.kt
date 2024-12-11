@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.operation
+package com.gopro.open_gopro.operations
 
 import com.gopro.open_gopro.domain.api.IOperation
 import com.gopro.open_gopro.domain.api.IOperationMarshaller

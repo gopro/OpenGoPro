@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.entity.queries
+package com.gopro.open_gopro.operations
 
 /************************************************************************************************************
  *

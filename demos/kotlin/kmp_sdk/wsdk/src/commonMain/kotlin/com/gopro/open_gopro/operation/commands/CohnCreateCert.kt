@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.operation.commands
+package com.gopro.open_gopro.operations.commands
 
 import com.gopro.open_gopro.domain.api.BaseOperation
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
@@ -7,7 +7,7 @@ import com.gopro.open_gopro.entity.communicator.ActionId
 import com.gopro.open_gopro.entity.communicator.FeatureId
 import com.gopro.open_gopro.entity.network.ble.GpUuid
 import com.gopro.open_gopro.util.extensions.mapFromGenericProtoResponseToResult
-import com.gopro.open_gopro.entity.operation.proto.RequestCreateCOHNCert
+import com.gopro.open_gopro.operations.RequestCreateCOHNCert
 import pbandk.encodeToByteArray
 
 internal class CohnCreateCert(val override: Boolean):

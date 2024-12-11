@@ -4,7 +4,7 @@ package com.gopro.open_gopro.database
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.gopro.open_gopro.entity.operation.jsonDefault
+import com.gopro.open_gopro.operations.jsonDefault
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.encodeToString
 import org.junit.After
@@ -167,7 +167,7 @@ class TestAppDatabase {
             with(results.first()) {
                 assertEquals(certificateEntry1.serialId, serialId)
                 val decodedCerts =
-                    com.gopro.open_gopro.entity.operation.jsonDefault.decodeFromString<CertificatesForDb>(certificates).certificates
+                    com.gopro.open_gopro.operations.jsonDefault.decodeFromString<CertificatesForDb>(certificates).certificates
                 assertEquals(2, decodedCerts.size)
             }
         }

@@ -1,12 +1,12 @@
-package com.gopro.open_gopro.operation.commands
+package com.gopro.open_gopro.operations.commands
 
 import com.gopro.open_gopro.domain.api.BaseOperation
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.HttpCommunicator
 import com.gopro.open_gopro.domain.communicator.bleCommunicator.ResponseId
 import com.gopro.open_gopro.entity.communicator.CommandId
-import com.gopro.open_gopro.entity.operation.DateTimeHttpResponse
-import com.gopro.open_gopro.entity.operation.GpDatetime
+import com.gopro.open_gopro.operations.DateTimeHttpResponse
+import com.gopro.open_gopro.operations.GpDatetime
 import com.gopro.open_gopro.util.extensions.toBoolean
 import com.gopro.open_gopro.util.extensions.toLocalDateTime
 import com.gopro.open_gopro.util.extensions.toUtcOffset

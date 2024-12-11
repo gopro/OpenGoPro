@@ -1,10 +1,10 @@
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
-package com.gopro.open_gopro.entity.operation.proto
+package com.gopro.open_gopro.operations
 
 @pbandk.Export
 internal sealed class EnumRegisterPresetStatus(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumRegisterPresetStatus && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumRegisterPresetStatus.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -12,29 +12,29 @@ internal sealed class EnumRegisterPresetStatus(override val value: Int, override
     internal object REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY : EnumRegisterPresetStatus(2, "REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY")
     internal class UNRECOGNIZED(value: Int) : EnumRegisterPresetStatus(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus> by lazy { listOf(REGISTER_PRESET_STATUS_PRESET, REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumRegisterPresetStatus with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumRegisterPresetStatus> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumRegisterPresetStatus> by lazy { listOf(REGISTER_PRESET_STATUS_PRESET, REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumRegisterPresetStatus = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumRegisterPresetStatus = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumRegisterPresetStatus with name: $name")
     }
 }
 
 @pbandk.Export
 internal data class RequestGetPresetStatus(
-    val registerPresetStatus: List<com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus> = emptyList(),
-    val unregisterPresetStatus: List<com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus> = emptyList(),
+    val registerPresetStatus: List<com.gopro.open_gopro.operations.EnumRegisterPresetStatus> = emptyList(),
+    val unregisterPresetStatus: List<com.gopro.open_gopro.operations.EnumRegisterPresetStatus> = emptyList(),
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.RequestGetPresetStatus = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestGetPresetStatus> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus> {
-        internal val defaultInstance: com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus by lazy { com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus() }
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus = com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.RequestGetPresetStatus> {
+        internal val defaultInstance: com.gopro.open_gopro.operations.RequestGetPresetStatus by lazy { com.gopro.open_gopro.operations.RequestGetPresetStatus() }
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.RequestGetPresetStatus = com.gopro.open_gopro.operations.RequestGetPresetStatus.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestGetPresetStatus> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestGetPresetStatus",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus::class,
+            messageClass = com.gopro.open_gopro.operations.RequestGetPresetStatus::class,
             messageCompanion = this,
             fields = buildList(2) {
                 add(
@@ -42,9 +42,9 @@ internal data class RequestGetPresetStatus(
                         messageDescriptor = this@Companion::descriptor,
                         name = "register_preset_status",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus.Companion)),
+                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.operations.EnumRegisterPresetStatus>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumRegisterPresetStatus.Companion)),
                         jsonName = "registerPresetStatus",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus::registerPresetStatus
+                        value = com.gopro.open_gopro.operations.RequestGetPresetStatus::registerPresetStatus
                     )
                 )
                 add(
@@ -52,9 +52,9 @@ internal data class RequestGetPresetStatus(
                         messageDescriptor = this@Companion::descriptor,
                         name = "unregister_preset_status",
                         number = 2,
-                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus.Companion)),
+                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.operations.EnumRegisterPresetStatus>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumRegisterPresetStatus.Companion)),
                         jsonName = "unregisterPresetStatus",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus::unregisterPresetStatus
+                        value = com.gopro.open_gopro.operations.RequestGetPresetStatus::unregisterPresetStatus
                     )
                 )
             }
@@ -64,7 +64,7 @@ internal data class RequestGetPresetStatus(
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForRequestGetPresetStatus")
-internal fun RequestGetPresetStatus?.orDefault(): com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus = this ?: RequestGetPresetStatus.defaultInstance
+internal fun RequestGetPresetStatus?.orDefault(): com.gopro.open_gopro.operations.RequestGetPresetStatus = this ?: RequestGetPresetStatus.defaultInstance
 
 private fun RequestGetPresetStatus.protoMergeImpl(plus: pbandk.Message?): RequestGetPresetStatus = (plus as? RequestGetPresetStatus)?.let {
     it.copy(
@@ -76,13 +76,13 @@ private fun RequestGetPresetStatus.protoMergeImpl(plus: pbandk.Message?): Reques
 
 @Suppress("UNCHECKED_CAST")
 private fun RequestGetPresetStatus.Companion.decodeWithImpl(u: pbandk.MessageDecoder): RequestGetPresetStatus {
-    var registerPresetStatus: pbandk.ListWithSize.Builder<com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus>? = null
-    var unregisterPresetStatus: pbandk.ListWithSize.Builder<com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus>? = null
+    var registerPresetStatus: pbandk.ListWithSize.Builder<com.gopro.open_gopro.operations.EnumRegisterPresetStatus>? = null
+    var unregisterPresetStatus: pbandk.ListWithSize.Builder<com.gopro.open_gopro.operations.EnumRegisterPresetStatus>? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> registerPresetStatus = (registerPresetStatus ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus> }
-            2 -> unregisterPresetStatus = (unregisterPresetStatus ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus> }
+            1 -> registerPresetStatus = (registerPresetStatus ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.operations.EnumRegisterPresetStatus> }
+            2 -> unregisterPresetStatus = (unregisterPresetStatus ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.operations.EnumRegisterPresetStatus> }
         }
     }
 

@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.operation.commands
+package com.gopro.open_gopro.operations.commands
 
 import com.gopro.open_gopro.domain.api.BaseOperation
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
@@ -11,7 +11,7 @@ import com.gopro.open_gopro.entity.network.ble.GpUuid
 import com.gopro.open_gopro.util.extensions.isOk
 import io.ktor.client.call.body
 import io.ktor.http.path
-import com.gopro.open_gopro.entity.operation.proto.ResponseCOHNCert
+import com.gopro.open_gopro.operations.ResponseCOHNCert
 import pbandk.decodeFromByteArray
 
 internal class CohnGetCert :

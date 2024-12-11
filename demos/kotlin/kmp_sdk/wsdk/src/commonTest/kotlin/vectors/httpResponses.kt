@@ -1,12 +1,12 @@
 package vectors
 
-import com.gopro.open_gopro.entity.operation.OgpVersionHttpResponse
-import com.gopro.open_gopro.entity.operation.MediaId
-import com.gopro.open_gopro.entity.operation.DateTimeHttpResponse
-import com.gopro.open_gopro.entity.operation.HardwareInfo
-import com.gopro.open_gopro.entity.operation.LivestreamConfigurationRequest
-import com.gopro.open_gopro.entity.operation.LivestreamFov
-import com.gopro.open_gopro.entity.operation.LivestreamResolution
+import com.gopro.open_gopro.operations.OgpVersionHttpResponse
+import com.gopro.open_gopro.operations.MediaId
+import com.gopro.open_gopro.operations.DateTimeHttpResponse
+import com.gopro.open_gopro.operations.HardwareInfo
+import com.gopro.open_gopro.operations.LivestreamConfigurationRequest
+import com.gopro.open_gopro.operations.LivestreamFov
+import com.gopro.open_gopro.operations.LivestreamResolution
 
 val mockMediaId = MediaId("file", "folder")
 val mockHardwareInfo =
@@ -84,7 +84,7 @@ val videoMetadataJson: String = """
     "fps": "30000",
     "fps_denom": "1001",
     "prog": "1",
-    "subsample": "0"    
+    "subsample": "0"
 }
 """.trimIndent()
 
@@ -117,7 +117,7 @@ val videoMetadataJson2 = """
     "fps_denom": "1001",
     "prog": "1",
     "subsample": "0"
-}    
+}
 """.trimIndent()
 
 val problematicMetadataJson = """
@@ -174,7 +174,7 @@ val groupedMediaListItemJson: String = """
     "s": "170856763",
     "t": "b",
     "m": []
-}    
+}
 """.trimIndent()
 
 val mediaListJson: String = """
@@ -230,7 +230,7 @@ val mediaListJson: String = """
             ]
         }
     ]
-}    
+}
 """.trimIndent()
 
 val mediaListJson2 = """
@@ -406,7 +406,7 @@ val mediaListJson2 = """
             ]
         }
     ]
-}    
+}
 """.trimIndent()
 
 val datetimeResponse =

@@ -3,9 +3,9 @@ package com.gopro.open_gopro.gopro
 import com.gopro.open_gopro.WsdkIsolatedKoinContext
 import co.touchlab.kermit.Logger
 import com.gopro.open_gopro.domain.data.ICameraRepository
-import com.gopro.open_gopro.entity.operation.CohnState
-import com.gopro.open_gopro.entity.operation.proto.EnumCOHNNetworkState
-import com.gopro.open_gopro.entity.operation.proto.EnumCOHNStatus
+import com.gopro.open_gopro.operations.CohnState
+import com.gopro.open_gopro.operations.EnumCOHNNetworkState
+import com.gopro.open_gopro.operations.EnumCOHNStatus
 import com.gopro.open_gopro.gopro.IFeatureContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first

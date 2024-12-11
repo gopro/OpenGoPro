@@ -1,17 +1,17 @@
 @file:OptIn(ExperimentalCoroutinesApi::class)
 
-package com.gopro.open_gopro.operation
+package com.gopro.open_gopro.operations
 
-import com.gopro.open_gopro.entity.operation.MediaId
-import com.gopro.open_gopro.entity.operation.CameraControlStatus
-import com.gopro.open_gopro.entity.operation.GroupMediaItemType
-import com.gopro.open_gopro.entity.operation.GroupedMediaListItem
-import com.gopro.open_gopro.entity.operation.HardwareInfo
-import com.gopro.open_gopro.entity.operation.Preset
-import com.gopro.open_gopro.entity.operation.PresetInfo
-import com.gopro.open_gopro.entity.operation.UpdateCustomPresetRequest
-import com.gopro.open_gopro.entity.operation.PhotoMediaMetadata
-import com.gopro.open_gopro.entity.operation.jsonDefault
+import com.gopro.open_gopro.operations.MediaId
+import com.gopro.open_gopro.operations.CameraControlStatus
+import com.gopro.open_gopro.operations.GroupMediaItemType
+import com.gopro.open_gopro.operations.GroupedMediaListItem
+import com.gopro.open_gopro.operations.HardwareInfo
+import com.gopro.open_gopro.operations.WrappedPreset
+import com.gopro.open_gopro.operations.PresetInfo
+import com.gopro.open_gopro.operations.UpdateCustomPresetRequest
+import com.gopro.open_gopro.operations.PhotoMediaMetadata
+import com.gopro.open_gopro.operations.jsonDefault
 import fakes.buildFakeHttpCommunicator
 import io.ktor.client.utils.EmptyContent
 import io.ktor.http.HttpMethod
@@ -21,22 +21,22 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.encodeToString
-import com.gopro.open_gopro.entity.operation.proto.EnumFlatMode
-import com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon
-import com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle
-import com.gopro.open_gopro.operation.commands.DatetimeGet
-import com.gopro.open_gopro.operation.commands.DatetimeSet
-import com.gopro.open_gopro.operation.commands.GetOpenGoProVersion
-import com.gopro.open_gopro.operation.commands.LivestreamConfigure
-import com.gopro.open_gopro.operation.commands.MediaDeleteGrouped
-import com.gopro.open_gopro.operation.commands.MediaGetLastCaptured
-import com.gopro.open_gopro.operation.commands.MediaGetList
-import com.gopro.open_gopro.operation.commands.MediaGetMetadata
-import com.gopro.open_gopro.operation.commands.PresetGetInfo
-import com.gopro.open_gopro.operation.commands.SetCameraControl
-import com.gopro.open_gopro.operation.commands.UpdateCustomPresetIcon
-import com.gopro.open_gopro.operation.commands.UpdateCustomPresetTitle
-import com.gopro.open_gopro.operation.commands.WebcamGetState
+import com.gopro.open_gopro.operations.EnumFlatMode
+import com.gopro.open_gopro.operations.EnumPresetIcon
+import com.gopro.open_gopro.operations.EnumPresetTitle
+import com.gopro.open_gopro.operations.commands.DatetimeGet
+import com.gopro.open_gopro.operations.commands.DatetimeSet
+import com.gopro.open_gopro.operations.commands.GetOpenGoProVersion
+import com.gopro.open_gopro.operations.commands.LivestreamConfigure
+import com.gopro.open_gopro.operations.commands.MediaDeleteGrouped
+import com.gopro.open_gopro.operations.commands.MediaGetLastCaptured
+import com.gopro.open_gopro.operations.commands.MediaGetList
+import com.gopro.open_gopro.operations.commands.MediaGetMetadata
+import com.gopro.open_gopro.operations.commands.PresetGetInfo
+import com.gopro.open_gopro.operations.commands.SetCameraControl
+import com.gopro.open_gopro.operations.commands.UpdateCustomPresetIcon
+import com.gopro.open_gopro.operations.commands.UpdateCustomPresetTitle
+import com.gopro.open_gopro.operations.commands.WebcamGetState
 import vectors.datetimeResponse
 import vectors.localDateTimeVector
 import vectors.mockHardwareInfo
@@ -200,7 +200,7 @@ class TestHttpCommands {
 
     @Test
     fun `test serialization of proto enums`() = runTest {
-        val preset = Preset(
+        val preset = WrappedPreset(
             icon = EnumPresetIcon.PRESET_ICON_BIKE,
             id = 0,
             mode = EnumFlatMode.FLAT_MODE_LOOPING,
@@ -214,7 +214,7 @@ class TestHttpCommands {
 
         val serialized = jsonDefault.encodeToString(preset)
 
-        val deserialized = jsonDefault.decodeFromString<Preset>(serialized)
+        val deserialized = jsonDefault.decodeFromString<WrappedPreset>(serialized)
 
         assertTrue { true }
         assertEquals(preset, deserialized)
@@ -366,8 +366,8 @@ class TestHttpCommands {
         // THEN
         assertTrue { response.isSuccess }
         with(response.getOrThrow()) {
-            assertEquals(com.gopro.open_gopro.entity.operation.WebcamStatus.OFF, status)
-            assertEquals(com.gopro.open_gopro.entity.operation.WebcamError.NONE, error)
+            assertEquals(com.gopro.open_gopro.operations.WebcamStatus.OFF, status)
+            assertEquals(com.gopro.open_gopro.operations.WebcamError.NONE, error)
         }
     }
 }

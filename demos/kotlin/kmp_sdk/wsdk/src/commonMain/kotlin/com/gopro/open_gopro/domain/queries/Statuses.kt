@@ -6,7 +6,7 @@ import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.bleCommunicator.ResponseId
 import com.gopro.open_gopro.CommunicationType
 import com.gopro.open_gopro.entity.communicator.QueryId
-import com.gopro.open_gopro.entity.queries.StatusId
+import com.gopro.open_gopro.operations.StatusId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart

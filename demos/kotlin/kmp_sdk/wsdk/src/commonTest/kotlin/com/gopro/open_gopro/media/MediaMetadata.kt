@@ -1,13 +1,13 @@
 package com.gopro.open_gopro.media
 
-import com.gopro.open_gopro.entity.operation.AudioOption
-import com.gopro.open_gopro.entity.operation.LensConfig
-import com.gopro.open_gopro.entity.operation.LensProjection
-import com.gopro.open_gopro.entity.operation.MediaContentType
-import com.gopro.open_gopro.entity.operation.MediaMetadata
-import com.gopro.open_gopro.entity.operation.PhotoMediaMetadata
-import com.gopro.open_gopro.entity.operation.VideoMediaMetadata
-import com.gopro.open_gopro.entity.operation.jsonDefault
+import com.gopro.open_gopro.operations.AudioOption
+import com.gopro.open_gopro.operations.LensConfig
+import com.gopro.open_gopro.operations.LensProjection
+import com.gopro.open_gopro.operations.MediaContentType
+import com.gopro.open_gopro.operations.MediaMetadata
+import com.gopro.open_gopro.operations.PhotoMediaMetadata
+import com.gopro.open_gopro.operations.VideoMediaMetadata
+import com.gopro.open_gopro.operations.jsonDefault
 import vectors.photoMetadataJson
 import vectors.problematicMetadataJson
 import vectors.videoMetadataJson

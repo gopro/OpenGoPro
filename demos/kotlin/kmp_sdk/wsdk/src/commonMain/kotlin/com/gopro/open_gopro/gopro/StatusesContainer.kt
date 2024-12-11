@@ -9,7 +9,7 @@ package com.gopro.open_gopro.gopro
  */
 
 import com.gopro.open_gopro.domain.api.IOperationMarshaller
-import com.gopro.open_gopro.entity.queries.StatusId
+import com.gopro.open_gopro.operations.*
 import com.gopro.open_gopro.util.extensions.decodeToString
 import com.gopro.open_gopro.util.extensions.toBoolean
 
@@ -203,8 +203,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#ap-ssid-29)
      */
-    val apSsid = Status(
-        StatusId.AP_SSID, marshaller,::toString
+    val apSsid = Status(StatusId.AP_SSID, marshaller,::toString
     )
 
     /**
@@ -214,8 +213,7 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      *
      * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#wifi-ssid-30)
      */
-    val wifiSsid = Status(
-        StatusId.WIFI_SSID, marshaller,::toString
+    val wifiSsid = Status(StatusId.WIFI_SSID, marshaller,::toString
     )
 
     /**

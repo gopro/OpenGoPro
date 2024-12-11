@@ -1,6 +1,6 @@
-package com.gopro.open_gopro.operation.commands
+package com.gopro.open_gopro.operations.commands
 
-import com.gopro.open_gopro.entity.operation.OgpVersionHttpResponse
+import com.gopro.open_gopro.operations.OgpVersionHttpResponse
 import com.gopro.open_gopro.domain.api.BaseOperation
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.HttpCommunicator

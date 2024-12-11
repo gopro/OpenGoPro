@@ -1,10 +1,5 @@
-package com.gopro.open_gopro.entity.operation
+package com.gopro.open_gopro.operations
 
-import com.gopro.open_gopro.entity.operation.proto.EnumFlatMode
-import com.gopro.open_gopro.entity.operation.proto.EnumPresetGroup
-import com.gopro.open_gopro.entity.operation.proto.EnumPresetGroupIcon
-import com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon
-import com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -33,20 +28,20 @@ data class Range(
 )
 
 @Serializable
-data class PresetSetting(
+data class WrappedPresetSetting(
     val id: Int? = null,
     val isCaption: Boolean? = null,
     val value: Int? = null
 )
 
 @Serializable
-data class Preset(
+data class WrappedPreset(
     @Contextual val icon: EnumPresetIcon? = null,
     val id: Int? = null,
     val isFixed: Boolean? = null,
     val isModified: Boolean? = null,
     @Contextual val mode: EnumFlatMode? = null,
-    @SerialName("settingArray") val settings: List<PresetSetting>? = null,
+    @SerialName("settingArray") val settings: List<WrappedPresetSetting>? = null,
     @Contextual val titleId: EnumPresetTitle? = null,
     val titleNumber: Int? = null,
     @SerialName("userDefined") val isUserDefined: Boolean? = null,
@@ -54,18 +49,18 @@ data class Preset(
 )
 
 @Serializable
-data class PresetGroup(
+data class WrappedPresetGroup(
     val canAddPreset: Boolean? = null,
     @Contextual val icon: EnumPresetGroupIcon? = null,
     @Contextual val id: EnumPresetGroup? = null,
     @SerialName("modeArray") val modes: List<@Contextual EnumFlatMode>? = null,
-    @SerialName("presetArray") val presets: List<Preset>? = null
+    @SerialName("presetArray") val presets: List<WrappedPreset>? = null
 )
 
 @Serializable
 data class PresetInfo(
     val customIconIds: List<Range>? = null,
     val customTitleIds: List<Range>? = null,
-    val presetGroupArray: List<PresetGroup>? = null
+    val presetGroupArray: List<WrappedPresetGroup>? = null
 )
 

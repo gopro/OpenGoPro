@@ -1,8 +1,8 @@
 package com.gopro.open_gopro.gopro
 
 import co.touchlab.kermit.Logger
-import com.gopro.open_gopro.entity.operation.AccessPointState
-import com.gopro.open_gopro.entity.operation.ApScanEntry
+import com.gopro.open_gopro.operations.AccessPointState
+import com.gopro.open_gopro.operations.ApScanEntry
 import com.gopro.open_gopro.gopro.IFeatureContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.last

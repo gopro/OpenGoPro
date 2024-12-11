@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.entity.queries
+package com.gopro.open_gopro.operations
 
 /************************************************************************************************************
  *
@@ -113,6 +113,8 @@ enum class VideoResolution(override val value: UByte) : IValuedEnum<UByte> {
     NUM_2_7K_4_3_V2(111U),
     NUM_4K_9_16_V2(109U),
     NUM_1080_9_16_V2(110U),
+    NUM_5_3K_21_9(35U),
+    NUM_4K_21_9(36U),
     NUM_4K_1_1(37U),
     NUM_900(38U),
     NUM_720(12U);
@@ -141,7 +143,10 @@ enum class FramesPerSecond(override val value: UByte) : IValuedEnum<UByte> {
     NUM_50_0(6U),
     NUM_30_0(8U),
     NUM_25_0(9U),
-    NUM_24_0(10U);
+    NUM_24_0(10U),
+    NUM_400_0(15U),
+    NUM_360_0(16U),
+    NUM_300_0(17U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<FramesPerSecond> {
@@ -531,6 +536,16 @@ enum class EasyModeSpeed(override val value: UByte) : IValuedEnum<UByte> {
     NUM_1X_NORMAL_SPEED_1_1_25_FPS_4K_V2_(139U),
     NUM_2X_SLO_MO_SPEED_1_1_4K_60_FPS_V2_(140U),
     NUM_2X_SLO_MO_SPEED_1_1_4K_50_FPS_V2_(141U),
+    NUM_1X_NORMAL_SPEED_21_9_30_FPS_5_3K_V2_(142U),
+    NUM_1X_NORMAL_SPEED_21_9_25_FPS_5_3K_V2_(143U),
+    NUM_1X_NORMAL_SPEED_21_9_30_FPS_4K_V2_(146U),
+    NUM_1X_NORMAL_SPEED_21_9_25_FPS_4K_V2_(147U),
+    NUM_2X_SLO_MO_SPEED_21_9_5_3K_60_FPS_V2_(144U),
+    NUM_2X_SLO_MO_SPEED_21_9_5_3K_50_FPS_V2_(145U),
+    NUM_2X_SLO_MO_SPEED_21_9_4K_60_FPS_V2_(148U),
+    NUM_2X_SLO_MO_SPEED_21_9_4K_50_FPS_V2_(149U),
+    NUM_120_4X_SUPER_SLO_MO_SPEED_21_9_4K_V2_(150U),
+    NUM_100_4X_SUPER_SLO_MO_SPEED_21_9_4K_V2_(151U),
     NUM_1X_NORMAL_SPEED_30_FPS_4_3_5_3K_V2_(152U),
     NUM_1X_NORMAL_SPEED_25_FPS_4_3_5_3K_V2_(153U),
     NUM_1X_NORMAL_SPEED_30_FPS_4_3_4K_V2_(154U),
@@ -806,7 +821,8 @@ enum class MaxLensMod(override val value: UByte) : IValuedEnum<UByte> {
     STANDARD_LENS(10U),
     AUTO_DETECT(100U),
     MAX_LENS_2_5(3U),
-    MACRO(4U);
+    MACRO(4U),
+    ANAMORPHIC(5U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<MaxLensMod> {
@@ -844,7 +860,8 @@ enum class MaxLensModEnable(override val value: UByte) : IValuedEnum<UByte> {
  */
 enum class EasyNightPhoto(override val value: UByte) : IValuedEnum<UByte> {
     SUPER_PHOTO(0U),
-    NIGHT_PHOTO(1U);
+    NIGHT_PHOTO(1U),
+    BURST(2U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<EasyNightPhoto> {
@@ -864,7 +881,8 @@ enum class EasyNightPhoto(override val value: UByte) : IValuedEnum<UByte> {
 enum class MultiShotAspectRatio(override val value: UByte) : IValuedEnum<UByte> {
     NUM_4_3(0U),
     NUM_16_9(1U),
-    NUM_8_7(3U);
+    NUM_8_7(3U),
+    NUM_9_16(4U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<MultiShotAspectRatio> {
@@ -889,6 +907,7 @@ enum class Framing(override val value: UByte) : IValuedEnum<UByte> {
     VERTICAL_9_16_V2(104U),
     FULL_FRAME_8_7_V2(103U),
     FULL_FRAME_1_1_V2(106U),
+    ULTRA_WIDESCREEN_21_9_V2(105U),
     TRADITIONAL_4_3_V2(100U);
 
     @ExperimentalUnsignedTypes
@@ -951,7 +970,7 @@ enum class Led(override val value: UByte) : IValuedEnum<UByte> {
     FRONT_OFF_ONLY(5U),
     ON(2U),
     OFF(0U),
-    KEEP_ALIVE(0x42U), // TODO how to handle this?
+    KEEP_ALIVE(66U),
     BACK_ONLY(100U);
 
     @ExperimentalUnsignedTypes
@@ -1047,6 +1066,7 @@ enum class VideoFraming(override val value: UByte) : IValuedEnum<UByte> {
     NUM_16_9(1U),
     NUM_8_7(3U),
     NUM_9_16(4U),
+    NUM_21_9(5U),
     NUM_1_1(6U);
 
     @ExperimentalUnsignedTypes
@@ -1118,7 +1138,9 @@ enum class VideoAspectRatio(override val value: UByte) : IValuedEnum<UByte> {
     NUM_4_3(0U),
     NUM_16_9(1U),
     NUM_8_7(3U),
-    NUM_9_16(4U);
+    NUM_9_16(4U),
+    NUM_21_9(5U),
+    NUM_1_1(6U);
 
     @ExperimentalUnsignedTypes
     companion object : IUByteArrayCompanion<VideoAspectRatio> {
@@ -1145,6 +1167,7 @@ enum class VideoLens(override val value: UByte) : IValuedEnum<UByte> {
     HYPERVIEW(9U),
     LINEAR_HORIZON_LOCK(10U),
     MAX_HYPERVIEW(11U),
+    ULTRA_LINEAR(14U),
     ULTRA_WIDE(13U),
     ULTRA_SUPERVIEW(12U),
     ULTRA_HYPERVIEW(104U);
@@ -1169,11 +1192,15 @@ enum class PhotoLens(override val value: UByte) : IValuedEnum<UByte> {
     WIDE(101U),
     LINEAR(102U),
     NARROW(19U),
+    NUM_17MP_ULTRA_LINEAR(48U),
+    NUM_17MP_ULTRA_WIDE(47U),
     ULTRA_WIDE_12_MP(41U),
     WIDE_12_MP(0U),
+    NUM_17MP_WIDE(46U),
     WIDE_23_MP(27U),
     WIDE_27_MP(31U),
     LINEAR_27_MP(32U),
+    NUM_17MP_LINEAR(45U),
     LINEAR_23_MP(28U),
     LINEAR_12_MP(10U);
 

@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.entity.operation
+package com.gopro.open_gopro.operations
 
 enum class CameraControlStatus(val value: Int) {
     IDLE(0),

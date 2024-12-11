@@ -6,8 +6,8 @@ import com.gopro.open_gopro.entity.communicator.FeatureId
 import com.gopro.open_gopro.entity.communicator.QueryId
 import com.gopro.open_gopro.entity.communicator.responseProtobufIds
 import com.gopro.open_gopro.entity.network.ble.GpUuid
-import com.gopro.open_gopro.entity.queries.SettingId
-import com.gopro.open_gopro.entity.queries.StatusId
+import com.gopro.open_gopro.operations.SettingId
+import com.gopro.open_gopro.operations.StatusId
 
 
 internal sealed interface ResponseId {

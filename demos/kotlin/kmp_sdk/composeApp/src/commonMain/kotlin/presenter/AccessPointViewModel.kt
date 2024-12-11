@@ -3,7 +3,7 @@ package presenter
 import com.gopro.open_gopro.Wsdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
-import com.gopro.open_gopro.entity.operation.AccessPointState
+import com.gopro.open_gopro.operations.AccessPointState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

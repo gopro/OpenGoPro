@@ -1,21 +1,21 @@
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
-package com.gopro.open_gopro.entity.operation.proto
+package com.gopro.open_gopro.operations
 
 @pbandk.Export
 internal data class RequestSetTurboActive(
     val active: Boolean,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.RequestSetTurboActive = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestSetTurboActive> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.RequestSetTurboActive = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestSetTurboActive> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.RequestSetTurboActive> {
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.RequestSetTurboActive = com.gopro.open_gopro.entity.operation.proto.RequestSetTurboActive.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.RequestSetTurboActive> {
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.RequestSetTurboActive = com.gopro.open_gopro.operations.RequestSetTurboActive.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestSetTurboActive> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestSetTurboActive> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestSetTurboActive",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.RequestSetTurboActive::class,
+            messageClass = com.gopro.open_gopro.operations.RequestSetTurboActive::class,
             messageCompanion = this,
             fields = buildList(1) {
                 add(
@@ -25,7 +25,7 @@ internal data class RequestSetTurboActive(
                         number = 1,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "active",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestSetTurboActive::active
+                        value = com.gopro.open_gopro.operations.RequestSetTurboActive::active
                     )
                 )
             }

@@ -1,10 +1,10 @@
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
-package com.gopro.open_gopro.entity.operation.proto
+package com.gopro.open_gopro.operations
 
 @pbandk.Export
 sealed class EnumFlatMode(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumFlatMode && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumFlatMode && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumFlatMode.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -33,16 +33,16 @@ sealed class EnumFlatMode(override val value: Int, override val name: String? = 
     internal object FLAT_MODE_VIDEO_BURST_SLOMO : EnumFlatMode(32, "FLAT_MODE_VIDEO_BURST_SLOMO")
     internal class UNRECOGNIZED(value: Int) : EnumFlatMode(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumFlatMode> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumFlatMode> by lazy { listOf(FLAT_MODE_UNKNOWN, FLAT_MODE_PLAYBACK, FLAT_MODE_SETUP, FLAT_MODE_VIDEO, FLAT_MODE_TIME_LAPSE_VIDEO, FLAT_MODE_LOOPING, FLAT_MODE_PHOTO_SINGLE, FLAT_MODE_PHOTO, FLAT_MODE_PHOTO_NIGHT, FLAT_MODE_PHOTO_BURST, FLAT_MODE_TIME_LAPSE_PHOTO, FLAT_MODE_NIGHT_LAPSE_PHOTO, FLAT_MODE_BROADCAST_RECORD, FLAT_MODE_BROADCAST_BROADCAST, FLAT_MODE_TIME_WARP_VIDEO, FLAT_MODE_LIVE_BURST, FLAT_MODE_NIGHT_LAPSE_VIDEO, FLAT_MODE_SLOMO, FLAT_MODE_IDLE, FLAT_MODE_VIDEO_STAR_TRAIL, FLAT_MODE_VIDEO_LIGHT_PAINTING, FLAT_MODE_VIDEO_LIGHT_TRAIL, FLAT_MODE_VIDEO_BURST_SLOMO) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumFlatMode = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumFlatMode = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumFlatMode with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumFlatMode> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumFlatMode> by lazy { listOf(FLAT_MODE_UNKNOWN, FLAT_MODE_PLAYBACK, FLAT_MODE_SETUP, FLAT_MODE_VIDEO, FLAT_MODE_TIME_LAPSE_VIDEO, FLAT_MODE_LOOPING, FLAT_MODE_PHOTO_SINGLE, FLAT_MODE_PHOTO, FLAT_MODE_PHOTO_NIGHT, FLAT_MODE_PHOTO_BURST, FLAT_MODE_TIME_LAPSE_PHOTO, FLAT_MODE_NIGHT_LAPSE_PHOTO, FLAT_MODE_BROADCAST_RECORD, FLAT_MODE_BROADCAST_BROADCAST, FLAT_MODE_TIME_WARP_VIDEO, FLAT_MODE_LIVE_BURST, FLAT_MODE_NIGHT_LAPSE_VIDEO, FLAT_MODE_SLOMO, FLAT_MODE_IDLE, FLAT_MODE_VIDEO_STAR_TRAIL, FLAT_MODE_VIDEO_LIGHT_PAINTING, FLAT_MODE_VIDEO_LIGHT_TRAIL, FLAT_MODE_VIDEO_BURST_SLOMO) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumFlatMode = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumFlatMode = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumFlatMode with name: $name")
     }
 }
 
 @pbandk.Export
 sealed class EnumPresetGroup(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumPresetGroup && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumPresetGroup && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumPresetGroup.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -51,16 +51,16 @@ sealed class EnumPresetGroup(override val value: Int, override val name: String?
     internal object PRESET_GROUP_ID_TIMELAPSE : EnumPresetGroup(1002, "PRESET_GROUP_ID_TIMELAPSE")
     internal class UNRECOGNIZED(value: Int) : EnumPresetGroup(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumPresetGroup> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumPresetGroup> by lazy { listOf(PRESET_GROUP_ID_VIDEO, PRESET_GROUP_ID_PHOTO, PRESET_GROUP_ID_TIMELAPSE) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumPresetGroup = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumPresetGroup = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumPresetGroup with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumPresetGroup> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumPresetGroup> by lazy { listOf(PRESET_GROUP_ID_VIDEO, PRESET_GROUP_ID_PHOTO, PRESET_GROUP_ID_TIMELAPSE) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumPresetGroup = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumPresetGroup = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumPresetGroup with name: $name")
     }
 }
 
 @pbandk.Export
 sealed class EnumPresetGroupIcon(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumPresetGroupIcon && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumPresetGroupIcon && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumPresetGroupIcon.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -77,16 +77,16 @@ sealed class EnumPresetGroupIcon(override val value: Int, override val name: Str
     internal object PRESET_GROUP_ND_MOD_TIMELAPSE_ICON_ID : EnumPresetGroupIcon(10, "PRESET_GROUP_ND_MOD_TIMELAPSE_ICON_ID")
     internal class UNRECOGNIZED(value: Int) : EnumPresetGroupIcon(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumPresetGroupIcon> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumPresetGroupIcon> by lazy { listOf(PRESET_GROUP_VIDEO_ICON_ID, PRESET_GROUP_PHOTO_ICON_ID, PRESET_GROUP_TIMELAPSE_ICON_ID, PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID, PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID, PRESET_GROUP_MAX_VIDEO_ICON_ID, PRESET_GROUP_MAX_PHOTO_ICON_ID, PRESET_GROUP_MAX_TIMELAPSE_ICON_ID, PRESET_GROUP_ND_MOD_VIDEO_ICON_ID, PRESET_GROUP_ND_MOD_PHOTO_ICON_ID, PRESET_GROUP_ND_MOD_TIMELAPSE_ICON_ID) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumPresetGroupIcon = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumPresetGroupIcon = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumPresetGroupIcon with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumPresetGroupIcon> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumPresetGroupIcon> by lazy { listOf(PRESET_GROUP_VIDEO_ICON_ID, PRESET_GROUP_PHOTO_ICON_ID, PRESET_GROUP_TIMELAPSE_ICON_ID, PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID, PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID, PRESET_GROUP_MAX_VIDEO_ICON_ID, PRESET_GROUP_MAX_PHOTO_ICON_ID, PRESET_GROUP_MAX_TIMELAPSE_ICON_ID, PRESET_GROUP_ND_MOD_VIDEO_ICON_ID, PRESET_GROUP_ND_MOD_PHOTO_ICON_ID, PRESET_GROUP_ND_MOD_TIMELAPSE_ICON_ID) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumPresetGroupIcon = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumPresetGroupIcon = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumPresetGroupIcon with name: $name")
     }
 }
 
 @pbandk.Export
 sealed class EnumPresetIcon(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumPresetIcon && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumPresetIcon.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -178,16 +178,16 @@ sealed class EnumPresetIcon(override val value: Int, override val name: String? 
     internal object PRESET_ICON_NIGHTLAPSE_PHOTO : EnumPresetIcon(1001, "PRESET_ICON_NIGHTLAPSE_PHOTO")
     internal class UNRECOGNIZED(value: Int) : EnumPresetIcon(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon> by lazy { listOf(PRESET_ICON_VIDEO, PRESET_ICON_ACTIVITY, PRESET_ICON_CINEMATIC, PRESET_ICON_PHOTO, PRESET_ICON_LIVE_BURST, PRESET_ICON_BURST, PRESET_ICON_PHOTO_NIGHT, PRESET_ICON_TIMEWARP, PRESET_ICON_TIMELAPSE, PRESET_ICON_NIGHTLAPSE, PRESET_ICON_SNAIL, PRESET_ICON_VIDEO_2, PRESET_ICON_PHOTO_2, PRESET_ICON_PANORAMA, PRESET_ICON_BURST_2, PRESET_ICON_TIMEWARP_2, PRESET_ICON_TIMELAPSE_2, PRESET_ICON_CUSTOM, PRESET_ICON_AIR, PRESET_ICON_BIKE, PRESET_ICON_EPIC, PRESET_ICON_INDOOR, PRESET_ICON_MOTOR, PRESET_ICON_MOUNTED, PRESET_ICON_OUTDOOR, PRESET_ICON_POV, PRESET_ICON_SELFIE, PRESET_ICON_SKATE, PRESET_ICON_SNOW, PRESET_ICON_TRAIL, PRESET_ICON_TRAVEL, PRESET_ICON_WATER, PRESET_ICON_LOOPING, PRESET_ICON_STARS, PRESET_ICON_ACTION, PRESET_ICON_FOLLOW_CAM, PRESET_ICON_SURF, PRESET_ICON_CITY, PRESET_ICON_SHAKY, PRESET_ICON_CHESTY, PRESET_ICON_HELMET, PRESET_ICON_BITE, PRESET_ICON_CUSTOM_CINEMATIC, PRESET_ICON_VLOG, PRESET_ICON_FPV, PRESET_ICON_HDR, PRESET_ICON_LANDSCAPE, PRESET_ICON_LOG, PRESET_ICON_CUSTOM_SLOMO, PRESET_ICON_TRIPOD, PRESET_ICON_MAX_VIDEO, PRESET_ICON_MAX_PHOTO, PRESET_ICON_MAX_TIMEWARP, PRESET_ICON_BASIC, PRESET_ICON_ULTRA_SLO_MO, PRESET_ICON_STANDARD_ENDURANCE, PRESET_ICON_ACTIVITY_ENDURANCE, PRESET_ICON_CINEMATIC_ENDURANCE, PRESET_ICON_SLOMO_ENDURANCE, PRESET_ICON_STATIONARY_1, PRESET_ICON_STATIONARY_2, PRESET_ICON_STATIONARY_3, PRESET_ICON_STATIONARY_4, PRESET_ICON_SIMPLE_SUPER_PHOTO, PRESET_ICON_SIMPLE_NIGHT_PHOTO, PRESET_ICON_HIGHEST_QUALITY_VIDEO, PRESET_ICON_STANDARD_QUALITY_VIDEO, PRESET_ICON_BASIC_QUALITY_VIDEO, PRESET_ICON_STAR_TRAIL, PRESET_ICON_LIGHT_PAINTING, PRESET_ICON_LIGHT_TRAIL, PRESET_ICON_FULL_FRAME, PRESET_ICON_EASY_MAX_VIDEO, PRESET_ICON_EASY_MAX_PHOTO, PRESET_ICON_EASY_MAX_TIMEWARP, PRESET_ICON_EASY_MAX_STAR_TRAIL, PRESET_ICON_EASY_MAX_LIGHT_PAINTING, PRESET_ICON_EASY_MAX_LIGHT_TRAIL, PRESET_ICON_MAX_STAR_TRAIL, PRESET_ICON_MAX_LIGHT_PAINTING, PRESET_ICON_MAX_LIGHT_TRAIL, PRESET_ICON_EASY_STANDARD_PROFILE, PRESET_ICON_EASY_HDR_PROFILE, PRESET_ICON_BURST_SLOMO, PRESET_ICON_TIMELAPSE_PHOTO, PRESET_ICON_NIGHTLAPSE_PHOTO) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumPresetIcon with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumPresetIcon> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumPresetIcon> by lazy { listOf(PRESET_ICON_VIDEO, PRESET_ICON_ACTIVITY, PRESET_ICON_CINEMATIC, PRESET_ICON_PHOTO, PRESET_ICON_LIVE_BURST, PRESET_ICON_BURST, PRESET_ICON_PHOTO_NIGHT, PRESET_ICON_TIMEWARP, PRESET_ICON_TIMELAPSE, PRESET_ICON_NIGHTLAPSE, PRESET_ICON_SNAIL, PRESET_ICON_VIDEO_2, PRESET_ICON_PHOTO_2, PRESET_ICON_PANORAMA, PRESET_ICON_BURST_2, PRESET_ICON_TIMEWARP_2, PRESET_ICON_TIMELAPSE_2, PRESET_ICON_CUSTOM, PRESET_ICON_AIR, PRESET_ICON_BIKE, PRESET_ICON_EPIC, PRESET_ICON_INDOOR, PRESET_ICON_MOTOR, PRESET_ICON_MOUNTED, PRESET_ICON_OUTDOOR, PRESET_ICON_POV, PRESET_ICON_SELFIE, PRESET_ICON_SKATE, PRESET_ICON_SNOW, PRESET_ICON_TRAIL, PRESET_ICON_TRAVEL, PRESET_ICON_WATER, PRESET_ICON_LOOPING, PRESET_ICON_STARS, PRESET_ICON_ACTION, PRESET_ICON_FOLLOW_CAM, PRESET_ICON_SURF, PRESET_ICON_CITY, PRESET_ICON_SHAKY, PRESET_ICON_CHESTY, PRESET_ICON_HELMET, PRESET_ICON_BITE, PRESET_ICON_CUSTOM_CINEMATIC, PRESET_ICON_VLOG, PRESET_ICON_FPV, PRESET_ICON_HDR, PRESET_ICON_LANDSCAPE, PRESET_ICON_LOG, PRESET_ICON_CUSTOM_SLOMO, PRESET_ICON_TRIPOD, PRESET_ICON_MAX_VIDEO, PRESET_ICON_MAX_PHOTO, PRESET_ICON_MAX_TIMEWARP, PRESET_ICON_BASIC, PRESET_ICON_ULTRA_SLO_MO, PRESET_ICON_STANDARD_ENDURANCE, PRESET_ICON_ACTIVITY_ENDURANCE, PRESET_ICON_CINEMATIC_ENDURANCE, PRESET_ICON_SLOMO_ENDURANCE, PRESET_ICON_STATIONARY_1, PRESET_ICON_STATIONARY_2, PRESET_ICON_STATIONARY_3, PRESET_ICON_STATIONARY_4, PRESET_ICON_SIMPLE_SUPER_PHOTO, PRESET_ICON_SIMPLE_NIGHT_PHOTO, PRESET_ICON_HIGHEST_QUALITY_VIDEO, PRESET_ICON_STANDARD_QUALITY_VIDEO, PRESET_ICON_BASIC_QUALITY_VIDEO, PRESET_ICON_STAR_TRAIL, PRESET_ICON_LIGHT_PAINTING, PRESET_ICON_LIGHT_TRAIL, PRESET_ICON_FULL_FRAME, PRESET_ICON_EASY_MAX_VIDEO, PRESET_ICON_EASY_MAX_PHOTO, PRESET_ICON_EASY_MAX_TIMEWARP, PRESET_ICON_EASY_MAX_STAR_TRAIL, PRESET_ICON_EASY_MAX_LIGHT_PAINTING, PRESET_ICON_EASY_MAX_LIGHT_TRAIL, PRESET_ICON_MAX_STAR_TRAIL, PRESET_ICON_MAX_LIGHT_PAINTING, PRESET_ICON_MAX_LIGHT_TRAIL, PRESET_ICON_EASY_STANDARD_PROFILE, PRESET_ICON_EASY_HDR_PROFILE, PRESET_ICON_BURST_SLOMO, PRESET_ICON_TIMELAPSE_PHOTO, PRESET_ICON_NIGHTLAPSE_PHOTO) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumPresetIcon = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumPresetIcon = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumPresetIcon with name: $name")
     }
 }
 
 @pbandk.Export
 sealed class EnumPresetTitle(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle && other.value == value
+    override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumPresetTitle && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumPresetTitle.${name ?: "UNRECOGNIZED"}(value=$value)"
 
@@ -270,28 +270,28 @@ sealed class EnumPresetTitle(override val value: Int, override val name: String?
     internal object PRESET_TITLE_BURST_SLOMO : EnumPresetTitle(106, "PRESET_TITLE_BURST_SLOMO")
     internal class UNRECOGNIZED(value: Int) : EnumPresetTitle(value)
 
-    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle> {
-        internal val values: List<com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle> by lazy { listOf(PRESET_TITLE_ACTIVITY, PRESET_TITLE_STANDARD, PRESET_TITLE_CINEMATIC, PRESET_TITLE_PHOTO, PRESET_TITLE_LIVE_BURST, PRESET_TITLE_BURST, PRESET_TITLE_NIGHT, PRESET_TITLE_TIME_WARP, PRESET_TITLE_TIME_LAPSE, PRESET_TITLE_NIGHT_LAPSE, PRESET_TITLE_VIDEO, PRESET_TITLE_SLOMO, PRESET_TITLE_PHOTO_2, PRESET_TITLE_PANORAMA, PRESET_TITLE_TIME_WARP_2, PRESET_TITLE_CUSTOM, PRESET_TITLE_AIR, PRESET_TITLE_BIKE, PRESET_TITLE_EPIC, PRESET_TITLE_INDOOR, PRESET_TITLE_MOTOR, PRESET_TITLE_MOUNTED, PRESET_TITLE_OUTDOOR, PRESET_TITLE_POV, PRESET_TITLE_SELFIE, PRESET_TITLE_SKATE, PRESET_TITLE_SNOW, PRESET_TITLE_TRAIL, PRESET_TITLE_TRAVEL, PRESET_TITLE_WATER, PRESET_TITLE_LOOPING, PRESET_TITLE_STARS, PRESET_TITLE_ACTION, PRESET_TITLE_FOLLOW_CAM, PRESET_TITLE_SURF, PRESET_TITLE_CITY, PRESET_TITLE_SHAKY, PRESET_TITLE_CHESTY, PRESET_TITLE_HELMET, PRESET_TITLE_BITE, PRESET_TITLE_CUSTOM_CINEMATIC, PRESET_TITLE_VLOG, PRESET_TITLE_FPV, PRESET_TITLE_HDR, PRESET_TITLE_LANDSCAPE, PRESET_TITLE_LOG, PRESET_TITLE_CUSTOM_SLOMO, PRESET_TITLE_TRIPOD, PRESET_TITLE_BASIC, PRESET_TITLE_ULTRA_SLO_MO, PRESET_TITLE_STANDARD_ENDURANCE, PRESET_TITLE_ACTIVITY_ENDURANCE, PRESET_TITLE_CINEMATIC_ENDURANCE, PRESET_TITLE_SLOMO_ENDURANCE, PRESET_TITLE_STATIONARY_1, PRESET_TITLE_STATIONARY_2, PRESET_TITLE_STATIONARY_3, PRESET_TITLE_STATIONARY_4, PRESET_TITLE_SIMPLE_VIDEO, PRESET_TITLE_SIMPLE_TIME_WARP, PRESET_TITLE_SIMPLE_SUPER_PHOTO, PRESET_TITLE_SIMPLE_NIGHT_PHOTO, PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE, PRESET_TITLE_HIGHEST_QUALITY, PRESET_TITLE_EXTENDED_BATTERY, PRESET_TITLE_LONGEST_BATTERY, PRESET_TITLE_STAR_TRAIL, PRESET_TITLE_LIGHT_PAINTING, PRESET_TITLE_LIGHT_TRAIL, PRESET_TITLE_FULL_FRAME, PRESET_TITLE_STANDARD_QUALITY_VIDEO, PRESET_TITLE_BASIC_QUALITY_VIDEO, PRESET_TITLE_HIGHEST_QUALITY_VIDEO, PRESET_TITLE_USER_DEFINED_CUSTOM_NAME, PRESET_TITLE_EASY_STANDARD_PROFILE, PRESET_TITLE_EASY_HDR_PROFILE, PRESET_TITLE_BURST_SLOMO) }
-        override fun fromValue(value: Int): com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumPresetTitle with name: $name")
+    internal companion object : pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumPresetTitle> {
+        internal val values: List<com.gopro.open_gopro.operations.EnumPresetTitle> by lazy { listOf(PRESET_TITLE_ACTIVITY, PRESET_TITLE_STANDARD, PRESET_TITLE_CINEMATIC, PRESET_TITLE_PHOTO, PRESET_TITLE_LIVE_BURST, PRESET_TITLE_BURST, PRESET_TITLE_NIGHT, PRESET_TITLE_TIME_WARP, PRESET_TITLE_TIME_LAPSE, PRESET_TITLE_NIGHT_LAPSE, PRESET_TITLE_VIDEO, PRESET_TITLE_SLOMO, PRESET_TITLE_PHOTO_2, PRESET_TITLE_PANORAMA, PRESET_TITLE_TIME_WARP_2, PRESET_TITLE_CUSTOM, PRESET_TITLE_AIR, PRESET_TITLE_BIKE, PRESET_TITLE_EPIC, PRESET_TITLE_INDOOR, PRESET_TITLE_MOTOR, PRESET_TITLE_MOUNTED, PRESET_TITLE_OUTDOOR, PRESET_TITLE_POV, PRESET_TITLE_SELFIE, PRESET_TITLE_SKATE, PRESET_TITLE_SNOW, PRESET_TITLE_TRAIL, PRESET_TITLE_TRAVEL, PRESET_TITLE_WATER, PRESET_TITLE_LOOPING, PRESET_TITLE_STARS, PRESET_TITLE_ACTION, PRESET_TITLE_FOLLOW_CAM, PRESET_TITLE_SURF, PRESET_TITLE_CITY, PRESET_TITLE_SHAKY, PRESET_TITLE_CHESTY, PRESET_TITLE_HELMET, PRESET_TITLE_BITE, PRESET_TITLE_CUSTOM_CINEMATIC, PRESET_TITLE_VLOG, PRESET_TITLE_FPV, PRESET_TITLE_HDR, PRESET_TITLE_LANDSCAPE, PRESET_TITLE_LOG, PRESET_TITLE_CUSTOM_SLOMO, PRESET_TITLE_TRIPOD, PRESET_TITLE_BASIC, PRESET_TITLE_ULTRA_SLO_MO, PRESET_TITLE_STANDARD_ENDURANCE, PRESET_TITLE_ACTIVITY_ENDURANCE, PRESET_TITLE_CINEMATIC_ENDURANCE, PRESET_TITLE_SLOMO_ENDURANCE, PRESET_TITLE_STATIONARY_1, PRESET_TITLE_STATIONARY_2, PRESET_TITLE_STATIONARY_3, PRESET_TITLE_STATIONARY_4, PRESET_TITLE_SIMPLE_VIDEO, PRESET_TITLE_SIMPLE_TIME_WARP, PRESET_TITLE_SIMPLE_SUPER_PHOTO, PRESET_TITLE_SIMPLE_NIGHT_PHOTO, PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE, PRESET_TITLE_HIGHEST_QUALITY, PRESET_TITLE_EXTENDED_BATTERY, PRESET_TITLE_LONGEST_BATTERY, PRESET_TITLE_STAR_TRAIL, PRESET_TITLE_LIGHT_PAINTING, PRESET_TITLE_LIGHT_TRAIL, PRESET_TITLE_FULL_FRAME, PRESET_TITLE_STANDARD_QUALITY_VIDEO, PRESET_TITLE_BASIC_QUALITY_VIDEO, PRESET_TITLE_HIGHEST_QUALITY_VIDEO, PRESET_TITLE_USER_DEFINED_CUSTOM_NAME, PRESET_TITLE_EASY_STANDARD_PROFILE, PRESET_TITLE_EASY_HDR_PROFILE, PRESET_TITLE_BURST_SLOMO) }
+        override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumPresetTitle = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+        override fun fromName(name: String): com.gopro.open_gopro.operations.EnumPresetTitle = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No EnumPresetTitle with name: $name")
     }
 }
 
 @pbandk.Export
 data class NotifyPresetStatus(
-    val presetGroupArray: List<com.gopro.open_gopro.entity.operation.proto.PresetGroup> = emptyList(),
+    val presetGroupArray: List<com.gopro.open_gopro.operations.PresetGroup> = emptyList(),
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.NotifyPresetStatus = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.NotifyPresetStatus> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.NotifyPresetStatus = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.NotifyPresetStatus> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.NotifyPresetStatus> {
-        internal val defaultInstance: com.gopro.open_gopro.entity.operation.proto.NotifyPresetStatus by lazy { com.gopro.open_gopro.entity.operation.proto.NotifyPresetStatus() }
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.NotifyPresetStatus = com.gopro.open_gopro.entity.operation.proto.NotifyPresetStatus.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.NotifyPresetStatus> {
+        internal val defaultInstance: com.gopro.open_gopro.operations.NotifyPresetStatus by lazy { com.gopro.open_gopro.operations.NotifyPresetStatus() }
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.NotifyPresetStatus = com.gopro.open_gopro.operations.NotifyPresetStatus.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.NotifyPresetStatus> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.NotifyPresetStatus> = pbandk.MessageDescriptor(
             fullName = "open_gopro.NotifyPresetStatus",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.NotifyPresetStatus::class,
+            messageClass = com.gopro.open_gopro.operations.NotifyPresetStatus::class,
             messageCompanion = this,
             fields = buildList(1) {
                 add(
@@ -299,9 +299,9 @@ data class NotifyPresetStatus(
                         messageDescriptor = this@Companion::descriptor,
                         name = "preset_group_array",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.entity.operation.proto.PresetGroup>(valueType = pbandk.FieldDescriptor.Type.Message(messageCompanion = com.gopro.open_gopro.entity.operation.proto.PresetGroup.Companion)),
+                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.operations.PresetGroup>(valueType = pbandk.FieldDescriptor.Type.Message(messageCompanion = com.gopro.open_gopro.operations.PresetGroup.Companion)),
                         jsonName = "presetGroupArray",
-                        value = com.gopro.open_gopro.entity.operation.proto.NotifyPresetStatus::presetGroupArray
+                        value = com.gopro.open_gopro.operations.NotifyPresetStatus::presetGroupArray
                     )
                 )
             }
@@ -312,27 +312,27 @@ data class NotifyPresetStatus(
 @pbandk.Export
 data class Preset(
     val id: Int? = null,
-    val mode: com.gopro.open_gopro.entity.operation.proto.EnumFlatMode? = null,
-    val titleId: com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle? = null,
+    val mode: com.gopro.open_gopro.operations.EnumFlatMode? = null,
+    val titleId: com.gopro.open_gopro.operations.EnumPresetTitle? = null,
     val titleNumber: Int? = null,
     val userDefined: Boolean? = null,
-    val icon: com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon? = null,
-    val settingArray: List<com.gopro.open_gopro.entity.operation.proto.PresetSetting> = emptyList(),
+    val icon: com.gopro.open_gopro.operations.EnumPresetIcon? = null,
+    val settingArray: List<com.gopro.open_gopro.operations.PresetSetting> = emptyList(),
     val isModified: Boolean? = null,
     val isFixed: Boolean? = null,
     val customName: String? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.Preset = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.Preset> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.Preset = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.Preset> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.Preset> {
-        internal val defaultInstance: com.gopro.open_gopro.entity.operation.proto.Preset by lazy { com.gopro.open_gopro.entity.operation.proto.Preset() }
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.Preset = com.gopro.open_gopro.entity.operation.proto.Preset.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.Preset> {
+        internal val defaultInstance: com.gopro.open_gopro.operations.Preset by lazy { com.gopro.open_gopro.operations.Preset() }
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.Preset = com.gopro.open_gopro.operations.Preset.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.Preset> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.Preset> = pbandk.MessageDescriptor(
             fullName = "open_gopro.Preset",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.Preset::class,
+            messageClass = com.gopro.open_gopro.operations.Preset::class,
             messageCompanion = this,
             fields = buildList(10) {
                 add(
@@ -342,7 +342,7 @@ data class Preset(
                         number = 1,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "id",
-                        value = com.gopro.open_gopro.entity.operation.proto.Preset::id
+                        value = com.gopro.open_gopro.operations.Preset::id
                     )
                 )
                 add(
@@ -350,9 +350,9 @@ data class Preset(
                         messageDescriptor = this@Companion::descriptor,
                         name = "mode",
                         number = 2,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumFlatMode.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumFlatMode.Companion, hasPresence = true),
                         jsonName = "mode",
-                        value = com.gopro.open_gopro.entity.operation.proto.Preset::mode
+                        value = com.gopro.open_gopro.operations.Preset::mode
                     )
                 )
                 add(
@@ -360,9 +360,9 @@ data class Preset(
                         messageDescriptor = this@Companion::descriptor,
                         name = "title_id",
                         number = 3,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumPresetTitle.Companion, hasPresence = true),
                         jsonName = "titleId",
-                        value = com.gopro.open_gopro.entity.operation.proto.Preset::titleId
+                        value = com.gopro.open_gopro.operations.Preset::titleId
                     )
                 )
                 add(
@@ -372,7 +372,7 @@ data class Preset(
                         number = 4,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "titleNumber",
-                        value = com.gopro.open_gopro.entity.operation.proto.Preset::titleNumber
+                        value = com.gopro.open_gopro.operations.Preset::titleNumber
                     )
                 )
                 add(
@@ -382,7 +382,7 @@ data class Preset(
                         number = 5,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "userDefined",
-                        value = com.gopro.open_gopro.entity.operation.proto.Preset::userDefined
+                        value = com.gopro.open_gopro.operations.Preset::userDefined
                     )
                 )
                 add(
@@ -390,9 +390,9 @@ data class Preset(
                         messageDescriptor = this@Companion::descriptor,
                         name = "icon",
                         number = 6,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumPresetIcon.Companion, hasPresence = true),
                         jsonName = "icon",
-                        value = com.gopro.open_gopro.entity.operation.proto.Preset::icon
+                        value = com.gopro.open_gopro.operations.Preset::icon
                     )
                 )
                 add(
@@ -400,9 +400,9 @@ data class Preset(
                         messageDescriptor = this@Companion::descriptor,
                         name = "setting_array",
                         number = 7,
-                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.entity.operation.proto.PresetSetting>(valueType = pbandk.FieldDescriptor.Type.Message(messageCompanion = com.gopro.open_gopro.entity.operation.proto.PresetSetting.Companion)),
+                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.operations.PresetSetting>(valueType = pbandk.FieldDescriptor.Type.Message(messageCompanion = com.gopro.open_gopro.operations.PresetSetting.Companion)),
                         jsonName = "settingArray",
-                        value = com.gopro.open_gopro.entity.operation.proto.Preset::settingArray
+                        value = com.gopro.open_gopro.operations.Preset::settingArray
                     )
                 )
                 add(
@@ -412,7 +412,7 @@ data class Preset(
                         number = 8,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "isModified",
-                        value = com.gopro.open_gopro.entity.operation.proto.Preset::isModified
+                        value = com.gopro.open_gopro.operations.Preset::isModified
                     )
                 )
                 add(
@@ -422,7 +422,7 @@ data class Preset(
                         number = 9,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "isFixed",
-                        value = com.gopro.open_gopro.entity.operation.proto.Preset::isFixed
+                        value = com.gopro.open_gopro.operations.Preset::isFixed
                     )
                 )
                 add(
@@ -432,7 +432,7 @@ data class Preset(
                         number = 10,
                         type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                         jsonName = "customName",
-                        value = com.gopro.open_gopro.entity.operation.proto.Preset::customName
+                        value = com.gopro.open_gopro.operations.Preset::customName
                     )
                 )
             }
@@ -442,21 +442,21 @@ data class Preset(
 
 @pbandk.Export
 internal data class RequestCustomPresetUpdate(
-    val titleId: com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle? = null,
+    val titleId: com.gopro.open_gopro.operations.EnumPresetTitle? = null,
     val customName: String? = null,
-    val iconId: com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon? = null,
+    val iconId: com.gopro.open_gopro.operations.EnumPresetIcon? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.RequestCustomPresetUpdate = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestCustomPresetUpdate> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.RequestCustomPresetUpdate = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestCustomPresetUpdate> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.RequestCustomPresetUpdate> {
-        internal val defaultInstance: com.gopro.open_gopro.entity.operation.proto.RequestCustomPresetUpdate by lazy { com.gopro.open_gopro.entity.operation.proto.RequestCustomPresetUpdate() }
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.RequestCustomPresetUpdate = com.gopro.open_gopro.entity.operation.proto.RequestCustomPresetUpdate.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.RequestCustomPresetUpdate> {
+        internal val defaultInstance: com.gopro.open_gopro.operations.RequestCustomPresetUpdate by lazy { com.gopro.open_gopro.operations.RequestCustomPresetUpdate() }
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.RequestCustomPresetUpdate = com.gopro.open_gopro.operations.RequestCustomPresetUpdate.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.RequestCustomPresetUpdate> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestCustomPresetUpdate> = pbandk.MessageDescriptor(
             fullName = "open_gopro.RequestCustomPresetUpdate",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.RequestCustomPresetUpdate::class,
+            messageClass = com.gopro.open_gopro.operations.RequestCustomPresetUpdate::class,
             messageCompanion = this,
             fields = buildList(3) {
                 add(
@@ -464,9 +464,9 @@ internal data class RequestCustomPresetUpdate(
                         messageDescriptor = this@Companion::descriptor,
                         name = "title_id",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumPresetTitle.Companion, hasPresence = true),
                         jsonName = "titleId",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestCustomPresetUpdate::titleId
+                        value = com.gopro.open_gopro.operations.RequestCustomPresetUpdate::titleId
                     )
                 )
                 add(
@@ -476,7 +476,7 @@ internal data class RequestCustomPresetUpdate(
                         number = 2,
                         type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                         jsonName = "customName",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestCustomPresetUpdate::customName
+                        value = com.gopro.open_gopro.operations.RequestCustomPresetUpdate::customName
                     )
                 )
                 add(
@@ -484,9 +484,9 @@ internal data class RequestCustomPresetUpdate(
                         messageDescriptor = this@Companion::descriptor,
                         name = "icon_id",
                         number = 3,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumPresetIcon.Companion, hasPresence = true),
                         jsonName = "iconId",
-                        value = com.gopro.open_gopro.entity.operation.proto.RequestCustomPresetUpdate::iconId
+                        value = com.gopro.open_gopro.operations.RequestCustomPresetUpdate::iconId
                     )
                 )
             }
@@ -496,23 +496,23 @@ internal data class RequestCustomPresetUpdate(
 
 @pbandk.Export
 data class PresetGroup(
-    val id: com.gopro.open_gopro.entity.operation.proto.EnumPresetGroup? = null,
-    val presetArray: List<com.gopro.open_gopro.entity.operation.proto.Preset> = emptyList(),
+    val id: com.gopro.open_gopro.operations.EnumPresetGroup? = null,
+    val presetArray: List<com.gopro.open_gopro.operations.Preset> = emptyList(),
     val canAddPreset: Boolean? = null,
-    val icon: com.gopro.open_gopro.entity.operation.proto.EnumPresetGroupIcon? = null,
-    val modeArray: List<com.gopro.open_gopro.entity.operation.proto.EnumFlatMode> = emptyList(),
+    val icon: com.gopro.open_gopro.operations.EnumPresetGroupIcon? = null,
+    val modeArray: List<com.gopro.open_gopro.operations.EnumFlatMode> = emptyList(),
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.PresetGroup = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.PresetGroup> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.PresetGroup = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.PresetGroup> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.PresetGroup> {
-        internal val defaultInstance: com.gopro.open_gopro.entity.operation.proto.PresetGroup by lazy { com.gopro.open_gopro.entity.operation.proto.PresetGroup() }
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.PresetGroup = com.gopro.open_gopro.entity.operation.proto.PresetGroup.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.PresetGroup> {
+        internal val defaultInstance: com.gopro.open_gopro.operations.PresetGroup by lazy { com.gopro.open_gopro.operations.PresetGroup() }
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.PresetGroup = com.gopro.open_gopro.operations.PresetGroup.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.PresetGroup> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.PresetGroup> = pbandk.MessageDescriptor(
             fullName = "open_gopro.PresetGroup",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.PresetGroup::class,
+            messageClass = com.gopro.open_gopro.operations.PresetGroup::class,
             messageCompanion = this,
             fields = buildList(5) {
                 add(
@@ -520,9 +520,9 @@ data class PresetGroup(
                         messageDescriptor = this@Companion::descriptor,
                         name = "id",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumPresetGroup.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumPresetGroup.Companion, hasPresence = true),
                         jsonName = "id",
-                        value = com.gopro.open_gopro.entity.operation.proto.PresetGroup::id
+                        value = com.gopro.open_gopro.operations.PresetGroup::id
                     )
                 )
                 add(
@@ -530,9 +530,9 @@ data class PresetGroup(
                         messageDescriptor = this@Companion::descriptor,
                         name = "preset_array",
                         number = 2,
-                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.entity.operation.proto.Preset>(valueType = pbandk.FieldDescriptor.Type.Message(messageCompanion = com.gopro.open_gopro.entity.operation.proto.Preset.Companion)),
+                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.operations.Preset>(valueType = pbandk.FieldDescriptor.Type.Message(messageCompanion = com.gopro.open_gopro.operations.Preset.Companion)),
                         jsonName = "presetArray",
-                        value = com.gopro.open_gopro.entity.operation.proto.PresetGroup::presetArray
+                        value = com.gopro.open_gopro.operations.PresetGroup::presetArray
                     )
                 )
                 add(
@@ -542,7 +542,7 @@ data class PresetGroup(
                         number = 3,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "canAddPreset",
-                        value = com.gopro.open_gopro.entity.operation.proto.PresetGroup::canAddPreset
+                        value = com.gopro.open_gopro.operations.PresetGroup::canAddPreset
                     )
                 )
                 add(
@@ -550,9 +550,9 @@ data class PresetGroup(
                         messageDescriptor = this@Companion::descriptor,
                         name = "icon",
                         number = 4,
-                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumPresetGroupIcon.Companion, hasPresence = true),
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumPresetGroupIcon.Companion, hasPresence = true),
                         jsonName = "icon",
-                        value = com.gopro.open_gopro.entity.operation.proto.PresetGroup::icon
+                        value = com.gopro.open_gopro.operations.PresetGroup::icon
                     )
                 )
                 add(
@@ -560,9 +560,9 @@ data class PresetGroup(
                         messageDescriptor = this@Companion::descriptor,
                         name = "mode_array",
                         number = 5,
-                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.entity.operation.proto.EnumFlatMode>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.entity.operation.proto.EnumFlatMode.Companion)),
+                        type = pbandk.FieldDescriptor.Type.Repeated<com.gopro.open_gopro.operations.EnumFlatMode>(valueType = pbandk.FieldDescriptor.Type.Enum(enumCompanion = com.gopro.open_gopro.operations.EnumFlatMode.Companion)),
                         jsonName = "modeArray",
-                        value = com.gopro.open_gopro.entity.operation.proto.PresetGroup::modeArray
+                        value = com.gopro.open_gopro.operations.PresetGroup::modeArray
                     )
                 )
             }
@@ -577,16 +577,16 @@ data class PresetSetting(
     val isCaption: Boolean? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.entity.operation.proto.PresetSetting = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.PresetSetting> get() = Companion.descriptor
+    override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.PresetSetting = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.PresetSetting> get() = Companion.descriptor
     override val protoSize: Int by lazy { super.protoSize }
-    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.entity.operation.proto.PresetSetting> {
-        internal val defaultInstance: com.gopro.open_gopro.entity.operation.proto.PresetSetting by lazy { com.gopro.open_gopro.entity.operation.proto.PresetSetting() }
-        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.entity.operation.proto.PresetSetting = com.gopro.open_gopro.entity.operation.proto.PresetSetting.decodeWithImpl(u)
+    internal companion object : pbandk.Message.Companion<com.gopro.open_gopro.operations.PresetSetting> {
+        internal val defaultInstance: com.gopro.open_gopro.operations.PresetSetting by lazy { com.gopro.open_gopro.operations.PresetSetting() }
+        override fun decodeWith(u: pbandk.MessageDecoder): com.gopro.open_gopro.operations.PresetSetting = com.gopro.open_gopro.operations.PresetSetting.decodeWithImpl(u)
 
-        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.entity.operation.proto.PresetSetting> = pbandk.MessageDescriptor(
+        override val descriptor: pbandk.MessageDescriptor<com.gopro.open_gopro.operations.PresetSetting> = pbandk.MessageDescriptor(
             fullName = "open_gopro.PresetSetting",
-            messageClass = com.gopro.open_gopro.entity.operation.proto.PresetSetting::class,
+            messageClass = com.gopro.open_gopro.operations.PresetSetting::class,
             messageCompanion = this,
             fields = buildList(3) {
                 add(
@@ -596,7 +596,7 @@ data class PresetSetting(
                         number = 1,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "id",
-                        value = com.gopro.open_gopro.entity.operation.proto.PresetSetting::id
+                        value = com.gopro.open_gopro.operations.PresetSetting::id
                     )
                 )
                 add(
@@ -606,7 +606,7 @@ data class PresetSetting(
                         number = 2,
                         type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
                         jsonName = "value",
-                        value = com.gopro.open_gopro.entity.operation.proto.PresetSetting::value
+                        value = com.gopro.open_gopro.operations.PresetSetting::value
                     )
                 )
                 add(
@@ -616,7 +616,7 @@ data class PresetSetting(
                         number = 3,
                         type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
                         jsonName = "isCaption",
-                        value = com.gopro.open_gopro.entity.operation.proto.PresetSetting::isCaption
+                        value = com.gopro.open_gopro.operations.PresetSetting::isCaption
                     )
                 )
             }
@@ -626,7 +626,7 @@ data class PresetSetting(
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForNotifyPresetStatus")
-internal fun NotifyPresetStatus?.orDefault(): com.gopro.open_gopro.entity.operation.proto.NotifyPresetStatus = this ?: NotifyPresetStatus.defaultInstance
+internal fun NotifyPresetStatus?.orDefault(): com.gopro.open_gopro.operations.NotifyPresetStatus = this ?: NotifyPresetStatus.defaultInstance
 
 private fun NotifyPresetStatus.protoMergeImpl(plus: pbandk.Message?): NotifyPresetStatus = (plus as? NotifyPresetStatus)?.let {
     it.copy(
@@ -637,11 +637,11 @@ private fun NotifyPresetStatus.protoMergeImpl(plus: pbandk.Message?): NotifyPres
 
 @Suppress("UNCHECKED_CAST")
 private fun NotifyPresetStatus.Companion.decodeWithImpl(u: pbandk.MessageDecoder): NotifyPresetStatus {
-    var presetGroupArray: pbandk.ListWithSize.Builder<com.gopro.open_gopro.entity.operation.proto.PresetGroup>? = null
+    var presetGroupArray: pbandk.ListWithSize.Builder<com.gopro.open_gopro.operations.PresetGroup>? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> presetGroupArray = (presetGroupArray ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.entity.operation.proto.PresetGroup> }
+            1 -> presetGroupArray = (presetGroupArray ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.operations.PresetGroup> }
         }
     }
 
@@ -650,7 +650,7 @@ private fun NotifyPresetStatus.Companion.decodeWithImpl(u: pbandk.MessageDecoder
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForPreset")
-internal fun Preset?.orDefault(): com.gopro.open_gopro.entity.operation.proto.Preset = this ?: Preset.defaultInstance
+internal fun Preset?.orDefault(): com.gopro.open_gopro.operations.Preset = this ?: Preset.defaultInstance
 
 private fun Preset.protoMergeImpl(plus: pbandk.Message?): Preset = (plus as? Preset)?.let {
     it.copy(
@@ -671,12 +671,12 @@ private fun Preset.protoMergeImpl(plus: pbandk.Message?): Preset = (plus as? Pre
 @Suppress("UNCHECKED_CAST")
 private fun Preset.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Preset {
     var id: Int? = null
-    var mode: com.gopro.open_gopro.entity.operation.proto.EnumFlatMode? = null
-    var titleId: com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle? = null
+    var mode: com.gopro.open_gopro.operations.EnumFlatMode? = null
+    var titleId: com.gopro.open_gopro.operations.EnumPresetTitle? = null
     var titleNumber: Int? = null
     var userDefined: Boolean? = null
-    var icon: com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon? = null
-    var settingArray: pbandk.ListWithSize.Builder<com.gopro.open_gopro.entity.operation.proto.PresetSetting>? = null
+    var icon: com.gopro.open_gopro.operations.EnumPresetIcon? = null
+    var settingArray: pbandk.ListWithSize.Builder<com.gopro.open_gopro.operations.PresetSetting>? = null
     var isModified: Boolean? = null
     var isFixed: Boolean? = null
     var customName: String? = null
@@ -684,12 +684,12 @@ private fun Preset.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Preset {
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
             1 -> id = _fieldValue as Int
-            2 -> mode = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumFlatMode
-            3 -> titleId = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle
+            2 -> mode = _fieldValue as com.gopro.open_gopro.operations.EnumFlatMode
+            3 -> titleId = _fieldValue as com.gopro.open_gopro.operations.EnumPresetTitle
             4 -> titleNumber = _fieldValue as Int
             5 -> userDefined = _fieldValue as Boolean
-            6 -> icon = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon
-            7 -> settingArray = (settingArray ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.entity.operation.proto.PresetSetting> }
+            6 -> icon = _fieldValue as com.gopro.open_gopro.operations.EnumPresetIcon
+            7 -> settingArray = (settingArray ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.operations.PresetSetting> }
             8 -> isModified = _fieldValue as Boolean
             9 -> isFixed = _fieldValue as Boolean
             10 -> customName = _fieldValue as String
@@ -703,7 +703,7 @@ private fun Preset.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Preset {
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForRequestCustomPresetUpdate")
-internal fun RequestCustomPresetUpdate?.orDefault(): com.gopro.open_gopro.entity.operation.proto.RequestCustomPresetUpdate = this ?: RequestCustomPresetUpdate.defaultInstance
+internal fun RequestCustomPresetUpdate?.orDefault(): com.gopro.open_gopro.operations.RequestCustomPresetUpdate = this ?: RequestCustomPresetUpdate.defaultInstance
 
 private fun RequestCustomPresetUpdate.protoMergeImpl(plus: pbandk.Message?): RequestCustomPresetUpdate = (plus as? RequestCustomPresetUpdate)?.let {
     it.copy(
@@ -716,15 +716,15 @@ private fun RequestCustomPresetUpdate.protoMergeImpl(plus: pbandk.Message?): Req
 
 @Suppress("UNCHECKED_CAST")
 private fun RequestCustomPresetUpdate.Companion.decodeWithImpl(u: pbandk.MessageDecoder): RequestCustomPresetUpdate {
-    var titleId: com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle? = null
+    var titleId: com.gopro.open_gopro.operations.EnumPresetTitle? = null
     var customName: String? = null
-    var iconId: com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon? = null
+    var iconId: com.gopro.open_gopro.operations.EnumPresetIcon? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> titleId = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle
+            1 -> titleId = _fieldValue as com.gopro.open_gopro.operations.EnumPresetTitle
             2 -> customName = _fieldValue as String
-            3 -> iconId = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon
+            3 -> iconId = _fieldValue as com.gopro.open_gopro.operations.EnumPresetIcon
         }
     }
 
@@ -733,7 +733,7 @@ private fun RequestCustomPresetUpdate.Companion.decodeWithImpl(u: pbandk.Message
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForPresetGroup")
-internal fun PresetGroup?.orDefault(): com.gopro.open_gopro.entity.operation.proto.PresetGroup = this ?: PresetGroup.defaultInstance
+internal fun PresetGroup?.orDefault(): com.gopro.open_gopro.operations.PresetGroup = this ?: PresetGroup.defaultInstance
 
 private fun PresetGroup.protoMergeImpl(plus: pbandk.Message?): PresetGroup = (plus as? PresetGroup)?.let {
     it.copy(
@@ -748,19 +748,19 @@ private fun PresetGroup.protoMergeImpl(plus: pbandk.Message?): PresetGroup = (pl
 
 @Suppress("UNCHECKED_CAST")
 private fun PresetGroup.Companion.decodeWithImpl(u: pbandk.MessageDecoder): PresetGroup {
-    var id: com.gopro.open_gopro.entity.operation.proto.EnumPresetGroup? = null
-    var presetArray: pbandk.ListWithSize.Builder<com.gopro.open_gopro.entity.operation.proto.Preset>? = null
+    var id: com.gopro.open_gopro.operations.EnumPresetGroup? = null
+    var presetArray: pbandk.ListWithSize.Builder<com.gopro.open_gopro.operations.Preset>? = null
     var canAddPreset: Boolean? = null
-    var icon: com.gopro.open_gopro.entity.operation.proto.EnumPresetGroupIcon? = null
-    var modeArray: pbandk.ListWithSize.Builder<com.gopro.open_gopro.entity.operation.proto.EnumFlatMode>? = null
+    var icon: com.gopro.open_gopro.operations.EnumPresetGroupIcon? = null
+    var modeArray: pbandk.ListWithSize.Builder<com.gopro.open_gopro.operations.EnumFlatMode>? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> id = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumPresetGroup
-            2 -> presetArray = (presetArray ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.entity.operation.proto.Preset> }
+            1 -> id = _fieldValue as com.gopro.open_gopro.operations.EnumPresetGroup
+            2 -> presetArray = (presetArray ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.operations.Preset> }
             3 -> canAddPreset = _fieldValue as Boolean
-            4 -> icon = _fieldValue as com.gopro.open_gopro.entity.operation.proto.EnumPresetGroupIcon
-            5 -> modeArray = (modeArray ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.entity.operation.proto.EnumFlatMode> }
+            4 -> icon = _fieldValue as com.gopro.open_gopro.operations.EnumPresetGroupIcon
+            5 -> modeArray = (modeArray ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<com.gopro.open_gopro.operations.EnumFlatMode> }
         }
     }
 
@@ -770,7 +770,7 @@ private fun PresetGroup.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Pres
 
 @pbandk.Export
 @pbandk.JsName("orDefaultForPresetSetting")
-internal fun PresetSetting?.orDefault(): com.gopro.open_gopro.entity.operation.proto.PresetSetting = this ?: PresetSetting.defaultInstance
+internal fun PresetSetting?.orDefault(): com.gopro.open_gopro.operations.PresetSetting = this ?: PresetSetting.defaultInstance
 
 private fun PresetSetting.protoMergeImpl(plus: pbandk.Message?): PresetSetting = (plus as? PresetSetting)?.let {
     it.copy(

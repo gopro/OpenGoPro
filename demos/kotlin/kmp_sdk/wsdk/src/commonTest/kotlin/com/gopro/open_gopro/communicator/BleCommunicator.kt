@@ -6,10 +6,10 @@ import com.gopro.open_gopro.entity.communicator.ActionId
 import com.gopro.open_gopro.entity.communicator.CommandId
 import com.gopro.open_gopro.entity.communicator.FeatureId
 import com.gopro.open_gopro.entity.communicator.QueryId
-import com.gopro.open_gopro.entity.queries.SettingId
 import com.gopro.open_gopro.exceptions.BleError
 import com.gopro.open_gopro.entity.network.ble.BleNotification
 import com.gopro.open_gopro.entity.network.ble.GpUuid
+import com.gopro.open_gopro.operations.SettingId
 import fakes.BleApiSpy
 import fakes.buildFakeBleCommunicator
 import fakes.buildResponse

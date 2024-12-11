@@ -2,7 +2,7 @@ import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.bleCommunicator.bleFragment
 import com.gopro.open_gopro.entity.network.ble.BleNotification
 import com.gopro.open_gopro.entity.network.ble.GpUuid
-import com.gopro.open_gopro.entity.queries.VideoResolution
+import com.gopro.open_gopro.operations.VideoResolution
 import fakes.BleApiSpy
 import fakes.buildFakeSettingsContainer
 import kotlinx.coroutines.ExperimentalCoroutinesApi

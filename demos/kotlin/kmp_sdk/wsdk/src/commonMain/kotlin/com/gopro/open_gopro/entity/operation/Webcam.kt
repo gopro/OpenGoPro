@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.entity.operation
+package com.gopro.open_gopro.operations
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName

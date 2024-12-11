@@ -1,10 +1,10 @@
-package com.gopro.open_gopro.operation.commands
+package com.gopro.open_gopro.operations.commands
 
 import com.gopro.open_gopro.domain.api.BaseOperation
 import com.gopro.open_gopro.domain.communicator.HttpCommunicator
-import com.gopro.open_gopro.entity.operation.WebcamFov
-import com.gopro.open_gopro.entity.operation.WebcamProtocol
-import com.gopro.open_gopro.entity.operation.WebcamResolution
+import com.gopro.open_gopro.operations.WebcamFov
+import com.gopro.open_gopro.operations.WebcamProtocol
+import com.gopro.open_gopro.operations.WebcamResolution
 import io.ktor.client.call.body
 import io.ktor.http.path
 

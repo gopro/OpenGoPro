@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.operation.commands
+package com.gopro.open_gopro.operations.commands
 
 import com.gopro.open_gopro.domain.api.BaseOperation
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
@@ -7,14 +7,14 @@ import com.gopro.open_gopro.entity.communicator.ActionId
 import com.gopro.open_gopro.entity.communicator.FeatureId
 import com.gopro.open_gopro.exceptions.CameraInternalError
 import com.gopro.open_gopro.entity.network.ble.GpUuid
-import com.gopro.open_gopro.entity.operation.AccessPointState
-import com.gopro.open_gopro.entity.operation.isFinished
-import com.gopro.open_gopro.entity.operation.proto.EnumProvisioning
-import com.gopro.open_gopro.entity.operation.proto.NotifProvisioningState
-import com.gopro.open_gopro.entity.operation.proto.RequestConnect
-import com.gopro.open_gopro.entity.operation.proto.RequestConnectNew
-import com.gopro.open_gopro.entity.operation.proto.ResponseConnect
-import com.gopro.open_gopro.entity.operation.proto.ResponseConnectNew
+import com.gopro.open_gopro.operations.AccessPointState
+import com.gopro.open_gopro.operations.isFinished
+import com.gopro.open_gopro.operations.EnumProvisioning
+import com.gopro.open_gopro.operations.NotifProvisioningState
+import com.gopro.open_gopro.operations.RequestConnect
+import com.gopro.open_gopro.operations.RequestConnectNew
+import com.gopro.open_gopro.operations.ResponseConnect
+import com.gopro.open_gopro.operations.ResponseConnectNew
 import com.gopro.open_gopro.util.extensions.isOk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onStart

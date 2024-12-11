@@ -1,6 +1,6 @@
-package com.gopro.open_gopro.operation.commands
+package com.gopro.open_gopro.operations.commands
 
-import com.gopro.open_gopro.entity.operation.CohnSettingRequest
+import com.gopro.open_gopro.operations.CohnSettingRequest
 import com.gopro.open_gopro.domain.api.BaseOperation
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.HttpCommunicator
@@ -11,7 +11,7 @@ import com.gopro.open_gopro.entity.network.ble.GpUuid
 import io.ktor.client.call.body
 import io.ktor.client.request.setBody
 import io.ktor.http.path
-import com.gopro.open_gopro.entity.operation.proto.RequestSetCOHNSetting
+import com.gopro.open_gopro.operations.RequestSetCOHNSetting
 import pbandk.encodeToByteArray
 
 internal class CohnSetSetting(val disableCohn: Boolean) :

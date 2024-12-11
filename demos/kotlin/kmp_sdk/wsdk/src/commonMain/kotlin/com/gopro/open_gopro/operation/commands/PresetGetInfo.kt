@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.operation.commands
+package com.gopro.open_gopro.operations.commands
 
 import com.gopro.open_gopro.domain.api.BaseOperation
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
@@ -7,8 +7,8 @@ import com.gopro.open_gopro.domain.communicator.bleCommunicator.ResponseId
 import com.gopro.open_gopro.entity.communicator.ActionId
 import com.gopro.open_gopro.entity.communicator.FeatureId
 import com.gopro.open_gopro.entity.network.ble.GpUuid
-import com.gopro.open_gopro.entity.operation.PresetInfo
-import com.gopro.open_gopro.entity.operation.jsonFromProto
+import com.gopro.open_gopro.operations.PresetInfo
+import com.gopro.open_gopro.operations.jsonFromProto
 import io.ktor.client.call.body
 import io.ktor.http.path
 import kotlinx.coroutines.flow.Flow
@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
-import com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus
-import com.gopro.open_gopro.entity.operation.proto.NotifyPresetStatus
-import com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus
+import com.gopro.open_gopro.operations.EnumRegisterPresetStatus
+import com.gopro.open_gopro.operations.NotifyPresetStatus
+import com.gopro.open_gopro.operations.RequestGetPresetStatus
 import pbandk.ExperimentalProtoJson
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray

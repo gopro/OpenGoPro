@@ -1,6 +1,6 @@
-package com.gopro.open_gopro.operation.commands
+package com.gopro.open_gopro.operations.commands
 
-import com.gopro.open_gopro.entity.operation.CohnStatus
+import com.gopro.open_gopro.operations.CohnStatus
 import com.gopro.open_gopro.domain.api.BaseOperation
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.HttpCommunicator
@@ -13,8 +13,8 @@ import io.ktor.http.path
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import com.gopro.open_gopro.entity.operation.proto.NotifyCOHNStatus
-import com.gopro.open_gopro.entity.operation.proto.RequestGetCOHNStatus
+import com.gopro.open_gopro.operations.NotifyCOHNStatus
+import com.gopro.open_gopro.operations.RequestGetCOHNStatus
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray
 
