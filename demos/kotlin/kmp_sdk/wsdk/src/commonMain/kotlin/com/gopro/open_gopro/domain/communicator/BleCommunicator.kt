@@ -1,6 +1,8 @@
 package com.gopro.open_gopro.domain.communicator
 
 import com.benasher44.uuid.Uuid
+import com.gopro.open_gopro.CommunicationType
+import com.gopro.open_gopro.ConnectionDescriptor
 import com.gopro.open_gopro.domain.communicator.bleCommunicator.AccumulatedGpBleResponse
 import com.gopro.open_gopro.domain.communicator.bleCommunicator.IGpBleResponse
 import com.gopro.open_gopro.domain.communicator.bleCommunicator.ResponseId
@@ -8,17 +10,19 @@ import com.gopro.open_gopro.domain.communicator.bleCommunicator.bleFragment
 import com.gopro.open_gopro.domain.network.IBleApi
 import com.gopro.open_gopro.entity.communicator.ActionId
 import com.gopro.open_gopro.entity.communicator.CommandId
-import com.gopro.open_gopro.entity.communicator.CommunicationType
 import com.gopro.open_gopro.entity.communicator.FeatureId
 import com.gopro.open_gopro.entity.communicator.GpStatus
 import com.gopro.open_gopro.entity.communicator.QueryId
-import com.gopro.open_gopro.entity.connector.ConnectionDescriptor
 import com.gopro.open_gopro.entity.network.ble.BleNotification
 import com.gopro.open_gopro.entity.network.ble.GpUuid
 import com.gopro.open_gopro.entity.queries.SettingId
 import com.gopro.open_gopro.entity.queries.StatusId
 import com.gopro.open_gopro.exceptions.ApiError
 import com.gopro.open_gopro.exceptions.BleError
+import com.gopro.open_gopro.util.GpCommonBase
+import com.gopro.open_gopro.util.IGpCommonBase
+import com.gopro.open_gopro.util.extensions.toPrettyHexString
+import com.gopro.open_gopro.util.extensions.toTlvMap
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.TimeoutCancellationException
@@ -31,10 +35,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onSubscription
 import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.launch
-import com.gopro.open_gopro.util.GpCommonBase
-import com.gopro.open_gopro.util.IGpCommonBase
-import com.gopro.open_gopro.util.extensions.toPrettyHexString
-import com.gopro.open_gopro.util.extensions.toTlvMap
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 

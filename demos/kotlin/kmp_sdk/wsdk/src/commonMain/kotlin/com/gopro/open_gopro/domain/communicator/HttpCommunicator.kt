@@ -3,8 +3,8 @@ package com.gopro.open_gopro.domain.communicator
 import co.touchlab.kermit.Logger
 import com.gopro.open_gopro.domain.network.IHttpApi
 import com.gopro.open_gopro.domain.network.IHttpClientProvider
-import com.gopro.open_gopro.entity.communicator.CommunicationType
-import com.gopro.open_gopro.entity.connector.ConnectionDescriptor
+import com.gopro.open_gopro.CommunicationType
+import com.gopro.open_gopro.ConnectionDescriptor
 import com.gopro.open_gopro.exceptions.HttpError
 import com.gopro.open_gopro.exceptions.NetworkError
 import com.gopro.open_gopro.exceptions.SerializationError

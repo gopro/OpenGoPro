@@ -1,7 +1,7 @@
 package com.gopro.open_gopro.gopro
 
 import com.gopro.open_gopro.domain.api.IOperationMarshaller
-import com.gopro.open_gopro.entity.communicator.CommunicationType
+import com.gopro.open_gopro.CommunicationType
 import com.gopro.open_gopro.entity.operation.CameraControlStatus
 import com.gopro.open_gopro.entity.operation.GpDatetime
 import com.gopro.open_gopro.entity.operation.HardwareInfo

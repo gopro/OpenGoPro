@@ -1,6 +1,6 @@
 package com.gopro.open_gopro.domain.data
 
-import com.gopro.open_gopro.entity.connector.GoProId
+import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.entity.network.IHttpsCredentials
 
 internal data class WifiCredentials(

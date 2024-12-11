@@ -1,11 +1,7 @@
 package com.gopro.open_gopro.gopro
 
 import com.gopro.open_gopro.domain.connector.ICameraConnector
-import com.gopro.open_gopro.domain.gopro.GpDescriptorManager
 import com.gopro.open_gopro.domain.gopro.IGoProFactory
-import com.gopro.open_gopro.gopro.features.AccessPointFeature
-import com.gopro.open_gopro.gopro.features.CohnFeature
-import com.gopro.open_gopro.gopro.features.ConnectWifiFeature
 
 internal interface IFeatureContext {
     val gopro: GoPro

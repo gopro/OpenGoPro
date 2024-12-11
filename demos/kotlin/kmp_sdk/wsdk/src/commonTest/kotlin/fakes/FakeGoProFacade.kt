@@ -1,6 +1,6 @@
 package fakes
 
-import com.gopro.open_gopro.entity.connector.GoProId
+import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.gopro.GoPro
 import kotlinx.coroutines.CoroutineDispatcher
 

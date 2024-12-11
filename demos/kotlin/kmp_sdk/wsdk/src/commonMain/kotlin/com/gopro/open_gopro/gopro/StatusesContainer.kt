@@ -9,7 +9,6 @@ package com.gopro.open_gopro.gopro
  */
 
 import com.gopro.open_gopro.domain.api.IOperationMarshaller
-import com.gopro.open_gopro.domain.queries.Status
 import com.gopro.open_gopro.entity.queries.StatusId
 import com.gopro.open_gopro.util.extensions.decodeToString
 import com.gopro.open_gopro.util.extensions.toBoolean

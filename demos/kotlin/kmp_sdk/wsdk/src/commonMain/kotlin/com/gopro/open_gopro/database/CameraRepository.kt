@@ -3,7 +3,7 @@ package com.gopro.open_gopro.database
 import co.touchlab.kermit.Logger
 import com.gopro.open_gopro.domain.data.ICameraRepository
 import com.gopro.open_gopro.domain.data.WifiCredentials
-import com.gopro.open_gopro.entity.connector.GoProId
+import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.entity.network.HttpsCredentials
 import com.gopro.open_gopro.entity.network.IHttpsCredentials
 import com.gopro.open_gopro.entity.operation.jsonDefault

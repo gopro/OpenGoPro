@@ -4,10 +4,6 @@ import co.touchlab.kermit.Logger
 import com.gopro.open_gopro.di.buildPackageModules
 import com.gopro.open_gopro.domain.connector.ICameraConnector
 import com.gopro.open_gopro.domain.gopro.IGoProFactory
-import com.gopro.open_gopro.entity.connector.ConnectionRequestContext
-import com.gopro.open_gopro.entity.connector.GoProId
-import com.gopro.open_gopro.entity.connector.NetworkType
-import com.gopro.open_gopro.entity.connector.ScanResult
 import com.gopro.open_gopro.gopro.GoPro
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.gopro.features
+package com.gopro.open_gopro.gopro
 
 import com.gopro.open_gopro.WsdkIsolatedKoinContext
 import co.touchlab.kermit.Logger

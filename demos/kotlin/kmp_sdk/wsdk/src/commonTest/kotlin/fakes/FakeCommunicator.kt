@@ -4,8 +4,8 @@ import com.gopro.open_gopro.di.createHttpClient
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.HttpCommunicator
 import com.gopro.open_gopro.domain.network.IHttpClientProvider
-import com.gopro.open_gopro.entity.connector.ConnectionDescriptor
-import com.gopro.open_gopro.entity.connector.GoProId
+import com.gopro.open_gopro.ConnectionDescriptor
+import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.entity.network.IHttpsCredentials
 import com.gopro.open_gopro.entity.network.ble.BleDevice
 import com.gopro.open_gopro.entity.network.ble.BleNotification

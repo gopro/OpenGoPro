@@ -57,7 +57,6 @@ import com.gopro.open_gopro.entity.queries.VideoResolution
 import com.gopro.open_gopro.entity.queries.VideoTimelapseRate
 import com.gopro.open_gopro.entity.queries.WebcamDigitalLenses
 import com.gopro.open_gopro.entity.queries.WirelessBand
-import com.gopro.open_gopro.domain.queries.Setting
 
 /**
  * Container for all per-setting-ID wrappers

@@ -1,6 +1,6 @@
 package com.gopro.open_gopro.exceptions
 
-import com.gopro.open_gopro.entity.communicator.CommunicationType
+import com.gopro.open_gopro.CommunicationType
 
 class OperationUnsupportedForCommunicator(operation: String, communicationType: CommunicationType) :
     Exception("$operation not supported on $communicationType")

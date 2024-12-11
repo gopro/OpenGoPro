@@ -8,8 +8,8 @@ import com.gopro.open_gopro.domain.network.IBleApi
 import com.gopro.open_gopro.domain.network.IHttpApi
 import com.gopro.open_gopro.domain.network.IHttpClientProvider
 import com.gopro.open_gopro.domain.network.IWifiApi
-import com.gopro.open_gopro.entity.connector.ConnectionDescriptor
-import com.gopro.open_gopro.entity.connector.GoProId
+import com.gopro.open_gopro.ConnectionDescriptor
+import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.entity.network.ble.BleDevice
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch

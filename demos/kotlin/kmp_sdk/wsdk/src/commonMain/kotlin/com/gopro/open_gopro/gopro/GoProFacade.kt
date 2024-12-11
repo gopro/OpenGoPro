@@ -7,11 +7,9 @@ import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.HttpCommunicator
 import com.gopro.open_gopro.domain.communicator.ICommunicator
 import com.gopro.open_gopro.domain.connector.ICameraConnector
-import com.gopro.open_gopro.domain.gopro.GpDescriptorManager
 import com.gopro.open_gopro.domain.gopro.IGoProFactory
-import com.gopro.open_gopro.domain.gopro.IGpDescriptor
-import com.gopro.open_gopro.entity.communicator.CommunicationType
-import com.gopro.open_gopro.entity.connector.GoProId
+import com.gopro.open_gopro.CommunicationType
+import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.entity.operation.AccessPointState
 import com.gopro.open_gopro.entity.operation.CohnState
 import kotlinx.coroutines.CoroutineDispatcher

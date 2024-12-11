@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.entity.connector
+package com.gopro.open_gopro
 
 import com.gopro.open_gopro.entity.network.ble.BleDevice
 import com.gopro.open_gopro.entity.network.IHttpsCredentials

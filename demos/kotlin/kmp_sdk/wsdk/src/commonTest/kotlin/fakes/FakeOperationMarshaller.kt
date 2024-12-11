@@ -5,9 +5,9 @@ import com.gopro.open_gopro.domain.api.IOperationMarshaller
 import com.gopro.open_gopro.domain.api.StrategyBuilder
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.ICommunicator
-import com.gopro.open_gopro.entity.communicator.CommunicationType
-import com.gopro.open_gopro.entity.connector.ConnectionDescriptor
-import com.gopro.open_gopro.entity.connector.GoProId
+import com.gopro.open_gopro.CommunicationType
+import com.gopro.open_gopro.ConnectionDescriptor
+import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.entity.network.ble.BleDevice
 import com.gopro.open_gopro.entity.network.ble.BleNotification
 import kotlinx.coroutines.CoroutineDispatcher

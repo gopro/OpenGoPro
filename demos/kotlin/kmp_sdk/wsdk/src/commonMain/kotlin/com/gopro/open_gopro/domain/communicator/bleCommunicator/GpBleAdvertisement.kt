@@ -1,6 +1,6 @@
 package com.gopro.open_gopro.domain.communicator.bleCommunicator
 
-import com.gopro.open_gopro.entity.connector.GoProId
+import com.gopro.open_gopro.GoProId
 
 @OptIn(ExperimentalUnsignedTypes::class)
 internal data class GpBleAdvertisement(

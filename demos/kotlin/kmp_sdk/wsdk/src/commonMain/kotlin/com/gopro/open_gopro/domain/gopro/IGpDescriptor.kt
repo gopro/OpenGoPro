@@ -1,7 +1,7 @@
-package com.gopro.open_gopro.domain.gopro
+package com.gopro.open_gopro.gopro
 
-import com.gopro.open_gopro.entity.communicator.CommunicationType
-import com.gopro.open_gopro.entity.connector.GoProId
+import com.gopro.open_gopro.CommunicationType
+import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.entity.operation.AccessPointState
 import com.gopro.open_gopro.entity.operation.CohnState
 import kotlinx.coroutines.flow.Flow

@@ -4,8 +4,8 @@ import co.touchlab.kermit.Logger
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.HttpCommunicator
 import com.gopro.open_gopro.domain.communicator.ICommunicator
-import com.gopro.open_gopro.domain.gopro.IGpDescriptor
-import com.gopro.open_gopro.entity.communicator.CommunicationType
+import com.gopro.open_gopro.gopro.IGpDescriptor
+import com.gopro.open_gopro.CommunicationType
 import com.gopro.open_gopro.exceptions.OperationUnsupportedForCommunicator
 import com.gopro.open_gopro.util.extensions.bleIfAvailable
 import com.gopro.open_gopro.util.extensions.prettyPrintResult

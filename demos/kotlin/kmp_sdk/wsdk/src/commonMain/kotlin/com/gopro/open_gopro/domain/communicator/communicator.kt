@@ -1,7 +1,7 @@
 package com.gopro.open_gopro.domain.communicator
 
-import com.gopro.open_gopro.entity.communicator.CommunicationType
-import com.gopro.open_gopro.entity.connector.ConnectionDescriptor
+import com.gopro.open_gopro.CommunicationType
+import com.gopro.open_gopro.ConnectionDescriptor
 
 // Note! This is theoretically a source of instability as any new communicator causes changes in
 // all operations. These would ideally be abstract.

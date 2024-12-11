@@ -3,11 +3,11 @@ package com.gopro.open_gopro.connector
 import com.gopro.open_gopro.domain.connector.IConnector
 import com.gopro.open_gopro.domain.data.ICameraRepository
 import com.gopro.open_gopro.domain.network.IDnsApi
-import com.gopro.open_gopro.entity.connector.ConnectionDescriptor
-import com.gopro.open_gopro.entity.connector.ConnectionRequestContext
-import com.gopro.open_gopro.entity.connector.GoProId
-import com.gopro.open_gopro.entity.connector.NetworkType
-import com.gopro.open_gopro.entity.connector.ScanResult
+import com.gopro.open_gopro.ConnectionDescriptor
+import com.gopro.open_gopro.ConnectionRequestContext
+import com.gopro.open_gopro.GoProId
+import com.gopro.open_gopro.NetworkType
+import com.gopro.open_gopro.ScanResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

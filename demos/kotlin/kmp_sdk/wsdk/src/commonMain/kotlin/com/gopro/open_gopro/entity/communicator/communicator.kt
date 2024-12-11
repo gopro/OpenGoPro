@@ -1,4 +1,4 @@
-package com.gopro.open_gopro.entity.communicator
+package com.gopro.open_gopro
 
 enum class CommunicationType {
     BLE,

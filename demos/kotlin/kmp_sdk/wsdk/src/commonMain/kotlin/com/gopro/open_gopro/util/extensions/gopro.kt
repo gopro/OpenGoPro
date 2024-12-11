@@ -1,6 +1,6 @@
 package com.gopro.open_gopro.util.extensions
 
-import com.gopro.open_gopro.entity.communicator.CommunicationType
+import com.gopro.open_gopro.CommunicationType
 
 internal fun List<CommunicationType>.bleIfAvailable(): CommunicationType? =
     this.firstOrNull { it == CommunicationType.BLE }

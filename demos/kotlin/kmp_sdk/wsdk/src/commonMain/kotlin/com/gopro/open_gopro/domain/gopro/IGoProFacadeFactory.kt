@@ -1,7 +1,7 @@
 package com.gopro.open_gopro.domain.gopro
 
-import com.gopro.open_gopro.entity.connector.ConnectionDescriptor
-import com.gopro.open_gopro.entity.connector.GoProId
+import com.gopro.open_gopro.ConnectionDescriptor
+import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.gopro.GoPro
 
 

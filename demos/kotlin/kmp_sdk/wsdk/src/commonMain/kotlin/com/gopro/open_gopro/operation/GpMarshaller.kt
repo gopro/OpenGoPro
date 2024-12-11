@@ -5,8 +5,8 @@ import com.gopro.open_gopro.domain.api.IOperationMarshaller
 import com.gopro.open_gopro.domain.api.StrategyBuilder
 import com.gopro.open_gopro.domain.api.operationStrategy
 import com.gopro.open_gopro.domain.communicator.ICommunicator
-import com.gopro.open_gopro.domain.gopro.IGpDescriptor
-import com.gopro.open_gopro.entity.communicator.CommunicationType
+import com.gopro.open_gopro.gopro.IGpDescriptor
+import com.gopro.open_gopro.CommunicationType
 import com.gopro.open_gopro.exceptions.OperationUnsupportedForCommunicator
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
