@@ -1,4 +1,6 @@
 import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.dokka.base.DokkaBase
+import org.jetbrains.dokka.base.DokkaBaseConfiguration
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -151,19 +153,17 @@ buildscript {
     }
 }
 
-// Configures only the parent MultiModule task,
-// this will not affect subprojects
 tasks.dokkaHtml {
-//    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-//        customAssets = listOf(
-//            file("../docs/assets/logo-icon.svg"),
-////            file("../docs/assets/my-style.css")
-//        )
-//    }
+    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+        customAssets = listOf(
+            file("../docs/assets/logo-icon.svg"),
+//            file("../docs/assets/my-style.css")
+        )
+    }
     dokkaSourceSets {
         configureEach {
             moduleName.set("Open GoPro SDK")
-            includes.from("package.md")
+            includes.from("../docs/sdk_documentation.md")
 
 //            suppressInheritedMembers = true
 //            documentedVisibilities.set(

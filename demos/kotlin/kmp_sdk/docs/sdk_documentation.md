@@ -23,4 +23,16 @@ coroutineScope.launch {
 
 # Package com.gopro.open_gopro
 
-Here is some stuff
+todo
+
+# Package com.gopro.open_gopro.exceptions
+
+todo move these into their relevant packages
+
+# Package com.gopro.open_gopro.gopro
+
+todo
+
+# Package com.gopro.open_gopro.operations
+
+todo
