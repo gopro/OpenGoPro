@@ -16,7 +16,7 @@ import com.gopro.open_gopro.entity.operation.LivestreamResolution
 import com.gopro.open_gopro.entity.operation.LivestreamStatus
 import com.gopro.open_gopro.entity.operation.PresetInfo
 import com.gopro.open_gopro.entity.operation.jsonFromProto
-import entity.operation.proto.EnumPresetGroupIcon
+import com.gopro.open_gopro.entity.operation.proto.EnumPresetGroupIcon
 import fakes.BleApiSpy
 import fakes.buildFakeBleCommunicator
 import fakes.toBleNotificationList

@@ -14,9 +14,9 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.path
-import entity.operation.proto.EnumLens
-import entity.operation.proto.EnumWindowSize
-import entity.operation.proto.RequestSetLiveStreamMode
+import com.gopro.open_gopro.entity.operation.proto.EnumLens
+import com.gopro.open_gopro.entity.operation.proto.EnumWindowSize
+import com.gopro.open_gopro.entity.operation.proto.RequestSetLiveStreamMode
 import pbandk.ByteArr
 import pbandk.encodeToByteArray
 

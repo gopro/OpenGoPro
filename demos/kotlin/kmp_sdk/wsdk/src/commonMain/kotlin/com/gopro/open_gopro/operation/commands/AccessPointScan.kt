@@ -13,9 +13,9 @@ import com.gopro.open_gopro.util.extensions.isOk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transformWhile
-import entity.operation.proto.EnumScanning
-import entity.operation.proto.NotifStartScanning
-import entity.operation.proto.ResponseStartScanning
+import com.gopro.open_gopro.entity.operation.proto.EnumScanning
+import com.gopro.open_gopro.entity.operation.proto.NotifStartScanning
+import com.gopro.open_gopro.entity.operation.proto.ResponseStartScanning
 import pbandk.decodeFromByteArray
 
 private val logger = Logger.withTag("Access Point Scan Operation")

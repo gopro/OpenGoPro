@@ -5,4 +5,5 @@ services:
         container_name: proto-build
         volumes:
             - ./protobuf:/proto_in
-            - ./wsdk/src/commonMain/kotlin/entity/operation/proto:/proto_output/kotlin
+            - ./wsdk/src/commonMain/kotlin/com/gopro/open_gopro/entity/operation/proto:/proto_output_kotlin
+

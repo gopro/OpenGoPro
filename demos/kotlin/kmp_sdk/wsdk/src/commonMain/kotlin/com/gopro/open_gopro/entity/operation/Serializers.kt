@@ -1,12 +1,12 @@
 package com.gopro.open_gopro.entity.operation
 
-import entity.operation.proto.EnumCOHNNetworkState
-import entity.operation.proto.EnumCOHNStatus
-import entity.operation.proto.EnumFlatMode
-import entity.operation.proto.EnumPresetGroup
-import entity.operation.proto.EnumPresetGroupIcon
-import entity.operation.proto.EnumPresetIcon
-import entity.operation.proto.EnumPresetTitle
+import com.gopro.open_gopro.entity.operation.proto.EnumCOHNNetworkState
+import com.gopro.open_gopro.entity.operation.proto.EnumCOHNStatus
+import com.gopro.open_gopro.entity.operation.proto.EnumFlatMode
+import com.gopro.open_gopro.entity.operation.proto.EnumPresetGroup
+import com.gopro.open_gopro.entity.operation.proto.EnumPresetGroupIcon
+import com.gopro.open_gopro.entity.operation.proto.EnumPresetIcon
+import com.gopro.open_gopro.entity.operation.proto.EnumPresetTitle
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind

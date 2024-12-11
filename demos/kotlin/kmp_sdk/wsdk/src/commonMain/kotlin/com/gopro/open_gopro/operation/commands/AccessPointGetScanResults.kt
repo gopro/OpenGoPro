@@ -8,8 +8,8 @@ import com.gopro.open_gopro.entity.communicator.FeatureId
 import com.gopro.open_gopro.exceptions.CameraInternalError
 import com.gopro.open_gopro.entity.network.ble.GpUuid
 import com.gopro.open_gopro.entity.operation.ApScanEntry
-import entity.operation.proto.RequestGetApEntries
-import entity.operation.proto.ResponseGetApEntries
+import com.gopro.open_gopro.entity.operation.proto.RequestGetApEntries
+import com.gopro.open_gopro.entity.operation.proto.ResponseGetApEntries
 import com.gopro.open_gopro.util.extensions.isOk
 import com.gopro.open_gopro.util.extensions.toBoolean
 import pbandk.decodeFromByteArray

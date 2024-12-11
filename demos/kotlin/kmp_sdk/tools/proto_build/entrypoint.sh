@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 PROTO_SRC_DIR=/proto_in
-PROTO_PYTHON_OUT_DIR=/proto_output/python
-PROTO_KOTLIN_OUT_DIR=/proto_output/kotlin
 
 function build_python()
 {
@@ -30,9 +28,11 @@ function build_kotlin()
 {
     echo "Building kotlin protobuf files using pbandk..."
     export PATH=$PATH:/
-    rm -rf $PROTO_KOTLIN_OUT_DIR/*
+    rm -rf /proto_output_kotlin/*
+    gosu user:user mkdir -p /home/user/temp
     # We can't run as root because pbank can't handle it: https://github.com/streem/pbandk/issues/73
-    gosu user:user protoc --pbandk_out=kotlin_package=entity.operation.proto,visibility=internal:$PROTO_KOTLIN_OUT_DIR -I $PROTO_SRC_DIR $PROTO_SRC_DIR/*
+    gosu user:user protoc --pbandk_out=kotlin_package=com.gopro.open_gopro.entity.operation.proto,visibility=internal:/home/user/temp -I $PROTO_SRC_DIR $PROTO_SRC_DIR/*
+    mv /home/user/temp/com/gopro/open_gopro/entity/operation/proto/* /proto_output_kotlin
 }
 
 # build_python

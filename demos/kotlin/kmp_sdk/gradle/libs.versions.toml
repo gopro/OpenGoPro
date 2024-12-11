@@ -154,6 +154,8 @@ libvlc-all = { module = "org.videolan.android:libvlc-all", version.ref = "vlc" }
 pbandk-runtime = { module = "pro.streem.pbandk:pbandk-runtime", version.ref = "pbandk" }
 # Local OGP libarary for simplified app testing
 openGopro = { module = "io.github.tcamise-gpsw:open-gopro", version.ref = "wsdk"}
+# Documentation
+dokka-base = { module = "org.jetbrains.dokka:dokka-base", version.ref = "dokka" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

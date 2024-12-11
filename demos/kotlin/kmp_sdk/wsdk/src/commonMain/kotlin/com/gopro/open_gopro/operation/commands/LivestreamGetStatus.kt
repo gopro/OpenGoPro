@@ -21,9 +21,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
-import entity.operation.proto.EnumRegisterLiveStreamStatus
-import entity.operation.proto.NotifyLiveStreamStatus
-import entity.operation.proto.RequestGetLiveStreamStatus
+import com.gopro.open_gopro.entity.operation.proto.EnumRegisterLiveStreamStatus
+import com.gopro.open_gopro.entity.operation.proto.NotifyLiveStreamStatus
+import com.gopro.open_gopro.entity.operation.proto.RequestGetLiveStreamStatus
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray
 

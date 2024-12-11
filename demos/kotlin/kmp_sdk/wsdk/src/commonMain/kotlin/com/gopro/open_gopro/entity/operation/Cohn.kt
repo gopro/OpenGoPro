@@ -1,8 +1,8 @@
 package com.gopro.open_gopro.entity.operation
 
 import com.gopro.open_gopro.entity.network.IHttpsCredentials
-import entity.operation.proto.EnumCOHNNetworkState
-import entity.operation.proto.EnumCOHNStatus
+import com.gopro.open_gopro.entity.operation.proto.EnumCOHNNetworkState
+import com.gopro.open_gopro.entity.operation.proto.EnumCOHNStatus
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

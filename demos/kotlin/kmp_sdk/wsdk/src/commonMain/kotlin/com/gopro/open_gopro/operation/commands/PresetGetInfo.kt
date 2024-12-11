@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
-import entity.operation.proto.EnumRegisterPresetStatus
-import entity.operation.proto.NotifyPresetStatus
-import entity.operation.proto.RequestGetPresetStatus
+import com.gopro.open_gopro.entity.operation.proto.EnumRegisterPresetStatus
+import com.gopro.open_gopro.entity.operation.proto.NotifyPresetStatus
+import com.gopro.open_gopro.entity.operation.proto.RequestGetPresetStatus
 import pbandk.ExperimentalProtoJson
 import pbandk.decodeFromByteArray
 import pbandk.encodeToByteArray
