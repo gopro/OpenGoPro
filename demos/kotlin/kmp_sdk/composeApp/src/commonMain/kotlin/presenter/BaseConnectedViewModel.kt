@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import com.gopro.open_gopro.entity.communicator.CommunicationType
+import com.gopro.open_gopro.CommunicationType
 import com.gopro.open_gopro.gopro.GoPro
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

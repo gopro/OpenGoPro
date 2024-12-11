@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import com.gopro.open_gopro.entity.connector.ConnectionRequestContext
-import com.gopro.open_gopro.entity.connector.GoProId
-import com.gopro.open_gopro.entity.connector.NetworkType
-import com.gopro.open_gopro.entity.connector.ScanResult
+import com.gopro.open_gopro.ConnectionRequestContext
+import com.gopro.open_gopro.GoProId
+import com.gopro.open_gopro.NetworkType
+import com.gopro.open_gopro.ScanResult
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
