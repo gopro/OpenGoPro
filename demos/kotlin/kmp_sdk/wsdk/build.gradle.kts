@@ -1,3 +1,4 @@
+import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -10,41 +11,8 @@ plugins {
     alias(libs.plugins.serialization)
     alias(libs.plugins.dokka)
     alias(libs.plugins.license)
+    alias(libs.plugins.publish)
 }
-
-// TODO how to to move to libs.versions.toml
-// https://mvnrepository.com/artifact/com.google.protobuf/protoc
-val protocVersion by extra("4.26.1")
-// https://github.com/streem/pbandk/releases/tag/v0.16.0
-val pbandkVersion by extra("0.16.0")
-
-//dependencies {
-//    implementation("pro.streem.pbandk:pbandk-runtime:$pbandkVersion")
-//}
-
-//protobuf {
-//    generatedFilesBaseDir = "src"
-//    protoc {
-//        artifact = "com.google.protobuf:protoc:$protocVersion"
-//    }
-//    plugins {
-//        id("pbandk") {
-//            artifact = "pro.streem.pbandk:protoc-gen-pbandk-jvm:$pbandkVersion:jvm8@jar"
-//        }
-//    }
-//    generateProtoTasks {
-//        all().configureEach {
-//            builtins {
-//                java { }
-//            }
-//            plugins {
-//                id("pbandk") {
-//                    option("kotlin_package=ogp.pb")
-//                }
-//            }
-//        }
-//    }
-//}
 
 kotlin {
     androidTarget {
@@ -65,11 +33,7 @@ kotlin {
 
         // https://kotlinlang.org/docs/multiplatform-android-layout.html#move-source-files
         val commonTest by getting
-
         val androidInstrumentedTest by getting
-
-        // https://slack-chats.kotlinlang.org/t/16139070/i-havee-to-admin-it-s-very-frustrating-that-there-is-no-stan
-        // THis is not used currently
         val androidUnitTest by getting
 
         commonMain.dependencies {
@@ -106,7 +70,7 @@ kotlin {
             implementation(libs.uuid)
 
             // Protobuf run-time
-            implementation("pro.streem.pbandk:pbandk-runtime:$pbandkVersion")
+            implementation(libs.pbandk.runtime)
 
             // Version data structure
             implementation(libs.version)
@@ -140,7 +104,7 @@ kotlin {
 }
 
 android {
-    namespace = "gopro.open_gopro.wsdk"
+    namespace = "com.gopro.open_gopro"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -203,4 +167,48 @@ licenseReport {
 
     // Show versions in the report - default is false
     showVersions = true
+}
+
+mavenPublishing {
+    // Define coordinates for the published artifact
+    coordinates(
+        groupId = "io.github.tcamise-gpsw", // TODO move to GoPro once possible
+        artifactId = "open-gopro",
+        version = "0.1.0"
+    )
+
+    // Configure POM metadata for the published artifact
+    pom {
+        name.set("Open GoPro KMP SDK")
+        description.set("n interface for the user to exercise the Open GoPro Bluetooth Low Energy (BLE) and Wi-Fi / USB HTTP API's")
+        inceptionYear.set("2024")
+        url.set("tcamise-gpsw")
+
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://opensource.org/licenses/MIT")
+            }
+        }
+
+        // Specify developers information
+        developers {
+            developer {
+                id.set("tcamise-gpsw")
+                name.set("Tim Camise")
+                email.set("tcamise@gopro.com")
+            }
+        }
+
+        // Specify SCM information
+        scm {
+            url.set("https://github.com/gopro/OpenGoPro")
+        }
+    }
+
+    // Configure publishing to Maven Central
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    // Enable GPG signing for all publications
+    signAllPublications()
 }

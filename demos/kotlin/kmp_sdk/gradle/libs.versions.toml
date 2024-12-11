@@ -65,6 +65,10 @@ dokka = "1.9.20"
 mockito = "5.14.2"
 # https://github.com/jaredsburrows/gradle-license-plugin/releases/tag/0.9.8
 license = '0.9.8'
+# https://github.com/streem/pbandk/releases/tag/v0.16.0
+pbandk = "0.16.0"
+# https://github.com/vanniktech/gradle-maven-publish-plugin/releases/tag/0.30.0
+publish =  "0.28.0"
 
 [libraries]
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
@@ -144,6 +148,8 @@ sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sql
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtx" }
 # VLC
 libvlc-all = { module = "org.videolan.android:libvlc-all", version.ref = "vlc" }
+# Protobuf
+pbandk-runtime = { module = "pro.streem.pbandk:pbandk-runtime", version.ref = "pbandk" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -157,3 +163,4 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "androidx-room" }
 dokka = { id= "org.jetbrains.dokka", version.ref = "dokka"}
 license = { id = "com.jaredsburrows.license", version.ref= "license"}
+publish = { id =  "com.vanniktech.maven.publish", version.ref = "publish"}
