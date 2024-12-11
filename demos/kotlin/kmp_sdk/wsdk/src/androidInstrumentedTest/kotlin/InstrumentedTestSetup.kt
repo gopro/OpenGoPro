@@ -1,6 +1,8 @@
 import androidx.test.platform.app.InstrumentationRegistry
-import domain.network.IDnsApi
-import domain.network.IWifiApi
+import com.gopro.open_gopro.Wsdk
+import com.gopro.open_gopro.WsdkIsolatedKoinContext
+import com.gopro.open_gopro.domain.network.IDnsApi
+import com.gopro.open_gopro.domain.network.IWifiApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.junit.Rule
@@ -37,7 +39,7 @@ class KoinTestRule(private val additionalModules: List<Module>? = null) : TestWa
     init {
         Wsdk.init(
             dispatcher = UnconfinedTestDispatcher(),
-            appContext = WsdkAppContext().apply {
+            appContext = com.gopro.open_gopro.WsdkAppContext().apply {
                 set(InstrumentationRegistry.getInstrumentation().targetContext.applicationContext)
             })
         testModule = WsdkIsolatedKoinContext.koinModules!!

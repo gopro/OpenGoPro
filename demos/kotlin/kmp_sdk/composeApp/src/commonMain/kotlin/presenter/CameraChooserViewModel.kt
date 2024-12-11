@@ -1,14 +1,14 @@
 package presenter
 
-import Wsdk
+import com.gopro.open_gopro.Wsdk
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import entity.connector.ConnectionRequestContext
-import entity.connector.GoProId
-import entity.connector.NetworkType
-import entity.connector.ScanResult
+import com.gopro.open_gopro.entity.connector.ConnectionRequestContext
+import com.gopro.open_gopro.entity.connector.GoProId
+import com.gopro.open_gopro.entity.connector.NetworkType
+import com.gopro.open_gopro.entity.connector.ScanResult
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

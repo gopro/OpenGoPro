@@ -1,8 +1,8 @@
 package fakes
 
 import FakeWifiApi
-import domain.gopro.IGoProFactory
-import gopro.GoProFactory
+import com.gopro.open_gopro.domain.gopro.IGoProFactory
+import com.gopro.open_gopro.gopro.GoProFactory
 import kotlinx.coroutines.CoroutineDispatcher
 
 internal fun buildFakeGoPro(dispatcher: CoroutineDispatcher): IGoProFactory =

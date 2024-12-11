@@ -1,10 +1,10 @@
 package fakes
 
-import domain.data.ICameraRepository
-import domain.data.WifiCredentials
-import entity.connector.GoProId
-import entity.network.HttpsCredentials
-import entity.network.IHttpsCredentials
+import com.gopro.open_gopro.domain.data.ICameraRepository
+import com.gopro.open_gopro.domain.data.WifiCredentials
+import com.gopro.open_gopro.entity.connector.GoProId
+import com.gopro.open_gopro.entity.network.HttpsCredentials
+import com.gopro.open_gopro.entity.network.IHttpsCredentials
 
 internal class FakeCameraRepo : ICameraRepository {
     override suspend fun addHttpsCredentials(id: GoProId, credentials: IHttpsCredentials) {

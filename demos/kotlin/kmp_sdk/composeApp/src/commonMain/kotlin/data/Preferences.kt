@@ -4,7 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import entity.connector.GoProId
+import com.gopro.open_gopro.entity.connector.GoProId
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 

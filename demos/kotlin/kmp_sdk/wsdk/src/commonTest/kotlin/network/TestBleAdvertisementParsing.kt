@@ -1,6 +1,6 @@
 package network
 
-import domain.communicator.bleCommunicator.GpBleAdvertisement
+import com.gopro.open_gopro.domain.communicator.bleCommunicator.GpBleAdvertisement
 import vectors.scanResponseFea6ServiceData
 import vectors.scanResponseManufData
 import kotlin.test.Test

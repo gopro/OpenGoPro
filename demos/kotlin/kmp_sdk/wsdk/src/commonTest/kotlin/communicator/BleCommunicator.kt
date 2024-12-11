@@ -1,15 +1,15 @@
 package communicator
 
-import domain.communicator.bleCommunicator.ResponseId
-import domain.communicator.bleCommunicator.decipherResponse
-import entity.communicator.ActionId
-import entity.communicator.CommandId
-import entity.communicator.FeatureId
-import entity.communicator.QueryId
-import entity.queries.SettingId
-import exceptions.BleError
-import entity.network.ble.BleNotification
-import entity.network.ble.GpUuid
+import com.gopro.open_gopro.domain.communicator.bleCommunicator.ResponseId
+import com.gopro.open_gopro.domain.communicator.bleCommunicator.decipherResponse
+import com.gopro.open_gopro.entity.communicator.ActionId
+import com.gopro.open_gopro.entity.communicator.CommandId
+import com.gopro.open_gopro.entity.communicator.FeatureId
+import com.gopro.open_gopro.entity.communicator.QueryId
+import com.gopro.open_gopro.entity.queries.SettingId
+import com.gopro.open_gopro.exceptions.BleError
+import com.gopro.open_gopro.entity.network.ble.BleNotification
+import com.gopro.open_gopro.entity.network.ble.GpUuid
 import fakes.BleApiSpy
 import fakes.buildFakeBleCommunicator
 import fakes.buildResponse

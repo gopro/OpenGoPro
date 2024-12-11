@@ -18,7 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import entity.connector.ScanResult
+import com.gopro.open_gopro.entity.connector.ScanResult
 import presenter.CameraChooserUiState
 import presenter.CameraChooserViewModel
 import presenter.ScanNetworkType

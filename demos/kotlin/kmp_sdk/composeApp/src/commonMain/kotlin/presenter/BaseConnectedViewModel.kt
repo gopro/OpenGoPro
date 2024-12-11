@@ -1,12 +1,12 @@
 package presenter
 
-import Wsdk
+import com.gopro.open_gopro.Wsdk
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import data.IAppPreferences
-import entity.communicator.CommunicationType
-import gopro.GoPro
+import com.gopro.open_gopro.entity.communicator.CommunicationType
+import com.gopro.open_gopro.gopro.GoPro
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

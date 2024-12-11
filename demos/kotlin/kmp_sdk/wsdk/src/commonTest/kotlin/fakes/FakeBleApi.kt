@@ -3,14 +3,14 @@
 package fakes
 
 import com.benasher44.uuid.Uuid
-import domain.communicator.BleCommunicator
-import domain.communicator.bleCommunicator.bleFragment
-import domain.network.IBleApi
-import entity.network.ble.BleAdvertisement
-import entity.network.ble.BleDevice
-import entity.network.ble.BleNotification
-import entity.network.ble.GpUuid
-import util.extensions.toPrettyHexString
+import com.gopro.open_gopro.domain.communicator.BleCommunicator
+import com.gopro.open_gopro.domain.communicator.bleCommunicator.bleFragment
+import com.gopro.open_gopro.domain.network.IBleApi
+import com.gopro.open_gopro.entity.network.ble.BleAdvertisement
+import com.gopro.open_gopro.entity.network.ble.BleDevice
+import com.gopro.open_gopro.entity.network.ble.BleNotification
+import com.gopro.open_gopro.entity.network.ble.GpUuid
+import com.gopro.open_gopro.util.extensions.toPrettyHexString
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow

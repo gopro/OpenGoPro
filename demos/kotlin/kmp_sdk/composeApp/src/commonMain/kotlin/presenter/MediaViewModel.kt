@@ -1,10 +1,10 @@
 package presenter
 
-import Wsdk
+import com.gopro.open_gopro.Wsdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
-import entity.operation.MediaId
-import entity.operation.MediaMetadata
+import com.gopro.open_gopro.entity.operation.MediaId
+import com.gopro.open_gopro.entity.operation.MediaMetadata
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

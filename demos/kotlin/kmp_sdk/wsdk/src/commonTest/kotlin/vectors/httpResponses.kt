@@ -1,12 +1,12 @@
 package vectors
 
-import entity.operation.OgpVersionHttpResponse
-import entity.operation.MediaId
-import entity.operation.DateTimeHttpResponse
-import entity.operation.HardwareInfo
-import entity.operation.LivestreamConfigurationRequest
-import entity.operation.LivestreamFov
-import entity.operation.LivestreamResolution
+import com.gopro.open_gopro.entity.operation.OgpVersionHttpResponse
+import com.gopro.open_gopro.entity.operation.MediaId
+import com.gopro.open_gopro.entity.operation.DateTimeHttpResponse
+import com.gopro.open_gopro.entity.operation.HardwareInfo
+import com.gopro.open_gopro.entity.operation.LivestreamConfigurationRequest
+import com.gopro.open_gopro.entity.operation.LivestreamFov
+import com.gopro.open_gopro.entity.operation.LivestreamResolution
 
 val mockMediaId = MediaId("file", "folder")
 val mockHardwareInfo =

@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import co.touchlab.kermit.Logger
-import entity.operation.CohnState
+import com.gopro.open_gopro.entity.operation.CohnState
 import presenter.CameraViewModel
 import ui.common.Screen
 import ui.components.CommonTopBar

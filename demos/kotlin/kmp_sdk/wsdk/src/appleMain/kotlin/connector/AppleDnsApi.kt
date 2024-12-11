@@ -1,8 +1,8 @@
 package connector
 
 import co.touchlab.kermit.Logger
-import domain.network.DnsScanResult
-import domain.network.IDnsApi
+import com.gopro.open_gopro.domain.network.DnsScanResult
+import com.gopro.open_gopro.domain.network.IDnsApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 

@@ -3,8 +3,8 @@ package data
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import database.AppDatabase
-import database.IDatabaseProvider
+import com.gopro.open_gopro.database.AppDatabase
+import com.gopro.open_gopro.database.IDatabaseProvider
 
 // https://developer.android.com/kotlin/multiplatform/room
 internal class AndroidDatabaseProvider(private val context: Context) : IDatabaseProvider {

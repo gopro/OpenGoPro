@@ -1,8 +1,8 @@
-import domain.communicator.BleCommunicator
-import domain.communicator.bleCommunicator.bleFragment
-import entity.network.ble.BleNotification
-import entity.network.ble.GpUuid
-import entity.queries.VideoResolution
+import com.gopro.open_gopro.domain.communicator.BleCommunicator
+import com.gopro.open_gopro.domain.communicator.bleCommunicator.bleFragment
+import com.gopro.open_gopro.entity.network.ble.BleNotification
+import com.gopro.open_gopro.entity.network.ble.GpUuid
+import com.gopro.open_gopro.entity.queries.VideoResolution
 import fakes.BleApiSpy
 import fakes.buildFakeSettingsContainer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import util.extensions.toTlvMap
+import com.gopro.open_gopro.util.extensions.toTlvMap
 import vectors.asynchronousSettingValueUpdateMessage1
 import vectors.asynchronousSettingValueUpdateMessage2
 import vectors.getMultipleSettingsResponsePayload

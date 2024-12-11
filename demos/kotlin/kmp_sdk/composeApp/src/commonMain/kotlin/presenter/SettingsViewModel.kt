@@ -1,11 +1,11 @@
 package presenter
 
-import Wsdk
+import com.gopro.open_gopro.Wsdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
-import entity.queries.FramesPerSecond
-import entity.queries.VideoResolution
-import entity.queries.VideoLens
+import com.gopro.open_gopro.entity.queries.FramesPerSecond
+import com.gopro.open_gopro.entity.queries.VideoResolution
+import com.gopro.open_gopro.entity.queries.VideoLens
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

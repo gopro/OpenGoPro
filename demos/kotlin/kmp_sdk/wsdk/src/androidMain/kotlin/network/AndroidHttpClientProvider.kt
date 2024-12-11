@@ -1,8 +1,8 @@
 package network
 
-import di.createHttpClient
-import domain.network.IHttpClientProvider
-import entity.network.IHttpsCredentials
+import com.gopro.open_gopro.di.createHttpClient
+import com.gopro.open_gopro.domain.network.IHttpClientProvider
+import com.gopro.open_gopro.entity.network.IHttpsCredentials
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import okhttp3.Credentials

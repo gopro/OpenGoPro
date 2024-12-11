@@ -2,10 +2,10 @@
 
 package vectors
 
-import entity.communicator.ActionId
-import entity.communicator.CommandId
-import entity.communicator.FeatureId
-import entity.communicator.GpStatus
+import com.gopro.open_gopro.entity.communicator.ActionId
+import com.gopro.open_gopro.entity.communicator.CommandId
+import com.gopro.open_gopro.entity.communicator.FeatureId
+import com.gopro.open_gopro.entity.communicator.GpStatus
 import entity.operation.proto.EnumFlatMode
 import entity.operation.proto.EnumLens
 import entity.operation.proto.EnumLiveStreamError
@@ -33,7 +33,7 @@ import entity.operation.proto.ResponseConnectNew
 import entity.operation.proto.ResponseGeneric
 import entity.operation.proto.ResponseGetApEntries
 import entity.operation.proto.ResponseStartScanning
-import util.extensions.encodeToUByteArray
+import com.gopro.open_gopro.util.extensions.encodeToUByteArray
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.UtcOffset

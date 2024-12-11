@@ -1,9 +1,9 @@
 package fakes
 
-import domain.communicator.BleCommunicator
-import domain.communicator.bleCommunicator.AccumulatedGpBleResponse
-import domain.communicator.bleCommunicator.bleFragment
-import entity.network.ble.GpUuid
+import com.gopro.open_gopro.domain.communicator.BleCommunicator
+import com.gopro.open_gopro.domain.communicator.bleCommunicator.AccumulatedGpBleResponse
+import com.gopro.open_gopro.domain.communicator.bleCommunicator.bleFragment
+import com.gopro.open_gopro.entity.network.ble.GpUuid
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalUnsignedTypes::class)

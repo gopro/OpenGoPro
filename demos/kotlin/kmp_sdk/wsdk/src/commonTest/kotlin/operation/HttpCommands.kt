@@ -2,18 +2,16 @@
 
 package operation
 
-import entity.operation.MediaId
-import entity.operation.CameraControlStatus
-import entity.operation.GroupMediaItemType
-import entity.operation.GroupedMediaListItem
-import entity.operation.HardwareInfo
-import entity.operation.Preset
-import entity.operation.PresetInfo
-import entity.operation.UpdateCustomPresetRequest
-import entity.operation.WebcamError
-import entity.operation.WebcamStatus
-import entity.operation.PhotoMediaMetadata
-import entity.operation.jsonDefault
+import com.gopro.open_gopro.entity.operation.MediaId
+import com.gopro.open_gopro.entity.operation.CameraControlStatus
+import com.gopro.open_gopro.entity.operation.GroupMediaItemType
+import com.gopro.open_gopro.entity.operation.GroupedMediaListItem
+import com.gopro.open_gopro.entity.operation.HardwareInfo
+import com.gopro.open_gopro.entity.operation.Preset
+import com.gopro.open_gopro.entity.operation.PresetInfo
+import com.gopro.open_gopro.entity.operation.UpdateCustomPresetRequest
+import com.gopro.open_gopro.entity.operation.PhotoMediaMetadata
+import com.gopro.open_gopro.entity.operation.jsonDefault
 import fakes.buildFakeHttpCommunicator
 import io.ktor.client.utils.EmptyContent
 import io.ktor.http.HttpMethod
@@ -26,19 +24,19 @@ import kotlinx.serialization.encodeToString
 import entity.operation.proto.EnumFlatMode
 import entity.operation.proto.EnumPresetIcon
 import entity.operation.proto.EnumPresetTitle
-import operation.commands.DatetimeGet
-import operation.commands.DatetimeSet
-import operation.commands.GetOpenGoProVersion
-import operation.commands.LivestreamConfigure
-import operation.commands.MediaDeleteGrouped
-import operation.commands.MediaGetLastCaptured
-import operation.commands.MediaGetList
-import operation.commands.MediaGetMetadata
-import operation.commands.PresetGetInfo
-import operation.commands.SetCameraControl
-import operation.commands.UpdateCustomPresetIcon
-import operation.commands.UpdateCustomPresetTitle
-import operation.commands.WebcamGetState
+import com.gopro.open_gopro.operation.commands.DatetimeGet
+import com.gopro.open_gopro.operation.commands.DatetimeSet
+import com.gopro.open_gopro.operation.commands.GetOpenGoProVersion
+import com.gopro.open_gopro.operation.commands.LivestreamConfigure
+import com.gopro.open_gopro.operation.commands.MediaDeleteGrouped
+import com.gopro.open_gopro.operation.commands.MediaGetLastCaptured
+import com.gopro.open_gopro.operation.commands.MediaGetList
+import com.gopro.open_gopro.operation.commands.MediaGetMetadata
+import com.gopro.open_gopro.operation.commands.PresetGetInfo
+import com.gopro.open_gopro.operation.commands.SetCameraControl
+import com.gopro.open_gopro.operation.commands.UpdateCustomPresetIcon
+import com.gopro.open_gopro.operation.commands.UpdateCustomPresetTitle
+import com.gopro.open_gopro.operation.commands.WebcamGetState
 import vectors.datetimeResponse
 import vectors.localDateTimeVector
 import vectors.mockHardwareInfo
@@ -368,8 +366,8 @@ class TestHttpCommands {
         // THEN
         assertTrue { response.isSuccess }
         with(response.getOrThrow()) {
-            assertEquals(WebcamStatus.OFF, status)
-            assertEquals(WebcamError.NONE, error)
+            assertEquals(com.gopro.open_gopro.entity.operation.WebcamStatus.OFF, status)
+            assertEquals(com.gopro.open_gopro.entity.operation.WebcamError.NONE, error)
         }
     }
 }

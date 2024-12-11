@@ -13,7 +13,7 @@ import android.net.wifi.WifiManager
 import android.net.wifi.WifiNetworkSpecifier
 import android.provider.Settings
 import co.touchlab.kermit.Logger
-import domain.network.IWifiApi
+import com.gopro.open_gopro.domain.network.IWifiApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope

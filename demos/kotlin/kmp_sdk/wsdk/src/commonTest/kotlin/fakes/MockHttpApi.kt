@@ -1,6 +1,6 @@
 package fakes
 
-import domain.network.IHttpApi
+import com.gopro.open_gopro.domain.network.IHttpApi
 import io.ktor.client.HttpClient
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get

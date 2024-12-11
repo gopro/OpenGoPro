@@ -1,4 +1,6 @@
-import entity.connector.NetworkType
+import com.gopro.open_gopro.Wsdk
+import com.gopro.open_gopro.WsdkAppContext
+import com.gopro.open_gopro.entity.connector.NetworkType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first

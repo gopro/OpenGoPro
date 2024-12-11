@@ -1,10 +1,10 @@
 package media
 
-import entity.operation.GroupMediaItemType
-import entity.operation.GroupedMediaListItem
-import entity.operation.MediaList
-import entity.operation.MediaListItem
-import entity.operation.jsonDefault
+import com.gopro.open_gopro.entity.operation.GroupMediaItemType
+import com.gopro.open_gopro.entity.operation.GroupedMediaListItem
+import com.gopro.open_gopro.entity.operation.MediaList
+import com.gopro.open_gopro.entity.operation.MediaListItem
+import com.gopro.open_gopro.entity.operation.jsonDefault
 import vectors.groupedMediaListItemJson
 import vectors.mediaListJson2
 import vectors.singleMediaListItemJson

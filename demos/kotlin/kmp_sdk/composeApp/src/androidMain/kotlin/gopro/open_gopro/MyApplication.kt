@@ -1,6 +1,6 @@
 package gopro.open_gopro
 
-import WsdkAppContext
+import com.gopro.open_gopro.WsdkAppContext
 import android.app.Application
 import di.buildAppModule
 import org.koin.android.ext.koin.androidLogger

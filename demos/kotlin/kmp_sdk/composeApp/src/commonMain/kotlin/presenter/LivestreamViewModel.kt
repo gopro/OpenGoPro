@@ -1,12 +1,12 @@
 package presenter
 
-import Wsdk
+import com.gopro.open_gopro.Wsdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
-import entity.operation.AccessPointState
-import entity.operation.LivestreamConfigurationRequest
-import entity.operation.LivestreamState
-import entity.operation.LivestreamStatus
+import com.gopro.open_gopro.entity.operation.AccessPointState
+import com.gopro.open_gopro.entity.operation.LivestreamConfigurationRequest
+import com.gopro.open_gopro.entity.operation.LivestreamState
+import com.gopro.open_gopro.entity.operation.LivestreamStatus
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

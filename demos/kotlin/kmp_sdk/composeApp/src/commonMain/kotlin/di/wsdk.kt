@@ -1,7 +1,7 @@
 package di
 
-import Wsdk
-import WsdkAppContext
+import com.gopro.open_gopro.Wsdk
+import com.gopro.open_gopro.WsdkAppContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import org.koin.core.module.Module

@@ -1,7 +1,7 @@
 package gopro.open_gopro
 
 import App
-import WsdkAppContext
+import com.gopro.open_gopro.WsdkAppContext
 import androidx.compose.ui.window.ComposeUIViewController
 import di.buildAppModule
 import org.koin.core.context.startKoin

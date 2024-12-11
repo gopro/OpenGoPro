@@ -1,6 +1,6 @@
 package di
 
-import WsdkAppContext
+import com.gopro.open_gopro.WsdkAppContext
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import data.dataStore

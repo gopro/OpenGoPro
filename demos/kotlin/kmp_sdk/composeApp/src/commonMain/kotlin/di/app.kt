@@ -1,6 +1,6 @@
 package di
 
-import WsdkAppContext
+import com.gopro.open_gopro.WsdkAppContext
 import org.koin.core.module.Module
 import org.koin.dsl.module
 

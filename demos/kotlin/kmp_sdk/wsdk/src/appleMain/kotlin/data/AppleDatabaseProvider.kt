@@ -2,8 +2,8 @@ package data
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import database.AppDatabase
-import database.IDatabaseProvider
+import com.gopro.open_gopro.database.AppDatabase
+import com.gopro.open_gopro.database.IDatabaseProvider
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager

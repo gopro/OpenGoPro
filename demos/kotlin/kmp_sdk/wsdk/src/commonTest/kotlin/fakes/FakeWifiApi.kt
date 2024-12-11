@@ -1,4 +1,4 @@
-import domain.network.IWifiApi
+import com.gopro.open_gopro.domain.network.IWifiApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

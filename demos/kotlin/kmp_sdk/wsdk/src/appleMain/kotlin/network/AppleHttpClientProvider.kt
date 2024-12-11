@@ -1,7 +1,7 @@
 package network
 
-import domain.network.IHttpClientProvider
-import entity.network.IHttpsCredentials
+import com.gopro.open_gopro.domain.network.IHttpClientProvider
+import com.gopro.open_gopro.entity.network.IHttpsCredentials
 import io.ktor.client.HttpClient
 
 internal class AppleHttpClientProvider: IHttpClientProvider {

@@ -4,8 +4,8 @@ import android.content.Context
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import co.touchlab.kermit.Logger
-import domain.network.DnsScanResult
-import domain.network.IDnsApi
+import com.gopro.open_gopro.domain.network.DnsScanResult
+import com.gopro.open_gopro.domain.network.IDnsApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -46,7 +46,7 @@ internal class AndroidDnsApi(
     }
 
 
-    override suspend fun scan(serviceType: String): Result<Flow<domain.network.DnsScanResult>> {
+    override suspend fun scan(serviceType: String): Result<Flow<DnsScanResult>> {
         val discoveryListener = DiscoveryListener(serviceType, nsdManager, nsdResolveListener)
 
         nsdManager.discoverServices(
@@ -57,7 +57,7 @@ internal class AndroidDnsApi(
         return Result.success(mdnsScanResults
             .filter { it.hostAddresses.first().hostAddress != null }
             .map {
-                domain.network.DnsScanResult(
+                DnsScanResult(
                     it.hostAddresses.first().hostAddress!!,
                     it.serviceName
                 )

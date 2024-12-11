@@ -1,11 +1,11 @@
 package presenter
 
-import Wsdk
+import com.gopro.open_gopro.Wsdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
-import entity.operation.WebcamError
-import entity.operation.WebcamProtocol
-import entity.operation.WebcamStatus
+import com.gopro.open_gopro.entity.operation.WebcamError
+import com.gopro.open_gopro.entity.operation.WebcamProtocol
+import com.gopro.open_gopro.entity.operation.WebcamStatus
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

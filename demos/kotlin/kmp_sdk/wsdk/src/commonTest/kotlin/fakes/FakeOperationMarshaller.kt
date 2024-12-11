@@ -1,15 +1,15 @@
 package fakes
 
-import domain.api.IOperation
-import domain.api.IOperationMarshaller
-import domain.api.StrategyBuilder
-import domain.communicator.BleCommunicator
-import domain.communicator.ICommunicator
-import entity.communicator.CommunicationType
-import entity.connector.ConnectionDescriptor
-import entity.connector.GoProId
-import entity.network.ble.BleDevice
-import entity.network.ble.BleNotification
+import com.gopro.open_gopro.domain.api.IOperation
+import com.gopro.open_gopro.domain.api.IOperationMarshaller
+import com.gopro.open_gopro.domain.api.StrategyBuilder
+import com.gopro.open_gopro.domain.communicator.BleCommunicator
+import com.gopro.open_gopro.domain.communicator.ICommunicator
+import com.gopro.open_gopro.entity.communicator.CommunicationType
+import com.gopro.open_gopro.entity.connector.ConnectionDescriptor
+import com.gopro.open_gopro.entity.connector.GoProId
+import com.gopro.open_gopro.entity.network.ble.BleDevice
+import com.gopro.open_gopro.entity.network.ble.BleNotification
 import kotlinx.coroutines.CoroutineDispatcher
 
 internal class FakeOperationMarshaller(

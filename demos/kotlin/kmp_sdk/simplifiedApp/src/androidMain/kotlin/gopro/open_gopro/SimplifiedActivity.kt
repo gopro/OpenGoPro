@@ -1,6 +1,6 @@
 package gopro.open_gopro
 
-import WsdkAppContext
+import com.gopro.open_gopro.WsdkAppContext
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.Manifest.permission.ACCESS_WIFI_STATE

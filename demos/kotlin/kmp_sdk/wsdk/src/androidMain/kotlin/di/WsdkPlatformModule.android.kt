@@ -1,15 +1,16 @@
 package di
 
-import WsdkAppContext
+import com.gopro.open_gopro.WsdkAppContext
 import android.content.Context
 import android.net.wifi.WifiManager
+import com.gopro.open_gopro.di.WsdkPlatformModule
 import connector.AndroidDnsApi
 import connector.AndroidWifiApi
 import data.AndroidDatabaseProvider
-import database.IDatabaseProvider
-import domain.network.IDnsApi
-import domain.network.IHttpClientProvider
-import domain.network.IWifiApi
+import com.gopro.open_gopro.database.IDatabaseProvider
+import com.gopro.open_gopro.domain.network.IDnsApi
+import com.gopro.open_gopro.domain.network.IHttpClientProvider
+import com.gopro.open_gopro.domain.network.IWifiApi
 import network.AndroidHttpClientProvider
 import org.koin.dsl.bind
 import org.koin.dsl.module

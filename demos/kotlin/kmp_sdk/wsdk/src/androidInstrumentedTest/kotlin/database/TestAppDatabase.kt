@@ -4,7 +4,16 @@ package database
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import entity.operation.jsonDefault
+import com.gopro.open_gopro.database.AppDatabase
+import com.gopro.open_gopro.database.CertificatesDao
+import com.gopro.open_gopro.database.CertificatesDbEntry
+import com.gopro.open_gopro.database.CertificatesForDb
+import com.gopro.open_gopro.database.HttpsCredentialsDao
+import com.gopro.open_gopro.database.HttpsCredentialsDbEntry
+import com.gopro.open_gopro.database.SerialIdDb
+import com.gopro.open_gopro.database.SsidDao
+import com.gopro.open_gopro.database.SsidDbEntry
+import com.gopro.open_gopro.entity.operation.jsonDefault
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.encodeToString
 import org.junit.After
@@ -167,7 +176,7 @@ class TestAppDatabase {
             with(results.first()) {
                 assertEquals(certificateEntry1.serialId, serialId)
                 val decodedCerts =
-                    jsonDefault.decodeFromString<CertificatesForDb>(certificates).certificates
+                    com.gopro.open_gopro.entity.operation.jsonDefault.decodeFromString<CertificatesForDb>(certificates).certificates
                 assertEquals(2, decodedCerts.size)
             }
         }

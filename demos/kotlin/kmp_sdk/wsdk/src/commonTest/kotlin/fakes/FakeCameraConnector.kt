@@ -1,11 +1,10 @@
 package fakes
 
-import domain.connector.ICameraConnector
-import entity.connector.ConnectionDescriptor
-import entity.connector.ConnectionRequestContext
-import entity.connector.GoProId
-import entity.connector.NetworkType
-import entity.connector.ScanResult
+import com.gopro.open_gopro.domain.connector.ICameraConnector
+import com.gopro.open_gopro.entity.connector.ConnectionDescriptor
+import com.gopro.open_gopro.entity.connector.ConnectionRequestContext
+import com.gopro.open_gopro.entity.connector.NetworkType
+import com.gopro.open_gopro.entity.connector.ScanResult
 import kotlinx.coroutines.flow.Flow
 
 internal class FakeCameraConnector : ICameraConnector {
