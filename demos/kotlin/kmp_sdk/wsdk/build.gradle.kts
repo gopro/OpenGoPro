@@ -20,16 +20,24 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
+        publishLibraryVariants("release")
     }
 
-    jvm("desktop")
+//    jvm("desktop")
 
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
+            baseName = "openGoPro"
+            isStatic = true
+        }
+    }
 
     sourceSets {
-        val desktopMain by getting
+//        val desktopMain by getting
 
         // https://kotlinlang.org/docs/multiplatform-android-layout.html#move-source-files
         val commonTest by getting
@@ -97,9 +105,9 @@ kotlin {
         appleMain.dependencies {
             api(libs.ktor.client.darwin)
         }
-        desktopMain.dependencies {
-            api(libs.ktor.client.okhttp)
-        }
+//        desktopMain.dependencies {
+//            api(libs.ktor.client.okhttp)
+//        }
     }
 }
 

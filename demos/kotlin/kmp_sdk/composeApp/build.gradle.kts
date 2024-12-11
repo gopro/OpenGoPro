@@ -18,7 +18,7 @@ kotlin {
         }
     }
 
-    jvm("desktop")
+//    jvm("desktop")
 
     listOf(
         iosX64(),
@@ -32,7 +32,7 @@ kotlin {
     }
 
     sourceSets {
-        val desktopMain by getting
+//        val desktopMain by getting
         val androidUnitTest by getting
 
         commonMain.dependencies {
@@ -70,10 +70,10 @@ kotlin {
             implementation(libs.coil.mp)
             implementation(libs.coil.network.ktor)
         }
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutines.swing)
-        }
+//        desktopMain.dependencies {
+//            implementation(compose.desktop.currentOs)
+//            implementation(libs.kotlinx.coroutines.swing)
+//        }
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -131,17 +131,17 @@ android {
     }
 }
 
-compose.desktop {
-    application {
-        mainClass = "gopro.open_gopro.MainKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "gopro.open_gopro"
-            packageVersion = "1.0.0"
-        }
-    }
-}
+//compose.desktop {
+//    application {
+//        mainClass = "gopro.open_gopro.MainKt"
+//
+//        nativeDistributions {
+//            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+//            packageName = "gopro.open_gopro"
+//            packageVersion = "1.0.0"
+//        }
+//    }
+//}
 
 licenseReport {
     // Generate reports
