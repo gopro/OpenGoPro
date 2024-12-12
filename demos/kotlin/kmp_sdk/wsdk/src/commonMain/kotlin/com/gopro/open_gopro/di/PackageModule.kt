@@ -1,6 +1,6 @@
 package com.gopro.open_gopro.di
 
-import com.gopro.open_gopro.WsdkAppContext
+import com.gopro.open_gopro.OgpSdkAppContext
 import com.gopro.open_gopro.connector.CameraConnector
 import com.gopro.open_gopro.connector.GpBleConnector
 import com.gopro.open_gopro.connector.GpDnsConnector
@@ -15,11 +15,11 @@ import com.gopro.open_gopro.network.KableBle
 import com.gopro.open_gopro.network.KtorHttp
 import org.koin.dsl.module
 
-internal fun buildPackageModules(dispatcher: CoroutineDispatcher, appContext: WsdkAppContext) =
+internal fun buildPackageModules(dispatcher: CoroutineDispatcher, appContext: OgpSdkAppContext) =
     module {
         single<CoroutineDispatcher> { dispatcher }
 
-        includes(buildWsdkPlatformModules(appContext))
+        includes(buildOgpSdkPlatformModules(appContext))
 
         // Network ConnectorFactory and communicator APIs
         single<IBleApi> { KableBle(get()) }

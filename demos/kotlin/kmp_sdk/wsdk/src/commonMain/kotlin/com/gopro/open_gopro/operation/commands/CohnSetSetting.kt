@@ -29,7 +29,7 @@ internal class CohnSetSetting(val disableCohn: Boolean) :
 
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.post {
-            url { path("com/gopro/open_gopro/gopro/cohn/setting") }
+            url { path("gopro/cohn/setting") }
             setBody(CohnSettingRequest(!disableCohn))
         }.map { it.body() }
 }

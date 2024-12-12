@@ -1,6 +1,6 @@
 package presenter
 
-import com.gopro.open_gopro.Wsdk
+import com.gopro.open_gopro.OgpSdk
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
@@ -42,7 +42,7 @@ sealed class CameraChooserUiState(val name: String) {
 }
 
 class CameraChooserViewModel(
-    private val wsdk: Wsdk,
+    private val sdk: OgpSdk,
     private val appPreferences: IAppPreferences,
 ) : ViewModel() {
     private val found =
@@ -57,7 +57,7 @@ class CameraChooserViewModel(
     fun discover(networks: Set<ScanNetworkType>) {
         if (_state.value == CameraChooserUiState.Idle) {
             discoverJob = viewModelScope.launch {
-                wsdk.discover(*networks.map(::scanNetworkToNetwork).toTypedArray())
+                sdk.discover(*networks.map(::scanNetworkToNetwork).toTypedArray())
                     .onStart { _state.update { CameraChooserUiState.Discovering } }
                     .onEach { found[Pair(it.id, it.networkType)] = it }
                     .onCompletion { _devices.update { mutableListOf() } }
@@ -94,7 +94,7 @@ class CameraChooserViewModel(
         viewModelScope.launch {
             cancelDiscovery()
             _state.update { CameraChooserUiState.Connecting }
-            wsdk.connect(target, requestContext)
+            sdk.connect(target, requestContext)
                 .fold(
                     onSuccess = {
                         logger.d { "Connected to ${it}." }

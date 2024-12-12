@@ -8,5 +8,5 @@ import io.ktor.http.path
 internal class WebcamExit : BaseOperation<Unit>("Exit Webcam") {
 
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
-        communicator.get { url { path("com/gopro/open_gopro/gopro/webcam/exit") } }.map { it.body() }
+        communicator.get { url { path("gopro/webcam/exit") } }.map { it.body() }
 }

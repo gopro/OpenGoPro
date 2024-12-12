@@ -1,6 +1,6 @@
 package presenter
 
-import com.gopro.open_gopro.Wsdk
+import com.gopro.open_gopro.OgpSdk
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 open class BaseConnectedViewModel(
     private val appPreferences: IAppPreferences,
-    private val wsdk: Wsdk,
+    private val wsdk: OgpSdk,
     tag: String
 ) : ViewModel() {
     protected val logger = Logger.withTag(tag)

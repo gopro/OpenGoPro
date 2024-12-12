@@ -28,7 +28,7 @@ internal class SetTurboTransfer(val enable: Boolean) : BaseOperation<Unit>("Set 
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/media/turbo_transfer")
+                path("gopro/media/turbo_transfer")
                 parameters.append("p", enable.toInt().toString())
             }
         }.map { it.body() }

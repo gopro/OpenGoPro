@@ -9,5 +9,5 @@ import io.ktor.http.path
 internal class WebcamGetState : BaseOperation<WebcamState>("Get Webcam Status") {
 
     override suspend fun execute(communicator: HttpCommunicator): Result<WebcamState> =
-        communicator.get { url { path("com/gopro/open_gopro/gopro/webcam/status") } }.map { it.body() }
+        communicator.get { url { path("gopro/webcam/status") } }.map { it.body() }
 }

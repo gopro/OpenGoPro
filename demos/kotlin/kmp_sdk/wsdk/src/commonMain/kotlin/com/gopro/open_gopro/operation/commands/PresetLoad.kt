@@ -20,7 +20,7 @@ internal class PresetLoad(private val preset: Int) : BaseOperation<Unit>("Load P
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/camera/presets/load")
+                path("gopro/camera/presets/load")
                 parameters.append("id", preset.toString())
             }
         }.map { it.body() }

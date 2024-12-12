@@ -1,6 +1,6 @@
 package presenter
 
-import com.gopro.open_gopro.Wsdk
+import com.gopro.open_gopro.OgpSdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
 import com.gopro.open_gopro.operations.MediaId
@@ -23,7 +23,7 @@ sealed class MediaUiState(val message: String) {
 
 class MediaViewModel(
     appPreferences: IAppPreferences,
-    wsdk: Wsdk,
+    wsdk: OgpSdk,
 ) : BaseConnectedViewModel(appPreferences, wsdk, "MediaViewModel") {
     private val _state = MutableStateFlow<MediaUiState>(MediaUiState.Error("not yet initialized"))
     val state = _state.asStateFlow()

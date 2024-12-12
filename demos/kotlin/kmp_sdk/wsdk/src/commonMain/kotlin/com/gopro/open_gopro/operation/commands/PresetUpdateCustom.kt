@@ -34,7 +34,7 @@ internal class UpdateCustomPresetIcon(val icon: EnumPresetIcon) :
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             contentType(ContentType.Application.Json)
-            url { path("com/gopro/open_gopro/gopro/camera/presets/update_custom") }
+            url { path("gopro/camera/presets/update_custom") }
             setBody(UpdateCustomPresetRequest(iconId = icon.value))
         }.map { it.body() }
 }
@@ -63,7 +63,7 @@ internal class UpdateCustomPresetTitle(val titleId: EnumPresetTitle) :
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             contentType(ContentType.Application.Json)
-            url { path("com/gopro/open_gopro/gopro/camera/presets/update_custom") }
+            url { path("gopro/camera/presets/update_custom") }
             setBody(
                 UpdateCustomPresetRequest(
                     titleId = titleId.value,

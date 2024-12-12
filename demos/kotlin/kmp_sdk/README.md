@@ -46,18 +46,18 @@ TODO
 ## Usage
 
 ```kotlin
-// Initialize WSDK
-val wsdk = Wsdk(dispatcher, appContext)
+// Initialize the SDK
+val sdk = OgpSdk(dispatcher, appContext)
 
 coroutineScope.launch {
     // Discover and take the first device we find
-    val target = wsdk.discover(NetworkType.BLE).first()
+    val target = sdk.discover(NetworkType.BLE).first()
 
     // Connect
-    val goproId = wsdk.connect(target).getOrThrow()
+    val goproId = sdk.connect(target).getOrThrow()
 
     // Now retrieve the gopro
-    val gopro = wsdk.getGoPro(goproId)
+    val gopro = sdk.getGoPro(goproId)
 
     // Set the shutter
     gopro.commands.setShutter(true)

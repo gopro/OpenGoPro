@@ -12,7 +12,7 @@ internal class SetWiredControl(val enable: Boolean) :
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/camera/control/wired_usb")
+                path("gopro/camera/control/wired_usb")
                 parameters.append("p", enable.toInt().toString())
             }
         }.map { it.body() }

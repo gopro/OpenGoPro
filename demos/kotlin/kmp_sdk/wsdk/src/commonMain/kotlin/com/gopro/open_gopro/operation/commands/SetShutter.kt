@@ -22,7 +22,7 @@ internal class SetShutter(val shutter: Boolean) : BaseOperation<Unit>("Set Shutt
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/camera/shutter")
+                path("gopro/camera/shutter")
                 appendPathSegments(if (shutter) "start" else "stop")
             }
         }.map { it.body() }

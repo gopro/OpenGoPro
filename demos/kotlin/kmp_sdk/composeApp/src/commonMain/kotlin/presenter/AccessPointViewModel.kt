@@ -1,6 +1,6 @@
 package presenter
 
-import com.gopro.open_gopro.Wsdk
+import com.gopro.open_gopro.OgpSdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
 import com.gopro.open_gopro.operations.AccessPointState
@@ -20,7 +20,7 @@ sealed class ApUiState(val name: String) {
 
 class AccessPointViewModel(
     appPreferences: IAppPreferences,
-    wsdk: Wsdk,
+    wsdk: OgpSdk,
 ) : BaseConnectedViewModel(appPreferences, wsdk, "AccessPointViewModel") {
     private var _state = MutableStateFlow<ApUiState>(ApUiState.Idle)
     val state = _state.asStateFlow()

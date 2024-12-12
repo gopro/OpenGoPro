@@ -14,15 +14,19 @@ import org.koin.core.error.ApplicationAlreadyStartedException
 import org.koin.core.module.Module
 import org.koin.dsl.koinApplication
 
-expect class WsdkAppContext
+/**
+ * Platform-specific context needed to initialize the OGP SDK
+ *
+ */
+expect class OgpSdkAppContext
 
-private val logger = Logger.withTag("WSDK")
+private val logger = Logger.withTag("OGP SDK")
 
 // https://insert-koin.io/docs/reference/koin-core/context-isolation
 // https://medium.com/@gusakov.giorgi/using-koin-dependency-injection-in-library-sdk-7be76291ecad
-internal object WsdkIsolatedKoinContext {
+internal object OgpSdkIsolatedKoinContext {
     private data class InitArguments(
-        val dispatcher: CoroutineDispatcher, val appContext: WsdkAppContext
+        val dispatcher: CoroutineDispatcher, val appContext: OgpSdkAppContext
     )
 
     private var initArguments: InitArguments? = null
@@ -31,23 +35,23 @@ internal object WsdkIsolatedKoinContext {
         koinApplication { modules(koinModules) }.also { app ->
             try {
                 startKoin(app)
-                logger.d("Started KOIN from WSDK since it was not running.")
+                logger.d("Started KOIN from OGP SDK since it was not running.")
             } catch (_: ApplicationAlreadyStartedException) {
-                logger.d("Not starting Koin from WSDK since it was already started")
+                logger.d("Not starting Koin from OGP SDK since it was already started")
             }
         }
     }
     internal val koinModules: Module by lazy {
         initArguments?.let { args ->
             buildPackageModules(args.dispatcher, args.appContext)
-        } ?: throw Exception("WSDK has not been initialized")
+        } ?: throw Exception("OGP SDK has not been initialized")
     }
 
-    fun init(dispatcher: CoroutineDispatcher, appContext: WsdkAppContext) {
+    fun init(dispatcher: CoroutineDispatcher, appContext: OgpSdkAppContext) {
         initArguments = InitArguments(dispatcher, appContext)
     }
 
-    fun getWsdkKoinApp(): Koin = koinApp.koin
+    fun getOgpSdkKoinApp(): Koin = koinApp.koin
 }
 
 /**
@@ -55,38 +59,38 @@ internal object WsdkIsolatedKoinContext {
  *
  * The client should use this class to discover, connect, and retrieve [GoPro] objects
  *
- * TODO currently multiple instances of WSDK are not supported and have not been tested.
+ * > TODO currently multiple instances of OGP SDK are not supported and have not been tested.
  *
  * ```
- * // Initialize WSDK
- * val wsdk = Wsdk(dispatcher, appContext)
+ * // Initialize OGP SDK
+ * val ogpSdk = OgpSdk(dispatcher, appContext)
  *
  * coroutineScope.launch {
  *     // Discover and take the first device we find
- *     val target = wsdk.discover(NetworkType.BLE).first()
+ *     val target = ogpSdk.discover(NetworkType.BLE).first()
  *
  *     // Connect
- *     val goproId = wsdk.connect(target).getOrThrow()
+ *     val goproId = ogpSdk.connect(target).getOrThrow()
  *
  *     // Now retrieve the gopro
- *     val gopro = wsdk.getGoPro(goproId)
+ *     val gopro = ogpSdk.getGoPro(goproId)
  *
  *     // Set the shutter
  *     gopro.commands.setShutter(true)
  * }
  * ```
  *
- * @param dispatcher dispatcher that WSDK should use for coroutine scopes
+ * @param dispatcher dispatcher that OGP SDK should use for coroutine scopes
  * @param appContext platform-specific application context
  */
-class Wsdk(dispatcher: CoroutineDispatcher, appContext: WsdkAppContext) {
+class OgpSdk(dispatcher: CoroutineDispatcher, appContext: OgpSdkAppContext) {
     // TODO how / should we handle multiple SDK's
     init {
-        WsdkIsolatedKoinContext.init(dispatcher, appContext)
+        OgpSdkIsolatedKoinContext.init(dispatcher, appContext)
     }
 
-    private val goProFactory: IGoProFactory = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
-    private val cameraConnector: ICameraConnector = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
+    private val goProFactory: IGoProFactory = OgpSdkIsolatedKoinContext.getOgpSdkKoinApp().get()
+    private val cameraConnector: ICameraConnector = OgpSdkIsolatedKoinContext.getOgpSdkKoinApp().get()
 
     /**
      * Scan for available GoPro's on one or more network types

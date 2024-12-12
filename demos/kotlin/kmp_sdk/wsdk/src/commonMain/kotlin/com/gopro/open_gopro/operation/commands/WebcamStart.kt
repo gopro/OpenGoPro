@@ -19,7 +19,7 @@ internal class WebcamStart(
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/webcam/start")
+                path("gopro/webcam/start")
                 resolution?.let {
                     parameters.append("res", it.value.toString())
                 }

@@ -1,6 +1,6 @@
 package com.gopro.open_gopro.di
 
-import com.gopro.open_gopro.WsdkAppContext
+import com.gopro.open_gopro.OgpSdkAppContext
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.gopro.open_gopro.database.AppDatabase
 import com.gopro.open_gopro.database.CameraRepository
@@ -10,11 +10,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-internal interface WsdkPlatformModule {
+internal interface OgpSdkPlatformModule {
     val module: Module
 }
 
-internal expect fun buildWsdkPlatformModule(appContext: WsdkAppContext): WsdkPlatformModule
+internal expect fun buildOgpSdkPlatformModule(appContext: OgpSdkAppContext): OgpSdkPlatformModule
 
 private fun getRoomDatabase(
     provider: IDatabaseProvider,
@@ -24,8 +24,8 @@ private fun getRoomDatabase(
     .setQueryCoroutineContext(dispatcher)
     .build()
 
-internal fun buildWsdkPlatformModules(appContext: WsdkAppContext) = module {
-    includes(buildWsdkPlatformModule(appContext).module)
+internal fun buildOgpSdkPlatformModules(appContext: OgpSdkAppContext) = module {
+    includes(buildOgpSdkPlatformModule(appContext).module)
 
     // Note! We can't create HTTP engine / client singletons because they can be created dynamically
     // for various https credentials at run-time.

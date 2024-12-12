@@ -17,6 +17,11 @@ internal data class FeatureContext(
     override val facadeFactory: IGoProFactory
 ) : IFeatureContext
 
+/**
+ * Container used to access and exercise features
+ *
+ * @param featureContext
+ */
 class FeaturesContainer internal constructor(featureContext: IFeatureContext) {
     val accessPoint = AccessPointFeature(featureContext)
     val cohn = CohnFeature(featureContext)

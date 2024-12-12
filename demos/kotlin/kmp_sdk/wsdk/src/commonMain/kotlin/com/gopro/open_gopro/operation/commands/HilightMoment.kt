@@ -18,5 +18,5 @@ internal class HilightMoment : BaseOperation<Unit>("Hilight Moment") {
         ).map { }
 
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
-        communicator.get { url { path("com/gopro/open_gopro/gopro/media/hilight/moment") } }.map { it.body() }
+        communicator.get { url { path("gopro/media/hilight/moment") } }.map { it.body() }
 }

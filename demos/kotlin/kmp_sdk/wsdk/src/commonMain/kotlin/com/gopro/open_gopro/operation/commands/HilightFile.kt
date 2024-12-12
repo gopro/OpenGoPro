@@ -12,7 +12,7 @@ internal class HilightFile(val file: MediaId, val offsetMs: Int? = null) :
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/media/hilight/file")
+                path("gopro/media/hilight/file")
                 parameters.append("path", file.asPath)
                 offsetMs?.let {
                     parameters.append("ms", it.toString())

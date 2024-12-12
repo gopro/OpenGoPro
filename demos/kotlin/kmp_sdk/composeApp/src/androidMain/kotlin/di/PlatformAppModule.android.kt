@@ -1,6 +1,6 @@
 package di
 
-import com.gopro.open_gopro.WsdkAppContext
+import com.gopro.open_gopro.OgpSdkAppContext
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import data.dataStore
@@ -13,7 +13,7 @@ import ui.components.IStreamPlayer
 import ui.components.IVideoPlayer
 import ui.components.LibVlcStreamPlayer
 
-actual fun buildPlatformModules(appContext: WsdkAppContext): Module = module {
+actual fun buildPlatformModules(appContext: OgpSdkAppContext): Module = module {
     single<DataStore<Preferences>> { dataStore(appContext.get()) }
     factory<IImageRequestBuilder> { AndroidImageRequestBuilder(appContext.get()) }
 //        factory<IStreamPlayer> { ExoplayerStreamPlayer(appContext.get()) }

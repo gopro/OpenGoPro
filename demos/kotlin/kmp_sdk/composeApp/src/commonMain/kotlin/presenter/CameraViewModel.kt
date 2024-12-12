@@ -1,6 +1,6 @@
 package presenter
 
-import com.gopro.open_gopro.Wsdk
+import com.gopro.open_gopro.OgpSdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
 import com.gopro.open_gopro.CommunicationType
@@ -14,7 +14,7 @@ data class Busy(val text: String)
 
 class CameraViewModel(
     appPreferences: IAppPreferences,
-    wsdk: Wsdk,
+    wsdk: OgpSdk,
 ) : BaseConnectedViewModel(appPreferences, wsdk, "CameraChooserViewModel") {
     private var _cohnState = MutableStateFlow(CohnState.Unprovisioned)
     val cohnState = _cohnState.asStateFlow()

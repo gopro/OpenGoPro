@@ -11,7 +11,7 @@ internal class PreviewStreamStart(val port: Int? = null) :
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/camera/stream/start")
+                path("gopro/camera/stream/start")
                 this@PreviewStreamStart.port?.let {
                     parameters.append("port", it.toString())
                 }

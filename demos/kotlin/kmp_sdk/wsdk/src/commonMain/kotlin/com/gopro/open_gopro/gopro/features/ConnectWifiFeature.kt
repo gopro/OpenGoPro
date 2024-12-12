@@ -3,7 +3,7 @@ package com.gopro.open_gopro.gopro
 import com.gopro.open_gopro.ConnectionDescriptor
 import com.gopro.open_gopro.ConnectionRequestContext
 import com.gopro.open_gopro.ScanResult
-import com.gopro.open_gopro.WsdkIsolatedKoinContext
+import com.gopro.open_gopro.OgpSdkIsolatedKoinContext
 import com.gopro.open_gopro.domain.data.ICameraRepository
 import kotlinx.coroutines.delay
 
@@ -17,7 +17,7 @@ import kotlinx.coroutines.delay
  * @property context
  */
 class ConnectWifiFeature internal constructor(private val context: IFeatureContext) {
-    private val cameraRepo: ICameraRepository = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
+    private val cameraRepo: ICameraRepository = OgpSdkIsolatedKoinContext.getOgpSdkKoinApp().get()
 
     /**
      * Establish a Wi-Fi connection where the camera is an Access Point

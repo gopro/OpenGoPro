@@ -11,7 +11,7 @@ internal class MediaGetScreennail(val file: MediaId) : BaseOperation<ByteArray>(
     override suspend fun execute(communicator: HttpCommunicator): Result<ByteArray> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/media/screennail")
+                path("gopro/media/screennail")
                 encodedParameters.append("path", file.asPath)
             }
         }

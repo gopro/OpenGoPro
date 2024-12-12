@@ -9,5 +9,5 @@ import io.ktor.http.path
 internal class MediaGetList : BaseOperation<MediaList>("Get Media List") {
 
     override suspend fun execute(communicator: HttpCommunicator): Result<MediaList> =
-        communicator.get { url { path("com/gopro/open_gopro/gopro/media/list") } }.map { it.body() }
+        communicator.get { url { path("gopro/media/list") } }.map { it.body() }
 }

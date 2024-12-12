@@ -1,6 +1,6 @@
 package presenter
 
-import com.gopro.open_gopro.Wsdk
+import com.gopro.open_gopro.OgpSdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
 import com.gopro.open_gopro.operations.FramesPerSecond
@@ -14,7 +14,7 @@ import kotlinx.coroutines.runBlocking
 
 class SettingsViewModel(
     appPreferences: IAppPreferences,
-    wsdk: Wsdk,
+    wsdk: OgpSdk,
 ) : BaseConnectedViewModel(appPreferences, wsdk, "SettingsViewModel") {
     private var _currentResolution = MutableStateFlow(VideoResolution.NUM_1080)
     val currentResolution = _currentResolution.asStateFlow()

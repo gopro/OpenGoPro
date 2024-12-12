@@ -11,7 +11,7 @@ internal class MediaDeleteSingle(val file: MediaId) : BaseOperation<Unit>("Delet
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/media/delete/file")
+                path("gopro/media/delete/file")
                 encodedParameters.append("path", file.asPath)
             }
         }

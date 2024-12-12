@@ -37,12 +37,12 @@ class KoinTestRule(private val additionalModules: List<Module>? = null) : TestWa
     private val testModule: Module
 
     init {
-        Wsdk.init(
+        OgpSdk.init(
             dispatcher = UnconfinedTestDispatcher(),
-            appContext = WsdkAppContext().apply {
+            appContext = OgpSdkAppContext().apply {
                 set(InstrumentationRegistry.getInstrumentation().targetContext.applicationContext)
             })
-        testModule = WsdkIsolatedKoinContext.koinModules!!
+        testModule = OgpSdkIsolatedKoinContext.koinModules!!
     }
 
     override fun starting(description: Description) {

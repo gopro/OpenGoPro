@@ -1,6 +1,6 @@
 package presenter
 
-import com.gopro.open_gopro.Wsdk
+import com.gopro.open_gopro.OgpSdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
 import com.gopro.open_gopro.operations.AccessPointState
@@ -19,7 +19,7 @@ sealed class CohnUiState(val name: String) {
 
 class CohnViewModel(
     appPreferences: IAppPreferences,
-    wsdk: Wsdk
+    wsdk: OgpSdk
 ) : BaseConnectedViewModel(appPreferences, wsdk, "CohnViewModel") {
     private var _state = MutableStateFlow<CohnUiState>(CohnUiState.Idle)
     val state = _state.asStateFlow()

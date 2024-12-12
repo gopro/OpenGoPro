@@ -22,7 +22,7 @@ internal class PresetLoadGroup(private val group: PresetGroupId) : BaseOperation
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/camera/presets/set_group")
+                path("gopro/camera/presets/set_group")
                 parameters.append("id", group.value.toInt().toString())
             }
         }.map { it.body() }

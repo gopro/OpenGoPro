@@ -4,7 +4,7 @@ import android.content.Context
 import java.lang.ref.WeakReference
 
 // https://stackoverflow.com/questions/76669135/using-context-in-kmm-shared-library-manually/77378735
-actual class WsdkAppContext {
+actual class OgpSdkAppContext {
 
     private var value: WeakReference<Context?>? = null
 

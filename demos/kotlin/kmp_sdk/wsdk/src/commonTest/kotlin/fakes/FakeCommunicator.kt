@@ -63,13 +63,13 @@ private val responseHeaders = headersOf(HttpHeaders.ContentType, "application/js
 
 private val mockEngine = MockEngine { request ->
     when (request.url.encodedPath) {
-        "/com/gopro/open_gopro/gopro/media/last_captured" -> respond(
+        "/gopro/media/last_captured" -> respond(
             content = ByteReadChannel(jsonDefault.encodeToString(mockMediaId)),
             status = HttpStatusCode.OK,
             headers = responseHeaders
         )
 
-        "/com/gopro/open_gopro/gopro/camera/presets/get" -> {
+        "/gopro/camera/presets/get" -> {
             respond(
                 content = ByteReadChannel(
                     serializeAsDefaultFromProto<PresetInfo>(
@@ -81,42 +81,42 @@ private val mockEngine = MockEngine { request ->
             )
         }
 
-        "/com/gopro/open_gopro/gopro/version" -> respond(
+        "/gopro/version" -> respond(
             content = ByteReadChannel(jsonDefault.encodeToString(mockOgpVersion)),
             status = HttpStatusCode.OK,
             headers = responseHeaders
         )
 
-        "/com/gopro/open_gopro/gopro/media/info" -> respond(
+        "/gopro/media/info" -> respond(
             content = ByteReadChannel(photoMetadataJson),
             status = HttpStatusCode.OK,
             headers = responseHeaders
         )
 
-        "/com/gopro/open_gopro/gopro/media/list" -> respond(
+        "/gopro/media/list" -> respond(
             content = ByteReadChannel(mediaListJson),
             status = HttpStatusCode.OK,
             headers = responseHeaders
         )
 
-        "/com/gopro/open_gopro/gopro/camera/get_date_time" -> respond(
+        "/gopro/camera/get_date_time" -> respond(
             content = ByteReadChannel(jsonDefault.encodeToString(datetimeResponse)),
             status = HttpStatusCode.OK,
             headers = responseHeaders
         )
 
-        "/com/gopro/open_gopro/gopro/webcam/status" -> respond(
+        "/gopro/webcam/status" -> respond(
             content = ByteReadChannel(webcamStatusResponseJson),
             status = HttpStatusCode.OK,
             headers = responseHeaders
         )
 
         // Empty successful responses
-        "/com/gopro/open_gopro/gopro/livestream/setup",
-        "/com/gopro/open_gopro/gopro/camera/control/set_ui_controller",
+        "/gopro/livestream/setup",
+        "/gopro/camera/control/set_ui_controller",
         "/gp/gpControl/command/storage/delete/group",
-        "/com/gopro/open_gopro/gopro/camera/set_date_time",
-        "/com/gopro/open_gopro/gopro/camera/presets/update_custom" -> respond(
+        "/gopro/camera/set_date_time",
+        "/gopro/camera/presets/update_custom" -> respond(
             content = ByteReadChannel("{}"),
             status = HttpStatusCode.OK,
             headers = responseHeaders

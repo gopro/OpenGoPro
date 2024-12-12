@@ -1,7 +1,7 @@
 package com.gopro.open_gopro.gopro
 
-import com.gopro.open_gopro.Wsdk
-import com.gopro.open_gopro.WsdkIsolatedKoinContext
+import com.gopro.open_gopro.OgpSdk
+import com.gopro.open_gopro.OgpSdkIsolatedKoinContext
 import co.touchlab.kermit.Logger
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.HttpCommunicator
@@ -38,7 +38,7 @@ private const val TRACE_LOG = true
 /**
  * Top level interface to communicate with a connected GoPro.
  *
- * Should be retrieved from [Wsdk.getGoPro]
+ * Should be retrieved from [OgpSdk.getGoPro]
  *
  * @property id identifier of connected GoPro
  */
@@ -48,10 +48,10 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
     private fun traceLog(message: String) = if (TRACE_LOG) logger.d(message) else {
     }
 
-    private val cameraConnector: ICameraConnector = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
-    private val dispatcher: CoroutineDispatcher = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
+    private val cameraConnector: ICameraConnector = OgpSdkIsolatedKoinContext.getOgpSdkKoinApp().get()
+    private val dispatcher: CoroutineDispatcher = OgpSdkIsolatedKoinContext.getOgpSdkKoinApp().get()
     private val facadeFactory: IGoProFactory =
-        WsdkIsolatedKoinContext.getWsdkKoinApp().get()
+        OgpSdkIsolatedKoinContext.getOgpSdkKoinApp().get()
 
     private val operationMarshaller = GpMarshaller(this)
 

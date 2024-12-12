@@ -1,6 +1,6 @@
 package presenter
 
-import com.gopro.open_gopro.Wsdk
+import com.gopro.open_gopro.OgpSdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
 import com.gopro.open_gopro.operations.WebcamError
@@ -21,7 +21,7 @@ sealed class WebcamUiState(val message: String) {
 }
 
 class WebcamViewModel(
-    appPreferences: IAppPreferences, wsdk: Wsdk
+    appPreferences: IAppPreferences, wsdk: OgpSdk
 ) : BaseConnectedViewModel(appPreferences, wsdk, "WebcamViewModel") {
     private var _state = MutableStateFlow<WebcamUiState>(WebcamUiState.Error("not yet initialized"))
     val state = _state.asStateFlow()

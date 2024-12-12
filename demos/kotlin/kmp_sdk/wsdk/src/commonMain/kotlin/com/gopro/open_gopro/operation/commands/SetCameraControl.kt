@@ -34,7 +34,7 @@ internal class SetCameraControl(val status: CameraControlStatus) :
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/camera/control/set_ui_controller")
+                path("gopro/camera/control/set_ui_controller")
                 parameters.append("p", status.value.toString())
             }
         }.map { it.body() }

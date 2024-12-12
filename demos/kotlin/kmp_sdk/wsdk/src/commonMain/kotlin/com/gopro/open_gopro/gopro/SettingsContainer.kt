@@ -12,10 +12,7 @@ import com.gopro.open_gopro.domain.api.IOperationMarshaller
 import com.gopro.open_gopro.operations.*
 
 /**
- * Container for all per-setting-ID wrappers
- *
- * Note! This is a very small subset of the supported settings. TODO these need to be
- * automatically generated.
+ * Container used to access and operate on settings.
  *
  * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html)
  *

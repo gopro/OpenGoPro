@@ -1,6 +1,6 @@
 package com.gopro.open_gopro.di
 
-import com.gopro.open_gopro.WsdkAppContext
+import com.gopro.open_gopro.OgpSdkAppContext
 import android.content.Context
 import android.net.wifi.WifiManager
 import com.gopro.open_gopro.connector.AndroidDnsApi
@@ -14,8 +14,8 @@ import com.gopro.open_gopro.network.AndroidHttpClientProvider
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-internal actual fun buildWsdkPlatformModule(appContext: WsdkAppContext): WsdkPlatformModule {
-    return object : WsdkPlatformModule {
+internal actual fun buildOgpSdkPlatformModule(appContext: OgpSdkAppContext): OgpSdkPlatformModule {
+    return object : OgpSdkPlatformModule {
         val context = appContext.get()
         override val module = module {
             single<WifiManager> {

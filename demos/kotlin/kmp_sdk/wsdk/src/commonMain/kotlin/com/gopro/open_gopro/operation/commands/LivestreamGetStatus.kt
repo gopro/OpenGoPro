@@ -109,7 +109,7 @@ internal class LivestreamGetStatus : BaseOperation<Flow<LivestreamStatus>>("Get 
 
     override suspend fun execute(communicator: HttpCommunicator): Result<Flow<LivestreamStatus>> =
         communicator.get {
-            url { path("com/gopro/open_gopro/gopro/livestream/setup") }
+            url { path("gopro/livestream/setup") }
         }.map {
             flow {
                 emit(it.body())

@@ -86,7 +86,7 @@ internal class PresetGetInfo : BaseOperation<Flow<PresetInfo>>("Get Preset Info"
 
     override suspend fun execute(communicator: HttpCommunicator): Result<Flow<PresetInfo>> =
         communicator.get {
-            url { path("com/gopro/open_gopro/gopro/camera/presets/get") }
+            url { path("gopro/camera/presets/get") }
         }.map {
             flow {
                 emit(it.body())

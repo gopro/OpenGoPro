@@ -11,7 +11,7 @@ internal class SetDigitalZoom(val zoom: Int) :
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/camera/digital_zoom")
+                path("gopro/camera/digital_zoom")
                 parameters.append("percent", zoom.toString())
             }
         }.map { it.body() }

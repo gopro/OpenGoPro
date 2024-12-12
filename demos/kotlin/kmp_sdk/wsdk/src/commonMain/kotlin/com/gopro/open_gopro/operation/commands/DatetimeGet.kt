@@ -32,7 +32,7 @@ internal class DatetimeGet : BaseOperation<GpDatetime>("Get Datetime") {
         }
 
     override suspend fun execute(communicator: HttpCommunicator): Result<GpDatetime> =
-        communicator.get { url { path("com/gopro/open_gopro/gopro/camera/get_date_time") } }.map { response ->
+        communicator.get { url { path("gopro/camera/get_date_time") } }.map { response ->
             val dateTimeHttp: DateTimeHttpResponse = response.body()
             var year: Int
             var month: Int

@@ -179,6 +179,11 @@ class Setting<T> internal constructor(
     suspend fun registerValueUpdates(): Result<Flow<T>> =
         marshaller.marshal(RegisterForSettingValueUpdates()) { useCommunicator { _, _ -> CommunicationType.BLE } }
 
+    /**
+     * Unregister for setting value updates
+     *
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#unregister-for-setting-value-updates)
+     */
     suspend fun unregisterValueUpdates(): Result<Unit> =
         marshaller.marshal(UnregisterForSettingValueUpdates()) { useCommunicator { _, _ -> CommunicationType.BLE } }
 
@@ -192,6 +197,11 @@ class Setting<T> internal constructor(
     suspend fun registerCapabilityUpdates(): Result<Flow<List<T>>> =
         marshaller.marshal(RegisterForSettingCapabilityUpdates()) { useCommunicator { _, _ -> CommunicationType.BLE } }
 
+    /**
+     * Unregister for setting capability updates
+     *
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#unregister-for-setting-capability-updates)
+     */
     suspend fun unregisterCapabilityUpdates(): Result<Unit> =
         marshaller.marshal(UnregisterForSettingCapabilityUpdates()) { useCommunicator { _, _ -> CommunicationType.BLE } }
 }

@@ -48,7 +48,7 @@ internal class LivestreamConfigure(val request: LivestreamConfigurationRequest) 
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.post {
             contentType(ContentType.Application.Json)
-            url { path("com/gopro/open_gopro/gopro/livestream/setup") }
+            url { path("gopro/livestream/setup") }
             setBody(request)
         }.map { it.body() }
 }

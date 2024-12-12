@@ -24,7 +24,7 @@ internal class GetOpenGoProVersion : BaseOperation<Version>("Get Open GoPro Vers
         }
 
     override suspend fun execute(communicator: HttpCommunicator): Result<Version> =
-        communicator.get { url { path("com/gopro/open_gopro/gopro/version") } }
+        communicator.get { url { path("gopro/version") } }
             .map {
                 (it.body() as OgpVersionHttpResponse).version
                     .split(".")

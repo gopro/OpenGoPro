@@ -1,12 +1,11 @@
 package com.gopro.open_gopro.gopro
 
-import com.gopro.open_gopro.WsdkIsolatedKoinContext
+import com.gopro.open_gopro.OgpSdkIsolatedKoinContext
 import co.touchlab.kermit.Logger
 import com.gopro.open_gopro.domain.data.ICameraRepository
 import com.gopro.open_gopro.operations.CohnState
 import com.gopro.open_gopro.operations.EnumCOHNNetworkState
 import com.gopro.open_gopro.operations.EnumCOHNStatus
-import com.gopro.open_gopro.gopro.IFeatureContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.transform
@@ -28,7 +27,7 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
     private var ipAddress: String? = null
     private var certificate: String? = null
 
-    private val cameraRepo: ICameraRepository = WsdkIsolatedKoinContext.getWsdkKoinApp().get()
+    private val cameraRepo: ICameraRepository = OgpSdkIsolatedKoinContext.getOgpSdkKoinApp().get()
 
     /**
      * Get the continuous COHN State

@@ -13,7 +13,7 @@ internal class MediaGetMetadata(val file: MediaId) :
     override suspend fun execute(communicator: HttpCommunicator): Result<MediaMetadata> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/media/info")
+                path("gopro/media/info")
                 encodedParameters.append("path", file.asPath)
             }
         }

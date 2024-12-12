@@ -157,6 +157,10 @@ tasks.dokkaHtml {
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
         customAssets = listOf(
             file("../docs/assets/logo-icon.svg"),
+            file("../docs/assets/connected.png"),
+            file("../docs/assets/connecting_wifi.png"),
+            file("../docs/assets/get_media.png"),
+            file("../docs/assets/scanned.png")
 //            file("../docs/assets/my-style.css")
         )
     }

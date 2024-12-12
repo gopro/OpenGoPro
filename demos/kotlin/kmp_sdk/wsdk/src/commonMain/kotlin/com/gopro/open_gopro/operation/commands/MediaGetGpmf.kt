@@ -11,7 +11,7 @@ internal class MediaGetGpmf(val file: MediaId) : BaseOperation<Unit>("Get Media 
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/media/gpmf")
+                path("gopro/media/gpmf")
                 encodedParameters.append("path", file.asPath)
             }
         }

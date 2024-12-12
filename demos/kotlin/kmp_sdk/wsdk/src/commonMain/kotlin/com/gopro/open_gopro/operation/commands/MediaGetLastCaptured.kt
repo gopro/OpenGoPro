@@ -43,5 +43,5 @@ internal class MediaGetLastCaptured : BaseOperation<MediaId>("Get Last Captured 
         }
 
     override suspend fun execute(communicator: HttpCommunicator): Result<MediaId> =
-        communicator.get { url { path("com/gopro/open_gopro/gopro/media/last_captured") } }.map { it.body() }
+        communicator.get { url { path("gopro/media/last_captured") } }.map { it.body() }
 }

@@ -34,7 +34,7 @@ internal class DatetimeSet(
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
         communicator.get {
             url {
-                path("com/gopro/open_gopro/gopro/camera/set_date_time")
+                path("gopro/camera/set_date_time")
                 parameters.append(
                     "date",
                     "${datetime.year}_${datetime.month.number}_${datetime.dayOfMonth}"

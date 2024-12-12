@@ -19,7 +19,7 @@ internal class GetHardwareInfo : BaseOperation<HardwareInfo>("Get Hardware Info"
         ).map { parseBleCommunicatorResponse(it) }
 
     override suspend fun execute(communicator: HttpCommunicator): Result<HardwareInfo> =
-        communicator.get { url { path("com/gopro/open_gopro/gopro/camera/info") } }.map { it.body() }
+        communicator.get { url { path("gopro/camera/info") } }.map { it.body() }
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)

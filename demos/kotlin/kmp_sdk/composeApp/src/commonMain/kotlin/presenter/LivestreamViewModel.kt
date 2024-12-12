@@ -1,6 +1,6 @@
 package presenter
 
-import com.gopro.open_gopro.Wsdk
+import com.gopro.open_gopro.OgpSdk
 import androidx.lifecycle.viewModelScope
 import data.IAppPreferences
 import com.gopro.open_gopro.operations.AccessPointState
@@ -25,7 +25,7 @@ sealed class LivestreamUiState(val name: String) {
 
 class LivestreamViewModel(
     appPreferences: IAppPreferences,
-    wsdk: Wsdk
+    wsdk: OgpSdk
 ) : BaseConnectedViewModel(appPreferences, wsdk, "LivestreamViewModel") {
     private var _state = MutableStateFlow<LivestreamUiState>(LivestreamUiState.ApNotConnected)
     val state = _state.asStateFlow()

@@ -23,10 +23,7 @@ private fun toInt8(data: UByteArray): Int = data.last().toInt()
 private fun toString(data: UByteArray): String = data.decodeToString()
 
 /**
- * Container for all per-status-ID wrappers
- *
- * Note! This is a very small subset of the supported statuses. TODO these need to be automatically
- * generated.
+ * Container used to access and operate on statuses.
  *
  * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html)
  *

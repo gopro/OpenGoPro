@@ -1,6 +1,6 @@
 package com.gopro.open_gopro.di
 
-import com.gopro.open_gopro.WsdkAppContext
+import com.gopro.open_gopro.OgpSdkAppContext
 import com.gopro.open_gopro.connector.AppleDnsApi
 import com.gopro.open_gopro.connector.AppleWifiApi
 import com.gopro.open_gopro.data.AppleDatabaseProvider
@@ -12,8 +12,8 @@ import com.gopro.open_gopro.network.AppleHttpClientProvider
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-internal actual fun buildWsdkPlatformModule(appContext: WsdkAppContext): WsdkPlatformModule {
-    return object : WsdkPlatformModule { override val module = module {
+internal actual fun buildOgpSdkPlatformModule(appContext: OgpSdkAppContext): OgpSdkPlatformModule {
+    return object : OgpSdkPlatformModule { override val module = module {
             single { AppleWifiApi(get()) }.bind(IWifiApi::class)
             single { AppleDnsApi(get()) }.bind(IDnsApi::class)
             single { AppleDatabaseProvider() }.bind(IDatabaseProvider::class)

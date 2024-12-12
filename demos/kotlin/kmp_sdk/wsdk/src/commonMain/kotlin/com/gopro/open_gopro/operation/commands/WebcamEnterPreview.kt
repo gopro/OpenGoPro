@@ -8,5 +8,5 @@ import io.ktor.http.path
 internal class WebcamEnterPreview : BaseOperation<Unit>("Enter Webcam Preview") {
 
     override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
-        communicator.get { url { path("com/gopro/open_gopro/gopro/webcam/preview") } }.map { it.body() }
+        communicator.get { url { path("gopro/webcam/preview") } }.map { it.body() }
 }

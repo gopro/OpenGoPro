@@ -6,6 +6,8 @@ import com.gopro.open_gopro.entity.network.IHttpsCredentials
 /**
  * The identifier of a connected GoPro
  *
+ * This is used throughout the SDK to identify / retrieve GoPro's.
+ *
  * @property partialSerial the last four digits of the GoPro's serial number
  */
 data class GoProId(val partialSerial: String) {
