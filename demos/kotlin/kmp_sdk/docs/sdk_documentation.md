@@ -1,5 +1,7 @@
 # Module Open GoPro SDK
 
+<img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/gh-pages/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"/>
+
 Welcome to the API Documentation for the Open GoPro Kotlin Multiplatfrom SDK. A complete overview of the SDK can
 be found on Github (TODO link)
 
@@ -10,7 +12,7 @@ The general procedure is:
     // App context is platform-specific context passed from application
     val sdk = OgpSdk(Dispatchers.IO, appContext)
    ```
-1. Discover and connect to a GoPro Device. A successful connection will store it in the SDKs (runtime) database.
+1. Discover and connect to a GoPro Device. A successful connection will store it in the SDK's (runtime) database.
    ```kotlin
     // Discover and take the first device we find
     val device = sdk.discover(NetworkType.BLE).first()
@@ -25,7 +27,7 @@ The general procedure is:
     // Now retrieve the gopro (assume success)
     val gopro = sdk.getGoPro(goproId).getOrThrow()
    ```
-3. Manipulate the connected GoPro as desired
+3. Manipulate the retrieved GoPro as desired
    ```kotlin
     // Set the shutter
     gopro.commands.setShutter(true)
@@ -35,7 +37,8 @@ See the relevant packages below for more detailed information on specific object
 
 # Package com.gopro.open_gopro
 
-This is the top level entrypoint to use the SDK. It contains components to discover, connect, and retrieve a GoPro.
+This is the top level entrypoint to use the SDK. It contains components to discover, connect, and retrieve a
+[GoPro](com.gopro.open_gopro.gopro.GoPro).
 
 ## SDK Initialization
 

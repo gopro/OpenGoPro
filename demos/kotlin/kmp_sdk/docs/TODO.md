@@ -1,7 +1,6 @@
-# General 
+# General
 
 - Abstract more commands into features
-- Generate setting / status code
 
 # Platform support
 
@@ -12,7 +11,7 @@
 
 - Use real one-to-many instead of certificate serialization hack
 
-# Robustness 
+# Robustness
 
 - Wifi Connections are taking a long time
 - BLE can not communicate after waking up GoPro. Seems to be Hero13 only.
