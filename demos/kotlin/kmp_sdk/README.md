@@ -98,13 +98,13 @@ General usage is (TODO screenshots):
 1. Select an interface to scan for GoPro's (initially only BLE will be available) and select "Scan"
     <br>![initial demo app](docs/assets/initial.png)
 2. Click on a discovered GoPro to connect to it.
-    ![initial demo app](docs/assets/scanned.png)
+    <br>![initial demo app](docs/assets/scanned.png)
 3. Select "Toggle Shutter" to verify communication
-    ![initial demo app](docs/assets/connected.png)
+    <br>![initial demo app](docs/assets/connected.png)
 4. Select "Connect Wifi" if desired
-    ![initial demo app](docs/assets/connecting_wifi.png)
+    <br>![initial demo app](docs/assets/connecting_wifi.png)
 5. Select a submenu to enter. Note that some require HTTP so you will have needed to Connect Wifi.
-    ![initial demo app](docs/assets/get_media.png)
+    <br>![initial demo app](docs/assets/get_media.png)
 
 ## Usage
 
