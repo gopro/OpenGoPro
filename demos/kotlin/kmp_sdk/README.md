@@ -2,7 +2,8 @@
 
 <img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/gh-pages/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"/>
 <br>
-<img alt="Static Badge" src="https://img.shields.io/badge/android-android?label=platform"><img alt="Static Badge" src="https://img.shields.io/badge/TODO-TODO">
+<img alt="Static Badge" src="https://img.shields.io/badge/android-android?label=platform">
+<img alt="Static Badge" src="https://img.shields.io/badge/TODO-TODO">
 
 ## Overview
 
@@ -95,7 +96,7 @@ To see a simple demo app that demonstrates most of the SDK, build and load the `
 General usage is (TODO screenshots):
 
 1. Select an interface to scan for GoPro's (initially only BLE will be available) and select "Scan"
-    ![initial demo app](docs/assets/initial.png)
+    <br>![initial demo app](docs/assets/initial.png)
 2. Click on a discovered GoPro to connect to it.
     ![initial demo app](docs/assets/scanned.png)
 3. Select "Toggle Shutter" to verify communication
