@@ -2,8 +2,7 @@
 
 <img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/gh-pages/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"/>
 <br>
-<img alt="Static Badge" src="https://img.shields.io/badge/android-android?label=platform">
-<img alt="Static Badge" src="https://img.shields.io/badge/TODO-TODO">
+<img alt="Static Badge" src="https://img.shields.io/badge/android-android?label=platform"><img alt="Static Badge" src="https://img.shields.io/badge/TODO-TODO">
 
 ## Overview
 
