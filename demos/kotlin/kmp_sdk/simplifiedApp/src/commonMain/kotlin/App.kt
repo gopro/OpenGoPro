@@ -1,6 +1,6 @@
-import com.gopro.open_gopro.Wsdk
-import com.gopro.open_gopro.WsdkAppContext
-import com.gopro.open_gopro.entity.connector.NetworkType
+import com.gopro.open_gopro.NetworkType
+import com.gopro.open_gopro.OgpSdk
+import com.gopro.open_gopro.OgpSdkAppContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 
 private var isStarted = false
 
-fun app(appContext: WsdkAppContext) {
+fun app(appContext: OgpSdkAppContext) {
     if (isStarted) return
 
     isStarted = true
@@ -17,17 +17,17 @@ fun app(appContext: WsdkAppContext) {
     val coroutineScope = CoroutineScope(dispatcher)
 
     // Initialize WSDK
-    val wsdk = Wsdk(dispatcher, appContext)
+    val sdk = OgpSdk(dispatcher, appContext)
 
     coroutineScope.launch {
         // Discover and take the first device we find
-        val target = wsdk.discover(NetworkType.BLE).first()
+        val device = sdk.discover(NetworkType.BLE).first()
 
-        // Connect
-        val goproId = wsdk.connect(target).getOrThrow()
+        // Connect (assume success)
+        val goproId = sdk.connect(device).getOrThrow()
 
-        // Now retrieve the gopro
-        val gopro = wsdk.getGoPro(goproId)
+        // Now retrieve the gopro (assume success)
+        val gopro = sdk.getGoPro(goproId).getOrThrow()
 
         // Set the shutter
         gopro.commands.setShutter(true)

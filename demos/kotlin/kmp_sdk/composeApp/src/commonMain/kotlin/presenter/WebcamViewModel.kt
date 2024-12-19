@@ -21,8 +21,8 @@ sealed class WebcamUiState(val message: String) {
 }
 
 class WebcamViewModel(
-    appPreferences: IAppPreferences, wsdk: OgpSdk
-) : BaseConnectedViewModel(appPreferences, wsdk, "WebcamViewModel") {
+    appPreferences: IAppPreferences, sdk: OgpSdk
+) : BaseConnectedViewModel(appPreferences, sdk, "WebcamViewModel") {
     private var _state = MutableStateFlow<WebcamUiState>(WebcamUiState.Error("not yet initialized"))
     val state = _state.asStateFlow()
 

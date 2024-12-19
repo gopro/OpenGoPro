@@ -1,5 +1,7 @@
 package com.gopro.open_gopro.gopro
 
+import com.gopro.open_gopro.ConnectionDescriptor
+import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.HttpCommunicator
 import com.gopro.open_gopro.domain.communicator.ICommunicator
@@ -8,13 +10,12 @@ import com.gopro.open_gopro.domain.network.IBleApi
 import com.gopro.open_gopro.domain.network.IHttpApi
 import com.gopro.open_gopro.domain.network.IHttpClientProvider
 import com.gopro.open_gopro.domain.network.IWifiApi
-import com.gopro.open_gopro.ConnectionDescriptor
-import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.entity.network.ble.BleDevice
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.launch
+import com.gopro.open_gopro.exceptions.DeviceNotFound
 import com.gopro.open_gopro.util.GpCommonBase
 import com.gopro.open_gopro.util.IGpCommonBase
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 
 internal class GoProFactory(
     private val bleApi: IBleApi,
@@ -73,14 +74,18 @@ internal class GoProFactory(
         scope?.launch { monitorWifiConnections() }
     }
 
-    override suspend fun getGoPro(id: GoProId): GoPro {
-        val gopro = facadesById.getOrPut(id) { GoPro(id) }
-        communicatorsByConnection.filterKeys { it.id == id }.values.forEach { communicator ->
-            gopro.bindCommunicator(communicator)
+    override suspend fun getGoPro(id: GoProId): Result<GoPro> =
+        communicatorsByConnection.filterKeys { it.id == id }.run {
+            if (isEmpty()) return Result.failure(DeviceNotFound("No connections found with ID $id"))
+            // Get or store the new gopro facade
+            Result.success(facadesById.getOrPut(id) { GoPro(id) }.also { gopro ->
+                // Bind the filters communicators to the facade
+                values.forEach { communicator ->
+                    gopro.bindCommunicator(communicator)
+                }
+                logger.i("$id communication is ready.")
+            })
         }
-        logger.i("$id communication is ready.")
-        return gopro
-    }
 
     override suspend fun storeConnection(connection: ConnectionDescriptor) {
         val communicator = communicatorsByConnection.getOrPut(connection) {
@@ -94,7 +99,6 @@ internal class GoProFactory(
                 )
             }
         }
-        val gopro = getGoPro(connection.id)
-        gopro.bindCommunicator(communicator)
+        getGoPro(connection.id).getOrThrow().bindCommunicator(communicator)
     }
 }

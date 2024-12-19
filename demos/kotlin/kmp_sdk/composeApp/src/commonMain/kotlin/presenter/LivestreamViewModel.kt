@@ -25,8 +25,8 @@ sealed class LivestreamUiState(val name: String) {
 
 class LivestreamViewModel(
     appPreferences: IAppPreferences,
-    wsdk: OgpSdk
-) : BaseConnectedViewModel(appPreferences, wsdk, "LivestreamViewModel") {
+    sdk: OgpSdk
+) : BaseConnectedViewModel(appPreferences, sdk, "LivestreamViewModel") {
     private var _state = MutableStateFlow<LivestreamUiState>(LivestreamUiState.ApNotConnected)
     val state = _state.asStateFlow()
 

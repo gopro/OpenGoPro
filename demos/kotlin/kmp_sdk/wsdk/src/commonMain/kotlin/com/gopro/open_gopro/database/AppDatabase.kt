@@ -30,7 +30,7 @@ internal expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatab
     override fun initialize(): AppDatabase
 }
 
-internal const val dbFileName = "ogp_wsdk.db"
+internal const val dbFileName = "ogp_sdk.db"
 
 internal interface IDatabaseProvider {
     fun provideDatabase(): RoomDatabase.Builder<AppDatabase>

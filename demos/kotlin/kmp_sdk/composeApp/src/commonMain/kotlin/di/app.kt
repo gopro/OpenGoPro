@@ -9,5 +9,5 @@ fun buildAppModule(appContext: OgpSdkAppContext): Module =
         includes(dataModule)
         includes(buildPlatformModules(appContext))
         includes(screenModules)
-        includes(buildWsdkModule(appContext))
+        includes(buildOgpSdkModule(appContext))
     }

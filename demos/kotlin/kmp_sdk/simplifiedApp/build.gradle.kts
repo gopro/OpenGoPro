@@ -16,7 +16,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.openGopro)
+            // This is meant to be a real-world test so use the built library
+//            implementation(libs.openGopro)
+            implementation(projects.wsdk)
+
 
             // Logging
             implementation(libs.kermit)

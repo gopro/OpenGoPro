@@ -69,7 +69,7 @@ license = '0.9.8'
 pbandk = "0.16.0"
 # https://github.com/vanniktech/gradle-maven-publish-plugin/releases/tag/0.30.0
 publish =  "0.28.0"
-# Our WSDK version
+# Our SDK version
 ogpSdk = "0.1.0"
 
 [libraries]

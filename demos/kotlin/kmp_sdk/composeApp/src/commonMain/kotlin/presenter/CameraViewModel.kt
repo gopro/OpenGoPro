@@ -14,8 +14,8 @@ data class Busy(val text: String)
 
 class CameraViewModel(
     appPreferences: IAppPreferences,
-    wsdk: OgpSdk,
-) : BaseConnectedViewModel(appPreferences, wsdk, "CameraChooserViewModel") {
+    sdk: OgpSdk,
+) : BaseConnectedViewModel(appPreferences, sdk, "CameraChooserViewModel") {
     private var _cohnState = MutableStateFlow(CohnState.Unprovisioned)
     val cohnState = _cohnState.asStateFlow()
 

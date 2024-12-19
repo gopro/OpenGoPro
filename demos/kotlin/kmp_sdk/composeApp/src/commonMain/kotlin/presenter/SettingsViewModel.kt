@@ -14,8 +14,8 @@ import kotlinx.coroutines.runBlocking
 
 class SettingsViewModel(
     appPreferences: IAppPreferences,
-    wsdk: OgpSdk,
-) : BaseConnectedViewModel(appPreferences, wsdk, "SettingsViewModel") {
+    sdk: OgpSdk,
+) : BaseConnectedViewModel(appPreferences, sdk, "SettingsViewModel") {
     private var _currentResolution = MutableStateFlow(VideoResolution.NUM_1080)
     val currentResolution = _currentResolution.asStateFlow()
 

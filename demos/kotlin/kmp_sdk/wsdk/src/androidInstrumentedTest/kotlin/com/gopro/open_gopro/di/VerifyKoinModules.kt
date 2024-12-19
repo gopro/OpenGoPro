@@ -4,7 +4,7 @@ package com.gopro.open_gopro.di
 //    @OptIn(KoinExperimentalAPI::class)
 //    @Test
 //    fun `verify koin modules`() {
-//        initTestWsdk().verify(
+//        initTestSdk().verify(
 //            extraTypes = listOf(
 //                GoProFactory::class,
 //                CameraConnector::class,

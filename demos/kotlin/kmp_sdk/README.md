@@ -106,29 +106,38 @@ General usage is (TODO screenshots):
 5. Select a submenu to enter. Note that some require HTTP so you will have needed to Connect Wifi.
     <br>![initial demo app](docs/assets/get_media.png)
 
-## Usage
+## SDK Usage
 
 > Note! This section contains only an overview.
 > Complete API documentation for the OGP KMP SDK can be found on Open GoPro TODO link.
 
-```kotlin
-// Initialize WSDK
-val wsdk = Wsdk(dispatcher, appContext)
+The general procedure is:
 
-coroutineScope.launch {
+1. Initialize the SDK
+   ```kotlin
+    // App context is platform-specific context passed from application
+    val wsdk = Wsdk(Dispatchers.IO, appContext)
+   ```
+1. Discover and connect to a GoPro Device. A successful connection will store it in the SDKs (runtime) database.
+   ```kotlin
     // Discover and take the first device we find
-    val target = wsdk.discover(NetworkType.BLE).first()
+    val device = sdk.discover(NetworkType.BLE).first()
 
-    // Connect
-    val goproId = wsdk.connect(target).getOrThrow()
+    // Connect (assume success)
+    val goproId = sdk.connect(device).getOrThrow()
+    ```
 
-    // Now retrieve the gopro
-    val gopro = wsdk.getGoPro(goproId)
-
+2. Now that the device is connected and stored in the SDK, retrieve the GoPro object from the SDK. This can be done any
+   number of times after connection.
+   ```kotlin
+    // Now retrieve the gopro (assume success)
+    val gopro = sdk.getGoPro(goproId).getOrThrow()
+   ```
+3. Manipulate the connected GoPro as desired
+   ```kotlin
     // Set the shutter
     gopro.commands.setShutter(true)
-}
-```
+   ```
 
 ## Development
 

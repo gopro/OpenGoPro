@@ -20,8 +20,8 @@ sealed class ApUiState(val name: String) {
 
 class AccessPointViewModel(
     appPreferences: IAppPreferences,
-    wsdk: OgpSdk,
-) : BaseConnectedViewModel(appPreferences, wsdk, "AccessPointViewModel") {
+    sdk: OgpSdk,
+) : BaseConnectedViewModel(appPreferences, sdk, "AccessPointViewModel") {
     private var _state = MutableStateFlow<ApUiState>(ApUiState.Idle)
     val state = _state.asStateFlow()
 

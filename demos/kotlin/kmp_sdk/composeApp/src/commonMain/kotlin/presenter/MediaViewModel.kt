@@ -23,8 +23,8 @@ sealed class MediaUiState(val message: String) {
 
 class MediaViewModel(
     appPreferences: IAppPreferences,
-    wsdk: OgpSdk,
-) : BaseConnectedViewModel(appPreferences, wsdk, "MediaViewModel") {
+    sdk: OgpSdk,
+) : BaseConnectedViewModel(appPreferences, sdk, "MediaViewModel") {
     private val _state = MutableStateFlow<MediaUiState>(MediaUiState.Error("not yet initialized"))
     val state = _state.asStateFlow()
 

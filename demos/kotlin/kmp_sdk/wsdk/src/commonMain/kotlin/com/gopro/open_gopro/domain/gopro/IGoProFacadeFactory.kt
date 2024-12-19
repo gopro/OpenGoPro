@@ -6,6 +6,6 @@ import com.gopro.open_gopro.gopro.GoPro
 
 
 internal interface IGoProFactory {
-    suspend fun getGoPro(id: GoProId): GoPro
+    suspend fun getGoPro(id: GoProId): Result<GoPro>
     suspend fun storeConnection(connection: ConnectionDescriptor)
 }

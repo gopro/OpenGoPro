@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 open class BaseConnectedViewModel(
     private val appPreferences: IAppPreferences,
-    private val wsdk: OgpSdk,
+    private val sdk: OgpSdk,
     tag: String
 ) : ViewModel() {
     protected val logger = Logger.withTag(tag)
@@ -28,7 +28,7 @@ open class BaseConnectedViewModel(
         logger.d("Starting...")
         viewModelScope.launch {
             appPreferences.getConnectedDevice()?.let {
-                gopro = wsdk.getGoPro(it)
+                gopro = sdk.getGoPro(it).getOrThrow()
             } ?: throw Exception("No connected device found.")
             viewModelScope.launch {
                 gopro.disconnects.collect { disconnect ->

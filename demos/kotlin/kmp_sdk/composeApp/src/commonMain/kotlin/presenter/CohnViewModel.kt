@@ -19,8 +19,8 @@ sealed class CohnUiState(val name: String) {
 
 class CohnViewModel(
     appPreferences: IAppPreferences,
-    wsdk: OgpSdk
-) : BaseConnectedViewModel(appPreferences, wsdk, "CohnViewModel") {
+    sdk: OgpSdk
+) : BaseConnectedViewModel(appPreferences, sdk, "CohnViewModel") {
     private var _state = MutableStateFlow<CohnUiState>(CohnUiState.Idle)
     val state = _state.asStateFlow()
 

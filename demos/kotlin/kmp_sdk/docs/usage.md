@@ -4,7 +4,7 @@ This is currently dependent on Koin. Is that bad? If so how do we remove this de
 Or is it...I guess you can create any of the below 3 classes by themselves.
 We might want documentation considering with / without Koin
 
-TODO try to get a miniminal demo using the WSDK library and use this code in the below samples.
+TODO try to get a miniminal demo using the SDK library and use this code in the below samples.
 
 TODO we should review the naming and grouping below. Maybe "cameraConnector" should be something more generic
 
@@ -17,8 +17,8 @@ TODO abstract away communicator? Pass in connection to GoProFactory and handle c
 1. Init Koin
     ```kotlin
         module {
-            single<CameraConnector> { Wsdk.getCameraConnector(config) }
-            single<GoProFactory> { Wsdk.getGoPro(config) }
+            single<CameraConnector> { OgpSdk.getCameraConnector(config) }
+            single<GoProFactory> { OgpSdk.getGoPro(config) }
         }
     ```
 
