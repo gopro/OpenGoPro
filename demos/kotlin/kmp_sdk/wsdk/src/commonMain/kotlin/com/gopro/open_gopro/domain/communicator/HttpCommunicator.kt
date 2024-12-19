@@ -1,13 +1,13 @@
 package com.gopro.open_gopro.domain.communicator
 
 import co.touchlab.kermit.Logger
-import com.gopro.open_gopro.domain.network.IHttpApi
-import com.gopro.open_gopro.domain.network.IHttpClientProvider
 import com.gopro.open_gopro.CommunicationType
 import com.gopro.open_gopro.ConnectionDescriptor
-import com.gopro.open_gopro.exceptions.HttpError
-import com.gopro.open_gopro.exceptions.NetworkError
-import com.gopro.open_gopro.exceptions.SerializationError
+import com.gopro.open_gopro.HttpError
+import com.gopro.open_gopro.NetworkError
+import com.gopro.open_gopro.domain.network.IHttpApi
+import com.gopro.open_gopro.domain.network.IHttpClientProvider
+import com.gopro.open_gopro.operations.SerializationError
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.plugins.defaultRequest

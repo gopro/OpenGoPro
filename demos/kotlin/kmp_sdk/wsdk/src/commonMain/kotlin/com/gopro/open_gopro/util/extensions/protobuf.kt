@@ -1,6 +1,6 @@
 package com.gopro.open_gopro.util.extensions
 
-import com.gopro.open_gopro.exceptions.CameraInternalError
+import com.gopro.open_gopro.gopro.CameraInternalError
 import com.gopro.open_gopro.operations.EnumResultGeneric
 import com.gopro.open_gopro.operations.ResponseGeneric
 import pbandk.decodeFromByteArray

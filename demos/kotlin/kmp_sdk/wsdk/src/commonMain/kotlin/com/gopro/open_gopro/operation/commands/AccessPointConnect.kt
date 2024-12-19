@@ -5,8 +5,8 @@ import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.bleCommunicator.ResponseId
 import com.gopro.open_gopro.entity.communicator.ActionId
 import com.gopro.open_gopro.entity.communicator.FeatureId
-import com.gopro.open_gopro.exceptions.CameraInternalError
 import com.gopro.open_gopro.entity.network.ble.GpUuid
+import com.gopro.open_gopro.gopro.CameraInternalError
 import com.gopro.open_gopro.operations.AccessPointState
 import com.gopro.open_gopro.operations.isFinished
 import com.gopro.open_gopro.operations.EnumProvisioning

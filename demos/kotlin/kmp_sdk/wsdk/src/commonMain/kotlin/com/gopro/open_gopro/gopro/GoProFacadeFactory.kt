@@ -1,6 +1,7 @@
 package com.gopro.open_gopro.gopro
 
 import com.gopro.open_gopro.ConnectionDescriptor
+import com.gopro.open_gopro.DeviceNotFound
 import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.HttpCommunicator
@@ -11,7 +12,6 @@ import com.gopro.open_gopro.domain.network.IHttpApi
 import com.gopro.open_gopro.domain.network.IHttpClientProvider
 import com.gopro.open_gopro.domain.network.IWifiApi
 import com.gopro.open_gopro.entity.network.ble.BleDevice
-import com.gopro.open_gopro.exceptions.DeviceNotFound
 import com.gopro.open_gopro.util.GpCommonBase
 import com.gopro.open_gopro.util.IGpCommonBase
 import kotlinx.coroutines.CoroutineDispatcher

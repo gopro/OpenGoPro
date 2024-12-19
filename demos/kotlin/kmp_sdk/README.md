@@ -7,6 +7,23 @@
 
 ## Overview
 
+- [Open GoPro Kotlin Multiplatform SDK](#open-gopro-kotlin-multiplatform-sdk)
+  - [Overview](#overview)
+  - [Features](#features)
+  - [Setup](#setup)
+    - [Gradle](#gradle)
+      - [Version Catalog](#version-catalog)
+      - [Gradle Build](#gradle-build)
+    - [Permissions](#permissions)
+      - [Android](#android)
+  - [Quick Start (Demo App)](#quick-start-demo-app)
+  - [SDK Usage](#sdk-usage)
+  - [Development](#development)
+    - [Documentation](#documentation)
+    - [Unit Testing](#unit-testing)
+    - [Linting](#linting)
+
+
 The Open GoPro (OGP) Kotlin Multiplatform (KMP) SDK provides a simple Coroutines-powered API to
 connect to GoPro cameras and exercise the Open GoPro [Bluetooth Low Energy](https://gopro.github.io/OpenGoPro/ble/)
 and Wi-Fi / USB [HTTP](https://gopro.github.io/OpenGoPro/http) APIs.
@@ -116,7 +133,7 @@ The general procedure is:
 1. Initialize the SDK
    ```kotlin
     // App context is platform-specific context passed from application
-    val wsdk = Wsdk(Dispatchers.IO, appContext)
+    val sdk = OgpSdk(Dispatchers.IO, appContext)
    ```
 1. Discover and connect to a GoPro Device. A successful connection will store it in the SDKs (runtime) database.
    ```kotlin
@@ -141,4 +158,8 @@ The general procedure is:
 
 ## Development
 
-TODO
+### Documentation
+
+### Unit Testing
+
+### Linting

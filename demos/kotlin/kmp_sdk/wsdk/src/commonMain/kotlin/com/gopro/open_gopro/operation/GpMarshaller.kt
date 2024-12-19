@@ -1,17 +1,16 @@
 package com.gopro.open_gopro.operations
 
+import com.gopro.open_gopro.CommunicationType
 import com.gopro.open_gopro.domain.api.IOperation
 import com.gopro.open_gopro.domain.api.IOperationMarshaller
 import com.gopro.open_gopro.domain.api.StrategyBuilder
 import com.gopro.open_gopro.domain.api.operationStrategy
 import com.gopro.open_gopro.domain.communicator.ICommunicator
 import com.gopro.open_gopro.gopro.IGpDescriptor
-import com.gopro.open_gopro.CommunicationType
-import com.gopro.open_gopro.exceptions.OperationUnsupportedForCommunicator
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
 import com.gopro.open_gopro.util.GpCommonBase
 import com.gopro.open_gopro.util.IGpCommonBase
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 
 internal class GpMarshaller(private val gopro: IGpDescriptor) : IOperationMarshaller,
     IGpCommonBase by GpCommonBase("GpMarshaller") {

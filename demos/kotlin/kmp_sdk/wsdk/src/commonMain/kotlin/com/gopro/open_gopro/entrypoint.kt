@@ -121,6 +121,8 @@ class OgpSdk(dispatcher: CoroutineDispatcher, appContext: OgpSdkAppContext) {
      * The GoPro referenced by [id] must have first been connected with [connect]
      *
      * @param id
+     *
+     * @return [GoPro] if a connection is found matching the [id]
      */
     suspend fun getGoPro(id: GoProId) = goProFactory.getGoPro(id)
 }

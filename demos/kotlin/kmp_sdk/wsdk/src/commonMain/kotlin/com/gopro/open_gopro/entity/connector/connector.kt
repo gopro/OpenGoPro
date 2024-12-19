@@ -4,6 +4,22 @@ import com.gopro.open_gopro.entity.network.ble.BleDevice
 import com.gopro.open_gopro.entity.network.IHttpsCredentials
 
 /**
+ * Represents server (50x) and client (40x) errors.
+ */
+class HttpError(code: Int, errorMessage: String) :
+    Exception("HTTP failed with status $code: $errorMessage")
+
+/**
+ * Represent IOExceptions and connectivity issues.
+ */
+class NetworkError(message: String) : Exception("Http Network Error: $message")
+
+class BleError(errorMessage: String) : Exception(errorMessage)
+
+class DeviceNotFound(deviceId: String) :
+    Exception("$deviceId not found")
+
+/**
  * The identifier of a connected GoPro
  *
  * This is used throughout the SDK to identify / retrieve GoPro's.

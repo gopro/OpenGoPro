@@ -1,6 +1,7 @@
 package com.gopro.open_gopro.domain.communicator
 
 import com.benasher44.uuid.Uuid
+import com.gopro.open_gopro.BleError
 import com.gopro.open_gopro.CommunicationType
 import com.gopro.open_gopro.ConnectionDescriptor
 import com.gopro.open_gopro.domain.communicator.bleCommunicator.AccumulatedGpBleResponse
@@ -15,8 +16,7 @@ import com.gopro.open_gopro.entity.communicator.GpStatus
 import com.gopro.open_gopro.entity.communicator.QueryId
 import com.gopro.open_gopro.entity.network.ble.BleNotification
 import com.gopro.open_gopro.entity.network.ble.GpUuid
-import com.gopro.open_gopro.exceptions.ApiError
-import com.gopro.open_gopro.exceptions.BleError
+import com.gopro.open_gopro.operations.ApiError
 import com.gopro.open_gopro.operations.SettingId
 import com.gopro.open_gopro.operations.StatusId
 import com.gopro.open_gopro.util.GpCommonBase

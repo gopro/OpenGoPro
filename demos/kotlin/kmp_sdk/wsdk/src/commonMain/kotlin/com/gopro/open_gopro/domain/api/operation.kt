@@ -6,7 +6,7 @@ import com.gopro.open_gopro.domain.communicator.HttpCommunicator
 import com.gopro.open_gopro.domain.communicator.ICommunicator
 import com.gopro.open_gopro.gopro.IGpDescriptor
 import com.gopro.open_gopro.CommunicationType
-import com.gopro.open_gopro.exceptions.OperationUnsupportedForCommunicator
+import com.gopro.open_gopro.operations.OperationUnsupportedForCommunicator
 import com.gopro.open_gopro.util.extensions.bleIfAvailable
 import com.gopro.open_gopro.util.extensions.prettyPrintResult
 
