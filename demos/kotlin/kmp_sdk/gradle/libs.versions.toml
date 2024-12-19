@@ -70,7 +70,7 @@ pbandk = "0.16.0"
 # https://github.com/vanniktech/gradle-maven-publish-plugin/releases/tag/0.30.0
 publish =  "0.28.0"
 # Our WSDK version
-wsdk = "0.1.0"
+ogpSdk = "0.1.0"
 
 [libraries]
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
@@ -153,7 +153,7 @@ libvlc-all = { module = "org.videolan.android:libvlc-all", version.ref = "vlc" }
 # Protobuf
 pbandk-runtime = { module = "pro.streem.pbandk:pbandk-runtime", version.ref = "pbandk" }
 # Local OGP libarary for simplified app testing
-openGopro = { module = "io.github.tcamise-gpsw:open-gopro", version.ref = "wsdk"}
+openGopro = { module = "io.github.tcamise-gpsw:open-gopro", version.ref = "ogpSdk"}
 # Documentation
 dokka-base = { module = "org.jetbrains.dokka:dokka-base", version.ref = "dokka" }
 
