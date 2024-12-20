@@ -10,6 +10,7 @@ androidx-constraintlayout = "2.1.4"
 androidx-lifecycle = "2.8.0"
 androidx-material = "1.12.0"
 compose-plugin = "1.6.11"
+uiToolingPreview = "1.7.0"
 junit = "4.13.2"
 # https://central.sonatype.com/artifact/io.insert-koin/koin-test-junit4/versions
 koinTestJunit4 = "4.0.0"
@@ -104,6 +105,7 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinCoroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
 # UUID Base type
+ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }
 uuid = { module = "com.benasher44:uuid", version.ref = "uuid" }
 ##  Http Stack
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }

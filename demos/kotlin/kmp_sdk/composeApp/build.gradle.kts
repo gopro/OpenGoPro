@@ -75,7 +75,6 @@ kotlin {
 //            implementation(libs.kotlinx.coroutines.swing)
 //        }
         androidMain.dependencies {
-            implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             // DI
             implementation(libs.koin.android)
@@ -128,6 +127,8 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
+        debugImplementation(compose.preview)
+        debugImplementation(libs.ui.tooling.preview)
     }
 }
 
