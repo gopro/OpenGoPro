@@ -22,18 +22,12 @@ for more information.
 
 ## Installation
 
-This module requires Python >= 3.9 and < 3.11.
+This module requires Python >= 3.10 and < 3.13.
 
 It should be installed locally, either with pip via:
 
 ```
 pip install .
-```
-
-or [poetry](https://python-poetry.org/) via:
-
-```
-poetry install --only main
 ```
 
 ## Quick Start
@@ -125,9 +119,6 @@ where an example config file could look like this:
 ```
 If port is not set, an available port will be discovered automatically starting at 8554.
 If resolution or fov are not set, they will be set to defaults by the GoPro.
-
-
-Cameras
 
 ## Module Usage
 
