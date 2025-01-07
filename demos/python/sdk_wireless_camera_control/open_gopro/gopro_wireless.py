@@ -13,7 +13,6 @@ from collections import defaultdict
 from copy import deepcopy
 from typing import Any, Callable, Final, Pattern
 
-import open_gopro.exceptions as GpException
 from open_gopro import proto
 from open_gopro.api import (
     BleCommands,
@@ -33,6 +32,14 @@ from open_gopro.communicator_interface import (
     MessageRules,
 )
 from open_gopro.constants import ActionId, GoProUUIDs, StatusId
+from open_gopro.exceptions import (
+    ConnectFailed,
+    ConnectionTerminated,
+    GoProNotOpened,
+    InterfaceConfigFailure,
+    InvalidOpenGoProVersion,
+    ResponseTimeout,
+)
 from open_gopro.gopro_base import (
     GoProBase,
     GoProMessageInterface,
@@ -91,6 +98,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     >>> print("Yay! I'm connected via BLE, Wifi, opened, and ready to send / get data now!")
     >>> # Send some messages now
 
+    Attributes:
+        WRITE_TIMEOUT (Final[int]): BLE Write Timeout. Not configurable.
+
     Args:
         target (Pattern | None): A regex to search for the target GoPro's name. For example, "GoPro 0456").
             Defaults to None (i.e. connect to first discovered GoPro)
@@ -110,7 +120,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             the interface can also be specified manually with the 'wifi_interface' argument.
     """
 
-    WRITE_TIMEOUT: Final = 5
+    WRITE_TIMEOUT: Final[int] = 5
 
     class _LockOwner(enum.Enum):
         """Current owner of the communication lock"""
@@ -144,7 +154,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 notification_cb=self._notification_handler,
                 target=target,
             )
-        except GpException.InterfaceConfigFailure as e:
+        except InterfaceConfigFailure as e:
             logger.error(
                 "Could not find a suitable Wifi Interface. If there is an available Wifi interface, try passing it manually with the 'wifi_interface' argument."
             )
@@ -192,7 +202,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             str: last 4 digits if available, else None
         """
         if self._ble.identifier is None:
-            raise GpException.GoProNotOpened("Client does not yet have an identifier.")
+            raise GoProNotOpened("Client does not yet have an identifier.")
         return self._ble.identifier
 
     @property
@@ -301,7 +311,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             # Find and configure API version
             version = (await self.ble_command.get_open_gopro_api_version()).data
             if version != self.version:
-                raise GpException.InvalidOpenGoProVersion(version)
+                raise InvalidOpenGoProVersion(version)
             logger.info(f"Using Open GoPro API version {version}")
 
             # Establish Wifi connection if desired
@@ -705,7 +715,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             ConnectionTerminated: We entered this callback in an unexpected state.
         """
         if self._ble_disconnect_event.is_set():
-            raise GpException.ConnectionTerminated("BLE connection terminated unexpectedly.")
+            raise ConnectionTerminated("BLE connection terminated unexpectedly.")
         self._ble_disconnect_event.set()
 
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
@@ -727,7 +737,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             response = await asyncio.wait_for(self._sync_resp_ready_q.get(), WirelessGoPro.WRITE_TIMEOUT)
         except queue.Empty as e:
             logger.error(f"Response timeout of {WirelessGoPro.WRITE_TIMEOUT} seconds!")
-            raise GpException.ResponseTimeout(WirelessGoPro.WRITE_TIMEOUT) from e
+            raise ResponseTimeout(WirelessGoPro.WRITE_TIMEOUT) from e
 
         # Check status
         if not response.ok:
@@ -793,12 +803,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 assert (await self.ble_command.enable_wifi_ap(enable=True)).ok
                 self._wifi.open(ssid, password, timeout, 1)
                 break
-            except GpException.ConnectFailed:
+            except ConnectFailed:
                 logger.warning(f"Wifi connection failed. Retrying #{retry}")
                 # In case camera Wifi is in strange disable, reset it
                 assert (await self.ble_command.enable_wifi_ap(enable=False)).ok
         else:
-            raise GpException.ConnectFailed("Wifi Connection failed", timeout, retries)
+            raise ConnectFailed("Wifi Connection failed", timeout, retries)
 
     async def _close_wifi(self) -> None:
         """Terminate the Wifi connection."""

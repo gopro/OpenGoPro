@@ -87,6 +87,7 @@ nitpick_ignore = [
     ("py:class", "T_co"),
     ("py:class", "ExceptionHandler"),
     ("py:class", "abc.ABC"),
+    ("py:class", "InitVar"),
     # TODO need to fix these
     ("py:class", "Path"),
     ("py:class", "JsonDict"),

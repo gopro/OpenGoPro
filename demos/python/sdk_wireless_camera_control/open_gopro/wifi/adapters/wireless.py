@@ -99,8 +99,7 @@ class WifiCli(WifiController):
         """Try to find and instantiate a Wifi driver that can be used.
 
         Raises:
-            RuntimeError: We weren't able to find a suitable driver
-            RuntimeError: We weren't able to auto-detect an interface after detecting driver
+            RuntimeError: We weren't able to find a suitable driver or auto-detect an interface after detecting driver
 
         Returns:
             WifiController: [description]
