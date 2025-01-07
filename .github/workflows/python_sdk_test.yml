@@ -52,6 +52,7 @@ jobs:
                   pip install nox==2024.10.9
                   pip install nox-poetry==1.0.3
                   pip install poetry==2.0.0
+                  pip install poetry-plugin-export==1.8.0
 
             - name: Unit Testing for all cases
               working-directory: ./demos/python/sdk_wireless_camera_control/
