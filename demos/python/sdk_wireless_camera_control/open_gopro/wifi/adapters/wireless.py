@@ -99,8 +99,7 @@ class WifiCli(WifiController):
         """Try to find and instantiate a Wifi driver that can be used.
 
         Raises:
-            RuntimeError: We weren't able to find a suitable driver
-            RuntimeError: We weren't able to auto-detect an interface after detecting driver
+            RuntimeError: We weren't able to find a suitable driver or auto-detect an interface after detecting driver
 
         Returns:
             WifiController: [description]
@@ -167,8 +166,6 @@ class WifiCli(WifiController):
     def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:  # type: ignore
         """Connect to a network.
 
-        # noqa: DAR202
-
         Args:
             ssid (str): SSID of network to connect to
             password (str): password of network to connect to
@@ -182,8 +179,6 @@ class WifiCli(WifiController):
     def disconnect(self) -> bool:  # type: ignore
         """Disconnect from a network.
 
-        # noqa: DAR202
-
         Returns:
             bool: True if successful, False otherwise
         """
@@ -191,8 +186,6 @@ class WifiCli(WifiController):
     @pass_through_to_driver
     def current(self) -> tuple[Optional[str], SsidState]:  # type: ignore
         """Return the SSID and state of the current network.
-
-        # noqa: DAR202
 
         Returns:
             tuple[Optional[str], SsidState]: Tuple of SSID str and state. If SSID is None,
@@ -203,8 +196,6 @@ class WifiCli(WifiController):
     def available_interfaces(self) -> list[str]:  # type: ignore
         """Return a list of the available Wifi interfaces
 
-        # noqa: DAR202
-
         Returns:
             list[str]: list of available interfaces
         """
@@ -212,8 +203,6 @@ class WifiCli(WifiController):
     @pass_through_to_driver
     def power(self, power: bool) -> bool:  # type: ignore
         """Enable / disable the wireless driver.
-
-        # noqa: DAR202
 
         Args:
             power (bool): Enable if True. Disable if False.

@@ -44,6 +44,10 @@ logger = logging.getLogger(__name__)
 class MessageRules:
     """Message Rules Manager
 
+    Attributes:
+        always_false (Analyzer): helper analyzer for a property that is always false
+        always_true (Analyzer): helper analyzer for a property that is always true
+
     Args:
         fastpass_analyzer (Analyzer): Analyzer to decide if the message is fastpass. Defaults to always_false.
         wait_for_encoding_analyzer (Analyzer): Analyzer to decide if the message should wait for encoding.

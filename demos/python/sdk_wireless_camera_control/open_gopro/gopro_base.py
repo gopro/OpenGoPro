@@ -17,7 +17,6 @@ from typing import Any, Awaitable, Callable, Final, Generic, TypeVar
 import requests
 import wrapt
 
-import open_gopro.exceptions as GpException
 from open_gopro.api import (
     BleCommands,
     BleSettings,
@@ -34,6 +33,7 @@ from open_gopro.communicator_interface import (
     MessageRules,
 )
 from open_gopro.constants import ErrorCode
+from open_gopro.exceptions import GoProNotOpened, ResponseTimeout
 from open_gopro.logger import Logger
 from open_gopro.models.response import GoProResp, RequestsHttpRespBuilderDirector
 from open_gopro.types import JsonDict
@@ -86,9 +86,9 @@ def ensure_opened(interface: tuple[GoProMessageInterface]) -> Callable:
     @wrapt.decorator
     def wrapper(wrapped: Callable, instance: GoProBase, args: Any, kwargs: Any) -> Callable:
         if GoProMessageInterface.BLE in interface and not instance.is_ble_connected:
-            raise GpException.GoProNotOpened("BLE not connected")
+            raise GoProNotOpened("BLE not connected")
         if GoProMessageInterface.HTTP in interface and not instance.is_http_connected:
-            raise GpException.GoProNotOpened("HTTP interface not connected")
+            raise GoProNotOpened("HTTP interface not connected")
         return wrapped(*args, **kwargs)
 
     return wrapper
@@ -395,7 +395,7 @@ class GoProBase(GoProHttp, Generic[ApiType]):
                 logger.critical(f"Unexpected error: {repr(e)}")
             logger.warning(f"Retrying #{retry} to send the command...")
         else:
-            raise GpException.ResponseTimeout(GoProBase.HTTP_GET_RETRIES)
+            raise ResponseTimeout(GoProBase.HTTP_GET_RETRIES)
 
         logger.info(Logger.build_log_rx_str(pretty_print(response._as_dict())))
         return response
@@ -440,6 +440,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
                 logger.critical(f"Unexpected error: {repr(e)}")
             logger.warning(f"Retrying #{retry} to send the command...")
         else:
-            raise GpException.ResponseTimeout(GoProBase.HTTP_GET_RETRIES)
+            raise ResponseTimeout(GoProBase.HTTP_GET_RETRIES)
 
         return response
