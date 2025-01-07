@@ -73,8 +73,7 @@ class BleUUID(uuid.UUID):
         int (int | None): build from int. Defaults to None.
 
     Raises:
-        ValueError: Attempt to initialize with more than one option
-        ValueError: Badly formed input
+        ValueError: Attempt to initialize with more than one option or badly formed input
     """
 
     class Format(IntEnum):
@@ -133,15 +132,15 @@ class BleUUID(uuid.UUID):
 class Descriptor:
     """A characteristic descriptor.
 
-    Args:
+    Attributes:
         handle (int) : the handle of the attribute table that the descriptor resides at
         uuid (BleUUID): BleUUID of this descriptor
-        value (bytes) : the byte stream value of the descriptor
+        value (bytes | None) : the byte stream value of the descriptor
     """
 
     handle: int
     uuid: BleUUID
-    value: Optional[bytes] = None
+    value: bytes | None = None
 
     def __str__(self) -> str:
         return json.dumps(asdict(self), indent=4, default=str)
@@ -160,12 +159,12 @@ class Descriptor:
 class Characteristic:
     """A BLE characteristic.
 
-    Args:
+    Attributes:
         handle (int) : the handle of the attribute table that the characteristic resides at
         uuid (BleUUID) : the BleUUID of the characteristic
         props (CharProps) : the characteristic's properties (READ, WRITE, NOTIFY, etc)
         value (bytes | None) : the current byte stream value of the characteristic value
-        init_descriptors (list[Descriptor] | None) : Descriptors known at initialization (can also be
+        init_descriptors (InitVar[list[Descriptor] | None]) : Descriptors known at initialization (can also be
             set later using the descriptors property)
         descriptor_handle (int | None) : handle of this characteristic's declaration descriptor. If not
             passed, defaults to handle + 1
@@ -281,12 +280,12 @@ class Characteristic:
 class Service:
     """A BLE service or grouping of Characteristics.
 
-    Args:
+    Attributes:
         uuid (BleUUID) : the service's BleUUID
         start_handle(int): the attribute handle where the service begins
         end_handle(int): the attribute handle where the service ends. Defaults to 0xFFFF.
-        init_chars (list[Characteristic]) : list of characteristics known at service instantiation. Can be set
-            later with the characteristics property
+        init_chars (InitVar[Optional[list[Characteristic]]]) : list of characteristics known at service instantiation.
+            Can be set later with the characteristics property
     """
 
     uuid: BleUUID

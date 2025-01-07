@@ -14,7 +14,7 @@ import zeroconf
 # Imported this way for monkeypatching in pytest
 import zeroconf.asyncio
 
-from open_gopro import exceptions as GpException
+from open_gopro.exceptions import FailedToFindDevice
 
 logger = logging.getLogger(__name__)
 
@@ -76,9 +76,9 @@ async def find_first_ip_addr(service: str, timeout: int = 5) -> str:
                 if info := await azc.async_get_service_info(service, name):
                     ip_addr = info.parsed_addresses()[0]
                     return ip_addr
-                raise GpException.FailedToFindDevice()
+                raise FailedToFindDevice()
         except Exception as e:
-            raise GpException.FailedToFindDevice() from e
+            raise FailedToFindDevice() from e
 
 
 async def get_all_services() -> list[str]:

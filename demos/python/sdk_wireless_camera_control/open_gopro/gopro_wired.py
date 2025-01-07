@@ -9,7 +9,6 @@ import asyncio
 import logging
 from typing import Any, Callable, Final
 
-import open_gopro.exceptions as GpException
 import open_gopro.wifi.mdns_scanner  # Imported this way for pytest monkeypatching
 from open_gopro.api import (
     BleCommands,
@@ -22,6 +21,11 @@ from open_gopro.api import (
 )
 from open_gopro.communicator_interface import GoProWiredInterface, Message, MessageRules
 from open_gopro.constants import StatusId
+from open_gopro.exceptions import (
+    FailedToFindDevice,
+    GoProNotOpened,
+    InvalidOpenGoProVersion,
+)
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models import GoProResp
 from open_gopro.types import CameraState, UpdateCb, UpdateType
@@ -84,11 +88,9 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
             timeout (int): time (in seconds) before considering connection a failure. Defaults to 10.
             retries (int): number of connection retries. Defaults to 1.
 
-        # noqa: DAR401
-
         Raises:
             InvalidOpenGoProVersion: the GoPro camera does not support the correct Open GoPro API version
-            FailedToFindDevice: could not auto-discover GoPro via mDNS # noqa: DAR402
+            FailedToFindDevice: could not auto-discover GoPro via mDNS
         """
         if not self._serial:
             for retry in range(1, retries + 1):
@@ -98,7 +100,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
                     )
                     self._serial = "GoPro X" + "".join([ip_addr[5], *ip_addr[8:10]])
                     break
-                except GpException.FailedToFindDevice as e:
+                except FailedToFindDevice as e:
                     if retry == retries:
                         raise e
                     logger.warning(f"Failed to discover GoPro. Retrying #{retry}")
@@ -106,7 +108,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         await self.http_command.wired_usb_control(control=Params.Toggle.ENABLE)
         # Find and configure API version
         if (version := (await self.http_command.get_open_gopro_api_version()).data) != self.version:
-            raise GpException.InvalidOpenGoProVersion(version)
+            raise InvalidOpenGoProVersion(version)
         logger.info(f"Using Open GoPro API version {version}")
 
         # Wait for initial ready state
@@ -141,7 +143,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         """
         if self._serial:
             return self._serial
-        raise GpException.GoProNotOpened("IP address has not yet been discovered")
+        raise GoProNotOpened("IP address has not yet been discovered")
 
     @property
     def version(self) -> str:
@@ -340,5 +342,5 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
             str: base endpoint with URL from serial number
         """
         if not self._serial:
-            raise GpException.GoProNotOpened("Serial / IP has not yet been discovered")
+            raise GoProNotOpened("Serial / IP has not yet been discovered")
         return WiredGoPro._BASE_ENDPOINT.format(ip=WiredGoPro._BASE_IP.format(*self._serial[-3:]))

@@ -42,7 +42,7 @@ Complete documentation can be  found on [Open GoPro](https://gopro.github.io/Ope
 
 ## Installation
 
-> Note! This package requires Python >= 3.8 and < 3.12
+> Note! This package requires Python >= 3.10 and < 3.13
 
 The minimal install to use the Open GoPro library and the CLI demos is:
 

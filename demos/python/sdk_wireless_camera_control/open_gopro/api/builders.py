@@ -372,9 +372,10 @@ def ble_proto_command(
 class BleAsyncResponse:
     """A BLE protobuf response that is not associated with any message.
 
-    Args:
+    Attributes:
         feature_id (FeatureId): Feature ID that response corresponds to
         action_id (ActionId): Action ID that response corresponds to
+        parser (Parser): response parser
     """
 
     feature_id: FeatureId
@@ -397,6 +398,10 @@ class BleSettingFacade(Generic[ValueType]):
 
     Raises:
         TypeError: Parser builder is not a valid type
+
+    Attributes:
+        SETTER_UUID (Final[BleUUID]): UUID used to perform set operation
+        READER_UUID (Final[BleUUID]): UUID used to perform read operation
 
     Args:
         communicator (GoProBle): BLE communicator that will operate on this object.
@@ -623,6 +628,9 @@ class BleSettingFacade(Generic[ValueType]):
 
 class BleStatusFacade(Generic[ValueType]):
     """Wrapper around BleStatus since a BleStatus's message definition changes based on how it is being operated on.
+
+    Attributes:
+        UUID (Final[BleUUID]): attribute ID used to perform set operation
 
     Args:
         communicator (GoProBle): BLE communicator that will operate on this object.

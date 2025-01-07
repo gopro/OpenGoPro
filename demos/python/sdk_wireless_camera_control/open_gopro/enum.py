@@ -18,8 +18,6 @@ class ProtobufDescriptor(Protocol):
     def name(self) -> str:
         """Human readable name of protobuf enum
 
-        # noqa: DAR202
-
         Returns:
             str: enum name
         """
@@ -28,8 +26,6 @@ class ProtobufDescriptor(Protocol):
     def values_by_name(self) -> dict:
         """Get the enum values by name
 
-        # noqa: DAR202
-
         Returns:
             dict: Dict of enum values mapped by name
         """
@@ -37,8 +33,6 @@ class ProtobufDescriptor(Protocol):
     @property
     def values_by_number(self) -> dict:
         """Get the enum values by number
-
-        # noqa: DAR202
 
         Returns:
             dict: dict of enum numbers mapped by number

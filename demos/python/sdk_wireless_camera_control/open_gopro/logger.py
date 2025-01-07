@@ -17,6 +17,10 @@ from rich.logging import RichHandler
 class Logger:
     """A singleton class to manage logging for the Open GoPro internal modules
 
+    Attributes:
+        ARROW_HEAD_COUNT (Final[int]): Length of leading arrow
+        ARROW_TAIL_COUNT (Final[int]): Length of trailing arrow
+
     Args:
         logger (logging.Logger): input logger that will be modified and then returned
         output (Path | None): Path of log file for file stream handler. If not set, will not log to file.
@@ -24,8 +28,8 @@ class Logger:
     """
 
     _instances: dict[type[Logger], Logger] = {}
-    ARROW_HEAD_COUNT: Final = 8
-    ARROW_TAIL_COUNT: Final = 14
+    ARROW_HEAD_COUNT: Final[int] = 8
+    ARROW_TAIL_COUNT: Final[int] = 14
 
     def __new__(cls, *_: Any) -> Any:  # noqa https://github.com/PyCQA/pydocstyle/issues/515
         if cls not in cls._instances:
