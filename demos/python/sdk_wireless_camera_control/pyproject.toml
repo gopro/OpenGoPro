@@ -43,8 +43,8 @@ construct = "^2"
 wrapt = "^1"
 requests = "^2"
 protobuf = "^3"
-packaging = "^21"
-rich = "^12"
+packaging = "^24"
+rich = "^13"
 pexpect = "^4"
 zeroconf = "^0"
 pydantic = "^2"
@@ -82,6 +82,7 @@ autodoc-pydantic = "^2"
 pytest-timeout = "^2"
 isort = "*"
 types-protobuf = "*"
+licensecheck = "^2024.3"
 
 [tool.poe.tasks.tests]
 cmd = "pytest tests/unit --cov-fail-under=70"
@@ -158,6 +159,13 @@ help = "Clean everything"
 [tool.poe.tasks.all]
 sequence = ["format", "lint", "tests", "docs"]
 help = "Format, check types, lint, check docstrings, and run unit tests"
+
+[tool.poe.tasks.licenses]
+# shell = """
+#   licensecheck -u poetry:dev > licenses.csv
+# """
+shell = """licensecheck > licenses.csv"""
+help = "Analyze dependency licenses"
 
 [tool.mypy]
 ignore_missing_imports = true
@@ -243,6 +251,7 @@ disable = [
     "protected-access",
     "invalid-name",
     "unsubscriptable-object",
+    "too-many-positional-arguments",
     "no-member", # This is bad. We need to make stub files since mypy and pylint do not follow decorators well
 ]
 
@@ -269,3 +278,7 @@ profile = "black"
 style = 'google'
 exclude = 'schemas/'
 require-return-section-when-returning-nothing = false
+
+[tool.licensecheck]
+using = "PEP631"
+format = 'csv'
