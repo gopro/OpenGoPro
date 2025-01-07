@@ -19,7 +19,7 @@ __pycache__/
 
 # Output
 *.csv
-!/licenseReport.csv
+!/thirdPartyDependencies.csv
 
 # C extensions
 *.so

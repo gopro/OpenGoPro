@@ -23,6 +23,4 @@ SOFTWARE.
 =============================================================================
 
 The SDK is comprised of third-party libraries made available by their respective
-copyright holders under the licenses specified in the licenseReport file.
-
-
+copyright holders under the licenses specified in the thirdPartyDependencies.csv file.
