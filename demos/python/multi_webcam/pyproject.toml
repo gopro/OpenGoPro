@@ -1,21 +1,20 @@
 [tool.poetry]
 name = "multi-webcam"
-version = "0.1.0"
+version = "0.2.0"
 description = "Simultaneously control multiple GoPro's as webcams"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.11"
+python = ">=3.10,<3.13"
 opencv-python = "^4"
 requests = "^2"
 tk = "^0"
-Pillow = "^9"
+Pillow = "^11"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 black = "*"
-mypy = "^0"
-Sphinx = "^5.3.0"
+mypy = "*"
 rinohtype = "^0.5.4"
 
 [tool.poetry.scripts]
