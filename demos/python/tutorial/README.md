@@ -8,7 +8,7 @@ If you are a user of the tutorials, please visit the above link. Developer's of 
 
 ## Development Environment Setup
 
-With Python >= 3.9 and < 3.12, perform:
+With Python >= 3.10 and < 3.13, perform:
 
 ```
 poetry install
