@@ -14,9 +14,16 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - name: Build and publish to pypi
-              uses: JRubics/poetry-publish@v2.0
+            - name: Set up Python 3.12.8
+              uses: actions/setup-python@v5
               with:
-                  package_directory: ./demos/python/sdk_wireless_camera_control/
-                  python_version: 3.12.8
-                  pypi_token: ${{ secrets.PYTHON_SDK_PYPI_TOKEN }}
+                  python-version: 3.12.8
+
+            - name: Install poetry
+              uses: abatilo/actions-poetry@v4
+
+            - name: Build and publish to pypi
+              working-directory: ./demos/python/sdk_wireless_camera_control/
+              run: |
+                poetry config pypi-token.pypi ${{ secrets.PYTHON_SDK_PYPI_TOKEN }}
+                poetry publish --build
