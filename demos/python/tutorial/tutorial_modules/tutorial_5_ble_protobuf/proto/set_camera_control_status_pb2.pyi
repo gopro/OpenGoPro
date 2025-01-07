@@ -23,9 +23,7 @@ class _EnumCameraControlStatus:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumCameraControlStatusEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
-        _EnumCameraControlStatus.ValueType
-    ],
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumCameraControlStatus.ValueType],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
@@ -34,18 +32,16 @@ class _EnumCameraControlStatusEnumTypeWrapper(
     "Can only be set by camera, not by app or third party"
     CAMERA_EXTERNAL_CONTROL: _EnumCameraControlStatus.ValueType
     CAMERA_COF_SETUP: _EnumCameraControlStatus.ValueType
-    "Set by the camera when it is on the CAH (Camera As a Hub) / COF (Cloud OFfload) setup screen"
+    "Set by the camera when it is on the CAH (Camera As a Hub) / COF (Cloud Offload) setup screen"
 
-class EnumCameraControlStatus(
-    _EnumCameraControlStatus, metaclass=_EnumCameraControlStatusEnumTypeWrapper
-): ...
+class EnumCameraControlStatus(_EnumCameraControlStatus, metaclass=_EnumCameraControlStatusEnumTypeWrapper): ...
 
 CAMERA_IDLE: EnumCameraControlStatus.ValueType
 CAMERA_CONTROL: EnumCameraControlStatus.ValueType
 "Can only be set by camera, not by app or third party"
 CAMERA_EXTERNAL_CONTROL: EnumCameraControlStatus.ValueType
 CAMERA_COF_SETUP: EnumCameraControlStatus.ValueType
-"Set by the camera when it is on the CAH (Camera As a Hub) / COF (Cloud OFfload) setup screen"
+"Set by the camera when it is on the CAH (Camera As a Hub) / COF (Cloud Offload) setup screen"
 global___EnumCameraControlStatus = EnumCameraControlStatus
 
 @typing_extensions.final
@@ -69,22 +65,14 @@ class RequestSetCameraControlStatus(google.protobuf.message.Message):
     camera_control_status: global___EnumCameraControlStatus.ValueType
     "Declare who is taking control of the camera"
 
-    def __init__(
-        self,
-        *,
-        camera_control_status: global___EnumCameraControlStatus.ValueType | None = ...
-    ) -> None: ...
+    def __init__(self, *, camera_control_status: global___EnumCameraControlStatus.ValueType | None = ...) -> None: ...
     def HasField(
         self,
-        field_name: typing_extensions.Literal[
-            "camera_control_status", b"camera_control_status"
-        ],
+        field_name: typing_extensions.Literal["camera_control_status", b"camera_control_status"],
     ) -> builtins.bool: ...
     def ClearField(
         self,
-        field_name: typing_extensions.Literal[
-            "camera_control_status", b"camera_control_status"
-        ],
+        field_name: typing_extensions.Literal["camera_control_status", b"camera_control_status"],
     ) -> None: ...
 
 global___RequestSetCameraControlStatus = RequestSetCameraControlStatus

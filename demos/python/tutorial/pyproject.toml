@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "open-gopro-tutorials"
-version = "0.3.0"
+version = "0.4.0"
 description = "Open GoPro Python Tutorials"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 license = "MIT"
@@ -18,22 +18,21 @@ classifiers = [
     "Operating System :: MacOS :: MacOS X",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.12"
-bleak = "0.21.1"
+python = ">=3.10,<3.13"
+bleak = "0.22.3"
 requests = "^2"
 rich = "^13"
-pytz = "^2024.1"
-tzlocal = "^5.2"
+pytz = "*"
+tzlocal = "*"
 mypy-protobuf = "*"
 
 [tool.poetry.group.dev.dependencies]
-types-pytz = "^2024.1.0.20240203"
 poethepoet = "^0"
 black = "*"
 isort = "*"
@@ -43,9 +42,9 @@ pytest-asyncio = "^0"
 pytest-html = "^3"
 pytest-cov = "^4"
 coverage = { extras = ["toml"], version = "^6" }
-pylint = "^2"
+pylint = "^3"
 types-requests = "*"
-protoletariat = "^3"
+types-pytz = "*"
 
 [build-system]
 requires = ["poetry-core"]
@@ -86,10 +85,6 @@ help = "Clean module build output"
 [tool.poe.tasks.clean]
 sequence = ["_clean_artifacts", "_clean_tests", "_clean_build"]
 help = "Clean everything"
-
-[tool.poe.tasks.protobuf]
-cmd = "bash ../../../tools/build_python_protos.sh tutorial_modules"
-help = "generate protobuf source from .proto (assumes protoc >= 3.20.1 available)"
 
 [tool.poe.tasks.lint]
 sequence = ["format", "_sort_imports", "_types", "_pylint",]
