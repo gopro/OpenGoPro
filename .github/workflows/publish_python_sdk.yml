@@ -18,5 +18,5 @@ jobs:
               uses: JRubics/poetry-publish@v2.0
               with:
                   package_directory: ./demos/python/sdk_wireless_camera_control/
-                  python_version: 3.11.4
+                  python_version: 3.12.8
                   pypi_token: ${{ secrets.PYTHON_SDK_PYPI_TOKEN }}
