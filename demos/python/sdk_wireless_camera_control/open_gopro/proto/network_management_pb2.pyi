@@ -580,12 +580,13 @@ class ResponseGetApEntries(google.protobuf.message.Message):
         self,
     ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___ResponseGetApEntries.ScanEntry]:
         """Array containing details about discovered APs"""
+
     def __init__(
         self,
         *,
         result: response_generic_pb2.EnumResultGeneric.ValueType | None = ...,
         scan_id: builtins.int | None = ...,
-        entries: (collections.abc.Iterable[global___ResponseGetApEntries.ScanEntry] | None) = ...
+        entries: collections.abc.Iterable[global___ResponseGetApEntries.ScanEntry] | None = ...
     ) -> None: ...
     def HasField(
         self,

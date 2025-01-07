@@ -94,17 +94,14 @@ class MockCommunicator(Generic[T]):
         self.message = message
         return GoProResp(protocol=GoProResp.Protocol.BLE, status=ErrorCode.SUCCESS, data=bytes(), identifier="unknown")
 
-    def register_update(self, *args, **kwargs):
-        ...
+    def register_update(self, *args, **kwargs): ...
 
-    def unregister_update(self, *args, **kwargs):
-        ...
+    def unregister_update(self, *args, **kwargs): ...
 
 
 @pytest.mark.asyncio
 async def test_ble_setting():
-    class Communicator(MockCommunicator[BleSettingFacade.BleSettingMessageBase]):
-        ...
+    class Communicator(MockCommunicator[BleSettingFacade.BleSettingMessageBase]): ...
 
     communicator = Communicator()
     message = BleSettingFacade(
@@ -184,8 +181,7 @@ async def test_ble_setting():
 
 @pytest.mark.asyncio
 async def test_ble_status():
-    class Communicator(MockCommunicator[BleStatusFacade.BleStatusMessageBase]):
-        ...
+    class Communicator(MockCommunicator[BleStatusFacade.BleStatusMessageBase]): ...
 
     communicator = Communicator()
     message = BleStatusFacade(communicator=communicator, identifier=StatusId.ACC_MIC_STAT, parser=construct.Flag)
@@ -234,8 +230,7 @@ async def test_http_command():
 
 @pytest.mark.asyncio
 async def test_http_setting():
-    class Communicator(MockCommunicator[HttpMessage]):
-        ...
+    class Communicator(MockCommunicator[HttpMessage]): ...
 
     communicator = Communicator()
     message = HttpSetting(communicator=communicator, identifier=SettingId.ADDON_MAX_LENS_MOD)
