@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "open_gopro"
-version = "0.18"
+version = "0.18.0"
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 readme = "README.md"

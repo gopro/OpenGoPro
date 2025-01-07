@@ -1529,19 +1529,19 @@ yaml = ["pyyaml (>=6.0.1)"]
 
 [[package]]
 name = "pydoclint"
-version = "0.4.2"
+version = "0.5.14"
 description = "A Python docstring linter that checks arguments, returns, yields, and raises sections"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "pydoclint-0.4.2-py2.py3-none-any.whl", hash = "sha256:1941ba8d47b021939e47f6b79b77513449ef0565330b836173df9d6cf1606045"},
-    {file = "pydoclint-0.4.2.tar.gz", hash = "sha256:559060dc1a91240ac1e28be570b3563ae66f292c7dd7124f4d4eab1483416a41"},
+    {file = "pydoclint-0.5.14-py2.py3-none-any.whl", hash = "sha256:d06c8b4f4eff49e1814cac3d7a7ca0c858ae6866dd4afa9588659ae9dbf86462"},
+    {file = "pydoclint-0.5.14.tar.gz", hash = "sha256:4e63ddcc4b6bb0a3fb6135cb841e1f71549c2547baee731c82b231a7c652d020"},
 ]
 
 [package.dependencies]
 click = ">=8.1.0"
-docstring-parser-fork = ">=0.0.5"
+docstring_parser_fork = ">=0.0.9"
 tomli = {version = ">=2.0.1", markers = "python_version < \"3.11\""}
 
 [package.extras]
@@ -2906,4 +2906,4 @@ gui = ["Pillow", "opencv-python"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.9,<3.13"
-content-hash = "57bd434bcc06771ed698c7688234a01ea03a4a541596f6a43d8576020b4782d2"
+content-hash = "e76980517a47948921ab535b1c2e73c9d15b2d05c9d78582a8861612b4e4280d"
