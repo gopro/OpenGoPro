@@ -151,8 +151,6 @@ class BytesBuilder(Protocol):
     def build(self, obj: Any) -> bytes:
         """Build bytestream from object
 
-        # noqa: DAR202
-
         Args:
             obj (Any): object to serialize
 
@@ -178,8 +176,6 @@ class BytesParserBuilder(BytesParser[T_co], BytesBuilder):
     @abstractmethod
     def build(self, obj: Any) -> bytes:
         """Build bytestream from object
-
-        # noqa: DAR202
 
         Args:
             obj (Any): object to serialize

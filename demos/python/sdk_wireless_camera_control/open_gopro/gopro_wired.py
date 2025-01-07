@@ -88,11 +88,9 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
             timeout (int): time (in seconds) before considering connection a failure. Defaults to 10.
             retries (int): number of connection retries. Defaults to 1.
 
-        # noqa: DAR401
-
         Raises:
             InvalidOpenGoProVersion: the GoPro camera does not support the correct Open GoPro API version
-            FailedToFindDevice: could not auto-discover GoPro via mDNS # noqa: DAR402
+            FailedToFindDevice: could not auto-discover GoPro via mDNS
         """
         if not self._serial:
             for retry in range(1, retries + 1):

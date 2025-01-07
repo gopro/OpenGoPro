@@ -111,10 +111,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         enable_wifi (bool): Optionally do not enable Wifi if set to False. Defaults to True.
         **kwargs (Any): additional parameters for internal use / testing
 
-    # noqa: DAR401
-
     Raises:
-        InterfaceConfigFailure: In order to communicate via Wifi, there must be an available # noqa: DAR402
+        InterfaceConfigFailure: In order to communicate via Wifi, there must be an available
             Wifi Interface. By default during initialization, the Wifi driver will attempt to automatically
             discover such an interface. If it does not find any, it will raise this exception. Note that
             the interface can also be specified manually with the 'wifi_interface' argument.
