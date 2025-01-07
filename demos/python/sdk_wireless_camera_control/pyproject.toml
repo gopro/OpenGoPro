@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "open_gopro"
-version = "0.17.1"
+version = "0.18"
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 readme = "README.md"
@@ -52,13 +52,12 @@ opencv-python = { version = "^4", optional = true }
 Pillow = {version= "^9", optional = true}
 pytz = "*"
 tzlocal = "*"
-typing-extensions = "^4"
 
 [tool.poetry.extras]
 gui = ["opencv-python", "pillow"]
 
 [tool.poetry.group.dev.dependencies]
-pydoclint = "^0.4.1"
+pydoclint = "^0"
 pydocstyle = { extras = ["toml"], version = "^6" }
 pytest = "^7"
 pytest-cov = "^3"
@@ -82,7 +81,7 @@ autodoc-pydantic = "^2"
 pytest-timeout = "^2"
 isort = "*"
 types-protobuf = "*"
-licensecheck = "^2024.3"
+licensecheck = "*"
 
 [tool.poe.tasks.tests]
 cmd = "pytest tests/unit --cov-fail-under=70"
@@ -161,9 +160,6 @@ sequence = ["format", "lint", "tests", "docs"]
 help = "Format, check types, lint, check docstrings, and run unit tests"
 
 [tool.poe.tasks.licenses]
-# shell = """
-#   licensecheck -u poetry:dev > licenses.csv
-# """
 shell = """licensecheck > licenses.csv"""
 help = "Analyze dependency licenses"
 
