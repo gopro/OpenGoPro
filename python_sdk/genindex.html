@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Index &mdash; Open GoPro Python SDK  documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
       <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
@@ -36,7 +36,7 @@
             Open GoPro Python SDK
           </a>
               <div class="version">
-                0.17.1
+                0.18.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -144,6 +144,10 @@
 </li>
       <li><a href="api.html#open_gopro.api.params.LED.ALL_ON">ALL_ON (LED attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.communicator_interface.MessageRules.always_false">always_false (MessageRules attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.communicator_interface.MessageRules.always_true">always_true (MessageRules attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.analytics_rdy">analytics_rdy (BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.ANALYTICS_RDY">ANALYTICS_RDY (StatusId attribute)</a>
@@ -162,10 +166,10 @@
         <li><a href="api.html#open_gopro.api.http_commands.HttpSettings.anti_flicker">(HttpSettings attribute)</a>
 </li>
       </ul></li>
-      <li><a href="api.html#open_gopro.constants.SettingId.ANTI_FLICKER">ANTI_FLICKER (SettingId attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.constants.SettingId.ANTI_FLICKER">ANTI_FLICKER (SettingId attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.params.AntiFlicker">AntiFlicker (class in open_gopro.api.params)</a>
 </li>
       <li><a href="api.html#open_gopro.models.general.CameraInfo.ap_mac_addr">ap_mac_addr (CameraInfo attribute)</a>
@@ -552,6 +556,8 @@
 </li>
       <li><a href="api.html#open_gopro.ble.services.Descriptor">Descriptor (class in open_gopro.ble.services)</a>
 </li>
+      <li><a href="api.html#open_gopro.ble.services.Characteristic.descriptor_handle">descriptor_handle (Characteristic attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.ble.services.Characteristic.descriptors">descriptors (Characteristic property)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.dig_zoom_active">dig_zoom_active (BleStatuses attribute)</a>
@@ -576,10 +582,10 @@
       </ul></li>
       <li><a href="api.html#open_gopro.ble.controller.BLEController.discover_chars">discover_chars() (BLEController method)</a>
 </li>
-      <li><a href="api.html#open_gopro.models.general.SupportedOption.display_name">display_name (SupportedOption attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.models.general.SupportedOption.display_name">display_name (SupportedOption attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.download_cancel_pend">download_cancel_pend (BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.DOWNLOAD_CANCEL_PEND">DOWNLOAD_CANCEL_PEND (StatusId attribute)</a>
@@ -640,6 +646,8 @@
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.encoding_active">encoding_active (BleStatuses attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.ble.services.Service.end_handle">end_handle (Service attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.params.SetupLanguage.ENGLISH_AUS">ENGLISH_AUS (SetupLanguage attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.params.SetupLanguage.ENGLISH_IND">ENGLISH_IND (SetupLanguage attribute)</a>
@@ -652,10 +660,10 @@
 </li>
       <li><a href="api.html#open_gopro.models.general.WebcamResponse.error">error (WebcamResponse attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.constants.ErrorCode">ErrorCode (class in open_gopro.constants)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.constants.ErrorCode">ErrorCode (class in open_gopro.constants)</a>
+</li>
       <li><a href="api.html#open_gopro.exceptions.ExceptionHandler">ExceptionHandler (in module open_gopro.exceptions)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.WebcamError.EXEC_STREAM">EXEC_STREAM (WebcamError attribute)</a>
@@ -1020,6 +1028,12 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.ble.services.Characteristic.handle">handle (Characteristic attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.ble.services.Descriptor.handle">(Descriptor attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api.html#open_gopro.ble.services.GattDB.handle2uuid">handle2uuid() (GattDB method)</a>
 </li>
       <li><a href="api.html#open_gopro.api.params.PhotoOutput.HDR">HDR (PhotoOutput attribute)</a>
@@ -1068,10 +1082,10 @@
 </li>
       <li><a href="api.html#open_gopro.api.params.PhotoDuration.HOUR_1">HOUR_1 (PhotoDuration attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.api.params.PhotoDuration.HOUR_2">HOUR_2 (PhotoDuration attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.api.params.PhotoDuration.HOUR_2">HOUR_2 (PhotoDuration attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.params.PhotoDuration.HOUR_3">HOUR_3 (PhotoDuration attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.gopro_base.GoProBase.http_command">http_command (GoProBase property)</a>
@@ -1171,6 +1185,10 @@
       <li><a href="api.html#open_gopro.constants.StatusId.IN_CONTEXT_MENU">IN_CONTEXT_MENU (StatusId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.params.PairState.IN_PROGRESS">IN_PROGRESS (PairState attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.ble.services.Service.init_chars">init_chars (Service attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.ble.services.Characteristic.init_descriptors">init_descriptors (Characteristic attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.int_batt_per">int_batt_per (BleStatuses attribute)</a>
 </li>
@@ -2075,10 +2093,10 @@
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.photo_interval_capture_count">photo_interval_capture_count (BleStatuses attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.StatusId.PHOTO_INTERVAL_CAPTURE_COUNT">PHOTO_INTERVAL_CAPTURE_COUNT (StatusId attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.SettingId.PHOTO_INTERVAL_DURATION">PHOTO_INTERVAL_DURATION (SettingId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleSettings.photo_mode">photo_mode (BleSettings attribute)</a>
@@ -2153,6 +2171,8 @@
 </li>
       <li><a href="api.html#open_gopro.models.media_list.VideoMetadata.progressive">progressive (VideoMetadata attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.ble.services.Characteristic.props">props (Characteristic attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.constants.QueryCmdId.PROTOBUF_QUERY">PROTOBUF_QUERY (QueryCmdId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.SettingId.PROTOBUF_SETTING">PROTOBUF_SETTING (SettingId attribute)</a>
@@ -2209,6 +2229,8 @@
         <li><a href="api.html#open_gopro.ble.controller.BLEController.read">(BLEController method)</a>
 </li>
       </ul></li>
+      <li><a href="api.html#open_gopro.api.builders.BleSettingFacade.READER_UUID">READER_UUID (BleSettingFacade attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.params.AnalyticsState.READY">READY (AnalyticsState attribute)</a>
 
       <ul>
@@ -2579,6 +2601,8 @@
 </li>
       <li><a href="api.html#open_gopro.constants.WebcamError.SET_WINDOW_SIZE">SET_WINDOW_SIZE (WebcamError attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.builders.BleSettingFacade.SETTER_UUID">SETTER_UUID (BleSettingFacade attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.constants.FeatureId.SETTING">SETTING (FeatureId attribute)</a>
 </li>
   </ul></td>
@@ -2682,6 +2706,8 @@
       <li><a href="api.html#open_gopro.constants.SettingId.STAR_TRAIL_LENGTH">STAR_TRAIL_LENGTH (SettingId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.params.TimelapseMode.STAR_TRAILS">STAR_TRAILS (TimelapseMode attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.ble.services.Service.start_handle">start_handle (Service attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.params.WAPState.STARTED">STARTED (WAPState attribute)</a>
 </li>
@@ -2879,8 +2905,6 @@
 </li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings">unregister_for_all_settings() (BleCommands method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses">unregister_for_all_statuses() (BleCommands method)</a>
 </li>
       <li><a href="api.html#open_gopro.communicator_interface.BaseGoProCommunicator.unregister_update">unregister_update() (BaseGoProCommunicator method)</a>
@@ -2891,6 +2915,8 @@
         <li><a href="api.html#open_gopro.gopro_wireless.WirelessGoPro.unregister_update">(WirelessGoPro method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.api.builders.BleSettingFacade.unregister_value_update">unregister_value_update() (BleSettingFacade method)</a>
 
       <ul>
@@ -2913,6 +2939,16 @@
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.USB_CONNECTED">USB_CONNECTED (StatusId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.builders.BleStatusFacade.UUID">UUID (BleStatusFacade attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.ble.services.Characteristic.uuid">uuid (Characteristic attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.ble.services.Descriptor.uuid">(Descriptor attribute)</a>
+</li>
+        <li><a href="api.html#open_gopro.ble.services.Service.uuid">(Service attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api.html#open_gopro.ble.services.GattDB.uuid2handle">uuid2handle() (GattDB method)</a>
 </li>
       <li><a href="api.html#open_gopro.ble.services.UUIDs">UUIDs (class in open_gopro.ble.services)</a>
@@ -2929,6 +2965,12 @@
 </li>
       <li><a href="api.html#open_gopro.api.params.MaxLensModType.V2">V2 (MaxLensModType attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.ble.services.Characteristic.value">value (Characteristic attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.ble.services.Descriptor.value">(Descriptor attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api.html#open_gopro.ble.services.GattDB.CharacteristicView.values">values() (GattDB.CharacteristicView method)</a>
 </li>
       <li><a href="api.html#open_gopro.api.params.TimelapseMode.VEHICLE_LIGHTS">VEHICLE_LIGHTS (TimelapseMode attribute)</a>
@@ -2995,10 +3037,10 @@
       </ul></li>
       <li><a href="api.html#open_gopro.constants.SettingId.VIDEO_FOV">VIDEO_FOV (SettingId attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.constants.SettingId.VIDEO_FRAMING">VIDEO_FRAMING (SettingId attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.constants.SettingId.VIDEO_FRAMING">VIDEO_FRAMING (SettingId attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_commands.BleStatuses.video_hindsight">video_hindsight (BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.StatusId.VIDEO_HINDSIGHT">VIDEO_HINDSIGHT (StatusId attribute)</a>
@@ -3185,6 +3227,8 @@
         <li><a href="api.html#open_gopro.ble.controller.BLEController.write">(BLEController method)</a>
 </li>
       </ul></li>
+      <li><a href="api.html#open_gopro.gopro_wireless.WirelessGoPro.WRITE_TIMEOUT">WRITE_TIMEOUT (WirelessGoPro attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 

@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Usage &mdash; Open GoPro Python SDK  documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
       <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
@@ -39,7 +39,7 @@
             Open GoPro Python SDK
           </a>
               <div class="version">
-                0.17.1
+                0.18.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -150,9 +150,9 @@ camera resource. The general procedure to communicate with the GoPro is:</p>
 <p>This package is <a class="reference external" href="https://docs.python.org/3/library/asyncio.html">asyncio</a>-based which means that its awaitable
 methods need to be called from an async coroutine. For the code snippets throughout this documentation, assume that this
 is accomplished in the same manner as the demo scripts provided:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="c1"># Put our code here</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
@@ -167,7 +167,7 @@ the context manager. See the below sections for opening information specific to 
 <section id="wireless-opening">
 <h3>Wireless Opening<a class="headerlink" href="#wireless-opening" title="Link to this heading"></a></h3>
 <p>The Wireless GoPro client can be opened either with the context manager:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">WirelessGoPro</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">open_gopro</span><span class="w"> </span><span class="kn">import</span> <span class="n">WirelessGoPro</span>
 
 <span class="k">async</span> <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Yay! I&#39;m connected via BLE, Wifi, opened, and ready to send / get data now!&quot;</span><span class="p">)</span>
@@ -175,7 +175,7 @@ the context manager. See the below sections for opening information specific to 
 </pre></div>
 </div>
 <p>...or without the context manager:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">WirelessGoPro</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">open_gopro</span><span class="w"> </span><span class="kn">import</span> <span class="n">WirelessGoPro</span>
 
 <span class="n">gopro</span> <span class="o">=</span> <span class="n">WirelessGoPro</span><span class="p">()</span>
 <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
@@ -203,7 +203,7 @@ instance arguments) see the API Reference for <a class="reference internal" href
 <section id="wired-opening">
 <h3>Wired Opening<a class="headerlink" href="#wired-opening" title="Link to this heading"></a></h3>
 <p>The Wired GoPro client can be opened either with the context manager:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">WiredGoPro</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">open_gopro</span><span class="w"> </span><span class="kn">import</span> <span class="n">WiredGoPro</span>
 
 <span class="k">async</span> <span class="k">with</span> <span class="n">WiredGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Yay! I&#39;m connected via USB, opened, and ready to send / get data now!&quot;</span><span class="p">)</span>
@@ -211,7 +211,7 @@ instance arguments) see the API Reference for <a class="reference internal" href
 </pre></div>
 </div>
 <p>...or without the context manager:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">WiredGoPro</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">open_gopro</span><span class="w"> </span><span class="kn">import</span> <span class="n">WiredGoPro</span>
 
 <span class="n">gopro</span> <span class="o">=</span> <span class="n">WiredGoPro</span><span class="p">()</span>
 <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
@@ -322,7 +322,7 @@ Do not confuse this with <cite>asyncio</cite>: all operations from the user’s 
 <p>Whenever a parameter is required for a message, it will be type-hinted in the method definition as either a standard Python type
 or an Enum from the <a class="reference internal" href="api.html#parameters"><span class="std std-ref">Params</span></a> module.</p>
 <p>Here is a full example for clarity:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">open_gopro</span> <span class="kn">import</span> <span class="n">WirelessGoPro</span><span class="p">,</span> <span class="n">Params</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">open_gopro</span><span class="w"> </span><span class="kn">import</span> <span class="n">WirelessGoPro</span><span class="p">,</span> <span class="n">Params</span>
 
 <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
     <span class="n">gopro</span><span class="o">.</span><span class="n">ble_command</span><span class="o">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">Toggle</span><span class="o">.</span><span class="n">ENABLE</span><span class="p">)</span>
@@ -436,7 +436,7 @@ responses will then be sent to the registered callback for handling.</p>
 <li><p>status values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleStatusFacade.unregister_value_update" title="open_gopro.api.builders.BleStatusFacade.unregister_value_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_value_update()</span></code></a></p></li>
 </ul>
 <p>Here is an example of registering for and receiving FOV updates:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span> <span class="nf">process_battery_notifications</span><span class="p">(</span><span class="n">update</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">process_battery_notifications</span><span class="p">(</span><span class="n">update</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">update</span> <span class="o">==</span> <span class="n">constants</span><span class="o">.</span><span class="n">StatusId</span><span class="o">.</span><span class="n">INT_BATT_PER</span><span class="p">:</span>
         <span class="o">...</span>
     <span class="k">elif</span> <span class="n">update</span> <span class="o">==</span> <span class="n">constants</span><span class="o">.</span><span class="n">StatusId</span><span class="o">.</span><span class="n">BATT_LEVEL</span><span class="p">:</span>
@@ -532,7 +532,7 @@ the <cite>identifier</cite> and <cite>status</cite> attributes are appended to t
 <p>The response data is stored in the <cite>data</cite> attribute (<a class="reference internal" href="api.html#open_gopro.models.response.GoProResp.data" title="open_gopro.models.response.GoProResp.data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">data()</span></code></a>) and its type
 is specified via the Generic type specified in the corresponding command signature where the response is defined.</p>
 <p>For example, consider <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.get_hardware_info" title="open_gopro.api.ble_commands.BleCommands.get_hardware_info"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_hardware_info()</span></code></a>. It’s signature is:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span> <span class="nf">get_hardware_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GoProResp</span><span class="p">[</span><span class="n">CameraInfo</span><span class="p">]:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_hardware_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GoProResp</span><span class="p">[</span><span class="n">CameraInfo</span><span class="p">]:</span>
     <span class="o">...</span>
 </pre></div>
 </div>
