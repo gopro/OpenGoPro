@@ -38,7 +38,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
-bleak = "=0.22.2"
+bleak = "=0.22.3"
 construct = "^2"
 wrapt = "^1"
 requests = "^2"
@@ -49,7 +49,7 @@ pexpect = "^4"
 zeroconf = "^0"
 pydantic = "^2"
 opencv-python = { version = "^4", optional = true }
-Pillow = {version= "^9", optional = true}
+Pillow = {version= "^11", optional = true}
 pytz = "*"
 tzlocal = "*"
 
