@@ -1,4 +1,4 @@
-OpenGoPro is licensed under the MIT License
+The OpenGoPro Kotlin Multiplatform SDK is licensed under the MIT License
 
 Copyright © 2021-2024 GoPro, Inc.
 
@@ -22,5 +22,7 @@ SOFTWARE.
 
 =============================================================================
 
-The OpenGoPro project includes the Kotlin and Python SDKs.  The SDKs are comprised of third-party libraries
-made available by their respective copyright holders under the licenses specified below.
+The SDK is comprised of third-party libraries made available by their respective
+copyright holders under the licenses specified in the licenseReport file.
+
+

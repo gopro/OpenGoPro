@@ -3,6 +3,7 @@ import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import com.jaredsburrows.license.LicensePlugin
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -24,8 +25,6 @@ kotlin {
         publishLibraryVariants("release")
     }
 
-//    jvm("desktop")
-
     listOf(
         iosX64(),
         iosArm64(),
@@ -38,8 +37,6 @@ kotlin {
     }
 
     sourceSets {
-//        val desktopMain by getting
-
         // https://kotlinlang.org/docs/multiplatform-android-layout.html#move-source-files
         val commonTest by getting
         val androidInstrumentedTest by getting
@@ -106,9 +103,6 @@ kotlin {
         appleMain.dependencies {
             api(libs.ktor.client.darwin)
         }
-//        desktopMain.dependencies {
-//            api(libs.ktor.client.okhttp)
-//        }
     }
 }
 
@@ -196,6 +190,16 @@ licenseReport {
     // Show versions in the report - default is false
     showVersions = true
 }
+
+tasks.register<Copy>("copyLicenseReport") {
+    val reportDir = layout.buildDirectory.dir("reports/licenses")
+    group = "reporting"
+    description = "Copy Generated License Reports to top level of repo"
+    from(reportDir)
+    into(rootDir)
+}
+
+//tasks.getByName("licenseReleaseReport").finalizedBy
 
 mavenPublishing {
     // Define coordinates for the published artifact
