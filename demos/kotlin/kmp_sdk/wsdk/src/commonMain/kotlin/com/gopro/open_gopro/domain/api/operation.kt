@@ -29,9 +29,6 @@ internal abstract class BaseOperation<T : Any>(final override val debugId: Strin
         val result = when (communicator) {
             is BleCommunicator -> execute(communicator)
             is HttpCommunicator -> execute(communicator)
-            else -> {
-                throw Exception("Should be impossible to get an unsupported communicator.")
-            }
         }
         logger.i("$debugId finished with result ==> ${prettyPrintResult(result)}")
         return result

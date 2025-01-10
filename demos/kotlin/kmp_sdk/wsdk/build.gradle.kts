@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.tasks.factory.dependsOn
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
@@ -195,11 +196,12 @@ tasks.register<Copy>("copyLicenseReport") {
     val reportDir = layout.buildDirectory.dir("reports/licenses")
     group = "reporting"
     description = "Copy Generated License Reports to top level of repo"
+    println("Copying licenses from $reportDir to $rootDir")
+    project.logger.lifecycle("Copying licenses from $reportDir to $rootDir")
     from(reportDir)
     into(rootDir)
+    dependsOn(tasks.getByName("licenseReleaseReport"))
 }
-
-//tasks.getByName("licenseReleaseReport").finalizedBy
 
 mavenPublishing {
     // Define coordinates for the published artifact

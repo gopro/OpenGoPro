@@ -14,26 +14,8 @@ There are the following components:
 ```mermaid
 classDiagram
     direction TB
-    namespace BusinessLogic {
-        class CameraConnector {
-            This is the top level class to be be consumed by a user.
-            -connectors IConnectorFactory
-            -communicators ICommunicatorFactory
-            discover(~List~NetworkType) Flow~IScanResult~
-            connect(IScanResult scanResult, CommunicationType communicationType, ConnectionRequestContext? request) ICommunicator
-            disconnect(connection IConnectionDescriptor) Unit
-        }
-    }
-    CameraConnector --> IConnector
-    CameraConnector --> ICommunicator
-    CameraConnector --> IScanResult
-    CameraConnector --> IConnectorFactory
-    CameraConnector --> ICommunicatorFactory
+
     namespace Domain {
-        class IConnectorFactory {
-            <<interface>>
-            getConnector(NetworkType networkType) IConnector*
-        }
         class NetworkType {
             BLE
             USB
@@ -48,7 +30,6 @@ classDiagram
         class IConnectionDescriptor {
             <<interface>>
             +string id*
-            +CommunicationType communicationType*
             +NetworkType networkType*
         }
         class ConnectionRequestContext {
@@ -62,10 +43,6 @@ classDiagram
             connect(IScanResult target, ConnectionRequestContext? request) IConnectionDescriptor*
             disconnect(IConnectionDescriptor connection) Boolean*
         }
-        class ICommunicatorFactory {
-            <<interface>>
-            getCommunicator(CommunicationType communicationType) ICommunicator*
-        }
         class CommunicationType {
             BLE
             HTTP
@@ -74,19 +51,49 @@ classDiagram
         class ICommunicator {
             <<interface>>
             +CommunicationType communicationType*
-            +setup() Boolean*
+            +IConnectionDescriptor connectionDescriptor*
+            +string id
         }
     }
+
     IScanResult --> NetworkType
     IConnectionDescriptor --> NetworkType
     IConnector --> IScanResult
     IConnector --> IConnectionDescriptor
     IConnector --> ConnectionRequestContext
-    IConnectorFactory --> IConnector
-    IConnectorFactory --> NetworkType
     ICommunicator --> CommunicationType
-    ICommunicatorFactory --> ICommunicator
-    ICommunicatorFactory --> CommunicationType
+    ICommunicator --> IConnectionDescriptor
+
+    namespace InternalUsage {
+        class GoProFactory {
+            +getGoPro(string id) GoPro
+            +storeConnection(IConnectionDescriptor connection)
+            -Map~IConnectionDescriptor, ICommunicator~ communicatorMap
+        }
+        class CameraConnector {
+            +discover(List~NetworkType~ networkTypes) Flow~IScanResult~
+            +connect(IScanResult target, ConnectionRequestContext context) IConnectionDescriptor
+        }
+    }
+
+    GoProFactory --> IConnectionDescriptor
+    GoProFactory --> ICommunicator
+    CameraConnector --> IConnector
+    CameraConnector --> NetworkType
+    CameraConnector --> IScanResult
+    CameraConnector --> IConnectionDescriptor
+
+    namespace ExternalFacade {
+        class OgpSdk {
+            +discover(List~NetworkTypes~ networkTypes) Flow~IScanResult~
+            +connect(IScanResult target, ConnectionRequestContext context) String
+            +getGoPro(string id) GoPro
+        }
+    }
+    OgpSdk --> GoProFactory
+    OgpSdk --> CameraConnector
+    OgpSdk --> NetworkType
+    OgpSdk --> IScanResult
 ```
 
 ## Connector Implementation
@@ -95,11 +102,6 @@ classDiagram
 classDiagram
     direction TB
        namespace Implementation {
-        class ConnectorFactory {
-            connectors passed via DI
-            getConnector(NetworkType) IConnector
-        }
-
         class BleConnector {
             -bleApi IBleApi
         }
@@ -131,11 +133,9 @@ classDiagram
     WifiSsidScanResult ..|> IScanResult
     DnsConnector ..|> IConnector
     DnsScanResult ..|> IScanResult
-    ConnectorFactory --> IConnectorFactory
     namespace Domain {
         class IScanResult
         class IConnector
-        class IConnectorFactory
     }
 ```
 
@@ -145,10 +145,6 @@ classDiagram
 classDiagram
     direction TB
        namespace Implementation {
-        class CommunicatorFactory {
-            communicators passed via DI
-            getCommunicator(CommunicationType communicationType) ICommunicator
-        }
         class BleCommunicator {
             -IBleApi bleApi
             +CommunicationType.BLE$
@@ -172,20 +168,12 @@ classDiagram
             post(HttpRequest request, body: JSON) HttpResponse
             put(HttpRequest request, body: JSON) HttpResponse
         }
-        class HttpsCommunicator {
-            -IHttpApi httpApi
-            -authenticate()
-            +CommunicationType.HTTPS$
-        }
     }
     BleCommunicator ..|> ICommunicator
     BleCommunicatorV2 ..|> ICommunicator
     HttpCommunicator ..|> ICommunicator
-    HttpsCommunicator ..|> HttpCommunicator
-    CommunicatorFactory ..|> ICommunicatorFactory
     namespace Domain {
         class ICommunicator
-        class ICommunicatorFactory
     }
 ```
 
