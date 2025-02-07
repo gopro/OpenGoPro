@@ -509,6 +509,7 @@ class BleCommands(BleMessages[BleMessage]):
         return {  # type: ignore
             "register_preset_status": register or [],
             "unregister_preset_status": unregister or [],
+            "use_constant_setting_ids": True,
         }
 
     @ble_proto_command(
