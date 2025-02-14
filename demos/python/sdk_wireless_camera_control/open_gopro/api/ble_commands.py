@@ -1386,7 +1386,7 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
         """Is the camera currently in First Time Use (FTU) UI flow?"""
 
         self.sec_sd_stat: BleStatus[Params.SDStatus] = BleStatus(communicator, StatusId.SEC_SD_STAT, Params.SDStatus)
-        """Secondary Storage Status (exclusive to Superbank)."""
+        """Secondary Storage Status"""
 
         self.band_5ghz_avail: BleStatus[bool] = BleStatus(communicator, StatusId.BAND_5GHZ_AVAIL, Flag)
         """Is 5GHz wireless band available?"""
