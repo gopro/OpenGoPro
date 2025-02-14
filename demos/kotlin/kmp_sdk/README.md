@@ -11,17 +11,10 @@
   - [Overview](#overview)
   - [Features](#features)
   - [Setup](#setup)
-    - [Gradle](#gradle)
-      - [Version Catalog](#version-catalog)
-      - [Gradle Build](#gradle-build)
     - [Permissions](#permissions)
       - [Android](#android)
   - [Quick Start (Demo App)](#quick-start-demo-app)
   - [SDK Usage](#sdk-usage)
-  - [Development](#development)
-    - [Documentation](#documentation)
-    - [Unit Testing](#unit-testing)
-    - [Linting](#linting)
 
 
 The Open GoPro (OGP) Kotlin Multiplatform (KMP) SDK provides a simple Coroutines-powered API to
@@ -49,52 +42,10 @@ and Wi-Fi / USB [HTTP](https://gopro.github.io/OpenGoPro/http) APIs.
 
 ## Setup
 
-### Gradle
+NOTE!! The library is not yet available on Maven so this project is currently only intended to be interacted with using
+the demo app provided in the repo.
 
-The OGP KMP SDK can be setup via Gradle as:
-
-#### Version Catalog
-
-```toml
-[versions]
-ogpSdk = "0.1.0"
-agp = "8.7.2"
-kotlin = "2.0.10"
-
-[libraries]
-openGopro = { module = "TODO_NAMESPACE:open-gopro", version.ref = "ogpSdk"}
-
-[plugins]
-androidApplication = { id = "com.android.application", version.ref = "agp" }
-kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-```
-
-#### Gradle Build
-
-```Gradle
-plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinMultiplatform)
-}
-
-repositories {
-    mavenCentral()
-}
-
-kotlin {
-    androidTarget()
-
-    sourceSets {
-        commonMain.dependencies {
-            implementation(libs.openGopro)
-        }
-    }
-}
-
-android {
-    // ...
-}
-```
+This should be resolved soon...
 
 ### Permissions
 
@@ -155,11 +106,3 @@ The general procedure is:
     // Set the shutter
     gopro.commands.setShutter(true)
    ```
-
-## Development
-
-### Documentation
-
-### Unit Testing
-
-### Linting
